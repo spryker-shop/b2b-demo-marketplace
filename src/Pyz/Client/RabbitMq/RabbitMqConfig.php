@@ -42,6 +42,8 @@ use Spryker\Shared\TaxProductStorage\TaxProductStorageConfig;
 use Spryker\Shared\TaxStorage\TaxStorageConfig;
 use Spryker\Shared\UrlStorage\UrlStorageConfig;
 use Spryker\Shared\UrlStorage\UrlStorageConstants;
+use Spryker\Shared\MerchantStorage\MerchantStorageConfig;
+use Spryker\Shared\MerchantSearch\MerchantSearchConfig;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
@@ -69,7 +71,10 @@ class RabbitMqConfig extends SprykerRabbitMqConfig
                 $this->get(LogConstants::LOG_QUEUE_NAME),
             ],
             $this->getPublishQueueConfiguration(),
-            $this->getSynchronizationQueueConfiguration()
+            $this->getSynchronizationQueueConfiguration(),
+            [
+                MerchantSearchConfig::SYNC_SEARCH_MERCHANT,
+            ]
         );
     }
 
@@ -127,6 +132,7 @@ class RabbitMqConfig extends SprykerRabbitMqConfig
             TaxProductStorageConfig::PRODUCT_ABSTRACT_TAX_SET_SYNC_STORAGE_QUEUE,
             TaxStorageConfig::TAX_SET_SYNC_STORAGE_QUEUE,
             SalesReturnSearchConfig::SYNC_SEARCH_RETURN,
+            MerchantStorageConfig::MERCHANT_SYNC_STORAGE_QUEUE,
         ];
     }
 
