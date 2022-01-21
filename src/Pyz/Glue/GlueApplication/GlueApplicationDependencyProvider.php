@@ -193,6 +193,12 @@ use Spryker\Glue\StoresRestApi\Plugin\StoresResourceRoutePlugin;
 use Spryker\Glue\UpSellingProductsRestApi\Plugin\GlueApplication\CartUpSellingProductsResourceRoutePlugin;
 use Spryker\Glue\UpSellingProductsRestApi\Plugin\GlueApplication\GuestCartUpSellingProductsResourceRoutePlugin;
 use Spryker\Glue\UrlsRestApi\Plugin\GlueApplication\UrlResolverResourceRoutePlugin;
+use Spryker\Glue\MerchantsRestApi\MerchantsRestApiConfig;
+use Spryker\Glue\MerchantsRestApi\Plugin\GlueApplication\MerchantAddressByMerchantReferenceResourceRelationshipPlugin;
+use Spryker\Glue\MerchantsRestApi\Plugin\GlueApplication\MerchantAddressesResourceRoutePlugin;
+use Spryker\Glue\MerchantsRestApi\Plugin\GlueApplication\MerchantByMerchantReferenceResourceRelationshipPlugin;
+use Spryker\Glue\MerchantsRestApi\Plugin\GlueApplication\MerchantsByOrderResourceRelationshipPlugin;
+use Spryker\Glue\MerchantsRestApi\Plugin\GlueApplication\MerchantsResourceRoutePlugin;
 
 class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependencyProvider
 {
@@ -275,6 +281,8 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
             new MyAvailabilityNotificationsResourceRoutePlugin(),
             new CustomerAvailabilityNotificationsResourceRoutePlugin(),
             new MyAvailabilityNotificationsResourceRoutePlugin(),
+            new MerchantsResourceRoutePlugin(),
+            new MerchantAddressesResourceRoutePlugin(),
         ];
     }
 
@@ -683,7 +691,18 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
         $resourceRelationshipCollection->addRelationship(
             ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
             new ConcreteProductsByProductConcreteIdsResourceRelationshipPlugin()
+        );$resourceRelationshipCollection->addRelationship(
+            MerchantsRestApiConfig::RESOURCE_MERCHANTS,
+            new MerchantAddressByMerchantReferenceResourceRelationshipPlugin()
         );
+        $resourceRelationshipCollection->addRelationship(
+            OrdersRestApiConfig::RESOURCE_ORDERS,
+            new MerchantsByOrderResourceRelationshipPlugin()
+        );
+        /*$resourceRelationshipCollection->addRelationship(
+            MerchantProductOffersRestApiConfig::RESOURCE_PRODUCT_OFFERS,
+            new MerchantByMerchantReferenceResourceRelationshipPlugin()
+        );TODO: uncomment after MP-6393 */
 
         return $resourceRelationshipCollection;
     }
