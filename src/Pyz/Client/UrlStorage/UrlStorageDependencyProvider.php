@@ -13,6 +13,7 @@ use Spryker\Client\ProductSetStorage\Plugin\UrlStorageProductSetMapperPlugin;
 use Spryker\Client\ProductStorage\Plugin\UrlStorageProductAbstractMapperPlugin;
 use Spryker\Client\UrlStorage\Plugin\UrlStorageRedirectMapperPlugin;
 use Spryker\Client\UrlStorage\UrlStorageDependencyProvider as SprykerUrlDependencyProvider;
+use Spryker\Client\MerchantStorage\Plugin\UrlStorageMerchantMapperPlugin;
 
 class UrlStorageDependencyProvider extends SprykerUrlDependencyProvider
 {
@@ -27,6 +28,7 @@ class UrlStorageDependencyProvider extends SprykerUrlDependencyProvider
             new UrlStorageProductAbstractMapperPlugin(),
             new UrlStorageProductSetMapperPlugin(),
             new UrlStorageRedirectMapperPlugin(),
+            new UrlStorageMerchantMapperPlugin(),
         ];
     }
 }

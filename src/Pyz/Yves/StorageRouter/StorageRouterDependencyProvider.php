@@ -13,6 +13,7 @@ use SprykerShop\Yves\ProductDetailPage\Plugin\StorageRouter\ProductDetailPageRes
 use SprykerShop\Yves\ProductSetDetailPage\Plugin\StorageRouter\ProductSetDetailPageResourceCreatorPlugin;
 use SprykerShop\Yves\RedirectPage\Plugin\StorageRouter\RedirectResourceCreatorPlugin;
 use SprykerShop\Yves\StorageRouter\StorageRouterDependencyProvider as SprykerShopStorageRouterDependencyProvider;
+use SprykerShop\Yves\MerchantPage\Plugin\MerchantPageResourceCreatorPlugin;
 
 class StorageRouterDependencyProvider extends SprykerShopStorageRouterDependencyProvider
 {
@@ -27,6 +28,7 @@ class StorageRouterDependencyProvider extends SprykerShopStorageRouterDependency
             new ProductDetailPageResourceCreatorPlugin(),
             new ProductSetDetailPageResourceCreatorPlugin(),
             new RedirectResourceCreatorPlugin(),
+            new MerchantPageResourceCreatorPlugin(),
         ];
     }
 }
