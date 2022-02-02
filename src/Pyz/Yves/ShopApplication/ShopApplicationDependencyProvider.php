@@ -142,6 +142,7 @@ use SprykerShop\Yves\ShoppingListWidget\Widget\ShoppingListSubtotalWidget;
 use SprykerShop\Yves\TabsWidget\Widget\FullTextSearchTabsWidget;
 use SprykerShop\Yves\WebProfilerWidget\Plugin\Application\WebProfilerApplicationPlugin;
 use SprykerShop\Yves\MerchantWidget\Widget\SoldByMerchantWidget;
+use SprykerShop\Yves\MerchantProductWidget\Widget\MerchantProductWidget;
 
 /**
  * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
@@ -264,6 +265,7 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             ProductSetIdsWidget::class,
             CartAddProductAsSeparateItemWidget::class,
             SoldByMerchantWidget::class,
+            MerchantProductWidget::class,
         ];
     }
 

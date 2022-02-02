@@ -67,6 +67,8 @@ Verification: `config/Zed/navigation.xml` needs to be updated to see a new menu 
 
 Filename `src/Pyz/Client/ProductStorage/ProductStorageDependencyProvider.php` is wrong and should be replaced with `src/Pyz/Zed/ProductStorage/ProductStorageDependencyProvider.php`
 
+If `spy_product_abstract_storage.merchant_reference` is null for all rows, run `cache:class-resolver:build` and then trigger storage update
+
 ##Install feature frontend
 
 1 ) Class `SprykerShop\Yves\MerchantProductWidget\Widget\ProductSoldByMerchantWidget` doesn't exist, and the `SprykerShop\Yves\MerchantWidget\Widget\SoldByMerchantWidget` is already added.

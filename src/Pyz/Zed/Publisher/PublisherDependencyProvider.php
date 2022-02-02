@@ -80,6 +80,10 @@ use Spryker\Zed\MerchantStorage\Communication\Plugin\Publisher\MerchantPublisher
 use Spryker\Zed\MerchantStorage\Communication\Plugin\Publisher\Merchant\MerchantStoragePublisherPlugin;
 use Spryker\Zed\MerchantSearch\Communication\Plugin\Publisher\Merchant\MerchantWritePublisherPlugin;
 use Spryker\Zed\MerchantSearch\Communication\Plugin\Publisher\Merchant\MerchantDeletePublisherPlugin;
+use Spryker\Zed\MerchantProductSearch\Communication\Plugin\Publisher\Merchant\MerchantProductSearchWritePublisherPlugin as MerchantMerchantProductSearchWritePublisherPlugin;
+use Spryker\Zed\MerchantProductSearch\Communication\Plugin\Publisher\MerchantProduct\MerchantProductSearchWritePublisherPlugin;
+use Spryker\Zed\MerchantProductStorage\Communication\Plugin\Publisher\Merchant\MerchantUpdatePublisherPlugin;
+use Spryker\Zed\MerchantProductStorage\Communication\Plugin\Publisher\MerchantProduct\MerchantProductWritePublisherPlugin;
 
 class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
 {
@@ -103,6 +107,10 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
                 new MerchantStoragePublisherPlugin(),
                 new MerchantWritePublisherPlugin(),
                 new MerchantDeletePublisherPlugin(),
+                new MerchantProductWritePublisherPlugin(),
+                new MerchantUpdatePublisherPlugin(),
+                new MerchantMerchantProductSearchWritePublisherPlugin(),
+                new MerchantProductSearchWritePublisherPlugin(),
             ]
         );
     }
