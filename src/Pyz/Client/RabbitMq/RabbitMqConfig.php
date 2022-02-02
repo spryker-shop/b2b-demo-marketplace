@@ -71,10 +71,7 @@ class RabbitMqConfig extends SprykerRabbitMqConfig
                 $this->get(LogConstants::LOG_QUEUE_NAME),
             ],
             $this->getPublishQueueConfiguration(),
-            $this->getSynchronizationQueueConfiguration(),
-            [
-                MerchantSearchConfig::SYNC_SEARCH_MERCHANT,
-            ]
+            $this->getSynchronizationQueueConfiguration()
         );
     }
 
@@ -133,6 +130,7 @@ class RabbitMqConfig extends SprykerRabbitMqConfig
             TaxStorageConfig::TAX_SET_SYNC_STORAGE_QUEUE,
             SalesReturnSearchConfig::SYNC_SEARCH_RETURN,
             MerchantStorageConfig::MERCHANT_SYNC_STORAGE_QUEUE,
+            MerchantSearchConfig::SYNC_SEARCH_MERCHANT,
         ];
     }
 

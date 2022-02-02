@@ -33,6 +33,16 @@ Probably, more detailed checkout guide is needed (I had to update company role, 
 ##Glue API
 3 ) `MerchantProductOffersRestApiConfig` can't be used before `MerchantProductOffer` integration
 
+The following code can't be added to `GlueApplicationDependencyProvider::getResourceRelationshipPlugins()` before offers integration:
+
+`$resourceRelationshipCollection->addRelationship(`
+
+`MerchantProductOffersRestApiConfig::RESOURCE_PRODUCT_OFFERS,`
+
+`new MerchantByMerchantReferenceResourceRelationshipPlugin()`
+
+`);`
+
    "Make sure that by sending the request GET http://glue.mysprykershop.com/orders?include=merchant, merchant attributes are returned in response." - merchant offers not integrated yet, so can't order items from merchants.
 
 

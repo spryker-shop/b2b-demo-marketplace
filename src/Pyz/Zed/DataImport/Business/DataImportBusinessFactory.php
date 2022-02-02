@@ -1769,7 +1769,9 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
      *
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function createMerchantUserImporter(DataImportConfigurationActionTransfer $dataImportConfigurationActionTransfer)
+    public function createMerchantUserImporter(
+        DataImportConfigurationActionTransfer $dataImportConfigurationActionTransfer
+    ): DataImporterInterface
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
             $this->getConfig()->buildImporterConfigurationByDataImportConfigAction($dataImportConfigurationActionTransfer)

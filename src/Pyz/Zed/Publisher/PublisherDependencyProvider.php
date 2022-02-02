@@ -103,11 +103,9 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
             $this->getCategoryStoragePlugins(),
             $this->getCategoryPageSearchPlugins(),
             $this->getProductCategoryStoragePlugins(),
+            $this->getMerchantStoragePlugins(),
+            $this->getMerchantSearchPlugins(),
             [
-                new MerchantStoragePublisherPlugin(),
-                new MerchantWritePublisherPlugin(),
-                new MerchantDeletePublisherPlugin(),
-                new MerchantProductWritePublisherPlugin(),
                 new MerchantUpdatePublisherPlugin(),
                 new MerchantMerchantProductSearchWritePublisherPlugin(),
                 new MerchantProductSearchWritePublisherPlugin(),
@@ -282,6 +280,27 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
             new CategoryUrlAndResourceCategorynodeWritePublisherPlugin(),
             new ProductCategoryWriteForPublishingPublisherPlugin(),
             new ProductCategoryWritePublisherPlugin(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface[]
+     */
+    protected function getMerchantStoragePlugins(): array
+    {
+        return [
+            new MerchantStoragePublisherPlugin(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface[]
+     */
+    protected function getMerchantSearchPlugins(): array
+    {
+        return [
+            new MerchantWritePublisherPlugin(),
+            new MerchantDeletePublisherPlugin(),
         ];
     }
 }
