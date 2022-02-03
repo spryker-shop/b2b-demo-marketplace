@@ -91,6 +91,10 @@ Verification: not `spy_glossary table`, but `spy_glossary_key` and `spy_glossary
 
 3 ) Verification: merchant doesn't appear on product page and in cart
 
+##Glue API
+
+1 ) extra space after package name
+
 #MP-6404 Persistence ACL
 
 1 ) typo: extra space, should be `spryker-feature/acl:"202108.0"`, not `spryker-feature/acl: "202108.0"`

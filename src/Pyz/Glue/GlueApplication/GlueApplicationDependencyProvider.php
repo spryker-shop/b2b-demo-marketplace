@@ -700,6 +700,18 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
             OrdersRestApiConfig::RESOURCE_ORDERS,
             new MerchantsByOrderResourceRelationshipPlugin()
         );
+        $resourceRelationshipCollection->addRelationship(
+            ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
+            new MerchantByMerchantReferenceResourceRelationshipPlugin()
+        );
+        $resourceRelationshipCollection->addRelationship(
+            CartsRestApiConfig::RESOURCE_CART_ITEMS,
+            new MerchantByMerchantReferenceResourceRelationshipPlugin()
+        );
+        $resourceRelationshipCollection->addRelationship(
+            CartsRestApiConfig::RESOURCE_GUEST_CARTS_ITEMS,
+            new MerchantByMerchantReferenceResourceRelationshipPlugin()
+        );
 
         return $resourceRelationshipCollection;
     }

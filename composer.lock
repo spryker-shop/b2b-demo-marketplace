@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "96b29fe793c59aac067d147156829989",
+    "content-hash": "b590071b6030e0b3c01bc5c0795c7f1f",
     "packages": [
         {
             "name": "brick/math",
@@ -26302,6 +26302,48 @@
             ],
             "description": "MerchantProductStorage module",
             "time": "2022-01-26T13:14:24+00:00"
+        },
+        {
+            "name": "spryker/merchant-products-rest-api",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/merchant-products-rest-api.git",
+                "reference": "337430a8698593c32871e968fb449ea06c4101c3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/merchant-products-rest-api/zipball/337430a8698593c32871e968fb449ea06c4101c3",
+                "reference": "337430a8698593c32871e968fb449ea06c4101c3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/carts-rest-api-extension": "^1.5.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/synchronization-behavior": "^1.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "MerchantProductsRestApi module",
+            "time": "2021-07-07T15:14:17+00:00"
         },
         {
             "name": "spryker/merchant-profile",
