@@ -708,7 +708,6 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
             new MerchantOpeningHoursByMerchantReferenceResourceRelationshipPlugin()
         );
 
-
         return $resourceRelationshipCollection;
     }
 
