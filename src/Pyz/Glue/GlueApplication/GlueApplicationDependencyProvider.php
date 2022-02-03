@@ -693,7 +693,8 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
         $resourceRelationshipCollection->addRelationship(
             ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
             new ConcreteProductsByProductConcreteIdsResourceRelationshipPlugin()
-        );$resourceRelationshipCollection->addRelationship(
+        );
+        $resourceRelationshipCollection->addRelationship(
             MerchantsRestApiConfig::RESOURCE_MERCHANTS,
             new MerchantAddressByMerchantReferenceResourceRelationshipPlugin()
         );
@@ -707,10 +708,6 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
             new MerchantOpeningHoursByMerchantReferenceResourceRelationshipPlugin()
         );
 
-        /*$resourceRelationshipCollection->addRelationship(
-            MerchantProductOffersRestApiConfig::RESOURCE_PRODUCT_OFFERS,
-            new MerchantByMerchantReferenceResourceRelationshipPlugin()
-        );TODO: uncomment after MP-6393 */
 
         return $resourceRelationshipCollection;
     }
