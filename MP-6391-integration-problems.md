@@ -20,7 +20,9 @@
 7 ) There is no `getMerchantUserFacade()` method in `src/Pyz/Zed/DataImport/Business/DataImportBusinessFactory.php`
 
 ###Install feature front end
-2 ) Verification: not `spy_glossary table`, but `spy_glossary_key` and `spy_glossary_translation` tables
+2 ) Wrong filename, should be `data/import/common/common/glossary.csv`
+
+Verification: not `spy_glossary table`, but `spy_glossary_key` and `spy_glossary_translation` tables
 
 3 ) Verification can't be done, because `MerchantProduct` is not integrated yet
 

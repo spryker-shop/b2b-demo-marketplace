@@ -13,6 +13,7 @@ use Spryker\Client\ProductSearchConfigStorage\Plugin\Config\ProductSearchConfigE
 use Spryker\Client\Search\SearchDependencyProvider as SprykerSearchDependencyProvider;
 use Spryker\Client\SearchElasticsearch\Plugin\ElasticsearchSearchAdapterPlugin;
 use Spryker\Client\SearchElasticsearch\Plugin\ElasticsearchSearchContextExpanderPlugin;
+use Spryker\Client\MerchantProductSearch\Plugin\Search\MerchantProductMerchantNameSearchConfigExpanderPlugin;
 
 class SearchDependencyProvider extends SprykerSearchDependencyProvider
 {
@@ -36,6 +37,7 @@ class SearchDependencyProvider extends SprykerSearchDependencyProvider
         $searchConfigExpanderPlugins = parent::createSearchConfigExpanderPlugins($container);
 
         $searchConfigExpanderPlugins[] = new ProductSearchConfigExpanderPlugin();
+        $searchConfigExpanderPlugins[] = new MerchantProductMerchantNameSearchConfigExpanderPlugin();
 
         return $searchConfigExpanderPlugins;
     }
