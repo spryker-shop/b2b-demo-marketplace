@@ -95,6 +95,12 @@ Verification: not `spy_glossary table`, but `spy_glossary_key` and `spy_glossary
 
 1 ) extra space after package name
 
+##Marketplace Product + Cart
+
+2 ) wrong filename, should be `src/Pyz/Zed/Cart/CartDependencyProvider.php`
+
+Verification requires writing additional code for direct CartFacade call
+
 #MP-6404 Persistence ACL
 
 1 ) typo: extra space, should be `spryker-feature/acl:"202108.0"`, not `spryker-feature/acl: "202108.0"`
