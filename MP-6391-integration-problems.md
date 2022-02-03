@@ -89,6 +89,8 @@ If `spy_product_abstract_storage.merchant_reference` is null for all rows, run `
 
 Verification: not `spy_glossary table`, but `spy_glossary_key` and `spy_glossary_translation` tables
 
+3 ) Verification: merchant doesn't appear on product page and in cart
+
 #MP-6404 Persistence ACL
 
 1 ) typo: extra space, should be `spryker-feature/acl:"202108.0"`, not `spryker-feature/acl: "202108.0"`
