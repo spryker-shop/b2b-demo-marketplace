@@ -131,3 +131,11 @@ AclConfig file missing `RULE_TYPE_DENY` definition:
 
 Some file updates needed for MP to work are missing, see https://github.com/spryker/b2b-demo-shop-internal/commit/334306a43055c74c5c0effc82632a3a8fc20dd7f
 
+-------------------------------------------------------------
+#MP-6392 Marketplace Merchant
+##feature integration issues
+1. Duplicated `console transfer:generate`.
+2. Missing `console propel:install`.
+3. Outdated demodata for merchant-opening-hours-date-schedule (Dates are in the past, schedule not diplayed on yves, year should be updated).
+4. Missing glossary translations for date schedule, should be copy-pasted from latest suite-nonsplit.
+-------------------------------------------------------------
