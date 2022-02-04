@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b7c9b3fc3aa38cf35c6376015f0c62c2",
+    "content-hash": "7c35244e8dc16fd057bb168d55f7beb7",
     "packages": [
         {
             "name": "brick/math",
@@ -430,23 +430,23 @@
         },
         {
             "name": "elasticsearch/elasticsearch",
-            "version": "v7.16.0",
+            "version": "v7.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/elastic/elasticsearch-php.git",
-                "reference": "f87f93f71f564d4bbdc5f008d296d1c37d828e10"
+                "reference": "1890f9d7fde076b5a3ddcf579a802af05b2e781b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/elastic/elasticsearch-php/zipball/f87f93f71f564d4bbdc5f008d296d1c37d828e10",
-                "reference": "f87f93f71f564d4bbdc5f008d296d1c37d828e10",
+                "url": "https://api.github.com/repos/elastic/elasticsearch-php/zipball/1890f9d7fde076b5a3ddcf579a802af05b2e781b",
+                "reference": "1890f9d7fde076b5a3ddcf579a802af05b2e781b",
                 "shasum": ""
             },
             "require": {
                 "ext-json": ">=1.3.7",
                 "ezimuel/ringphp": "^1.1.2",
                 "php": "^7.3 || ^8.0",
-                "psr/log": "^1|^2"
+                "psr/log": "^1|^2|^3"
             },
             "require-dev": {
                 "ext-yaml": "*",
@@ -489,7 +489,7 @@
                 "elasticsearch",
                 "search"
             ],
-            "time": "2021-12-09T20:04:01+00:00"
+            "time": "2022-02-03T13:40:04+00:00"
         },
         {
             "name": "everon/collection",
@@ -4115,7 +4115,7 @@
         },
         {
             "name": "spryker-feature/marketplace-merchant",
-            "version": "202108.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/marketplace-merchant.git",
@@ -4159,7 +4159,7 @@
         },
         {
             "name": "spryker-feature/marketplace-product",
-            "version": "202108.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/marketplace-product.git",
@@ -4205,21 +4205,22 @@
         },
         {
             "name": "spryker-feature/marketplace-product-offer",
-            "version": "202108.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/marketplace-product-offer.git",
-                "reference": "3f8c843ef3683c501fbb7dc46d562164e65b43a5"
+                "reference": "38c75e0c213973cef419282d59bdfe3165b4bad3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/marketplace-product-offer/zipball/3f8c843ef3683c501fbb7dc46d562164e65b43a5",
-                "reference": "3f8c843ef3683c501fbb7dc46d562164e65b43a5",
+                "url": "https://api.github.com/repos/spryker-feature/marketplace-product-offer/zipball/38c75e0c213973cef419282d59bdfe3165b4bad3",
+                "reference": "38c75e0c213973cef419282d59bdfe3165b4bad3",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.3",
+                "php": ">=7.4",
                 "spryker-shop/merchant-product-offer-widget": "^1.0.0",
+                "spryker-shop/product-offer-widget": "^0.1.0",
                 "spryker/merchant-product-offer": "^1.0.0",
                 "spryker/merchant-product-offer-data-import": "^0.11.0",
                 "spryker/merchant-product-offer-gui": "^1.0.0",
@@ -4247,7 +4248,7 @@
                 "proprietary"
             ],
             "description": "Marketplace Product Offer [feature]",
-            "time": "2021-08-30T07:34:36+00:00"
+            "time": "2022-01-26T15:57:36+00:00"
         },
         {
             "name": "spryker-feature/measurement-units",
@@ -10053,6 +10054,46 @@
             "time": "2021-10-29T12:16:12+00:00"
         },
         {
+            "name": "spryker-shop/product-offer-widget",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-shop/product-offer-widget.git",
+                "reference": "da21a336e1fa864a1b446f143011782cb56aed6e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-shop/product-offer-widget/zipball/da21a336e1fa864a1b446f143011782cb56aed6e",
+                "reference": "da21a336e1fa864a1b446f143011782cb56aed6e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4",
+                "spryker/kernel": "^3.30.0",
+                "spryker/merchant-product-offer-storage": "^1.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SprykerShop\\": "src/SprykerShop/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ProductOfferWidget module",
+            "time": "2022-01-26T13:14:26+00:00"
+        },
+        {
             "name": "spryker-shop/product-option-widget",
             "version": "1.4.7",
             "source": {
@@ -12870,9 +12911,9 @@
             "autoload": {
                 "psr-4": {
                     "Spryker\\": "src/Spryker/",
-                    "SprykerTest\\Shared\\Application\\Helper\\": "tests/SprykerTest/Shared/Application/_support/Helper/",
+                    "SprykerTest\\Zed\\Application\\Helper\\": "tests/SprykerTest/Zed/Application/_support/Helper/",
                     "SprykerTest\\Yves\\Application\\Helper\\": "tests/SprykerTest/Yves/Application/_support/Helper/",
-                    "SprykerTest\\Zed\\Application\\Helper\\": "tests/SprykerTest/Zed/Application/_support/Helper/"
+                    "SprykerTest\\Shared\\Application\\Helper\\": "tests/SprykerTest/Shared/Application/_support/Helper/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -23416,16 +23457,16 @@
         },
         {
             "name": "spryker/discount-promotion",
-            "version": "4.4.0",
+            "version": "4.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/discount-promotion.git",
-                "reference": "87353c2cb291dbd76387ee8612c1663f148bef08"
+                "reference": "a5e70780a67a351e76ebb9324e8e5ab96d298be4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/discount-promotion/zipball/87353c2cb291dbd76387ee8612c1663f148bef08",
-                "reference": "87353c2cb291dbd76387ee8612c1663f148bef08",
+                "url": "https://api.github.com/repos/spryker/discount-promotion/zipball/a5e70780a67a351e76ebb9324e8e5ab96d298be4",
+                "reference": "a5e70780a67a351e76ebb9324e8e5ab96d298be4",
                 "shasum": ""
             },
             "require": {
@@ -23473,7 +23514,7 @@
                 "proprietary"
             ],
             "description": "DiscountPromotion module",
-            "time": "2022-02-01T08:28:42+00:00"
+            "time": "2022-02-02T16:44:08+00:00"
         },
         {
             "name": "spryker/discount-promotions-rest-api",
@@ -25501,8 +25542,8 @@
             "autoload": {
                 "psr-4": {
                     "Spryker\\": "src/Spryker/",
-                    "SprykerTest\\Shared\\Kernel\\Helper\\": "tests/SprykerTest/Shared/Kernel/_support/Helper/",
-                    "SprykerTest\\Zed\\Kernel\\Helper\\": "tests/SprykerTest/Zed/Kernel/_support/Helper/"
+                    "SprykerTest\\Zed\\Kernel\\Helper\\": "tests/SprykerTest/Zed/Kernel/_support/Helper/",
+                    "SprykerTest\\Shared\\Kernel\\Helper\\": "tests/SprykerTest/Shared/Kernel/_support/Helper/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -38399,8 +38440,8 @@
             "autoload": {
                 "psr-4": {
                     "Spryker\\": "src/Spryker/",
-                    "SprykerTest\\Shared\\Sales\\Helper\\": "tests/SprykerTest/Shared/Sales/_support/Helper/",
-                    "SprykerTest\\Zed\\Sales\\Helper\\": "tests/SprykerTest/Zed/Sales/_support/Helper/"
+                    "SprykerTest\\Zed\\Sales\\Helper\\": "tests/SprykerTest/Zed/Sales/_support/Helper/",
+                    "SprykerTest\\Shared\\Sales\\Helper\\": "tests/SprykerTest/Shared/Sales/_support/Helper/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -40122,8 +40163,8 @@
             "autoload": {
                 "psr-4": {
                     "Spryker\\": "src/Spryker/",
-                    "SprykerTest\\Yves\\Security\\Helper\\": "tests/SprykerTest/Yves/Security/_support/Helper/",
-                    "SprykerTest\\Zed\\Security\\Helper\\": "tests/SprykerTest/Zed/Security/_support/Helper/"
+                    "SprykerTest\\Zed\\Security\\Helper\\": "tests/SprykerTest/Zed/Security/_support/Helper/",
+                    "SprykerTest\\Yves\\Security\\Helper\\": "tests/SprykerTest/Yves/Security/_support/Helper/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -40599,9 +40640,9 @@
             "autoload": {
                 "psr-4": {
                     "Spryker\\": "src/Spryker/",
-                    "SprykerTest\\Shared\\Session\\Helper\\": "tests/SprykerTest/Shared/Session/_support/Helper/",
+                    "SprykerTest\\Zed\\Session\\Helper\\": "tests/SprykerTest/Zed/Session/_support/Helper/",
                     "SprykerTest\\Yves\\Session\\Helper\\": "tests/SprykerTest/Yves/Session/_support/Helper/",
-                    "SprykerTest\\Zed\\Session\\Helper\\": "tests/SprykerTest/Zed/Session/_support/Helper/"
+                    "SprykerTest\\Shared\\Session\\Helper\\": "tests/SprykerTest/Shared/Session/_support/Helper/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -49268,16 +49309,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v3.3.7",
+            "version": "v3.3.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "8f168c6ffa3ce76d1786b3cd52275424a3fc675b"
+                "reference": "972d8604a92b7054828b539f2febb0211dd5945c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/8f168c6ffa3ce76d1786b3cd52275424a3fc675b",
-                "reference": "8f168c6ffa3ce76d1786b3cd52275424a3fc675b",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/972d8604a92b7054828b539f2febb0211dd5945c",
+                "reference": "972d8604a92b7054828b539f2febb0211dd5945c",
                 "shasum": ""
             },
             "require": {
@@ -49336,7 +49377,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-03T21:15:37+00:00"
+            "time": "2022-02-04T06:59:48+00:00"
         },
         {
             "name": "voku/anti-xss",
@@ -51099,12 +51140,12 @@
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "DeepCopy\\": "src/DeepCopy/"
-                },
                 "files": [
                     "src/DeepCopy/deep_copy.php"
-                ]
+                ],
+                "psr-4": {
+                    "DeepCopy\\": "src/DeepCopy/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -54903,13 +54944,13 @@
                 }
             },
             "autoload": {
+                "files": [
+                    "tests/dd.php"
+                ],
                 "psr-4": {
                     "Spryker\\": "src/Spryker/",
                     "SprykerTest\\Zed\\Development\\Helper\\": "tests/SprykerTest/Zed/Development/_support/Helper/"
-                },
-                "files": [
-                    "tests/dd.php"
-                ]
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -55043,17 +55084,17 @@
             "autoload": {
                 "psr-4": {
                     "Spryker\\": "src/Spryker/",
-                    "SprykerTest\\Client\\Testify\\Helper\\": "tests/SprykerTest/Client/Testify/_support/Helper/",
+                    "SprykerTest\\Zed\\Testify\\Helper\\": "tests/SprykerTest/Zed/Testify/_support/Helper/",
                     "SprykerTest\\Glue\\Testify\\Helper\\": "tests/SprykerTest/Glue/Testify/_support/Helper/",
                     "SprykerTest\\Glue\\Testify\\Tester\\": "tests/SprykerTest/Glue/Testify/_support/Tester/",
-                    "SprykerTest\\Service\\Testify\\Helper\\": "tests/SprykerTest/Service/Testify/_support/Helper/",
-                    "SprykerTest\\Shared\\Testify\\Helper\\": "tests/SprykerTest/Shared/Testify/_support/Helper/",
-                    "SprykerTest\\Shared\\Testify\\Fixtures\\": "tests/SprykerTest/Shared/Testify/_support/Fixtures/",
-                    "SprykerTest\\Shared\\Testify\\Tester\\": "tests/SprykerTest/Shared/Testify/_support/Tester/",
-                    "SprykerTest\\Shared\\Testify\\StepOverride\\": "tests/SprykerTest/Shared/Testify/_support/StepOverride/",
-                    "SprykerTest\\Shared\\Testify\\Filter\\": "tests/SprykerTest/Shared/Testify/_support/Filter/",
                     "SprykerTest\\Yves\\Testify\\Helper\\": "tests/SprykerTest/Yves/Testify/_support/Helper/",
-                    "SprykerTest\\Zed\\Testify\\Helper\\": "tests/SprykerTest/Zed/Testify/_support/Helper/"
+                    "SprykerTest\\Client\\Testify\\Helper\\": "tests/SprykerTest/Client/Testify/_support/Helper/",
+                    "SprykerTest\\Shared\\Testify\\Filter\\": "tests/SprykerTest/Shared/Testify/_support/Filter/",
+                    "SprykerTest\\Shared\\Testify\\Helper\\": "tests/SprykerTest/Shared/Testify/_support/Helper/",
+                    "SprykerTest\\Shared\\Testify\\Tester\\": "tests/SprykerTest/Shared/Testify/_support/Tester/",
+                    "SprykerTest\\Service\\Testify\\Helper\\": "tests/SprykerTest/Service/Testify/_support/Helper/",
+                    "SprykerTest\\Shared\\Testify\\Fixtures\\": "tests/SprykerTest/Shared/Testify/_support/Fixtures/",
+                    "SprykerTest\\Shared\\Testify\\StepOverride\\": "tests/SprykerTest/Shared/Testify/_support/StepOverride/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -55964,6 +56005,24 @@
     ],
     "aliases": [
         {
+            "alias": "202204.0",
+            "alias_normalized": "202204.0",
+            "version": "9999999-dev",
+            "package": "spryker-feature/marketplace-merchant"
+        },
+        {
+            "alias": "202204.0",
+            "alias_normalized": "202204.0",
+            "version": "9999999-dev",
+            "package": "spryker-feature/marketplace-product"
+        },
+        {
+            "alias": "202204.0",
+            "alias_normalized": "202204.0",
+            "version": "9999999-dev",
+            "package": "spryker-feature/marketplace-product-offer"
+        },
+        {
             "alias": "202108.0",
             "alias_normalized": "202108.0",
             "version": "9999999-dev",
@@ -55972,6 +56031,9 @@
     ],
     "minimum-stability": "dev",
     "stability-flags": {
+        "spryker-feature/marketplace-merchant": 20,
+        "spryker-feature/marketplace-product": 20,
+        "spryker-feature/marketplace-product-offer": 20,
         "spryker-sdk/integrator": 20,
         "spryker/docker-chromedriver": 20
     },

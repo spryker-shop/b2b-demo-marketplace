@@ -81,6 +81,7 @@ use Spryker\Zed\ProductDiscontinuedDataImport\ProductDiscontinuedDataImportConfi
 use Spryker\Zed\ProductLabel\Communication\Console\ProductLabelRelationUpdaterConsole;
 use Spryker\Zed\ProductLabel\Communication\Console\ProductLabelValidityConsole;
 use Spryker\Zed\ProductLabelDataImport\ProductLabelDataImportConfig;
+use Spryker\Zed\ProductOfferValidity\Communication\Console\ProductOfferValidityConsole;
 use Spryker\Zed\ProductPackagingUnitDataImport\ProductPackagingUnitDataImportConfig;
 use Spryker\Zed\ProductQuantityDataImport\ProductQuantityDataImportConfig;
 use Spryker\Zed\ProductRelation\Communication\Console\ProductRelationUpdaterConsole;
@@ -164,7 +165,6 @@ use SprykerEco\Zed\NewRelic\Communication\Console\RecordDeploymentConsole;
 use SprykerSdk\Zed\Integrator\Communication\Console\ManifestGeneratorConsole;
 use SprykerSdk\Zed\Integrator\Communication\Console\ModuleInstallerConsole;
 use Stecman\Component\Symfony\Console\BashCompletion\CompletionCommand;
-use Spryker\Zed\ProductOfferValidity\Communication\Console\ProductOfferValidityConsole;
 
 /**
  * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
