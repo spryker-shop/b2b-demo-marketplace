@@ -24,6 +24,8 @@ use Spryker\Shared\Event\EventConstants;
 use Spryker\Shared\FileManagerStorage\FileManagerStorageConstants;
 use Spryker\Shared\GlossaryStorage\GlossaryStorageConfig;
 use Spryker\Shared\Log\LogConstants;
+use Spryker\Shared\MerchantSearch\MerchantSearchConfig;
+use Spryker\Shared\MerchantStorage\MerchantStorageConfig;
 use Spryker\Shared\PriceProductStorage\PriceProductStorageConfig;
 use Spryker\Shared\PriceProductStorage\PriceProductStorageConstants;
 use Spryker\Shared\ProductImageStorage\ProductImageStorageConfig;
@@ -42,8 +44,6 @@ use Spryker\Shared\TaxProductStorage\TaxProductStorageConfig;
 use Spryker\Shared\TaxStorage\TaxStorageConfig;
 use Spryker\Shared\UrlStorage\UrlStorageConfig;
 use Spryker\Shared\UrlStorage\UrlStorageConstants;
-use Spryker\Shared\MerchantStorage\MerchantStorageConfig;
-use Spryker\Shared\MerchantSearch\MerchantSearchConfig;
 use Spryker\Shared\MerchantProductOfferStorage\MerchantProductOfferStorageConfig;
 
 /**
