@@ -57,6 +57,7 @@ use SprykerShop\Yves\CustomerReorderWidget\Plugin\CustomerPage\CustomerReorderIt
 use SprykerShop\Yves\DiscountPromotionWidget\Plugin\ShopApplication\CartDiscountPromotionProductListWidgetCacheKeyGeneratorStrategyPlugin;
 use SprykerShop\Yves\DiscountPromotionWidget\Widget\CartDiscountPromotionProductListWidget;
 use SprykerShop\Yves\LanguageSwitcherWidget\Widget\LanguageSwitcherWidget;
+use SprykerShop\Yves\MerchantWidget\Widget\SoldByMerchantWidget;
 use SprykerShop\Yves\MoneyWidget\Widget\CurrencyIsoCodeWidget;
 use SprykerShop\Yves\MultiCartWidget\Widget\AddToMultiCartWidget;
 use SprykerShop\Yves\MultiCartWidget\Widget\CartOperationsWidget;
@@ -141,7 +142,6 @@ use SprykerShop\Yves\ShoppingListWidget\Widget\ShoppingListNavigationMenuWidget;
 use SprykerShop\Yves\ShoppingListWidget\Widget\ShoppingListSubtotalWidget;
 use SprykerShop\Yves\TabsWidget\Widget\FullTextSearchTabsWidget;
 use SprykerShop\Yves\WebProfilerWidget\Plugin\Application\WebProfilerApplicationPlugin;
-use SprykerShop\Yves\MerchantWidget\Widget\SoldByMerchantWidget;
 use SprykerShop\Yves\MerchantProductWidget\Widget\MerchantProductWidget;
 
 /**

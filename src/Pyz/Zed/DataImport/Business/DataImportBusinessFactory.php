@@ -49,6 +49,7 @@ use Pyz\Zed\DataImport\Business\Model\Glossary\GlossaryWriterStep;
 use Pyz\Zed\DataImport\Business\Model\Locale\AddLocalesStep;
 use Pyz\Zed\DataImport\Business\Model\Locale\LocaleNameToIdLocaleStep;
 use Pyz\Zed\DataImport\Business\Model\Locale\Repository\LocaleRepository;
+use Pyz\Zed\DataImport\Business\Model\MerchantUser\MerchantUserWriterStep;
 use Pyz\Zed\DataImport\Business\Model\Navigation\NavigationKeyToIdNavigationStep;
 use Pyz\Zed\DataImport\Business\Model\Navigation\NavigationWriterStep;
 use Pyz\Zed\DataImport\Business\Model\NavigationNode\NavigationNodeValidityDatesStep;
@@ -120,7 +121,6 @@ use Spryker\Zed\MerchantUser\Business\MerchantUserFacadeInterface;
 use Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface;
 use Spryker\Zed\Stock\Business\StockFacadeInterface;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
-use Pyz\Zed\DataImport\Business\Model\MerchantUser\MerchantUserWriterStep;
 
 /**
  * @method \Pyz\Zed\DataImport\DataImportConfig getConfig()
@@ -1771,8 +1771,7 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
      */
     public function createMerchantUserImporter(
         DataImportConfigurationActionTransfer $dataImportConfigurationActionTransfer
-    ): DataImporterInterface
-    {
+    ): DataImporterInterface {
         $dataImporter = $this->getCsvDataImporterFromConfig(
             $this->getConfig()->buildImporterConfigurationByDataImportConfigAction($dataImportConfigurationActionTransfer)
         );
@@ -1788,7 +1787,7 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
     }
 
     /**
-     * @return MerchantUserFacadeInterface
+     * @return \Spryker\Zed\MerchantUser\Business\MerchantUserFacadeInterface
      */
     public function getMerchantUserFacade(): MerchantUserFacadeInterface
     {
