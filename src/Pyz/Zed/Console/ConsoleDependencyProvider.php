@@ -164,6 +164,7 @@ use SprykerEco\Zed\NewRelic\Communication\Console\RecordDeploymentConsole;
 use SprykerSdk\Zed\Integrator\Communication\Console\ManifestGeneratorConsole;
 use SprykerSdk\Zed\Integrator\Communication\Console\ModuleInstallerConsole;
 use Stecman\Component\Symfony\Console\BashCompletion\CompletionCommand;
+use Spryker\Zed\ProductOfferValidity\Communication\Console\ProductOfferValidityConsole;
 
 /**
  * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
@@ -356,6 +357,8 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new RecordDeploymentConsole(),
 
             new OrderInvoiceSendConsole(),
+
+            new ProductOfferValidityConsole(),
         ];
 
         $propelCommands = $container->getLocator()->propel()->facade()->getConsoleCommands();
