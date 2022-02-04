@@ -44,6 +44,7 @@ use Spryker\Shared\UrlStorage\UrlStorageConfig;
 use Spryker\Shared\UrlStorage\UrlStorageConstants;
 use Spryker\Shared\MerchantStorage\MerchantStorageConfig;
 use Spryker\Shared\MerchantSearch\MerchantSearchConfig;
+use Spryker\Shared\MerchantProductOfferStorage\MerchantProductOfferStorageConfig;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
@@ -131,6 +132,7 @@ class RabbitMqConfig extends SprykerRabbitMqConfig
             SalesReturnSearchConfig::SYNC_SEARCH_RETURN,
             MerchantStorageConfig::MERCHANT_SYNC_STORAGE_QUEUE,
             MerchantSearchConfig::SYNC_SEARCH_MERCHANT,
+            MerchantProductOfferStorageConfig::MERCHANT_PRODUCT_OFFER_SYNC_STORAGE_QUEUE,
         ];
     }
 

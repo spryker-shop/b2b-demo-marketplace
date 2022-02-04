@@ -71,6 +71,8 @@ use Spryker\Zed\UrlStorage\Communication\Plugin\Synchronization\UrlRedirectSynch
 use Spryker\Zed\UrlStorage\Communication\Plugin\Synchronization\UrlSynchronizationDataPlugin;
 use Spryker\Zed\MerchantStorage\Communication\Plugin\Synchronization\MerchantSynchronizationDataPlugin;
 use Spryker\Zed\MerchantSearch\Communication\Plugin\Synchronization\MerchantSynchronizationDataBulkRepositoryPlugin;
+use Spryker\Zed\MerchantProductOfferStorage\Communication\Plugin\Synchronization\ProductConcreteProductOffersSynchronizationDataBulkRepositoryPlugin;
+use Spryker\Zed\MerchantProductOfferStorage\Communication\Plugin\Synchronization\ProductOfferSynchronizationDataBulkRepositoryPlugin;
 
 class SynchronizationDependencyProvider extends SprykerSynchronizationDependencyProvider
 {
@@ -142,6 +144,8 @@ class SynchronizationDependencyProvider extends SprykerSynchronizationDependency
             new CmsBlockProductSynchronizationDataPlugin(),
             new MerchantSynchronizationDataPlugin(),
             new MerchantSynchronizationDataBulkRepositoryPlugin(),
+            new ProductConcreteProductOffersSynchronizationDataBulkRepositoryPlugin(),
+            new ProductOfferSynchronizationDataBulkRepositoryPlugin(),
         ];
     }
 

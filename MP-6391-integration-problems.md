@@ -107,6 +107,14 @@ Verification requires writing additional code for direct CartFacade call
 
 Same with `Marketplace Product + Inventory Management feature integration`, `Merchant Portal - Marketplace Product feature integration` and `Merchant Portal - Marketplace Product + Tax feature integration`
 
+#MP-6393 Marketplace Product Offer
+
+##Install feature core
+
+4 ) Verification probably should be done after data import.
+
+5 ) Import types should be added to full_EU.yml
+
 #MP-6404 Persistence ACL
 
 1 ) typo: extra space, should be `spryker-feature/acl:"202108.0"`, not `spryker-feature/acl: "202108.0"`

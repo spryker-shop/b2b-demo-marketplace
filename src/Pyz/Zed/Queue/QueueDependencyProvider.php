@@ -49,6 +49,7 @@ use Spryker\Zed\Synchronization\Communication\Plugin\Queue\SynchronizationStorag
 use SprykerEco\Zed\Loggly\Communication\Plugin\LogglyLoggerQueueMessageProcessorPlugin;
 use Spryker\Shared\MerchantStorage\MerchantStorageConfig;
 use Spryker\Shared\MerchantSearch\MerchantSearchConfig;
+use Spryker\Shared\MerchantProductOfferStorage\MerchantProductOfferStorageConfig;
 
 class QueueDependencyProvider extends SprykerDependencyProvider
 {
@@ -101,6 +102,7 @@ class QueueDependencyProvider extends SprykerDependencyProvider
             SalesReturnSearchConfig::SYNC_SEARCH_RETURN => new SynchronizationSearchQueueMessageProcessorPlugin(),
             MerchantStorageConfig::MERCHANT_SYNC_STORAGE_QUEUE => new SynchronizationStorageQueueMessageProcessorPlugin(),
             MerchantSearchConfig::SYNC_SEARCH_MERCHANT => new SynchronizationSearchQueueMessageProcessorPlugin(),
+            MerchantProductOfferStorageConfig::MERCHANT_PRODUCT_OFFER_SYNC_STORAGE_QUEUE => new SynchronizationStorageQueueMessageProcessorPlugin(),
         ];
     }
 }

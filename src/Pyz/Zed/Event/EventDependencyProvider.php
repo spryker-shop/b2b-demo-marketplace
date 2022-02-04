@@ -56,6 +56,9 @@ use Spryker\Zed\ShoppingListStorage\Communication\Plugin\Event\Subscriber\Shoppi
 use Spryker\Zed\TaxProductStorage\Communication\Plugin\Event\Subscriber\TaxProductStorageSubscriber;
 use Spryker\Zed\TaxStorage\Communication\Plugin\Event\Subscriber\TaxStorageSubscriber;
 use Spryker\Zed\UrlStorage\Communication\Plugin\Event\Subscriber\UrlStorageEventSubscriber;
+use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\Event\Subscriber\MerchantProductOfferSearchEventSubscriber;
+use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\Event\Subscriber\MerchantSearchEventSubscriber;
+use Spryker\Zed\MerchantProductOfferStorage\Communication\Plugin\Event\Subscriber\MerchantProductOfferStorageEventSubscriber;
 
 class EventDependencyProvider extends SprykerEventDependencyProvider
 {
@@ -108,6 +111,7 @@ class EventDependencyProvider extends SprykerEventDependencyProvider
         $eventSubscriberCollection->add(new ProductConcretePageSearchProductImageEventSubscriber());
         $eventSubscriberCollection->add(new ConfigurableBundleTemplatePageSearchEventSubscriber());
         $eventSubscriberCollection->add(new ConfigurableBundleTemplateImagePageSearchEventSubscriber());
+        $eventSubscriberCollection->add(new MerchantProductOfferStorageEventSubscriber());
 
         /**
          * Search Events
@@ -120,6 +124,8 @@ class EventDependencyProvider extends SprykerEventDependencyProvider
         $eventSubscriberCollection->add(new ProductConcretePageSearchProductAbstractEventSubscriber());
         $eventSubscriberCollection->add(new ProductConcretePageSearchProductEventSubscriber());
         $eventSubscriberCollection->add(new ProductConcretePageSearchProductLocalizedAttributesEventSubscriber());
+        $eventSubscriberCollection->add(new MerchantSearchEventSubscriber());
+        $eventSubscriberCollection->add(new MerchantProductOfferSearchEventSubscriber());
 
         $eventSubscriberCollection->add(new PublisherSubscriber());
 

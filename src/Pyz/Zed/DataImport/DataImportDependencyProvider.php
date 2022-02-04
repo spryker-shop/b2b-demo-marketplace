@@ -84,6 +84,9 @@ use Spryker\Zed\StockDataImport\Communication\Plugin\StockStoreDataImportPlugin;
 use Spryker\Zed\MerchantProfileDataImport\Communication\Plugin\MerchantProfileDataImportPlugin;
 use Spryker\Zed\MerchantProfileDataImport\Communication\Plugin\MerchantProfileAddressDataImportPlugin;
 use Spryker\Zed\MerchantProductDataImport\Communication\Plugin\MerchantProductDataImportPlugin;
+use Spryker\Zed\MerchantProductOfferDataImport\Communication\Plugin\DataImport\MerchantProductOfferDataImportPlugin;
+use Spryker\Zed\MerchantProductOfferDataImport\Communication\Plugin\DataImport\MerchantProductOfferStoreDataImportPlugin;
+use Spryker\Zed\ProductOfferValidityDataImport\Communication\DataImport\ProductOfferValidityDataImportPlugin;
 
 class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
 {
@@ -342,6 +345,9 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
             new MerchantProfileDataImportPlugin(),
             new MerchantProfileAddressDataImportPlugin(),
             new MerchantProductDataImportPlugin(),
+            new MerchantProductOfferDataImportPlugin(),
+            new MerchantProductOfferStoreDataImportPlugin(),
+            new ProductOfferValidityDataImportPlugin(),
         ];
     }
 
