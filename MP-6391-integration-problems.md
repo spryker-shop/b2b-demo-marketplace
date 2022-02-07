@@ -115,6 +115,12 @@ Same with `Marketplace Product + Inventory Management feature integration`, `Mer
 
 5 ) Import types should be added to full_EU.yml
 
+##Install feature front end
+
+2 ) wrong filename, should be `data/import/common/common/glossary.csv`
+
+3 ) Offers widget can't be displayed properly without prices integration
+
 #MP-6404 Persistence ACL
 
 1 ) typo: extra space, should be `spryker-feature/acl:"202108.0"`, not `spryker-feature/acl: "202108.0"`
