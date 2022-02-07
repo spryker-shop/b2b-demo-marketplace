@@ -152,6 +152,15 @@
                                         {% widget 'ProductBundleCartItemsListWidget' args [data.listItem, data.list] only %}
                                         {% endwidget %}
                                     {% endblock %}
+
+                                    {% if widgetGlobalExists('SoldByMerchantWidget') %}
+                                        {% widget 'SoldByMerchantWidget' args [data.listItem] only %}{% endwidget %}
+                                    {% elseif widgetGlobalExists('ProductOfferSoldByMerchantWidget') %}
+                                        {% widget 'ProductOfferSoldByMerchantWidget' args [data.listItem] only %}{% endwidget %}
+                                    {% elseif widgetGlobalExists('ProductSoldByMerchantWidget') %}
+                                        {% widget 'ProductSoldByMerchantWidget' args [data.listItem] only %}{% endwidget %}
+                                    {% endif %}
+
                                 {% endblock %}
                             {% endblock %}
 
