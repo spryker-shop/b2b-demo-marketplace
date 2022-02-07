@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7c35244e8dc16fd057bb168d55f7beb7",
+    "content-hash": "fe6269b682a56960a1def0a332562853",
     "packages": [
         {
             "name": "brick/math",
@@ -26591,6 +26591,52 @@
             ],
             "description": "MerchantProductOfferStorageExtension module",
             "time": "2021-07-07T15:14:17+00:00"
+        },
+        {
+            "name": "spryker/merchant-product-offers-rest-api",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/merchant-product-offers-rest-api.git",
+                "reference": "c59807e35c7a6107d8870cfc76b74f5ce89e7151"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/merchant-product-offers-rest-api/zipball/c59807e35c7a6107d8870cfc76b74f5ce89e7151",
+                "reference": "c59807e35c7a6107d8870cfc76b74f5ce89e7151",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/carts-rest-api-extension": "^1.5.0",
+                "spryker/glue-application": "^1.0.0",
+                "spryker/glue-application-extension": "^1.0.0",
+                "spryker/kernel": "^3.33.0",
+                "spryker/merchant-product-offer-storage": "^1.0.0",
+                "spryker/quote-requests-rest-api-extension": "^1.0.0",
+                "spryker/symfony": "^3.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "MerchantProductOffersRestApi module",
+            "time": "2021-08-23T13:21:20+00:00"
         },
         {
             "name": "spryker/merchant-product-search",

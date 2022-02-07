@@ -199,6 +199,10 @@ use Spryker\Glue\StoresRestApi\Plugin\StoresResourceRoutePlugin;
 use Spryker\Glue\UpSellingProductsRestApi\Plugin\GlueApplication\CartUpSellingProductsResourceRoutePlugin;
 use Spryker\Glue\UpSellingProductsRestApi\Plugin\GlueApplication\GuestCartUpSellingProductsResourceRoutePlugin;
 use Spryker\Glue\UrlsRestApi\Plugin\GlueApplication\UrlResolverResourceRoutePlugin;
+use Spryker\Glue\MerchantProductOffersRestApi\MerchantProductOffersRestApiConfig;
+use Spryker\Glue\MerchantProductOffersRestApi\Plugin\GlueApplication\ConcreteProductsProductOffersResourceRoutePlugin;
+use Spryker\Glue\MerchantProductOffersRestApi\Plugin\GlueApplication\ProductOffersByProductConcreteSkuResourceRelationshipPlugin;
+use Spryker\Glue\MerchantProductOffersRestApi\Plugin\GlueApplication\ProductOffersResourceRoutePlugin;
 
 class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependencyProvider
 {
@@ -283,6 +287,8 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
             new MyAvailabilityNotificationsResourceRoutePlugin(),
             new MerchantsResourceRoutePlugin(),
             new MerchantAddressesResourceRoutePlugin(),
+            new ProductOffersResourceRoutePlugin(),
+            new ConcreteProductsProductOffersResourceRoutePlugin(),
         ];
     }
 
@@ -710,6 +716,14 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
         );
         $resourceRelationshipCollection->addRelationship(
             CartsRestApiConfig::RESOURCE_GUEST_CARTS_ITEMS,
+            new MerchantByMerchantReferenceResourceRelationshipPlugin()
+        );
+        $resourceRelationshipCollection->addRelationship(
+            ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
+            new ProductOffersByProductConcreteSkuResourceRelationshipPlugin()
+        );
+        $resourceRelationshipCollection->addRelationship(
+            MerchantProductOffersRestApiConfig::RESOURCE_PRODUCT_OFFERS,
             new MerchantByMerchantReferenceResourceRelationshipPlugin()
         );
 
