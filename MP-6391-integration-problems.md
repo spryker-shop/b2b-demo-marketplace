@@ -89,7 +89,7 @@ If `spy_product_abstract_storage.merchant_reference` is null for all rows, run `
 
 Verification: not `spy_glossary table`, but `spy_glossary_key` and `spy_glossary_translation` tables
 
-3 ) Verification: merchant doesn't appear on product page and in cart
+3 ) Twig frontend changes are missing, see https://github.com/spryker/b2b-demo-shop-internal/commit/5a77aacb469a117b2b46cae948ae7c6f1ebe88ac
 
 ##Glue API
 
