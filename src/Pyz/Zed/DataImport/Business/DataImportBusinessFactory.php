@@ -49,6 +49,7 @@ use Pyz\Zed\DataImport\Business\Model\Glossary\GlossaryWriterStep;
 use Pyz\Zed\DataImport\Business\Model\Locale\AddLocalesStep;
 use Pyz\Zed\DataImport\Business\Model\Locale\LocaleNameToIdLocaleStep;
 use Pyz\Zed\DataImport\Business\Model\Locale\Repository\LocaleRepository;
+use Pyz\Zed\DataImport\Business\Model\MerchantUser\MerchantUserWriterStep;
 use Pyz\Zed\DataImport\Business\Model\Navigation\NavigationKeyToIdNavigationStep;
 use Pyz\Zed\DataImport\Business\Model\Navigation\NavigationWriterStep;
 use Pyz\Zed\DataImport\Business\Model\NavigationNode\NavigationNodeValidityDatesStep;
@@ -116,6 +117,7 @@ use Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterCollection;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface;
 use Spryker\Zed\Discount\DiscountConfig;
+use Spryker\Zed\MerchantUser\Business\MerchantUserFacadeInterface;
 use Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface;
 use Spryker\Zed\Stock\Business\StockFacadeInterface;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
@@ -208,6 +210,8 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
                 return $this->createNavigationImporter($dataImportConfigurationActionTransfer);
             case DataImportConfig::IMPORT_TYPE_NAVIGATION_NODE:
                 return $this->createNavigationNodeImporter($dataImportConfigurationActionTransfer);
+            case DataImportConfig::IMPORT_TYPE_MERCHANT_USER:
+                return $this->createMerchantUserImporter($dataImportConfigurationActionTransfer);
             default:
                 return null;
         }
@@ -1061,7 +1065,7 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
      */
     public function createAddLocalesStep(): DataImportStepInterface
     {
-        return new AddLocalesStep($this->getStore());
+        return new AddLocalesStep($this->getDataImportStoreFacade());
     }
 
     /**
@@ -1758,5 +1762,35 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
     public function createCombinedProductLocalizedAttributesExtractorStep(array $defaultAttributes = [])
     {
         return new CombinedProductLocalizedAttributesExtractorStep($defaultAttributes);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DataImportConfigurationActionTransfer $dataImportConfigurationActionTransfer
+     *
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
+     */
+    public function createMerchantUserImporter(
+        DataImportConfigurationActionTransfer $dataImportConfigurationActionTransfer
+    ): DataImporterInterface {
+        $dataImporter = $this->getCsvDataImporterFromConfig(
+            $this->getConfig()->buildImporterConfigurationByDataImportConfigAction($dataImportConfigurationActionTransfer)
+        );
+
+        $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
+        $dataSetStepBroker->addStep(new MerchantUserWriterStep(
+            $this->getMerchantUserFacade()
+        ));
+
+        $dataImporter->addDataSetStepBroker($dataSetStepBroker);
+
+        return $dataImporter;
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantUser\Business\MerchantUserFacadeInterface
+     */
+    public function getMerchantUserFacade(): MerchantUserFacadeInterface
+    {
+        return $this->getProvidedDependency(DataImportDependencyProvider::FACADE_MERCHANT_USER);
     }
 }

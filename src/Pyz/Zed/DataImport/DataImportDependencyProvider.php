@@ -41,6 +41,8 @@ use Spryker\Zed\FileManagerDataImport\Communication\Plugin\FileManagerDataImport
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantDataImport\Communication\Plugin\MerchantDataImportPlugin;
 use Spryker\Zed\MerchantDataImport\Communication\Plugin\MerchantStoreDataImportPlugin;
+use Spryker\Zed\MerchantProfileDataImport\Communication\Plugin\MerchantProfileAddressDataImportPlugin;
+use Spryker\Zed\MerchantProfileDataImport\Communication\Plugin\MerchantProfileDataImportPlugin;
 use Spryker\Zed\MerchantRelationshipDataImport\Communication\Plugin\MerchantRelationshipDataImportPlugin;
 use Spryker\Zed\MerchantRelationshipProductListDataImport\Communication\Plugin\MerchantRelationshipProductListDataImportPlugin;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdDataImport\Communication\Plugin\DataImport\MerchantRelationshipSalesOrderThresholdDataImportPlugin;
@@ -93,6 +95,7 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
     public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
     public const FACADE_STOCK = 'FACADE_STOCK';
     public const FACADE_STORE = 'FACADE_STORE';
+    public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -112,6 +115,7 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
         $container = $this->addPriceProductFacade($container);
         $container = $this->addStockFacade($container);
         $container = $this->addStoreFacade($container);
+        $container = $this->addMerchantUserFacade($container);
 
         return $container;
     }
@@ -243,6 +247,20 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantUserFacade(Container $container)
+    {
+        $container[static::FACADE_MERCHANT_USER] = function (Container $container) {
+            return $container->getLocator()->merchantUser()->facade();
+        };
+
+        return $container;
+    }
+
+    /**
      * @return array
      */
     protected function getDataImporterPlugins(): array
@@ -319,6 +337,9 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
             new CmsSlotBlockDataImportPlugin(),
             new ContentNavigationDataImportPlugin(),
             new CategoryStoreDataImportPlugin(),
+
+            new MerchantProfileDataImportPlugin(),
+            new MerchantProfileAddressDataImportPlugin(),
         ];
     }
 

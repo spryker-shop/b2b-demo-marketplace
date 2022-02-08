@@ -27,6 +27,8 @@ use Spryker\Zed\ContentStorage\Communication\Plugin\Synchronization\ContentStora
 use Spryker\Zed\CustomerAccessStorage\Communication\Plugin\Synchronization\CustomerAccessSynchronizationDataBulkPlugin;
 use Spryker\Zed\FileManagerStorage\Communication\Plugin\Synchronization\FileSynchronizationDataBulkPlugin;
 use Spryker\Zed\GlossaryStorage\Communication\Plugin\Synchronization\GlossarySynchronizationDataRepositoryPlugin;
+use Spryker\Zed\MerchantSearch\Communication\Plugin\Synchronization\MerchantSynchronizationDataBulkRepositoryPlugin;
+use Spryker\Zed\MerchantStorage\Communication\Plugin\Synchronization\MerchantSynchronizationDataPlugin;
 use Spryker\Zed\NavigationStorage\Communication\Plugin\Synchronization\NavigationSynchronizationDataPlugin;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plugin\Synchronization\PriceProductAbstractMerchantRelationSynchronizationDataBulkPlugin;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plugin\Synchronization\PriceProductConcreteMerchantRelationSynchronizationDataBulkPlugin;
@@ -138,6 +140,8 @@ class SynchronizationDependencyProvider extends SprykerSynchronizationDependency
             new ProductCategoryFilterSynchronizationDataPlugin(),
             new CmsBlockCategorySynchronizationDataPlugin(),
             new CmsBlockProductSynchronizationDataPlugin(),
+            new MerchantSynchronizationDataPlugin(),
+            new MerchantSynchronizationDataBulkRepositoryPlugin(),
         ];
     }
 
