@@ -46,6 +46,10 @@ use Spryker\Zed\MerchantSearch\Communication\Plugin\Publisher\Merchant\MerchantD
 use Spryker\Zed\MerchantSearch\Communication\Plugin\Publisher\Merchant\MerchantWritePublisherPlugin;
 use Spryker\Zed\MerchantStorage\Communication\Plugin\Publisher\Merchant\MerchantStoragePublisherPlugin;
 use Spryker\Zed\MerchantStorage\Communication\Plugin\Publisher\MerchantPublisherTriggerPlugin;
+use Spryker\Zed\MerchantProductSearch\Communication\Plugin\Publisher\Merchant\MerchantProductSearchWritePublisherPlugin as MerchantMerchantProductSearchWritePublisherPlugin;
+use Spryker\Zed\MerchantProductSearch\Communication\Plugin\Publisher\MerchantProduct\MerchantProductSearchWritePublisherPlugin;
+use Spryker\Zed\MerchantProductStorage\Communication\Plugin\Publisher\Merchant\MerchantUpdatePublisherPlugin;
+use Spryker\Zed\MerchantProductStorage\Communication\Plugin\Publisher\MerchantProduct\MerchantProductWritePublisherPlugin;
 use Spryker\Zed\ProductBundleStorage\Communication\Plugin\Publisher\ProductBundle\ProductBundlePublishWritePublisherPlugin;
 use Spryker\Zed\ProductBundleStorage\Communication\Plugin\Publisher\ProductBundle\ProductBundleWritePublisherPlugin;
 use Spryker\Zed\ProductBundleStorage\Communication\Plugin\Publisher\ProductBundlePublisherTriggerPlugin;
@@ -104,6 +108,8 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
             $this->getProductCategoryStoragePlugins(),
             $this->getMerchantStoragePlugins(),
             $this->getMerchantSearchPlugins(),
+            $this->getMerchantProductPlugins(),
+            $this->getMerchantProductSearchPlugins()
             $this->getMerchantOpeningHoursStoragePlugins(),
         );
     }
@@ -308,6 +314,28 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
             new MerchantOpeningHoursWritePublisherPlugin(),
             new MerchantOpeningHoursWeekdayScheduleWritePublisherPlugin(),
             new MerchantOpeningHoursDateScheduleWritePublisherPlugin(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface[]
+     */
+    protected function getMerchantProductPlugins(): array
+    {
+        return [
+            new MerchantProductWritePublisherPlugin(),
+            new MerchantUpdatePublisherPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface>
+     */
+    protected function getMerchantProductSearchPlugins(): array
+    {
+        return [
+            new MerchantMerchantProductSearchWritePublisherPlugin(),
+            new MerchantProductSearchWritePublisherPlugin(),
         ];
     }
 }

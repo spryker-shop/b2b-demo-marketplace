@@ -8,6 +8,7 @@
 namespace Pyz\Zed\Product;
 
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\MerchantProduct\Communication\Plugin\Product\MerchantProductProductAbstractPostCreatePlugin;
 use Spryker\Zed\PriceProduct\Communication\Plugin\ProductAbstract\PriceProductAbstractAfterCreatePlugin;
 use Spryker\Zed\PriceProduct\Communication\Plugin\ProductAbstract\PriceProductAbstractAfterUpdatePlugin;
 use Spryker\Zed\PriceProduct\Communication\Plugin\ProductAbstract\PriceProductAbstractReadPlugin;
@@ -44,6 +45,16 @@ use Spryker\Zed\TaxProductConnector\Communication\Plugin\TaxSetProductAbstractRe
 
 class ProductDependencyProvider extends SprykerProductDependencyProvider
 {
+    /**
+     * @return \Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractPostCreatePluginInterface[]
+     */
+    protected function getProductAbstractPostCreatePlugins(): array
+    {
+        return [
+            new MerchantProductProductAbstractPostCreatePlugin(),
+        ];
+    }
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *

@@ -20,7 +20,9 @@
 7 ) There is no `getMerchantUserFacade()` method in `src/Pyz/Zed/DataImport/Business/DataImportBusinessFactory.php`
 
 ###Install feature front end
-2 ) Verification: not `spy_glossary table`, but `spy_glossary_key` and `spy_glossary_translation` tables
+2 ) Wrong filename, should be `data/import/common/common/glossary.csv`
+
+Verification: not `spy_glossary table`, but `spy_glossary_key` and `spy_glossary_translation` tables
 
 3 ) Verification can't be done, because `MerchantProduct` is not integrated yet
 
@@ -77,6 +79,8 @@ Verification: `config/Zed/navigation.xml` needs to be updated to see a new menu 
 
 Filename `src/Pyz/Client/ProductStorage/ProductStorageDependencyProvider.php` is wrong and should be replaced with `src/Pyz/Zed/ProductStorage/ProductStorageDependencyProvider.php`
 
+If `spy_product_abstract_storage.merchant_reference` is null for all rows, run `cache:class-resolver:build` and then trigger storage update
+
 ##Install feature frontend
 
 1 ) Class `SprykerShop\Yves\MerchantProductWidget\Widget\ProductSoldByMerchantWidget` doesn't exist, and the `SprykerShop\Yves\MerchantWidget\Widget\SoldByMerchantWidget` is already added.
@@ -84,6 +88,24 @@ Filename `src/Pyz/Client/ProductStorage/ProductStorageDependencyProvider.php` is
 2 ) Typo: `src/data/import/common/common/glossary.csv` should be `data/import/common/common/glossary.csv`
 
 Verification: not `spy_glossary table`, but `spy_glossary_key` and `spy_glossary_translation` tables
+
+3 ) Twig frontend changes are missing, see https://github.com/spryker/b2b-demo-shop-internal/commit/5a77aacb469a117b2b46cae948ae7c6f1ebe88ac
+
+##Glue API
+
+1 ) extra space after package name
+
+##Marketplace Product + Cart
+
+2 ) wrong filename, should be `src/Pyz/Zed/Cart/CartDependencyProvider.php`
+
+Verification requires writing additional code for direct CartFacade call
+
+##Other
+
+`Marketplace Product + Marketplace Product Offer feature integration` guide should be moved to (or duplicated in) Marketplace Product Offer guide
+
+Same with `Marketplace Product + Inventory Management feature integration`, `Merchant Portal - Marketplace Product feature integration` and `Merchant Portal - Marketplace Product + Tax feature integration`
 
 #MP-6404 Persistence ACL
 
