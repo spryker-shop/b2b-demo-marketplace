@@ -131,6 +131,10 @@ Feature core: Verification can't be done before prices integration.
 
 Feature front end: wrong filename, should be `src/Pyz/Yves/CartPage/CartPageDependencyProvider.php`
 
+##Marketplace Product Offer + Checkout
+
+1 ) Install is already done.
+
 #MP-6404 Persistence ACL
 
 1 ) typo: extra space, should be `spryker-feature/acl:"202108.0"`, not `spryker-feature/acl: "202108.0"`
