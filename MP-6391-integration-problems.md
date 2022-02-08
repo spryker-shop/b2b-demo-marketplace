@@ -149,9 +149,13 @@ Some file updates needed for MP to work are missing, see https://github.com/spry
 3. Outdated demodata for merchant-opening-hours-date-schedule (Dates are in the past, schedule not diplayed on yves, year should be updated).
 4. Missing glossary translations for date schedule, should be copy-pasted from latest suite-nonsplit.
 -------------------------------------------------------------
-#MP-6405 Merchant Opening Hours feature
+#MP-6405 Merchant Category
 ##feature integration issues
 1. Specific modules mentioned in composer require step, instead of feature.
 2. Zed should be replaced by `Backoffice`.
 3. Typo in merchant_category.csv example.
+4. CategoryWritePublisherPlugin missing in the plugins table.
+#glue integration issues
+1. 0.x version mentioned in the composer require step, instead of stable one.
+2. In the example `http://glue.mysprykershop.com/merchants?categoryKeys[]={{some-category-key}}` - parameter categoryKeys should be category-keys.
 -------------------------------------------------------------
