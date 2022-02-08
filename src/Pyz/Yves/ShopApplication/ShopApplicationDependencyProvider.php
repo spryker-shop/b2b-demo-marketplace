@@ -58,6 +58,7 @@ use SprykerShop\Yves\DiscountPromotionWidget\Plugin\ShopApplication\CartDiscount
 use SprykerShop\Yves\DiscountPromotionWidget\Widget\CartDiscountPromotionProductListWidget;
 use SprykerShop\Yves\LanguageSwitcherWidget\Widget\LanguageSwitcherWidget;
 use SprykerShop\Yves\MerchantOpeningHoursWidget\Widget\MerchantOpeningHoursWidget;
+use SprykerShop\Yves\MerchantProductWidget\Widget\MerchantProductWidget;
 use SprykerShop\Yves\MerchantWidget\Widget\SoldByMerchantWidget;
 use SprykerShop\Yves\MoneyWidget\Widget\CurrencyIsoCodeWidget;
 use SprykerShop\Yves\MultiCartWidget\Widget\AddToMultiCartWidget;
@@ -265,6 +266,7 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             ProductSetIdsWidget::class,
             CartAddProductAsSeparateItemWidget::class,
             SoldByMerchantWidget::class,
+            MerchantProductWidget::class,
             MerchantOpeningHoursWidget::class,
         ];
     }
