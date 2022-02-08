@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "82f98199c710e2ed1c5603b1c51f445e",
+    "content-hash": "01bc89b1d13128a2cc5059b6424facc8",
     "packages": [
         {
             "name": "brick/math",
@@ -4226,6 +4226,48 @@
             ],
             "description": "Merchant [feature]",
             "time": "2021-08-30T07:40:38+00:00"
+        },
+        {
+            "name": "spryker-feature/merchant-category",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-feature/merchant-category.git",
+                "reference": "c00c9be548be76be0fe2eecde5f34a2c8c6fb538"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-feature/merchant-category/zipball/c00c9be548be76be0fe2eecde5f34a2c8c6fb538",
+                "reference": "c00c9be548be76be0fe2eecde5f34a2c8c6fb538",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/category": "^5.2.0",
+                "spryker/merchant-category": "^1.0.0",
+                "spryker/merchant-category-data-import": "^0.3.0",
+                "spryker/merchant-category-search": "^1.0.0"
+            },
+            "suggest": {
+                "spryker-feature/category-management": "Recommended feature dependency.",
+                "spryker-feature/marketplace-merchant": "Recommended feature dependency."
+            },
+            "default-branch": true,
+            "type": "metapackage",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "202108.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Merchant Category [feature]",
+            "support": {
+                "source": "https://github.com/spryker-feature/merchant-category/tree/202108.0"
+            },
+            "time": "2021-08-30T07:33:36+00:00"
         },
         {
             "name": "spryker-feature/merchant-contracts",
@@ -25816,6 +25858,202 @@
             ],
             "description": "Merchant module",
             "time": "2022-01-26T13:14:24+00:00"
+        },
+        {
+            "name": "spryker/merchant-categories-rest-api",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/merchant-categories-rest-api.git",
+                "reference": "9e7dbe1e510c3f42c4dd1da31949bcc833d4a6de"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/merchant-categories-rest-api/zipball/9e7dbe1e510c3f42c4dd1da31949bcc833d4a6de",
+                "reference": "9e7dbe1e510c3f42c4dd1da31949bcc833d4a6de",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/glue-application": "^1.9.0",
+                "spryker/kernel": "^3.33.0",
+                "spryker/merchant-category": "^1.0.0",
+                "spryker/merchants-rest-api-extension": "^1.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "MerchantCategoriesRestApi module",
+            "support": {
+                "source": "https://github.com/spryker/merchant-categories-rest-api/tree/1.0.0"
+            },
+            "time": "2021-08-16T16:27:47+00:00"
+        },
+        {
+            "name": "spryker/merchant-category",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/merchant-category.git",
+                "reference": "ebfdee64f1888a8a56072c6d746abeb8b1f6e8c4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/merchant-category/zipball/ebfdee64f1888a8a56072c6d746abeb8b1f6e8c4",
+                "reference": "ebfdee64f1888a8a56072c6d746abeb8b1f6e8c4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/category": "^4.19.0 || ^5.0.0",
+                "spryker/category-extension": "^1.0.0",
+                "spryker/event": "^2.0.0",
+                "spryker/event-behavior": "^1.0.0",
+                "spryker/kernel": "^3.33.0",
+                "spryker/merchant": "^3.1.0",
+                "spryker/merchant-extension": "^1.1.0",
+                "spryker/propel-orm": "^1.0.0",
+                "spryker/publisher-extension": "^1.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/",
+                    "SprykerTest\\Shared\\MerchantCategory\\Helper\\": "tests/SprykerTest/Shared/MerchantCategory/_support/Helper/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "MerchantCategory module",
+            "support": {
+                "source": "https://github.com/spryker/merchant-category/tree/1.0.0"
+            },
+            "time": "2021-07-07T15:14:17+00:00"
+        },
+        {
+            "name": "spryker/merchant-category-data-import",
+            "version": "0.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/merchant-category-data-import.git",
+                "reference": "9a2d83aa404bb2c46c6dad9e2cd4584d7d037ad2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/merchant-category-data-import/zipball/9a2d83aa404bb2c46c6dad9e2cd4584d7d037ad2",
+                "reference": "9a2d83aa404bb2c46c6dad9e2cd4584d7d037ad2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/category": "^4.0.0 || ^5.0.0",
+                "spryker/data-import": "^1.11.0",
+                "spryker/kernel": "^3.33.0",
+                "spryker/merchant": "^3.0.0",
+                "spryker/merchant-category": "^1.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "MerchantCategoryDataImport module",
+            "support": {
+                "source": "https://github.com/spryker/merchant-category-data-import/tree/0.3.0"
+            },
+            "time": "2021-08-16T16:27:47+00:00"
+        },
+        {
+            "name": "spryker/merchant-category-search",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/merchant-category-search.git",
+                "reference": "679423b39b9a43a029c58bad3010ea74c839805a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/merchant-category-search/zipball/679423b39b9a43a029c58bad3010ea74c839805a",
+                "reference": "679423b39b9a43a029c58bad3010ea74c839805a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/kernel": "^3.33.0",
+                "spryker/merchant-category": "^1.0.0",
+                "spryker/merchant-search-extension": "^1.0.0",
+                "spryker/search-extension": "^1.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/elastica": "^6.0.0",
+                "spryker/testify": "*"
+            },
+            "suggest": {
+                "spryker/elastica": "If you want to use Elastica plugins."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "MerchantCategorySearch module",
+            "support": {
+                "source": "https://github.com/spryker/merchant-category-search/tree/1.0.0"
+            },
+            "time": "2021-08-16T16:27:47+00:00"
         },
         {
             "name": "spryker/merchant-data-import",
@@ -55514,6 +55752,12 @@
             "alias_normalized": "202204.0"
         },
         {
+            "package": "spryker-feature/merchant-category",
+            "version": "9999999-dev",
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
+        },
+        {
             "package": "spryker-feature/merchant-opening-hours",
             "version": "9999999-dev",
             "alias": "202204.0",
@@ -55530,6 +55774,7 @@
     "stability-flags": {
         "spryker-feature/marketplace-merchant": 20,
         "spryker-feature/marketplace-product": 20,
+        "spryker-feature/merchant-category": 20,
         "spryker-feature/merchant-opening-hours": 20,
         "spryker-sdk/integrator": 20,
         "spryker/docker-chromedriver": 20
