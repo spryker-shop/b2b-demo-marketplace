@@ -163,6 +163,22 @@
                 {% endwidget %}
             {% endif %}
 
+            {% if merchantProductOfferWidget %}
+                {% widget merchantProductOfferWidget with
+                    {
+                        embed: {
+                            hasMerchantProduct: merchantProductWidget and merchantProductWidget.merchantProductView is defined and merchantProductWidget.merchantProductView,
+                            productOffersCount: merchantProductOfferWidget.productOffers | length
+                        }
+                    }
+                %}
+                    {% block content %}
+                        {% set isRadioButtonVisible = embed.productOffersCount + embed.hasMerchantProduct > 1 %}
+                        {{ parent() }}
+                    {% endblock %}
+                {% endwidget %}
+            {% endif %}
+
             {% if not data.product.available %}
                 <p class="text-alert">{{ "product.detail.out_of_stock" | trans }}</p>
             {% endif %}
