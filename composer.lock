@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fe6269b682a56960a1def0a332562853",
+    "content-hash": "d5f36a994a92e38153778ede8c4178be",
     "packages": [
         {
             "name": "brick/math",
@@ -4249,6 +4249,53 @@
             ],
             "description": "Marketplace Product Offer [feature]",
             "time": "2022-01-26T15:57:36+00:00"
+        },
+        {
+            "name": "spryker-feature/marketplace-product-offer-prices",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-feature/marketplace-product-offer-prices.git",
+                "reference": "60c50672e9ed79f937d66e23ee1619b6b4abf32d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-feature/marketplace-product-offer-prices/zipball/60c50672e9ed79f937d66e23ee1619b6b4abf32d",
+                "reference": "60c50672e9ed79f937d66e23ee1619b6b4abf32d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker-shop/price-product-volume-widget": "^1.6.0",
+                "spryker-shop/price-widget": "^1.4.0",
+                "spryker/price": "^5.6.0",
+                "spryker/price-product": "^4.31.0",
+                "spryker/price-product-data-import": "^0.1.0",
+                "spryker/price-product-offer": "^1.1.0",
+                "spryker/price-product-offer-data-import": "^0.7.0",
+                "spryker/price-product-offer-gui": "^1.0.0",
+                "spryker/price-product-offer-storage": "^1.0.0",
+                "spryker/price-product-offer-volume": "^1.0.0",
+                "spryker/price-product-offer-volume-gui": "^1.0.0",
+                "spryker/price-product-storage": "^4.7.0",
+                "spryker/price-product-volume": "^3.3.0"
+            },
+            "suggest": {
+                "spryker-feature/marketplace-product-offer": "Recommended feature dependency.",
+                "spryker-feature/prices": "Recommended feature dependency."
+            },
+            "type": "metapackage",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "202108.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Marketplace Product Offer Prices [feature]",
+            "time": "2021-08-30T07:34:33+00:00"
         },
         {
             "name": "spryker-feature/measurement-units",
@@ -30770,6 +30817,382 @@
             "time": "2021-09-30T13:33:17+00:00"
         },
         {
+            "name": "spryker/price-product-offer",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/price-product-offer.git",
+                "reference": "0bac8775db21fbe69b1d778b544c1b0c2fe4bd7f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/price-product-offer/zipball/0bac8775db21fbe69b1d778b544c1b0c2fe4bd7f",
+                "reference": "0bac8775db21fbe69b1d778b544c1b0c2fe4bd7f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/currency": "^3.0.0",
+                "spryker/kernel": "^3.33.0",
+                "spryker/price-product": "^4.16.0",
+                "spryker/price-product-extension": "^1.3.0",
+                "spryker/price-product-offer-extension": "^1.0.0",
+                "spryker/product-offer": "^1.0.0",
+                "spryker/product-offer-extension": "^1.0.0",
+                "spryker/propel-orm": "^1.0.0",
+                "spryker/store": "^1.0.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/transfer": "^3.25.0",
+                "spryker/translator": "^1.1.0",
+                "spryker/wishlist-extension": "^1.2.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/",
+                    "SprykerTest\\Shared\\PriceProductOffer\\Helper\\": "tests/SprykerTest/Shared/PriceProductOffer/_support/Helper/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "PriceProductOffer module",
+            "time": "2021-08-19T10:54:56+00:00"
+        },
+        {
+            "name": "spryker/price-product-offer-data-import",
+            "version": "0.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/price-product-offer-data-import.git",
+                "reference": "33970e8bd33a4dda6dd213eba70d3bdb96ebcc92"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/price-product-offer-data-import/zipball/33970e8bd33a4dda6dd213eba70d3bdb96ebcc92",
+                "reference": "33970e8bd33a4dda6dd213eba70d3bdb96ebcc92",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/currency": "^3.0.0",
+                "spryker/data-import": "^1.0.0",
+                "spryker/kernel": "^3.33.0",
+                "spryker/price-product": "^4.9.0",
+                "spryker/price-product-offer": "^1.0.0",
+                "spryker/product": "^6.0.0",
+                "spryker/product-offer": "^1.0.0",
+                "spryker/store": "^1.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "PriceProductOfferDataImport module",
+            "time": "2021-08-16T16:27:47+00:00"
+        },
+        {
+            "name": "spryker/price-product-offer-extension",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/price-product-offer-extension.git",
+                "reference": "83fb8da2b6988650c6992788599ae33505b68e44"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/price-product-offer-extension/zipball/83fb8da2b6988650c6992788599ae33505b68e44",
+                "reference": "83fb8da2b6988650c6992788599ae33505b68e44",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "PriceProductOfferExtension module",
+            "time": "2021-07-12T07:32:25+00:00"
+        },
+        {
+            "name": "spryker/price-product-offer-gui",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/price-product-offer-gui.git",
+                "reference": "2de0e101f235ae072a613efa0fcaf1e5f0f9d0f1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/price-product-offer-gui/zipball/2de0e101f235ae072a613efa0fcaf1e5f0f9d0f1",
+                "reference": "2de0e101f235ae072a613efa0fcaf1e5f0f9d0f1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/kernel": "^3.33.0",
+                "spryker/price": "^5.6.0",
+                "spryker/price-product": "^4.16.0",
+                "spryker/product-offer-gui-extension": "^1.0.0",
+                "spryker/util-encoding": "^2.1.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "PriceProductOfferGui module",
+            "time": "2021-08-16T16:27:47+00:00"
+        },
+        {
+            "name": "spryker/price-product-offer-storage",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/price-product-offer-storage.git",
+                "reference": "359a9a385b8234644714b0eddb45c2fdc5569390"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/price-product-offer-storage/zipball/359a9a385b8234644714b0eddb45c2fdc5569390",
+                "reference": "359a9a385b8234644714b0eddb45c2fdc5569390",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/currency": "^3.1.0",
+                "spryker/event": "^2.0.0",
+                "spryker/event-behavior": "^1.14.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/merchant-product-offer-storage-extension": "^1.0.0",
+                "spryker/price-product": "^4.9.0",
+                "spryker/price-product-offer": "^1.0.0",
+                "spryker/price-product-offer-storage-extension": "^1.0.0",
+                "spryker/price-product-storage": "^4.5.1",
+                "spryker/price-product-storage-extension": "^1.2.0",
+                "spryker/product": "^6.0.0",
+                "spryker/product-offer": "^1.0.0",
+                "spryker/propel-orm": "^1.5.0",
+                "spryker/publisher-extension": "^1.0.0",
+                "spryker/storage": "^3.4.0",
+                "spryker/store": "^1.10.0",
+                "spryker/synchronization": "^1.0.0",
+                "spryker/synchronization-behavior": "^1.0.0",
+                "spryker/synchronization-extension": "^1.0.0",
+                "spryker/transfer": "^3.25.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/merchant": "*",
+                "spryker/propel": "*",
+                "spryker/queue": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "PriceProductOfferStorage module",
+            "time": "2021-08-16T16:27:47+00:00"
+        },
+        {
+            "name": "spryker/price-product-offer-storage-extension",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/price-product-offer-storage-extension.git",
+                "reference": "4f4689d1ec53e610a0f46c0f0006591dac951f98"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/price-product-offer-storage-extension/zipball/4f4689d1ec53e610a0f46c0f0006591dac951f98",
+                "reference": "4f4689d1ec53e610a0f46c0f0006591dac951f98",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "PriceProductOfferStorageExtension module",
+            "time": "2021-07-07T15:14:17+00:00"
+        },
+        {
+            "name": "spryker/price-product-offer-volume",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/price-product-offer-volume.git",
+                "reference": "31b9507c2ad078ffd0c565343d7c1d851b841014"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/price-product-offer-volume/zipball/31b9507c2ad078ffd0c565343d7c1d851b841014",
+                "reference": "31b9507c2ad078ffd0c565343d7c1d851b841014",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4",
+                "spryker/kernel": "^3.30.0",
+                "spryker/price-product-extension": "^1.3.0",
+                "spryker/price-product-offer-extension": "^1.0.0",
+                "spryker/price-product-offer-storage-extension": "^1.0.0",
+                "spryker/price-product-volume": "^3.2.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/transfer": "^3.25.0",
+                "spryker/util-encoding": "^2.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/price-product": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "PriceProductOfferVolume module",
+            "time": "2021-12-01T17:41:51+00:00"
+        },
+        {
+            "name": "spryker/price-product-offer-volume-gui",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/price-product-offer-volume-gui.git",
+                "reference": "612b7f1387d42e3b00a6f3b46bf9f2fdc9f722ec"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/price-product-offer-volume-gui/zipball/612b7f1387d42e3b00a6f3b46bf9f2fdc9f722ec",
+                "reference": "612b7f1387d42e3b00a6f3b46bf9f2fdc9f722ec",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/kernel": "^3.33.0",
+                "spryker/product-offer": "^1.0.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/transfer": "^3.25.0",
+                "spryker/util-encoding": "^2.1.0",
+                "spryker/util-text": "^1.3.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "PriceProductOfferVolumeGui module",
+            "time": "2021-08-16T16:27:47+00:00"
+        },
+        {
             "name": "spryker/price-product-schedule",
             "version": "2.4.0",
             "source": {
@@ -56069,6 +56492,12 @@
             "package": "spryker-feature/marketplace-product-offer"
         },
         {
+            "alias": "202204.0",
+            "alias_normalized": "202204.0",
+            "version": "9999999-dev",
+            "package": "spryker-feature/marketplace-product-offer-prices"
+        },
+        {
             "alias": "202108.0",
             "alias_normalized": "202108.0",
             "version": "9999999-dev",
@@ -56080,6 +56509,7 @@
         "spryker-feature/marketplace-merchant": 20,
         "spryker-feature/marketplace-product": 20,
         "spryker-feature/marketplace-product-offer": 20,
+        "spryker-feature/marketplace-product-offer-prices": 20,
         "spryker-sdk/integrator": 20,
         "spryker/docker-chromedriver": 20
     },
