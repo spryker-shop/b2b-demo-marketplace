@@ -107,6 +107,8 @@ use Spryker\Glue\GlueApplication\Plugin\Rest\SetStoreCurrentLocaleBeforeActionPl
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface;
 use Spryker\Glue\HealthCheck\Plugin\HealthCheckResourceRoutePlugin;
 use Spryker\Glue\Http\Plugin\Application\HttpApplicationPlugin;
+use Spryker\Glue\MerchantOpeningHoursRestApi\Plugin\GlueApplication\MerchantOpeningHoursByMerchantReferenceResourceRelationshipPlugin;
+use Spryker\Glue\MerchantOpeningHoursRestApi\Plugin\GlueApplication\MerchantOpeningHoursResourceRoutePlugin;
 use Spryker\Glue\MerchantsRestApi\MerchantsRestApiConfig;
 use Spryker\Glue\MerchantsRestApi\Plugin\GlueApplication\MerchantAddressByMerchantReferenceResourceRelationshipPlugin;
 use Spryker\Glue\MerchantsRestApi\Plugin\GlueApplication\MerchantAddressesResourceRoutePlugin;
@@ -283,6 +285,7 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
             new MyAvailabilityNotificationsResourceRoutePlugin(),
             new MerchantsResourceRoutePlugin(),
             new MerchantAddressesResourceRoutePlugin(),
+            new MerchantOpeningHoursResourceRoutePlugin(),
         ];
     }
 
@@ -711,6 +714,11 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
         $resourceRelationshipCollection->addRelationship(
             CartsRestApiConfig::RESOURCE_GUEST_CARTS_ITEMS,
             new MerchantByMerchantReferenceResourceRelationshipPlugin()
+        );
+
+        $resourceRelationshipCollection->addRelationship(
+            MerchantsRestApiConfig::RESOURCE_MERCHANTS,
+            new MerchantOpeningHoursByMerchantReferenceResourceRelationshipPlugin()
         );
 
         return $resourceRelationshipCollection;
