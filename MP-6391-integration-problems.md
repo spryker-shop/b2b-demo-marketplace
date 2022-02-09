@@ -135,6 +135,18 @@ Feature front end: wrong filename, should be `src/Pyz/Yves/CartPage/CartPageDepe
 
 1 ) Install is already done.
 
+#MP-6397 Marketplace Product Offer Prices
+
+6 ) In `src/Pyz/Service/PriceProduct/PriceProductDependencyProvider.php`: second use should be `use Spryker\Service\PriceProductOffer\Plugin\PriceProduct\PriceProductOfferPriceProductFilterPlugin;`
+
+In `src/Pyz/Client/PriceProductOffer/PriceProductOfferDependencyProvider.php`: wrong filename, should be `src/Pyz/Zed/PriceProductOffer/PriceProductOfferDependencyProvider.php`
+
+In `src/Pyz/Client/MerchantProductOfferStorage/MerchantProductOfferStorageDependencyProvider.php` additional use is needed:
+
+`use Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageCollectionSorterPluginInterface;`
+
+Some file changes are missing from guide, see https://github.com/spryker/b2b-demo-shop-internal/commit/54f0472dd10b77c0421369374accbb164ff37a1c
+
 #MP-6404 Persistence ACL
 
 1 ) typo: extra space, should be `spryker-feature/acl:"202108.0"`, not `spryker-feature/acl: "202108.0"`
