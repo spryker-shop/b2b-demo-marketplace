@@ -147,6 +147,10 @@ In `src/Pyz/Client/MerchantProductOfferStorage/MerchantProductOfferStorageDepend
 
 Some file changes are missing from guide, see https://github.com/spryker/b2b-demo-shop-internal/commit/54f0472dd10b77c0421369374accbb164ff37a1c
 
+##Glue API: Marketplace Product Offer Prices
+
+1 ) Old package version (also conflicts with requirements for `spryker/merchant-product-offer-storage`)
+
 #MP-6404 Persistence ACL
 
 1 ) typo: extra space, should be `spryker-feature/acl:"202108.0"`, not `spryker-feature/acl: "202108.0"`
