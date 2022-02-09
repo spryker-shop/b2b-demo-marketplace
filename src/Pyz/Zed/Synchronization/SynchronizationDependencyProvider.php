@@ -34,6 +34,7 @@ use Spryker\Zed\MerchantStorage\Communication\Plugin\Synchronization\MerchantSyn
 use Spryker\Zed\NavigationStorage\Communication\Plugin\Synchronization\NavigationSynchronizationDataPlugin;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plugin\Synchronization\PriceProductAbstractMerchantRelationSynchronizationDataBulkPlugin;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plugin\Synchronization\PriceProductConcreteMerchantRelationSynchronizationDataBulkPlugin;
+use Spryker\Zed\PriceProductOfferStorage\Communication\Plugin\Synchronization\PriceProductOfferSynchronizationDataBulkRepositoryPlugin;
 use Spryker\Zed\PriceProductStorage\Communication\Plugin\Synchronization\PriceProductAbstractSynchronizationDataPlugin;
 use Spryker\Zed\PriceProductStorage\Communication\Plugin\Synchronization\PriceProductConcreteSynchronizationDataPlugin;
 use Spryker\Zed\ProductAlternativeStorage\Communication\Plugin\Synchronization\ProductAlternativeSynchronizationDataBulkPlugin;
@@ -146,6 +147,7 @@ class SynchronizationDependencyProvider extends SprykerSynchronizationDependency
             new MerchantSynchronizationDataBulkRepositoryPlugin(),
             new ProductConcreteProductOffersSynchronizationDataBulkRepositoryPlugin(),
             new ProductOfferSynchronizationDataBulkRepositoryPlugin(),
+            new PriceProductOfferSynchronizationDataBulkRepositoryPlugin(),
         ];
     }
 

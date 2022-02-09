@@ -26,6 +26,7 @@ use Spryker\Shared\Log\LogConstants;
 use Spryker\Shared\MerchantProductOfferStorage\MerchantProductOfferStorageConfig;
 use Spryker\Shared\MerchantSearch\MerchantSearchConfig;
 use Spryker\Shared\MerchantStorage\MerchantStorageConfig;
+use Spryker\Shared\PriceProductOfferStorage\PriceProductOfferStorageConfig;
 use Spryker\Shared\PriceProductStorage\PriceProductStorageConfig;
 use Spryker\Shared\PriceProductStorage\PriceProductStorageConstants;
 use Spryker\Shared\ProductImageStorage\ProductImageStorageConfig;
@@ -103,6 +104,7 @@ class QueueDependencyProvider extends SprykerDependencyProvider
             MerchantStorageConfig::MERCHANT_SYNC_STORAGE_QUEUE => new SynchronizationStorageQueueMessageProcessorPlugin(),
             MerchantSearchConfig::SYNC_SEARCH_MERCHANT => new SynchronizationSearchQueueMessageProcessorPlugin(),
             MerchantProductOfferStorageConfig::MERCHANT_PRODUCT_OFFER_SYNC_STORAGE_QUEUE => new SynchronizationStorageQueueMessageProcessorPlugin(),
+            PriceProductOfferStorageConfig::PRICE_PRODUCT_OFFER_OFFER_SYNC_STORAGE_QUEUE => new SynchronizationStorageQueueMessageProcessorPlugin(),
         ];
     }
 }

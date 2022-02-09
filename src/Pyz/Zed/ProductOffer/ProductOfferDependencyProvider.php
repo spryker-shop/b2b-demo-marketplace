@@ -7,6 +7,9 @@
 
 namespace Pyz\Zed\ProductOffer;
 
+use Spryker\Zed\PriceProductOffer\Communication\Plugin\ProductOffer\PriceProductOfferProductOfferExpanderPlugin;
+use Spryker\Zed\PriceProductOffer\Communication\Plugin\ProductOffer\PriceProductOfferProductOfferPostCreatePlugin;
+use Spryker\Zed\PriceProductOffer\Communication\Plugin\ProductOffer\PriceProductOfferProductOfferPostUpdatePlugin;
 use Spryker\Zed\ProductOffer\ProductOfferDependencyProvider as SprykerProductOfferDependencyProvider;
 use Spryker\Zed\ProductOfferValidity\Communication\Plugin\ProductOffer\ProductOfferValidityProductOfferExpanderPlugin;
 use Spryker\Zed\ProductOfferValidity\Communication\Plugin\ProductOffer\ProductOfferValidityProductOfferPostCreatePlugin;
@@ -21,6 +24,7 @@ class ProductOfferDependencyProvider extends SprykerProductOfferDependencyProvid
     {
         return [
             new ProductOfferValidityProductOfferPostCreatePlugin(),
+            new PriceProductOfferProductOfferPostCreatePlugin(),
         ];
     }
 
@@ -31,6 +35,7 @@ class ProductOfferDependencyProvider extends SprykerProductOfferDependencyProvid
     {
         return [
             new ProductOfferValidityProductOfferPostUpdatePlugin(),
+            new PriceProductOfferProductOfferPostUpdatePlugin(),
         ];
     }
 
@@ -41,6 +46,7 @@ class ProductOfferDependencyProvider extends SprykerProductOfferDependencyProvid
     {
         return [
             new ProductOfferValidityProductOfferExpanderPlugin(),
+            new PriceProductOfferProductOfferExpanderPlugin(),
         ];
     }
 }

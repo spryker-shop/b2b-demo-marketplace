@@ -47,6 +47,7 @@ use Spryker\Zed\MerchantSearch\Communication\Plugin\Publisher\Merchant\MerchantD
 use Spryker\Zed\MerchantSearch\Communication\Plugin\Publisher\Merchant\MerchantWritePublisherPlugin;
 use Spryker\Zed\MerchantStorage\Communication\Plugin\Publisher\Merchant\MerchantStoragePublisherPlugin;
 use Spryker\Zed\MerchantStorage\Communication\Plugin\Publisher\MerchantPublisherTriggerPlugin;
+use Spryker\Zed\PriceProductOfferStorage\Communication\Plugin\Publisher\PriceProductOffer\PriceProductStoreWritePublisherPlugin;
 use Spryker\Zed\ProductBundleStorage\Communication\Plugin\Publisher\ProductBundle\ProductBundlePublishWritePublisherPlugin;
 use Spryker\Zed\ProductBundleStorage\Communication\Plugin\Publisher\ProductBundle\ProductBundleWritePublisherPlugin;
 use Spryker\Zed\ProductBundleStorage\Communication\Plugin\Publisher\ProductBundlePublisherTriggerPlugin;
@@ -106,7 +107,8 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
             $this->getMerchantStoragePlugins(),
             $this->getMerchantSearchPlugins(),
             $this->getMerchantProductPlugins(),
-            $this->getMerchantProductSearchPlugins()
+            $this->getMerchantProductSearchPlugins(),
+            $this->getPriceProductOfferStoragePlugins(),
         );
     }
 
@@ -320,6 +322,16 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
         return [
             new MerchantMerchantProductSearchWritePublisherPlugin(),
             new MerchantProductSearchWritePublisherPlugin(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface[]
+     */
+    protected function getPriceProductOfferStoragePlugins(): array
+    {
+        return [
+            new PriceProductStoreWritePublisherPlugin(),
         ];
     }
 }

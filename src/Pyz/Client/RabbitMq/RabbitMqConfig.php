@@ -27,6 +27,7 @@ use Spryker\Shared\Log\LogConstants;
 use Spryker\Shared\MerchantProductOfferStorage\MerchantProductOfferStorageConfig;
 use Spryker\Shared\MerchantSearch\MerchantSearchConfig;
 use Spryker\Shared\MerchantStorage\MerchantStorageConfig;
+use Spryker\Shared\PriceProductOfferStorage\PriceProductOfferStorageConfig;
 use Spryker\Shared\PriceProductStorage\PriceProductStorageConfig;
 use Spryker\Shared\PriceProductStorage\PriceProductStorageConstants;
 use Spryker\Shared\ProductImageStorage\ProductImageStorageConfig;
@@ -133,6 +134,7 @@ class RabbitMqConfig extends SprykerRabbitMqConfig
             MerchantStorageConfig::MERCHANT_SYNC_STORAGE_QUEUE,
             MerchantSearchConfig::SYNC_SEARCH_MERCHANT,
             MerchantProductOfferStorageConfig::MERCHANT_PRODUCT_OFFER_SYNC_STORAGE_QUEUE,
+            PriceProductOfferStorageConfig::PRICE_PRODUCT_OFFER_OFFER_SYNC_STORAGE_QUEUE,
         ];
     }
 

@@ -32,12 +32,12 @@ class ProductStorageDependencyProvider extends SprykerProductStorageDependencyPr
         $plugins = [
             new ProductViewDiscontinuedOptionsExpanderPlugin(), #ProductDiscontinuedFeature
             new ProductVariantProductViewExpanderPlugin(),
+            new ProductViewProductOfferExpanderPlugin(),
             new ProductViewPriceExpanderPlugin(),
             new ProductViewAvailabilityStorageExpanderPlugin(),
             new ProductDiscontinuedProductAvailabilityExpanderPlugin(), #ProductDiscontinuedFeature
             new ProductViewImageExpanderPlugin(),
             new ProductViewMerchantProductExpanderPlugin(),
-            new ProductViewProductOfferExpanderPlugin(),
         ];
 
         return $plugins;
