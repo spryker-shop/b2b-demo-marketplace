@@ -115,6 +115,14 @@ Same with `Marketplace Product + Inventory Management feature integration`, `Mer
 
 5 ) Import types should be added to full_EU.yml
 
+6 ) Following verification steps are unclear and probably require additional coding:
+
+`Make sure that a default product offer is given when retrieving product concrete data.`
+
+`Make sure that validity data is saved when saving a product offer.`
+
+Offer edit page doesn't exist in backoffice.
+
 ##Install feature front end
 
 2 ) wrong filename, should be `data/import/common/common/glossary.csv`
@@ -150,6 +158,12 @@ Some file changes are missing from guide, see https://github.com/spryker/b2b-dem
 ##Glue API: Marketplace Product Offer Prices
 
 1 ) Old package version (also conflicts with requirements for `spryker/merchant-product-offer-storage`)
+
+##Glue API: Marketplace Product Offer Volume Prices
+
+Prerequisites: missing integration guide for Marketplace Product Offer Volume Prices
+
+1 ) Wrong package name, should be `spryker/price-product-offer-volumes-rest-api`; wrong version
 
 #MP-6404 Persistence ACL
 
