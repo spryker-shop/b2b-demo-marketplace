@@ -115,13 +115,13 @@ Same with `Marketplace Product + Inventory Management feature integration`, `Mer
 
 5 ) Import types should be added to full_EU.yml
 
-6 ) Following verification steps are unclear and probably require additional coding:
+6 ) Following verification steps are unclear and may require additional coding:
 
-`Make sure that a default product offer is given when retrieving product concrete data.`
+`Make sure that a default product offer is given when retrieving product concrete data.` (Possible solution is `Make sure that a default product offer is selected in Product Detail Page at first load`)
 
 `Make sure that validity data is saved when saving a product offer.`
 
-Offer edit page doesn't exist in backoffice.
+Offer edit page doesn't exist in backoffice, probably should be replaced with 'view page'.
 
 ##Install feature front end
 
