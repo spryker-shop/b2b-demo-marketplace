@@ -165,6 +165,14 @@ Prerequisites: missing integration guide for Marketplace Product Offer Volume Pr
 
 1 ) Wrong package name, should be `spryker/price-product-offer-volumes-rest-api`; wrong version
 
+##MP-6401 Marketplace Product Options
+
+Feature walkthrough article doesn't have a link to integration guide
+
+#MP-6402 Marketplace Cart
+
+Feature walkthrough article: broken formatting
+
 #MP-6404 Persistence ACL
 
 1 ) typo: extra space, should be `spryker-feature/acl:"202108.0"`, not `spryker-feature/acl: "202108.0"`
