@@ -17,6 +17,7 @@ use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Shared\CmsGui\CmsGuiConstants;
 use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Shared\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConstants;
+use Spryker\Shared\DummyMarketplacePayment\DummyMarketplacePaymentConfig;
 use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\WebHtmlErrorRenderer;
 use Spryker\Shared\Event\EventConstants;
@@ -550,8 +551,12 @@ $config[GlueApplicationConstants::GLUE_APPLICATION_CORS_ALLOW_ORIGIN] = getenv('
 // ------------------------------ OMS -----------------------------------------
 // ----------------------------------------------------------------------------
 
-$config[OmsConstants::ACTIVE_PROCESSES] = [];
-$config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = [];
+$config[OmsConstants::ACTIVE_PROCESSES] = [
+    'MarketplacePayment01'
+];
+$config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = [
+    DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE => 'MarketplacePayment01'
+];
 
 // ----------------------------------------------------------------------------
 // ------------------------------ PAYMENTS ------------------------------------
