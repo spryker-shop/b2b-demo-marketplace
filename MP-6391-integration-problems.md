@@ -190,4 +190,7 @@ Some file updates needed for MP to work are missing, see https://github.com/spry
 3. Invalid file name Pyz\Yves\CheckoutPage\CheckoutPageDependencyProvider.php=>src/Pyz/Yves/CheckoutPage/CheckoutPageDependencyProvider.php
 4. Code sample for CheckoutPageDependencyProvider.php is invalid, call of provided methods in provideDependencies() is missing.
 5. MerchantSalesOrderDependencyProvider has no example of adding project level dependency to addSalesFacade.
+
+## Marketplace Order Management + Order Threshold feature integration
+1. Should be moved to standalone IG, because feature was introduced spryker-feature/marketplace-merchant-order-threshold
 -------------------------------------------------------------

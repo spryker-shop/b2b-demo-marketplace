@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3762d79f042b1b02423ecdca20c38b6a",
+    "content-hash": "5be777c4c98e2d6c3abcf92eaa37ee92",
     "packages": [
         {
             "name": "brick/math",
@@ -4258,6 +4258,45 @@
             ],
             "description": "Marketplace Merchant [feature]",
             "time": "2021-08-18T09:24:23+00:00"
+        },
+        {
+            "name": "spryker-feature/marketplace-merchant-order-threshold",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-feature/marketplace-merchant-order-threshold.git",
+                "reference": "04628b40b99905f21c9b1ed44655f22ec8bf3611"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-feature/marketplace-merchant-order-threshold/zipball/04628b40b99905f21c9b1ed44655f22ec8bf3611",
+                "reference": "04628b40b99905f21c9b1ed44655f22ec8bf3611",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4",
+                "spryker/merchant-sales-order-threshold-gui": "^1.0.0"
+            },
+            "suggest": {
+                "spryker-feature/marketplace-order-management": "Recommended feature dependency.",
+                "spryker-feature/merchant-order-threshold": "Recommended feature dependency."
+            },
+            "default-branch": true,
+            "type": "metapackage",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "202108.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Marketplace Merchant Order Threshold [feature]",
+            "support": {
+                "source": "https://github.com/spryker-feature/marketplace-merchant-order-threshold/tree/master"
+            },
+            "time": "2022-02-11T17:59:16+00:00"
         },
         {
             "name": "spryker-feature/marketplace-order-management",
@@ -28081,6 +28120,48 @@
                 "source": "https://github.com/spryker/merchant-sales-order-merchant-user-gui/tree/1.0.1"
             },
             "time": "2021-08-19T10:54:56+00:00"
+        },
+        {
+            "name": "spryker/merchant-sales-order-threshold-gui",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/merchant-sales-order-threshold-gui.git",
+                "reference": "99b4e668a9e534ad643a539137647b0e316c97f9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/merchant-sales-order-threshold-gui/zipball/99b4e668a9e534ad643a539137647b0e316c97f9",
+                "reference": "99b4e668a9e534ad643a539137647b0e316c97f9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/sales-order-threshold-gui": "^1.6.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "MerchantSalesOrderThresholdGui module",
+            "support": {
+                "source": "https://github.com/spryker/merchant-sales-order-threshold-gui/tree/1.0.0"
+            },
+            "time": "2021-07-07T15:14:17+00:00"
         },
         {
             "name": "spryker/merchant-search",
@@ -56980,6 +57061,12 @@
             "alias_normalized": "202204.0"
         },
         {
+            "package": "spryker-feature/marketplace-merchant-order-threshold",
+            "version": "9999999-dev",
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
+        },
+        {
             "package": "spryker-feature/marketplace-order-management",
             "version": "9999999-dev",
             "alias": "202204.0",
@@ -57007,6 +57094,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "spryker-feature/marketplace-merchant": 20,
+        "spryker-feature/marketplace-merchant-order-threshold": 20,
         "spryker-feature/marketplace-order-management": 20,
         "spryker-feature/marketplace-product": 20,
         "spryker-feature/merchant-opening-hours": 20,
