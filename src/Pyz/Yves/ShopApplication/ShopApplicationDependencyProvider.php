@@ -57,6 +57,7 @@ use SprykerShop\Yves\CustomerReorderWidget\Plugin\CustomerPage\CustomerReorderIt
 use SprykerShop\Yves\DiscountPromotionWidget\Plugin\ShopApplication\CartDiscountPromotionProductListWidgetCacheKeyGeneratorStrategyPlugin;
 use SprykerShop\Yves\DiscountPromotionWidget\Widget\CartDiscountPromotionProductListWidget;
 use SprykerShop\Yves\LanguageSwitcherWidget\Widget\LanguageSwitcherWidget;
+use SprykerShop\Yves\MerchantOpeningHoursWidget\Widget\MerchantOpeningHoursWidget;
 use SprykerShop\Yves\MerchantProductOfferWidget\Widget\MerchantProductOfferWidget;
 use SprykerShop\Yves\MerchantProductWidget\Widget\MerchantProductWidget;
 use SprykerShop\Yves\MerchantWidget\Widget\SoldByMerchantWidget;
@@ -268,6 +269,7 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             SoldByMerchantWidget::class,
             MerchantProductWidget::class,
             MerchantProductOfferWidget::class,
+            MerchantOpeningHoursWidget::class,
         ];
     }
 

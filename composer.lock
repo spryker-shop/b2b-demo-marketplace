@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b8a83e110bfdf2c6b593f09818674495",
+    "content-hash": "604fd54adaf8be5419791c5bf2b0da2f",
     "packages": [
         {
             "name": "brick/math",
@@ -3085,23 +3085,23 @@
         },
         {
             "name": "react/promise",
-            "version": "v2.8.0",
+            "version": "v2.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/reactphp/promise.git",
-                "reference": "f3cff96a19736714524ca0dd1d4130de73dbbbc4"
+                "reference": "234f8fd1023c9158e2314fa9d7d0e6a83db42910"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/reactphp/promise/zipball/f3cff96a19736714524ca0dd1d4130de73dbbbc4",
-                "reference": "f3cff96a19736714524ca0dd1d4130de73dbbbc4",
+                "url": "https://api.github.com/repos/reactphp/promise/zipball/234f8fd1023c9158e2314fa9d7d0e6a83db42910",
+                "reference": "234f8fd1023c9158e2314fa9d7d0e6a83db42910",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.4.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^7.0 || ^6.5 || ^5.7 || ^4.8.36"
+                "phpunit/phpunit": "^9.3 || ^5.7 || ^4.8.36"
             },
             "type": "library",
             "autoload": {
@@ -3119,7 +3119,23 @@
             "authors": [
                 {
                     "name": "Jan Sorgalla",
-                    "email": "jsorgalla@gmail.com"
+                    "email": "jsorgalla@gmail.com",
+                    "homepage": "https://sorgalla.com/"
+                },
+                {
+                    "name": "Christian Lück",
+                    "email": "christian@clue.engineering",
+                    "homepage": "https://clue.engineering/"
+                },
+                {
+                    "name": "Cees-Jan Kiewiet",
+                    "email": "reactphp@ceesjankiewiet.nl",
+                    "homepage": "https://wyrihaximus.net/"
+                },
+                {
+                    "name": "Chris Boden",
+                    "email": "cboden@gmail.com",
+                    "homepage": "https://cboden.dev/"
                 }
             ],
             "description": "A lightweight implementation of CommonJS Promises/A for PHP",
@@ -3127,7 +3143,17 @@
                 "promise",
                 "promises"
             ],
-            "time": "2020-05-12T15:16:56+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/WyriHaximus",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/clue",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-02-11T10:27:51+00:00"
         },
         {
             "name": "ruflin/elastica",
@@ -4298,45 +4324,6 @@
             "time": "2021-08-30T07:34:33+00:00"
         },
         {
-            "name": "spryker-feature/marketplace-shipment",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/spryker-feature/marketplace-shipment.git",
-                "reference": "7fa755448aa08683240bfad7f688bc1b89a9bc2c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/marketplace-shipment/zipball/7fa755448aa08683240bfad7f688bc1b89a9bc2c",
-                "reference": "7fa755448aa08683240bfad7f688bc1b89a9bc2c",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.3",
-                "spryker/merchant-shipment": "^1.0.0",
-                "spryker/merchant-shipment-gui": "^1.0.0",
-                "spryker/shipment": "^8.9.0",
-                "spryker/shipment-data-import": "^1.1.0",
-                "spryker/shipment-gui": "^2.4.0"
-            },
-            "suggest": {
-                "spryker-feature/marketplace-merchant": "Recommended feature dependency.",
-                "spryker-feature/shipment": "Recommended feature dependency."
-            },
-            "type": "metapackage",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "202108.x-dev"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "proprietary"
-            ],
-            "description": "Marketplace Shipment [feature]",
-            "time": "2021-08-30T07:33:57+00:00"
-        },
-        {
             "name": "spryker-feature/measurement-units",
             "version": "202108.0",
             "source": {
@@ -4478,6 +4465,47 @@
             ],
             "description": "Merchant Custom Prices [feature]",
             "time": "2021-08-30T07:34:18+00:00"
+        },
+        {
+            "name": "spryker-feature/merchant-opening-hours",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-feature/merchant-opening-hours.git",
+                "reference": "3a7963bb336716c785b8506252839f7cae4df38d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-feature/merchant-opening-hours/zipball/3a7963bb336716c785b8506252839f7cae4df38d",
+                "reference": "3a7963bb336716c785b8506252839f7cae4df38d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker-shop/merchant-opening-hours-widget": "^1.0.0",
+                "spryker/merchant-opening-hours": "^1.0.0",
+                "spryker/merchant-opening-hours-data-import": "^0.6.0",
+                "spryker/merchant-opening-hours-storage": "^1.0.0",
+                "spryker/weekday-schedule": "^1.0.0"
+            },
+            "suggest": {
+                "spryker-feature/marketplace-merchant": "Recommended feature dependency."
+            },
+            "type": "metapackage",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "202108.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Merchant Opening Hours [feature]",
+            "support": {
+                "source": "https://github.com/spryker-feature/merchant-opening-hours/tree/202108.0"
+            },
+            "time": "2021-08-18T09:17:43+00:00"
         },
         {
             "name": "spryker-feature/merchant-order-threshold",
@@ -8671,6 +8699,49 @@
             ],
             "description": "LanguageSwitcherWidget module",
             "time": "2021-10-29T12:16:12+00:00"
+        },
+        {
+            "name": "spryker-shop/merchant-opening-hours-widget",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-shop/merchant-opening-hours-widget.git",
+                "reference": "a76f05bddae7e97f46af73b7081306d202f55410"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-shop/merchant-opening-hours-widget/zipball/a76f05bddae7e97f46af73b7081306d202f55410",
+                "reference": "a76f05bddae7e97f46af73b7081306d202f55410",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/kernel": "^3.33.0",
+                "spryker/merchant-opening-hours-storage": "^1.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SprykerShop\\": "src/SprykerShop/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "MerchantOpeningHoursWidget module",
+            "support": {
+                "source": "https://github.com/spryker-shop/merchant-opening-hours-widget/tree/1.0.0"
+            },
+            "time": "2021-08-16T16:27:49+00:00"
         },
         {
             "name": "spryker-shop/merchant-page",
@@ -26233,6 +26304,206 @@
             "time": "2020-04-08T15:48:06+00:00"
         },
         {
+            "name": "spryker/merchant-opening-hours",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/merchant-opening-hours.git",
+                "reference": "0f2894c5badeccd004ea2d889408fe9b3f0f5952"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/merchant-opening-hours/zipball/0f2894c5badeccd004ea2d889408fe9b3f0f5952",
+                "reference": "0f2894c5badeccd004ea2d889408fe9b3f0f5952",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/merchant": "^3.0.0",
+                "spryker/weekday-schedule": "^1.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "MerchantOpeningHours module",
+            "support": {
+                "source": "https://github.com/spryker/merchant-opening-hours/tree/1.0.0"
+            },
+            "time": "2021-08-16T16:27:47+00:00"
+        },
+        {
+            "name": "spryker/merchant-opening-hours-data-import",
+            "version": "0.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/merchant-opening-hours-data-import.git",
+                "reference": "18bdf3b8c0c106d91b28699de25312b593d2d368"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/merchant-opening-hours-data-import/zipball/18bdf3b8c0c106d91b28699de25312b593d2d368",
+                "reference": "18bdf3b8c0c106d91b28699de25312b593d2d368",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/data-import": "^1.3.0",
+                "spryker/kernel": "^3.33.0",
+                "spryker/merchant": "^3.0.0",
+                "spryker/merchant-opening-hours": "^1.0.0",
+                "spryker/weekday-schedule": "^1.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/merchant-data-import": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/",
+                    "SprykerTest\\Zed\\MerchantOpeningHoursDataImport\\Helper\\": "tests/SprykerTest/Zed/MerchantOpeningHoursDataImport/_support/Helper/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "MerchantOpeningHoursDataImport module",
+            "support": {
+                "source": "https://github.com/spryker/merchant-opening-hours-data-import/tree/0.6.0"
+            },
+            "time": "2021-08-16T16:27:47+00:00"
+        },
+        {
+            "name": "spryker/merchant-opening-hours-rest-api",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/merchant-opening-hours-rest-api.git",
+                "reference": "5faef81337ff9d7ac9e77f329a8a970fa978958c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/merchant-opening-hours-rest-api/zipball/5faef81337ff9d7ac9e77f329a8a970fa978958c",
+                "reference": "5faef81337ff9d7ac9e77f329a8a970fa978958c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/glossary-storage": "^1.5.0",
+                "spryker/glue-application": "^1.9.0",
+                "spryker/glue-application-extension": "^1.0.0",
+                "spryker/kernel": "^3.33.0",
+                "spryker/merchant-opening-hours-storage": "^1.0.0",
+                "spryker/merchant-storage": "^1.0.0",
+                "spryker/symfony": "^3.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "MerchantOpeningHoursRestApi module",
+            "support": {
+                "source": "https://github.com/spryker/merchant-opening-hours-rest-api/tree/1.0.0"
+            },
+            "time": "2021-08-16T16:27:47+00:00"
+        },
+        {
+            "name": "spryker/merchant-opening-hours-storage",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/merchant-opening-hours-storage.git",
+                "reference": "db72539d95051ee2a1c5a1aef7d165ab2f35370a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/merchant-opening-hours-storage/zipball/db72539d95051ee2a1c5a1aef7d165ab2f35370a",
+                "reference": "db72539d95051ee2a1c5a1aef7d165ab2f35370a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/event-behavior": "^1.0.0",
+                "spryker/kernel": "^3.33.0",
+                "spryker/merchant": "^3.0.0",
+                "spryker/merchant-opening-hours": "^1.0.0",
+                "spryker/propel-orm": "^1.5.0",
+                "spryker/publisher-extension": "^1.0.0",
+                "spryker/storage": "^3.0.0",
+                "spryker/synchronization": "^1.0.0",
+                "spryker/synchronization-behavior": "^1.0.0",
+                "spryker/synchronization-extension": "^1.0.0",
+                "spryker/util-encoding": "^2.0.0",
+                "spryker/weekday-schedule": "^1.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/propel": "*",
+                "spryker/queue": "*",
+                "spryker/testify": "*"
+            },
+            "suggest": {
+                "spryker/event": "If you want to use Event plugins: ^2.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "MerchantOpeningHoursStorage module",
+            "support": {
+                "source": "https://github.com/spryker/merchant-opening-hours-storage/tree/1.0.0"
+            },
+            "time": "2021-08-16T16:27:47+00:00"
+        },
+        {
             "name": "spryker/merchant-product",
             "version": "1.1.0",
             "source": {
@@ -27696,94 +27967,6 @@
             ],
             "description": "MerchantSearchExtension module",
             "time": "2021-07-07T15:14:17+00:00"
-        },
-        {
-            "name": "spryker/merchant-shipment",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/spryker/merchant-shipment.git",
-                "reference": "84e807954e2558e72cf12bb57658602108ace247"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/spryker/merchant-shipment/zipball/84e807954e2558e72cf12bb57658602108ace247",
-                "reference": "84e807954e2558e72cf12bb57658602108ace247",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.3",
-                "spryker-shop/checkout-page-extension": "^1.3.0",
-                "spryker-shop/customer-page-extension": "^1.3.0",
-                "spryker/cart-extension": "^4.2.0",
-                "spryker/kernel": "^3.33.0",
-                "spryker/quote-extension": "^1.2.0",
-                "spryker/sales": "^10.0.0 || ^11.0.0",
-                "spryker/shipment": "^7.2.0 || ^8.0.0"
-            },
-            "require-dev": {
-                "spryker/code-sniffer": "*",
-                "spryker/propel": "*",
-                "spryker/testify": "*"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Spryker\\": "src/Spryker/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "proprietary"
-            ],
-            "description": "MerchantShipment module",
-            "time": "2021-08-16T16:27:47+00:00"
-        },
-        {
-            "name": "spryker/merchant-shipment-gui",
-            "version": "1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/spryker/merchant-shipment-gui.git",
-                "reference": "be5d9a4a9804cf221a59cf1d54a23375c333fc90"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/spryker/merchant-shipment-gui/zipball/be5d9a4a9804cf221a59cf1d54a23375c333fc90",
-                "reference": "be5d9a4a9804cf221a59cf1d54a23375c333fc90",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.3",
-                "spryker/kernel": "^3.30.0",
-                "spryker/merchant": "^3.0.0",
-                "spryker/shipment-gui-extension": "^1.0.0"
-            },
-            "require-dev": {
-                "spryker/code-sniffer": "*"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Spryker\\": "src/Spryker/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "proprietary"
-            ],
-            "description": "MerchantShipmentGui module",
-            "time": "2021-08-19T10:54:56+00:00"
         },
         {
             "name": "spryker/merchant-storage",
@@ -45733,6 +45916,47 @@
             "time": "2019-10-09T04:52:31+00:00"
         },
         {
+            "name": "spryker/weekday-schedule",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/weekday-schedule.git",
+                "reference": "492ff153c85c66ee1ec3e7ea2bf804f521ac7ff9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/weekday-schedule/zipball/492ff153c85c66ee1ec3e7ea2bf804f521ac7ff9",
+                "reference": "492ff153c85c66ee1ec3e7ea2bf804f521ac7ff9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "WeekdaySchedule module",
+            "support": {
+                "source": "https://github.com/spryker/weekday-schedule/tree/1.0.0"
+            },
+            "time": "2021-07-07T15:14:17+00:00"
+        },
+        {
             "name": "spryker/wishlist-extension",
             "version": "1.3.0",
             "source": {
@@ -54352,16 +54576,16 @@
         },
         {
             "name": "sebastian/global-state",
-            "version": "5.0.3",
+            "version": "5.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/global-state.git",
-                "reference": "23bd5951f7ff26f12d4e3242864df3e08dec4e49"
+                "reference": "19c519631c5a511b7ed0ad64a6713fdb3fd25fe4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/global-state/zipball/23bd5951f7ff26f12d4e3242864df3e08dec4e49",
-                "reference": "23bd5951f7ff26f12d4e3242864df3e08dec4e49",
+                "url": "https://api.github.com/repos/sebastianbergmann/global-state/zipball/19c519631c5a511b7ed0ad64a6713fdb3fd25fe4",
+                "reference": "19c519631c5a511b7ed0ad64a6713fdb3fd25fe4",
                 "shasum": ""
             },
             "require": {
@@ -54408,7 +54632,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-06-11T13:31:12+00:00"
+            "time": "2022-02-10T07:01:19+00:00"
         },
         {
             "name": "sebastian/lines-of-code",
@@ -56764,7 +56988,7 @@
             "alias": "202204.0",
             "alias_normalized": "202204.0",
             "version": "9999999-dev",
-            "package": "spryker-feature/marketplace-shipment"
+            "package": "spryker-feature/merchant-opening-hours"
         },
         {
             "alias": "202108.0",
@@ -56779,7 +57003,7 @@
         "spryker-feature/marketplace-product": 20,
         "spryker-feature/marketplace-product-offer": 20,
         "spryker-feature/marketplace-product-offer-prices": 20,
-        "spryker-feature/marketplace-shipment": 20,
+        "spryker-feature/merchant-opening-hours": 20,
         "spryker-sdk/integrator": 20,
         "spryker/docker-chromedriver": 20
     },
