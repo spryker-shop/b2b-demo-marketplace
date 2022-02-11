@@ -175,6 +175,10 @@ Prerequisites: missing integration guide for Marketplace Product Offer Volume Pr
 
 typo: `ssrc` instead of `src`
 
+#MP-6401
+
+1 ) MerchantProductOptionExtension module doesn't exist
+
 #MP-6401 Marketplace Product Options
 
 Feature walkthrough article doesn't have a link to integration guide
