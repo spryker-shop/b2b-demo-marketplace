@@ -165,7 +165,13 @@ Prerequisites: missing integration guide for Marketplace Product Offer Volume Pr
 
 1 ) Wrong package name, should be `spryker/price-product-offer-volumes-rest-api`; wrong version
 
-##MP-6401 Marketplace Product Options
+#MP-6399 Marketplace Shipment
+
+2 ) and 3 ) should go in the opposite order
+
+2 ) Verification requires shipments with merchant_reference set, but the corresponding plugin isn't integrated yet (Marketplace Shipment + Cart)
+
+#MP-6401 Marketplace Product Options
 
 Feature walkthrough article doesn't have a link to integration guide
 
