@@ -171,6 +171,10 @@ Prerequisites: missing integration guide for Marketplace Product Offer Volume Pr
 
 2 ) Verification requires shipments with merchant_reference set, but the corresponding plugin isn't integrated yet (Marketplace Shipment + Cart)
 
+##Marketplace Shipment + Customer
+
+typo: `ssrc` instead of `src`
+
 #MP-6401 Marketplace Product Options
 
 Feature walkthrough article doesn't have a link to integration guide

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "604fd54adaf8be5419791c5bf2b0da2f",
+    "content-hash": "0589f4ace5d9247a5aabfb728b539d5f",
     "packages": [
         {
             "name": "brick/math",
@@ -1078,38 +1078,34 @@
         },
         {
             "name": "laminas/laminas-config",
-            "version": "3.5.1",
+            "version": "3.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-config.git",
-                "reference": "e4d714780b2d0b3ad748d715fff6ab0a5f37c6a5"
+                "reference": "e43d13dcfc273d4392812eb395ce636f73f34dfd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-config/zipball/e4d714780b2d0b3ad748d715fff6ab0a5f37c6a5",
-                "reference": "e4d714780b2d0b3ad748d715fff6ab0a5f37c6a5",
+                "url": "https://api.github.com/repos/laminas/laminas-config/zipball/e43d13dcfc273d4392812eb395ce636f73f34dfd",
+                "reference": "e43d13dcfc273d4392812eb395ce636f73f34dfd",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "laminas/laminas-stdlib": "^2.7.7 || ^3.1",
-                "laminas/laminas-zendframework-bridge": "^1.0",
-                "php": "^7.3 || ~8.0.0",
+                "laminas/laminas-stdlib": "^3.6",
+                "php": "^7.3 || ~8.0.0 || ~8.1.0",
                 "psr/container": "^1.0"
             },
             "conflict": {
-                "container-interop/container-interop": "<1.2.0"
-            },
-            "replace": {
-                "zendframework/zend-config": "^3.3.0"
+                "container-interop/container-interop": "<1.2.0",
+                "zendframework/zend-config": "*"
             },
             "require-dev": {
                 "laminas/laminas-coding-standard": "~1.0.0",
                 "laminas/laminas-filter": "^2.7.2",
                 "laminas/laminas-i18n": "^2.10.3",
-                "laminas/laminas-servicemanager": "^3.4.1",
-                "malukenho/docheader": "^0.1.6",
-                "phpunit/phpunit": "^8.5.8"
+                "laminas/laminas-servicemanager": "^3.7",
+                "phpunit/phpunit": "^9.5.5"
             },
             "suggest": {
                 "laminas/laminas-filter": "^2.7.2; install if you want to use the Filter processor",
@@ -1138,44 +1134,41 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2021-09-08T09:57:17+00:00"
+            "time": "2021-10-01T16:07:46+00:00"
         },
         {
             "name": "laminas/laminas-filter",
-            "version": "2.12.0",
+            "version": "2.13.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-filter.git",
-                "reference": "0fc5dcd27dc22dba1a2544123684c67768fc5f88"
+                "reference": "3da1df596b023fb0387a1dbb0e77e536afd9d1af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-filter/zipball/0fc5dcd27dc22dba1a2544123684c67768fc5f88",
-                "reference": "0fc5dcd27dc22dba1a2544123684c67768fc5f88",
+                "url": "https://api.github.com/repos/laminas/laminas-filter/zipball/3da1df596b023fb0387a1dbb0e77e536afd9d1af",
+                "reference": "3da1df596b023fb0387a1dbb0e77e536afd9d1af",
                 "shasum": ""
             },
             "require": {
-                "laminas/laminas-stdlib": "^3.3",
-                "laminas/laminas-zendframework-bridge": "^1.0",
-                "php": "^7.3 || ~8.0.0"
+                "laminas/laminas-stdlib": "^3.6.1",
+                "php": "^7.4 || ~8.0.0 || ~8.1.0"
             },
             "conflict": {
-                "laminas/laminas-validator": "<2.10.1"
-            },
-            "replace": {
-                "zendframework/zend-filter": "^2.9.2"
+                "laminas/laminas-validator": "<2.10.1",
+                "zendframework/zend-filter": "*"
             },
             "require-dev": {
-                "laminas/laminas-coding-standard": "~1.0.0",
-                "laminas/laminas-crypt": "^3.2.1",
-                "laminas/laminas-servicemanager": "^3.3",
-                "laminas/laminas-uri": "^2.6",
-                "pear/archive_tar": "^1.4.3",
-                "phpspec/prophecy-phpunit": "^2.0",
-                "phpunit/phpunit": "^9.3",
-                "psalm/plugin-phpunit": "^0.15.1",
-                "psr/http-factory": "^1.0",
-                "vimeo/psalm": "^4.6"
+                "laminas/laminas-coding-standard": "^2.3.0",
+                "laminas/laminas-crypt": "^3.5.1",
+                "laminas/laminas-servicemanager": "^3.7.0",
+                "laminas/laminas-uri": "^2.9.1",
+                "pear/archive_tar": "^1.4.14",
+                "phpspec/prophecy-phpunit": "^2.0.1",
+                "phpunit/phpunit": "^9.5.10",
+                "psalm/plugin-phpunit": "^0.15.2",
+                "psr/http-factory": "^1.0.1",
+                "vimeo/psalm": "^4.13.1"
             },
             "suggest": {
                 "laminas/laminas-crypt": "Laminas\\Crypt component, for encryption filters",
@@ -1212,7 +1205,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2021-10-24T21:01:15+00:00"
+            "time": "2022-02-07T13:14:03+00:00"
         },
         {
             "name": "laminas/laminas-servicemanager",
@@ -1342,62 +1335,6 @@
                 }
             ],
             "time": "2022-01-21T15:50:46+00:00"
-        },
-        {
-            "name": "laminas/laminas-zendframework-bridge",
-            "version": "1.4.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laminas/laminas-zendframework-bridge.git",
-                "reference": "88bf037259869891afce6504cacc4f8a07b24d0f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-zendframework-bridge/zipball/88bf037259869891afce6504cacc4f8a07b24d0f",
-                "reference": "88bf037259869891afce6504cacc4f8a07b24d0f",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.3 || ~8.0.0 || ~8.1.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^9.3",
-                "psalm/plugin-phpunit": "^0.15.1",
-                "squizlabs/php_codesniffer": "^3.5",
-                "vimeo/psalm": "^4.6"
-            },
-            "type": "library",
-            "extra": {
-                "laminas": {
-                    "module": "Laminas\\ZendFrameworkBridge"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "src/autoload.php"
-                ],
-                "psr-4": {
-                    "Laminas\\ZendFrameworkBridge\\": "src//"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "description": "Alias legacy ZF class names to Laminas Project equivalents.",
-            "keywords": [
-                "ZendFramework",
-                "autoloading",
-                "laminas",
-                "zf"
-            ],
-            "funding": [
-                {
-                    "url": "https://funding.communitybridge.org/projects/laminas-project",
-                    "type": "community_bridge"
-                }
-            ],
-            "time": "2021-12-21T14:34:37+00:00"
         },
         {
             "name": "lcobucci/clock",
@@ -4322,6 +4259,45 @@
             ],
             "description": "Marketplace Product Offer Prices [feature]",
             "time": "2021-08-30T07:34:33+00:00"
+        },
+        {
+            "name": "spryker-feature/marketplace-shipment",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-feature/marketplace-shipment.git",
+                "reference": "7fa755448aa08683240bfad7f688bc1b89a9bc2c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-feature/marketplace-shipment/zipball/7fa755448aa08683240bfad7f688bc1b89a9bc2c",
+                "reference": "7fa755448aa08683240bfad7f688bc1b89a9bc2c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/merchant-shipment": "^1.0.0",
+                "spryker/merchant-shipment-gui": "^1.0.0",
+                "spryker/shipment": "^8.9.0",
+                "spryker/shipment-data-import": "^1.1.0",
+                "spryker/shipment-gui": "^2.4.0"
+            },
+            "suggest": {
+                "spryker-feature/marketplace-merchant": "Recommended feature dependency.",
+                "spryker-feature/shipment": "Recommended feature dependency."
+            },
+            "type": "metapackage",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "202108.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Marketplace Shipment [feature]",
+            "time": "2021-08-30T07:33:57+00:00"
         },
         {
             "name": "spryker-feature/measurement-units",
@@ -27967,6 +27943,94 @@
             ],
             "description": "MerchantSearchExtension module",
             "time": "2021-07-07T15:14:17+00:00"
+        },
+        {
+            "name": "spryker/merchant-shipment",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/merchant-shipment.git",
+                "reference": "84e807954e2558e72cf12bb57658602108ace247"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/merchant-shipment/zipball/84e807954e2558e72cf12bb57658602108ace247",
+                "reference": "84e807954e2558e72cf12bb57658602108ace247",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker-shop/checkout-page-extension": "^1.3.0",
+                "spryker-shop/customer-page-extension": "^1.3.0",
+                "spryker/cart-extension": "^4.2.0",
+                "spryker/kernel": "^3.33.0",
+                "spryker/quote-extension": "^1.2.0",
+                "spryker/sales": "^10.0.0 || ^11.0.0",
+                "spryker/shipment": "^7.2.0 || ^8.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "MerchantShipment module",
+            "time": "2021-08-16T16:27:47+00:00"
+        },
+        {
+            "name": "spryker/merchant-shipment-gui",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/merchant-shipment-gui.git",
+                "reference": "be5d9a4a9804cf221a59cf1d54a23375c333fc90"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/merchant-shipment-gui/zipball/be5d9a4a9804cf221a59cf1d54a23375c333fc90",
+                "reference": "be5d9a4a9804cf221a59cf1d54a23375c333fc90",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/kernel": "^3.30.0",
+                "spryker/merchant": "^3.0.0",
+                "spryker/shipment-gui-extension": "^1.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "MerchantShipmentGui module",
+            "time": "2021-08-19T10:54:56+00:00"
         },
         {
             "name": "spryker/merchant-storage",
@@ -55708,37 +55772,30 @@
         },
         {
             "name": "spryker/architecture-sniffer",
-            "version": "0.4.2",
+            "version": "0.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/architecture-sniffer.git",
-                "reference": "db5f56a25e9903c0409fd3053e8e4bda4af91977"
+                "reference": "bcd993e532dfe7846da03790cb9f5844ebd20c18"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/architecture-sniffer/zipball/db5f56a25e9903c0409fd3053e8e4bda4af91977",
-                "reference": "db5f56a25e9903c0409fd3053e8e4bda4af91977",
+                "url": "https://api.github.com/repos/spryker/architecture-sniffer/zipball/bcd993e532dfe7846da03790cb9f5844ebd20c18",
+                "reference": "bcd993e532dfe7846da03790cb9f5844ebd20c18",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.1",
-                "phpmd/phpmd": "^2.4",
-                "roave/better-reflection": "*",
-                "symfony/finder": "*",
-                "zendframework/zend-config": "*",
-                "zendframework/zend-filter": "*"
+                "php": ">=5.4.16",
+                "phpmd/phpmd": "^2.4"
             },
             "require-dev": {
-                "codeception/codeception": "^2.4",
-                "phpstan/phpstan": "^0.11.1",
                 "phpunit/phpunit": "~5.2",
-                "spryker/code-sniffer": "*",
-                "symfony/var-dumper": "^4.0"
+                "spryker/code-sniffer": "*"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "ArchitectureSniffer\\": "src/"
+                    "ArchitectureSniffer\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -55751,18 +55808,18 @@
             "authors": [
                 {
                     "name": "Spryker",
-                    "homepage": "https://spryker.com"
+                    "homepage": "http://spryker.com"
                 }
             ],
-            "description": "Spryker Architecture Sniffer",
-            "homepage": "https://spryker.com",
+            "description": "Spryker Code Architecture Sniffer",
+            "homepage": "http://spryker.com",
             "keywords": [
                 "architecture",
                 "framework",
                 "sniffer",
                 "standards"
             ],
-            "time": "2019-03-14T14:56:25+00:00"
+            "time": "2017-08-01T14:03:04+00:00"
         },
         {
             "name": "spryker/code-generator",
@@ -56988,6 +57045,12 @@
             "alias": "202204.0",
             "alias_normalized": "202204.0",
             "version": "9999999-dev",
+            "package": "spryker-feature/marketplace-shipment"
+        },
+        {
+            "alias": "202204.0",
+            "alias_normalized": "202204.0",
+            "version": "9999999-dev",
             "package": "spryker-feature/merchant-opening-hours"
         },
         {
@@ -57003,6 +57066,7 @@
         "spryker-feature/marketplace-product": 20,
         "spryker-feature/marketplace-product-offer": 20,
         "spryker-feature/marketplace-product-offer-prices": 20,
+        "spryker-feature/marketplace-shipment": 20,
         "spryker-feature/merchant-opening-hours": 20,
         "spryker-sdk/integrator": 20,
         "spryker/docker-chromedriver": 20
