@@ -221,3 +221,13 @@ AclConfig file missing `RULE_TYPE_DENY` definition:
 
 Some file updates needed for MP to work are missing, see https://github.com/spryker/b2b-demo-shop-internal/commit/334306a43055c74c5c0effc82632a3a8fc20dd7f
 
+-------------------------------------------------------------
+#MP-6406 Merchant Opening Hours feature
+##feature integration issues
+1. Duplicated `console transfer:generate`.
+2. Missing `console propel:install`.
+3. Outdated demodata for merchant-opening-hours-date-schedule (Dates are in the past, schedule not displayed on yves, year should be updated).
+4. Missing glossary translations for date schedule, should be copy-pasted from latest suite-nonsplit.
+5. spryker/merchant-opening-hours-rest-api - should be ^1.0.0, instead of ^0.1.0.
+6. MerchantOpeningHoursWeekdayScheduleWritePublisherPlugin and MerchantOpeningHoursWeekdayScheduleWritePublisherPlugin not mentioned in IG. (And not used in CORE, but should)
+-------------------------------------------------------------
