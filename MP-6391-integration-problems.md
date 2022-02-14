@@ -111,7 +111,17 @@ Same with `Marketplace Product + Inventory Management feature integration`, `Mer
 
 1 ) typo: extra space, should be `spryker-feature/acl:"202108.0"`, not `spryker-feature/acl: "202108.0"`
 
+2 ) AclEntityRule mentioned twice.
+
 4 ) Files missing `namespace` and `use` parts
+
+`AccessControlEventDispatcherPlugin`, `AclNavigationItemCollectionFilterPlugin`, `AclInstallerPlugin`, `addGroupPlugin`,
+are already added
+
+5 ) Verification requires additional coding
+
+User transfer doesn't contain ACL groups (the corresponding plugin executed in other methods, than getting UserTransfer.
+It can be checked on User Edit page in Backoffice).
 
 #MP-6407 Marketplace Merchant Portal Core
 ##Install feature core
