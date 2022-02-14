@@ -1,10 +1,15 @@
 <?php
 
+/**
+ * This file is part of the Spryker Commerce OS.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
+ */
+
 namespace Pyz\Zed\Acl;
 
+use Spryker\Zed\Acl\AclDependencyProvider as SprykerAclDependencyProvider;
 use Spryker\Zed\AclEntity\Communication\Plugin\Acl\AclEntityAclRolePostSavePlugin;
 use Spryker\Zed\AclEntity\Communication\Plugin\Acl\AclRulesAclRolesExpanderPlugin;
-use Spryker\Zed\Acl\AclDependencyProvider as SprykerAclDependencyProvider;
 
 class AclDependencyProvider extends SprykerAclDependencyProvider
 {

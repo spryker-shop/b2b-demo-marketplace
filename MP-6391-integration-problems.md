@@ -115,9 +115,6 @@ Same with `Marketplace Product + Inventory Management feature integration`, `Mer
 
 4 ) Files missing `namespace` and `use` parts
 
-`AccessControlEventDispatcherPlugin`, `AclNavigationItemCollectionFilterPlugin`, `AclInstallerPlugin`, `addGroupPlugin`,
-are already added
-
 5 ) Verification requires additional coding
 
 User transfer doesn't contain ACL groups (the corresponding plugin executed in other methods, than getting UserTransfer.
