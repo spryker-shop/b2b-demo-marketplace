@@ -107,6 +107,12 @@ Verification requires writing additional code for direct CartFacade call
 
 Same with `Marketplace Product + Inventory Management feature integration`, `Merchant Portal - Marketplace Product feature integration` and `Merchant Portal - Marketplace Product + Tax feature integration`
 
+#MP-6400 Marketplace promotions and discounts
+
+5 ) wrong use, should be `Spryker\Zed\DiscountMerchantSalesOrder\Communication\Plugin\MerchantSalesOrder\DiscountMerchantOrderFilterPlugin;`
+
+may require `console router:cache:warm-up` to start work
+
 #MP-6404 Persistence ACL
 
 1 ) typo: extra space, should be `spryker-feature/acl:"202108.0"`, not `spryker-feature/acl: "202108.0"`
