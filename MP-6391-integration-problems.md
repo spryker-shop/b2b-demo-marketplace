@@ -231,6 +231,16 @@ Some file updates needed for MP to work are missing, see https://github.com/spry
 5. spryker/merchant-opening-hours-rest-api - should be ^1.0.0, instead of ^0.1.0.
 6. MerchantOpeningHoursWeekdayScheduleWritePublisherPlugin and MerchantOpeningHoursWeekdayScheduleWritePublisherPlugin not mentioned in IG. (And not used in CORE, but should)
 -------------------------------------------------------------
+#MP-6405 Merchant Category
+##feature integration issues
+1. Specific modules mentioned in composer require step, instead of feature.
+2. Zed should be replaced by `Backoffice`.
+3. Typo in merchant_category.csv example.
+4. CategoryWritePublisherPlugin missing in the plugins table.
+#glue integration issues
+1. 0.x version mentioned in the composer require step, instead of stable one.
+2. In the example `http://glue.mysprykershop.com/merchants?categoryKeys[]={{some-category-key}}` - parameter categoryKeys should be category-keys.
+-------------------------------------------------------------
 
 #MP-6395 Merchant Order Management feature
 ##feature integration issues
