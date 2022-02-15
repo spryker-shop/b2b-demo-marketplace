@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a91b3fe118b48d11129175f0757e3d15",
+    "content-hash": "af805d00b18bc3ff247437795f3cf3b7",
     "packages": [
         {
             "name": "brick/math",
@@ -4405,6 +4405,45 @@
             ],
             "description": "Marketplace Product Offer Prices [feature]",
             "time": "2021-08-30T07:34:33+00:00"
+        },
+        {
+            "name": "spryker-feature/marketplace-shipment",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-feature/marketplace-shipment.git",
+                "reference": "7fa755448aa08683240bfad7f688bc1b89a9bc2c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-feature/marketplace-shipment/zipball/7fa755448aa08683240bfad7f688bc1b89a9bc2c",
+                "reference": "7fa755448aa08683240bfad7f688bc1b89a9bc2c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/merchant-shipment": "^1.0.0",
+                "spryker/merchant-shipment-gui": "^1.0.0",
+                "spryker/shipment": "^8.9.0",
+                "spryker/shipment-data-import": "^1.1.0",
+                "spryker/shipment-gui": "^2.4.0"
+            },
+            "suggest": {
+                "spryker-feature/marketplace-merchant": "Recommended feature dependency.",
+                "spryker-feature/shipment": "Recommended feature dependency."
+            },
+            "type": "metapackage",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "202108.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Marketplace Shipment [feature]",
+            "time": "2021-08-30T07:33:57+00:00"
         },
         {
             "name": "spryker-feature/measurement-units",
@@ -28784,6 +28823,47 @@
             ],
             "description": "MerchantShipment module",
             "time": "2021-08-16T16:27:47+00:00"
+        },
+        {
+            "name": "spryker/merchant-shipment-gui",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/merchant-shipment-gui.git",
+                "reference": "be5d9a4a9804cf221a59cf1d54a23375c333fc90"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/merchant-shipment-gui/zipball/be5d9a4a9804cf221a59cf1d54a23375c333fc90",
+                "reference": "be5d9a4a9804cf221a59cf1d54a23375c333fc90",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/kernel": "^3.30.0",
+                "spryker/merchant": "^3.0.0",
+                "spryker/shipment-gui-extension": "^1.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "MerchantShipmentGui module",
+            "time": "2021-08-19T10:54:56+00:00"
         },
         {
             "name": "spryker/merchant-storage",
@@ -57987,6 +58067,12 @@
             "alias": "202204.0",
             "alias_normalized": "202204.0",
             "version": "9999999-dev",
+            "package": "spryker-feature/marketplace-shipment"
+        },
+        {
+            "alias": "202204.0",
+            "alias_normalized": "202204.0",
+            "version": "9999999-dev",
             "package": "spryker-feature/merchant-category"
         },
         {
@@ -58010,6 +58096,7 @@
         "spryker-feature/marketplace-product": 20,
         "spryker-feature/marketplace-product-offer": 20,
         "spryker-feature/marketplace-product-offer-prices": 20,
+        "spryker-feature/marketplace-shipment": 20,
         "spryker-feature/merchant-category": 20,
         "spryker-feature/merchant-opening-hours": 20,
         "spryker-sdk/integrator": 20,
