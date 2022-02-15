@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "af805d00b18bc3ff247437795f3cf3b7",
+    "content-hash": "e7c2230a66e25307b0ff27fcf800c1f3",
     "packages": [
         {
             "name": "brick/math",
@@ -3362,6 +3362,40 @@
             ],
             "description": "NewRelic module",
             "time": "2020-06-19T09:30:20+00:00"
+        },
+        {
+            "name": "spryker-feature/acl",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-feature/acl.git",
+                "reference": "3338db5187710cecbbfbdb2b80ffa8a1af010095"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-feature/acl/zipball/3338db5187710cecbbfbdb2b80ffa8a1af010095",
+                "reference": "3338db5187710cecbbfbdb2b80ffa8a1af010095",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/acl": "^3.9.0",
+                "spryker/acl-data-import": "^0.1.0",
+                "spryker/acl-entity": "^1.0.0",
+                "spryker/acl-entity-data-import": "^0.2.0"
+            },
+            "type": "metapackage",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "202108.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ACL [feature]",
+            "time": "2021-08-30T07:33:31+00:00"
         },
         {
             "name": "spryker-feature/agent-assist",
@@ -12912,6 +12946,153 @@
             ],
             "description": "Acl module",
             "time": "2021-10-18T14:23:12+00:00"
+        },
+        {
+            "name": "spryker/acl-data-import",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/acl-data-import.git",
+                "reference": "510df959f53b1f2afdbbe308fe89a0b7091ac3ee"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/acl-data-import/zipball/510df959f53b1f2afdbbe308fe89a0b7091ac3ee",
+                "reference": "510df959f53b1f2afdbbe308fe89a0b7091ac3ee",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/acl": "^3.8.0",
+                "spryker/data-import": "^1.14.0",
+                "spryker/kernel": "^3.30.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "AclDataImport module",
+            "time": "2021-07-30T05:04:54+00:00"
+        },
+        {
+            "name": "spryker/acl-entity",
+            "version": "1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/acl-entity.git",
+                "reference": "009897e9d56c41bfe64c992f82512c9563c3c023"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/acl-entity/zipball/009897e9d56c41bfe64c992f82512c9563c3c023",
+                "reference": "009897e9d56c41bfe64c992f82512c9563c3c023",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4",
+                "spryker/acl": "^3.8.0",
+                "spryker/acl-entity-extension": "^1.0.0",
+                "spryker/acl-extension": "^1.1.0",
+                "spryker/application-extension": "^1.0.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/propel-orm": "^1.0.0",
+                "spryker/transfer": "^3.25.0",
+                "spryker/user": "^3.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/container": "*",
+                "spryker/locale": "*",
+                "spryker/merchant": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "suggest": {
+                "spryker/container": "If you want to use AclEntityApplicationPlugin."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                },
+                "name": "acl",
+                "class": "\\Spryker\\Zed\\AclEntity\\Persistence\\Propel\\Behavior\\AclEntityBehavior"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/",
+                    "SprykerTest\\Zed\\AclEntity\\Helper\\": "tests/SprykerTest/Zed/AclEntity/_support/Helper/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "AclEntity module",
+            "time": "2022-01-19T10:41:09+00:00"
+        },
+        {
+            "name": "spryker/acl-entity-data-import",
+            "version": "0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/acl-entity-data-import.git",
+                "reference": "f06c76a2e8c92ff2105f8c41b6b9fd8c5bbe3020"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/acl-entity-data-import/zipball/f06c76a2e8c92ff2105f8c41b6b9fd8c5bbe3020",
+                "reference": "f06c76a2e8c92ff2105f8c41b6b9fd8c5bbe3020",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/acl": "^3.8.0",
+                "spryker/acl-entity": "^1.0.0",
+                "spryker/data-import": "^1.14.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/propel-orm": "^1.13.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/merchant": "*",
+                "spryker/product": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "AclEntityDataImport module",
+            "time": "2021-08-23T11:19:52+00:00"
         },
         {
             "name": "spryker/acl-entity-extension",
@@ -58031,6 +58212,12 @@
             "alias": "202204.0",
             "alias_normalized": "202204.0",
             "version": "9999999-dev",
+            "package": "spryker-feature/acl"
+        },
+        {
+            "alias": "202204.0",
+            "alias_normalized": "202204.0",
+            "version": "9999999-dev",
             "package": "spryker-feature/marketplace-merchant"
         },
         {
@@ -58090,6 +58277,7 @@
     ],
     "minimum-stability": "dev",
     "stability-flags": {
+        "spryker-feature/acl": 20,
         "spryker-feature/marketplace-merchant": 20,
         "spryker-feature/marketplace-merchant-order-threshold": 20,
         "spryker-feature/marketplace-order-management": 20,
