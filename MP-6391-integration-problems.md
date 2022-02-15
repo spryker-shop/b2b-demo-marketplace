@@ -231,3 +231,24 @@ Some file updates needed for MP to work are missing, see https://github.com/spry
 5. spryker/merchant-opening-hours-rest-api - should be ^1.0.0, instead of ^0.1.0.
 6. MerchantOpeningHoursWeekdayScheduleWritePublisherPlugin and MerchantOpeningHoursWeekdayScheduleWritePublisherPlugin not mentioned in IG. (And not used in CORE, but should)
 -------------------------------------------------------------
+
+#MP-6395 Merchant Order Management feature
+##feature integration issues
+1. Typo in data/import/common/common/marketplace/merchant_oms_process.csv example on the first line
+2. Missing code sample for abstract class, but it's used in the other code samples https://github.com/spryker/suite-nonsplit/blob/master/src/Pyz/Zed/MerchantOms/Communication/Plugin/Oms/AbstractTriggerOmsEventCommandPlugin.php
+3. Container is not used in src/Pyz/Zed/MerchantOms/MerchantOmsDependencyProvider.php, but registered in `use` section.
+4. Typo (** at the end) in src/Pyz/Zed/Shipment/ShipmentDependencyProvider.php code sample name.
+5. This IG is not related to Marketplace Order Management at all, but have it in the name https://docs.spryker.com/docs/marketplace/dev/feature-integration-guides/202108.0/marketplace-order-management-customer-account-management-feature-integration.html
+6. Import types should be added to full_EU.yml
+7. https://docs.spryker.com/docs/marketplace/dev/feature-integration-guides/202108.0/marketplace-dummy-payment-feature-integration.html is not mentioned in the dependencies, but without it is not possible to test the feature.
+
+## Marketplace Dummy Payment
+1. Invalid file name Pyz\Zed\Payment\PaymentDependencyProvider.php=>src/Pyz/Zed/Payment/PaymentDependencyProvider.php
+2. Typo in data/import/payment_method.csv on the first line
+3. Invalid file name Pyz\Yves\CheckoutPage\CheckoutPageDependencyProvider.php=>src/Pyz/Yves/CheckoutPage/CheckoutPageDependencyProvider.php
+4. Code sample for CheckoutPageDependencyProvider.php is invalid, call of provided methods in provideDependencies() is missing.
+5. MerchantSalesOrderDependencyProvider has no example of adding project level dependency to addSalesFacade.
+
+## Marketplace Order Management + Order Threshold feature integration
+1. Should be moved to standalone IG, because feature was introduced spryker-feature/marketplace-merchant-order-threshold
+-------------------------------------------------------------
