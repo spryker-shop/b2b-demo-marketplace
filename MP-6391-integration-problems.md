@@ -175,9 +175,11 @@ Prerequisites: missing integration guide for Marketplace Product Offer Volume Pr
 
 typo: `ssrc` instead of `src`
 
-#MP-6401
+#MP-6401 Marketplace Product Option
 
 1 ) MerchantProductOptionExtension module doesn't exist
+
+4 ) Regular product option import requires some changes too. See https://github.com/spryker/b2b-demo-shop-internal/commit/0a46f72835c4c91b75570fb86292bb1d4c7fe012
 
 #MP-6401 Marketplace Product Options
 
