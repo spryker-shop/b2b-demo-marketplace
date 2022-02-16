@@ -11,7 +11,7 @@ use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
-use Orm\Zed\ProductOption\Persistence\Base\SpyProductOptionGroup;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup;
 use Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
@@ -31,6 +31,7 @@ class ProductOptionWriterStep extends PublishAwareStep implements DataImportStep
 {
     public const BULK_SIZE = 100;
 
+    public const KEY_PRODUCT_OPTION_GROUP_KEY = 'product_option_group_key';
     public const KEY_ABSTRACT_PRODUCT_SKUS = 'abstract_product_skus';
     public const KEY_GROUP_NAME_TRANSLATION_KEY = 'group_name_translation_key';
     public const KEY_IS_ACTIVE = 'is_active';
@@ -48,10 +49,11 @@ class ProductOptionWriterStep extends PublishAwareStep implements DataImportStep
     public function execute(DataSetInterface $dataSet)
     {
         $productOptionGroupEntity = SpyProductOptionGroupQuery::create()
-            ->filterByName($dataSet[self::KEY_GROUP_NAME_TRANSLATION_KEY])
+            ->filterByKey($dataSet[self::KEY_PRODUCT_OPTION_GROUP_KEY])
             ->findOneOrCreate();
 
         $productOptionGroupEntity
+            ->setName($dataSet[static::KEY_OPTION_NAME_TRANSLATION_KEY])
             ->setActive($this->isActive($dataSet, $productOptionGroupEntity))
             ->setFkTaxSet($dataSet[TaxSetNameToIdTaxSetStep::KEY_TARGET])
             ->save();
@@ -93,7 +95,7 @@ class ProductOptionWriterStep extends PublishAwareStep implements DataImportStep
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     * @param \Orm\Zed\ProductOption\Persistence\Base\SpyProductOptionGroup $productOptionGroupEntity
+     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup $productOptionGroupEntity
      *
      * @return bool
      */
