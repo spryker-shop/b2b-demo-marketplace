@@ -12,6 +12,7 @@ use Spryker\Zed\MerchantProductOfferGui\Communication\Plugin\MerchantProductOffe
 use Spryker\Zed\MerchantProductOfferGui\Communication\Plugin\ProductOfferGui\MerchantProductOfferViewSectionPlugin;
 use Spryker\Zed\PriceProductOfferGui\Communication\Plugin\ProductOfferGui\PriceProductOfferProductOfferViewSectionPlugin;
 use Spryker\Zed\ProductOfferGui\ProductOfferGuiDependencyProvider as SprykerProductOfferGuiDependencyProvider;
+use Spryker\Zed\ProductOfferStockGui\Communication\Plugin\ProductOffer\ProductOfferStockProductOfferViewSectionPlugin;
 use Spryker\Zed\ProductOfferValidityGui\Communication\Plugin\ProductOfferGui\ProductOfferValidityProductOfferViewSectionPlugin;
 
 class ProductOfferGuiDependencyProvider extends SprykerProductOfferGuiDependencyProvider
@@ -45,6 +46,7 @@ class ProductOfferGuiDependencyProvider extends SprykerProductOfferGuiDependency
             new MerchantProductOfferViewSectionPlugin(),
             new ProductOfferValidityProductOfferViewSectionPlugin(),
             new PriceProductOfferProductOfferViewSectionPlugin(),
+            new ProductOfferStockProductOfferViewSectionPlugin(),
         ];
     }
 }

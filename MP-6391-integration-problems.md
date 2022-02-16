@@ -47,6 +47,7 @@ The following code can't be added to `GlueApplicationDependencyProvider::getReso
 
    "Make sure that by sending the request GET http://glue.mysprykershop.com/orders?include=merchant, merchant attributes are returned in response." - merchant offers not integrated yet, so can't order items from merchants.
 
+------------------------------------------------------------------------------------------------------------------------
 
 ##Marketplace Merchant
 4 ) requires MerchantPortal, that isn't integrated yet.
@@ -68,6 +69,8 @@ Verification: `config/Zed/navigation.xml` needs to be updated to see a new menu 
         <action>index</action>
 
     </merchant-portal-profile>
+
+------------------------------------------------------------------------------------------------------------------------
 
 #MP-6394 Marketplace Product
 
@@ -107,6 +110,8 @@ Verification requires writing additional code for direct CartFacade call
 
 Same with `Marketplace Product + Inventory Management feature integration`, `Merchant Portal - Marketplace Product feature integration` and `Merchant Portal - Marketplace Product + Tax feature integration`
 
+------------------------------------------------------------------------------------------------------------------------
+
 #MP-6393 Marketplace Product Offer
 
 ##Install feature core
@@ -143,6 +148,8 @@ Feature front end: wrong filename, should be `src/Pyz/Yves/CartPage/CartPageDepe
 
 1 ) Install is already done.
 
+------------------------------------------------------------------------------------------------------------------------
+
 #MP-6397 Marketplace Product Offer Prices
 
 6 ) In `src/Pyz/Service/PriceProduct/PriceProductDependencyProvider.php`: second use should be `use Spryker\Service\PriceProductOffer\Plugin\PriceProduct\PriceProductOfferPriceProductFilterPlugin;`
@@ -165,6 +172,8 @@ Prerequisites: missing integration guide for Marketplace Product Offer Volume Pr
 
 1 ) Wrong package name, should be `spryker/price-product-offer-volumes-rest-api`; wrong version
 
+------------------------------------------------------------------------------------------------------------------------
+
 #MP-6399 Marketplace Shipment
 
 2 ) and 3 ) should go in the opposite order
@@ -175,13 +184,19 @@ Prerequisites: missing integration guide for Marketplace Product Offer Volume Pr
 
 typo: `ssrc` instead of `src`
 
+------------------------------------------------------------------------------------------------------------------------
+
 #MP-6401 Marketplace Product Options
 
 Feature walkthrough article doesn't have a link to integration guide
 
+------------------------------------------------------------------------------------------------------------------------
+
 #MP-6402 Marketplace Cart
 
 Feature walkthrough article: broken formatting
+
+------------------------------------------------------------------------------------------------------------------------
 
 #MP-6404 Persistence ACL
 
@@ -195,6 +210,8 @@ Feature walkthrough article: broken formatting
 
 User transfer doesn't contain ACL groups (the corresponding plugin executed in other methods, than getting UserTransfer.
 It can be checked on User Edit page in Backoffice).
+
+------------------------------------------------------------------------------------------------------------------------
 
 #MP-6407 Marketplace Merchant Portal Core
 ##Install feature core
@@ -245,6 +262,20 @@ AclConfig file missing `RULE_TYPE_DENY` definition:
 ##Missed from guide
 
 Some file updates needed for MP to work are missing, see https://github.com/spryker/b2b-demo-shop-internal/commit/334306a43055c74c5c0effc82632a3a8fc20dd7f
+
+------------------------------------------------------------------------------------------------------------------------
+
+#MP-6396 Marketplace Inventory Management
+
+1 ) extra space before package version
+
+5 ) wrong filenames
+
+Typo: `Warehouses` instead of `Wherehouses`
+
+If offer page doesn't work, check, if there is stock data for it and if the corresponding warehouse is connected to the store.
+
+Verification can't be done, because offer page in zed doesn't open before `Marketplace Inventory Management + Order Management` feature integration
 
 -------------------------------------------------------------
 #MP-6406 Merchant Opening Hours feature
