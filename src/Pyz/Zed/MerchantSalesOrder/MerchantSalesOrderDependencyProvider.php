@@ -50,7 +50,7 @@ class MerchantSalesOrderDependencyProvider extends SprykerMerchantSalesOrderDepe
     }
 
     /**
-     * @return \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderFilterPluginInterface[]
+     * @return array<\Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderFilterPluginInterface>
      */
     protected function getMerchantOrderFilterPlugins(): array
     {

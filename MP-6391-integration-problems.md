@@ -1,3 +1,9 @@
+#General problems
+
+Comments like `SomeEntity[]` should be replaced by `array<SomeEntity>`
+
+------------------------------------------------------------------------------------------------------------------------
+
 #MP-6392 Marketplace Merchant
 ##feature integration
 
