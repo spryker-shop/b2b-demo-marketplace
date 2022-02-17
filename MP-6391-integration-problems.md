@@ -277,6 +277,10 @@ If offer page doesn't work, check, if there is stock data for it and if the corr
 
 Verification can't be done, because offer page in zed doesn't open before `Marketplace Inventory Management + Order Management` feature integration
 
+##Marketplace Inventory Management + Packaging Units
+
+Verification: wrong table name, should be `spy_oms_product_offer_reservation`
+
 -------------------------------------------------------------
 #MP-6406 Merchant Opening Hours feature
 ##feature integration issues
