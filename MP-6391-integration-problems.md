@@ -281,6 +281,8 @@ Verification can't be done, because offer page in zed doesn't open before `Marke
 
 Verification: wrong table name, should be `spy_oms_product_offer_reservation`
 
+Creating a product with both offer and packaging unit may require a guide because it is a non-trivial task.
+
 ##Other
 
 `Marketplace Product + Inventory Management` guide may be unnecessary here, because it was already mentioned in
