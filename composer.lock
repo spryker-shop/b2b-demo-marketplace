@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e7c2230a66e25307b0ff27fcf800c1f3",
+    "content-hash": "df15673beb7739cf385bf9ee0109974d",
     "packages": [
         {
             "name": "brick/math",
@@ -4439,6 +4439,48 @@
             ],
             "description": "Marketplace Product Offer Prices [feature]",
             "time": "2021-08-30T07:34:33+00:00"
+        },
+        {
+            "name": "spryker-feature/marketplace-promotions-discounts",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-feature/marketplace-promotions-discounts.git",
+                "reference": "d5763f04cd40e2da78c393526514d832795e3f92"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-feature/marketplace-promotions-discounts/zipball/d5763f04cd40e2da78c393526514d832795e3f92",
+                "reference": "d5763f04cd40e2da78c393526514d832795e3f92",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker-shop/cart-code-widget": "^1.4.0",
+                "spryker-shop/discount-promotion-widget": "^3.3.0",
+                "spryker-shop/discount-widget": "^1.8.0",
+                "spryker/cart-code": "^1.2.0",
+                "spryker/discount": "^9.17.0",
+                "spryker/discount-merchant-sales-order": "^1.0.0",
+                "spryker/discount-merchant-sales-order-gui": "^1.0.0",
+                "spryker/discount-promotion": "^4.2.0"
+            },
+            "suggest": {
+                "spryker-feature/marketplace-order-management": "Recommended feature dependency.",
+                "spryker-feature/promotions-discounts": "Recommended feature dependency."
+            },
+            "type": "metapackage",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "202108.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Marketplace Promotions & Discounts [feature]",
+            "time": "2021-08-30T07:33:39+00:00"
         },
         {
             "name": "spryker-feature/marketplace-shipment",
@@ -23988,6 +24030,90 @@
             ],
             "description": "DiscountExtension module",
             "time": "2021-12-06T13:29:28+00:00"
+        },
+        {
+            "name": "spryker/discount-merchant-sales-order",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/discount-merchant-sales-order.git",
+                "reference": "07faefe7fa54aef8ae89207cc4313296a2d3b56b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/discount-merchant-sales-order/zipball/07faefe7fa54aef8ae89207cc4313296a2d3b56b",
+                "reference": "07faefe7fa54aef8ae89207cc4313296a2d3b56b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/kernel": "^3.33.0",
+                "spryker/merchant-sales-order-extension": "^1.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/merchant-sales-order": "*",
+                "spryker/propel": "*",
+                "spryker/sales": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "DiscountMerchantSalesOrder module",
+            "time": "2021-08-16T16:27:47+00:00"
+        },
+        {
+            "name": "spryker/discount-merchant-sales-order-gui",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/discount-merchant-sales-order-gui.git",
+                "reference": "84f7b2e51321127740f52db5f3f940e0b3c4913b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/discount-merchant-sales-order-gui/zipball/84f7b2e51321127740f52db5f3f940e0b3c4913b",
+                "reference": "84f7b2e51321127740f52db5f3f940e0b3c4913b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/kernel": "^3.33.0",
+                "spryker/symfony": "^3.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "DiscountMerchantSalesOrderGui module",
+            "time": "2021-07-07T15:14:17+00:00"
         },
         {
             "name": "spryker/discount-promotion",
@@ -58254,6 +58380,12 @@
             "alias": "202204.0",
             "alias_normalized": "202204.0",
             "version": "9999999-dev",
+            "package": "spryker-feature/marketplace-promotions-discounts"
+        },
+        {
+            "alias": "202204.0",
+            "alias_normalized": "202204.0",
+            "version": "9999999-dev",
             "package": "spryker-feature/marketplace-shipment"
         },
         {
@@ -58284,6 +58416,7 @@
         "spryker-feature/marketplace-product": 20,
         "spryker-feature/marketplace-product-offer": 20,
         "spryker-feature/marketplace-product-offer-prices": 20,
+        "spryker-feature/marketplace-promotions-discounts": 20,
         "spryker-feature/marketplace-shipment": 20,
         "spryker-feature/merchant-category": 20,
         "spryker-feature/merchant-opening-hours": 20,
