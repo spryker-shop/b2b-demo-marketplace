@@ -1,3 +1,9 @@
+#General problems
+
+Comments like `SomeEntity[]` should be replaced by `array<SomeEntity>`
+
+------------------------------------------------------------------------------------------------------------------------
+
 #MP-6392 Marketplace Merchant
 ##feature integration
 
@@ -174,6 +180,12 @@ Prerequisites: missing integration guide for Marketplace Product Offer Volume Pr
 ##Marketplace Shipment + Customer
 
 typo: `ssrc` instead of `src`
+
+#MP-6400 Marketplace promotions and discounts
+
+5 ) wrong use, should be `Spryker\Zed\DiscountMerchantSalesOrder\Communication\Plugin\MerchantSalesOrder\DiscountMerchantOrderFilterPlugin;`
+
+may require `console router:cache:warm-up` to start work
 
 #MP-6401 Marketplace Product Options
 
