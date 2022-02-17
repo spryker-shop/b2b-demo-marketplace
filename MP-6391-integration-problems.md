@@ -281,6 +281,11 @@ Verification can't be done, because offer page in zed doesn't open before `Marke
 
 Verification: wrong table name, should be `spy_oms_product_offer_reservation`
 
+##Other
+
+`Marketplace Product + Inventory Management` guide may be unnecessary here, because it was already mentioned in
+`Marketplace Product` and also because it doesn't require **Marketplace** `Inventory Managament`, only usual one.
+
 -------------------------------------------------------------
 #MP-6406 Merchant Opening Hours feature
 ##feature integration issues
