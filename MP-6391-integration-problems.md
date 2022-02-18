@@ -248,7 +248,11 @@ and Node (<15) version (higher versions result in `function remove_cv_t() not fo
 
 3 ) verification can't be done, because MP is not up yet
 
-5 ) to run `npm run mp:build` ZedUi module is needed (both as a composer dependency and on Pyz level)
+4 ) `wget -O .yarn/plugins/@yarnpkg/plugin-interactive-tools.cjs https://raw.githubusercontent.com/spryker-shop/suite/master/.yarn/plugins/%40yarnpkg/plugin-interactive-tools.cjs`
+
+If you're getting `Missing write access to node_modules/mp-profile`, delete this **file** and make a **folder** with the same name
+
+5 ) `test-setup.js` and `webpack.config.js` should both be `.ts`
 
 6 ) `yves-isntall-dependencies and yves-isntall-dependencies` - should be `yves-install-dependencies and zed-isntall-dependencies`
 

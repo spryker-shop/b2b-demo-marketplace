@@ -12,6 +12,8 @@ use Spryker\Zed\Acl\AclConfig as SprykerAclConfig;
 
 class AclConfig extends SprykerAclConfig
 {
+    protected const RULE_TYPE_DENY = 'deny';
+
     /**
      * @return array
      */
@@ -25,5 +27,31 @@ class AclConfig extends SprykerAclConfig
                 'group' => AclConstants::ROOT_GROUP,
             ],
         ];
+    }
+
+    /**
+     * @param string[][] $installerRules
+     *
+     * @return string[][]
+     */
+    protected function addMerchantPortalInstallerRules(array $installerRules): array
+    {
+        $bundleNames = [
+            'user-merchant-portal-gui',
+            'dashboard-merchant-portal-gui',
+            'security-merchant-portal-gui',
+        ];
+
+        foreach ($bundleNames as $bundleName) {
+            $installerRules[] = [
+                'bundle' => $bundleName,
+                'controller' => AclConstants::VALIDATOR_WILDCARD,
+                'action' => AclConstants::VALIDATOR_WILDCARD,
+                'type' => static::RULE_TYPE_DENY,
+                'role' => AclConstants::ROOT_ROLE,
+            ];
+        }
+
+        return $installerRules;
     }
 }

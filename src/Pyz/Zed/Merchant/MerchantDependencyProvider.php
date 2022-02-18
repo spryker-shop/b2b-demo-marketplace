@@ -26,8 +26,8 @@ class MerchantDependencyProvider extends SprykerMerchantDependencyProvider
     {
         return [
             new MerchantProfileMerchantPostCreatePlugin(),
-            new MerchantAclMerchantPostCreatePlugin(),
             new MerchantStockMerchantPostCreatePlugin(),
+            new MerchantAclMerchantPostCreatePlugin(),
         ];
     }
 
