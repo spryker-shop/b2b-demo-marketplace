@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "76b8c07af6f1a3acac39d7a01c54149c",
+    "content-hash": "db4769ad0a1d0c5ec302b7530e9a0fc0",
     "packages": [
         {
             "name": "brick/math",
@@ -4239,6 +4239,50 @@
             ],
             "description": "Marketplace Merchant Order Threshold [feature]",
             "time": "2022-02-11T17:59:16+00:00"
+        },
+        {
+            "name": "spryker-feature/marketplace-merchantportal-core",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-feature/marketplace-merchantportal-core.git",
+                "reference": "8ab4d4f9b61767a886355a42ef860dc6bbcbf755"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-feature/marketplace-merchantportal-core/zipball/8ab4d4f9b61767a886355a42ef860dc6bbcbf755",
+                "reference": "8ab4d4f9b61767a886355a42ef860dc6bbcbf755",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/acl": "^3.9.0",
+                "spryker/acl-entity": "^1.0.0",
+                "spryker/acl-merchant-portal": "^1.1.0",
+                "spryker/gui-table": "^1.0.0",
+                "spryker/merchant-portal-application": "^1.0.0",
+                "spryker/merchant-user": "^1.0.0",
+                "spryker/merchant-user-password-reset-mail": "^1.0.0",
+                "spryker/navigation": "^2.6.0",
+                "spryker/security-merchant-portal-gui": "^1.0.0",
+                "spryker/user-merchant-portal-gui": "^1.0.0",
+                "spryker/zed-ui": "^1.1.0"
+            },
+            "suggest": {
+                "spryker-feature/acl": "Recommended feature dependency."
+            },
+            "type": "metapackage",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "202108.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Marketplace MerchantPortal Core [feature]",
+            "time": "2021-08-30T07:34:42+00:00"
         },
         {
             "name": "spryker-feature/marketplace-order-management",
@@ -13199,6 +13243,57 @@
             ],
             "description": "AclExtension module",
             "time": "2021-07-30T05:04:54+00:00"
+        },
+        {
+            "name": "spryker/acl-merchant-portal",
+            "version": "1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/acl-merchant-portal.git",
+                "reference": "b774168077c7a9f54cc5d3147c96874732cf1211"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/acl-merchant-portal/zipball/b774168077c7a9f54cc5d3147c96874732cf1211",
+                "reference": "b774168077c7a9f54cc5d3147c96874732cf1211",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4",
+                "spryker/acl": "^3.9.0",
+                "spryker/acl-entity": "^1.0.0",
+                "spryker/acl-entity-extension": "^1.0.0",
+                "spryker/acl-extension": "^1.1.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/merchant": "^3.0.0",
+                "spryker/merchant-extension": "^1.1.0",
+                "spryker/merchant-user": "^1.0.0",
+                "spryker/merchant-user-extension": "^1.1.0",
+                "spryker/transfer": "^3.25.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*",
+                "spryker/user": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "AclMerchantPortal module",
+            "time": "2022-01-19T10:41:09+00:00"
         },
         {
             "name": "spryker/agent",
@@ -23623,6 +23718,86 @@
             "time": "2021-02-05T08:49:33+00:00"
         },
         {
+            "name": "spryker/dashboard-merchant-portal-gui",
+            "version": "1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/dashboard-merchant-portal-gui.git",
+                "reference": "db78110d8fc55a30964c6601036f211bced9fd20"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/dashboard-merchant-portal-gui/zipball/db78110d8fc55a30964c6601036f211bced9fd20",
+                "reference": "db78110d8fc55a30964c6601036f211bced9fd20",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4",
+                "spryker/dashboard-merchant-portal-gui-extension": "^1.0.0",
+                "spryker/kernel": "^3.33.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/zed-ui": "^1.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "DashboardMerchantPortalGui module",
+            "time": "2022-02-03T10:07:21+00:00"
+        },
+        {
+            "name": "spryker/dashboard-merchant-portal-gui-extension",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/dashboard-merchant-portal-gui-extension.git",
+                "reference": "dd166c5585321974b34bfe1cb05417f77a19506b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/dashboard-merchant-portal-gui-extension/zipball/dd166c5585321974b34bfe1cb05417f77a19506b",
+                "reference": "dd166c5585321974b34bfe1cb05417f77a19506b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "DashboardMerchantPortalGuiExtension module",
+            "time": "2021-08-16T16:27:47+00:00"
+        },
+        {
             "name": "spryker/data-export",
             "version": "0.1.3",
             "source": {
@@ -25806,6 +25981,59 @@
             "time": "2021-11-24T13:32:22+00:00"
         },
         {
+            "name": "spryker/gui-table",
+            "version": "1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/gui-table.git",
+                "reference": "db2604f196d79622ecfb71526dbca453a7bfb396"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/gui-table/zipball/db2604f196d79622ecfb71526dbca453a7bfb396",
+                "reference": "db2604f196d79622ecfb71526dbca453a7bfb396",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4",
+                "spryker/application-extension": "^1.0.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/transfer": "^3.25.0",
+                "spryker/translator": "^1.1.0",
+                "spryker/twig": "^3.13.0",
+                "spryker/util-date-time": "^1.2.0",
+                "spryker/util-encoding": "^2.0.0",
+                "spryker/zed-ui": "^1.2.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/container": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "suggest": {
+                "spryker/container": "If you want to use ApplicationPluginInterface"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "GuiTable module",
+            "time": "2022-02-03T10:07:21+00:00"
+        },
+        {
             "name": "spryker/guzzle",
             "version": "2.3.0",
             "source": {
@@ -27366,6 +27594,50 @@
                 "source": "https://github.com/spryker/merchant-opening-hours-storage/tree/1.0.0"
             },
             "time": "2021-08-16T16:27:47+00:00"
+        },
+        {
+            "name": "spryker/merchant-portal-application",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/merchant-portal-application.git",
+                "reference": "ce69f5c3c480f41fe7b248f549a0f821c8d920fa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/merchant-portal-application/zipball/ce69f5c3c480f41fe7b248f549a0f821c8d920fa",
+                "reference": "ce69f5c3c480f41fe7b248f549a0f821c8d920fa",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/application": "^3.0.0",
+                "spryker/container": "^1.0.0",
+                "spryker/kernel": "^3.30.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "suggest": {
+                "spryker/log": "For logging request and response."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "MerchantPortalApplication module",
+            "time": "2021-08-13T12:47:42+00:00"
         },
         {
             "name": "spryker/merchant-product",
@@ -29487,6 +29759,51 @@
                 "proprietary"
             ],
             "description": "MerchantUserGui module",
+            "time": "2021-08-16T16:27:47+00:00"
+        },
+        {
+            "name": "spryker/merchant-user-password-reset-mail",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/merchant-user-password-reset-mail.git",
+                "reference": "32afb660ca5726b0e43043b52a57dbbfc4ee633e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/merchant-user-password-reset-mail/zipball/32afb660ca5726b0e43043b52a57dbbfc4ee633e",
+                "reference": "32afb660ca5726b0e43043b52a57dbbfc4ee633e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/kernel": "^3.33.0",
+                "spryker/mail": "^4.6.0",
+                "spryker/merchant-user": "^1.0.0",
+                "spryker/user-password-reset-extension": "^1.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*",
+                "spryker/user": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "MerchantUserPasswordResetMail module",
             "time": "2021-08-16T16:27:47+00:00"
         },
         {
@@ -43062,6 +43379,67 @@
             "time": "2021-12-10T09:14:37+00:00"
         },
         {
+            "name": "spryker/security-merchant-portal-gui",
+            "version": "1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/security-merchant-portal-gui.git",
+                "reference": "ca8694eec8314bfe88933234884839f6604c98a3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/security-merchant-portal-gui/zipball/ca8694eec8314bfe88933234884839f6604c98a3",
+                "reference": "ca8694eec8314bfe88933234884839f6604c98a3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4",
+                "spryker/kernel": "^3.33.0",
+                "spryker/merchant-user": "^1.0.0",
+                "spryker/messenger": "^3.0.0",
+                "spryker/security": "^1.5.0",
+                "spryker/security-extension": "^1.0.0",
+                "spryker/symfony": "^3.5.0",
+                "spryker/user-merchant-portal-gui-extension": "^1.0.0",
+                "spryker/zed-ui": "^1.0.0"
+            },
+            "require-dev": {
+                "spryker/application": "*",
+                "spryker/code-sniffer": "*",
+                "spryker/container": "*",
+                "spryker/customer": "*",
+                "spryker/event-dispatcher": "*",
+                "spryker/form": "*",
+                "spryker/merchant": "*",
+                "spryker/propel": "*",
+                "spryker/router": "*",
+                "spryker/session": "*",
+                "spryker/testify": "*",
+                "spryker/user": "*",
+                "spryker/validator": "*"
+            },
+            "suggest": {
+                "spryker/container": "Add this module when you want to use the Container."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "SecurityMerchantPortalGui module",
+            "time": "2022-02-03T10:07:21+00:00"
+        },
+        {
             "name": "spryker/security-oauth-user",
             "version": "1.1.1",
             "source": {
@@ -46696,6 +47074,93 @@
             "time": "2020-05-29T13:08:37+00:00"
         },
         {
+            "name": "spryker/user-merchant-portal-gui",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/user-merchant-portal-gui.git",
+                "reference": "05ed1716c96255d34765d0c846e1463e3d60e670"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/user-merchant-portal-gui/zipball/05ed1716c96255d34765d0c846e1463e3d60e670",
+                "reference": "05ed1716c96255d34765d0c846e1463e3d60e670",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4",
+                "spryker/gui": "^3.0.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/locale": "^3.2.0",
+                "spryker/merchant-user": "^1.0.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/transfer": "^3.25.0",
+                "spryker/translator": "^1.1.0",
+                "spryker/user-locale": "^1.0.0",
+                "spryker/user-merchant-portal-gui-extension": "^1.0.0",
+                "spryker/zed-ui": "^1.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "UserMerchantPortalGui module",
+            "time": "2022-02-03T10:07:21+00:00"
+        },
+        {
+            "name": "spryker/user-merchant-portal-gui-extension",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/user-merchant-portal-gui-extension.git",
+                "reference": "c3e838287c83663622ea23f3c6754956e5300a35"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/user-merchant-portal-gui-extension/zipball/c3e838287c83663622ea23f3c6754956e5300a35",
+                "reference": "c3e838287c83663622ea23f3c6754956e5300a35",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "UserMerchantPortalGuiExtension module",
+            "time": "2021-07-07T15:14:17+00:00"
+        },
+        {
             "name": "spryker/user-password-reset",
             "version": "1.0.0",
             "source": {
@@ -47983,6 +48448,56 @@
             ],
             "description": "ZedRequestExtension module",
             "time": "2020-11-11T13:55:08+00:00"
+        },
+        {
+            "name": "spryker/zed-ui",
+            "version": "1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/zed-ui.git",
+                "reference": "485c58f3e2534fdb3335a3905c044ceaf5834624"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/zed-ui/zipball/485c58f3e2534fdb3335a3905c044ceaf5834624",
+                "reference": "485c58f3e2534fdb3335a3905c044ceaf5834624",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4",
+                "spryker/application-extension": "^1.0.0",
+                "spryker/kernel": "^3.33.0",
+                "spryker/translator": "^1.1.0",
+                "spryker/twig": "^3.13.0",
+                "spryker/twig-extension": "^1.0.0",
+                "spryker/util-encoding": "^2.1.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/container": "*"
+            },
+            "suggest": {
+                "spryker/container": "If you want to use Twig plugins",
+                "spryker/ui-components": "If you want to use Spryker web components in HTML.",
+                "spryker/zed-navigation": "If you want to use the navigation."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ZedUi module",
+            "time": "2022-02-03T10:07:21+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -58731,6 +59246,12 @@
             "alias": "202204.0",
             "alias_normalized": "202204.0",
             "version": "9999999-dev",
+            "package": "spryker-feature/marketplace-merchantportal-core"
+        },
+        {
+            "alias": "202204.0",
+            "alias_normalized": "202204.0",
+            "version": "9999999-dev",
             "package": "spryker-feature/marketplace-order-management"
         },
         {
@@ -58788,6 +59309,7 @@
         "spryker-feature/marketplace-inventory-management": 20,
         "spryker-feature/marketplace-merchant": 20,
         "spryker-feature/marketplace-merchant-order-threshold": 20,
+        "spryker-feature/marketplace-merchantportal-core": 20,
         "spryker-feature/marketplace-order-management": 20,
         "spryker-feature/marketplace-product": 20,
         "spryker-feature/marketplace-product-offer": 20,
