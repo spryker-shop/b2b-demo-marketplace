@@ -280,6 +280,7 @@ AclConfig file missing `RULE_TYPE_DENY` definition:
 ##Missed from guide
 
 Some file updates needed for MP to work are missing, see https://github.com/spryker/b2b-demo-shop-internal/commit/334306a43055c74c5c0effc82632a3a8fc20dd7f
+and https://github.com/spryker/b2b-demo-shop-internal/commit/2d192c7e43cd4e51b136bfc8259e9da8558c73ea
 
 ------------------------------------------------------------------------------------------------------------------------
 
