@@ -1,0 +1,9 @@
+<?php
+
+namespace Pyz\Zed\MerchantProductOfferDataImport;
+
+use Spryker\Zed\MerchantProductOfferDataImport\MerchantProductOfferDataImportDependencyProvider as SprykerMerchantProductOfferDataImportDependencyProvider;
+
+class MerchantProductOfferDataImportDependencyProvider extends SprykerMerchantProductOfferDataImportDependencyProvider
+{
+}
