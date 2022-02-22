@@ -12,11 +12,12 @@ use Spryker\Zed\MerchantSalesOrderMerchantUserGui\MerchantSalesOrderMerchantUser
 class MerchantSalesOrderMerchantUserGuiConfig extends SprykerMerchantSalesOrderMerchantUserGuiConfig
 {
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getMerchantSalesOrderDetailExternalBlocksUrls(): array
     {
         return [
+            'discount' => '/discount-merchant-sales-order-gui/merchant-sales-order/list',
             'cart_note' => '/cart-note-merchant-sales-order-gui/merchant-sales-order/list',
         ];
     }
