@@ -181,9 +181,12 @@ typo: `ssrc` instead of `src`
 
 4 ) Regular product option import requires some changes too. See https://github.com/spryker/b2b-demo-shop-internal/commit/0a46f72835c4c91b75570fb86292bb1d4c7fe012
 
-#MP-6401 Marketplace Product Options
+##Other
 
 Feature walkthrough article doesn't have a link to integration guide
+
+`Merchant Portal - Marketplace Product Option Management feature integration` link is missing
+(https://docs.spryker.com/docs/marketplace/dev/feature-integration-guides/202108.0/merchant-portal-marketplace-product-option-management-feature-integration.html)
 
 #MP-6402 Marketplace Cart
 
