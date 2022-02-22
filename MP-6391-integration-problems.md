@@ -307,6 +307,9 @@ Creating a product with both offer and packaging unit may require a guide becaus
 `Marketplace Product + Inventory Management` guide may be unnecessary here, because it was already mentioned in
 `Marketplace Product` and also because it doesn't require **Marketplace** `Inventory Managament`, only usual one.
 
+`Merchant Portal - Marketplace Product + Inventory Management feature integration` link is missing
+(https://docs.spryker.com/docs/marketplace/dev/feature-integration-guides/202108.0/merchant-portal-marketplace-product-inventory-management-feature-integration.html)
+
 -------------------------------------------------------------
 #MP-6406 Merchant Opening Hours feature
 ##feature integration issues

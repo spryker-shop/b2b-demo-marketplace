@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b4f2a7c387deda85c456889f31ca6f8e",
+    "content-hash": "ac31b664d4091558c221f9f171c3248b",
     "packages": [
         {
             "name": "brick/math",
@@ -14225,6 +14225,51 @@
             ],
             "description": "AvailabilityGuiExtension module",
             "time": "2020-06-17T12:01:35+00:00"
+        },
+        {
+            "name": "spryker/availability-merchant-portal-gui",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/availability-merchant-portal-gui.git",
+                "reference": "57af9aa15cd00f2c812db6adf3c111bc3d027e00"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/availability-merchant-portal-gui/zipball/57af9aa15cd00f2c812db6adf3c111bc3d027e00",
+                "reference": "57af9aa15cd00f2c812db6adf3c111bc3d027e00",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/availability": "^9.8.0",
+                "spryker/decimal-object": "^1.0.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/merchant-stock": "^1.0.0",
+                "spryker/merchant-user": "^1.0.0",
+                "spryker/product-merchant-portal-gui-extension": "^1.0.0",
+                "spryker/transfer": "^3.25.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "AvailabilityMerchantPortalGui module",
+            "time": "2021-08-16T16:27:47+00:00"
         },
         {
             "name": "spryker/availability-notification",
