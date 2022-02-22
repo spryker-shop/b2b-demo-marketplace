@@ -1,3 +1,9 @@
+#General problems
+
+Comments like `SomeEntity[]` should be replaced by `array<SomeEntity>`
+
+------------------------------------------------------------------------------------------------------------------------
+
 #MP-6392 Marketplace Merchant
 ##feature integration
 
@@ -47,6 +53,7 @@ The following code can't be added to `GlueApplicationDependencyProvider::getReso
 
    "Make sure that by sending the request GET http://glue.mysprykershop.com/orders?include=merchant, merchant attributes are returned in response." - merchant offers not integrated yet, so can't order items from merchants.
 
+------------------------------------------------------------------------------------------------------------------------
 
 ##Marketplace Merchant
 4 ) requires MerchantPortal, that isn't integrated yet.
@@ -68,6 +75,8 @@ Verification: `config/Zed/navigation.xml` needs to be updated to see a new menu 
         <action>index</action>
 
     </merchant-portal-profile>
+
+------------------------------------------------------------------------------------------------------------------------
 
 #MP-6394 Marketplace Product
 
@@ -107,6 +116,8 @@ Verification requires writing additional code for direct CartFacade call
 
 Same with `Marketplace Product + Inventory Management feature integration`, `Merchant Portal - Marketplace Product feature integration` and `Merchant Portal - Marketplace Product + Tax feature integration`
 
+------------------------------------------------------------------------------------------------------------------------
+
 #MP-6393 Marketplace Product Offer
 
 ##Install feature core
@@ -143,6 +154,8 @@ Feature front end: wrong filename, should be `src/Pyz/Yves/CartPage/CartPageDepe
 
 1 ) Install is already done.
 
+------------------------------------------------------------------------------------------------------------------------
+
 #MP-6397 Marketplace Product Offer Prices
 
 6 ) In `src/Pyz/Service/PriceProduct/PriceProductDependencyProvider.php`: second use should be `use Spryker\Service\PriceProductOffer\Plugin\PriceProduct\PriceProductOfferPriceProductFilterPlugin;`
@@ -165,6 +178,8 @@ Prerequisites: missing integration guide for Marketplace Product Offer Volume Pr
 
 1 ) Wrong package name, should be `spryker/price-product-offer-volumes-rest-api`; wrong version
 
+------------------------------------------------------------------------------------------------------------------------
+
 #MP-6399 Marketplace Shipment
 
 2 ) and 3 ) should go in the opposite order
@@ -174,6 +189,16 @@ Prerequisites: missing integration guide for Marketplace Product Offer Volume Pr
 ##Marketplace Shipment + Customer
 
 typo: `ssrc` instead of `src`
+
+------------------------------------------------------------------------------------------------------------------------
+
+#MP-6400 Marketplace promotions and discounts
+
+5 ) wrong use, should be `Spryker\Zed\DiscountMerchantSalesOrder\Communication\Plugin\MerchantSalesOrder\DiscountMerchantOrderFilterPlugin;`
+
+may require `console router:cache:warm-up` to start work
+
+------------------------------------------------------------------------------------------------------------------------
 
 #MP-6401 Marketplace Product Option
 
@@ -188,15 +213,28 @@ Feature walkthrough article doesn't have a link to integration guide
 `Merchant Portal - Marketplace Product Option Management feature integration` link is missing
 (https://docs.spryker.com/docs/marketplace/dev/feature-integration-guides/202108.0/merchant-portal-marketplace-product-option-management-feature-integration.html)
 
+------------------------------------------------------------------------------------------------------------------------
+
 #MP-6402 Marketplace Cart
 
 Feature walkthrough article: broken formatting
+
+------------------------------------------------------------------------------------------------------------------------
 
 #MP-6404 Persistence ACL
 
 1 ) typo: extra space, should be `spryker-feature/acl:"202108.0"`, not `spryker-feature/acl: "202108.0"`
 
+2 ) AclEntityRule mentioned twice.
+
 4 ) Files missing `namespace` and `use` parts
+
+5 ) Verification requires additional coding
+
+User transfer doesn't contain ACL groups (the corresponding plugin executed in other methods, than getting UserTransfer.
+It can be checked on User Edit page in Backoffice).
+
+------------------------------------------------------------------------------------------------------------------------
 
 #MP-6407 Marketplace Merchant Portal Core
 ##Install feature core
@@ -248,6 +286,31 @@ AclConfig file missing `RULE_TYPE_DENY` definition:
 
 Some file updates needed for MP to work are missing, see https://github.com/spryker/b2b-demo-shop-internal/commit/334306a43055c74c5c0effc82632a3a8fc20dd7f
 
+------------------------------------------------------------------------------------------------------------------------
+
+#MP-6396 Marketplace Inventory Management
+
+1 ) extra space before package version
+
+5 ) wrong filenames
+
+Typo: `Warehouses` instead of `Wherehouses`
+
+If offer page doesn't work, check, if there is stock data for it and if the corresponding warehouse is connected to the store.
+
+Verification can't be done, because offer page in zed doesn't open before `Marketplace Inventory Management + Order Management` feature integration
+
+##Marketplace Inventory Management + Packaging Units
+
+Verification: wrong table name, should be `spy_oms_product_offer_reservation`
+
+Creating a product with both offer and packaging unit may require a guide because it is a non-trivial task.
+
+##Other
+
+`Marketplace Product + Inventory Management` guide may be unnecessary here, because it was already mentioned in
+`Marketplace Product` and also because it doesn't require **Marketplace** `Inventory Managament`, only usual one.
+
 -------------------------------------------------------------
 #MP-6406 Merchant Opening Hours feature
 ##feature integration issues
@@ -257,4 +320,35 @@ Some file updates needed for MP to work are missing, see https://github.com/spry
 4. Missing glossary translations for date schedule, should be copy-pasted from latest suite-nonsplit.
 5. spryker/merchant-opening-hours-rest-api - should be ^1.0.0, instead of ^0.1.0.
 6. MerchantOpeningHoursWeekdayScheduleWritePublisherPlugin and MerchantOpeningHoursWeekdayScheduleWritePublisherPlugin not mentioned in IG. (And not used in CORE, but should)
+-------------------------------------------------------------
+#MP-6405 Merchant Category
+##feature integration issues
+1. Specific modules mentioned in composer require step, instead of feature.
+2. Zed should be replaced by `Backoffice`.
+3. Typo in merchant_category.csv example.
+4. CategoryWritePublisherPlugin missing in the plugins table.
+#glue integration issues
+1. 0.x version mentioned in the composer require step, instead of stable one.
+2. In the example `http://glue.mysprykershop.com/merchants?categoryKeys[]={{some-category-key}}` - parameter categoryKeys should be category-keys.
+-------------------------------------------------------------
+
+#MP-6395 Merchant Order Management feature
+##feature integration issues
+1. Typo in data/import/common/common/marketplace/merchant_oms_process.csv example on the first line
+2. Missing code sample for abstract class, but it's used in the other code samples https://github.com/spryker/suite-nonsplit/blob/master/src/Pyz/Zed/MerchantOms/Communication/Plugin/Oms/AbstractTriggerOmsEventCommandPlugin.php
+3. Container is not used in src/Pyz/Zed/MerchantOms/MerchantOmsDependencyProvider.php, but registered in `use` section.
+4. Typo (** at the end) in src/Pyz/Zed/Shipment/ShipmentDependencyProvider.php code sample name.
+5. This IG is not related to Marketplace Order Management at all, but have it in the name https://docs.spryker.com/docs/marketplace/dev/feature-integration-guides/202108.0/marketplace-order-management-customer-account-management-feature-integration.html
+6. Import types should be added to full_EU.yml
+7. https://docs.spryker.com/docs/marketplace/dev/feature-integration-guides/202108.0/marketplace-dummy-payment-feature-integration.html is not mentioned in the dependencies, but without it is not possible to test the feature.
+
+## Marketplace Dummy Payment
+1. Invalid file name Pyz\Zed\Payment\PaymentDependencyProvider.php=>src/Pyz/Zed/Payment/PaymentDependencyProvider.php
+2. Typo in data/import/payment_method.csv on the first line
+3. Invalid file name Pyz\Yves\CheckoutPage\CheckoutPageDependencyProvider.php=>src/Pyz/Yves/CheckoutPage/CheckoutPageDependencyProvider.php
+4. Code sample for CheckoutPageDependencyProvider.php is invalid, call of provided methods in provideDependencies() is missing.
+5. MerchantSalesOrderDependencyProvider has no example of adding project level dependency to addSalesFacade.
+
+## Marketplace Order Management + Order Threshold feature integration
+1. Should be moved to standalone IG, because feature was introduced spryker-feature/marketplace-merchant-order-threshold
 -------------------------------------------------------------
