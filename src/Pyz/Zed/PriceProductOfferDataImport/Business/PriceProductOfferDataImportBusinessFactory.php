@@ -51,7 +51,8 @@ class PriceProductOfferDataImportBusinessFactory extends SprykerPriceProductOffe
             ->addStep($this->createPriceProductOfferWriterStep());
 
         $dataImporter
-            ->setDataSetCondition($this->createCombinedPriceProductOfferMandatoryColumnCondition())
+            ->setDataSetCondition($this->createCombinedPriceProductOfferMandatoryColumnCondition());
+        $dataImporter
             ->addDataSetStepBroker($dataSetStepBroker);
 
         return $dataImporter;
