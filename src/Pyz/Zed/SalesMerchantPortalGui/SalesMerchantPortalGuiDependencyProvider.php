@@ -9,6 +9,7 @@ namespace Pyz\Zed\SalesMerchantPortalGui;
 
 use Spryker\Zed\CartNoteMerchantPortalGui\Communication\Plugin\SalesMerchantPortalGui\CartNoteMerchantOrderItemTableExpanderPlugin;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Plugin\SalesMerchantPortalGui\ProductOfferMerchantOrderItemTableExpanderPlugin;
+use Spryker\Zed\ProductOptionMerchantPortalGui\Communication\Plugin\SalesMerchantPortalGui\ProductOptionMerchantOrderItemTableExpanderPlugin;
 use Spryker\Zed\SalesMerchantPortalGui\SalesMerchantPortalGuiDependencyProvider as SprykerSalesMerchantPortalGuiDependencyProvider;
 
 class SalesMerchantPortalGuiDependencyProvider extends SprykerSalesMerchantPortalGuiDependencyProvider
@@ -21,6 +22,7 @@ class SalesMerchantPortalGuiDependencyProvider extends SprykerSalesMerchantPorta
         return [
             new CartNoteMerchantOrderItemTableExpanderPlugin(),
             new ProductOfferMerchantOrderItemTableExpanderPlugin(),
+            new ProductOptionMerchantOrderItemTableExpanderPlugin(),
         ];
     }
 }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e3b088a7477d6ba3b335d0bdbe8d8f8b",
+    "content-hash": "290f827439861ae582301689101772e4",
     "packages": [
         {
             "name": "brick/math",
@@ -38583,6 +38583,48 @@
             ],
             "description": "ProductOptionGuiExtension module",
             "time": "2021-05-28T11:56:55+00:00"
+        },
+        {
+            "name": "spryker/product-option-merchant-portal-gui",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/product-option-merchant-portal-gui.git",
+                "reference": "bb7002759b8f61d128a16d43d864032df2dbb52c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/product-option-merchant-portal-gui/zipball/bb7002759b8f61d128a16d43d864032df2dbb52c",
+                "reference": "bb7002759b8f61d128a16d43d864032df2dbb52c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/kernel": "^3.33.0",
+                "spryker/product-option": "^6.0.0 || ^8.0.0",
+                "spryker/sales-merchant-portal-gui-extension": "^1.0.0",
+                "spryker/transfer": "^3.8.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ProductOptionMerchantPortalGui module",
+            "time": "2021-08-16T16:27:47+00:00"
         },
         {
             "name": "spryker/product-option-storage",
