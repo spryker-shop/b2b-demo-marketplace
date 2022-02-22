@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "290f827439861ae582301689101772e4",
+    "content-hash": "c914f7331e2d936f6f98f9ea06b75839",
     "packages": [
         {
             "name": "brick/math",
@@ -4111,6 +4111,38 @@
             ],
             "description": "Mailing & Notifications [feature]",
             "time": "2021-08-30T07:33:42+00:00"
+        },
+        {
+            "name": "spryker-feature/marketplace-cart",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-feature/marketplace-cart.git",
+                "reference": "10a6be4b1ad474f12ba3a03b42a1ad766dbb40b8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-feature/marketplace-cart/zipball/10a6be4b1ad474f12ba3a03b42a1ad766dbb40b8",
+                "reference": "10a6be4b1ad474f12ba3a03b42a1ad766dbb40b8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/cart-note": "^1.0.0",
+                "spryker/cart-note-merchant-sales-order-gui": "^1.0.0"
+            },
+            "type": "metapackage",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "202108.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Marketplace Cart [feature]",
+            "time": "2021-08-25T17:21:06+00:00"
         },
         {
             "name": "spryker-feature/marketplace-inventory-management",
@@ -15404,6 +15436,47 @@
             ],
             "description": "CartNoteMerchantPortalGui module",
             "time": "2021-08-16T16:27:47+00:00"
+        },
+        {
+            "name": "spryker/cart-note-merchant-sales-order-gui",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/cart-note-merchant-sales-order-gui.git",
+                "reference": "b3fff239eae7363767e207c0a62c0cba594f0cb2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/cart-note-merchant-sales-order-gui/zipball/b3fff239eae7363767e207c0a62c0cba594f0cb2",
+                "reference": "b3fff239eae7363767e207c0a62c0cba594f0cb2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/cart-note": "^1.0.0",
+                "spryker/kernel": "^3.33.0",
+                "spryker/symfony": "^3.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "CartNoteMerchantSalesOrderGui module",
+            "time": "2021-07-07T15:14:17+00:00"
         },
         {
             "name": "spryker/cart-note-product-bundle-connector",
@@ -60030,6 +60103,12 @@
             "alias": "202204.0",
             "alias_normalized": "202204.0",
             "version": "9999999-dev",
+            "package": "spryker-feature/marketplace-cart"
+        },
+        {
+            "alias": "202204.0",
+            "alias_normalized": "202204.0",
+            "version": "9999999-dev",
             "package": "spryker-feature/marketplace-inventory-management"
         },
         {
@@ -60126,6 +60205,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "spryker-feature/acl": 20,
+        "spryker-feature/marketplace-cart": 20,
         "spryker-feature/marketplace-inventory-management": 20,
         "spryker-feature/marketplace-merchant": 20,
         "spryker-feature/marketplace-merchant-order-threshold": 20,
