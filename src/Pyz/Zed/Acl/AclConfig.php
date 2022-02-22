@@ -37,9 +37,14 @@ class AclConfig extends SprykerAclConfig
     protected function addMerchantPortalInstallerRules(array $installerRules): array
     {
         $bundleNames = [
-            'user-merchant-portal-gui',
             'dashboard-merchant-portal-gui',
+            'merchant-profile-merchant-portal-gui',
+            'product-merchant-portal-gui',
+            'product-offer-merchant-portal-gui',
             'security-merchant-portal-gui',
+            'sales-merchant-portal-gui',
+            'user-merchant-portal-gui',
+            'dummy-merchant-portal-gui',
         ];
 
         foreach ($bundleNames as $bundleName) {
@@ -51,6 +56,17 @@ class AclConfig extends SprykerAclConfig
                 'role' => AclConstants::ROOT_ROLE,
             ];
         }
+
+        return $installerRules;
+    }
+
+    /**
+     * @return array
+     */
+    public function getInstallerRules()
+    {
+        $installerRules = parent::getInstallerRules();
+        $installerRules = $this->addMerchantPortalInstallerRules($installerRules);
 
         return $installerRules;
     }

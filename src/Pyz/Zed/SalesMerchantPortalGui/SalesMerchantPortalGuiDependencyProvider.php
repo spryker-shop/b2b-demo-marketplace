@@ -1,7 +1,13 @@
 <?php
 
+/**
+ * This file is part of the Spryker Commerce OS.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
+ */
+
 namespace Pyz\Zed\SalesMerchantPortalGui;
 
+use Spryker\Zed\CartNoteMerchantPortalGui\Communication\Plugin\SalesMerchantPortalGui\CartNoteMerchantOrderItemTableExpanderPlugin;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Plugin\SalesMerchantPortalGui\ProductOfferMerchantOrderItemTableExpanderPlugin;
 use Spryker\Zed\SalesMerchantPortalGui\SalesMerchantPortalGuiDependencyProvider as SprykerSalesMerchantPortalGuiDependencyProvider;
 
@@ -13,6 +19,7 @@ class SalesMerchantPortalGuiDependencyProvider extends SprykerSalesMerchantPorta
     protected function getMerchantOrderItemTableExpanderPlugins(): array
     {
         return [
+            new CartNoteMerchantOrderItemTableExpanderPlugin(),
             new ProductOfferMerchantOrderItemTableExpanderPlugin(),
         ];
     }

@@ -2599,6 +2599,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@spryker/button.icon@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "@spryker/button.icon@npm:0.2.0"
+  dependencies:
+    tslib: ^1.10.0
+  peerDependencies:
+    "@angular/common": ^9.1.12
+    "@angular/core": ^9.1.12
+    "@spryker/button": ^0.4.0
+    "@spryker/icon": ^0.3.0
+    "@spryker/styles": ^0.5.0
+    "@spryker/utils": ^0.2.11
+  checksum: 382b3897bb9d274e455bdcdb7c7718d02e47347d90f58a203297bd261cf567f9dd8298e8f70c8035dbc729d3bb542c218d678af7cb03e5246503569ce9815de9
+  languageName: node
+  linkType: hard
+
 "@spryker/button@npm:^0.4.0":
   version: 0.4.0
   resolution: "@spryker/button@npm:0.4.0"
@@ -3390,6 +3406,22 @@ __metadata:
     "@angular/core": ^9.1.12
     "@spryker/styles": ^0.5.0
   checksum: 6612b809e6b55ad9149354f4c531db3f0ef3538323bbb50b91f4e4567a3336ce80b226a09945aee2bcc1b5631ad3a42389a69c63ca3500bdd2ffcc74b97b509d
+  languageName: node
+  linkType: hard
+
+"@spryker/radio@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "@spryker/radio@npm:0.2.0"
+  dependencies:
+    ng-zorro-antd: 9.3.0
+    tslib: ^1.10.0
+  peerDependencies:
+    "@angular/common": ^9.1.12
+    "@angular/core": ^9.1.12
+    "@angular/forms": ^9.1.12
+    "@spryker/styles": ^0.5.0
+    "@spryker/utils": ^0.2.11
+  checksum: 84de891cef7cd6d365649ddb6ce3c6aee5fc7b31832696638c7c80aabac1f4d040ebfc63a0b8aef6d011d6d7fbcd055561abee625671e5b5dab8b967fa605245
   languageName: node
   linkType: hard
 
@@ -14786,6 +14818,68 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"mp-product-list@workspace:vendor/spryker/product-merchant-portal-gui":
+  version: 0.0.0-use.local
+  resolution: "mp-product-list@workspace:vendor/spryker/product-merchant-portal-gui"
+  dependencies:
+    "@angular/animations": ^9.1.12
+    "@angular/cdk": ^9.2.0
+    "@angular/common": ^9.1.12
+    "@angular/core": ^9.1.12
+    "@angular/elements": ^9.1.12
+    "@angular/forms": ^9.1.12
+    "@angular/platform-browser": ^9.1.12
+    "@spryker/button": ^0.4.0
+    "@spryker/button.action": ^0.1.10
+    "@spryker/button.icon": ^0.2.0
+    "@spryker/card": ^0.4.0
+    "@spryker/checkbox": ^0.3.0
+    "@spryker/chips": ^0.2.0
+    "@spryker/date-picker": ^0.3.0
+    "@spryker/form-item": ^0.3.0
+    "@spryker/headline": ^0.3.0
+    "@spryker/icon": ^0.3.0
+    "@spryker/input": ^0.3.0
+    "@spryker/radio": ^0.2.0
+    "@spryker/select": ^0.3.0
+    "@spryker/styles": ^0.5.0
+    "@spryker/table": ^0.4.0
+    "@spryker/tabs": ^0.3.0
+    "@spryker/textarea": ^0.3.0
+    "@spryker/toggle": ^0.3.0
+    "@spryker/tree-select": ^0.2.0
+    "@spryker/unsaved-changes.monitor.form": ^0.1.9
+    "@spryker/utils": ^0.2.11
+    "@spryker/web-components": ^0.2.11
+    rxjs: ^6.5.4
+  languageName: unknown
+  linkType: soft
+
+"mp-product-offer@workspace:vendor/spryker/product-offer-merchant-portal-gui":
+  version: 0.0.0-use.local
+  resolution: "mp-product-offer@workspace:vendor/spryker/product-offer-merchant-portal-gui"
+  dependencies:
+    "@angular/animations": ^9.1.12
+    "@angular/cdk": ^9.2.0
+    "@angular/common": ^9.1.12
+    "@angular/core": ^9.1.12
+    "@angular/elements": ^9.1.12
+    "@angular/forms": ^9.1.12
+    "@angular/platform-browser": ^9.1.12
+    "@spryker/button": ^0.4.0
+    "@spryker/card": ^0.4.0
+    "@spryker/chips": ^0.2.0
+    "@spryker/date-picker": ^0.3.0
+    "@spryker/headline": ^0.3.0
+    "@spryker/styles": ^0.5.0
+    "@spryker/table": ^0.4.0
+    "@spryker/unsaved-changes.monitor.form": ^0.1.9
+    "@spryker/utils": ^0.2.11
+    "@spryker/web-components": ^0.2.11
+    rxjs: ^6.5.4
+  languageName: unknown
+  linkType: soft
+
 "mp-profile@workspace:vendor/spryker/merchant-profile-merchant-portal-gui":
   version: 0.0.0-use.local
   resolution: "mp-profile@workspace:vendor/spryker/merchant-profile-merchant-portal-gui"
@@ -14803,6 +14897,33 @@ __metadata:
     "@spryker/icon": ^0.3.0
     "@spryker/label": ^0.2.0
     "@spryker/styles": ^0.5.0
+    "@spryker/tabs": ^0.3.0
+    "@spryker/utils": ^0.2.11
+    "@spryker/web-components": ^0.2.11
+    rxjs: ^6.5.4
+  languageName: unknown
+  linkType: soft
+
+"mp-sales-orders@workspace:vendor/spryker/sales-merchant-portal-gui":
+  version: 0.0.0-use.local
+  resolution: "mp-sales-orders@workspace:vendor/spryker/sales-merchant-portal-gui"
+  dependencies:
+    "@angular/animations": ^9.1.12
+    "@angular/cdk": ^9.2.0
+    "@angular/common": ^9.1.12
+    "@angular/core": ^9.1.12
+    "@angular/elements": ^9.1.12
+    "@angular/forms": ^9.1.12
+    "@angular/platform-browser": ^9.1.12
+    "@spryker/button": ^0.4.0
+    "@spryker/card": ^0.4.0
+    "@spryker/chips": ^0.2.0
+    "@spryker/collapsible": ^0.3.0
+    "@spryker/headline": ^0.3.0
+    "@spryker/html-renderer": ^0.1.10
+    "@spryker/icon": ^0.3.0
+    "@spryker/styles": ^0.5.0
+    "@spryker/table": ^0.4.0
     "@spryker/tabs": ^0.3.0
     "@spryker/utils": ^0.2.11
     "@spryker/web-components": ^0.2.11
