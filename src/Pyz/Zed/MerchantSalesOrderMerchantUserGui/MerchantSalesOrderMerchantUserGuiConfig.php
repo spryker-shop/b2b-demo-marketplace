@@ -18,6 +18,7 @@ class MerchantSalesOrderMerchantUserGuiConfig extends SprykerMerchantSalesOrderM
     {
         return [
             'discount' => '/discount-merchant-sales-order-gui/merchant-sales-order/list',
+            'cart_note' => '/cart-note-merchant-sales-order-gui/merchant-sales-order/list',
         ];
     }
 }
