@@ -98,7 +98,10 @@ If `spy_product_abstract_storage.merchant_reference` is null for all rows, run `
 
 Verification: not `spy_glossary table`, but `spy_glossary_key` and `spy_glossary_translation` tables
 
-3 ) Twig frontend changes are missing, see https://github.com/spryker/b2b-demo-shop-internal/commit/5a77aacb469a117b2b46cae948ae7c6f1ebe88ac
+3 ) Twig, glossary and widget changes are missing, see
+https://github.com/spryker/b2b-demo-shop-internal/commit/5a77aacb469a117b2b46cae948ae7c6f1ebe88ac
+https://github.com/spryker/b2b-demo-shop-internal/commit/b56ed20eae7afab71dbab245e001042aadc88434
+https://github.com/spryker/b2b-demo-shop-internal/commit/9bb51404e1a6bcde8dfc0b7ef86031957cafd153
 
 ##Glue API
 
