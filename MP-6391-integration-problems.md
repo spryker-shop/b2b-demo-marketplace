@@ -116,6 +116,8 @@ Verification requires writing additional code for direct CartFacade call
 
 Same with `Marketplace Product + Inventory Management feature integration`, `Merchant Portal - Marketplace Product feature integration` and `Merchant Portal - Marketplace Product + Tax feature integration`
 
+Missing translation for `product.filter.merchant_name`
+
 ------------------------------------------------------------------------------------------------------------------------
 
 #MP-6393 Marketplace Product Offer
