@@ -368,7 +368,4 @@ and https://github.com/spryker/b2b-demo-shop-internal/commit/2d192c7e43cd4e51b13
 
 `Combined Product Offer Import integration` never mentioned anywhere
 
-`setDataSetCondition` returns void, so business factories should be fixed, see
-https://github.com/spryker/b2b-demo-shop-internal/commit/acd85c6829a9c0b70486f8a3768886f87dbff073
-
 There are too many files, and most of them are created for the first time. Maybe, it makes sense to attach them as archive.

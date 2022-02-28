@@ -46,8 +46,7 @@ class MerchantProductOfferDataImportBusinessFactory extends SprykerMerchantProdu
             ->addStep($this->createCombinedMerchantProductOfferWriterStep());
 
         $dataImporter
-            ->setDataSetCondition($this->createCombinedMerchantProductOfferMandatoryColumnCondition());
-        $dataImporter
+            ->setDataSetCondition($this->createCombinedMerchantProductOfferMandatoryColumnCondition())
             ->addDataSetStepBroker($dataSetStepBroker);
 
         return $dataImporter;
@@ -69,8 +68,7 @@ class MerchantProductOfferDataImportBusinessFactory extends SprykerMerchantProdu
             ->addStep($this->createMerchantProductOfferStoreWriterStep());
 
         $dataImporter
-            ->setDataSetCondition($this->createCombinedMerchantProductOfferStoreMandatoryColumnCondition());
-        $dataImporter
+            ->setDataSetCondition($this->createCombinedMerchantProductOfferStoreMandatoryColumnCondition())
             ->addDataSetStepBroker($dataSetStepBroker);
 
         return $dataImporter;

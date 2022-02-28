@@ -38,8 +38,7 @@ class ProductOfferValidityDataImportBusinessFactory extends SprykerProductOfferV
             ->addStep($this->createCombinedProductOfferValidityWriterStep());
 
         $dataImporter
-            ->setDataSetCondition($this->createCombinedProductOfferValidityMandatoryColumnCondition());
-        $dataImporter
+            ->setDataSetCondition($this->createCombinedProductOfferValidityMandatoryColumnCondition())
             ->addDataSetStepBroker($dataSetStepBroker);
 
         return $dataImporter;

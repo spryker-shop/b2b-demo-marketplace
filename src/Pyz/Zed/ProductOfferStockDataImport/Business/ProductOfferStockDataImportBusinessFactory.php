@@ -40,8 +40,7 @@ class ProductOfferStockDataImportBusinessFactory extends SprykerProductOfferStoc
             ->addStep($this->createCombinedProductOfferStockWriterStep());
 
         $dataImporter
-            ->setDataSetCondition($this->createCombinedProductOfferStockMandatoryColumnCondition());
-        $dataImporter
+            ->setDataSetCondition($this->createCombinedProductOfferStockMandatoryColumnCondition())
             ->addDataSetStepBroker($dataSetStepBroker);
 
         return $dataImporter;
