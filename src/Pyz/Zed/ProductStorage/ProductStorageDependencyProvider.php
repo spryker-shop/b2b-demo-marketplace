@@ -8,6 +8,7 @@
 namespace Pyz\Zed\ProductStorage;
 
 use Spryker\Zed\MerchantProductStorage\Communication\Plugin\ProductStorage\MerchantProductAbstractStorageExpanderPlugin;
+use Spryker\Zed\MerchantProductStorage\Communication\Plugin\ProductStorage\MerchantProductConcreteStorageCollectionExpanderPlugin;
 use Spryker\Zed\ProductStorage\ProductStorageDependencyProvider as SprykerProductStorageDependencyProvider;
 
 class ProductStorageDependencyProvider extends SprykerProductStorageDependencyProvider
@@ -19,6 +20,16 @@ class ProductStorageDependencyProvider extends SprykerProductStorageDependencyPr
     {
         return [
             new MerchantProductAbstractStorageExpanderPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductStorageExtension\Dependency\Plugin\ProductConcreteStorageCollectionExpanderPluginInterface>
+     */
+    protected function getProductConcreteStorageCollectionExpanderPlugins(): array
+    {
+        return [
+            new MerchantProductConcreteStorageCollectionExpanderPlugin(),
         ];
     }
 }
