@@ -104,7 +104,7 @@ groups:
     EU:
         region: EU
         applications:
-            yves_eu:
+            yves:
                 application: yves
                 endpoints:
                     www.de.mp-b2b.internal-testing.demo-spryker.com:
@@ -113,7 +113,7 @@ groups:
                     www.at.mp-b2b.internal-testing.demo-spryker.com:
                         store: AT
                         <<: *frontend-auth
-            backoffice_eu:
+            boffice:
                 application: backoffice
                 endpoints:
                     backoffice.de.mp-b2b.internal-testing.demo-spryker.com:
@@ -122,14 +122,14 @@ groups:
                     backoffice.at.mp-b2b.internal-testing.demo-spryker.com:
                         store: AT
                         <<: *frontend-auth
-            backend_gateway_eu:
+            backgw:
                 application: backend-gateway
                 endpoints:
                     backend-gateway.de.mp-b2b.internal-testing.demo-spryker.com:
                         store: DE
                     backend-gateway.at.mp-b2b.internal-testing.demo-spryker.com:
                         store: AT
-            backend_api_eu:
+            backapi:
                 application: zed
                 endpoints:
                     backend-api.de.mp-b2b.internal-testing.demo-spryker.com:
@@ -138,7 +138,7 @@ groups:
                     backend-api.at.mp-b2b.internal-testing.demo-spryker.com:
                         store: AT
                         entry-point: BackendApi
-            glue_eu:
+            glue:
                 application: glue
                 endpoints:
                     glue.de.mp-b2b.internal-testing.demo-spryker.com:
