@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9c92e957206986e3abb4dd2d23b28d0d",
+    "content-hash": "9f9a807f872db9e14ab3554f7fe2635d",
     "packages": [
         {
             "name": "brick/math",
@@ -4542,6 +4542,48 @@
             ],
             "description": "Marketplace Promotions & Discounts [feature]",
             "time": "2021-08-30T07:33:39+00:00"
+        },
+        {
+            "name": "spryker-feature/marketplace-return-management",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-feature/marketplace-return-management.git",
+                "reference": "04bed327a6ebc1170911f3f9c4fc326ae5d392a0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-feature/marketplace-return-management/zipball/04bed327a6ebc1170911f3f9c4fc326ae5d392a0",
+                "reference": "04bed327a6ebc1170911f3f9c4fc326ae5d392a0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker-shop/merchant-sales-return-widget": "^1.0.0",
+                "spryker-shop/sales-return-page": "^1.3.0",
+                "spryker/merchant-sales-return": "^1.0.0",
+                "spryker/merchant-sales-return-gui": "^1.0.0",
+                "spryker/merchant-sales-return-merchant-user-gui": "^1.0.0",
+                "spryker/sales-return": "^1.3.0",
+                "spryker/sales-return-data-import": "^0.2.0",
+                "spryker/sales-return-search": "^1.0.0"
+            },
+            "suggest": {
+                "spryker-feature/marketplace-order-management": "Recommended feature dependency.",
+                "spryker-feature/return-management": "Recommended feature dependency."
+            },
+            "type": "metapackage",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "202108.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Marketplace Return Management [feature]",
+            "time": "2021-08-30T07:40:32+00:00"
         },
         {
             "name": "spryker-feature/marketplace-shipment",
@@ -9264,6 +9306,53 @@
             ],
             "description": "MerchantSalesOrderWidget module",
             "time": "2021-07-07T15:14:14+00:00"
+        },
+        {
+            "name": "spryker-shop/merchant-sales-return-widget",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-shop/merchant-sales-return-widget.git",
+                "reference": "49d19d27fed7a433295bc425945fb9c445403632"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-shop/merchant-sales-return-widget/zipball/49d19d27fed7a433295bc425945fb9c445403632",
+                "reference": "49d19d27fed7a433295bc425945fb9c445403632",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker-shop/shop-application-extension": "^1.2.0",
+                "spryker-shop/shop-ui": "^1.52.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/merchant-sales-return": "^1.0.0",
+                "spryker/symfony": "^3.0.0"
+            },
+            "require-dev": {
+                "spryker-shop/sales-return-page": "*",
+                "spryker/code-sniffer": "*"
+            },
+            "suggest": {
+                "spryker-shop/sales-return-page": "Add the module if you want to use return-create-link molecule."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SprykerShop\\": "src/SprykerShop/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "MerchantSalesReturnWidget module",
+            "time": "2021-08-16T16:27:49+00:00"
         },
         {
             "name": "spryker-shop/merchant-widget",
@@ -29270,6 +29359,147 @@
             ],
             "description": "MerchantSalesOrderThresholdGui module",
             "time": "2021-07-07T15:14:17+00:00"
+        },
+        {
+            "name": "spryker/merchant-sales-return",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/merchant-sales-return.git",
+                "reference": "823c1054c60b987ade512ea425e1dabe0c036312"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/merchant-sales-return/zipball/823c1054c60b987ade512ea425e1dabe0c036312",
+                "reference": "823c1054c60b987ade512ea425e1dabe0c036312",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/kernel": "^3.33.0",
+                "spryker/merchant-sales-order": "^1.0.0",
+                "spryker/sales-return-extension": "^1.2.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/merchant": "*",
+                "spryker/oms": "*",
+                "spryker/propel": "*",
+                "spryker/sales": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "MerchantSalesReturn module",
+            "time": "2021-08-16T16:27:47+00:00"
+        },
+        {
+            "name": "spryker/merchant-sales-return-gui",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/merchant-sales-return-gui.git",
+                "reference": "d46984c7de8d956aba5440226ecba0ce0a844508"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/merchant-sales-return-gui/zipball/d46984c7de8d956aba5440226ecba0ce0a844508",
+                "reference": "d46984c7de8d956aba5440226ecba0ce0a844508",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/kernel": "^3.33.0",
+                "spryker/merchant-sales-order": "^1.0.0",
+                "spryker/merchant-sales-return": "^1.0.0",
+                "spryker/sales-return-gui-extension": "^1.1.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "MerchantSalesReturnGui module",
+            "time": "2021-08-19T10:54:56+00:00"
+        },
+        {
+            "name": "spryker/merchant-sales-return-merchant-user-gui",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/merchant-sales-return-merchant-user-gui.git",
+                "reference": "8443ddf7edcfada41af8cf48560b9e16d2692694"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/merchant-sales-return-merchant-user-gui/zipball/8443ddf7edcfada41af8cf48560b9e16d2692694",
+                "reference": "8443ddf7edcfada41af8cf48560b9e16d2692694",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/customer": "^7.0.0",
+                "spryker/glossary": "^3.0.0",
+                "spryker/gui": "^3.30.0",
+                "spryker/kernel": "^3.33.0",
+                "spryker/merchant-oms": "^1.0.0",
+                "spryker/merchant-sales-order": "^1.0.0",
+                "spryker/merchant-sales-return": "^1.0.0",
+                "spryker/merchant-user": "^1.0.0",
+                "spryker/propel-orm": "^1.0.0",
+                "spryker/sales": "^10.0.0 || ^11.0.0",
+                "spryker/sales-return": "^1.3.0",
+                "spryker/state-machine": "^2.7.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/util-date-time": "^1.0.0",
+                "spryker/util-text": "^1.1.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "MerchantSalesReturnMerchantUserGui module",
+            "time": "2021-08-19T10:54:56+00:00"
         },
         {
             "name": "spryker/merchant-search",
@@ -59071,6 +59301,12 @@
             "alias": "202204.0",
             "alias_normalized": "202204.0",
             "version": "9999999-dev",
+            "package": "spryker-feature/marketplace-return-management"
+        },
+        {
+            "alias": "202204.0",
+            "alias_normalized": "202204.0",
+            "version": "9999999-dev",
             "package": "spryker-feature/marketplace-shipment"
         },
         {
@@ -59105,6 +59341,7 @@
         "spryker-feature/marketplace-product-offer-prices": 20,
         "spryker-feature/marketplace-product-options": 20,
         "spryker-feature/marketplace-promotions-discounts": 20,
+        "spryker-feature/marketplace-return-management": 20,
         "spryker-feature/marketplace-shipment": 20,
         "spryker-feature/merchant-category": 20,
         "spryker-feature/merchant-opening-hours": 20,
