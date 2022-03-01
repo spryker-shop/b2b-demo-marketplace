@@ -10,10 +10,14 @@ namespace Pyz\Zed\MerchantOms;
 use Pyz\Zed\MerchantOms\Communication\Plugin\Oms\CancelMarketplaceOrderItemCommandPlugin;
 use Pyz\Zed\MerchantOms\Communication\Plugin\Oms\DeliverMarketplaceOrderItemCommandPlugin;
 use Pyz\Zed\MerchantOms\Communication\Plugin\Oms\ShipByMerchantMarketplaceOrderItemCommandPlugin;
+use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantOms\MerchantOmsDependencyProvider as SprykerMerchantOmsDependencyProvider;
 
 class MerchantOmsDependencyProvider extends SprykerMerchantOmsDependencyProvider
 {
+    public const FACADE_OMS = 'FACADE_OMS';
+    public const FACADE_SALES_RETURN = 'FACADE_SALES_RETURN';
+
     protected function getStateMachineCommandPlugins(): array
     {
         return [
@@ -21,5 +25,48 @@ class MerchantOmsDependencyProvider extends SprykerMerchantOmsDependencyProvider
             'MarketplaceOrder/DeliverOrderItem' => new DeliverMarketplaceOrderItemCommandPlugin(),
             'MarketplaceOrder/CancelOrderItem' => new CancelMarketplaceOrderItemCommandPlugin(),
         ];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideCommunicationLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideCommunicationLayerDependencies($container);
+
+        $container = $this->addOmsFacade($container);
+        $container = $this->addSalesReturnFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function addOmsFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_OMS, function (Container $container) {
+            return $container->getLocator()->oms()->facade();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function addSalesReturnFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_SALES_RETURN, function (Container $container) {
+            return $container->getLocator()->salesReturn()->facade();
+        });
+
+        return $container;
     }
 }
