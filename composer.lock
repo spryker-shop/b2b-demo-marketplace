@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9f9a807f872db9e14ab3554f7fe2635d",
+    "content-hash": "c79ca10e5f62ef10e08beda6df79e579",
     "packages": [
         {
             "name": "brick/math",
@@ -29500,6 +29500,45 @@
             ],
             "description": "MerchantSalesReturnMerchantUserGui module",
             "time": "2021-08-19T10:54:56+00:00"
+        },
+        {
+            "name": "spryker/merchant-sales-returns-rest-api",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/merchant-sales-returns-rest-api.git",
+                "reference": "a0ccccf84d3eaa7fd26feeac8024ba52a3bb26e1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/merchant-sales-returns-rest-api/zipball/a0ccccf84d3eaa7fd26feeac8024ba52a3bb26e1",
+                "reference": "a0ccccf84d3eaa7fd26feeac8024ba52a3bb26e1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3",
+                "spryker/merchant-sales-return": "^1.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "MerchantSalesReturnsRestApi module",
+            "time": "2021-08-16T16:27:47+00:00"
         },
         {
             "name": "spryker/merchant-search",
