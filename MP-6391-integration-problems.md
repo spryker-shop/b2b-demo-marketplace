@@ -346,7 +346,8 @@ Creating a product with both offer and packaging unit may require a guide becaus
 5. This IG is not related to Marketplace Order Management at all, but have it in the name https://docs.spryker.com/docs/marketplace/dev/feature-integration-guides/202108.0/marketplace-order-management-customer-account-management-feature-integration.html
 6. Import types should be added to full_EU.yml
 7. https://docs.spryker.com/docs/marketplace/dev/feature-integration-guides/202108.0/marketplace-dummy-payment-feature-integration.html is not mentioned in the dependencies, but without it is not possible to test the feature.
-8. Missing changes: https://github.com/spryker/b2b-demo-shop-internal/commit/0c808701660aa6b35a511f06639318e4655a051c
+8. Missing(?) changes: https://github.com/spryker/b2b-demo-shop-internal/commit/0c808701660aa6b35a511f06639318e4655a051c
+Or just move verification lower
 
 ## Marketplace Dummy Payment
 1. Invalid file name Pyz\Zed\Payment\PaymentDependencyProvider.php=>src/Pyz/Zed/Payment/PaymentDependencyProvider.php
