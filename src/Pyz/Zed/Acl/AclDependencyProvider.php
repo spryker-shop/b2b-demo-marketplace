@@ -15,7 +15,7 @@ use Spryker\Zed\AclMerchantPortal\Communication\Plugin\MerchantUser\ProductViewe
 class AclDependencyProvider extends SprykerAclDependencyProvider
 {
     /**
-     * @return \Spryker\Zed\AclExtension\Dependency\Plugin\AclRolesExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\AclExtension\Dependency\Plugin\AclInstallerPluginInterface>
      */
     protected function getAclRolesExpanderPlugins(): array
     {

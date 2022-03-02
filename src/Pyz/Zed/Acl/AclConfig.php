@@ -12,6 +12,9 @@ use Spryker\Zed\Acl\AclConfig as SprykerAclConfig;
 
 class AclConfig extends SprykerAclConfig
 {
+    /**
+     * @var string
+     */
     protected const RULE_TYPE_DENY = 'deny';
 
     /**
@@ -30,9 +33,9 @@ class AclConfig extends SprykerAclConfig
     }
 
     /**
-     * @param string[][] $installerRules
+     * @param array<array<string, mixed>> $installerRules
      *
-     * @return string[][]
+     * @return array<array<string, mixed>>
      */
     protected function addMerchantPortalInstallerRules(array $installerRules): array
     {
@@ -61,9 +64,9 @@ class AclConfig extends SprykerAclConfig
     }
 
     /**
-     * @return array
+     * @return array<array<string, mixed>>
      */
-    public function getInstallerRules()
+    public function getInstallerRules(): array
     {
         $installerRules = parent::getInstallerRules();
         $installerRules = $this->addMerchantPortalInstallerRules($installerRules);

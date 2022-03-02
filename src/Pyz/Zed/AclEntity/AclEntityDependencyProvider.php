@@ -13,7 +13,7 @@ use Spryker\Zed\AclMerchantPortal\Communication\Plugin\AclEntity\MerchantPortalA
 class AclEntityDependencyProvider extends SprykerAclEntityDependencyProvider
 {
     /**
-     * @return \Spryker\Zed\AclEntityExtension\Dependency\Plugin\AclEntityMetadataConfigExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\AclEntityExtension\Dependency\Plugin\AclEntityMetadataConfigExpanderPluginInterface>
      */
     protected function getAclEntityMetadataCollectionExpanderPlugins(): array
     {
