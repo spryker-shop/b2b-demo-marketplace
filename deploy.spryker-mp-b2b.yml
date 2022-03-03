@@ -104,6 +104,24 @@ groups:
     EU:
         region: EU
         applications:
+            Redirects:
+                application: static
+                endpoints:
+                    mp-b2b.internal-testing.demo-spryker.com:
+                        store: DE
+                        redirect:
+                            type: 302
+                            url: www.de.mp-b2b.internal-testing.demo-spryker.com                  
+                    de.mp-b2b.internal-testing.demo-spryker.com:
+                        store: DE
+                        redirect:
+                            type: 302
+                            url: www.de.mp-b2b.internal-testing.demo-spryker.com     
+                    at.mp-b2b.internal-testing.demo-spryker.com:
+                        store: AT
+                        redirect:
+                            type: 302
+                            url: www.at.mp-b2b.internal-testing.demo-spryker.com     
             yves:
                 application: yves
                 endpoints:
