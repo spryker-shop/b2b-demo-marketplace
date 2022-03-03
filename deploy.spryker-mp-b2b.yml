@@ -163,7 +163,22 @@ groups:
                         store: DE
                     glue.at.mp-b2b.internal-testing.demo-spryker.com:
                         store: AT
-
+            mportal:
+                application: merchant-portal
+                endpoints:
+                    mp.de.korax-dev.cloud.spryker.toys:
+                        entry-point: MerchantPortal
+                        store: DE
+                        primal: true
+                        services:
+                            session:
+                                namespace: 7
+                    mp.at.korax-dev.cloud.spryker.toys:
+                        entry-point: MerchantPortal
+                        store: AT
+                        services:
+                            session:
+                                namespace: 8
 services:
     database:
         engine: mysql
