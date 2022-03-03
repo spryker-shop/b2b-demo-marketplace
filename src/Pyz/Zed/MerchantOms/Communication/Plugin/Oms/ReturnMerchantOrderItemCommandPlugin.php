@@ -41,9 +41,11 @@ class ReturnMerchantOrderItemCommandPlugin extends AbstractPlugin implements Com
      */
     public function run(SpySalesOrderItem $orderItem, ReadOnlyArrayObject $data): array
     {
-        $merchantOrderItemTransfer = $this->getFactory()->getMerchantSalesOrderFacade()->findMerchantOrderItem(
-            (new MerchantOrderItemCriteriaTransfer())
-                ->setIdOrderItem($orderItem->getIdSalesOrderItem()),
+        $merchantOrderItemTransfer = $this->getFactory()
+            ->getMerchantSalesOrderFacade()
+            ->findMerchantOrderItem(
+                (new MerchantOrderItemCriteriaTransfer())
+                    ->setIdOrderItem($orderItem->getIdSalesOrderItem()),
         );
 
         if (!$merchantOrderItemTransfer) {
@@ -67,7 +69,9 @@ class ReturnMerchantOrderItemCommandPlugin extends AbstractPlugin implements Com
         $itemTransfer = (new ItemTransfer())
             ->setIdSalesOrderItem($orderItem->getIdSalesOrderItem());
 
-        $this->getFactory()->getSalesReturnFacade()->setOrderItemRemunerationAmount($itemTransfer);
+        $this->getFactory()
+            ->getSalesReturnFacade()
+            ->setOrderItemRemunerationAmount($itemTransfer);
 
         return [];
     }
