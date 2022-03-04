@@ -48,19 +48,19 @@ class UserConfig extends SprykerUserConfig
                 'firstName' => 'Martha',
                 'lastName' => 'Farmer',
                 'password' => 'change123',
-                'username' => 'martha@video-king.nl',
+                'username' => 'martha@office-king.nl',
             ],
             [
                 'firstName' => 'Jason',
                 'lastName' => 'Weidmann',
                 'password' => 'change123',
-                'username' => 'jason.weidmann@budgetcamerasonline.com',
+                'username' => 'jason.weidmann@budgetstationery.com',
             ],
             [
                 'firstName' => 'Michele',
                 'lastName' => 'Nemeth',
                 'password' => 'change123',
-                'username' => 'michele@sony-experts.com',
+                'username' => 'michele@computer-experts.com',
             ],
             [
                 'firstName' => 'Vitaliy',
