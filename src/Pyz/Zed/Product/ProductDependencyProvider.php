@@ -82,20 +82,6 @@ class ProductDependencyProvider extends SprykerProductDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginReadInterface[]
-     */
-    protected function getProductAbstractReadPlugins(Container $container): array
-    {
-        return [
-            new ImageSetProductAbstractReadPlugin(),
-            new TaxSetProductAbstractReadPlugin(),
-            new PriceProductAbstractReadPlugin(),
-        ];
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
      * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginUpdateInterface[]
      */
     protected function getProductAbstractBeforeUpdatePlugins(Container $container): array
