@@ -8,6 +8,7 @@
 namespace Pyz\Zed\Oms;
 
 use Pyz\Zed\MerchantOms\Communication\Plugin\Oms\CloseMerchantOrderItemCommandPlugin;
+use Pyz\Zed\MerchantOms\Communication\Plugin\Oms\ReturnMerchantOrderItemCommandPlugin;
 use Pyz\Zed\MerchantSalesOrder\Communication\Plugin\Oms\Condition\IsOrderPaidConditionPlugin;
 use Pyz\Zed\MerchantSalesOrder\Communication\Plugin\Oms\CreateMerchantOrdersCommandPlugin;
 use Pyz\Zed\Oms\Communication\Plugin\Oms\InitiationTimeoutProcessorPlugin;
@@ -54,6 +55,7 @@ class OmsDependencyProvider extends SprykerOmsDependencyProvider
 
             return $commandCollection;
         });
+        $container = $this->extendCommandPlugins($container);
 
         return $container;
     }
@@ -179,5 +181,27 @@ class OmsDependencyProvider extends SprykerOmsDependencyProvider
         return [
             new ProductOfferOmsReservationReaderStrategyPlugin(),
         ];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function extendCommandPlugins(Container $container): Container
+    {
+        $container->extend(self::COMMAND_PLUGINS, function (CommandCollectionInterface $commandCollection) {
+            $commandCollection->add(new SendOrderConfirmationPlugin(), 'Oms/SendOrderConfirmation');
+            $commandCollection->add(new SendOrderShippedPlugin(), 'Oms/SendOrderShipped');
+            $commandCollection->add(new CreateMerchantOrdersCommandPlugin(), 'MerchantSalesOrder/CreateOrders');
+            $commandCollection->add(new CloseMerchantOrderItemCommandPlugin(), 'MerchantOms/CloseOrderItem');
+            $commandCollection->add(new StartReturnCommandPlugin(), 'Return/StartReturn');
+            $commandCollection->add(new GenerateOrderInvoiceCommandPlugin(), 'Invoice/Generate');
+            $commandCollection->add(new ReturnMerchantOrderItemCommandPlugin(), 'MerchantOms/ReturnOrderItem');
+
+            return $commandCollection;
+        });
+
+        return $container;
     }
 }
