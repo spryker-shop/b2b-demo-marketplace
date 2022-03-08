@@ -241,58 +241,6 @@ It can be checked on User Edit page in Backoffice).
 
 ------------------------------------------------------------------------------------------------------------------------
 
-#MP-6407 Marketplace Merchant Portal Core
-##Install feature core
-
-2 ) If `src/Pyz/Zed/Security/SecurityDependencyProvider.php` already has UserSecurityPlugin, MerchantUserSecurityPlugin should go before it.
-
-"Enable Merchant Portal infrastructural plugins." - wrong filename after, should be `src/Pyz/Zed/MerchantPortalApplication/MerchantPortalApplicationDependencyProvider.php`
-
-config_default.php already has $config[AclConstants::ACL_DEFAULT_RULES], so adding this code at the end of file would break backoffice. Should be `$config[AclConstants::ACL_DEFAULT_RULES][] = [` instead
-
-3 ) `MerchantDashboardCard` and `MerchantDashboardActionButton` - require dashboard-merchant-portal-gui, that is added in the next step
-
-##Install feature front end
-
-all `wget` URLs don't work, "202108.0" should be replaced with "master"
-
-requires specific npm (<7) version (higher versions have problems with workspace)
-
-and Node (<15) version (higher versions result in `function remove_cv_t() not found` error)
-
-3 ) verification can't be done, because MP is not up yet
-
-5 ) to run `npm run mp:build` ZedUi module is needed (both as a composer dependency and on Pyz level)
-
-6 ) `yves-isntall-dependencies and yves-isntall-dependencies` - should be `yves-install-dependencies and zed-isntall-dependencies`
-
-file `docker.yml` should be specified
-
-Also add this to `src/Pyz/Zed/Console/ConsoleDependencyProvider.php::getConsoleCommands()`:
-
-`new MerchantPortalInstallDependenciesConsole(),`
-
-`new MerchantPortalBuildFrontendConsole(),`
-
-In case of problems with `fsevents` package, install it manually:
-`npm install --force fsevents`
-
-`rm -rf node_modules && yarn cache clean --all && npm cache clean --force && yarn install && yarn mp:build`
-
-If frontend build is successful, but MP is not working and browser console has errors, you have to check that there is no `node_modules` folders except the one in the project root, and rebuild frontend.
-
-##Adjust environment infrastructure
-
-AclConfig file missing `RULE_TYPE_DENY` definition:
-
-`protected const RULE_TYPE_DENY = 'deny';`
-
-##Missed from guide
-
-Some file updates needed for MP to work are missing, see https://github.com/spryker/b2b-demo-shop-internal/commit/334306a43055c74c5c0effc82632a3a8fc20dd7f
-
-------------------------------------------------------------------------------------------------------------------------
-
 #MP-6396 Marketplace Inventory Management
 
 1 ) extra space before package version
@@ -315,6 +263,9 @@ Creating a product with both offer and packaging unit may require a guide becaus
 
 `Marketplace Product + Inventory Management` guide may be unnecessary here, because it was already mentioned in
 `Marketplace Product` and also because it doesn't require **Marketplace** `Inventory Managament`, only usual one.
+
+`Merchant Portal - Marketplace Product + Inventory Management feature integration` link is missing
+(https://docs.spryker.com/docs/marketplace/dev/feature-integration-guides/202108.0/merchant-portal-marketplace-product-inventory-management-feature-integration.html)
 
 -------------------------------------------------------------
 #MP-6406 Merchant Opening Hours feature
@@ -348,6 +299,7 @@ Creating a product with both offer and packaging unit may require a guide becaus
 7. https://docs.spryker.com/docs/marketplace/dev/feature-integration-guides/202108.0/marketplace-dummy-payment-feature-integration.html is not mentioned in the dependencies, but without it is not possible to test the feature.
 8. Missing(?) changes: https://github.com/spryker/b2b-demo-shop-internal/commit/0c808701660aa6b35a511f06639318e4655a051c
 Or just move verification lower
+9. Missing src/Pyz/Zed/MerchantOms/Communication/MerchantOmsCommunicationFactory.php
 
 ## Marketplace Dummy Payment
 1. Invalid file name Pyz\Zed\Payment\PaymentDependencyProvider.php=>src/Pyz/Zed/Payment/PaymentDependencyProvider.php
@@ -359,3 +311,69 @@ Or just move verification lower
 ## Marketplace Order Management + Order Threshold feature integration
 1. Should be moved to standalone IG, because feature was introduced spryker-feature/marketplace-merchant-order-threshold
 -------------------------------------------------------------
+
+#MP-6407 Marketplace Merchant Portal Core
+##Install feature core
+
+2 ) If `src/Pyz/Zed/Security/SecurityDependencyProvider.php` already has UserSecurityPlugin, MerchantUserSecurityPlugin should go before it.
+
+"Enable Merchant Portal infrastructural plugins." - wrong filename after, should be `src/Pyz/Zed/MerchantPortalApplication/MerchantPortalApplicationDependencyProvider.php`
+
+config_default.php already has $config[AclConstants::ACL_DEFAULT_RULES], so adding this code at the end of file would break backoffice. Should be `$config[AclConstants::ACL_DEFAULT_RULES][] = [` instead
+
+3 ) `MerchantDashboardCard` and `MerchantDashboardActionButton` - require dashboard-merchant-portal-gui, that is added in the next step
+
+##Install feature front end
+
+all `wget` URLs don't work, "202108.0" should be replaced with "master"
+
+requires specific npm (<7) version (higher versions have problems with workspace)
+
+and Node (<15) version (higher versions result in `function remove_cv_t() not found` error)
+
+3 ) verification can't be done, because MP is not up yet
+
+4 ) `wget -O .yarn/plugins/@yarnpkg/plugin-interactive-tools.cjs https://raw.githubusercontent.com/spryker-shop/suite/master/.yarn/plugins/%40yarnpkg/plugin-interactive-tools.cjs`
+
+If you're getting `Missing write access to node_modules/mp-profile`, delete this **file** and make a **folder** with the same name
+
+5 ) `test-setup.js` and `webpack.config.js` should both be `.ts`
+
+6 ) `yves-isntall-dependencies and yves-isntall-dependencies` - should be `yves-install-dependencies and zed-isntall-dependencies`
+
+file `docker.yml` should be specified
+
+Also add this to `src/Pyz/Zed/Console/ConsoleDependencyProvider.php::getConsoleCommands()`:
+
+`new MerchantPortalInstallDependenciesConsole(),`
+
+`new MerchantPortalBuildFrontendConsole(),`
+
+In case of problems with `fsevents` package, install it manually:
+`npm install --force fsevents`
+
+`rm -rf node_modules && yarn cache clean --all && npm cache clean --force && yarn install && yarn mp:build`
+
+If frontend build is successful, but MP is not working and browser console has errors, you have to check that there is no `node_modules` folders except the one in the project root, and rebuild frontend.
+
+##Adjust environment infrastructure
+
+AclConfig file missing `RULE_TYPE_DENY` definition:
+
+`protected const RULE_TYPE_DENY = 'deny';`
+
+##Missed from guide
+
+Some file updates needed for MP to work are missing, see https://github.com/spryker/b2b-demo-shop-internal/commit/334306a43055c74c5c0effc82632a3a8fc20dd7f
+and https://github.com/spryker/b2b-demo-shop-internal/commit/2d192c7e43cd4e51b136bfc8259e9da8558c73ea
+
+`Merchant Portal feature integration` link is missing
+(https://docs.spryker.com/docs/marketplace/dev/feature-integration-guides/202108.0/merchant-portal-feature-integration.html)
+
+------------------------------------------------------------------------------------------------------------------------
+
+#Combined Product Offer Import integration
+
+`Combined Product Offer Import integration` never mentioned anywhere
+
+There are too many files, and most of them are created for the first time. Maybe, it makes sense to attach them as archive.

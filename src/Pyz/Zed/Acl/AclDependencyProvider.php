@@ -10,11 +10,12 @@ namespace Pyz\Zed\Acl;
 use Spryker\Zed\Acl\AclDependencyProvider as SprykerAclDependencyProvider;
 use Spryker\Zed\AclEntity\Communication\Plugin\Acl\AclEntityAclRolePostSavePlugin;
 use Spryker\Zed\AclEntity\Communication\Plugin\Acl\AclRulesAclRolesExpanderPlugin;
+use Spryker\Zed\AclMerchantPortal\Communication\Plugin\MerchantUser\ProductViewerForOfferCreationAclInstallerPlugin;
 
 class AclDependencyProvider extends SprykerAclDependencyProvider
 {
     /**
-     * @return \Spryker\Zed\AclExtension\Dependency\Plugin\AclRolesExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\AclExtension\Dependency\Plugin\AclRolesExpanderPluginInterface>
      */
     protected function getAclRolesExpanderPlugins(): array
     {
@@ -30,6 +31,16 @@ class AclDependencyProvider extends SprykerAclDependencyProvider
     {
         return [
             new AclEntityAclRolePostSavePlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\AclExtension\Dependency\Plugin\AclInstallerPluginInterface>
+     */
+    protected function getAclInstallerPlugins(): array
+    {
+        return [
+            new ProductViewerForOfferCreationAclInstallerPlugin(),
         ];
     }
 }
