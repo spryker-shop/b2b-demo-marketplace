@@ -244,6 +244,12 @@ actions:
     source: data/import/common/AT/price_product_offer.csv
   - data_entity: merchant-stock
     source: data/import/common/common/marketplace/merchant_stock.csv
+  - data_entity: stock-address
+    source: data/import/common/common/marketplace/warehouse_address.csv
+  - data_entity: stock-store
+    source: data/import/common/DE/marketplace/warehouse_store.csv
+  - data_entity: stock-store
+    source: data/import/common/AT/marketplace/warehouse_store.csv
   - data_entity: product-offer-stock
     source: data/import/common/common/marketplace/product_offer_stock.csv
   - data_entity: merchant-profile
