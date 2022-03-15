@@ -110,6 +110,8 @@ actions:
     source: data/import/common/common/configurable_bundle_template_slot.csv
   - data_entity: configurable-bundle-template-image
     source: data/import/common/common/configurable_bundle_template_image.csv
+  - data_entity: product-approval-status
+    source: data/import/common/common/product_abstract_approval_status.csv
   # Store relation
   - data_entity: product-measurement-sales-unit-store
     source: data/import/common/DE/product_measurement_sales_unit_store.csv
@@ -308,6 +310,8 @@ actions:
     source: data/import/common/common/marketplace/merchant_product_option_group.csv
   - data_entity: merchant-product
     source: data/import/common/common/marketplace/merchant_product.csv
+  - data_entity: merchant-product-approval-status-default
+    source: data/import/common/common/marketplace/merchant_product_approval_status_default.csv
 
 #7. Miscellaneous Setup import
   - data_entity: comment

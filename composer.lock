@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c427c782b8f3469efaae0c2a2d4bb341",
+    "content-hash": "1255f29fc623c7aa5341fe440a666df3",
     "packages": [
         {
             "name": "brick/math",
@@ -4484,6 +4484,45 @@
             "time": "2022-02-11T17:59:16+00:00"
         },
         {
+            "name": "spryker-feature/marketplace-merchant-portal-product-management",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-feature/marketplace-merchant-portal-product-management.git",
+                "reference": "f941dcecc91aa4be2f6db474cc9a917a5952a63b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-feature/marketplace-merchant-portal-product-management/zipball/f941dcecc91aa4be2f6db474cc9a917a5952a63b",
+                "reference": "f941dcecc91aa4be2f6db474cc9a917a5952a63b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4",
+                "spryker/product-merchant-portal-gui": "^2.0.0"
+            },
+            "suggest": {
+                "spryker-feature/marketplace-merchantportal-core": "Recommended feature dependency.",
+                "spryker-feature/marketplace-product": "Recommended feature dependency."
+            },
+            "default-branch": true,
+            "type": "metapackage",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "202108.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Marketplace Merchant Portal Product Management [feature]",
+            "support": {
+                "source": "https://github.com/spryker-feature/marketplace-merchant-portal-product-management/tree/master"
+            },
+            "time": "2022-02-12T02:34:43+00:00"
+        },
+        {
             "name": "spryker-feature/marketplace-merchant-portal-product-offer-management",
             "version": "dev-master",
             "source": {
@@ -4657,6 +4696,42 @@
             ],
             "description": "Marketplace Product [feature]",
             "time": "2021-08-30T07:33:47+00:00"
+        },
+        {
+            "name": "spryker-feature/marketplace-product-approval-process",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-feature/marketplace-product-approval-process.git",
+                "reference": "f3be1242dcc3307ec4e97284e2b17fe4cbc8e16e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-feature/marketplace-product-approval-process/zipball/f3be1242dcc3307ec4e97284e2b17fe4cbc8e16e",
+                "reference": "f3be1242dcc3307ec4e97284e2b17fe4cbc8e16e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4",
+                "spryker/merchant-product-approval": "^1.0.0",
+                "spryker/merchant-product-approval-data-import": "^0.1.0"
+            },
+            "default-branch": true,
+            "type": "metapackage",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "202204.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Marketplace Product Approval Process [feature]",
+            "support": {
+                "source": "https://github.com/spryker-feature/marketplace-product-approval-process/tree/master"
+            },
+            "time": "2022-03-15T08:42:03+00:00"
         },
         {
             "name": "spryker-feature/marketplace-product-offer",
@@ -5615,6 +5690,43 @@
                 "source": "https://github.com/spryker-feature/product/tree/202108.0"
             },
             "time": "2021-08-30T07:40:57+00:00"
+        },
+        {
+            "name": "spryker-feature/product-approval-process",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-feature/product-approval-process.git",
+                "reference": "16e52383ca05b1840e7f4ff0138cafcc4a7b86d9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-feature/product-approval-process/zipball/16e52383ca05b1840e7f4ff0138cafcc4a7b86d9",
+                "reference": "16e52383ca05b1840e7f4ff0138cafcc4a7b86d9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4",
+                "spryker/product-approval": "^1.0.0",
+                "spryker/product-approval-data-import": "^0.1.0",
+                "spryker/product-approval-gui": "^0.1.0"
+            },
+            "default-branch": true,
+            "type": "metapackage",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "202204.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Product Approval Process [feature]",
+            "support": {
+                "source": "https://github.com/spryker-feature/product-approval-process/tree/master"
+            },
+            "time": "2022-03-15T08:42:03+00:00"
         },
         {
             "name": "spryker-feature/product-barcode",
@@ -29465,6 +29577,103 @@
             "time": "2022-01-26T13:14:24+00:00"
         },
         {
+            "name": "spryker/merchant-product-approval",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/merchant-product-approval.git",
+                "reference": "001784d1cb5dcce83eba547485be0875265223be"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/merchant-product-approval/zipball/001784d1cb5dcce83eba547485be0875265223be",
+                "reference": "001784d1cb5dcce83eba547485be0875265223be",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4",
+                "spryker/kernel": "^3.30.0",
+                "spryker/merchant": "^3.0.0",
+                "spryker/merchant-product": "^1.0.0",
+                "spryker/product-approval": "^1.0.0",
+                "spryker/product-extension": "^1.2.0",
+                "spryker/transfer": "^3.25.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/product": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "MerchantProductApproval module",
+            "support": {
+                "source": "https://github.com/spryker/merchant-product-approval/tree/1.0.0"
+            },
+            "time": "2022-02-11T12:49:43+00:00"
+        },
+        {
+            "name": "spryker/merchant-product-approval-data-import",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/merchant-product-approval-data-import.git",
+                "reference": "9a67213390fbfc4dc60121b7111a5a80d34d2a91"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/merchant-product-approval-data-import/zipball/9a67213390fbfc4dc60121b7111a5a80d34d2a91",
+                "reference": "9a67213390fbfc4dc60121b7111a5a80d34d2a91",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4",
+                "spryker/data-import": "^1.3.0",
+                "spryker/kernel": "^3.33.0",
+                "spryker/merchant": "^3.0.0",
+                "spryker/merchant-product-approval": "^1.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "MerchantProductApprovalDataImport module",
+            "support": {
+                "source": "https://github.com/spryker/merchant-product-approval-data-import/tree/0.1.0"
+            },
+            "time": "2022-02-11T12:49:43+00:00"
+        },
+        {
             "name": "spryker/merchant-product-data-import",
             "version": "0.3.0",
             "source": {
@@ -36472,6 +36681,156 @@
             "time": "2018-07-24T08:04:43+00:00"
         },
         {
+            "name": "spryker/product-approval",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/product-approval.git",
+                "reference": "b5e6015a6c6e73951b430df1704228d451e37a64"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/product-approval/zipball/b5e6015a6c6e73951b430df1704228d451e37a64",
+                "reference": "b5e6015a6c6e73951b430df1704228d451e37a64",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4",
+                "spryker/cart-extension": "^4.0.0",
+                "spryker/checkout-extension": "^1.2.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/messenger": "^3.0.0",
+                "spryker/product": "^6.27.0",
+                "spryker/product-extension": "^1.2.0",
+                "spryker/product-page-search-extension": "^1.6.0",
+                "spryker/product-storage-extension": "^1.7.0",
+                "spryker/shopping-list-extension": "^1.1.0",
+                "spryker/transfer": "^3.25.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ProductApproval module",
+            "support": {
+                "source": "https://github.com/spryker/product-approval/tree/1.0.0"
+            },
+            "time": "2022-02-11T12:49:43+00:00"
+        },
+        {
+            "name": "spryker/product-approval-data-import",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/product-approval-data-import.git",
+                "reference": "f15b6c1025131cbfe42783b69cffbd77a567f060"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/product-approval-data-import/zipball/f15b6c1025131cbfe42783b69cffbd77a567f060",
+                "reference": "f15b6c1025131cbfe42783b69cffbd77a567f060",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4",
+                "spryker/data-import": "^1.3.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/product": "^6.0.0",
+                "spryker/product-approval": "^1.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "ProductApprovalDataImport module",
+            "support": {
+                "source": "https://github.com/spryker/product-approval-data-import/tree/0.1.0"
+            },
+            "time": "2022-02-11T12:49:43+00:00"
+        },
+        {
+            "name": "spryker/product-approval-gui",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/product-approval-gui.git",
+                "reference": "982f31e81f9a390eb35cad584adb6c7f3d2f949f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/product-approval-gui/zipball/982f31e81f9a390eb35cad584adb6c7f3d2f949f",
+                "reference": "982f31e81f9a390eb35cad584adb6c7f3d2f949f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4",
+                "spryker/gui": "^3.17.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/product": "^6.0.0",
+                "spryker/product-approval": "^1.0.0",
+                "spryker/product-management-extension": "^1.6.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/transfer": "^3.25.0",
+                "spryker/twig": "^3.0.0",
+                "spryker/util-text": "^1.1.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ProductApprovalGui module",
+            "support": {
+                "source": "https://github.com/spryker/product-approval-gui/tree/0.1.0"
+            },
+            "time": "2022-02-11T12:49:43+00:00"
+        },
+        {
             "name": "spryker/product-attribute",
             "version": "1.10.0",
             "source": {
@@ -39434,16 +39793,16 @@
         },
         {
             "name": "spryker/product-merchant-portal-gui",
-            "version": "1.6.0",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-merchant-portal-gui.git",
-                "reference": "81ae47b3797a808517bd6479eac1b5497cf45a7e"
+                "reference": "6ff6ae2b2414a78a2552d06c3672baef742cf366"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-merchant-portal-gui/zipball/81ae47b3797a808517bd6479eac1b5497cf45a7e",
-                "reference": "81ae47b3797a808517bd6479eac1b5497cf45a7e",
+                "url": "https://api.github.com/repos/spryker/product-merchant-portal-gui/zipball/6ff6ae2b2414a78a2552d06c3672baef742cf366",
+                "reference": "6ff6ae2b2414a78a2552d06c3672baef742cf366",
                 "shasum": ""
             },
             "require": {
@@ -39456,6 +39815,7 @@
                 "spryker/laminas": "^1.0.0",
                 "spryker/locale": "^3.0.0",
                 "spryker/merchant-product": "^1.0.0",
+                "spryker/merchant-product-approval": "^1.0.0",
                 "spryker/merchant-stock": "^1.0.0",
                 "spryker/merchant-user": "^1.0.0",
                 "spryker/money": "^1.0.0 || ^2.0.0",
@@ -39463,10 +39823,12 @@
                 "spryker/price-product": "^4.31.0",
                 "spryker/price-product-volume": "^3.3.0",
                 "spryker/product": "^6.25.0",
+                "spryker/product-approval": "^1.0.0",
                 "spryker/product-attribute": "^1.8.0",
                 "spryker/product-category": "^4.6.0",
                 "spryker/product-image": "^3.0.0",
                 "spryker/product-merchant-portal-gui-extension": "^1.0.0",
+                "spryker/product-offer-merchant-portal-gui-extension": "^1.0.0",
                 "spryker/product-validity": "^1.0.0",
                 "spryker/propel-orm": "^1.0.0",
                 "spryker/store": "^1.1.0",
@@ -39483,7 +39845,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "2.0.x-dev"
                 }
             },
             "autoload": {
@@ -39496,7 +39858,10 @@
                 "proprietary"
             ],
             "description": "ProductMerchantPortalGui module",
-            "time": "2022-02-03T10:07:21+00:00"
+            "support": {
+                "source": "https://github.com/spryker/product-merchant-portal-gui/tree/2.0.0"
+            },
+            "time": "2022-02-11T12:49:43+00:00"
         },
         {
             "name": "spryker/product-merchant-portal-gui-extension",
@@ -63180,118 +63545,136 @@
     ],
     "aliases": [
         {
-            "alias": "202204.0",
-            "alias_normalized": "202204.0",
+            "package": "spryker-feature/acl",
             "version": "9999999-dev",
-            "package": "spryker-feature/acl"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         },
         {
-            "alias": "202204.0",
-            "alias_normalized": "202204.0",
+            "package": "spryker-feature/marketplace-cart",
             "version": "9999999-dev",
-            "package": "spryker-feature/marketplace-cart"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         },
         {
-            "alias": "202204.0",
-            "alias_normalized": "202204.0",
+            "package": "spryker-feature/marketplace-inventory-management",
             "version": "9999999-dev",
-            "package": "spryker-feature/marketplace-inventory-management"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         },
         {
-            "alias": "202204.0",
-            "alias_normalized": "202204.0",
+            "package": "spryker-feature/marketplace-merchant",
             "version": "9999999-dev",
-            "package": "spryker-feature/marketplace-merchant"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         },
         {
-            "alias": "202204.0",
-            "alias_normalized": "202204.0",
+            "package": "spryker-feature/marketplace-merchant-order-threshold",
             "version": "9999999-dev",
-            "package": "spryker-feature/marketplace-merchant-order-threshold"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         },
         {
-            "alias": "202204.0",
-            "alias_normalized": "202204.0",
+            "package": "spryker-feature/marketplace-merchant-portal-product-management",
             "version": "9999999-dev",
-            "package": "spryker-feature/marketplace-merchant-portal-product-offer-management"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         },
         {
-            "alias": "202204.0",
-            "alias_normalized": "202204.0",
+            "package": "spryker-feature/marketplace-merchant-portal-product-offer-management",
             "version": "9999999-dev",
-            "package": "spryker-feature/marketplace-merchantportal-core"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         },
         {
-            "alias": "202204.0",
-            "alias_normalized": "202204.0",
+            "package": "spryker-feature/marketplace-merchantportal-core",
             "version": "9999999-dev",
-            "package": "spryker-feature/marketplace-order-management"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         },
         {
-            "alias": "202204.0",
-            "alias_normalized": "202204.0",
+            "package": "spryker-feature/marketplace-order-management",
             "version": "9999999-dev",
-            "package": "spryker-feature/marketplace-product"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         },
         {
-            "alias": "202204.0",
-            "alias_normalized": "202204.0",
+            "package": "spryker-feature/marketplace-product",
             "version": "9999999-dev",
-            "package": "spryker-feature/marketplace-product-offer"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         },
         {
-            "alias": "202204.0",
-            "alias_normalized": "202204.0",
+            "package": "spryker-feature/marketplace-product-approval-process",
             "version": "9999999-dev",
-            "package": "spryker-feature/marketplace-product-offer-prices"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         },
         {
-            "alias": "202204.0",
-            "alias_normalized": "202204.0",
+            "package": "spryker-feature/marketplace-product-offer",
             "version": "9999999-dev",
-            "package": "spryker-feature/marketplace-product-options"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         },
         {
-            "alias": "202204.0",
-            "alias_normalized": "202204.0",
+            "package": "spryker-feature/marketplace-product-offer-prices",
             "version": "9999999-dev",
-            "package": "spryker-feature/marketplace-promotions-discounts"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         },
         {
-            "alias": "202204.0",
-            "alias_normalized": "202204.0",
+            "package": "spryker-feature/marketplace-product-options",
             "version": "9999999-dev",
-            "package": "spryker-feature/marketplace-return-management"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         },
         {
-            "alias": "202204.0",
-            "alias_normalized": "202204.0",
+            "package": "spryker-feature/marketplace-promotions-discounts",
             "version": "9999999-dev",
-            "package": "spryker-feature/marketplace-shipment"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         },
         {
-            "alias": "202204.0",
-            "alias_normalized": "202204.0",
+            "package": "spryker-feature/marketplace-return-management",
             "version": "9999999-dev",
-            "package": "spryker-feature/merchant-category"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         },
         {
-            "alias": "202204.0",
-            "alias_normalized": "202204.0",
+            "package": "spryker-feature/marketplace-shipment",
             "version": "9999999-dev",
-            "package": "spryker-feature/merchant-opening-hours"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         },
         {
-            "alias": "202204.0",
-            "alias_normalized": "202204.0",
+            "package": "spryker-feature/merchant-category",
             "version": "9999999-dev",
-            "package": "spryker/tax-merchant-portal-gui"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         },
         {
+            "package": "spryker-feature/merchant-opening-hours",
+            "version": "9999999-dev",
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
+        },
+        {
+            "package": "spryker-feature/product-approval-process",
+            "version": "9999999-dev",
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
+        },
+        {
+            "package": "spryker/docker-chromedriver",
+            "version": "9999999-dev",
             "alias": "202108.0",
-            "alias_normalized": "202108.0",
+            "alias_normalized": "202108.0"
+        },
+        {
+            "package": "spryker/tax-merchant-portal-gui",
             "version": "9999999-dev",
-            "package": "spryker/docker-chromedriver"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         }
     ],
     "minimum-stability": "dev",
@@ -63301,10 +63684,12 @@
         "spryker-feature/marketplace-inventory-management": 20,
         "spryker-feature/marketplace-merchant": 20,
         "spryker-feature/marketplace-merchant-order-threshold": 20,
+        "spryker-feature/marketplace-merchant-portal-product-management": 20,
         "spryker-feature/marketplace-merchant-portal-product-offer-management": 20,
         "spryker-feature/marketplace-merchantportal-core": 20,
         "spryker-feature/marketplace-order-management": 20,
         "spryker-feature/marketplace-product": 20,
+        "spryker-feature/marketplace-product-approval-process": 20,
         "spryker-feature/marketplace-product-offer": 20,
         "spryker-feature/marketplace-product-offer-prices": 20,
         "spryker-feature/marketplace-product-options": 20,
@@ -63313,6 +63698,7 @@
         "spryker-feature/marketplace-shipment": 20,
         "spryker-feature/merchant-category": 20,
         "spryker-feature/merchant-opening-hours": 20,
+        "spryker-feature/product-approval-process": 20,
         "spryker/tax-merchant-portal-gui": 20,
         "spryker-sdk/integrator": 20,
         "spryker/docker-chromedriver": 20
@@ -63336,5 +63722,5 @@
     "platform-overrides": {
         "php": "7.4.20"
     },
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.2.0"
 }

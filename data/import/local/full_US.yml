@@ -122,6 +122,8 @@ actions:
       source: data/import/common/common/product_alternative.csv
     - data_entity: product-quantity
       source: data/import/common/common/product_quantity.csv
+    - data_entity: product-approval-status
+      source: data/import/common/common/product_abstract_approval_status.csv
     # Store relation
     - data_entity: discount-store
       source: data/import/common/US/discount_store.csv
@@ -258,6 +260,8 @@ actions:
       source: data/import/common/common/marketplace/merchant_product_option_group.csv
     - data_entity: merchant-product
       source: data/import/common/common/marketplace/merchant_product.csv
+    - data_entity: merchant-product-approval-status-default
+      source: data/import/common/common/marketplace/merchant_product_approval_status_default.csv
 
     #7. Miscellaneous Setup import
     - data_entity: comment

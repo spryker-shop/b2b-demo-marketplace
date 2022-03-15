@@ -40,10 +40,12 @@
         "spryker-feature/marketplace-inventory-management": "dev-master as 202204.0",
         "spryker-feature/marketplace-merchant": "dev-master as 202204.0",
         "spryker-feature/marketplace-merchant-order-threshold": "dev-master as 202204.0",
+        "spryker-feature/marketplace-merchant-portal-product-management": "dev-master as 202204.0",
         "spryker-feature/marketplace-merchant-portal-product-offer-management": "dev-master as 202204.0",
         "spryker-feature/marketplace-merchantportal-core": "dev-master as 202204.0",
         "spryker-feature/marketplace-order-management": "dev-master as 202204.0",
         "spryker-feature/marketplace-product": "dev-master as 202204.0",
+        "spryker-feature/marketplace-product-approval-process": "dev-master as 202204.0",
         "spryker-feature/marketplace-product-offer": "dev-master as 202204.0",
         "spryker-feature/marketplace-product-offer-prices": "dev-master as 202204.0",
         "spryker-feature/marketplace-product-options": "dev-master as 202204.0",
@@ -67,6 +69,7 @@
         "spryker-feature/persistent-cart-sharing": "^202108.0",
         "spryker-feature/prices": "^202108.0",
         "spryker-feature/product": "^202108.0",
+        "spryker-feature/product-approval-process": "dev-master as 202204.0",
         "spryker-feature/product-barcode": "^202108.0",
         "spryker-feature/product-bundles": "^202108.0",
         "spryker-feature/product-customer-restrictions": "^202108.0",
@@ -200,7 +203,6 @@
         "spryker/product-label-discount-connector": "^3.0.3",
         "spryker/product-labels-rest-api": "^1.2.3",
         "spryker/product-measurement-units-rest-api": "^1.0.1",
-        "spryker/product-merchant-portal-gui": "^1.0.0",
         "spryker/product-offer-prices-rest-api": "^1.0.0",
         "spryker/product-option-cart-connector": "^7.1.2",
         "spryker/product-option-merchant-portal-gui": "^1.0.0",
@@ -304,7 +306,12 @@
             "https"
         ],
         "process-timeout": 900,
-        "chromium-revision": 814168
+        "chromium-revision": 814168,
+        "allow-plugins": {
+            "sllh/composer-versions-check": false,
+            "dealerdirect/phpcodesniffer-composer-installer": false,
+            "spryker-sdk/integrator": false
+        }
     },
     "scripts": {
         "compile": [
