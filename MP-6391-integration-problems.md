@@ -370,6 +370,9 @@ and https://github.com/spryker/b2b-demo-shop-internal/commit/2d192c7e43cd4e51b13
 `Merchant Portal feature integration` link is missing
 (https://docs.spryker.com/docs/marketplace/dev/feature-integration-guides/202108.0/merchant-portal-feature-integration.html)
 
+Missed config changes: 
+https://github.com/spryker/b2b-demo-shop-internal/commit/3e9346479c371e40f340a89f0069ba2b9d3c47d9
+
 ------------------------------------------------------------------------------------------------------------------------
 
 #Combined Product Offer Import integration
