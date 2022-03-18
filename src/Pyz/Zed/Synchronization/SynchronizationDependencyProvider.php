@@ -52,6 +52,8 @@ use Spryker\Zed\ProductListStorage\Communication\Plugin\Synchronization\ProductC
 use Spryker\Zed\ProductMeasurementUnitStorage\Communication\Plugin\Synchronization\ProductConcreteMeasurementUnitSynchronizationDataBulkPlugin;
 use Spryker\Zed\ProductMeasurementUnitStorage\Communication\Plugin\Synchronization\ProductMeasurementUnitSynchronizationDataBulkPlugin;
 use Spryker\Zed\ProductOfferAvailabilityStorage\Communication\Plugin\Synchronization\ProductOfferAvailabilitySynchronizationDataBulkPlugin;
+use Spryker\Zed\ProductOfferStorage\Communication\Plugin\Synchronization\ProductConcreteProductOffersSynchronizationDataBulkRepositoryPlugin;
+use Spryker\Zed\ProductOfferStorage\Communication\Plugin\Synchronization\ProductOfferSynchronizationDataBulkRepositoryPlugin;
 use Spryker\Zed\ProductOptionStorage\Communication\Plugin\Synchronization\ProductOptionSynchronizationDataPlugin;
 use Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Synchronization\ProductPackagingUnitSynchronizationDataBulkPlugin;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Synchronization\ProductConcretePageSynchronizationDataBulkPlugin;
@@ -148,6 +150,8 @@ class SynchronizationDependencyProvider extends SprykerSynchronizationDependency
             new PriceProductOfferSynchronizationDataBulkRepositoryPlugin(),
             new MerchantOpeningHoursSynchronizationDataBulkPlugin(),
             new ProductOfferAvailabilitySynchronizationDataBulkPlugin(),
+            new ProductConcreteProductOffersSynchronizationDataBulkRepositoryPlugin(),
+            new ProductOfferSynchronizationDataBulkRepositoryPlugin(),
         ];
     }
 
