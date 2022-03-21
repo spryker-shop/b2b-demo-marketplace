@@ -8,6 +8,8 @@
 namespace Pyz\Zed\DataImport;
 
 use Spryker\Zed\DataImport\DataImportConfig as SprykerDataImportConfig;
+use Spryker\Zed\MerchantProductApprovalDataImport\MerchantProductApprovalDataImportConfig;
+use Spryker\Zed\ProductApprovalDataImport\ProductApprovalDataImportConfig;
 use Spryker\Zed\ProductOfferShoppingListDataImport\ProductOfferShoppingListDataImportConfig;
 use Spryker\Zed\StockAddressDataImport\StockAddressDataImportConfig;
 
@@ -73,6 +75,8 @@ class DataImportConfig extends SprykerDataImportConfig
         $customImportTypes = [
             StockAddressDataImportConfig::IMPORT_TYPE_STOCK_ADDRESS,
             static::IMPORT_TYPE_MERCHANT_USER,
+            MerchantProductApprovalDataImportConfig::IMPORT_TYPE_MERCHANT_PRODUCT_APPROVAL_STATUS_DEFAULT,
+            ProductApprovalDataImportConfig::IMPORT_TYPE_PRODUCT_APPROVAL_STATUS,
             ProductOfferShoppingListDataImportConfig::IMPORT_TYPE_PRODUCT_OFFER_SHOPPING_LIST_ITEM,
         ];
 

@@ -30,6 +30,8 @@ use Spryker\Zed\PriceCartConnector\Communication\Plugin\Cart\SanitizeSourcePrice
 use Spryker\Zed\PriceCartConnector\Communication\Plugin\CartItemPricePlugin;
 use Spryker\Zed\PriceCartConnector\Communication\Plugin\CartItemPricePreCheckPlugin;
 use Spryker\Zed\PriceCartConnector\Communication\Plugin\FilterItemsWithoutPricePlugin;
+use Spryker\Zed\ProductApproval\Communication\Plugin\Cart\ProductApprovalCartPreCheckPlugin;
+use Spryker\Zed\ProductApproval\Communication\Plugin\Cart\ProductApprovalPreReloadItemsPlugin;
 use Spryker\Zed\ProductBundle\Communication\Plugin\Cart\BundleItemPriceQuoteChangeObserverPlugin;
 use Spryker\Zed\ProductBundle\Communication\Plugin\Cart\CartBundleActivePreCheckPlugin;
 use Spryker\Zed\ProductBundle\Communication\Plugin\Cart\CartBundleAvailabilityPreCheckPlugin;
@@ -159,6 +161,7 @@ class CartDependencyProvider extends SprykerCartDependencyProvider
             new MerchantProductCartPreCheckPlugin(),
             new ProductOfferCartPreCheckPlugin(),
             new MerchantProductOptionCartPreCheckPlugin(),
+            new ProductApprovalCartPreCheckPlugin(),
         ];
     }
 
@@ -196,6 +199,7 @@ class CartDependencyProvider extends SprykerCartDependencyProvider
             new FilterItemsWithoutPricePlugin(),
             new ConfiguredBundleQuantityPerSlotPreReloadItemsPlugin(),
             new FilterInactiveProductOfferPreReloadItemsPlugin(),
+            new ProductApprovalPreReloadItemsPlugin(),
         ];
     }
 
