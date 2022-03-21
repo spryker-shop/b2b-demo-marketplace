@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a6b12b3916af384d866214870b9a71d4",
+    "content-hash": "d6d46a34e7a99312a0ea9f4b02f83cc1",
     "packages": [
         {
             "name": "brick/math",
@@ -11291,48 +11291,6 @@
             ],
             "description": "ProductNewPage module",
             "time": "2021-10-29T12:16:12+00:00"
-        },
-        {
-            "name": "spryker-shop/product-offer-shopping-list-widget",
-            "version": "0.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/spryker-shop/product-offer-shopping-list-widget.git",
-                "reference": "f83a3b4bf9d16bb2a874653bb26ca3c55c3dce94"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/spryker-shop/product-offer-shopping-list-widget/zipball/f83a3b4bf9d16bb2a874653bb26ca3c55c3dce94",
-                "reference": "f83a3b4bf9d16bb2a874653bb26ca3c55c3dce94",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.4",
-                "spryker/kernel": "^3.30.0"
-            },
-            "require-dev": {
-                "spryker/code-sniffer": "*"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "SprykerShop\\": "src/SprykerShop/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "proprietary"
-            ],
-            "description": "ProductOfferShoppingListWidget module",
-            "support": {
-                "source": "https://github.com/spryker-shop/product-offer-shopping-list-widget/tree/0.1.0"
-            },
-            "time": "2022-01-26T13:14:26+00:00"
         },
         {
             "name": "spryker-shop/product-offer-shopping-list-widget",
@@ -40629,6 +40587,49 @@
                 "source": "https://github.com/spryker/product-offer-shopping-list-data-import/tree/0.1.0"
             },
             "time": "2022-01-26T13:14:24+00:00"
+        },
+        {
+            "name": "spryker/product-offer-shopping-lists-rest-api",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/product-offer-shopping-lists-rest-api.git",
+                "reference": "97df4e4dc324c42e6b11a42a512013165f6d6151"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/product-offer-shopping-lists-rest-api/zipball/97df4e4dc324c42e6b11a42a512013165f6d6151",
+                "reference": "97df4e4dc324c42e6b11a42a512013165f6d6151",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4",
+                "spryker/glue-application": "^1.0.0",
+                "spryker/product-offer-shopping-list": "^0.1.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ProductOfferShoppingListsRestApi module",
+            "support": {
+                "source": "https://github.com/spryker/product-offer-shopping-lists-rest-api/tree/0.1.0"
+            },
+            "time": "2022-03-14T17:20:27+00:00"
         },
         {
             "name": "spryker/product-offer-stock",
