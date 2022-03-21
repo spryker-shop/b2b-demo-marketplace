@@ -190,7 +190,7 @@
     {% endif %}
 
     {% if can('SeeShoppingListPermissionPlugin') %}
-        {% widget 'AddToShoppingListWidget' args [sku, isDisabled] only %}{% endwidget %}
+        {% widget 'AddToShoppingListWidget' args [sku, isDisabled, data.product] only %}{% endwidget %}
     {% endif %}
 
     {% widget 'ProductDiscontinuedNoteWidget' args [sku] only %}{% endwidget %}
