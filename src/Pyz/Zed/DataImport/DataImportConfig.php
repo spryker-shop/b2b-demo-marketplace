@@ -8,6 +8,7 @@
 namespace Pyz\Zed\DataImport;
 
 use Spryker\Zed\DataImport\DataImportConfig as SprykerDataImportConfig;
+use Spryker\Zed\ProductOfferShoppingListDataImport\ProductOfferShoppingListDataImportConfig;
 use Spryker\Zed\StockAddressDataImport\StockAddressDataImportConfig;
 
 /**
@@ -72,6 +73,7 @@ class DataImportConfig extends SprykerDataImportConfig
         $customImportTypes = [
             StockAddressDataImportConfig::IMPORT_TYPE_STOCK_ADDRESS,
             static::IMPORT_TYPE_MERCHANT_USER,
+            ProductOfferShoppingListDataImportConfig::IMPORT_TYPE_PRODUCT_OFFER_SHOPPING_LIST_ITEM,
         ];
 
         return array_merge(parent::getFullImportTypes(), $customImportTypes);

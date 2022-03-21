@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c427c782b8f3469efaae0c2a2d4bb341",
+    "content-hash": "a6b12b3916af384d866214870b9a71d4",
     "packages": [
         {
             "name": "brick/math",
@@ -4917,6 +4917,43 @@
             "time": "2021-08-30T07:33:57+00:00"
         },
         {
+            "name": "spryker-feature/marketplace-shopping-lists",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-feature/marketplace-shopping-lists.git",
+                "reference": "ac712eddf9e92ade93d4f304e162079bf2ce52c8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-feature/marketplace-shopping-lists/zipball/ac712eddf9e92ade93d4f304e162079bf2ce52c8",
+                "reference": "ac712eddf9e92ade93d4f304e162079bf2ce52c8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4",
+                "spryker-shop/product-offer-shopping-list-widget": "^0.1.0",
+                "spryker/product-offer-shopping-list": "^0.1.0",
+                "spryker/product-offer-shopping-list-data-import": "^0.1.0"
+            },
+            "default-branch": true,
+            "type": "metapackage",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "202108.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Marketplace Shopping Lists [feature]",
+            "support": {
+                "source": "https://github.com/spryker-feature/marketplace-shopping-lists/tree/master"
+            },
+            "time": "2022-02-16T10:41:43+00:00"
+        },
+        {
             "name": "spryker-feature/measurement-units",
             "version": "202108.0",
             "source": {
@@ -6475,25 +6512,25 @@
         },
         {
             "name": "spryker-feature/shopping-lists",
-            "version": "202108.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/shopping-lists.git",
-                "reference": "d82a26fcd84e4d9a880b6531ad777fe671620a21"
+                "reference": "7c6ebc34559bf6024701bfa07ea8d2dce0b078f9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/shopping-lists/zipball/d82a26fcd84e4d9a880b6531ad777fe671620a21",
-                "reference": "d82a26fcd84e4d9a880b6531ad777fe671620a21",
+                "url": "https://api.github.com/repos/spryker-feature/shopping-lists/zipball/7c6ebc34559bf6024701bfa07ea8d2dce0b078f9",
+                "reference": "7c6ebc34559bf6024701bfa07ea8d2dce0b078f9",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.3",
+                "php": ">=7.4",
                 "spryker-shop/shopping-list-note-widget": "^1.1.0",
                 "spryker-shop/shopping-list-page": "^1.4.0",
                 "spryker-shop/shopping-list-widget": "^1.1.0",
                 "spryker/shopping-list": "^4.5.0",
-                "spryker/shopping-list-data-import": "^0.1.0",
+                "spryker/shopping-list-data-import": "^0.2.0",
                 "spryker/shopping-list-note": "^1.2.0",
                 "spryker/shopping-list-session": "^1.2.0",
                 "spryker/shopping-list-storage": "^1.6.0"
@@ -6506,6 +6543,7 @@
                 "spryker-feature/product": "Recommended feature dependency.",
                 "spryker-feature/spryker-core": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -6518,9 +6556,9 @@
             ],
             "description": "Shopping Lists [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/shopping-lists/tree/202108.0"
+                "source": "https://github.com/spryker-feature/shopping-lists/tree/master"
             },
-            "time": "2021-08-30T07:34:13+00:00"
+            "time": "2022-01-26T15:57:35+00:00"
         },
         {
             "name": "spryker-feature/spryker-core",
@@ -11241,6 +11279,48 @@
             ],
             "description": "ProductNewPage module",
             "time": "2021-10-29T12:16:12+00:00"
+        },
+        {
+            "name": "spryker-shop/product-offer-shopping-list-widget",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-shop/product-offer-shopping-list-widget.git",
+                "reference": "f83a3b4bf9d16bb2a874653bb26ca3c55c3dce94"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-shop/product-offer-shopping-list-widget/zipball/f83a3b4bf9d16bb2a874653bb26ca3c55c3dce94",
+                "reference": "f83a3b4bf9d16bb2a874653bb26ca3c55c3dce94",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4",
+                "spryker/kernel": "^3.30.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SprykerShop\\": "src/SprykerShop/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ProductOfferShoppingListWidget module",
+            "support": {
+                "source": "https://github.com/spryker-shop/product-offer-shopping-list-widget/tree/0.1.0"
+            },
+            "time": "2022-01-26T13:14:26+00:00"
         },
         {
             "name": "spryker-shop/product-offer-widget",
@@ -40231,6 +40311,102 @@
             "time": "2021-07-07T15:14:17+00:00"
         },
         {
+            "name": "spryker/product-offer-shopping-list",
+            "version": "0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/product-offer-shopping-list.git",
+                "reference": "18958b653642df12fa893dbfab72d1ddb582f8f5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/product-offer-shopping-list/zipball/18958b653642df12fa893dbfab72d1ddb582f8f5",
+                "reference": "18958b653642df12fa893dbfab72d1ddb582f8f5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4",
+                "spryker/kernel": "^3.52.0",
+                "spryker/product-offer": "^1.2.0",
+                "spryker/shopping-list-extension": "^1.4.0",
+                "spryker/store": "^1.1.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/product": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ProductOfferShoppingList module",
+            "support": {
+                "source": "https://github.com/spryker/product-offer-shopping-list/tree/0.1.1"
+            },
+            "time": "2022-03-14T17:20:27+00:00"
+        },
+        {
+            "name": "spryker/product-offer-shopping-list-data-import",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/product-offer-shopping-list-data-import.git",
+                "reference": "0d3c2cbb3c930b9a59a96c2ff84d499fbf13b1fd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/product-offer-shopping-list-data-import/zipball/0d3c2cbb3c930b9a59a96c2ff84d499fbf13b1fd",
+                "reference": "0d3c2cbb3c930b9a59a96c2ff84d499fbf13b1fd",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4",
+                "spryker/data-import": "^1.6.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/product-offer": "^1.2.0",
+                "spryker/shopping-list": "^4.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/propel": "*",
+                "spryker/propel-orm": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "ProductOfferShoppingListDataImport module",
+            "support": {
+                "source": "https://github.com/spryker/product-offer-shopping-list-data-import/tree/0.1.0"
+            },
+            "time": "2022-01-26T13:14:24+00:00"
+        },
+        {
             "name": "spryker/product-offer-stock",
             "version": "1.1.0",
             "source": {
@@ -47978,25 +48154,25 @@
         },
         {
             "name": "spryker/shopping-list-data-import",
-            "version": "0.1.4",
+            "version": "0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/shopping-list-data-import.git",
-                "reference": "c65954f17bea9ad6bb4ba01f2a5d8ffab0fcc040"
+                "reference": "86e9f8431dca46a25ef58f578d8307e2dd24a718"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/shopping-list-data-import/zipball/c65954f17bea9ad6bb4ba01f2a5d8ffab0fcc040",
-                "reference": "c65954f17bea9ad6bb4ba01f2a5d8ffab0fcc040",
+                "url": "https://api.github.com/repos/spryker/shopping-list-data-import/zipball/86e9f8431dca46a25ef58f578d8307e2dd24a718",
+                "reference": "86e9f8431dca46a25ef58f578d8307e2dd24a718",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.1",
+                "php": ">=7.4",
                 "spryker/company-business-unit": "^1.0.0 || ^2.0.0",
                 "spryker/company-user": "^1.0.0 || ^2.0.0",
                 "spryker/customer": "^7.0.0",
                 "spryker/data-import": "^1.0.0",
-                "spryker/kernel": "^3.0.0",
+                "spryker/kernel": "^3.30.0",
                 "spryker/product": "^5.0.0 || ^6.0.0",
                 "spryker/shopping-list": "^1.0.0 || ^2.0.0 || ^4.0.0"
             },
@@ -48004,7 +48180,6 @@
                 "spryker/code-sniffer": "*",
                 "spryker/company": "*",
                 "spryker/permission": "*",
-                "spryker/propel": "*",
                 "spryker/propel-orm": "*",
                 "spryker/testify": "*"
             },
@@ -48026,9 +48201,9 @@
             ],
             "description": "ShoppingListDataImport module",
             "support": {
-                "source": "https://github.com/spryker/shopping-list-data-import/tree/0.1.4"
+                "source": "https://github.com/spryker/shopping-list-data-import/tree/0.2.0"
             },
-            "time": "2019-06-27T10:59:33+00:00"
+            "time": "2022-01-26T13:14:24+00:00"
         },
         {
             "name": "spryker/shopping-list-extension",
@@ -63180,118 +63355,130 @@
     ],
     "aliases": [
         {
-            "alias": "202204.0",
-            "alias_normalized": "202204.0",
+            "package": "spryker-feature/acl",
             "version": "9999999-dev",
-            "package": "spryker-feature/acl"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         },
         {
-            "alias": "202204.0",
-            "alias_normalized": "202204.0",
+            "package": "spryker-feature/marketplace-cart",
             "version": "9999999-dev",
-            "package": "spryker-feature/marketplace-cart"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         },
         {
-            "alias": "202204.0",
-            "alias_normalized": "202204.0",
+            "package": "spryker-feature/marketplace-inventory-management",
             "version": "9999999-dev",
-            "package": "spryker-feature/marketplace-inventory-management"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         },
         {
-            "alias": "202204.0",
-            "alias_normalized": "202204.0",
+            "package": "spryker-feature/marketplace-merchant",
             "version": "9999999-dev",
-            "package": "spryker-feature/marketplace-merchant"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         },
         {
-            "alias": "202204.0",
-            "alias_normalized": "202204.0",
+            "package": "spryker-feature/marketplace-merchant-order-threshold",
             "version": "9999999-dev",
-            "package": "spryker-feature/marketplace-merchant-order-threshold"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         },
         {
-            "alias": "202204.0",
-            "alias_normalized": "202204.0",
+            "package": "spryker-feature/marketplace-merchant-portal-product-offer-management",
             "version": "9999999-dev",
-            "package": "spryker-feature/marketplace-merchant-portal-product-offer-management"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         },
         {
-            "alias": "202204.0",
-            "alias_normalized": "202204.0",
+            "package": "spryker-feature/marketplace-merchantportal-core",
             "version": "9999999-dev",
-            "package": "spryker-feature/marketplace-merchantportal-core"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         },
         {
-            "alias": "202204.0",
-            "alias_normalized": "202204.0",
+            "package": "spryker-feature/marketplace-order-management",
             "version": "9999999-dev",
-            "package": "spryker-feature/marketplace-order-management"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         },
         {
-            "alias": "202204.0",
-            "alias_normalized": "202204.0",
+            "package": "spryker-feature/marketplace-product",
             "version": "9999999-dev",
-            "package": "spryker-feature/marketplace-product"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         },
         {
-            "alias": "202204.0",
-            "alias_normalized": "202204.0",
+            "package": "spryker-feature/marketplace-product-offer",
             "version": "9999999-dev",
-            "package": "spryker-feature/marketplace-product-offer"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         },
         {
-            "alias": "202204.0",
-            "alias_normalized": "202204.0",
+            "package": "spryker-feature/marketplace-product-offer-prices",
             "version": "9999999-dev",
-            "package": "spryker-feature/marketplace-product-offer-prices"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         },
         {
-            "alias": "202204.0",
-            "alias_normalized": "202204.0",
+            "package": "spryker-feature/marketplace-product-options",
             "version": "9999999-dev",
-            "package": "spryker-feature/marketplace-product-options"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         },
         {
-            "alias": "202204.0",
-            "alias_normalized": "202204.0",
+            "package": "spryker-feature/marketplace-promotions-discounts",
             "version": "9999999-dev",
-            "package": "spryker-feature/marketplace-promotions-discounts"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         },
         {
-            "alias": "202204.0",
-            "alias_normalized": "202204.0",
+            "package": "spryker-feature/marketplace-return-management",
             "version": "9999999-dev",
-            "package": "spryker-feature/marketplace-return-management"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         },
         {
-            "alias": "202204.0",
-            "alias_normalized": "202204.0",
+            "package": "spryker-feature/marketplace-shipment",
             "version": "9999999-dev",
-            "package": "spryker-feature/marketplace-shipment"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         },
         {
-            "alias": "202204.0",
-            "alias_normalized": "202204.0",
+            "package": "spryker-feature/marketplace-shopping-lists",
             "version": "9999999-dev",
-            "package": "spryker-feature/merchant-category"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         },
         {
-            "alias": "202204.0",
-            "alias_normalized": "202204.0",
+            "package": "spryker-feature/merchant-category",
             "version": "9999999-dev",
-            "package": "spryker-feature/merchant-opening-hours"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         },
         {
-            "alias": "202204.0",
-            "alias_normalized": "202204.0",
+            "package": "spryker-feature/merchant-opening-hours",
             "version": "9999999-dev",
-            "package": "spryker/tax-merchant-portal-gui"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         },
         {
+            "package": "spryker-feature/shopping-lists",
+            "version": "9999999-dev",
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
+        },
+        {
+            "package": "spryker/docker-chromedriver",
+            "version": "9999999-dev",
             "alias": "202108.0",
-            "alias_normalized": "202108.0",
+            "alias_normalized": "202108.0"
+        },
+        {
+            "package": "spryker/tax-merchant-portal-gui",
             "version": "9999999-dev",
-            "package": "spryker/docker-chromedriver"
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
         }
     ],
     "minimum-stability": "dev",
@@ -63311,8 +63498,10 @@
         "spryker-feature/marketplace-promotions-discounts": 20,
         "spryker-feature/marketplace-return-management": 20,
         "spryker-feature/marketplace-shipment": 20,
+        "spryker-feature/marketplace-shopping-lists": 20,
         "spryker-feature/merchant-category": 20,
         "spryker-feature/merchant-opening-hours": 20,
+        "spryker-feature/shopping-lists": 20,
         "spryker/tax-merchant-portal-gui": 20,
         "spryker-sdk/integrator": 20,
         "spryker/docker-chromedriver": 20
@@ -63336,5 +63525,5 @@
     "platform-overrides": {
         "php": "7.4.20"
     },
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.2.0"
 }
