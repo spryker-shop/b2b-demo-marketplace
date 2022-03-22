@@ -19,6 +19,7 @@ class PriceCartConnectorConfig extends SprykerPriceCartConnectorConfig
     {
         return array_merge(parent::getItemFieldsForIsSameItemComparison(), [
             ItemTransfer::MERCHANT_REFERENCE,
+            ItemTransfer::PRODUCT_OFFER_REFERENCE,
         ]);
     }
 }
