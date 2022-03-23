@@ -68,6 +68,18 @@
                     {% for key, shoppingListItem in data.shoppingList.items %}
                         {% set product = data.shoppingListItemProducts[shoppingListItem.idShoppingListItem] %}
                         {% set isProductAvailable = product.available is defined and product.available and product.price is defined and product.price is not null %}
+
+                        {% set shoppingListMerchantWidget = findWidget('ShoppingListMerchantWidget', [product]) %}
+                        {% set shoppingListProductOfferWidget = findWidget('ShoppingListProductOfferWidget', [product]) %}
+
+                        {% if shoppingListProductOfferWidget and shoppingListProductOfferWidget.isProductOfferActive is not null %}
+                            {% set isProductAvailable = shoppingListProductOfferWidget.isProductOfferActive and isProductAvailable %}
+                        {% endif %}
+
+                        {% if shoppingListMerchantWidget and shoppingListMerchantWidget.isMerchantActive is not null %}
+                            {% set isProductAvailable = shoppingListMerchantWidget.isMerchantActive and isProductAvailable %}
+                        {% endif %}
+
                         {% set productDiscontinuedWidget = findWidget('ProductDiscontinuedWidget', [product.sku]) %}
 
                         {% if productDiscontinuedWidget %}
