@@ -46,7 +46,7 @@ class ReturnMerchantOrderItemCommandPlugin extends AbstractPlugin implements Com
             ->findMerchantOrderItem(
                 (new MerchantOrderItemCriteriaTransfer())
                     ->setIdOrderItem($orderItem->getIdSalesOrderItem()),
-        );
+            );
 
         if (!$merchantOrderItemTransfer) {
             return [];

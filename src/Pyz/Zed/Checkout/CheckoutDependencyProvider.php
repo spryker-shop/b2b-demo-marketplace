@@ -17,6 +17,7 @@ use Spryker\Zed\Discount\Communication\Plugin\Checkout\VoucherDiscountMaxUsageCh
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantProductOption\Communication\Plugin\Checkout\MerchantProductOptionCheckoutPreConditionPlugin;
 use Spryker\Zed\Payment\Communication\Plugin\Checkout\PaymentMethodValidityCheckoutPreConditionPlugin;
+use Spryker\Zed\ProductApproval\Communication\Plugin\Checkout\ProductApprovalCheckoutPreConditionPlugin;
 use Spryker\Zed\ProductBundle\Communication\Plugin\Checkout\ProductBundleAvailabilityCheckoutPreConditionPlugin;
 use Spryker\Zed\ProductBundle\Communication\Plugin\Checkout\ProductBundleOrderSaverPlugin;
 use Spryker\Zed\ProductDiscontinued\Communication\Plugin\Checkout\ProductDiscontinuedCheckoutPreConditionPlugin;
@@ -61,6 +62,7 @@ class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
             new DuplicateOrderCheckoutPreConditionPlugin(),
             new ProductOfferCheckoutPreConditionPlugin(),
             new MerchantProductOptionCheckoutPreConditionPlugin(),
+            new ProductApprovalCheckoutPreConditionPlugin(),
         ];
     }
 
