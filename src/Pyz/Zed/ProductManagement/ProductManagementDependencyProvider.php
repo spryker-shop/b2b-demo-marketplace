@@ -39,7 +39,7 @@ use Spryker\Zed\Store\Communication\Plugin\Form\StoreRelationToggleFormTypePlugi
 class ProductManagementDependencyProvider extends SprykerProductManagementDependencyProvider
 {
     /**
-     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableConfigurationExpanderPluginInterface>
+     * @return array<\Spryker\Zed\ProductManagement\Communication\Plugin\ProductAbstractViewPluginInterface>
      */
     protected function getProductAbstractViewPlugins()
     {
@@ -195,7 +195,7 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
     }
 
     /**
-     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableDataExpanderPluginInterface>
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableConfigurationExpanderPluginInterface>
      */
     protected function getProductTableConfigurationExpanderPlugins(): array
     {
