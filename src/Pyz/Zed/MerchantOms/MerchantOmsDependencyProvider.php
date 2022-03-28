@@ -30,6 +30,9 @@ class MerchantOmsDependencyProvider extends SprykerMerchantOmsDependencyProvider
      */
     public const FACADE_SALES_RETURN = 'FACADE_SALES_RETURN';
 
+    /**
+     * @return array
+     */
     protected function getStateMachineCommandPlugins(): array
     {
         return [

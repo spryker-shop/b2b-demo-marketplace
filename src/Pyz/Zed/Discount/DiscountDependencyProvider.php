@@ -36,7 +36,7 @@ use Spryker\Zed\Store\Communication\Plugin\Form\StoreRelationToggleFormTypePlugi
 class DiscountDependencyProvider extends SprykerDiscountDependencyProvider
 {
     /**
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface[]
+     * @return array<\Spryker\Zed\DiscountExtension\Dependency\Plugin\DecisionRulePluginInterface>
      */
     protected function getDecisionRulePlugins()
     {
@@ -51,7 +51,7 @@ class DiscountDependencyProvider extends SprykerDiscountDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface[]
+     * @return array<\Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemCollectorPluginInterface>
      */
     protected function getCollectorPlugins()
     {
