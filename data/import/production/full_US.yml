@@ -40,6 +40,8 @@ actions:
       source: data/import/common/common/category_template.csv
     - data_entity: category
       source: data/import/common/common/category.csv
+    - data_entity: category-store
+      source: data/import/common/US/category_store.csv
     - data_entity: product-attribute-key
       source: data/import/common/common/product_attribute_key.csv
     - data_entity: product-management-attribute
@@ -56,13 +58,9 @@ actions:
       source: data/import/common/US/product_price_schedule.csv
     - data_entity: product-stock
       source: data/import/common/common/product_stock.csv
-    - data_entity: product-approval-status
-      source: data/import/common/common/product_abstract_approval_status.csv
     # Store relation
     - data_entity: product-abstract-store
       source: data/import/common/US/product_abstract_store.csv
-    - data_entity: category-store
-      source: data/import/common/US/category_store.csv
 
 
     #3. Special Product Types Setup import - Special Product Types category includes sub-categories: Product Options, Measurements, Product Bundles, Gift Cards
@@ -124,6 +122,8 @@ actions:
       source: data/import/common/common/product_alternative.csv
     - data_entity: product-quantity
       source: data/import/common/common/product_quantity.csv
+    - data_entity: product-approval-status
+      source: data/import/common/common/product_abstract_approval_status.csv
     # Store relation
     - data_entity: discount-store
       source: data/import/common/US/discount_store.csv
@@ -209,7 +209,13 @@ actions:
     - data_entity: price-product-offer
       source: data/import/common/US/price_product_offer.csv
     - data_entity: merchant-stock
+      source: data/import/common/common/marketplace/product_stock.csv
+    - data_entity: stock-address
+      source: data/import/common/common/marketplace/warehouse_address.csv
+    - data_entity: stock-store
       source: data/import/common/common/marketplace/merchant_stock.csv
+    - data_entity: product-stock
+      source: data/import/common/US/marketplace/warehouse_store.csv
     - data_entity: product-offer-stock
       source: data/import/common/common/marketplace/product_offer_stock.csv
     - data_entity: merchant-profile
@@ -240,8 +246,6 @@ actions:
       source: data/import/common/common/quote_request.csv
     - data_entity: quote-request-version
       source: data/import/common/common/quote_request_version.csv
-    - data_entity: merchant-category
-      source: data/import/common/common/marketplace/merchant_category.csv
 
 # Marketplace
     - data_entity: merchant-user
@@ -254,6 +258,8 @@ actions:
       source: data/import/common/common/marketplace/merchant_open_hours_date_schedule.csv
     - data_entity: merchant-opening-hours-weekday-schedule
       source: data/import/common/common/marketplace/merchant_open_hours_week_day_schedule.csv
+    - data_entity: merchant-category
+      source: data/import/common/common/marketplace/merchant_category.csv
     - data_entity: merchant-oms-process
       source: data/import/common/common/marketplace/merchant_oms_process.csv
     - data_entity: merchant-product-option-group
