@@ -44,6 +44,7 @@ use Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\PaginatedResultFor
 use Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\SortedResultFormatterPlugin;
 use Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\SpellingSuggestionResultFormatterPlugin;
 use Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\SuggestionByTypeResultFormatterPlugin;
+use Spryker\Client\MerchantProductSearch\Plugin\Search\MerchantReferenceQueryExpanderPlugin as MerchantProductReferenceQueryExpanderPlugin;
 
 class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
 {
@@ -188,6 +189,8 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
             new PaginatedProductConcreteCatalogSearchQueryExpanderPlugin(),
             new CustomerCatalogProductListQueryExpanderPlugin(),
             new ProductListSearchProductListQueryExpanderPlugin(),
+            new MerchantReferenceQueryExpanderPlugin(),
+            new MerchantProductReferenceQueryExpanderPlugin(),
         ];
     }
 }

@@ -67,6 +67,7 @@ use SprykerShop\Yves\SharedCartPage\Plugin\Router\SharedCartPageRouteProviderPlu
 use SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin;
 use SprykerShop\Yves\ShoppingListWidget\Plugin\Router\ShoppingListWidgetRouteProviderPlugin;
 use SprykerShop\Yves\StorageRouter\Plugin\Router\StorageRouterPlugin;
+use SprykerShop\Yves\MerchantProductOfferWidget\Plugin\Router\MerchantProductOfferWidgetRouteProviderPlugin;
 
 class RouterDependencyProvider extends SprykerRouterDependencyProvider
 {
@@ -138,6 +139,7 @@ class RouterDependencyProvider extends SprykerRouterDependencyProvider
             new ConfigurableBundlePageRouteProviderPlugin(),
             new ConfigurableBundleNoteWidgetRouteProviderPlugin(),
             new OrderCustomReferenceWidgetRouteProviderPlugin(),
+            new MerchantProductOfferWidgetRouteProviderPlugin(),
             new SalesReturnPageRouteProviderPlugin(),
             new OrderCancelWidgetRouteProviderPlugin(),
         ];
