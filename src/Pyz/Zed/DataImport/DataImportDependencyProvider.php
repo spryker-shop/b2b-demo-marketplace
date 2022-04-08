@@ -203,9 +203,9 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
      */
     protected function addAvailabilityFacade(Container $container): Container
     {
-        $container[static::FACADE_AVAILABILITY] = function (Container $container) {
+        $container->set(static::FACADE_AVAILABILITY, function (Container $container) {
             return $container->getLocator()->availability()->facade();
-        };
+        });
 
         return $container;
     }
@@ -217,9 +217,9 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
      */
     protected function addCategoryFacade(Container $container): Container
     {
-        $container[static::FACADE_CATEGORY] = function (Container $container) {
+        $container->set(static::FACADE_CATEGORY, function (Container $container) {
             return $container->getLocator()->category()->facade();
-        };
+        });
 
         return $container;
     }
@@ -231,9 +231,9 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
      */
     protected function addProductBundleFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT_BUNDLE] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_BUNDLE, function (Container $container) {
             return $container->getLocator()->productBundle()->facade();
-        };
+        });
 
         return $container;
     }
@@ -245,9 +245,9 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
      */
     protected function addProductSearchFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT_SEARCH] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_SEARCH, function (Container $container) {
             return $container->getLocator()->productSearch()->facade();
-        };
+        });
 
         return $container;
     }
@@ -259,9 +259,9 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
      */
     protected function addProductRelationFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT_RELATION] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_RELATION, function (Container $container) {
             return $container->getLocator()->productRelation()->facade();
-        };
+        });
 
         return $container;
     }
@@ -273,9 +273,9 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
      */
     protected function addMerchantUserFacade(Container $container): Container
     {
-        $container[static::FACADE_MERCHANT_USER] = function (Container $container) {
+        $container->set(static::FACADE_MERCHANT_USER, function (Container $container) {
             return $container->getLocator()->merchantUser()->facade();
-        };
+        });
 
         return $container;
     }
