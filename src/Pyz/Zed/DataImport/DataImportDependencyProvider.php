@@ -122,7 +122,7 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
 
@@ -201,7 +201,7 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addAvailabilityFacade(Container $container)
+    protected function addAvailabilityFacade(Container $container): Container
     {
         $container[static::FACADE_AVAILABILITY] = function (Container $container) {
             return $container->getLocator()->availability()->facade();
@@ -215,7 +215,7 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCategoryFacade(Container $container)
+    protected function addCategoryFacade(Container $container): Container
     {
         $container[static::FACADE_CATEGORY] = function (Container $container) {
             return $container->getLocator()->category()->facade();
@@ -229,7 +229,7 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductBundleFacade(Container $container)
+    protected function addProductBundleFacade(Container $container): Container
     {
         $container[static::FACADE_PRODUCT_BUNDLE] = function (Container $container) {
             return $container->getLocator()->productBundle()->facade();
@@ -243,7 +243,7 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductSearchFacade(Container $container)
+    protected function addProductSearchFacade(Container $container): Container
     {
         $container[static::FACADE_PRODUCT_SEARCH] = function (Container $container) {
             return $container->getLocator()->productSearch()->facade();
@@ -257,7 +257,7 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductRelationFacade(Container $container)
+    protected function addProductRelationFacade(Container $container): Container
     {
         $container[static::FACADE_PRODUCT_RELATION] = function (Container $container) {
             return $container->getLocator()->productRelation()->facade();
@@ -271,7 +271,7 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addMerchantUserFacade(Container $container)
+    protected function addMerchantUserFacade(Container $container): Container
     {
         $container[static::FACADE_MERCHANT_USER] = function (Container $container) {
             return $container->getLocator()->merchantUser()->facade();
