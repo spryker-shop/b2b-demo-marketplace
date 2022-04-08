@@ -87,8 +87,6 @@
                                         {% endif %}
                                         {% block soldBy %}
                                             {% widget 'SoldByMerchantWidget' args [data.listItem] only %}
-                                            {% elsewidget 'ProductOfferSoldByMerchantWidget' args [data.listItem] only %}
-                                            {% elsewidget 'ProductSoldByMerchantWidget' args [data.listItem] only %}
                                             {% endwidget %}
                                         {% endblock %}
                                     {% endblock %}
