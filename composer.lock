@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1fbde247903744ca4c89dafd2235f87d",
+    "content-hash": "9cd28f8e3faac7cd0c8d953d84a39644",
     "packages": [
         {
             "name": "brick/math",
@@ -1986,16 +1986,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "2.4.0",
+            "version": "2.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "d7fd7450628561ba697b7097d86db72662f54aef"
+                "reference": "4192345e260f1d51b365536199744b987e160edc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/d7fd7450628561ba697b7097d86db72662f54aef",
-                "reference": "d7fd7450628561ba697b7097d86db72662f54aef",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/4192345e260f1d51b365536199744b987e160edc",
+                "reference": "4192345e260f1d51b365536199744b987e160edc",
                 "shasum": ""
             },
             "require": {
@@ -2077,7 +2077,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-14T12:44:37+00:00"
+            "time": "2022-04-08T15:43:54+00:00"
         },
         {
             "name": "nyholm/dsn",
@@ -5049,7 +5049,7 @@
         },
         {
             "name": "spryker-feature/merchant",
-            "version": "202108.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/merchant.git",
@@ -5078,9 +5078,6 @@
                 "proprietary"
             ],
             "description": "Merchant [feature]",
-            "support": {
-                "source": "https://github.com/spryker-feature/merchant/tree/202108.0"
-            },
             "time": "2021-08-30T07:40:38+00:00"
         },
         {
@@ -29408,20 +29405,20 @@
         },
         {
             "name": "spryker/merchant-gui",
-            "version": "3.7.2",
+            "version": "3.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/merchant-gui.git",
-                "reference": "0825d6f602a5d66d1696cebcf581294675af139f"
+                "reference": "72a370fc6f965d73c81cd30b910d11e24213d208"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/merchant-gui/zipball/0825d6f602a5d66d1696cebcf581294675af139f",
-                "reference": "0825d6f602a5d66d1696cebcf581294675af139f",
+                "url": "https://api.github.com/repos/spryker/merchant-gui/zipball/72a370fc6f965d73c81cd30b910d11e24213d208",
+                "reference": "72a370fc6f965d73c81cd30b910d11e24213d208",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.3",
+                "php": ">=7.4",
                 "spryker/availability-gui-extension": "^1.0.0",
                 "spryker/gui": "^3.33.0",
                 "spryker/kernel": "^3.52.0",
@@ -29460,10 +29457,7 @@
                 "proprietary"
             ],
             "description": "MerchantGui module",
-            "support": {
-                "source": "https://github.com/spryker/merchant-gui/tree/3.7.2"
-            },
-            "time": "2021-08-19T10:54:56+00:00"
+            "time": "2022-02-11T12:49:43+00:00"
         },
         {
             "name": "spryker/merchant-gui-extension",
@@ -50784,12 +50778,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/tax-merchant-portal-gui.git",
-                "reference": "b4f08b070cb1ce617095c903b2c7f040ccf16b7a"
+                "reference": "a70861832227af6e5a97bfe6092ae8ae0f7da6ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/tax-merchant-portal-gui/zipball/b4f08b070cb1ce617095c903b2c7f040ccf16b7a",
-                "reference": "b4f08b070cb1ce617095c903b2c7f040ccf16b7a",
+                "url": "https://api.github.com/repos/spryker/tax-merchant-portal-gui/zipball/a70861832227af6e5a97bfe6092ae8ae0f7da6ab",
+                "reference": "a70861832227af6e5a97bfe6092ae8ae0f7da6ab",
                 "shasum": ""
             },
             "require": {
@@ -50821,7 +50815,7 @@
                 "proprietary"
             ],
             "description": "TaxMerchantPortalGui module",
-            "time": "2022-03-18T14:52:42+00:00"
+            "time": "2022-04-08T13:35:49+00:00"
         },
         {
             "name": "spryker/tax-product-connector",
@@ -65093,6 +65087,12 @@
             "alias": "202204.0",
             "alias_normalized": "202204.0",
             "version": "9999999-dev",
+            "package": "spryker-feature/merchant"
+        },
+        {
+            "alias": "202204.0",
+            "alias_normalized": "202204.0",
+            "version": "9999999-dev",
             "package": "spryker-feature/merchant-category"
         },
         {
@@ -65147,6 +65147,7 @@
         "spryker-feature/marketplace-return-management": 20,
         "spryker-feature/marketplace-shipment": 20,
         "spryker-feature/marketplace-shopping-lists": 20,
+        "spryker-feature/merchant": 20,
         "spryker-feature/merchant-category": 20,
         "spryker-feature/merchant-opening-hours": 20,
         "spryker-feature/order-management": 20,
