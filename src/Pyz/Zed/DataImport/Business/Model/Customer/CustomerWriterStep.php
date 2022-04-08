@@ -16,6 +16,10 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class CustomerWriterStep implements DataImportStepInterface
 {
+
+    /**
+     * @var string
+     */
     public const COL_CUSTOMER_REFERENCE = 'customer_reference';
 
     /**

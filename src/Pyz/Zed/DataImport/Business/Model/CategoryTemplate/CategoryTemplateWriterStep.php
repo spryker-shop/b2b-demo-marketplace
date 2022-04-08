@@ -13,7 +13,15 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class CategoryTemplateWriterStep implements DataImportStepInterface
 {
+
+    /**
+     * @var string
+     */
     public const KEY_NAME = 'template_name';
+
+    /**
+     * @var string
+     */
     public const KEY_PATH = 'template_path';
 
     /**

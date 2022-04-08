@@ -12,6 +12,10 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class AttributesExtractorStep implements DataImportStepInterface
 {
+
+    /**
+     * @var string
+     */
     public const KEY_ATTRIBUTES = 'attributes';
 
     /**

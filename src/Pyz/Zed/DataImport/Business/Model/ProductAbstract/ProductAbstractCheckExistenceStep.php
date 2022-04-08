@@ -14,6 +14,10 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class ProductAbstractCheckExistenceStep implements DataImportStepInterface
 {
+
+    /**
+     * @var string
+     */
     public const KEY_ABSTRACT_SKU = 'abstract_sku';
 
     /**

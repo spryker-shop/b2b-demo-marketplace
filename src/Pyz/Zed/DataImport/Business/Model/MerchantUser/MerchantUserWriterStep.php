@@ -32,7 +32,14 @@ class MerchantUserWriterStep implements DataImportStepInterface
         $this->merchantUserFacade = $merchantUserFacade;
     }
 
+    /**
+     * @var string
+     */
     protected const MERCHANT_REFERENCE = 'merchant_reference';
+
+    /**
+     * @var string
+     */
     protected const USERNAME = 'username';
 
     /**

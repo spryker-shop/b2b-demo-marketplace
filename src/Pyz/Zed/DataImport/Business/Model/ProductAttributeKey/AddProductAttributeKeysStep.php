@@ -15,6 +15,10 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class AddProductAttributeKeysStep implements DataImportStepInterface
 {
+
+    /**
+     * @var string
+     */
     public const KEY_TARGET = 'attributeKeys';
 
     /**

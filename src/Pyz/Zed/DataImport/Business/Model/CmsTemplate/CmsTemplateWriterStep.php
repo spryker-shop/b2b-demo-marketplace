@@ -13,7 +13,15 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class CmsTemplateWriterStep implements DataImportStepInterface
 {
+
+    /**
+     * @var string
+     */
     public const KEY_TEMPLATE_NAME = 'template_name';
+
+    /**
+     * @var string
+     */
     public const KEY_TEMPLATE_PATH = 'template_path';
 
     /**

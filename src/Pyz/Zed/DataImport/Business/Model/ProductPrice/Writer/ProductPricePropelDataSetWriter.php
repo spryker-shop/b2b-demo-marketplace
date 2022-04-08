@@ -29,13 +29,45 @@ use Spryker\Zed\Store\Business\StoreFacadeInterface;
 
 class ProductPricePropelDataSetWriter implements DataSetWriterInterface
 {
+
+    /**
+     * @var string
+     */
     protected const COLUMN_ABSTRACT_SKU = ProductPriceHydratorStep::COLUMN_ABSTRACT_SKU;
+
+    /**
+     * @var string
+     */
     protected const COLUMN_CONCRETE_SKU = ProductPriceHydratorStep::COLUMN_CONCRETE_SKU;
+
+    /**
+     * @var string
+     */
     protected const COLUMN_STORE = ProductPriceHydratorStep::COLUMN_STORE;
+
+    /**
+     * @var string
+     */
     protected const COLUMN_CURRENCY = ProductPriceHydratorStep::COLUMN_CURRENCY;
+
+    /**
+     * @var string
+     */
     protected const COLUMN_PRICE_GROSS = ProductPriceHydratorStep::COLUMN_PRICE_GROSS;
+
+    /**
+     * @var string
+     */
     protected const COLUMN_PRICE_NET = ProductPriceHydratorStep::COLUMN_PRICE_NET;
+
+    /**
+     * @var string
+     */
     protected const COLUMN_PRICE_DATA = ProductPriceHydratorStep::COLUMN_PRICE_DATA;
+
+    /**
+     * @var string
+     */
     protected const COLUMN_PRICE_DATA_CHECKSUM = ProductPriceHydratorStep::COLUMN_PRICE_DATA_CHECKSUM;
 
     /**
