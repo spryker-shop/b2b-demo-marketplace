@@ -12,7 +12,15 @@ use Spryker\Zed\ProductOfferStockDataImport\Business\Step\ProductOfferStockWrite
 
 class CombinedProductOfferStockWriterStep extends ProductOfferStockWriterStep
 {
+
+    /**
+     * @var string
+     */
     protected const QUANTITY = CombinedProductOfferStockDataSetInterface::QUANTITY;
+
+    /**
+     * @var string
+     */
     protected const IS_NEVER_OUT_OF_STOCK = CombinedProductOfferStockDataSetInterface::IS_NEVER_OUT_OF_STOCK;
 
     /**

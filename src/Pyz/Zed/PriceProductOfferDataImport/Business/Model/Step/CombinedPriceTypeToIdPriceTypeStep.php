@@ -12,5 +12,9 @@ use Spryker\Zed\PriceProductOfferDataImport\Business\Step\PriceTypeToIdPriceType
 
 class CombinedPriceTypeToIdPriceTypeStep extends PriceTypeToIdPriceTypeStep
 {
+
+    /**
+     * @var string
+     */
     protected const PRICE_TYPE = CombinedPriceProductOfferDataSetInterface::PRICE_TYPE;
 }

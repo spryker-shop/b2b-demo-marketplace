@@ -12,6 +12,14 @@ use Spryker\Zed\ProductOfferValidityDataImport\Business\Step\ProductOfferValidit
 
 class CombinedProductOfferValidityWriterStep extends ProductOfferValidityWriterStep
 {
+
+    /**
+     * @var string
+     */
     protected const PRODUCT_VALID_FROM = CombinedProductOfferValidityDataSetInterface::VALID_FROM;
+
+    /**
+     * @var string
+     */
     protected const PRODUCT_VALID_TO = CombinedProductOfferValidityDataSetInterface::VALID_TO;
 }

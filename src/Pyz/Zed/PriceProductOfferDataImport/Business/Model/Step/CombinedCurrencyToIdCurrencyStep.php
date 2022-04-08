@@ -12,5 +12,9 @@ use Spryker\Zed\PriceProductOfferDataImport\Business\Step\CurrencyToIdCurrencySt
 
 class CombinedCurrencyToIdCurrencyStep extends CurrencyToIdCurrencyStep
 {
+
+    /**
+     * @var string
+     */
     protected const CURRENCY = CombinedPriceProductOfferDataSetInterface::CURRENCY;
 }
