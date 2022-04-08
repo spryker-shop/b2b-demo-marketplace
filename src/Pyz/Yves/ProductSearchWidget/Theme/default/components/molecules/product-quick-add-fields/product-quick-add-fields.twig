@@ -1,33 +1,30 @@
-{% extends model('component') %}
+{% extends molecule('product-quick-add-fields', '@SprykerShop:ProductSearchWidget') %}
 
-{% define config = {
-    name: 'product-quick-add-fields'
-} %}
-
-{% define data = {
-    form: required,
-    verticalLayout: false
-} %}
-
-{% block body %}
-    {% do data.form.sku.setRendered %}
-
-    <div class="col col--sm-12 spacing-bottom spacing-bottom--big {{ data.verticalLayout ? '' : 'col--md-8 spacing-right spacing-right--inner' }}">
+{% block productConcreteSearchWidget %}
+    <div class="col col--sm-12 spacing-bottom spacing-bottom--big {{ not data.verticalLayout ? 'col--md-8' }}">
         {% widget 'ProductConcreteSearchWidget' args [
             'ajax-provider' ~ config.name,
             data.form.sku.vars.full_name,
-        ] only %}
+        ] with {
+            data: {
+                autocompleteFormClassName: data.autocompleteFormClassName,
+            },
+        } only %}
         {% endwidget %}
     </div>
+{% endblock %}
 
-    <div class="col col--sm-12 spacing-bottom spacing-bottom--big {{ data.verticalLayout ? '' : 'col--md-4 spacing-right spacing-right--inner' }}">
+{% block quantity %}
+    {% set quantityClass = config.jsName ~ '__quantity ' ~ 'product-search-autocomplete-form__input product-search-autocomplete-form__input--no-icon js-product-search-autocomplete-form__quantity-field' %}
+
+    <div class="col col--sm-12 spacing-bottom spacing-bottom--big {{ not data.verticalLayout ? 'col--md-4' }}">
         {{ form_widget(data.form.children.quantity, {
             attr: {
-                class: config.jsName ~ '__quantity ' ~ 'product-search-autocomplete-form__input product-search-autocomplete-form__input--no-icon js-product-search-autocomplete-form__quantity-field',
+                class: quantityClass,
                 min: 1,
                 step: 1,
                 placeholder: 'product_quick_add_widget.form.quantity' | trans
-            }}
-        ) }}
+            },
+        }) }}
     </div>
 {% endblock %}

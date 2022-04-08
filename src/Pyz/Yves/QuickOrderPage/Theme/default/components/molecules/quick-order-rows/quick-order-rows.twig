@@ -1,74 +1,82 @@
-{% extends model('component') %}
+{% extends molecule('quick-order-rows', '@SprykerShop:QuickOrderPage') %}
 
-{% define config = {
-    name: 'quick-order-rows'
-} %}
+{% block head %}
+    {% set quantityColumnClass = additionalColumns ? (additionalColumns | length > 1 ? 'col--sm-3' : 'col--sm-4') : 'col--sm-5' %}
+    {% set priceColumnClass = additionalColumns ? 'col--sm-3' : 'col--sm-4' %}
 
-{% define data = {
-    rows: required,
-    products: [],
-    prices: [],
-    additionalColumns: []
-} %}
-
-{% block body %}
-    <div class="grid grid--justify grid--middle {{config.name}}__row {{config.name}}__row--head is-hidden-sm-only">
-        <div class="col col--sm-4 spacing-x spacing-x--inner spacing-x--bigger spacing-y spacing-y--big {{config.name}}__cell">
-            {{ 'quick-order.input-label.sku.name' | trans }}
-        </div>
-
-        <div class="col col--sm-7">
-            <div class="grid grid--justify grid--middle">
-                {% if data.additionalColumns is not empty %}
-                    <div class="col col--sm-3">
-                        {% for additionalColumn in data.additionalColumns %}
-                            <div class="col col--expand spacing-x spacing-x--inner spacing-x--bigger spacing-y spacing-y--big {{config.name}}__cell">
-                                {% block additionalColumn %}
-                                    {{ additionalColumn.title | trans }}
-                                {% endblock %}
-                            </div>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-
-                <div class="col col--sm-5 spacing-x spacing-x--inner spacing-x--bigger spacing-y spacing-y--big {{config.name}}__cell">
-                    {{ 'quick-order.input-label.qty' | trans }}
-                </div>
-
-                <div class="col col--sm-4 spacing-x spacing-x--inner spacing-x--bigger spacing-y spacing-y--big {{config.name}}__cell">
-                    {{ 'quick-order.input-label.price' | trans }}
-                </div>
-            </div>
-        </div>
-
+    <div class="{{ config.name }}__row {{ config.name }}__row--head grid grid--justify grid--middle is-hidden-sm-md">
+        {{ block('sku') }}
+        {{ block('partial') }}
         <div class="col col--sm-1"></div>
     </div>
+{% endblock %}
 
-    {% for row in data.rows %}
-        {% set product = data.products[row.sku.vars.value] ?? null %}
-        {% set searchFieldValue = product is not null ? (product.localizedAttributes[0] is defined ? product.localizedAttributes[0].name ~ ' (' ~ product.sku ~ ')' : '(' ~ product.sku ~ ')') : null %}
-        {% set skuFieldValue = product is not null ? product.sku : null %}
+{% block sku %}
+    <div class="{{ config.name }}__cell col col--sm-4 spacing-x spacing-x--inner spacing-y spacing-y--big">
+        {{ 'quick-order.input-label.sku.name' | trans }}
+    </div>
+{% endblock %}
 
-        {% include molecule('quick-order-row', 'QuickOrderPage') with {
-            class: config.name ~ '__row',
-            data: {
-                index: loop.index0,
-                quantityField: row.quantity,
-                skuField: row.sku,
-                messages: row.vars.value.messages,
-                additionalColumns: data.additionalColumns,
-                product: product,
-                price: row.vars.value.sumPrice,
+{% block additionalColumns %}
+    {% if additionalColumns and additionalColumns | length == 1 %}
+        {{ block('additionalColumn') }}
+    {% elseif additionalColumns and additionalColumns | length > 1 %}
+        {% for key, additionalColumn in additionalColumns %}
+            {% if key is odd %}
+                <div class="{{ config.name }}__cell col col--sm-2 spacing-x spacing-x--inner spacing-y spacing-y--big">
+                    {{ block('oddAdditionalColumn') }}
+                </div>
+            {% elseif key is even %}
+                <div class="{{ config.name }}__cell col col--sm-4 spacing-x spacing-x--inner spacing-y spacing-y--big">
+                    {{ block('evenAdditionalColumn') }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock %}
 
-                autocomplete: {
-                    skuFieldName: row.vars.full_name,
-                    skuFieldValue: skuFieldValue,
-                    searchFieldValue: searchFieldValue,
-                },
+{% block additionalColumn %}
+    <div class="{{ config.name }}__cell col col--sm-3 spacing-x spacing-x--inner spacing-y spacing-y--big">
+        {{ additionalColumns[0].title | trans }}
+    </div>
+{% endblock %}
+
+{% block quantity %}
+    <div class="{{ config.name }}__cell col {{ quantityColumnClass }} spacing-x spacing-x--inner spacing-y spacing-y--big">
+        {{ 'quick-order.input-label.qty' | trans }}
+    </div>
+{% endblock %}
+
+{% block price %}
+    <div class="{{ config.name }}__cell col {{ priceColumnClass }} spacing-x spacing-x--inner spacing-y spacing-y--big">
+        {{ 'quick-order.input-label.price' | trans }}
+    </div>
+{% endblock %}
+
+{% block row %}
+    {% set searchFieldValue = product is null ? null : product.localizedAttributes[0] is defined ? product.localizedAttributes[0].name ~ ' (' ~ product.sku ~ ')' : '(' ~ product.sku ~ ')' %}
+    {% set skuFieldValue = product is null ? null : product.sku %}
+
+    {% include molecule('quick-order-row', 'QuickOrderPage') with {
+        class: config.name ~ '__row',
+        data: {
+            index: loop.index0,
+            quantityField: row.quantity,
+            skuField: row.sku,
+            messages: row.vars.value.messages,
+            additionalColumns: data.additionalColumns,
+            product: product,
+            price: row.vars.value.sumPrice,
+            autocomplete: {
+                skuFieldName: row.vars.full_name,
+                skuFieldValue: skuFieldValue,
+                searchFieldValue: searchFieldValue,
+                extraSearchFormElementClassName: data.extraSearchFormElementClassName,
             },
-            attributes: {
-                'autocomplete-form-class-name': 'js-product-search-autocomplete-form',
-            },
-        } only %}
-    {% endfor %}
+            form: row,
+        },
+        attributes: {
+            'autocomplete-form-class-name': 'js-product-search-autocomplete-form',
+        },
+    } only %}
 {% endblock %}
