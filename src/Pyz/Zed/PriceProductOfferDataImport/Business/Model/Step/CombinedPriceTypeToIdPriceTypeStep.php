@@ -12,7 +12,6 @@ use Spryker\Zed\PriceProductOfferDataImport\Business\Step\PriceTypeToIdPriceType
 
 class CombinedPriceTypeToIdPriceTypeStep extends PriceTypeToIdPriceTypeStep
 {
-
     /**
      * @var string
      */

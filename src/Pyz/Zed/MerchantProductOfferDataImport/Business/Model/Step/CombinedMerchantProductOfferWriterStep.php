@@ -12,7 +12,6 @@ use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\Step\MerchantProdu
 
 class CombinedMerchantProductOfferWriterStep extends MerchantProductOfferWriterStep
 {
-
     /**
      * @var string
      */

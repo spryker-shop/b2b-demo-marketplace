@@ -12,7 +12,6 @@ use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\Step\StoreNameToId
 
 class CombinedStoreNameToIdStoreStep extends StoreNameToIdStoreStep
 {
-
     /**
      * @var string
      */

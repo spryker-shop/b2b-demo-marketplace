@@ -28,7 +28,6 @@ class ProductConcretePropelDataSetWriter implements DataSetWriterInterface
      */
     protected const PRODUCT_BUNDLE_PUBLISH = 'ProductBundle.product_bundle.publish.write';
 
-
     /**
      * @var string
      */

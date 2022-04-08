@@ -12,7 +12,6 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class AttributesExtractorStep implements DataImportStepInterface
 {
-
     /**
      * @var string
      */

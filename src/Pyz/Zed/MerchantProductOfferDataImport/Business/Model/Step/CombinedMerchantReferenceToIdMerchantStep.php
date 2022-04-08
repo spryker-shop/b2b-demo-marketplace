@@ -12,7 +12,6 @@ use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\Step\MerchantRefer
 
 class CombinedMerchantReferenceToIdMerchantStep extends MerchantReferenceToIdMerchantStep
 {
-
     /**
      * @var string
      */

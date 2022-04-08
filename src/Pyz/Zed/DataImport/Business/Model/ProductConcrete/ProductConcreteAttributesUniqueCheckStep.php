@@ -15,7 +15,6 @@ use Spryker\Zed\DataImport\Dependency\Service\DataImportToUtilEncodingServiceInt
 
 class ProductConcreteAttributesUniqueCheckStep implements DataImportStepInterface
 {
-
     /**
      * @var string
      */

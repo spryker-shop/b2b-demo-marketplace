@@ -29,12 +29,10 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
  */
 class ProductSetWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
-
     /**
      * @var int
      */
     public const BULK_SIZE = 100;
-
 
     /**
      * @var string

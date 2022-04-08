@@ -12,7 +12,6 @@ use Spryker\Zed\ProductOfferStockDataImport\Business\Step\StockNameToIdStockStep
 
 class CombinedStockNameToIdStockStep extends StockNameToIdStockStep
 {
-
     /**
      * @var string
      */

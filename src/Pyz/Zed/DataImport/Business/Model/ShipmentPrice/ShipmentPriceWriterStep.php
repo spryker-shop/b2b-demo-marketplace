@@ -16,7 +16,6 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class ShipmentPriceWriterStep implements DataImportStepInterface
 {
-
     /**
      * @var string
      */

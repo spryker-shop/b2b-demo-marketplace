@@ -12,12 +12,10 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class ProductSetImageExtractorStep implements DataImportStepInterface
 {
-
     /**
      * @var string
      */
     public const KEY_TARGET = 'productImageSets';
-
 
     /**
      * @var string

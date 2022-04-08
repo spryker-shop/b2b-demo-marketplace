@@ -13,7 +13,6 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class CmsTemplateWriterStep implements DataImportStepInterface
 {
-
     /**
      * @var string
      */

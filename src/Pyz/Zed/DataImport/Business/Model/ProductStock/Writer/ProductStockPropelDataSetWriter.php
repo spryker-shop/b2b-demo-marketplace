@@ -34,7 +34,6 @@ use Spryker\Zed\Store\Business\StoreFacadeInterface;
 
 class ProductStockPropelDataSetWriter implements DataSetWriterInterface
 {
-
     /**
      * @var string
      */
@@ -49,7 +48,6 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
      * @var string
      */
     protected const COLUMN_IS_NEVER_OUT_OF_STOCK = ProductStockHydratorStep::COLUMN_IS_NEVER_OUT_OF_STOCK;
-
 
     /**
      * @var string
@@ -75,7 +73,6 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
      * @var string
      */
     protected const KEY_AVAILABILITY_ID_AVAILABILITY_ABSTRACT = 'KEY_AVAILABILITY_ID_AVAILABILITY_ABSTRACT';
-
 
     /**
      * @var string

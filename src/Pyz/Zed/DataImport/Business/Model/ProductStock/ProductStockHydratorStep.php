@@ -14,12 +14,10 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class ProductStockHydratorStep implements DataImportStepInterface
 {
-
     /**
      * @var int
      */
     public const BULK_SIZE = 100;
-
 
     /**
      * @var string
@@ -45,7 +43,6 @@ class ProductStockHydratorStep implements DataImportStepInterface
      * @var string
      */
     public const COLUMN_IS_BUNDLE = 'is_bundle';
-
 
     /**
      * @var string

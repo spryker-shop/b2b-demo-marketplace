@@ -14,7 +14,6 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class ProductAbstractSkuToIdProductAbstractStep implements DataImportStepInterface
 {
-
     /**
      * @var string
      */

@@ -18,12 +18,10 @@ use Spryker\Zed\Discount\DiscountConfig;
 
 class DiscountVoucherWriterStep implements DataImportStepInterface
 {
-
     /**
      * @var int
      */
     public const BULK_SIZE = 100;
-
 
     /**
      * @var string

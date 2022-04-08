@@ -12,7 +12,6 @@ use Spryker\Zed\ProductOfferStockDataImport\Business\Step\ProductOfferStockWrite
 
 class CombinedProductOfferStockWriterStep extends ProductOfferStockWriterStep
 {
-
     /**
      * @var string
      */

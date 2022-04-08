@@ -13,7 +13,6 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class ProductManagementLocalizedAttributesExtractorStep implements DataImportStepInterface
 {
-
     /**
      * @var string
      */
