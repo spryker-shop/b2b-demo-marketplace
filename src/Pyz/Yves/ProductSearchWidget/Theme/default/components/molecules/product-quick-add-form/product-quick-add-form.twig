@@ -11,14 +11,9 @@
 {% endblock %}
 
 {% block fields %}
-    {% include molecule('product-quick-add-fields', 'ProductSearchWidget') with {
-        class: 'grid grid--gap-smaller col col--sm-12',
-        data: {
-            form: data.form,
-            verticalLayout: data.verticalLayout,
-            autocompleteFormClassName: config.jsName ~ '__autocomplete-form',
-        },
-    } only %}
+    {% set fieldsAlignment = 'grid--gap-smaller' %}
+
+    {{ parent() }}
 {% endblock %}
 
 {% block merchantProductOffersSelectWidget %}

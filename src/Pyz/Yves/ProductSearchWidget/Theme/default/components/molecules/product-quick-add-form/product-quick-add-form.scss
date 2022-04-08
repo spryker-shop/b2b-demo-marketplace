@@ -22,7 +22,11 @@
 
         .custom-select__select,
         .select2-selection__rendered {
-            background: $setting-color-white;
+            background: $setting-color-gray-7;
+
+            @include helper-breakpoint-media-min($lg) {
+                background: $setting-color-white;
+            }
         }
     }
 }
