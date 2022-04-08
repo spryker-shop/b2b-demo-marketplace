@@ -86,13 +86,8 @@
                                             </div>
                                         {% endif %}
                                         {% block soldBy %}
-                                            {% if widgetGlobalExists('SoldByMerchantWidget') %}
-                                                {% widget 'SoldByMerchantWidget' args [data.listItem] only %}{% endwidget %}
-                                            {% elseif widgetGlobalExists('ProductOfferSoldByMerchantWidget') %}
-                                                {% widget 'ProductOfferSoldByMerchantWidget' args [data.listItem] only %}{% endwidget %}
-                                            {% elseif widgetGlobalExists('ProductSoldByMerchantWidget') %}
-                                                {% widget 'ProductSoldByMerchantWidget' args [data.listItem] only %}{% endwidget %}
-                                            {% endif %}
+                                            {% widget 'SoldByMerchantWidget' args [data.listItem] only %}
+                                            {% endwidget %}
                                         {% endblock %}
                                     {% endblock %}
 

@@ -12,5 +12,8 @@ use Spryker\Zed\PriceProductOfferDataImport\Business\Step\PreparePriceDataStep;
 
 class CombinedPreparePriceDataStep extends PreparePriceDataStep
 {
+    /**
+     * @var string
+     */
     protected const PRICE_DATA_VOLUME_PRICES = CombinedPriceProductOfferDataSetInterface::PRICE_DATA_VOLUME_PRICES;
 }
