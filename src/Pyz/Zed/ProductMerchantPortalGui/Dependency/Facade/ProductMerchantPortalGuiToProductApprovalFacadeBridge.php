@@ -7,6 +7,8 @@
 
 namespace Pyz\Zed\ProductMerchantPortalGui\Dependency\Facade;
 
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductApprovalFacadeInterface;
+
 class ProductMerchantPortalGuiToProductApprovalFacadeBridge implements ProductMerchantPortalGuiToProductApprovalFacadeInterface
 {
     /**
