@@ -38,8 +38,7 @@
         {% set required = false %}
     {%- endif -%}
 
-    {%- set modifiers = [] -%}
-    {%- set modifiers = modifiers | merge(errors is empty ? ['full-width'] : ['full-width', 'error']) -%}
+    {%- set modifiers = modifiers | default([]) | merge(errors is empty ? ['full-width'] : ['full-width', 'error']) -%}
 
     {% embed molecule('custom-select') with {
         modifiers: modifiers,
