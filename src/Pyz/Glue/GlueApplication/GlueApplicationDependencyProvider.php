@@ -294,6 +294,7 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
             new CustomerAvailabilityNotificationsResourceRoutePlugin(),
             new MyAvailabilityNotificationsResourceRoutePlugin(),
             new CartCodesResourceRoutePlugin(),
+            new CartCodesResourceRoutePlugin(),
             new MerchantsResourceRoutePlugin(),
             new MerchantAddressesResourceRoutePlugin(),
             new ProductOffersResourceRoutePlugin(),
