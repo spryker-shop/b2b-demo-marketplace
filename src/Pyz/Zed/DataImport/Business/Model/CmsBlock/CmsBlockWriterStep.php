@@ -27,12 +27,10 @@ use Spryker\Zed\Glossary\Dependency\GlossaryEvents;
  */
 class CmsBlockWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
-
     /**
      * @var int
      */
     public const BULK_SIZE = 100;
-
 
     /**
      * @var string

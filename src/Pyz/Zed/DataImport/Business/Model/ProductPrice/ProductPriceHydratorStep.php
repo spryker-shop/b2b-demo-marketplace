@@ -23,12 +23,10 @@ use Spryker\Zed\PriceProductDataImport\Business\Exception\InvalidPriceDataKeyExc
 
 class ProductPriceHydratorStep implements DataImportStepInterface
 {
-
     /**
      * @var int
      */
     public const BULK_SIZE = 5000;
-
 
     /**
      * @var string
@@ -74,7 +72,6 @@ class ProductPriceHydratorStep implements DataImportStepInterface
      * @var string
      */
     public const COLUMN_PRICE_TYPE = 'price_type';
-
 
     /**
      * @var string

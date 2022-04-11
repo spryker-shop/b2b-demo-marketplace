@@ -12,7 +12,6 @@ use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\Step\MerchantSkuVa
 
 class CombinedMerchantSkuValidationStep extends MerchantSkuValidationStep
 {
-
     /**
      * @var string
      */

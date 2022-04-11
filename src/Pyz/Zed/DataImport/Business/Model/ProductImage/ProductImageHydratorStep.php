@@ -17,12 +17,10 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class ProductImageHydratorStep extends PublishAwareStep implements DataImportStepInterface
 {
-
     /**
      * @var int
      */
     public const BULK_SIZE = 5000;
-
 
     /**
      * @var string
@@ -69,7 +67,6 @@ class ProductImageHydratorStep extends PublishAwareStep implements DataImportSte
      */
     public const COLUMN_PRODUCT_IMAGE_SET_KEY = 'product_image_set_key';
 
-
     /**
      * @var string
      */
@@ -79,7 +76,6 @@ class ProductImageHydratorStep extends PublishAwareStep implements DataImportSte
      * @var string
      */
     public const KEY_IMAGE_SET_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
-
 
     /**
      * @var string

@@ -18,18 +18,15 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class ProductAbstractHydratorStep implements DataImportStepInterface
 {
-
     /**
      * @var int
      */
     public const BULK_SIZE = 5000;
 
-
     /**
      * @var string
      */
     public const COLUMN_ABSTRACT_SKU = 'abstract_sku';
-
 
     /**
      * @var string
@@ -90,7 +87,6 @@ class ProductAbstractHydratorStep implements DataImportStepInterface
      * @var string
      */
     public const COLUMN_NEW_TO = 'new_to';
-
 
     /**
      * @var string

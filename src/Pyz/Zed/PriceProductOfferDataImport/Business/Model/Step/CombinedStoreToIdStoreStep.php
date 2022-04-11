@@ -12,7 +12,6 @@ use Spryker\Zed\PriceProductOfferDataImport\Business\Step\StoreToIdStoreStep;
 
 class CombinedStoreToIdStoreStep extends StoreToIdStoreStep
 {
-
     /**
      * @var string
      */

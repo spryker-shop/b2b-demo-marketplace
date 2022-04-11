@@ -12,7 +12,6 @@ use Spryker\Zed\PriceProductOfferDataImport\Business\Step\PreparePriceDataStep;
 
 class CombinedPreparePriceDataStep extends PreparePriceDataStep
 {
-
     /**
      * @var string
      */

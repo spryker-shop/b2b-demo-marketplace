@@ -22,18 +22,15 @@ use Spryker\Zed\Navigation\Dependency\NavigationEvents;
 
 class NavigationNodeWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
-
     /**
      * @var int
      */
     public const BULK_SIZE = 100;
 
-
     /**
-     * @var boolean
+     * @var bool
      */
     public const DEFAULT_IS_ACTIVE = true;
-
 
     /**
      * @var string
@@ -89,7 +86,6 @@ class NavigationNodeWriterStep extends PublishAwareStep implements DataImportSte
      * @var string
      */
     public const KEY_VALID_TO = 'valid_to';
-
 
     /**
      * @var string

@@ -20,12 +20,10 @@ use Spryker\Zed\ProductOption\Dependency\ProductOptionEvents;
 
 class ProductOptionPriceWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
-
     /**
      * @var int
      */
     public const BULK_SIZE = 100;
-
 
     /**
      * @var string

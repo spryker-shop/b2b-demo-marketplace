@@ -18,7 +18,6 @@ use Pyz\Zed\DataImport\Business\Exception\EntityNotFoundException;
 
 class ProductRepository implements ProductRepositoryInterface
 {
-
     /**
      * @var string
      */

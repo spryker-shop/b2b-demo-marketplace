@@ -18,7 +18,6 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class CmsBlockStoreWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
-
     /**
      * @var int
      */

@@ -12,7 +12,6 @@ use Spryker\Zed\ProductOfferValidityDataImport\Business\Step\ProductOfferValidit
 
 class CombinedProductOfferValidityWriterStep extends ProductOfferValidityWriterStep
 {
-
     /**
      * @var string
      */

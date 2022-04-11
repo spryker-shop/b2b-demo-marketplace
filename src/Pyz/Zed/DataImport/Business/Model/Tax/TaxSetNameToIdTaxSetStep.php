@@ -14,7 +14,6 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class TaxSetNameToIdTaxSetStep implements DataImportStepInterface
 {
-
     /**
      * @var string
      */

@@ -13,7 +13,6 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class ProductAttributeKeyWriter implements DataImportStepInterface
 {
-
     /**
      * @var string
      */

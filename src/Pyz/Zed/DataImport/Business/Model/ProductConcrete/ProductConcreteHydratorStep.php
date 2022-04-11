@@ -18,12 +18,10 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class ProductConcreteHydratorStep implements DataImportStepInterface
 {
-
     /**
      * @var int
      */
     public const BULK_SIZE = 100;
-
 
     /**
      * @var string
@@ -34,7 +32,6 @@ class ProductConcreteHydratorStep implements DataImportStepInterface
      * @var string
      */
     public const COLUMN_CONCRETE_SKU = 'concrete_sku';
-
 
     /**
      * @var string
@@ -60,7 +57,6 @@ class ProductConcreteHydratorStep implements DataImportStepInterface
      * @var string
      */
     public const COLUMN_IS_QUANTITY_SPLITTABLE = 'is_quantity_splittable';
-
 
     /**
      * @var string

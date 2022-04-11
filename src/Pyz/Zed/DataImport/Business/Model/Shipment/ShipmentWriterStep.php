@@ -14,7 +14,6 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class ShipmentWriterStep implements DataImportStepInterface
 {
-
     /**
      * @var string
      */
@@ -34,7 +33,6 @@ class ShipmentWriterStep implements DataImportStepInterface
      * @var string
      */
     public const COL_ID_TAX_SET = 'idTaxSet';
-
 
     /**
      * @var int

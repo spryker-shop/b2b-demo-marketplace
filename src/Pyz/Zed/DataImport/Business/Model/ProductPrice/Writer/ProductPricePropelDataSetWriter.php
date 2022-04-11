@@ -29,7 +29,6 @@ use Spryker\Zed\Store\Business\StoreFacadeInterface;
 
 class ProductPricePropelDataSetWriter implements DataSetWriterInterface
 {
-
     /**
      * @var string
      */
