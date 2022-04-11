@@ -7,8 +7,8 @@
 
 namespace Pyz\Zed\ProductStorage\Business;
 
-use Pyz\Zed\ProductStorage\Business\Storage\ProductAbstractStorageWriter;
-use Pyz\Zed\ProductStorage\Business\Storage\ProductConcreteStorageWriter;
+use Spryker\Zed\ProductStorage\Business\Storage\ProductAbstractStorageWriter;
+use Spryker\Zed\ProductStorage\Business\Storage\ProductConcreteStorageWriter;
 use Spryker\Zed\ProductStorage\Business\Attribute\AttributeMap;
 use Spryker\Zed\ProductStorage\Business\ProductStorageBusinessFactory as SprykerProductStorageBusinessFactory;
 use Spryker\Zed\ProductStorage\ProductStorageDependencyProvider;
@@ -57,7 +57,7 @@ class ProductStorageBusinessFactory extends SprykerProductStorageBusinessFactory
     }
 
     /**
-     * @return \Pyz\Zed\ProductStorage\Business\Storage\ProductConcreteStorageWriter
+     * @return \Spryker\Zed\ProductStorage\Business\Storage\ProductConcreteStorageWriter
      */
     public function createProductConcreteStorageWriter()
     {
