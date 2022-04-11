@@ -1,0 +1,9 @@
+<?php
+
+namespace Pyz\Zed\ProductMerchantPortalGui\Dependency\Facade;
+
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductApprovalFacadeInterface as SprykerProductMerchantPortalGuiToProductApprovalFacadeInterface;
+
+interface ProductMerchantPortalGuiToProductApprovalFacadeInterface extends SprykerProductMerchantPortalGuiToProductApprovalFacadeInterface
+{
+}
