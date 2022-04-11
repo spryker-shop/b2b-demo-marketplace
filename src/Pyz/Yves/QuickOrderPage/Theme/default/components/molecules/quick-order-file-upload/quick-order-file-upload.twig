@@ -66,8 +66,8 @@
 
                     {% if embed.fileTemplateExtensions is not null %}
                         {% set fileExtensions = [] %}
-                        {% for fileExt in embed.fileTemplateExtensions %}
-                            {% set fileExtensions = fileExtensions | merge(['.' ~ fileExt]) %}
+                        {% for fileExtension in embed.fileTemplateExtensions %}
+                            {% set fileExtensions = fileExtensions | merge(['.' ~ fileExtension]) %}
                         {% endfor %}
                         {% set fileExtensions = '<strong>' ~ fileExtensions | join(', ') ~ '</strong>' %}
 
@@ -82,7 +82,7 @@
 {% endblock %}
 
 {% block button %}
-    <button type="submit" name="uploadOrder" class="button button--success spacing-top spacing-top--big">
+    <button name="uploadOrder" class="button button--success spacing-top spacing-top--big">
         {{ 'quick-order.file-upload-order.button.upload' | trans }}
     </button>
 {% endblock %}
@@ -90,9 +90,9 @@
 {% block fileTemplate %}
     {% if data.fileTemplateExtensions %}
         <div class="grid grid--gap grid--center spacing-top">
-            {% for fileTemplateExt in data.fileTemplateExtensions %}
+            {% for fileTemplateExtension in data.fileTemplateExtensions %}
                 <div class="col col--sm-10 spacing-top">
-                    <a class="{{ config.name }}__download-link" href="{{ path('quick-order/download-template', {'file-type': fileTemplateExt}) }}">
+                    <a class="{{ config.name }}__download-link" href="{{ path('quick-order/download-template', {'file-type': fileTemplateExtension}) }}">
                         {% include atom('icon') with {
                             modifiers: ['download-file'],
                             data: {
@@ -100,7 +100,7 @@
                             },
                         } only %}
 
-                        {{ 'quick-order.file-upload-order.file-template-download-message' | trans({'%template%': fileTemplateExt})}}
+                        {{ 'quick-order.file-upload-order.file-template-download-message' | trans({'%template%': fileTemplateExtension})}}
                     </a>
                 </div>
             {% endfor %}
