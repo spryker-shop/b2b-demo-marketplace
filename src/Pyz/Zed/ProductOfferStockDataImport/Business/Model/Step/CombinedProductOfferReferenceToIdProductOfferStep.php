@@ -12,5 +12,8 @@ use Spryker\Zed\ProductOfferStockDataImport\Business\Step\ProductOfferReferenceT
 
 class CombinedProductOfferReferenceToIdProductOfferStep extends ProductOfferReferenceToIdProductOfferStep
 {
+    /**
+     * @var string
+     */
     protected const PRODUCT_OFFER_REFERENCE = CombinedProductOfferStockDataSetInterface::PRODUCT_OFFER_REFERENCE;
 }
