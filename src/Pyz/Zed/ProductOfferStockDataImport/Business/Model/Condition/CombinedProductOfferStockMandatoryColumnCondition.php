@@ -18,9 +18,9 @@ class CombinedProductOfferStockMandatoryColumnCondition extends CombinedProductM
     protected function getMandatoryColumns(): array
     {
         return [
-            CombinedProductOfferStockDataSetInterface::STOCK_NAME,
-            CombinedProductOfferStockDataSetInterface::QUANTITY,
-            CombinedProductOfferStockDataSetInterface::IS_NEVER_OUT_OF_STOCK,
+            CombinedProductOfferStockDataSetInterface::PYZ_STOCK_NAME,
+            CombinedProductOfferStockDataSetInterface::PYZ_QUANTITY,
+            CombinedProductOfferStockDataSetInterface::PYZ_IS_NEVER_OUT_OF_STOCK,
         ];
     }
 }

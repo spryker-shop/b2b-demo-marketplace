@@ -15,12 +15,12 @@ class CombinedProductOfferStockWriterStep extends ProductOfferStockWriterStep
     /**
      * @var string
      */
-    protected const QUANTITY = CombinedProductOfferStockDataSetInterface::QUANTITY;
+    protected const QUANTITY = CombinedProductOfferStockDataSetInterface::PYZ_QUANTITY;
 
     /**
      * @var string
      */
-    protected const IS_NEVER_OUT_OF_STOCK = CombinedProductOfferStockDataSetInterface::IS_NEVER_OUT_OF_STOCK;
+    protected const IS_NEVER_OUT_OF_STOCK = CombinedProductOfferStockDataSetInterface::PYZ_IS_NEVER_OUT_OF_STOCK;
 
     /**
      * @var array<string>
