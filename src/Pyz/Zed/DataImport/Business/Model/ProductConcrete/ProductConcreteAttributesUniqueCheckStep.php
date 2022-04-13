@@ -15,8 +15,19 @@ use Spryker\Zed\DataImport\Dependency\Service\DataImportToUtilEncodingServiceInt
 
 class ProductConcreteAttributesUniqueCheckStep implements DataImportStepInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_CONCRETE_SKU = 'concrete_sku';
+
+    /**
+     * @var string
+     */
     protected const KEY_ABSTRACT_SKU = 'abstract_sku';
+
+    /**
+     * @var string
+     */
     protected const KEY_ATTRIBUTES = 'attributes';
 
     /**

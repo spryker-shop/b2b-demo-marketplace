@@ -12,5 +12,8 @@ use Spryker\Zed\ProductOfferValidityDataImport\Business\Step\ProductOfferReferen
 
 class CombinedProductOfferReferenceToIdProductOfferStep extends ProductOfferReferenceToIdProductOfferStep
 {
+    /**
+     * @var string
+     */
     protected const PRODUCT_OFFER_REFERENCE = CombinedProductOfferValidityDataSetInterface::PRODUCT_OFFER_REFERENCE;
 }

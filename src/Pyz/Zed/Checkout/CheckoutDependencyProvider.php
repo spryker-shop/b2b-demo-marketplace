@@ -20,6 +20,7 @@ use Spryker\Zed\Payment\Communication\Plugin\Checkout\PaymentMethodValidityCheck
 use Spryker\Zed\ProductApproval\Communication\Plugin\Checkout\ProductApprovalCheckoutPreConditionPlugin;
 use Spryker\Zed\ProductBundle\Communication\Plugin\Checkout\ProductBundleAvailabilityCheckoutPreConditionPlugin;
 use Spryker\Zed\ProductBundle\Communication\Plugin\Checkout\ProductBundleOrderSaverPlugin;
+use Spryker\Zed\ProductCartConnector\Communication\Plugin\Checkout\ProductExistsCheckoutPreConditionPlugin;
 use Spryker\Zed\ProductDiscontinued\Communication\Plugin\Checkout\ProductDiscontinuedCheckoutPreConditionPlugin;
 use Spryker\Zed\ProductOffer\Communication\Plugin\Checkout\ProductOfferCheckoutPreConditionPlugin;
 use Spryker\Zed\ProductOption\Communication\Plugin\Checkout\ProductOptionOrderSaverPlugin;
@@ -60,6 +61,7 @@ class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
             new QuoteApprovalCheckoutPreConditionPlugin(),
             new PaymentMethodValidityCheckoutPreConditionPlugin(),
             new DuplicateOrderCheckoutPreConditionPlugin(),
+            new ProductExistsCheckoutPreConditionPlugin(),
             new ProductOfferCheckoutPreConditionPlugin(),
             new MerchantProductOptionCheckoutPreConditionPlugin(),
             new ProductApprovalCheckoutPreConditionPlugin(),

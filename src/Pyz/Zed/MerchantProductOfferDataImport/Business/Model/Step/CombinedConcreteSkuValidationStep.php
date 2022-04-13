@@ -12,5 +12,8 @@ use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\Step\ConcreteSkuVa
 
 class CombinedConcreteSkuValidationStep extends ConcreteSkuValidationStep
 {
+    /**
+     * @var string
+     */
     protected const CONCRETE_SKU = CombinedMerchantProductOfferDataSetInterface::CONCRETE_SKU;
 }

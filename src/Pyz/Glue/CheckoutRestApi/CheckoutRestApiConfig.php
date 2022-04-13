@@ -11,32 +11,45 @@ use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig as SprykerCheckoutRestApi
 
 class CheckoutRestApiConfig extends SprykerCheckoutRestApiConfig
 {
+    /**
+     * @var array<string, array<string>>
+     */
     protected const PAYMENT_METHOD_REQUIRED_FIELDS = [
         'dummyMarketplacePaymentInvoice' => ['dummyMarketplacePaymentInvoice.dateOfBirth'],
     ];
 
     /**
      * @uses \Spryker\Shared\DummyMarketplacePayment\DummyMarketplacePaymentConfig::PAYMENT_PROVIDER_NAME
+     *
+     * @var string
      */
-    protected const DUMMY_MARKETPLACE_PAYMENT_PROVIDER_NAME = 'DummyMarketplacePayment';
+    protected const PYZ_DUMMY_MARKETPLACE_PAYMENT_PROVIDER_NAME = 'DummyMarketplacePayment';
 
-    protected const DUMMY_PAYMENT_PAYMENT_METHOD_NAME_INVOICE = 'Invoice';
+    /**
+     * @var string
+     */
+    protected const PYZ_DUMMY_PAYMENT_PAYMENT_METHOD_NAME_INVOICE = 'Invoice';
 
     /**
      * @uses \Spryker\Shared\DummyMarketplacePayment\DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE
+     *
+     * @var string
      */
-    protected const PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE = 'dummyMarketplacePaymentInvoice';
+    protected const PYZ_PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE = 'dummyMarketplacePaymentInvoice';
 
+    /**
+     * @var bool
+     */
     protected const IS_PAYMENT_PROVIDER_METHOD_TO_STATE_MACHINE_MAPPING_ENABLED = false;
 
     /**
-     * @return string[][]
+     * @return array<array<string>>
      */
     public function getPaymentProviderMethodToStateMachineMapping(): array
     {
         return [
-            static::DUMMY_MARKETPLACE_PAYMENT_PROVIDER_NAME => [
-                static::DUMMY_PAYMENT_PAYMENT_METHOD_NAME_INVOICE => static::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE,
+            static::PYZ_DUMMY_MARKETPLACE_PAYMENT_PROVIDER_NAME => [
+                static::PYZ_DUMMY_PAYMENT_PAYMENT_METHOD_NAME_INVOICE => static::PYZ_PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE,
             ],
         ];
     }

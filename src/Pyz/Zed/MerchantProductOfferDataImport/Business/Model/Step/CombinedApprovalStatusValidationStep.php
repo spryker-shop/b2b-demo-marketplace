@@ -12,5 +12,8 @@ use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\Step\ApprovalStatu
 
 class CombinedApprovalStatusValidationStep extends ApprovalStatusValidationStep
 {
+    /**
+     * @var string
+     */
     protected const APPROVAL_STATUS = CombinedMerchantProductOfferDataSetInterface::APPROVAL_STATUS;
 }
