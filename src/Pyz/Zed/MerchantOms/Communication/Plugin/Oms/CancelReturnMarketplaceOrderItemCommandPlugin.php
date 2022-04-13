@@ -12,13 +12,13 @@ class CancelReturnMarketplaceOrderItemCommandPlugin extends AbstractTriggerOmsEv
     /**
      * @var string
      */
-    protected const EVENT_CANCEL_RETURN = 'cancel-return';
+    protected const PYZ_EVENT_CANCEL_RETURN = 'cancel-return';
 
     /**
      * @return string
      */
     public function getEventName(): string
     {
-        return static::EVENT_CANCEL_RETURN;
+        return static::PYZ_EVENT_CANCEL_RETURN;
     }
 }

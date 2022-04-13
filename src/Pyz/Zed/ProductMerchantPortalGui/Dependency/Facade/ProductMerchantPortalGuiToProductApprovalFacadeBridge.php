@@ -7,8 +7,6 @@
 
 namespace Pyz\Zed\ProductMerchantPortalGui\Dependency\Facade;
 
-use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductApprovalFacadeInterface;
-
 class ProductMerchantPortalGuiToProductApprovalFacadeBridge implements ProductMerchantPortalGuiToProductApprovalFacadeInterface
 {
     /**
@@ -31,6 +29,6 @@ class ProductMerchantPortalGuiToProductApprovalFacadeBridge implements ProductMe
      */
     public function getApplicableApprovalStatuses(string $currentStatus): array
     {
-        return $this->productMerchantPortalGuiConfig->getApplicableApprovalStatuses($currentStatus);
+        return $this->productMerchantPortalGuiConfig->getPyzApplicableApprovalStatuses($currentStatus);
     }
 }

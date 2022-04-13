@@ -12,13 +12,13 @@ class ShipReturnMarketplaceOrderItemCommandPlugin extends AbstractTriggerOmsEven
     /**
      * @var string
      */
-    protected const EVENT_SHIP_RETURN = 'ship-return';
+    protected const PYZ_EVENT_SHIP_RETURN = 'ship-return';
 
     /**
      * @return string
      */
     public function getEventName(): string
     {
-        return static::EVENT_SHIP_RETURN;
+        return static::PYZ_EVENT_SHIP_RETURN;
     }
 }
