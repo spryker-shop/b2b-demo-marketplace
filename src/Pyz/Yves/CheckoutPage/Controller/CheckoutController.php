@@ -136,7 +136,7 @@ class CheckoutController extends SprykerCheckoutController
             $request,
             $this->getFactory()
                 ->createPyzCheckoutFormFactory()
-                ->getPyzPaymentFormCollection()
+                ->getPaymentFormCollection()
         );
 
         if (!is_array($response)) {
