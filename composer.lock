@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b21d6674a000e1c0be3f80ef4420ade8",
+    "content-hash": "2d33d696e57892c9b26dd8d2f6ca725f",
     "packages": [
         {
             "name": "brick/math",
@@ -4761,6 +4761,41 @@
             "time": "2022-04-13T13:07:06+00:00"
         },
         {
+            "name": "spryker-feature/marketplace-packaging-units",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-feature/marketplace-packaging-units.git",
+                "reference": "ad038f1d8a41d574298df5e66b679e640b21d304"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-feature/marketplace-packaging-units/zipball/ad038f1d8a41d574298df5e66b679e640b21d304",
+                "reference": "ad038f1d8a41d574298df5e66b679e640b21d304",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4",
+                "spryker/product-offer-packaging-unit": "^1.0.0"
+            },
+            "default-branch": true,
+            "type": "metapackage",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "202204.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Marketplace Packaging Units [feature]",
+            "support": {
+                "source": "https://github.com/spryker-feature/marketplace-packaging-units/tree/master"
+            },
+            "time": "2022-04-18T20:42:23+00:00"
+        },
+        {
             "name": "spryker-feature/marketplace-product",
             "version": "dev-master",
             "source": {
@@ -5135,18 +5170,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/marketplace-shopping-lists.git",
-                "reference": "68c0239628293d2de76c4921260bed0a74ccbbd9"
+                "reference": "6a74931ac13c65026ecd996ab6beba91ba5fc830"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/marketplace-shopping-lists/zipball/68c0239628293d2de76c4921260bed0a74ccbbd9",
-                "reference": "68c0239628293d2de76c4921260bed0a74ccbbd9",
+                "url": "https://api.github.com/repos/spryker-feature/marketplace-shopping-lists/zipball/6a74931ac13c65026ecd996ab6beba91ba5fc830",
+                "reference": "6a74931ac13c65026ecd996ab6beba91ba5fc830",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.4",
-                "spryker-shop/product-offer-shopping-list-widget": "^0.1.0",
-                "spryker/product-offer-shopping-list": "^0.1.0",
+                "spryker-shop/product-offer-shopping-list-widget": "^1.0.0",
+                "spryker/product-offer-shopping-list": "^1.0.0",
                 "spryker/product-offer-shopping-list-data-import": "^0.1.0",
                 "spryker/shopping-list": "^4.8.0"
             },
@@ -5165,7 +5200,7 @@
             "support": {
                 "source": "https://github.com/spryker-feature/marketplace-shopping-lists/tree/master"
             },
-            "time": "2022-04-13T13:33:31+00:00"
+            "time": "2022-04-18T20:41:04+00:00"
         },
         {
             "name": "spryker-feature/measurement-units",
@@ -5670,18 +5705,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/packaging-units.git",
-                "reference": "a00b3b0a4f7ecda7a3c21336b98c93cf8c307d48"
+                "reference": "9346ed7efb684a35444afea57fe0354b620a3cb9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/packaging-units/zipball/a00b3b0a4f7ecda7a3c21336b98c93cf8c307d48",
-                "reference": "a00b3b0a4f7ecda7a3c21336b98c93cf8c307d48",
+                "url": "https://api.github.com/repos/spryker-feature/packaging-units/zipball/9346ed7efb684a35444afea57fe0354b620a3cb9",
+                "reference": "9346ed7efb684a35444afea57fe0354b620a3cb9",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.3",
+                "php": ">=7.4",
                 "spryker-shop/product-packaging-unit-widget": "^1.2.0",
-                "spryker/product-offer-packaging-unit": "^0.1.0",
                 "spryker/product-packaging-unit": "^4.5.0",
                 "spryker/product-packaging-unit-data-import": "^2.0.0",
                 "spryker/product-packaging-unit-storage": "^5.2.0"
@@ -5693,7 +5727,7 @@
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "202108.x-dev"
+                    "dev-master": "202204.x-dev"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -5702,9 +5736,9 @@
             ],
             "description": "Packaging units [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/packaging-units/tree/202108.0"
+                "source": "https://github.com/spryker-feature/packaging-units/tree/master"
             },
-            "time": "2021-08-30T07:34:06+00:00"
+            "time": "2022-04-18T22:02:23+00:00"
         },
         {
             "name": "spryker-feature/payments",
@@ -11765,16 +11799,16 @@
         },
         {
             "name": "spryker-shop/product-offer-shopping-list-widget",
-            "version": "0.1.0",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-shop/product-offer-shopping-list-widget.git",
-                "reference": "f83a3b4bf9d16bb2a874653bb26ca3c55c3dce94"
+                "reference": "f9ace5001260c909be2fce6d4b99de1cfb72398a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-shop/product-offer-shopping-list-widget/zipball/f83a3b4bf9d16bb2a874653bb26ca3c55c3dce94",
-                "reference": "f83a3b4bf9d16bb2a874653bb26ca3c55c3dce94",
+                "url": "https://api.github.com/repos/spryker-shop/product-offer-shopping-list-widget/zipball/f9ace5001260c909be2fce6d4b99de1cfb72398a",
+                "reference": "f9ace5001260c909be2fce6d4b99de1cfb72398a",
                 "shasum": ""
             },
             "require": {
@@ -11800,7 +11834,10 @@
                 "proprietary"
             ],
             "description": "ProductOfferShoppingListWidget module",
-            "time": "2022-01-26T13:14:26+00:00"
+            "support": {
+                "source": "https://github.com/spryker-shop/product-offer-shopping-list-widget/tree/1.0.0"
+            },
+            "time": "2022-04-18T12:48:32+00:00"
         },
         {
             "name": "spryker-shop/product-offer-widget",
@@ -30921,22 +30958,24 @@
         },
         {
             "name": "spryker/merchant-product-offer-shopping-lists-rest-api",
-            "version": "0.1.0",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/merchant-product-offer-shopping-lists-rest-api.git",
-                "reference": "6a81b7e18cdd4d0437b983bb55f3e76f374c91c1"
+                "reference": "219cd2b6f1fc75d050b31491319976390358a336"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/merchant-product-offer-shopping-lists-rest-api/zipball/6a81b7e18cdd4d0437b983bb55f3e76f374c91c1",
-                "reference": "6a81b7e18cdd4d0437b983bb55f3e76f374c91c1",
+                "url": "https://api.github.com/repos/spryker/merchant-product-offer-shopping-lists-rest-api/zipball/219cd2b6f1fc75d050b31491319976390358a336",
+                "reference": "219cd2b6f1fc75d050b31491319976390358a336",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.4",
                 "spryker/glue-application": "^1.0.0",
+                "spryker/merchant": "^3.0.0",
                 "spryker/merchant-product-offer": "^1.0.0",
+                "spryker/product-offer": "^1.0.0",
                 "spryker/shopping-list": "^4.0.0"
             },
             "require-dev": {
@@ -30958,7 +30997,10 @@
                 "proprietary"
             ],
             "description": "MerchantProductOfferShoppingListsRestApi module",
-            "time": "2022-03-14T17:20:27+00:00"
+            "support": {
+                "source": "https://github.com/spryker/merchant-product-offer-shopping-lists-rest-api/tree/1.0.0"
+            },
+            "time": "2022-04-18T12:48:30+00:00"
         },
         {
             "name": "spryker/merchant-product-offer-storage",
@@ -31344,22 +31386,24 @@
         },
         {
             "name": "spryker/merchant-product-shopping-lists-rest-api",
-            "version": "0.1.0",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/merchant-product-shopping-lists-rest-api.git",
-                "reference": "1896e9e92a5fbbb77c85be19d94e05c6ada210c8"
+                "reference": "ed41b9ee7e073d10eb34d6a1d432887a1d55b986"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/merchant-product-shopping-lists-rest-api/zipball/1896e9e92a5fbbb77c85be19d94e05c6ada210c8",
-                "reference": "1896e9e92a5fbbb77c85be19d94e05c6ada210c8",
+                "url": "https://api.github.com/repos/spryker/merchant-product-shopping-lists-rest-api/zipball/ed41b9ee7e073d10eb34d6a1d432887a1d55b986",
+                "reference": "ed41b9ee7e073d10eb34d6a1d432887a1d55b986",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.4",
                 "spryker/glue-application": "^1.0.0",
+                "spryker/merchant": "^3.0.0",
                 "spryker/merchant-product": "^1.0.0",
+                "spryker/product": "^6.0.0",
                 "spryker/shopping-list": "^4.0.0"
             },
             "require-dev": {
@@ -31381,7 +31425,10 @@
                 "proprietary"
             ],
             "description": "MerchantProductShoppingListsRestApi module",
-            "time": "2022-03-14T17:20:27+00:00"
+            "support": {
+                "source": "https://github.com/spryker/merchant-product-shopping-lists-rest-api/tree/1.0.0"
+            },
+            "time": "2022-04-18T12:48:30+00:00"
         },
         {
             "name": "spryker/merchant-product-storage",
@@ -41474,26 +41521,26 @@
         },
         {
             "name": "spryker/product-offer-packaging-unit",
-            "version": "0.1.1",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-offer-packaging-unit.git",
-                "reference": "092aa0cbd765fb7344b5eac876988b6cf1fa7b7c"
+                "reference": "d7102ea92ebc383ec14f3aa7727a6e2a2e1e51e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-offer-packaging-unit/zipball/092aa0cbd765fb7344b5eac876988b6cf1fa7b7c",
-                "reference": "092aa0cbd765fb7344b5eac876988b6cf1fa7b7c",
+                "url": "https://api.github.com/repos/spryker/product-offer-packaging-unit/zipball/d7102ea92ebc383ec14f3aa7727a6e2a2e1e51e3",
+                "reference": "d7102ea92ebc383ec14f3aa7727a6e2a2e1e51e3",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.3",
+                "php": ">=7.4",
                 "spryker/kernel": "^3.33.0",
                 "spryker/oms": "^11.7.0",
                 "spryker/oms-extension": "^1.2.0",
                 "spryker/propel-orm": "^1.9.0",
                 "spryker/sales": "^11.0.0",
-                "spryker/transfer": "^3.18.0"
+                "spryker/transfer": "^3.25.0"
             },
             "require-dev": {
                 "spryker/code-sniffer": "*",
@@ -41522,9 +41569,9 @@
             ],
             "description": "ProductOfferPackagingUnit module",
             "support": {
-                "source": "https://github.com/spryker/product-offer-packaging-unit/tree/0.1.1"
+                "source": "https://github.com/spryker/product-offer-packaging-unit/tree/1.0.0"
             },
-            "time": "2021-02-05T15:12:21+00:00"
+            "time": "2022-04-18T12:48:30+00:00"
         },
         {
             "name": "spryker/product-offer-prices-rest-api",
@@ -41699,16 +41746,16 @@
         },
         {
             "name": "spryker/product-offer-shopping-list",
-            "version": "0.1.1",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-offer-shopping-list.git",
-                "reference": "18958b653642df12fa893dbfab72d1ddb582f8f5"
+                "reference": "6071beb75d27213b5ce5c3c513d3cf5fc485020e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-offer-shopping-list/zipball/18958b653642df12fa893dbfab72d1ddb582f8f5",
-                "reference": "18958b653642df12fa893dbfab72d1ddb582f8f5",
+                "url": "https://api.github.com/repos/spryker/product-offer-shopping-list/zipball/6071beb75d27213b5ce5c3c513d3cf5fc485020e",
+                "reference": "6071beb75d27213b5ce5c3c513d3cf5fc485020e",
                 "shasum": ""
             },
             "require": {
@@ -41740,7 +41787,10 @@
                 "proprietary"
             ],
             "description": "ProductOfferShoppingList module",
-            "time": "2022-03-14T17:20:27+00:00"
+            "support": {
+                "source": "https://github.com/spryker/product-offer-shopping-list/tree/1.0.0"
+            },
+            "time": "2022-04-18T12:48:30+00:00"
         },
         {
             "name": "spryker/product-offer-shopping-list-data-import",
@@ -41789,22 +41839,22 @@
         },
         {
             "name": "spryker/product-offer-shopping-lists-rest-api",
-            "version": "0.1.0",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-offer-shopping-lists-rest-api.git",
-                "reference": "97df4e4dc324c42e6b11a42a512013165f6d6151"
+                "reference": "4eed7fd2c3ec01bafec6aa53316f25d2c258ea13"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-offer-shopping-lists-rest-api/zipball/97df4e4dc324c42e6b11a42a512013165f6d6151",
-                "reference": "97df4e4dc324c42e6b11a42a512013165f6d6151",
+                "url": "https://api.github.com/repos/spryker/product-offer-shopping-lists-rest-api/zipball/4eed7fd2c3ec01bafec6aa53316f25d2c258ea13",
+                "reference": "4eed7fd2c3ec01bafec6aa53316f25d2c258ea13",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.4",
                 "spryker/glue-application": "^1.0.0",
-                "spryker/product-offer-shopping-list": "^0.1.0"
+                "spryker/product-offer-shopping-list": "^1.0.0"
             },
             "require-dev": {
                 "spryker/code-sniffer": "*"
@@ -41825,7 +41875,10 @@
                 "proprietary"
             ],
             "description": "ProductOfferShoppingListsRestApi module",
-            "time": "2022-03-14T17:20:27+00:00"
+            "support": {
+                "source": "https://github.com/spryker/product-offer-shopping-lists-rest-api/tree/1.0.0"
+            },
+            "time": "2022-04-18T12:48:30+00:00"
         },
         {
             "name": "spryker/product-offer-stock",
@@ -42234,16 +42287,16 @@
         },
         {
             "name": "spryker/product-offers-rest-api",
-            "version": "0.1.0",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-offers-rest-api.git",
-                "reference": "b9997ecaebf237a035dbb985acb9d56858b97bd4"
+                "reference": "2ad6c3b6d3fe4a68be7cee9580b5534012011e67"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-offers-rest-api/zipball/b9997ecaebf237a035dbb985acb9d56858b97bd4",
-                "reference": "b9997ecaebf237a035dbb985acb9d56858b97bd4",
+                "url": "https://api.github.com/repos/spryker/product-offers-rest-api/zipball/2ad6c3b6d3fe4a68be7cee9580b5534012011e67",
+                "reference": "2ad6c3b6d3fe4a68be7cee9580b5534012011e67",
                 "shasum": ""
             },
             "require": {
@@ -42274,7 +42327,10 @@
                 "proprietary"
             ],
             "description": "ProductOffersRestApi module",
-            "time": "2022-03-14T17:20:27+00:00"
+            "support": {
+                "source": "https://github.com/spryker/product-offers-rest-api/tree/1.0.0"
+            },
+            "time": "2022-04-18T12:48:30+00:00"
         },
         {
             "name": "spryker/product-option",
@@ -65938,6 +65994,12 @@
             "alias_normalized": "202204.0"
         },
         {
+            "package": "spryker-feature/marketplace-packaging-units",
+            "version": "9999999-dev",
+            "alias": "202204.0",
+            "alias_normalized": "202204.0"
+        },
+        {
             "package": "spryker-feature/marketplace-product",
             "version": "9999999-dev",
             "alias": "202204.0",
@@ -66331,6 +66393,7 @@
         "spryker-feature/product-groups": 20,
         "spryker-feature/product-labels": 20,
         "spryker-feature/product-lists": 20,
+        "spryker-feature/marketplace-packaging-units": 20,
         "spryker-feature/product-options": 20,
         "spryker-feature/product-rating-reviews": 20,
         "spryker-feature/product-relations": 20,
