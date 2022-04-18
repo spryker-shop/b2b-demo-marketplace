@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "535411bf479c73ac1ca087ed344b642d",
+    "content-hash": "683a08cbcb14ae6e63eb3a2cb6f60610",
     "packages": [
         {
             "name": "brick/math",
@@ -25823,6 +25823,59 @@
                 "source": "https://github.com/spryker/file-system-extension/tree/1.0.0"
             },
             "time": "2021-10-08T18:13:40+00:00"
+        },
+        {
+            "name": "spryker/flysystem",
+            "version": "2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/flysystem.git",
+                "reference": "3efeda9bf58faa427ea5a03e9fea9111fa5c59d3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/flysystem/zipball/3efeda9bf58faa427ea5a03e9fea9111fa5c59d3",
+                "reference": "3efeda9bf58faa427ea5a03e9fea9111fa5c59d3",
+                "shasum": ""
+            },
+            "require": {
+                "league/flysystem": "^2.0",
+                "php": ">=7.4",
+                "spryker/file-system-extension": "^1.0.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/transfer": "^3.25.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/flysystem-local-file-system": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "suggest": {
+                "spryker/flysystem-aws3v3-file-system": "For handling AWS3v3 filesystem.",
+                "spryker/flysystem-ftp-file-system": "For handling FTP filesystem.",
+                "spryker/flysystem-local-file-system": "For handling local files."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Flysystem module",
+            "support": {
+                "source": "https://github.com/spryker/flysystem/tree/2.1.0"
+            },
+            "time": "2021-10-26T10:08:16+00:00"
         },
         {
             "name": "spryker/flysystem-ftp-file-system",
