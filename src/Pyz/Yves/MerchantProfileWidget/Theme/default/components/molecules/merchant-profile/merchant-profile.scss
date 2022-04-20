@@ -1,0 +1,20 @@
+@mixin merchant-profile-widget-merchant-profile($name: '.merchant-profile') {
+    #{$name} {
+        margin: rem(26) 0 rem(50);
+        color: $setting-color-black;
+
+        @include helper-breakpoint-media-min($lg) {
+            margin-bottom: rem(130);
+        }
+
+        &__info-text {
+            color: $setting-color-gray-4;
+            font-size: rem(15);
+            line-height: rem(20);
+        }
+
+        @content;
+    }
+}
+
+@include merchant-profile-widget-merchant-profile();
