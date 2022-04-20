@@ -19,20 +19,6 @@ use Spryker\Zed\TaxMerchantPortalGui\Communication\Plugin\ProductMerchantPortalG
 class ProductMerchantPortalGuiDependencyProvider extends SprykerProductMerchantPortalGuiDependencyProvider
 {
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addProductApprovalFacade(Container $container): Container
-    {
-        $container->set(static::FACADE_PRODUCT_APPROVAL, function () {
-            return new ProductMerchantPortalGuiToProductApprovalFacadeBridge($this->getConfig());
-        });
-
-        return $container;
-    }
-
-    /**
      * @return array<\Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\ProductAbstractFormExpanderPluginInterface>
      */
     protected function getProductAbstractFormExpanderPlugins(): array
