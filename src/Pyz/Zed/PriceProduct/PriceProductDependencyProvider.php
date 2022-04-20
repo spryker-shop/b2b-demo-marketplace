@@ -97,8 +97,6 @@ class PriceProductDependencyProvider extends SprykerPriceProductDependencyProvid
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @return array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductCollectionDeletePluginInterface>
      */
     protected function getPriceProductCollectionDeletePlugins(): array

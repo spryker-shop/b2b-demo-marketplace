@@ -36,8 +36,6 @@ class PriceProductDependencyProvider extends SprykerPriceProductDependencyProvid
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @return array<int, \Spryker\Service\PriceProductExtension\Dependency\Plugin\PreBuildPriceProductGroupKeyPluginInterface>
      */
     protected function getPreBuildPriceProductGroupKeyPlugins(): array
