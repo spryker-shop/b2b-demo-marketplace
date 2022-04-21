@@ -34,9 +34,9 @@ use Spryker\Zed\ProductImage\Communication\Plugin\ProductConcreteAfterUpdatePlug
 use Spryker\Zed\ProductImage\Communication\Plugin\ProductConcreteReadPlugin as ImageSetProductConcreteReadPlugin;
 use Spryker\Zed\ProductSearch\Communication\Plugin\ProductConcrete\ProductSearchProductConcreteAfterCreatePlugin;
 use Spryker\Zed\ProductSearch\Communication\Plugin\ProductConcrete\ProductSearchProductConcreteAfterUpdatePlugin;
-use Spryker\Zed\ProductSearch\Communication\Plugin\ProductConcrete\ProductSearchProductConcreteExpanderPlugin;
+use Spryker\Zed\ProductSearch\Communication\Plugin\ProductConcrete\ProductSearchProductConcreteReadPlugin;
 use Spryker\Zed\ProductValidity\Communication\Plugin\ProductValidityCreatePlugin;
-use Spryker\Zed\ProductValidity\Communication\Plugin\ProductValidityProductConcreteExpanderPlugin;
+use Spryker\Zed\ProductValidity\Communication\Plugin\ProductValidityReadPlugin;
 use Spryker\Zed\ProductValidity\Communication\Plugin\ProductValidityUpdatePlugin;
 use Spryker\Zed\Stock\Communication\Plugin\ProductConcreteAfterCreatePlugin as StockProductConcreteAfterCreatePlugin;
 use Spryker\Zed\Stock\Communication\Plugin\ProductConcreteAfterUpdatePlugin as StockProductConcreteAfterUpdatePlugin;
@@ -123,7 +123,9 @@ class ProductDependencyProvider extends SprykerProductDependencyProvider
             new ImageSetProductConcreteReadPlugin(),
             new StockProductConcreteReadPlugin(),
             new ConcreteProductPriceProductConcreteReadPlugin(),
+            new ProductSearchProductConcreteReadPlugin(),
             new ProductBundleProductConcreteReadPlugin(),
+            new ProductValidityReadPlugin(),
         ];
     }
 
@@ -183,16 +185,6 @@ class ProductDependencyProvider extends SprykerProductDependencyProvider
             new ProductImageProductAbstractExpanderPlugin(),
             new TaxSetProductAbstractExpanderPlugin(),
             new PriceProductProductAbstractExpanderPlugin(),
-        ];
-    }
-    /**
-     * @return array<\Spryker\Zed\ProductExtension\Dependency\Plugin\ProductConcreteExpanderPluginInterface>
-     */
-    protected function getProductConcreteExpanderPlugins() : array
-    {
-        return [
-            new ProductSearchProductConcreteExpanderPlugin(),
-            new ProductValidityProductConcreteExpanderPlugin(),
         ];
     }
 }
