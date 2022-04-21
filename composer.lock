@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "775510c28a380d8e9c5c9910050b0ad5",
+    "content-hash": "b3cdbc469120e11174b92c293a0fc0e8",
     "packages": [
         {
             "name": "brick/math",
@@ -31767,26 +31767,27 @@
         },
         {
             "name": "spryker/merchant-relationship",
-            "version": "1.9.0",
+            "version": "1.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/merchant-relationship.git",
-                "reference": "cba4c4d9394ee7f89110f20ac03526033660b0ee"
+                "reference": "2029384c6af784af2367e6bd7ce8b64132f99503"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/merchant-relationship/zipball/cba4c4d9394ee7f89110f20ac03526033660b0ee",
-                "reference": "cba4c4d9394ee7f89110f20ac03526033660b0ee",
+                "url": "https://api.github.com/repos/spryker/merchant-relationship/zipball/2029384c6af784af2367e6bd7ce8b64132f99503",
+                "reference": "2029384c6af784af2367e6bd7ce8b64132f99503",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.3",
-                "spryker/company-business-unit": "^1.0.0 || ^2.0.0",
+                "php": ">=7.4",
+                "spryker/company-business-unit": "^1.6.0 || ^2.9.0",
                 "spryker/company-user-extension": "^1.0.0",
                 "spryker/kernel": "^3.33.0",
                 "spryker/merchant": "^1.1.0 || ^2.0.0 || ^3.0.0",
-                "spryker/merchant-relationship-extension": "^1.1.0",
-                "spryker/propel-orm": "^1.0.0"
+                "spryker/merchant-relationship-extension": "^1.2.0",
+                "spryker/propel-orm": "^1.0.0",
+                "spryker/transfer": "^3.25.0"
             },
             "require-dev": {
                 "spryker/code-sniffer": "*",
@@ -31812,9 +31813,9 @@
             ],
             "description": "MerchantRelationship module",
             "support": {
-                "source": "https://github.com/spryker/merchant-relationship/tree/1.9.0"
+                "source": "https://github.com/spryker/merchant-relationship/tree/1.10.0"
             },
-            "time": "2021-09-30T13:33:17+00:00"
+            "time": "2022-01-28T07:52:09+00:00"
         },
         {
             "name": "spryker/merchant-relationship-data-import",
@@ -31868,24 +31869,23 @@
         },
         {
             "name": "spryker/merchant-relationship-extension",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/merchant-relationship-extension.git",
-                "reference": "139f5e857cd36bc7ec6e88af82f5e4149baa6745"
+                "reference": "d84eabb2e048fa43205d35938964d04a6a9c4baf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/merchant-relationship-extension/zipball/139f5e857cd36bc7ec6e88af82f5e4149baa6745",
-                "reference": "139f5e857cd36bc7ec6e88af82f5e4149baa6745",
+                "url": "https://api.github.com/repos/spryker/merchant-relationship-extension/zipball/d84eabb2e048fa43205d35938964d04a6a9c4baf",
+                "reference": "d84eabb2e048fa43205d35938964d04a6a9c4baf",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2"
+                "php": ">=7.4"
             },
             "require-dev": {
-                "spryker/code-sniffer": "*",
-                "spryker/testify": "*"
+                "spryker/code-sniffer": "*"
             },
             "type": "library",
             "extra": {
@@ -31904,9 +31904,9 @@
             ],
             "description": "MerchantRelationshipExtension module",
             "support": {
-                "source": "https://github.com/spryker/merchant-relationship-extension/tree/master"
+                "source": "https://github.com/spryker/merchant-relationship-extension/tree/1.2.0"
             },
-            "time": "2019-11-15T11:10:36+00:00"
+            "time": "2022-01-28T07:52:09+00:00"
         },
         {
             "name": "spryker/merchant-relationship-gui",
