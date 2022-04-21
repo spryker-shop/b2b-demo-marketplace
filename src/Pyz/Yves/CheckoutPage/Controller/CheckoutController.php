@@ -198,7 +198,7 @@ class CheckoutController extends SprykerCheckoutController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MessageTransfer[]|\ArrayObject $messageTransfers
+     * @param \ArrayObject<mixed, Generated\Shared\Transfer\MessageTransfer> $messageTransfers
      *
      * @return void
      */
