@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e1bb31ccd90f3b1c89835cb9e5d24353",
+    "content-hash": "78ba1f43c051195c351c77b809e745e6",
     "packages": [
         {
             "name": "brick/math",
@@ -65,59 +65,6 @@
                 }
             ],
             "time": "2021-08-15T20:50:18+00:00"
-        },
-        {
-            "name": "codeitnowin/barcode",
-            "version": "3.0.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/codeitnowin/barcode-generator.git",
-                "reference": "68e6f0f9eac16a20e20ed0e8258d4d9765800878"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/codeitnowin/barcode-generator/zipball/68e6f0f9eac16a20e20ed0e8258d4d9765800878",
-                "reference": "68e6f0f9eac16a20e20ed0e8258d4d9765800878",
-                "shasum": ""
-            },
-            "require": {
-                "ext-gd": "*",
-                "php": ">=5.3.2"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "CodeItNow\\": "CodeItNow/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Akhtar Khan",
-                    "email": "er.akhtarkhan@gmail.com"
-                }
-            ],
-            "description": "Barcode & Qr Code generator library by http://www.codeitnow.in. You can use it with Custom PHP application or any PHP Framework such as Laravel, Cakephp, Yii, Codeigneter etc.",
-            "homepage": "http://www.codeitnow.in",
-            "keywords": [
-                "Symfony2",
-                "barcode",
-                "cakephp",
-                "code",
-                "generator",
-                "laravel",
-                "qr",
-                "qrcode",
-                "symfony"
-            ],
-            "support": {
-                "issues": "https://github.com/codeitnowin/barcode-generator/issues",
-                "source": "https://github.com/codeitnowin/barcode-generator/tree/v3.0.6"
-            },
-            "time": "2021-08-20T15:46:10+00:00"
         },
         {
             "name": "defuse/php-encryption",
@@ -4540,6 +4487,47 @@
                 "source": "https://github.com/spryker-feature/marketplace-merchant/tree/master"
             },
             "time": "2022-04-13T13:15:54+00:00"
+        },
+        {
+            "name": "spryker-feature/marketplace-merchant-custom-prices",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-feature/marketplace-merchant-custom-prices.git",
+                "reference": "489a4d4f93e794ea105fc1d73f32074b8dee44d1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-feature/marketplace-merchant-custom-prices/zipball/489a4d4f93e794ea105fc1d73f32074b8dee44d1",
+                "reference": "489a4d4f93e794ea105fc1d73f32074b8dee44d1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4",
+                "spryker/price-product": "^4.35.0",
+                "spryker/price-product-merchant-relationship": "^1.9.0",
+                "spryker/price-product-merchant-relationship-merchant-portal-gui": "^1.0.0",
+                "spryker/product-merchant-portal-gui": "^2.2.0"
+            },
+            "suggest": {
+                "spryker-feature/merchant-custom-prices": "Recommended feature dependency."
+            },
+            "default-branch": true,
+            "type": "metapackage",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "202204.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Marketplace Merchant Custom Prices [feature]",
+            "support": {
+                "source": "https://github.com/spryker-feature/marketplace-merchant-custom-prices/tree/master"
+            },
+            "time": "2022-04-20T15:20:16+00:00"
         },
         {
             "name": "spryker-feature/marketplace-merchant-order-threshold",
@@ -21018,21 +21006,20 @@
         },
         {
             "name": "spryker/code-it-now",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/code-it-now.git",
-                "reference": "9b29d0e4d357d5252bee01d1fb06572812bac924"
+                "reference": "5b640c417967df863f1537c1336e19d50c0df3c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/code-it-now/zipball/9b29d0e4d357d5252bee01d1fb06572812bac924",
-                "reference": "9b29d0e4d357d5252bee01d1fb06572812bac924",
+                "url": "https://api.github.com/repos/spryker/code-it-now/zipball/5b640c417967df863f1537c1336e19d50c0df3c9",
+                "reference": "5b640c417967df863f1537c1336e19d50c0df3c9",
                 "shasum": ""
             },
             "require": {
-                "codeitnowin/barcode": "^3.0.0",
-                "php": ">=7.1",
+                "php": ">=7.4",
                 "spryker/barcode-extension": "^1.0.0"
             },
             "require-dev": {
@@ -21060,9 +21047,9 @@
             ],
             "description": "CodeItNow module",
             "support": {
-                "source": "https://github.com/spryker/code-it-now/tree/master"
+                "source": "https://github.com/spryker/code-it-now/tree/1.0.1"
             },
-            "time": "2018-05-16T13:57:10+00:00"
+            "time": "2022-04-21T13:32:43+00:00"
         },
         {
             "name": "spryker/collector",
@@ -28822,16 +28809,16 @@
         },
         {
             "name": "spryker/gui-table",
-            "version": "1.4.0",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/gui-table.git",
-                "reference": "f3fc02dd6bc172335199419556053402812ed928"
+                "reference": "3a2284b496dfdd47e2e8c9aa0a6b7fcce7651d9b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/gui-table/zipball/f3fc02dd6bc172335199419556053402812ed928",
-                "reference": "f3fc02dd6bc172335199419556053402812ed928",
+                "url": "https://api.github.com/repos/spryker/gui-table/zipball/3a2284b496dfdd47e2e8c9aa0a6b7fcce7651d9b",
+                "reference": "3a2284b496dfdd47e2e8c9aa0a6b7fcce7651d9b",
                 "shasum": ""
             },
             "require": {
@@ -28871,7 +28858,10 @@
                 "proprietary"
             ],
             "description": "GuiTable module",
-            "time": "2022-03-28T12:53:35+00:00"
+            "support": {
+                "source": "https://github.com/spryker/gui-table/tree/1.5.0"
+            },
+            "time": "2022-04-15T13:47:42+00:00"
         },
         {
             "name": "spryker/guzzle",
@@ -31728,26 +31718,27 @@
         },
         {
             "name": "spryker/merchant-relationship",
-            "version": "1.9.0",
+            "version": "1.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/merchant-relationship.git",
-                "reference": "cba4c4d9394ee7f89110f20ac03526033660b0ee"
+                "reference": "2029384c6af784af2367e6bd7ce8b64132f99503"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/merchant-relationship/zipball/cba4c4d9394ee7f89110f20ac03526033660b0ee",
-                "reference": "cba4c4d9394ee7f89110f20ac03526033660b0ee",
+                "url": "https://api.github.com/repos/spryker/merchant-relationship/zipball/2029384c6af784af2367e6bd7ce8b64132f99503",
+                "reference": "2029384c6af784af2367e6bd7ce8b64132f99503",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.3",
-                "spryker/company-business-unit": "^1.0.0 || ^2.0.0",
+                "php": ">=7.4",
+                "spryker/company-business-unit": "^1.6.0 || ^2.9.0",
                 "spryker/company-user-extension": "^1.0.0",
                 "spryker/kernel": "^3.33.0",
                 "spryker/merchant": "^1.1.0 || ^2.0.0 || ^3.0.0",
-                "spryker/merchant-relationship-extension": "^1.1.0",
-                "spryker/propel-orm": "^1.0.0"
+                "spryker/merchant-relationship-extension": "^1.2.0",
+                "spryker/propel-orm": "^1.0.0",
+                "spryker/transfer": "^3.25.0"
             },
             "require-dev": {
                 "spryker/code-sniffer": "*",
@@ -31773,9 +31764,9 @@
             ],
             "description": "MerchantRelationship module",
             "support": {
-                "source": "https://github.com/spryker/merchant-relationship/tree/1.9.0"
+                "source": "https://github.com/spryker/merchant-relationship/tree/1.10.0"
             },
-            "time": "2021-09-30T13:33:17+00:00"
+            "time": "2022-01-28T07:52:09+00:00"
         },
         {
             "name": "spryker/merchant-relationship-data-import",
@@ -31829,24 +31820,23 @@
         },
         {
             "name": "spryker/merchant-relationship-extension",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/merchant-relationship-extension.git",
-                "reference": "139f5e857cd36bc7ec6e88af82f5e4149baa6745"
+                "reference": "d84eabb2e048fa43205d35938964d04a6a9c4baf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/merchant-relationship-extension/zipball/139f5e857cd36bc7ec6e88af82f5e4149baa6745",
-                "reference": "139f5e857cd36bc7ec6e88af82f5e4149baa6745",
+                "url": "https://api.github.com/repos/spryker/merchant-relationship-extension/zipball/d84eabb2e048fa43205d35938964d04a6a9c4baf",
+                "reference": "d84eabb2e048fa43205d35938964d04a6a9c4baf",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2"
+                "php": ">=7.4"
             },
             "require-dev": {
-                "spryker/code-sniffer": "*",
-                "spryker/testify": "*"
+                "spryker/code-sniffer": "*"
             },
             "type": "library",
             "extra": {
@@ -31865,9 +31855,9 @@
             ],
             "description": "MerchantRelationshipExtension module",
             "support": {
-                "source": "https://github.com/spryker/merchant-relationship-extension/tree/master"
+                "source": "https://github.com/spryker/merchant-relationship-extension/tree/1.2.0"
             },
-            "time": "2019-11-15T11:10:36+00:00"
+            "time": "2022-01-28T07:52:09+00:00"
         },
         {
             "name": "spryker/merchant-relationship-gui",
@@ -36089,16 +36079,16 @@
         },
         {
             "name": "spryker/price-product",
-            "version": "4.34.0",
+            "version": "4.35.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/price-product.git",
-                "reference": "df5ef39bb0d7f9db04a0f6508c4e031e89580fe5"
+                "reference": "f832dec1f48cc7268b36c9398a121b41de983110"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/price-product/zipball/df5ef39bb0d7f9db04a0f6508c4e031e89580fe5",
-                "reference": "df5ef39bb0d7f9db04a0f6508c4e031e89580fe5",
+                "url": "https://api.github.com/repos/spryker/price-product/zipball/f832dec1f48cc7268b36c9398a121b41de983110",
+                "reference": "f832dec1f48cc7268b36c9398a121b41de983110",
                 "shasum": ""
             },
             "require": {
@@ -36107,7 +36097,7 @@
                 "spryker/kernel": "^3.33.0",
                 "spryker/log": "^3.7.0",
                 "spryker/price": "^5.0.0",
-                "spryker/price-product-extension": "^1.5.0",
+                "spryker/price-product-extension": "^1.6.0",
                 "spryker/product": "^5.6.0 || ^6.3.0",
                 "spryker/product-extension": "^1.3.0",
                 "spryker/propel-orm": "^1.0.0",
@@ -36149,7 +36139,10 @@
                 "proprietary"
             ],
             "description": "PriceProduct module",
-            "time": "2022-03-24T13:24:00+00:00"
+            "support": {
+                "source": "https://github.com/spryker/price-product/tree/4.35.0"
+            },
+            "time": "2022-04-15T13:47:42+00:00"
         },
         {
             "name": "spryker/price-product-data-import",
@@ -36205,20 +36198,20 @@
         },
         {
             "name": "spryker/price-product-extension",
-            "version": "1.5.0",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/price-product-extension.git",
-                "reference": "53954f2fe66264aeebfb97fe2c503e77349c33a7"
+                "reference": "ab909f3409f645638f46dda0f3f47358708f7e7a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/price-product-extension/zipball/53954f2fe66264aeebfb97fe2c503e77349c33a7",
-                "reference": "53954f2fe66264aeebfb97fe2c503e77349c33a7",
+                "url": "https://api.github.com/repos/spryker/price-product-extension/zipball/ab909f3409f645638f46dda0f3f47358708f7e7a",
+                "reference": "ab909f3409f645638f46dda0f3f47358708f7e7a",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.3"
+                "php": ">=7.4"
             },
             "require-dev": {
                 "spryker/code-sniffer": "*"
@@ -36240,31 +36233,31 @@
             ],
             "description": "PriceProductExtension module",
             "support": {
-                "source": "https://github.com/spryker/price-product-extension/tree/1.5.0"
+                "source": "https://github.com/spryker/price-product-extension/tree/1.6.0"
             },
-            "time": "2021-07-22T10:12:00+00:00"
+            "time": "2022-04-15T13:47:42+00:00"
         },
         {
             "name": "spryker/price-product-merchant-relationship",
-            "version": "1.8.0",
+            "version": "1.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/price-product-merchant-relationship.git",
-                "reference": "6287ad6912fed6d35e7a9db63beb1b903a2f37f6"
+                "reference": "8213f7c3e87f4c9dbb44ef6021b789e799a75f77"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/price-product-merchant-relationship/zipball/6287ad6912fed6d35e7a9db63beb1b903a2f37f6",
-                "reference": "6287ad6912fed6d35e7a9db63beb1b903a2f37f6",
+                "url": "https://api.github.com/repos/spryker/price-product-merchant-relationship/zipball/8213f7c3e87f4c9dbb44ef6021b789e799a75f77",
+                "reference": "8213f7c3e87f4c9dbb44ef6021b789e799a75f77",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.3",
+                "php": ">=7.4",
                 "spryker/cart": "^5.1.0 || ^7.0.0",
                 "spryker/kernel": "^3.30.0",
                 "spryker/merchant-relationship": "^1.4.0",
                 "spryker/price-product": "^2.0.0 || ^4.0.0",
-                "spryker/price-product-extension": "^1.2.0",
+                "spryker/price-product-extension": "^1.6.0",
                 "spryker/product": "^6.1.0",
                 "spryker/propel-orm": "^1.6.2",
                 "spryker/symfony": "^3.1.5",
@@ -36299,9 +36292,9 @@
             ],
             "description": "PriceProductMerchantRelationship module",
             "support": {
-                "source": "https://github.com/spryker/price-product-merchant-relationship/tree/1.8.0"
+                "source": "https://github.com/spryker/price-product-merchant-relationship/tree/1.9.0"
             },
-            "time": "2021-09-30T13:33:17+00:00"
+            "time": "2022-04-15T13:47:42+00:00"
         },
         {
             "name": "spryker/price-product-merchant-relationship-data-import",
@@ -36403,6 +36396,58 @@
                 "source": "https://github.com/spryker/price-product-merchant-relationship-gui/tree/1.0.6"
             },
             "time": "2020-05-29T13:08:37+00:00"
+        },
+        {
+            "name": "spryker/price-product-merchant-relationship-merchant-portal-gui",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/price-product-merchant-relationship-merchant-portal-gui.git",
+                "reference": "1af0caa90c95b3238bfd7d1bac4f743723ed3a78"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/price-product-merchant-relationship-merchant-portal-gui/zipball/1af0caa90c95b3238bfd7d1bac4f743723ed3a78",
+                "reference": "1af0caa90c95b3238bfd7d1bac4f743723ed3a78",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4",
+                "spryker/gui": "^3.41.0",
+                "spryker/gui-table": "^1.5.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/merchant-relationship": "^1.9.0",
+                "spryker/merchant-user": "^1.0.0",
+                "spryker/price-product-extension": "^1.6.0",
+                "spryker/product-merchant-portal-gui-extension": "^1.1.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/transfer": "^3.25.0",
+                "spryker/translator": "^1.1.0",
+                "spryker/util-encoding": "^2.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "PriceProductMerchantRelationshipMerchantPortalGui module",
+            "support": {
+                "source": "https://github.com/spryker/price-product-merchant-relationship-merchant-portal-gui/tree/1.0.0"
+            },
+            "time": "2022-04-15T13:47:42+00:00"
         },
         {
             "name": "spryker/price-product-merchant-relationship-storage",
@@ -36930,23 +36975,23 @@
         },
         {
             "name": "spryker/price-product-schedule",
-            "version": "2.4.0",
+            "version": "2.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/price-product-schedule.git",
-                "reference": "3360dc0b6d566b3deb1a7c73582ac6141475ad5d"
+                "reference": "53fb152dc5466bdf17a9a5ac3003605770c1e2d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/price-product-schedule/zipball/3360dc0b6d566b3deb1a7c73582ac6141475ad5d",
-                "reference": "3360dc0b6d566b3deb1a7c73582ac6141475ad5d",
+                "url": "https://api.github.com/repos/spryker/price-product-schedule/zipball/53fb152dc5466bdf17a9a5ac3003605770c1e2d8",
+                "reference": "53fb152dc5466bdf17a9a5ac3003605770c1e2d8",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.4",
                 "spryker/currency": "^3.8.0",
                 "spryker/kernel": "^3.32.0",
-                "spryker/price-product": "^4.6.0",
+                "spryker/price-product": "^4.35.0",
                 "spryker/product": "^6.9.0",
                 "spryker/propel": "^3.8.0",
                 "spryker/propel-orm": "^1.8.0",
@@ -36978,9 +37023,9 @@
             ],
             "description": "PriceProductSchedule module",
             "support": {
-                "source": "https://github.com/spryker/price-product-schedule/tree/2.4.0"
+                "source": "https://github.com/spryker/price-product-schedule/tree/2.5.0"
             },
-            "time": "2021-11-09T18:30:55+00:00"
+            "time": "2022-04-15T13:47:42+00:00"
         },
         {
             "name": "spryker/price-product-schedule-data-import",
@@ -40905,16 +40950,16 @@
         },
         {
             "name": "spryker/product-merchant-portal-gui",
-            "version": "2.1.1",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-merchant-portal-gui.git",
-                "reference": "af6d96657963239216cfa6cfcf8140ad06c589ac"
+                "reference": "d9ce60a84a44823efb6a3945498b8fc0cae84c31"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-merchant-portal-gui/zipball/af6d96657963239216cfa6cfcf8140ad06c589ac",
-                "reference": "af6d96657963239216cfa6cfcf8140ad06c589ac",
+                "url": "https://api.github.com/repos/spryker/product-merchant-portal-gui/zipball/d9ce60a84a44823efb6a3945498b8fc0cae84c31",
+                "reference": "d9ce60a84a44823efb6a3945498b8fc0cae84c31",
                 "shasum": ""
             },
             "require": {
@@ -40932,14 +40977,14 @@
                 "spryker/merchant-user": "^1.0.0",
                 "spryker/money": "^1.0.0 || ^2.0.0",
                 "spryker/oms": "^11.7.0",
-                "spryker/price-product": "^4.31.0",
+                "spryker/price-product": "^4.35.0",
                 "spryker/price-product-volume": "^3.3.0",
                 "spryker/product": "^6.25.0",
                 "spryker/product-approval": "^1.0.0",
                 "spryker/product-attribute": "^1.8.0",
                 "spryker/product-category": "^4.6.0",
                 "spryker/product-image": "^3.0.0",
-                "spryker/product-merchant-portal-gui-extension": "^1.0.0",
+                "spryker/product-merchant-portal-gui-extension": "^1.1.0",
                 "spryker/product-offer-merchant-portal-gui-extension": "^1.0.0",
                 "spryker/product-validity": "^1.0.0",
                 "spryker/propel-orm": "^1.0.0",
@@ -40970,30 +41015,35 @@
                 "proprietary"
             ],
             "description": "ProductMerchantPortalGui module",
-            "time": "2022-04-05T10:48:10+00:00"
+            "support": {
+                "source": "https://github.com/spryker/product-merchant-portal-gui/tree/2.2.0"
+            },
+            "time": "2022-04-15T13:47:42+00:00"
         },
         {
             "name": "spryker/product-merchant-portal-gui-extension",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-merchant-portal-gui-extension.git",
-                "reference": "2cc95d4a21666bc1ad0a470ef38ce29cf286f271"
+                "reference": "a86b637633bd234553af965a856d9a030852dfae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-merchant-portal-gui-extension/zipball/2cc95d4a21666bc1ad0a470ef38ce29cf286f271",
-                "reference": "2cc95d4a21666bc1ad0a470ef38ce29cf286f271",
+                "url": "https://api.github.com/repos/spryker/product-merchant-portal-gui-extension/zipball/a86b637633bd234553af965a856d9a030852dfae",
+                "reference": "a86b637633bd234553af965a856d9a030852dfae",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.3"
+                "php": ">=7.4"
             },
             "require-dev": {
                 "spryker/code-sniffer": "*",
+                "spryker/gui-table": "*",
                 "spryker/symfony": "*"
             },
             "suggest": {
+                "spryker/gui-table": "If you want to use GuiTableConfigurationBuilderInterface for expander plugins.",
                 "spryker/symfony": "If you want to use ProductMerchantPortalGui form expander plugins."
             },
             "type": "library",
@@ -41012,7 +41062,10 @@
                 "proprietary"
             ],
             "description": "ProductMerchantPortalGuiExtension module",
-            "time": "2021-07-07T15:14:17+00:00"
+            "support": {
+                "source": "https://github.com/spryker/product-merchant-portal-gui-extension/tree/1.1.0"
+            },
+            "time": "2022-04-15T13:47:42+00:00"
         },
         {
             "name": "spryker/product-new",
@@ -66362,6 +66415,7 @@
         "spryker-feature/marketplace-cart": 20,
         "spryker-feature/marketplace-inventory-management": 20,
         "spryker-feature/marketplace-merchant": 20,
+        "spryker-feature/marketplace-merchant-custom-prices": 20,
         "spryker-feature/marketplace-merchant-order-threshold": 20,
         "spryker-feature/marketplace-merchant-portal-product-management": 20,
         "spryker-feature/marketplace-merchant-portal-product-offer-management": 20,
