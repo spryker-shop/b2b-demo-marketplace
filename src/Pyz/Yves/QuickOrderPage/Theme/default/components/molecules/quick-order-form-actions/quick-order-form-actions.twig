@@ -1,11 +1,11 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'quick-order-form-actions'
+    name: 'quick-order-form-actions',
 } %}
 
 {% define data = {
-    addRowTriggerClass: required
+    addRowTriggerClass: required,
 } %}
 
 {% block body %}
@@ -20,8 +20,8 @@
             <a class="{{ config.name }}__clear-all-trigger" href="{{ url('quick-order/clear-all-rows') }}">
                 {% include atom('icon') with {
                     data: {
-                        name: 'delete'
-                    }
+                        name: 'delete',
+                    },
                 } only %}
 
                 {{ 'quick-order.button.clear-all-rows' | trans }}

@@ -1,0 +1,42 @@
+{% extends molecule('product-quick-add-form', '@SprykerShop:ProductSearchWidget') %}
+
+{% block title %}
+    {% if data.title %}
+        <div class="col col--sm-12">
+            <h2 class="{{ config.name }}__title {{ not data.verticalLayout ? config.name ~ '__title--row' }} title title--h5 spacing-bottom spacing-bottom--big">
+                {{ data.title }}
+            </h2>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block fields %}
+    {% set fieldsAlignment = 'grid--gap-smaller' %}
+
+    {{ parent() }}
+{% endblock %}
+
+{% block merchantProductOffersSelectWidget %}
+    <div class="grid grid--gap-smaller">
+        <div class="col col--sm-12 {{ not data.verticalLayout ? 'col--md-8' }}">
+            {% widget 'MerchantProductOffersSelectWidget' with {
+                data: {
+                    id: 'merchant-product-offers-select',
+                    submitButtonClassName: config.jsName ~ '__submit-button',
+                    autocompleteFormClassName: config.jsName ~ '__autocomplete-form',
+                    mounAfterRender: true,
+                },
+            } only %}{% endwidget %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block button %}
+    <div class="col col--sm-12 grid">
+        <div class="col col--sm-12 {{ not data.verticalLayout ? 'col--md-3' }}">
+            <button class="{{ config.name }}__button {{ config.jsName }}__submit-button button button--expand button--success">
+                {{ data.submitButtonTitle }}
+            </button>
+        </div>
+    </div>
+{% endblock %}
