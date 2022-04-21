@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e22a4f403bdf9d5df83c2ed507411866",
+    "content-hash": "a2c90a2355177bba9d8e56537681aea3",
     "packages": [
         {
             "name": "brick/math",
@@ -5934,12 +5934,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/product-approval-process.git",
-                "reference": "966fd24e76edf0495cda76e9072d08edaaac1d95"
+                "reference": "9d9cd701b9283df509448b2c679d5d902097922f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/product-approval-process/zipball/966fd24e76edf0495cda76e9072d08edaaac1d95",
-                "reference": "966fd24e76edf0495cda76e9072d08edaaac1d95",
+                "url": "https://api.github.com/repos/spryker-feature/product-approval-process/zipball/9d9cd701b9283df509448b2c679d5d902097922f",
+                "reference": "9d9cd701b9283df509448b2c679d5d902097922f",
                 "shasum": ""
             },
             "require": {
@@ -5948,7 +5948,7 @@
                 "spryker/product-approval": "^1.0.0",
                 "spryker/product-approval-data-import": "^0.1.0",
                 "spryker/product-approval-gui": "^1.0.0",
-                "spryker/product-management": "^0.19.0"
+                "spryker/product-management": "^0.19.25"
             },
             "default-branch": true,
             "type": "metapackage",
@@ -5965,7 +5965,7 @@
             "support": {
                 "source": "https://github.com/spryker-feature/product-approval-process/tree/master"
             },
-            "time": "2022-04-18T21:41:13+00:00"
+            "time": "2022-04-20T16:39:23+00:00"
         },
         {
             "name": "spryker-feature/product-barcode",
@@ -40553,21 +40553,21 @@
         },
         {
             "name": "spryker/product-management",
-            "version": "0.19.22",
+            "version": "0.19.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-management.git",
-                "reference": "20215b1aab5a2696e9932bf0bc031406fadca1ac"
+                "reference": "30c1f9f1edaa79cd154c8c722fa85fb86f8614b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-management/zipball/20215b1aab5a2696e9932bf0bc031406fadca1ac",
-                "reference": "20215b1aab5a2696e9932bf0bc031406fadca1ac",
+                "url": "https://api.github.com/repos/spryker/product-management/zipball/30c1f9f1edaa79cd154c8c722fa85fb86f8614b9",
+                "reference": "30c1f9f1edaa79cd154c8c722fa85fb86f8614b9",
                 "shasum": ""
             },
             "require": {
                 "everon/collection": "^1.0.0",
-                "php": ">=7.3",
+                "php": ">=7.4",
                 "spryker/availability": "^9.0.0",
                 "spryker/category": "^3.0.0 || ^4.0.0 || ^5.0.0",
                 "spryker/currency": "^3.2.0",
@@ -40578,13 +40578,13 @@
                 "spryker/money": "^2.4.0",
                 "spryker/price": "^5.0.0",
                 "spryker/price-product": "^2.1.0 || ^4.0.0",
-                "spryker/product": "^6.7.0",
+                "spryker/product": "^6.26.0",
                 "spryker/product-attribute": "^1.9.0",
                 "spryker/product-bundle": "^2.0.0 || ^3.0.0 || ^4.0.0 || ^6.0.0 || ^7.0.0",
                 "spryker/product-category": "^4.12.1",
                 "spryker/product-group": "^1.0.0",
                 "spryker/product-image": "^3.0.0",
-                "spryker/product-management-extension": "^1.5.0",
+                "spryker/product-management-extension": "^1.6.0",
                 "spryker/product-validity": "^1.0.0",
                 "spryker/propel-orm": "^1.0.0",
                 "spryker/stock": "^8.0.0",
@@ -40600,8 +40600,10 @@
                 "spryker/application": "*",
                 "spryker/code-sniffer": "*",
                 "spryker/config": "*",
+                "spryker/container": "*",
                 "spryker/propel": "*",
                 "spryker/testify": "*",
+                "spryker/twig": "*",
                 "spryker/zed-navigation": "*"
             },
             "type": "library",
@@ -40622,9 +40624,9 @@
             ],
             "description": "ProductManagement module",
             "support": {
-                "source": "https://github.com/spryker/product-management/tree/0.19.22"
+                "source": "https://github.com/spryker/product-management/tree/0.19.25"
             },
-            "time": "2021-07-28T15:07:53+00:00"
+            "time": "2022-02-11T12:49:43+00:00"
         },
         {
             "name": "spryker/product-management-extension",
@@ -66156,12 +66158,6 @@
             "alias_normalized": "202204.0"
         },
         {
-            "package": "spryker-feature/product-approval-process",
-            "version": "9999999-dev",
-            "alias": "202204.0",
-            "alias_normalized": "202204.0"
-        },
-        {
             "package": "spryker-feature/product-barcode",
             "version": "9999999-dev",
             "alias": "202204.0",
@@ -66360,6 +66356,7 @@
         "spryker-feature/marketplace-merchant-portal-product-offer-management": 20,
         "spryker-feature/marketplace-merchantportal-core": 20,
         "spryker-feature/marketplace-order-management": 20,
+        "spryker-feature/marketplace-packaging-units": 20,
         "spryker-feature/marketplace-product": 20,
         "spryker-feature/marketplace-product-approval-process": 20,
         "spryker-feature/marketplace-product-offer": 20,
@@ -66393,7 +66390,6 @@
         "spryker-feature/product-groups": 20,
         "spryker-feature/product-labels": 20,
         "spryker-feature/product-lists": 20,
-        "spryker-feature/marketplace-packaging-units": 20,
         "spryker-feature/product-options": 20,
         "spryker-feature/product-rating-reviews": 20,
         "spryker-feature/product-relations": 20,
