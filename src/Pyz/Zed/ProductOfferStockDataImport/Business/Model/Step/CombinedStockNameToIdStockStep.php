@@ -15,10 +15,10 @@ class CombinedStockNameToIdStockStep extends StockNameToIdStockStep
     /**
      * @var string
      */
-    protected const PRODUCT_STOCK_NAME = CombinedProductOfferStockDataSetInterface::STOCK_NAME;
+    protected const PRODUCT_STOCK_NAME = CombinedProductOfferStockDataSetInterface::PYZ_STOCK_NAME;
 
     /**
      * @var string
      */
-    protected const STORE_NAME = CombinedProductOfferStockDataSetInterface::STORE_NAME;
+    protected const PYZ_STORE_NAME = CombinedProductOfferStockDataSetInterface::PYZ_STORE_NAME;
 }

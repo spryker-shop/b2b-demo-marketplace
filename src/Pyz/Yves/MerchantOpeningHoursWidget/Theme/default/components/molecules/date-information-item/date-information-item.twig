@@ -1,0 +1,29 @@
+{% extends molecule('information-item', '@SprykerShop:MerchantOpeningHoursWidget') %}
+
+{% define config = {
+    name: 'date-information-item',
+} %}
+
+{% define data = {
+    scheduleList: [],
+} %}
+
+{% block component %}
+    {% if data.scheduleList %}{{ parent() }}{% endif %}
+{% endblock %}
+
+{% block title %}
+    <h5 class="spacing-bottom">{{ data.title }}</h5>
+{% endblock %}
+
+{% block text %}
+    {% for scheduleItem in data.scheduleList %}
+        {% set date = scheduleItem.noteGlossaryKey ? scheduleItem.date ~ ' (' ~ scheduleItem.noteGlossaryKey ~ ')' : scheduleItem.date %}
+        {% set time = scheduleItem.time ? scheduleItem.time | replace({'|' : '<br>'}) %}
+
+        <div class="grid grid--gap-smaller">
+            <div class="{{ config.name }}__date col col--sm-7">{{ date }}</div>
+            <div class="{{ config.name }}__time col col--sm-5">{{ time | raw }}</div>
+        </div>
+    {% endfor %}
+{% endblock %}

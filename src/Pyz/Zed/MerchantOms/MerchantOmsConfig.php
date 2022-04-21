@@ -14,11 +14,12 @@ class MerchantOmsConfig extends SprykerMerchantOmsConfig
     /**
      * @var string
      */
-    protected const MAIN_MERCHANT_OMS_PROCESS_NAME = 'MainMerchantStateMachine';
+    protected const PYZ_MAIN_MERCHANT_OMS_PROCESS_NAME = 'MainMerchantStateMachine';
+
     /**
      * @var string
      */
-    protected const MAIN_MERCHANT_STATE_MACHINE_INITIAL_STATE = 'created';
+    protected const PYZ_MAIN_MERCHANT_STATE_MACHINE_INITIAL_STATE = 'created';
 
     /**
      * @return string[]
@@ -28,7 +29,7 @@ class MerchantOmsConfig extends SprykerMerchantOmsConfig
         return array_merge(
             parent::getMerchantProcessInitialStateMap(),
             [
-                static::MAIN_MERCHANT_OMS_PROCESS_NAME => static::MAIN_MERCHANT_STATE_MACHINE_INITIAL_STATE,
+                static::PYZ_MAIN_MERCHANT_OMS_PROCESS_NAME => static::PYZ_MAIN_MERCHANT_STATE_MACHINE_INITIAL_STATE,
             ]
         );
     }
@@ -43,7 +44,7 @@ class MerchantOmsConfig extends SprykerMerchantOmsConfig
         return array_merge(
             parent::getMerchantOmsProcesses(),
             [
-                static::MAIN_MERCHANT_OMS_PROCESS_NAME,
+                static::PYZ_MAIN_MERCHANT_OMS_PROCESS_NAME,
             ]
         );
     }

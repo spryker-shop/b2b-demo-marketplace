@@ -1,0 +1,9 @@
+{% extends view('merchant-opening-hours-widget', '@SprykerShop:MerchantOpeningHoursWidget') %}
+
+{% block body %}
+    <div class="box box--smaller">
+        <div class="grid grid--gap">
+            {{ block('schedulelInner') }}
+        </div>
+    </div>
+{% endblock %}

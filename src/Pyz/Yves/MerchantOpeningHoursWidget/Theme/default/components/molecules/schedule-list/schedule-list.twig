@@ -1,0 +1,10 @@
+{% extends molecule('schedule-list', '@SprykerShop:MerchantOpeningHoursWidget') %}
+
+{% block schedule %}
+    {% include molecule('date-information-item', 'MerchantOpeningHoursWidget') with {
+        data: {
+            title: data.title,
+            scheduleList: scheduleList,
+        },
+    } only %}
+{% endblock %}
