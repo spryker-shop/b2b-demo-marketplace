@@ -7,9 +7,7 @@
 
 namespace Pyz\Zed\ProductMerchantPortalGui;
 
-use Pyz\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductApprovalFacadeBridge;
 use Spryker\Zed\AvailabilityMerchantPortalGui\Communication\Plugin\ProductMerchantPortalGui\TotalProductAvailabilityProductConcreteTableExpanderPlugin;
-use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\PriceProductMerchantRelationshipMerchantPortalGui\Communication\Plugin\ProductMerchantPortalGui\MerchantRelationshipPriceProductAbstractTableConfigurationExpanderPlugin;
 use Spryker\Zed\PriceProductMerchantRelationshipMerchantPortalGui\Communication\Plugin\ProductMerchantPortalGui\MerchantRelationshipPriceProductConcreteTableConfigurationExpanderPlugin;
 use Spryker\Zed\PriceProductMerchantRelationshipMerchantPortalGui\Communication\Plugin\ProductMerchantPortalGui\MerchantRelationshipPriceProductMapperPlugin;
@@ -22,20 +20,6 @@ use Spryker\Zed\TaxMerchantPortalGui\Communication\Plugin\ProductMerchantPortalG
  */
 class ProductMerchantPortalGuiDependencyProvider extends SprykerProductMerchantPortalGuiDependencyProvider
 {
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addProductApprovalFacade(Container $container): Container
-    {
-        $container->set(static::FACADE_PRODUCT_APPROVAL, function () {
-            return new ProductMerchantPortalGuiToProductApprovalFacadeBridge($this->getConfig());
-        });
-
-        return $container;
-    }
-
     /**
      * @return array<\Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\ProductAbstractFormExpanderPluginInterface>
      */

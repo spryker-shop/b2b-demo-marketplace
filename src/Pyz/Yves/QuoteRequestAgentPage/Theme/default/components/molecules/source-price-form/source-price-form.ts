@@ -8,7 +8,9 @@ export default class SourcePriceForm extends SourcePriceFormParentClass {
     protected readyCallback(): void {
         this.price = <HTMLElement>this.getElementsByClassName(`${this.jsName}__price`)[0];
         this.originPrice = <HTMLElement>this.getElementsByClassName(`${this.jsName}__origin-price`)[0];
+        /* tslint:disable: deprecation */
         super.readyCallback();
+        /* tslint:enable: deprecation */
     }
 
     protected togglePriceVisibility(): void {
