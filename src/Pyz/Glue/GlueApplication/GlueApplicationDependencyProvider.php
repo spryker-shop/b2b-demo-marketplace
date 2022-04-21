@@ -788,7 +788,7 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
             ConfigurableBundlesRestApiConfig::RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATES,
             new ConfigurableBundleTemplateImageSetByConfigurableBundleTemplateResourceRelationshipPlugin()
         );
-
+//
         return $resourceRelationshipCollection;
     }
 
