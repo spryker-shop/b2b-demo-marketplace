@@ -185,7 +185,6 @@ use Spryker\Glue\ProductReviewsRestApi\Plugin\GlueApplication\ProductReviewsRela
 use Spryker\Glue\ProductsCategoriesResourceRelationship\Plugin\AbstractProductsCategoriesResourceRelationshipPlugin;
 use Spryker\Glue\ProductsRestApi\Plugin\AbstractProductsResourceRoutePlugin;
 use Spryker\Glue\ProductsRestApi\Plugin\ConcreteProductsResourceRoutePlugin;
-use Spryker\Glue\ProductsRestApi\Plugin\GlueApplication\ConcreteProductByQuoteRequestResourceRelationshipPlugin;
 use Spryker\Glue\ProductsRestApi\Plugin\GlueApplication\ConcreteProductBySkuResourceRelationshipPlugin;
 use Spryker\Glue\ProductsRestApi\Plugin\GlueApplication\ConcreteProductsByProductConcreteIdsResourceRelationshipPlugin;
 use Spryker\Glue\ProductsRestApi\Plugin\GlueApplication\ProductAbstractByProductAbstractSkuResourceRelationshipPlugin;
@@ -193,7 +192,6 @@ use Spryker\Glue\ProductsRestApi\Plugin\GlueApplication\ProductAbstractBySkuReso
 use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 use Spryker\Glue\ProductTaxSetsRestApi\Plugin\GlueApplication\ProductTaxSetByProductAbstractSkuResourceRelationshipPlugin;
 use Spryker\Glue\ProductTaxSetsRestApi\Plugin\GlueApplication\ProductTaxSetsResourceRoutePlugin;
-use Spryker\Glue\QuoteRequestsRestApi\QuoteRequestsRestApiConfig;
 use Spryker\Glue\RelatedProductsRestApi\Plugin\GlueApplication\RelatedProductsResourceRoutePlugin;
 use Spryker\Glue\RestRequestValidator\Plugin\ValidateRestRequestAttributesPlugin;
 use Spryker\Glue\Router\Plugin\Application\RouterApplicationPlugin;
@@ -792,11 +790,6 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
         $resourceRelationshipCollection->addRelationship(
             ConfigurableBundlesRestApiConfig::RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATES,
             new ConfigurableBundleTemplateImageSetByConfigurableBundleTemplateResourceRelationshipPlugin()
-        );
-
-        $resourceRelationshipCollection->addRelationship(
-            QuoteRequestsRestApiConfig::RESOURCE_QUOTE_REQUESTS,
-            new ConcreteProductByQuoteRequestResourceRelationshipPlugin()
         );
 
         return $resourceRelationshipCollection;
