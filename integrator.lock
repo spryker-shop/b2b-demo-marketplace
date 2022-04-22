@@ -1062,15 +1062,6 @@
       }
     }
   },
-  "Spryker.CompaniesRestApi": {
-    "wire-glue-relationship": {
-      "880a851dca0dcdb72819441bd428c12390ec2bab": {
-        "source": {
-          "\\Spryker\\Glue\\QuoteRequestsRestApi\\QuoteRequestsRestApiConfig::RESOURCE_QUOTE_REQUESTS": "\\Spryker\\Glue\\CompaniesRestApi\\Plugin\\GlueApplication\\CompanyByQuoteRequestResourceRelationshipPlugin"
-        }
-      }
-    }
-  },
   "Spryker.CompanyBusinessUnit": {
     "wire-plugin": {
       "4ec9bea4957752d741512145dd0d04f8be25a351": {
@@ -1164,15 +1155,6 @@
       "7aa93af3c9e4f302eb9b178680696cacb0ab1a42": {
         "target": "\\Spryker\\Zed\\CompanyUserStorage\\CompanyUserStorageDependencyProvider::getCompanyUserStorageExpanderPlugins",
         "source": "\\Spryker\\Zed\\CompanyBusinessUnitStorage\\Communication\\Plugin\\CompanyBusinessUnitCompanyUserStorageExpanderPlugin"
-      }
-    }
-  },
-  "Spryker.CompanyBusinessUnitsRestApi": {
-    "wire-glue-relationship": {
-      "11abf56f99b946c5ba55c1942c3d5d646b94ebb2": {
-        "source": {
-          "\\Spryker\\Glue\\QuoteRequestsRestApi\\QuoteRequestsRestApiConfig::RESOURCE_QUOTE_REQUESTS": "\\Spryker\\Glue\\CompanyBusinessUnitsRestApi\\Plugin\\GlueApplication\\CompanyBusinessUnitByQuoteRequestResourceRelationshipPlugin"
-        }
       }
     }
   },
