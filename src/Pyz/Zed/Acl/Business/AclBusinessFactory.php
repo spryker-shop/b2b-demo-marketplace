@@ -7,18 +7,40 @@
 
 namespace Pyz\Zed\Acl\Business;
 
-use Pyz\Zed\Acl\Business\Acl\AclConfigReader;
-use Spryker\Zed\Acl\Business\Acl\AclConfigReaderInterface;
+use Pyz\Zed\Acl\AclDependencyProvider;
+use Pyz\Zed\Acl\Business\Acl\pyzAclConfigReader;
+use Pyz\Zed\Acl\Business\Acl\pyzAclConfigReaderInterface;
 use Spryker\Zed\Acl\Business\AclBusinessFactory as SprykerAclBusinessFactory;
+use Spryker\Zed\Acl\Business\Model\Installer;
+use Spryker\Zed\Acl\Business\Model\InstallerInterface;
 
 class AclBusinessFactory extends SprykerAclBusinessFactory
 {
-    // TODO: Should be removed after MP-6691 integration.
+    // TODO: Should be removed after MP-6740 integration.
+
     /**
-     * @return \Spryker\Zed\Acl\Business\Acl\AclConfigReaderInterface
+     * @var string
      */
-    public function createAclConfigReader(): AclConfigReaderInterface
+    public const PYZ_FACADE_USER = 'user facade';
+
+    /**
+     * @return \Pyz\Zed\Acl\Business\Acl\pyzAclConfigReader
+     */
+    public function createPyzAclConfigReader(): pyzAclConfigReaderInterface
     {
-        return new AclConfigReader($this->getConfig());
+        return new pyzAclConfigReader($this->getConfig());
+    }
+
+    public function createPyzInstallerModel(): InstallerInterface
+    {
+        return new Installer(
+            $this->createGroupModel(),
+            $this->createRoleModel(),
+            $this->createRuleModel(),
+            $this->getProvidedDependency(AclDependencyProvider::PYZ_FACADE_USER),
+            $this->createPyzAclConfigReader(),
+            $this->createRoleWriter(),
+            $this->getAclInstallerPlugins(),
+        );
     }
 }
