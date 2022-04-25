@@ -147,8 +147,33 @@
                 {% widget 'CartAddProductAsSeparateItemWidget' only %}{% endwidget %}
             {% endif %}
 
+            {% set merchantProductOfferWidget = findWidget('MerchantProductOfferWidget', [data.product]) %}
+            {% set productOffersCount = merchantProductOfferWidget ? merchantProductOfferWidget.productOffers | length : 0 %}
+            {% set isRadioButtonVisible = productOffersCount > 0  %}
+            {% set isChecked = merchantProductOfferWidget ? not merchantProductOfferWidget.productView.productOfferReference : true %}
+            {% set merchantProductWidget = findWidget('MerchantProductWidget', [
+                data.product,
+                isRadioButtonVisible,
+                isChecked,
+            ]) %}
+
+            <div class="spacing-top spacing-top--big">
+                {% widget merchantProductWidget %}{% endwidget %}
+                {% widget merchantProductOfferWidget with {
+                    embed: {
+                        hasMerchantProduct: merchantProductWidget.merchantProductView is defined,
+                        productOffersCount: merchantProductOfferWidget.productOffers | length,
+                    },
+                } %}
+                    {% block content %}
+                        {% set isRadioButtonVisible = embed.productOffersCount + embed.hasMerchantProduct > 1 %}
+                        {{ parent() }}
+                    {% endblock %}
+                {% endwidget %}
+            </div>
+
             {% if not data.product.available %}
-                <p class="text-alert">{{ "product.detail.out_of_stock" | trans }}</p>
+                <p class="text-alert">{{ 'product.detail.out_of_stock' | trans }}</p>
             {% endif %}
         {% endblock %}
     {% endwidget %}
@@ -158,7 +183,7 @@
     {% endif %}
 
     {% if can('SeeShoppingListPermissionPlugin') %}
-        {% widget 'AddToShoppingListWidget' args [sku, isDisabled] only %}{% endwidget %}
+        {% widget 'AddToShoppingListWidget' args [sku, isDisabled, data.product] only %}{% endwidget %}
     {% endif %}
 
     {% widget 'ProductDiscontinuedNoteWidget' args [sku] only %}{% endwidget %}

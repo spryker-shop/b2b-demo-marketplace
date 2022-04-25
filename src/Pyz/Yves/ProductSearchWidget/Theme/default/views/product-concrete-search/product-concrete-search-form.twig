@@ -6,10 +6,13 @@
     skuFieldValue: _widget.skuFieldValue | default,
     searchFieldValue: _widget.searchFieldValue | default,
     searchResultLimit: _widget.searchResultLimit,
+    injectorsExtraQueryValueClassName: '',
+    autocompleteFormClassName: '',
 } %}
 
 {% block body %}
     {% include molecule('product-search-autocomplete-form', 'ProductSearchWidget') with {
+        class: data.autocompleteFormClassName,
         data: {
             id: data.index,
             name: data.skuFieldName,
@@ -23,6 +26,7 @@
             'query-param-name': 'limit=' ~ data.searchResultLimit ~ '&searchString',
             'value-data-attribute': 'data-value',
             'min-letters': 1,
+            'injectors-extra-query-value-class-name': data.injectorsExtraQueryValueClassName,
         },
     } only %}
 {% endblock %}

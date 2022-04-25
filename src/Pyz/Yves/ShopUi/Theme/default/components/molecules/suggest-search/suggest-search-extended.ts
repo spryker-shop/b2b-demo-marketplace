@@ -6,7 +6,9 @@ export default class SuggestSearchExtended extends SuggestSearch {
 
     protected readyCallback(): void {
         this.overlay = <OverlayBlock>document.getElementsByClassName(this.overlayClassName)[0];
+        /* tslint:disable: deprecation */
         super.readyCallback();
+        /* tslint:enable: deprecation */
     }
 
     showSugestions(): void {

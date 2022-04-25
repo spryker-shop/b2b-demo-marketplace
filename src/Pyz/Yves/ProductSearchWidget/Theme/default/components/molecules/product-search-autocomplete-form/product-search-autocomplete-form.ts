@@ -13,12 +13,20 @@ export default class ProductSearchAutocompleteForm extends AutocompleteForm {
     protected suggestionItems: HTMLElement[];
     protected lastSelectedItem: HTMLElement;
     protected quantityInput: HTMLInputElement;
+    protected injectorsExtraQueryValueList: HTMLSelectElement[] | HTMLInputElement[];
+    protected extraQueryValues = new Map();
 
     protected readyCallback(): void {}
 
     protected init(): void {
         this.widgetSuggestionsContainer = <HTMLElement>this.getElementsByClassName(`${this.jsName}__suggestions`)[0];
         this.quantityInput = <HTMLInputElement>document.getElementsByClassName(`${this.jsName}__quantity-field`)[0];
+        if (this.injectorsExtraQueryValueClassName) {
+            this.injectorsExtraQueryValueList = <HTMLSelectElement[] | HTMLInputElement[]>(
+                Array.from(document.getElementsByClassName(this.injectorsExtraQueryValueClassName))
+            );
+        }
+
         super.init();
         this.plugKeydownEvent();
     }
@@ -100,10 +108,30 @@ export default class ProductSearchAutocompleteForm extends AutocompleteForm {
         this.lastSelectedItem = item;
     }
 
+    protected setQueryParams(): void {
+        this.extraQueryValues.clear();
+        this.ajaxProvider.queryParams.clear();
+        this.ajaxProvider.queryParams.set(this.queryParamName, this.inputText);
+
+        if (!this.injectorsExtraQueryValueList || !this.injectorsExtraQueryValueList.length) {
+            return;
+        }
+
+        this.injectorsExtraQueryValueList.forEach((item) => {
+            if (!item.name || !item.value) {
+                return;
+            }
+
+            this.ajaxProvider.queryParams.set(item.name, item.value);
+            this.extraQueryValues.set(item.name, item.value);
+        });
+    }
+
     async loadSuggestions(): Promise<void> {
         this.dispatchCustomEvent(Events.FETCHING);
         this.showSuggestions();
-        this.ajaxProvider.queryParams.set(this.queryParamName, this.inputText);
+        this.setQueryParams();
+
         await this.ajaxProvider.fetch();
         this.suggestionItems = <HTMLElement[]>(
             Array.from(this.widgetSuggestionsContainer.getElementsByClassName(this.itemClassName))
@@ -116,7 +144,11 @@ export default class ProductSearchAutocompleteForm extends AutocompleteForm {
         this.inputText = text;
         this.inputValue = data;
 
-        this.dispatchCustomEvent(Events.SET, { text: this.inputText, value: this.inputValue });
+        this.dispatchCustomEvent(Events.SET, {
+            text: this.inputText,
+            value: this.inputValue,
+            extraValues: this.extraQueryValues,
+        });
 
         if (this.quantityInput) {
             this.quantityInput.focus();
@@ -153,5 +185,9 @@ export default class ProductSearchAutocompleteForm extends AutocompleteForm {
 
     protected set inputValue(value: string) {
         this.hiddenInputElement.value = value;
+    }
+
+    protected get injectorsExtraQueryValueClassName(): string {
+        return this.getAttribute('injectors-extra-query-value-class-name');
     }
 }

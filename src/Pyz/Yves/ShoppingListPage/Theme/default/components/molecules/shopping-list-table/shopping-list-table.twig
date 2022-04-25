@@ -16,6 +16,18 @@
                value="{{ item.shoppingListItem.toArray | json_encode }}"
         >
         {% set isItemAvailable = item.available is defined and item.available and item.price is defined and item.price is not null %}
+
+        {% set shoppingListMerchantWidget = findWidget('ShoppingListMerchantWidget', [item]) %}
+        {% set shoppingListProductOfferWidget = findWidget('ShoppingListProductOfferWidget', [item]) %}
+
+        {% if shoppingListProductOfferWidget and shoppingListProductOfferWidget.isProductOfferActive is not null %}
+            {% set isItemAvailable = shoppingListProductOfferWidget.isProductOfferActive and isItemAvailable %}
+        {% endif %}
+
+        {% if shoppingListMerchantWidget and shoppingListMerchantWidget.isMerchantActive is not null %}
+            {% set isItemAvailable = shoppingListMerchantWidget.isMerchantActive and isItemAvailable %}
+        {% endif %}
+
         {% set productDiscontinuedNoteWidget = findWidget('ProductDiscontinuedNoteWidget', [item.sku]) %}
 
         {% if productDiscontinuedNoteWidget %}

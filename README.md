@@ -39,7 +39,7 @@ mkdir spryker-b2b && cd spryker-b2b
 
 2. Clone the B2B Demo Shop:
 ```bash
-git clone https://github.com/spryker-shop/b2b-demo-shop.git ./
+git clone https://github.com/spryker-shop/b2b-demo-marketplace.git ./
 ```
 
 3. Clone the Docker SDK:

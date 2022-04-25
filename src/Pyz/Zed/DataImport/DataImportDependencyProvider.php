@@ -7,6 +7,11 @@
 
 namespace Pyz\Zed\DataImport;
 
+use Pyz\Zed\MerchantProductOfferDataImport\Communication\Plugin\CombinedMerchantProductOfferDataImportPlugin;
+use Pyz\Zed\MerchantProductOfferDataImport\Communication\Plugin\CombinedMerchantProductOfferStoreDataImportPlugin;
+use Pyz\Zed\PriceProductOfferDataImport\Communication\Plugin\CombinedPriceProductOfferDataImportPlugin;
+use Pyz\Zed\ProductOfferStockDataImport\Communication\Plugin\CombinedProductOfferStockDataImportPlugin;
+use Pyz\Zed\ProductOfferValidityDataImport\Communication\Plugin\CombinedProductOfferValidityDataImportPlugin;
 use Spryker\Zed\BusinessOnBehalfDataImport\Communication\Plugin\DataImport\BusinessOnBehalfCompanyUserDataImportPlugin;
 use Spryker\Zed\CategoryDataImport\Communication\Plugin\CategoryDataImportPlugin;
 use Spryker\Zed\CategoryDataImport\Communication\Plugin\DataImport\CategoryStoreDataImportPlugin;
@@ -39,18 +44,32 @@ use Spryker\Zed\DataImport\Communication\Plugin\DataImportPublisherPlugin;
 use Spryker\Zed\DataImport\DataImportDependencyProvider as SprykerDataImportDependencyProvider;
 use Spryker\Zed\FileManagerDataImport\Communication\Plugin\FileManagerDataImportPlugin;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\MerchantCategoryDataImport\Communication\Plugin\DataImport\MerchantCategoryDataImportPlugin;
 use Spryker\Zed\MerchantDataImport\Communication\Plugin\MerchantDataImportPlugin;
 use Spryker\Zed\MerchantDataImport\Communication\Plugin\MerchantStoreDataImportPlugin;
+use Spryker\Zed\MerchantOmsDataImport\Communication\Plugin\DataImport\MerchantOmsProcessDataImportPlugin;
+use Spryker\Zed\MerchantOpeningHoursDataImport\Communication\Plugin\MerchantOpeningHoursDateScheduleDataImportPlugin;
+use Spryker\Zed\MerchantOpeningHoursDataImport\Communication\Plugin\MerchantOpeningHoursWeekdayScheduleDataImportPlugin;
+use Spryker\Zed\MerchantProductApprovalDataImport\Communication\Plugin\DataImport\MerchantProductApprovalStatusDefaultDataImportPlugin;
+use Spryker\Zed\MerchantProductDataImport\Communication\Plugin\MerchantProductDataImportPlugin;
+use Spryker\Zed\MerchantProductOfferDataImport\Communication\Plugin\DataImport\MerchantProductOfferDataImportPlugin;
+use Spryker\Zed\MerchantProductOfferDataImport\Communication\Plugin\DataImport\MerchantProductOfferStoreDataImportPlugin;
+use Spryker\Zed\MerchantProductOptionDataImport\Communication\Plugin\DataImport\MerchantProductOptionGroupDataImportPlugin;
+use Spryker\Zed\MerchantProfileDataImport\Communication\Plugin\MerchantProfileAddressDataImportPlugin;
+use Spryker\Zed\MerchantProfileDataImport\Communication\Plugin\MerchantProfileDataImportPlugin;
 use Spryker\Zed\MerchantRelationshipDataImport\Communication\Plugin\MerchantRelationshipDataImportPlugin;
 use Spryker\Zed\MerchantRelationshipProductListDataImport\Communication\Plugin\MerchantRelationshipProductListDataImportPlugin;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdDataImport\Communication\Plugin\DataImport\MerchantRelationshipSalesOrderThresholdDataImportPlugin;
+use Spryker\Zed\MerchantStockDataImport\Communication\Plugin\MerchantStockDataImportPlugin;
 use Spryker\Zed\MultiCartDataImport\Communication\Plugin\MultiCartDataImportPlugin;
 use Spryker\Zed\PaymentDataImport\Communication\Plugin\PaymentMethodDataImportPlugin;
 use Spryker\Zed\PaymentDataImport\Communication\Plugin\PaymentMethodStoreDataImportPlugin;
 use Spryker\Zed\PriceProductDataImport\Communication\Plugin\PriceProductDataImportPlugin;
 use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Communication\Plugin\PriceProductMerchantRelationshipDataImportPlugin;
+use Spryker\Zed\PriceProductOfferDataImport\Communication\Plugin\PriceProductOfferDataImportPlugin;
 use Spryker\Zed\PriceProductScheduleDataImport\Communication\Plugin\PriceProductScheduleDataImportPlugin;
 use Spryker\Zed\ProductAlternativeDataImport\Communication\Plugin\ProductAlternativeDataImportPlugin;
+use Spryker\Zed\ProductApprovalDataImport\Communication\Plugin\DataImport\ProductAbstractApprovalStatusDataImportPlugin;
 use Spryker\Zed\ProductDiscontinuedDataImport\Communication\Plugin\ProductDiscontinuedDataImportPlugin;
 use Spryker\Zed\ProductLabelDataImport\Communication\Plugin\ProductLabelDataImportPlugin;
 use Spryker\Zed\ProductLabelDataImport\Communication\Plugin\ProductLabelStoreDataImportPlugin;
@@ -61,6 +80,9 @@ use Spryker\Zed\ProductMeasurementUnitDataImport\Communication\Plugin\ProductMea
 use Spryker\Zed\ProductMeasurementUnitDataImport\Communication\Plugin\ProductMeasurementSalesUnitDataImportPlugin;
 use Spryker\Zed\ProductMeasurementUnitDataImport\Communication\Plugin\ProductMeasurementSalesUnitStoreDataImportPlugin;
 use Spryker\Zed\ProductMeasurementUnitDataImport\Communication\Plugin\ProductMeasurementUnitDataImportPlugin;
+use Spryker\Zed\ProductOfferShoppingListDataImport\Communication\Plugin\DataImport\ProductOfferShoppingListItemDataImportPlugin;
+use Spryker\Zed\ProductOfferStockDataImport\Communication\Plugin\ProductOfferStockDataImportPlugin;
+use Spryker\Zed\ProductOfferValidityDataImport\Communication\DataImport\ProductOfferValidityDataImportPlugin;
 use Spryker\Zed\ProductPackagingUnitDataImport\Communication\Plugin\DataImport\ProductPackagingUnitDataImportPlugin;
 use Spryker\Zed\ProductPackagingUnitDataImport\Communication\Plugin\DataImport\ProductPackagingUnitTypeDataImportPlugin;
 use Spryker\Zed\ProductQuantityDataImport\Communication\Plugin\ProductQuantityDataImportPlugin;
@@ -93,13 +115,14 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
     public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
     public const FACADE_STOCK = 'FACADE_STOCK';
     public const FACADE_STORE = 'FACADE_STORE';
+    public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
 
@@ -112,6 +135,7 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
         $container = $this->addPriceProductFacade($container);
         $container = $this->addStockFacade($container);
         $container = $this->addStoreFacade($container);
+        $container = $this->addMerchantUserFacade($container);
 
         return $container;
     }
@@ -177,11 +201,11 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addAvailabilityFacade(Container $container)
+    protected function addAvailabilityFacade(Container $container): Container
     {
-        $container[static::FACADE_AVAILABILITY] = function (Container $container) {
+        $container->set(static::FACADE_AVAILABILITY, function (Container $container) {
             return $container->getLocator()->availability()->facade();
-        };
+        });
 
         return $container;
     }
@@ -191,11 +215,11 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCategoryFacade(Container $container)
+    protected function addCategoryFacade(Container $container): Container
     {
-        $container[static::FACADE_CATEGORY] = function (Container $container) {
+        $container->set(static::FACADE_CATEGORY, function (Container $container) {
             return $container->getLocator()->category()->facade();
-        };
+        });
 
         return $container;
     }
@@ -205,11 +229,11 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductBundleFacade(Container $container)
+    protected function addProductBundleFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT_BUNDLE] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_BUNDLE, function (Container $container) {
             return $container->getLocator()->productBundle()->facade();
-        };
+        });
 
         return $container;
     }
@@ -219,11 +243,11 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductSearchFacade(Container $container)
+    protected function addProductSearchFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT_SEARCH] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_SEARCH, function (Container $container) {
             return $container->getLocator()->productSearch()->facade();
-        };
+        });
 
         return $container;
     }
@@ -233,11 +257,25 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductRelationFacade(Container $container)
+    protected function addProductRelationFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT_RELATION] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_RELATION, function (Container $container) {
             return $container->getLocator()->productRelation()->facade();
-        };
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantUserFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_MERCHANT_USER, function (Container $container) {
+            return $container->getLocator()->merchantUser()->facade();
+        });
 
         return $container;
     }
@@ -319,6 +357,33 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
             new CmsSlotBlockDataImportPlugin(),
             new ContentNavigationDataImportPlugin(),
             new CategoryStoreDataImportPlugin(),
+
+            new MerchantProfileDataImportPlugin(),
+            new MerchantProfileAddressDataImportPlugin(),
+            new MerchantProductDataImportPlugin(),
+            new MerchantProductOfferDataImportPlugin(),
+            new MerchantProductOfferStoreDataImportPlugin(),
+            new ProductOfferValidityDataImportPlugin(),
+            new PriceProductOfferDataImportPlugin(),
+            new MerchantStockDataImportPlugin(),
+            new ProductOfferStockDataImportPlugin(),
+            new ProductOfferShoppingListItemDataImportPlugin(),
+
+            new MerchantOmsProcessDataImportPlugin(),
+            new MerchantProductOptionGroupDataImportPlugin(),
+
+            new MerchantOpeningHoursDateScheduleDataImportPlugin(),
+            new MerchantOpeningHoursWeekdayScheduleDataImportPlugin(),
+
+            new MerchantCategoryDataImportPlugin(),
+            new MerchantProductApprovalStatusDefaultDataImportPlugin(),
+            new ProductAbstractApprovalStatusDataImportPlugin(),
+
+            new CombinedMerchantProductOfferDataImportPlugin(),
+            new CombinedMerchantProductOfferStoreDataImportPlugin(),
+            new CombinedPriceProductOfferDataImportPlugin(),
+            new CombinedProductOfferValidityDataImportPlugin(),
+            new CombinedProductOfferStockDataImportPlugin(),
         ];
     }
 

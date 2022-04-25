@@ -1,0 +1,8 @@
+{% extends view('merchant-product-offers-select-form', '@SprykerShop:MerchantProductOfferWidget') %}
+
+{% block productOffersForm %}
+    <b>{{ field.vars.label | trans }}</b>
+    {{ form_widget(field, {
+        modifiers: ['light'],
+    }) }}
+{% endblock %}

@@ -8,14 +8,17 @@
 namespace Pyz\Zed\Product;
 
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\PriceProduct\Communication\Plugin\ProductAbstract\PriceProductAbstractAfterCreatePlugin;
+use Spryker\Zed\MerchantProduct\Communication\Plugin\Product\MerchantProductProductAbstractPostCreatePlugin;
+use Spryker\Zed\MerchantProductApproval\Communication\Plugin\Product\MerchantProductApprovalProductAbstractPreCreatePlugin;
+use Spryker\Zed\PriceProduct\Communication\Plugin\Product\PriceProductAbstractPostCreatePlugin;
+use Spryker\Zed\PriceProduct\Communication\Plugin\Product\PriceProductProductAbstractExpanderPlugin;
 use Spryker\Zed\PriceProduct\Communication\Plugin\ProductAbstract\PriceProductAbstractAfterUpdatePlugin;
-use Spryker\Zed\PriceProduct\Communication\Plugin\ProductAbstract\PriceProductAbstractReadPlugin;
 use Spryker\Zed\PriceProduct\Communication\Plugin\ProductConcrete\ConcreteProductPriceProductConcreteReadPlugin;
 use Spryker\Zed\PriceProduct\Communication\Plugin\ProductConcrete\PriceProductConcreteAfterCreatePlugin;
 use Spryker\Zed\PriceProduct\Communication\Plugin\ProductConcrete\PriceProductConcreteAfterUpdatePlugin;
 use Spryker\Zed\Product\ProductDependencyProvider as SprykerProductDependencyProvider;
 use Spryker\Zed\ProductAlternativeGui\Communication\Plugin\Product\ProductConcretePluginUpdate as ProductAlternativeGuiProductConcretePluginUpdate;
+use Spryker\Zed\ProductApproval\Communication\Plugin\Product\ProductApprovalProductAbstractPreCreatePlugin;
 use Spryker\Zed\ProductBundle\Communication\Plugin\Product\ProductBundleDeactivatorProductConcreteAfterUpdatePlugin;
 use Spryker\Zed\ProductBundle\Communication\Plugin\Product\ProductBundleProductConcreteAfterCreatePlugin;
 use Spryker\Zed\ProductBundle\Communication\Plugin\Product\ProductBundleProductConcreteAfterUpdatePlugin;
@@ -23,9 +26,9 @@ use Spryker\Zed\ProductBundle\Communication\Plugin\Product\ProductBundleProductC
 use Spryker\Zed\ProductDiscontinued\Communication\Plugin\SaveDiscontinuedNotesProductConcretePluginUpdate;
 use Spryker\Zed\ProductDiscontinuedProductBundleConnector\Communication\Plugin\Product\DiscontinuedProductConcreteAfterCreatePlugin;
 use Spryker\Zed\ProductDiscontinuedProductBundleConnector\Communication\Plugin\Product\DiscontinuedProductConcreteAfterUpdatePlugin;
-use Spryker\Zed\ProductImage\Communication\Plugin\ProductAbstractAfterCreatePlugin as ImageSetProductAbstractAfterCreatePlugin;
+use Spryker\Zed\ProductImage\Communication\Plugin\Product\ImageSetProductAbstractPostCreatePlugin;
+use Spryker\Zed\ProductImage\Communication\Plugin\Product\ProductImageProductAbstractExpanderPlugin;
 use Spryker\Zed\ProductImage\Communication\Plugin\ProductAbstractAfterUpdatePlugin as ImageSetProductAbstractAfterUpdatePlugin;
-use Spryker\Zed\ProductImage\Communication\Plugin\ProductAbstractReadPlugin as ImageSetProductAbstractReadPlugin;
 use Spryker\Zed\ProductImage\Communication\Plugin\ProductConcreteAfterCreatePlugin as ImageSetProductConcreteAfterCreatePlugin;
 use Spryker\Zed\ProductImage\Communication\Plugin\ProductConcreteAfterUpdatePlugin as ImageSetProductConcreteAfterUpdatePlugin;
 use Spryker\Zed\ProductImage\Communication\Plugin\ProductConcreteReadPlugin as ImageSetProductConcreteReadPlugin;
@@ -38,12 +41,25 @@ use Spryker\Zed\ProductValidity\Communication\Plugin\ProductValidityUpdatePlugin
 use Spryker\Zed\Stock\Communication\Plugin\ProductConcreteAfterCreatePlugin as StockProductConcreteAfterCreatePlugin;
 use Spryker\Zed\Stock\Communication\Plugin\ProductConcreteAfterUpdatePlugin as StockProductConcreteAfterUpdatePlugin;
 use Spryker\Zed\Stock\Communication\Plugin\ProductConcreteReadPlugin as StockProductConcreteReadPlugin;
-use Spryker\Zed\TaxProductConnector\Communication\Plugin\TaxSetProductAbstractAfterCreatePlugin;
+use Spryker\Zed\TaxProductConnector\Communication\Plugin\Product\TaxSetProductAbstractExpanderPlugin;
+use Spryker\Zed\TaxProductConnector\Communication\Plugin\Product\TaxSetProductAbstractPostCreatePlugin;
 use Spryker\Zed\TaxProductConnector\Communication\Plugin\TaxSetProductAbstractAfterUpdatePlugin;
-use Spryker\Zed\TaxProductConnector\Communication\Plugin\TaxSetProductAbstractReadPlugin;
 
 class ProductDependencyProvider extends SprykerProductDependencyProvider
 {
+    /**
+     * @return \Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractPostCreatePluginInterface[]
+     */
+    protected function getProductAbstractPostCreatePlugins(): array
+    {
+        return [
+            new MerchantProductProductAbstractPostCreatePlugin(),
+            new ImageSetProductAbstractPostCreatePlugin(),
+            new TaxSetProductAbstractPostCreatePlugin(),
+            new PriceProductAbstractPostCreatePlugin(),
+        ];
+    }
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -52,34 +68,6 @@ class ProductDependencyProvider extends SprykerProductDependencyProvider
     protected function getProductAbstractBeforeCreatePlugins(Container $container): array
     {
         return [];
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginCreateInterface[]
-     */
-    protected function getProductAbstractAfterCreatePlugins(Container $container): array
-    {
-        return [
-            new ImageSetProductAbstractAfterCreatePlugin(),
-            new TaxSetProductAbstractAfterCreatePlugin(),
-            new PriceProductAbstractAfterCreatePlugin(),
-        ];
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginReadInterface[]
-     */
-    protected function getProductAbstractReadPlugins(Container $container): array
-    {
-        return [
-            new ImageSetProductAbstractReadPlugin(),
-            new TaxSetProductAbstractReadPlugin(),
-            new PriceProductAbstractReadPlugin(),
-        ];
     }
 
     /**
@@ -146,7 +134,7 @@ class ProductDependencyProvider extends SprykerProductDependencyProvider
      *
      * @return \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginUpdateInterface[]
      */
-    protected function getProductConcreteBeforeUpdatePlugins(Container $container): array
+    protected function getProductConcreteBeforeUpdatePlugins(Container $container)
     {
         return [
             new ProductAlternativeGuiProductConcretePluginUpdate(), #ProductAlternativeFeature
@@ -158,7 +146,7 @@ class ProductDependencyProvider extends SprykerProductDependencyProvider
      *
      * @return \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginUpdateInterface[]
      */
-    protected function getProductConcreteAfterUpdatePlugins(Container $container): array
+    protected function getProductConcreteAfterUpdatePlugins(Container $container)
     {
         return [
             new ImageSetProductConcreteAfterUpdatePlugin(),
@@ -170,6 +158,33 @@ class ProductDependencyProvider extends SprykerProductDependencyProvider
             new SaveDiscontinuedNotesProductConcretePluginUpdate(),
             new DiscontinuedProductConcreteAfterUpdatePlugin(),
             new ProductBundleDeactivatorProductConcreteAfterUpdatePlugin(),
+        ];
+    }
+
+    /**
+     * The order of execution is important for expanding with correct product approval statuses.
+     *
+     * @return array<\Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractPreCreatePluginInterface>
+     */
+    protected function getProductAbstractPreCreatePlugins(): array
+    {
+        return [
+            new MerchantProductApprovalProductAbstractPreCreatePlugin(),
+            new ProductApprovalProductAbstractPreCreatePlugin(),
+        ];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return array
+     */
+    protected function getProductAbstractExpanderPlugins(Container $container): array
+    {
+        return [
+            new ProductImageProductAbstractExpanderPlugin(),
+            new TaxSetProductAbstractExpanderPlugin(),
+            new PriceProductProductAbstractExpanderPlugin(),
         ];
     }
 }

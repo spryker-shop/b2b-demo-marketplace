@@ -28,6 +28,9 @@ class ProductConcretePropelDataSetWriter implements DataSetWriterInterface
      */
     protected const PRODUCT_BUNDLE_PUBLISH = 'ProductBundle.product_bundle.publish.write';
 
+    /**
+     * @var string
+     */
     protected const COLUMN_ABSTRACT_SKU = ProductConcreteHydratorStep::COLUMN_ABSTRACT_SKU;
 
     /**

@@ -1,0 +1,17 @@
+@mixin merchant-opening-hours-widget-date-information-item($name: '.date-information-item') {
+    #{$name} {
+        &__date {
+            line-height: rem(29);
+        }
+
+        &__time {
+            color: $setting-color-gray-2;
+            line-height: rem(29);
+            text-align: right;
+        }
+
+        @content;
+    }
+}
+
+@include merchant-opening-hours-widget-date-information-item();

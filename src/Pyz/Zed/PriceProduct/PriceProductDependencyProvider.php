@@ -10,8 +10,14 @@ namespace Pyz\Zed\PriceProduct;
 use Spryker\Zed\PriceProduct\PriceProductDependencyProvider as SprykerPriceProductDependencyProvider;
 use Spryker\Zed\PriceProductMerchantRelationship\Communication\Plugin\PriceProduct\MerchantRelationshipPriceDimensionAbstractWriterPlugin;
 use Spryker\Zed\PriceProductMerchantRelationship\Communication\Plugin\PriceProduct\MerchantRelationshipPriceDimensionConcreteWriterPlugin;
+use Spryker\Zed\PriceProductMerchantRelationship\Communication\Plugin\PriceProduct\MerchantRelationshipPriceProductCollectionDeletePlugin;
 use Spryker\Zed\PriceProductMerchantRelationship\Communication\Plugin\PriceProduct\MerchantRelationshipPriceProductDimensionExpanderStrategyPlugin;
 use Spryker\Zed\PriceProductMerchantRelationship\Communication\Plugin\PriceProduct\MerchantRelationshipPriceQueryCriteriaPlugin;
+use Spryker\Zed\PriceProductMerchantRelationshipMerchantPortalGui\Communication\Plugin\PriceProduct\MerchantRelationshipVolumePriceProductValidatorPlugin;
+use Spryker\Zed\PriceProductOffer\Communication\Plugin\PriceProduct\PriceProductOfferPriceDimensionConcreteSaverPlugin;
+use Spryker\Zed\PriceProductOffer\Communication\Plugin\PriceProduct\PriceProductOfferPriceDimensionQueryCriteriaPlugin;
+use Spryker\Zed\PriceProductOffer\Communication\Plugin\PriceProduct\PriceProductOfferPriceProductDimensionExpanderStrategyPlugin;
+use Spryker\Zed\PriceProductVolume\Communication\Plugin\PriceProduct\PriceProductVolumeValidatorPlugin;
 use Spryker\Zed\PriceProductVolume\Communication\Plugin\PriceProductExtension\PriceProductVolumeExtractorPlugin;
 
 /**
@@ -29,6 +35,7 @@ class PriceProductDependencyProvider extends SprykerPriceProductDependencyProvid
     {
         return array_merge(parent::getPriceDimensionQueryCriteriaPlugins(), [
             new MerchantRelationshipPriceQueryCriteriaPlugin(),
+            new PriceProductOfferPriceDimensionQueryCriteriaPlugin(),
         ]);
     }
 
@@ -53,6 +60,7 @@ class PriceProductDependencyProvider extends SprykerPriceProductDependencyProvid
     {
         return [
             new MerchantRelationshipPriceDimensionConcreteWriterPlugin(),
+            new PriceProductOfferPriceDimensionConcreteSaverPlugin(),
         ];
     }
 
@@ -63,6 +71,7 @@ class PriceProductDependencyProvider extends SprykerPriceProductDependencyProvid
     {
         return [
             new MerchantRelationshipPriceProductDimensionExpanderStrategyPlugin(),
+            new PriceProductOfferPriceProductDimensionExpanderStrategyPlugin(),
         ];
     }
 
@@ -73,6 +82,27 @@ class PriceProductDependencyProvider extends SprykerPriceProductDependencyProvid
     {
         return [
             new PriceProductVolumeExtractorPlugin(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductValidatorPluginInterface[]
+     */
+    protected function getPriceProductValidatorPlugins(): array
+    {
+        return [
+            new PriceProductVolumeValidatorPlugin(),
+            new MerchantRelationshipVolumePriceProductValidatorPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductCollectionDeletePluginInterface>
+     */
+    protected function getPriceProductCollectionDeletePlugins(): array
+    {
+        return [
+            new MerchantRelationshipPriceProductCollectionDeletePlugin(),
         ];
     }
 }

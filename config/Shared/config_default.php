@@ -17,6 +17,7 @@ use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Shared\CmsGui\CmsGuiConstants;
 use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Shared\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConstants;
+use Spryker\Shared\DummyMarketplacePayment\DummyMarketplacePaymentConfig;
 use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\WebHtmlErrorRenderer;
 use Spryker\Shared\Event\EventConstants;
@@ -30,6 +31,7 @@ use Spryker\Shared\Http\HttpConstants;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Log\LogConstants;
 use Spryker\Shared\Mail\MailConstants;
+use Spryker\Shared\MerchantPortalApplication\MerchantPortalConstants;
 use Spryker\Shared\Monitoring\MonitoringConstants;
 use Spryker\Shared\Newsletter\NewsletterConstants;
 use Spryker\Shared\Oauth\OauthConstants;
@@ -260,6 +262,12 @@ $config[AclConstants::ACL_DEFAULT_RULES] = [
         'bundle' => 'api',
         'controller' => 'rest',
         'action' => '*',
+        'type' => 'allow',
+    ],
+    [
+        'bundle' => 'security-merchant-portal-gui',
+        'controller' => 'login',
+        'action' => 'index',
         'type' => 'allow',
     ],
 ];
@@ -519,6 +527,17 @@ $config[ApplicationConstants::BASE_URL_ZED] = sprintf(
 );
 
 // ----------------------------------------------------------------------------
+// ------------------------------ MERCHANT PORTAL -----------------------------
+// ----------------------------------------------------------------------------
+
+$merchantPortalPort = (int)(getenv('SPRYKER_MP_PORT')) ?: 443;
+$config[MerchantPortalConstants::BASE_URL_MP] = sprintf(
+    'http://%s%s',
+    getenv('SPRYKER_MP_HOST'),
+    $merchantPortalPort !== 80 ? ':' . $merchantPortalPort : '',
+);
+
+// ----------------------------------------------------------------------------
 // ------------------------------ FRONTEND ------------------------------------
 // ----------------------------------------------------------------------------
 
@@ -560,16 +579,19 @@ $config[GlueApplicationConstants::GLUE_APPLICATION_CORS_ALLOW_ORIGIN] = getenv('
 // ------------------------------ OMS -----------------------------------------
 // ----------------------------------------------------------------------------
 
-$config[OmsConstants::ACTIVE_PROCESSES] = [];
+$config[OmsConstants::ACTIVE_PROCESSES] = [
+    'MarketplacePayment01'
+];
+
 $config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = [
-    PaymentConfig::PAYMENT_FOREIGN_PROVIDER => 'B2CStateMachine01',
+    DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE => 'MarketplacePayment01',
+    PaymentConfig::PAYMENT_FOREIGN_PROVIDER => 'B2CStateMachine01'
 ];
 
 $config[OmsConstants::PROCESS_LOCATION] = [
     OmsConfig::DEFAULT_PROCESS_LOCATION,
     APPLICATION_ROOT_DIR . '/vendor/spryker/payment/config/Zed/Oms',
 ];
-
 
 // ----------------------------------------------------------------------------
 // ------------------------------ PAYMENTS ------------------------------------
@@ -596,6 +618,8 @@ $config[ProductLabelConstants::PRODUCT_LABEL_TO_DE_ASSIGN_CHUNK_SIZE] = 1000;
 // ----------------------------------------------------------------------------
 
 $config[CartsRestApiConstants::IS_QUOTE_RELOAD_ENABLED] = true;
+
+$config[\Spryker\Shared\Http\HttpConstants::URI_SIGNER_SECRET_KEY] = 'JDJ5JDEwJFE0cXBwYnVVTTV6YVZXSnVmM2l1UWVhRE94WkQ4UjBUeHBEWTNHZlFRTEd4U2F6QVBqejQ2';
 
 // ----------------------------------------------------------------------------
 // ------------------------------ AOP -----------------------------------------

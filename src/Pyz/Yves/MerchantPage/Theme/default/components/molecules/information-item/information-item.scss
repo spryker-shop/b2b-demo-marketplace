@@ -1,0 +1,15 @@
+@mixin merchant-page-information-item($name: '.information-item') {
+    #{$name} {
+        margin-bottom: rem(16);
+
+        &__text {
+            color: $setting-color-gray-2;
+            line-height: rem(29);
+            word-break: break-word;
+        }
+
+        @content;
+    }
+}
+
+@include merchant-page-information-item();
