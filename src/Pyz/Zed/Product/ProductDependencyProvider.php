@@ -189,7 +189,7 @@ class ProductDependencyProvider extends SprykerProductDependencyProvider
     /**
      * @return array<int, \Spryker\Zed\ProductExtension\Dependency\Plugin\ProductConcreteExpanderPluginInterface>
      */
-    protected function getProductConcreteExpanderPlugins() : array
+    protected function getProductConcreteExpanderPlugins(): array
     {
         return [
             new ProductSearchProductConcreteExpanderPlugin(),

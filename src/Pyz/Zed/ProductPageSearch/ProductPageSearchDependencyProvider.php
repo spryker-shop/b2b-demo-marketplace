@@ -172,10 +172,11 @@ class ProductPageSearchDependencyProvider extends SprykerProductPageSearchDepend
             new ProductApprovalProductConcreteCollectionFilterPlugin(),
         ];
     }
+
     /**
      * @return array<\Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractCollectionRefreshPluginInterface>
      */
-    protected function getProductPageRefreshPlugins() : array
+    protected function getProductPageRefreshPlugins(): array
     {
         return [
             new ProductListWasBoughtByIntervalPlugin(),

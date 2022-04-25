@@ -15,7 +15,7 @@ class QuoteRequestsRestApiDependencyProvider extends SprykerQuoteRequestsRestApi
     /**
      * @return array<\Spryker\Glue\QuoteRequestsRestApiExtension\Dependency\Plugin\RestQuoteRequestAttributesExpanderPluginInterface>
      */
-    protected function getRestQuoteRequestAttributesExpanderPlugins() : array
+    protected function getRestQuoteRequestAttributesExpanderPlugins(): array
     {
         return [
             new ConfiguredBundleRestQuoteRequestAttributesExpanderPlugin(),
