@@ -30,7 +30,6 @@ class NavigationWriterStep extends PublishAwareStep implements DataImportStepInt
      * @var string
      */
     public const KEY = 'key';
-    public const KEY_IS_ACTIVE = 'is_active';
 
     /**
      * @var string
