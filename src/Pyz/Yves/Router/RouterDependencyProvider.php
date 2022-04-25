@@ -142,6 +142,7 @@ class RouterDependencyProvider extends SprykerRouterDependencyProvider
             new MerchantProductOfferWidgetRouteProviderPlugin(),
             new SalesReturnPageRouteProviderPlugin(),
             new OrderCancelWidgetRouteProviderPlugin(),
+            new PaymentPageRouteProviderPlugin(),
         ];
     }
 
