@@ -7,8 +7,8 @@
 
 namespace Pyz\Zed\ProductMerchantPortalGui\Communication;
 
-use Pyz\Zed\ProductMerchantPortalGui\Communication\Generator\CreateProductUrlGenerator;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\Generator\CreateProductUrlGeneratorInterface;
+use Pyz\Zed\ProductMerchantPortalGui\Communication\Generator\CreatePyzProductUrlGenerator;
+use Pyz\Zed\ProductMerchantPortalGui\Communication\Generator\CreatePyzProductUrlGeneratorInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\ProductMerchantPortalGuiCommunicationFactory as SprykerProductMerchantPortalGuiCommunicationFactory;
 
 /**
@@ -17,10 +17,10 @@ use Spryker\Zed\ProductMerchantPortalGui\Communication\ProductMerchantPortalGuiC
 class ProductMerchantPortalGuiCommunicationFactory extends SprykerProductMerchantPortalGuiCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Generator\CreateProductUrlGeneratorInterface
+     * @return \Pyz\Zed\ProductMerchantPortalGui\Communication\Generator\CreatePyzProductUrlGeneratorInterface;
      */
-    public function createCreateProductUrlGenerator(): CreateProductUrlGeneratorInterface
+    public function createPyzCreateProductUrlGenerator(): CreatePyzProductUrlGeneratorInterface
     {
-        return new CreateProductUrlGenerator();
+        return new CreatePyzProductUrlGenerator();
     }
 }

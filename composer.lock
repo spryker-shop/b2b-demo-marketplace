@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4802d6c79153f68031057bfbf49b2204",
+    "content-hash": "5cdfe763269d1c6dc57ec7758d5d2091",
     "packages": [
         {
             "name": "async-aws/core",
@@ -2780,16 +2780,16 @@
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "3.0.10",
+            "version": "3.0.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "62fcc5a94ac83b1506f52d7558d828617fac9187"
+                "reference": "2f0b7af658cbea265cbb4a791d6c29a6613f98ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/62fcc5a94ac83b1506f52d7558d828617fac9187",
-                "reference": "62fcc5a94ac83b1506f52d7558d828617fac9187",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/2f0b7af658cbea265cbb4a791d6c29a6613f98ef",
+                "reference": "2f0b7af658cbea265cbb4a791d6c29a6613f98ef",
                 "shasum": ""
             },
             "require": {
@@ -2798,9 +2798,7 @@
                 "php": ">=5.6.1"
             },
             "require-dev": {
-                "phing/phing": "~2.7",
-                "phpunit/phpunit": "^5.7|^6.0|^9.4",
-                "squizlabs/php_codesniffer": "~2.0"
+                "phpunit/phpunit": "*"
             },
             "suggest": {
                 "ext-gmp": "Install the GMP (GNU Multiple Precision) extension in order to speed up arbitrary precision integer arithmetic operations.",
@@ -2869,6 +2867,10 @@
                 "x.509",
                 "x509"
             ],
+            "support": {
+                "issues": "https://github.com/phpseclib/phpseclib/issues",
+                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.14"
+            },
             "funding": [
                 {
                     "url": "https://github.com/terrafrost",
@@ -2883,7 +2885,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-08-16T04:24:45+00:00"
+            "time": "2022-04-04T05:15:45+00:00"
         },
         {
             "name": "predis/predis",
@@ -44891,6 +44893,9 @@
                 "proprietary"
             ],
             "description": "ProductSearch module",
+            "support": {
+                "source": "https://github.com/spryker/product-search/tree/5.15.0"
+            },
             "time": "2022-02-22T13:01:19+00:00"
         },
         {
@@ -65503,12 +65508,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-sdk/integrator.git",
-                "reference": "27aa0a2969fe607e899c1716483b2befeb96359e"
+                "reference": "6b313960be66b2b544b21a9410083dd1fb1d0577"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-sdk/integrator/zipball/27aa0a2969fe607e899c1716483b2befeb96359e",
-                "reference": "27aa0a2969fe607e899c1716483b2befeb96359e",
+                "url": "https://api.github.com/repos/spryker-sdk/integrator/zipball/6b313960be66b2b544b21a9410083dd1fb1d0577",
+                "reference": "6b313960be66b2b544b21a9410083dd1fb1d0577",
                 "shasum": ""
             },
             "require": {
@@ -65548,7 +65553,11 @@
                 "proprietary"
             ],
             "description": "Integrator module",
-            "time": "2022-04-11T12:54:35+00:00"
+            "support": {
+                "issues": "https://github.com/spryker-sdk/integrator/issues",
+                "source": "https://github.com/spryker-sdk/integrator/tree/master"
+            },
+            "time": "2022-04-22T12:47:22+00:00"
         },
         {
             "name": "spryker-sdk/phpstan-spryker",

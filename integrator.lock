@@ -4,6 +4,10 @@
       "cfecb5a72dda82e1f1e03fed32136607cbf24209": {
         "target": "\\Spryker\\Yves\\Twig\\TwigDependencyProvider::getTwigPlugins",
         "source": "\\SprykerShop\\Yves\\CatalogPage\\Plugin\\Twig\\CategoryFilterTwigPlugin"
+      },
+      "46bf287bbad4289fc39b5f594b0a6a01c8c6d49f": {
+        "target": "\\Spryker\\Yves\\Twig\\TwigDependencyProvider::getTwigPlugins",
+        "source": "\\SprykerShop\\Yves\\CatalogPage\\Plugin\\Twig\\CatalogPageTwigPlugin"
       }
     }
   },
@@ -1062,15 +1066,6 @@
       }
     }
   },
-  "Spryker.CompaniesRestApi": {
-    "wire-glue-relationship": {
-      "880a851dca0dcdb72819441bd428c12390ec2bab": {
-        "source": {
-          "\\Spryker\\Glue\\QuoteRequestsRestApi\\QuoteRequestsRestApiConfig::RESOURCE_QUOTE_REQUESTS": "\\Spryker\\Glue\\CompaniesRestApi\\Plugin\\GlueApplication\\CompanyByQuoteRequestResourceRelationshipPlugin"
-        }
-      }
-    }
-  },
   "Spryker.CompanyBusinessUnit": {
     "wire-plugin": {
       "4ec9bea4957752d741512145dd0d04f8be25a351": {
@@ -1164,15 +1159,6 @@
       "7aa93af3c9e4f302eb9b178680696cacb0ab1a42": {
         "target": "\\Spryker\\Zed\\CompanyUserStorage\\CompanyUserStorageDependencyProvider::getCompanyUserStorageExpanderPlugins",
         "source": "\\Spryker\\Zed\\CompanyBusinessUnitStorage\\Communication\\Plugin\\CompanyBusinessUnitCompanyUserStorageExpanderPlugin"
-      }
-    }
-  },
-  "Spryker.CompanyBusinessUnitsRestApi": {
-    "wire-glue-relationship": {
-      "11abf56f99b946c5ba55c1942c3d5d646b94ebb2": {
-        "source": {
-          "\\Spryker\\Glue\\QuoteRequestsRestApi\\QuoteRequestsRestApiConfig::RESOURCE_QUOTE_REQUESTS": "\\Spryker\\Glue\\CompanyBusinessUnitsRestApi\\Plugin\\GlueApplication\\CompanyBusinessUnitByQuoteRequestResourceRelationshipPlugin"
-        }
       }
     }
   },
@@ -1999,6 +1985,12 @@
       "678e705c51f200fc0597301aebf198c9a70b3955": {
         "target": "\\Spryker\\Glue\\EventDispatcher\\EventDispatcherDependencyProvider::getEventDispatcherPlugins",
         "source": "\\Spryker\\Glue\\Http\\Plugin\\EventDispatcher\\StrictTransportSecurityHeaderEventDispatcherPlugin"
+      }
+    },
+    "configure-env": {
+      "a024ab9b13f2ccd6262b65fbe9057e0c9b401163": {
+        "target": "\\Spryker\\Shared\\Http\\HttpConstants::URI_SIGNER_SECRET_KEY",
+        "value": "JDJ5JDEwJFE0cXBwYnVVTTV6YVZXSnVmM2l1UWVhRE94WkQ4UjBUeHBEWTNHZlFRTEd4U2F6QVBqejQ2"
       }
     }
   },
@@ -3001,6 +2993,14 @@
       "9eb0c76ac68bcfd2f7fd7e6ebc9ff182b5c98992": {
         "target": "\\Spryker\\Zed\\PriceProduct\\PriceProductDependencyProvider::getPriceProductDimensionExpanderStrategyPlugins",
         "source": "\\Spryker\\Zed\\PriceProductMerchantRelationship\\Communication\\Plugin\\PriceProduct\\MerchantRelationshipPriceProductDimensionExpanderStrategyPlugin"
+      },
+      "971f8d98f16bb55e8c9b2013b97da1165d6226c5": {
+        "target": "\\Spryker\\Service\\PriceProduct\\PriceProductDependencyProvider::getPreBuildPriceProductGroupKeyPlugins",
+        "source": "\\Spryker\\Service\\PriceProductMerchantRelationship\\Plugin\\PriceProduct\\MerchantRelationshipPreBuildPriceProductGroupKeyPlugin"
+      },
+      "7d39dc14d4aa780e809f0bbf30501b888df038d4": {
+        "target": "\\Spryker\\Zed\\PriceProduct\\PriceProductDependencyProvider::getPriceProductCollectionDeletePlugins",
+        "source": "\\Spryker\\Zed\\PriceProductMerchantRelationship\\Communication\\Plugin\\PriceProduct\\MerchantRelationshipPriceProductCollectionDeletePlugin"
       }
     }
   },
@@ -4142,6 +4142,16 @@
       "bcf5e5cbfa4d58a500ed626d93e00d0c258a86bf": {
         "target": "\\Spryker\\Zed\\Product\\ProductDependencyProvider::getProductConcreteAfterUpdatePlugins",
         "source": "\\Spryker\\Zed\\ProductSearch\\Communication\\Plugin\\ProductConcrete\\ProductSearchProductConcreteAfterUpdatePlugin"
+      },
+      "f816679e53a6472a72721e7f702195c71345d2cd": {
+        "target": "\\Spryker\\Zed\\Product\\ProductDependencyProvider::getProductConcreteExpanderPlugins",
+        "source": "\\Spryker\\Zed\\ProductSearch\\Communication\\Plugin\\ProductConcrete\\ProductSearchProductConcreteExpanderPlugin"
+      }
+    },
+    "unwire-plugin": {
+      "d25a195dc7b37c07d45381ec31a2fa278bbbe2d3": {
+        "target": "\\Spryker\\Zed\\Product\\ProductDependencyProvider::getProductConcreteReadPlugins",
+        "source": "\\Spryker\\Zed\\ProductSearch\\Communication\\Plugin\\ProductConcrete\\ProductSearchProductConcreteReadPlugin"
       }
     }
   },
@@ -4209,6 +4219,16 @@
       "6e383071e32960ed7f1c4d08c3760180c79ed8cc": {
         "target": "\\Spryker\\Zed\\Product\\ProductDependencyProvider::getProductConcreteAfterCreatePlugins",
         "source": "\\Spryker\\Zed\\ProductValidity\\Communication\\Plugin\\ProductValidityCreatePlugin"
+      },
+      "40b092af80806893971200efe5ad074050f507a7": {
+        "target": "\\Spryker\\Zed\\Product\\ProductDependencyProvider::getProductConcreteExpanderPlugins",
+        "source": "\\Spryker\\Zed\\ProductValidity\\Communication\\Plugin\\ProductValidityProductConcreteExpanderPlugin"
+      }
+    },
+    "unwire-plugin": {
+      "a3c63a81c9b09282db11958cf7567dd59bb52202": {
+        "target": "\\Spryker\\Zed\\Product\\ProductDependencyProvider::getProductConcreteReadPlugins",
+        "source": "\\Spryker\\Zed\\ProductValidity\\Communication\\Plugin\\ProductValidityReadPlugin"
       }
     }
   },
@@ -4226,6 +4246,11 @@
       "397a53b2f355b24080ba750d279dd6a364187d49": {
         "source": {
           "\\Spryker\\Glue\\ProductsRestApi\\ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS": "\\Spryker\\Glue\\ProductsRestApi\\Plugin\\GlueApplication\\ProductAbstractByProductAbstractSkuResourceRelationshipPlugin"
+        }
+      },
+      "87408ba1bd9412ac3897d196a08dfe9af6692c6d": {
+        "source": {
+          "\\Spryker\\Glue\\QuoteRequestsRestApi\\QuoteRequestsRestApiConfig::RESOURCE_QUOTE_REQUESTS": "\\Spryker\\Glue\\ProductsRestApi\\Plugin\\GlueApplication\\ConcreteProductByQuoteRequestResourceRelationshipPlugin"
         }
       }
     }
@@ -4419,6 +4444,22 @@
       "fef3acec2a78fdc022554cd044ab8c4ca429c48d": {
         "target": "\\Spryker\\Zed\\Sales\\SalesDependencyProvider::getOrderItemsPostSavePlugins",
         "source": "\\Spryker\\Zed\\SalesProductConnector\\Communication\\Plugin\\Sales\\ItemMetadataOrderItemsPostSavePlugin"
+      },
+      "3f61c778895c1172edc50ef5430dfaa8bf7d669a": {
+        "target": "\\Spryker\\Client\\Catalog\\CatalogDependencyProvider::getSortConfigTransferBuilderPlugins",
+        "source": "\\Spryker\\Client\\SalesProductConnector\\Plugin\\PopularitySortConfigTransferBuilderPlugin"
+      },
+      "2cc91062d7d3e540edef7166da7dd9d5bf25386d": {
+        "target": "\\Spryker\\Zed\\ProductPageSearch\\ProductPageSearchDependencyProvider::getDataLoaderPlugins",
+        "source": "\\Spryker\\Zed\\SalesProductConnector\\Communication\\Plugin\\ProductPageSearch\\ProductPopularityPageDataLoaderPlugin"
+      },
+      "ac860e362490086eb29fdcee105687a892525122": {
+        "target": "\\Spryker\\Zed\\ProductPageSearch\\ProductPageSearchDependencyProvider::getProductPageRefreshPlugins",
+        "source": "\\Spryker\\Zed\\SalesProductConnector\\Communication\\Plugin\\ProductPageSearch\\ProductListWasBoughtByIntervalPlugin"
+      },
+      "4058736ef75776d606921d7651dd8bb3277596fd": {
+        "target": "\\Spryker\\Zed\\ProductPageSearch\\ProductPageSearchDependencyProvider::getProductAbstractMapExpanderPlugins",
+        "source": "\\Spryker\\Zed\\SalesProductConnector\\Communication\\Plugin\\ProductPageSearch\\ProductPopularityMapExpanderPlugin"
       }
     }
   },
@@ -5299,6 +5340,10 @@
       "478dea500e11f71c01fced5e2a6264f927991935": {
         "target": "\\Spryker\\Yves\\Router\\RouterDependencyProvider::getRouteProvider",
         "source": "\\SprykerShop\\Yves\\CmsPage\\Plugin\\Router\\CmsPageRouteProviderPlugin"
+      },
+      "adb900646a6dab41a8e91d62bf9059f4d81d0f1e": {
+        "target": "\\Spryker\\Yves\\Twig\\TwigDependencyProvider::getTwigPlugins",
+        "source": "\\SprykerShop\\Yves\\CmsPage\\Plugin\\Twig\\CmsTwigPlugin"
       }
     }
   },
@@ -5497,6 +5542,14 @@
       "1caf67bedd7ad0f1fdf7fe2560112dfebae6998d": {
         "target": "\\Spryker\\Yves\\Router\\RouterDependencyProvider::getRouteProvider",
         "source": "\\SprykerShop\\Yves\\MerchantProductOfferWidget\\Plugin\\Router\\MerchantProductOfferWidgetRouteProviderPlugin"
+      },
+      "48d1124d24ee22ebaa56f96d7b1f266e94ac3c8b": {
+        "target": "\\SprykerShop\\Yves\\ProductSearchWidget\\ProductSearchWidgetDependencyProvider::getProductQuickAddFormExpanderPlugins",
+        "source": "\\SprykerShop\\Yves\\MerchantProductOfferWidget\\Plugin\\ProductSearchWidget\\MerchantProductOfferProductQuickAddFormExpanderPlugin"
+      },
+      "a212333991dc63f24cfc60b9f75fbe7e32488b01": {
+        "target": "\\SprykerShop\\Yves\\QuickOrderPage\\QuickOrderPageDependencyProvider::getQuickOrderFormExpanderPlugins",
+        "source": "\\SprykerShop\\Yves\\MerchantProductOfferWidget\\Plugin\\QuickOrderPage\\MerchantProductOfferQuickOrderFormExpanderPlugin"
       }
     },
     "wire-widget": {
@@ -5879,6 +5932,116 @@
       "769fedcd23f1771ac92fa408dfbda2181c4adb9c": {
         "target": "\\Spryker\\Yves\\Router\\RouterDependencyProvider::getRouterPlugins",
         "source": "\\SprykerShop\\Yves\\StorageRouter\\Plugin\\Router\\StorageRouterPlugin"
+      }
+    }
+  },
+  "Spryker.CompaniesRestApi": {
+    "wire-glue-relationship": {
+      "880a851dca0dcdb72819441bd428c12390ec2bab": {
+        "source": {
+          "\\Spryker\\Glue\\QuoteRequestsRestApi\\QuoteRequestsRestApiConfig::RESOURCE_QUOTE_REQUESTS": "\\Spryker\\Glue\\CompaniesRestApi\\Plugin\\GlueApplication\\CompanyByQuoteRequestResourceRelationshipPlugin"
+        }
+      }
+    }
+  },
+  "Spryker.CompanyBusinessUnitsRestApi": {
+    "wire-glue-relationship": {
+      "11abf56f99b946c5ba55c1942c3d5d646b94ebb2": {
+        "source": {
+          "\\Spryker\\Glue\\QuoteRequestsRestApi\\QuoteRequestsRestApiConfig::RESOURCE_QUOTE_REQUESTS": "\\Spryker\\Glue\\CompanyBusinessUnitsRestApi\\Plugin\\GlueApplication\\CompanyBusinessUnitByQuoteRequestResourceRelationshipPlugin"
+        }
+      }
+    }
+  },
+  "Spryker.ConfigurableBundleCartsRestApi": {
+    "wire-plugin": {
+      "062b3632d321d2531936b98d4cc151c39571a9c7": {
+        "target": "\\Spryker\\Glue\\CartsRestApi\\CartsRestApiDependencyProvider::getRestCartItemsAttributesMapperPlugins",
+        "source": "\\Spryker\\Glue\\ConfigurableBundleCartsRestApi\\Plugin\\CartsRestApi\\ConfiguredBundleItemsAttributesMapperPlugin"
+      }
+    }
+  },
+  "Spryker.ConfigurableBundlesRestApi": {
+    "wire-plugin": {
+      "d1e079a39cc49397bf4079ce8df5d626accbf044": {
+        "target": "\\Spryker\\Glue\\QuoteRequestsRestApi\\QuoteRequestsRestApiDependencyProvider::getRestQuoteRequestAttributesExpanderPlugins",
+        "source": "\\Spryker\\Glue\\ConfigurableBundlesRestApi\\Plugin\\QuoteRequestsRestApi\\ConfiguredBundleRestQuoteRequestAttributesExpanderPlugin"
+      }
+    }
+  },
+  "Spryker.GlueBackendApiApplication": {
+    "wire-plugin": {
+      "51fa5e10ebce4332b06a639148d22229e23cb922": {
+        "target": "\\Spryker\\Glue\\GlueApplication\\GlueApplicationDependencyProvider::getGlueApplicationBootstrapPlugins",
+        "source": "\\Spryker\\Glue\\GlueBackendApiApplication\\Plugin\\GlueApplication\\BackendApiGlueApplicationBootstrapPlugin"
+      }
+    }
+  },
+  "Spryker.GlueHttp": {
+    "wire-plugin": {
+      "f14a4bb33ba7817e397164b2722b97ff577c0aa6": {
+        "target": "\\Spryker\\Glue\\GlueApplication\\GlueApplicationDependencyProvider::getGlueContextExpanderPlugins",
+        "source": "\\Spryker\\Glue\\GlueHttp\\Plugin\\GlueContext\\HttpGlueContextExpanderPlugin"
+      }
+    }
+  },
+  "Spryker.GlueStorefrontApiApplication": {
+    "wire-plugin": {
+      "5e8540c4046dc8ee22c73ef28a1881b6ee9dc9c1": {
+        "target": "\\Spryker\\Glue\\GlueApplication\\GlueApplicationDependencyProvider::getGlueApplicationBootstrapPlugins",
+        "source": "\\Spryker\\Glue\\GlueStorefrontApiApplication\\Plugin\\StorefrontApiGlueApplicationBootstrapPlugin"
+      }
+    }
+  },
+  "Spryker.PriceProductMerchantRelationshipMerchantPortalGui": {
+    "wire-plugin": {
+      "959e2d590cf31941df79d07aed528a55d03c9c7e": {
+        "target": "\\Spryker\\Zed\\PriceProduct\\PriceProductDependencyProvider::getPriceProductValidatorPlugins",
+        "source": "\\Spryker\\Zed\\PriceProductMerchantRelationshipMerchantPortalGui\\Communication\\Plugin\\PriceProduct\\MerchantRelationshipVolumePriceProductValidatorPlugin"
+      },
+      "c91fd1d5937d8bf2d097271c766071baec2ca735": {
+        "target": "\\Spryker\\Zed\\ProductMerchantPortalGui\\ProductMerchantPortalGuiDependencyProvider::getPriceProductTableFilterPlugins",
+        "source": "\\Spryker\\Zed\\PriceProductMerchantRelationshipMerchantPortalGui\\Communication\\Plugin\\ProductMerchantPortalGui\\MerchantRelationshipPriceProductTableFilterPlugin"
+      },
+      "3893597e77395142adeca14602d85e097a84a358": {
+        "target": "\\Spryker\\Zed\\ProductMerchantPortalGui\\ProductMerchantPortalGuiDependencyProvider::getPriceProductAbstractTableConfigurationExpanderPlugins",
+        "source": "\\Spryker\\Zed\\PriceProductMerchantRelationshipMerchantPortalGui\\Communication\\Plugin\\ProductMerchantPortalGui\\MerchantRelationshipPriceProductAbstractTableConfigurationExpanderPlugin"
+      },
+      "9bf0ce05680989cf8417a9437d6613d7b6889c07": {
+        "target": "\\Spryker\\Zed\\ProductMerchantPortalGui\\ProductMerchantPortalGuiDependencyProvider::getPriceProductConcreteTableConfigurationExpanderPlugins",
+        "source": "\\Spryker\\Zed\\PriceProductMerchantRelationshipMerchantPortalGui\\Communication\\Plugin\\ProductMerchantPortalGui\\MerchantRelationshipPriceProductConcreteTableConfigurationExpanderPlugin"
+      },
+      "4c07cc99fba6744d2aaa0cab4f768620ecd29079": {
+        "target": "\\Spryker\\Zed\\ProductMerchantPortalGui\\ProductMerchantPortalGuiDependencyProvider::getPriceProductMapperPlugins",
+        "source": "\\Spryker\\Zed\\PriceProductMerchantRelationshipMerchantPortalGui\\Communication\\Plugin\\ProductMerchantPortalGui\\MerchantRelationshipPriceProductMapperPlugin"
+      }
+    }
+  },
+  "Spryker.QuoteRequestsRestApi": {
+    "wire-plugin": {
+      "67e4b9fbfcedb14aaa66a053a9171ad6b1f764d5": {
+        "target": "\\Spryker\\Glue\\GlueApplication\\GlueApplicationDependencyProvider::getResourceRoutePlugins",
+        "source": "\\Spryker\\Glue\\QuoteRequestsRestApi\\Plugin\\GlueApplication\\QuoteRequestReviseResourceRoutePlugin"
+      },
+      "6a78eb5d8afc0189996de59cd6bc9ced11a9d30a": {
+        "target": "\\Spryker\\Glue\\GlueApplication\\GlueApplicationDependencyProvider::getResourceRoutePlugins",
+        "source": "\\Spryker\\Glue\\QuoteRequestsRestApi\\Plugin\\GlueApplication\\QuoteRequestSendResourceRoutePlugin"
+      }
+    }
+  },
+  "Spryker.TaxMerchantPortalGui": {
+    "wire-plugin": {
+      "19c80a77cdfe66aac4b82b589ea86044177c54a5": {
+        "target": "\\Spryker\\Zed\\ProductMerchantPortalGui\\ProductMerchantPortalGuiDependencyProvider::getProductAbstractFormExpanderPlugins",
+        "source": "\\Spryker\\Zed\\TaxMerchantPortalGui\\Communication\\Plugin\\ProductMerchantPortalGui\\TaxProductAbstractFormExpanderPlugin"
+      }
+    }
+  },
+  "SprykerShop.PaymentPage": {
+    "wire-plugin": {
+      "0652faf2cc84c43ee05f54929267cfcbf48a175c": {
+        "target": "\\Spryker\\Yves\\Router\\RouterDependencyProvider::getRouteProvider",
+        "source": "\\SprykerShop\\Yves\\PaymentPage\\Plugin\\Router\\PaymentPageRouteProviderPlugin"
       }
     }
   }
