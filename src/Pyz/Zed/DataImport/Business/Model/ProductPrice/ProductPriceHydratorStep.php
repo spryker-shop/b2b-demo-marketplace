@@ -78,9 +78,6 @@ class ProductPriceHydratorStep implements DataImportStepInterface
      */
     public const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
 
-    /**
-     * @var int
-     */
     public const KEY_DEFAULT_PRICE_MODE_CONFIGURATION = 2;
 
     /**
