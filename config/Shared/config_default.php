@@ -269,8 +269,8 @@ $config[AclConstants::ACL_DEFAULT_RULES] = [
     ],
     [
         'bundle' => 'security-merchant-portal-gui',
-        'controller' => 'login',
-        'action' => 'index',
+        'controller' => '*',
+        'action' => '*',
         'type' => 'allow',
     ],
 ];
