@@ -163,6 +163,7 @@ $config[KernelConstants::DOMAIN_WHITELIST] = array_merge($trustedHosts, [
     $sprykerFrontendHost,
     'threedssvc.pay1.de', // trusted Payone domain
     'www.sofort.com', // trusted Payone domain
+    getenv('APPS_ZED_HOST'),
 ]);
 $config[KernelConstants::STRICT_DOMAIN_REDIRECT] = true;
 

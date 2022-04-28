@@ -15,9 +15,6 @@ sections:
         router-cache-warmup-backend-gateway:
             command: 'vendor/bin/console router:cache:warm-up:backend-gateway'
 
-        router-cache-warmup-merchant-portal:
-            command: 'vendor/bin/console router:cache:warm-up:merchant-portal'
-
         twig-cache-warmup:
             command: 'vendor/bin/console twig:cache:warmer'
 
@@ -42,6 +39,20 @@ sections:
         translator-generate-cache:
             command: 'vendor/bin/console translator:generate-cache'
 
+        # app-store-suite
+        app-store-suite-composer-dependencies:
+            command: 'bash config/install/bin/app-store-suite.sh composer install -o'
+
+        app-store-suite-build:
+            command: 'bash config/install/bin/app-store-suite.sh vendor/bin/install -r docker -s build'
+
+        # registry-service
+        registry-service-composer-dependencies:
+            command: 'bash config/install/bin/registry-service.sh composer install -o'
+
+        registry-service-build:
+            command: 'bash config/install/bin/registry-service.sh vendor/bin/install -r docker -s build'
+
     build-production:
         excluded: true
         cache-class-resolver-build:
@@ -60,13 +71,32 @@ sections:
         rest-api-generate-documentation:
             command: 'vendor/bin/console rest-api:generate:documentation'
 
-    build-static:
-        merchant-portal-install-dependencies:
-            command: 'console frontend:mp:install-dependencies | tail -100 && echo "Output trimmed, only last 100 lines shown."'
+        # app-store-suite
+        app-store-suite-build-development:
+            command: 'bash config/install/bin/app-store-suite.sh vendor/bin/install -r docker -s build-development'
 
+        # registry-service
+        registry-service-build:
+            command: 'bash config/install/bin/registry-service.sh vendor/bin/install -r docker -s build-development'
+
+    build-static:
         zed-install-dependencies:
             command: 'vendor/bin/console frontend:zed:install-dependencies'
 
+        dependencies-install:
+            command: 'vendor/bin/console frontend:project:install-dependencies'
+
+        yves-install-dependencies:
+            command: 'vendor/bin/console frontend:yves:install-dependencies'
+
+        # app-store-suite
+        app-store-suite-build-static:
+            command: 'bash config/install/bin/app-store-suite.sh vendor/bin/install -r docker -s build-static'
+
+        # registry-service
+        registry-service-build-static:
+            command: 'bash config/install/bin/registry-service.sh vendor/bin/install -r docker -s build-static'
+            timeout: 1200
 
     build-static-production:
         excluded: true
@@ -76,10 +106,13 @@ sections:
         zed-build-frontend:
             command: 'vendor/bin/console frontend:zed:build -e production'
 
-        merchant-portal-build-frontend:
-            command: 'vendor/bin/console frontend:mp:build -e production'
-            timeout: 1600
+        # app-store-suite
+        app-store-suite-build-static-development:
+            command: 'bash config/install/bin/app-store-suite.sh vendor/bin/install -r docker -s build-static-development'
 
+        # registry-service
+        registry-service-build-static-development:
+            command: 'bash config/install/bin/registry-service.sh vendor/bin/install -r docker -s build-static-development'
 
     build-static-development:
         yves-build-frontend:
@@ -88,14 +121,13 @@ sections:
         zed-build-frontend:
             command: 'vendor/bin/console frontend:zed:build'
 
-        merchant-portal-build-frontend:
-            command: 'vendor/bin/console frontend:mp:build'
-            timeout: 1600
-
-
     scheduler-setup:
         jenkins-setup:
             command: 'vendor/bin/console scheduler:setup'
+
+        # app-store-suite
+        app-store-suite-jenkins-setup:
+            command: 'bash config/install/bin/app-store-suite.sh vendor/bin/install -r docker -s scheduler-setup'
 
     scheduler-suspend:
         excluded: true
@@ -108,39 +140,70 @@ sections:
             command: 'vendor/bin/console scheduler:clean'
 
     init-storages-per-store:
+        # app-store-suite | registry-service
+        external-init-storages-per-store:
+            command: 'bash config/install/bin/external-region-install.sh -r docker -s init-storages-per-store'
+
         queue-setup:
-            command: 'vendor/bin/console queue:setup'
+            command: 'bash config/install/bin/internal-region-console.sh queue:setup'
         setup-search-create-sources:
-            command: 'vendor/bin/console search:setup:sources'
+            command: 'bash config/install/bin/internal-region-console.sh search:setup:sources'
 
     init-storages-per-region:
+        # It's only for AOP local development setup
+        create-sqs-queues:
+            command: 'bash config/install/bin/internal-region-console.sh message-broker:aws-sqs:create-queues'
+
+        # It's only for AOP local development setup
+        create-sns-topics:
+            command: 'bash config/install/bin/internal-region-console.sh message-broker:aws-sns:create-topics'
+
+        # It's only for AOP local development setup
+        create-sns-subscriptions:
+            command: 'bash config/install/bin/internal-region-console.sh message-broker:aws-sqs:subscribe-sqs-to-sns'
+
+        # app-store-suite | registry-service
+        external-init-storages-per-region:
+            command: 'bash config/install/bin/external-region-install.sh -r docker -s init-storages-per-region'
+
         propel-copy-schema:
-            command: 'vendor/bin/console propel:schema:copy'
+            command: 'bash config/install/bin/internal-region-console.sh propel:schema:copy'
 
         propel-postgres-compatibility:
-            command: 'vendor/bin/console propel:pg-sql-compat'
+            command: 'bash config/install/bin/internal-region-console.sh propel:pg-sql-compat'
 
         propel-migration-delete:
-            command: 'vendor/bin/console propel:migration:delete'
+            command: 'bash config/install/bin/internal-region-console.sh propel:migration:delete'
 
         propel-tables-drop:
-            command: 'vendor/bin/console propel:tables:drop'
+            command: 'bash config/install/bin/internal-region-console.sh propel:tables:drop'
 
         propel-diff:
-            command: 'vendor/bin/console propel:diff'
+            command: 'bash config/install/bin/internal-region-console.sh propel:diff'
 
         propel-migrate:
-            command: 'vendor/bin/console propel:migrate'
+            command: 'bash config/install/bin/internal-region-console.sh propel:migrate'
 
         propel-migration-cleanup:
-            command: 'vendor/bin/console propel:migration:delete'
+            command: 'bash config/install/bin/internal-region-console.sh propel:migration:delete'
 
         init-database:
-            command: 'vendor/bin/console setup:init-db'
+            command: 'bash config/install/bin/internal-region-console.sh setup:init-db'
 
+        # registry-service localstack section execution
+        registry-service-localstack:
+            command: 'bash config/install/bin/external-region-install.sh -r docker -s localstack'
+
+        # This command currently works not properly at app-store-suite (It is not ready to work with current registry-service)
+        # pbc-registration:
+        #     command: 'bash config/install/bin/internal-region-console.sh pbc:app:registration'
     demodata:
         import-demodata:
-            command: 'vendor/bin/console data:import --config=data/import/local/full_${SPRYKER_REGION}.yml'
+            command: 'bash config/install/bin/internal-region-console.sh data:import --config=data/import/local/full_${SPRYKER_REGION}.yml'
 
         update-product-labels:
-            command: 'vendor/bin/console product-label:relations:update'
+            command: 'bash config/install/bin/internal-region-console.sh product-label:relations:update'
+
+        # app-store-suite | registry-service
+        external-demodata:
+            command: 'bash config/install/bin/external-region-install.sh -r docker -s demodata'

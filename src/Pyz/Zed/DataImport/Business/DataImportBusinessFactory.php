@@ -243,13 +243,20 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
      */
     public function createStoreImporter(DataImportConfigurationActionTransfer $dataImportConfigurationActionTransfer): DataImporterInterface
     {
+        $allowedStores = Store::getInstance()->getAllowedStores();
+        $filteredAllowedStores = array_intersect(
+            $allowedStores,
+            ['DE', 'AT', 'US'], // only real suite-nonsplit stores must be imported
+        );
+
         /** @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterInterface $dataImporter */
         $dataImporter = $this->createDataImporter(
             $dataImportConfigurationActionTransfer->getDataEntity(),
             new StoreReader(
                 $this->createDataSet(
                     Store::getInstance()->getAllowedStores()
-                )
+                ),
+                $this->createDataSet($filteredAllowedStores),
             )
         );
 

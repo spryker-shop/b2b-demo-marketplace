@@ -10,8 +10,36 @@ image:
         enabled-extensions:
             - blackfire
     environment:
+        AWS_ACCOUNT_ID: '000000000000'
+        AWS_ACCESS_KEY_ID: test
+        AWS_SECRET_ACCESS_KEY: test
+        AWS_DEFAULT_REGION: eu-central-1
+        AWS_ENDPOINT: http://localhost.localstack.cloud:4566
+        AWS_SNS_VERSION: '2010-03-31'
+
+        #AOP
+        SPRYKER_AOP_IDP_URL: http://backoffice.registry.spryker.local/dummy-endpoint/auth-token
+        SPRYKER_AOP_CLIENT_ID: aop_client_id
+        SPRYKER_AOP_CLIENT_SECRET: aop_client_secret
+        SPRYKER_AOP_CLIENT_AUDIENCE: aop_api_audience
+        APP_CATALOG_SCRIPT_URL: http://yves.registry.spryker.local/loader
+        APPS_ZED_HOST: 'apps.spryker.local'
         STORE_NAME_REFERENCE_MAP: '{"DE":"dev-DE","AT":"dev-AT","US":"dev-US"}'
 
+        # RegistryService
+        ASSET_PUBLIC_DOMAIN: http://app-assets.localhost.localstack.cloud:4566
+        PUBLIC_REGISTRY_SERVICE_YVES_FOLDER: ../public/RegistryServiceYves/
+        APP_STORE_SUITE_ENDPOINT: http://apps.spryker.local
+        AWS_S3_ASSETS_BUCKET: app-assets
+        AWS_SECRETS_MANAGER_ENDPOINT: http://localhost.localstack.cloud:4566
+
+        # Application Store Suite
+        PUBLIC_APP_STORE_SUITE_FOLDER: ../public/Apps/
+        APP_REGISTRATION_URL: http://glue.registry.spryker.local/apps
+        # Got this UUIDs from dataImport
+        AOP_PAYONE_APP_IDENTIFIER: '098aa300-2e3d-5a32-89c6-d79c45f15cd4'
+        AOP_BAZAAR_VOICE_APP_IDENTIFIER: 'b72fa702-7d8e-5d14-92b9-b8c9ad9c7066'
+        AOP_USERCENTRICS_APP_IDENTIFIER: '804ebe5b-00f5-5121-9f90-29301d033dbb'
 composer:
     mode: ''
     autoload: ''
@@ -58,6 +86,36 @@ regions:
                         namespace: 3
                     search:
                         namespace: us_search
+    app-store-suite:
+        services:
+            database:
+                database: app-store-suite-docker
+                username: spryker
+                password: secret
+        stores:
+            GLOBAL:
+                services:
+                    broker:
+                        namespace: app-store-suite-broker
+                    key_value_store:
+                        namespace: 8
+                    search:
+                        namespace: app-store-suite-search
+    registry-service:
+        services:
+            database:
+                database: registry-service-docker
+                username: spryker
+                password: secret
+        stores:
+            REGISTRY:
+                services:
+                    broker:
+                        namespace: registry-service-broker
+                    key_value_store:
+                        namespace: 9
+                    search:
+                        namespace: registry-service-search
 groups:
     EU:
         region: EU
@@ -99,7 +157,7 @@ groups:
                     glue.at.spryker.local:
                         store: AT
             backoffice_eu:
-                application: backoffice
+                application: zed
                 endpoints:
                     backoffice.de.spryker.local:
                         store: DE
@@ -112,7 +170,7 @@ groups:
                             session:
                                 namespace: 4
             backend_gateway_eu:
-                application: backend-gateway
+                application: zed
                 endpoints:
                     backend-gateway.de.spryker.local:
                         store: DE
@@ -125,10 +183,8 @@ groups:
                 endpoints:
                     backend-api.de.spryker.local:
                         store: DE
-                        entry-point: BackendApi
                     backend-api.at.spryker.local:
                         store: AT
-                        entry-point: BackendApi
     US:
         region: US
         applications:
@@ -155,7 +211,7 @@ groups:
                     glue.us.spryker.local:
                         store: US
             backoffice_us:
-                application: backoffice
+                application: zed
                 endpoints:
                     zed.us.spryker.local:
                         store: US
@@ -163,7 +219,7 @@ groups:
                             session:
                                 namespace: 6
             backend_gateway_us:
-                application: backend-gateway
+                application: zed
                 endpoints:
                     backend-gateway.us.spryker.local:
                         store: US
@@ -172,6 +228,49 @@ groups:
                 endpoints:
                     backend-api.us.spryker.local:
                         store: US
+    app-store-suite:
+        region: app-store-suite
+        applications:
+            app_store_suite_zed:
+                application: zed
+                endpoints:
+                    # project/config/install/bin/app-store-suite.sh:7
+                    apps.spryker.local:
+                        entry-point: Apps
+                        store: GLOBAL
+                        services:
+                            session:
+                                namespace: 8
+    registry-service:
+        region: registry-service
+        applications:
+            registry_service_backoffice:
+                application: zed
+                endpoints:
+                    # project/config/install/bin/registry-service.sh:7
+                    backoffice.registry.spryker.local:
+                        entry-point: RegistryServiceBackoffice
+                        store: REGISTRY
+                        services:
+                            session:
+                                namespace: 9
+            registry_service_yves:
+                application: yves
+                endpoints:
+                    # project/config/install/bin/registry-service.sh:8
+                    yves.registry.spryker.local:
+                        entry-point: RegistryServiceYves
+                        store: REGISTRY
+                        services:
+                            session:
+                                namespace: 10
+            registry_service_glue:
+                application: glue
+                endpoints:
+                    # project/config/install/bin/registry-service.sh:9
+                    glue.registry.spryker.local:
+                        entry-point: RegistryServiceGlue
+                        store: REGISTRY
 services:
     database:
         engine: mysql
@@ -251,3 +350,6 @@ docker:
         mutagen:
             platforms:
                 - macos
+    compose:
+        yamls:
+            docker-services/aws.localstack.docker-compose.yml

@@ -11,7 +11,9 @@ use Spryker\Zed\Router\Communication\Plugin\Router\BackendGatewayRouterPlugin;
 use Spryker\Zed\Router\Communication\Plugin\Router\BackofficeRouterPlugin;
 use Spryker\Zed\Router\Communication\Plugin\Router\MerchantPortalRouterPlugin;
 use Spryker\Zed\Router\RouterDependencyProvider as SprykerRouterDependencyProvider;
-
+use Spryker\Zed\Router\Communication\Plugin\Router\RouterEnhancer\BackwardsCompatibleUrlRouterEnhancerPlugin;
+use Spryker\Zed\Router\Communication\Plugin\Router\ZedDevelopmentRouterPlugin;
+use Spryker\Zed\Router\Communication\Plugin\Router\ZedRouterPlugin;
 class RouterDependencyProvider extends SprykerRouterDependencyProvider
 {
     /**
@@ -49,6 +51,25 @@ class RouterDependencyProvider extends SprykerRouterDependencyProvider
     {
         return [
             new MerchantPortalRouterPlugin(),
+        ];
+    }
+
+    protected function getRouterPlugins(): array
+    {
+        return [
+            new ZedRouterPlugin(),
+            // This router will only be hit, when no other router was able to match/generate.
+            new ZedDevelopmentRouterPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\Router\Communication\Plugin\Router\RouterEnhancer\BackwardsCompatibleUrlRouterEnhancerPlugin>
+     */
+    protected function getRouterEnhancerPlugins(): array
+    {
+        return [
+            new BackwardsCompatibleUrlRouterEnhancerPlugin(),
         ];
     }
 }

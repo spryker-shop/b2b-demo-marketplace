@@ -1418,6 +1418,8 @@
         "phpstan-setup": "vendor/bin/console dev:ide-auto-completion:generate",
         "prefer-mid": [
             "COMPOSER_MEMORY_LIMIT=-1 composer require twig/twig:\"^2.9.0\""
-        ]
+        ],
+        "rector": "vendor/bin/rector process src/Pyz/ --config architector.php --ansi",
+        "rector-ci": "vendor/bin/rector process src/Pyz/ --config architector.php --ansi --dry-run"
     }
 }

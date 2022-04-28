@@ -1,9 +1,9 @@
 <?php
 
 use Monolog\Logger;
-use Spryker\Shared\AppCatalogGui\AppCatalogGuiConstants;
+use Pyz\Shared\Console\ConsoleConstants;
+use Spryker\Shared\Api\ApiConstants;
 use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Shared\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConstants;
 use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\ApiDebugErrorRenderer;
@@ -14,20 +14,12 @@ use Spryker\Shared\Event\EventConstants;
 use Spryker\Shared\GlueApplication\GlueApplicationConstants;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Log\LogConstants;
-use Spryker\Shared\MerchantPortalApplication\MerchantPortalConstants;
-use Spryker\Shared\Newsletter\NewsletterConstants;
-use Spryker\Shared\OauthClient\OauthClientConstants;
-use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Shared\PropelOrm\PropelOrmConstants;
 use Spryker\Shared\Queue\QueueConfig;
 use Spryker\Shared\Queue\QueueConstants;
-use Spryker\Shared\Router\RouterConstants;
-use Spryker\Shared\Session\SessionConstants;
-use Spryker\Shared\Testify\TestifyConstants;
 use Spryker\Shared\WebProfiler\WebProfilerConstants;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
-use Spryker\Zed\OauthDummy\OauthDummyConfig;
 use SprykerShop\Shared\CalculationPage\CalculationPageConstants;
 use SprykerShop\Shared\ErrorPage\ErrorPageConstants;
 use SprykerShop\Shared\ShopApplication\ShopApplicationConstants;
@@ -43,10 +35,14 @@ use SprykerShop\Shared\WebProfilerWidget\WebProfilerWidgetConstants;
 
 // >>> Debug
 
+$config[KernelConstants::RESOLVABLE_CLASS_NAMES_CACHE_ENABLED] = false;
+$config[KernelConstants::RESOLVED_INSTANCE_CACHE_ENABLED] = false;
+
 $config[ApplicationConstants::ENABLE_APPLICATION_DEBUG]
     = $config[ShopApplicationConstants::ENABLE_APPLICATION_DEBUG]
     = (bool)getenv('SPRYKER_DEBUG_ENABLED');
 
+$config[ApiConstants::ENABLE_API_DEBUG] = (bool)getenv('SPRYKER_DEBUG_ENABLED');
 $config[PropelConstants::PROPEL_DEBUG] = (bool)getenv('SPRYKER_DEBUG_PROPEL_ENABLED');
 $config[CalculationPageConstants::ENABLE_CART_DEBUG] = (bool)getenv('SPRYKER_DEBUG_ENABLED');
 $config[ErrorPageConstants::ENABLE_ERROR_404_STACK_TRACE] = (bool)getenv('SPRYKER_DEBUG_ENABLED');
@@ -57,10 +53,11 @@ $config[GlueApplicationConstants::GLUE_APPLICATION_REST_DEBUG] = (bool)getenv('S
 if (interface_exists(WebProfilerConstants::class, true)) {
     $config[WebProfilerConstants::IS_WEB_PROFILER_ENABLED]
         = $config[WebProfilerWidgetConstants::IS_WEB_PROFILER_ENABLED]
-        = false;
+        = (getenv('SPRYKER_DEBUG_ENABLED') && !getenv('SPRYKER_TESTING_ENABLED'));
 }
 $config[KernelConstants::ENABLE_CONTAINER_OVERRIDING] = (bool)getenv('SPRYKER_TESTING_ENABLED');
 $config[DocumentationGeneratorRestApiConstants::ENABLE_REST_API_DOCUMENTATION_GENERATION] = true;
+$config[ConsoleConstants::ENABLE_DEVELOPMENT_CONSOLE_COMMANDS] = false;
 
 // >>> Error handler
 
@@ -89,74 +86,6 @@ $config[LogConstants::LOG_LEVEL] = getenv('SPRYKER_DEBUG_ENABLED') ? Logger::INF
 $config[ZedRequestConstants::TRANSFER_DEBUG_SESSION_FORWARD_ENABLED] = (bool)getenv('SPRYKER_DEBUG_ENABLED');
 $config[ZedRequestConstants::SET_REPEAT_DATA] = (bool)getenv('SPRYKER_DEBUG_ENABLED');
 
-if (!getenv('SPRYKER_SSL_ENABLE')) {
-// ----------------------------------------------------------------------------
-// ------------------------------ SECURITY ------------------------------------
-// ----------------------------------------------------------------------------
-
-    $config[SessionConstants::ZED_SSL_ENABLED]
-        = $config[SessionConstants::YVES_SSL_ENABLED]
-        = $config[RouterConstants::YVES_IS_SSL_ENABLED]
-        = $config[RouterConstants::ZED_IS_SSL_ENABLED]
-        = $config[ApplicationConstants::ZED_SSL_ENABLED]
-        = $config[ApplicationConstants::YVES_SSL_ENABLED]
-        = false;
-
-// ----------------------------------------------------------------------------
-// ------------------------------ BACKOFFICE ----------------------------------
-// ----------------------------------------------------------------------------
-
-    $backofficePort = (int)(getenv('SPRYKER_BE_PORT')) ?: 80;
-    $config[ApplicationConstants::BASE_URL_ZED] = sprintf(
-        'http://%s%s',
-        getenv('SPRYKER_BE_HOST'),
-        $backofficePort !== 80 ? ':' . $backofficePort : ''
-    );
-
-// ----------------------------------------------------------------------------
-// ------------------------------ MERCHANT PORTAL -----------------------------
-// ----------------------------------------------------------------------------
-
-    $merchantPortalPort = (int)(getenv('SPRYKER_MP_PORT')) ?: 80;
-    $config[MerchantPortalConstants::BASE_URL_MP] = sprintf(
-        'http://%s%s',
-        getenv('SPRYKER_MP_HOST'),
-        $merchantPortalPort !== 80 ? ':' . $merchantPortalPort : '',
-    );
-
-// ----------------------------------------------------------------------------
-// ------------------------------ FRONTEND ------------------------------------
-// ----------------------------------------------------------------------------
-
-    $yvesHost = getenv('SPRYKER_FE_HOST');
-    $yvesPort = (int)(getenv('SPRYKER_FE_PORT')) ?: 80;
-    $config[ApplicationConstants::BASE_URL_YVES]
-        = $config[CustomerConstants::BASE_URL_YVES]
-        = $config[ProductManagementConstants::BASE_URL_YVES]
-        = $config[NewsletterConstants::BASE_URL_YVES]
-        = sprintf(
-            'http://%s%s',
-            $yvesHost,
-            $yvesPort !== 80 ? ':' . $yvesPort : ''
-        );
-
-// ----------------------------------------------------------------------------
-// ------------------------------ API -----------------------------------------
-// ----------------------------------------------------------------------------
-
-    $glueHost = getenv('SPRYKER_API_HOST') ?: 'localhost';
-    $gluePort = (int)(getenv('SPRYKER_API_PORT')) ?: 80;
-    $config[GlueApplicationConstants::GLUE_APPLICATION_DOMAIN] = sprintf(
-        'http://%s%s',
-        $glueHost,
-        $gluePort !== 80 ? ':' . $gluePort : ''
-    );
-
-    if (class_exists(TestifyConstants::class, true)) {
-        $config[TestifyConstants::GLUE_APPLICATION_DOMAIN] = $config[GlueApplicationConstants::GLUE_APPLICATION_DOMAIN];
-    }
-}
-
 // ----------------------------------------------------------------------------
 // ------------------------------ OMS -----------------------------------------
 // ----------------------------------------------------------------------------
@@ -164,14 +93,9 @@ if (!getenv('SPRYKER_SSL_ENABLE')) {
 require 'common/config_oms-development.php';
 
 // ----------------------------------------------------------------------------
-// ------------------------------ OAUTH ---------------------------------------
-// ----------------------------------------------------------------------------
-$config[OauthClientConstants::OAUTH_PROVIDER_NAME_FOR_MESSAGE_BROKER] = OauthDummyConfig::PROVIDER_NAME;
-$config[OauthClientConstants::OAUTH_PROVIDER_NAME_FOR_PAYMENT_AUTHORIZE] = OauthDummyConfig::PROVIDER_NAME;
-$config[AppCatalogGuiConstants::OAUTH_PROVIDER_NAME] = OauthDummyConfig::PROVIDER_NAME;
-
-// ----------------------------------------------------------------------------
-// ------------------------------ MessageBroker -------------------------------
+// ------------------------------ PAYMENTS ------------------------------------
 // ----------------------------------------------------------------------------
 
-require 'common/config_message-broker-development.php';
+// >>> PAYONE
+
+require 'common/config_payone-development.php';

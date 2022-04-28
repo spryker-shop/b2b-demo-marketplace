@@ -1,0 +1,223 @@
+version: "0.1"
+
+x-real-ip: &real-ip
+    real-ip:
+        from:
+            - 10.0.0.0/8 # AWS VPC network
+            - 103.21.244.0/22 # Cloudflare
+            - 103.22.200.0/22 # Cloudflare
+            - 103.31.4.0/22 # Cloudflare
+            - 104.16.0.0/12 # Cloudflare
+            - 108.162.192.0/18 # Cloudflare
+            - 131.0.72.0/22 # Cloudflare
+            - 141.101.64.0/18 # Cloudflare
+            - 162.158.0.0/15 # Cloudflare
+            - 172.64.0.0/13 # Cloudflare
+            - 173.245.48.0/20 # Cloudflare
+            - 188.114.96.0/20 # Cloudflare
+            - 190.93.240.0/20 # Cloudflare
+            - 197.234.240.0/22 # Cloudflare
+            - 198.41.128.0/17 # Cloudflare
+            - 2400:cb00::/32 # Cloudflare
+            - 2606:4700::/32 # Cloudflare
+            - 2803:f800::/32 # Cloudflare
+            - 2405:b500::/32 # Cloudflare
+            - 2405:8100::/32 # Cloudflare
+            - 2c0f:f248::/32 # Cloudflare
+            - 2a06:98c0::/29 # Cloudflare
+
+x-frontend-auth: &frontend-auth
+    <<: *real-ip
+    auth:
+        engine: basic
+        users:
+            - username: cloud # must be changed
+              password: cloud # must be changed
+        exclude:
+            - '${ALLOWED_IP}' # AWS gateway
+            - 185.60.20.0/24 # PayOne
+
+namespace: spryker-cloud
+tag: '1.0'
+
+environment: docker.prod
+pipeline: docker.prod
+image:
+    tag: spryker/php:7.4
+    environment:
+        SPRYKER_HOOK_BEFORE_DEPLOY: "vendor/bin/install -r pre-deploy -vvv"
+        SPRYKER_HOOK_AFTER_DEPLOY: "true"
+        SPRYKER_HOOK_INSTALL: "vendor/bin/install -r production --no-ansi -vvv"
+        SPRYKER_HOOK_DESTRUCTIVE_INSTALL: "vendor/bin/install -r destructive --no-ansi -vvv"
+        #AOP
+        SPRYKER_AOP_IDP_URL: https://dev-163i904u.us.auth0.com/oauth/token
+        SPRYKER_AOP_CLIENT_AUDIENCE: atrs
+        APP_CATALOG_SCRIPT_URL: https://www.trs-staging.demo-spryker.com/loader
+        STORE_NAME_REFERENCE_MAP: '{"DE":"AOP_Demo_Testing-DE","AT":"AOP_Demo_Testing-AT","US":"dummy-US"}'
+        # An example of config structure for cloud setting
+        SPRYKER_CHANNEL_TO_TRANSPORT_MAP: '{"payment":"sqs","assets":"sqs"}'
+        SPRYKER_CHANNEL_TO_RECEIVER_TRANSPORT_MAP: '{"payment":"sqs","assets":"sqs"}'
+        SPRYKER_CHANNEL_TO_SENDER_TRANSPORT_MAP: '{"payment": "sns", "assets":"sns"}'
+        SPRYKER_MESSAGE_TO_CHANNEL_MAP: '{
+          "Generated\\Shared\\Transfer\\PaymentMethodTransfer":"payment",
+          "Generated\\Shared\\Transfer\\PaymentMethodAddedTransfer":"payment",
+          "Generated\\Shared\\Transfer\\PaymentCancelReservationRequestedTransfer":"payment",
+          "Generated\\Shared\\Transfer\\PaymentConfirmationRequestedTransfer":"payment",
+          "Generated\\Shared\\Transfer\\PaymentRefundRequestedTransfer":"payment",
+          "Generated\\Shared\\Transfer\\PaymentMethodDeletedTransfer":"payment",
+          "Generated\\Shared\\Transfer\\PaymentPreauthorizedTransfer":"payment",
+          "Generated\\Shared\\Transfer\\PaymentPreauthorizationFailedTransfer":"payment",
+          "Generated\\Shared\\Transfer\\PaymentConfirmedTransfer":"payment",
+          "Generated\\Shared\\Transfer\\PaymentConfirmationFailedTransfer":"payment",
+          "Generated\\Shared\\Transfer\\PaymentRefundedTransfer":"payment",
+          "Generated\\Shared\\Transfer\\PaymentRefundFailedTransfer":"payment",
+          "Generated\\Shared\\Transfer\\PaymentReservationCanceledTransfer":"payment",
+          "Generated\\Shared\\Transfer\\PaymentCancelReservationFailedTransfer":"payment",
+          "Generated\\Shared\\Transfer\\AssetAddedTransfer":"assets",
+          "Generated\\Shared\\Transfer\\AssetUpdatedTransfer":"assets",
+          "Generated\\Shared\\Transfer\\AssetDeletedTransfer":"assets"
+      }'
+        SPRYKER_MESSAGE_BROKER_SQS_RECEIVER_CONFIG: '{
+          "default": {
+              "endpoint":"https:\/\/sqs.eu-central-1.amazonaws.com",
+              "auto_setup":false,
+              "buffer_size":1
+          },
+          "DE": {
+              "queue_name":"tenant_messages_for_store_reference_AOP_Demo_Testing-DE.fifo"
+          },
+          "AT": {
+              "queue_name":"tenant_messages_for_store_reference_AOP_Demo_Testing-AT.fifo"
+          }
+      }'
+        SPRYKER_MESSAGE_BROKER_SNS_SENDER_CONFIG: '{
+          "endpoint":"https:\/\/sns.eu-central-1.amazonaws.com",
+          "topic":"arn:aws:sns:eu-central-1:054004971898:tenant-sender-topic-testing.fifo"
+      }'
+
+composer:
+    mode: --no-dev
+    autoload: --classmap-authoritative
+
+assets:
+    image: fholzer/nginx-brotli:v1.18.0
+    mode: production
+    compression:
+        brotli:
+            static: only
+        gzip:
+            static: true
+            level: 5
+
+regions:
+    EU:
+        services:
+            mail:
+                sender:
+                    name: Spryker No-Reply
+                    email: no-reply@app-store-staging.demo-spryker.com
+            database:
+                database: spryker_appstore_stage #Example: customer_staging
+                username: spryker
+                password: secret
+
+        stores:
+            DE:
+                services:
+                    broker:
+                        namespace: appstore_staging_de_queue
+                    key_value_store:
+                        namespace: 41
+                    search:
+                        namespace: appstore_staging_de_search
+                    session:
+                        namespace: 42
+            AT:
+                services:
+                    broker:
+                        namespace: appstore_staging_at_queue
+                    key_value_store:
+                        namespace: 41
+                    search:
+                        namespace: appstore_staging_at_search
+                    session:
+                        namespace: 42
+
+groups:
+    EU:
+        region: EU
+        applications:
+            Yves:
+                application: yves
+                endpoints:
+                    www.de.app-store-staging.demo-spryker.com:
+                        store: DE
+                    www.at.app-store-staging.demo-spryker.com:
+                        store: AT
+            Zed:
+                application: zed
+                endpoints:
+                    os.de.app-store-staging.demo-spryker.com:
+                        store: DE
+                    os.at.app-store-staging.demo-spryker.com:
+                        store: AT
+            Glue:
+                application: glue
+                endpoints:
+                    glue.de.app-store-staging.demo-spryker.com:
+                        store: DE
+                    glue.at.app-store-staging.demo-spryker.com:
+                        store: AT
+
+services:
+    database:
+        engine: mysql
+        version: mariadb-10.4
+        root:
+            username: "root"
+            password: "secret"
+        endpoints:
+            localhost:3306:
+                protocol: tcp
+    broker:
+        engine: rabbitmq
+        api:
+            username: "spryker"
+            password: "secret"
+        endpoints:
+            queue.app-store-staging.demo-spryker.com:
+            localhost:5672:
+                protocol: tcp
+    session:
+        engine: redis
+    key_value_store:
+        engine: redis
+        endpoints:
+            localhost:16379:
+                protocol: tcp
+    search:
+        engine: elastic
+        version: 7.6
+        endpoints:
+            localhost:9200:
+                protocol: tcp
+    scheduler:
+        engine: jenkins
+        endpoints:
+            scheduler.app-store-staging.demo-spryker.com:
+    mail_catcher:
+        engine: mailhog
+        endpoints:
+            mail.app-store-staging.demo-spryker.com:
+
+docker:
+    blackfire:
+        enabled: false
+    ssl:
+        enabled: true
+    testing:
+        store: DE
+    debug:
+        enabled: false
+    mount:
+        baked:

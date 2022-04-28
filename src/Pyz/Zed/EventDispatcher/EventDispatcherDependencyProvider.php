@@ -57,6 +57,7 @@ class EventDispatcherDependencyProvider extends SprykerEventDispatcherDependency
             new RequestAttributesEventDispatcherPlugin(),
             new ResponseListenerEventDispatcherPlugin(),
             new ErrorPageEventDispatcherPlugin(),
+            new GatewayControllerEventDispatcherPlugin(),
         ];
     }
 

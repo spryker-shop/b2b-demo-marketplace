@@ -52,6 +52,12 @@ public/Yves/assets/
 public/Zed/assets/
 public/Backoffice/assets/
 public/MerchantPortal/assets/
+public/Apps/
+!public/Apps/index.php
+public/RegistryServiceBackoffice/
+!public/RegistryServiceBackoffice/index.php
+public/RegistryServiceYves/*
+!public/RegistryServiceYves/index.php
 
 # vagrant stuff
 .vagrant
@@ -102,3 +108,18 @@ c3.php
 .yarn/*
 !.yarn/releases/
 !.yarn/plugins/
+
+# PBC related tests
+*/tests/_log/*
+!*/tests/_log/.gitkeep
+*/tests/_output/*
+!*/tests/_output/.gitkeep
+*/tests/_support/_generated/*
+!*/tests/_support/_generated/.gitkeep
+
+*/tests/AppTest/*/*/_support/_generated/*
+*/tests/AppTest/*/*/_output/*
+
+# AppStore
+/app-store-suite
+/registry-service

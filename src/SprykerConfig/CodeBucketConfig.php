@@ -20,6 +20,8 @@ class CodeBucketConfig extends AbstractCodeBucketConfig
             'DE',
             'AT',
             'US',
+            'GLOBAL',
+            'REGISTRY',
         ];
     }
 

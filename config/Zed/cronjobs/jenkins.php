@@ -163,3 +163,11 @@ $jobs[] = [
     'enable' => true,
     'stores' => $allStores,
 ];
+
+$jobs[] = [
+    'name' => 'message-broker-consume-channels',
+    'command' => '$PHP_BIN vendor/bin/console message-broker:consume --time-limit=45',
+    'schedule' => '* * * * *',
+    'enable' => true,
+    'stores' => $allStores,
+];
