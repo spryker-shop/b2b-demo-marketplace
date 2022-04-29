@@ -85,6 +85,10 @@
                                                 {% block subQuantity %}{% endblock %}
                                             </div>
                                         {% endif %}
+                                        {% block soldBy %}
+                                            {% widget 'SoldByMerchantWidget' args [data.listItem] only %}
+                                            {% endwidget %}
+                                        {% endblock %}
                                     {% endblock %}
 
                                     {% block packagingUnitCart %}

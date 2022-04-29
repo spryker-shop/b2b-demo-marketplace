@@ -2,6 +2,7 @@
 
 use Monolog\Logger;
 use Pyz\Shared\Console\ConsoleConstants;
+use Spryker\Shared\AppCatalogGui\AppCatalogGuiConstants;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Shared\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConstants;
@@ -15,7 +16,9 @@ use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Log\LogConstants;
 use Spryker\Shared\Mail\MailConstants;
+use Spryker\Shared\MerchantPortalApplication\MerchantPortalConstants;
 use Spryker\Shared\Newsletter\NewsletterConstants;
+use Spryker\Shared\OauthClient\OauthClientConstants;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Shared\Queue\QueueConfig;
 use Spryker\Shared\Queue\QueueConstants;
@@ -30,6 +33,7 @@ use Spryker\Shared\StorageDatabase\StorageDatabaseConstants;
 use Spryker\Shared\StorageRedis\StorageRedisConstants;
 use Spryker\Shared\Testify\TestifyConstants;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
+use Spryker\Zed\OauthDummy\OauthDummyConfig;
 use SprykerShop\Shared\ErrorPage\ErrorPageConstants;
 
 // ############################################################################
@@ -40,6 +44,7 @@ $stores = array_combine(Store::getInstance()->getAllowedStores(), Store::getInst
 $yvesHost = 'www.de.spryker.test';
 $glueHost = 'glue.de.spryker.test';
 $backofficeHost = 'backoffice.de.spryker.test';
+$merchantPortalHost = 'mp.de.spryker.test';
 $backendGatewayHost = 'backend-gateway.de.spryker.test';
 $backendApiHost = 'backend-api.de.spryker.test';
 
@@ -219,6 +224,15 @@ $config[ApplicationConstants::BASE_URL_ZED] = sprintf(
 );
 
 // ----------------------------------------------------------------------------
+// ------------------------------ MERCHANT PORTAL -----------------------------
+// ----------------------------------------------------------------------------
+
+$config[MerchantPortalConstants::BASE_URL_MP] = sprintf(
+    'http://%s',
+    $merchantPortalHost,
+);
+
+// ----------------------------------------------------------------------------
 // ------------------------------ FRONTEND ------------------------------------
 // ----------------------------------------------------------------------------
 
@@ -257,3 +271,10 @@ $config[GlueApplicationConstants::GLUE_APPLICATION_CORS_ALLOW_ORIGIN] = '*';
 // ----------------------------------------------------------------------------
 
 require 'common/config_oms-development.php';
+
+// ----------------------------------------------------------------------------
+// ------------------------------ OAUTH ---------------------------------------
+// ----------------------------------------------------------------------------
+$config[OauthClientConstants::OAUTH_PROVIDER_NAME_FOR_MESSAGE_BROKER] = OauthDummyConfig::PROVIDER_NAME;
+$config[OauthClientConstants::OAUTH_PROVIDER_NAME_FOR_PAYMENT_AUTHORIZE] = OauthDummyConfig::PROVIDER_NAME;
+$config[AppCatalogGuiConstants::OAUTH_PROVIDER_NAME] = OauthDummyConfig::PROVIDER_NAME;

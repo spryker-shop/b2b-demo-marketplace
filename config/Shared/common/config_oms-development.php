@@ -1,6 +1,6 @@
 <?php
 
-use Spryker\Shared\DummyPayment\DummyPaymentConfig;
+use Spryker\Shared\DummyMarketplacePayment\DummyMarketplacePaymentConfig;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Nopayment\NopaymentConfig;
 use Spryker\Shared\Oms\OmsConstants;
@@ -12,22 +12,22 @@ use Spryker\Shared\Sales\SalesConstants;
 
 $config[KernelConstants::DEPENDENCY_INJECTOR_YVES] = [
     'CheckoutPage' => [
-        'DummyPayment',
+        'DummyMarketplacePayment',
         'Nopayment',
     ],
 ];
 $config[KernelConstants::DEPENDENCY_INJECTOR_ZED] = [
     'Payment' => [
-        'DummyPayment',
+        'DummyMarketplacePayment',
         'Nopayment',
     ],
     'Oms' => [
-        'DummyPayment',
+        'DummyMarketplacePayment',
     ],
 ];
 
 $config[OmsConstants::ACTIVE_PROCESSES] = array_merge([
-    'DummyPayment01',
+    'MarketplacePayment01',
     'Nopayment01',
     'B2CStateMachine01',
 ], $config[OmsConstants::ACTIVE_PROCESSES]);
@@ -35,8 +35,7 @@ $config[OmsConstants::ACTIVE_PROCESSES] = array_merge([
 $config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = array_replace(
     $config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING],
     [
-        DummyPaymentConfig::PAYMENT_METHOD_INVOICE => 'DummyPayment01',
-        DummyPaymentConfig::PAYMENT_METHOD_CREDIT_CARD => 'DummyPayment01',
+        DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE => 'MarketplacePayment01',
         NopaymentConfig::PAYMENT_PROVIDER_NAME => 'Nopayment01',
     ]
 );

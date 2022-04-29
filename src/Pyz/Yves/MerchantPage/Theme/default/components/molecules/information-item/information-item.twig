@@ -1,0 +1,13 @@
+{% extends molecule('information-item', '@SprykerShop:MerchantPage') %}
+
+{% block extraClass %}{% endblock %}
+
+{% block title %}
+    <h5 class="spacing-bottom">{{ data.title }}</h5>
+{% endblock %}
+
+{% block text %}
+    {% set textClassName = config.name ~ '__text' %}
+
+    {{ parent() }}
+{% endblock %}

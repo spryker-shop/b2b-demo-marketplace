@@ -1,19 +1,4 @@
-{% extends model('component') %}
-
-{% define config = {
-    name: 'quick-order-form',
-    tag: 'quick-order-form'
-} %}
-
-{% define data = {
-    form: required,
-    products: [],
-    prices: [],
-    additionalColumns: [],
-    fileTemplateExtensions: [],
-    textOrderForm: required,
-    uploadOrderForm: required
-} %}
+{% extends molecule('quick-order-form', '@SprykerShop:QuickOrderPage') %}
 
 {% block body %}
     {% include molecule('ajax-provider') with {
@@ -38,6 +23,12 @@
             'provider-class-name': config.jsName ~ '__provider',
         },
     } only %}
+
+    {% widget 'MerchantSearchWidget' with {
+        data: {
+            merchantsFormElementClassName: config.jsName ~ '__search-form-element',
+        },
+    } only %}{% endwidget %}
 
     {% embed molecule('form') with {
         data: {
@@ -70,16 +61,17 @@
                                     rows: data.form.items,
                                     products: data.products,
                                     prices: data.prices,
-                                    additionalColumns: embed.additionalColumns
-                                }
+                                    additionalColumns: embed.additionalColumns,
+                                    extraSearchFormElementClassName: embed.jsName ~ '__search-form-element',
+                                },
                             } only %}
                         </div>
 
                         {% include molecule('quick-order-form-actions', 'QuickOrderPage') with {
                             class: 'grid grid--wide grid--justify spacing-top spacing-top--bigger',
                             data: {
-                                addRowTriggerClass: embed.jsName ~ '__add-row-trigger'
-                            }
+                                addRowTriggerClass: embed.jsName ~ '__add-row-trigger',
+                            },
                         } only %}
                     </div>
 
@@ -87,15 +79,15 @@
                         {% include molecule('quick-order-text-order-form', 'QuickOrderPage') with {
                             data: {
                                 textOrderForm: data.textOrderForm,
-                            }
+                            },
                         } only %}
 
                         {% include molecule('quick-order-file-upload', 'QuickOrderPage') with {
                             class: 'spacing-top',
                             data: {
                                 uploadOrderForm: data.uploadOrderForm,
-                                fileTemplateExtensions: data.fileTemplateExtensions
-                            }
+                                fileTemplateExtensions: data.fileTemplateExtensions,
+                            },
                         } only %}
                     </div>
                 {% endblock %}

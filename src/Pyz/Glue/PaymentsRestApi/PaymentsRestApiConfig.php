@@ -8,18 +8,18 @@
 namespace Pyz\Glue\PaymentsRestApi;
 
 use Spryker\Glue\PaymentsRestApi\PaymentsRestApiConfig as SprykerPaymentsRestApiConfig;
-use Spryker\Shared\DummyPayment\DummyPaymentConfig;
+use Spryker\Shared\DummyMarketplacePayment\DummyMarketplacePaymentConfig;
 
 class PaymentsRestApiConfig extends SprykerPaymentsRestApiConfig
 {
     protected const PAYMENT_METHOD_PRIORITY = [
-        DummyPaymentConfig::PAYMENT_METHOD_INVOICE => 1,
+        DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE => 1,
     ];
 
     protected const PAYMENT_METHOD_REQUIRED_FIELDS = [
-        DummyPaymentConfig::PROVIDER_NAME => [
-            DummyPaymentConfig::PAYMENT_METHOD_INVOICE => [
-                'dummyPaymentInvoice.dateOfBirth',
+        DummyMarketplacePaymentConfig::PAYMENT_PROVIDER_NAME => [
+            DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE => [
+                'dummyMarketplacePaymentInvoice.dateOfBirth',
             ],
         ],
     ];

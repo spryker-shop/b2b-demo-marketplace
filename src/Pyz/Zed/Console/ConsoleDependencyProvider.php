@@ -38,6 +38,7 @@ use Spryker\Zed\Development\Communication\Console\CodePhpstanConsole;
 use Spryker\Zed\Development\Communication\Console\CodeStyleSnifferConsole;
 use Spryker\Zed\Development\Communication\Console\CodeTestConsole;
 use Spryker\Zed\Development\Communication\Console\GenerateClientIdeAutoCompletionConsole;
+use Spryker\Zed\Development\Communication\Console\GenerateGlueBackendIdeAutoCompletionConsole;
 use Spryker\Zed\Development\Communication\Console\GenerateGlueIdeAutoCompletionConsole;
 use Spryker\Zed\Development\Communication\Console\GenerateIdeAutoCompletionConsole;
 use Spryker\Zed\Development\Communication\Console\GenerateServiceIdeAutoCompletionConsole;
@@ -45,6 +46,7 @@ use Spryker\Zed\Development\Communication\Console\GenerateYvesIdeAutoCompletionC
 use Spryker\Zed\Development\Communication\Console\GenerateZedIdeAutoCompletionConsole;
 use Spryker\Zed\Development\Communication\Console\PluginUsageFinderConsole;
 use Spryker\Zed\Development\Communication\Console\RemoveClientIdeAutoCompletionConsole;
+use Spryker\Zed\Development\Communication\Console\RemoveGlueBackendIdeAutoCompletionConsole;
 use Spryker\Zed\Development\Communication\Console\RemoveGlueIdeAutoCompletionConsole;
 use Spryker\Zed\Development\Communication\Console\RemoveIdeAutoCompletionConsole;
 use Spryker\Zed\Development\Communication\Console\RemoveServiceIdeAutoCompletionConsole;
@@ -62,6 +64,8 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Log\Communication\Console\DeleteLogFilesConsole;
 use Spryker\Zed\Maintenance\Communication\Console\MaintenanceDisableConsole;
 use Spryker\Zed\Maintenance\Communication\Console\MaintenanceEnableConsole;
+use Spryker\Zed\MerchantOms\Communication\Console\TriggerEventFromCsvFileConsole;
+use Spryker\Zed\MerchantProductApprovalDataImport\MerchantProductApprovalDataImportConfig;
 use Spryker\Zed\MessageBroker\Communication\Plugin\Console\MessageBrokerDebugConsole;
 use Spryker\Zed\MessageBroker\Communication\Plugin\Console\MessageBrokerWorkerConsole;
 use Spryker\Zed\Monitoring\Communication\Plugin\Console\MonitoringConsolePlugin;
@@ -78,11 +82,14 @@ use Spryker\Zed\PriceProductSchedule\Communication\Console\PriceProductScheduleA
 use Spryker\Zed\PriceProductSchedule\Communication\Console\PriceProductScheduleCleanupConsole;
 use Spryker\Zed\PriceProductScheduleDataImport\PriceProductScheduleDataImportConfig;
 use Spryker\Zed\ProductAlternativeDataImport\ProductAlternativeDataImportConfig;
+use Spryker\Zed\ProductApprovalDataImport\ProductApprovalDataImportConfig;
 use Spryker\Zed\ProductDiscontinued\Communication\Console\DeactivateDiscontinuedProductsConsole;
 use Spryker\Zed\ProductDiscontinuedDataImport\ProductDiscontinuedDataImportConfig;
 use Spryker\Zed\ProductLabel\Communication\Console\ProductLabelRelationUpdaterConsole;
 use Spryker\Zed\ProductLabel\Communication\Console\ProductLabelValidityConsole;
 use Spryker\Zed\ProductLabelDataImport\ProductLabelDataImportConfig;
+use Spryker\Zed\ProductOfferShoppingListDataImport\ProductOfferShoppingListDataImportConfig;
+use Spryker\Zed\ProductOfferValidity\Communication\Console\ProductOfferValidityConsole;
 use Spryker\Zed\ProductPackagingUnitDataImport\ProductPackagingUnitDataImportConfig;
 use Spryker\Zed\ProductQuantityDataImport\ProductQuantityDataImportConfig;
 use Spryker\Zed\ProductRelation\Communication\Console\ProductRelationUpdaterConsole;
@@ -112,6 +119,7 @@ use Spryker\Zed\RestRequestValidator\Communication\Console\BuildRestApiValidatio
 use Spryker\Zed\RestRequestValidator\Communication\Console\RemoveRestApiValidationCacheConsole;
 use Spryker\Zed\Router\Communication\Plugin\Console\BackendGatewayRouterCacheWarmUpConsole;
 use Spryker\Zed\Router\Communication\Plugin\Console\BackofficeRouterCacheWarmUpConsole;
+use Spryker\Zed\Router\Communication\Plugin\Console\MerchantPortalRouterCacheWarmUpConsole;
 use Spryker\Zed\SalesInvoice\Communication\Console\OrderInvoiceSendConsole;
 use Spryker\Zed\SalesOms\Communication\Console\ImportOrderItemsStatusConsole;
 use Spryker\Zed\Scheduler\Communication\Console\SchedulerCleanConsole;
@@ -134,6 +142,8 @@ use Spryker\Zed\Session\Communication\Console\SessionRemoveLockConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\CleanUpDependenciesConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\InstallPackageManagerConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\InstallProjectDependenciesConsole;
+use Spryker\Zed\SetupFrontend\Communication\Console\MerchantPortalBuildFrontendConsole;
+use Spryker\Zed\SetupFrontend\Communication\Console\MerchantPortalInstallDependenciesConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\Npm\RunnerConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\YvesBuildFrontendConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\YvesInstallDependenciesConsole;
@@ -279,6 +289,9 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::PYZ_COMMAND_SEPARATOR . PaymentDataImportConfig::IMPORT_TYPE_PAYMENT_METHOD),
             new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::PYZ_COMMAND_SEPARATOR . PaymentDataImportConfig::IMPORT_TYPE_PAYMENT_METHOD_STORE),
             new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::PYZ_COMMAND_SEPARATOR . ContentNavigationDataImportConfig::IMPORT_TYPE_CONTENT_NAVIGATION),
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::PYZ_COMMAND_SEPARATOR . MerchantProductApprovalDataImportConfig::IMPORT_TYPE_MERCHANT_PRODUCT_APPROVAL_STATUS_DEFAULT),
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::PYZ_COMMAND_SEPARATOR . ProductApprovalDataImportConfig::IMPORT_TYPE_PRODUCT_APPROVAL_STATUS),
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::PYZ_COMMAND_SEPARATOR . ProductOfferShoppingListDataImportConfig::IMPORT_TYPE_PRODUCT_OFFER_SHOPPING_LIST_ITEM),
 
             // Publish and Synchronization
             new EventBehaviorTriggerTimeoutConsole(),
@@ -351,12 +364,18 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
 
             new BackofficeRouterCacheWarmUpConsole(),
             new BackendGatewayRouterCacheWarmUpConsole(),
+            new MerchantPortalRouterCacheWarmUpConsole(),
             new ResolvableClassCacheConsole(),
 
             new DataExportConsole(),
             new RecordDeploymentConsole(),
 
             new OrderInvoiceSendConsole(),
+
+            new ProductOfferValidityConsole(),
+
+            new MerchantPortalInstallDependenciesConsole(),
+            new MerchantPortalBuildFrontendConsole(),
 
             new MessageBrokerWorkerConsole(),
         ];
@@ -398,7 +417,9 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             $commands[] = new PropelSchemaXmlNameValidatorConsole();
             $commands[] = new DataImportDumpConsole();
             $commands[] = new GenerateGlueIdeAutoCompletionConsole();
+            $commands[] = new GenerateGlueBackendIdeAutoCompletionConsole();
             $commands[] = new RemoveGlueIdeAutoCompletionConsole();
+            $commands[] = new RemoveGlueBackendIdeAutoCompletionConsole();
             $commands[] = new PluginUsageFinderConsole();
             $commands[] = new PostgresIndexGeneratorConsole();
             $commands[] = new PostgresIndexRemoverConsole();
@@ -407,6 +428,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             $commands[] = new GenerateRestApiDocumentationConsole();
             $commands[] = new CustomerPasswordResetConsole();
             $commands[] = new CustomerPasswordSetConsole();
+            $commands[] = new TriggerEventFromCsvFileConsole();
 
             $commands[] = new ModuleInstallerConsole();
 

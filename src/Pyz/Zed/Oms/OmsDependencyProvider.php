@@ -7,17 +7,27 @@
 
 namespace Pyz\Zed\Oms;
 
+use Pyz\Zed\MerchantOms\Communication\Plugin\Oms\CloseMerchantOrderItemCommandPlugin;
+use Pyz\Zed\MerchantOms\Communication\Plugin\Oms\ReturnMerchantOrderItemCommandPlugin;
+use Pyz\Zed\MerchantSalesOrder\Communication\Plugin\Oms\Condition\IsOrderPaidConditionPlugin;
+use Pyz\Zed\MerchantSalesOrder\Communication\Plugin\Oms\CreateMerchantOrdersCommandPlugin;
 use Pyz\Zed\Oms\Communication\Plugin\Oms\InitiationTimeoutProcessorPlugin;
 use Spryker\Zed\Availability\Communication\Plugin\Oms\AvailabilityReservationPostSaveTerminationAwareStrategyPlugin;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\SendOrderConfirmationPlugin;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\SendOrderShippedPlugin;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandCollectionInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface;
 use Spryker\Zed\Oms\OmsDependencyProvider as SprykerOmsDependencyProvider;
+use Spryker\Zed\OmsProductOfferReservation\Communication\Plugin\Oms\ProductOfferOmsReservationAggregationPlugin;
+use Spryker\Zed\OmsProductOfferReservation\Communication\Plugin\Oms\ProductOfferOmsReservationReaderStrategyPlugin;
+use Spryker\Zed\OmsProductOfferReservation\Communication\Plugin\Oms\ProductOfferOmsReservationWriterStrategyPlugin;
+use Spryker\Zed\OmsProductOfferReservation\Communication\Plugin\Oms\ProductOfferReservationPostSaveTerminationAwareStrategyPlugin;
 use Spryker\Zed\Payment\Communication\Plugin\Command\SendEventPaymentCancelReservationPendingPlugin;
 use Spryker\Zed\Payment\Communication\Plugin\Command\SendEventPaymentConfirmationPendingPlugin;
 use Spryker\Zed\Payment\Communication\Plugin\Command\SendEventPaymentRefundPendingPlugin;
 use Spryker\Zed\ProductBundle\Communication\Plugin\Oms\ProductBundleReservationPostSaveTerminationAwareStrategyPlugin;
+use Spryker\Zed\ProductOfferPackagingUnit\Communication\Plugin\Oms\ProductOfferPackagingUnitOmsReservationAggregationPlugin;
 use Spryker\Zed\ProductPackagingUnit\Communication\Plugin\Oms\ProductPackagingUnitOmsReservationAggregationPlugin;
 use Spryker\Zed\ProductPackagingUnit\Communication\Plugin\Reservation\LeadProductReservationPostSaveTerminationAwareStrategyPlugin;
 use Spryker\Zed\SalesInvoice\Communication\Plugin\Oms\GenerateOrderInvoiceCommandPlugin;
@@ -40,16 +50,37 @@ class OmsDependencyProvider extends SprykerOmsDependencyProvider
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
+        $container = $this->extendConditionPlugins($container);
         $container->extend(self::COMMAND_PLUGINS, function (CommandCollectionInterface $commandCollection) {
             $commandCollection->add(new SendOrderConfirmationPlugin(), 'Oms/SendOrderConfirmation');
             $commandCollection->add(new SendOrderShippedPlugin(), 'Oms/SendOrderShipped');
             $commandCollection->add(new StartReturnCommandPlugin(), 'Return/StartReturn');
             $commandCollection->add(new GenerateOrderInvoiceCommandPlugin(), 'Invoice/Generate');
+            $commandCollection->add(new CreateMerchantOrdersCommandPlugin(), 'MerchantSalesOrder/CreateOrders');
+            $commandCollection->add(new CloseMerchantOrderItemCommandPlugin(), 'MerchantOms/CloseOrderItem');
             $commandCollection->add(new SendEventPaymentConfirmationPendingPlugin(), 'Payment/SendEventPaymentConfirmationPending');
             $commandCollection->add(new SendEventPaymentRefundPendingPlugin(), 'Payment/SendEventPaymentRefundPending');
             $commandCollection->add(new SendEventPaymentCancelReservationPendingPlugin(), 'Payment/SendEventPaymentCancelReservationPending');
 
             return $commandCollection;
+        });
+        $container = $this->extendCommandPlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function extendConditionPlugins(Container $container): Container
+    {
+        $container->extend(self::CONDITION_PLUGINS, function (ConditionCollectionInterface $conditionCollection) {
+            $conditionCollection
+                ->add(new IsOrderPaidConditionPlugin(), 'MerchantSalesOrder/IsOrderPaid');
+
+            return $conditionCollection;
         });
 
         return $container;
@@ -64,6 +95,7 @@ class OmsDependencyProvider extends SprykerOmsDependencyProvider
             new AvailabilityReservationPostSaveTerminationAwareStrategyPlugin(),
             new ProductBundleReservationPostSaveTerminationAwareStrategyPlugin(),
             new LeadProductReservationPostSaveTerminationAwareStrategyPlugin(),
+            new ProductOfferReservationPostSaveTerminationAwareStrategyPlugin(),
         ];
     }
 
@@ -98,6 +130,8 @@ class OmsDependencyProvider extends SprykerOmsDependencyProvider
     {
         return [
             new ProductPackagingUnitOmsReservationAggregationPlugin(),
+            new ProductOfferOmsReservationAggregationPlugin(),
+            new ProductOfferPackagingUnitOmsReservationAggregationPlugin(),
         ];
     }
 
@@ -136,5 +170,47 @@ class OmsDependencyProvider extends SprykerOmsDependencyProvider
         return [
             new InitiationTimeoutProcessorPlugin(),
         ];
+    }
+
+    /**
+     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationWriterStrategyPluginInterface[]
+     */
+    protected function getOmsReservationWriterStrategyPlugins(): array
+    {
+        return [
+            new ProductOfferOmsReservationWriterStrategyPlugin(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationReaderStrategyPluginInterface[]
+     */
+    protected function getOmsReservationReaderStrategyPlugins(): array
+    {
+        return [
+            new ProductOfferOmsReservationReaderStrategyPlugin(),
+        ];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function extendCommandPlugins(Container $container): Container
+    {
+        $container->extend(self::COMMAND_PLUGINS, function (CommandCollectionInterface $commandCollection) {
+            $commandCollection->add(new SendOrderConfirmationPlugin(), 'Oms/SendOrderConfirmation');
+            $commandCollection->add(new SendOrderShippedPlugin(), 'Oms/SendOrderShipped');
+            $commandCollection->add(new CreateMerchantOrdersCommandPlugin(), 'MerchantSalesOrder/CreateOrders');
+            $commandCollection->add(new CloseMerchantOrderItemCommandPlugin(), 'MerchantOms/CloseOrderItem');
+            $commandCollection->add(new StartReturnCommandPlugin(), 'Return/StartReturn');
+            $commandCollection->add(new GenerateOrderInvoiceCommandPlugin(), 'Invoice/Generate');
+            $commandCollection->add(new ReturnMerchantOrderItemCommandPlugin(), 'MerchantOms/ReturnOrderItem');
+
+            return $commandCollection;
+        });
+
+        return $container;
     }
 }

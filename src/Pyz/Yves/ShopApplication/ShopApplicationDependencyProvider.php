@@ -58,6 +58,16 @@ use SprykerShop\Yves\CustomerReorderWidget\Plugin\CustomerPage\CustomerReorderIt
 use SprykerShop\Yves\DiscountPromotionWidget\Plugin\ShopApplication\CartDiscountPromotionProductListWidgetCacheKeyGeneratorStrategyPlugin;
 use SprykerShop\Yves\DiscountPromotionWidget\Widget\CartDiscountPromotionProductListWidget;
 use SprykerShop\Yves\LanguageSwitcherWidget\Widget\LanguageSwitcherWidget;
+use SprykerShop\Yves\MerchantOpeningHoursWidget\Widget\MerchantOpeningHoursWidget;
+use SprykerShop\Yves\MerchantProductOfferWidget\Widget\MerchantProductOffersSelectWidget;
+use SprykerShop\Yves\MerchantProductOfferWidget\Widget\MerchantProductOfferWidget;
+use SprykerShop\Yves\MerchantProductWidget\Widget\MerchantProductWidget;
+use SprykerShop\Yves\MerchantSalesOrderWidget\Widget\MerchantOrderReferenceForItemsWidget;
+use SprykerShop\Yves\MerchantSalesReturnWidget\Plugin\MerchantSalesReturnCreateFormWidgetCacheKeyGeneratorStrategyPlugin;
+use SprykerShop\Yves\MerchantSalesReturnWidget\Widget\MerchantSalesReturnCreateFormWidget;
+use SprykerShop\Yves\MerchantSearchWidget\Widget\MerchantSearchWidget;
+use SprykerShop\Yves\MerchantWidget\Widget\ShoppingListMerchantWidget;
+use SprykerShop\Yves\MerchantWidget\Widget\SoldByMerchantWidget;
 use SprykerShop\Yves\MoneyWidget\Widget\CurrencyIsoCodeWidget;
 use SprykerShop\Yves\MultiCartWidget\Widget\AddToMultiCartWidget;
 use SprykerShop\Yves\MultiCartWidget\Widget\CartOperationsWidget;
@@ -91,6 +101,8 @@ use SprykerShop\Yves\ProductLabelWidget\Widget\ProductAbstractLabelWidget;
 use SprykerShop\Yves\ProductLabelWidget\Widget\ProductConcreteLabelWidget;
 use SprykerShop\Yves\ProductMeasurementUnitWidget\Widget\CartProductMeasurementUnitQuantitySelectorWidget;
 use SprykerShop\Yves\ProductMeasurementUnitWidget\Widget\ManageProductMeasurementUnitWidget;
+use SprykerShop\Yves\ProductOfferShoppingListWidget\Widget\ProductOfferShoppingListWidget;
+use SprykerShop\Yves\ProductOfferWidget\Widget\ShoppingListProductOfferWidget;
 use SprykerShop\Yves\ProductOptionWidget\Widget\ProductOptionConfiguratorWidget;
 use SprykerShop\Yves\ProductPackagingUnitWidget\Widget\ProductPackagingUnitWidget;
 use SprykerShop\Yves\ProductRelationWidget\Widget\SimilarProductsWidget;
@@ -264,6 +276,17 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             CustomerFullNameWidget::class,
             ProductSetIdsWidget::class,
             CartAddProductAsSeparateItemWidget::class,
+            SoldByMerchantWidget::class,
+            MerchantProductWidget::class,
+            MerchantProductOfferWidget::class,
+            MerchantOpeningHoursWidget::class,
+            MerchantOrderReferenceForItemsWidget::class,
+            MerchantSalesReturnCreateFormWidget::class,
+            ShoppingListMerchantWidget::class,
+            ShoppingListProductOfferWidget::class,
+            ProductOfferShoppingListWidget::class,
+            MerchantProductOffersSelectWidget::class,
+            MerchantSearchWidget::class,
             ProductSchemaOrgCategoryWidget::class,
             AssetWidget::class,
         ];
@@ -280,6 +303,7 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             new QuoteApprovalWidgetCacheKeyGeneratorStrategyPlugin(),
             new CartDiscountPromotionProductListWidgetCacheKeyGeneratorStrategyPlugin(),
             new CartItemNoteFormWidgetCacheKeyGeneratorStrategyPlugin(),
+            new MerchantSalesReturnCreateFormWidgetCacheKeyGeneratorStrategyPlugin(),
         ];
     }
 

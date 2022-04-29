@@ -10,6 +10,7 @@ use Spryker\Glue\Log\Plugin\GlueLoggerConfigPlugin;
 use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
 use Spryker\Shared\Acl\AclConstants;
 use Spryker\Shared\Agent\AgentConstants;
+use Spryker\Shared\AppCatalogGui\AppCatalogGuiConstants;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Application\Log\Config\SprykerLoggerConfig;
 use Spryker\Shared\CartsRestApi\CartsRestApiConstants;
@@ -17,6 +18,7 @@ use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Shared\CmsGui\CmsGuiConstants;
 use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Shared\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConstants;
+use Spryker\Shared\DummyMarketplacePayment\DummyMarketplacePaymentConfig;
 use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\WebHtmlErrorRenderer;
 use Spryker\Shared\Event\EventConstants;
@@ -25,14 +27,16 @@ use Spryker\Shared\FileManager\FileManagerConstants;
 use Spryker\Shared\FileManagerGui\FileManagerGuiConstants;
 use Spryker\Shared\FileSystem\FileSystemConstants;
 use Spryker\Shared\GlueApplication\GlueApplicationConstants;
-use Spryker\Shared\GlueStorefrontApiApplication\GlueStorefrontApiApplicationConstants;
 use Spryker\Shared\Http\HttpConstants;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Log\LogConstants;
 use Spryker\Shared\Mail\MailConstants;
+use Spryker\Shared\MerchantPortalApplication\MerchantPortalConstants;
 use Spryker\Shared\Monitoring\MonitoringConstants;
 use Spryker\Shared\Newsletter\NewsletterConstants;
 use Spryker\Shared\Oauth\OauthConstants;
+use Spryker\Shared\OauthAuth0\OauthAuth0Constants;
+use Spryker\Shared\OauthClient\OauthClientConstants;
 use Spryker\Shared\OauthCryptography\OauthCryptographyConstants;
 use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Shared\ProductLabel\ProductLabelConstants;
@@ -57,6 +61,7 @@ use Spryker\Shared\SessionRedis\SessionRedisConfig;
 use Spryker\Shared\SessionRedis\SessionRedisConstants;
 use Spryker\Shared\Storage\StorageConstants;
 use Spryker\Shared\StorageRedis\StorageRedisConstants;
+use Spryker\Shared\StoreReference\StoreReferenceConstants;
 use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Shared\Testify\TestifyConstants;
 use Spryker\Shared\Translator\TranslatorConstants;
@@ -64,13 +69,13 @@ use Spryker\Shared\User\UserConstants;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
 use Spryker\Yves\Log\Plugin\YvesLoggerConfigPlugin;
 use Spryker\Zed\Log\Communication\Plugin\ZedLoggerConfigPlugin;
+use Spryker\Zed\OauthAuth0\OauthAuth0Config;
 use Spryker\Zed\Oms\OmsConfig;
+use Spryker\Zed\Payment\PaymentConfig;
 use Spryker\Zed\Propel\PropelConfig;
 use SprykerShop\Shared\CustomerPage\CustomerPageConstants;
 use SprykerShop\Shared\ShopUi\ShopUiConstants;
-use Spryker\Zed\Payment\PaymentConfig;
-use Spryker\Shared\StoreReference\StoreReferenceConstants;
-use Spryker\Shared\AppCatalogGui\AppCatalogGuiConstants;
+
 // ############################################################################
 // ############################## PRODUCTION CONFIGURATION ####################
 // ############################################################################
@@ -259,6 +264,12 @@ $config[AclConstants::ACL_DEFAULT_RULES] = [
     [
         'bundle' => 'api',
         'controller' => 'rest',
+        'action' => '*',
+        'type' => 'allow',
+    ],
+    [
+        'bundle' => 'security-merchant-portal-gui',
+        'controller' => '*',
         'action' => '*',
         'type' => 'allow',
     ],
@@ -519,6 +530,17 @@ $config[ApplicationConstants::BASE_URL_ZED] = sprintf(
 );
 
 // ----------------------------------------------------------------------------
+// ------------------------------ MERCHANT PORTAL -----------------------------
+// ----------------------------------------------------------------------------
+
+$merchantPortalPort = (int)(getenv('SPRYKER_MP_PORT')) ?: 443;
+$config[MerchantPortalConstants::BASE_URL_MP] = sprintf(
+    'http://%s%s',
+    getenv('SPRYKER_MP_HOST'),
+    $merchantPortalPort !== 80 ? ':' . $merchantPortalPort : '',
+);
+
+// ----------------------------------------------------------------------------
 // ------------------------------ FRONTEND ------------------------------------
 // ----------------------------------------------------------------------------
 
@@ -560,16 +582,19 @@ $config[GlueApplicationConstants::GLUE_APPLICATION_CORS_ALLOW_ORIGIN] = getenv('
 // ------------------------------ OMS -----------------------------------------
 // ----------------------------------------------------------------------------
 
-$config[OmsConstants::ACTIVE_PROCESSES] = [];
+$config[OmsConstants::ACTIVE_PROCESSES] = [
+    'MarketplacePayment01'
+];
+
 $config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = [
-    PaymentConfig::PAYMENT_FOREIGN_PROVIDER => 'B2CStateMachine01',
+    DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE => 'MarketplacePayment01',
+    PaymentConfig::PAYMENT_FOREIGN_PROVIDER => 'B2CStateMachine01'
 ];
 
 $config[OmsConstants::PROCESS_LOCATION] = [
     OmsConfig::DEFAULT_PROCESS_LOCATION,
     APPLICATION_ROOT_DIR . '/vendor/spryker/payment/config/Zed/Oms',
 ];
-
 
 // ----------------------------------------------------------------------------
 // ------------------------------ PAYMENTS ------------------------------------
@@ -597,6 +622,8 @@ $config[ProductLabelConstants::PRODUCT_LABEL_TO_DE_ASSIGN_CHUNK_SIZE] = 1000;
 
 $config[CartsRestApiConstants::IS_QUOTE_RELOAD_ENABLED] = true;
 
+$config[\Spryker\Shared\Http\HttpConstants::URI_SIGNER_SECRET_KEY] = 'JDJ5JDEwJFE0cXBwYnVVTTV6YVZXSnVmM2l1UWVhRE94WkQ4UjBUeHBEWTNHZlFRTEd4U2F6QVBqejQ2';
+
 // ----------------------------------------------------------------------------
 // ------------------------------ AOP -----------------------------------------
 // ----------------------------------------------------------------------------
@@ -606,3 +633,22 @@ $config[StoreReferenceConstants::STORE_NAME_REFERENCE_MAP] = json_decode(
     true,
 );
 $config[AppCatalogGuiConstants::APP_CATALOG_SCRIPT_URL] = (string)getenv('APP_CATALOG_SCRIPT_URL');
+
+// ----------------------------------------------------------------------------
+// ------------------------------ OAUTH ---------------------------------------
+// ----------------------------------------------------------------------------
+$config[OauthAuth0Constants::AUTH0_CLIENT_ID] = getenv('AUTH0_CLIENT_ID') ?: '';
+$config[OauthAuth0Constants::AUTH0_CLIENT_SECRET] = getenv('AUTH0_CLIENT_SECRET') ?: '';
+$config[OauthAuth0Constants::AUTH0_CUSTOM_DOMAIN] = getenv('AUTH0_CUSTOM_DOMAIN') ?: '';
+
+$config[OauthClientConstants::OAUTH_PROVIDER_NAME_FOR_MESSAGE_BROKER] = OauthAuth0Config::PROVIDER_NAME;
+$config[OauthClientConstants::OAUTH_GRANT_TYPE_FOR_MESSAGE_BROKER] = OauthAuth0Config::GRANT_TYPE_CLIENT_CREDENTIALS;
+$config[OauthClientConstants::OAUTH_OPTION_AUDIENCE_FOR_MESSAGE_BROKER] = 'aop-event-platform';
+
+$config[AppCatalogGuiConstants::OAUTH_PROVIDER_NAME] = OauthAuth0Config::PROVIDER_NAME;
+$config[AppCatalogGuiConstants::OAUTH_GRANT_TYPE] = OauthAuth0Config::GRANT_TYPE_CLIENT_CREDENTIALS;
+$config[AppCatalogGuiConstants::OAUTH_OPTION_AUDIENCE] = 'aop-atrs';
+
+$config[OauthClientConstants::OAUTH_PROVIDER_NAME_FOR_PAYMENT_AUTHORIZE] = OauthAuth0Config::PROVIDER_NAME;
+$config[OauthClientConstants::OAUTH_GRANT_TYPE_FOR_PAYMENT_AUTHORIZE] = OauthAuth0Config::GRANT_TYPE_CLIENT_CREDENTIALS;
+$config[OauthClientConstants::OAUTH_OPTION_AUDIENCE_FOR_PAYMENT_AUTHORIZE] = 'aop-app';
