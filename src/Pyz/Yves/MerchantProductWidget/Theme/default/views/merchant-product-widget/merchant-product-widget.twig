@@ -1,0 +1,38 @@
+{% extends view('merchant-product-widget', '@SprykerShop:MerchantProductWidget') %}
+
+{% block content %}
+    {% set merchantProductView = data.merchantProductView %}
+    {% set priceMode = merchantProductView.price.priceMode | default %}
+
+    <div class="title title--product-sold-by grid grid--justify grid--baseline">
+        <div class="col col--expand col--reset-min-width">
+            {{ 'merchant_product.sold_by' | trans }}
+        </div>
+        {% if priceMode %}
+            <div class="title title--price-mode col col--reset-min-width is-hidden-lg-xxl">
+                {% if priceMode == 'GROSS_MODE' %}
+                    {{ 'price.mode.incl_vat' | trans }}
+                {% endif %}
+
+                {% if priceMode == 'NET_MODE' %}
+                    {{ 'price.mode.excl_vat' | trans }}
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+
+    {% include molecule('merchant-product-item', 'MerchantProductWidget') with {
+        class: 'box box--smaller',
+        data: {
+            isChecked: data.isChecked,
+            radioGroupName: 'merchant_reference',
+            merchantReference: merchantProductView.merchantReference | default,
+            merchantName: merchantProductView.merchantName | default,
+            merchantUrl: merchantProductView.merchantUrl | default,
+            price: merchantProductView.price.price | default(null),
+            currencyIsoCode: merchantProductView.price.currency.code | default(null),
+            isRadioButtonVisible: data.isRadioButtonVisible,
+            currentProductPrice: merchantProductView.price,
+        },
+    } only %}
+{% endblock %}
