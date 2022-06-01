@@ -1,0 +1,45 @@
+{% extends view('merchant-product-offer-widget', '@SprykerShop:MerchantProductOfferWidget') %}
+
+{% define data = {
+    isTitleVisible: true,
+} %}
+
+{% block content %}
+    {% set priceMode = data.productView.currentProductPrice.priceMode | default %}
+
+    {% if data.isTitleVisible %}
+        <div class="title title--product-sold-by grid grid--justify grid--baseline">
+            <div class="col col--expand col--reset-min-width">
+                {{ 'merchant_product.sold_by' | trans }}
+            </div>
+            {% if priceMode %}
+                <div class="title title--price-mode col col--reset-min-width is-hidden-lg-xxl">
+                    {% if priceMode == 'GROSS_MODE' %}
+                        {{ 'price.mode.incl_vat' | trans }}
+                    {% endif %}
+
+                    {% if priceMode == 'NET_MODE' %}
+                        {{ 'price.mode.excl_vat' | trans }}
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {% for productOffer in data.productOffers %}
+        {% include molecule('merchant-product-offer-item', 'MerchantProductOfferWidget') with {
+            class: 'box box--smaller',
+            data: {
+                isChecked: data.productView.productOfferReference is same as(productOffer.productOfferReference),
+                radioGroupName: 'product_offer_reference',
+                productOfferReference: productOffer.productOfferReference | default,
+                merchantName: productOffer.merchantStorage.name | default,
+                merchantUrl: productOffer.merchantStorage.merchantUrl | default,
+                price: productOffer.price.price | default(null),
+                currencyIsoCode: productOffer.price.currency.code | default(null),
+                isRadioButtonVisible: isRadioButtonVisible,
+                currentProductPrice: productOffer.price,
+            },
+        } only %}
+    {% endfor %}
+{% endblock %}

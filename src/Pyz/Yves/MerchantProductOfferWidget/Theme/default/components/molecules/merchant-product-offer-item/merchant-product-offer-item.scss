@@ -1,0 +1,23 @@
+@mixin merchant-product-offer-widget-merchant-product-offer-item($name: '.merchant-product-offer-item') {
+    #{$name} {
+        border-bottom: rem(1) solid $setting-color-gray-1;
+        line-height: rem(20);
+
+        &__name {
+            font-size: rem(16);
+            margin-bottom: rem(7);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: $setting-color-gray-5;
+        }
+
+        &__link {
+            font-size: rem(12);
+            color: $setting-color-main;
+        }
+
+        @content;
+    }
+}
+
+@include merchant-product-offer-widget-merchant-product-offer-item();

@@ -29,6 +29,10 @@
                     @include helper-font-size(big);
                 }
             }
+
+            &--text-alt {
+                color: $setting-color-alt;
+            }
         }
 
         &__price {
@@ -44,6 +48,35 @@
         &__mode {
             color: $setting-color-gray-2;
             font-size: rem(13);
+        }
+
+        &--list {
+            margin-top: 0;
+            margin-bottom: 0;
+
+            #{$name}__amount {
+                display: block;
+                font-size: rem(16);
+                font-weight: fw(regular);
+                margin: 0;
+                padding-left: rem(10);
+                color: $setting-color-gray-5;
+
+                &--original {
+                    font-size: rem(14);
+                    margin: 0;
+                    color: $setting-color-gray-3;
+                }
+
+                &--text-alt {
+                    color: $setting-color-alt;
+                }
+            }
+
+            #{$name}__mode {
+                font-size: rem(12);
+                line-height: rem(18);
+            }
         }
 
         @content;

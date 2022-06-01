@@ -11,7 +11,22 @@
 {% block salesReturnProductItem %}
     {% set salesReturnProductItemClass = 'grid grid--middle grid--justify' %}
 
-    {{ parent() }}
+    {% if loop.first %}
+        {% widget 'SoldByMerchantWidget' args [orderItem] only %}
+            {% block soldBy %}
+                {% set merchantModifiers = ['group'] %}
+                {% set merchantClass = 'spacing-bottom spacing-bottom--bigger' %}
+
+                {{ parent() }}
+            {% endblock %}
+        {% endwidget %}
+    {% endif %}
+
+    <div class="{{ salesReturnProductItemClass }}">
+        {% set productItemReturnClass = 'col col--expand grid' %}
+
+        {{ block('salesReturnProductItemInner') }}
+    </div>
 {% endblock %}
 
 {% block salesReturnProductItemInner %}

@@ -156,17 +156,22 @@
                 isRadioButtonVisible,
                 isChecked,
             ]) %}
+            {% set hasMerchantProduct = merchantProductWidget.merchantProductView is defined %}
 
-            <div class="spacing-top spacing-top--big">
+            <div class="spacing-bottom spacing-bottom--bigger">
                 {% widget merchantProductWidget %}{% endwidget %}
                 {% widget merchantProductOfferWidget with {
+                    data: {
+                        isTitleVisible: not hasMerchantProduct,
+                    },
                     embed: {
-                        hasMerchantProduct: merchantProductWidget.merchantProductView is defined,
+                        hasMerchantProduct: hasMerchantProduct,
                         productOffersCount: merchantProductOfferWidget.productOffers | length,
                     },
                 } %}
                     {% block content %}
                         {% set isRadioButtonVisible = embed.productOffersCount + embed.hasMerchantProduct > 1 %}
+
                         {{ parent() }}
                     {% endblock %}
                 {% endwidget %}
