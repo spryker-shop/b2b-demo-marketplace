@@ -124,6 +124,23 @@
         }
     }
 
+    &--product-sold-by {
+        color: $setting-color-gray-5;
+        font-size: rem(18);
+        font-weight: fw(regular);
+        padding: rem(20) 0 rem(14);
+        border-bottom: rem(1) solid $setting-color-gray-1;
+
+        @include helper-breakpoint-media-min($lg) {
+            font-size: rem(22);
+        }
+    }
+
+    &--price-mode {
+        font-size: rem(13);
+        color: $setting-color-gray-2;
+    }
+
     &--mobile-toggler-section {
         margin-bottom: rem(24);
         font-weight: fw(medium);
