@@ -22,11 +22,11 @@ use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
-use Pyz\Zed\Merchant\MerchantDependencyProvider;
 use PyzTest\Zed\AclEntity\AclQueryDirectorTester;
 use Spryker\Shared\AclEntity\AclEntityConstants;
 use Spryker\Zed\AclEntity\AclEntityDependencyProvider;
 use Spryker\Zed\AclEntity\Persistence\Exception\OperationNotAuthorizedException;
+use Spryker\Zed\Merchant\MerchantDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -322,6 +322,7 @@ class RelationHandlingTest extends Unit
             $productTransfer->getFkProductAbstractOrFail(),
         );
         $productAbstractEntity->setSku($productAbstractEntity->getSku() . time());
+        $productAbstractEntity->addSpyProduct($productEntity);
 
         // Act
         $aclModelDirector->inspectUpdate($productEntity);
