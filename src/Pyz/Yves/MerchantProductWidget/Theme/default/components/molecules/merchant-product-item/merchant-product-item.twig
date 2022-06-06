@@ -1,0 +1,58 @@
+{% extends molecule('merchant-product-item', '@SprykerShop:MerchantProductWidget') %}
+
+{% define data = {
+    currentProductPrice: required,
+} %}
+
+{% block extraClass %}{% endblock %}
+
+{% block contentCol %}
+    <div class="col col--expand col--reset-min-width">
+        {{ block('content') }}
+    </div>
+{% endblock %}
+
+{% block merchantInfoCol %}
+    <div class="col col--expand col--reset-min-width">
+        {% block merchantName %}
+            <div class="{{ config.name }}__name">{{ data.merchantName }}</div>
+        {% endblock %}
+
+        {% block merchantLink %}
+            <a class="{{ config.name }}__link" href="{{ data.merchantUrl }}">
+                {{ 'merchant_product_offer.view_seller' | trans }}
+            </a>
+        {% endblock %}
+    </div>
+{% endblock %}
+
+{% block price %}
+    {% widget 'CurrentProductPriceVolumeWidget' args [data.currentProductPrice] only %}
+        {% block priceTable %}{% endblock %}
+        {% block price %}
+            {% embed molecule('volume-price', 'PriceProductVolumeWidget') with {
+                class: 'grid grid--gap-smaller grid--right',
+                modifiers: ['list'],
+                attributes: {
+                    'data-json': jsonVolumeProductPrices | json_encode(),
+                },
+                data: {
+                    amount: data.amount,
+                    originalAmount: data.originalAmount,
+                },
+            } only %}
+                {% block body %}
+                    <div class="col is-hidden-sm-md">
+                        {{ block('priceModeWrap') }}
+                    </div>
+                    <div class="col text-right">
+                        {{ block('amount') }}
+                        {{ block('originalAmount') }}
+                    </div>
+                {% endblock %}
+            {% endembed %}
+        {% endblock %}
+    {% nowidget %}
+        {{ parent() }}
+    {% endwidget %}
+{% endblock %}
