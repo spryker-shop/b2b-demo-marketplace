@@ -148,7 +148,6 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
     {
         return [
             new ScheduledPriceProductAbstractEditViewExpanderPlugin(),
-            new ProductApprovalProductAbstractEditViewExpanderPlugin(),
             new MerchantProductProductAbstractEditViewExpanderPlugin(),
         ];
     }
