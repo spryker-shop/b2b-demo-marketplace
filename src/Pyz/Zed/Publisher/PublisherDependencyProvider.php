@@ -134,6 +134,7 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
             $this->getMerchantOpeningHoursStoragePlugins(),
             $this->getMerchantProductOptionStoragePlugins(),
             $this->getProductOfferStoragePlugins(),
+            $this->getMerchantProductOfferStoragePlugins(),
             $this->getMerchantProductOfferSearchPlugins(),
             $this->getPriceProductMerchantRelationshipStoragePlugins(),
         );
