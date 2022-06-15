@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a77369128e2d43749de66b446836ae3a",
+    "content-hash": "e7c1d3f942eab8939904884b35c4754e",
     "packages": [
         {
             "name": "async-aws/core",
@@ -17081,52 +17081,6 @@
             "time": "2019-04-23T09:58:16+00:00"
         },
         {
-            "name": "spryker/barcode-laminas",
-            "version": "1.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/spryker/barcode-laminas.git",
-                "reference": "5401ad3b262aee35290be345bc48e892e86f9dee"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/spryker/barcode-laminas/zipball/5401ad3b262aee35290be345bc48e892e86f9dee",
-                "reference": "5401ad3b262aee35290be345bc48e892e86f9dee",
-                "shasum": ""
-            },
-            "require": {
-                "laminas/laminas-barcode": "^2.8.0",
-                "php": ">=7.4",
-                "spryker/barcode-extension": "^1.0.0",
-                "spryker/kernel": "^3.30.0",
-                "spryker/transfer": "^3.25.0"
-            },
-            "require-dev": {
-                "spryker/code-sniffer": "*",
-                "spryker/testify": "*"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Spryker\\": "src/Spryker/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "proprietary"
-            ],
-            "description": "BarcodeLaminas module",
-            "support": {
-                "source": "https://github.com/spryker/barcode-laminas/tree/1.1.0"
-            },
-            "time": "2022-05-11T08:36:06+00:00"
-        },
-        {
             "name": "spryker/business-on-behalf",
             "version": "1.1.2",
             "source": {
@@ -22035,6 +21989,55 @@
                 "source": "https://github.com/spryker/cms-user-connector/tree/1.1.1"
             },
             "time": "2020-05-29T13:08:37+00:00"
+        },
+        {
+            "name": "spryker/code-it-now",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/code-it-now.git",
+                "reference": "e823462f7ca0531d5d1e6d74194cdca787f093ff"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/code-it-now/zipball/e823462f7ca0531d5d1e6d74194cdca787f093ff",
+                "reference": "e823462f7ca0531d5d1e6d74194cdca787f093ff",
+                "shasum": ""
+            },
+            "require": {
+                "laminas/laminas-barcode": "^2.8.0",
+                "php": ">=7.4",
+                "spryker/barcode-extension": "^1.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/kernel": "^3.1.0",
+                "spryker/testify": "*"
+            },
+            "suggest": {
+                "spryker/kernel": "for testing"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "CodeItNow module",
+            "support": {
+                "source": "https://github.com/spryker/code-it-now/tree/1.1.1"
+            },
+            "abandoned": "spryker/barcode-laminas",
+            "time": "2022-05-11T08:36:06+00:00"
         },
         {
             "name": "spryker/collector",
