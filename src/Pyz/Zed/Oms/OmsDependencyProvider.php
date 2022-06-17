@@ -92,10 +92,10 @@ class OmsDependencyProvider extends SprykerOmsDependencyProvider
     protected function getReservationPostSaveTerminationAwareStrategyPlugins(): array
     {
         return [
+            new ProductOfferReservationPostSaveTerminationAwareStrategyPlugin(),
             new AvailabilityReservationPostSaveTerminationAwareStrategyPlugin(),
             new ProductBundleReservationPostSaveTerminationAwareStrategyPlugin(),
             new LeadProductReservationPostSaveTerminationAwareStrategyPlugin(),
-            new ProductOfferReservationPostSaveTerminationAwareStrategyPlugin(),
         ];
     }
 
@@ -129,9 +129,9 @@ class OmsDependencyProvider extends SprykerOmsDependencyProvider
     protected function getOmsReservationAggregationPlugins(): array
     {
         return [
-            new ProductPackagingUnitOmsReservationAggregationPlugin(),
-            new ProductOfferOmsReservationAggregationPlugin(),
             new ProductOfferPackagingUnitOmsReservationAggregationPlugin(),
+            new ProductOfferOmsReservationAggregationPlugin(),
+            new ProductPackagingUnitOmsReservationAggregationPlugin(),
         ];
     }
 
