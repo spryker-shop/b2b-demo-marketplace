@@ -12,17 +12,17 @@ use Spryker\Shared\Sales\SalesConstants;
 
 $config[KernelConstants::DEPENDENCY_INJECTOR_YVES] = [
     'CheckoutPage' => [
-        'DummyMarketplacePayment',
+        'DummyPayment',
         'Nopayment',
     ],
 ];
 $config[KernelConstants::DEPENDENCY_INJECTOR_ZED] = [
     'Payment' => [
-        'DummyMarketplacePayment',
+        'DummyPayment',
         'Nopayment',
     ],
     'Oms' => [
-        'DummyMarketplacePayment',
+        'DummyPayment',
     ],
 ];
 

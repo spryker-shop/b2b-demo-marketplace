@@ -50,21 +50,8 @@ class OmsDependencyProvider extends SprykerOmsDependencyProvider
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
-        $container = $this->extendConditionPlugins($container);
-        $container->extend(self::COMMAND_PLUGINS, function (CommandCollectionInterface $commandCollection) {
-            $commandCollection->add(new SendOrderConfirmationPlugin(), 'Oms/SendOrderConfirmation');
-            $commandCollection->add(new SendOrderShippedPlugin(), 'Oms/SendOrderShipped');
-            $commandCollection->add(new StartReturnCommandPlugin(), 'Return/StartReturn');
-            $commandCollection->add(new GenerateOrderInvoiceCommandPlugin(), 'Invoice/Generate');
-            $commandCollection->add(new CreateMerchantOrdersCommandPlugin(), 'MerchantSalesOrder/CreateOrders');
-            $commandCollection->add(new CloseMerchantOrderItemCommandPlugin(), 'MerchantOms/CloseOrderItem');
-            $commandCollection->add(new SendEventPaymentConfirmationPendingPlugin(), 'Payment/SendEventPaymentConfirmationPending');
-            $commandCollection->add(new SendEventPaymentRefundPendingPlugin(), 'Payment/SendEventPaymentRefundPending');
-            $commandCollection->add(new SendEventPaymentCancelReservationPendingPlugin(), 'Payment/SendEventPaymentCancelReservationPending');
-
-            return $commandCollection;
-        });
         $container = $this->extendCommandPlugins($container);
+        $container = $this->extendConditionPlugins($container);
 
         return $container;
     }
@@ -92,10 +79,10 @@ class OmsDependencyProvider extends SprykerOmsDependencyProvider
     protected function getReservationPostSaveTerminationAwareStrategyPlugins(): array
     {
         return [
+            new ProductOfferReservationPostSaveTerminationAwareStrategyPlugin(),
             new AvailabilityReservationPostSaveTerminationAwareStrategyPlugin(),
             new ProductBundleReservationPostSaveTerminationAwareStrategyPlugin(),
             new LeadProductReservationPostSaveTerminationAwareStrategyPlugin(),
-            new ProductOfferReservationPostSaveTerminationAwareStrategyPlugin(),
         ];
     }
 
@@ -207,6 +194,9 @@ class OmsDependencyProvider extends SprykerOmsDependencyProvider
             $commandCollection->add(new StartReturnCommandPlugin(), 'Return/StartReturn');
             $commandCollection->add(new GenerateOrderInvoiceCommandPlugin(), 'Invoice/Generate');
             $commandCollection->add(new ReturnMerchantOrderItemCommandPlugin(), 'MerchantOms/ReturnOrderItem');
+            $commandCollection->add(new SendEventPaymentConfirmationPendingPlugin(), 'Payment/SendEventPaymentConfirmationPending');
+            $commandCollection->add(new SendEventPaymentRefundPendingPlugin(), 'Payment/SendEventPaymentRefundPending');
+            $commandCollection->add(new SendEventPaymentCancelReservationPendingPlugin(), 'Payment/SendEventPaymentCancelReservationPending');
 
             return $commandCollection;
         });
