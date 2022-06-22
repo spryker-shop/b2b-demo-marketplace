@@ -50,8 +50,8 @@ class OmsDependencyProvider extends SprykerOmsDependencyProvider
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
-        $container = $this->extendCommandPlugins($container);
         $container = $this->extendConditionPlugins($container);
+        $container = $this->extendCommandPlugins($container);
 
         return $container;
     }
