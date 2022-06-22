@@ -12,14 +12,14 @@ use Spryker\Shared\Sales\SalesConstants;
 
 $config[KernelConstants::DEPENDENCY_INJECTOR_YVES] = [
     'CheckoutPage' => [
-        'DummyPayment',
-        'Nopayment',
+        'DummyMarketplacePayment',
+        NopaymentConfig::PAYMENT_PROVIDER_NAME,
     ],
 ];
 $config[KernelConstants::DEPENDENCY_INJECTOR_ZED] = [
     'Payment' => [
-        'DummyPayment',
-        'Nopayment',
+        'DummyMarketplacePayment',
+        NopaymentConfig::PAYMENT_PROVIDER_NAME,
     ],
     'Oms' => [
         'DummyPayment',
