@@ -42,7 +42,15 @@ tag: '1.0'
 
 environment: docker
 image:
-    tag: spryker/php:7.4  # Last actual image
+    tag: spryker/php:7.4-alpine3.12
+    environment:
+        SPRYKER_DEFAULT_STORE: "DE"
+        SPRYKER_ACTIVE_STORES: "DE,AT"
+        SPRYKER_HOOK_BEFORE_DEPLOY: "vendor/bin/install -r EU/pre-deploy -vvv"
+        SPRYKER_HOOK_AFTER_DEPLOY: "true"
+        SPRYKER_HOOK_INSTALL: "vendor/bin/install -r EU/production --no-ansi -vvv"
+        SPRYKER_HOOK_DESTRUCTIVE_INSTALL: "vendor/bin/install -r EU/destructive --no-ansi -vvv"
+
 composer:
     mode: --no-dev
     autoload: --classmap-authoritative
@@ -84,16 +92,6 @@ regions:
                         namespace: at_search
                     session:
                         namespace: 2
-            US:
-                services:
-                    broker:
-                        namespace: us_queue
-                    key_value_store:
-                        namespace: 1
-                    search:
-                        namespace: us_search
-                    session:
-                        namespace: 2
 
 groups:
     EU:
@@ -114,12 +112,6 @@ groups:
                     at.example.cloud.spryker.toys:
                         store: AT
                         <<: *frontend-auth
-                    www.us.example.cloud.spryker.toys:
-                        store: US
-                        <<: *frontend-auth
-                    us.example.cloud.spryker.toys:
-                        store: US
-                        <<: *frontend-auth
             backoffice_eu:
                 application: backoffice
                 endpoints:
@@ -128,8 +120,6 @@ groups:
                         primal: true
                     backoffice.at.example.cloud.spryker.toys:
                         store: AT
-                    backoffice.us.example.cloud.spryker.toys:
-                        store: US
             backend_gateway_eu:
                 application: backend-gateway
                 endpoints:
@@ -138,8 +128,6 @@ groups:
                         primal: true
                     backend-gateway.at.example.cloud.spryker.toys:
                         store: AT
-                    backend-gateway.us.example.cloud.spryker.toys:
-                        store: US
             backend_api_eu:
                 application: zed
                 endpoints:
@@ -149,9 +137,6 @@ groups:
                     backend-api.at.example.cloud.spryker.toys:
                         store: AT
                         entry-point: BackendApi
-                    backend-api.us.example.cloud.spryker.toys:
-                        store: US
-                        entry-point: BackendApi
             glue_eu:
                 application: glue
                 endpoints:
@@ -159,8 +144,22 @@ groups:
                         store: DE
                     glue.at.example.cloud.spryker.toys:
                         store: AT
-                    glue.us.example.cloud.spryker.toys:
-                        store: US
+            mportal:
+                application: merchant-portal
+                endpoints:
+                    mp.de.example.cloud.spryker.toys:
+                        entry-point: MerchantPortal
+                        store: DE
+                        primal: true
+                        services:
+                            session:
+                                namespace: 7
+                    mp.at.example.cloud.spryker.toys:
+                        entry-point: MerchantPortal
+                        store: AT
+                        services:
+                            session:
+                                namespace: 8
 services:
     database:
         engine: mysql
@@ -173,6 +172,7 @@ services:
                 protocol: tcp
     broker:
         engine: rabbitmq
+        version: '3.9'
         api:
             username: "spryker"
             password: "secret"
@@ -195,6 +195,8 @@ services:
                 protocol: tcp
     scheduler:
         engine: jenkins
+        version: '2.324'
+        csrf-protection-enabled: true
         endpoints:
             scheduler.example.cloud.spryker.toys:
     mail_catcher:

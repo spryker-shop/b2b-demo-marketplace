@@ -169,6 +169,12 @@
         "target": "\\Spryker\\Zed\\Checkout\\CheckoutDependencyProvider::getCheckoutOrderSavers",
         "source": "\\Spryker\\Zed\\Sales\\Communication\\Plugin\\Checkout\\SalesOrderSaverPlugin"
       }
+    },
+    "configure-module": {
+      "e79c820270bcde12b285b64d892977b50e67635d": {
+        "target": "\\Spryker\\Zed\\Sales\\SalesConfig::isOldDeterminationForOrderItemProcessEnabled",
+        "value": false
+      }
     }
   },
   "Spryker.Shipment": {
@@ -2884,6 +2890,20 @@
         "target": "\\Spryker\\Zed\\Checkout\\CheckoutDependencyProvider::getCheckoutPreConditions",
         "source": "\\Spryker\\Zed\\Payment\\Communication\\Plugin\\Checkout\\PaymentMethodValidityCheckoutPreConditionPlugin"
       }
+    },
+    "configure-env": {
+      "97d36b367f6ee79689943db80e450122c981a2f0": {
+        "target": "\\Spryker\\Shared\\Payment\\PaymentConstants::OAUTH_PROVIDER_NAME_FOR_PAYMENT_AUTHORIZE",
+        "value": "\\Spryker\\Zed\\OauthAuth0\\OauthAuth0Config::PROVIDER_NAME"
+      },
+      "e8ec3df95ad70d710725cbbb8113ffc1603ee48f": {
+        "target": "\\Spryker\\Shared\\Payment\\PaymentConstants::OAUTH_GRANT_TYPE_FOR_PAYMENT_AUTHORIZE",
+        "value": "\\Spryker\\Zed\\OauthAuth0\\OauthAuth0Config::GRANT_TYPE_CLIENT_CREDENTIALS"
+      },
+      "534b0b3f8b78b4403129a416f18e8f7fe7307169": {
+        "target": "\\Spryker\\Shared\\Payment\\PaymentConstants::OAUTH_OPTION_AUDIENCE_FOR_PAYMENT_AUTHORIZE",
+        "value": "aop-app"
+      }
     }
   },
   "Spryker.PaymentCartConnector": {
@@ -4832,6 +4852,26 @@
         "target": "\\Spryker\\Zed\\ShoppingList\\ShoppingListDependencyProvider::getAddItemPreCheckPlugins",
         "source": "\\Spryker\\Zed\\ShoppingList\\Communication\\Plugin\\ShoppingList\\ShoppingListItemProductConcreteHasValidStoreAddItemPreCheckPlugin"
       }
+    },
+    "glossary-key": {
+      "4f56ec7bd5c1383a83df848b265899e9cdd351b3": {
+        "shopping_list.pre.check.product_merchant_inactive": {
+          "en_US": "Merchant is inactive.",
+          "de_DE": "Der H\u00e4ndler ist nicht aktiv."
+        },
+        "shopping_list.pre.check.product_merchant_not_approved": {
+          "en_US": "Merchant is not approved.",
+          "de_DE": "Der H\u00e4ndler ist nicht best\u00e4tigt."
+        },
+        "shopping_list.pre.check.product_offer.store_invalid": {
+          "en_US": "Product Offer is not equal to the current Store.",
+          "de_DE": "Das Angebot gleicht nicht dem aktuellen Shop."
+        },
+        "shopping_list.pre.check.product.store_invalid": {
+          "en_US": "Product is not equal to the current Store.",
+          "de_DE": "Das Produkt gleicht nicht dem aktuellen Shop."
+        }
+      }
     }
   },
   "Spryker.ShoppingListDataImport": {
@@ -5556,6 +5596,14 @@
       "008caa2634c1eab627f6f352ec9a0f69e30e16a9": {
         "source": "\\SprykerShop\\Yves\\MerchantProductOfferWidget\\Widget\\MerchantProductOffersSelectWidget"
       }
+    },
+    "glossary-key": {
+      "6aa92519b04d5cff570d7b3e00bae44790b895ac": {
+        "merchant_product_offer_widget.merchant_name": {
+          "en_US": "Merchant",
+          "de_DE": "H\u00e4ndler"
+        }
+      }
     }
   },
   "SprykerShop.MerchantProductWidget": {
@@ -6042,6 +6090,163 @@
       "0652faf2cc84c43ee05f54929267cfcbf48a175c": {
         "target": "\\Spryker\\Yves\\Router\\RouterDependencyProvider::getRouteProvider",
         "source": "\\SprykerShop\\Yves\\PaymentPage\\Plugin\\Router\\PaymentPageRouteProviderPlugin"
+      },
+      "8b3279fa89f3510c618f74af980d80566504c24e": {
+        "target": "\\SprykerShop\\Yves\\CheckoutPage\\CheckoutPageDependencyProvider::getPaymentCollectionExtenderPlugins",
+        "source": "\\SprykerShop\\Yves\\PaymentPage\\Plugin\\PaymentPage\\PaymentForeignPaymentCollectionExtenderPlugin"
+      }
+    }
+  },
+  "Spryker.AppCatalogGui": {
+    "configure-env": {
+      "9bb9c59c6322b77674ba6ffb2c18a819f53c746b": {
+        "target": "\\Spryker\\Shared\\AppCatalogGui\\AppCatalogGuiConstants::OAUTH_PROVIDER_NAME",
+        "value": "\\Spryker\\Zed\\OauthAuth0\\OauthAuth0Config::PROVIDER_NAME"
+      },
+      "4a48033dd0898af478c18ee26bd38a7785003172": {
+        "target": "\\Spryker\\Shared\\AppCatalogGui\\AppCatalogGuiConstants::OAUTH_GRANT_TYPE",
+        "value": "\\Spryker\\Zed\\OauthAuth0\\OauthAuth0Config::GRANT_TYPE_CLIENT_CREDENTIALS"
+      },
+      "8299953287d5e3a9641d6a2e8a3aa1c6fafd4901": {
+        "target": "\\Spryker\\Shared\\AppCatalogGui\\AppCatalogGuiConstants::OAUTH_OPTION_AUDIENCE",
+        "value": "aop-atrs"
+      }
+    }
+  },
+  "Spryker.Asset": {
+    "wire-plugin": {
+      "f4b20110d4acfd2b12e701789f98307640d06178": {
+        "target": "\\Spryker\\Zed\\MessageBroker\\MessageBrokerDependencyProvider::getMessageHandlerPlugins",
+        "source": "\\Spryker\\Zed\\Asset\\Communication\\Plugin\\MessageBroker\\AssetAddedMessageHandlerPlugin"
+      },
+      "a35cc2212b5b985905f56935202b55bc933def12": {
+        "target": "\\Spryker\\Zed\\MessageBroker\\MessageBrokerDependencyProvider::getMessageHandlerPlugins",
+        "source": "\\Spryker\\Zed\\Asset\\Communication\\Plugin\\MessageBroker\\AssetUpdatedMessageHandlerPlugin"
+      },
+      "f0593d75b723f6c2bf4f15d2e1dd54ce0c1965d0": {
+        "target": "\\Spryker\\Zed\\MessageBroker\\MessageBrokerDependencyProvider::getMessageHandlerPlugins",
+        "source": "\\Spryker\\Zed\\Asset\\Communication\\Plugin\\MessageBroker\\AssetDeletedMessageHandlerPlugin"
+      }
+    }
+  },
+  "Spryker.AssetStorage": {
+    "wire-plugin": {
+      "3a6e6466720de91f9edd7240fac1d02cd76184d3": {
+        "target": "\\Spryker\\Zed\\Queue\\QueueDependencyProvider::getProcessorMessagePlugins",
+        "index": "\\Spryker\\Shared\\AssetStorage\\AssetStorageConfig::ASSET_SYNC_STORAGE_QUEUE",
+        "source": "\\Spryker\\Zed\\Synchronization\\Communication\\Plugin\\Queue\\SynchronizationStorageQueueMessageProcessorPlugin"
+      },
+      "b79f3cabc0449d63601e1220852bfdcda3247ef7": {
+        "target": "\\Spryker\\Zed\\Synchronization\\SynchronizationDependencyProvider::getSynchronizationDataPlugins",
+        "source": "\\Spryker\\Zed\\AssetStorage\\Communication\\Plugin\\Synchronization\\AssetStorageSynchronizationDataPlugin"
+      }
+    }
+  },
+  "Spryker.MessageBroker": {
+    "wire-plugin": {
+      "381f5c5a49811e61b8f4e3cced9e46eb5d159867": {
+        "target": "\\Spryker\\Zed\\Console\\ConsoleDependencyProvider::getConsoleCommands",
+        "source": "\\Spryker\\Zed\\MessageBroker\\Communication\\Plugin\\Console\\MessageBrokerWorkerConsole"
+      },
+      "9e6bf4345e7b5a785d45779e6b7fd10c8c57b826": {
+        "target": "\\Spryker\\Zed\\MessageBroker\\MessageBrokerDependencyProvider::getMessageAttributeProviderPlugins",
+        "source": "\\Spryker\\Zed\\MessageBroker\\Communication\\Plugin\\MessageBroker\\CorrelationIdMessageAttributeProviderPlugin"
+      },
+      "df07ea8cc1a72c9dbbdce77f7909585188607469": {
+        "target": "\\Spryker\\Zed\\MessageBroker\\MessageBrokerDependencyProvider::getMessageAttributeProviderPlugins",
+        "source": "\\Spryker\\Zed\\MessageBroker\\Communication\\Plugin\\MessageBroker\\TimestampMessageAttributeProviderPlugin"
+      },
+      "084e7028cc449a96cb05c27886a73c9ae9710793": {
+        "target": "\\Spryker\\Zed\\MessageBroker\\MessageBrokerDependencyProvider::getMiddlewarePlugins",
+        "source": "\\Spryker\\Zed\\MessageBroker\\Communication\\Plugin\\MessageBroker\\ValidationMiddlewarePlugin"
+      }
+    }
+  },
+  "Spryker.MessageBrokerAws": {
+    "wire-plugin": {
+      "27543b55fbcb72fd4a96f88f4f0782f2b6091949": {
+        "target": "\\Spryker\\Zed\\MessageBroker\\MessageBrokerDependencyProvider::getMessageSenderPlugins",
+        "source": "\\Spryker\\Zed\\MessageBrokerAws\\Communication\\Plugin\\MessageBroker\\Sender\\AwsSnsMessageSenderPlugin"
+      },
+      "e48756682cd6641970cde8a8c72b3201f873c38a": {
+        "target": "\\Spryker\\Zed\\MessageBroker\\MessageBrokerDependencyProvider::getMessageSenderPlugins",
+        "source": "\\Spryker\\Zed\\MessageBrokerAws\\Communication\\Plugin\\MessageBroker\\Sender\\AwsSqsMessageSenderPlugin"
+      },
+      "f8b60dedbb03be5a2a7ec7059122ffcdb68bfea4": {
+        "target": "\\Spryker\\Zed\\MessageBroker\\MessageBrokerDependencyProvider::getMessageSenderPlugins",
+        "source": "\\Spryker\\Zed\\MessageBrokerAws\\Communication\\Plugin\\MessageBroker\\Sender\\HttpMessageSenderPlugin"
+      },
+      "1ee2af8b6b0d9308ca548b0695904869d32a5ce1": {
+        "target": "\\Spryker\\Zed\\MessageBroker\\MessageBrokerDependencyProvider::getMessageReceiverPlugins",
+        "source": "\\Spryker\\Zed\\MessageBrokerAws\\Communication\\Plugin\\MessageBroker\\Receiver\\AwsSqsMessageReceiverPlugin"
+      }
+    }
+  },
+  "Spryker.OauthAuth0": {
+    "wire-plugin": {
+      "7d7537ea24eaef4d885af980848a063e8206649f": {
+        "target": "\\Spryker\\Zed\\OauthClient\\OauthClientDependencyProvider::getOauthAccessTokenProviderPlugins",
+        "source": "\\Spryker\\Zed\\OauthAuth0\\Communication\\Plugin\\OauthClient\\Auth0OauthAccessTokenProviderPlugin"
+      }
+    }
+  },
+  "Spryker.OauthClient": {
+    "configure-env": {
+      "3bc7e9c28e289fea503d9b65ed774760c2fa8242": {
+        "target": "\\Spryker\\Shared\\OauthClient\\OauthClientConstants::OAUTH_PROVIDER_NAME_FOR_MESSAGE_BROKER",
+        "value": "\\Spryker\\Zed\\OauthAuth0\\OauthAuth0Config::PROVIDER_NAME"
+      },
+      "d65039c114c4a6747600caf0ec5be64ef4f7280e": {
+        "target": "\\Spryker\\Shared\\OauthClient\\OauthClientConstants::OAUTH_GRANT_TYPE_FOR_MESSAGE_BROKER",
+        "value": "\\Spryker\\Zed\\OauthAuth0\\OauthAuth0Config::GRANT_TYPE_CLIENT_CREDENTIALS"
+      },
+      "f38f700d0a31d0b38c54e7b0b7c2da6fdf93aa16": {
+        "target": "\\Spryker\\Shared\\OauthClient\\OauthClientConstants::OAUTH_OPTION_AUDIENCE_FOR_MESSAGE_BROKER",
+        "value": "aop-event-platform"
+      }
+    },
+    "wire-plugin": {
+      "d8a14e31c477ad0035ec312067ba00d1809889f4": {
+        "target": "\\Spryker\\Zed\\MessageBroker\\MessageBrokerDependencyProvider::getMessageAttributeProviderPlugins",
+        "source": "\\Spryker\\Zed\\OauthClient\\Communication\\Plugin\\AccessTokenMessageAttributeProviderPlugin"
+      }
+    }
+  },
+  "Spryker.OauthDummy": {
+    "wire-plugin": {
+      "19ffa52010f2f696d35eeb88ef7a878103c60110": {
+        "target": "\\Spryker\\Zed\\OauthClient\\OauthClientDependencyProvider::getOauthAccessTokenProviderPlugins",
+        "source": "\\Spryker\\Zed\\OauthDummy\\Communication\\Plugin\\OauthClient\\DummyOauthAccessTokenProviderPlugin"
+      }
+    }
+  },
+  "Spryker.ProductApprovalGui": {
+    "configure-module": {
+      "59fdd4219953f9709fbeb136e25b0208cd7ba75a": {
+        "target": "\\Spryker\\Zed\\ProductApprovalGui\\ProductApprovalGuiConfig::isApprovalStatusTreeCustomizationEnabled",
+        "value": true
+      }
+    }
+  },
+  "Spryker.StoreReference": {
+    "wire-plugin": {
+      "5ee03b742a9a3cbfc9b2cb498459f8936807b46a": {
+        "target": "\\Spryker\\Zed\\OauthClient\\OauthClientDependencyProvider::getAccessTokenRequestExpanderPlugins",
+        "source": "\\Spryker\\Zed\\StoreReference\\Communication\\Plugin\\StoreReferenceAccessTokenRequestExpanderPlugin"
+      }
+    }
+  },
+  "SprykerShop.AssetWidget": {
+    "wire-widget": {
+      "ed34f605cc28cc8b8fc4c699c2bdf88626e0eeca": {
+        "source": "\\SprykerShop\\Yves\\AssetWidget\\Widget\\AssetWidget"
+      }
+    }
+  },
+  "SprykerShop.ProductCategoryWidget": {
+    "wire-widget": {
+      "ca064f8165b550edcbcfffb897f6d4ece5b7ca82": {
+        "source": "\\SprykerShop\\Yves\\ProductCategoryWidget\\Widget\\ProductSchemaOrgCategoryWidget"
       }
     }
   }
