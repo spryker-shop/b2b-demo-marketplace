@@ -1,6 +1,6 @@
 # Spryker B2B Marketplace Demo Shop
-[![Build Status](https://github.com/spryker-shop/b2b-demo-marketplace/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/spryker-shop/b2b-demo-marketplace/actions?query=branch:master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker-shop/b2b-demo-marketplace/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spryker-shop/b2b-demo-marketplace/?branch=master)
+[![Build Status](https://travis-ci.com/spryker/b2b-demo-marketplace-internal.svg?token=uuNLarTLvJGpcdGUgqj2&branch=master)](https://travis-ci.com/spryker/b2b-demo-marketplace-internal)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker/b2b-demo-marketplace-internal/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spryker/b2b-demo-marketplace-internal/?branch=master)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.4-8892BF.svg)](https://php.net/)
 
 
@@ -39,7 +39,7 @@ mkdir spryker-b2b-marketplace && cd spryker-b2b-marketplace
 
 2. Clone the B2B Marketplace Demo Shop:
 ```bash
-git clone https://github.com/spryker-shop/b2b-demo-marketplace.git ./spryker-b2b-marketplace
+git clone https://github.com/spryker/b2b-demo-marketplace-internal.git ./spryker-b2b-marketplace
 ```
 
 3. Clone the Docker SDK:
