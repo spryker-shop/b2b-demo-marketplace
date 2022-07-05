@@ -116,9 +116,9 @@ class OmsDependencyProvider extends SprykerOmsDependencyProvider
     protected function getOmsReservationAggregationPlugins(): array
     {
         return [
-            new ProductPackagingUnitOmsReservationAggregationPlugin(),
-            new ProductOfferOmsReservationAggregationPlugin(),
             new ProductOfferPackagingUnitOmsReservationAggregationPlugin(),
+            new ProductOfferOmsReservationAggregationPlugin(),
+            new ProductPackagingUnitOmsReservationAggregationPlugin(),
         ];
     }
 
