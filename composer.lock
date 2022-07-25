@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "af7c6f6e55a5f06a45d6bcf6be3a8432",
+    "content-hash": "71e5ab02f697c84fb4192e0b8ae18283",
     "packages": [
         {
             "name": "async-aws/core",
@@ -4410,7 +4410,7 @@
         },
         {
             "name": "spryker-feature/cart",
-            "version": "202204.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/cart.git",
@@ -4432,6 +4432,7 @@
                 "spryker/cart-variant": "^2.0.0",
                 "spryker/persistent-cart": "^3.5.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -5646,7 +5647,7 @@
         },
         {
             "name": "spryker-feature/marketplace-product-offer-prices",
-            "version": "dev-master",
+            "version": "202204.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/marketplace-product-offer-prices.git",
@@ -5678,7 +5679,6 @@
                 "spryker-feature/marketplace-product-offer": "Recommended feature dependency.",
                 "spryker-feature/prices": "Recommended feature dependency."
             },
-            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -17539,20 +17539,20 @@
         },
         {
             "name": "spryker/cart",
-            "version": "7.10.2",
+            "version": "7.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/cart.git",
-                "reference": "192280aa35beececc7331864e1801b38e111439b"
+                "reference": "ebd230c1dedd7aca91de9ccc4f9208d636d7d92e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/cart/zipball/192280aa35beececc7331864e1801b38e111439b",
-                "reference": "192280aa35beececc7331864e1801b38e111439b",
+                "url": "https://api.github.com/repos/spryker/cart/zipball/ebd230c1dedd7aca91de9ccc4f9208d636d7d92e",
+                "reference": "ebd230c1dedd7aca91de9ccc4f9208d636d7d92e",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.3",
+                "php": ">=7.4",
                 "spryker/calculation": "^4.9.0",
                 "spryker/cart-extension": "^1.11.0 || ^2.7.0 || ^4.3.0",
                 "spryker/kernel": "^3.30.0",
@@ -17595,9 +17595,9 @@
             ],
             "description": "Cart module",
             "support": {
-                "source": "https://github.com/spryker/cart/tree/7.10.2"
+                "source": "https://github.com/spryker/cart/tree/7.11.0"
             },
-            "time": "2021-07-08T15:51:44+00:00"
+            "time": "2022-06-21T11:22:24+00:00"
         },
         {
             "name": "spryker/cart-code",
@@ -38420,16 +38420,16 @@
         },
         {
             "name": "spryker/price-product-offer-gui",
-            "version": "1.1.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/price-product-offer-gui.git",
-                "reference": "aad4f8e74833f9187fe962131b85cd4adf21f941"
+                "reference": "fa68f02f3cb7b57cb62726945920108d766ac184"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/price-product-offer-gui/zipball/aad4f8e74833f9187fe962131b85cd4adf21f941",
-                "reference": "aad4f8e74833f9187fe962131b85cd4adf21f941",
+                "url": "https://api.github.com/repos/spryker/price-product-offer-gui/zipball/fa68f02f3cb7b57cb62726945920108d766ac184",
+                "reference": "fa68f02f3cb7b57cb62726945920108d766ac184",
                 "shasum": ""
             },
             "require": {
@@ -38437,17 +38437,11 @@
                 "spryker/kernel": "^3.33.0",
                 "spryker/price": "^5.6.0",
                 "spryker/price-product": "^4.16.0",
-                "spryker/product-merchant-portal-gui-extension": "^1.1.0",
                 "spryker/product-offer-gui-extension": "^1.0.0",
-                "spryker/transfer": "^3.25.0",
                 "spryker/util-encoding": "^2.1.0"
             },
             "require-dev": {
-                "spryker/code-sniffer": "*",
-                "spryker/product": "*",
-                "spryker/product-offer": "*",
-                "spryker/propel": "*",
-                "spryker/testify": "*"
+                "spryker/code-sniffer": "*"
             },
             "type": "library",
             "extra": {
@@ -38466,9 +38460,9 @@
             ],
             "description": "PriceProductOfferGui module",
             "support": {
-                "source": "https://github.com/spryker/price-product-offer-gui/tree/1.1.0"
+                "source": "https://github.com/spryker/price-product-offer-gui/tree/1.0.1"
             },
-            "time": "2022-07-14T11:12:48+00:00"
+            "time": "2022-04-26T16:30:57+00:00"
         },
         {
             "name": "spryker/price-product-offer-storage",
@@ -66745,12 +66739,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-sdk/integrator.git",
-                "reference": "6b313960be66b2b544b21a9410083dd1fb1d0577"
+                "reference": "3fd423c67c1786305c54c61bedd7ebb882730cb5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-sdk/integrator/zipball/6b313960be66b2b544b21a9410083dd1fb1d0577",
-                "reference": "6b313960be66b2b544b21a9410083dd1fb1d0577",
+                "url": "https://api.github.com/repos/spryker-sdk/integrator/zipball/3fd423c67c1786305c54c61bedd7ebb882730cb5",
+                "reference": "3fd423c67c1786305c54c61bedd7ebb882730cb5",
                 "shasum": ""
             },
             "require": {
@@ -66794,7 +66788,7 @@
                 "issues": "https://github.com/spryker-sdk/integrator/issues",
                 "source": "https://github.com/spryker-sdk/integrator/tree/hotfix/incorrect-manifest-path"
             },
-            "time": "2022-04-22T12:47:22+00:00"
+            "time": "2022-05-06T07:28:16+00:00"
         },
         {
             "name": "spryker-sdk/phpstan-spryker",
@@ -68539,7 +68533,7 @@
     ],
     "aliases": [
         {
-            "package": "spryker-feature/marketplace-product-offer-prices",
+            "package": "spryker-feature/cart",
             "version": "9999999-dev",
             "alias": "202210.0",
             "alias_normalized": "202210.0"
@@ -68547,7 +68541,7 @@
     ],
     "minimum-stability": "dev",
     "stability-flags": {
-        "spryker-feature/marketplace-product-offer-prices": 20,
+        "spryker-feature/cart": 20,
         "spryker-sdk/integrator": 20,
         "spryker/docker-chromedriver": 20
     },
