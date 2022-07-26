@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6b1e97e615f3760013cd0b2000e67d26",
+    "content-hash": "71e5ab02f697c84fb4192e0b8ae18283",
     "packages": [
         {
             "name": "async-aws/core",
@@ -4410,7 +4410,7 @@
         },
         {
             "name": "spryker-feature/cart",
-            "version": "202204.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/cart.git",
@@ -4432,6 +4432,7 @@
                 "spryker/cart-variant": "^2.0.0",
                 "spryker/persistent-cart": "^3.5.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -17538,20 +17539,20 @@
         },
         {
             "name": "spryker/cart",
-            "version": "7.10.2",
+            "version": "7.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/cart.git",
-                "reference": "192280aa35beececc7331864e1801b38e111439b"
+                "reference": "ebd230c1dedd7aca91de9ccc4f9208d636d7d92e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/cart/zipball/192280aa35beececc7331864e1801b38e111439b",
-                "reference": "192280aa35beececc7331864e1801b38e111439b",
+                "url": "https://api.github.com/repos/spryker/cart/zipball/ebd230c1dedd7aca91de9ccc4f9208d636d7d92e",
+                "reference": "ebd230c1dedd7aca91de9ccc4f9208d636d7d92e",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.3",
+                "php": ">=7.4",
                 "spryker/calculation": "^4.9.0",
                 "spryker/cart-extension": "^1.11.0 || ^2.7.0 || ^4.3.0",
                 "spryker/kernel": "^3.30.0",
@@ -17594,9 +17595,9 @@
             ],
             "description": "Cart module",
             "support": {
-                "source": "https://github.com/spryker/cart/tree/7.10.2"
+                "source": "https://github.com/spryker/cart/tree/7.11.0"
             },
-            "time": "2021-07-08T15:51:44+00:00"
+            "time": "2022-06-21T11:22:24+00:00"
         },
         {
             "name": "spryker/cart-code",
@@ -43897,16 +43898,16 @@
         },
         {
             "name": "spryker/product-offer-stock-gui",
-            "version": "1.0.2",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-offer-stock-gui.git",
-                "reference": "1c76ccdde862216dbfb79a6db01dbfc0d58ac8b9"
+                "reference": "5463f9aadbf3ee5ef3761acb641c13704d47a92a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-offer-stock-gui/zipball/1c76ccdde862216dbfb79a6db01dbfc0d58ac8b9",
-                "reference": "1c76ccdde862216dbfb79a6db01dbfc0d58ac8b9",
+                "url": "https://api.github.com/repos/spryker/product-offer-stock-gui/zipball/5463f9aadbf3ee5ef3761acb641c13704d47a92a",
+                "reference": "5463f9aadbf3ee5ef3761acb641c13704d47a92a",
                 "shasum": ""
             },
             "require": {
@@ -43937,9 +43938,9 @@
             ],
             "description": "ProductOfferStockGui module",
             "support": {
-                "source": "https://github.com/spryker/product-offer-stock-gui/tree/1.0.2"
+                "source": "https://github.com/spryker/product-offer-stock-gui/tree/1.0.1"
             },
-            "time": "2022-07-04T15:24:13+00:00"
+            "time": "2022-04-26T16:30:57+00:00"
         },
         {
             "name": "spryker/product-offer-stock-gui-extension",
@@ -68530,9 +68531,17 @@
             "time": "2015-12-17T08:42:14+00:00"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "package": "spryker-feature/cart",
+            "version": "9999999-dev",
+            "alias": "202210.0",
+            "alias_normalized": "202210.0"
+        }
+    ],
     "minimum-stability": "dev",
     "stability-flags": {
+        "spryker-feature/cart": 20,
         "spryker-sdk/integrator": 20,
         "spryker/docker-chromedriver": 20
     },
@@ -68555,5 +68564,5 @@
     "platform-overrides": {
         "php": "7.4.20"
     },
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.2.0"
 }
