@@ -47,9 +47,12 @@
     {% endif %}
 
     {% if data.form.children[additionalColumn.dataPath] is defined %}
+        {% set customFieldName = data.customFieldNamePattern | replace({'%name%': data.form.children[additionalColumn.dataPath].vars.name}) %}
+
         {# Don't replace class name with config.jsName, it's used also for `quick-order-row` component #}
         {{ form_widget(data.form.children[additionalColumn.dataPath], {
-            full_name: data.customFieldNamePattern | replace({'%name%': data.form.children[additionalColumn.dataPath].vars.name}),
+            full_name: customFieldName,
+            id: customFieldName,
             attr: {
                 class: 'js-quick-order-row-partial__additional-form-element',
             },
