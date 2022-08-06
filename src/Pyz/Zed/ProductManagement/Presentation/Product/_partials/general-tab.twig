@@ -1,0 +1,60 @@
+{# @var locale \Generated\Shared\Transfer\LocaleTransfer #}
+
+<div class="well">
+    {% apply trans|raw %}
+        <h3>{{ 'Add General Information' | trans }}</h3>
+        <p>{{ 'Below the name and description for your product can be edited for different locales (in different languages).' | trans }}</p>
+        <p><i>{{ 'Note: The SKU prefix, just like the SKUs of your product variants, are not editable after saving anymore.' | trans }}</i></p>
+    {% endapply %}
+</div>
+
+{% if merchant is defined and merchant is not empty %}
+    <div class="row">
+        <div class="col-xs-2"><strong>{{ 'Merchant' | trans }}</strong></div>
+        <div class="col-xs-10">
+            <a target="_blank" href="/merchant-gui/edit-merchant?id-merchant={{ merchant.idMerchant}}">
+                {{ merchant.name }}
+            </a>
+        </div>
+    </div>
+    <div class="hr-line-dashed"></div>
+{% endif %}
+
+{% if currentProduct is defined %}
+    {% include '@ProductApprovalGui/Partials/approval_status_label.twig' ignore missing with {
+        product: currentProduct,
+    } only %}
+{% endif %}
+
+{% if form.store_relation is defined %}
+    {{ form_widget(form.store_relation) }}
+{% endif %}
+
+{{ form_row(form.sku) }}
+
+{% for locale in localeCollection %}
+    {% set formKey = 'general_' ~ locale.localeName %}
+
+    {% if form[formKey] is defined %}
+
+        {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.first), 'localeName': locale.localeName} %}
+            {% block content %}
+                {% for input in form[formKey] %}
+                    <div class="form-group {% if input.vars.errors|length %}has-error{% endif %}">
+                        {{ form_label(input) }}
+                        {{ form_widget(input, {'attr': {'class': 'name-translation'}}) }}
+                        {{ form_errors(input) }}
+                    </div>
+                {% endfor %}
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
+{% endfor %}
+
+{% if form.new_from is defined %}
+    <p>{{ form_row(form.new_from) }}</p>
+{% endif %}
+
+{% if form.new_to is defined %}
+    <p>{{ form_row(form.new_to) }}</p>
+{% endif %}
