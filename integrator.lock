@@ -6249,5 +6249,37 @@
         "source": "\\SprykerShop\\Yves\\ProductCategoryWidget\\Widget\\ProductSchemaOrgCategoryWidget"
       }
     }
+  },
+  "Spryker.CmsContentWidgetProductConnector": {
+    "wire-plugin": {
+      "99f30a538b7ee8c6bf0d89c209d368cf6c5ed70a": {
+        "target": "\\Spryker\\Zed\\CmsContentWidget\\CmsContentWidgetDependencyProvider::getCmsContentWidgetParameterMapperPlugins",
+        "source": "\\Spryker\\Zed\\CmsContentWidgetProductConnector\\Communication\\Plugin\\Cms\\CmsProductSkuMapperPlugin"
+      }
+    }
+  },
+  "Spryker.CmsContentWidgetProductSetConnector": {
+    "wire-plugin": {
+      "fb18a264ff59d87bdc7390c91f67ae4e27e18d63": {
+        "target": "\\Spryker\\Zed\\CmsContentWidget\\CmsContentWidgetDependencyProvider::getCmsContentWidgetParameterMapperPlugins",
+        "source": "\\Spryker\\Zed\\CmsContentWidgetProductSetConnector\\Communication\\Plugin\\Cms\\CmsProductSetKeyMapperPlugin"
+      }
+    }
+  },
+  "SprykerShop.CmsContentWidgetProductConnector": {
+    "wire-plugin": {
+      "dc22914cd06932316d80802fd4ba656394665af8": {
+        "target": "\\Spryker\\Zed\\CmsContentWidget\\CmsContentWidgetDependencyProvider::getCmsContentWidgetParameterMapperPlugins",
+        "source": "\\Spryker\\Zed\\CmsContentWidgetProductConnector\\Communication\\Plugin\\Cms\\CmsProductSkuMapperPlugin"
+      }
+    }
+  },
+  "SprykerShop.CmsContentWidgetProductSetConnector": {
+    "wire-plugin": {
+      "a35f21f7f346b56bcbbaec45e199286b19ee9801": {
+        "target": "\\Spryker\\Zed\\CmsContentWidget\\CmsContentWidgetDependencyProvider::getCmsContentWidgetParameterMapperPlugins",
+        "source": "\\Spryker\\Zed\\CmsContentWidgetProductSetConnector\\Communication\\Plugin\\Cms\\CmsProductSetKeyMapperPlugin"
+      }
+    }
   }
 }
