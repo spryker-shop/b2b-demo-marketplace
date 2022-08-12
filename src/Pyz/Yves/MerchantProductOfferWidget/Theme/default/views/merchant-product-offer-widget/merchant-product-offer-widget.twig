@@ -1,9 +1,5 @@
 {% extends view('merchant-product-offer-widget', '@SprykerShop:MerchantProductOfferWidget') %}
 
-{% define data = {
-    isTitleVisible: true,
-} %}
-
 {% block content %}
     {% set priceMode = data.productView.currentProductPrice.priceMode | default %}
 

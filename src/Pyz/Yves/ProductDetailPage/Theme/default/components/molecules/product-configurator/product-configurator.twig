@@ -170,7 +170,7 @@
                     },
                 } %}
                     {% block content %}
-                        {% set isRadioButtonVisible = embed.productOffersCount + embed.hasMerchantProduct > 1 %}
+                        {% set isRadioButtonVisible = embed.productOffersCount > 1 or embed.hasMerchantProduct %}
 
                         {{ parent() }}
                     {% endblock %}
