@@ -55,6 +55,9 @@ image:
         enabled-extensions:
             - blackfire
             - newrelic
+    node:
+        version: 16
+        npm: 8
 
 composer:
     mode: --no-dev
@@ -111,17 +114,17 @@ groups:
                         store: DE
                         redirect:
                             type: 302
-                            url: www.de.mp-b2b.internal-testing.demo-spryker.com                  
+                            url: www.de.mp-b2b.internal-testing.demo-spryker.com
                     de.mp-b2b.internal-testing.demo-spryker.com:
                         store: DE
                         redirect:
                             type: 302
-                            url: www.de.mp-b2b.internal-testing.demo-spryker.com     
+                            url: www.de.mp-b2b.internal-testing.demo-spryker.com
                     at.mp-b2b.internal-testing.demo-spryker.com:
                         store: AT
                         redirect:
                             type: 302
-                            url: www.at.mp-b2b.internal-testing.demo-spryker.com     
+                            url: www.at.mp-b2b.internal-testing.demo-spryker.com
             yves:
                 application: yves
                 endpoints:
