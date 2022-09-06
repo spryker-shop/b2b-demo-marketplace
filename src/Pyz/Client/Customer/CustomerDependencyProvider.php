@@ -44,7 +44,7 @@ class CustomerDependencyProvider extends SprykerCustomerDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\Customer\Dependency\Plugin\DefaultAddressChangePluginInterface[]
+     * @return array<\Spryker\Client\CustomerExtension\Dependency\Plugin\DefaultAddressChangePluginInterface>
      */
     protected function getDefaultAddressChangePlugins()
     {
