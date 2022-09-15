@@ -11,7 +11,6 @@ use Spryker\Client\Agent\Plugin\Customer\AgentAccessCustomerSecuredPatternRulePl
 use Spryker\Client\Cart\Plugin\CustomerChangeCartUpdatePlugin;
 use Spryker\Client\Customer\CustomerDependencyProvider as SprykerCustomerDependencyProvider;
 use Spryker\Client\Customer\Plugin\Customer\CustomerAddressDefaultAddressChangePlugin;
-use Spryker\Client\Customer\Plugin\CustomerAddressSessionUpdatePlugin;
 use Spryker\Client\Customer\Plugin\CustomerTransferSessionRefreshPlugin;
 use Spryker\Client\CustomerAccessPermission\Plugin\Customer\CustomerAccessSecuredPatternRulePlugin;
 use Spryker\Client\CustomerExtension\Dependency\Plugin\AccessTokenAuthenticationHandlerPluginInterface;
