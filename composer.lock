@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1a6f50995cb50ea338b61ef7a8acf576",
+    "content-hash": "e662769c465855240323976ecc92dd0e",
     "packages": [
         {
             "name": "async-aws/core",
@@ -4222,7 +4222,7 @@
         },
         {
             "name": "spryker-feature/acl",
-            "version": "202204.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/acl.git",
@@ -4241,6 +4241,7 @@
                 "spryker/acl-entity": "^1.4.0",
                 "spryker/acl-entity-data-import": "^0.2.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -68729,6 +68730,12 @@
     ],
     "aliases": [
         {
+            "package": "spryker-feature/acl",
+            "version": "9999999-dev",
+            "alias": "202210.0",
+            "alias_normalized": "202210.0"
+        },
+        {
             "package": "spryker-feature/cart",
             "version": "9999999-dev",
             "alias": "202210.0",
@@ -68743,6 +68750,7 @@
     ],
     "minimum-stability": "dev",
     "stability-flags": {
+        "spryker-feature/acl": 20,
         "spryker-feature/cart": 20,
         "spryker-feature/marketplace-product-offer-prices": 20,
         "spryker-sdk/integrator": 20,
