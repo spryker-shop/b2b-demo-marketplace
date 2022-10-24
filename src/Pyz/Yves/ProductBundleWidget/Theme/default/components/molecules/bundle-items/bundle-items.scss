@@ -1,0 +1,41 @@
+@include product-bundle-widget-bundle-items() {
+    font-size: rem(15);
+    margin-bottom: rem(21);
+
+    @include helper-breakpoint-media-min($lg) {
+        border-top: solid rem(1) $setting-color-gray-6;
+    }
+
+    &__item {
+        display: flex;
+        margin-bottom: rem(10);
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    &__title {
+        line-height: rem(54);
+        color: $setting-color-gray-5;
+
+        @include helper-breakpoint-media-min($lg) {
+            font-size: rem(16);
+        }
+    }
+
+    &__details {
+        padding-left: rem(18);
+        font-weight: fw(regular);
+    }
+
+    &__name {
+        @include helper-effect-transition(color);
+        color: $setting-color-gray-5;
+        line-height: rem(18);
+    }
+
+    &__quantity {
+        color: $setting-color-gray-3;
+    }
+}
