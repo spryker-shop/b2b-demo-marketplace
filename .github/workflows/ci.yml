@@ -17,7 +17,7 @@ jobs:
             fail-fast: false
             matrix:
                 php-version: [
-                        '8.0',
+                    '8.0',
                 ]
 
         env:
@@ -115,8 +115,9 @@ jobs:
 
             - name: Frontend install-dependencies
               run: |
-                  vendor/bin/console frontend:mp:install-dependencies
-                  vendor/bin/console frontend:zed:install-dependencies
+                  vendor/bin/console frontend:project:install-dependencies
+                  vendor/bin/console frontend:yves:install-dependencies
+
             - name: Install NPM packages
               run: |
                   sudo npm install -g --unsafe-perm speccy@0.11.0
@@ -132,12 +133,6 @@ jobs:
 
             - name: Front-end Formatter
               run: node ./frontend/libs/formatter
-
-            - name: Front-end MP Unit Tests
-              run: yarn mp:test
-
-            - name: Front-end MP Build
-              run: vendor/bin/console frontend:mp:build -e production
 
             - name: Validate propel files
               run: |
@@ -329,7 +324,7 @@ jobs:
                   docker/sdk up -t -v
                   docker/sdk testing codecept run -c codeception.functional.yml
 
-    frontend-assets-via-docker-php-7-4:
+    frontend-assets-via-docker-php-8-0:
         name: "Docker / Alpine / PHP 8.0 / Frontend & Assets"
         runs-on: ubuntu-18.04
         env:
