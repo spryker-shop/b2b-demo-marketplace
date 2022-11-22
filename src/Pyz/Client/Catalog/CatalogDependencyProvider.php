@@ -116,12 +116,15 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
      */
     protected function createCatalogSearchResultFormatterPlugins(): array
     {
+        /** @phpstan-var \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface $rawCatalogSearchResultFormatterPlugin */
+        $rawCatalogSearchResultFormatterPlugin = new RawCatalogSearchResultFormatterPlugin();
+
         return [
             new FacetResultFormatterPlugin(),
             new SortedResultFormatterPlugin(),
             new PaginatedResultFormatterPlugin(),
             new CurrencyAwareCatalogSearchResultFormatterPlugin(
-                new RawCatalogSearchResultFormatterPlugin()
+                $rawCatalogSearchResultFormatterPlugin,
             ),
             new SpellingSuggestionResultFormatterPlugin(),
             new CategoryTreeFilterPageSearchResultFormatterPlugin(),
@@ -155,7 +158,7 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
         return [
             new CompletionResultFormatterPlugin(),
             new CurrencyAwareSuggestionByTypeResultFormatter(
-                new SuggestionByTypeResultFormatterPlugin()
+                new SuggestionByTypeResultFormatterPlugin(),
             ),
         ];
     }
