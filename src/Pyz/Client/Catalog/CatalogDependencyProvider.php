@@ -75,6 +75,8 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
     }
 
     /**
+     * @phpstan-return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
+     *
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
     protected function createCatalogSearchQueryPlugin()
@@ -108,7 +110,9 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     * @phpstan-return array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface>
+     *
+     * @return array<\Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface>
      */
     protected function createCatalogSearchResultFormatterPlugins(): array
     {
@@ -142,7 +146,9 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     * @phpstan-return array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface>
+     *
+     * @return array<\Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface>
      */
     protected function createSuggestionResultFormatterPlugins(): array
     {
@@ -170,7 +176,9 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     * @phpstan-return array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface>
+     *
+     * @return array<\Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface>
      */
     protected function getProductConcreteCatalogSearchResultFormatterPlugins(): array
     {

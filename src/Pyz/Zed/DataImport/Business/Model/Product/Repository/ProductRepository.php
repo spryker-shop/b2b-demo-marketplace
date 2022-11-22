@@ -43,7 +43,7 @@ class ProductRepository implements ProductRepositoryInterface
      *
      * @return int
      */
-    public function getIdProductByConcreteSku($sku)
+    public function getIdProductByConcreteSku($sku): int
     {
         if (!isset(static::$resolved[$sku])) {
             $this->resolveProductByConcreteSku($sku);
@@ -57,7 +57,7 @@ class ProductRepository implements ProductRepositoryInterface
      *
      * @return string
      */
-    public function getAbstractSkuByConcreteSku($sku)
+    public function getAbstractSkuByConcreteSku($sku): string
     {
         if (!isset(static::$resolved[$sku])) {
             $this->resolveProductByConcreteSku($sku);
@@ -71,7 +71,7 @@ class ProductRepository implements ProductRepositoryInterface
      *
      * @return int
      */
-    public function getIdProductAbstractByAbstractSku($sku)
+    public function getIdProductAbstractByAbstractSku($sku): int
     {
         if (!isset(static::$resolved[$sku])) {
             $this->resolveProductByAbstractSku($sku);
@@ -143,7 +143,7 @@ class ProductRepository implements ProductRepositoryInterface
      *
      * @return void
      */
-    public function addProductAbstract(SpyProductAbstract $productAbstractEntity)
+    public function addProductAbstract(SpyProductAbstract $productAbstractEntity): void
     {
         static::$resolved[$productAbstractEntity->getSku()] = [
             static::ID_PRODUCT_ABSTRACT => $productAbstractEntity->getIdProductAbstract(),
@@ -156,7 +156,7 @@ class ProductRepository implements ProductRepositoryInterface
      *
      * @return void
      */
-    public function addProductConcrete(SpyProduct $productEntity, $abstractSku = null)
+    public function addProductConcrete(SpyProduct $productEntity, $abstractSku = null): void
     {
         static::$resolved[$productEntity->getSku()] = [
             static::ID_PRODUCT => $productEntity->getIdProduct(),
