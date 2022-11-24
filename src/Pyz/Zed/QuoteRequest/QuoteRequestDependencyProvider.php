@@ -25,7 +25,7 @@ class QuoteRequestDependencyProvider extends SprykerQuoteRequestDependencyProvid
     }
 
     /**
-     * @return list<\Spryker\Zed\QuoteRequestExtension\Dependency\Plugin\QuoteRequestValidatorPluginInterface>
+     * @return array<\Spryker\Zed\QuoteRequestExtension\Dependency\Plugin\QuoteRequestValidatorPluginInterface>
      */
     protected function getQuoteRequestValidatorPlugins(): array
     {
@@ -35,7 +35,7 @@ class QuoteRequestDependencyProvider extends SprykerQuoteRequestDependencyProvid
     }
 
     /**
-     * @return list<\Spryker\Zed\QuoteRequestExtension\Dependency\Plugin\QuoteRequestUserValidatorPluginInterface>
+     * @return array<\Spryker\Zed\QuoteRequestExtension\Dependency\Plugin\QuoteRequestUserValidatorPluginInterface>
      */
     protected function getQuoteRequestUserValidatorPlugins(): array
     {
