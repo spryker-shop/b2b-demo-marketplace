@@ -185,10 +185,11 @@
                         {% set value = data.cartItem.quantitySalesUnit.value %}
                         {% set precision = data.cartItem.quantitySalesUnit.precision %}
                         {% set salesUnitName = data.cartItem.quantitySalesUnit.productMeasurementUnit.name | default %}
+                        {% set salesUnitValue = value / precision %}
 
                         <p>
                             <small class="text-secondary">
-                                [= {{ value / precision | executeFilterIfExists('formatFloat', app.locale) }} {{ salesUnitName | trans }}]
+                                [= {{ salesUnitValue | executeFilterIfExists('formatFloat', app.locale) }} {{ salesUnitName | trans }}]
                             </small>
                         </p>
                     {% endif %}
