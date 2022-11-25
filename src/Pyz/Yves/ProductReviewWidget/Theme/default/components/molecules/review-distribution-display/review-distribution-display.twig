@@ -20,7 +20,7 @@
 
         <tr>
             <td class="{{ config.name }}__summary-stars">
-                {{ rating }}
+                {{ rating | executeFilterIfExists('formatInt', app.locale) }}
 
                 {% set amount = rating > 1 ? 'multiple' : rating %}
 
@@ -30,7 +30,7 @@
                 }) }}
             </td>
             <td>
-                <div class="{{ config.name }}__progress" max="{{ data.summary.totalReview | executeFilterIfExists('formatInt', app.locale) }}" value="{{ ratingReview }}">
+                <div class="{{ config.name }}__progress" max="{{ data.summary.totalReview }}" value="{{ ratingReview }}">
                     <div class="{{ config.name }}__progress-active" style="left: -{{ ratingReviewPercent }}%;"></div>
                 </div>
             </td>

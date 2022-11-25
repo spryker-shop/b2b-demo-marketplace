@@ -188,7 +188,7 @@
 
                         <p>
                             <small class="text-secondary">
-                                [= {{ value / precision }} {{ salesUnitName | trans }}]
+                                [= {{ value / precision | executeFilterIfExists('formatFloat', app.locale) }} {{ salesUnitName | trans }}]
                             </small>
                         </p>
                     {% endif %}
