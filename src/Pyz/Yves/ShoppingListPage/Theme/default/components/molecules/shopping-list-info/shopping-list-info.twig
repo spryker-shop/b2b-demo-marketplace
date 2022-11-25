@@ -34,12 +34,12 @@
                 {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
                     <a href="{{ url('shopping-list/share', { idShoppingList: data.shoppingList.idShoppingList }) }}">
                         {{ data.shoppingList.sharedCompanyUsers.count | executeFilterIfExists('formatInt', app.locale) ~ ' ' ~ 'company.account.company_user' | trans }},
-                        {{ data.shoppingList.sharedCompanyBusinessUnits.count ~ ' ' ~ 'company.account.business_unit' | trans }}
+                        {{ data.shoppingList.sharedCompanyBusinessUnits.count | executeFilterIfExists('formatInt', app.locale) ~ ' ' ~ 'company.account.business_unit' | trans }}
                     </a>
                 {% else %}
                     <span>
                         {{ data.shoppingList.sharedCompanyUsers.count | executeFilterIfExists('formatInt', app.locale) ~ ' ' ~ 'company.account.company_user' | trans }},
-                        {{ data.shoppingList.sharedCompanyBusinessUnits.count ~ ' ' ~ 'company.account.business_unit' | trans }}
+                        {{ data.shoppingList.sharedCompanyBusinessUnits.count | executeFilterIfExists('formatInt', app.locale) ~ ' ' ~ 'company.account.business_unit' | trans }}
                     </span>
                 {% endif %}
             </div>
