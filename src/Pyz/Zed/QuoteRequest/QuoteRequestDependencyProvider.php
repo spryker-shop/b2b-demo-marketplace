@@ -15,7 +15,7 @@ use Spryker\Zed\QuoteRequest\QuoteRequestDependencyProvider as SprykerQuoteReque
 class QuoteRequestDependencyProvider extends SprykerQuoteRequestDependencyProvider
 {
     /**
-     * @return list<\Spryker\Zed\QuoteRequestExtension\Dependency\Plugin\QuoteRequestPreCreateCheckPluginInterface>
+     * @return array<\Spryker\Zed\QuoteRequestExtension\Dependency\Plugin\QuoteRequestPreCreateCheckPluginInterface>
      */
     protected function getQuoteRequestPreCreateCheckPlugins(): array
     {
