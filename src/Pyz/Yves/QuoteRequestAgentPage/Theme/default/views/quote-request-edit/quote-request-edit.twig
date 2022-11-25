@@ -145,7 +145,7 @@
                                     <div class="{{ config.name }}__inner-section {{ config.name }}__inner-section--text-light col col--sm-4 col--lg-2 text-right">
                                         {% block quantity %}
                                             <span class="{{ config.name }}__text">
-                                                {{ 'configured_bundle.multiplier' | trans }} {{ data.quantity }}
+                                                {{ 'configured_bundle.multiplier' | trans }} {{ data.quantity | executeFilterIfExists('formatInt', app.locale) }}
                                             </span>
                                         {% endblock %}
                                     </div>
@@ -340,7 +340,7 @@
                                     <div class="{{ config.name }}__inner-section {{ config.name }}__inner-section--text-light col col--sm-4 col--lg-2 text-right">
                                         {% block quantity %}
                                             <span class="{{ config.name }}__text">
-                                                {{ 'configured_bundle.multiplier' | trans }} {{ data.quantity }}
+                                                {{ 'configured_bundle.multiplier' | trans }} {{ data.quantity | executeFilterIfExists('formatInt', app.locale) }}
                                             </span>
                                         {% endblock %}
                                     </div>
@@ -529,7 +529,7 @@
                                     <div class="{{ config.name }}__inner-section {{ config.name }}__inner-section--text-light col col--sm-4 col--lg-2 text-right">
                                         {% block quantity %}
                                             <span class="{{ config.name }}__text">
-                                                {{ 'configured_bundle.multiplier' | trans }} {{ data.quantity }}
+                                                {{ 'configured_bundle.multiplier' | trans }} {{ data.quantity | executeFilterIfExists('formatInt', app.locale) }}
                                             </span>
                                         {% endblock %}
                                     </div>

@@ -32,7 +32,7 @@
                     {{ data.cartItem.sku }}
                 </small>
 
-                <p class="text-small"><strong>{{ 'cart.item_quantity' | trans }}:</strong><span class="text-secondary spacing-x spacing-x--inner spacing-x--small">{{ data.cartItem.quantity }}</span></p>
+                <p class="text-small"><strong>{{ 'cart.item_quantity' | trans }}:</strong><span class="text-secondary spacing-x spacing-x--inner spacing-x--small">{{ data.cartItem.quantity | executeFilterIfExists('formatInt', app.locale) }}</span></p>
 
                 {% include molecule('quote-request-item-summary', 'QuoteRequestPage') with {
                     class: 'text-small',
