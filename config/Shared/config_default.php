@@ -237,13 +237,13 @@ $config[UserConstants::USER_SYSTEM_USERS] = [
 ];
 $config[SecuritySystemUserConstants::AUTH_DEFAULT_CREDENTIALS] = [
     'yves_system' => [
-        'token' => getenv('SPRYKER_ZED_REQUEST_TOKEN') ?: '',
+        'token' => getenv('SPRYKER_ZED_REQUEST_TOKEN'),
     ],
 ];
 
 // >> URL Signer
 
-$config[HttpConstants::URI_SIGNER_SECRET_KEY] = getenv('SPRYKER_ZED_REQUEST_TOKEN') ?: null;
+$config[HttpConstants::URI_SIGNER_SECRET_KEY] = getenv('SPRYKER_URI_SIGNER_SECRET_KEY') ?: null;
 
 // ACL: Special rules for specific users
 $config[AclConstants::ACL_DEFAULT_CREDENTIALS] = [
@@ -642,8 +642,6 @@ $config[ProductLabelConstants::PRODUCT_LABEL_TO_DE_ASSIGN_CHUNK_SIZE] = 1000;
 // ----------------------------------------------------------------------------
 
 $config[CartsRestApiConstants::IS_QUOTE_RELOAD_ENABLED] = true;
-
-$config[\Spryker\Shared\Http\HttpConstants::URI_SIGNER_SECRET_KEY] = 'JDJ5JDEwJFE0cXBwYnVVTTV6YVZXSnVmM2l1UWVhRE94WkQ4UjBUeHBEWTNHZlFRTEd4U2F6QVBqejQ2';
 
 // ----------------------------------------------------------------------------
 // ------------------------------ AOP -----------------------------------------
