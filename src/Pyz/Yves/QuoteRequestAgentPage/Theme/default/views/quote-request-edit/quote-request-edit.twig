@@ -381,10 +381,11 @@
                         {% set value = data.cartItem.quantitySalesUnit.value %}
                         {% set precision = data.cartItem.quantitySalesUnit.precision %}
                         {% set salesUnitName = data.cartItem.quantitySalesUnit.productMeasurementUnit.name | default %}
+                        {% set salesUnitValue = value / precision %}
 
                         <p>
                             <small class="text-secondary">
-                                [= {{ value / precision }} {{ salesUnitName | trans }}]
+                                [= {{ salesUnitValue | executeFilterIfExists('formatFloat', app.locale) }} {{ salesUnitName | trans }}]
                             </small>
                         </p>
                     {% endif %}
@@ -571,10 +572,11 @@
                             {% set value = data.cartItem.quantitySalesUnit.value %}
                             {% set precision = data.cartItem.quantitySalesUnit.precision %}
                             {% set salesUnitName = data.cartItem.quantitySalesUnit.productMeasurementUnit.name | default %}
+                            {% set salesUnitValue = value / precision %}
 
                             <p>
                                 <small class="text-secondary">
-                                    [= {{ value / precision }} {{ salesUnitName | trans }}]
+                                    [= {{ salesUnitValue | executeFilterIfExists('formatFloat', app.locale) }} {{ salesUnitName | trans }}]
                                 </small>
                             </p>
                         {% endif %}
