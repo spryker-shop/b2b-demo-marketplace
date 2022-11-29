@@ -30,7 +30,7 @@ export default class QuickOrderRow extends QuickOrderRowCore {
 
         super.registerQuantityInput();
 
-        // TODO(https://spryker.atlassian.net/browse/CC-23779): Remove variable declaration after integration.
+        // TODO(https://spryker.atlassian.net/browse/CC-23779): Remove variable registration after integration.
         this.quantityInput = <HTMLInputElement>(
             (this.getElementsByClassName(`${this.jsName}__quantity`)[0] ||
                 this.getElementsByClassName(`${this.jsName}-partial__quantity`)[0])
