@@ -689,10 +689,6 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
             new AbstractProductsCategoriesResourceRelationshipPlugin()
         );
         $resourceRelationshipCollection->addRelationship(
-            ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
-            new ConcreteProductsByProductConcreteIdsResourceRelationshipPlugin()
-        );
-        $resourceRelationshipCollection->addRelationship(
             MerchantsRestApiConfig::RESOURCE_MERCHANTS,
             new MerchantAddressByMerchantReferenceResourceRelationshipPlugin()
         );
