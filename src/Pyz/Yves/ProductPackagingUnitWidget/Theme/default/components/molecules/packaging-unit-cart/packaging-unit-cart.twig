@@ -54,8 +54,8 @@
 
     {% if data.amount is not empty %}
         <li class="spacing-top">
-            {% set amountPerQuantityValue = data.hasAmountPerQuantity ? amountPerQuantity : data.amount %}
-            {{ 'packaging_units.cart.amount' | trans }}: {{ amountPerQuantityValue | executeFilterIfExists('formatInt', app.locale) }}
+            {% set amountPerQuantityValue = data.hasAmountPerQuantity ? amountPerQuantity.toFloat() : data.amount.toFloat() %}
+            {{ 'packaging_units.cart.amount' | trans }}: {{ amountPerQuantityValue | executeFilterIfExists('formatFloat', app.locale) }}
         </li>
     {% endif %}
 {% endblock %}
