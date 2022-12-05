@@ -29,6 +29,12 @@ export default class QuickOrderRow extends QuickOrderRowCore {
         );
 
         super.registerQuantityInput();
+
+        /* TODO(https://spryker.atlassian.net/browse/CC-23779): Remove variable registration after integration. */
+        this.quantityInput = <HTMLInputElement>(
+            (this.getElementsByClassName(`${this.jsName}__quantity`)[0] ||
+                this.getElementsByClassName(`${this.jsName}-partial__quantity`)[0])
+        );
     }
 
     protected mapAdditionalFormElementChange(): void {
@@ -107,5 +113,10 @@ export default class QuickOrderRow extends QuickOrderRowCore {
         const step = Number(this.quantityInput.getAttribute('step'));
 
         return step > 0 ? step : 1;
+    }
+
+    /* TODO(https://spryker.atlassian.net/browse/CC-23779): Remove getter after integration. */
+    get quantityValue(): string {
+        return this.quantityInput.value;
     }
 }
