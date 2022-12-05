@@ -7,4 +7,25 @@
 
 {% define attributes = {
     json: required,
+    'decimal-separator': getNumberFormatConfig(app.locale).toArray()['decimal_separator_symbol'],
 } %}
+
+{% block amountInput %}
+    {% include molecule('formatted-number-input') with {
+        modifiers: ['expand'],
+        data: {
+            inputName: 'amount-sales-unit[' ~ data.product.sku ~ ']',
+            inputValue: defaultAmount,
+            inputAttributes: {
+                min: data.productPackagingUnit.amountMin,
+                max: data.productPackagingUnit.amountMax,
+                step: data.productPackagingUnit.amountInterval,
+                disabled: not data.packagingUnitIsAmountVariable,
+            },
+            inputExtraClasses: config.jsName ~ '__user-amount',
+        },
+        attributes: {
+            'decimal-rounding': 10,
+        },
+    } only %}
+{% endblock %}

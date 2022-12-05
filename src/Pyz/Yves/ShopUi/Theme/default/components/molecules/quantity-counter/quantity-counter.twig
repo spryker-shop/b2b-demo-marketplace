@@ -9,7 +9,7 @@
 {% define data = {
     isDisabled: false,
     isReadOnly: false,
-    autoUpdate: false
+    autoUpdate: false,
 } %}
 
 {% set isEditable = not data.isReadOnly and not data.isDisabled %}
@@ -24,7 +24,31 @@
     step: 1,
 } %}
 
-{% block attributes %}{% endblock %}
+{% set decimalSeparator = 'decimal-separator=' ~ getNumberFormatConfig(app.locale).toArray()['decimal_separator_symbol'] %}
+{% block attributes %}{{ decimalSeparator }}{% endblock %}
+
+{% set inputAttributes = attributes %}
+
+{% set inputAttributeFilters = {
+    type: false,
+    value: false,
+    name: false,
+    class: false,
+    min: false,
+    max: false,
+} %}
+
+{% set filteredInputAttributes = inputAttributes | filter((value, key) => inputAttributeFilters[key] ?? true) %}
+
+{% set filteredInputAttributes = {
+    'data-auto-update': data.autoUpdate,
+    'disabled': data.isDisabled,
+    'readonly': data.isReadOnly,
+} | merge(filteredInputAttributes) %}
+
+{% set numberFormatConfig = {'watch-external-changes': true} %}
+
+{% block inputClass %}{% endblock %}
 
 {% block body %}
     <button class="{{ config.name }}__button
@@ -35,13 +59,20 @@
                    {{ config.name }}__button--decrement">-</button>
 
     {% block quantityField %}
-        <input
-            class="{{ config.name }}__input {{ config.jsName }}__input {% block inputClass %}{% endblock %}"
-            {% block quantityCounterAttributes %}{{component.renderAttributes(attributes)}}{% endblock %}
-            {% if data.autoUpdate %}data-auto-update="true"{% endif %}
-            {% if data.isDisabled %}disabled{% endif %}
-            {% if data.isReadOnly %}readonly{% endif %}
-            {{qa('quantity-input')}}>
+        {% include molecule('formatted-number-input') with {
+            data: {
+                inputName: attributes.name,
+                inputValue: attributes.value,
+                inputAttributes: filteredInputAttributes,
+                inputExtraClasses: config.name ~ '__input ' ~ config.jsName ~ '__input ' ~ block('inputClass'),
+                hiddenInputAttributes: {
+                    'data-qa': 'quantity-input',
+                    disabled: data.isDisabled,
+                },
+            },
+            attributes: numberFormatConfig,
+        } only %}
+
     {% endblock %}
 
     <button class="{{ config.name }}__button
@@ -51,4 +82,3 @@
                    {{ config.jsName }}__button-increment
                    {{ config.name }}__button--increment">+</button>
 {% endblock %}
-

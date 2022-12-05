@@ -51,6 +51,8 @@ export default class PackagingUnitQuantitySelector extends Component {
     muError: boolean;
     puError: boolean;
     protected numberOfDecimalPlaces: number = 10;
+    protected eventChange: Event = new Event('change');
+    protected unformattedValueRegExp: RegExp = new RegExp(`[^0-9${this.decimalSeparator}-]+`, 'g');
 
     protected readyCallback(event?: Event): void {
         this.qtyInSalesUnitInput = <HTMLInputElement>document.getElementById('sales-unit-quantity');
@@ -149,6 +151,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         }
 
         this.qtyInSalesUnitInput.value = this.getMinQuantity().toString();
+        this.triggerChangeEvent(this.qtyInSalesUnitInput);
 
         if (this.leadSalesUnitSelect) {
             this.leadSalesUnitSelect.value = this.currentLeadSalesUnit.id_product_measurement_sales_unit;
@@ -195,7 +198,7 @@ export default class PackagingUnitQuantitySelector extends Component {
 
     private qtyInputChange(qtyInSalesUnits?: number) {
         if (typeof qtyInSalesUnits === 'undefined') {
-            qtyInSalesUnits = Number(this.qtyInSalesUnitInput.value);
+            qtyInSalesUnits = this.getUnformattedNumber(this.qtyInSalesUnitInput.value);
         }
 
         this.muError = false;
@@ -288,7 +291,7 @@ export default class PackagingUnitQuantitySelector extends Component {
                 .toString()
                 .toString()} ${measurementSalesUnitName}) = (${qtyInBaseUnits} ${measurementBaseUnitName})`;
             choiceElem.onclick = function (event: Event) {
-                let element = event.srcElement as HTMLSelectElement;
+                let element = event.target as HTMLSelectElement;
                 let qtyInBaseUnits = parseFloat(element.dataset.baseUnitQty);
                 let qtyInSalesUnits = parseFloat(element.dataset.salesUnitQty);
                 this.muError = false;
@@ -306,6 +309,7 @@ export default class PackagingUnitQuantitySelector extends Component {
     private selectQty(qtyInBaseUnits: number, qtyInSalesUnits: number) {
         this.qtyInBaseUnitInput.value = qtyInBaseUnits.toString();
         this.qtyInSalesUnitInput.value = this.round(qtyInSalesUnits, 4).toString().toString();
+        this.triggerChangeEvent(this.qtyInSalesUnitInput);
         if (!this.puError && !this.isAddToCartDisabled) {
             this.addToCartButton.removeAttribute('disabled');
             this.qtyInSalesUnitInput.removeAttribute('disabled');
@@ -423,13 +427,14 @@ export default class PackagingUnitQuantitySelector extends Component {
     private measurementUnitInputChange(event: Event) {
         let salesUnitId = parseInt((event.srcElement as HTMLSelectElement).value);
         let salesUnit = this.getSalesUnitById(salesUnitId);
-        let qtyInSalesUnits = Number(this.qtyInSalesUnitInput.value);
+        let qtyInSalesUnits = this.getUnformattedNumber(this.qtyInSalesUnitInput.value);
         let qtyInBaseUnits = this.multiply(qtyInSalesUnits, this.currentSalesUnit.conversion);
         this.currentSalesUnit = salesUnit;
         qtyInSalesUnits = this.convertBaseUnitsAmountToCurrentSalesUnitsAmount(qtyInBaseUnits);
 
         if (isFinite(qtyInSalesUnits)) {
             this.qtyInSalesUnitInput.value = this.round(qtyInSalesUnits, 4).toString();
+            this.triggerChangeEvent(this.qtyInSalesUnitInput);
         }
 
         this.qtyInputChange(qtyInSalesUnits);
@@ -454,17 +459,8 @@ export default class PackagingUnitQuantitySelector extends Component {
     }
 
     private amountInputChange(amountInSalesUnitInput?: number) {
-        const amountDecimalsMaxLength = new RegExp(`((\.|\,)\\d{${this.numberOfDecimalPlaces}})\\d+`, 'g');
-
-        if (this.amountInSalesUnitInput.value.match(/[,.]/)) {
-            this.amountInSalesUnitInput.value = this.amountInSalesUnitInput.value.replace(
-                amountDecimalsMaxLength,
-                '$1',
-            );
-        }
-
         if (typeof amountInSalesUnitInput === 'undefined') {
-            amountInSalesUnitInput = Number(this.amountInSalesUnitInput.value);
+            amountInSalesUnitInput = this.getUnformattedNumber(this.amountInSalesUnitInput.value);
         }
 
         const amountInBaseUnits = Number(
@@ -598,6 +594,7 @@ export default class PackagingUnitQuantitySelector extends Component {
 
     private selectAmount(amountInBaseUnits: number, amountInSalesUnits: number) {
         this.amountInSalesUnitInput.value = amountInSalesUnits.toString();
+        this.triggerChangeEvent(this.amountInSalesUnitInput);
         this.amountInBaseUnitInput.value = amountInBaseUnits;
         if (!this.muError && !this.isAddToCartDisabled) {
             this.addToCartButton.removeAttribute('disabled');
@@ -610,13 +607,14 @@ export default class PackagingUnitQuantitySelector extends Component {
         const salesUnitId = parseInt((event.srcElement as HTMLSelectElement).value);
         const salesUnit = this.getLeadSalesUnitById(salesUnitId);
 
-        const amountInSalesUnits = this.getAmountConversion(this.amountInSalesUnitInput.value, salesUnit.conversion);
+        const amountInSalesUnits = this.getAmountConversion(this.getUnformattedNumber(this.amountInSalesUnitInput.value), salesUnit.conversion);
         const amountInSalesUnitsMin = this.getAmountConversion(this.amountInSalesUnitInput.min, salesUnit.conversion);
         const amountInSalesUnitsMax = this.getAmountConversion(this.amountInSalesUnitInput.max, salesUnit.conversion);
         const amountInSalesUnitsStep = this.getAmountConversion(this.amountInSalesUnitInput.step, salesUnit.conversion);
 
         this.currentLeadSalesUnit = salesUnit;
         this.amountInSalesUnitInput.value = amountInSalesUnits;
+        this.triggerChangeEvent(this.amountInSalesUnitInput);
 
         if (this.amountInSalesUnitInput.min) {
             this.amountInSalesUnitInput.min = amountInSalesUnitsMin;
@@ -781,7 +779,19 @@ export default class PackagingUnitQuantitySelector extends Component {
         return Number(amountPercentageOfDivision);
     }
 
+    protected getUnformattedNumber(value: string): number {
+        return Number(value.replace(this.unformattedValueRegExp, '')) || Number(0);
+    }
+
+    protected triggerChangeEvent(input: HTMLInputElement): void {
+        input.dispatchEvent(this.eventChange);
+    }
+
     protected get precision(): number {
         return Number(`1${'0'.repeat(this.numberOfDecimalPlaces)}`);
+    }
+
+    protected get decimalSeparator(): string {
+        return this.getAttribute('decimal-separator');
     }
 }

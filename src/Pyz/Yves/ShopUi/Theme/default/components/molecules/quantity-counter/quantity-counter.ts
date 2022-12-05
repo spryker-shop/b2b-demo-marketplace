@@ -10,6 +10,7 @@ export default class QuantityCounter extends Component {
     protected eventChange: Event = new Event('change');
     protected eventInput: Event = new Event('input');
     protected numberOfDecimalPlaces: number = 10;
+    protected unformattedValueRegExp: RegExp = new RegExp(`[^0-9${this.decimalSeparator}-]+`, 'g');
 
     protected readyCallback(): void {}
 
@@ -34,7 +35,7 @@ export default class QuantityCounter extends Component {
     protected incrementValue(event: Event): void {
         event.preventDefault();
         if (this.isAvailable) {
-            const value = Number(this.input.value);
+            const value = this.getUnformattedNumber(this.input.value);
             const potentialValue = Number(
                 ((value * this.precision + this.step * this.precision) / this.precision).toFixed(
                     this.numberOfDecimalPlaces,
@@ -51,7 +52,7 @@ export default class QuantityCounter extends Component {
     protected decrementValue(event: Event): void {
         event.preventDefault();
         if (this.isAvailable) {
-            const value = Number(this.input.value);
+            const value = this.getUnformattedNumber(this.input.value);
             const potentialValue = Number(
                 ((value * this.precision - this.step * this.precision) / this.precision).toFixed(
                     this.numberOfDecimalPlaces,
@@ -87,6 +88,10 @@ export default class QuantityCounter extends Component {
         }
     }
 
+    protected getUnformattedNumber(value: string): number {
+        return Number(value.replace(this.unformattedValueRegExp, '')) || Number(0);
+    }
+
     protected get minQuantity(): number {
         return Number(this.input.getAttribute('min'));
     }
@@ -117,5 +122,9 @@ export default class QuantityCounter extends Component {
 
     protected get precision(): number {
         return Number(`1${'0'.repeat(this.numberOfDecimalPlaces)}`);
+    }
+
+    protected get decimalSeparator(): string {
+        return this.getAttribute('decimal-separator');
     }
 }
