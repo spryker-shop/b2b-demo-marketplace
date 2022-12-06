@@ -50,6 +50,8 @@ image:
         SPRYKER_HOOK_AFTER_DEPLOY: "true"
         SPRYKER_HOOK_INSTALL: "vendor/bin/install -r EU/production --no-ansi -vvv"
         SPRYKER_HOOK_DESTRUCTIVE_INSTALL: "vendor/bin/install -r EU/destructive --no-ansi -vvv"
+        SPRYKER_PRODUCT_CONFIGURATOR_HOST: date-time-configurator-example.cloud.spryker.toys
+        SPRYKER_PRODUCT_CONFIGURATOR_PORT: 443
 
 composer:
     mode: --no-dev
@@ -99,6 +101,8 @@ groups:
             yves_eu:
                 application: yves
                 endpoints:
+                    date-time-configurator-example.cloud.spryker.toys:
+                        entry-point: Configurator
                     www.de.example.cloud.spryker.toys:
                         store: DE
                         <<: *frontend-auth
@@ -194,8 +198,6 @@ services:
                 protocol: tcp
     scheduler:
         engine: jenkins
-        version: '2.324'
-        csrf-protection-enabled: true
         endpoints:
             scheduler.example.cloud.spryker.toys:
     mail_catcher:
