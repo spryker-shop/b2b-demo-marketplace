@@ -4,13 +4,13 @@ export default class QuantityCounter extends Component {
     protected incrementButton: HTMLButtonElement;
     protected decrementButton: HTMLButtonElement;
     protected input: HTMLInputElement;
+    protected inputHidden: HTMLInputElement;
     protected value: number;
     protected duration: number = 1000;
     protected timeout: number = 0;
     protected eventChange: Event = new Event('change');
     protected eventInput: Event = new Event('input');
     protected numberOfDecimalPlaces: number = 10;
-    protected unformattedValueRegExp: RegExp = new RegExp(`[^0-9${this.decimalSeparator}-]+`, 'g');
 
     protected readyCallback(): void {}
 
@@ -18,6 +18,7 @@ export default class QuantityCounter extends Component {
         this.incrementButton = <HTMLButtonElement>this.getElementsByClassName(`${this.jsName}__button-increment`)[0];
         this.decrementButton = <HTMLButtonElement>this.getElementsByClassName(`${this.jsName}__button-decrement`)[0];
         this.input = <HTMLInputElement>this.getElementsByClassName(`${this.jsName}__input`)[0];
+        this.inputHidden = <HTMLInputElement>this.getElementsByClassName(`${this.jsName}__input-hidden`)[0];
         this.value = this.getValue;
         this.mapEvents();
     }
@@ -35,7 +36,7 @@ export default class QuantityCounter extends Component {
     protected incrementValue(event: Event): void {
         event.preventDefault();
         if (this.isAvailable) {
-            const value = this.getUnformattedNumber(this.input.value);
+            const value = Number(this.inputHidden.value);
             const potentialValue = Number(
                 ((value * this.precision + this.step * this.precision) / this.precision).toFixed(
                     this.numberOfDecimalPlaces,
@@ -52,7 +53,7 @@ export default class QuantityCounter extends Component {
     protected decrementValue(event: Event): void {
         event.preventDefault();
         if (this.isAvailable) {
-            const value = this.getUnformattedNumber(this.input.value);
+            const value = Number(this.inputHidden.value);
             const potentialValue = Number(
                 ((value * this.precision - this.step * this.precision) / this.precision).toFixed(
                     this.numberOfDecimalPlaces,
@@ -88,10 +89,6 @@ export default class QuantityCounter extends Component {
         }
     }
 
-    protected getUnformattedNumber(value: string): number {
-        return Number(value.replace(this.unformattedValueRegExp, '')) || Number(0);
-    }
-
     protected get minQuantity(): number {
         return Number(this.input.getAttribute('min'));
     }
@@ -109,7 +106,7 @@ export default class QuantityCounter extends Component {
     }
 
     protected get getValue(): number {
-        return Number(this.input.value);
+        return Number(this.inputHidden.value);
     }
 
     protected get autoUpdate(): boolean {
@@ -122,9 +119,5 @@ export default class QuantityCounter extends Component {
 
     protected get precision(): number {
         return Number(`1${'0'.repeat(this.numberOfDecimalPlaces)}`);
-    }
-
-    protected get decimalSeparator(): string {
-        return this.getAttribute('decimal-separator');
     }
 }
