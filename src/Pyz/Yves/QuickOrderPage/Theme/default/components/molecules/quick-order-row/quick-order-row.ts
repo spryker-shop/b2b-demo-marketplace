@@ -82,6 +82,7 @@ export default class QuickOrderRow extends QuickOrderRowCore {
         }
     }
 
+    //todo: check
     async reloadField(sku: string = ''): Promise<void> {
         this.setQueryParams(sku);
 
