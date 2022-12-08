@@ -89,7 +89,9 @@ export default class QuantityCounter extends Component {
     }
 
     protected getUnformattedNumber(value: string): number {
-        return Number(value.replace(this.unformattedValueRegExp, '')) || Number(0);
+        const unformattedValue = value.replace(this.unformattedValueRegExp, '').replace(this.decimalSeparator, '.');
+
+        return Number(unformattedValue) || Number(0);
     }
 
     protected get minQuantity(): number {

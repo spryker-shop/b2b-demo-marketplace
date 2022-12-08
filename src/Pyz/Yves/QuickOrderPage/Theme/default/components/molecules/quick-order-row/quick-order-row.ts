@@ -7,7 +7,7 @@ export default class QuickOrderRow extends QuickOrderRowCore {
     protected incrementButton: HTMLButtonElement;
     protected decrementButton: HTMLButtonElement;
     protected formattedInput: HTMLElement;
-    protected eventChange: Event = new Event('change');
+    protected eventInput: Event = new Event('input');
     protected unformattedValueRegExp: RegExp = new RegExp(`[^0-9${this.decimalSeparator}-]+`, 'g');
 
     protected readyCallback(): void {}
@@ -33,12 +33,6 @@ export default class QuickOrderRow extends QuickOrderRowCore {
 
         super.registerQuantityInput();
 
-        /* TODO(https://spryker.atlassian.net/browse/CC-23779): Remove variable registration after integration. */
-        this.quantityInput = <HTMLInputElement>(
-            (this.getElementsByClassName(`${this.jsName}__quantity`)[0] ||
-                this.getElementsByClassName(`${this.jsName}-partial__quantity`)[0])
-        );
-
         this.formattedInput = <HTMLInputElement>(
             (this.getElementsByClassName(`${this.jsName}__formatted`)[0] ||
                 this.getElementsByClassName(`${this.jsName}-partial__formatted`)[0])
@@ -51,12 +45,7 @@ export default class QuickOrderRow extends QuickOrderRowCore {
         }
 
         this.additionalFormElements.forEach((item) => {
-            item.addEventListener(
-                'change',
-                debounce(() => {
-                    this.reloadField(this.autocompleteInput.inputValue);
-                }, this.autocompleteInput.debounceDelay),
-            );
+            item.addEventListener('change', () => this.reloadField(this.autocompleteInput.inputValue));
         });
     }
 
@@ -73,7 +62,7 @@ export default class QuickOrderRow extends QuickOrderRowCore {
         const potentialValue = value + this.step;
         if (value < this.maxQuantity) {
             this.quantityInput.value = potentialValue.toString();
-            this.triggerChangeEvent(this.quantityInput);
+            this.triggerInputEvent(this.quantityInput);
             this.reloadField(this.autocompleteInput.inputValue);
         }
     }
@@ -84,12 +73,11 @@ export default class QuickOrderRow extends QuickOrderRowCore {
         const potentialValue = value - this.step;
         if (potentialValue >= this.minQuantity) {
             this.quantityInput.value = potentialValue.toString();
-            this.triggerChangeEvent(this.quantityInput);
+            this.triggerInputEvent(this.quantityInput);
             this.reloadField(this.autocompleteInput.inputValue);
         }
     }
 
-    //todo: check
     async reloadField(sku: string = ''): Promise<void> {
         this.setQueryParams(sku);
 
@@ -130,11 +118,13 @@ export default class QuickOrderRow extends QuickOrderRowCore {
         return this.getAttribute('decimal-separator');
     }
 
-    protected triggerChangeEvent(input: HTMLInputElement): void {
-        input.dispatchEvent(this.eventChange);
+    protected triggerInputEvent(input: HTMLInputElement): void {
+        input.dispatchEvent(this.eventInput);
     }
 
     protected getUnformattedNumber(value: string): number {
-        return Number(value.replace(this.unformattedValueRegExp, '')) || Number(0);
+        const unformattedValue = value.replace(this.unformattedValueRegExp, '').replace(this.decimalSeparator, '.');
+
+        return Number(unformattedValue) || Number(0);
     }
 }

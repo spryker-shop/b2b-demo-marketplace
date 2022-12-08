@@ -22,7 +22,7 @@
 {% define attributes = {
     'autocomplete-form-class-name': required,
     index: data.index,
-    'decimal-separator': getNumberFormatConfig(app.locale).toArray()['decimal_separator_symbol'],
+    'decimal-separator': getNumberFormatConfig(app.locale).toArray()['decimal_separator_symbol'] | default('.'),
 } %}
 
 {% block body %}

@@ -51,7 +51,7 @@ export default class PackagingUnitQuantitySelector extends Component {
     muError: boolean;
     puError: boolean;
     protected numberOfDecimalPlaces: number = 10;
-    protected eventChange: Event = new Event('change');
+    protected eventInput: Event = new Event('input');
     protected unformattedValueRegExp: RegExp = new RegExp(`[^0-9${this.decimalSeparator}-]+`, 'g');
 
     protected readyCallback(event?: Event): void {
@@ -151,7 +151,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         }
 
         this.qtyInSalesUnitInput.value = this.getMinQuantity().toString();
-        this.triggerChangeEvent(this.qtyInSalesUnitInput);
+        this.triggerInputEvent(this.qtyInSalesUnitInput);
 
         if (this.leadSalesUnitSelect) {
             this.leadSalesUnitSelect.value = this.currentLeadSalesUnit.id_product_measurement_sales_unit;
@@ -309,7 +309,7 @@ export default class PackagingUnitQuantitySelector extends Component {
     private selectQty(qtyInBaseUnits: number, qtyInSalesUnits: number) {
         this.qtyInBaseUnitInput.value = qtyInBaseUnits.toString();
         this.qtyInSalesUnitInput.value = this.round(qtyInSalesUnits, 4).toString().toString();
-        this.triggerChangeEvent(this.qtyInSalesUnitInput);
+        this.triggerInputEvent(this.qtyInSalesUnitInput);
         if (!this.puError && !this.isAddToCartDisabled) {
             this.addToCartButton.removeAttribute('disabled');
             this.qtyInSalesUnitInput.removeAttribute('disabled');
@@ -434,7 +434,7 @@ export default class PackagingUnitQuantitySelector extends Component {
 
         if (isFinite(qtyInSalesUnits)) {
             this.qtyInSalesUnitInput.value = this.round(qtyInSalesUnits, 4).toString();
-            this.triggerChangeEvent(this.qtyInSalesUnitInput);
+            this.triggerInputEvent(this.qtyInSalesUnitInput);
         }
 
         this.qtyInputChange(qtyInSalesUnits);
@@ -577,7 +577,7 @@ export default class PackagingUnitQuantitySelector extends Component {
                 amountInSalesUnits,
             )} ${measurementSalesUnitName}) = (${amountInBaseUnits} ${measurementBaseUnitName})`;
             choiceElem.onclick = function (event: Event) {
-                let element = event.srcElement as HTMLSelectElement;
+                let element = event.target as HTMLSelectElement;
                 let amountInBaseUnits = parseFloat(element.dataset.baseUnitAmount);
                 let amountInSalesUnits = parseFloat(element.dataset.salesUnitAmount);
                 this.puError = false;
@@ -594,7 +594,7 @@ export default class PackagingUnitQuantitySelector extends Component {
 
     private selectAmount(amountInBaseUnits: number, amountInSalesUnits: number) {
         this.amountInSalesUnitInput.value = amountInSalesUnits.toString();
-        this.triggerChangeEvent(this.amountInSalesUnitInput);
+        this.triggerInputEvent(this.amountInSalesUnitInput);
         this.amountInBaseUnitInput.value = amountInBaseUnits;
         if (!this.muError && !this.isAddToCartDisabled) {
             this.addToCartButton.removeAttribute('disabled');
@@ -614,7 +614,7 @@ export default class PackagingUnitQuantitySelector extends Component {
 
         this.currentLeadSalesUnit = salesUnit;
         this.amountInSalesUnitInput.value = amountInSalesUnits;
-        this.triggerChangeEvent(this.amountInSalesUnitInput);
+        this.triggerInputEvent(this.amountInSalesUnitInput);
 
         if (this.amountInSalesUnitInput.min) {
             this.amountInSalesUnitInput.min = amountInSalesUnitsMin;
@@ -780,11 +780,13 @@ export default class PackagingUnitQuantitySelector extends Component {
     }
 
     protected getUnformattedNumber(value: string): number {
-        return Number(value.replace(this.unformattedValueRegExp, '')) || Number(0);
+        const unformattedValue = value.replace(this.unformattedValueRegExp, '').replace(this.decimalSeparator, '.');
+
+        return Number(unformattedValue) || Number(0);
     }
 
-    protected triggerChangeEvent(input: HTMLInputElement): void {
-        input.dispatchEvent(this.eventChange);
+    protected triggerInputEvent(input: HTMLInputElement): void {
+        input.dispatchEvent(this.eventInput);
     }
 
     protected get precision(): number {
