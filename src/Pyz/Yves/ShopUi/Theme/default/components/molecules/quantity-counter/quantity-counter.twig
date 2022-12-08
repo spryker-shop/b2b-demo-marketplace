@@ -10,6 +10,7 @@
     isDisabled: false,
     isReadOnly: false,
     autoUpdate: false,
+    numberFormatConfig: {},
 } %}
 
 {% set isEditable = not data.isReadOnly and not data.isDisabled %}
@@ -46,7 +47,7 @@
     'readonly': data.isReadOnly,
 } | merge(filteredInputAttributes) %}
 
-{% set numberFormatConfig = {'watch-external-changes': true} %}
+{% set numberFormatConfig = {'watch-external-changes': true} | merge(data.numberFormatConfig) %}
 
 {% block inputClass %}{% endblock %}
 

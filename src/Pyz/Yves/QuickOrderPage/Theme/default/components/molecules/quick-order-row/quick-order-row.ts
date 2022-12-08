@@ -1,7 +1,6 @@
 import QuickOrderRowCore from 'QuickOrderPage/components/molecules/quick-order-row/quick-order-row';
 import AutocompleteForm from 'ShopUi/components/molecules/autocomplete-form/autocomplete-form';
 import AjaxProvider from 'ShopUi/components/molecules/ajax-provider/ajax-provider';
-import debounce from 'lodash-es/debounce';
 
 export default class QuickOrderRow extends QuickOrderRowCore {
     protected incrementButton: HTMLButtonElement;
