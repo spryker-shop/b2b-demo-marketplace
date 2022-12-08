@@ -10,7 +10,6 @@
     isDisabled: false,
     isReadOnly: false,
     autoUpdate: false,
-    numberFormatConfig: {},
 } %}
 
 {% set isEditable = not data.isReadOnly and not data.isDisabled %}
@@ -25,7 +24,8 @@
     step: 1,
 } %}
 
-{% block attributes %}{% endblock %}
+{% set decimalSeparator = 'decimal-separator=' ~ getNumberFormatConfig(app.locale).toArray()['decimal_separator_symbol'] %}
+{% block attributes %}{{ decimalSeparator }}{% endblock %}
 
 {% set inputAttributes = attributes %}
 
@@ -42,11 +42,11 @@
 
 {% set filteredInputAttributes = {
     'data-auto-update': data.autoUpdate,
-    disabled: data.isDisabled,
-    readonly: data.isReadOnly,
+    'disabled': data.isDisabled,
+    'readonly': data.isReadOnly,
 } | merge(filteredInputAttributes) %}
 
-{% set numberFormatConfig = {'watch-external-changes': true} | merge(data.numberFormatConfig) %}
+{% set numberFormatConfig = {'watch-external-changes': true} %}
 
 {% block inputClass %}{% endblock %}
 
@@ -65,7 +65,6 @@
                 inputValue: attributes.value,
                 inputAttributes: filteredInputAttributes,
                 inputExtraClasses: config.name ~ '__input ' ~ config.jsName ~ '__input ' ~ block('inputClass'),
-                hiddenInputExtraClasses: config.jsName ~ '__input-hidden ',
                 hiddenInputAttributes: {
                     'data-qa': 'quantity-input',
                     disabled: data.isDisabled,

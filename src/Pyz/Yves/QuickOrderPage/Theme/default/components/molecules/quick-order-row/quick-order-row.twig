@@ -22,6 +22,7 @@
 {% define attributes = {
     'autocomplete-form-class-name': required,
     index: data.index,
+    'decimal-separator': getNumberFormatConfig(app.locale).toArray()['decimal_separator_symbol'],
 } %}
 
 {% block body %}

@@ -8,6 +8,7 @@ export default class QuickOrderRow extends QuickOrderRowCore {
     protected decrementButton: HTMLButtonElement;
     protected formattedInput: HTMLElement;
     protected eventChange: Event = new Event('change');
+    protected unformattedValueRegExp: RegExp = new RegExp(`[^0-9${this.decimalSeparator}-]+`, 'g');
 
     protected readyCallback(): void {}
 
@@ -31,6 +32,12 @@ export default class QuickOrderRow extends QuickOrderRowCore {
         );
 
         super.registerQuantityInput();
+
+        /* TODO(https://spryker.atlassian.net/browse/CC-23779): Remove variable registration after integration. */
+        this.quantityInput = <HTMLInputElement>(
+            (this.getElementsByClassName(`${this.jsName}__quantity`)[0] ||
+                this.getElementsByClassName(`${this.jsName}-partial__quantity`)[0])
+        );
 
         this.formattedInput = <HTMLInputElement>(
             (this.getElementsByClassName(`${this.jsName}__formatted`)[0] ||
@@ -62,7 +69,7 @@ export default class QuickOrderRow extends QuickOrderRowCore {
 
     protected incrementValue(event: Event): void {
         event.preventDefault();
-        const value = Number(this.quantityHiddenInput.value);
+        const value = this.getUnformattedNumber(this.quantityInput.value);
         const potentialValue = value + this.step;
         if (value < this.maxQuantity) {
             this.quantityInput.value = potentialValue.toString();
@@ -73,7 +80,7 @@ export default class QuickOrderRow extends QuickOrderRowCore {
 
     protected decrementValue(event: Event): void {
         event.preventDefault();
-        const value = Number(this.quantityHiddenInput.value);
+        const value = this.getUnformattedNumber(this.quantityInput.value);
         const potentialValue = value - this.step;
         if (potentialValue >= this.minQuantity) {
             this.quantityInput.value = potentialValue.toString();
@@ -119,7 +126,15 @@ export default class QuickOrderRow extends QuickOrderRowCore {
         return step > 0 ? step : 1;
     }
 
+    protected get decimalSeparator(): string {
+        return this.getAttribute('decimal-separator');
+    }
+
     protected triggerChangeEvent(input: HTMLInputElement): void {
         input.dispatchEvent(this.eventChange);
+    }
+
+    protected getUnformattedNumber(value: string): number {
+        return Number(value.replace(this.unformattedValueRegExp, '')) || Number(0);
     }
 }
