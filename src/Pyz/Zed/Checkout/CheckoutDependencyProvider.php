@@ -80,7 +80,7 @@ class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
     {
         return [
             new CustomerOrderSavePlugin(),
-            /**
+            /*
              * Plugins
              * `OrderSaverPlugin`,
              * `OrderTotalsSaverPlugin`,
