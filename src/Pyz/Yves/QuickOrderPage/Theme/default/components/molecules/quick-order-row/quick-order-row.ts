@@ -6,7 +6,6 @@ import FormattedNumberInput from 'ShopUi/components/molecules/formatted-number-i
 export default class QuickOrderRow extends QuickOrderRowCore {
     protected incrementButton: HTMLButtonElement;
     protected decrementButton: HTMLButtonElement;
-    protected formattedInput: HTMLElement;
     protected eventInput: Event = new Event('input');
     protected formattedNumberInput: FormattedNumberInput;
 
@@ -33,7 +32,7 @@ export default class QuickOrderRow extends QuickOrderRowCore {
 
         super.registerQuantityInput();
 
-        this.formattedInput = <FormattedNumberInput>(
+        this.formattedNumberInput = <FormattedNumberInput>(
             (this.getElementsByClassName(`${this.jsName}__formatted`)[0] ||
                 this.getElementsByClassName(`${this.jsName}-partial__formatted`)[0])
         );
@@ -58,7 +57,7 @@ export default class QuickOrderRow extends QuickOrderRowCore {
 
     protected incrementValue(event: Event): void {
         event.preventDefault();
-        const value = this.formattedInput.unformattedValue;
+        const value = this.formattedNumberInput.unformattedValue;
         const potentialValue = Number(value) + this.step;
         if (value < this.maxQuantity) {
             this.quantityInput.value = potentialValue.toString();
@@ -69,7 +68,7 @@ export default class QuickOrderRow extends QuickOrderRowCore {
 
     protected decrementValue(event: Event): void {
         event.preventDefault();
-        const value = this.formattedInput.unformattedValue;
+        const value = this.formattedNumberInput.unformattedValue;
         const potentialValue = value - this.step;
         if (potentialValue >= this.minQuantity) {
             this.quantityInput.value = potentialValue.toString();
@@ -98,22 +97,16 @@ export default class QuickOrderRow extends QuickOrderRowCore {
         input.dispatchEvent(this.eventInput);
     }
 
-    protected getUnformattedNumber(value: string): number {
-        const unformattedValue = value.replace(this.unformattedValueRegExp, '').replace(this.decimalSeparator, '.');
-
-        return Number(unformattedValue) || Number(0);
-    }
-
     protected get autocompleteFormClassName(): string {
         return this.getAttribute('autocomplete-form-class-name');
     }
 
     protected get minQuantity(): number {
-        return Number(this.formattedInput.getAttribute('min'));
+        return Number(this.formattedNumberInput.getAttribute('min'));
     }
 
     protected get maxQuantity(): number {
-        const max = Number(this.formattedInput.getAttribute('max'));
+        const max = Number(this.formattedNumberInput.getAttribute('max'));
 
         return max > 0 && max > this.minQuantity ? max : Infinity;
     }
