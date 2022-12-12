@@ -1,13 +1,14 @@
 import QuickOrderRowCore from 'QuickOrderPage/components/molecules/quick-order-row/quick-order-row';
 import AutocompleteForm from 'ShopUi/components/molecules/autocomplete-form/autocomplete-form';
 import AjaxProvider from 'ShopUi/components/molecules/ajax-provider/ajax-provider';
+import FormattedNumberInput from 'ShopUi/components/molecules/formatted-number-input/formatted-number-input';
 
 export default class QuickOrderRow extends QuickOrderRowCore {
     protected incrementButton: HTMLButtonElement;
     protected decrementButton: HTMLButtonElement;
     protected formattedInput: HTMLElement;
     protected eventInput: Event = new Event('input');
-    protected unformattedValueRegExp: RegExp = new RegExp(`[^0-9${this.decimalSeparator}-]+`, 'g');
+    protected formattedNumberInput: FormattedNumberInput;
 
     protected readyCallback(): void {}
 
@@ -32,7 +33,7 @@ export default class QuickOrderRow extends QuickOrderRowCore {
 
         super.registerQuantityInput();
 
-        this.formattedInput = <HTMLInputElement>(
+        this.formattedInput = <FormattedNumberInput>(
             (this.getElementsByClassName(`${this.jsName}__formatted`)[0] ||
                 this.getElementsByClassName(`${this.jsName}-partial__formatted`)[0])
         );
@@ -57,8 +58,8 @@ export default class QuickOrderRow extends QuickOrderRowCore {
 
     protected incrementValue(event: Event): void {
         event.preventDefault();
-        const value = this.getUnformattedNumber(this.quantityInput.value);
-        const potentialValue = value + this.step;
+        const value = this.formattedInput.unformattedValue;
+        const potentialValue = Number(value) + this.step;
         if (value < this.maxQuantity) {
             this.quantityInput.value = potentialValue.toString();
             this.triggerInputEvent(this.quantityInput);
@@ -68,7 +69,7 @@ export default class QuickOrderRow extends QuickOrderRowCore {
 
     protected decrementValue(event: Event): void {
         event.preventDefault();
-        const value = this.getUnformattedNumber(this.quantityInput.value);
+        const value = this.formattedInput.unformattedValue;
         const potentialValue = value - this.step;
         if (potentialValue >= this.minQuantity) {
             this.quantityInput.value = potentialValue.toString();
@@ -93,6 +94,16 @@ export default class QuickOrderRow extends QuickOrderRowCore {
         }
     }
 
+    protected triggerInputEvent(input: HTMLInputElement): void {
+        input.dispatchEvent(this.eventInput);
+    }
+
+    protected getUnformattedNumber(value: string): number {
+        const unformattedValue = value.replace(this.unformattedValueRegExp, '').replace(this.decimalSeparator, '.');
+
+        return Number(unformattedValue) || Number(0);
+    }
+
     protected get autocompleteFormClassName(): string {
         return this.getAttribute('autocomplete-form-class-name');
     }
@@ -111,19 +122,5 @@ export default class QuickOrderRow extends QuickOrderRowCore {
         const step = Number(this.quantityInput.getAttribute('step'));
 
         return step > 0 ? step : 1;
-    }
-
-    protected get decimalSeparator(): string {
-        return this.getAttribute('decimal-separator');
-    }
-
-    protected triggerInputEvent(input: HTMLInputElement): void {
-        input.dispatchEvent(this.eventInput);
-    }
-
-    protected getUnformattedNumber(value: string): number {
-        const unformattedValue = value.replace(this.unformattedValueRegExp, '').replace(this.decimalSeparator, '.');
-
-        return Number(unformattedValue) || Number(0);
     }
 }

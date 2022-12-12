@@ -7,12 +7,12 @@
 
 {% define attributes = {
     json: required,
-    'decimal-separator': getNumberFormatConfig(app.locale).toArray()['decimal_separator_symbol'] | default('.'),
 } %}
 
 {% block amountInput %}
     {% include molecule('formatted-number-input') with {
         modifiers: ['expand'],
+        class: config.jsName ~ '__formatted-user-amount',
         data: {
             inputName: 'amount-sales-unit[' ~ data.product.sku ~ ']',
             inputValue: defaultAmount,

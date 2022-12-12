@@ -27,6 +27,9 @@
                             value: data.minQuantityInSalesUnits,
                             name: 'sales-unit-quantity',
                         },
+                        data: {
+                            formattedClass: 'js-formatted-sales-unit-quantity',
+                        },
                     } only %}
                         {% block inputClass %}js-volume-price__quantity {{ config.name }}__input--medium-width{% endblock %}
                     {% endembed %}
@@ -128,6 +131,7 @@
                         modifiers: ['right-space'],
                         data: {
                             isDisabled: not data.isAmountVariable,
+                            formattedClass: 'js-formatted-user-amount',
                         },
                         attributes: {
                             id: 'user-amount',

@@ -1,5 +1,7 @@
 /* tslint:disable */
 import Component from 'ShopUi/models/component';
+import { mount } from 'ShopUi/app';
+import FormattedNumberInput from 'ShopUi/components/molecules/formatted-number-input/formatted-number-input';
 
 export default class PackagingUnitQuantitySelector extends Component {
     qtyInSalesUnitInput: HTMLInputElement;
@@ -52,15 +54,23 @@ export default class PackagingUnitQuantitySelector extends Component {
     puError: boolean;
     protected numberOfDecimalPlaces: number = 10;
     protected eventInput: Event = new Event('input');
-    protected unformattedValueRegExp: RegExp = new RegExp(`[^0-9${this.decimalSeparator}-]+`, 'g');
+    protected formattedQtyInSalesUnitInput: FormattedNumberInput;
+    protected formattedAmountInSalesUnitInput: FormattedNumberInput;
 
-    protected readyCallback(event?: Event): void {
+    protected async init(): Promise<void> {
+        this.formattedQtyInSalesUnitInput = <FormattedNumberInput>(
+            document.getElementsByClassName('js-formatted-sales-unit-quantity')[0]
+        );
+        
         this.qtyInSalesUnitInput = <HTMLInputElement>document.getElementById('sales-unit-quantity');
         this.qtyInBaseUnitInput = <HTMLInputElement>document.getElementById('base-unit-quantity');
         this.measurementUnitInput = <HTMLSelectElement>document.getElementsByClassName('select-measurement-unit')[0];
         this.addToCartButton = <HTMLButtonElement>document.getElementById('add-to-cart-button');
         this.leadSalesUnitSelect = <HTMLSelectElement>(
             document.getElementsByClassName('select-lead-measurement-unit')[0]
+        );
+        this.formattedAmountInSalesUnitInput = <FormattedNumberInput>(
+            document.getElementsByClassName('js-formatted-user-amount')[0]
         );
         this.amountInSalesUnitInput = <HTMLInputElement>document.getElementById('user-amount');
         this.amountDefaultInBaseUnitInput = <HTMLInputElement>document.getElementById('default-amount');
@@ -107,8 +117,9 @@ export default class PackagingUnitQuantitySelector extends Component {
         this.initTranslations();
         this.initCurrentSalesUnit();
         this.initCurrentLeadSalesUnit();
-        this.initFormDefaultValues();
         this.mapEvents();
+        await mount();
+        this.initFormDefaultValues();
         if (this.amountInBaseUnitInput) {
             this.amountInputChange();
         }
@@ -145,13 +156,12 @@ export default class PackagingUnitQuantitySelector extends Component {
         }
     }
 
-    private initFormDefaultValues() {
+    private initFormDefaultValues(): void {
         if (!this.amountInBaseUnitInput) {
             return;
         }
 
         this.qtyInSalesUnitInput.value = this.getMinQuantity().toString();
-        this.triggerInputEvent(this.qtyInSalesUnitInput);
 
         if (this.leadSalesUnitSelect) {
             this.leadSalesUnitSelect.value = this.currentLeadSalesUnit.id_product_measurement_sales_unit;
@@ -177,7 +187,7 @@ export default class PackagingUnitQuantitySelector extends Component {
     }
 
     private mapEvents() {
-        this.qtyInSalesUnitInput.addEventListener('input', (event: Event) => this.qtyInputChange());
+        this.qtyInSalesUnitInput.addEventListener('input', () => this.qtyInputChange());
 
         if (this.measurementUnitInput) {
             this.measurementUnitInput.addEventListener('change', (event: Event) =>
@@ -186,7 +196,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         }
 
         if (this.amountInSalesUnitInput) {
-            this.amountInSalesUnitInput.addEventListener('input', (event: Event) => this.amountInputChange());
+            this.amountInSalesUnitInput.addEventListener('input', () => this.onAmountInputChange());
         }
 
         if (this.leadSalesUnitSelect) {
@@ -198,7 +208,7 @@ export default class PackagingUnitQuantitySelector extends Component {
 
     private qtyInputChange(qtyInSalesUnits?: number) {
         if (typeof qtyInSalesUnits === 'undefined') {
-            qtyInSalesUnits = this.getUnformattedNumber(this.qtyInSalesUnitInput.value);
+            qtyInSalesUnits = this.formattedQtyInSalesUnitInput.unformattedValue;
         }
 
         this.muError = false;
@@ -427,7 +437,7 @@ export default class PackagingUnitQuantitySelector extends Component {
     private measurementUnitInputChange(event: Event) {
         let salesUnitId = parseInt((event.srcElement as HTMLSelectElement).value);
         let salesUnit = this.getSalesUnitById(salesUnitId);
-        let qtyInSalesUnits = this.getUnformattedNumber(this.qtyInSalesUnitInput.value);
+        let qtyInSalesUnits = this.formattedQtyInSalesUnitInput.unformattedValue;
         let qtyInBaseUnits = this.multiply(qtyInSalesUnits, this.currentSalesUnit.conversion);
         this.currentSalesUnit = salesUnit;
         qtyInSalesUnits = this.convertBaseUnitsAmountToCurrentSalesUnitsAmount(qtyInBaseUnits);
@@ -460,7 +470,7 @@ export default class PackagingUnitQuantitySelector extends Component {
 
     private amountInputChange(amountInSalesUnitInput?: number) {
         if (typeof amountInSalesUnitInput === 'undefined') {
-            amountInSalesUnitInput = this.getUnformattedNumber(this.amountInSalesUnitInput.value);
+            amountInSalesUnitInput = this.formattedAmountInSalesUnitInput.unformattedValue;
         }
 
         const amountInBaseUnits = Number(
@@ -594,6 +604,7 @@ export default class PackagingUnitQuantitySelector extends Component {
 
     private selectAmount(amountInBaseUnits: number, amountInSalesUnits: number) {
         this.amountInSalesUnitInput.value = amountInSalesUnits.toString();
+        
         this.triggerInputEvent(this.amountInSalesUnitInput);
         this.amountInBaseUnitInput.value = amountInBaseUnits;
         if (!this.muError && !this.isAddToCartDisabled) {
@@ -607,7 +618,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         const salesUnitId = parseInt((event.srcElement as HTMLSelectElement).value);
         const salesUnit = this.getLeadSalesUnitById(salesUnitId);
 
-        const amountInSalesUnits = this.getAmountConversion(this.getUnformattedNumber(this.amountInSalesUnitInput.value), salesUnit.conversion);
+        const amountInSalesUnits = this.getAmountConversion(this.formattedAmountInSalesUnitInput.unformattedValue, salesUnit.conversion);
         const amountInSalesUnitsMin = this.getAmountConversion(this.amountInSalesUnitInput.min, salesUnit.conversion);
         const amountInSalesUnitsMax = this.getAmountConversion(this.amountInSalesUnitInput.max, salesUnit.conversion);
         const amountInSalesUnitsStep = this.getAmountConversion(this.amountInSalesUnitInput.step, salesUnit.conversion);
@@ -779,21 +790,11 @@ export default class PackagingUnitQuantitySelector extends Component {
         return Number(amountPercentageOfDivision);
     }
 
-    protected getUnformattedNumber(value: string): number {
-        const unformattedValue = value.replace(this.unformattedValueRegExp, '').replace(this.decimalSeparator, '.');
-
-        return Number(unformattedValue) || Number(0);
-    }
-
     protected triggerInputEvent(input: HTMLInputElement): void {
         input.dispatchEvent(this.eventInput);
     }
 
     protected get precision(): number {
         return Number(`1${'0'.repeat(this.numberOfDecimalPlaces)}`);
-    }
-
-    protected get decimalSeparator(): string {
-        return this.getAttribute('decimal-separator');
     }
 }

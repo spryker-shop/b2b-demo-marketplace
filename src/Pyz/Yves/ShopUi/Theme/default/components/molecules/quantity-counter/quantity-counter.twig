@@ -10,6 +10,7 @@
     isDisabled: false,
     isReadOnly: false,
     autoUpdate: false,
+    formattedClass: '',
     numberFormatConfig: {},
 } %}
 
@@ -25,8 +26,7 @@
     step: 1,
 } %}
 
-{% set decimalSeparator = 'decimal-separator=' ~ getNumberFormatConfig(app.locale).toArray()['decimal_separator_symbol'] | default('.') %}
-{% block attributes %}{{ decimalSeparator }}{% endblock %}
+{% block attributes %}{% endblock %}
 
 {% set inputAttributes = attributes %}
 
@@ -43,8 +43,8 @@
 
 {% set filteredInputAttributes = {
     'data-auto-update': data.autoUpdate,
-    'disabled': data.isDisabled,
-    'readonly': data.isReadOnly,
+    disabled: data.isDisabled,
+    readonly: data.isReadOnly,
 } | merge(filteredInputAttributes) %}
 
 {% set numberFormatConfig = {'watch-external-changes': true} | merge(data.numberFormatConfig) %}
@@ -61,6 +61,7 @@
 
     {% block quantityField %}
         {% include molecule('formatted-number-input') with {
+            class: data.formattedClass ~ ' ' ~ config.jsName ~ '__formatted-input',
             data: {
                 inputName: attributes.name,
                 inputValue: attributes.value,
