@@ -164,6 +164,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         }
 
         this.qtyInSalesUnitInput.value = this.getMinQuantity().toString();
+        this.triggerInputEvent(this.qtyInSalesUnitInput);
 
         if (this.leadSalesUnitSelect) {
             this.leadSalesUnitSelect.value = this.currentLeadSalesUnit.id_product_measurement_sales_unit;
