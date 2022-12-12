@@ -604,7 +604,6 @@ export default class PackagingUnitQuantitySelector extends Component {
 
     private selectAmount(amountInBaseUnits: number, amountInSalesUnits: number) {
         this.amountInSalesUnitInput.value = amountInSalesUnits.toString();
-        
         this.triggerInputEvent(this.amountInSalesUnitInput);
         this.amountInBaseUnitInput.value = amountInBaseUnits;
         if (!this.muError && !this.isAddToCartDisabled) {

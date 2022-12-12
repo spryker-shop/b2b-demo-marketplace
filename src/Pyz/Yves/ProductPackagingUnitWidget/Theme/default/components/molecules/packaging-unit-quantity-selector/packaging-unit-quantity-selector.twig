@@ -8,24 +8,3 @@
 {% define attributes = {
     json: required,
 } %}
-
-{% block amountInput %}
-    {% include molecule('formatted-number-input') with {
-        modifiers: ['expand'],
-        class: config.jsName ~ '__formatted-user-amount',
-        data: {
-            inputName: 'amount-sales-unit[' ~ data.product.sku ~ ']',
-            inputValue: defaultAmount,
-            inputAttributes: {
-                min: data.productPackagingUnit.amountMin,
-                max: data.productPackagingUnit.amountMax,
-                step: data.productPackagingUnit.amountInterval,
-                disabled: not data.packagingUnitIsAmountVariable,
-            },
-            inputExtraClasses: config.jsName ~ '__user-amount',
-        },
-        attributes: {
-            'decimal-rounding': 10,
-        },
-    } only %}
-{% endblock %}
