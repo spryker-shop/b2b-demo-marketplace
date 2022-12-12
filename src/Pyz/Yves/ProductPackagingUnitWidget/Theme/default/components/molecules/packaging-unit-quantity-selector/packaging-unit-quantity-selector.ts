@@ -57,6 +57,8 @@ export default class PackagingUnitQuantitySelector extends Component {
     protected formattedQtyInSalesUnitInput: FormattedNumberInput;
     protected formattedAmountInSalesUnitInput: FormattedNumberInput;
 
+    protected readyCallback(): void {}
+
     protected async init(): Promise<void> {
         this.formattedQtyInSalesUnitInput = <FormattedNumberInput>(
             document.getElementsByClassName('js-formatted-sales-unit-quantity')[0]
