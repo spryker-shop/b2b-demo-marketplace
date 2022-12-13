@@ -1,11 +1,13 @@
 import QuickOrderRowCore from 'QuickOrderPage/components/molecules/quick-order-row/quick-order-row';
 import AutocompleteForm from 'ShopUi/components/molecules/autocomplete-form/autocomplete-form';
 import AjaxProvider from 'ShopUi/components/molecules/ajax-provider/ajax-provider';
-import debounce from 'lodash-es/debounce';
+import FormattedNumberInput from 'ShopUi/components/molecules/formatted-number-input/formatted-number-input';
 
 export default class QuickOrderRow extends QuickOrderRowCore {
     protected incrementButton: HTMLButtonElement;
     protected decrementButton: HTMLButtonElement;
+    protected eventInput: Event = new Event('input');
+    protected formattedNumberInput: FormattedNumberInput;
 
     protected readyCallback(): void {}
 
@@ -30,10 +32,9 @@ export default class QuickOrderRow extends QuickOrderRowCore {
 
         super.registerQuantityInput();
 
-        /* TODO(https://spryker.atlassian.net/browse/CC-23779): Remove variable registration after integration. */
-        this.quantityInput = <HTMLInputElement>(
-            (this.getElementsByClassName(`${this.jsName}__quantity`)[0] ||
-                this.getElementsByClassName(`${this.jsName}-partial__quantity`)[0])
+        this.formattedNumberInput = <FormattedNumberInput>(
+            (this.getElementsByClassName(`${this.jsName}__formatted`)[0] ||
+                this.getElementsByClassName(`${this.jsName}-partial__formatted`)[0])
         );
     }
 
@@ -43,12 +44,7 @@ export default class QuickOrderRow extends QuickOrderRowCore {
         }
 
         this.additionalFormElements.forEach((item) => {
-            item.addEventListener(
-                'change',
-                debounce(() => {
-                    this.reloadField(this.autocompleteInput.inputValue);
-                }, this.autocompleteInput.debounceDelay),
-            );
+            item.addEventListener('change', () => this.reloadField(this.autocompleteInput.inputValue));
         });
     }
 
@@ -61,20 +57,22 @@ export default class QuickOrderRow extends QuickOrderRowCore {
 
     protected incrementValue(event: Event): void {
         event.preventDefault();
-        const value = Number(this.quantityInput.value);
-        const potentialValue = value + this.step;
+        const value = this.formattedNumberInput.unformattedValue;
+        const potentialValue = Number(value) + this.step;
         if (value < this.maxQuantity) {
             this.quantityInput.value = potentialValue.toString();
+            this.triggerInputEvent(this.quantityInput);
             this.reloadField(this.autocompleteInput.inputValue);
         }
     }
 
     protected decrementValue(event: Event): void {
         event.preventDefault();
-        const value = Number(this.quantityInput.value);
+        const value = this.formattedNumberInput.unformattedValue;
         const potentialValue = value - this.step;
         if (potentialValue >= this.minQuantity) {
             this.quantityInput.value = potentialValue.toString();
+            this.triggerInputEvent(this.quantityInput);
             this.reloadField(this.autocompleteInput.inputValue);
         }
     }
@@ -95,16 +93,20 @@ export default class QuickOrderRow extends QuickOrderRowCore {
         }
     }
 
+    protected triggerInputEvent(input: HTMLInputElement): void {
+        input.dispatchEvent(this.eventInput);
+    }
+
     protected get autocompleteFormClassName(): string {
         return this.getAttribute('autocomplete-form-class-name');
     }
 
     protected get minQuantity(): number {
-        return Number(this.quantityInput.getAttribute('min'));
+        return Number(this.formattedNumberInput.getAttribute('min'));
     }
 
     protected get maxQuantity(): number {
-        const max = Number(this.quantityInput.getAttribute('max'));
+        const max = Number(this.formattedNumberInput.getAttribute('max'));
 
         return max > 0 && max > this.minQuantity ? max : Infinity;
     }
@@ -113,10 +115,5 @@ export default class QuickOrderRow extends QuickOrderRowCore {
         const step = Number(this.quantityInput.getAttribute('step'));
 
         return step > 0 ? step : 1;
-    }
-
-    /* TODO(https://spryker.atlassian.net/browse/CC-23779): Remove getter after integration. */
-    get quantityValue(): string {
-        return this.quantityInput.value;
     }
 }
