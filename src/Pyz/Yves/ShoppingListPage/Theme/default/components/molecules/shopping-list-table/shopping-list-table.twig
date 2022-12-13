@@ -7,6 +7,7 @@
 {% define data = {
     shoppingList: required,
     shoppingListItems: required,
+    numberFormatConfig: {},
 } %}
 
 {% block body %}
@@ -43,6 +44,7 @@
             },
             embed: {
                 isItemAvailable: isItemAvailable,
+                numberFormatConfig: data.numberFormatConfig,
             },
         } only %}
             {% block image %}
@@ -123,6 +125,7 @@
                     modifiers: ['shopping-list'],
                     data: {
                         isDisabled: not embed.isItemAvailable,
+                        numberFormatConfig: embed.numberFormatConfig,
                     },
                     attributes: {
                         name: 'shoppingListItem[quantity][' ~ data.listItem.idShoppingListItem ~ ']',

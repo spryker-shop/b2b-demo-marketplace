@@ -196,6 +196,14 @@
         'decimal-rounding': 1,
     } -%}
 
+    {% if grouping_separator_symbol ?? false %}
+        {%- set inputAttributes = inputAttributes | merge({'grouping-separator': grouping_separator_symbol}) -%}
+    {% endif %}
+
+    {% if decimal_separator_symbol ?? false %}
+        {%- set inputAttributes = inputAttributes | merge({'decimal-separator': decimal_separator_symbol}) -%}
+    {% endif %}
+
     {% if watchExternalChanges ?? false %}
         {%- set inputAttributes = inputAttributes | merge({'watch-external-changes': true}) -%}
     {% endif %}
