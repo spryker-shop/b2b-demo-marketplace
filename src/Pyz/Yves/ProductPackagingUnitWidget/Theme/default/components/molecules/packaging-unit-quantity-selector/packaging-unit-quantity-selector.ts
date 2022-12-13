@@ -199,7 +199,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         }
 
         if (this.amountInSalesUnitInput) {
-            this.amountInSalesUnitInput.addEventListener('input', () => this.onAmountInputChange());
+            this.amountInSalesUnitInput.addEventListener('input', () => this.amountInputChange());
         }
 
         if (this.leadSalesUnitSelect) {
