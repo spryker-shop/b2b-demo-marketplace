@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Spryker Suite.
+ * This file is part of the Spryker Commerce OS.
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
@@ -13,9 +13,6 @@ use SprykerShop\Yves\SessionCustomerValidationPage\SessionCustomerValidationPage
 use SprykerShop\Yves\SessionCustomerValidationPageExtension\Dependency\Plugin\CustomerSessionSaverPluginInterface;
 use SprykerShop\Yves\SessionCustomerValidationPageExtension\Dependency\Plugin\CustomerSessionValidatorPluginInterface;
 
-/**
- * @method \SprykerShop\Yves\SessionCustomerValidationPage\SessionCustomerValidationPageConfig getConfig()
- */
 class SessionCustomerValidationPageDependencyProvider extends SprykerSessionCustomerValidationPageDependencyProvider
 {
     /**
