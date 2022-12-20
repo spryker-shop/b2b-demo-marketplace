@@ -7,7 +7,6 @@
 
 namespace Pyz\Zed\Event;
 
-use Spryker\Zed\AssetStorage\Communication\Plugin\Event\Subscriber\AssetStorageEventSubscriber;
 use Spryker\Zed\AvailabilityNotification\Communication\Plugin\Event\Subscriber\AvailabilityNotificationSubscriber;
 use Spryker\Zed\AvailabilityStorage\Communication\Plugin\Event\Subscriber\AvailabilityStorageEventSubscriber;
 use Spryker\Zed\CategoryImageStorage\Communication\Plugin\Event\Subscriber\CategoryImageStorageEventSubscriber;
@@ -71,7 +70,7 @@ class EventDependencyProvider extends SprykerEventDependencyProvider
     {
         $eventSubscriberCollection = parent::getEventSubscriberCollection();
 
-        /**
+        /*
          * Storage Events
          */
         $eventSubscriberCollection->add(new UrlStorageEventSubscriber());
@@ -116,7 +115,7 @@ class EventDependencyProvider extends SprykerEventDependencyProvider
         $eventSubscriberCollection->add(new PriceProductOfferStorageEventSubscriber());
         $eventSubscriberCollection->add(new ProductOfferAvailabilityStorageEventSubscriber());
 
-        /**
+        /*
          * Search Events
          */
         $eventSubscriberCollection->add(new CmsPageSearchEventSubscriber());
@@ -131,8 +130,6 @@ class EventDependencyProvider extends SprykerEventDependencyProvider
         $eventSubscriberCollection->add(new MerchantProductOfferSearchEventSubscriber());
 
         $eventSubscriberCollection->add(new PublisherSubscriber());
-
-        $eventSubscriberCollection->add(new AssetStorageEventSubscriber());
 
         return $eventSubscriberCollection;
     }

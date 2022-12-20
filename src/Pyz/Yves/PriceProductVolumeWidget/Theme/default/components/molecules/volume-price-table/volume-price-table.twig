@@ -22,7 +22,7 @@
         {% for volumePrice in data.volumePrices %}
             <tr>
                 <td class="{{config.name}}__cell">
-                    {{ volumePrice.quantity }}
+                    {{ volumePrice.quantity | executeFilterIfExists('formatInt', app.locale) }}
                 </td>
                 <td class="{{config.name}}__cell">
                     {{ volumePrice.price|money }}

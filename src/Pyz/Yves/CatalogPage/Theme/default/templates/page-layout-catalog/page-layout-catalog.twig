@@ -76,6 +76,8 @@
                             <div class="col col--lg-12">
                                 {% include molecule('sort', 'CatalogPage') with {
                                     data: {
+                                        pagination: data.pagination,
+                                        sort: data.sort,
                                         parentJsName: catalogJsName,
                                     },
                                 } only %}
