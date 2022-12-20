@@ -15,7 +15,7 @@
 {% endblock %}
 
 {% block quantity %}
-    {% set quantityClass = config.jsName ~ '__quantity ' ~ 'product-search-autocomplete-form__input product-search-autocomplete-form__input--no-icon js-product-search-autocomplete-form__quantity-field' %}
+    {% set quantityClass = config.jsName ~ '__quantity ' ~ 'product-search-autocomplete-form__input product-search-autocomplete-form__input--no-icon js-product-search-autocomplete-form__quantity-field input input--expand' %}
 
     <div class="col col--sm-12 spacing-bottom spacing-bottom--big {{ not data.verticalLayout ? 'col--md-4' }}">
         {{ form_widget(data.form.children.quantity, {

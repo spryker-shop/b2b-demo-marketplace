@@ -7,7 +7,7 @@
 
 namespace Orm\Zed\ProductConfiguration\Persistence;
 
-use Orm\Zed\ProductConfiguration\Persistence\Base\SpyProductConfiguration as BaseSpyProductConfiguration;
+use Spryker\Zed\ProductConfiguration\Persistence\Propel\AbstractSpyProductConfiguration as BaseSpyProductConfiguration;
 
 /**
  * Skeleton subclass for representing a row from the 'spy_product_configuration' table.

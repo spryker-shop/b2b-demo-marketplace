@@ -34,6 +34,7 @@ use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\ViewTableButtonTwigP
 use Spryker\Zed\Gui\Communication\Plugin\Twig\FormRuntimeLoaderTwigPlugin;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\GuiFilterTwigPlugin;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\GuiTwigLoaderPlugin;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\NumberFormatterTwigPlugin;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\TabsTwigPlugin;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlDecodeTwigPlugin;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlTwigPlugin;
@@ -103,6 +104,7 @@ class TwigDependencyProvider extends SprykerTwigDependencyProvider
             new ZedUiNavigationTwigPlugin(),
             new BooleanToStringTwigPlugin(),
             new GuiTableConfigurationTwigPlugin(),
+            new NumberFormatterTwigPlugin(),
         ];
     }
 
