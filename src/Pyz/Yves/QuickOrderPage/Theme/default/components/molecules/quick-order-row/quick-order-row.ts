@@ -57,8 +57,8 @@ export default class QuickOrderRow extends QuickOrderRowCore {
 
     protected incrementValue(event: Event): void {
         event.preventDefault();
-        const value = this.formattedNumberInput.unformattedValue;
-        const potentialValue = Number(value) + this.step;
+        const value: number = this.formattedNumberInput.unformattedValue;
+        const potentialValue = value + this.step;
         if (value < this.maxQuantity) {
             this.quantityInput.value = potentialValue.toString();
             this.triggerInputEvent(this.quantityInput);
