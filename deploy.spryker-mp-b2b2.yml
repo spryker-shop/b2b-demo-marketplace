@@ -43,7 +43,7 @@ tag: '1.0'
 environment: docker.prod
 
 image:
-    tag: spryker/php:8.0
+    tag: spryker/php:7.4-alpine3.12
     environment:
         SPRYKER_DEFAULT_STORE: "DE"
         SPRYKER_ACTIVE_STORES: "DE,AT"
@@ -51,8 +51,6 @@ image:
         SPRYKER_HOOK_AFTER_DEPLOY: "true"
         SPRYKER_HOOK_INSTALL: "vendor/bin/install -r EU/production --no-ansi -vvv"
         SPRYKER_HOOK_DESTRUCTIVE_INSTALL: "vendor/bin/install -r EU/destructive --no-ansi -vvv"
-        SPRYKER_PRODUCT_CONFIGURATOR_HOST: dtc.mp-b2b-pr-perf.demo-spryker.com
-        SPRYKER_PRODUCT_CONFIGURATOR_PORT: 443
     php:
         enabled-extensions:
             - blackfire
@@ -128,8 +126,6 @@ groups:
             yves:
                 application: yves
                 endpoints:
-                    dtc.mp-b2b-pr-perf.demo-spryker.com:
-                        entry-point: Configurator
                     www.de.mp-b2b-pr-perf.demo-spryker.com:
                         store: DE
                         <<: *frontend-auth
