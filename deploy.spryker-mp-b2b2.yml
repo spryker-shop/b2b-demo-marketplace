@@ -55,20 +55,19 @@ image:
         enabled-extensions:
             - blackfire
             - newrelic
-    node:
-        version: 16
-        npm: 8
 
 composer:
     mode: --no-dev
     autoload: --classmap-authoritative
 
 assets:
-    image: spryker/nginx-brotli:latest
+    image: fholzer/nginx-brotli:v1.18.0
     mode: production
     compression:
         brotli:
-            static: on
+            static: only
+        gzip:
+            static: true
             level: 5
 
 regions:
