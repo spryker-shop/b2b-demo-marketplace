@@ -29,7 +29,7 @@ class MerchantGuiDependencyProvider extends SprykerMerchantGuiDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantFormExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantFormExpanderPluginInterface>
      */
     protected function getMerchantFormExpanderPlugins(): array
     {
@@ -40,7 +40,7 @@ class MerchantGuiDependencyProvider extends SprykerMerchantGuiDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantFormTabExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantFormTabExpanderPluginInterface>
      */
     protected function getMerchantFormTabsExpanderPlugins(): array
     {
@@ -53,7 +53,7 @@ class MerchantGuiDependencyProvider extends SprykerMerchantGuiDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantUpdateFormViewExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantUpdateFormViewExpanderPluginInterface>
      */
     protected function getMerchantUpdateFormViewExpanderPlugins(): array
     {
