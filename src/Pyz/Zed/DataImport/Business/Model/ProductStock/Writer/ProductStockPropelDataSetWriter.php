@@ -85,7 +85,7 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
     protected const COL_STOCK_PRODUCT_TOTAL_QUANTITY = 'stockProductTotalQuantity';
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected static $productAbstractSkus = [];
 
@@ -119,7 +119,7 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
         ProductBundleFacadeInterface $productBundleFacade,
         ProductRepositoryInterface $productRepository,
         StoreFacadeInterface $storeFacade,
-        StockFacadeInterface $stockFacade
+        StockFacadeInterface $stockFacade,
     ) {
         $this->productBundleFacade = $productBundleFacade;
         $this->productRepository = $productRepository;
@@ -161,7 +161,7 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStock
      */
-    protected function createOrUpdateStock(DataSetInterface $dataSet)
+    protected function createOrUpdateStock(DataSetInterface $dataSet): SpyStock
     {
         $stockTransfer = $dataSet[ProductStockHydratorStep::STOCK_ENTITY_TRANSFER];
         $stockEntity = SpyStockQuery::create()
@@ -215,7 +215,7 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     protected function getAvailabilityAbstractIdsForCollectedAbstractSkus(): array
     {
@@ -235,7 +235,7 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     protected function getStoreIds(): array
     {
@@ -333,13 +333,13 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
 
     /**
      * @param int $idProductConcrete
-     * @param string[] $stockNames
+     * @param array<string> $stockNames
      *
      * @return \Spryker\DecimalObject\Decimal
      */
     protected function getStockProductQuantityByIdProductAndStockNames(
         int $idProductConcrete,
-        array $stockNames
+        array $stockNames,
     ): Decimal {
         $stockProductTotalQuantity = SpyStockProductQuery::create()
             ->filterByFkProduct($idProductConcrete)
@@ -488,7 +488,7 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
      */
     protected function updateAbstractAvailabilityQuantity(
         SpyAvailabilityAbstract $availabilityAbstractEntity,
-        int $idStore
+        int $idStore,
     ): SpyAvailabilityAbstract {
         $sumQuantity = SpyAvailabilityQuery::create()
             ->filterByFkAvailabilityAbstract($availabilityAbstractEntity->getIdAvailabilityAbstract())

@@ -167,11 +167,11 @@ $config[SessionConstants::ZED_SESSION_COOKIE_NAME]
 
 $config[ZedRequestConstants::BASE_URL_ZED_API] = sprintf(
     'http://%s',
-    $backendGatewayHost
+    $backendGatewayHost,
 );
 $config[ZedRequestConstants::BASE_URL_SSL_ZED_API] = sprintf(
     'https://%s',
-    $backendGatewayHost
+    $backendGatewayHost,
 );
 
 // ----------------------------------------------------------------------------
@@ -180,7 +180,7 @@ $config[ZedRequestConstants::BASE_URL_SSL_ZED_API] = sprintf(
 
 $config[ApplicationConstants::BASE_URL_ZED] = sprintf(
     'http://%s',
-    $backofficeHost
+    $backofficeHost,
 );
 
 // ----------------------------------------------------------------------------
@@ -207,7 +207,7 @@ $config[ApplicationConstants::BASE_URL_YVES]
     = $config[NewsletterConstants::BASE_URL_YVES]
     = sprintf(
         'http://%s',
-        $yvesHost
+        $yvesHost,
     );
 
 // ----------------------------------------------------------------------------
@@ -217,7 +217,7 @@ $config[ApplicationConstants::BASE_URL_YVES]
 $config[GlueApplicationConstants::GLUE_APPLICATION_DOMAIN]
     = sprintf(
         'http://%s',
-        $glueHost
+        $glueHost,
     );
 
 if (class_exists(TestifyConstants::class)) {

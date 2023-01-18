@@ -21,7 +21,7 @@ class PriceProductDependencyProvider extends SprykerPriceProductDependencyProvid
     /**
      * {@inheritDoc}
      *
-     * @return \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductFilterPluginInterface[]
+     * @return array<\Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductFilterPluginInterface>
      */
     protected function getPriceProductDecisionPlugins(): array
     {

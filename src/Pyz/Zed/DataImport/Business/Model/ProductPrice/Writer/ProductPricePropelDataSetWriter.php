@@ -92,7 +92,7 @@ class ProductPricePropelDataSetWriter implements DataSetWriterInterface
     public function __construct(
         ProductRepository $productRepository,
         StoreFacadeInterface $storeFacade,
-        CurrencyFacadeInterface $currencyFacade
+        CurrencyFacadeInterface $currencyFacade,
     ) {
         $this->productRepository = $productRepository;
         $this->storeFacade = $storeFacade;
@@ -143,7 +143,7 @@ class ProductPricePropelDataSetWriter implements DataSetWriterInterface
      */
     protected function findOrCreateProductPrice(
         DataSetInterface $dataSet,
-        SpyPriceType $priceTypeEntity
+        SpyPriceType $priceTypeEntity,
     ): SpyPriceProduct {
         $query = SpyPriceProductQuery::create();
         $query->filterByFkPriceType($priceTypeEntity->getIdPriceType());
@@ -153,7 +153,7 @@ class ProductPricePropelDataSetWriter implements DataSetWriterInterface
                 'One of "%s" or "%s" must be in the data set. Given: "%s"',
                 static::COLUMN_ABSTRACT_SKU,
                 static::COLUMN_CONCRETE_SKU,
-                implode(', ', array_keys($dataSet->getArrayCopy()))
+                implode(', ', array_keys($dataSet->getArrayCopy())),
             ));
         }
 
@@ -182,7 +182,7 @@ class ProductPricePropelDataSetWriter implements DataSetWriterInterface
      */
     protected function findOrCreatePriceProductStore(
         DataSetInterface $dataSet,
-        SpyPriceProduct $spyPriceProduct
+        SpyPriceProduct $spyPriceProduct,
     ): SpyPriceProductStore {
         $storeTransfer = $this->storeFacade->getStoreByName($dataSet[static::COLUMN_STORE]);
         $currencyTransfer = $this->currencyFacade->fromIsoCode($dataSet[static::COLUMN_CURRENCY]);
