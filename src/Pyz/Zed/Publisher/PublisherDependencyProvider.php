@@ -224,7 +224,6 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
             new MerchantProductPublisherTriggerPlugin(),
             new AssetPublisherTriggerPlugin(),
             new PriceProductOfferPublisherTriggerPlugin(),
-
         ];
     }
 
