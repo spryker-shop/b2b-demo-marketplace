@@ -25,7 +25,7 @@ class AclDependencyProvider extends SprykerAclDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\AclExtension\Dependency\Plugin\AclRolePostSavePluginInterface[]
+     * @return array<\Spryker\Zed\AclExtension\Dependency\Plugin\AclRolePostSavePluginInterface>
      */
     protected function getAclRolePostSavePlugins(): array
     {
