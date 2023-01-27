@@ -129,7 +129,7 @@ class ProductConcreteHydratorStep implements DataImportStepInterface
     protected $productRepository;
 
     /**
-     * @var bool[] Keys are product column names
+     * @var array<bool> Keys are product column names
      */
     protected static $isProductColumnBuffer = [];
 

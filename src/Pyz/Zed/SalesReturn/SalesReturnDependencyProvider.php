@@ -35,7 +35,7 @@ class SalesReturnDependencyProvider extends SprykerSalesReturnDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnExpanderPluginInterface>
      */
     protected function getReturnExpanderPlugins(): array
     {
