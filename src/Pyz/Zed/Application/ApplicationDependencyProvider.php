@@ -35,7 +35,7 @@ class ApplicationDependencyProvider extends SprykerApplicationDependencyProvider
     /**
      * @deprecated Use {@link \Pyz\Zed\Application\ApplicationDependencyProvider::getBackofficeApplicationPlugins()} instead.
      *
-     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     * @return array<\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface>
      */
     protected function getApplicationPlugins(): array
     {
@@ -43,7 +43,7 @@ class ApplicationDependencyProvider extends SprykerApplicationDependencyProvider
     }
 
     /**
-     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     * @return array<\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface>
      */
     protected function getBackofficeApplicationPlugins(): array
     {
@@ -73,7 +73,7 @@ class ApplicationDependencyProvider extends SprykerApplicationDependencyProvider
     }
 
     /**
-     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     * @return array<\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface>
      */
     protected function getBackendGatewayApplicationPlugins(): array
     {
@@ -89,7 +89,7 @@ class ApplicationDependencyProvider extends SprykerApplicationDependencyProvider
     }
 
     /**
-     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     * @return array<\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface>
      */
     protected function getBackendApiApplicationPlugins(): array
     {

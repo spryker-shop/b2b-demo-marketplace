@@ -15,7 +15,7 @@ use Spryker\Zed\MerchantProductGui\Communication\Plugin\AvailabilityGui\Merchant
 class AvailabilityGuiDependencyProvider extends SprykerAvailabilityGuiDependencyProvider
 {
     /**
-     * @return \Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin\AvailabilityViewActionViewDataExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin\AvailabilityViewActionViewDataExpanderPluginInterface>
      */
     protected function getAvailabilityViewActionViewDataExpanderPlugins(): array
     {
@@ -25,7 +25,7 @@ class AvailabilityGuiDependencyProvider extends SprykerAvailabilityGuiDependency
     }
 
     /**
-     * @return \Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin\AvailabilityAbstractTableQueryCriteriaExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin\AvailabilityAbstractTableQueryCriteriaExpanderPluginInterface>
      */
     protected function getAvailabilityAbstractTableQueryCriteriaExpanderPlugins(): array
     {

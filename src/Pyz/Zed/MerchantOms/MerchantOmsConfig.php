@@ -22,7 +22,7 @@ class MerchantOmsConfig extends SprykerMerchantOmsConfig
     protected const PYZ_MAIN_MERCHANT_STATE_MACHINE_INITIAL_STATE = 'created';
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getMerchantProcessInitialStateMap(): array
     {
@@ -30,14 +30,14 @@ class MerchantOmsConfig extends SprykerMerchantOmsConfig
             parent::getMerchantProcessInitialStateMap(),
             [
                 static::PYZ_MAIN_MERCHANT_OMS_PROCESS_NAME => static::PYZ_MAIN_MERCHANT_STATE_MACHINE_INITIAL_STATE,
-            ]
+            ],
         );
     }
 
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getMerchantOmsProcesses(): array
     {
@@ -45,7 +45,7 @@ class MerchantOmsConfig extends SprykerMerchantOmsConfig
             parent::getMerchantOmsProcesses(),
             [
                 static::PYZ_MAIN_MERCHANT_OMS_PROCESS_NAME,
-            ]
+            ],
         );
     }
 }
