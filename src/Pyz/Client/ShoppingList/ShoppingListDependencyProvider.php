@@ -8,6 +8,9 @@
 namespace Pyz\Client\ShoppingList;
 
 use Spryker\Client\Merchant\Plugin\ShoppingList\MerchantShoppingListItemToItemMapperPlugin;
+use Spryker\Client\ProductConfigurationShoppingList\Plugin\ShoppingList\ProductConfigurationShoppingListExpanderPlugin;
+use Spryker\Client\ProductConfigurationShoppingList\Plugin\ShoppingList\ProductConfigurationShoppingListItemMapperPlugin;
+use Spryker\Client\ProductConfigurationShoppingList\Plugin\ShoppingList\ProductConfigurationShoppingListItemToItemMapperPlugin;
 use Spryker\Client\ProductOfferShoppingList\Plugin\ShoppingList\ProductOfferShoppingListItemMapperPlugin;
 use Spryker\Client\ProductOfferShoppingList\Plugin\ShoppingList\ProductOfferShoppingListItemToItemMapperPlugin;
 use Spryker\Client\ShoppingList\ShoppingListDependencyProvider as SprykerShoppingListDependencyProvider;
@@ -19,18 +22,19 @@ use Spryker\Client\ShoppingListProductOptionConnector\ShoppingList\ShoppingListI
 class ShoppingListDependencyProvider extends SprykerShoppingListDependencyProvider
 {
     /**
-     * @return \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemMapperPluginInterface[]
+     * @return array<\Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemMapperPluginInterface>
      */
     protected function getAddItemShoppingListItemMapperPlugins(): array
     {
         return [
             new ShoppingListItemProductOptionRequestMapperPlugin(),
             new ProductOfferShoppingListItemMapperPlugin(),
+            new ProductConfigurationShoppingListItemMapperPlugin(),
         ];
     }
 
     /**
-     * @return \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemToItemMapperPluginInterface[]
+     * @return array<\Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemToItemMapperPluginInterface>
      */
     protected function getShoppingListItemToItemMapperPlugins(): array
     {
@@ -39,16 +43,27 @@ class ShoppingListDependencyProvider extends SprykerShoppingListDependencyProvid
             new ShoppingListItemProductOptionToItemProductOptionMapperPlugin(),
             new ProductOfferShoppingListItemToItemMapperPlugin(),
             new MerchantShoppingListItemToItemMapperPlugin(),
+            new ProductConfigurationShoppingListItemToItemMapperPlugin(),
         ];
     }
 
     /**
-     * @return \Spryker\Client\ShoppingListExtension\Dependency\Plugin\QuoteItemToItemMapperPluginInterface[]
+     * @return array<\Spryker\Client\ShoppingListExtension\Dependency\Plugin\QuoteItemToItemMapperPluginInterface>
      */
     protected function getQuoteItemToItemMapperPlugins(): array
     {
         return [
             new ProductOptionQuoteItemToItemMapperPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListExpanderPluginInterface>
+     */
+    protected function getShoppingListExpanderPlugins(): array
+    {
+        return [
+            new ProductConfigurationShoppingListExpanderPlugin(),
         ];
     }
 }

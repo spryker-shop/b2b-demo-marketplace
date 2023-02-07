@@ -12,12 +12,14 @@ use Spryker\Zed\SecurityGui\Communication\Plugin\Security\UserSecurityPlugin;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Plugin\Security\MerchantUserSecurityPlugin;
 use Spryker\Zed\SecurityOauthUser\Communication\Plugin\Security\OauthUserSecurityPlugin;
 use Spryker\Zed\SecuritySystemUser\Communication\Plugin\Security\SystemUserSecurityPlugin;
+use Spryker\Zed\SessionUserValidation\Communication\Plugin\Security\SaveSessionUserSecurityPlugin;
+use Spryker\Zed\SessionUserValidation\Communication\Plugin\Security\ValidateSessionUserSecurityPlugin;
 use Spryker\Zed\User\Communication\Plugin\Security\UserSessionHandlerSecurityPlugin;
 
 class SecurityDependencyProvider extends SprykerSecurityDependencyProvider
 {
     /**
-     * @return \Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityPluginInterface[]
+     * @return array<\Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityPluginInterface>
      */
     protected function getSecurityPlugins(): array
     {
@@ -27,6 +29,8 @@ class SecurityDependencyProvider extends SprykerSecurityDependencyProvider
             new MerchantUserSecurityPlugin(),
             new UserSecurityPlugin(),
             new OauthUserSecurityPlugin(),
+            new ValidateSessionUserSecurityPlugin(),
+            new SaveSessionUserSecurityPlugin(),
         ];
     }
 }

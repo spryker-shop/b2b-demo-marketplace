@@ -42,13 +42,14 @@ use SprykerShop\Yves\ShopApplication\Plugin\TwigFormRuntimeLoaderPlugin;
 use SprykerShop\Yves\ShopCmsSlot\Plugin\Twig\ShopCmsSlotTwigPlugin;
 use SprykerShop\Yves\ShopPermission\Plugin\Twig\ShopPermissionTwigPlugin;
 use SprykerShop\Yves\ShopUi\Plugin\Twig\FunctionTwigPlugin;
+use SprykerShop\Yves\ShopUi\Plugin\Twig\NumberFormatterTwigPlugin;
 use SprykerShop\Yves\ShopUi\Plugin\Twig\ShopUiTwigPlugin;
 use SprykerShop\Yves\WebProfilerWidget\Plugin\Twig\WebProfilerTwigLoaderPlugin;
 
 class TwigDependencyProvider extends SprykerTwigDependencyProvider
 {
     /**
-     * @return \Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface[]
+     * @return array<\Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface>
      */
     protected function getTwigPlugins(): array
     {
@@ -85,11 +86,12 @@ class TwigDependencyProvider extends SprykerTwigDependencyProvider
             new ShopCmsSlotTwigPlugin(),
             new ContentNavigationTwigPlugin(),
             new PriceModeTwigPlugin(),
+            new NumberFormatterTwigPlugin(),
         ];
     }
 
     /**
-     * @return \Spryker\Shared\TwigExtension\Dependency\Plugin\TwigLoaderPluginInterface[]
+     * @return array<\Spryker\Shared\TwigExtension\Dependency\Plugin\TwigLoaderPluginInterface>
      */
     protected function getTwigLoaderPlugins(): array
     {

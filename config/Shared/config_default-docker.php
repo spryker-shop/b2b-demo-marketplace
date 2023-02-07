@@ -63,25 +63,25 @@ $config[ApplicationConstants::PORT_SSL_ZED] = '';
 $config[ApplicationConstants::BASE_URL_ZED] = sprintf(
     'http://%s%s',
     getenv('SPRYKER_BE_HOST'),
-    $backofficePort
+    $backofficePort,
 );
 $config[ApplicationConstants::BASE_URL_SSL_ZED] = sprintf(
     'https://%s%s',
     getenv('SPRYKER_BE_HOST'),
-    $backofficePort
+    $backofficePort,
 );
 $config[ZedRequestConstants::HOST_ZED_API] = sprintf(
     '%s:%s',
     getenv('SPRYKER_ZED_HOST'),
-    $config[ApplicationConstants::PORT_ZED]
+    $config[ApplicationConstants::PORT_ZED],
 );
 $config[ZedRequestConstants::BASE_URL_ZED_API] = sprintf(
     'http://%s',
-    $config[ZedRequestConstants::HOST_ZED_API]
+    $config[ZedRequestConstants::HOST_ZED_API],
 );
 $config[ZedRequestConstants::BASE_URL_SSL_ZED_API] = sprintf(
     'https://%s',
-    $config[ZedRequestConstants::HOST_ZED_API]
+    $config[ZedRequestConstants::HOST_ZED_API],
 );
 
 $config[ZedRequestConstants::TRANSFER_DEBUG_SESSION_FORWARD_ENABLED] = true;
@@ -122,7 +122,7 @@ $config[OmsConstants::ACTIVE_PROCESSES] = [
     'MarketplacePayment01',
 ];
 $config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = [
-    DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE => 'MarketplacePayment01'
+    DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE => 'MarketplacePayment01',
 ];
 
 $config[EventConstants::LOGGER_ACTIVE] = true;
@@ -150,12 +150,12 @@ $config[ApplicationConstants::PORT_YVES]
 $config[ApplicationConstants::BASE_URL_YVES] = sprintf(
     'http://%s%s',
     $config[ApplicationConstants::HOST_YVES],
-    getenv('SPRYKER_FE_PORT') ? ':' . getenv('SPRYKER_FE_PORT') : ''
+    getenv('SPRYKER_FE_PORT') ? ':' . getenv('SPRYKER_FE_PORT') : '',
 );
 $config[ApplicationConstants::BASE_URL_SSL_YVES] = sprintf(
     'https://%s%s',
     $config[ApplicationConstants::HOST_YVES],
-    $config[ApplicationConstants::PORT_SSL_YVES]
+    $config[ApplicationConstants::PORT_SSL_YVES],
 );
 $config[ProductManagementConstants::BASE_URL_YVES] = $config[ApplicationConstants::BASE_URL_YVES];
 $config[NewsletterConstants::BASE_URL_YVES] = $config[ApplicationConstants::BASE_URL_YVES];
@@ -187,7 +187,7 @@ $config[GlueApplicationConstants::GLUE_APPLICATION_DOMAIN] = sprintf(
     '%s://%s%s',
     $protocol,
     $glueHost, // TODO: refactor GlueControllerFilterPluginTest to avoid the knowledge of GLUE_APPLICATION_DOMAIN in Zed
-    $gluePort !== 80 ? ':' . $gluePort : ''
+    $gluePort !== 80 ? ':' . $gluePort : '',
 );
 $config[GlueApplicationConstants::GLUE_APPLICATION_REST_DEBUG] = (bool)getenv('SPRYKER_DEBUG_ENABLED');
 $config[GlueApplicationConstants::GLUE_APPLICATION_CORS_ALLOW_ORIGIN] = getenv('SPRYKER_GLUE_APPLICATION_CORS_ALLOW_ORIGIN') ?: '';

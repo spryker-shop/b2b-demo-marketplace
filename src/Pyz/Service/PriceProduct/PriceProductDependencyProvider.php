@@ -13,18 +13,20 @@ use Spryker\Service\PriceProductMerchantRelationship\Plugin\PriceProduct\Merchan
 use Spryker\Service\PriceProductOffer\Plugin\PriceProduct\PriceProductOfferPriceProductFilterPlugin;
 use Spryker\Service\PriceProductOfferVolume\Plugin\PriceProductOffer\PriceProductOfferVolumeFilterPlugin;
 use Spryker\Service\PriceProductVolume\Plugin\PriceProductExtension\PriceProductVolumeFilterPlugin;
+use Spryker\Service\ProductConfiguration\Plugin\PriceProduct\ProductConfigurationPriceProductFilterPlugin;
+use Spryker\Service\ProductConfiguration\Plugin\PriceProduct\ProductConfigurationVolumePriceProductFilterPlugin;
 
 class PriceProductDependencyProvider extends SprykerPriceProductDependencyProvider
 {
     /**
      * {@inheritDoc}
      *
-     * @return \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductFilterPluginInterface[]
+     * @return array<\Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductFilterPluginInterface>
      */
     protected function getPriceProductDecisionPlugins(): array
     {
         return array_merge([
-            /**
+            /*
              * MerchantRelationshipPriceProductFilterPlugin should be at the beginning to filter non-active merchant prices
              * and define right minimum price in next filter plugins like in `PriceProductVolumeFilterPlugin`.
              */
@@ -32,6 +34,8 @@ class PriceProductDependencyProvider extends SprykerPriceProductDependencyProvid
             new PriceProductOfferPriceProductFilterPlugin(),
             new PriceProductOfferVolumeFilterPlugin(),
             new PriceProductVolumeFilterPlugin(),
+            new ProductConfigurationPriceProductFilterPlugin(),
+            new ProductConfigurationVolumePriceProductFilterPlugin(),
         ], parent::getPriceProductDecisionPlugins());
     }
 

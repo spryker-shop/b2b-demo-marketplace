@@ -29,7 +29,7 @@ class MerchantProductOfferDataImportConfig extends SprykerMerchantProductOfferDa
     {
         return $this->buildImporterConfiguration(
             $this->getPyzCombinedMerchantProductOfferFilePath(),
-            static::PYZ_IMPORT_TYPE_COMBINED_MERCHANT_PRODUCT_OFFER
+            static::PYZ_IMPORT_TYPE_COMBINED_MERCHANT_PRODUCT_OFFER,
         );
     }
 
@@ -40,7 +40,7 @@ class MerchantProductOfferDataImportConfig extends SprykerMerchantProductOfferDa
     {
         return $this->buildImporterConfiguration(
             $this->getPyzCombinedMerchantProductOfferFilePath(),
-            static::PYZ_IMPORT_TYPE_COMBINED_MERCHANT_PRODUCT_OFFER_STORE
+            static::PYZ_IMPORT_TYPE_COMBINED_MERCHANT_PRODUCT_OFFER_STORE,
         );
     }
 

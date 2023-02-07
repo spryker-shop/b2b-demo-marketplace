@@ -11,21 +11,23 @@ use Spryker\Zed\MerchantRelationship\MerchantRelationshipDependencyProvider as S
 use Spryker\Zed\MerchantRelationshipProductList\Communication\Plugin\MerchantRelationship\ProductListMerchantRelationshipPostCreatePlugin;
 use Spryker\Zed\MerchantRelationshipProductList\Communication\Plugin\MerchantRelationship\ProductListMerchantRelationshipPostUpdatePlugin;
 use Spryker\Zed\MerchantRelationshipProductList\Communication\Plugin\MerchantRelationship\ProductListRelationshipMerchantRelationshipPreDeletePlugin;
+use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Communication\Plugin\MerchantRelationship\MerchantRelationshipSalesOrderThresholdMerchantRelationshipPreDeletePlugin;
 
 class MerchantRelationshipDependencyProvider extends SprykerMerchantRelationshipDependencyProvider
 {
     /**
-     * @return \Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPreDeletePluginInterface[]
+     * @return array<\Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPreDeletePluginInterface>
      */
     protected function getMerchantRelationshipPreDeletePlugins(): array
     {
         return [
+            new MerchantRelationshipSalesOrderThresholdMerchantRelationshipPreDeletePlugin(),
             new ProductListRelationshipMerchantRelationshipPreDeletePlugin(),
         ];
     }
 
     /**
-     * @return \Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPostCreatePluginInterface[]
+     * @return array<\Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPostCreatePluginInterface>
      */
     protected function getMerchantRelationshipPostCreatePlugins(): array
     {
@@ -35,7 +37,7 @@ class MerchantRelationshipDependencyProvider extends SprykerMerchantRelationship
     }
 
     /**
-     * @return \Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPostUpdatePluginInterface[]
+     * @return array<\Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPostUpdatePluginInterface>
      */
     protected function getMerchantRelationshipPostUpdatePlugins(): array
     {

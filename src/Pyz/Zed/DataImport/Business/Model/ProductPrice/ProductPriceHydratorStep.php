@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\SpyPriceTypeEntityTransfer;
 use Generated\Shared\Transfer\SpyProductAbstractEntityTransfer;
 use Generated\Shared\Transfer\SpyProductEntityTransfer;
 use Generated\Shared\Transfer\SpyStoreEntityTransfer;
+use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceTypeTableMap;
 use Spryker\Zed\DataImport\Business\Exception\DataKeyNotFoundInDataSetException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
@@ -78,7 +79,10 @@ class ProductPriceHydratorStep implements DataImportStepInterface
      */
     public const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
 
-    public const KEY_DEFAULT_PRICE_MODE_CONFIGURATION = 2;
+    /**
+     * @var string
+     */
+    public const KEY_DEFAULT_PRICE_MODE_CONFIGURATION = SpyPriceTypeTableMap::COL_PRICE_MODE_CONFIGURATION_BOTH;
 
     /**
      * @var string
@@ -116,7 +120,7 @@ class ProductPriceHydratorStep implements DataImportStepInterface
      */
     public function __construct(
         PriceProductFacadeInterface $priceProductFacade,
-        DataImportToUtilEncodingServiceInterface $utilEncodingService
+        DataImportToUtilEncodingServiceInterface $utilEncodingService,
     ) {
         $this->priceProductFacade = $priceProductFacade;
         $this->utilEncodingService = $utilEncodingService;
@@ -150,7 +154,7 @@ class ProductPriceHydratorStep implements DataImportStepInterface
                 'One of "%s" or "%s" must be in the data set. Given: "%s"',
                 $dataSet[static::COLUMN_ABSTRACT_SKU],
                 $dataSet[static::COLUMN_ABSTRACT_SKU],
-                implode(', ', array_keys($dataSet->getArrayCopy()))
+                implode(', ', array_keys($dataSet->getArrayCopy())),
             ));
         }
 
@@ -300,8 +304,8 @@ class ProductPriceHydratorStep implements DataImportStepInterface
             throw new InvalidPriceDataKeyException(
                 sprintf(
                     'Price data key "%s" has invalid format. Should be in following format: "price_data.some_key"',
-                    $key
-                )
+                    $key,
+                ),
             );
         }
 
@@ -317,7 +321,7 @@ class ProductPriceHydratorStep implements DataImportStepInterface
      */
     protected function addPriceDataValue(array $priceData, string $key, string $value): array
     {
-        if (empty($value)) {
+        if (!$value) {
             return $priceData;
         }
 

@@ -14,6 +14,8 @@ use Spryker\Glue\MerchantProductOffersRestApi\Plugin\CartsRestApi\MerchantProduc
 use Spryker\Glue\MerchantProductOffersRestApi\Plugin\CartsRestApi\MerchantProductOfferRestCartItemsAttributesMapperPlugin;
 use Spryker\Glue\MerchantProductsRestApi\Plugin\CartsRestApi\MerchantProductCartItemExpanderPlugin;
 use Spryker\Glue\ProductBundleCartsRestApi\Plugin\CartsRestApi\ProductBundleCartItemFilterPlugin;
+use Spryker\Glue\ProductConfigurationsRestApi\Plugin\CartsRestApi\ProductConfigurationCartItemExpanderPlugin;
+use Spryker\Glue\ProductConfigurationsRestApi\Plugin\CartsRestApi\ProductConfigurationRestCartItemsAttributesMapperPlugin;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Plugin\CartsRestApi\SalesUnitCartItemExpanderPlugin;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Plugin\CartsRestApi\SalesUnitsRestCartItemsAttributesMapperPlugin;
 use Spryker\Glue\ProductOptionsRestApi\Plugin\CartsRestApi\ProductOptionCartItemExpanderPlugin;
@@ -23,7 +25,7 @@ use Spryker\Glue\SalesOrderThresholdsRestApi\Plugin\CartsRestApi\SalesOrderThres
 class CartsRestApiDependencyProvider extends SprykerCartsRestApiDependencyProvider
 {
     /**
-     * @return \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[]
+     * @return array<\Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface>
      */
     protected function getCustomerExpanderPlugins(): array
     {
@@ -33,7 +35,7 @@ class CartsRestApiDependencyProvider extends SprykerCartsRestApiDependencyProvid
     }
 
     /**
-     * @return \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\RestCartItemsAttributesMapperPluginInterface[]
+     * @return array<\Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\RestCartItemsAttributesMapperPluginInterface>
      */
     protected function getRestCartItemsAttributesMapperPlugins(): array
     {
@@ -41,11 +43,12 @@ class CartsRestApiDependencyProvider extends SprykerCartsRestApiDependencyProvid
             new ProductOptionRestCartItemsAttributesMapperPlugin(),
             new SalesUnitsRestCartItemsAttributesMapperPlugin(),
             new MerchantProductOfferRestCartItemsAttributesMapperPlugin(),
+            new ProductConfigurationRestCartItemsAttributesMapperPlugin(),
         ];
     }
 
     /**
-     * @return \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CartItemExpanderPluginInterface[]
+     * @return array<\Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CartItemExpanderPluginInterface>
      */
     protected function getCartItemExpanderPlugins(): array
     {
@@ -55,11 +58,12 @@ class CartsRestApiDependencyProvider extends SprykerCartsRestApiDependencyProvid
             new SalesUnitCartItemExpanderPlugin(),
             new MerchantProductCartItemExpanderPlugin(),
             new MerchantProductOfferCartItemExpanderPlugin(),
+            new ProductConfigurationCartItemExpanderPlugin(),
         ];
     }
 
     /**
-     * @return \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CartItemFilterPluginInterface[]
+     * @return array<\Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CartItemFilterPluginInterface>
      */
     protected function getCartItemFilterPlugins(): array
     {

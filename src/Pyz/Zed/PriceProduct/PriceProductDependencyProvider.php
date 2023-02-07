@@ -30,7 +30,7 @@ class PriceProductDependencyProvider extends SprykerPriceProductDependencyProvid
     /**
      * {@inheritDoc}
      *
-     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface[]
+     * @return array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface>
      */
     protected function getPriceDimensionQueryCriteriaPlugins(): array
     {
@@ -43,7 +43,7 @@ class PriceProductDependencyProvider extends SprykerPriceProductDependencyProvid
     /**
      * {@inheritDoc}
      *
-     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionAbstractSaverPluginInterface[]
+     * @return array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionAbstractSaverPluginInterface>
      */
     protected function getPriceDimensionAbstractSaverPlugins(): array
     {
@@ -55,7 +55,7 @@ class PriceProductDependencyProvider extends SprykerPriceProductDependencyProvid
     /**
      * {@inheritDoc}
      *
-     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionConcreteSaverPluginInterface[]
+     * @return array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionConcreteSaverPluginInterface>
      */
     protected function getPriceDimensionConcreteSaverPlugins(): array
     {
@@ -66,7 +66,7 @@ class PriceProductDependencyProvider extends SprykerPriceProductDependencyProvid
     }
 
     /**
-     * @return \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDimensionExpanderStrategyPluginInterface[]
+     * @return array<\Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDimensionExpanderStrategyPluginInterface>
      */
     protected function getPriceProductDimensionExpanderStrategyPlugins(): array
     {
@@ -77,7 +77,7 @@ class PriceProductDependencyProvider extends SprykerPriceProductDependencyProvid
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductReaderPricesExtractorPluginInterface[]
+     * @return array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductReaderPricesExtractorPluginInterface>
      */
     protected function getPriceProductPricesExtractorPlugins(): array
     {
@@ -87,7 +87,7 @@ class PriceProductDependencyProvider extends SprykerPriceProductDependencyProvid
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductValidatorPluginInterface[]
+     * @return array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductValidatorPluginInterface>
      */
     protected function getPriceProductValidatorPlugins(): array
     {

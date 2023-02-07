@@ -34,6 +34,7 @@ use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\ViewTableButtonTwigP
 use Spryker\Zed\Gui\Communication\Plugin\Twig\FormRuntimeLoaderTwigPlugin;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\GuiFilterTwigPlugin;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\GuiTwigLoaderPlugin;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\NumberFormatterTwigPlugin;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\TabsTwigPlugin;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlDecodeTwigPlugin;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlTwigPlugin;
@@ -55,7 +56,7 @@ use Spryker\Zed\ZedUi\Communication\Plugin\ZedUiNavigationTwigPlugin;
 class TwigDependencyProvider extends SprykerTwigDependencyProvider
 {
     /**
-     * @return \Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface[]
+     * @return array<\Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface>
      */
     protected function getTwigPlugins(): array
     {
@@ -103,11 +104,12 @@ class TwigDependencyProvider extends SprykerTwigDependencyProvider
             new ZedUiNavigationTwigPlugin(),
             new BooleanToStringTwigPlugin(),
             new GuiTableConfigurationTwigPlugin(),
+            new NumberFormatterTwigPlugin(),
         ];
     }
 
     /**
-     * @return \Spryker\Shared\TwigExtension\Dependency\Plugin\TwigLoaderPluginInterface[]
+     * @return array<\Spryker\Shared\TwigExtension\Dependency\Plugin\TwigLoaderPluginInterface>
      */
     protected function getTwigLoaderPlugins(): array
     {

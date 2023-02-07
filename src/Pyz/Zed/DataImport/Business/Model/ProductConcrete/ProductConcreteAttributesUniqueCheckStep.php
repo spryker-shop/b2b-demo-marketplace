@@ -32,14 +32,22 @@ class ProductConcreteAttributesUniqueCheckStep implements DataImportStepInterfac
 
     /**
      * @uses \Orm\Zed\Product\Persistence\Map\SpyProductTableMap::COL_ATTRIBUTES
+     *
+     * @var string
      */
     protected const PRODUCT_COL_ATTRIBUTES = 'spy_product.attributes';
+
     /**
      * @uses \Orm\Zed\Product\Persistence\Map\SpyProductTableMap::COL_SKU
+     *
+     * @var string
      */
     protected const PRODUCT_COL_SKU = 'spy_product.sku';
+
     /**
      * @uses \Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap::COL_SKU
+     *
+     * @var string
      */
     protected const PRODUCT_ABSTRACT_COL_SKU = 'spy_product_abstract.sku';
 
@@ -64,7 +72,7 @@ class ProductConcreteAttributesUniqueCheckStep implements DataImportStepInterfac
      */
     public function __construct(
         ProductRepositoryInterface $productRepository,
-        DataImportToUtilEncodingServiceInterface $utilEncodingService
+        DataImportToUtilEncodingServiceInterface $utilEncodingService,
     ) {
         $this->productRepository = $productRepository;
         $this->utilEncodingService = $utilEncodingService;
@@ -101,7 +109,7 @@ class ProductConcreteAttributesUniqueCheckStep implements DataImportStepInterfac
     protected function checkProductConcreteAttributesUnique(
         string $dataSetProductAbstractSku,
         string $dataSetProductConcreteSku,
-        array $dataSetProductConcreteAttributes
+        array $dataSetProductConcreteAttributes,
     ): void {
         if (!isset(static::$productConcreteAttributesMap[$dataSetProductAbstractSku])) {
             return;
@@ -118,7 +126,7 @@ class ProductConcreteAttributesUniqueCheckStep implements DataImportStepInterfac
                     $this->utilEncodingService->encodeJson($dataSetProductConcreteAttributes),
                     $dataSetProductConcreteSku,
                     $this->utilEncodingService->encodeJson($productConcreteAttributes),
-                    $productConcreteSku
+                    $productConcreteSku,
                 ));
             }
         }

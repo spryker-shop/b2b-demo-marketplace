@@ -15,12 +15,6 @@ use SecurityChecker\Command\SecurityCheckerCommand;
 use Spryker\Zed\BusinessOnBehalfDataImport\BusinessOnBehalfDataImportConfig;
 use Spryker\Zed\Cache\Communication\Console\EmptyAllCachesConsole;
 use Spryker\Zed\CategoryDataImport\CategoryDataImportConfig;
-use Spryker\Zed\CodeGenerator\Communication\Console\BundleClientCodeGeneratorConsole;
-use Spryker\Zed\CodeGenerator\Communication\Console\BundleCodeGeneratorConsole;
-use Spryker\Zed\CodeGenerator\Communication\Console\BundleServiceCodeGeneratorConsole;
-use Spryker\Zed\CodeGenerator\Communication\Console\BundleSharedCodeGeneratorConsole;
-use Spryker\Zed\CodeGenerator\Communication\Console\BundleYvesCodeGeneratorConsole;
-use Spryker\Zed\CodeGenerator\Communication\Console\BundleZedCodeGeneratorConsole;
 use Spryker\Zed\CompanyBusinessUnitDataImport\CompanyBusinessUnitDataImportConfig;
 use Spryker\Zed\CompanyDataImport\CompanyDataImportConfig;
 use Spryker\Zed\CompanyUnitAddressDataImport\CompanyUnitAddressDataImportConfig;
@@ -68,6 +62,9 @@ use Spryker\Zed\MerchantOms\Communication\Console\TriggerEventFromCsvFileConsole
 use Spryker\Zed\MerchantProductApprovalDataImport\MerchantProductApprovalDataImportConfig;
 use Spryker\Zed\MessageBroker\Communication\Plugin\Console\MessageBrokerDebugConsole;
 use Spryker\Zed\MessageBroker\Communication\Plugin\Console\MessageBrokerWorkerConsole;
+use Spryker\Zed\MessageBrokerAws\Communication\Console\MessageBrokerAwsSnsTopicsCreatorConsole;
+use Spryker\Zed\MessageBrokerAws\Communication\Console\MessageBrokerAwsSqsQueuesCreatorConsole;
+use Spryker\Zed\MessageBrokerAws\Communication\Console\MessageBrokerSqsToSnsSubscriberConsole;
 use Spryker\Zed\Monitoring\Communication\Plugin\Console\MonitoringConsolePlugin;
 use Spryker\Zed\MultiCartDataImport\MultiCartDataImportConfig;
 use Spryker\Zed\Oauth\Communication\Console\OauthTokenConsole;
@@ -174,6 +171,7 @@ use Spryker\Zed\ZedNavigation\Communication\Console\BuildNavigationConsole;
 use Spryker\Zed\ZedNavigation\Communication\Console\RemoveNavigationCacheConsole;
 use SprykerEco\Zed\NewRelic\Communication\Console\RecordDeploymentConsole;
 use SprykerSdk\Integrator\Console\ModuleInstallerConsole;
+use SprykerShop\Zed\DateTimeConfiguratorPageExample\Communication\Console\DateTimeProductConfiguratorBuildFrontendConsole;
 use Stecman\Component\Symfony\Console\BashCompletion\CompletionCommand;
 
 /**
@@ -182,12 +180,15 @@ use Stecman\Component\Symfony\Console\BashCompletion\CompletionCommand;
  */
 class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
 {
+    /**
+     * @var string
+     */
     protected const PYZ_COMMAND_SEPARATOR = ':';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Symfony\Component\Console\Command\Command[]
+     * @return array<\Symfony\Component\Console\Command\Command>
      */
     protected function getConsoleCommands(Container $container): array
     {
@@ -378,6 +379,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new MerchantPortalBuildFrontendConsole(),
 
             new MessageBrokerWorkerConsole(),
+            new DateTimeProductConfiguratorBuildFrontendConsole(),
         ];
 
         $propelCommands = $container->getLocator()->propel()->facade()->getConsoleCommands();
@@ -393,12 +395,6 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             $commands[] = new CodeFixturesConsole();
             $commands[] = new CodePhpstanConsole();
             $commands[] = new ValidatorConsole();
-            $commands[] = new BundleCodeGeneratorConsole();
-            $commands[] = new BundleYvesCodeGeneratorConsole();
-            $commands[] = new BundleZedCodeGeneratorConsole();
-            $commands[] = new BundleServiceCodeGeneratorConsole();
-            $commands[] = new BundleSharedCodeGeneratorConsole();
-            $commands[] = new BundleClientCodeGeneratorConsole();
             $commands[] = new GenerateZedIdeAutoCompletionConsole();
             $commands[] = new RemoveZedIdeAutoCompletionConsole();
             $commands[] = new GenerateClientIdeAutoCompletionConsole();
@@ -437,6 +433,9 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             }
 
             $commands[] = new MessageBrokerDebugConsole();
+            $commands[] = new MessageBrokerAwsSqsQueuesCreatorConsole();
+            $commands[] = new MessageBrokerAwsSnsTopicsCreatorConsole();
+            $commands[] = new MessageBrokerSqsToSnsSubscriberConsole();
         }
 
         return $commands;
@@ -447,7 +446,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
      *
      * @return array
      */
-    public function getConsolePostRunHookPlugins(Container $container)
+    public function getConsolePostRunHookPlugins(Container $container): array
     {
         return [
             new EventBehaviorPostHookPlugin(),
@@ -457,7 +456,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     * @return array<\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface>
      */
     public function getApplicationPlugins(Container $container): array
     {
@@ -471,7 +470,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Monitoring\Communication\Plugin\Console\MonitoringConsolePlugin[]
+     * @return array<\Spryker\Zed\Monitoring\Communication\Plugin\Console\MonitoringConsolePlugin>
      */
     public function getEventSubscriber(Container $container): array
     {
