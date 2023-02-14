@@ -1,6 +1,6 @@
 import { CustomWebpackBrowserSchema, TargetOptions } from '@angular-builders/custom-webpack';
 import * as webpack from 'webpack';
-
+import * as path from 'path';
 import { getMPEntryPointsMap } from './entry-points';
 
 export default async (
