@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "63b8a6332f1101b18138030bd0bef915",
+    "content-hash": "3c71ba7ae74b55b7786e49e125ad73cd",
     "packages": [
         {
             "name": "async-aws/core",
@@ -5037,7 +5037,7 @@
         },
         {
             "name": "spryker-feature/company-account",
-            "version": "202212.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/company-account.git",
@@ -5087,6 +5087,7 @@
             "suggest": {
                 "spryker-feature/customer-account-management": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -25769,20 +25770,20 @@
         },
         {
             "name": "spryker/company-users-rest-api",
-            "version": "2.5.0",
+            "version": "2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/company-users-rest-api.git",
-                "reference": "9d19e3995b87751fa4947b3454a82f17231aef32"
+                "reference": "fd5e312c8200985df36229459af988a449c71e04"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/company-users-rest-api/zipball/9d19e3995b87751fa4947b3454a82f17231aef32",
-                "reference": "9d19e3995b87751fa4947b3454a82f17231aef32",
+                "url": "https://api.github.com/repos/spryker/company-users-rest-api/zipball/fd5e312c8200985df36229459af988a449c71e04",
+                "reference": "fd5e312c8200985df36229459af988a449c71e04",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.4",
+                "php": ">=8.0",
                 "spryker/carts-rest-api-extension": "^1.2.0",
                 "spryker/checkout-rest-api-extension": "^1.4.0",
                 "spryker/company": "^1.0.0",
@@ -25823,9 +25824,9 @@
             ],
             "description": "CompanyUsersRestApi module",
             "support": {
-                "source": "https://github.com/spryker/company-users-rest-api/tree/2.5.0"
+                "source": "https://github.com/spryker/company-users-rest-api/tree/2.6.0"
             },
-            "time": "2022-01-21T12:16:33+00:00"
+            "time": "2023-02-27T09:29:09+00:00"
         },
         {
             "name": "spryker/config",
@@ -70710,6 +70711,12 @@
             "alias_normalized": "202304.0"
         },
         {
+            "package": "spryker-feature/company-account",
+            "version": "9999999-dev",
+            "alias": "202304.0",
+            "alias_normalized": "202304.0"
+        },
+        {
             "package": "spryker-feature/deployment-tools",
             "version": "9999999-dev",
             "alias": "202304.0",
@@ -70780,6 +70787,7 @@
     "stability-flags": {
         "spryker-feature/alternative-products": 20,
         "spryker-feature/category-management": 20,
+        "spryker-feature/company-account": 20,
         "spryker-feature/deployment-tools": 20,
         "spryker-feature/file-manager": 20,
         "spryker-feature/marketplace-product": 20,
