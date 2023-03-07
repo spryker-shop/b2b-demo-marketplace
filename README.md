@@ -175,11 +175,6 @@ docker/sdk up --build --assets --data
 
 For detailed installation instructions of Spryker with Docker, see [Installing Spryker with Docker](https://docs.spryker.com/docs/scos/dev/setup/installing-spryker-with-docker/installing-spryker-with-docker.html).
 
-## Installation of B2B Marketplace Demo Shop with Vagrant
-
-For detailed installation instructions of Spryker with DevVM, see [Installing with Development Virtual Machine](https://docs.spryker.com/docs/scos/dev/developer-getting-started-guide.html#installing-spryker-with-development-virtual-machine).
-
-
 ## Glue API reference
 
 See Glue API reference at [REST API reference](https://docs.spryker.com/docs/scos/dev/glue-api-guides/202108.0/rest-api-reference.html)
