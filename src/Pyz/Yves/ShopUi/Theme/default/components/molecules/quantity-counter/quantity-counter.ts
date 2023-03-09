@@ -12,7 +12,6 @@ export default class QuantityCounter extends Component {
     protected eventInput: Event = new Event('input');
     protected numberOfDecimalPlaces: number = 10;
     protected formattedNumberInput: FormattedNumberInput;
-    
 
     protected readyCallback(): void {}
 
