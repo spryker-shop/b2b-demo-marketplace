@@ -47,7 +47,7 @@ jobs:
               uses: elastic/elastic-github-actions/elasticsearch@master
               with:
                   stack-version: 7.10.0
-                  port: 10005
+                  port: 9200
 
             - uses: actions/setup-node@v1
               with:
