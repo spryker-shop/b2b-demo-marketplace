@@ -39,6 +39,7 @@ use Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\CategoryTree\Cate
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\CategoryTree\CategoryTreeWriteForPublishingPublisherPlugin;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\CategoryTreePublisherTriggerPlugin;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\ParentWritePublisherPlugin;
+use Spryker\Zed\CustomerStorage\Communication\Plugin\Publisher\Customer\CustomerInvalidatedWritePublisherPlugin;
 use Spryker\Zed\FileManagerStorage\Communication\Plugin\Publisher\FileManagerPublisherTriggerPlugin;
 use Spryker\Zed\GlossaryStorage\Communication\Plugin\Publisher\GlossaryKey\GlossaryDeletePublisherPlugin as GlossaryKeyDeletePublisherPlugin;
 use Spryker\Zed\GlossaryStorage\Communication\Plugin\Publisher\GlossaryKey\GlossaryWritePublisherPlugin as GlossaryKeyWriterPublisherPlugin;
@@ -169,6 +170,7 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
             $this->getPriceProductMerchantRelationshipStoragePlugins(),
             $this->getAssetStoragePlugins(),
             $this->getProductConfigurationStoragePlugins(),
+            $this->getCustomerStoragePlugins(),
             $this->getProductExportPlugins(),
             $this->getProductPageSearchPlugins(),
         );
@@ -532,6 +534,16 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
             new ProductConcreteUpdatedMessageBrokerPublisherPlugin(),
             new ProductConcreteDeletedMessageBrokerPublisherPlugin(),
             new ProductAbstractUpdatedMessageBrokerPublisherPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<int, \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface>
+     */
+    protected function getCustomerStoragePlugins(): array
+    {
+        return [
+            new CustomerInvalidatedWritePublisherPlugin(),
         ];
     }
 
