@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9a65ec80983c2b3f6e4276e7752254ca",
+    "content-hash": "5a577d639277b232dbef70c739f39c14",
     "packages": [
         {
             "name": "async-aws/core",
@@ -4750,7 +4750,7 @@
         },
         {
             "name": "spryker-feature/cart",
-            "version": "202212.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/cart.git",
@@ -4772,6 +4772,7 @@
                 "spryker/cart-variant": "^2.0.0",
                 "spryker/persistent-cart": "^3.5.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -6944,7 +6945,7 @@
         },
         {
             "name": "spryker-feature/prices",
-            "version": "202212.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/prices.git",
@@ -6972,6 +6973,7 @@
                 "spryker/price-product-volume": "^3.3.0",
                 "spryker/price-product-volume-gui": "^3.2.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -7133,7 +7135,7 @@
         },
         {
             "name": "spryker-feature/product-bundles",
-            "version": "202212.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/product-bundles.git",
@@ -7155,6 +7157,7 @@
             "suggest": {
                 "spryker-feature/product": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -70837,6 +70840,12 @@
             "alias_normalized": "202304.0"
         },
         {
+            "package": "spryker-feature/cart",
+            "version": "9999999-dev",
+            "alias": "202304.0",
+            "alias_normalized": "202304.0"
+        },
+        {
             "package": "spryker-feature/category-management",
             "version": "9999999-dev",
             "alias": "202304.0",
@@ -70909,7 +70918,19 @@
             "alias_normalized": "202304.0"
         },
         {
+            "package": "spryker-feature/prices",
+            "version": "9999999-dev",
+            "alias": "202304.0",
+            "alias_normalized": "202304.0"
+        },
+        {
             "package": "spryker-feature/product",
+            "version": "9999999-dev",
+            "alias": "202304.0",
+            "alias_normalized": "202304.0"
+        },
+        {
+            "package": "spryker-feature/product-bundles",
             "version": "9999999-dev",
             "alias": "202304.0",
             "alias_normalized": "202304.0"
@@ -70936,6 +70957,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "spryker-feature/alternative-products": 20,
+        "spryker-feature/cart": 20,
         "spryker-feature/category-management": 20,
         "spryker-feature/company-account": 20,
         "spryker-feature/deployment-tools": 20,
@@ -70947,7 +70969,9 @@
         "spryker-feature/marketplace-product-offer": 20,
         "spryker-feature/marketplace-product-offer-prices": 20,
         "spryker-feature/marketplace-product-options": 20,
+        "spryker-feature/prices": 20,
         "spryker-feature/product": 20,
+        "spryker-feature/product-bundles": 20,
         "spryker-feature/product-labels": 20,
         "spryker-feature/product-lists": 20,
         "spryker-feature/tax": 20,
@@ -70974,5 +70998,5 @@
     "platform-overrides": {
         "php": "8.0.9"
     },
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
