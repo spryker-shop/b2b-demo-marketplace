@@ -589,7 +589,6 @@ $config[ApplicationConstants::BASE_URL_YVES]
 
 $config[ShopUiConstants::YVES_ASSETS_URL_PATTERN] = '/assets/' . (getenv('SPRYKER_BUILD_HASH') ?: 'current') . '/%theme%/';
 
-
 // >>> Availability Notification
 $config[AvailabilityNotificationConstants::BASE_URL_YVES_PORT] = $yvesPort;
 $config[AvailabilityNotificationConstants::STORE_TO_YVES_HOST_MAPPING] = [
