@@ -666,7 +666,6 @@ $config[KernelConstants::DOMAIN_WHITELIST] = array_merge(
 
 $config[KernelConstants::DOMAIN_WHITELIST][] = '*.bazaarvoice.com';
 
-
 $config[StoreConstants::STORE_NAME_REFERENCE_MAP] = $aopApplicationConfiguration['STORE_NAME_REFERENCE_MAP'] ?? [];
 $config[AppCatalogGuiConstants::APP_CATALOG_SCRIPT_URL] = $aopApplicationConfiguration['APP_CATALOG_SCRIPT_URL'] ?? '';
 
@@ -699,7 +698,7 @@ $config[MessageBrokerConstants::MESSAGE_TO_CHANNEL_MAP] = [
     ProductDeletedTransfer::class => 'product',
     InitializeProductExportTransfer::class => 'product',
     AddReviewsTransfer::class => 'reviews',
-    OrderStatusChangedTransfer::class => 'orders'
+    OrderStatusChangedTransfer::class => 'orders',
 ];
 
 $config[MessageBrokerConstants::CHANNEL_TO_TRANSPORT_MAP] =
