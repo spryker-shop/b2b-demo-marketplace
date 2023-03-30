@@ -10,6 +10,9 @@ image:
         enabled-extensions:
             - blackfire
     environment:
+        SPRYKER_YVES_HOST_DE: yves.de.spryker.local
+        SPRYKER_YVES_HOST_AT: yves.at.spryker.local
+        SPRYKER_YVES_HOST_US: yves.us.spryker.local
         #AOP
         SPRYKER_AOP_INFRASTRUCTURE: '{
             "SPRYKER_MESSAGE_BROKER_HTTP_SENDER_CONFIG": {},
