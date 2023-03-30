@@ -7,7 +7,6 @@
 
 namespace Pyz\Yves\Log;
 
-use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Log\LogDependencyProvider as SprykerLogDependencyProvider;
 use Spryker\Yves\Log\Plugin\Handler\ExceptionStreamHandlerPlugin;
 use Spryker\Yves\Log\Plugin\Handler\StreamHandlerPlugin;

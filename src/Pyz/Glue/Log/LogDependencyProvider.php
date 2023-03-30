@@ -7,7 +7,6 @@
 
 namespace Pyz\Glue\Log;
 
-use Spryker\Glue\Kernel\Container;
 use Spryker\Glue\Log\LogDependencyProvider as SprykerLogDependencyProvider;
 use Spryker\Glue\Log\Plugin\Handler\ExceptionStreamHandlerPlugin;
 use Spryker\Glue\Log\Plugin\Handler\StreamHandlerPlugin;
