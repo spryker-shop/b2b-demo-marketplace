@@ -7,8 +7,8 @@
 
 namespace Pyz\Client\Catalog;
 
-use Generated\Shared\Transfer\SearchHttpSearchContextTransfer;
 use Generated\Shared\Transfer\SearchContextTransfer;
+use Generated\Shared\Transfer\SearchHttpSearchContextTransfer;
 use Spryker\Client\Catalog\CatalogDependencyProvider as SprykerCatalogDependencyProvider;
 use Spryker\Client\Catalog\Plugin\ConfigTransferBuilder\AscendingNameSortConfigTransferBuilderPlugin;
 use Spryker\Client\Catalog\Plugin\ConfigTransferBuilder\CategoryFacetConfigTransferBuilderPlugin;

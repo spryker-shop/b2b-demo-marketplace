@@ -28,7 +28,6 @@ class SearchHttpDependencyProvider extends SprykerSearchHttpDependencyProvider
         ];
     }
 
-
     /**
      * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigExpanderPluginInterface>
      */
