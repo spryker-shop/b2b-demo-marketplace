@@ -28,6 +28,7 @@ use Spryker\Client\CatalogPriceProductConnector\Plugin\ProductPriceQueryExpander
 use Spryker\Client\CategoryStorage\Plugin\Catalog\ResultFormatter\CategoryTreeFilterSearchHttpResultFormatterPlugin;
 use Spryker\Client\CategoryStorage\Plugin\Elasticsearch\ResultFormatter\CategoryTreeFilterPageSearchResultFormatterPlugin;
 use Spryker\Client\CustomerCatalog\Plugin\Search\ProductListQueryExpanderPlugin as CustomerCatalogProductListQueryExpanderPlugin;
+use Spryker\Client\MerchantProductOfferSearch\Plugin\Catalog\MerchantReferenceSearchHttpQueryExpanderPlugin;
 use Spryker\Client\MerchantProductOfferSearch\Plugin\Search\MerchantReferenceQueryExpanderPlugin;
 use Spryker\Client\MerchantProductSearch\Plugin\Search\MerchantReferenceQueryExpanderPlugin as MerchantProductReferenceQueryExpanderPlugin;
 use Spryker\Client\ProductLabelStorage\Plugin\Catalog\ProductLabelSearchHttpFacetConfigTransferBuilderPlugin;
@@ -266,6 +267,7 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
                 new BasicSearchHttpQueryExpanderPlugin(),
                 new ProductPriceSearchHttpQueryExpanderPlugin(),
                 new FacetSearchHttpQueryExpanderPlugin(),
+                new MerchantReferenceSearchHttpQueryExpanderPlugin(),
             ],
         ];
     }
