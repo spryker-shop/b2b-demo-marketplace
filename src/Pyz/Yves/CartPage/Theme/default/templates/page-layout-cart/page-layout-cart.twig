@@ -202,30 +202,6 @@
                     },
                 } only %}
 
-{#                {% for cartItem in transformedCartItems %}#}
-{#                    {% block cartItem %}#}
-{#                        {% if not cartItem.configuredBundleItem %}#}
-{#                            {% embed molecule('product-card-item') with {#}
-{#                                data: {#}
-{#                                    list: data.cart,#}
-{#                                    listItem: cartItem,#}
-{#                                    attributes: data.attributes[cartItem.sku] | default([]),#}
-{#                                    canEdit: data.isQuoteEditable and can('ChangeCartItemPermissionPlugin', data.cart.idQuote),#}
-{#                                    canRemove: data.isQuoteEditable and can('RemoveCartItemPermissionPlugin'),#}
-{#                                    imageModifiers: ['cart'],#}
-{#                                },#}
-{#                                embed: {#}
-{#                                    product: data.products[cartItem.sku] | default,#}
-{#                                    hasAdditionalTitle: cartItem.cartNote,#}
-{#                                    additionalTitleText: 'cart_note.form.comment' | trans,#}
-{#                                },#}
-{#                            } only %}#}
-
-{#                            {% endembed %}#}
-{#                        {% endif %}#}
-{#                    {% endblock %}#}
-{#                {% endfor %}#}
-
                 {% if isQuoteEnadled and can('RemoveCartItemPermissionPlugin') %}
                     <div class="grid grid--right cart-bottom">
                         {% widget 'CartOperationsWidget' args [data.cart] use view('cart-operations-actions', 'MultiCartWidget') only %}{% endwidget %}
