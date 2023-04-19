@@ -173,14 +173,3 @@ $config[OauthClientConstants::OAUTH_PROVIDER_NAME_FOR_MESSAGE_BROKER] = OauthDum
 $config[OauthClientConstants::OAUTH_PROVIDER_NAME_FOR_PAYMENT_AUTHORIZE] = OauthDummyConfig::PROVIDER_NAME;
 $config[AppCatalogGuiConstants::OAUTH_PROVIDER_NAME] = OauthDummyConfig::PROVIDER_NAME;
 
-// ----------------------------------------------------------------------------
-// ------------------------------ MessageBroker -----------------------------------------
-// ----------------------------------------------------------------------------
-$messageBrokerTransport = getenv('SPRYKER_TESTING_ENABLED') ? 'in-memory' : MessageBrokerAwsConfig::SQS_TRANSPORT;
-
-$config[MessageBrokerConstants::CHANNEL_TO_TRANSPORT_MAP] =
-$config[MessageBrokerAwsConstants::CHANNEL_TO_RECEIVER_TRANSPORT_MAP] = [
-    'payment' => $messageBrokerTransport,
-    'assets' => $messageBrokerTransport,
-    'product' => $messageBrokerTransport,
-];

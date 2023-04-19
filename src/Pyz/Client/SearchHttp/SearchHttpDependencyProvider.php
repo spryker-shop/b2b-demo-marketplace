@@ -13,7 +13,7 @@ use Spryker\Client\CatalogPriceProductConnector\Plugin\ConfigTransferBuilder\Pri
 use Spryker\Client\MerchantProductSearch\Plugin\Search\MerchantProductMerchantNameSearchConfigExpanderPlugin;
 use Spryker\Client\ProductLabel\Plugin\ProductLabelFacetConfigTransferBuilderPlugin;
 use Spryker\Client\ProductReview\Plugin\RatingFacetConfigTransferBuilderPlugin;
-use Spryker\Client\ProductSearch\Plugin\Config\ProductSearchConfigExpanderPlugin;
+use Spryker\Client\ProductSearchConfigStorage\Plugin\Config\ProductSearchConfigExpanderPlugin;
 use Spryker\Client\SearchHttp\SearchHttpDependencyProvider as SprykerSearchHttpDependencyProvider;
 
 class SearchHttpDependencyProvider extends SprykerSearchHttpDependencyProvider
@@ -34,8 +34,8 @@ class SearchHttpDependencyProvider extends SprykerSearchHttpDependencyProvider
     protected function getSearchConfigExpanderPlugins(): array
     {
         return [
-            new MerchantProductMerchantNameSearchConfigExpanderPlugin(),
             new ProductSearchConfigExpanderPlugin(),
+            new MerchantProductMerchantNameSearchConfigExpanderPlugin(),
         ];
     }
 
