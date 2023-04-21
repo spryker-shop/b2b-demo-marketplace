@@ -42,10 +42,11 @@ class ProductController extends SprykerShopProductController
 
         $productStorageCriteriaTransfer = (new ProductStorageCriteriaTransfer())
             ->fromArray($shopContextTransfer->toArray());
+        $selectedAttributes = $this->getSelectedAttributesWithoutPostfix($productData, $request);
 
         $productViewTransfer = $this->getFactory()
             ->getProductStorageClient()
-            ->mapProductStorageData($productData, $this->getLocale(), $this->getSelectedAttributes($request), $productStorageCriteriaTransfer);
+            ->mapProductStorageData($productData, $this->getLocale(), $selectedAttributes, $productStorageCriteriaTransfer);
 
         try {
             $this->assertProductRestrictions($productViewTransfer);
