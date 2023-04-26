@@ -103,6 +103,7 @@
         "spryker-feature/spryker-core-back-office": "^202212.0",
         "spryker-feature/state-machine": "^202212.0",
         "spryker-feature/tax": "dev-master as 202304.0",
+        "spryker-projects/acp-configuration": "dev-master",
         "spryker-shop/asset-widget": "^1.0.0",
         "spryker-shop/calculation-page": "^1.3.2",
         "spryker-shop/chart-widget": "^0.2.3",
@@ -253,7 +254,7 @@
         "spryker/sales-returns-rest-api": "^1.1.0",
         "spryker/sales-statistics": "^1.2.0",
         "spryker/scheduler-jenkins": "^1.2.1",
-        "spryker/search-http": "^0.3.1",
+        "spryker/search-http": "^0.3.2",
         "spryker/secrets-manager": "^1.0.0",
         "spryker/secrets-manager-aws": "^1.0.1",
         "spryker/security-blocker-rest-api": "^1.0.0",
@@ -303,6 +304,7 @@
             "Generated\\": "src/Generated/",
             "Orm\\": "src/Orm/",
             "Pyz\\": "src/Pyz/",
+            "Acp\\": "src/Acp/",
             "SprykerConfig\\": "src/SprykerConfig/"
         }
     },
@@ -315,6 +317,12 @@
             "test-autoload.php"
         ]
     },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "git@github.com:spryker-projects/acp-configuration.git"
+        }
+    ],
     "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
@@ -329,7 +337,8 @@
         "chromium-revision": 814168,
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true,
-            "spryker-sdk/integrator": true
+            "spryker-sdk/integrator": true,
+            "spryker-projects/acp-configuration": true
         }
     },
     "scripts": {

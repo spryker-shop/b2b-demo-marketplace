@@ -10,7 +10,6 @@ namespace Pyz\Client\SearchHttp;
 use Spryker\Client\Catalog\Plugin\ConfigTransferBuilder\CategoryFacetConfigTransferBuilderPlugin;
 use Spryker\Client\Catalog\Plugin\SearchHttp\CatalogSearchHttpConfigBuilderPlugin;
 use Spryker\Client\CatalogPriceProductConnector\Plugin\ConfigTransferBuilder\PriceFacetConfigTransferBuilderPlugin;
-use Spryker\Client\MerchantProductSearch\Plugin\Search\MerchantProductMerchantNameSearchConfigExpanderPlugin;
 use Spryker\Client\ProductLabel\Plugin\ProductLabelFacetConfigTransferBuilderPlugin;
 use Spryker\Client\ProductReview\Plugin\RatingFacetConfigTransferBuilderPlugin;
 use Spryker\Client\ProductSearchConfigStorage\Plugin\Config\ProductSearchConfigExpanderPlugin;
@@ -35,7 +34,6 @@ class SearchHttpDependencyProvider extends SprykerSearchHttpDependencyProvider
     {
         return [
             new ProductSearchConfigExpanderPlugin(),
-            new MerchantProductMerchantNameSearchConfigExpanderPlugin(),
         ];
     }
 

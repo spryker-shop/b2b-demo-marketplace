@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "02edd359c344123cb62461fe049cad32",
+    "content-hash": "eae88c6ba26f8173e4a83af79fd3b4b9",
     "packages": [
         {
             "name": "async-aws/core",
@@ -8225,6 +8225,36 @@
                 "source": "https://github.com/spryker-feature/tax/tree/202212.0"
             },
             "time": "2022-12-16T09:54:55+00:00"
+        },
+        {
+            "name": "spryker-projects/acp-configuration",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:spryker-projects/acp-configuration.git",
+                "reference": "59f020a584afad1ed9502bfce482324995331fbc"
+            },
+            "require": {
+                "composer-plugin-api": "^2.0.0",
+                "php": ">=8.0"
+            },
+            "require-dev": {
+                "composer/composer": "^2.0.0"
+            },
+            "default-branch": true,
+            "type": "composer-plugin",
+            "extra": {
+                "class": "AcpConfiguration\\InstallerPlugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "AcpConfiguration\\": "src/AcpConfiguration/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "time": "2023-03-27T11:30:03+00:00"
         },
         {
             "name": "spryker-shop/agent-page",
@@ -53263,16 +53293,16 @@
         },
         {
             "name": "spryker/search-http",
-            "version": "0.3.1",
+            "version": "0.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/search-http.git",
-                "reference": "81e6b65aa9f96997959ab5ced237ee1f4c4e01db"
+                "reference": "acbf678407461026b7d5eed02fc99fdb81822a29"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/search-http/zipball/81e6b65aa9f96997959ab5ced237ee1f4c4e01db",
-                "reference": "81e6b65aa9f96997959ab5ced237ee1f4c4e01db",
+                "url": "https://api.github.com/repos/spryker/search-http/zipball/acbf678407461026b7d5eed02fc99fdb81822a29",
+                "reference": "acbf678407461026b7d5eed02fc99fdb81822a29",
                 "shasum": ""
             },
             "require": {
@@ -53325,9 +53355,9 @@
             ],
             "description": "SearchHttp module",
             "support": {
-                "source": "https://github.com/spryker/search-http/tree/0.3.1"
+                "source": "https://github.com/spryker/search-http/tree/0.3.2"
             },
-            "time": "2023-04-06T09:10:04+00:00"
+            "time": "2023-04-21T08:15:01+00:00"
         },
         {
             "name": "spryker/secrets-manager",
@@ -71269,6 +71299,7 @@
         "spryker-feature/product-lists": 20,
         "spryker-feature/promotions-discounts": 20,
         "spryker-feature/tax": 20,
+        "spryker-projects/acp-configuration": 20,
         "spryker-feature/development-tools": 20,
         "spryker-sdk/integrator": 20,
         "spryker/docker-chromedriver": 20
