@@ -20,6 +20,7 @@ use Spryker\Zed\PriceProduct\Communication\Plugin\ProductConcrete\PriceProductCo
 use Spryker\Zed\PriceProduct\Communication\Plugin\ProductConcrete\PriceProductConcreteAfterUpdatePlugin;
 use Spryker\Zed\Product\ProductDependencyProvider as SprykerProductDependencyProvider;
 use Spryker\Zed\ProductAlternativeGui\Communication\Plugin\Product\ProductConcretePluginUpdate as ProductAlternativeGuiProductConcretePluginUpdate;
+use Spryker\Zed\ProductApproval\Communication\Plugin\Product\ApprovalStatusProductConcreteMergerPlugin;
 use Spryker\Zed\ProductApproval\Communication\Plugin\Product\ProductApprovalProductAbstractPreCreatePlugin;
 use Spryker\Zed\ProductBundle\Communication\Plugin\Product\ProductBundleDeactivatorProductConcreteAfterUpdatePlugin;
 use Spryker\Zed\ProductBundle\Communication\Plugin\Product\ProductBundleProductConcreteAfterCreatePlugin;
@@ -36,6 +37,7 @@ use Spryker\Zed\ProductImage\Communication\Plugin\ProductAbstractAfterUpdatePlug
 use Spryker\Zed\ProductImage\Communication\Plugin\ProductConcreteAfterCreatePlugin as ImageSetProductConcreteAfterCreatePlugin;
 use Spryker\Zed\ProductImage\Communication\Plugin\ProductConcreteAfterUpdatePlugin as ImageSetProductConcreteAfterUpdatePlugin;
 use Spryker\Zed\ProductImage\Communication\Plugin\ProductConcreteReadPlugin as ImageSetProductConcreteReadPlugin;
+use Spryker\Zed\ProductLabel\Communication\Plugin\Product\ProductLabelProductConcreteExpanderPlugin;
 use Spryker\Zed\ProductReview\Communication\Plugin\Product\ProductReviewProductConcreteExpanderPlugin;
 use Spryker\Zed\ProductSearch\Communication\Plugin\ProductConcrete\ProductSearchProductConcreteAfterCreatePlugin;
 use Spryker\Zed\ProductSearch\Communication\Plugin\ProductConcrete\ProductSearchProductConcreteAfterUpdatePlugin;
@@ -202,6 +204,7 @@ class ProductDependencyProvider extends SprykerProductDependencyProvider
             new ProductReviewProductConcreteExpanderPlugin(),
             new ProductConcreteCategoriesExpanderPlugin(),
             new MerchantProductOfferProductConcreteExpanderPlugin(),
+            new ProductLabelProductConcreteExpanderPlugin(),
         ];
     }
 
@@ -213,6 +216,7 @@ class ProductDependencyProvider extends SprykerProductDependencyProvider
         return [
             new ImageSetProductConcreteMergerPlugin(),
             new PriceProductConcreteMergerPlugin(),
+            new ApprovalStatusProductConcreteMergerPlugin(),
         ];
     }
 }
