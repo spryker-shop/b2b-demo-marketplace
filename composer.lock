@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9435723db6e03a8c4a4b2c70ffe4b3df",
+    "content-hash": "94fde48c899d8c7204479daddc8af90e",
     "packages": [
         {
             "name": "async-aws/core",
@@ -4748,7 +4748,7 @@
         },
         {
             "name": "spryker-feature/cart",
-            "version": "202212.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/cart.git",
@@ -4770,6 +4770,7 @@
                 "spryker/cart-variant": "^2.0.0",
                 "spryker/persistent-cart": "^3.5.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -5835,6 +5836,7 @@
                 "spryker/merchant-user": "^1.1.0",
                 "spryker/merchant-user-password-reset-mail": "^1.1.0",
                 "spryker/navigation": "^2.6.0",
+                "spryker/security-blocker-merchant-portal": "^1.0.0",
                 "spryker/security-merchant-portal-gui": "^2.0.0",
                 "spryker/user-merchant-portal-gui": "^2.0.0",
                 "spryker/zed-ui": "^2.0.0"
@@ -7135,7 +7137,7 @@
         },
         {
             "name": "spryker-feature/product-bundles",
-            "version": "202212.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/product-bundles.git",
@@ -7157,6 +7159,7 @@
             "suggest": {
                 "spryker-feature/product": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -18982,20 +18985,20 @@
         },
         {
             "name": "spryker/cart",
-            "version": "7.11.0",
+            "version": "7.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/cart.git",
-                "reference": "ebd230c1dedd7aca91de9ccc4f9208d636d7d92e"
+                "reference": "31a8e980a0076dd6c00813918fda1c2c64486781"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/cart/zipball/ebd230c1dedd7aca91de9ccc4f9208d636d7d92e",
-                "reference": "ebd230c1dedd7aca91de9ccc4f9208d636d7d92e",
+                "url": "https://api.github.com/repos/spryker/cart/zipball/31a8e980a0076dd6c00813918fda1c2c64486781",
+                "reference": "31a8e980a0076dd6c00813918fda1c2c64486781",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.4",
+                "php": ">=8.0",
                 "spryker/calculation": "^4.9.0",
                 "spryker/cart-extension": "^1.11.0 || ^2.7.0 || ^4.3.0",
                 "spryker/kernel": "^3.30.0",
@@ -19008,6 +19011,7 @@
             "require-dev": {
                 "spryker/application": "*",
                 "spryker/code-sniffer": "*",
+                "spryker/container": "*",
                 "spryker/customer": "*",
                 "spryker/price-cart-connector": "*",
                 "spryker/price-product": "*",
@@ -19015,6 +19019,8 @@
                 "spryker/product": "*",
                 "spryker/product-cart-connector": "*",
                 "spryker/propel": "*",
+                "spryker/store": "*",
+                "spryker/store-storage": "*",
                 "spryker/testify": "*"
             },
             "suggest": {
@@ -19038,9 +19044,9 @@
             ],
             "description": "Cart module",
             "support": {
-                "source": "https://github.com/spryker/cart/tree/7.11.0"
+                "source": "https://github.com/spryker/cart/tree/7.12.1"
             },
-            "time": "2022-06-21T11:22:24+00:00"
+            "time": "2023-03-31T19:36:11+00:00"
         },
         {
             "name": "spryker/cart-code",
@@ -39600,27 +39606,29 @@
         },
         {
             "name": "spryker/price-cart-connector",
-            "version": "6.8.0",
+            "version": "6.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/price-cart-connector.git",
-                "reference": "1ceb252c0418359a6be6eb54a6243ee1c035c543"
+                "reference": "7dbe63842213706feb24ccfde71fe7d3148dafd6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/price-cart-connector/zipball/1ceb252c0418359a6be6eb54a6243ee1c035c543",
-                "reference": "1ceb252c0418359a6be6eb54a6243ee1c035c543",
+                "url": "https://api.github.com/repos/spryker/price-cart-connector/zipball/7dbe63842213706feb24ccfde71fe7d3148dafd6",
+                "reference": "7dbe63842213706feb24ccfde71fe7d3148dafd6",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.4",
+                "php": ">=8.0",
                 "spryker/cart-extension": "^2.4.0 || ^4.0.0",
-                "spryker/currency": "^3.0.0",
+                "spryker/currency": "^3.0.0 || ^4.0.0",
                 "spryker/kernel": "^3.30.0",
                 "spryker/messenger": "^3.0.0",
                 "spryker/price": "^5.0.0",
                 "spryker/price-cart-connector-extension": "^1.1.0",
-                "spryker/price-product": "^1.4.0 || ^2.3.0 || ^4.1.0"
+                "spryker/price-product": "^1.4.0 || ^2.3.0 || ^4.1.0",
+                "spryker/util-encoding": "^2.0.0",
+                "spryker/util-text": "^1.1.0"
             },
             "require-dev": {
                 "spryker/cart": "*",
@@ -39650,9 +39658,9 @@
             ],
             "description": "PriceCartConnector module",
             "support": {
-                "source": "https://github.com/spryker/price-cart-connector/tree/6.8.0"
+                "source": "https://github.com/spryker/price-cart-connector/tree/6.10.0"
             },
-            "time": "2022-09-07T13:16:18+00:00"
+            "time": "2023-03-31T19:36:11+00:00"
         },
         {
             "name": "spryker/price-cart-connector-extension",
@@ -42054,20 +42062,20 @@
         },
         {
             "name": "spryker/product-bundle",
-            "version": "7.13.0",
+            "version": "7.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-bundle.git",
-                "reference": "3e8be539ddc40ad27ecc5c3e82eccbdae9ea60ef"
+                "reference": "94790f5a21ce3c82014d3656147681799f73a76e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-bundle/zipball/3e8be539ddc40ad27ecc5c3e82eccbdae9ea60ef",
-                "reference": "3e8be539ddc40ad27ecc5c3e82eccbdae9ea60ef",
+                "url": "https://api.github.com/repos/spryker/product-bundle/zipball/94790f5a21ce3c82014d3656147681799f73a76e",
+                "reference": "94790f5a21ce3c82014d3656147681799f73a76e",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.4",
+                "php": ">=8.0",
                 "spryker/availability": "^9.8.0",
                 "spryker/calculation-extension": "^1.1.0",
                 "spryker/cart-extension": "^1.0.0 || ^2.0.0 || ^4.0.0",
@@ -42127,9 +42135,9 @@
             ],
             "description": "ProductBundle module",
             "support": {
-                "source": "https://github.com/spryker/product-bundle/tree/7.13.0"
+                "source": "https://github.com/spryker/product-bundle/tree/7.14.0"
             },
-            "time": "2022-07-01T12:54:10+00:00"
+            "time": "2023-03-22T09:04:51+00:00"
         },
         {
             "name": "spryker/product-bundle-carts-rest-api",
@@ -53567,6 +53575,92 @@
                 "source": "https://github.com/spryker/security-blocker/tree/1.1.0"
             },
             "time": "2021-01-25T08:30:25+00:00"
+        },
+        {
+            "name": "spryker/security-blocker-extension",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/security-blocker-extension.git",
+                "reference": "3420e65e94ca1da656a79d60beca93325d8b8601"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/security-blocker-extension/zipball/3420e65e94ca1da656a79d60beca93325d8b8601",
+                "reference": "3420e65e94ca1da656a79d60beca93325d8b8601",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "SecurityBlockerExtension module",
+            "support": {
+                "source": "https://github.com/spryker/security-blocker-extension/tree/1.0.0"
+            },
+            "time": "2023-03-28T12:28:15+00:00"
+        },
+        {
+            "name": "spryker/security-blocker-merchant-portal",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/security-blocker-merchant-portal.git",
+                "reference": "5c4ba5b244c629174c9503adc1b9f11c92273527"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/security-blocker-merchant-portal/zipball/5c4ba5b244c629174c9503adc1b9f11c92273527",
+                "reference": "5c4ba5b244c629174c9503adc1b9f11c92273527",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/security-blocker-extension": "^1.0.0",
+                "spryker/transfer": "^3.25.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "SecurityBlockerMerchantPortal module",
+            "support": {
+                "source": "https://github.com/spryker/security-blocker-merchant-portal/tree/1.0.0"
+            },
+            "time": "2023-03-28T12:28:15+00:00"
         },
         {
             "name": "spryker/security-blocker-rest-api",
@@ -71137,6 +71231,12 @@
             "alias_normalized": "202304.0"
         },
         {
+            "package": "spryker-feature/cart",
+            "version": "9999999-dev",
+            "alias": "202304.0",
+            "alias_normalized": "202304.0"
+        },
+        {
             "package": "spryker-feature/category-management",
             "version": "9999999-dev",
             "alias": "202304.0",
@@ -71221,6 +71321,12 @@
             "alias_normalized": "202304.0"
         },
         {
+            "package": "spryker-feature/product-bundles",
+            "version": "9999999-dev",
+            "alias": "202304.0",
+            "alias_normalized": "202304.0"
+        },
+        {
             "package": "spryker-feature/product-labels",
             "version": "9999999-dev",
             "alias": "202304.0",
@@ -71249,6 +71355,7 @@
     "stability-flags": {
         "spryker-feature/alternative-products": 20,
         "spryker-feature/availability-notification": 20,
+        "spryker-feature/cart": 20,
         "spryker-feature/category-management": 20,
         "spryker-feature/company-account": 20,
         "spryker-feature/customer-account-management": 20,
@@ -71262,6 +71369,7 @@
         "spryker-feature/marketplace-product-offer-prices": 20,
         "spryker-feature/marketplace-product-options": 20,
         "spryker-feature/product": 20,
+        "spryker-feature/product-bundles": 20,
         "spryker-feature/product-labels": 20,
         "spryker-feature/product-lists": 20,
         "spryker-feature/promotions-discounts": 20,

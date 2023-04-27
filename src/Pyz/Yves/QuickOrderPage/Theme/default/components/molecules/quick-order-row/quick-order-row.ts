@@ -9,8 +9,6 @@ export default class QuickOrderRow extends QuickOrderRowCore {
     protected eventInput: Event = new Event('input');
     protected formattedNumberInput: FormattedNumberInput;
 
-    protected readyCallback(): void {}
-
     protected init(): void {
         this.ajaxProvider = <AjaxProvider>this.getElementsByClassName(`${this.jsName}__provider`)[0];
         this.autocompleteInput = <AutocompleteForm>this.getElementsByClassName(this.autocompleteFormClassName)[0];
@@ -77,7 +75,7 @@ export default class QuickOrderRow extends QuickOrderRowCore {
         }
     }
 
-    async reloadField(sku: string = ''): Promise<void> {
+    async reloadField(sku = ''): Promise<void> {
         this.setQueryParams(sku);
 
         await this.ajaxProvider.fetch();
