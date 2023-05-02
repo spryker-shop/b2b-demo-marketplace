@@ -336,7 +336,6 @@ $config[PropelConstants::ZED_DB_REPLICAS] = json_decode(getenv('SPRYKER_DB_REPLI
 $config[PropelConstants::USE_SUDO_TO_MANAGE_DATABASE] = false;
 
 // >>> DATABASE REPLICA CACHE
-$config[PropelReplicationCacheConstants::IS_REPLICATION_ENABLED] = (bool)$config[PropelConstants::ZED_DB_REPLICAS];
 $config[PropelReplicationCacheConstants::CACHE_TTL] = 2;
 
 // >>> SEARCH
