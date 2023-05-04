@@ -150,6 +150,22 @@ groups:
                         store: DE
                     glue.at.optimus-searchmig.cloud.spryker.toys:
                         store: AT
+            mportal:
+                application: merchant-portal
+                endpoints:
+                    mp.de.optimus-searchmig.cloud.spryker.toys:
+                        entry-point: MerchantPortal
+                        store: DE
+                        primal: true
+                        services:
+                            session:
+                                namespace: 7
+                    mp.at.optimus-searchmig.cloud.spryker.toys:
+                        entry-point: MerchantPortal
+                        store: AT
+                        services:
+                            session:
+                                namespace: 8
 services:
     database:
         engine: mysql
