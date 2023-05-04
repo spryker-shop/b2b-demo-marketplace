@@ -51,7 +51,7 @@ jobs:
             - name: Run Tests
               run: |
                   cd robotframework-tests
-                  robot -v env:ui_mp_b2b -d results tests/ui/e2e/e2e_mp_b2b.robot
+                  robot -v env:ui_mp_b2b -v headless:true -d results tests/ui/e2e/e2e_mp_b2b.robot
             - name: Upload artifacts
               if: always()
               run: |
