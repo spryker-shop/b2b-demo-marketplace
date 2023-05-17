@@ -45,15 +45,15 @@ use Spryker\Shared\PublishAndSynchronizeHealthCheck\PublishAndSynchronizeHealthC
 use Spryker\Shared\PublishAndSynchronizeHealthCheckSearch\PublishAndSynchronizeHealthCheckSearchConfig;
 use Spryker\Shared\PublishAndSynchronizeHealthCheckStorage\PublishAndSynchronizeHealthCheckStorageConfig;
 use Spryker\Shared\Publisher\PublisherConfig;
+use Spryker\Shared\RabbitMq\RabbitMqEnv;
 use Spryker\Shared\SalesReturnSearch\SalesReturnSearchConfig;
 use Spryker\Shared\SearchHttp\SearchHttpConfig;
 use Spryker\Shared\ShoppingListStorage\ShoppingListStorageConfig;
+use Spryker\Shared\StoreStorage\StoreStorageConfig;
 use Spryker\Shared\TaxProductStorage\TaxProductStorageConfig;
 use Spryker\Shared\TaxStorage\TaxStorageConfig;
 use Spryker\Shared\UrlStorage\UrlStorageConfig;
 use Spryker\Shared\UrlStorage\UrlStorageConstants;
-use Spryker\Shared\StoreStorage\StoreStorageConfig;
-use Spryker\Shared\RabbitMq\RabbitMqEnv;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)

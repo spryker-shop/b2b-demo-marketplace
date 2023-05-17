@@ -142,6 +142,7 @@ class NavigationNodeWriterStep extends PublishAwareStep implements DataImportSte
             if ($localizedAttributes === []) {
                 continue;
             }
+
             $navigationNodeLocalizedAttributesEntity = SpyNavigationNodeLocalizedAttributesQuery::create()
                 ->filterByFkNavigationNode($navigationNodeEntity->getIdNavigationNode())
                 ->filterByFkLocale($idLocale)

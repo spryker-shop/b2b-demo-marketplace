@@ -9,11 +9,11 @@ namespace Pyz\Client\Quote;
 
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\MultiCart\Plugin\NameQuoteTransferExpanderPlugin;
+use Spryker\Client\PersistentCart\Plugin\Quote\QuoteSyncDatabaseStrategyReaderPlugin;
 use Spryker\Client\Price\Plugin\PriceModeQuoteTransferExpanderPlugin;
 use Spryker\Client\Quote\QuoteDependencyProvider as SprykerQuoteDependencyProvider;
 use Spryker\Client\QuoteRequest\Plugin\Quote\QuoteRequestDatabaseStrategyPreCheckPlugin;
 use Spryker\Client\Store\Plugin\StoreQuoteTransferExpanderPlugin;
-use Spryker\Client\PersistentCart\Plugin\Quote\QuoteSyncDatabaseStrategyReaderPlugin;
 
 class QuoteDependencyProvider extends SprykerQuoteDependencyProvider
 {

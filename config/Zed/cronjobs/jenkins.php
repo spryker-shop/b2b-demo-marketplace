@@ -7,90 +7,90 @@
  * - jobs[]['role'] default value is 'admin'
  */
 
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\MessageBrokerAws\MessageBrokerAwsConstants;
+    use Spryker\Shared\Config\Config;
+    use Spryker\Shared\MessageBrokerAws\MessageBrokerAwsConstants;
 
 /* ProductValidity */
-$jobs[] = [
+    $jobs[] = [
     'name' => 'check-product-validity',
     'command' => '$PHP_BIN vendor/bin/console product:check-validity',
     'schedule' => '0 6 * * *',
     'enable' => true,
-];
+    ];
 
 /* ProductLabel */
-$jobs[] = [
+    $jobs[] = [
     'name' => 'check-product-label-validity',
     'command' => '$PHP_BIN vendor/bin/console product-label:validity',
     'schedule' => '0 6 * * *',
     'enable' => true,
-];
-$jobs[] = [
+    ];
+    $jobs[] = [
     'name' => 'update-product-label-relations',
     'command' => '$PHP_BIN vendor/bin/console product-label:relations:update -vvv --no-touch',
     'schedule' => '* * * * *',
     'enable' => true,
-];
+    ];
 
 /* PriceProductSchedule */
-$jobs[] = [
+    $jobs[] = [
     'name' => 'apply-price-product-schedule',
     'command' => '$PHP_BIN vendor/bin/console price-product-schedule:apply',
     'schedule' => '* * * * *',
     'enable' => true,
     'storeAware' => true,
-];
+    ];
 
 /* Oms */
-$jobs[] = [
+    $jobs[] = [
     'name' => 'check-oms-conditions',
     'command' => '$PHP_BIN vendor/bin/console oms:check-condition',
     'schedule' => '* * * * *',
     'enable' => true,
-];
+    ];
 
-$jobs[] = [
+    $jobs[] = [
     'name' => 'check-oms-timeouts',
     'command' => '$PHP_BIN vendor/bin/console oms:check-timeout',
     'schedule' => '* * * * *',
     'enable' => true,
-];
+    ];
 
-$jobs[] = [
+    $jobs[] = [
     'name' => 'clear-oms-locks',
     'command' => '$PHP_BIN vendor/bin/console oms:clear-locks',
     'schedule' => '0 6 * * *',
     'enable' => true,
-];
+    ];
 
-$jobs[] = [
+    $jobs[] = [
     'name' => 'queue-worker-start',
     'command' => '$PHP_BIN vendor/bin/console queue:worker:start',
     'schedule' => '* * * * *',
     'enable' => true,
     'storeAware' => true,
-];
+    ];
 
-$jobs[] = [
+    $jobs[] = [
     'name' => 'product-relation-updater',
     'command' => '$PHP_BIN vendor/bin/console product-relation:update -vvv',
     'schedule' => '30 2 * * *',
     'enable' => true,
-];
+    ];
 
-$jobs[] = [
-  'name' => 'event-trigger-timeout',
-  'command' => '$PHP_BIN vendor/bin/console event:trigger:timeout -vvv',
-  'schedule' => '*/5 * * * *',
-  'enable' => true,
-];
+    $jobs[] = [
+    'name' => 'event-trigger-timeout',
+    'command' => '$PHP_BIN vendor/bin/console event:trigger:timeout -vvv',
+    'schedule' => '*/5 * * * *',
+    'enable' => true,
+    ];
 
-$jobs[] = [
+    $jobs[] = [
     'name' => 'deactivate-discontinued-products',
     'command' => '$PHP_BIN vendor/bin/console deactivate-discontinued-products',
     'schedule' => '0 0 * * *',
     'enable' => true,
-];
+    ];
 
 /* StateMachine */
 /*
@@ -117,57 +117,57 @@ $jobs[] = [
 */
 
 /* Quote */
-$jobs[] = [
+    $jobs[] = [
     'name' => 'clean-expired-guest-cart',
     'command' => '$PHP_BIN vendor/bin/console quote:delete-expired-guest-quotes',
     'schedule' => '30 1 * * *',
     'enable' => true,
-];
+    ];
 
 /* QuoteRequest */
-$jobs[] = [
+    $jobs[] = [
     'name' => 'close-outdated-quote-requests',
     'command' => '$PHP_BIN vendor/bin/console quote-request:close-outdated',
     'schedule' => '0 * * * *',
     'enable' => true,
-];
+    ];
 
 /* Oauth */
-$jobs[] = [
+    $jobs[] = [
     'name' => 'remove-expired-refresh-tokens',
     'command' => '$PHP_BIN vendor/bin/console oauth:refresh-token:remove-expired',
     'schedule' => '*/5 * * * *',
     'enable' => true,
-];
+    ];
 
 /* Customer */
-$jobs[] = [
+    $jobs[] = [
     'name' => 'delete-expired-customer-invalidated',
     'command' => '$PHP_BIN vendor/bin/console customer:delete-expired-customer-invalidated',
     'schedule' => '0 0 * * 0',
     'enable' => true,
-];
+    ];
 
 /* Order invoice */
-$jobs[] = [
+    $jobs[] = [
     'name' => 'order-invoice-send',
     'command' => '$PHP_BIN vendor/bin/console order:invoice:send',
     'schedule' => '*/5 * * * *',
     'enable' => true,
-];
+    ];
 
 /* Message broker */
-if (Config::get(MessageBrokerAwsConstants::SQS_RECEIVER_CONFIG)) {
-    $jobs[] = [
+    if (Config::get(MessageBrokerAwsConstants::SQS_RECEIVER_CONFIG)) {
+        $jobs[] = [
         'name' => 'message-broker-consume-channels',
         'command' => '$PHP_BIN vendor/bin/console message-broker:consume --time-limit=15',
         'schedule' => '* * * * *',
         'enable' => true,
-    ];
-}
-
-if (getenv('SPRYKER_CURRENT_REGION')) {
-    foreach ($jobs as $job) {
-        $job['region'] = getenv('SPRYKER_CURRENT_REGION');
+        ];
     }
-}
+
+    if (getenv('SPRYKER_CURRENT_REGION')) {
+        foreach ($jobs as $job) {
+            $job['region'] = getenv('SPRYKER_CURRENT_REGION');
+        }
+    }
