@@ -7,6 +7,7 @@
 
 namespace Pyz\Yves\ShopApplication;
 
+use SprykerShop\Yves\StoreWidget\Widget\StoreSwitcherWidget;
 use Pyz\Yves\CompanyPage\Plugin\ShopApplication\CompanyUserRestrictionHandlerPlugin;
 use Pyz\Yves\CompanyWidget\Widget\MenuItemCompanyWidget;
 use Pyz\Yves\CustomerFullNameWidget\Widget\CustomerFullNameWidget;
@@ -294,6 +295,7 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             MerchantSalesReturnCreateFormWidget::class,
             ShoppingListMerchantWidget::class,
             ShoppingListProductOfferWidget::class,
+            StoreSwitcherWidget::class,
             ProductOfferShoppingListWidget::class,
             MerchantProductOffersSelectWidget::class,
             MerchantSearchWidget::class,
@@ -345,6 +347,7 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
     protected function getApplicationPlugins(): array
     {
         $applicationPlugins = [
+            new HttpApplicationPlugin(),
             new TwigApplicationPlugin(),
             new EventDispatcherApplicationPlugin(),
             new ShopApplicationApplicationPlugin(),
@@ -353,7 +356,6 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             new TranslatorApplicationPlugin(),
             new RouterApplicationPlugin(),
             new SessionApplicationPlugin(),
-            new HttpApplicationPlugin(),
             new ErrorHandlerApplicationPlugin(),
             new FlashMessengerApplicationPlugin(),
             new FormApplicationPlugin(),

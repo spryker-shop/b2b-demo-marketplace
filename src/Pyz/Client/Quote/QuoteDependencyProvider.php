@@ -10,11 +10,12 @@ namespace Pyz\Client\Quote;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\MultiCart\Plugin\NameQuoteTransferExpanderPlugin;
 use Spryker\Client\Price\Plugin\PriceModeQuoteTransferExpanderPlugin;
-use Spryker\Client\Quote\QuoteDependencyProvider as BaseQuoteDependencyProvider;
+use Spryker\Client\Quote\QuoteDependencyProvider as SprykerQuoteDependencyProvider;
 use Spryker\Client\QuoteRequest\Plugin\Quote\QuoteRequestDatabaseStrategyPreCheckPlugin;
 use Spryker\Client\Store\Plugin\StoreQuoteTransferExpanderPlugin;
+use Spryker\Client\PersistentCart\Plugin\Quote\QuoteSyncDatabaseStrategyReaderPlugin;
 
-class QuoteDependencyProvider extends BaseQuoteDependencyProvider
+class QuoteDependencyProvider extends SprykerQuoteDependencyProvider
 {
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -37,6 +38,16 @@ class QuoteDependencyProvider extends BaseQuoteDependencyProvider
     {
         return [
             new QuoteRequestDatabaseStrategyPreCheckPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Client\QuoteExtension\Dependency\Plugin\DatabaseStrategyReaderPluginInterface>
+     */
+    protected function getDatabaseStrategyReaderPlugins(): array
+    {
+        return [
+            new QuoteSyncDatabaseStrategyReaderPlugin(),
         ];
     }
 }
