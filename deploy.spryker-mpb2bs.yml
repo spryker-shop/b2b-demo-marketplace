@@ -32,7 +32,7 @@ regions:
     EU:
         services:
             database:
-                database: spryker_b2bsec #Example: environment_staging
+                database: spryker_mpb2bs #Example: environment_staging
                 username: spryker
                 password: secret
 
@@ -57,7 +57,6 @@ regions:
                         namespace: at_search
                     session:
                         namespace: 2
-
 groups:
     EU:
         region: EU
@@ -65,61 +64,61 @@ groups:
             Redirects:
                 application: static
                 endpoints:
-                    de.b2b.internal-security.demo-spryker.com::
+                    de.mp-b2b.internal-security.demo-spryker.com:
                         store: DE
                         redirect:
                             type: 302
-                            url: www.de.b2b.internal-security.demo-spryker.com:
-                    at.b2b.internal-security.demo-spryker.com::
+                            url: www.de.mp-b2b.internal-security.demo-spryker.com
+                    at.mp-b2b.internal-security.demo-spryker.com:
                         store: AT
                         redirect:
                             code: 302
-                            url: www.at.b2b.internal-security.demo-spryker.com:
+                            url: www.at.mp-b2b.internal-security.demo-spryker.com
             Yves:
                 application: yves
                 endpoints:
-                    www.de.b2b.internal-security.demo-spryker.com:
+                    www.de.mp-b2b.internal-security.demo-spryker.com:
                         store: DE
-                    www.at.b2b.internal-security.demo-spryker.com:
+                    www.at.mp-b2b.internal-security.demo-spryker.com:
                         store: AT
             boffice:
                 application: backoffice
                 endpoints:
-                    backoffice.de.b2b.internal-security.demo-spryker.com:
+                    backoffice.de.mp-b2b.internal-security.demo-spryker.com:
                         store: DE
-                    backoffice.at.b2b.internal-security.demo-spryker.com:
+                    backoffice.at.mp-b2b.internal-security.demo-spryker.com:
                         store: AT
             backgw:
                 application: backend-gateway
                 endpoints:
-                    backend-gateway.de.b2b.internal-security.demo-spryker.com:
+                    backend-gateway.de.mp-b2b.internal-security.demo-spryker.com:
                         store: DE
-                    backend-gateway.at.b2b.internal-security.demo-spryker.com:
+                    backend-gateway.at.mp-b2b.internal-security.demo-spryker.com:
                         store: AT
             backapi:
                 application: zed
                 endpoints:
-                    backend-api.de.b2b.internal-security.demo-spryker.com:
+                    backend-api.de.mp-b2b.internal-security.demo-spryker.com:
                         store: DE
                         entry-point: BackendApi
-                    backend-api.at.b2b.internal-security.demo-spryker.com:
+                    backend-api.at.mp-b2b.internal-security.demo-spryker.com:
                         store: AT
                         entry-point: BackendApi
             Glue:
                 application: glue
                 endpoints:
-                    glue.de.b2b.internal-security.demo-spryker.com:
+                    glue.de.mp-b2b.internal-security.demo-spryker.com:
                         store: DE
-                    glue.at.b2b.internal-security.demo-spryker.com:
+                    glue.at.mp-b2b.internal-security.demo-spryker.com:
                         store: AT
             mportal:
                 application: merchant-portal
                 endpoints:
-                    mp.de.b2b.internal-security.demo-spryker.com::
+                    mp.de.mp-b2b.internal-security.demo-spryker.com::
                         entry-point: MerchantPortal
                         store: DE
                         primal: true
-                    mp.at.b2b.internal-security.demo-spryker.com::
+                    mp.at.mp-b2b.internal-security.demo-spryker.com::
                         entry-point: MerchantPortal
                         store: AT
 services:
@@ -138,7 +137,7 @@ services:
             username: "spryker"
             password: "secret"
         endpoints:
-            queue.b2b.internal-security.demo-spryker.com:
+            queue.mp-b2b.internal-security.demo-spryker.com:
             localhost:5672:
                 protocol: tcp
     session:
@@ -157,11 +156,11 @@ services:
     scheduler:
         engine: jenkins
         endpoints:
-            scheduler.internal-security.demo-spryker.com:
+            scheduler.mp-b2b.internal-security.demo-spryker.com:
     mail_catcher:
         engine: mailhog
         endpoints:
-            mail.internal-security.demo-spryker.com:
+            mail.mp-b2b.internal-security.demo-spryker.com:
 
 docker:
 
