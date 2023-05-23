@@ -7,6 +7,7 @@
 
 namespace Pyz\Client\ExampleProductSalePage;
 
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ProductLabelStorage\ProductLabelStorageClientInterface;
 use Spryker\Client\Search\SearchClientInterface;
