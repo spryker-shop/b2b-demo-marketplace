@@ -7,6 +7,12 @@
 
 namespace Pyz\Zed\Oauth;
 
+use Spryker\Glue\GlueBackendApiApplication\Plugin\Oauth\BackendScopeCollectorPlugin;
+use Spryker\Glue\GlueBackendApiApplication\Plugin\Oauth\BackendScopeFinderPlugin;
+use Spryker\Glue\GlueStorefrontApiApplication\Plugin\Oauth\StorefrontScopeCollectorPlugin;
+use Spryker\Glue\GlueStorefrontApiApplication\Plugin\Oauth\StorefrontScopeFinderPlugin;
+use Spryker\Zed\Oauth\Communication\Plugin\Oauth\CustomerPasswordOauthRequestGrantTypeConfigurationProviderPlugin;
+use Spryker\Zed\Oauth\Communication\Plugin\Oauth\UserPasswordOauthRequestGrantTypeConfigurationProviderPlugin;
 use Spryker\Zed\Oauth\OauthDependencyProvider as SprykerOauthDependencyProvider;
 use Spryker\Zed\OauthAgentConnector\Communication\Plugin\Oauth\AgentCredentialsOauthGrantTypeConfigurationProviderPlugin;
 use Spryker\Zed\OauthAgentConnector\Communication\Plugin\Oauth\AgentOauthScopeProviderPlugin;
@@ -28,6 +34,8 @@ use Spryker\Zed\OauthRevoke\Communication\Plugin\Oauth\OauthRefreshTokenReaderPl
 use Spryker\Zed\OauthRevoke\Communication\Plugin\Oauth\OauthRefreshTokenRevokerPlugin;
 use Spryker\Zed\OauthRevoke\Communication\Plugin\Oauth\OauthRefreshTokensReaderPlugin;
 use Spryker\Zed\OauthRevoke\Communication\Plugin\Oauth\OauthRefreshTokensRevokerPlugin;
+use Spryker\Zed\OauthUserConnector\Communication\Plugin\Oauth\UserOauthScopeProviderPlugin;
+use Spryker\Zed\OauthUserConnector\Communication\Plugin\Oauth\UserOauthUserProviderPlugin;
 
 class OauthDependencyProvider extends SprykerOauthDependencyProvider
 {
@@ -45,6 +53,16 @@ class OauthDependencyProvider extends SprykerOauthDependencyProvider
     }
 
     /**
+     * @return array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserProviderPluginInterface>
+     */
+    protected function getOauthUserProviderPlugins(): array
+    {
+        return [
+            new UserOauthUserProviderPlugin(),
+        ];
+    }
+
+    /**
      * @return array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthScopeProviderPluginInterface>
      */
     protected function getScopeProviderPlugins(): array
@@ -54,6 +72,7 @@ class OauthDependencyProvider extends SprykerOauthDependencyProvider
             new CompanyUserOauthScopeProviderPlugin(),
             new AgentOauthScopeProviderPlugin(),
             new CustomerImpersonationOauthScopeProviderPlugin(),
+            new UserOauthScopeProviderPlugin(),
         ];
     }
 
@@ -147,6 +166,39 @@ class OauthDependencyProvider extends SprykerOauthDependencyProvider
     {
         return [
             new OauthRefreshTokensReaderPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRequestGrantTypeConfigurationProviderPluginInterface>
+     */
+    protected function getOauthRequestGrantTypeConfigurationProviderPlugins(): array
+    {
+        return [
+            new UserPasswordOauthRequestGrantTypeConfigurationProviderPlugin(),
+            new CustomerPasswordOauthRequestGrantTypeConfigurationProviderPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Glue\OauthExtension\Dependency\Plugin\ScopeCollectorPluginInterface>
+     */
+    protected function getScopeCollectorPlugins(): array
+    {
+        return [
+            new StorefrontScopeCollectorPlugin(),
+            new BackendScopeCollectorPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Glue\OauthExtension\Dependency\Plugin\ScopeFinderPluginInterface>
+     */
+    protected function getScopeFinderPlugins(): array
+    {
+        return [
+            new BackendScopeFinderPlugin(),
+            new StorefrontScopeFinderPlugin(),
         ];
     }
 }

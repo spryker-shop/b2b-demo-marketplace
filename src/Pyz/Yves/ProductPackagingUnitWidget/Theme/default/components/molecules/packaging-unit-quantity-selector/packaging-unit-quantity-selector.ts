@@ -1,4 +1,4 @@
-/* tslint:disable */
+/* eslint-disable */
 import Component from 'ShopUi/models/component';
 import { mount } from 'ShopUi/app';
 import FormattedNumberInput from 'ShopUi/components/molecules/formatted-number-input/formatted-number-input';
@@ -63,7 +63,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         this.formattedQtyInSalesUnitInput = <FormattedNumberInput>(
             document.getElementsByClassName('js-formatted-sales-unit-quantity')[0]
         );
-        
+
         this.qtyInSalesUnitInput = <HTMLInputElement>document.getElementById('sales-unit-quantity');
         this.qtyInBaseUnitInput = <HTMLInputElement>document.getElementById('base-unit-quantity');
         this.measurementUnitInput = <HTMLSelectElement>document.getElementsByClassName('select-measurement-unit')[0];
@@ -620,7 +620,10 @@ export default class PackagingUnitQuantitySelector extends Component {
         const salesUnitId = parseInt((event.srcElement as HTMLSelectElement).value);
         const salesUnit = this.getLeadSalesUnitById(salesUnitId);
 
-        const amountInSalesUnits = this.getAmountConversion(this.formattedAmountInSalesUnitInput.unformattedValue, salesUnit.conversion);
+        const amountInSalesUnits = this.getAmountConversion(
+            this.formattedAmountInSalesUnitInput.unformattedValue,
+            salesUnit.conversion,
+        );
         const amountInSalesUnitsMin = this.getAmountConversion(this.amountInSalesUnitInput.min, salesUnit.conversion);
         const amountInSalesUnitsMax = this.getAmountConversion(this.amountInSalesUnitInput.max, salesUnit.conversion);
         const amountInSalesUnitsStep = this.getAmountConversion(this.amountInSalesUnitInput.step, salesUnit.conversion);
