@@ -39,6 +39,8 @@ use Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\CategoryTree\Cate
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\CategoryTree\CategoryTreeWriteForPublishingPublisherPlugin;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\CategoryTreePublisherTriggerPlugin;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\ParentWritePublisherPlugin;
+use Spryker\Zed\CustomerAccessStorage\Communication\Plugin\Publisher\CustomerAccessPublisherTriggerPlugin;
+use Spryker\Zed\CustomerStorage\Communication\Plugin\Publisher\Customer\CustomerInvalidatedWritePublisherPlugin;
 use Spryker\Zed\FileManagerStorage\Communication\Plugin\Publisher\FileManagerPublisherTriggerPlugin;
 use Spryker\Zed\GlossaryStorage\Communication\Plugin\Publisher\GlossaryKey\GlossaryDeletePublisherPlugin as GlossaryKeyDeletePublisherPlugin;
 use Spryker\Zed\GlossaryStorage\Communication\Plugin\Publisher\GlossaryKey\GlossaryWritePublisherPlugin as GlossaryKeyWriterPublisherPlugin;
@@ -108,6 +110,7 @@ use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Publisher\ProductLabelD
 use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Publisher\ProductLabelProductAbstract\ProductLabelProductAbstractWritePublisherPlugin as ProductLabelProductAbstractStorageWritePublisherPlugin;
 use Spryker\Zed\ProductListSearch\Communication\Plugin\Publisher\ProductListSearchPublisherTriggerPlugin;
 use Spryker\Zed\ProductListStorage\Communication\Plugin\Publisher\ProductListPublisherTriggerPlugin;
+use Spryker\Zed\ProductOfferAvailabilityStorage\Communication\Plugin\Publisher\ProductOfferAvailability\ProductOfferAvailabilityProductOfferStoreStoragePublisherPlugin;
 use Spryker\Zed\ProductOfferStorage\Communication\Plugin\Publisher\ProductConcreteOffers\ProductConcreteProductOffersDeletePublisherPlugin;
 use Spryker\Zed\ProductOfferStorage\Communication\Plugin\Publisher\ProductConcreteOffers\ProductConcreteProductOffersStoreDeletePublisherPlugin;
 use Spryker\Zed\ProductOfferStorage\Communication\Plugin\Publisher\ProductConcreteOffers\ProductConcreteProductOffersStoreWritePublisherPlugin;
@@ -132,6 +135,11 @@ use Spryker\Zed\Publisher\PublisherDependencyProvider as SprykerPublisherDepende
 use Spryker\Zed\SalesReturnSearch\Communication\Plugin\Publisher\ReturnReason\ReturnReasonDeletePublisherPlugin;
 use Spryker\Zed\SalesReturnSearch\Communication\Plugin\Publisher\ReturnReason\ReturnReasonWritePublisherPlugin;
 use Spryker\Zed\SalesReturnSearch\Communication\Plugin\Publisher\ReturnReasonPublisherTriggerPlugin;
+use Spryker\Zed\StoreStorage\Communication\Plugin\Publisher\CountryStore\CountryStoreWritePublisherPlugin;
+use Spryker\Zed\StoreStorage\Communication\Plugin\Publisher\CurrencyStore\CurrencyStoreWritePublisherPlugin;
+use Spryker\Zed\StoreStorage\Communication\Plugin\Publisher\LocaleStore\LocaleStoreWritePublisherPlugin;
+use Spryker\Zed\StoreStorage\Communication\Plugin\Publisher\Store\StoreSynchronizationTriggeringPublisherPlugin;
+use Spryker\Zed\StoreStorage\Communication\Plugin\Publisher\Store\StoreWritePublisherPlugin;
 use Spryker\Zed\TaxProductStorage\Communication\Plugin\Publisher\TaxProductPublisherTriggerPlugin;
 use Spryker\Zed\TaxStorage\Communication\Plugin\Publisher\TaxSetPublisherTriggerPlugin;
 
@@ -167,10 +175,13 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
             $this->getMerchantProductOfferStoragePlugins(),
             $this->getMerchantProductOfferSearchPlugins(),
             $this->getPriceProductMerchantRelationshipStoragePlugins(),
+            $this->getStoreStoragePlugins(),
             $this->getAssetStoragePlugins(),
             $this->getProductConfigurationStoragePlugins(),
+            $this->getCustomerStoragePlugins(),
             $this->getProductExportPlugins(),
             $this->getProductPageSearchPlugins(),
+            $this->getProductOfferAvailabilityStoragePlugins(),
         );
     }
 
@@ -224,6 +235,7 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
             new MerchantProductPublisherTriggerPlugin(),
             new AssetPublisherTriggerPlugin(),
             new PriceProductOfferPublisherTriggerPlugin(),
+            new CustomerAccessPublisherTriggerPlugin(),
         ];
     }
 
@@ -502,6 +514,30 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
     /**
      * @return array<\Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface>
      */
+    protected function getProductOfferAvailabilityStoragePlugins(): array
+    {
+        return [
+            new ProductOfferAvailabilityProductOfferStoreStoragePublisherPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface>
+     */
+    protected function getStoreStoragePlugins(): array
+    {
+        return [
+            new StoreWritePublisherPlugin(),
+            new StoreSynchronizationTriggeringPublisherPlugin(),
+            new CurrencyStoreWritePublisherPlugin(),
+            new CountryStoreWritePublisherPlugin(),
+            new LocaleStoreWritePublisherPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface>
+     */
     protected function getAssetStoragePlugins(): array
     {
         return [
@@ -532,6 +568,16 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
             new ProductConcreteUpdatedMessageBrokerPublisherPlugin(),
             new ProductConcreteDeletedMessageBrokerPublisherPlugin(),
             new ProductAbstractUpdatedMessageBrokerPublisherPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<int, \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface>
+     */
+    protected function getCustomerStoragePlugins(): array
+    {
+        return [
+            new CustomerInvalidatedWritePublisherPlugin(),
         ];
     }
 
