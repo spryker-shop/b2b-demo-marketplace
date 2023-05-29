@@ -108,12 +108,26 @@ use Spryker\Glue\EventDispatcher\Plugin\Application\EventDispatcherApplicationPl
 use Spryker\Glue\GlueApplication\GlueApplicationDependencyProvider as SprykerGlueApplicationDependencyProvider;
 use Spryker\Glue\GlueApplication\Plugin\Application\GlueApplicationApplicationPlugin;
 use Spryker\Glue\GlueApplication\Plugin\GlueApplication\CorsValidateHttpRequestPlugin;
+use Spryker\Glue\GlueApplication\Plugin\GlueApplication\FallbackStorefrontApiGlueApplicationBootstrapPlugin;
 use Spryker\Glue\GlueApplication\Plugin\GlueApplication\HeadersValidateHttpRequestPlugin;
 use Spryker\Glue\GlueApplication\Plugin\GlueApplication\PaginationParametersValidateHttpRequestPlugin;
-use Spryker\Glue\GlueApplication\Plugin\Rest\SetStoreCurrentLocaleBeforeActionPlugin;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface;
+use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\BackendApiGlueApplicationBootstrapPlugin;
+use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\BackendRouterProviderPlugin;
+use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\ControllerCacheCollectorPlugin as BackendControllerCacheCollectorPlugin;
+use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\CustomRouteRoutesProviderPlugin as BackendCustomRouteRoutesProviderPlugin;
+use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\ResourcesProviderPlugin as BackendResourcesProviderPlugin;
+use Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\Plugin\GlueApplication\IsProtectedTableColumnExpanderPlugin as BackendIsProtectedTableColumnExpanderPlugin;
+use Spryker\Glue\GlueJsonApiConvention\Plugin\GlueApplication\JsonApiConventionPlugin;
+use Spryker\Glue\GlueStorefrontApiApplication\Plugin\GlueApplication\ControllerCacheCollectorPlugin as StorefrontControllerCacheCollectorPlugin;
+use Spryker\Glue\GlueStorefrontApiApplication\Plugin\GlueApplication\CustomRouteRoutesProviderPlugin as StorefrontCustomRouteRoutesProviderPlugin;
+use Spryker\Glue\GlueStorefrontApiApplication\Plugin\GlueApplication\ResourcesProviderPlugin as StorefrontResourcesProviderPlugin;
+use Spryker\Glue\GlueStorefrontApiApplication\Plugin\GlueApplication\StorefrontApiGlueApplicationBootstrapPlugin;
+use Spryker\Glue\GlueStorefrontApiApplication\Plugin\GlueApplication\StorefrontRouterProviderPlugin;
+use Spryker\Glue\GlueStorefrontApiApplicationAuthorizationConnector\Plugin\GlueApplication\IsProtectedTableColumnExpanderPlugin as StorefrontIsProtectedTableColumnExpanderPlugin;
 use Spryker\Glue\HealthCheck\Plugin\HealthCheckResourceRoutePlugin;
 use Spryker\Glue\Http\Plugin\Application\HttpApplicationPlugin;
+use Spryker\Glue\Locale\Plugin\Application\LocaleApplicationPlugin;
 use Spryker\Glue\MerchantOpeningHoursRestApi\Plugin\GlueApplication\MerchantOpeningHoursByMerchantReferenceResourceRelationshipPlugin;
 use Spryker\Glue\MerchantOpeningHoursRestApi\Plugin\GlueApplication\MerchantOpeningHoursResourceRoutePlugin;
 use Spryker\Glue\MerchantProductOffersRestApi\MerchantProductOffersRestApiConfig;
@@ -213,6 +227,7 @@ use Spryker\Glue\ShoppingListsRestApi\Plugin\GlueApplication\ShoppingListItemByS
 use Spryker\Glue\ShoppingListsRestApi\Plugin\GlueApplication\ShoppingListItemsResourcePlugin;
 use Spryker\Glue\ShoppingListsRestApi\Plugin\GlueApplication\ShoppingListsResourcePlugin;
 use Spryker\Glue\ShoppingListsRestApi\ShoppingListsRestApiConfig;
+use Spryker\Glue\StoresRestApi\Plugin\Application\StoreHttpHeaderApplicationPlugin;
 use Spryker\Glue\StoresRestApi\Plugin\StoresResourceRoutePlugin;
 use Spryker\Glue\UpSellingProductsRestApi\Plugin\GlueApplication\CartUpSellingProductsResourceRoutePlugin;
 use Spryker\Glue\UrlsRestApi\Plugin\GlueApplication\UrlResolverResourceRoutePlugin;
@@ -220,6 +235,10 @@ use Spryker\Glue\UrlsRestApi\Plugin\GlueApplication\UrlResolverResourceRoutePlug
 class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependencyProvider
 {
     /**
+     * {@inheritDoc}
+     *
+     * @deprecated Will be removed without replacement.
+     *
      * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface>
      */
     protected function getResourceRoutePlugins(): array
@@ -309,6 +328,8 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
     /**
      * {@inheritDoc}
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestUserValidatorPluginInterface>
      */
     protected function getRestUserValidatorPlugins(): array
@@ -321,6 +342,8 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
 
     /**
      * {@inheritDoc}
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateHttpRequestPluginInterface>
      */
@@ -336,6 +359,8 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
     /**
      * {@inheritDoc}
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormattedControllerBeforeActionPluginInterface>
      */
     protected function getFormattedControllerBeforeActionTerminatePlugins(): array
@@ -348,6 +373,8 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
     /**
      * {@inheritDoc}
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatRequestPluginInterface>
      */
     protected function getFormatRequestPlugins(): array
@@ -358,6 +385,10 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @deprecated Will be removed without replacement.
+     *
      * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestRequestValidatorPluginInterface>
      */
     protected function getRestRequestValidatorPlugins(): array
@@ -392,6 +423,8 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
     /**
      * {@inheritDoc}
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateRestRequestPluginInterface>
      */
     protected function getValidateRestRequestPlugins(): array
@@ -402,6 +435,10 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @deprecated Will be removed without replacement.
+     *
      * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatResponseHeadersPluginInterface>
      */
     protected function getFormatResponseHeadersPlugins(): array
@@ -413,12 +450,15 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @deprecated Will be removed without replacement.
+     *
      * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerBeforeActionPluginInterface>
      */
     protected function getControllerBeforeActionPlugins(): array
     {
         return [
-            new SetStoreCurrentLocaleBeforeActionPlugin(),
             new SetCustomerBeforeActionPlugin(),
             new SetAnonymousCustomerIdControllerBeforeActionPlugin(),
             new SetCurrencyBeforeActionPlugin(),
@@ -427,6 +467,10 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface $resourceRelationshipCollection
      *
      * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface
@@ -777,6 +821,10 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @deprecated Will be removed without replacement.
+     *
      * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestUserFinderPluginInterface>
      */
     protected function getRestUserFinderPlugins(): array
@@ -788,6 +836,10 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @deprecated Will be removed without replacement.
+     *
      * @return array<\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface>
      */
     protected function getApplicationPlugins(): array
@@ -798,6 +850,85 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
             new EventDispatcherApplicationPlugin(),
             new GlueApplicationApplicationPlugin(),
             new RouterApplicationPlugin(),
+            new StoreHttpHeaderApplicationPlugin(),
+            new LocaleApplicationPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\GlueApplicationBootstrapPluginInterface>
+     */
+    protected function getGlueApplicationBootstrapPlugins(): array
+    {
+        return [
+            new StorefrontApiGlueApplicationBootstrapPlugin(),
+            new BackendApiGlueApplicationBootstrapPlugin(),
+            new FallbackStorefrontApiGlueApplicationBootstrapPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ConventionPluginInterface>
+     */
+    protected function getConventionPlugins(): array
+    {
+        return [
+            new JsonApiConventionPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerCacheCollectorPluginInterface>
+     */
+    protected function getControllerCacheCollectorPlugins(): array
+    {
+        return [
+            new StorefrontControllerCacheCollectorPlugin(),
+            new BackendControllerCacheCollectorPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ApiApplicationEndpointProviderPluginInterface>
+     */
+    protected function getGlueApplicationRouterProviderPlugins(): array
+    {
+        return [
+            new BackendRouterProviderPlugin(),
+            new StorefrontRouterProviderPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RoutesProviderPluginInterface>
+     */
+    protected function getRoutesProviderPlugins(): array
+    {
+        return [
+            new StorefrontCustomRouteRoutesProviderPlugin(),
+            new BackendCustomRouteRoutesProviderPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourcesProviderPluginInterface>
+     */
+    protected function getResourcesProviderPlugins(): array
+    {
+        return [
+            new StorefrontResourcesProviderPlugin(),
+            new BackendResourcesProviderPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\TableColumnExpanderPluginInterface>
+     */
+    protected function getTableColumnExpanderPlugins(): array
+    {
+        return [
+            new BackendIsProtectedTableColumnExpanderPlugin(),
+            new StorefrontIsProtectedTableColumnExpanderPlugin(),
         ];
     }
 }
