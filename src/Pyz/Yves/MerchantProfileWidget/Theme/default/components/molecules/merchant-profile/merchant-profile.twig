@@ -3,8 +3,16 @@
 {% block extraClass %}{% endblock %}
 
 {% block body %}
-    <div class="grid grid--gap">
+    <div class="grid grid--gap" itemscope itemtype="https://schema.org/Organization">
+        <meta itemprop="identifier" content="{{ data.merchantReference }}"/>
+        <meta itemprop="name" content="{{ data.merchantName }}"/>
+        {% if data.merchantStorageProfile.logoUrl %}
+            <meta itemprop="logo" content="{{ data.merchantStorageProfile.logoUrl | trans }}"/>
+        {% endif %}
+
         {{ block('contentInner') }}
+
+        <section class="col col--sm-12 col--lg-12 merchant-review-summary"></section>
     </div>
 
     {{ block('additional') }}
@@ -33,6 +41,8 @@
 {% block detailInner %}
     <div class="col col--sm-12 grid grid--gap">
         <div class="col col--sm-9">
+            <section itemscope itemtype="http://schema.org/AggregateRating" itemprop="aggregateRating"></section>
+
             {% set descriptionGlossaryValue = (data.merchantStorageProfile.descriptionGlossaryKey ?: '') | trans %}
             {% set hasDescriptionTranslation = data.merchantStorageProfile.descriptionGlossaryKey
                 ? data.merchantStorageProfile.descriptionGlossaryKey != descriptionGlossaryValue %}

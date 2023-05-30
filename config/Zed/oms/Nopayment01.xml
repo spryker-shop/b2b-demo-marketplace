@@ -77,7 +77,7 @@
 
         <events>
             <event name="authorize" timeout="1 second" manual="true"/>
-            <event name="paid" manual="true" />
+            <event name="paid" manual="true" command="Order/RequestProductReviews"/>
             <event name="pick" manual="true" />
             <event name="ship" manual="true" />
             <event name="forward" onEnter="true" />
