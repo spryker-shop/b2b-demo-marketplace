@@ -10,7 +10,7 @@
     isDisabled: false,
     isReadOnly: false,
     autoUpdate: false,
-    formattedNumberExtraClass: '',
+    formattedNumberExtraClasses: '',
     inputExtraClasses: '',
     numberFormatConfig: {},
 } %}
@@ -58,7 +58,7 @@
 
     {% block quantityField %}
         {% include molecule('formatted-number-input') with {
-            class: config.jsName ~ '__formatted-input ' ~ data.formattedNumberExtraClass,
+            class: config.jsName ~ '__formatted-input ' ~ data.formattedNumberExtraClasses,
             data: {
                 inputName: attributes.name,
                 inputValue: attributes.value,
