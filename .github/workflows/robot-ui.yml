@@ -39,7 +39,7 @@ jobs:
                   sudo chmod +x /usr/local/bin/docker-compose
             - name: Install Robot tests
               run: |
-                  git clone https://github.com/spryker/robotframework-suite-tests.git --single-branch --branch ci-set robotframework-tests
+                  git clone https://github.com/spryker/robotframework-suite-tests.git --single-branch --branch ci-smoke-set robotframework-tests
             - name: Install Project
               continue-on-error: true
               run: |
@@ -52,7 +52,7 @@ jobs:
               run: |
                   cd robotframework-tests
                   rfbrowser init
-                  robot -v env:ui_mp_b2b -v headless:true --exclude skip-due-to-issueORskip-due-to-refactoring tests/ui/smoke/mp_b2b.robot
+                  robot -v env:ui_mp_b2b -v headless:true -d results --exclude skip-due-to-issueORskip-due-to-refactoring tests/ui/smoke/mp_b2b.robot
             - name: Upload artifacts
               if: always()
               run: |
