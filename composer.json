@@ -296,7 +296,7 @@
         "filp/whoops": "^2.7",
         "phpunit/phpunit": "^9.5.2",
         "spryker-feature/development-tools": "dev-master as 202304.0",
-        "spryker-sdk/evaluator": "dev-master",
+        "spryker-sdk/evaluator": "^0.1.0",
         "spryker-sdk/phpstan-spryker": "^0.4.0",
         "spryker-sdk/security-checker": "^0.2.0",
         "spryker/architecture-sniffer": "^0.5.5",
@@ -340,7 +340,8 @@
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "symfony/flex": true,
-            "symfony/runtime": true
+            "symfony/runtime": true,
+            "sllh/composer-versions-check": false
         }
     },
     "scripts": {

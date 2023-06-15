@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a762d20abb85fa52138233fd4d628c50",
+    "content-hash": "2b3e893e13c06f561c8368eb01e096b1",
     "packages": [
         {
             "name": "async-aws/core",
@@ -8379,16 +8379,16 @@
         },
         {
             "name": "spryker-sdk/evaluator",
-            "version": "dev-master",
+            "version": "0.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-sdk/evaluator.git",
-                "reference": "57f4b0a2eddeeecd334f908f8d4c73700804b0f0"
+                "reference": "ba9793347a35268e5bfa9c8654a90ed95551a391"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-sdk/evaluator/zipball/57f4b0a2eddeeecd334f908f8d4c73700804b0f0",
-                "reference": "57f4b0a2eddeeecd334f908f8d4c73700804b0f0",
+                "url": "https://api.github.com/repos/spryker-sdk/evaluator/zipball/ba9793347a35268e5bfa9c8654a90ed95551a391",
+                "reference": "ba9793347a35268e5bfa9c8654a90ed95551a391",
                 "shasum": ""
             },
             "require": {
@@ -8407,6 +8407,9 @@
                 "symfony/monolog-bundle": "^3.8",
                 "symfony/process": "^5.4|^6.0",
                 "symfony/runtime": "^5.4|^6.0",
+                "symfony/serializer": "^5.4|^6.0",
+                "symfony/stopwatch": "^5.4|^6.0",
+                "symfony/uid": "^5.4|^6.0",
                 "symfony/yaml": "^5.4|^6.0"
             },
             "conflict": {
@@ -8422,7 +8425,6 @@
                 "phpunit/phpunit": "^9.6",
                 "spryker/code-sniffer": "^0.17.18"
             },
-            "default-branch": true,
             "bin": [
                 "bin/evaluator"
             ],
@@ -8445,9 +8447,9 @@
             "description": "The tool for evaluating Spryker shops",
             "support": {
                 "issues": "https://github.com/spryker-sdk/evaluator/issues",
-                "source": "https://github.com/spryker-sdk/evaluator/tree/master"
+                "source": "https://github.com/spryker-sdk/evaluator/tree/0.1.0"
             },
-            "time": "2023-05-24T11:32:21+00:00"
+            "time": "2023-06-14T15:03:17+00:00"
         },
         {
             "name": "spryker-sdk/security-checker",
@@ -18077,20 +18079,20 @@
         },
         {
             "name": "spryker/authorization",
-            "version": "1.2.0",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/authorization.git",
-                "reference": "7aed78ec4bd6a6a9593ebf869beb77b6beaa5d2d"
+                "reference": "f68b43d067e68decb4c7d54ddfd1a9c9d6bdbc8b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/authorization/zipball/7aed78ec4bd6a6a9593ebf869beb77b6beaa5d2d",
-                "reference": "7aed78ec4bd6a6a9593ebf869beb77b6beaa5d2d",
+                "url": "https://api.github.com/repos/spryker/authorization/zipball/f68b43d067e68decb4c7d54ddfd1a9c9d6bdbc8b",
+                "reference": "f68b43d067e68decb4c7d54ddfd1a9c9d6bdbc8b",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.4",
+                "php": ">=8.0",
                 "spryker/authorization-extension": "^1.1.0",
                 "spryker/kernel": "^3.33.0",
                 "spryker/transfer": "^3.25.0"
@@ -18120,9 +18122,9 @@
             ],
             "description": "Authorization module",
             "support": {
-                "source": "https://github.com/spryker/authorization/tree/1.2.0"
+                "source": "https://github.com/spryker/authorization/tree/1.3.0"
             },
-            "time": "2022-08-26T15:08:26+00:00"
+            "time": "2023-05-15T15:35:26+00:00"
         },
         {
             "name": "spryker/authorization-extension",
@@ -32219,16 +32221,16 @@
         },
         {
             "name": "spryker/glue-json-api-convention",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/glue-json-api-convention.git",
-                "reference": "a92b7acf808fb36668cf3866b0a3ee1b71963f9b"
+                "reference": "38484d82ba6b112f53b455b7c1fc21dfd46064d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/glue-json-api-convention/zipball/a92b7acf808fb36668cf3866b0a3ee1b71963f9b",
-                "reference": "a92b7acf808fb36668cf3866b0a3ee1b71963f9b",
+                "url": "https://api.github.com/repos/spryker/glue-json-api-convention/zipball/38484d82ba6b112f53b455b7c1fc21dfd46064d5",
+                "reference": "38484d82ba6b112f53b455b7c1fc21dfd46064d5",
                 "shasum": ""
             },
             "require": {
@@ -32263,9 +32265,9 @@
             ],
             "description": "GlueJsonApiConvention module",
             "support": {
-                "source": "https://github.com/spryker/glue-json-api-convention/tree/1.1.0"
+                "source": "https://github.com/spryker/glue-json-api-convention/tree/1.2.0"
             },
-            "time": "2023-03-24T14:46:01+00:00"
+            "time": "2023-05-25T14:45:44+00:00"
         },
         {
             "name": "spryker/glue-json-api-convention-extension",
@@ -32366,16 +32368,16 @@
         },
         {
             "name": "spryker/glue-storefront-api-application-authorization-connector",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/glue-storefront-api-application-authorization-connector.git",
-                "reference": "94583c84630261569eda2da3f1c66d7cce4a21a4"
+                "reference": "1b9a421cd9879193960f666475dd4a98f9a46cde"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/glue-storefront-api-application-authorization-connector/zipball/94583c84630261569eda2da3f1c66d7cce4a21a4",
-                "reference": "94583c84630261569eda2da3f1c66d7cce4a21a4",
+                "url": "https://api.github.com/repos/spryker/glue-storefront-api-application-authorization-connector/zipball/1b9a421cd9879193960f666475dd4a98f9a46cde",
+                "reference": "1b9a421cd9879193960f666475dd4a98f9a46cde",
                 "shasum": ""
             },
             "require": {
@@ -32410,9 +32412,9 @@
             ],
             "description": "GlueStorefrontApiApplicationAuthorizationConnector module",
             "support": {
-                "source": "https://github.com/spryker/glue-storefront-api-application-authorization-connector/tree/1.0.1"
+                "source": "https://github.com/spryker/glue-storefront-api-application-authorization-connector/tree/1.0.2"
             },
-            "time": "2022-11-22T13:42:03+00:00"
+            "time": "2023-05-15T15:35:26+00:00"
         },
         {
             "name": "spryker/glue-storefront-api-application-glue-json-api-convention-connector",
@@ -38716,16 +38718,16 @@
         },
         {
             "name": "spryker/oauth",
-            "version": "2.9.2",
+            "version": "2.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/oauth.git",
-                "reference": "5aa462b430b699e8828383dfec7318e419ecffa4"
+                "reference": "da9d97d006c3fa2255fd00fb96ad30e2eaa13f20"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/oauth/zipball/5aa462b430b699e8828383dfec7318e419ecffa4",
-                "reference": "5aa462b430b699e8828383dfec7318e419ecffa4",
+                "url": "https://api.github.com/repos/spryker/oauth/zipball/da9d97d006c3fa2255fd00fb96ad30e2eaa13f20",
+                "reference": "da9d97d006c3fa2255fd00fb96ad30e2eaa13f20",
                 "shasum": ""
             },
             "require": {
@@ -38774,9 +38776,9 @@
             ],
             "description": "Oauth module",
             "support": {
-                "source": "https://github.com/spryker/oauth/tree/2.9.2"
+                "source": "https://github.com/spryker/oauth/tree/2.10.0"
             },
-            "time": "2023-04-27T14:36:57+00:00"
+            "time": "2023-05-18T11:08:04+00:00"
         },
         {
             "name": "spryker/oauth-agent-connector",
@@ -38835,16 +38837,16 @@
         },
         {
             "name": "spryker/oauth-api",
-            "version": "1.2.0",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/oauth-api.git",
-                "reference": "d0d162a589ba57c1683966cef395fc064e438bc3"
+                "reference": "e5a287403293672d77f9a487ec9738d1141f8aa2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/oauth-api/zipball/d0d162a589ba57c1683966cef395fc064e438bc3",
-                "reference": "d0d162a589ba57c1683966cef395fc064e438bc3",
+                "url": "https://api.github.com/repos/spryker/oauth-api/zipball/e5a287403293672d77f9a487ec9738d1141f8aa2",
+                "reference": "e5a287403293672d77f9a487ec9738d1141f8aa2",
                 "shasum": ""
             },
             "require": {
@@ -38883,9 +38885,9 @@
             ],
             "description": "OauthApi module",
             "support": {
-                "source": "https://github.com/spryker/oauth-api/tree/1.2.0"
+                "source": "https://github.com/spryker/oauth-api/tree/1.3.0"
             },
-            "time": "2023-04-25T12:55:27+00:00"
+            "time": "2023-05-23T06:57:39+00:00"
         },
         {
             "name": "spryker/oauth-auth0",
@@ -38936,16 +38938,16 @@
         },
         {
             "name": "spryker/oauth-backend-api",
-            "version": "1.3.0",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/oauth-backend-api.git",
-                "reference": "592d8ff878c53fc0a09ddb800b40aade54b5de81"
+                "reference": "85fef2e72c9e76d2b476cc088c5e9b8d02e135f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/oauth-backend-api/zipball/592d8ff878c53fc0a09ddb800b40aade54b5de81",
-                "reference": "592d8ff878c53fc0a09ddb800b40aade54b5de81",
+                "url": "https://api.github.com/repos/spryker/oauth-backend-api/zipball/85fef2e72c9e76d2b476cc088c5e9b8d02e135f3",
+                "reference": "85fef2e72c9e76d2b476cc088c5e9b8d02e135f3",
                 "shasum": ""
             },
             "require": {
@@ -38984,9 +38986,9 @@
             ],
             "description": "OauthBackendApi module",
             "support": {
-                "source": "https://github.com/spryker/oauth-backend-api/tree/1.3.0"
+                "source": "https://github.com/spryker/oauth-backend-api/tree/1.4.0"
             },
-            "time": "2023-04-25T12:55:27+00:00"
+            "time": "2023-05-23T06:57:39+00:00"
         },
         {
             "name": "spryker/oauth-backend-api-extension",
@@ -62436,16 +62438,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v5.4.23",
+            "version": "v5.4.24",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "90f21e27d0d88ce38720556dd164d4a1e4c3934c"
+                "reference": "560fc3ed7a43e6d30ea94a07d77f9a60b8ed0fb8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/90f21e27d0d88ce38720556dd164d4a1e4c3934c",
-                "reference": "90f21e27d0d88ce38720556dd164d4a1e4c3934c",
+                "url": "https://api.github.com/repos/symfony/console/zipball/560fc3ed7a43e6d30ea94a07d77f9a60b8ed0fb8",
+                "reference": "560fc3ed7a43e6d30ea94a07d77f9a60b8ed0fb8",
                 "shasum": ""
             },
             "require": {
@@ -62515,7 +62517,7 @@
                 "terminal"
             ],
             "support": {
-                "source": "https://github.com/symfony/console/tree/v5.4.23"
+                "source": "https://github.com/symfony/console/tree/v5.4.24"
             },
             "funding": [
                 {
@@ -62531,7 +62533,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-04-24T18:47:29+00:00"
+            "time": "2023-05-26T05:13:16+00:00"
         },
         {
             "name": "symfony/debug",
@@ -63188,16 +63190,16 @@
         },
         {
             "name": "symfony/flex",
-            "version": "v2.2.5",
+            "version": "v2.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/flex.git",
-                "reference": "2ff8465e7172790a47ab3c129f2b514eb2d8a286"
+                "reference": "3c9c3424efdafe33e0e3cfb5e87e50b34711fedf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/flex/zipball/2ff8465e7172790a47ab3c129f2b514eb2d8a286",
-                "reference": "2ff8465e7172790a47ab3c129f2b514eb2d8a286",
+                "url": "https://api.github.com/repos/symfony/flex/zipball/3c9c3424efdafe33e0e3cfb5e87e50b34711fedf",
+                "reference": "3c9c3424efdafe33e0e3cfb5e87e50b34711fedf",
                 "shasum": ""
             },
             "require": {
@@ -63233,7 +63235,7 @@
             "description": "Composer plugin for Symfony",
             "support": {
                 "issues": "https://github.com/symfony/flex/issues",
-                "source": "https://github.com/symfony/flex/tree/v2.2.5"
+                "source": "https://github.com/symfony/flex/tree/v2.3.1"
             },
             "funding": [
                 {
@@ -63249,7 +63251,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-02-18T08:03:15+00:00"
+            "time": "2023-05-27T07:38:25+00:00"
         },
         {
             "name": "symfony/form",
@@ -65138,6 +65140,88 @@
             "time": "2022-11-03T14:55:06+00:00"
         },
         {
+            "name": "symfony/polyfill-uuid",
+            "version": "v1.27.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-uuid.git",
+                "reference": "f3cf1a645c2734236ed1e2e671e273eeb3586166"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-uuid/zipball/f3cf1a645c2734236ed1e2e671e273eeb3586166",
+                "reference": "f3cf1a645c2734236ed1e2e671e273eeb3586166",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1"
+            },
+            "provide": {
+                "ext-uuid": "*"
+            },
+            "suggest": {
+                "ext-uuid": "For best performance"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.27-dev"
+                },
+                "thanks": {
+                    "name": "symfony/polyfill",
+                    "url": "https://github.com/symfony/polyfill"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Uuid\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Grégoire Pineau",
+                    "email": "lyrixx@lyrixx.info"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill for uuid functions",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "polyfill",
+                "portable",
+                "uuid"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/polyfill-uuid/tree/v1.27.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2022-11-03T14:55:06+00:00"
+        },
+        {
             "name": "symfony/process",
             "version": "v6.0.19",
             "source": {
@@ -66469,6 +66553,80 @@
                 }
             ],
             "time": "2023-01-11T11:50:03+00:00"
+        },
+        {
+            "name": "symfony/uid",
+            "version": "v6.0.19",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/uid.git",
+                "reference": "6499e28b0ac9f2aa3151e11845bdb5cd21e6bb9d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/uid/zipball/6499e28b0ac9f2aa3151e11845bdb5cd21e6bb9d",
+                "reference": "6499e28b0ac9f2aa3151e11845bdb5cd21e6bb9d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0.2",
+                "symfony/polyfill-uuid": "^1.15"
+            },
+            "require-dev": {
+                "symfony/console": "^5.4|^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Uid\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Grégoire Pineau",
+                    "email": "lyrixx@lyrixx.info"
+                },
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Provides an object-oriented API to generate and represent UIDs",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "UID",
+                "ulid",
+                "uuid"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/uid/tree/v6.0.19"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2023-01-01T08:36:10+00:00"
         },
         {
             "name": "symfony/validator",
@@ -72919,7 +73077,6 @@
         "spryker-feature/spryker-core-back-office": 20,
         "spryker-feature/tax": 20,
         "spryker-feature/development-tools": 20,
-        "spryker-sdk/evaluator": 20,
         "spryker/docker-chromedriver": 20
     },
     "prefer-stable": true,
