@@ -52,7 +52,7 @@ jobs:
               run: |
                   cd robotframework-tests
                   rfbrowser init
-                  robot -v env:ui_mp_b2b -v headless:true -d results --exclude skip-due-to-issueORskip-due-to-refactoring tests/ui/regression/b2b_mp.robot
+                  robot -v env:ui_mp_b2b -v headless:true -d results --exclude skip-due-to-issueORskip-due-to-refactoring tests/ui/regression/mp_b2b.robot
             - name: Upload artifacts
               if: always()
               run: |
