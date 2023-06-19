@@ -248,7 +248,7 @@ $config[OauthConstants::PUBLIC_KEY_PATH]
     ) ?: null;
 $config[OauthConstants::ENCRYPTION_KEY] = getenv('SPRYKER_OAUTH_ENCRYPTION_KEY') ?: null;
 // $config[OauthConstants::OAUTH_CLIENT_CONFIGURATION] = json_decode(getenv('SPRYKER_OAUTH_CLIENT_CONFIGURATION'), true) ?: [];
-$config[OauthConstants::OAUTH_CLIENT_CONFIGURATION] = json_decode('[{"identifier":"frontend","secret":"U7LBxyH6jfpmgNbbH6jWaMe1SVQiDoH1KSntMeIU74nikbxs","isConfidential":true,"name":"Customer client","redirectUri":null,"isDefault":true}]') ?: [];
+$config[OauthConstants::OAUTH_CLIENT_CONFIGURATION] = json_decode('[{"identifier":"frontend","secret":"U7LBxyH6jfpmgNbbH6jWaMe1SVQiDoH1KSntMeIU74nikbxs","isConfidential":true,"name":"Customer client","redirectUri":null,"isDefault":true}]', true) ?: [];
 
 // >> ZED REQUEST
 
