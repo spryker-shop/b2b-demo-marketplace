@@ -24,6 +24,7 @@ use Spryker\Zed\Locale\Communication\Plugin\EventDispatcher\LocaleEventDispatche
 use Spryker\Zed\MerchantPortalApplication\Communication\Plugin\EventDispatcher\HeadersSecurityEventDispatcherPlugin as MerchantPortalHeadersSecurityEventDispatcherPlugin;
 use Spryker\Zed\Monitoring\Communication\Plugin\EventDispatcher\GatewayMonitoringRequestTransactionEventDispatcherPlugin;
 use Spryker\Zed\Monitoring\Communication\Plugin\EventDispatcher\MonitoringRequestTransactionEventDispatcherPlugin;
+use Spryker\Zed\Profiler\Communication\Plugin\EventDispatcher\ProfilerRequestEventDispatcherPlugin;
 use Spryker\Zed\Router\Communication\Plugin\EventDispatcher\RequestAttributesEventDispatcherPlugin;
 use Spryker\Zed\Router\Communication\Plugin\EventDispatcher\RouterListenerEventDispatcherPlugin;
 use Spryker\Zed\Router\Communication\Plugin\EventDispatcher\RouterLocaleEventDispatcherPlugin;
@@ -66,6 +67,7 @@ class EventDispatcherDependencyProvider extends SprykerEventDispatcherDependency
             new SecurityBlockerBackofficeUserEventDispatcherPlugin(),
             new SecurityBlockerMerchantPortalUserEventDispatcherPlugin(),
             new EnvironmentInfoHeaderEventDispatcherPlugin(),
+            new ProfilerRequestEventDispatcherPlugin(),
         ];
     }
 
