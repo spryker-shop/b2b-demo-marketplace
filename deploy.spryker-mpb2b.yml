@@ -79,7 +79,7 @@ regions:
     EU:
         services:
             database:
-                database: spryker_mp_b2b
+                database: spryker_mpb2b
                 username: spryker
                 password: secret
 
@@ -169,6 +169,20 @@ groups:
                     glue.de.mp-b2b.internal-testing.demo-spryker.com:
                         store: DE
                     glue.at.mp-b2b.internal-testing.demo-spryker.com:
+                        store: AT
+            gluestorefront:
+                application: glue-storefront
+                endpoints:
+                    glue-storefront.de.mp-b2b.internal-testing.demo-spryker.com:
+                        store: DE
+                    glue-storefront.at.mp-b2b.internal-testing.demo-spryker.com:
+                        store: AT
+            gluebackend:
+                application: glue-backend
+                endpoints:
+                    glue-backend.de.mp-b2b.internal-testing.demo-spryker.com:
+                        store: DE
+                    glue-backend.at.mp-b2b.internal-testing.demo-spryker.com:
                         store: AT
             mportal:
                 application: merchant-portal
