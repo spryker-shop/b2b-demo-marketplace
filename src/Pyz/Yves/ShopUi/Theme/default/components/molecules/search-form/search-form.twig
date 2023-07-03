@@ -13,6 +13,7 @@
 
         <button class="{{ config.name }}__button {{ config.name }}__button--submit">
             {% include atom('icon') with {
+                class: config.name ~ '__icon',
                 modifiers: ['search'],
                 data: {
                     name: 'search',
@@ -22,6 +23,7 @@
 
         <button type="button" class="{{ config.name }}__button {{ config.name }}__button--close {% block close %}{% endblock %}">
             {% include atom('icon') with {
+                class: config.name ~ '__icon',
                 modifiers: ['small'],
                 data: {
                     name: 'cross',
