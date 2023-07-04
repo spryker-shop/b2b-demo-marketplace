@@ -67,7 +67,7 @@ class CustomerAccessFilter implements CustomerAccessFilterInterface
 
     /**
      * @param string|null $contentType
-     * @param array $manageableContentTypes
+     * @param list<string> $manageableContentTypes
      *
      * @return bool
      */
