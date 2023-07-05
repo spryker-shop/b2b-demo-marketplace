@@ -13,14 +13,14 @@ use Spryker\Shared\DummyMarketplacePayment\DummyMarketplacePaymentConfig;
 class PaymentsRestApiConfig extends SprykerPaymentsRestApiConfig
 {
     /**
-     * @var array
+     * @var array<string, int>
      */
     protected const PAYMENT_METHOD_PRIORITY = [
         DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE => 1,
     ];
 
     /**
-     * @var array
+     * @var array<string, array<string, array<string>>>
      */
     protected const PAYMENT_METHOD_REQUIRED_FIELDS = [
         DummyMarketplacePaymentConfig::PAYMENT_PROVIDER_NAME => [
