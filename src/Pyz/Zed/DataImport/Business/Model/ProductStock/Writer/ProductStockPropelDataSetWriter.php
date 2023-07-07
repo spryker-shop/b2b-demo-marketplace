@@ -317,7 +317,7 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
     /**
      * @param string $storeName
      *
-     * @return array
+     * @return array<string>
      */
     protected function getStoreWarehouses(string $storeName): array
     {
@@ -418,7 +418,7 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
     }
 
     /**
-     * @param array $availabilityData
+     * @param array<string, mixed> $availabilityData
      *
      * @return void
      */
