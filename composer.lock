@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "61f7807b7412af26504101138b9c3efd",
+    "content-hash": "0cf869e9caa28e623594ce384b84770f",
     "packages": [
         {
             "name": "async-aws/core",
@@ -72653,6 +72653,22 @@
             "time": "2023-01-03T16:08:22+00:00"
         },
         {
+            "name": "spryker/commerce-k6-performance-tests",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/commerce-k6-performance-tests.git",
+                "reference": "62023116b1973dec5a98f9717e0b84b4a62abfaa"
+            },
+            "default-branch": true,
+            "type": "library",
+            "license": [
+                "MIT"
+            ],
+            "description": "K6 performance tests",
+            "time": "2023-07-20T15:36:44+00:00"
+        },
+        {
             "name": "spryker/development",
             "version": "3.34.5",
             "source": {
@@ -74201,6 +74217,7 @@
         "spryker-feature/state-machine": 20,
         "spryker-feature/tax": 20,
         "spryker-feature/development-tools": 20,
+        "spryker/commerce-k6-performance-tests": 20,
         "spryker/docker-chromedriver": 20,
         "spryker/robotframework-suite-tests": 20
     },
