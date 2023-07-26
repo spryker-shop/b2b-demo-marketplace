@@ -22,7 +22,7 @@ class ProductSetIdsWidget extends AbstractWidget
     protected const PYZ_PARAMETER_PRODUCT_SET_LIST = 'productSetList';
 
     /**
-     * @param array $productSetIds
+     * @param list<int> $productSetIds
      */
     public function __construct(array $productSetIds)
     {
@@ -48,7 +48,7 @@ class ProductSetIdsWidget extends AbstractWidget
     }
 
     /**
-     * @param array $productSetIds
+     * @param list<int> $productSetIds
      *
      * @return void
      */
@@ -60,9 +60,9 @@ class ProductSetIdsWidget extends AbstractWidget
     }
 
     /**
-     * @param array<int> $productSetIds
+     * @param list<int> $productSetIds
      *
-     * @return array
+     * @return list<array<string, mixed>>
      */
     protected function getPyzProductSetList(array $productSetIds): array
     {
@@ -81,7 +81,7 @@ class ProductSetIdsWidget extends AbstractWidget
     /**
      * @param int $productSetId
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getPyzSingleProductSet($productSetId): array
     {

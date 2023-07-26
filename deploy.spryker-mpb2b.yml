@@ -78,8 +78,12 @@ assets:
 regions:
     EU:
         services:
+            mail:
+                sender:
+                    name: Spryker No-Reply
+                    email: no-reply@mp-b2b.internal-testing.demo-spryker.com
             database:
-                database: spryker_mp_b2b
+                database: spryker_mpb2b
                 username: spryker
                 password: secret
 
@@ -168,8 +172,28 @@ groups:
                 endpoints:
                     glue.de.mp-b2b.internal-testing.demo-spryker.com:
                         store: DE
+                        cors-allow-origin: '*'
                     glue.at.mp-b2b.internal-testing.demo-spryker.com:
                         store: AT
+                        cors-allow-origin: '*'
+            gluestorefront:
+                application: glue-storefront
+                endpoints:
+                    glue-storefront.de.mp-b2b.internal-testing.demo-spryker.com:
+                        store: DE
+                        cors-allow-origin: '*'
+                    glue-storefront.at.mp-b2b.internal-testing.demo-spryker.com:
+                        store: AT
+                        cors-allow-origin: '*'
+            gluebackend:
+                application: glue-backend
+                endpoints:
+                    glue-backend.de.mp-b2b.internal-testing.demo-spryker.com:
+                        store: DE
+                        cors-allow-origin: '*'
+                    glue-backend.at.mp-b2b.internal-testing.demo-spryker.com:
+                        store: AT
+                        cors-allow-origin: '*'
             mportal:
                 application: merchant-portal
                 endpoints:

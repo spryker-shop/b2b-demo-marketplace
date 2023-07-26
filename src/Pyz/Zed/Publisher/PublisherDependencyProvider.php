@@ -151,7 +151,7 @@ use Spryker\Zed\TaxStorage\Communication\Plugin\Publisher\TaxSetPublisherTrigger
 class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
 {
     /**
-     * @return array<\Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface>
+     * @return array<int|string, \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface>|array<string, array<int|string, \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface>>
      */
     protected function getPublisherPlugins(): array
     {
@@ -192,7 +192,7 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
     }
 
     /**
-     * @return array
+     * @return array<string, array<\Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface>>
      */
     protected function getPublishAndSynchronizeHealthCheckPlugins(): array
     {
@@ -246,7 +246,7 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
     }
 
     /**
-     * @return array
+     * @return array<int|string, \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface>|array<string, array<int|string, \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface>>
      */
     protected function getGlossaryStoragePlugins(): array
     {
@@ -590,7 +590,7 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
     }
 
     /**
-     * @return array<\Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface>
+     * @return list<\Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface>
      */
     protected function getProductPageSearchPlugins(): array
     {
