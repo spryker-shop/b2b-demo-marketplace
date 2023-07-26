@@ -117,11 +117,11 @@
         {% endblock %}
     {% endif %}
     {% if data.cart.items is not empty %}
+        {% set cartItemsCount = 0 %}
+        {% for cartItem in transformedCartItems %}
+            {% set cartItemsCount = cartItemsCount + cartItem.quantity %}
+        {% endfor %}
         <div class="grid grid--gap">
-            {% set cartItemsCount = 0 %}
-            {% for cartItem in transformedCartItems %}
-                {% set cartItemsCount = cartItemsCount + cartItem.quantity %}
-            {% endfor %}
             <div class="col col--sm-12 col--xl-9">
                 <div class="cart-title">
                     <h3 class="grid grid--nowrap grid--middle cart-title__text">
