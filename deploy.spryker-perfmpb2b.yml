@@ -158,7 +158,7 @@ services:
     scheduler:
         engine: jenkins
         version: '2.324'
-        csrf-protection-enabled: true
+        csrf-protection-enabled: false
         endpoints:
             scheduler.spryker-perfmpb2b.cloud.spryker.toys:
     mail_catcher:
