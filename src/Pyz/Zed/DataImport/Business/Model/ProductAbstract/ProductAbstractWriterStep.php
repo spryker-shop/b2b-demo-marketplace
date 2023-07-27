@@ -245,7 +245,7 @@ class ProductAbstractWriterStep extends PublishAwareStep implements DataImportSt
     /**
      * @param string $categoryKeys
      *
-     * @return array
+     * @return list<string>
      */
     protected function getCategoryKeys($categoryKeys): array
     {
@@ -257,7 +257,7 @@ class ProductAbstractWriterStep extends PublishAwareStep implements DataImportSt
     /**
      * @param string $categoryProductOrder
      *
-     * @return array
+     * @return list<string|int>
      */
     protected function getCategoryProductOrder($categoryProductOrder): array
     {

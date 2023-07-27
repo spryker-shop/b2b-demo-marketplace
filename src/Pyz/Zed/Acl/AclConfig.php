@@ -18,7 +18,7 @@ class AclConfig extends SprykerAclConfig
     protected const PYZ_RULE_TYPE_DENY = 'deny';
 
     /**
-     * @return array
+     * @return array<array<string, mixed>>
      */
     public function getInstallerUsers(): array
     {
