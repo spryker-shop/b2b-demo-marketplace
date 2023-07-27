@@ -283,7 +283,7 @@ class ProductAbstractHydratorStep implements DataImportStepInterface
     /**
      * @param string $categoryKeys
      *
-     * @return array
+     * @return array<string>
      */
     protected function getCategoryKeys($categoryKeys): array
     {
@@ -295,7 +295,7 @@ class ProductAbstractHydratorStep implements DataImportStepInterface
     /**
      * @param string $categoryProductOrder
      *
-     * @return array
+     * @return array<string>
      */
     protected function getCategoryProductOrder($categoryProductOrder): array
     {

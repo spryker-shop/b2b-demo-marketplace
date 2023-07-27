@@ -86,7 +86,7 @@ class RabbitMqConfig extends SprykerRabbitMqConfig
      *
      * @see https://www.rabbitmq.com/tutorials/amqp-concepts.html
      *
-     * @return array
+     * @return array<mixed>
      */
     protected function getQueueConfiguration(): array
     {
@@ -104,7 +104,7 @@ class RabbitMqConfig extends SprykerRabbitMqConfig
     }
 
     /**
-     * @return array
+     * @return array<mixed>
      */
     protected function getPyzPublishQueueConfiguration(): array
     {
@@ -130,7 +130,7 @@ class RabbitMqConfig extends SprykerRabbitMqConfig
     }
 
     /**
-     * @return array
+     * @return array<mixed>
      */
     protected function getPyzSynchronizationQueueConfiguration(): array
     {
