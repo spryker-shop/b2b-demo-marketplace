@@ -16,8 +16,6 @@ export default class ProductSearchAutocompleteForm extends AutocompleteForm {
     protected injectorsExtraQueryValueList: HTMLSelectElement[] | HTMLInputElement[];
     protected extraQueryValues = new Map();
 
-    protected readyCallback(): void {}
-
     protected init(): void {
         this.widgetSuggestionsContainer = <HTMLElement>this.getElementsByClassName(`${this.jsName}__suggestions`)[0];
         this.quantityInput = <HTMLInputElement>document.getElementsByClassName(`${this.jsName}__quantity-field`)[0];
@@ -53,12 +51,11 @@ export default class ProductSearchAutocompleteForm extends AutocompleteForm {
     }
 
     protected mapItemEvents(): void {
-        const self = this;
         const items = <HTMLElement[]>(
             Array.from(this.widgetSuggestionsContainer.getElementsByClassName(this.itemClassName))
         );
         items.forEach((item: HTMLElement) => {
-            item.addEventListener('click', (event: Event) => self.onItemClick(event));
+            item.addEventListener('click', (event: Event) => this.onItemClick(event));
         });
     }
 
@@ -162,8 +159,6 @@ export default class ProductSearchAutocompleteForm extends AutocompleteForm {
     protected onFocus(): void {
         if (this.inputText.length >= this.minLetters) {
             this.showSuggestions();
-
-            return;
         }
     }
 
@@ -176,7 +171,7 @@ export default class ProductSearchAutocompleteForm extends AutocompleteForm {
     }
 
     protected get selectedInputClass(): string {
-        return `${this.itemClassName}--selected`.substr(1);
+        return `${this.itemClassName}--selected`.substring(1);
     }
 
     protected get inputValue(): string {

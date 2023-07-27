@@ -27,12 +27,12 @@ class ProductController extends SprykerShopProductController
     protected const PYZ_KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
 
     /**
-     * @param array $productData
+     * @param array<string, mixed> $productData
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function executeDetailAction(array $productData, Request $request): array
     {
@@ -42,10 +42,11 @@ class ProductController extends SprykerShopProductController
 
         $productStorageCriteriaTransfer = (new ProductStorageCriteriaTransfer())
             ->fromArray($shopContextTransfer->toArray());
+        $selectedAttributes = $this->getSelectedAttributesWithoutPostfix($productData, $request);
 
         $productViewTransfer = $this->getFactory()
             ->getProductStorageClient()
-            ->mapProductStorageData($productData, $this->getLocale(), $this->getSelectedAttributes($request), $productStorageCriteriaTransfer);
+            ->mapProductStorageData($productData, $this->getLocale(), $selectedAttributes, $productStorageCriteriaTransfer);
 
         try {
             $this->assertProductRestrictions($productViewTransfer);

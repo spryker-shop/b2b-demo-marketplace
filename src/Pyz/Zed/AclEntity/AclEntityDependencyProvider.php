@@ -8,7 +8,7 @@
 namespace Pyz\Zed\AclEntity;
 
 use Spryker\Zed\AclEntity\AclEntityDependencyProvider as SprykerAclEntityDependencyProvider;
-use Spryker\Zed\AclMerchantPortal\Communication\Plugin\AclEntity\MerchantPortalAclEntityMetadataConfigExpanderPlugin;
+use Spryker\Zed\AclMerchantPortal\Communication\Plugin\AclEntity\MerchantPortalConfigurationAclEntityMetadataConfigExpanderPlugin;
 
 class AclEntityDependencyProvider extends SprykerAclEntityDependencyProvider
 {
@@ -18,7 +18,7 @@ class AclEntityDependencyProvider extends SprykerAclEntityDependencyProvider
     protected function getAclEntityMetadataCollectionExpanderPlugins(): array
     {
         return [
-            new MerchantPortalAclEntityMetadataConfigExpanderPlugin(),
+            new MerchantPortalConfigurationAclEntityMetadataConfigExpanderPlugin(),
         ];
     }
 }

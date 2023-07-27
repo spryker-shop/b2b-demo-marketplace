@@ -18,6 +18,9 @@ use Pyz\Zed\MerchantOms\Communication\Plugin\Oms\ShipReturnMarketplaceOrderItemC
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantOms\MerchantOmsDependencyProvider as SprykerMerchantOmsDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\MerchantOms\MerchantOmsConfig getConfig()
+ */
 class MerchantOmsDependencyProvider extends SprykerMerchantOmsDependencyProvider
 {
     /**
@@ -31,7 +34,7 @@ class MerchantOmsDependencyProvider extends SprykerMerchantOmsDependencyProvider
     public const PYZ_FACADE_SALES_RETURN = 'PYZ_FACADE_SALES_RETURN';
 
     /**
-     * @return array
+     * @return array<\Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface>
      */
     protected function getStateMachineCommandPlugins(): array
     {
