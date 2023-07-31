@@ -38,7 +38,7 @@ class CustomerAccessGuiCommunicationFactory extends SprykerCustomerAccessGuiComm
 
     /**
      * @param \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransfer
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */

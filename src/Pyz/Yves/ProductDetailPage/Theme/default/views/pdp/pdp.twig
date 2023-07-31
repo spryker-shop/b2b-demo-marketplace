@@ -1,5 +1,9 @@
 {% extends view('pdp', '@SprykerShop:ProductDetailPage') %}
 
+{% define data = {
+    request: app.request,
+} %}
+
 {% block title %}
     <h1 itemprop="name" class="page-info__title title title--h3">
         {% widget 'ProductAbstractLabelWidget' args [data.product.idProductAbstract] only %}
@@ -90,7 +94,7 @@
         {% widget 'SimilarProductsWidget' args [data.product] only %}{% endwidget %}
 
         {% if data.product.pyzProductSetIds is not empty %}
-            {% widget 'ProductSetIdsWidget' args [data.product.pyzProductSetIds] only %}{% endwidget %}
+            {% widget 'ProductSetIdsWidget' args [data.product.pyzProductSetIds, data.request] only %}{% endwidget %}
         {% endif %}
     </section>
 {% endblock %}

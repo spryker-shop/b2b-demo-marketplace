@@ -46,6 +46,9 @@ use Spryker\Zed\GlossaryStorage\Communication\Plugin\Publisher\GlossaryKey\Gloss
 use Spryker\Zed\GlossaryStorage\Communication\Plugin\Publisher\GlossaryKey\GlossaryWritePublisherPlugin as GlossaryKeyWriterPublisherPlugin;
 use Spryker\Zed\GlossaryStorage\Communication\Plugin\Publisher\GlossaryPublisherTriggerPlugin;
 use Spryker\Zed\GlossaryStorage\Communication\Plugin\Publisher\GlossaryTranslation\GlossaryWritePublisherPlugin as GlossaryTranslationWritePublisherPlugin;
+use Spryker\Zed\Merchant\Communication\Plugin\Publisher\MerchantCreatedMessageBrokerPublisherPlugin;
+use Spryker\Zed\Merchant\Communication\Plugin\Publisher\MerchantExportedMessageBrokerPublisherPlugin;
+use Spryker\Zed\Merchant\Communication\Plugin\Publisher\MerchantUpdatedMessageBrokerPublisherPlugin;
 use Spryker\Zed\MerchantCategory\Communication\Plugin\Publisher\Category\CategoryWritePublisherPlugin;
 use Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Publisher\MerchantOpeningHours\MerchantOpeningHoursDateScheduleWritePublisherPlugin;
 use Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Publisher\MerchantOpeningHours\MerchantOpeningHoursWeekdayScheduleWritePublisherPlugin;
@@ -146,7 +149,7 @@ use Spryker\Zed\TaxStorage\Communication\Plugin\Publisher\TaxSetPublisherTrigger
 class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
 {
     /**
-     * @return array<\Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface>
+     * @return array<int|string, \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface>|array<string, array<int|string, \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface>>
      */
     protected function getPublisherPlugins(): array
     {
@@ -182,11 +185,12 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
             $this->getProductExportPlugins(),
             $this->getProductPageSearchPlugins(),
             $this->getProductOfferAvailabilityStoragePlugins(),
+            $this->getMerchantExportPlugins(),
         );
     }
 
     /**
-     * @return array
+     * @return array<string, array<\Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface>>
      */
     protected function getPublishAndSynchronizeHealthCheckPlugins(): array
     {
@@ -240,7 +244,7 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
     }
 
     /**
-     * @return array
+     * @return array<int|string, \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface>|array<string, array<int|string, \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface>>
      */
     protected function getGlossaryStoragePlugins(): array
     {
@@ -582,12 +586,24 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
     }
 
     /**
-     * @return array<\Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface>
+     * @return list<\Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface>
      */
     protected function getProductPageSearchPlugins(): array
     {
         return [
             new ProductConcretePageSearchWritePublisherPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface>
+     */
+    protected function getMerchantExportPlugins(): array
+    {
+        return [
+            new MerchantExportedMessageBrokerPublisherPlugin(),
+            new MerchantCreatedMessageBrokerPublisherPlugin(),
+            new MerchantUpdatedMessageBrokerPublisherPlugin(),
         ];
     }
 }
