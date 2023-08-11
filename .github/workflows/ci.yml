@@ -551,7 +551,7 @@ jobs:
                   sudo chmod +x /usr/local/bin/docker-compose
             - name: Install Robot tests
               run: |
-                  git clone https://github.com/spryker/robotframework-suite-tests.git --single-branch --branch master robotframework-tests
+                  git clone https://github.com/spryker/robotframework-suite-tests.git --single-branch --branch feature/frw-1610/master-dynamic-multistore-api-coverage-integrations robotframework-tests
             - name: Install Project
               continue-on-error: true
               run: |
@@ -563,7 +563,7 @@ jobs:
             - name: Run Tests
               run: |
                   cd robotframework-tests
-                  robot -v env:api_mp_b2b --exclude skip-due-to-issueORskip-due-to-refactoring -d results -s tests.api.mp_b2b.glue .
+                  robot -v env:api_mp_b2b --exclude skip-due-to-issueORskip-due-to-refactoring -d results -s tests.api.mp_b2b .
             - name: Upload artifacts
               if: always()
               run: |
@@ -603,7 +603,7 @@ jobs:
                   sudo chmod +x /usr/local/bin/docker-compose
             - name: Install Robot tests
               run: |
-                  git clone https://github.com/spryker/robotframework-suite-tests.git --single-branch --branch master robotframework-tests
+                  git clone https://github.com/spryker/robotframework-suite-tests.git --single-branch --branch feature/frw-1610/master-dynamic-multistore-api-coverage-integrations robotframework-tests
             - name: Install Project
               continue-on-error: true
               run: |
@@ -615,7 +615,7 @@ jobs:
             - name: Run Tests
               run: |
                   cd robotframework-tests
-                  robot -v env:api_mp_b2b -v db_engine:psycopg2 --exclude skip-due-to-issueORskip-due-to-refactoring -d results -s tests.api.mp_b2b.glue .
+                  robot -v env:api_mp_b2b -v db_engine:psycopg2 --exclude skip-due-to-issueORskip-due-to-refactoring -d results -s tests.api.mp_b2b .
             - name: Upload artifacts
               if: always()
               run: |
