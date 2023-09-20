@@ -104,6 +104,24 @@ groups:
     EU:
         region: EU
         applications:
+            Redirects:
+                application: static
+                endpoints:
+                    b2bmpnt.sh01.demo-spryker.com:
+                        store: DE
+                        redirect:
+                            type: 302
+                            url: www.de.b2bmpnt.sh01.demo-spryker.com                  
+                    de.b2bmpnt.sh01.demo-spryker.com:
+                        store: DE
+                        redirect:
+                            type: 302
+                            url: www.de.b2bmpnt.sh01.demo-spryker.com     
+                    at.b2bmpnt.sh01.demo-spryker.com:
+                        store: AT
+                        redirect:
+                            type: 302
+                            url: www.at.b2bmpnt.sh01.demo-spryker.com     
             yves:
                 application: yves
                 endpoints:
