@@ -236,7 +236,8 @@ services:
                 protocol: tcp
     scheduler:
         engine: jenkins
-        version: '2.401'
+# reverting until we figure out if this is the only problem
+#        version: '2.401'
         csrf-protection-enabled: true
         endpoints:
             scheduler.aop-b2b.demo-spryker.com:
