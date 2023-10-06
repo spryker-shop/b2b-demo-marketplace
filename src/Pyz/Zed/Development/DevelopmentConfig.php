@@ -14,10 +14,8 @@ class DevelopmentConfig extends SprykerDevelopmentConfig
     /**
      * @return string
      */
-    public function getCodingStandard()
+    public function getCodingStandard(): string
     {
-        $rootDir = APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR;
-
-        return $rootDir . 'config/ruleset.xml';
+        return APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'phpcs.xml';
     }
 }

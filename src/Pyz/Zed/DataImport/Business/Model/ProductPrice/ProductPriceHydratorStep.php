@@ -120,7 +120,7 @@ class ProductPriceHydratorStep implements DataImportStepInterface
      */
     public function __construct(
         PriceProductFacadeInterface $priceProductFacade,
-        DataImportToUtilEncodingServiceInterface $utilEncodingService
+        DataImportToUtilEncodingServiceInterface $utilEncodingService,
     ) {
         $this->priceProductFacade = $priceProductFacade;
         $this->utilEncodingService = $utilEncodingService;
@@ -154,7 +154,7 @@ class ProductPriceHydratorStep implements DataImportStepInterface
                 'One of "%s" or "%s" must be in the data set. Given: "%s"',
                 $dataSet[static::COLUMN_ABSTRACT_SKU],
                 $dataSet[static::COLUMN_ABSTRACT_SKU],
-                implode(', ', array_keys($dataSet->getArrayCopy()))
+                implode(', ', array_keys($dataSet->getArrayCopy())),
             ));
         }
 
@@ -262,7 +262,7 @@ class ProductPriceHydratorStep implements DataImportStepInterface
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getPriceData(DataSetInterface $dataSet): array
     {
@@ -304,8 +304,8 @@ class ProductPriceHydratorStep implements DataImportStepInterface
             throw new InvalidPriceDataKeyException(
                 sprintf(
                     'Price data key "%s" has invalid format. Should be in following format: "price_data.some_key"',
-                    $key
-                )
+                    $key,
+                ),
             );
         }
 
@@ -313,15 +313,15 @@ class ProductPriceHydratorStep implements DataImportStepInterface
     }
 
     /**
-     * @param array $priceData
+     * @param array<string, mixed> $priceData
      * @param string $key
      * @param string $value
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function addPriceDataValue(array $priceData, string $key, string $value): array
     {
-        if (empty($value)) {
+        if (!$value) {
             return $priceData;
         }
 

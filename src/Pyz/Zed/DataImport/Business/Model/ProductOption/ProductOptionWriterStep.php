@@ -84,7 +84,7 @@ class ProductOptionWriterStep extends PublishAwareStep implements DataImportStep
      *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
         $productOptionGroupEntity = SpyProductOptionGroupQuery::create()
             ->filterByKey($dataSet[self::KEY_PRODUCT_OPTION_GROUP_KEY])
@@ -108,7 +108,7 @@ class ProductOptionWriterStep extends PublishAwareStep implements DataImportStep
         if (!empty($dataSet[static::KEY_ABSTRACT_PRODUCT_SKUS])) {
             $abstractProductSkuCollection = explode(',', $dataSet[static::KEY_ABSTRACT_PRODUCT_SKUS]);
 
-            /** @var int[] $abstractProductIdCollection */
+            /** @var array<int> $abstractProductIdCollection */
             $abstractProductIdCollection = SpyProductAbstractQuery::create()
                 ->select([SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT])
                 ->filterBySku($abstractProductSkuCollection, Criteria::IN)
@@ -126,6 +126,10 @@ class ProductOptionWriterStep extends PublishAwareStep implements DataImportStep
         }
 
         foreach ($dataSet[ProductLocalizedAttributesExtractorStep::KEY_LOCALIZED_ATTRIBUTES] as $idLocale => $attributes) {
+            if (!isset($attributes[static::KEY_OPTION_NAME])) {
+                continue;
+            }
+
             $this->findOrCreateTranslation($dataSet[static::KEY_OPTION_NAME_TRANSLATION_KEY], $attributes[static::KEY_OPTION_NAME], $idLocale);
             $this->findOrCreateTranslation($dataSet[static::KEY_GROUP_NAME_TRANSLATION_KEY], $attributes[static::KEY_GROUP_NAME], $idLocale);
         }
@@ -137,7 +141,7 @@ class ProductOptionWriterStep extends PublishAwareStep implements DataImportStep
      *
      * @return bool
      */
-    protected function isActive(DataSetInterface $dataSet, SpyProductOptionGroup $productOptionGroupEntity)
+    protected function isActive(DataSetInterface $dataSet, SpyProductOptionGroup $productOptionGroupEntity): bool
     {
         if (isset($dataSet[self::KEY_IS_ACTIVE])) {
             return isset($dataSet[self::KEY_IS_ACTIVE]);
@@ -153,7 +157,7 @@ class ProductOptionWriterStep extends PublishAwareStep implements DataImportStep
      *
      * @return void
      */
-    protected function findOrCreateTranslation($key, $translation, $idLocale)
+    protected function findOrCreateTranslation($key, $translation, $idLocale): void
     {
         $glossaryKeyEntity = SpyGlossaryKeyQuery::create()
             ->filterByKey($key)

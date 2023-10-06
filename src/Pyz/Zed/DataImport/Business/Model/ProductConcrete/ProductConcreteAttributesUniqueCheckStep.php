@@ -36,12 +36,14 @@ class ProductConcreteAttributesUniqueCheckStep implements DataImportStepInterfac
      * @var string
      */
     protected const PRODUCT_COL_ATTRIBUTES = 'spy_product.attributes';
+
     /**
      * @uses \Orm\Zed\Product\Persistence\Map\SpyProductTableMap::COL_SKU
      *
      * @var string
      */
     protected const PRODUCT_COL_SKU = 'spy_product.sku';
+
     /**
      * @uses \Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap::COL_SKU
      *
@@ -60,7 +62,7 @@ class ProductConcreteAttributesUniqueCheckStep implements DataImportStepInterfac
     protected $utilEncodingService;
 
     /**
-     * @var array
+     * @var array<string, array<string, array<string, mixed>>>
      */
     protected static $productConcreteAttributesMap = [];
 
@@ -70,7 +72,7 @@ class ProductConcreteAttributesUniqueCheckStep implements DataImportStepInterfac
      */
     public function __construct(
         ProductRepositoryInterface $productRepository,
-        DataImportToUtilEncodingServiceInterface $utilEncodingService
+        DataImportToUtilEncodingServiceInterface $utilEncodingService,
     ) {
         $this->productRepository = $productRepository;
         $this->utilEncodingService = $utilEncodingService;
@@ -85,7 +87,9 @@ class ProductConcreteAttributesUniqueCheckStep implements DataImportStepInterfac
      */
     public function execute(DataSetInterface $dataSet): void
     {
+        /** @var string $dataSetProductConcreteSku */
         $dataSetProductConcreteSku = $dataSet[static::KEY_CONCRETE_SKU];
+        /** @var string $dataSetProductAbstractSku */
         $dataSetProductAbstractSku = $dataSet[static::KEY_ABSTRACT_SKU];
         $dataSetProductConcreteAttributes = $dataSet[static::KEY_ATTRIBUTES];
         ksort($dataSetProductConcreteAttributes);
@@ -98,7 +102,7 @@ class ProductConcreteAttributesUniqueCheckStep implements DataImportStepInterfac
     /**
      * @param string $dataSetProductAbstractSku
      * @param string $dataSetProductConcreteSku
-     * @param array $dataSetProductConcreteAttributes
+     * @param array<string, mixed> $dataSetProductConcreteAttributes
      *
      * @throws \Pyz\Zed\DataImport\Business\Exception\InvalidDataException
      *
@@ -107,7 +111,7 @@ class ProductConcreteAttributesUniqueCheckStep implements DataImportStepInterfac
     protected function checkProductConcreteAttributesUnique(
         string $dataSetProductAbstractSku,
         string $dataSetProductConcreteSku,
-        array $dataSetProductConcreteAttributes
+        array $dataSetProductConcreteAttributes,
     ): void {
         if (!isset(static::$productConcreteAttributesMap[$dataSetProductAbstractSku])) {
             return;
@@ -124,7 +128,7 @@ class ProductConcreteAttributesUniqueCheckStep implements DataImportStepInterfac
                     $this->utilEncodingService->encodeJson($dataSetProductConcreteAttributes),
                     $dataSetProductConcreteSku,
                     $this->utilEncodingService->encodeJson($productConcreteAttributes),
-                    $productConcreteSku
+                    $productConcreteSku,
                 ));
             }
         }
@@ -142,7 +146,9 @@ class ProductConcreteAttributesUniqueCheckStep implements DataImportStepInterfac
             if ($productConcreteAttributes) {
                 ksort($productConcreteAttributes);
             }
+            /** @var string $productConcreteSku */
             $productConcreteSku = $productConcrete[static::PRODUCT_COL_SKU];
+            /** @var string $productAbstractSku */
             $productAbstractSku = $productConcrete[static::PRODUCT_ABSTRACT_COL_SKU];
 
             static::$productConcreteAttributesMap[$productAbstractSku][$productConcreteSku] = $productConcreteAttributes;

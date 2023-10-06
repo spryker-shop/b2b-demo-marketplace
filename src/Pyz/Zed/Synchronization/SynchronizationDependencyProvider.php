@@ -26,6 +26,7 @@ use Spryker\Zed\ConfigurableBundleStorage\Communication\Plugin\Synchronization\C
 use Spryker\Zed\ConfigurableBundleStorage\Communication\Plugin\Synchronization\ConfigurableBundleTemplateSynchronizationDataBulkPlugin;
 use Spryker\Zed\ContentStorage\Communication\Plugin\Synchronization\ContentStorageSynchronizationDataPlugin;
 use Spryker\Zed\CustomerAccessStorage\Communication\Plugin\Synchronization\CustomerAccessSynchronizationDataBulkPlugin;
+use Spryker\Zed\CustomerStorage\Communication\Plugin\Synchronization\CustomerInvalidatedStorageSynchronizationDataPlugin;
 use Spryker\Zed\FileManagerStorage\Communication\Plugin\Synchronization\FileSynchronizationDataBulkPlugin;
 use Spryker\Zed\GlossaryStorage\Communication\Plugin\Synchronization\GlossarySynchronizationDataRepositoryPlugin;
 use Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Synchronization\MerchantOpeningHoursSynchronizationDataBulkPlugin;
@@ -70,7 +71,9 @@ use Spryker\Zed\ProductSetStorage\Communication\Plugin\Synchronization\ProductSe
 use Spryker\Zed\ProductStorage\Communication\Plugin\Synchronization\ProductAbstractSynchronizationDataPlugin;
 use Spryker\Zed\ProductStorage\Communication\Plugin\Synchronization\ProductConcreteSynchronizationDataPlugin;
 use Spryker\Zed\SalesReturnSearch\Communication\Plugin\Synchronization\ReturnReasonSynchronizationDataBulkRepositoryPlugin;
+use Spryker\Zed\SearchHttp\Communication\Plugin\Synchronization\SearchHttpSynchronizationDataPlugin;
 use Spryker\Zed\ShoppingListStorage\Communication\Plugin\Synchronization\ShoppingListSynchronizationDataBulkPlugin;
+use Spryker\Zed\StoreStorage\Communication\Plugin\Synchronization\StoreSynchronizationDataPlugin;
 use Spryker\Zed\Synchronization\Communication\Plugin\Synchronization\SynchronizationDataQueryExpanderWhereBetweenStrategyPlugin;
 use Spryker\Zed\Synchronization\SynchronizationDependencyProvider as SprykerSynchronizationDependencyProvider;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryExpanderStrategyPluginInterface;
@@ -82,7 +85,7 @@ use Spryker\Zed\UrlStorage\Communication\Plugin\Synchronization\UrlSynchronizati
 class SynchronizationDependencyProvider extends SprykerSynchronizationDependencyProvider
 {
     /**
-     * @return \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[]
+     * @return array<\Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface>
      */
     protected function getSynchronizationDataPlugins(): array
     {
@@ -135,6 +138,7 @@ class SynchronizationDependencyProvider extends SprykerSynchronizationDependency
             new CompanyUserSynchronizationDataBulkPlugin(),
             new ConfigurableBundleTemplateSynchronizationDataBulkPlugin(),
             new ConfigurableBundleTemplateImageSynchronizationDataBulkPlugin(),
+            new CustomerInvalidatedStorageSynchronizationDataPlugin(),
             new CmsSlotSynchronizationDataBulkPlugin(),
             new CmsSlotBlockSynchronizationDataBulkPlugin(),
             new ConfigurableBundleTemplatePageSynchronizationDataBulkPlugin(),
@@ -147,6 +151,7 @@ class SynchronizationDependencyProvider extends SprykerSynchronizationDependency
             new ProductCategoryFilterSynchronizationDataPlugin(),
             new CmsBlockCategorySynchronizationDataPlugin(),
             new CmsBlockProductSynchronizationDataPlugin(),
+            new StoreSynchronizationDataPlugin(),
             new MerchantSynchronizationDataPlugin(),
             new MerchantSynchronizationDataBulkRepositoryPlugin(),
             new PriceProductOfferSynchronizationDataBulkRepositoryPlugin(),
@@ -156,6 +161,7 @@ class SynchronizationDependencyProvider extends SprykerSynchronizationDependency
             new ProductOfferSynchronizationDataBulkRepositoryPlugin(),
             new AssetStorageSynchronizationDataPlugin(),
             new ProductConfigurationSynchronizationDataRepositoryPlugin(),
+            new SearchHttpSynchronizationDataPlugin(),
         ];
     }
 

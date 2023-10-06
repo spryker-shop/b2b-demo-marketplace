@@ -85,7 +85,7 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
     protected const COL_STOCK_PRODUCT_TOTAL_QUANTITY = 'stockProductTotalQuantity';
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected static $productAbstractSkus = [];
 
@@ -119,7 +119,7 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
         ProductBundleFacadeInterface $productBundleFacade,
         ProductRepositoryInterface $productRepository,
         StoreFacadeInterface $storeFacade,
-        StockFacadeInterface $stockFacade
+        StockFacadeInterface $stockFacade,
     ) {
         $this->productBundleFacade = $productBundleFacade;
         $this->productRepository = $productRepository;
@@ -161,7 +161,7 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStock
      */
-    protected function createOrUpdateStock(DataSetInterface $dataSet)
+    protected function createOrUpdateStock(DataSetInterface $dataSet): SpyStock
     {
         $stockTransfer = $dataSet[ProductStockHydratorStep::STOCK_ENTITY_TRANSFER];
         $stockEntity = SpyStockQuery::create()
@@ -215,7 +215,7 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     protected function getAvailabilityAbstractIdsForCollectedAbstractSkus(): array
     {
@@ -235,16 +235,14 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     protected function getStoreIds(): array
     {
-        $storeTransfer = $this->storeFacade->getCurrentStore();
-        $storeIds = [$storeTransfer->getIdStore()];
+        $storeIds = [];
 
-        foreach ($storeTransfer->getStoresWithSharedPersistence() as $storeName) {
-            $storeTransfer = $this->storeFacade->getStoreByName($storeName);
-            $storeIds[] = $storeTransfer->getIdStore();
+        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
+            $storeIds[] = $storeTransfer->getIdStoreOrFail();
         }
 
         return $storeIds;
@@ -257,12 +255,7 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
      */
     protected function updateAvailability(DataSetInterface $dataSet): void
     {
-        $storeTransfer = $this->storeFacade->getCurrentStore();
-
-        $this->updateAvailabilityForStore($dataSet, $storeTransfer);
-
-        foreach ($storeTransfer->getStoresWithSharedPersistence() as $storeName) {
-            $storeTransfer = $this->storeFacade->getStoreByName($storeName);
+        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
             $this->updateAvailabilityForStore($dataSet, $storeTransfer);
         }
     }
@@ -324,7 +317,7 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
     /**
      * @param string $storeName
      *
-     * @return array
+     * @return array<string>
      */
     protected function getStoreWarehouses(string $storeName): array
     {
@@ -333,13 +326,13 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
 
     /**
      * @param int $idProductConcrete
-     * @param string[] $stockNames
+     * @param array<string> $stockNames
      *
      * @return \Spryker\DecimalObject\Decimal
      */
     protected function getStockProductQuantityByIdProductAndStockNames(
         int $idProductConcrete,
-        array $stockNames
+        array $stockNames,
     ): Decimal {
         $stockProductTotalQuantity = SpyStockProductQuery::create()
             ->filterByFkProduct($idProductConcrete)
@@ -425,7 +418,7 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
     }
 
     /**
-     * @param array $availabilityData
+     * @param array<string, mixed> $availabilityData
      *
      * @return void
      */
@@ -488,7 +481,7 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
      */
     protected function updateAbstractAvailabilityQuantity(
         SpyAvailabilityAbstract $availabilityAbstractEntity,
-        int $idStore
+        int $idStore,
     ): SpyAvailabilityAbstract {
         $sumQuantity = SpyAvailabilityQuery::create()
             ->filterByFkAvailabilityAbstract($availabilityAbstractEntity->getIdAvailabilityAbstract())

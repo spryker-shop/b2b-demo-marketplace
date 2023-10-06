@@ -36,7 +36,7 @@ class NavigationKeyToIdNavigationStep implements DataImportStepInterface
     protected $target;
 
     /**
-     * @var array
+     * @var array<string, int>
      */
     protected $resolved = [];
 
@@ -57,21 +57,23 @@ class NavigationKeyToIdNavigationStep implements DataImportStepInterface
      *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
         if (!isset($dataSet[$this->source])) {
             throw new DataKeyNotFoundInDataSetException(sprintf(
                 'Expected a key "%s" in current data set. Available keys: "%s"',
                 $this->source,
-                implode(', ', array_keys($dataSet->getArrayCopy()))
+                implode(', ', array_keys($dataSet->getArrayCopy())),
             ));
         }
 
-        if (!isset($this->resolved[$dataSet[$this->source]])) {
-            $this->resolved[$dataSet[$this->source]] = $this->resolveIdNavigation($dataSet[$this->source]);
+        /** @var string $navigationKey */
+        $navigationKey = $dataSet[$this->source];
+        if (!isset($this->resolved[$navigationKey])) {
+            $this->resolved[$navigationKey] = $this->resolveIdNavigation($navigationKey);
         }
 
-        $dataSet[$this->target] = $this->resolved[$dataSet[$this->source]];
+        $dataSet[$this->target] = $this->resolved[$navigationKey];
     }
 
     /**
@@ -81,7 +83,7 @@ class NavigationKeyToIdNavigationStep implements DataImportStepInterface
      *
      * @return int
      */
-    protected function resolveIdNavigation($navigationKey)
+    protected function resolveIdNavigation($navigationKey): int
     {
         $navigationEntity = SpyNavigationQuery::create()
             ->findOneByKey($navigationKey);

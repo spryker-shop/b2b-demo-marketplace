@@ -20,7 +20,6 @@ use Spryker\Yves\Messenger\Plugin\Application\FlashMessengerApplicationPlugin;
 use Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin;
 use Spryker\Yves\Security\Plugin\Application\SecurityApplicationPlugin;
 use Spryker\Yves\Session\Plugin\Application\SessionApplicationPlugin;
-use Spryker\Yves\Store\Plugin\Application\StoreApplicationPlugin;
 use Spryker\Yves\Translator\Plugin\Application\TranslatorApplicationPlugin;
 use Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin;
 use Spryker\Yves\Validator\Plugin\Application\ValidatorApplicationPlugin;
@@ -55,6 +54,7 @@ use SprykerShop\Yves\CustomerPage\Widget\CustomerNavigationWidget;
 use SprykerShop\Yves\CustomerReorderWidget\Plugin\CustomerPage\CustomerReorderFormWidget;
 use SprykerShop\Yves\CustomerReorderWidget\Plugin\CustomerPage\CustomerReorderItemCheckboxWidget;
 use SprykerShop\Yves\CustomerReorderWidget\Plugin\CustomerPage\CustomerReorderItemsFormWidget;
+use SprykerShop\Yves\CustomerValidationPage\Plugin\ShopApplication\LogoutInvalidatedCustomerFilterControllerEventHandlerPlugin;
 use SprykerShop\Yves\DiscountPromotionWidget\Plugin\ShopApplication\CartDiscountPromotionProductListWidgetCacheKeyGeneratorStrategyPlugin;
 use SprykerShop\Yves\DiscountPromotionWidget\Widget\CartDiscountPromotionProductListWidget;
 use SprykerShop\Yves\LanguageSwitcherWidget\Widget\LanguageSwitcherWidget;
@@ -162,6 +162,8 @@ use SprykerShop\Yves\ShoppingListWidget\Widget\CreateShoppingListFromCartWidget;
 use SprykerShop\Yves\ShoppingListWidget\Widget\ShoppingListMenuItemWidget;
 use SprykerShop\Yves\ShoppingListWidget\Widget\ShoppingListNavigationMenuWidget;
 use SprykerShop\Yves\ShoppingListWidget\Widget\ShoppingListSubtotalWidget;
+use SprykerShop\Yves\StoreWidget\Plugin\ShopApplication\StoreApplicationPlugin;
+use SprykerShop\Yves\StoreWidget\Widget\StoreSwitcherWidget;
 use SprykerShop\Yves\TabsWidget\Widget\FullTextSearchTabsWidget;
 use SprykerShop\Yves\WebProfilerWidget\Plugin\Application\WebProfilerApplicationPlugin;
 
@@ -171,7 +173,7 @@ use SprykerShop\Yves\WebProfilerWidget\Plugin\Application\WebProfilerApplication
 class ShopApplicationDependencyProvider extends SprykerShopApplicationDependencyProvider
 {
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getGlobalWidgets(): array
     {
@@ -293,6 +295,7 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             MerchantSalesReturnCreateFormWidget::class,
             ShoppingListMerchantWidget::class,
             ShoppingListProductOfferWidget::class,
+            StoreSwitcherWidget::class,
             ProductOfferShoppingListWidget::class,
             MerchantProductOffersSelectWidget::class,
             MerchantSearchWidget::class,
@@ -311,7 +314,7 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
     }
 
     /**
-     * @return \SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetCacheKeyGeneratorStrategyPluginInterface[]
+     * @return array<\SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetCacheKeyGeneratorStrategyPluginInterface>
      */
     protected function getWidgetCacheKeyGeneratorStrategyPlugins(): array
     {
@@ -326,7 +329,7 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
     }
 
     /**
-     * @return \SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\FilterControllerEventHandlerPluginInterface[]
+     * @return array<\SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\FilterControllerEventHandlerPluginInterface>
      */
     protected function getFilterControllerEventSubscriberPlugins(): array
     {
@@ -334,15 +337,17 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             new CompanyUserRestrictionHandlerPlugin(),
             new CheckBusinessOnBehalfCompanyUserHandlerPlugin(), #BusinessOnBehalfFeature
             new CompanyBusinessUnitControllerRestrictionPlugin(),
+            new LogoutInvalidatedCustomerFilterControllerEventHandlerPlugin(),
         ];
     }
 
     /**
-     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     * @return array<\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface>
      */
     protected function getApplicationPlugins(): array
     {
         $applicationPlugins = [
+            new HttpApplicationPlugin(),
             new TwigApplicationPlugin(),
             new EventDispatcherApplicationPlugin(),
             new ShopApplicationApplicationPlugin(),
@@ -351,7 +356,6 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             new TranslatorApplicationPlugin(),
             new RouterApplicationPlugin(),
             new SessionApplicationPlugin(),
-            new HttpApplicationPlugin(),
             new ErrorHandlerApplicationPlugin(),
             new FlashMessengerApplicationPlugin(),
             new FormApplicationPlugin(),
