@@ -23,19 +23,19 @@ class CheckoutRestApiConfig extends SprykerCheckoutRestApiConfig
      *
      * @var string
      */
-    protected const PYZ_DUMMY_MARKETPLACE_PAYMENT_PROVIDER_NAME = 'DummyMarketplacePayment';
+    protected const DUMMY_MARKETPLACE_PAYMENT_PROVIDER_NAME = 'DummyMarketplacePayment';
 
     /**
      * @var string
      */
-    protected const PYZ_DUMMY_PAYMENT_PAYMENT_METHOD_NAME_INVOICE = 'Invoice';
+    protected const DUMMY_PAYMENT_PAYMENT_METHOD_NAME_INVOICE = 'Invoice';
 
     /**
      * @uses \Spryker\Shared\DummyMarketplacePayment\DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE
      *
      * @var string
      */
-    protected const PYZ_PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE = 'dummyMarketplacePaymentInvoice';
+    protected const PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE = 'dummyMarketplacePaymentInvoice';
 
     /**
      * @var bool
@@ -48,8 +48,8 @@ class CheckoutRestApiConfig extends SprykerCheckoutRestApiConfig
     public function getPaymentProviderMethodToStateMachineMapping(): array
     {
         return [
-            static::PYZ_DUMMY_MARKETPLACE_PAYMENT_PROVIDER_NAME => [
-                static::PYZ_DUMMY_PAYMENT_PAYMENT_METHOD_NAME_INVOICE => static::PYZ_PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE,
+            static::DUMMY_MARKETPLACE_PAYMENT_PROVIDER_NAME => [
+                static::DUMMY_PAYMENT_PAYMENT_METHOD_NAME_INVOICE => static::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE,
             ],
         ];
     }
