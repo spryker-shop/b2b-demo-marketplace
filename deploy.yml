@@ -276,12 +276,8 @@ docker:
         enabled: false
         xdebug:
             enabled: false
-    compose:
-        yamls:
-            - robot/docker-compose.robot.yml
     testing:
         store: DE
 
     mount:
         baked:
-
