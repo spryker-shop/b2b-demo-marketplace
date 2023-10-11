@@ -5,7 +5,7 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace PyzTest\Zed\ProductReview;
+namespace PyzTest\Zed\AppCatalogGui;
 
 use Codeception\Actor;
 
@@ -23,17 +23,19 @@ use Codeception\Actor;
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(\PyzTest\Zed\ProductReview\PHPMD)
+ * @SuppressWarnings(\PyzTest\Zed\AppCatalogGui\PHPMD)
+ *
+ * @method \Spryker\Zed\AppCatalogGui\AppCatalogGuiConfig getModuleConfig()
  */
-class ProductReviewTester extends Actor
+class AppCatalogGuiPresentationTester extends Actor
 {
-    use _generated\ProductReviewTesterActions;
+    use _generated\AppCatalogGuiPresentationTesterActions;
 
     /**
-     * @return bool
+     * @return string
      */
-    public function seeThatDynamicStoreEnabled(): bool
+    public function getLocale(): string
     {
-        return $this->getLocator()->store()->facade()->isDynamicStoreEnabled();
+        return mb_substr($this->getLocator()->locale()->facade()->getCurrentLocaleName(), 0, 2);
     }
 }
