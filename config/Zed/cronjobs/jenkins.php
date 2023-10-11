@@ -7,9 +7,6 @@
  * - jobs[]['role'] default value is 'admin'
  */
 
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\MessageBrokerAws\MessageBrokerAwsConstants;
-
 /* ProductValidity */
 $jobs[] = [
     'name' => 'check-product-validity',
