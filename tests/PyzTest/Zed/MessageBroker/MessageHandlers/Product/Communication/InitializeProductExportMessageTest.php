@@ -5,12 +5,12 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace PyzTest\Zed\Product\Communication;
+namespace PyzTest\Zed\MessageBroker\MessageHandlers\Product\Communication;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\InitializeProductExportTransfer;
-use PyzTest\Zed\Product\ProductCommunicationTester;
+use PyzTest\Zed\MessageBroker\ProductCommunicationTester;
 use Spryker\Zed\Product\Business\ProductBusinessFactory;
 use Spryker\Zed\Product\Dependency\Facade\ProductToEventInterface;
 use Spryker\Zed\Product\Dependency\ProductEvents;
@@ -21,6 +21,8 @@ use Spryker\Zed\Product\ProductDependencyProvider;
  *
  * @group PyzTest
  * @group Zed
+ * @group MessageBroker
+ * @group MessageHandlers
  * @group Product
  * @group Communication
  * @group InitializeProductExportMessageTest
@@ -29,12 +31,7 @@ use Spryker\Zed\Product\ProductDependencyProvider;
 class InitializeProductExportMessageTest extends Unit
 {
     /**
-     * @var string
-     */
-    protected const STORE_REFERENCE = 'dev-DE';
-
-    /**
-     * @var \PyzTest\Zed\Product\ProductCommunicationTester
+     * @var \PyzTest\Zed\MessageBroker\ProductCommunicationTester
      */
     protected ProductCommunicationTester $tester;
 
@@ -43,14 +40,7 @@ class InitializeProductExportMessageTest extends Unit
      */
     public function testInitializeProductExportMessageIsSuccessfullyHandled(): void
     {
-        if ($this->tester->seeThatDynamicStoreEnabled()) {
-            $this->tester->markTestSkipped('Test is valid for Static Store mode only.');
-        }
-
         // Arrange
-        $storeTransfer = $this->tester->getAllowedStore();
-        $this->tester->setStoreReferenceData([$storeTransfer->getName() => static::STORE_REFERENCE]);
-
         $eventFacadeMock = $this->createMock(ProductToEventInterface::class);
         $this->tester->setDependency(
             ProductDependencyProvider::FACADE_EVENT,
@@ -58,6 +48,7 @@ class InitializeProductExportMessageTest extends Unit
             ProductBusinessFactory::class,
         );
         $this->tester->haveFullProduct();
+        $channelName = 'product-commands';
 
         // Assert
         $eventFacadeMock->expects($this->atLeastOnce())->method('triggerBulk')->with(
@@ -72,10 +63,13 @@ class InitializeProductExportMessageTest extends Unit
         );
 
         // Act
+        $this->tester->setupMessageBroker(InitializeProductExportTransfer::class, $channelName);
         $messageBrokerFacade = $this->tester->getLocator()->messageBroker()->facade();
-        $messageBrokerFacade->sendMessage(new InitializeProductExportTransfer());
+        $messageBrokerFacade->sendMessage(
+            $this->tester->buildInitializeProductExportTransfer(),
+        );
         $messageBrokerFacade->startWorker(
-            $this->tester->buildMessageBrokerWorkerConfigTransfer(['product'], 1),
+            $this->tester->buildMessageBrokerWorkerConfigTransfer([$channelName], 1),
         );
     }
 }

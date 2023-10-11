@@ -5,22 +5,24 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace PyzTest\Zed\Payment\Presentation;
+namespace PyzTest\Zed\MessageBroker\MessageHandlers\Payment\Presentation;
 
-use Generated\Shared\Transfer\PaymentConfirmedTransfer;
-use PyzTest\Zed\Payment\PaymentTester;
+use Generated\Shared\Transfer\PaymentConfirmationFailedTransfer;
+use PyzTest\Zed\MessageBroker\PaymentPresentationTester;
 
 /**
  * Auto-generated group annotations
  *
  * @group PyzTest
  * @group Zed
+ * @group MessageBroker
+ * @group MessageHandlers
  * @group Payment
  * @group Presentation
- * @group PaymentConfirmedMessageCest
+ * @group PaymentConfirmationFailedMessageCest
  * Add your own group annotations below this line
  */
-class PaymentConfirmedMessageCest
+class PaymentConfirmationFailedMessageCest
 {
     /**
      * @var string
@@ -30,24 +32,24 @@ class PaymentConfirmedMessageCest
     /**
      * @var string
      */
-    public const FINAL_ITEM_STATE = 'payment confirmed';
+    public const FINAL_ITEM_STATE = 'payment failed';
 
     /**
-     * @param \PyzTest\Zed\Payment\PaymentTester $I
+     * @param \PyzTest\Zed\MessageBroker\PaymentPresentationTester $I
      *
      * @return void
      */
-    public function testPaymentConfirmedMessageIsSuccessfullyHandled(PaymentTester $I): void
+    public function testPaymentConfirmationFailedMessageIsSuccessfullyHandled(PaymentPresentationTester $I): void
     {
         // Arrange
         $salesOrderEntity = $I->haveSalesOrder(static::INITIAL_ITEM_STATE);
-        $paymentConfirmedTransfer = $I->havePaymentMessageTransfer(
-            PaymentConfirmedTransfer::class,
+        $paymentConfirmationFailedTransfer = $I->havePaymentMessageTransfer(
+            PaymentConfirmationFailedTransfer::class,
             $salesOrderEntity,
         );
 
         // Act
-        $I->handlePaymentMessageTransfer($paymentConfirmedTransfer);
+        $I->handlePaymentMessageTransfer($paymentConfirmationFailedTransfer);
 
         // Assert
         $I->assertOrderHasCorrectState($salesOrderEntity, static::FINAL_ITEM_STATE);

@@ -5,16 +5,18 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace PyzTest\Zed\Payment\Presentation;
+namespace PyzTest\Zed\MessageBroker\MessageHandlers\Payment\Presentation;
 
 use Generated\Shared\Transfer\PaymentReservationCanceledTransfer;
-use PyzTest\Zed\Payment\PaymentTester;
+use PyzTest\Zed\MessageBroker\PaymentPresentationTester;
 
 /**
  * Auto-generated group annotations
  *
  * @group PyzTest
  * @group Zed
+ * @group MessageBroker
+ * @group MessageHandlers
  * @group Payment
  * @group Presentation
  * @group PaymentReservationMessageCest
@@ -33,11 +35,11 @@ class PaymentReservationMessageCest
     public const FINAL_ITEM_STATE = 'reservation cancelled';
 
     /**
-     * @param \PyzTest\Zed\Payment\PaymentTester $I
+     * @param \PyzTest\Zed\MessageBroker\PaymentPresentationTester $I
      *
      * @return void
      */
-    public function testPaymentReservationCanceledMessageIsSuccessfullyHandled(PaymentTester $I): void
+    public function testPaymentReservationCanceledMessageIsSuccessfullyHandled(PaymentPresentationTester $I): void
     {
         // Arrange
         $salesOrderEntity = $I->haveSalesOrder(static::INITIAL_ITEM_STATE);
