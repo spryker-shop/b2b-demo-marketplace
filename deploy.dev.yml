@@ -121,6 +121,7 @@ groups:
                 endpoints:
                     glue.de.spryker.local:
                         store: DE
+                        cors-allow-origin: '*'
                     glue.at.spryker.local:
                         store: AT
             glue_storefront_eu:
@@ -256,7 +257,7 @@ services:
                 protocol: tcp
     scheduler:
         engine: jenkins
-        version: '2.324'
+        version: '2.401'
         csrf-protection-enabled: true
         endpoints:
             scheduler.spryker.local:
@@ -276,6 +277,8 @@ services:
         engine: dashboard
         endpoints:
             spryker.local:
+    webdriver:
+        engine: chromedriver
 
 docker:
 
@@ -303,3 +306,7 @@ docker:
         mutagen:
             platforms:
                 - macos
+
+    compose:
+        yamls:
+            - .robot/docker-compose.robot.yml

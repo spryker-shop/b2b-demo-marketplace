@@ -15,5 +15,5 @@ class CombinedProductOfferReferenceToIdProductOfferStep extends ProductOfferRefe
     /**
      * @var string
      */
-    protected const PRODUCT_OFFER_REFERENCE = CombinedProductOfferStockDataSetInterface::PYZ_PRODUCT_OFFER_REFERENCE;
+    protected const PRODUCT_OFFER_REFERENCE = CombinedProductOfferStockDataSetInterface::PRODUCT_OFFER_REFERENCE;
 }

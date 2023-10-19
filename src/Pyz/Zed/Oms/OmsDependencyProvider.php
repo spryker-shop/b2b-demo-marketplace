@@ -36,13 +36,14 @@ use Spryker\Zed\SalesPayment\Communication\Plugin\Oms\SendEventPaymentRefundPend
 use Spryker\Zed\SalesReturn\Communication\Plugin\Oms\Command\StartReturnCommandPlugin;
 use Spryker\Zed\Shipment\Dependency\Plugin\Oms\ShipmentManualEventGrouperPlugin;
 use Spryker\Zed\Shipment\Dependency\Plugin\Oms\ShipmentOrderMailExpanderPlugin;
+use Spryker\Zed\TaxApp\Communication\Plugin\Oms\Command\SubmitPaymentTaxInvoicePlugin;
 
 class OmsDependencyProvider extends SprykerOmsDependencyProvider
 {
     /**
      * @var string
      */
-    public const PYZ_FACADE_TRANSLATOR = 'PYZ_FACADE_TRANSLATOR';
+    public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -132,7 +133,7 @@ class OmsDependencyProvider extends SprykerOmsDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
-        $container = $this->addPyzTranslatorFacade($container);
+        $container = $this->addTranslatorFacade($container);
 
         return $container;
     }
@@ -142,9 +143,9 @@ class OmsDependencyProvider extends SprykerOmsDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addPyzTranslatorFacade(Container $container): Container
+    protected function addTranslatorFacade(Container $container): Container
     {
-        $container->set(static::PYZ_FACADE_TRANSLATOR, function (Container $container) {
+        $container->set(static::FACADE_TRANSLATOR, function (Container $container) {
             return $container->getLocator()->translator()->facade();
         });
 
@@ -201,6 +202,7 @@ class OmsDependencyProvider extends SprykerOmsDependencyProvider
             $commandCollection->add(new SendEventPaymentCancelReservationPendingPlugin(), 'Payment/SendEventPaymentCancelReservationPending');
             $commandCollection->add(new RefundPlugin(), 'DummyPayment/Refund');
             $commandCollection->add(new SendOrderStatusChangedMessagePlugin(), 'Order/RequestProductReviews');
+            $commandCollection->add(new SubmitPaymentTaxInvoicePlugin(), 'TaxApp/SubmitPaymentTaxInvoice');
 
             return $commandCollection;
         });
