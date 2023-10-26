@@ -117,19 +117,12 @@ services:
         root:
             username: "root"
             password: "secret"
-        endpoints:
-            localhost:3306:
-                protocol: tcp
     broker:
         engine: rabbitmq
         version: '3.9'
         api:
             username: "spryker"
             password: "secret"
-        endpoints:
-            queue.spryker.local:
-            localhost:5672:
-                protocol: tcp
     session:
         engine: redis
     key_value_store:
@@ -150,22 +143,11 @@ docker:
         enabled: false
 
     debug:
-        enabled: true
+        enabled: false
         xdebug:
-            enabled: true
+            enabled: false
 
     testing:
         store: DE
 
     mount:
-        native:
-            platforms:
-                - linux
-
-        docker-sync:
-            platforms:
-                - windows
-
-        mutagen:
-            platforms:
-                - macos
