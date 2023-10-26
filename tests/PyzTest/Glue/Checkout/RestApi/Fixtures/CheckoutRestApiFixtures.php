@@ -58,11 +58,6 @@ class CheckoutRestApiFixtures implements FixturesBuilderInterface, FixturesConta
     protected const MERCHANT_STATUS_APPROVED = 'approved';
 
     /**
-     * @var string
-     */
-    protected const STORE_NAME_DE = 'DE';
-
-    /**
      * @var \Generated\Shared\Transfer\CustomerTransfer
      */
     protected CustomerTransfer $customerTransfer;
@@ -172,7 +167,7 @@ class CheckoutRestApiFixtures implements FixturesBuilderInterface, FixturesConta
         $this->shipmentMethodTransfer = $I->haveShipmentMethod(
             [
                 ShipmentMethodTransfer::CARRIER_NAME => 'Spryker Dummy Shipment',
-                ShipmentMethodTransfer::NAME => 'Dummy Shipment',
+                ShipmentMethodTransfer::NAME => 'Standard',
             ],
             [],
             ShipmentMethodDataHelper::DEFAULT_PRICE_LIST,
