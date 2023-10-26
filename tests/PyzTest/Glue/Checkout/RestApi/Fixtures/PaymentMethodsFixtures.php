@@ -34,27 +34,14 @@ class PaymentMethodsFixtures implements FixturesBuilderInterface, FixturesContai
     public function buildFixtures(CheckoutApiTester $I): FixturesContainerInterface
     {
         $paymentProviderTransfer = $I->havePaymentProvider([
-            PaymentProviderTransfer::PAYMENT_PROVIDER_KEY => 'DummyPayment',
-            PaymentProviderTransfer::NAME => 'dummyPayment',
+            PaymentProviderTransfer::PAYMENT_PROVIDER_KEY => 'DummyMarketplacePayment',
+            PaymentProviderTransfer::NAME => 'Dummy Marketplace Payment',
         ]);
         $I->havePaymentMethodWithStore([
             PaymentMethodTransfer::IS_ACTIVE => true,
-            PaymentMethodTransfer::PAYMENT_METHOD_KEY => 'dummyPaymentInvoice',
+            PaymentMethodTransfer::PAYMENT_METHOD_KEY => 'dummyMarketplacePaymentInvoice',
             PaymentMethodTransfer::NAME => 'Invoice',
             PaymentMethodTransfer::ID_PAYMENT_PROVIDER => $paymentProviderTransfer->getIdPaymentProvider(),
-        ]);
-        $I->havePaymentMethodWithStore([
-            PaymentMethodTransfer::IS_ACTIVE => true,
-            PaymentMethodTransfer::PAYMENT_METHOD_KEY => 'dummyPaymentCreditCard',
-            PaymentMethodTransfer::NAME => 'Credit Card',
-            PaymentMethodTransfer::ID_PAYMENT_PROVIDER => $paymentProviderTransfer->getIdPaymentProvider(),
-        ]);
-        $I->havePaymentMethodWithStore([
-            PaymentMethodTransfer::IS_ACTIVE => true,
-            PaymentMethodTransfer::PAYMENT_METHOD_KEY => 'foreignPaymentCreditCard',
-            PaymentMethodTransfer::NAME => 'Foreign Credit Card',
-            PaymentMethodTransfer::ID_PAYMENT_PROVIDER => $paymentProviderTransfer->getIdPaymentProvider(),
-            PaymentMethodTransfer::IS_FOREIGN => true,
         ]);
 
         return $this;
