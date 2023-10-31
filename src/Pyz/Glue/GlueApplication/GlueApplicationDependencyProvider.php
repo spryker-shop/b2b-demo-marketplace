@@ -399,6 +399,7 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
         return [
             new SecurityBlockerCustomerRestRequestValidatorPlugin(),
             new SecurityBlockerAgentRestRequestValidatorPlugin(),
+            new AccessTokenRestRequestValidatorPlugin(),
             new AgentAccessTokenRestRequestValidatorPlugin(),
             new SimultaneousAuthenticationRestRequestValidatorPlugin(),
             new CurrencyParameterValidatorPlugin(),
