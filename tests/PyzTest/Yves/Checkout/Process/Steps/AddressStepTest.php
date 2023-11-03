@@ -382,6 +382,7 @@ class AddressStepTest extends Unit
                 'address_step',
                 'escape_route',
                 $this->getCheckoutAddressStepEnterPreCheckPlugins(),
+                [],
             ])
             ->getMock();
 

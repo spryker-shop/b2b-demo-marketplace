@@ -1,7 +1,7 @@
 # Spryker B2B Marketplace Demo Shop
 [![Build Status](https://github.com/spryker-shop/b2b-demo-marketplace/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/spryker-shop/b2b-demo-marketplace/actions?query=branch:master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker-shop/b2b-demo-marketplace/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spryker-shop/b2b-demo-marketplace/?branch=master)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.0-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.1-8892BF.svg)](https://php.net/)
 
 ## Description
 
