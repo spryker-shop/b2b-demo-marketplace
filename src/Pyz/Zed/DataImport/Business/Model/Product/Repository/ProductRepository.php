@@ -94,6 +94,7 @@ class ProductRepository implements ProductRepositoryInterface
 
         $productQuery = $this->applyPagination($productQuery, $paginationTransfer);
 
+        /** @phpstan-var \Propel\Runtime\Collection\ArrayCollection */
         return $productQuery->find();
     }
 
