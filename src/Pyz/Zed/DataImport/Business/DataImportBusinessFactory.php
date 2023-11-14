@@ -757,6 +757,7 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
         return new ProductConcreteAttributesUniqueCheckStep(
             $this->createProductRepository(),
             $this->getUtilEncodingService(),
+            $this->getConfig(),
         );
     }
 
