@@ -55,7 +55,6 @@ class EventDispatcherDependencyProvider extends SprykerEventDispatcherDependency
         ];
     }
 
-
     /**
      * @return array<\Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface>
      */
