@@ -32,6 +32,9 @@ class ExampleStateMachineItemReader
      */
     public function getStateMachineItemTransferByItemStateIds(array $stateIds = []): array
     {
+        /**
+         * @var \Propel\Runtime\Collection\ObjectCollection $exampleStateMachineItems
+         */
         $exampleStateMachineItems = $this->exampleStateMachineQueryContainer
             ->queryStateMachineItemsByStateIds($stateIds)
             ->find();
