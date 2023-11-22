@@ -11,6 +11,7 @@ use Spryker\Zed\Acl\Communication\Plugin\AclInstallerPlugin;
 use Spryker\Zed\CompanyUserInvitation\Communication\Plugin\CompanyUserInvitationStatusInstallerPlugin;
 use Spryker\Zed\Country\Communication\Plugin\CountryInstallerPlugin;
 use Spryker\Zed\CustomerAccess\Communication\Plugin\CustomerAccessInstallerPlugin;
+use Spryker\Zed\DynamicEntity\Communication\Plugin\Installer\DynamicEntityInstallerPlugin;
 use Spryker\Zed\Glossary\Communication\Plugin\GlossaryInstallerPlugin;
 use Spryker\Zed\Installer\InstallerDependencyProvider as SprykerInstallerDependencyProvider;
 use Spryker\Zed\Locale\Communication\Plugin\LocaleInstallerPlugin;
@@ -33,7 +34,7 @@ use Spryker\Zed\User\Communication\Plugin\UserInstallerPlugin;
 class InstallerDependencyProvider extends SprykerInstallerDependencyProvider
 {
     /**
-     * @return array<\Spryker\Zed\Installer\Dependency\Plugin\InstallerPluginInterface>
+     * @return array<\Spryker\Zed\InstallerExtension\Dependency\Plugin\InstallerPluginInterface>
      */
     public function getInstallerPlugins(): array
     {
@@ -59,6 +60,7 @@ class InstallerDependencyProvider extends SprykerInstallerDependencyProvider
             new OauthCustomerScopeInstallerPlugin(),
             new OauthCompanyUserInstallerPlugin(),
             new AgentOauthScopeInstallerPlugin(),
+            new DynamicEntityInstallerPlugin(),
         ];
     }
 }

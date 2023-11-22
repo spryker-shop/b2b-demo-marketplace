@@ -24,7 +24,7 @@ class CustomerAccessRepository extends AbstractRepository implements CustomerAcc
     public function findCustomerAccessByContentType($contentType): ?ContentTypeAccessTransfer
     {
         $customerAccessEntity = $this->getFactory()
-            ->getPyzUnauthenticatedCustomerAccessQuery()
+            ->getUnauthenticatedCustomerAccessQuery()
             ->filterByContentType($contentType)
             ->findOne();
 
@@ -33,7 +33,7 @@ class CustomerAccessRepository extends AbstractRepository implements CustomerAcc
         }
 
         return $this->getFactory()
-            ->createPyzCustomerAccessMapper()
+            ->createCustomerAccessMapper()
             ->mapCustomerAccessEntityToContentTypeAccessTransfer($customerAccessEntity, new ContentTypeAccessTransfer());
     }
 
@@ -42,13 +42,16 @@ class CustomerAccessRepository extends AbstractRepository implements CustomerAcc
      */
     public function getUnrestrictedContentTypes(): CustomerAccessTransfer
     {
+        /**
+         * @var \Propel\Runtime\Collection\ObjectCollection $unauthenticatedCustomerAccessEntity
+         */
         $unauthenticatedCustomerAccessEntity = $this->getFactory()
-            ->getPyzUnauthenticatedCustomerAccessQuery()
+            ->getUnauthenticatedCustomerAccessQuery()
             ->filterByIsRestricted(false)
             ->find();
 
         return $this->getFactory()
-            ->createPyzCustomerAccessMapper()
+            ->createCustomerAccessMapper()
             ->mapEntitiesToCustomerAccessTransfer($unauthenticatedCustomerAccessEntity, new CustomerAccessTransfer());
     }
 
@@ -57,13 +60,16 @@ class CustomerAccessRepository extends AbstractRepository implements CustomerAcc
      */
     public function getAllContentTypes(): CustomerAccessTransfer
     {
+        /**
+         * @var \Propel\Runtime\Collection\ObjectCollection $unauthenticatedCustomerAccessEntity
+         */
         $unauthenticatedCustomerAccessEntity = $this->getFactory()
-            ->getPyzUnauthenticatedCustomerAccessQuery()
+            ->getUnauthenticatedCustomerAccessQuery()
             ->orderByIdUnauthenticatedCustomerAccess()
             ->find();
 
         return $this->getFactory()
-            ->createPyzCustomerAccessMapper()
+            ->createCustomerAccessMapper()
             ->mapEntitiesToCustomerAccessTransfer($unauthenticatedCustomerAccessEntity, new CustomerAccessTransfer());
     }
 
@@ -72,13 +78,16 @@ class CustomerAccessRepository extends AbstractRepository implements CustomerAcc
      */
     public function getRestrictedContentTypes(): CustomerAccessTransfer
     {
+        /**
+         * @var \Propel\Runtime\Collection\ObjectCollection $unauthenticatedCustomerAccessEntity
+         */
         $unauthenticatedCustomerAccessEntity = $this->getFactory()
-            ->getPyzUnauthenticatedCustomerAccessQuery()
+            ->getUnauthenticatedCustomerAccessQuery()
             ->filterByIsRestricted(true)
             ->find();
 
         return $this->getFactory()
-            ->createPyzCustomerAccessMapper()
+            ->createCustomerAccessMapper()
             ->mapEntitiesToCustomerAccessTransfer($unauthenticatedCustomerAccessEntity, new CustomerAccessTransfer());
     }
 }

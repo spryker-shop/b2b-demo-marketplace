@@ -12,15 +12,15 @@ interface SubFormInterface
     /**
      * @var string
      */
-    public const PYZ_OPTIONS_FIELD_NAME = 'select_options';
+    public const OPTIONS_FIELD_NAME = 'select_options';
 
     /**
      * @return string
      */
-    public function getPyzPropertyPath(): string;
+    public function getPropertyPath(): string;
 
     /**
      * @return string
      */
-    public function getPyzName(): string;
+    public function getName(): string;
 }
