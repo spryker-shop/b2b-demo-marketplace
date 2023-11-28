@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7de88376a213a00a74eede91060827ed",
+    "content-hash": "9fefa45a6b212f4f514e74cf610e4d7f",
     "packages": [
         {
             "name": "async-aws/core",
@@ -5984,7 +5984,7 @@
         },
         {
             "name": "spryker-feature/marketplace-merchantportal-core",
-            "version": "202311.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/marketplace-merchantportal-core.git",
@@ -6014,6 +6014,7 @@
             "suggest": {
                 "spryker-feature/acl": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -8295,7 +8296,7 @@
         },
         {
             "name": "spryker-feature/spryker-core-back-office",
-            "version": "202311.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/spryker-core-back-office.git",
@@ -8324,6 +8325,7 @@
                 "spryker/user-password-reset-mail": "^1.1.0",
                 "spryker/zed-navigation": "^1.13.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -71705,16 +71707,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.10.45",
+            "version": "1.10.46",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "2f024fbb47432e2e62ad8a8032387aa2dd631c73"
+                "reference": "90d3d25c5b98b8068916bbf08ce42d5cb6c54e70"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/2f024fbb47432e2e62ad8a8032387aa2dd631c73",
-                "reference": "2f024fbb47432e2e62ad8a8032387aa2dd631c73",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/90d3d25c5b98b8068916bbf08ce42d5cb6c54e70",
+                "reference": "90d3d25c5b98b8068916bbf08ce42d5cb6c54e70",
                 "shasum": ""
             },
             "require": {
@@ -71763,7 +71765,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-11-27T14:15:06+00:00"
+            "time": "2023-11-28T14:57:26+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -74793,7 +74795,19 @@
             "alias_normalized": "202403.0"
         },
         {
+            "package": "spryker-feature/marketplace-merchantportal-core",
+            "version": "9999999-dev",
+            "alias": "202403.0",
+            "alias_normalized": "202403.0"
+        },
+        {
             "package": "spryker-feature/shipment",
+            "version": "9999999-dev",
+            "alias": "202403.0",
+            "alias_normalized": "202403.0"
+        },
+        {
+            "package": "spryker-feature/spryker-core-back-office",
             "version": "9999999-dev",
             "alias": "202403.0",
             "alias_normalized": "202403.0"
@@ -74804,7 +74818,9 @@
         "spryker-feature/checkout": 20,
         "spryker-feature/company-account": 20,
         "spryker-feature/customer-account-management": 20,
+        "spryker-feature/marketplace-merchantportal-core": 20,
         "spryker-feature/shipment": 20,
+        "spryker-feature/spryker-core-back-office": 20,
         "spryker/docker-chromedriver": 20,
         "spryker/robotframework-suite-tests": 20
     },
