@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aad8cd2c467589df875530e26b0772bf",
+    "content-hash": "ea4d7369f578390fe1c784a8ea9cf3c0",
     "packages": [
         {
             "name": "async-aws/core",
@@ -5984,7 +5984,7 @@
         },
         {
             "name": "spryker-feature/marketplace-merchantportal-core",
-            "version": "202311.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/marketplace-merchantportal-core.git",
@@ -6014,6 +6014,7 @@
             "suggest": {
                 "spryker-feature/acl": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -8295,7 +8296,7 @@
         },
         {
             "name": "spryker-feature/spryker-core-back-office",
-            "version": "202311.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/spryker-core-back-office.git",
@@ -8324,6 +8325,7 @@
                 "spryker/user-password-reset-mail": "^1.1.0",
                 "spryker/zed-navigation": "^1.13.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -74790,7 +74792,19 @@
             "alias_normalized": "202403.0"
         },
         {
+            "package": "spryker-feature/marketplace-merchantportal-core",
+            "version": "9999999-dev",
+            "alias": "202403.0",
+            "alias_normalized": "202403.0"
+        },
+        {
             "package": "spryker-feature/shipment",
+            "version": "9999999-dev",
+            "alias": "202403.0",
+            "alias_normalized": "202403.0"
+        },
+        {
+            "package": "spryker-feature/spryker-core-back-office",
             "version": "9999999-dev",
             "alias": "202403.0",
             "alias_normalized": "202403.0"
@@ -74801,7 +74815,9 @@
         "spryker-feature/checkout": 20,
         "spryker-feature/company-account": 20,
         "spryker-feature/customer-account-management": 20,
+        "spryker-feature/marketplace-merchantportal-core": 20,
         "spryker-feature/shipment": 20,
+        "spryker-feature/spryker-core-back-office": 20,
         "spryker/docker-chromedriver": 20,
         "spryker/robotframework-suite-tests": 20
     },
