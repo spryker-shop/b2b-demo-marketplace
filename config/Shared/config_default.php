@@ -677,12 +677,12 @@ $config[GlueApplicationConstants::GLUE_APPLICATION_CORS_ALLOW_ORIGIN] = getenv('
 
 $config[OmsConstants::ACTIVE_PROCESSES] = [
     'MarketplacePayment01',
-    'ForeignPaymentB2CStateMachine01',
+    'ForeignPaymentStateMachine01',
 ];
 
 $config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = [
     DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE => 'MarketplacePayment01',
-    PaymentConfig::PAYMENT_FOREIGN_PROVIDER => 'ForeignPaymentB2CStateMachine01',
+    PaymentConfig::PAYMENT_FOREIGN_PROVIDER => 'ForeignPaymentStateMachine01',
 ];
 
 $config[OmsConstants::PROCESS_LOCATION] = [
