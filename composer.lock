@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bac6f4b5545bbc1f171fb7e95ac1a5a5",
+    "content-hash": "6a79c686f295e4670390dc1d4d801a6f",
     "packages": [
         {
             "name": "async-aws/core",
@@ -4965,7 +4965,7 @@
         },
         {
             "name": "spryker-feature/category-management",
-            "version": "202311.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/category-management.git",
@@ -4995,6 +4995,7 @@
             "suggest": {
                 "spryker-feature/spryker-core": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -74778,6 +74779,12 @@
     ],
     "aliases": [
         {
+            "package": "spryker-feature/category-management",
+            "version": "9999999-dev",
+            "alias": "202403.0",
+            "alias_normalized": "202403.0"
+        },
+        {
             "package": "spryker-feature/checkout",
             "version": "9999999-dev",
             "alias": "202403.0",
@@ -74816,6 +74823,7 @@
     ],
     "minimum-stability": "dev",
     "stability-flags": {
+        "spryker-feature/category-management": 20,
         "spryker-feature/checkout": 20,
         "spryker-feature/company-account": 20,
         "spryker-feature/customer-account-management": 20,
