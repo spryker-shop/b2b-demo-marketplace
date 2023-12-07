@@ -42,6 +42,9 @@ class CustomerAccessRepository extends AbstractRepository implements CustomerAcc
      */
     public function getUnrestrictedContentTypes(): CustomerAccessTransfer
     {
+        /**
+         * @var \Propel\Runtime\Collection\ObjectCollection $unauthenticatedCustomerAccessEntity
+         */
         $unauthenticatedCustomerAccessEntity = $this->getFactory()
             ->getUnauthenticatedCustomerAccessQuery()
             ->filterByIsRestricted(false)
@@ -57,6 +60,9 @@ class CustomerAccessRepository extends AbstractRepository implements CustomerAcc
      */
     public function getAllContentTypes(): CustomerAccessTransfer
     {
+        /**
+         * @var \Propel\Runtime\Collection\ObjectCollection $unauthenticatedCustomerAccessEntity
+         */
         $unauthenticatedCustomerAccessEntity = $this->getFactory()
             ->getUnauthenticatedCustomerAccessQuery()
             ->orderByIdUnauthenticatedCustomerAccess()
@@ -72,6 +78,9 @@ class CustomerAccessRepository extends AbstractRepository implements CustomerAcc
      */
     public function getRestrictedContentTypes(): CustomerAccessTransfer
     {
+        /**
+         * @var \Propel\Runtime\Collection\ObjectCollection $unauthenticatedCustomerAccessEntity
+         */
         $unauthenticatedCustomerAccessEntity = $this->getFactory()
             ->getUnauthenticatedCustomerAccessQuery()
             ->filterByIsRestricted(true)

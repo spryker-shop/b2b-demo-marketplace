@@ -34,9 +34,14 @@ class ExampleStateMachineQueryContainer extends AbstractQueryContainer implement
      */
     public function queryAllStateMachineItems(): ObjectCollection
     {
-         return $this->getFactory()
+        /**
+         * @var \Propel\Runtime\Collection\ObjectCollection $allStateMachineItems
+         */
+         $allStateMachineItems = $this->getFactory()
              ->createExampleStateMachineQuery()
              ->find();
+
+         return $allStateMachineItems;
     }
 
     /**
