@@ -40,7 +40,7 @@
     <td class="transform-cell" data-content="{{ 'return_page.return.order_ref' | trans }}">
         <div>
             {% for orderReference in orderReferences %}
-                {{ orderReference }}{{ not loop.last ? ', ' }}
+                {{- (not loop.first ? ', ') ~ orderReference -}}
             {% endfor %}
         </div>
     </td>

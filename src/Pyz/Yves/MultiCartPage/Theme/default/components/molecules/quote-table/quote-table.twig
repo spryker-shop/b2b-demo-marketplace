@@ -97,11 +97,13 @@
                     <td class="transform-cell" data-content="{{ 'page.multi_cart.shopping_cart.list.label.total' | trans }}">
                         <strong>{{ quote.totals.grandTotal | default(0) | money(true, quote.currency.code) }}</strong>
                     </td>
-                    {% if widgetGlobalExists('QuoteApprovalStatusWidget') %}
-                        <td class="transform-cell spacing-bottom spacing-bottom--inner spacing-bottom--big" data-content="{{ 'quote_approval_widget.cart.status' | trans }}">
-                            {% widget 'QuoteApprovalStatusWidget' args [quote] only %}{% endwidget %}
-                        </td>
-                    {% endif %}
+                    {% widget 'QuoteApprovalStatusWidget' args [quote] only %}
+                        {% block body %}
+                            <td class="transform-cell spacing-bottom spacing-bottom--inner spacing-bottom--big" data-content="{{ 'quote_approval_widget.cart.status' | trans }}">
+                                {{ parent() }}
+                            </td>
+                        {% endblock %}
+                    {% endwidget %}
                     {% if showActions %}
                         <td class="table__actions">
                             {% set multiCartDuplicateForm = data.multiCartDuplicateFormClone.getForm.createView ?? null %}
