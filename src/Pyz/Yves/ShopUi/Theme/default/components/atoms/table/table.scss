@@ -46,10 +46,6 @@
 
             td {
                 color: $setting-color-gray-4;
-
-                &#{$name}__actions {
-                    padding: 0;
-                }
             }
 
             strong {
@@ -186,7 +182,9 @@
             }
         }
 
-        &__actions {
+        #{$name}__actions {
+            padding: 0;
+            
             @include helper-breakpoint-media-min($lg) {
                 width: 0;
             }
