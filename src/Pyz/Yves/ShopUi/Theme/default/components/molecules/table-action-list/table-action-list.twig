@@ -12,18 +12,22 @@
 {% block body %}
     {% for item in data.items %}
         {% set available = item.available is defined ? item.available : true %}
-
-        <div class="{{ config.name }}__item">
-            {% if available and item.url is not defined %}
+        {% set isCustomAction = available and item.customAction is defined and (item.customAction | trim) is not empty and item.url is not defined %}
+        {% set isAction = available and (item.customAction is not defined or (item.customAction | trim) is empty) and item.url is defined %}
+        
+        {% if isCustomAction %}
+            <div class="{{ config.name }}__item">
                 {{ item.customAction | raw }}
-            {% elseif available %}
+            </div>
+        {% endif %}
+        {% if isAction %}
+            <div class="{{ config.name }}__item">
                 {% include molecule('table-action-link') with {
                     class: 'link link--alt link--action',
                     modifiers: data.linkModifiers,
                     data: item,
                 } only %}
-            {% endif %}
-        </div>
+            </div>
+        {% endif %}
     {% endfor %}
 {% endblock %}
-

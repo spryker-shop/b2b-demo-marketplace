@@ -27,16 +27,17 @@
                         {{ quoteRequest.companyUser.customer.firstName ~ ' ' ~ quoteRequest.companyUser.customer.lastName }}
                     </td>
                     <td class="transform-cell" data-content="{{ 'quote_request_page.quote_request.list.total' | trans }}">
-                        <strong>{{ quoteRequest.latestVisibleVersion.quote.totals.grandTotal | default(0) | money(true, quoteRequest.latestVersion.quote.currency ? quoteRequest.latestVersion.quote.currency.code : '') }}</strong>
+                        <strong>{{ quoteRequest.latestVisibleVersion.quote.totals.grandTotal | default(0) | money(true, quoteRequest.latestVersion.quote.currency ? quoteRequest.latestVersion.quote.currency.code) }}</strong>
                     </td>
                     <td class="transform-cell" data-content="{{ 'quote_request_page.quote_request.list.date' | trans }}">
                         {{ quoteRequest.createdAt | formatDateTime }}
                     </td>
                     <td class="transform-cell spacing-bottom spacing-bottom--inner spacing-bottom--big" data-content="{{ 'quote_request_page.quote_request.list.status' | trans }}">
-                        <p class="quote-status request-status request-status--{{ quoteRequest.status }}">
+                        <span class="quote-status request-status request-status--{{ quoteRequest.status }}">
                             {{ ('quote_request.status.' ~ quoteRequest.status) | trans }}
-                        </p>
-                    <td class="spacing spacing--inner spacing--reset">
+                        </span>
+                    </td>
+                    <td class="table__actions">
                         {% include molecule('table-action-list') with {
                             data: {
                                 items: [

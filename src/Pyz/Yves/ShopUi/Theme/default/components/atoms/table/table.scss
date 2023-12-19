@@ -42,6 +42,10 @@
 
             td {
                 color: $setting-color-gray-4;
+
+                &#{$name}__actions {
+                    padding: 0;
+                }
             }
 
             strong {
@@ -142,7 +146,6 @@
 
                 .transform-cell {
                     display: flex;
-                    align-items: center;
                     position: relative;
                     background-color: $setting-color-gray-7;
 
@@ -176,6 +179,12 @@
                 td {
                     padding: 0;
                 }
+            }
+        }
+
+        &__actions {
+            @include helper-breakpoint-media-min($lg) {
+                width: 0;
             }
         }
 

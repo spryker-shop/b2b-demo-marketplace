@@ -19,7 +19,7 @@
 {% block salesReturnTableUnderline %}{% endblock %}
 
 {% block salesReturnTable %}
-    {% set salesReturnTableClass = 'table table--expand table--responsive' %}
+    {% set salesReturnTableClass = salesReturnTableClass ~ ' table--responsive' %}
 
     {{ parent() }}
 {% endblock %}
@@ -38,9 +38,11 @@
         {{ return.returnReference }}
     </td>
     <td class="transform-cell" data-content="{{ 'return_page.return.order_ref' | trans }}">
-        {% for orderReference in orderReferences %}
-            {{ orderReference }}
-        {% endfor %}
+        <div>
+            {% for orderReference in orderReferences %}
+                {{ orderReference }}{{ not loop.last ? ', ' }}
+            {% endfor %}
+        </div>
     </td>
     <td class="transform-cell" data-content="{{ 'return_page.return.number_of_items' | trans }}">
         {{ return.returnItems | length | executeFilterIfExists('formatInt', app.locale) }}
@@ -49,13 +51,15 @@
         {{ date(return.createdAt) | formatDateTime }}
     </td>
     <td class="transform-cell spacing-bottom spacing-bottom--inner spacing-bottom--big" data-content="{{ 'return_page.return.items_state' | trans }}">
-        {% for state in itemStates %}
-            {% set stateName = state.status | replace({' ': '-'}) | lower %}
+        <div>
+            {% for state in itemStates %}
+                {% set stateName = state.status | replace({' ': '-'}) | lower %}
 
-            <p>{{ block('state') }}</p>
-        {% endfor %}
+                {{ block('state') }}
+            {% endfor %}
+        </div>
     </td>
-    <td class="spacing spacing--inner spacing--reset">
+    <td class="table__actions">
         {{ block('returnActionsMenu') }}
     </td>
 {% endblock %}

@@ -74,7 +74,7 @@
     {% if data.orders is empty %}
         <p>{{ 'customer.account.no_order' | trans }}</p>
     {% else %}
-        <table class="table table--expand table--responsive table--medium-indent">
+        <table class="table table--expand table--responsive">
             <thead>
                 <tr>
                     <th {{ _self.sortingAttributes('orderReference', data.orderSearchForm, data.jsPrefix, config.name ~ '__sorting-title') }}>
@@ -134,9 +134,9 @@
                             </strong>
                         </td>
                         <td class="transform-cell spacing-bottom spacing-bottom--inner spacing-bottom--big" data-content="{{ 'customer.order.items_state' | trans }}">
-                            <p>{{ block('stateWrapper') }}</p>
+                            <div>{{ block('stateWrapper') }}</div>
                         </td>
-                        <td class="spacing spacing--inner spacing--reset">
+                        <td class="table__actions">
                             {% include molecule('table-action-list') with {
                                 data: {
                                     items: [

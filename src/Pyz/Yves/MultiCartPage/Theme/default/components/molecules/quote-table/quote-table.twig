@@ -1,17 +1,19 @@
 {% extends molecule('quote-table', '@SprykerShop:MultiCartPage') %}
 
 {% macro multiCartDuplicateAction(multiCartDuplicateForm, quote, configName) %}
-    {{ form_start(multiCartDuplicateForm, { action: path('multi-cart/duplicate', { idQuote: quote.idQuote }) }) }}
-        <button class="{{ configName }}__duplicate-button">
-            {% include molecule('table-action-span') with {
-                class: 'link link--alt link--action',
-                data: {
-                    icon: 'duplicate',
-                    title: 'page.multi_cart.shopping_cart.list.link.duplicate',
-                },
-            } only %}
-        </button>
-    {{ form_end(multiCartDuplicateForm) }}
+    {% if multiCartDuplicateForm %}
+        {{ form_start(multiCartDuplicateForm, { action: path('multi-cart/duplicate', { idQuote: quote.idQuote }) }) }}
+            <button class="{{ configName }}__duplicate-button">
+                {% include molecule('table-action-span') with {
+                    class: 'link link--alt link--action',
+                    data: {
+                        icon: 'duplicate',
+                        title: 'page.multi_cart.shopping_cart.list.link.duplicate',
+                    },
+                } only %}
+            </button>
+        {{ form_end(multiCartDuplicateForm) }}
+    {% endif %}
 {% endmacro %}
 
 {% block extraClass %}
@@ -51,9 +53,11 @@
                         {% else %}
                             {% set multiCartSetDefaultForm = data.multiCartSetDefaultFormClone.getForm.createView ?? null %}
 
-                            {{ form_start(multiCartSetDefaultForm, { action: path('multi-cart/set-default', { idQuote: quote.idQuote }) }) }}
-                                <button class="{{ config.name }}__cart-name{% if quote.isDefault %} {{ config.name }}__cart-name--active{% endif %}">{{ quote.name }}</button>
-                            {{ form_end(multiCartSetDefaultForm) }}
+                            {% if multiCartSetDefaultForm %}
+                                {{ form_start(multiCartSetDefaultForm, { action: path('multi-cart/set-default', { idQuote: quote.idQuote }) }) }}
+                                    <button class="{{ config.name }}__cart-name{% if quote.isDefault %} {{ config.name }}__cart-name--active{% endif %}">{{ quote.name }}</button>
+                                {{ form_end(multiCartSetDefaultForm) }}
+                            {% endif %}
                         {% endif %}
                     </td>
                     {% widget 'CartListPermissionGroupWidget' args [quote, isQuoteDeletable] only %}
@@ -99,7 +103,7 @@
                         </td>
                     {% endif %}
                     {% if showActions %}
-                        <td class="spacing spacing--inner spacing--reset">
+                        <td class="table__actions">
                             {% set multiCartDuplicateForm = data.multiCartDuplicateFormClone.getForm.createView ?? null %}
                             {% import _self as macros %}
 
