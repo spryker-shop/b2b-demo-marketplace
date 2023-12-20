@@ -8,8 +8,12 @@
     shoppingLists: required,
     idShoppingList: null,
     shoppingListForm: null,
-    shoppingListResponse: null
+    shoppingListResponse: null,
 } %}
+
+{% block extraClass %}
+    is-scrollable
+{% endblock %}
 
 {% block body %}
     <table class="table table--expand table--responsive spacing-bottom spacing-bottom--biggest">
