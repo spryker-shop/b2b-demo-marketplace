@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6a79c686f295e4670390dc1d4d801a6f",
+    "content-hash": "e710287fb260d8787f65689eea4e4656",
     "packages": [
         {
             "name": "async-aws/core",
@@ -8183,7 +8183,7 @@
         },
         {
             "name": "spryker-feature/spryker-core",
-            "version": "202311.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/spryker-core.git",
@@ -8279,6 +8279,7 @@
                 "spryker/vault": "^1.2.0",
                 "spryker/zed-request": "^3.20.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -74795,6 +74796,12 @@
             "alias_normalized": "202403.0"
         },
         {
+            "package": "spryker-feature/spryker-core",
+            "version": "9999999-dev",
+            "alias": "202403.0",
+            "alias_normalized": "202403.0"
+        },
+        {
             "package": "spryker-feature/spryker-core-back-office",
             "version": "9999999-dev",
             "alias": "202403.0",
@@ -74809,6 +74816,7 @@
         "spryker-feature/customer-account-management": 20,
         "spryker-feature/marketplace-merchantportal-core": 20,
         "spryker-feature/shipment": 20,
+        "spryker-feature/spryker-core": 20,
         "spryker-feature/spryker-core-back-office": 20,
         "spryker/docker-chromedriver": 20,
         "spryker/robotframework-suite-tests": 20
