@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\MerchantProfileTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use PyzTest\Glue\Checkout\CheckoutApiTester;
@@ -32,6 +34,13 @@ class CompanyBusinessUnitAddressCheckoutDataRestApiFixtures implements FixturesB
      * @var string
      */
     protected const TEST_PASSWORD = 'change123';
+
+    /**
+     * @uses \Spryker\Zed\Merchant\MerchantConfig::STATUS_APPROVED
+     *
+     * @var string
+     */
+    protected const MERCHANT_STATUS_APPROVED = 'approved';
 
     /**
      * @var \Generated\Shared\Transfer\CustomerTransfer
@@ -101,8 +110,8 @@ class CompanyBusinessUnitAddressCheckoutDataRestApiFixtures implements FixturesB
         ]);
 
         $this->customerTransfer = $I->confirmCustomer($customerTransfer);
-        $this->buildCompanyUserAccount($I, $this->customerTransfer);
 
+        $this->buildCompanyUserAccount($I, $this->customerTransfer);
         $this->quoteTransfer = $this->createPersistentQuoteWithItemsAndItemLevelShipment($I);
 
         return $this;
@@ -162,9 +171,18 @@ class CompanyBusinessUnitAddressCheckoutDataRestApiFixtures implements FixturesB
             ],
         );
 
+        $merchantTransfer = $I->haveMerchant([
+            MerchantTransfer::IS_ACTIVE => true,
+            MerchantTransfer::STATUS => static::MERCHANT_STATUS_APPROVED,
+            MerchantTransfer::MERCHANT_PROFILE => new MerchantProfileTransfer(),
+        ]);
+
+        $productConcreteTransfer = $I->haveFullProduct();
+        $productConcreteTransfer->addOffer($I->createProductOfferWithStock($merchantTransfer, $productConcreteTransfer));
+
         return $I->havePersistentQuoteWithItemsAndItemLevelShipment(
             $this->customerTransfer,
-            [$I->getQuoteItemOverrideData($I->haveProductWithStock(), $shipmentMethodTransfer, 5)],
+            [$I->getQuoteItemOverrideData($productConcreteTransfer, $shipmentMethodTransfer, 5)],
         );
     }
 

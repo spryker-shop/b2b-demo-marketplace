@@ -8,6 +8,7 @@
 namespace PyzTest\Glue\Checkout\RestApi;
 
 use Codeception\Util\HttpCode;
+use Generated\Shared\Transfer\QuoteTransfer;
 use PyzTest\Glue\Checkout\CheckoutApiTester;
 use PyzTest\Glue\Checkout\RestApi\Fixtures\CompanyBusinessUnitAddressCheckoutRestApiFixtures;
 use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
@@ -52,12 +53,7 @@ class CompanyBusinessUnitAddressCheckoutRestApiCest
     {
         // Arrange
         $I->authorizeCustomerToGlue($this->fixtures->getCustomerTransfer());
-
-        $quoteTransfer = $I->havePersistentQuoteWithItemsAndItemLevelShipment(
-            $this->fixtures->getCustomerTransfer(),
-            [$I->getQuoteItemOverrideData($I->haveProductWithStock(), $this->fixtures->getShipmentMethodTransfer(), 5)],
-        );
-        $quoteTransfer = $I->getCartFacade()->validateQuote($quoteTransfer)->getQuoteTransfer();
+        $quoteTransfer = $this->createCartWithOneItem($I);
 
         $requestPayload = [
             'data' => [
@@ -94,12 +90,7 @@ class CompanyBusinessUnitAddressCheckoutRestApiCest
     {
         // Arrange
         $I->authorizeCustomerToGlue($this->fixtures->getCustomerTransfer());
-
-        $quoteTransfer = $I->havePersistentQuoteWithItemsAndItemLevelShipment(
-            $this->fixtures->getCustomerTransfer(),
-            [$I->getQuoteItemOverrideData($I->haveProductWithStock(), $this->fixtures->getShipmentMethodTransfer(), 5)],
-        );
-        $quoteTransfer = $I->getCartFacade()->validateQuote($quoteTransfer)->getQuoteTransfer();
+        $quoteTransfer = $this->createCartWithOneItem($I);
 
         $requestPayload = [
             'data' => [
@@ -124,5 +115,26 @@ class CompanyBusinessUnitAddressCheckoutRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::CREATED);
         $I->assertCompanyBusinessUnitShippingAddressInOrderShipments($this->fixtures->getCompanyUnitAddressTransfer());
+    }
+
+    /**
+     * @param \PyzTest\Glue\Checkout\CheckoutApiTester $I
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function createCartWithOneItem(CheckoutApiTester $I): QuoteTransfer
+    {
+        $productConcreteTransfer = $I->haveFullProduct();
+        $productConcreteTransfer->addOffer($I->createProductOfferWithStock(
+            $this->fixtures->getMerchantTransfer(),
+            $productConcreteTransfer,
+        ));
+
+        $quoteTransfer = $I->havePersistentQuoteWithItemsAndItemLevelShipment(
+            $this->fixtures->getCustomerTransfer(),
+            [$I->getQuoteItemOverrideData($productConcreteTransfer, $this->fixtures->getShipmentMethodTransfer(), 5)],
+        );
+
+        return $I->getCartFacade()->validateQuote($quoteTransfer)->getQuoteTransfer();
     }
 }

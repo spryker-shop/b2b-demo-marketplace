@@ -15,6 +15,8 @@ use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\MerchantProfileTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use PyzTest\Glue\Checkout\CheckoutApiTester;
@@ -36,6 +38,13 @@ class CompanyBusinessUnitAddressCheckoutRestApiFixtures implements FixturesBuild
     protected const TEST_PASSWORD = 'change123';
 
     /**
+     * @uses \Spryker\Zed\Merchant\MerchantConfig::STATUS_APPROVED
+     *
+     * @var string
+     */
+    protected const MERCHANT_STATUS_APPROVED = 'approved';
+
+    /**
      * @var \Generated\Shared\Transfer\CustomerTransfer
      */
     protected CustomerTransfer $customerTransfer;
@@ -54,6 +63,11 @@ class CompanyBusinessUnitAddressCheckoutRestApiFixtures implements FixturesBuild
      * @var \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
     protected ShipmentMethodTransfer $shipmentMethodTransfer;
+
+    /**
+     * @var \Generated\Shared\Transfer\MerchantTransfer
+     */
+    protected MerchantTransfer $merchantTransfer;
 
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer
@@ -88,6 +102,14 @@ class CompanyBusinessUnitAddressCheckoutRestApiFixtures implements FixturesBuild
     }
 
     /**
+     * @return \Generated\Shared\Transfer\MerchantTransfer
+     */
+    public function getMerchantTransfer(): MerchantTransfer
+    {
+        return $this->merchantTransfer;
+    }
+
+    /**
      * @param \PyzTest\Glue\Checkout\CheckoutApiTester $I
      *
      * @return \SprykerTest\Shared\Testify\Fixtures\FixturesContainerInterface
@@ -103,6 +125,11 @@ class CompanyBusinessUnitAddressCheckoutRestApiFixtures implements FixturesBuild
         ]);
 
         $this->customerTransfer = $I->confirmCustomer($customerTransfer);
+        $this->merchantTransfer = $I->haveMerchant([
+            MerchantTransfer::IS_ACTIVE => true,
+            MerchantTransfer::STATUS => static::MERCHANT_STATUS_APPROVED,
+            MerchantTransfer::MERCHANT_PROFILE => new MerchantProfileTransfer(),
+        ]);
         $this->buildCompanyUserAccount($I, $this->customerTransfer);
         $this->buildShipmentMethod($I);
 
