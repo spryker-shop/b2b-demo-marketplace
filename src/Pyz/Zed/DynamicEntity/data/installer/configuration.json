@@ -2562,22 +2562,7 @@
                     }
                 }
             ]
-        },
-        "childRelations": [
-            {
-                "name": "companyPriceProducts",
-                "isEditable": true,
-                "childDynamicEntityConfiguration": {
-                    "tableAlias": "price-products"
-                },
-                "relationFieldMappings": [
-                    {
-                        "childFieldName": "fk_company",
-                        "parentFieldName": "id_company"
-                    }
-                ]
-            }
-        ]
+        }
     },
     {
         "tableName": "spy_price_product_store",
