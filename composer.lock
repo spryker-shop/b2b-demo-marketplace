@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7a197b27d1082b2b20cc257106dba2be",
+    "content-hash": "fdafd9e2039db4c35df6ebe2cd9d4d38",
     "packages": [
         {
             "name": "async-aws/core",
@@ -5781,16 +5781,16 @@
         },
         {
             "name": "spryker-feature/marketplace-merchant",
-            "version": "202311.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/marketplace-merchant.git",
-                "reference": "f24fe89d960c00e1268895a8309866fc1d0525b9"
+                "reference": "047c46ea9c6c2d9546f9ec245ec85c4ebe633910"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/marketplace-merchant/zipball/f24fe89d960c00e1268895a8309866fc1d0525b9",
-                "reference": "f24fe89d960c00e1268895a8309866fc1d0525b9",
+                "url": "https://api.github.com/repos/spryker-feature/marketplace-merchant/zipball/047c46ea9c6c2d9546f9ec245ec85c4ebe633910",
+                "reference": "047c46ea9c6c2d9546f9ec245ec85c4ebe633910",
                 "shasum": ""
             },
             "require": {
@@ -5806,15 +5806,17 @@
                 "spryker/merchant-search": "^1.0.0",
                 "spryker/merchant-storage": "^1.1.0",
                 "spryker/merchant-user": "^1.4.0",
-                "spryker/merchant-user-gui": "^1.6.0"
+                "spryker/merchant-user-gui": "^1.6.0",
+                "spryker/oauth-merchant-user": "^1.0.0"
             },
             "suggest": {
                 "spryker-feature/merchant": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "202311.x-dev"
+                    "dev-master": "202403.x-dev"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -5823,9 +5825,9 @@
             ],
             "description": "Marketplace Merchant [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/marketplace-merchant/tree/202311.0"
+                "source": "https://github.com/spryker-feature/marketplace-merchant/tree/master"
             },
-            "time": "2023-11-21T13:27:43+00:00"
+            "time": "2024-02-01T14:30:31+00:00"
         },
         {
             "name": "spryker-feature/marketplace-merchant-custom-prices",
@@ -40272,6 +40274,55 @@
             "time": "2023-02-08T18:31:45+00:00"
         },
         {
+            "name": "spryker/oauth-merchant-user",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/oauth-merchant-user.git",
+                "reference": "3a49f776285a863454ab58489b7f9b919c589915"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/oauth-merchant-user/zipball/3a49f776285a863454ab58489b7f9b919c589915",
+                "reference": "3a49f776285a863454ab58489b7f9b919c589915",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "spryker/kernel": "^3.30.0",
+                "spryker/merchant-user": "^1.0.0",
+                "spryker/oauth-user-connector-extension": "^1.0.0",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/merchant": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*",
+                "spryker/user": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "OauthMerchantUser module",
+            "support": {
+                "source": "https://github.com/spryker/oauth-merchant-user/tree/1.0.0"
+            },
+            "time": "2024-02-01T12:59:57+00:00"
+        },
+        {
             "name": "spryker/oauth-permission",
             "version": "1.3.1",
             "source": {
@@ -74131,7 +74182,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/robotframework-suite-tests.git",
-                "reference": "7b6a2607272b7ec602efbc7fd9feeee5a40b5c17"
+                "reference": "005f311ec9a434eaeadaecb0037abe226e78c08f"
             },
             "default-branch": true,
             "type": "library",
@@ -74139,7 +74190,7 @@
                 "MIT"
             ],
             "description": "Automated tests for the Robot Framework",
-            "time": "2024-01-22T14:59:11+00:00"
+            "time": "2024-02-01T12:35:26+00:00"
         },
         {
             "name": "spryker/testify",
@@ -74899,6 +74950,12 @@
             "alias_normalized": "202403.0"
         },
         {
+            "package": "spryker-feature/marketplace-merchant",
+            "version": "9999999-dev",
+            "alias": "202403.0",
+            "alias_normalized": "202403.0"
+        },
+        {
             "package": "spryker-feature/marketplace-merchantportal-core",
             "version": "9999999-dev",
             "alias": "202403.0",
@@ -74929,6 +74986,7 @@
         "spryker-feature/checkout": 20,
         "spryker-feature/company-account": 20,
         "spryker-feature/customer-account-management": 20,
+        "spryker-feature/marketplace-merchant": 20,
         "spryker-feature/marketplace-merchantportal-core": 20,
         "spryker-feature/shipment": 20,
         "spryker-feature/spryker-core": 20,
