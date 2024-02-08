@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fdafd9e2039db4c35df6ebe2cd9d4d38",
+    "content-hash": "f16eb1c4d0e8f8fb558695e4df7c4ee6",
     "packages": [
         {
             "name": "async-aws/core",
@@ -4692,7 +4692,7 @@
         },
         {
             "name": "spryker-feature/acl",
-            "version": "202311.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/acl.git",
@@ -4711,6 +4711,7 @@
                 "spryker/acl-entity": "^1.9.0",
                 "spryker/acl-entity-data-import": "^0.2.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -4729,7 +4730,7 @@
         },
         {
             "name": "spryker-feature/agent-assist",
-            "version": "202311.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/agent-assist.git",
@@ -4750,6 +4751,7 @@
                 "spryker/agent-gui": "^1.1.0",
                 "spryker/security-blocker-storefront-agent": "^1.0.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -5693,6 +5695,44 @@
             "time": "2023-11-21T13:26:29+00:00"
         },
         {
+            "name": "spryker-feature/marketplace-agent-assist",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-feature/marketplace-agent-assist.git",
+                "reference": "64362c96c4cfd49baafed7bcbec855ddc9aa2d09"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-feature/marketplace-agent-assist/zipball/64362c96c4cfd49baafed7bcbec855ddc9aa2d09",
+                "reference": "64362c96c4cfd49baafed7bcbec855ddc9aa2d09",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0",
+                "spryker/acl-merchant-agent": "^1.0.0",
+                "spryker/agent-security-blocker-merchant-portal": "^1.0.0",
+                "spryker/merchant-agent": "^1.0.0",
+                "spryker/merchant-agent-gui": "^1.0.0"
+            },
+            "default-branch": true,
+            "type": "metapackage",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "202403.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Marketplace Agent Assist [feature]",
+            "support": {
+                "source": "https://github.com/spryker-feature/marketplace-agent-assist/tree/master"
+            },
+            "time": "2024-02-07T10:24:53+00:00"
+        },
+        {
             "name": "spryker-feature/marketplace-cart",
             "version": "202311.0",
             "source": {
@@ -5909,7 +5949,7 @@
         },
         {
             "name": "spryker-feature/marketplace-merchant-portal-product-management",
-            "version": "202311.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/marketplace-merchant-portal-product-management.git",
@@ -5929,6 +5969,7 @@
                 "spryker-feature/marketplace-merchantportal-core": "Recommended feature dependency.",
                 "spryker-feature/marketplace-product": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -6036,7 +6077,7 @@
         },
         {
             "name": "spryker-feature/marketplace-order-management",
-            "version": "202311.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/marketplace-order-management.git",
@@ -6069,6 +6110,7 @@
                 "spryker-feature/marketplace-merchant": "Recommended feature dependency.",
                 "spryker-feature/order-management": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -6121,7 +6163,7 @@
         },
         {
             "name": "spryker-feature/marketplace-product",
-            "version": "202311.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/marketplace-product.git",
@@ -6152,6 +6194,7 @@
                 "spryker-feature/marketplace-merchant": "Recommended feature dependency.",
                 "spryker-feature/product": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -6205,7 +6248,7 @@
         },
         {
             "name": "spryker-feature/marketplace-product-offer",
-            "version": "202311.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/marketplace-product-offer.git",
@@ -6238,6 +6281,7 @@
                 "spryker-feature/marketplace-merchant": "Recommended feature dependency.",
                 "spryker-feature/product": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -6440,7 +6484,7 @@
         },
         {
             "name": "spryker-feature/marketplace-shipment",
-            "version": "202311.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/marketplace-shipment.git",
@@ -6464,6 +6508,7 @@
                 "spryker-feature/marketplace-merchant": "Recommended feature dependency.",
                 "spryker-feature/shipment": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -6559,7 +6604,7 @@
         },
         {
             "name": "spryker-feature/merchant",
-            "version": "202311.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/merchant.git",
@@ -6577,6 +6622,7 @@
                 "spryker/merchant-data-import": "^0.5.0",
                 "spryker/merchant-gui": "^3.11.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -6636,7 +6682,7 @@
         },
         {
             "name": "spryker-feature/merchant-contracts",
-            "version": "202311.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/merchant-contracts.git",
@@ -6657,6 +6703,7 @@
             "suggest": {
                 "spryker-feature/merchant": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -17407,6 +17454,55 @@
             "time": "2024-02-06T10:56:40+00:00"
         },
         {
+            "name": "spryker/acl-merchant-agent",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/acl-merchant-agent.git",
+                "reference": "a0ae78c60c20de7e22e07f2b7daae275a168fc20"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/acl-merchant-agent/zipball/a0ae78c60c20de7e22e07f2b7daae275a168fc20",
+                "reference": "a0ae78c60c20de7e22e07f2b7daae275a168fc20",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "spryker/acl": "^3.0.0",
+                "spryker/acl-extension": "^1.2.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/log": "^3.0.0",
+                "spryker/merchant-agent": "^1.0.0",
+                "spryker/symfony": "^3.15.0",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "AclMerchantAgent module",
+            "support": {
+                "source": "https://github.com/spryker/acl-merchant-agent/tree/1.0.0"
+            },
+            "time": "2024-02-06T10:56:40+00:00"
+        },
+        {
             "name": "spryker/acl-merchant-portal",
             "version": "1.12.0",
             "source": {
@@ -17611,6 +17707,57 @@
             "time": "2020-08-18T17:06:30+00:00"
         },
         {
+            "name": "spryker/agent-dashboard-merchant-portal-gui",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/agent-dashboard-merchant-portal-gui.git",
+                "reference": "e73a6d29c11a3a4ebd8a955cda9cc7b629722e8b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/agent-dashboard-merchant-portal-gui/zipball/e73a6d29c11a3a4ebd8a955cda9cc7b629722e8b",
+                "reference": "e73a6d29c11a3a4ebd8a955cda9cc7b629722e8b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "spryker/agent-dashboard-merchant-portal-gui-extension": "^1.0.0",
+                "spryker/gui-table": "^2.2.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/merchant-agent": "^1.0.0",
+                "spryker/merchant-user": "^1.5.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/transfer": "^3.27.0",
+                "spryker/translator": "^1.1.0",
+                "spryker/zed-ui": "^2.4.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "AgentDashboardMerchantPortalGui module",
+            "support": {
+                "source": "https://github.com/spryker/agent-dashboard-merchant-portal-gui/tree/0.1.0"
+            },
+            "time": "2024-02-06T10:56:40+00:00"
+        },
+        {
             "name": "spryker/agent-dashboard-merchant-portal-gui-extension",
             "version": "1.0.0",
             "source": {
@@ -17735,6 +17882,168 @@
             "description": "AgentGui module",
             "support": {
                 "source": "https://github.com/spryker/agent-gui/tree/1.2.0"
+            },
+            "time": "2024-02-06T10:56:40+00:00"
+        },
+        {
+            "name": "spryker/agent-security-blocker-merchant-portal",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/agent-security-blocker-merchant-portal.git",
+                "reference": "8ac897b464f50dd806aef21abdce0b390cafc21a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/agent-security-blocker-merchant-portal/zipball/8ac897b464f50dd806aef21abdce0b390cafc21a",
+                "reference": "8ac897b464f50dd806aef21abdce0b390cafc21a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "spryker/kernel": "^3.30.0",
+                "spryker/security-blocker-extension": "^1.0.0",
+                "spryker/transfer": "^3.25.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "AgentSecurityBlockerMerchantPortal module",
+            "support": {
+                "source": "https://github.com/spryker/agent-security-blocker-merchant-portal/tree/1.0.0"
+            },
+            "time": "2024-02-06T10:56:40+00:00"
+        },
+        {
+            "name": "spryker/agent-security-blocker-merchant-portal-gui",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/agent-security-blocker-merchant-portal-gui.git",
+                "reference": "5618e02be51aa46ccbd238fbbf7f2b89a769672f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/agent-security-blocker-merchant-portal-gui/zipball/5618e02be51aa46ccbd238fbbf7f2b89a769672f",
+                "reference": "5618e02be51aa46ccbd238fbbf7f2b89a769672f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "spryker/event-dispatcher-extension": "^1.0.0",
+                "spryker/glossary": "^3.0.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/security-blocker": "^1.2.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/transfer": "^3.25.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/container": "*",
+                "spryker/event-dispatcher": "*",
+                "spryker/testify": "*"
+            },
+            "suggest": {
+                "spryker/container": "If you want to use EventDispatcherPlugin.",
+                "spryker/event-dispatcher": "If you want to use EventDispatcherPlugin."
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "AgentSecurityBlockerMerchantPortalGui module",
+            "support": {
+                "source": "https://github.com/spryker/agent-security-blocker-merchant-portal-gui/tree/1.0.0"
+            },
+            "time": "2024-02-06T10:56:40+00:00"
+        },
+        {
+            "name": "spryker/agent-security-merchant-portal-gui",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/agent-security-merchant-portal-gui.git",
+                "reference": "d2d7c442c009e12148e42b29610b4ef9603c0b63"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/agent-security-merchant-portal-gui/zipball/d2d7c442c009e12148e42b29610b4ef9603c0b63",
+                "reference": "d2d7c442c009e12148e42b29610b4ef9603c0b63",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "spryker/container": "^1.1.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/merchant-agent": "^1.0.0",
+                "spryker/merchant-user": "^1.0.0",
+                "spryker/messenger": "^3.0.0",
+                "spryker/security": "^1.8.0",
+                "spryker/security-extension": "^1.0.0",
+                "spryker/security-merchant-portal-gui-extension": "^1.1.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/transfer": "^3.27.0",
+                "spryker/user": "^3.21.0",
+                "spryker/zed-ui": "^2.4.0"
+            },
+            "require-dev": {
+                "spryker/application": "*",
+                "spryker/code-sniffer": "*",
+                "spryker/event-dispatcher": "*",
+                "spryker/form": "*",
+                "spryker/propel": "*",
+                "spryker/router": "*",
+                "spryker/session": "*",
+                "spryker/testify": "*",
+                "spryker/validator": "*"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "AgentSecurityMerchantPortalGui module",
+            "support": {
+                "source": "https://github.com/spryker/agent-security-merchant-portal-gui/tree/0.1.0"
             },
             "time": "2024-02-06T10:56:40+00:00"
         },
@@ -34555,6 +34864,100 @@
             "description": "Merchant module",
             "support": {
                 "source": "https://github.com/spryker/merchant/tree/3.10.0"
+            },
+            "time": "2024-02-06T10:56:40+00:00"
+        },
+        {
+            "name": "spryker/merchant-agent",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/merchant-agent.git",
+                "reference": "cbbdaa4646ab1c4891ee4e98ed1ea4bd0f3dbe4c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/merchant-agent/zipball/cbbdaa4646ab1c4891ee4e98ed1ea4bd0f3dbe4c",
+                "reference": "cbbdaa4646ab1c4891ee4e98ed1ea4bd0f3dbe4c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "spryker/kernel": "^3.30.0",
+                "spryker/merchant-user": "^1.0.0",
+                "spryker/transfer": "^3.27.0",
+                "spryker/user": "^3.0.0",
+                "spryker/user-extension": "^1.3.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "MerchantAgent module",
+            "support": {
+                "source": "https://github.com/spryker/merchant-agent/tree/1.0.0"
+            },
+            "time": "2024-02-06T10:56:40+00:00"
+        },
+        {
+            "name": "spryker/merchant-agent-gui",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/merchant-agent-gui.git",
+                "reference": "73c8424dc50163d4aefce7210d039e080850d4c9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/merchant-agent-gui/zipball/73c8424dc50163d4aefce7210d039e080850d4c9",
+                "reference": "73c8424dc50163d4aefce7210d039e080850d4c9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "spryker/gui": "^3.0.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/merchant-agent": "^1.0.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/transfer": "^3.27.0",
+                "spryker/user-extension": "^1.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "MerchantAgentGui module",
+            "support": {
+                "source": "https://github.com/spryker/merchant-agent-gui/tree/1.0.0"
             },
             "time": "2024-02-06T10:56:40+00:00"
         },
@@ -74976,6 +75379,18 @@
     ],
     "aliases": [
         {
+            "package": "spryker-feature/acl",
+            "version": "9999999-dev",
+            "alias": "202403.0",
+            "alias_normalized": "202403.0"
+        },
+        {
+            "package": "spryker-feature/agent-assist",
+            "version": "9999999-dev",
+            "alias": "202403.0",
+            "alias_normalized": "202403.0"
+        },
+        {
             "package": "spryker-feature/category-management",
             "version": "9999999-dev",
             "alias": "202403.0",
@@ -75000,13 +75415,61 @@
             "alias_normalized": "202403.0"
         },
         {
+            "package": "spryker-feature/marketplace-agent-assist",
+            "version": "9999999-dev",
+            "alias": "202403.0",
+            "alias_normalized": "202403.0"
+        },
+        {
             "package": "spryker-feature/marketplace-merchant",
             "version": "9999999-dev",
             "alias": "202403.0",
             "alias_normalized": "202403.0"
         },
         {
+            "package": "spryker-feature/marketplace-merchant-portal-product-management",
+            "version": "9999999-dev",
+            "alias": "202403.0",
+            "alias_normalized": "202403.0"
+        },
+        {
             "package": "spryker-feature/marketplace-merchantportal-core",
+            "version": "9999999-dev",
+            "alias": "202403.0",
+            "alias_normalized": "202403.0"
+        },
+        {
+            "package": "spryker-feature/marketplace-order-management",
+            "version": "9999999-dev",
+            "alias": "202403.0",
+            "alias_normalized": "202403.0"
+        },
+        {
+            "package": "spryker-feature/marketplace-product",
+            "version": "9999999-dev",
+            "alias": "202403.0",
+            "alias_normalized": "202403.0"
+        },
+        {
+            "package": "spryker-feature/marketplace-product-offer",
+            "version": "9999999-dev",
+            "alias": "202403.0",
+            "alias_normalized": "202403.0"
+        },
+        {
+            "package": "spryker-feature/marketplace-shipment",
+            "version": "9999999-dev",
+            "alias": "202403.0",
+            "alias_normalized": "202403.0"
+        },
+        {
+            "package": "spryker-feature/merchant",
+            "version": "9999999-dev",
+            "alias": "202403.0",
+            "alias_normalized": "202403.0"
+        },
+        {
+            "package": "spryker-feature/merchant-contracts",
             "version": "9999999-dev",
             "alias": "202403.0",
             "alias_normalized": "202403.0"
@@ -75028,19 +75491,50 @@
             "version": "9999999-dev",
             "alias": "202403.0",
             "alias_normalized": "202403.0"
+        },
+        {
+            "package": "spryker/agent-dashboard-merchant-portal-gui",
+            "version": "9999999-dev",
+            "alias": "1.0.0",
+            "alias_normalized": "1.0.0.0"
+        },
+        {
+            "package": "spryker/agent-security-blocker-merchant-portal-gui",
+            "version": "9999999-dev",
+            "alias": "1.0.0",
+            "alias_normalized": "1.0.0.0"
+        },
+        {
+            "package": "spryker/agent-security-merchant-portal-gui",
+            "version": "9999999-dev",
+            "alias": "1.0.0",
+            "alias_normalized": "1.0.0.0"
         }
     ],
     "minimum-stability": "dev",
     "stability-flags": {
+        "spryker-feature/acl": 20,
+        "spryker-feature/agent-assist": 20,
         "spryker-feature/category-management": 20,
         "spryker-feature/checkout": 20,
         "spryker-feature/company-account": 20,
         "spryker-feature/customer-account-management": 20,
+        "spryker-feature/marketplace-agent-assist": 20,
         "spryker-feature/marketplace-merchant": 20,
+        "spryker-feature/marketplace-merchant-portal-product-management": 20,
         "spryker-feature/marketplace-merchantportal-core": 20,
+        "spryker-feature/marketplace-order-management": 20,
+        "spryker-feature/marketplace-product": 20,
+        "spryker-feature/marketplace-product-offer": 20,
+        "spryker-feature/marketplace-shipment": 20,
+        "spryker-feature/merchant": 20,
+        "spryker-feature/merchant-contracts": 20,
         "spryker-feature/shipment": 20,
         "spryker-feature/spryker-core": 20,
         "spryker-feature/spryker-core-back-office": 20,
+        "spryker/agent-dashboard-merchant-portal-gui": 20,
+        "spryker/agent-security-blocker-merchant-portal-gui": 20,
+        "spryker/agent-security-merchant-portal-gui": 20,
         "spryker/docker-chromedriver": 20,
         "spryker/robotframework-suite-tests": 20
     },
