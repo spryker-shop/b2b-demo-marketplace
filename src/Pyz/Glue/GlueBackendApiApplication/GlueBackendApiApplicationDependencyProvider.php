@@ -19,6 +19,7 @@ use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\StrictTranspor
 use Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\Plugin\GlueBackendApiApplication\AuthorizationRequestAfterRoutingValidatorPlugin;
 use Spryker\Glue\Http\Plugin\Application\HttpApplicationPlugin;
 use Spryker\Glue\OauthBackendApi\Plugin\GlueApplication\BackendApiAccessTokenValidatorPlugin;
+use Spryker\Glue\Locale\Plugin\Application\LocaleApplicationPlugin;
 use Spryker\Glue\OauthBackendApi\Plugin\GlueApplication\OauthBackendApiTokenResource;
 use Spryker\Glue\OauthBackendApi\Plugin\GlueApplication\UserRequestValidatorPlugin;
 use Spryker\Glue\OauthBackendApi\Plugin\GlueBackendApiApplication\UserRequestBuilderPlugin;
@@ -39,6 +40,7 @@ class GlueBackendApiApplicationDependencyProvider extends SprykerGlueBackendApiA
             new RouterApplicationPlugin(),
             new EventDispatcherApplicationPlugin(),
             new StoreHttpHeaderApplicationPlugin(),
+            new LocaleApplicationPlugin(),
         ];
     }
 
