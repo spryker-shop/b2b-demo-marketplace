@@ -26,7 +26,6 @@ use Spryker\Glue\OauthBackendApi\Plugin\GlueBackendApiApplication\UserRequestBui
 use Spryker\Glue\Router\Plugin\Application\RouterApplicationPlugin;
 use Spryker\Glue\StoresApi\Plugin\GlueBackendApiApplication\StoreApplicationPlugin as ClientStoreApplicationPlugin;
 use Spryker\Glue\StoresBackendApi\Plugin\GlueBackendApiApplication\StoreApplicationPlugin;
-use Spryker\Glue\StoresRestApi\Plugin\Application\StoreHttpHeaderApplicationPlugin;
 use Spryker\Zed\Propel\Communication\Plugin\Application\PropelApplicationPlugin;
 
 class GlueBackendApiApplicationDependencyProvider extends SprykerGlueBackendApiApplicationDependencyProvider
@@ -43,7 +42,6 @@ class GlueBackendApiApplicationDependencyProvider extends SprykerGlueBackendApiA
             new StoreApplicationPlugin(),
             new RouterApplicationPlugin(),
             new EventDispatcherApplicationPlugin(),
-            new StoreHttpHeaderApplicationPlugin(),
             new LocaleApplicationPlugin(),
         ];
     }
