@@ -1,0 +1,12 @@
+{% extends template('widget') %}
+
+{% define data = {
+    isVisible: _widget.isVisible,
+    merchantReference: _widget.merchantReference,
+} %}
+
+{% block body %}
+    <a class="link link--small" href="{{ url('company/merchant-relation-request/create', {'merchant-reference': data.merchantReference}) }}" data-qa="merchant-relation-request-create-link">
+        {{ 'merchant_relation_request_widget.request_for_relation.link' | trans }}
+    </a>
+{% endblock %}

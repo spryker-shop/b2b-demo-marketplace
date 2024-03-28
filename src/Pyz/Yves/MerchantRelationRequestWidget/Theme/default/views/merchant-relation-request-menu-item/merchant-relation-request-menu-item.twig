@@ -1,0 +1,18 @@
+{% extends template('widget') %}
+
+{% define data = {
+    isActivePage: _widget.isActivePage,
+    isVisible: _widget.isVisible,
+} %}
+
+{% block body %}
+    {% include molecule('navigation-sidebar-item') with {
+        data: {
+            url: path('company/merchant-relation-request'),
+            icon: 'script',
+            label: 'merchant_relation_request_widget.merchant_relation_request.list.title' | trans,
+            name: 'merchant-relation-request'
+        },
+        modifiers: data.isActivePage ? ['active'] : [],
+    } only %}
+{% endblock %}

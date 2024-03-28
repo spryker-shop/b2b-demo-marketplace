@@ -1,0 +1,15 @@
+{% extends molecule('merchant-relationship-table', '@SprykerShop:MerchantRelationshipPage') %}
+
+{% block actions %}
+    {% include molecule('table-action-list') with {
+        data: {
+            items: [
+                {
+                    url: url('company/merchant-relation/details', {'id-merchant-relationship': merchantRelationship.idMerchantRelationship}),
+                    icon: 'eye',
+                    title: 'merchant_relationship_page.table.action.view',
+                }
+            ]
+        }
+    } only %}
+{% endblock %}
