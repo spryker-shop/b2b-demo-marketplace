@@ -1,0 +1,22 @@
+{% extends template('page-layout-company', 'CompanyPage') %}
+
+{% define data = {
+    title: 'merchant_relation_request_page.merchant_relation_request.list.title' | trans,
+    activePage: 'merchantRelationRequest',
+    currentBreadcrumb: null,
+} %}
+
+{% block title %}
+    <h3>{{ data.title }}</h3>
+{% endblock %}
+
+{% block breadcrumbs %}
+    {% set breadcrumbs = [{
+        label: 'merchant_relation_request_page.merchant_relation_request' | trans,
+        url: path('company/merchant-relation-request'),
+    }] %}
+
+    {% block breadcrumbsContent %}
+        {{ parent() }}
+    {% endblock %}
+{% endblock %}
