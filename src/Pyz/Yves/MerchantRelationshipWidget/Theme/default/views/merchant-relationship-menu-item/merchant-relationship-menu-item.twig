@@ -1,9 +1,4 @@
-{% extends template('widget') %}
-
-{% define data = {
-    isActivePage: _widget.isActivePage,
-} %}
-
+{% extends view('merchant-relationship-menu-item', '@SprykerShop:MerchantRelationshipWidget') %}
 
 {% block body %}
     {% include molecule('navigation-sidebar-item') with {

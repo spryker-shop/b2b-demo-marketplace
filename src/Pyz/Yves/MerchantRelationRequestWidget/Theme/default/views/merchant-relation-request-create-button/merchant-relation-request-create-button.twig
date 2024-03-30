@@ -1,14 +1,9 @@
-{% extends template('widget') %}
-
-{% define data = {
-    isVisible: _widget.isVisible,
-    merchantReference: _widget.merchantReference,
-} %}
+{% extends view('merchant-relation-request-create-button', '@SprykerShop:MerchantRelationRequestWidget') %}
 
 {% block body %}
-    <div class="grid spacing-y">
-        <div class="col col--sm-12 col--lg-6">
-            <strong>{{ 'merchant_relation_request_widget.create_request.label' | trans }}:</strong>
+    <div class="grid spacing-bottom spacing-bottom--biggest">
+        <div class="col col--sm-12 col--lg-4">
+            <h5 class="spacing-bottom">{{ 'merchant_relation_request_widget.create_request.label' | trans }}:</h5>
 
             <div>
                 <a class="button" href="{{ url('company/merchant-relation-request/create', {'merchant-reference': data.merchantReference}) }}" data-qa="merchant-relation-request-create-button">

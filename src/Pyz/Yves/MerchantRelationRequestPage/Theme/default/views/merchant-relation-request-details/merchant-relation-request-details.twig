@@ -25,33 +25,41 @@
         } only %}
     {% endblock %}
 
-    <div class="grid grid--middle spacing-bottom spacing-bottom--big">
-        {% if data.merchant.merchantProfile.logoUrl %}
-            <div class="col col--sm-2 col--lg-1 spacing">
-                {% include molecule('lazy-image') with {
-                    data: {
-                        imageSrc: data.merchant.merchantProfile.logoUrl,
-                        alt: data.merchant.name
-                    },
-                } only %}
-            </div>
-        {% endif %}
+    {% block merchantLogo %}
+        <h4 class="spacing-bottom spacing-bottom--big">
+            {{ 'merchant_relation_request_page.merchant_relation_request.merchant' | trans }}
+        </h4>
 
-        <div class="col">
-            <strong>
-                {% if data.merchantUrl is not null %}
-                    <a class="link" href="{{ data.merchantUrl }}">
+        <div class="grid grid--middle spacing-bottom spacing-bottom--big">
+            {% if data.merchant.merchantProfile.logoUrl %}
+                <div class="col col--sm-2 col--lg-1 spacing">
+                    {% include molecule('lazy-image') with {
+                        data: {
+                            imageSrc: data.merchant.merchantProfile.logoUrl,
+                            alt: data.merchant.name
+                        },
+                    } only %}
+                </div>
+            {% endif %}
+
+            <div class="col">
+                <strong>
+                    {% if data.merchantUrl is not null %}
+                        <a class="link" href="{{ data.merchantUrl }}">
+                            {{ data.merchant.name }}
+                        </a>
+                    {% else %}
                         {{ data.merchant.name }}
-                    </a>
-                {% else %}
-                    {{ data.merchant.name }}
-                {% endif %}
-            </strong>
+                    {% endif %}
+                </strong>
+            </div>
         </div>
-    </div>
+    {% endblock %}
 
     {% block companyDetails %}
-        <h4 class="spacing-bottom spacing-bottom--big">{{ 'merchant_relation_request_page.merchant_relation_request_detail.company_details' | trans }}</h4>
+        <h4 class="spacing-bottom spacing-bottom--big">
+            {{ 'merchant_relation_request_page.merchant_relation_request_detail.company_details' | trans }}
+        </h4>
 
         <ul class="spacing-bottom spacing-bottom--bigger">
             <li class="spacing-bottom grid grid--gap-smaller grid--nowrap">
@@ -77,7 +85,9 @@
     {% endblock %}
 
     {% block customerDetails %}
-        <h4 class="spacing-bottom spacing-bottom--big">{{ 'merchant_relation_request_page.merchant_relation_request_detail.details' | trans }}</h4>
+        <h4 class="spacing-bottom spacing-bottom--big">
+            {{ 'merchant_relation_request_page.merchant_relation_request_detail.details' | trans }}
+        </h4>
 
         <ul class="spacing-bottom spacing-bottom--bigger">
             <li class="spacing-bottom grid grid--gap-smaller grid--nowrap">
@@ -101,9 +111,11 @@
 
     {% block requestNote %}
         {% if data.merchantRelationRequest.requestNote ?? '' | length %}
-            <h4 class="spacing-bottom spacing-bottom--big">{{ 'merchant_relation_request_page.merchant_relation_request_detail.additional_details' | trans }}</h4>
+            <h4 class="spacing-bottom spacing-bottom--big">
+                {{ 'merchant_relation_request_page.merchant_relation_request_detail.additional_details' | trans }}
+            </h4>
 
-           <ul class="spacing-bottom spacing-bottom--bigger">
+            <ul class="spacing-bottom spacing-bottom--bigger">
                 <li class="spacing-bottom grid grid--gap-smaller grid--nowrap">
                     <span class="col col--xl-3">{{ 'merchant_relation_request_page.merchant_relation_request.request_note_label' | trans  ~ ': ' }}</span>
                     <span class="col">{{ data.merchantRelationRequest.requestNote }}</span>
@@ -114,7 +126,9 @@
 
     {% block desisionNote %}
         {% if data.merchantRelationRequest.decisionNote ?? '' | length %}
-            <h4 class="spacing-bottom spacing-bottom--big">{{ 'merchant_relation_request_page.merchant_relation_request_detail.comment_from_merchant' | trans }}</h4>
+            <h4 class="spacing-bottom spacing-bottom--big">
+                {{ 'merchant_relation_request_page.merchant_relation_request_detail.comment_from_merchant' | trans }}
+            </h4>
 
             <ul class="spacing-bottom spacing-bottom--bigger">
                 <li class="spacing-bottom grid grid--gap-smaller grid--nowrap">

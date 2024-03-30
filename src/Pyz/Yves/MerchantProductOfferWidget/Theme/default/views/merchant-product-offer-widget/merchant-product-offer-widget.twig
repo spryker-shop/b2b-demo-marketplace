@@ -35,6 +35,7 @@
                 currencyIsoCode: productOffer.price.currency.code | default(null),
                 isRadioButtonVisible: isRadioButtonVisible,
                 currentProductPrice: productOffer.price,
+                merchantReference: productOffer.merchantReference | default,
             },
         } only %}
     {% endfor %}

@@ -1,9 +1,13 @@
 {% extends view('merchant-relation-request-view', 'SprykerShop:MerchantRelationRequestPage') %}
 
+{% block relationRequestSeparator %}{% endblock %}
+
+{% block merchantRelationRequestPaginationSeparator %}{% endblock %}
+
 {% block companyContent %}
     {% include molecule('action-bar', 'ShopUi') with {
         data: {
-            title: 'company.account.company_user' | trans,
+            title: 'merchant_relation_request_page.merchant_relation_request' | trans,
             actions: (can('CreateMerchantRelationRequestPermissionPlugin') ? [
                 {
                     title: 'merchant_relation_request_page.merchant_relation_request.list.create_link' | trans,
@@ -15,10 +19,5 @@
     } only %}
 
     {{ block('relationRequestFiltersSecion') }}
-
-    {% block relationRequestSeparator %}{% endblock %}
-
     {{ block('merchantRelationRequests') }}
-
-    {% block merchantRelationRequestPaginationSeparator %}{% endblock %}
 {% endblock %}

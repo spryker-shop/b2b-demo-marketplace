@@ -1,8 +1,4 @@
-{% extends template('widget') %}
-
-{% define data = {
-    merchantRelationships: _widget.merchantRelationships,
-} %}
+{% extends view('merchant-relationship-link-list', '@SprykerShop:MerchantRelationshipWidget') %}
 
 {% block body %}
     <ul class="merchant-relationship-status-notification__list">
