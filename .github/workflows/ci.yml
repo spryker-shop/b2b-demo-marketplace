@@ -686,7 +686,7 @@ jobs:
               run: |
                   docker/sdk exec --env "ENV_REPOSITORY_ID=b2b-mp" --env "SPRYKER_MP_HOST=mp.de.spryker.local" cypress-tests npm run cy:feature:merchant-b2b-contract-requests
             - name: Upload artifacts
-              if: always()
+              if: failure()
               run: |
                   AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp .cypress s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/cypress-ui/b2b-mp/${GITHUB_RUN_ID}/ \
                     --recursive \
