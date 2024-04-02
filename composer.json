@@ -324,7 +324,8 @@
         "spryker/testify": "^3.52.0",
         "spryker/testify-backend-api": "^0.1.0",
         "stecman/symfony-console-completion": "*",
-        "symfony/web-profiler-bundle": "*"
+        "symfony/web-profiler-bundle": "*",
+        "spryker/cypress-tests": "dev-feature/cc-33374/integrate-cc-32421"
     },
     "autoload": {
         "psr-4": {
@@ -367,6 +368,10 @@
         {
             "type": "git",
             "url": "https://github.com/spryker/robotframework-suite-tests.git"
+        },
+        {
+            "type": "git",
+            "url": "git@github.com:spryker/cypress-tests.git"
         }
     ],
     "scripts": {

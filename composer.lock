@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8fcffebd498a2b33b115f70e9140f878",
+    "content-hash": "d8f7617c0f18dc0fc7016edb24bd92bf",
     "packages": [
         {
             "name": "async-aws/core",
@@ -30161,16 +30161,16 @@
         },
         {
             "name": "spryker/customer",
-            "version": "7.56.0",
+            "version": "7.56.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/customer.git",
-                "reference": "e51c94289ebf41f09ba71d0ce45a8730591a65ff"
+                "reference": "70cada48245cdf22794fd8e5fe752932320820b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/customer/zipball/e51c94289ebf41f09ba71d0ce45a8730591a65ff",
-                "reference": "e51c94289ebf41f09ba71d0ce45a8730591a65ff",
+                "url": "https://api.github.com/repos/spryker/customer/zipball/70cada48245cdf22794fd8e5fe752932320820b9",
+                "reference": "70cada48245cdf22794fd8e5fe752932320820b9",
                 "shasum": ""
             },
             "require": {
@@ -30237,9 +30237,9 @@
             ],
             "description": "Customer module",
             "support": {
-                "source": "https://github.com/spryker/customer/tree/7.56.0"
+                "source": "https://github.com/spryker/customer/tree/7.56.1"
             },
-            "time": "2024-03-21T18:45:02+00:00"
+            "time": "2024-04-01T14:15:35+00:00"
         },
         {
             "name": "spryker/customer-access",
@@ -75558,6 +75558,21 @@
             "time": "2023-11-02T19:16:04+00:00"
         },
         {
+            "name": "spryker/cypress-tests",
+            "version": "dev-feature/cc-33374/integrate-cc-32421",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:spryker/cypress-tests.git",
+                "reference": "9a2d27e98036d879c0b3cb090bf21b17c0e68fd4"
+            },
+            "type": "library",
+            "license": [
+                "MIT"
+            ],
+            "description": "This repository is dedicated to housing an extensive collection of UI end-to-end tests, meticulously crafted using Cypress for Spryker applications. These tests are designed to thoroughly evaluate the user interface, ensuring that all interactions and visual elements function as intended in real-world scenarios. By leveraging Cypress's advanced browser automation capabilities, this suite provides an efficient and effective means of validating the user experience, confirming the seamless operation and aesthetic integrity of Spryker's front-end components. Our commitment to rigorous UI testing helps maintain the high standard of quality and reliability that Spryker users expect.",
+            "time": "2024-04-01T15:51:43+00:00"
+        },
+        {
             "name": "spryker/development",
             "version": "3.35.0",
             "source": {
@@ -76725,7 +76740,8 @@
         "spryker/agent-security-blocker-merchant-portal-gui": 20,
         "spryker/agent-security-merchant-portal-gui": 20,
         "spryker/docker-chromedriver": 20,
-        "spryker/robotframework-suite-tests": 20
+        "spryker/robotframework-suite-tests": 20,
+        "spryker/cypress-tests": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
