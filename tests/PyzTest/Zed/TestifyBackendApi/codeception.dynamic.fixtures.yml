@@ -55,6 +55,8 @@ suites:
                 - \SprykerTest\Shared\MerchantRelationRequest\Helper\MerchantRelationRequestHelper
                 - \SprykerTest\Shared\Comment\Helper\CommentHelper
                 - \SprykerTest\Zed\Twig\Helper\TwigHelper:
+                      twigPlugins:
+                          - \Spryker\Zed\CmsBlock\Communication\Plugin\Twig\CmsBlockTwigExtensionPlugin
                       loaderPlugins:
                           - \Spryker\Zed\Twig\Communication\Plugin\FilesystemTwigLoaderPlugin
                           - \Spryker\Zed\Twig\Communication\Plugin\FormFilesystemTwigLoaderPlugin
