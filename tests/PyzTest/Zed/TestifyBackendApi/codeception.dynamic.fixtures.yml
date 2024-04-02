@@ -55,6 +55,11 @@ suites:
                 - \SprykerTest\Shared\MerchantRelationRequest\Helper\MerchantRelationRequestHelper
                 - \SprykerTest\Shared\Comment\Helper\CommentHelper
                 - \SprykerTest\Zed\Twig\Helper\TwigHelper:
+                      loaderPlugins:
+                          - \Spryker\Zed\Twig\Communication\Plugin\FilesystemTwigLoaderPlugin
+                          - \Spryker\Zed\Twig\Communication\Plugin\FormFilesystemTwigLoaderPlugin
             config:
                 \SprykerTest\Shared\Testify\Helper\DataCleanupHelper:
                     cleanup: false
+                \SprykerTest\Shared\Customer\Helper\CustomerDataHelper:
+                    isMailFacadeMockEnabled: false
