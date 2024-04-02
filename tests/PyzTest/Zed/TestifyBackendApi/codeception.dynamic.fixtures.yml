@@ -58,6 +58,8 @@ suites:
                       loaderPlugins:
                           - \Spryker\Zed\Twig\Communication\Plugin\FilesystemTwigLoaderPlugin
                           - \Spryker\Zed\Twig\Communication\Plugin\FormFilesystemTwigLoaderPlugin
+                          - \Spryker\Zed\Gui\Communication\Plugin\Twig\GuiTwigLoaderPlugin
+                          - \Spryker\Zed\CmsBlock\Communication\Plugin\Twig\CmsBlockTemplateTwigLoaderPlugin
             config:
                 \SprykerTest\Shared\Testify\Helper\DataCleanupHelper:
                     cleanup: false
