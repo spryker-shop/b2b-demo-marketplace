@@ -34,6 +34,11 @@
     <div class="col col--sm-12 col--lg-8 col--xl-6 spacing-bottom spacing-bottom--bigger">
         {{ block('detail') }}
 
+        {% block merchantRelationRequestCreateButton %}
+            {% widget 'MerchantRelationRequestCreateButtonWidget' args [data.merchantReference] only %}
+            {% endwidget %}
+        {% endblock %}
+
         {% widget 'MerchantOpeningHoursWidget' args [data.idMerchant] only %}{% endwidget %}
     </div>
 {% endblock %}
