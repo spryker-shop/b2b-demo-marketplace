@@ -684,7 +684,7 @@ jobs:
                   docker/sdk cli console queue:worker:start --stop-when-empty
             - name: Run Tests
               run: |
-                  docker/sdk exec --env "ENV_REPOSITORY_ID=b2b-mp" --env "SPRYKER_MP_HOST=mp.de.spryker.local" cypress-tests npm run cy:feature:merchant-b2b-contract-requests
+                  docker/sdk exec --env "ENV_REPOSITORY_ID=b2b-mp" --env "SPRYKER_MP_HOST=mp.de.spryker.local" cypress-tests npm run cy:ci:b2b-mp
             - name: Upload artifacts
               if: failure()
               run: |
