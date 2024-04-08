@@ -7,6 +7,9 @@ build:
     dependencies:
         before:
             - 'npm cache clean --force'
+            - 'rm -rf node_modules'
+            - 'npm install'
+            - 'npm install fast-glob --save'
 
     tests:
         override:
