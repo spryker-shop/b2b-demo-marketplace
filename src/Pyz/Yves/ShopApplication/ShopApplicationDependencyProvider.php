@@ -14,11 +14,11 @@ use Pyz\Yves\ProductSetWidget\Widget\ProductSetIdsWidget;
 use Spryker\Yves\ErrorHandler\Plugin\Application\ErrorHandlerApplicationPlugin;
 use Spryker\Yves\EventDispatcher\Plugin\Application\EventDispatcherApplicationPlugin;
 use Spryker\Yves\Form\Plugin\Application\FormApplicationPlugin;
-use Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin;
+use Spryker\Yves\Http\Plugin\Application\YvesHttpApplicationPlugin;
 use Spryker\Yves\Locale\Plugin\Application\LocaleApplicationPlugin;
 use Spryker\Yves\Messenger\Plugin\Application\FlashMessengerApplicationPlugin;
 use Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin;
-use Spryker\Yves\Security\Plugin\Application\SecurityApplicationPlugin;
+use Spryker\Yves\Security\Plugin\Application\YvesSecurityApplicationPlugin;
 use Spryker\Yves\Session\Plugin\Application\SessionApplicationPlugin;
 use Spryker\Yves\Translator\Plugin\Application\TranslatorApplicationPlugin;
 use Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin;
@@ -63,6 +63,11 @@ use SprykerShop\Yves\MerchantOpeningHoursWidget\Widget\MerchantOpeningHoursWidge
 use SprykerShop\Yves\MerchantProductOfferWidget\Widget\MerchantProductOffersSelectWidget;
 use SprykerShop\Yves\MerchantProductOfferWidget\Widget\MerchantProductOfferWidget;
 use SprykerShop\Yves\MerchantProductWidget\Widget\MerchantProductWidget;
+use SprykerShop\Yves\MerchantRelationRequestWidget\Widget\MerchantRelationRequestCreateButtonWidget;
+use SprykerShop\Yves\MerchantRelationRequestWidget\Widget\MerchantRelationRequestCreateLinkWidget;
+use SprykerShop\Yves\MerchantRelationRequestWidget\Widget\MerchantRelationRequestMenuItemWidget;
+use SprykerShop\Yves\MerchantRelationshipWidget\Widget\MerchantRelationshipLinkListWidget;
+use SprykerShop\Yves\MerchantRelationshipWidget\Widget\MerchantRelationshipMenuItemWidget;
 use SprykerShop\Yves\MerchantSalesOrderWidget\Widget\MerchantOrderReferenceForItemsWidget;
 use SprykerShop\Yves\MerchantSalesReturnWidget\Plugin\MerchantSalesReturnCreateFormWidgetCacheKeyGeneratorStrategyPlugin;
 use SprykerShop\Yves\MerchantSalesReturnWidget\Widget\MerchantSalesReturnCreateFormWidget;
@@ -312,6 +317,11 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             ProductConfigurationShoppingListItemDisplayWidget::class,
             ProductConfigurationShoppingListPageButtonWidget::class,
             CartSummaryHideTaxAmountWidget::class,
+            MerchantRelationRequestCreateLinkWidget::class,
+            MerchantRelationRequestCreateButtonWidget::class,
+            MerchantRelationRequestMenuItemWidget::class,
+            MerchantRelationshipMenuItemWidget::class,
+            MerchantRelationshipLinkListWidget::class,
         ];
     }
 
@@ -349,7 +359,7 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
     protected function getApplicationPlugins(): array
     {
         $applicationPlugins = [
-            new HttpApplicationPlugin(),
+            new YvesHttpApplicationPlugin(),
             new TwigApplicationPlugin(),
             new EventDispatcherApplicationPlugin(),
             new ShopApplicationApplicationPlugin(),
@@ -362,7 +372,7 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             new FlashMessengerApplicationPlugin(),
             new FormApplicationPlugin(),
             new ValidatorApplicationPlugin(),
-            new SecurityApplicationPlugin(),
+            new YvesSecurityApplicationPlugin(),
             new CustomerConfirmationUserCheckerApplicationPlugin(),
         ];
 

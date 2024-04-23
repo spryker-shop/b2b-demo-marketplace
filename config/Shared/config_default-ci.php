@@ -18,6 +18,8 @@ use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Log\LogConstants;
 use Spryker\Shared\MerchantPortalApplication\MerchantPortalConstants;
+use Spryker\Shared\MerchantRelationRequest\MerchantRelationRequestConstants;
+use Spryker\Shared\MerchantRelationship\MerchantRelationshipConstants;
 use Spryker\Shared\MessageBroker\MessageBrokerConstants;
 use Spryker\Shared\Newsletter\NewsletterConstants;
 use Spryker\Shared\OauthClient\OauthClientConstants;
@@ -54,6 +56,8 @@ $backofficeHost = $dynamicStoreEnabled ? 'backoffice.eu.spryker.test' : 'backoff
 $merchantPortalHost = $dynamicStoreEnabled ? 'mp.eu.spryker.test' : 'mp.de.spryker.test';
 $backendGatewayHost = $dynamicStoreEnabled ? 'backend-gateway.eu.spryker.test' : 'backend-gateway.de.spryker.test';
 $backendApiHost = $dynamicStoreEnabled ? 'backend-api.eu.spryker.test' : 'backend-api.de.spryker.test';
+
+$isTestifyConstantsClassExists = class_exists(TestifyConstants::class);
 
 // ----------------------------------------------------------------------------
 // ------------------------------ CODEBASE ------------------------------------
@@ -253,6 +257,8 @@ $config[ApplicationConstants::BASE_URL_YVES]
     = $config[CustomerConstants::BASE_URL_YVES]
     = $config[ProductManagementConstants::BASE_URL_YVES]
     = $config[NewsletterConstants::BASE_URL_YVES]
+    = $config[MerchantRelationshipConstants::BASE_URL_YVES]
+    = $config[MerchantRelationRequestConstants::BASE_URL_YVES]
     = sprintf(
         'http://%s',
         $yvesHost,
@@ -268,7 +274,7 @@ $config[GlueApplicationConstants::GLUE_APPLICATION_DOMAIN]
         $glueHost,
     );
 
-if (class_exists(TestifyConstants::class)) {
+if ($isTestifyConstantsClassExists) {
     $config[TestifyConstants::GLUE_APPLICATION_DOMAIN] = $config[GlueApplicationConstants::GLUE_APPLICATION_DOMAIN];
 }
 
@@ -304,6 +310,10 @@ $config[GlueBackendApiApplicationConstants::GLUE_BACKEND_API_HOST] = $glueBacken
 $config[GlueBackendApiApplicationConstants::PROJECT_NAMESPACES] = [
     'Pyz',
 ];
+
+if ($isTestifyConstantsClassExists) {
+    $config[TestifyConstants::GLUE_BACKEND_API_DOMAIN] = sprintf('http://%s', $glueBackendHost);
+}
 
 // ----------------------------------------------------------------------------
 // ------------------------------ Glue Storefront API -------------------------------
