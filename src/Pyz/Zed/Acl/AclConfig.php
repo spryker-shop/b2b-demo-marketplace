@@ -32,6 +32,9 @@ class AclConfig extends SprykerAclConfig
             'richard@spryker.com' => [
                 'group' => AclConstants::ROOT_GROUP,
             ],
+            'agent-merchant@spryker.com' => [
+                'group' => AclConstants::ROOT_GROUP,
+            ],
         ];
     }
 
@@ -50,6 +53,9 @@ class AclConfig extends SprykerAclConfig
             'security-merchant-portal-gui',
             'sales-merchant-portal-gui',
             'user-merchant-portal-gui',
+            'agent-dashboard-merchant-portal-gui',
+            'merchant-relation-request-merchant-portal-gui',
+            'merchant-relationship-merchant-portal-gui',
         ];
 
         foreach ($bundleNames as $bundleName) {

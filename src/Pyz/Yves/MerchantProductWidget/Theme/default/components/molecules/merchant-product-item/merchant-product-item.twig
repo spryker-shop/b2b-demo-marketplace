@@ -23,6 +23,15 @@
                 {{ 'merchant_product_offer.view_seller' | trans }}
             </a>
         {% endblock %}
+
+        {% block merchantRelationRequestCreateButton %}
+            <div>
+                {% if data.merchantReference is not null %}
+                    {% widget 'MerchantRelationRequestCreateLinkWidget' args [data.merchantReference] only %}
+                    {% endwidget %}
+                {% endif %}
+            </div>
+        {% endblock %}
     </div>
 {% endblock %}
 

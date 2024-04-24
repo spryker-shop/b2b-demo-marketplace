@@ -91,7 +91,7 @@
                             class: returnCreateStateTogglerJsClass,
                         },
                         attributes: {
-                            'merchant-reference': orderItem.merchantReference,
+                            'merchant-reference': orderItem.merchantReference ?? false,
                             'is-returnable': isReturnable,
                         },
                         disabled: not isReturnable,

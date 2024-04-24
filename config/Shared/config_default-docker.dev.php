@@ -17,6 +17,8 @@ use Spryker\Shared\GlueStorefrontApiApplication\GlueStorefrontApiApplicationCons
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Log\LogConstants;
 use Spryker\Shared\MerchantPortalApplication\MerchantPortalConstants;
+use Spryker\Shared\MerchantRelationRequest\MerchantRelationRequestConstants;
+use Spryker\Shared\MerchantRelationship\MerchantRelationshipConstants;
 use Spryker\Shared\Newsletter\NewsletterConstants;
 use Spryker\Shared\OauthClient\OauthClientConstants;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
@@ -91,6 +93,8 @@ $config[LogConstants::LOG_LEVEL] = getenv('SPRYKER_DEBUG_ENABLED') ? Logger::INF
 $config[ZedRequestConstants::TRANSFER_DEBUG_SESSION_FORWARD_ENABLED] = (bool)getenv('SPRYKER_DEBUG_ENABLED');
 $config[ZedRequestConstants::SET_REPEAT_DATA] = (bool)getenv('SPRYKER_DEBUG_ENABLED');
 
+$isTestifyConstantsClassExists = class_exists(TestifyConstants::class);
+
 if (!getenv('SPRYKER_SSL_ENABLE')) {
 // ----------------------------------------------------------------------------
 // ------------------------------ SECURITY ------------------------------------
@@ -136,6 +140,8 @@ if (!getenv('SPRYKER_SSL_ENABLE')) {
         = $config[CustomerConstants::BASE_URL_YVES]
         = $config[ProductManagementConstants::BASE_URL_YVES]
         = $config[NewsletterConstants::BASE_URL_YVES]
+        = $config[MerchantRelationshipConstants::BASE_URL_YVES]
+        = $config[MerchantRelationRequestConstants::BASE_URL_YVES]
         = sprintf(
             'http://%s%s',
             $yvesHost,
@@ -154,7 +160,7 @@ if (!getenv('SPRYKER_SSL_ENABLE')) {
         $gluePort !== 80 ? ':' . $gluePort : '',
     );
 
-    if (class_exists(TestifyConstants::class, true)) {
+    if ($isTestifyConstantsClassExists) {
         $config[TestifyConstants::GLUE_APPLICATION_DOMAIN] = $config[GlueApplicationConstants::GLUE_APPLICATION_DOMAIN];
     }
 }
@@ -176,10 +182,19 @@ $config[AppCatalogGuiConstants::OAUTH_PROVIDER_NAME] = OauthDummyConfig::PROVIDE
 // ------------------------------ Glue Backend API -------------------------------
 // ----------------------------------------------------------------------------
 $sprykerGlueBackendHost = getenv('SPRYKER_GLUE_BACKEND_HOST');
+$sprykerGlueBackendPort = (int)(getenv('SPRYKER_GLUE_BACKEND_PORT')) ?: 80;
 $config[GlueBackendApiApplicationConstants::GLUE_BACKEND_API_HOST] = $sprykerGlueBackendHost;
 $config[GlueBackendApiApplicationConstants::PROJECT_NAMESPACES] = [
     'Pyz',
 ];
+
+if ($isTestifyConstantsClassExists) {
+    $config[TestifyConstants::GLUE_BACKEND_API_DOMAIN] = sprintf(
+        'http://%s%s',
+        $sprykerGlueBackendHost,
+        $sprykerGlueBackendPort !== 80 ? ':' . $sprykerGlueBackendPort : '',
+    );
+}
 
 // ----------------------------------------------------------------------------
 // ------------------------------ Glue Storefront API -------------------------------
