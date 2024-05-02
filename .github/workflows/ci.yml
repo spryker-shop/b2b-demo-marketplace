@@ -693,7 +693,7 @@ jobs:
             -   name: Run Tests
                 run: |
                     for i in 1 2; do
-                      docker/sdk exec --env "ENV_REPOSITORY_ID=b2b-mp" --env "SPRYKER_MP_HOST=mp.de.spryker.local" cypress-tests npm run cy:ci:b2b-mp && s=0 && break || s=$? && echo "Test failed, retrying..."
+                      docker/sdk exec --env "ENV_REPOSITORY_ID=b2b-mp" --env "SPRYKER_MP_HOST=mp.de.spryker.local" cypress-tests npm run cy:ci && s=0 && break || s=$? && echo "Test failed, retrying..."
                       sleep 1
                     done
                     (exit $s)
