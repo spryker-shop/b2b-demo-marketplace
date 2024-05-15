@@ -26,9 +26,7 @@ Recommended system requirements for MacOS:
 |15'|	4	|6GB|
 |13'|	2	|4GB|
 
-### Install the B2B Demo Shop
-
-To set up the B2B Marketplace Demo Shop and its environment, do the following:
+### Install the B2B Marketplace Demo Shop
 
 1. Create a project folder and navigate into it:
 ```bash
@@ -171,4 +169,4 @@ docker/sdk up --build --assets --data
 
 ## Contributing to the repository
 
-For contribution guidelines, see [Code contribution guide](https://docs.spryker.com/docs/dg/dev/code-contribution-guide.html)
+For contribution guidelines, see [Code contribution guide](https://docs.spryker.com/docs/dg/dev/code-contribution-guide.html).
