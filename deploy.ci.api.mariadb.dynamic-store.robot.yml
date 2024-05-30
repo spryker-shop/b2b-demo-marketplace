@@ -3,7 +3,7 @@ version: '0.1'
 namespace: spryker_ci
 tag: '1.0'
 
-environment: docker.ci
+environment: docker.dev
 pipeline: docker.ci.acceptance.dynamic-store
 image:
     tag: spryker/php:8.2
@@ -22,8 +22,8 @@ image:
         npm: 9
 
 composer:
-    mode: "--no-dev --quiet"
-    autoload: --classmap-authoritative
+    mode: ''
+    autoload: ''
 
 regions:
     EU:
@@ -121,7 +121,7 @@ docker:
         enabled: false
 
     debug:
-        enabled: false
+        enabled: true
         xdebug:
             enabled: false
 
