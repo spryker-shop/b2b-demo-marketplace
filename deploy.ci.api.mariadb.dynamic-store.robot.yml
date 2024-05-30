@@ -3,7 +3,7 @@ version: '0.1'
 namespace: spryker_ci
 tag: '1.0'
 
-environment: docker.ci
+environment: docker.dev
 pipeline: docker.ci.acceptance.dynamic-store
 image:
     tag: spryker/php:8.2
