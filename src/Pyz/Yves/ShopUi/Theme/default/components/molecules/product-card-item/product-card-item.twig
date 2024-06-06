@@ -18,6 +18,7 @@
     priceModifiers: ['medium'],
     isShoppingList: false,
     currencyIsoCode: null,
+    ajaxTriggerAttribute: null,
 } %}
 
 {% define attributes = {
@@ -142,6 +143,7 @@
                                                             data: {
                                                                 productItem: listItem,
                                                                 isDisabled: not data.canEdit,
+                                                                ajaxTriggerAttribute: data.ajaxTriggerAttribute,
                                                             },
                                                         } only %}
                                                     {% endif %}
@@ -157,6 +159,7 @@
                                                     productItem: listItem,
                                                     productItemAttributes: data.attributes,
                                                     canEdit: data.canEdit,
+                                                    ajaxTriggerAttribute: data.ajaxTriggerAttribute,
                                                 },
                                             } only %}
                                         {% endif %}
@@ -171,7 +174,12 @@
 
                             {% block additionalInfo %}
                                 {% block note %}
-                                    {% widget 'CartItemNoteFormWidget' args [listItem, data.list] only %}{% endwidget %}
+                                    {% widget 'CartItemNoteFormWidget' args [listItem, data.list] with {
+                                        data: {
+                                            ajaxTriggerAttribute: data.ajaxTriggerAttribute,
+                                        },
+                                    }  only %}
+                                    {% endwidget %}
                                 {% endblock %}
 
                                 {% block productOptions %}
@@ -222,6 +230,7 @@
                                                             data: {
                                                                 productItem: listItem,
                                                                 isDisabled: not data.canEdit,
+                                                                ajaxTriggerAttribute: data.ajaxTriggerAttribute,
                                                             },
                                                         } only %}
                                                     </div>
@@ -251,13 +260,16 @@
                                     {% block deleteButton %}
                                         {% if data.canRemove %}
                                             {% widget 'RemoveFromCartFormWidget' args [listItem] with {
+                                                data: {
+                                                    ajaxTriggerAttribute: data.ajaxTriggerAttribute,
+                                                },
                                                 embed: {
                                                    configName: config.name,
                                                 },
                                             } only %}
                                                 {% block embeddedData %}
                                                     <div class="col {{ embed.configName }}__delete-cart">
-                                                        <button class="link link--icon" title="{{ 'cart.delete.item' | trans }}" data-init-single-click>
+                                                        <button {{ data.ajaxTriggerAttribute }} class="link link--icon" title="{{ 'cart.delete.item' | trans }}" data-init-single-click>
                                                             {% include atom('icon') with {
                                                                 modifiers: ['link'],
                                                                 data: {

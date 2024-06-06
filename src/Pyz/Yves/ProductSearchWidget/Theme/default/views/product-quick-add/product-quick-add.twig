@@ -7,20 +7,51 @@
         action: path('product-quick-add')
     },
     submitButtonTitle: _widget.submitButtonTitle,
-    verticalLayout: _widget.verticalLayout
+    verticalLayout: _widget.verticalLayout,
+    ajaxTriggerAttribute: null,
 } %}
 
 {% block body %}
     {% set formModifiers = data.verticalLayout ? [] : ["row"] %}
-    {% include molecule('product-quick-add-form', 'ProductSearchWidget') with {
+    {% set options = data.options | merge({action: data.ajaxTriggerAttribute ? path('cart/async/quick-add') : data.options.action }) %}
+
+    {% embed molecule('product-quick-add-form', 'ProductSearchWidget') with {
         class: "grid grid--middle",
         modifiers: formModifiers,
         data: {
             title: data.title,
             form: data.form,
-            options: data.options,
+            options: options,
             submitButtonTitle: data.submitButtonTitle,
-            verticalLayout: data.verticalLayout
+            verticalLayout: data.verticalLayout,
+            ajaxTriggerAttribute: data.ajaxTriggerAttribute,
         }
     } only %}
+        {% block body %}
+            {% if data.title is not empty %}
+                <div class="col col--sm-12">
+                    <h2 class="{{ config.name }}__title title title--h5 spacing-bottom spacing-bottom--big {{ not data.verticalLayout ? config.name ~ '__title--row' }}">
+                        {{ data.title }}
+                    </h2>
+                </div>
+            {% endif %}
+            <div class="col col--sm-12">
+                {{ form_start(data.form, data.options) }}
+                <div class="grid">
+
+                    {% block fields %}
+                        {% set fieldsAlignment = not data.verticalLayout ? 'col--md-10' %}
+                        {{ parent() }}
+                    {% endblock %}
+
+                    <div class="col col--sm-12 {{ data.verticalLayout ? '' : 'col--md-2' }}">
+                        <button {{ data.ajaxTriggerAttribute }} type="submit" class="{{ config.name }}__button button button--expand button--success">
+                            {{ data.submitButtonTitle }}
+                        </button>
+                    </div>
+                </div>
+                {{ form_end(data.form) }}
+            </div>
+        {% endblock %}
+    {% endembed %}
 {% endblock %}
