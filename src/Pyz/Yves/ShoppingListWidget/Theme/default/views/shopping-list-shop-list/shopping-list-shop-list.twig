@@ -5,8 +5,8 @@
 } %}
 
 {% define config = {
-    name: config.name,
-    jsName: 'js-' ~ config.name,
+    name: data.parentName,
+    jsName: 'js-' ~ data.parentName,
 } %}
 
 {% block contentInner %}
