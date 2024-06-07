@@ -1,10 +1,12 @@
 {% extends template('widget') %}
 
 {% define data = {
-    cartQuantity: _widget.cartQuantity | default,
-    activeCart: _widget.activeCart,
-    carts: _widget.cartList,
-    isMultiCartAllowed: _widget.isMultiCartAllowed,
+    parentName: 'mini-cart',
+} %}
+
+{% define config = {
+    name: data.parentName,
+    jsName: 'js-' ~ config.name,
 } %}
 
 {% set cartAmount = data.carts | length + 1 %}
