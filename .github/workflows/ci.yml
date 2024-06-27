@@ -667,6 +667,7 @@ jobs:
             -   uses: actions/checkout@v4
             -   name: Install packages
                 run: |
+                    sudo apt-get update -y
                     sudo apt install awscli -q
 
             -   name: Install cypress-tests folder
