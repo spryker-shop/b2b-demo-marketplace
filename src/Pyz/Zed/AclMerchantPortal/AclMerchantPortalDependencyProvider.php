@@ -85,6 +85,8 @@ use Spryker\Zed\Refund\Communication\Plugin\AclMerchantPortal\RefundMerchantAclE
 use Spryker\Zed\Sales\Communication\Plugin\AclMerchantPortal\SalesAclEntityConfigurationExpanderPlugin;
 use Spryker\Zed\Sales\Communication\Plugin\AclMerchantPortal\SalesMerchantAclEntityRuleExpanderPlugin;
 use Spryker\Zed\SalesInvoice\Communication\Plugin\AclMerchantPortal\SalesInvoiceAclEntityConfigurationExpanderPlugin;
+use Spryker\Zed\SalesMerchantCommission\Communication\Plugin\AclMerchantPortal\SalesMerchantCommissionAclEntityConfigurationExpanderPlugin;
+use Spryker\Zed\SalesMerchantCommission\Communication\Plugin\AclMerchantPortal\SalesMerchantCommissionMerchantAclEntityRuleExpanderPlugin;
 use Spryker\Zed\SalesMerchantPortalGui\Communication\Plugin\AclMerchantPortal\SalesMerchantPortalGuiMerchantAclRuleExpanderPlugin;
 use Spryker\Zed\SalesOrderThreshold\Communication\Plugin\AclMerchantPortal\SalesOrderThresholdAclEntityConfigurationExpanderPlugin;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Plugin\AclMerchantPortal\SecurityMerchantPortalGuiMerchantUserAclRuleExpanderPlugin;
@@ -148,6 +150,7 @@ class AclMerchantPortalDependencyProvider extends SprykerAclMerchantPortalDepend
             new MerchantRelationshipMerchantAclEntityRuleExpanderPlugin(),
             new CompanyUnitAddressMerchantAclEntityRuleExpanderPlugin(),
             new CompanyBusinessUnitMerchantAclEntityRuleExpanderPlugin(),
+            new SalesMerchantCommissionMerchantAclEntityRuleExpanderPlugin(),
         ];
     }
 
@@ -233,6 +236,7 @@ class AclMerchantPortalDependencyProvider extends SprykerAclMerchantPortalDepend
             new UrlAclEntityConfigurationExpanderPlugin(),
             new UserPasswordResetAclEntityConfigurationExpanderPlugin(),
             new MerchantRelationRequestAclEntityConfigurationExpanderPlugin(),
+            new SalesMerchantCommissionAclEntityConfigurationExpanderPlugin(),
         ];
     }
 }
