@@ -68,7 +68,6 @@ class LogDependencyProvider extends SprykerLogDependencyProvider
         ];
     }
 
-
     /**
      * @return list<\Spryker\Shared\Log\Dependency\Plugin\LogProcessorPluginInterface>
      */
