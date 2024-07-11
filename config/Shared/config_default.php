@@ -886,3 +886,27 @@ $config[GlueJsonApiConventionConstants::GLUE_DOMAIN] = sprintf(
 );
 
 $config[GlueStorefrontApiApplicationConstants::GLUE_STOREFRONT_CORS_ALLOW_ORIGIN] = getenv('SPRYKER_GLUE_APPLICATION_CORS_ALLOW_ORIGIN') ?: '*';
+
+$config[\Spryker\Shared\Log\LogConstants::AUDIT_LOG_SANITIZE_FIELDS] = [
+    'password',
+];
+
+$config[\Spryker\Shared\Log\LogConstants::AUDIT_LOGGER_CONFIG_PLUGINS_YVES] = [
+    \Spryker\Yves\Log\Plugin\Log\YvesSecurityAuditLoggerConfigPlugin::class,
+];
+
+$config[\Spryker\Shared\Log\LogConstants::AUDIT_LOGGER_CONFIG_PLUGINS_ZED] = [
+    \Spryker\Zed\Log\Communication\Plugin\Log\ZedSecurityAuditLoggerConfigPlugin::class,
+];
+
+$config[\Spryker\Shared\Log\LogConstants::AUDIT_LOGGER_CONFIG_PLUGINS_GLUE] = [
+    \Spryker\Glue\Log\Plugin\Log\GlueSecurityAuditLoggerConfigPlugin::class,
+];
+
+$config[\Spryker\Shared\Log\LogConstants::AUDIT_LOGGER_CONFIG_PLUGINS_GLUE_BACKEND] = [
+    \Spryker\Glue\Log\Plugin\Log\GlueBackendSecurityAuditLoggerConfigPlugin::class,
+];
+
+$config[\Spryker\Shared\Log\LogConstants::AUDIT_LOGGER_CONFIG_PLUGINS_MERCHANT_PORTAL] = [
+    \Spryker\Zed\Log\Communication\Plugin\Log\MerchantPortalSecurityAuditLoggerConfigPlugin::class,
+];
