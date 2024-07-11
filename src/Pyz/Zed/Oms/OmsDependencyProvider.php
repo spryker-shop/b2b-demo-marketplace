@@ -211,7 +211,6 @@ class OmsDependencyProvider extends SprykerOmsDependencyProvider
             $commandCollection->add(new RefundCommandPlugin(), 'Payment/Refund/Confirm');
             $commandCollection->add(new SalesMerchantCommissionCalculationCommandByOrderPlugin(), 'MerchantCommission/Calculate');
 
-
             return $commandCollection;
         });
 
