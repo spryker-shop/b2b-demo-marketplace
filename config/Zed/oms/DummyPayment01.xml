@@ -9,6 +9,7 @@
             <process>DummyRefund</process>
             <process>DummyReturn</process>
             <process>DummyInvoice</process>
+            <process>DummyMerchantCommission</process>
         </subprocesses>
 
         <states>
@@ -25,6 +26,7 @@
             <state name="paid" reserved="true" display="oms.state.paid">
                 <flag>cancellable</flag>
             </state>
+            <state name="tax pending" reserved="true" display="oms.state.tax-pending"/>
             <state name="tax invoice submitted" reserved="true" display="oms.state.paid"/>
             <state name="product review requested" reserved="true" display="oms.state.paid"/>
             <state name="confirmed" reserved="true" display="oms.state.confirmed"/>
@@ -61,7 +63,7 @@
             </transition>
 
             <transition happy="true">
-                <source>paid</source>
+                <source>tax pending</source>
                 <target>tax invoice submitted</target>
                 <event>submit tax invoice</event>
             </transition>
@@ -141,5 +143,6 @@
     <process name="DummyRefund" file="DummySubprocess/DummyRefund01.xml"/>
     <process name="DummyReturn" file="DummySubprocess/DummyReturn01.xml"/>
     <process name="DummyInvoice" file="DummySubprocess/DummyInvoice01.xml"/>
+    <process name="DummyMerchantCommission" file="DummySubprocess/DummyMerchantCommission01.xml"/>
 
 </statemachine>

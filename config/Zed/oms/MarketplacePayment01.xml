@@ -40,11 +40,6 @@
                 <event>submit tax invoice</event>
             </transition>
 
-            <transition happy="true">
-                <source>tax invoice submitted</source>
-                <target>merchant split pending</target>
-            </transition>
-
             <transition>
                 <source>paid</source>
                 <target>paid</target>
@@ -108,10 +103,12 @@
         <subprocesses>
             <process>MarketplaceReturn</process>
             <process>MarketplaceRefund</process>
+            <process>DummyMarketplaceMerchantCommission</process>
         </subprocesses>
     </process>
 
     <process name="MarketplaceReturn" file="MarketplaceSubprocess/MarketplaceReturn01.xml"/>
     <process name="MarketplaceRefund" file="MarketplaceSubprocess/MarketplaceRefund01.xml"/>
+    <process name="DummyMarketplaceMerchantCommission" file="DummySubprocess/DummyMarketplaceMerchantCommission01.xml"/>
 
 </statemachine>

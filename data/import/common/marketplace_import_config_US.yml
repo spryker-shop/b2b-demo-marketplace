@@ -36,3 +36,14 @@ actions:
       source: data/import/common/common/marketplace/product_offer_shopping_list_item.csv
     - data_entity: merchant-product-approval-status-default
       source: data/import/common/common/marketplace/merchant_product_approval_status_default.csv
+    - data_entity: merchant-commission-group
+      source: data/import/common/common/marketplace/merchant_commission_group.csv
+    - data_entity: merchant-commission
+      source: data/import/common/common/marketplace/merchant_commission.csv
+    - data_entity: merchant-commission-merchant
+      source: data/import/common/common/marketplace/merchant_commission_merchant.csv
+    # Store relation
+    - data_entity: merchant-commission-amount
+      source: data/import/common/US/marketplace/merchant_commission_amount.csv
+    - data_entity: merchant-commission-store
+      source: data/import/common/US/marketplace/merchant_commission_store.csv
