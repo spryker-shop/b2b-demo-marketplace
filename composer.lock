@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "88d77ea7fa6d795d8fe73d7638df25e6",
+    "content-hash": "8693a60b961e8f6934f0ad3d0d3fc3f6",
     "packages": [
         {
             "name": "async-aws/core",
@@ -36404,16 +36404,16 @@
         },
         {
             "name": "spryker/merchant-commission-gui",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/merchant-commission-gui.git",
-                "reference": "0155cedc7dcdfe86ee78ed2afa84a9430bdb12c4"
+                "reference": "c15ac6c2ea9142973405d4f21cdb1e2b57860be9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/merchant-commission-gui/zipball/0155cedc7dcdfe86ee78ed2afa84a9430bdb12c4",
-                "reference": "0155cedc7dcdfe86ee78ed2afa84a9430bdb12c4",
+                "url": "https://api.github.com/repos/spryker/merchant-commission-gui/zipball/c15ac6c2ea9142973405d4f21cdb1e2b57860be9",
+                "reference": "c15ac6c2ea9142973405d4f21cdb1e2b57860be9",
                 "shasum": ""
             },
             "require": {
@@ -36451,9 +36451,9 @@
             ],
             "description": "MerchantCommissionGui module",
             "support": {
-                "source": "https://github.com/spryker/merchant-commission-gui/tree/1.0.0"
+                "source": "https://github.com/spryker/merchant-commission-gui/tree/1.0.1"
             },
-            "time": "2024-07-10T09:00:59+00:00"
+            "time": "2024-07-23T14:49:16+00:00"
         },
         {
             "name": "spryker/merchant-commission-gui-extension",
@@ -56641,16 +56641,16 @@
         },
         {
             "name": "spryker/sales-merchant-portal-gui",
-            "version": "3.0.0",
+            "version": "3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/sales-merchant-portal-gui.git",
-                "reference": "94942f3647964aecdb920803c66b7f2b36b976ff"
+                "reference": "7819210fac42c7cb15790e05223072943c13c6e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/sales-merchant-portal-gui/zipball/94942f3647964aecdb920803c66b7f2b36b976ff",
-                "reference": "94942f3647964aecdb920803c66b7f2b36b976ff",
+                "url": "https://api.github.com/repos/spryker/sales-merchant-portal-gui/zipball/7819210fac42c7cb15790e05223072943c13c6e9",
+                "reference": "7819210fac42c7cb15790e05223072943c13c6e9",
                 "shasum": ""
             },
             "require": {
@@ -56685,6 +56685,10 @@
                 "spryker/propel": "*",
                 "spryker/testify": "*"
             },
+            "suggest": {
+                "spryker/sales-merchant-commission-merchant-portal-gui": "Use this module if you want to use templates with merchant commission totals.",
+                "spryker/sales-merchant-portal-gui": "Use this module if you want to use templates with merchant commission totals."
+            },
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -56702,9 +56706,9 @@
             ],
             "description": "SalesMerchantPortalGui module",
             "support": {
-                "source": "https://github.com/spryker/sales-merchant-portal-gui/tree/3.0.0"
+                "source": "https://github.com/spryker/sales-merchant-portal-gui/tree/3.0.2"
             },
-            "time": "2024-04-03T13:26:42+00:00"
+            "time": "2024-06-28T09:07:50+00:00"
         },
         {
             "name": "spryker/sales-merchant-portal-gui-extension",
@@ -76880,7 +76884,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/cypress-tests.git",
-                "reference": "94f5e41bdfc4b00142ca2cf5141c752899a2613d"
+                "reference": "89ffbd0c08c3f839aae5e75df0370554260976cf"
             },
             "default-branch": true,
             "type": "library",
@@ -76888,7 +76892,7 @@
                 "MIT"
             ],
             "description": "This repository is dedicated to housing an extensive collection of UI end-to-end tests, meticulously crafted using Cypress for Spryker applications. These tests are designed to thoroughly evaluate the user interface, ensuring that all interactions and visual elements function as intended in real-world scenarios. By leveraging Cypress's advanced browser automation capabilities, this suite provides an efficient and effective means of validating the user experience, confirming the seamless operation and aesthetic integrity of Spryker's front-end components. Our commitment to rigorous UI testing helps maintain the high standard of quality and reliability that Spryker users expect.",
-            "time": "2024-06-14T10:49:19+00:00"
+            "time": "2024-07-24T12:29:09+00:00"
         },
         {
             "name": "spryker/development",
