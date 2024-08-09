@@ -1,4 +1,4 @@
-?php
+<?php
 
 # The file is needed to allow redirects from 3rd party sites to the Merchant Portal. The default session cookie settings is SameSite=Strict and the browser does not allow to read session cookies.
 # Using the intermediate page on the Merchant Portal domain, the session cookies are visible and a user can continue with his session.
