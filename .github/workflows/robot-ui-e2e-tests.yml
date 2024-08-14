@@ -2,7 +2,7 @@ name: "[mp_b2b][master] Robot Regression UI E2E"
 
 on:
     pull_request:
-        types: [ labeled ]
+        types: [ labeled, synchronize ]
     push:
         branches:
             - master
@@ -48,6 +48,7 @@ jobs:
                   python3 -m pip install -U robotframework-browser
                   python3 -m pip install PyMySQL
                   sudo npx playwright install-deps
+
             - name: Install docker-compose
               run: |
                   sudo curl -L "https://github.com/docker/compose/releases/download/2.12.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
@@ -104,7 +105,6 @@ jobs:
             TRAVIS: 1
             ROBOT_TESTS_ARTIFACTS_BUCKET_REGION: eu-west-1
         steps:
-
             - uses: actions/checkout@v4
             - uses: actions/setup-python@v5
               with:
@@ -128,6 +128,7 @@ jobs:
                   python3 -m pip install -U robotframework-browser
                   python3 -m pip install PyMySQL
                   sudo npx playwright install-deps
+
             - name: Install docker-compose
               run: |
                   sudo curl -L "https://github.com/docker/compose/releases/download/2.12.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
@@ -207,6 +208,7 @@ jobs:
                   python3 -m pip install -U robotframework-browser
                   python3 -m pip install PyMySQL
                   sudo npx playwright install-deps
+
             - name: Install docker-compose
               run: |
                   sudo curl -L "https://github.com/docker/compose/releases/download/2.12.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
