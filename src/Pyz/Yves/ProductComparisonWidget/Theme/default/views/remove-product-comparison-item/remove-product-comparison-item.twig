@@ -1,0 +1,26 @@
+{% extends template('widget') %}
+
+{% define data = {
+    idProductAbstract: _widget.idProductAbstract,
+    modifier: '',
+    iconModifier: null,
+    buttonTextClassName: 'button__text',
+    text: null,
+    isAlternative: false,
+} %}
+
+{% block body %}
+    <a itemprop="url" class="{% if data.isAlternative %}button--secondary{% endif %} button {{ data.modifier }} button--expand" href="{{ path('product-comparison/remove', {
+        idProductAbstract: data.idProductAbstract,
+        _token: csrf_token('product_comparison_remove_item_form'),
+    }) }}">
+        {% include atom('icon') with {
+            modifiers: data.iconModifier ?? ['big', 'button-comparison'],
+            data: {
+                name: 'list',
+            },
+        } only %}
+
+        <span class="{{ data.buttonTextClassName }}">{{ data.text | default('product_comparison.compare_product_remove' | trans) }}</span>
+    </a>
+{% endblock %}

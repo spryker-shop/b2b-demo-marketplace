@@ -1,0 +1,35 @@
+{% extends template('widget') %}
+
+{% define data = {
+    idProductAbstract: _widget.idProductAbstract,
+    enableProductComparisonAdd: _widget.enableProductComparisonAdd,
+    modifier: '',
+    iconModifier: null,
+    buttonTextClassName: 'button__text',
+} %}
+
+{% block body %}
+    {% if data.enableProductComparisonAdd %}
+        <a itemprop="url" class="col button {{ data.modifier }} button--expand spacing-bottom" href="{{ path('product-comparison/add', {
+            idProductAbstract: data.idProductAbstract,
+            _token: csrf_token('product_comparison_add_item_form'),
+        }) }}">
+            {% include atom('icon') with {
+                modifiers: data.iconModifier ?? ['big', 'button-comparison'],
+                data: {
+                    name: 'list',
+                },
+            } only %}
+            <span class="{{ data.buttonTextClassName }}">{{ 'product_comparison.compare_product' | trans }}</span>
+        </a>
+    {% else %}
+        {% widget 'RemoveProductComparisonItemWidget' args [data.idProductAbstract] with {
+            data: {
+                iconModifier: data.iconModifier,
+                modifier: data.modifier | default,
+                buttonTextClassName: data.buttonTextClassName,
+                isAlternative: true,
+            }
+        } only %}{% endwidget %}
+    {% endif %}
+{% endblock %}

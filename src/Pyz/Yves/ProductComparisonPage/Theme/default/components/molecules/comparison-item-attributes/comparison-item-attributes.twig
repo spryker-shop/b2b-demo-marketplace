@@ -1,0 +1,111 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'comparison-item-attributes',
+} %}
+
+{% define data = {
+    groups: required,
+    products: required,
+    withAttributes: false,
+    productLength: 0,
+    differenceTargetClass: '',
+} %}
+
+{% block body %}
+    {% for group in data.groups %}
+        {% set groudModifier = group.name | replace({ ' ': '-', '&': '-' })  %}
+        {% set closedClass = data.withAttributes ?: "#{config.name}__title--closed #{config.name}__title--disabled" %}
+
+        <div class="{{ config.name }}__group {{ config.jsName }}__group--{{ groudModifier }}">
+            <div
+                class="{{ config.name }}__title {{ config.jsName }}__trigger {{ closedClass }}"
+                data-toggle-target=".{{ config.jsName ~ '__content--' ~ groudModifier }}"
+            >
+                {% include atom('icon') with {
+                    class: "#{config.name}__title-icon",
+                    modifiers: ['small'],
+                    data: {
+                        name: 'triangle-down',
+                    }
+                } only %}
+
+                {{ group.name }}
+            </div>
+
+            {% if data.withAttributes %}
+                <div class="{{ config.name }}__list {{ config.jsName }}__content--{{ groudModifier }}">
+                    {% set allAttributesSame = true %}
+
+                    {% for comparisonAttributeKey in group.allAttributes %}
+                        {% set allValuesSame = true %}
+                        {% set firstValue = null %}
+
+                        <div class="{{ config.name }}__content grid grid--wrap grid--stretch">
+                            <div class="{{ config.name }}__col col col--sm-12 col--xl-3">
+                                <div class="{{ config.name }}__value {{ config.name }}__value--name">{{ ('product.attribute.' ~ comparisonAttributeKey) | trans }}</div>
+                            </div>
+
+                            {% for product in data.products %}
+                                {% set currentValue = product.attributes[comparisonAttributeKey] ?? '-' %}
+                                {% set boolValue = {
+                                    'yes': 'check',
+                                    'true': 'check',
+                                    'no': 'cross',
+                                    'false': 'cross',
+                                    'n/a': 'cross',
+                                } %}
+                                {% set value = currentValue is iterable ? currentValue | join(', ') : currentValue %}
+
+                                {% if loop.index <= data.productLength %}
+                                    {% if loop.index == 1 %}
+                                        {% set firstValue = value %}
+                                    {% elseif value != firstValue %}
+                                        {% set allValuesSame = false %}
+                                    {% endif %}
+                                {% endif %}
+
+                                <div class="{{ config.name }}__col col col--sm-4 col--xl-3">
+                                    <div class="{{ config.name }}__value">
+                                        {% if boolValue[value | lower] is defined %}
+                                            {% set icon = boolValue[value | lower] %}
+
+                                            {% include atom('icon') with {
+                                                modifiers: ['big', icon == 'check' ? 'comparison-check'],
+                                                data: {
+                                                    name: icon,
+                                                }
+                                            } only %}
+                                        {% else %}
+                                            {{ value }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+
+                            {% if allValuesSame %}
+                                <div class="{{ data.differenceTargetClass }}"></div>
+                            {% endif %}
+                        </div>
+
+                        {% if allValuesSame == false %}
+                            {% set allAttributesSame = false %}
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if allAttributesSame %}
+                        <span class="{{ config.name }}__all-same"></span>
+                    {% endif %}
+                </div>
+
+                {% include molecule('toggler-accordion') with {
+                    attributes: {
+                        'wrap-class-name': config.jsName ~ '__group--' ~ groudModifier,
+                        'trigger-class-name': config.jsName ~ '__trigger',
+                        'active-class': config.name ~ '__title--closed',
+                    },
+                } only %}
+            {% endif %}
+        </div>
+    {% endfor %}
+{% endblock %}

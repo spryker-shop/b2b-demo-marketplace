@@ -1,0 +1,54 @@
+@mixin comparison-page-comparison-page($name: '.comparison-page') {
+    #{$name} {
+        overflow-x: auto;
+
+        &__inner {
+            overflow: hidden;
+        }
+
+        &__holder--with-products {
+            min-width: $md;
+        }
+
+        &__title {
+            font-size: rem(28);
+            padding-bottom: rem(20);
+            font-weight: 700;
+
+            @include helper-breakpoint-media-min($xl) {
+                padding-bottom: rem(70);
+            }
+        }
+
+        &__empty-text {
+            display: block;
+            padding-bottom: rem(20);
+            font-size: rem(21);
+            font-weight: 500;
+
+            @include helper-breakpoint-media-min($xl) {
+                padding-bottom: rem(130);
+            }
+        }
+
+        &__difference {
+            &.is-difference &-text--inactive {
+                display: none;
+            }
+
+            &.is-difference &-text--active {
+                display: block;
+            }
+        }
+
+        &__difference-text {
+            &--active {
+                display: none;
+            }
+        }
+
+        @content;
+    }
+}
+
+@include comparison-page-comparison-page;

@@ -1,0 +1,35 @@
+{% extends template('widget') %}
+
+{% define data = {
+    existingComparisonListLength: _widget.existingComparisonListLength,
+    name: '',
+} %}
+
+{% block button %}
+    {% embed molecule('cart-counter') with {
+        data: {
+            url: url('product-comparison-list'),
+            label: 'product.comparison' | trans,
+            iconName: 'comparison',
+            quantity: data.existingComparisonListLength,
+        },
+        embed: {
+            parentConfigName: data.name,
+        },
+   } only %}
+        {% block content %}
+            {% set linkClass = embed.parentConfigName ~ '__link' %}
+            {{ parent() }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block body %}
+    {% if is_granted('ROLE_USER') %}
+        <li class="{{ config.name }}__link {{ config.name }}__item">
+            {{ block('button') }}
+        </li>
+    {% else %}
+        {{ block('button') }}
+    {% endif %}
+{% endblock %}
