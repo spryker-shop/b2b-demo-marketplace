@@ -22,7 +22,7 @@ class FlysystemDependencyProvider extends SprykerFlysystemDependencyProvider
         return [
             new FtpFilesystemBuilderPlugin(),
             new LocalFilesystemBuilderPlugin(),
-            new Aws3v3FilesystemBuilderPlugi(),
+            new Aws3v3FilesystemBuilderPlugin(),
         ];
     }
 }
