@@ -169,7 +169,7 @@ $jobs[] = [
     'command' => '$PHP_BIN vendor/bin/console order-matrix:sync',
     'schedule' => '*/1 * * * *',
     'enable' => true,
-    'global' => true,
+    'global' => true,//
 ];
 
 /* Message broker */
