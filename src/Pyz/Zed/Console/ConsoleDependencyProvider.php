@@ -402,7 +402,6 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new ScopeCacheCollectorConsole(),
             new DateTimeProductConfiguratorBuildFrontendConsole(),
             new OrderMatrixConsole(),
-            // commit for run scrutinizer
         ];
 
         $propelCommands = $container->getLocator()->propel()->facade()->getConsoleCommands();
