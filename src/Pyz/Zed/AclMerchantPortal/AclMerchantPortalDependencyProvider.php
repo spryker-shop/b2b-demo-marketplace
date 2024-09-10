@@ -233,7 +233,6 @@ class AclMerchantPortalDependencyProvider extends SprykerAclMerchantPortalDepend
             new SalesAclEntityConfigurationExpanderPlugin(),
             new SalesInvoiceAclEntityConfigurationExpanderPlugin(),
             new SalesOrderThresholdAclEntityConfigurationExpanderPlugin(),
-            new SalesPaymentMerchantAclEntityConfigurationExpanderPlugin(),
             new ShipmentAclEntityConfigurationExpanderPlugin(),
             new StateMachineAclEntityConfigurationExpanderPlugin(),
             new StockAclEntityConfigurationExpanderPlugin(),
