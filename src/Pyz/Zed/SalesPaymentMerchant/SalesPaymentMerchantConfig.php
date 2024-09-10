@@ -15,7 +15,7 @@ class SalesPaymentMerchantConfig extends SprykerSalesPaymentMerchantConfig
     /**
      * @var bool
      */
-    protected const ORDER_EXPENSE_INCLUDED_IN_PAYMENT_PROCESS = false;
+    protected const ORDER_EXPENSE_INCLUDED_IN_PAYMENT_PROCESS = true;
 
     /**
      * @var array<string, list<string>>
