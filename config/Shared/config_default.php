@@ -134,6 +134,7 @@ use Spryker\Zed\OauthAuth0\OauthAuth0Config;
 use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Payment\PaymentConfig;
 use Spryker\Zed\Propel\PropelConfig;
+use SprykerEco\Shared\OpenAi\OpenAiConstants;
 use SprykerShop\Shared\CustomerPage\CustomerPageConstants;
 use SprykerShop\Shared\ShopUi\ShopUiConstants;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -953,3 +954,5 @@ $config[GlueJsonApiConventionConstants::GLUE_DOMAIN] = sprintf(
 );
 
 $config[GlueStorefrontApiApplicationConstants::GLUE_STOREFRONT_CORS_ALLOW_ORIGIN] = getenv('SPRYKER_GLUE_APPLICATION_CORS_ALLOW_ORIGIN') ?: '*';
+
+$config[OpenAiConstants::API_TOKEN] = getenv('OPEN_AI_API_TOKEN');
