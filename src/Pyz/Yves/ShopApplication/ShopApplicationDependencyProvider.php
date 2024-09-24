@@ -23,6 +23,7 @@ use Spryker\Yves\Session\Plugin\Application\SessionApplicationPlugin;
 use Spryker\Yves\Translator\Plugin\Application\TranslatorApplicationPlugin;
 use Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin;
 use Spryker\Yves\Validator\Plugin\Application\ValidatorApplicationPlugin;
+use SprykerEco\Yves\ImageSearchAi\Widget\ImageSearchAiWidget;
 use SprykerShop\Yves\AgentWidget\Widget\AgentControlBarWidget;
 use SprykerShop\Yves\AssetWidget\Widget\AssetWidget;
 use SprykerShop\Yves\AvailabilityNotificationWidget\Widget\AvailabilityNotificationSubscriptionWidget;
@@ -322,6 +323,7 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             MerchantRelationRequestMenuItemWidget::class,
             MerchantRelationshipMenuItemWidget::class,
             MerchantRelationshipLinkListWidget::class,
+            ImageSearchAiWidget::class,
         ];
     }
 
