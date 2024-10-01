@@ -38,6 +38,8 @@
             </span>
             <span class="{{ config.name }}__text">{% widget 'CustomerFullNameWidget' only %}{% endwidget %}</span>
         </div>
+
+
         {% include molecule('navigation-list') with {
             modifiers: ['secondary'],
             class: config.name ~ '__sub-nav',
@@ -91,6 +93,12 @@
             <span class="{{ config.name }}__text">{{ 'quick-order.page-title'|trans }}</span>
         </a>
     </li>
+
+    {% widget 'RedirectToProductComparisonPageWidget' with {
+        data: {
+            name: config.name
+        }
+    } %}{% endwidget %}
 
     <li class="{{ config.name }}__item">
         {% widget 'ShoppingListNavigationMenuWidget' with {

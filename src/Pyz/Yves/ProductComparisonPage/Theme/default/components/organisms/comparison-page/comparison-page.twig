@@ -1,0 +1,157 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'comparison-page',
+} %}
+
+{% define data = {
+    products: [],
+    productComparisonAttributeGroups: required,
+} %}
+
+{% block body %}
+    {% set products = (data.products | merge([{},{}]))[:3] %}
+    {% set hasProducts = data.productComparisonAttributeGroups and data.products[0] is defined %}
+
+    <div class="{{ config.name }}__holder {{ hasProducts ? config.name ~ '__holder--with-products' }}">
+        <div class="{{ config.name }}__inner">
+            <div class="grid grid--gap grid--stretch">
+                <div class="col col--sm-12 col--xl-3">
+                    <h1 class="{{ config.name }}__title">{{ 'comparison_page.title' | trans }}</h1>
+
+                    {% if hasProducts %}
+                        <div class="grid grid--middle">
+                            <div class="col col--sm-6 col--xl-12">
+                                <button class="{{ config.name }}__difference {{ config.jsName }}__difference-toggle spacing-bottom--big button button--big button--hollow-icon button--round-icon {% if data.products | length == 1 %} button--disabled {% endif %}">
+                                    <span class="button__icon-wrapper">
+                                        {% include atom('icon') with {
+                                            class: 'button__icon',
+                                            modifiers: ['big'],
+                                            data: {
+                                                name: 'files',
+                                            },
+                                        } only %}
+                                    </span>
+
+                                    <span class="{{ config.name }}__difference-text {{ config.name }}__difference-text--inactive">{{ 'product_comparison.show_difference' | trans }}</span>
+                                    <span class="{{ config.name }}__difference-text {{ config.name }}__difference-text--active">{{ 'product_comparison.show_all' | trans }}</span>
+                                </button>
+                            </div>
+
+                            <div class="col col--sm-6 col--xl-12">
+                                <a itemprop="url" class="spacing-bottom--big button button--big button--hollow-icon button--round-icon" href="{{ path('product-comparison/remove-all', {
+                                    _token: csrf_token('product_comparison_remove_all_form'),
+                                }) }}">
+                                    <span class="button__icon-wrapper">
+                                        {% include atom('icon') with {
+                                            class: 'button__icon',
+                                            modifiers: ['big'],
+                                            data: {
+                                                name: 'clear',
+                                            },
+                                        } only %}
+                                    </span>
+
+                                    <span class="button__text">{{ 'product_comparison.compare_product_remove_all' | trans }}</span>
+                                </a>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+
+                {% if hasProducts %}
+                    {% for index, product in products %}
+                            {% if product.name is defined %}
+                                {% embed molecule('product-item') with {
+                                    class: 'col col--sm-4 col--xl-3',
+                                    modifiers: ['catalog', 'comparison'],
+                                    data: {
+                                        product: product,
+                                        name: product.name,
+                                        slideShow: false,
+                                        idProductAbstract: product.idProductAbstract,
+                                    },
+                                } only %}
+                                    {% block description %}{% endblock %}
+
+                                    {% block bookmarks %}
+                                        {% if can('SeeShoppingListPermissionPlugin') %}
+                                            {% set argsArray = {'concrete_sku': data.product.sku} %}
+                                            {% widget 'CatalogAddToShoppingListWidget' args [argsArray] only %}{% endwidget %}
+                                        {% endif %}
+                                    {% endblock %}
+
+                                    {% block actionsContainer %}
+                                        {% widget 'RemoveProductComparisonItemWidget' args [data.idProductAbstract] with {
+                                            data: {
+                                                modifier: 'button--big',
+                                                text: 'product_comparison.delete_product' | trans,
+                                                icon: 'delete',
+                                            }
+                                        } only %}
+                                            {% block icon %}
+                                                {% include atom('icon') with {
+                                                    data: {
+                                                        name: 'delete',
+                                                    },
+                                                } only %}
+                                            {% endblock %}
+                                        {% endwidget %}
+                                    {% endblock %}
+                                {% endembed %}
+                            {% else %}
+                                <div class="col col--sm-4 col--xl-3">
+                                    <div class="grid grid--inner grid--bottom">
+                                        <a class="col button button--big button--expand" href="{{ path('search') }}">
+                                            {% include atom('icon') with {
+                                                modifiers: ['big', 'button-comparison'],
+                                                data: {
+                                                    name: 'circle-plus',
+                                                },
+                                            } only %}
+
+                                            <span class="button__text">{{ 'comparison_page.empty_list.add_vehicle' | trans }}</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <div class="col col--sm-12 col--xl-9">
+                        <span class="{{ config.name }}__empty-text">{{ 'comparison_page.empty_list.text' | trans }}</span>
+
+                        <a class="col button button--big" href="{{ path('search') }}">
+                            {% include atom('icon') with {
+                                modifiers: ['big'],
+                                data: {
+                                    name: 'circle-plus',
+                                },
+                            } only %}
+
+                            <span class="button__text">{{ 'comparison_page.empty_list.add_vehicle' | trans }}</span>
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+
+            {% include molecule('comparison-item-attributes', 'ProductComparisonPage') with {
+                data: {
+                    groups: data.productComparisonAttributeGroups,
+                    products: products,
+                    productLength: data.products | length,
+                    withAttributes: hasProducts,
+                    differenceTargetClass: "#{config.jsName}__difference-target",
+                },
+            } only %}
+        </div>
+    </div>
+
+    {% include molecule('toggler-click') with {
+        attributes: {
+            'trigger-class-name': "#{config.jsName}__difference-toggle",
+            'target-class-name': "#{config.jsName}__difference-target",
+            'trigger-class-to-toggle': 'is-difference',
+            'class-to-toggle': 'is-difference',
+        },
+    } only %}
+{% endblock %}

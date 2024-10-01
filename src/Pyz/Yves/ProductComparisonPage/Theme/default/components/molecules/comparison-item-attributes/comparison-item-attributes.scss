@@ -1,0 +1,119 @@
+@mixin comparison-page-comparison-item-attributes($name: '.comparison-item-attributes') {
+    #{$name} {
+        padding: rem(25) 0 rem(40);
+
+        @include helper-breakpoint-media-min($xl) {
+            padding-bottom: rem(80);
+        }
+
+        &__group {
+            @include helper-breakpoint-media-min($xl) {
+                padding-bottom: rem(16);
+            }
+        }
+
+        &__title {
+            position: relative;
+            padding: rem(11) rem(40);
+            color: $setting-color-gray-5;
+            background: $setting-color-gray-1;
+            font-size: rem(14);
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: rem(2);
+            user-select: none;
+
+            &--closed #{$name}__title-icon {
+                transform: rotate(-90deg) translate(50%, 25%);
+            }
+
+            &--disabled {
+                display: none;
+                cursor: not-allowed;
+
+                @include helper-breakpoint-media-min($xl) {
+                    display: block;
+                }
+            }
+        }
+
+        &__title-icon {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: rem(13);
+        }
+
+        &__col {
+            position: relative;
+
+            &:first-child #{$name}__value {
+                padding-left: rem(20);
+                border-bottom-width: 0;
+
+                @include helper-breakpoint-media-min($xl) {
+                    border-bottom-width: rem(1);
+                    padding-left: rem(40);
+                }
+            }
+
+            &:nth-child(2) #{$name}__value {
+                border-left: rem(1) solid $setting-color-gray-8;
+
+                @include helper-breakpoint-media-min($xl) {
+                    border-left-width: 0;
+                }
+            }
+
+            &:last-child #{$name}__value {
+                padding-right: rem(20);
+
+                @include helper-breakpoint-media-min($xl) {
+                    padding-right: rem(40);
+                }
+            }
+        }
+
+        &__value {
+            padding: rem(10) rem(15);
+            height: 100%;
+            font-size: rem(14);
+            font-weight: 300;
+            border-bottom: rem(1) solid $setting-color-gray-8;
+            border-right: rem(1) solid $setting-color-gray-8;
+
+            @include helper-breakpoint-media-min($xl) {
+                border-right: none;
+            }
+
+            &--name {
+                background: $setting-color-gray-6;
+                font-weight: 500;
+                border-right: none;
+
+                @include helper-breakpoint-media-min($xl) {
+                    background: none;
+                    font-weight: 300;
+                }
+            }
+        }
+
+        &__content:nth-last-child(1 of &__content:not(:has(.is-difference))) #{$name}__value {
+            @include helper-breakpoint-media-min($xl) {
+                border: none;
+            }
+        }
+
+        &__content:has(.is-difference) {
+            display: none;
+        }
+
+        &__group:has(.is-difference):has(&__all-same) {
+            display: none;
+        }
+
+        @content;
+    }
+}
+
+@include comparison-page-comparison-item-attributes();

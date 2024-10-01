@@ -1,0 +1,23 @@
+{% extends template('page-layout-main') %}
+
+{% define data = {
+    products: _view.comparisonData.productViews,
+    productComparisonAttributeGroups: _view.comparisonData.productComparisonAttributeGroups,
+} %}
+
+{% block pageInfo %}
+    <div class="page-info">
+        <div class="container">
+            {% include molecule('history-back') only %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    {% include organism('comparison-page', 'ProductComparisonPage') with {
+        data: {
+            products: data.products,
+            productComparisonAttributeGroups: data.productComparisonAttributeGroups,
+        },
+    } only %}
+{% endblock %}

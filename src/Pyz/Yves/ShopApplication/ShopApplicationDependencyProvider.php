@@ -10,6 +10,9 @@ namespace Pyz\Yves\ShopApplication;
 use Pyz\Yves\CompanyPage\Plugin\ShopApplication\CompanyUserRestrictionHandlerPlugin;
 use Pyz\Yves\CompanyWidget\Widget\MenuItemCompanyWidget;
 use Pyz\Yves\CustomerFullNameWidget\Widget\CustomerFullNameWidget;
+use Pyz\Yves\ProductComparisonWidget\Widget\AddToProductComparisonWidget;
+use Pyz\Yves\ProductComparisonWidget\Widget\RedirectToProductComparisonPageWidget;
+use Pyz\Yves\ProductComparisonWidget\Widget\RemoveProductComparisonItemWidget;
 use Pyz\Yves\ProductSetWidget\Widget\ProductSetIdsWidget;
 use Spryker\Yves\ErrorHandler\Plugin\Application\ErrorHandlerApplicationPlugin;
 use Spryker\Yves\EventDispatcher\Plugin\Application\EventDispatcherApplicationPlugin;
@@ -322,6 +325,9 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             MerchantRelationRequestMenuItemWidget::class,
             MerchantRelationshipMenuItemWidget::class,
             MerchantRelationshipLinkListWidget::class,
+            RemoveProductComparisonItemWidget::class,
+            AddToProductComparisonWidget::class,
+            RedirectToProductComparisonPageWidget::class,
         ];
     }
 

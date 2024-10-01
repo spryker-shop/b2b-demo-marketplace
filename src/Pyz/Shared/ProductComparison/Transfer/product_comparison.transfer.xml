@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+    <transfer name="ProductComparison" strict="true">
+        <property name="idCustomer" type="int" />
+        <property name="productAbstractIds" type="int[]" singular="idProductAbstract" />
+    </transfer>
+
+    <transfer name="ProductComparisonAttributeGroup" strict="true">
+        <property name="name" type="string"/>
+        <property name="allAttributes" type="array"/>
+        <property name="comparisonAttributes" type="array"/>
+    </transfer>
+
+    <transfer name="ProductComparisonView" strict="true">
+        <property name="productComparisonAttributeGroups" type="ProductComparisonAttributeGroup[]" singular="productComparisonAttributeGroup"/>
+        <property name="productViews" type="ProductView[]" singular="productView"/>
+    </transfer>
+</transfers>

@@ -122,6 +122,16 @@
         {% endblock %}
     {% endwidget %}
 
+    {% if data.product.idProductAbstract %}
+        {% widget 'AddToProductComparisonWidget' args [data.product.idProductAbstract] with {
+            data: {
+                iconModifier: ['bigger'],
+                modifier: 'button--big spacing-bottom--biggest',
+                buttonTextClassName: '',
+            },
+        } only %}{% endwidget %}
+    {% endif %}
+
     {% if not isAvailable and isProductConcrete %}
         {% widget 'AvailabilityNotificationSubscriptionWidget' args [data.product] only %}{% endwidget %}
     {% endif %}
