@@ -34,7 +34,7 @@
 {% block button %}
     <div class="col col--sm-12 grid">
         <div class="col col--sm-12 {{ not data.verticalLayout ? 'col--md-3' }}">
-            <button class="{{ config.name }}__button {{ config.jsName }}__submit-button button button--expand button--success">
+            <button {{ data.ajaxTriggerAttribute }} class="{{ config.name }}__button {{ config.jsName }}__submit-button button button--expand button--success">
                 {{ data.submitButtonTitle }}
             </button>
         </div>
