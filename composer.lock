@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ae900961c71cf35ca9c342908cb1666a",
+    "content-hash": "5d7aed7712bc591c01bbdab4c1beba9a",
     "packages": [
         {
             "name": "async-aws/core",
@@ -56890,6 +56890,58 @@
                 "source": "https://github.com/spryker/sales-data-export/tree/0.2.1"
             },
             "time": "2023-03-31T19:36:11+00:00"
+        },
+        {
+            "name": "spryker/sales-discount-connector",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/sales-discount-connector.git",
+                "reference": "b3a454c321cb0cdd43e1a653bc9f1b8200aa169c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/sales-discount-connector/zipball/b3a454c321cb0cdd43e1a653bc9f1b8200aa169c",
+                "reference": "b3a454c321cb0cdd43e1a653bc9f1b8200aa169c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "spryker/discount": "^9.0.0",
+                "spryker/discount-extension": "^1.2.0",
+                "spryker/kernel": "^3.33.0",
+                "spryker/sales": "^11.50.0",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/container": "*",
+                "spryker/customer": "*",
+                "spryker/locale": "*",
+                "spryker/oms": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "SalesDiscountConnector module",
+            "support": {
+                "source": "https://github.com/spryker/sales-discount-connector/tree/1.0.0"
+            },
+            "time": "2024-09-25T13:43:18+00:00"
         },
         {
             "name": "spryker/sales-extension",
