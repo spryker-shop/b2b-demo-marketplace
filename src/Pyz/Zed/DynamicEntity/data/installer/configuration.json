@@ -5053,136 +5053,136 @@
         }
     },
     {
-    "tableName": "spy_product_packaging_unit",
-    "tableAlias": "product-packaging-units",
-    "isActive": true,
-    "definition": {
-        "isDeletable": false,
-        "fields": [
-            {
-                "fieldName": "id_product_packaging_unit",
-                "fieldVisibleName": "id_product_packaging_unit",
-                "isCreatable": false,
-                "isEditable": false,
-                "validation": {
-                    "isRequired": true
+        "tableName": "spy_product_packaging_unit",
+        "tableAlias": "product-packaging-units",
+        "isActive": true,
+        "definition": {
+            "isDeletable": false,
+            "fields": [
+                {
+                    "fieldName": "id_product_packaging_unit",
+                    "fieldVisibleName": "id_product_packaging_unit",
+                    "isCreatable": false,
+                    "isEditable": false,
+                    "validation": {
+                        "isRequired": true
+                    },
+                    "type": "integer"
                 },
-                "type": "integer"
-            },
-            {
-                "fieldName": "fk_lead_product",
-                "fieldVisibleName": "fk_lead_product",
-                "isCreatable": true,
-                "isEditable": true,
-                "validation": {
-                    "isRequired": true
+                {
+                    "fieldName": "fk_lead_product",
+                    "fieldVisibleName": "fk_lead_product",
+                    "isCreatable": true,
+                    "isEditable": true,
+                    "validation": {
+                        "isRequired": true
+                    },
+                    "type": "integer"
                 },
-                "type": "integer"
-            },
-            {
-                "fieldName": "fk_product",
-                "fieldVisibleName": "fk_product",
-                "isCreatable": true,
-                "isEditable": true,
-                "validation": {
-                    "isRequired": true
+                {
+                    "fieldName": "fk_product",
+                    "fieldVisibleName": "fk_product",
+                    "isCreatable": true,
+                    "isEditable": true,
+                    "validation": {
+                        "isRequired": true
+                    },
+                    "type": "integer"
                 },
-                "type": "integer"
-            },
-            {
-                "fieldName": "fk_product_packaging_unit_type",
-                "fieldVisibleName": "fk_product_packaging_unit_type",
-                "isCreatable": true,
-                "isEditable": true,
-                "validation": {
-                    "isRequired": true
+                {
+                    "fieldName": "fk_product_packaging_unit_type",
+                    "fieldVisibleName": "fk_product_packaging_unit_type",
+                    "isCreatable": true,
+                    "isEditable": true,
+                    "validation": {
+                        "isRequired": true
+                    },
+                    "type": "integer"
                 },
-                "type": "integer"
-            },
-            {
-                "fieldName": "amount_interval",
-                "fieldVisibleName": "amount_interval",
-                "isCreatable": true,
-                "isEditable": true,
-                "validation": {
-                    "isRequired": false
+                {
+                    "fieldName": "amount_interval",
+                    "fieldVisibleName": "amount_interval",
+                    "isCreatable": true,
+                    "isEditable": true,
+                    "validation": {
+                        "isRequired": false
+                    },
+                    "type": "integer"
                 },
-                "type": "integer"
-            },
-            {
-                "fieldName": "amount_max",
-                "fieldVisibleName": "amount_max",
-                "isCreatable": true,
-                "isEditable": true,
-                "validation": {
-                    "isRequired": false
+                {
+                    "fieldName": "amount_max",
+                    "fieldVisibleName": "amount_max",
+                    "isCreatable": true,
+                    "isEditable": true,
+                    "validation": {
+                        "isRequired": false
+                    },
+                    "type": "integer"
                 },
-                "type": "integer"
-            },
-            {
-                "fieldName": "amount_min",
-                "fieldVisibleName": "amount_min",
-                "isCreatable": true,
-                "isEditable": true,
-                "validation": {
-                    "isRequired": false
+                {
+                    "fieldName": "amount_min",
+                    "fieldVisibleName": "amount_min",
+                    "isCreatable": true,
+                    "isEditable": true,
+                    "validation": {
+                        "isRequired": false
+                    },
+                    "type": "integer"
                 },
-                "type": "integer"
-            },
-            {
-                "fieldName": "default_amount",
-                "fieldVisibleName": "default_amount",
-                "isCreatable": true,
-                "isEditable": true,
-                "validation": {
-                    "isRequired": true
+                {
+                    "fieldName": "default_amount",
+                    "fieldVisibleName": "default_amount",
+                    "isCreatable": true,
+                    "isEditable": true,
+                    "validation": {
+                        "isRequired": true
+                    },
+                    "type": "integer"
                 },
-                "type": "integer"
-            },
-            {
-                "fieldName": "is_amount_variable",
-                "fieldVisibleName": "is_amount_variable",
-                "isCreatable": true,
-                "isEditable": true,
-                "validation": {
-                    "isRequired": true
+                {
+                    "fieldName": "is_amount_variable",
+                    "fieldVisibleName": "is_amount_variable",
+                    "isCreatable": true,
+                    "isEditable": true,
+                    "validation": {
+                        "isRequired": true
+                    },
+                    "type": "boolean"
                 },
-                "type": "boolean"
-            },
-            {
-                "fieldName": "created_at",
-                "fieldVisibleName": "created_at",
-                "isCreatable": true,
-                "isEditable": true,
-                "validation": {
-                    "isRequired": false
+                {
+                    "fieldName": "created_at",
+                    "fieldVisibleName": "created_at",
+                    "isCreatable": true,
+                    "isEditable": true,
+                    "validation": {
+                        "isRequired": false
+                    },
+                    "type": "string"
                 },
-                "type": "string"
-            },
-            {
-                "fieldName": "updated_at",
-                "fieldVisibleName": "updated_at",
-                "isCreatable": true,
-                "isEditable": true,
-                "validation": {
-                    "isRequired": false
+                {
+                    "fieldName": "updated_at",
+                    "fieldVisibleName": "updated_at",
+                    "isCreatable": true,
+                    "isEditable": true,
+                    "validation": {
+                        "isRequired": false
+                    },
+                    "type": "string"
                 },
-                "type": "string"
-            },
-            {
-                "fieldName": "uuid",
-                "fieldVisibleName": "uuid",
-                "isCreatable": true,
-                "isEditable": true,
-                "validation": {
-                    "isRequired": false
-                },
-                "type": "string"
-            }
-        ],
-        "identifier": "id_product_packaging_unit"
-    }
-},
+                {
+                    "fieldName": "uuid",
+                    "fieldVisibleName": "uuid",
+                    "isCreatable": true,
+                    "isEditable": true,
+                    "validation": {
+                        "isRequired": false
+                    },
+                    "type": "string"
+                }
+            ],
+            "identifier": "id_product_packaging_unit"
+        }
+    },
     {
         "tableName": "spy_product_measurement_base_unit",
         "tableAlias": "product-measurement-base-units",
