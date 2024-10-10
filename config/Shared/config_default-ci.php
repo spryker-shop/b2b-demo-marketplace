@@ -322,4 +322,4 @@ if ($isTestifyConstantsClassExists) {
 $config[GlueStorefrontApiApplicationConstants::GLUE_STOREFRONT_API_HOST] = $glueStorefrontHost;
 
 // -------------------------------- AWS QUICKSIGHT -------------------------------
-$config[AmazonQuicksightConstants::AWS_REGION] = getenv('AWS_REGION') ?: 'eu-west-1';
+$config[AmazonQuicksightConstants::AWS_REGION] = getenv('AWS_REGION') ?: 'eu-west';
