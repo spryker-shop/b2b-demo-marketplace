@@ -134,6 +134,7 @@ use Spryker\Zed\OauthAuth0\OauthAuth0Config;
 use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Payment\PaymentConfig;
 use Spryker\Zed\Propel\PropelConfig;
+use SprykerEco\Shared\AmazonQuicksight\AmazonQuicksightConstants;
 use SprykerShop\Shared\CustomerPage\CustomerPageConstants;
 use SprykerShop\Shared\ShopUi\ShopUiConstants;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -953,3 +954,14 @@ $config[GlueJsonApiConventionConstants::GLUE_DOMAIN] = sprintf(
 );
 
 $config[GlueStorefrontApiApplicationConstants::GLUE_STOREFRONT_CORS_ALLOW_ORIGIN] = getenv('SPRYKER_GLUE_APPLICATION_CORS_ALLOW_ORIGIN') ?: '*';
+
+// -------------------------------- AWS QUICKSIGHT -------------------------------
+$config[AmazonQuicksightConstants::AWS_ACCOUNT_ID] = getenv('AWS_ACCOUNT_ID');
+$config[AmazonQuicksightConstants::AWS_REGION] = getenv('AWS_REGION') ?: 'eu-west-1';
+$config[AmazonQuicksightConstants::AWS_QUICKSIGHT_NAMESPACE] = getenv('QUICKSIGHT_NAMESPACE');
+$config[AmazonQuicksightConstants::DEFAULT_DATA_SOURCE_USERNAME] = getenv('SPRYKER_BI_DB_USER');
+$config[AmazonQuicksightConstants::DEFAULT_DATA_SOURCE_PASSWORD] = getenv('SPRYKER_BI_DB_PASSWORD');
+$config[AmazonQuicksightConstants::DEFAULT_DATA_SOURCE_DATABASE_NAME] = getenv('SPRYKER_DB_IDENTIFIER');
+$config[AmazonQuicksightConstants::DEFAULT_DATA_SOURCE_DATABASE_HOST] = getenv('SPRYKER_DB_RO_REPLICA_HOST');
+$config[AmazonQuicksightConstants::DEFAULT_DATA_SOURCE_DATABASE_PORT] = getenv('SPRYKER_DB_PORT');
+$config[AmazonQuicksightConstants::DEFAULT_DATA_SOURCE_VPC_CONNECTION_ARN] = getenv('QUICKSIGHT_VPC_CONNECTION_ARN');

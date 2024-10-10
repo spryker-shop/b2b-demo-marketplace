@@ -55,6 +55,12 @@ sections:
         check-product-validity:
             command: 'vendor/bin/console product:check-validity'
 
+        create-quicksight-users:
+            command: 'vendor/bin/console quicksight-user:sync:create'
+
+        delete-quicksight-users:
+            command: 'vendor/bin/console quicksight-user:sync:delete'
+
     init-storage:
         clean-search:
             command: 'vendor/bin/console elasticsearch:index:delete -vvv --no-ansi'

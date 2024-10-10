@@ -13,6 +13,7 @@ use Spryker\Shared\Log\LogConstants;
 use Spryker\Shared\Product\ProductConstants;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Shared\Queue\QueueConstants;
+use SprykerEco\Shared\AmazonQuicksight\AmazonQuicksightConstants;
 
 require 'config_default-docker.dev.php';
 
@@ -44,3 +45,6 @@ $config[GlueJsonApiConventionConstants::GLUE_DOMAIN] = sprintf(
     'http://%s',
     $sprykerGlueStorefrontHost ?: $sprykerGlueBackendHost ?: 'localhost',
 );
+
+// -------------------------------- AWS QUICKSIGHT -------------------------------
+$config[AmazonQuicksightConstants::AWS_REGION] = getenv('AWS_REGION') ?: 'eu-west-1';
