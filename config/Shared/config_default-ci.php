@@ -40,6 +40,7 @@ use Spryker\Shared\SymfonyMailer\SymfonyMailerConstants;
 use Spryker\Shared\Testify\TestifyConstants;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
 use Spryker\Zed\OauthDummy\OauthDummyConfig;
+use SprykerEco\Shared\AmazonQuicksight\AmazonQuicksightConstants;
 use SprykerShop\Shared\ErrorPage\ErrorPageConstants;
 
 // ############################################################################
@@ -319,3 +320,6 @@ if ($isTestifyConstantsClassExists) {
 // ------------------------------ Glue Storefront API -------------------------------
 // ----------------------------------------------------------------------------
 $config[GlueStorefrontApiApplicationConstants::GLUE_STOREFRONT_API_HOST] = $glueStorefrontHost;
+
+// -------------------------------- AWS QUICKSIGHT -------------------------------
+$config[AmazonQuicksightConstants::AWS_REGION] = getenv('AWS_REGION') ?: 'eu-west-1';
