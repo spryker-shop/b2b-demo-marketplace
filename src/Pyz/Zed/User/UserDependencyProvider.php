@@ -21,6 +21,11 @@ use Spryker\Zed\User\UserDependencyProvider as SprykerUserDependencyProvider;
 use Spryker\Zed\UserLocale\Communication\Plugin\User\AssignUserLocalePreSavePlugin;
 use Spryker\Zed\UserLocale\Communication\Plugin\User\UserLocaleTransferExpanderPlugin;
 use Spryker\Zed\UserLocaleGui\Communication\Plugin\UserLocaleFormExpanderPlugin;
+use SprykerEco\Zed\AmazonQuicksight\Communication\Plugin\User\CreateQuicksightUserPostUpdatePlugin;
+use SprykerEco\Zed\AmazonQuicksight\Communication\Plugin\User\DeleteQuicksightUserPostUpdatePlugin;
+use SprykerEco\Zed\AmazonQuicksight\Communication\Plugin\User\QuicksightUserExpanderPlugin;
+use SprykerEco\Zed\AmazonQuicksight\Communication\Plugin\User\QuicksightUserPostCreatePlugin;
+use SprykerEco\Zed\AmazonQuicksight\Communication\Plugin\User\QuicksightUserRoleUserFormExpanderPlugin;
 
 class UserDependencyProvider extends SprykerUserDependencyProvider
 {
@@ -57,6 +62,7 @@ class UserDependencyProvider extends SprykerUserDependencyProvider
             new UserAgentFormExpanderPlugin(),
             new UserLocaleFormExpanderPlugin(),
             new MerchantAgentUserFormExpanderPlugin(),
+            new QuicksightUserRoleUserFormExpanderPlugin(),
         ];
     }
 
@@ -109,6 +115,37 @@ class UserDependencyProvider extends SprykerUserDependencyProvider
     {
         return [
             new MerchantAgentUserQueryCriteriaExpanderPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserExpanderPluginInterface>
+     */
+    protected function getUserExpanderPlugins(): array
+    {
+        return [
+            new QuicksightUserExpanderPlugin(),
+        ];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\UserExtension\Dependency\Plugin\UserPostCreatePluginInterface>
+     */
+    protected function getUserPostCreatePlugins(): array
+    {
+        return [
+            new QuicksightUserPostCreatePlugin(),
+        ];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\UserExtension\Dependency\Plugin\UserPostUpdatePluginInterface>
+     */
+    protected function getUserPostUpdatePlugins(): array
+    {
+        return [
+            new CreateQuicksightUserPostUpdatePlugin(),
+            new DeleteQuicksightUserPostUpdatePlugin(),
         ];
     }
 }

@@ -67,6 +67,14 @@ sections:
             command: "vendor/bin/console product:check-validity"
             stores: true
 
+        create-quicksight-users:
+            command: 'vendor/bin/console quicksight-user:sync:create'
+            stores: true
+
+        delete-quicksight-users:
+            command: 'vendor/bin/console quicksight-user:sync:delete'
+            stores: true
+
     scheduler-start:
         scheduler-setup:
             command: "vendor/bin/console scheduler:setup -vvv --no-ansi || true"
