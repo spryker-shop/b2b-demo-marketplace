@@ -13,6 +13,7 @@ use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Log\LogConstants;
 use Spryker\Shared\Newsletter\NewsletterConstants;
+use Spryker\Shared\Oauth\OauthConstants;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Shared\PropelOrm\PropelOrmConstants;
@@ -174,6 +175,7 @@ $config[TwigConstants::YVES_TWIG_OPTIONS] = [
     ),
 ];
 
+$config[OauthConstants::OAUTH_CLIENT_CONFIGURATION] = json_decode(getenv('SPRYKER_OAUTH_CLIENT_CONFIGURATION'), true) ?: [];
 // ----------------------------------------------------------------------------
 // ------------------------------ OMS -----------------------------------------
 // ----------------------------------------------------------------------------
