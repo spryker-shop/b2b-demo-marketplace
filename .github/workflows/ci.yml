@@ -952,7 +952,7 @@ jobs:
 
             -   name: Install cypress-tests folder
                 run: |
-                    cd ./data && composer require "spryker/cypress-tests:dev-master" --dev --no-interaction
+                    cd ./data && composer require "spryker/cypress-tests:dev-feature/frw-8354-create-dms-acceptance-tests" --dev --no-interaction
                     cp -r vendor ../vendor
 
             -   name: Install docker-compose
@@ -1006,7 +1006,7 @@ jobs:
 
             -   name: Install cypress-tests folder
                 run: |
-                    cd ./data && composer require "spryker/cypress-tests:dev-master" --dev --no-interaction
+                    cd ./data && composer require "spryker/cypress-tests:dev-feature/frw-8354-create-dms-acceptance-tests" --dev --no-interaction
                     cp -r vendor ../vendor
 
             -   name: Install docker-compose
