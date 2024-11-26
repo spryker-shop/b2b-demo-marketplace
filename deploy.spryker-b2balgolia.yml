@@ -208,7 +208,8 @@ services:
                 protocol: tcp
     scheduler:
         engine: jenkins
-        version: '2.324'
+        version: '2.442'
+        csrf-protection-enabled: false
         endpoints:
             scheduler.b2b-acp-algolia.cloud.spryker.toys:
     mail_catcher:
