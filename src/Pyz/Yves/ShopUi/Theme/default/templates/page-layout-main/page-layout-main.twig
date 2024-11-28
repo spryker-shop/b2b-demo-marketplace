@@ -10,9 +10,12 @@
 {%- block class -%}{{ pageLayoutMainJsClassName }}__side-drawer-container{%- endblock -%}
 
 {% block body %}
-    {% block notifications %}
-        {% include organism('notification-area') only %}
-    {% endblock %}
+    {{ parent() }}
+
+    {% include atom('touch-checker') only %}
+{% endblock %}
+
+{% block viewport %}
     <div class="page-layout page-layout--preload">
         {% widget 'AgentControlBarWidget' only %}{% endwidget %}
 
@@ -234,45 +237,35 @@
             {% endembed %}
         {% endblock %}
     </div>
+{% endblock %}
 
-    {% include atom('touch-checker') only %}
+{% block globalComponents %}
+    {% include molecule('action-single-click-enforcer') with {
+        attributes: {
+            'target-selector': '[data-init-single-click]',
+        },
+    } only %}
 
-    {% block globalComponents %}
-        {% include molecule('action-single-click-enforcer') with {
-            attributes: {
-                'target-selector': '[data-init-single-click]',
-            },
-        } only %}
+    {% include molecule('form-submitter') with {
+        attributes: {
+            'trigger-selector': '[data-form-submitter]',
+        },
+    } only %}
 
-        {% include molecule('form-submitter') with {
-            attributes: {
-                'trigger-selector': '[data-form-submitter]',
-            },
-        } only %}
+    {% include molecule('viewport-intersection-observer') only %}
 
-        {% include molecule('viewport-intersection-observer') only %}
+    {% include molecule('node-animator') only %}
 
-        {% include molecule('node-animator') only %}
+    {% include molecule('window-load-class-remover') with {
+        attributes: {
+            'target-class-name': 'page-layout',
+            'trigger-class-name': 'page-layout--preload',
+        },
+    } only %}
 
-        {% include molecule('window-load-class-remover') with {
-            attributes: {
-                'target-class-name': 'page-layout',
-                'trigger-class-name': 'page-layout--preload',
-            },
-        } only %}
-
-        {% include molecule('main-overlay') with {
-            attributes: {
-                'is-open': data.isOverlayOpen,
-            },
-        } only %}
-    {% endblock %}
-
-    {% block traceableEvent %}
-        {{ parent() }}
-    {% endblock %}
-
-    {% block icons %}
-        {% include atom('icon-sprite') only %}
-    {% endblock %}
+    {% include molecule('main-overlay') with {
+        attributes: {
+            'is-open': data.isOverlayOpen,
+        },
+    } only %}
 {% endblock %}
