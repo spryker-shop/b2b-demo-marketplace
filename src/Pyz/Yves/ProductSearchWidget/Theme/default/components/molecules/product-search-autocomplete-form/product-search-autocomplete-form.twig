@@ -64,7 +64,8 @@
 
             <input {% if data.name is not empty %}name="{{ data.name }}"{% endif %}
                    type="hidden"
-                   class="{{ config.jsName }}__input-hidden js-autocomplete-form__value-input"
+                   data-name="value"
+                   class="{{ config.jsName }}__input-hidden"
                    value="{{ data.hiddenValue }}"/>
 
             {% if attributes['show-clean-button'] %}

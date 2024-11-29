@@ -21,17 +21,9 @@
     ajaxTriggerAttribute: null,
 } %}
 
-{% set metaSku = data.listItem.sku is defined ? data.listItem.sku : (data.listItem.abstract_sku is defined ? data.listItem.abstract_sku : '') %}
-
 {% define attributes = {
     itemscope: '',
     itemtype: 'https://schema.org/Product',
-    details: {
-        sku: data.listItem.add_to_cart_sku
-            | default((data.listItem.attributeMap is defined ? data.listItem.attributeMap.productConcreteIds | keys | first)
-            | default(metaSku)),
-        price: can('SeePricePermissionPlugin') ? data.listItem.prices.DEFAULT | default : null,
-    } | json_encode,
 } %}
 
 {% set listItem = data.listItem %}
