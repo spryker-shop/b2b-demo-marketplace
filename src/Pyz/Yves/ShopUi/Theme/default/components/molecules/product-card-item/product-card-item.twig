@@ -28,8 +28,6 @@
 
 {% set listItem = data.listItem %}
 
-{%- block extraClass %} {{ config.jsName }}{% endblock -%}
-
 {% block body %}
     {% set amountSalesUnit = listItem.amountSalesUnit ?? null %}
     {% set quantitySalesUnit = listItem.quantitySalesUnit ?? null %}
