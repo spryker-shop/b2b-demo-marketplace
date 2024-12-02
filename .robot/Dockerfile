@@ -20,6 +20,8 @@ RUN pip3 install  \
     robotframework-jsonlibrary \
     tk
 
+RUN sudo npx playwright install-deps
+
 RUN rfbrowser init
 
 WORKDIR ${ROBOT_WORK_DIR}
