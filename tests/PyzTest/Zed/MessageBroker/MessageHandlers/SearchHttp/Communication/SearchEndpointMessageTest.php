@@ -35,15 +35,14 @@ class SearchEndpointMessageTest extends Unit
     public function testSearchEndpointAvailableMessageIsSuccessfullyHandled(): void
     {
         // Arrange
-        $storeTransfer = $this->tester->getAllowedStore();
-        $this->tester->removeHttpConfigForStore($storeTransfer);
+        $this->tester->removeHttpConfig();
         $searchEndpointAvailableTransfer = $this->tester->buildSearchEndpointAvailableTransfer();
 
         // Act
         $this->tester->handleSearchMessage($searchEndpointAvailableTransfer);
 
         // Assert
-        $this->tester->assertSearchHttpConfigExistsForStore($storeTransfer);
+        $this->tester->assertSearchHttpConfigExists();
     }
 
     /**
@@ -52,9 +51,8 @@ class SearchEndpointMessageTest extends Unit
     public function testSearchEndpointRemovedMessageIsSuccessfullyHandled(): void
     {
         // Arrange
-        $storeTransfer = $this->tester->getAllowedStore();
+        $this->tester->removeHttpConfig();
 
-        $this->tester->removeHttpConfigForStore($storeTransfer);
         $this->tester->handleSearchMessage(
             $this->tester->buildSearchEndpointAvailableTransfer(),
         );
@@ -65,6 +63,6 @@ class SearchEndpointMessageTest extends Unit
         $this->tester->handleSearchMessage($searchEndpointRemovedTransfer);
 
         // Assert
-        $this->tester->assertSearchHttpConfigIsRemovedForStore($storeTransfer);
+        $this->tester->assertSearchHttpConfigIsRemoved();
     }
 }
