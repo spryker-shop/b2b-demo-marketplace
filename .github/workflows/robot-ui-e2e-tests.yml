@@ -13,11 +13,11 @@ concurrency:
     cancel-in-progress: true
 
 jobs:
-    docker-alpine-php-82-mariadb-robot-ui-group-one:
+    docker-alpine-php-83-mariadb-robot-ui-group-one:
         if: >
             (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'robot-regression-ui-e2e')) ||
             (github.event_name == 'push' && github.ref == 'refs/heads/master')
-        name: "Docker / Alpine / PHP 8.2 / MariaDB / Robot / UI / Group One"
+        name: "Docker / Alpine / PHP 8.3 / MariaDB / Robot / UI / Group One"
         runs-on: ubuntu-22.04
         env:
             PROGRESS_TYPE: plain
