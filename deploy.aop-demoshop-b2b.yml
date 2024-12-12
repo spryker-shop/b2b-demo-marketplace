@@ -131,9 +131,11 @@ groups:
                     www.de.aop-b2b.demo-spryker.com:
                         region: EU
                         <<: *frontend-auth
-                    www.at.aop-b2b.demo-spryker.com:
+            Glue:
+                application: glue
+                endpoints:
+                    glue.de.aop-b2b.demo-spryker.com:
                         region: EU
-                        <<: *frontend-auth
             boffice:
                 application: backoffice
                 endpoints:
@@ -145,11 +147,6 @@ groups:
                 endpoints:
                     backend-gateway.de.aop-b2b.demo-spryker.com:
                         region: EU
-            Glue:
-                application: glue
-                endpoints:
-                    glue.de.aop-b2b.demo-spryker.com:
-                        region: EU
             mportal:
                 application: merchant-portal
                 endpoints:
@@ -157,7 +154,6 @@ groups:
                         region: EU
                         entry-point: MerchantPortal
                         primal: true
-
 services:
     database:
         engine: mysql
