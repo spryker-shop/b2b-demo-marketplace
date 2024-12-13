@@ -24,6 +24,7 @@ use Spryker\Zed\Session\Communication\Plugin\Application\SessionApplicationPlugi
 use Spryker\Zed\Translator\Communication\Plugin\Application\TranslatorApplicationPlugin;
 use Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin;
 use Spryker\Zed\Validator\Communication\Plugin\Application\ValidatorApplicationPlugin;
+use Spryker\Zed\WebProfiler\Communication\Plugin\Application\WebProfilerApplicationPlugin;
 use Spryker\Zed\ZedUi\Communication\Plugin\Application\ZedUiApplicationPlugin;
 
 class MerchantPortalApplicationDependencyProvider extends SprykerMerchantPortalApplicationDependencyProvider
