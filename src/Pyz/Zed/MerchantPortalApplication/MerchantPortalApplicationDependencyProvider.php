@@ -33,7 +33,7 @@ class MerchantPortalApplicationDependencyProvider extends SprykerMerchantPortalA
      */
     protected function getMerchantPortalApplicationPlugins(): array
     {
-        return [
+        $applicationPlugins = [
             new SessionApplicationPlugin(),
             new TwigApplicationPlugin(),
             new EventDispatcherApplicationPlugin(),
@@ -52,5 +52,11 @@ class MerchantPortalApplicationDependencyProvider extends SprykerMerchantPortalA
             new AclEntityApplicationPlugin(),
             new MerchantPortalEventDispatcherApplicationPlugin(),
         ];
+
+        if (class_exists(WebProfilerApplicationPlugin::class)) {
+            $applicationPlugins[] = new WebProfilerApplicationPlugin();
+        }
+
+        return $applicationPlugins;
     }
 }
