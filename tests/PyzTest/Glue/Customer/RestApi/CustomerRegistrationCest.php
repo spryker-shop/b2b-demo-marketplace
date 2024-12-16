@@ -55,7 +55,6 @@ class CustomerRegistrationCest
      */
     public function requestPostCustomerFailsOnExistingEmailUsage(CustomerApiTester $I): void
     {
-        // Arrange
         /** @var \Generated\Shared\Transfer\RestCustomersAttributesTransfer $restCustomersAttributesTransfer */
         $restCustomersAttributesTransfer = (new RestCustomersAttributesBuilder([
             RestCustomersAttributesTransfer::PASSWORD => 'Change!23456',
@@ -72,7 +71,6 @@ class CustomerRegistrationCest
 
         $restCustomersAttributesTransfer->setEmail($customerTransfer->getEmail());
 
-        // Act
         $I->sendPOST(
             CustomersRestApiConfig::RESOURCE_CUSTOMERS,
             [
@@ -260,22 +258,17 @@ class CustomerRegistrationCest
                     [
                         RestErrorMessageTransfer::CODE => RestRequestValidatorConfig::RESPONSE_CODE_REQUEST_INVALID,
                         RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
-                        RestErrorMessageTransfer::DETAIL => 'confirmPassword => This value is too short. It should have 12 characters or more.',
+                        RestErrorMessageTransfer::DETAIL => 'password => This value is not valid.',
                     ],
-                ],
-            ],
-            [
-                'attributes' => (new RestCustomersAttributesBuilder([
-                    RestCustomersAttributesTransfer::PASSWORD => 'qwertyui',
-                    RestCustomersAttributesTransfer::CONFIRM_PASSWORD => 'qwertyui',
-                    RestCustomersAttributesTransfer::ACCEPTED_TERMS => true,
-                ]))->build(),
-                RestErrorMessageTransfer::STATUS => Response::HTTP_BAD_REQUEST,
-                'errors' => [
                     [
-                        RestErrorMessageTransfer::CODE => CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_PASSWORD_INVALID_CHARACTER_SET,
-                        RestErrorMessageTransfer::STATUS => Response::HTTP_BAD_REQUEST,
-                        RestErrorMessageTransfer::DETAIL => CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_PASSWORD_INVALID_CHARACTER_SET,
+                        RestErrorMessageTransfer::CODE => RestRequestValidatorConfig::RESPONSE_CODE_REQUEST_INVALID,
+                        RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                        RestErrorMessageTransfer::DETAIL => 'password => This password has been leaked in a data breach, it must not be used. Please use another password.',
+                    ],
+                    [
+                        RestErrorMessageTransfer::CODE => RestRequestValidatorConfig::RESPONSE_CODE_REQUEST_INVALID,
+                        RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                        RestErrorMessageTransfer::DETAIL => 'confirmPassword => This value is too short. It should have 12 characters or more.',
                     ],
                 ],
             ],
