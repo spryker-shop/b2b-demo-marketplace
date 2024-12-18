@@ -33,6 +33,7 @@ use Generated\Shared\Transfer\RefundPaymentTransfer;
 use Generated\Shared\Transfer\SearchEndpointAvailableTransfer;
 use Generated\Shared\Transfer\SearchEndpointRemovedTransfer;
 use Generated\Shared\Transfer\SubmitPaymentTaxInvoiceTransfer;
+use Generated\Shared\Transfer\UpdatePaymentMethodTransfer;
 use Monolog\Logger;
 use Pyz\Shared\Console\ConsoleConstants;
 use Pyz\Shared\Scheduler\SchedulerConfig;
@@ -71,6 +72,7 @@ use Spryker\Shared\GlueStorefrontApiApplication\GlueStorefrontApiApplicationCons
 use Spryker\Shared\Http\HttpConstants;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\KernelApp\KernelAppConstants;
+use Spryker\Shared\Locale\LocaleConstants;
 use Spryker\Shared\Log\LogConstants;
 use Spryker\Shared\Mail\MailConstants;
 use Spryker\Shared\MerchantPortalApplication\MerchantPortalConstants;
@@ -136,6 +138,8 @@ use Spryker\Zed\Payment\PaymentConfig;
 use Spryker\Zed\Propel\PropelConfig;
 use SprykerShop\Shared\CustomerPage\CustomerPageConstants;
 use SprykerShop\Shared\ShopUi\ShopUiConstants;
+use SprykerShop\Shared\StorageRouter\StorageRouterConstants;
+use SprykerShop\Shared\StoreWidget\StoreWidgetConstants;
 use Symfony\Component\HttpFoundation\Cookie;
 
 // ############################################################################
@@ -173,6 +177,12 @@ $config[RouterConstants::YVES_SSL_EXCLUDED_ROUTE_NAMES] = [
 $config[RouterConstants::ZED_SSL_EXCLUDED_ROUTE_NAMES] = [
     'healthCheck' => 'health-check/index',
 ];
+
+$config[RouterConstants::IS_STORE_ROUTING_ENABLED]
+    = $config[StoreWidgetConstants::IS_STORE_ROUTING_ENABLED]
+    = $config[StorageRouterConstants::IS_STORE_ROUTING_ENABLED]
+    = $config[ShopUiConstants::IS_STORE_ROUTING_ENABLED]
+    = $config[LocaleConstants::IS_STORE_ROUTING_ENABLED] = (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
 
 // >>> DEV TOOLS
 
@@ -341,6 +351,12 @@ $config[AclConstants::ACL_DEFAULT_RULES] = [
     ],
     [
         'bundle' => 'agent-security-merchant-portal-gui',
+        'controller' => '*',
+        'action' => '*',
+        'type' => 'allow',
+    ],
+    [
+        'bundle' => '_profiler',
         'controller' => '*',
         'action' => '*',
         'type' => 'allow',
@@ -809,7 +825,9 @@ $config[SearchHttpConstants::TENANT_IDENTIFIER]
 
 $config[MessageBrokerConstants::MESSAGE_TO_CHANNEL_MAP] =
 $config[MessageBrokerAwsConstants::MESSAGE_TO_CHANNEL_MAP] = [
+    AppConfigUpdatedTransfer::class => 'app-events',
     AddPaymentMethodTransfer::class => 'payment-method-commands',
+    UpdatePaymentMethodTransfer::class => 'payment-method-commands',
     DeletePaymentMethodTransfer::class => 'payment-method-commands',
     CancelPaymentTransfer::class => 'payment-commands',
     CapturePaymentTransfer::class => 'payment-commands',
@@ -822,6 +840,8 @@ $config[MessageBrokerAwsConstants::MESSAGE_TO_CHANNEL_MAP] = [
     PaymentRefundFailedTransfer::class => 'payment-events',
     PaymentCanceledTransfer::class => 'payment-events',
     PaymentCancellationFailedTransfer::class => 'payment-events',
+    PaymentCreatedTransfer::class => 'payment-events',
+    PaymentUpdatedTransfer::class => 'payment-events',
     AssetAddedTransfer::class => 'asset-commands',
     AssetUpdatedTransfer::class => 'asset-commands',
     AssetDeletedTransfer::class => 'asset-commands',
@@ -837,11 +857,8 @@ $config[MessageBrokerAwsConstants::MESSAGE_TO_CHANNEL_MAP] = [
     ConfigureTaxAppTransfer::class => 'tax-commands',
     DeleteTaxAppTransfer::class => 'tax-commands',
     SubmitPaymentTaxInvoiceTransfer::class => 'payment-tax-invoice-commands',
-    PaymentCreatedTransfer::class => 'payment-events',
-    PaymentUpdatedTransfer::class => 'payment-events',
     ReadyForMerchantAppOnboardingTransfer::class => 'merchant-app-events',
     MerchantAppOnboardingStatusChangedTransfer::class => 'merchant-app-events',
-    AppConfigUpdatedTransfer::class => 'app-events',
 ];
 
 $config[MessageBrokerConstants::CHANNEL_TO_RECEIVER_TRANSPORT_MAP] = [
