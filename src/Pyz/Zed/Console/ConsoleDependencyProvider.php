@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\Console;
 
 use Pyz\Zed\DataImport\DataImportConfig;
@@ -470,7 +472,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
      *
      * @return array<\Spryker\Zed\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface>
      */
-    public function getConsolePostRunHookPlugins(Container $container): array
+    public function getConsolePostRunHookPlugins(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
         return [
             new EventBehaviorPostHookPlugin(),
@@ -497,7 +499,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
      *
      * @return array<\Symfony\Component\EventDispatcher\EventSubscriberInterface>
      */
-    public function getEventSubscriber(Container $container): array
+    public function getEventSubscriber(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
         return [
             new MonitoringConsolePlugin(),
