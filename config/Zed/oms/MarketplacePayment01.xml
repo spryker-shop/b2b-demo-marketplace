@@ -7,17 +7,17 @@
 
     <process name="MarketplacePayment01" main="true">
         <states>
-            <state name="new" reserved="true" display="oms.state.new">
+            <state name="new" display="oms.state.new">
                 <flag>cancellable</flag>
             </state>
-            <state name="paid" reserved="true" display="oms.state.paid"/>
+            <state name="paid" display="oms.state.paid"/>
             <state name="canceled" display="oms.state.canceled"/>
             <state name="refunded" display="oms.state.refunded"/>
-            <state name="merchant split pending" reserved="true" display="oms.state.merchant-split-pending"/>
-            <state name="tax invoice submitted" reserved="true" display="oms.state.paid"/>
-            <state name="sent to merchant" reserved="true" display="oms.state.sent-to-merchant"/>
-            <state name="shipped by merchant" reserved="true" display="oms.state.shipped-by-merchant"/>
-            <state name="delivered" reserved="true" display="oms.state.delivered"/>
+            <state name="merchant split pending" display="oms.state.merchant-split-pending"/>
+            <state name="tax invoice submitted" display="oms.state.paid"/>
+            <state name="sent to merchant" display="oms.state.sent-to-merchant"/>
+            <state name="shipped by merchant" display="oms.state.shipped-by-merchant"/>
+            <state name="delivered" display="oms.state.delivered"/>
             <state name="closed" display="oms.state.closed"/>
         </states>
 
