@@ -176,6 +176,7 @@ services:
     scheduler:
         engine: jenkins
         version: '2.442'
+        csrf-protection-enabled: true
         endpoints:
             scheduler.academy-eu-b2b-mp.prod.demo-spryker.com:
     mail_catcher:
