@@ -41,16 +41,7 @@ class SearchHttpCommunicationTester extends Actor
     /**
      * @return void
      */
-    public function removeHttpConfig(): void
-    {
-        (new SpySearchHttpConfigQuery())
-            ->deleteAll();
-    }
-
-    /**
-     * @return void
-     */
-    public function assertSearchHttpConfigExists(): void
+    public function assertSearchHttpConfigExistsForStore(): void
     {
         $searchHttpConfigEntity = $this->getSearchHttpConfigEntity();
 
@@ -91,6 +82,15 @@ class SearchHttpCommunicationTester extends Actor
     }
 
     /**
+     * @return void
+     */
+    public function removeHttpConfig(): void
+    {
+        (new SpySearchHttpConfigQuery())
+            ->deleteAll();
+    }
+
+    /**
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $searchMessageTransfer
      *
      * @return void
@@ -99,6 +99,7 @@ class SearchHttpCommunicationTester extends Actor
     {
         $channelName = 'search-commands';
         $this->setupMessageBroker($searchMessageTransfer::class, $channelName);
+        $this->setupMessageBrokerPlugins();
         $messageBrokerFacade = $this->getLocator()->messageBroker()->facade();
         $messageBrokerFacade->sendMessage($searchMessageTransfer);
         $messageBrokerFacade->startWorker(
