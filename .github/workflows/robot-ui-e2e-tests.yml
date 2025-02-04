@@ -15,8 +15,10 @@ concurrency:
 jobs:
     docker-alpine-php-83-mariadb-robot-ui-group-one:
         if: >
-            (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'robot-regression-ui-e2e')) ||
-            (github.event_name == 'push' && github.ref == 'refs/heads/master')
+            (github.event_name == 'pull_request'
+                && (contains(github.event.pull_request.labels.*.name, 'run-ui-ci')
+                    || contains(github.event.pull_request.labels.*.name, 'run-latest-ci'))
+            ) || (github.event_name == 'push' && github.ref == 'refs/heads/master')
         name: "Docker / Alpine / PHP 8.3 / MariaDB / Robot / UI / Group One"
         runs-on: ubuntu-22.04
         env:
@@ -82,9 +84,11 @@ jobs:
 
     docker-alpine-php-83-mariadb-robot-ui-group-two:
         if: >
-            (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'robot-regression-ui-e2e')) ||
-            (github.event_name == 'push' && github.ref == 'refs/heads/master')
-        name: "Docker / Alpine / PHP 8.3 / MariaDB / Robot / UI / Group Two"
+            (github.event_name == 'pull_request'
+                && (contains(github.event.pull_request.labels.*.name, 'run-ui-ci')
+                    || contains(github.event.pull_request.labels.*.name, 'run-latest-ci'))
+            ) || (github.event_name == 'push' && github.ref == 'refs/heads/master')
+        name: "Docker / Alpine / PHP 8.3 / MariaDB / Robot / UI /Group Two"
         runs-on: ubuntu-22.04
         env:
             PROGRESS_TYPE: plain
@@ -149,8 +153,10 @@ jobs:
 
     docker-alpine-php-83-mariadb-robot-ui-group-three:
         if: >
-            (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'robot-regression-ui-e2e')) ||
-            (github.event_name == 'push' && github.ref == 'refs/heads/master')
+            (github.event_name == 'pull_request'
+                && (contains(github.event.pull_request.labels.*.name, 'run-ui-ci')
+                    || contains(github.event.pull_request.labels.*.name, 'run-latest-ci'))
+            ) || (github.event_name == 'push' && github.ref == 'refs/heads/master')
         name: "Docker / Alpine / PHP 8.3 / MariaDB / Robot / UI / Group Three"
         runs-on: ubuntu-22.04
         env:
@@ -216,8 +222,10 @@ jobs:
 
     docker-alpine-php-82-postgresql-dynamic-store-off-robot-ui-group-one:
         if: >
-            (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'robot-regression-ui-e2e')) ||
-            (github.event_name == 'push' && github.ref == 'refs/heads/master')
+            (github.event_name == 'pull_request'
+                && (contains(github.event.pull_request.labels.*.name, 'run-ui-ci')
+                    || contains(github.event.pull_request.labels.*.name, 'run-latest-ci'))
+            ) || (github.event_name == 'push' && github.ref == 'refs/heads/master')
         name: "Docker / Alpine / PHP 8.2 / PostgreSQL / Dynamic Store OFF / Robot / UI / Group One"
         runs-on: ubuntu-22.04
         env:
@@ -282,8 +290,10 @@ jobs:
 
     docker-alpine-php-82-postgresql-dynamic-store-off-robot-ui-group-two:
         if: >
-            (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'robot-regression-ui-e2e')) ||
-            (github.event_name == 'push' && github.ref == 'refs/heads/master')
+            (github.event_name == 'pull_request'
+                && (contains(github.event.pull_request.labels.*.name, 'run-ui-ci')
+                    || contains(github.event.pull_request.labels.*.name, 'run-latest-ci'))
+            ) || (github.event_name == 'push' && github.ref == 'refs/heads/master')
         name: "Docker / Alpine / PHP 8.2 / PostgreSQL / Dynamic Store OFF / Robot / UI / Group Two"
         runs-on: ubuntu-22.04
         env:
@@ -348,8 +358,10 @@ jobs:
 
     docker-alpine-php-82-postgresql-dynamic-store-off-robot-ui-group-three:
         if: >
-            (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'robot-regression-ui-e2e')) ||
-            (github.event_name == 'push' && github.ref == 'refs/heads/master')
+            (github.event_name == 'pull_request'
+                && (contains(github.event.pull_request.labels.*.name, 'run-ui-ci')
+                    || contains(github.event.pull_request.labels.*.name, 'run-latest-ci'))
+            ) || (github.event_name == 'push' && github.ref == 'refs/heads/master')
         name: "Docker / Alpine / PHP 8.2 / PostgreSQL / Dynamic Store OFF / Robot / UI / Group Three"
         runs-on: ubuntu-22.04
         env:
