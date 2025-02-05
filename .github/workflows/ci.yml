@@ -7,6 +7,10 @@ on:
     schedule:
         -   cron: '0 0 * * 0'
 
+env:
+    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+    WEEKLY_CI_SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
+
 concurrency:
     group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
     cancel-in-progress: true
@@ -150,9 +154,6 @@ jobs:
 
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
-                env:
-                    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-                    SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
                 if: always()
 
     js-validation:
@@ -195,9 +196,6 @@ jobs:
 
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
-                env:
-                    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-                    SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
                 if: always()
 
     php-83-mariadb-glue-alpine-dynamic-store-off:
@@ -230,9 +228,6 @@ jobs:
 
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
-                env:
-                    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-                    SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
                 if: always()
 
     php-83-mariadb-glue-alpine:
@@ -269,9 +264,6 @@ jobs:
 
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
-                env:
-                    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-                    SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
                 if: always()
 
     php-83-postgresql-glue-alpine-dynamic-store-off:
@@ -304,9 +296,6 @@ jobs:
 
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
-                env:
-                    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-                    SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
                 if: always()
 
     php-83-postgresql-glue-alpine:
@@ -342,9 +331,6 @@ jobs:
 
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
-                env:
-                    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-                    SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
                 if: always()
 
     php-83-mariadb-acceptance-alpine-dynamic-store-off:
@@ -376,9 +362,6 @@ jobs:
 
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
-                env:
-                    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-                    SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
                 if: always()
 
     php-83-mariadb-acceptance-alpine:
@@ -414,9 +397,6 @@ jobs:
 
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
-                env:
-                    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-                    SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
                 if: always()
 
     php-83-postgresql-acceptance-alpine-dynamic-store-off:
@@ -448,9 +428,6 @@ jobs:
 
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
-                env:
-                    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-                    SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
                 if: always()
 
     php-83-postgresql-acceptance-alpine:
@@ -485,9 +462,6 @@ jobs:
 
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
-                env:
-                    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-                    SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
                 if: always()
 
     php-83-mariadb-functional-alpine-dynamic-store-off:
@@ -518,9 +492,6 @@ jobs:
 
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
-                env:
-                    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-                    SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
                 if: always()
 
     php-83-mariadb-functional-alpine:
@@ -554,9 +525,6 @@ jobs:
 
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
-                env:
-                    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-                    SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
                 if: always()
 
     php-83-postgresql-functional-alpine-dynamic-store-off:
@@ -588,9 +556,6 @@ jobs:
 
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
-                env:
-                    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-                    SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
                 if: always()
 
     php-83-postgresql-functional-alpine:
@@ -625,9 +590,6 @@ jobs:
 
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
-                env:
-                    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-                    SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
                 if: always()
 
     php-82-mariadb-glue-alpine-dynamic-store-off:
@@ -660,9 +622,6 @@ jobs:
 
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
-                env:
-                    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-                    SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
                 if: always()
 
     php-82-mariadb-glue-alpine:
@@ -697,9 +656,6 @@ jobs:
 
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
-                env:
-                    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-                    SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
                 if: always()
 
     php-82-postgresql-acceptance-alpine-dynamic-store-off:
@@ -731,9 +687,6 @@ jobs:
 
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
-                env:
-                    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-                    SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
                 if: always()
 
     php-82-postgresql-acceptance-alpine:
@@ -767,9 +720,6 @@ jobs:
 
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
-                env:
-                    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-                    SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
                 if: always()
 
     php-82-postgresql-functional-alpine-dynamic-store-off:
@@ -801,9 +751,6 @@ jobs:
 
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
-                env:
-                    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-                    SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
                 if: always()
 
     php-82-postgresql-functional-alpine:
@@ -838,9 +785,6 @@ jobs:
 
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
-                env:
-                    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-                    SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
                 if: always()
 
     php-82-mariadb-acceptance-alpine-dynamic-store-off:
@@ -872,9 +816,6 @@ jobs:
 
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
-                env:
-                    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-                    SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
                 if: always()
 
     php-82-mariadb-acceptance-alpine:
@@ -909,9 +850,6 @@ jobs:
 
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
-                env:
-                    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-                    SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
                 if: always()
 
     php-82-mariadb-functional-alpine-dynamic-store-off:
@@ -942,9 +880,6 @@ jobs:
 
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
-                env:
-                    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-                    SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
                 if: always()
 
     php-82-mariadb-functional-alpine:
@@ -978,9 +913,6 @@ jobs:
 
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
-                env:
-                    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-                    SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
                 if: always()
 
     php-82-postgres-functional-debian-dynamic-store-off:
@@ -1011,9 +943,6 @@ jobs:
 
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
-                env:
-                    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-                    SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
                 if: always()
 
     php-82-postgres-functional-debian:
@@ -1047,9 +976,6 @@ jobs:
 
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
-                env:
-                    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-                    SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
                 if: always()
 
     frontend-assets-via-docker-php-8-2:
@@ -1079,9 +1005,6 @@ jobs:
 
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
-                env:
-                    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-                    SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
                 if: always()
 
     docker-alpine-php-82-mariadb-robot-dynamic-store-off:
@@ -1132,9 +1055,6 @@ jobs:
 
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
-                env:
-                    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-                    SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
                 if: always()
 
     docker-alpine-php-83-postgresql-robot:
@@ -1187,9 +1107,6 @@ jobs:
 
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
-                env:
-                    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-                    SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
                 if: always()
 
     docker-alpine-php-83-mariadb-robot:
@@ -1242,9 +1159,6 @@ jobs:
 
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
-                env:
-                    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-                    SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
                 if: always()
 
     docker-alpine-php-8-3-mariadb-cypress-dynamic-store-off:
@@ -1303,9 +1217,6 @@ jobs:
 
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
-                env:
-                    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-                    SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
                 if: always()
 
     docker-alpine-php-83-mariadb-cypress:
@@ -1364,9 +1275,6 @@ jobs:
 
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
-                env:
-                    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-                    SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
                 if: always()
 
     positive-docker-alpine-php-82-mariadb-robot:
