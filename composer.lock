@@ -50669,21 +50669,22 @@
         },
         {
             "name": "spryker/product-list",
-            "version": "1.7.1",
+            "version": "1.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-list.git",
-                "reference": "f2cf0c520c6eed821055c4579b5638c4752cb630"
+                "reference": "ccc1b3aa618a28d29f5bb95114f9e98368733b24"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-list/zipball/f2cf0c520c6eed821055c4579b5638c4752cb630",
-                "reference": "f2cf0c520c6eed821055c4579b5638c4752cb630",
+                "url": "https://api.github.com/repos/spryker/product-list/zipball/ccc1b3aa618a28d29f5bb95114f9e98368733b24",
+                "reference": "ccc1b3aa618a28d29f5bb95114f9e98368733b24",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.0",
+                "php": ">=8.2",
                 "spryker/cart-extension": "^1.5.0 || ^2.1.0 || ^4.0.0",
+                "spryker/cart-reorder-extension": "^1.0.0",
                 "spryker/category": "^3.0.0 || ^4.0.0 || ^5.0.0",
                 "spryker/kernel": "^3.33.0",
                 "spryker/messenger": "^3.0.0",
@@ -50717,9 +50718,9 @@
             ],
             "description": "ProductList module",
             "support": {
-                "source": "https://github.com/spryker/product-list/tree/1.7.1"
+                "source": "https://github.com/spryker/product-list/tree/1.8.1"
             },
-            "time": "2023-02-02T12:10:12+00:00"
+            "time": "2025-01-15T13:59:52+00:00"
         },
         {
             "name": "spryker/product-list-data-import",
@@ -62650,20 +62651,20 @@
         },
         {
             "name": "spryker/shopping-list",
-            "version": "4.17.0",
+            "version": "4.19.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/shopping-list.git",
-                "reference": "924f723f3513b3226b5add72237658169c4b5988"
+                "reference": "808c5618b198713f700d219b74ba6f3fa12168a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/shopping-list/zipball/924f723f3513b3226b5add72237658169c4b5988",
-                "reference": "924f723f3513b3226b5add72237658169c4b5988",
+                "url": "https://api.github.com/repos/spryker/shopping-list/zipball/808c5618b198713f700d219b74ba6f3fa12168a9",
+                "reference": "808c5618b198713f700d219b74ba6f3fa12168a9",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.1",
+                "php": ">=8.2",
                 "spryker/cart": "^5.1.0 || ^7.0.0",
                 "spryker/company-business-unit": "^1.0.0 || ^2.0.0",
                 "spryker/company-business-unit-extension": "^1.1.0",
@@ -62716,9 +62717,9 @@
             ],
             "description": "ShoppingList module",
             "support": {
-                "source": "https://github.com/spryker/shopping-list/tree/4.17.0"
+                "source": "https://github.com/spryker/shopping-list/tree/4.19.0"
             },
-            "time": "2024-05-06T12:15:28+00:00"
+            "time": "2025-01-23T09:30:46+00:00"
         },
         {
             "name": "spryker/shopping-list-data-import",
@@ -64753,16 +64754,16 @@
         },
         {
             "name": "spryker/synchronization",
-            "version": "1.17.3",
+            "version": "1.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/synchronization.git",
-                "reference": "44cc5c9731c93984944a9003348bedeef41cd4dd"
+                "reference": "019b69e019f233c5c26d944e83e03f8376b5beb8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/synchronization/zipball/44cc5c9731c93984944a9003348bedeef41cd4dd",
-                "reference": "44cc5c9731c93984944a9003348bedeef41cd4dd",
+                "url": "https://api.github.com/repos/spryker/synchronization/zipball/019b69e019f233c5c26d944e83e03f8376b5beb8",
+                "reference": "019b69e019f233c5c26d944e83e03f8376b5beb8",
                 "shasum": ""
             },
             "require": {
@@ -64831,9 +64832,9 @@
             ],
             "description": "Synchronization module",
             "support": {
-                "source": "https://github.com/spryker/synchronization/tree/1.17.3"
+                "source": "https://github.com/spryker/synchronization/tree/1.18.0"
             },
-            "time": "2024-11-21T09:26:16+00:00"
+            "time": "2025-01-15T12:37:56+00:00"
         },
         {
             "name": "spryker/synchronization-behavior",
@@ -78360,7 +78361,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/cypress-tests.git",
-                "reference": "8b6cb07dffb30e9767a236f99eafe635b5cfc40f"
+                "reference": "41e7240ca1fa91f203978aa094d69dcac64f7aaa"
             },
             "default-branch": true,
             "type": "library",
@@ -78368,7 +78369,7 @@
                 "MIT"
             ],
             "description": "This repository is dedicated to housing an extensive collection of UI end-to-end tests, meticulously crafted using Cypress for Spryker applications. These tests are designed to thoroughly evaluate the user interface, ensuring that all interactions and visual elements function as intended in real-world scenarios. By leveraging Cypress's advanced browser automation capabilities, this suite provides an efficient and effective means of validating the user experience, confirming the seamless operation and aesthetic integrity of Spryker's front-end components. Our commitment to rigorous UI testing helps maintain the high standard of quality and reliability that Spryker users expect.",
-            "time": "2024-12-17T09:44:32+00:00"
+            "time": "2025-02-11T05:45:55+00:00"
         },
         {
             "name": "spryker/development",
@@ -79421,7 +79422,7 @@
         "ext-readline": "*",
         "ext-redis": "*"
     },
-    "platform-dev": {},
+    "platform-dev": [],
     "platform-overrides": {
         "php": "8.2"
     },
