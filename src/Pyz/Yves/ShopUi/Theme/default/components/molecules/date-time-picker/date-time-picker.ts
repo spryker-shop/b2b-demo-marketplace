@@ -22,9 +22,9 @@ export default class DateTimePicker extends Component {
             ...this.config,
             ...(this.dateToId
                 ? {
-                    // eslint-disable-next-line new-cap
-                    plugins: [new rangePlugin({ input: `#${this.dateToId}` })],
-                }
+                      // eslint-disable-next-line new-cap
+                      plugins: [new rangePlugin({ input: `#${this.dateToId}` })],
+                  }
                 : {}),
         };
 
