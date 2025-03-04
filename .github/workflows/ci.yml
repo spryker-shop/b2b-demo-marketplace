@@ -301,9 +301,9 @@ jobs:
     php-83-postgresql-glue-alpine:
         name: "PHP 8.3 / PostgreSQL / Glue / Alpine"
         if: >
-             !contains(github.event.pull_request.head.ref, 'hackathon')
-             && contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci')
-             || (github.event_name == 'schedule' && github.ref == 'refs/heads/master')
+            !contains(github.event.pull_request.head.ref, 'hackathon')
+            && contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci')
+            || (github.event_name == 'schedule' && github.ref == 'refs/heads/master')
         runs-on: ubuntu-22.04
         env:
             PROGRESS_TYPE: plain
