@@ -622,7 +622,7 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
     }
 
     /**
-     * @return array
+     * @return list<\Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface>
      */
     public function getAssetPlugins(): array
     {
@@ -632,7 +632,7 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
     }
 
     /**
-     * @return array
+     * @return list<\Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface>
      */
     public function getTaxAppPlugins(): array
     {
