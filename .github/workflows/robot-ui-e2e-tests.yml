@@ -87,7 +87,7 @@ jobs:
               id: rerun_failed_tests
               if: always() && steps.merge_initial_results.outcome != 'success'
               run: |
-                  docker/sdk exec robot-framework robot -v env:ui_mp_b2b -v dms:true -v headless:true -v ignore_console:false -d results/rerun --runemptysuite --rerunfailed results/output.xml --output rerun.xml -s '*'.tests.parallel_ui.mp_b2b .
+                  docker/sdk exec robot-framework robot -v env:ui_mp_b2b -v docker:True -v dms:true -v headless:true -v ignore_console:false -d results/rerun --runemptysuite --rerunfailed results/output.xml --output rerun.xml -s '*'.tests.parallel_ui.mp_b2b .
             - name: Merge Final Test Results
               if: always() && steps.merge_initial_results.outcome != 'success'
               run: |
@@ -169,7 +169,7 @@ jobs:
               id: rerun_failed_tests
               if: always() && steps.merge_initial_results.outcome != 'success'
               run: |
-                  docker/sdk exec robot-framework robot -v env:ui_mp_b2b -v dms:false -v db_engine:psycopg -v headless:true -v ignore_console:false -d results/rerun --runemptysuite --rerunfailed results/output.xml --output rerun.xml -s '*'.tests.parallel_ui.mp_b2b .
+                  docker/sdk exec robot-framework robot -v env:ui_mp_b2b -v docker:True -v dms:false -v db_engine:psycopg2 -v headless:true -v ignore_console:false -d results/rerun --runemptysuite --rerunfailed results/output.xml --output rerun.xml -s '*'.tests.parallel_ui.mp_b2b .
             - name: Merge Final Test Results
               if: always() && steps.merge_initial_results.outcome != 'success'
               run: |
