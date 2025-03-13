@@ -114,7 +114,7 @@ jobs:
             -   name: Generate autocompletion files
                 run: vendor/bin/console dev:ide-auto-completion:generate
 
-            -   name: Generate rest API dcoumentation
+            -   name: Generate rest API documentation
                 run: vendor/bin/console rest-api:generate:documentation
 
             -   name: Frontend install-dependencies
