@@ -26,6 +26,11 @@ use Spryker\Zed\SharedCart\Communication\Plugin\WriteSharedCartPermissionPlugin;
 use Spryker\Zed\ShoppingList\Communication\Plugin\ReadShoppingListPermissionPlugin;
 use Spryker\Zed\ShoppingList\Communication\Plugin\ShoppingListPermissionStoragePlugin;
 use Spryker\Zed\ShoppingList\Communication\Plugin\WriteShoppingListPermissionPlugin;
+use SprykerFeature\Shared\SspFileManagement\Plugin\Permission\DownloadFilesPermissionPlugin;
+use SprykerFeature\Shared\SspFileManagement\Plugin\Permission\ViewCompanyBusinessUnitFilesPermissionPlugin;
+use SprykerFeature\Shared\SspFileManagement\Plugin\Permission\ViewCompanyFilesPermissionPlugin;
+use SprykerFeature\Shared\SspFileManagement\Plugin\Permission\ViewCompanyUserFilesPermissionPlugin;
+use SprykerFeature\Shared\SspFileManagement\Plugin\Permission\ViewFilesPermissionPlugin;
 use SprykerShop\Shared\CartPage\Plugin\AddCartItemPermissionPlugin;
 use SprykerShop\Shared\CartPage\Plugin\ChangeCartItemPermissionPlugin;
 use SprykerShop\Shared\CartPage\Plugin\RemoveCartItemPermissionPlugin;
@@ -66,6 +71,11 @@ class PermissionDependencyProvider extends SprykerPermissionDependencyProvider
             new ApproveQuotePermissionPlugin(), #QuoteApprovalFeature
             new SeeBusinessUnitOrdersPermissionPlugin(),
             new SeeCompanyOrdersPermissionPlugin(),
+            new ViewFilesPermissionPlugin(), #SspFileManagementFeature
+            new DownloadFilesPermissionPlugin(), #SspFileManagementFeature
+            new ViewCompanyUserFilesPermissionPlugin(), #SspFileManagementFeature
+            new ViewCompanyBusinessUnitFilesPermissionPlugin(), #SspFileManagementFeature
+            new ViewCompanyFilesPermissionPlugin(), #SspFileManagementFeature
         ];
     }
 }

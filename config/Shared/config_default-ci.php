@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 use Monolog\Logger;
 use Pyz\Shared\Console\ConsoleConstants;
+use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
 use Spryker\Shared\AppCatalogGui\AppCatalogGuiConstants;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Customer\CustomerConstants;
@@ -12,6 +13,7 @@ use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\WebExceptionErrorRenderer;
 use Spryker\Shared\Event\EventConstants;
 use Spryker\Shared\EventBehavior\EventBehaviorConstants;
+use Spryker\Shared\FileSystem\FileSystemConstants;
 use Spryker\Shared\GlueApplication\GlueApplicationConstants;
 use Spryker\Shared\GlueBackendApiApplication\GlueBackendApiApplicationConstants;
 use Spryker\Shared\GlueStorefrontApiApplication\GlueStorefrontApiApplicationConstants;
@@ -42,6 +44,7 @@ use Spryker\Shared\SymfonyMailer\SymfonyMailerConstants;
 use Spryker\Shared\Testify\TestifyConstants;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
 use Spryker\Zed\OauthDummy\OauthDummyConfig;
+use SprykerFeature\Shared\SspInquiryManagement\SspInquiryManagementConstants;
 use SprykerShop\Shared\ErrorPage\ErrorPageConstants;
 
 // ############################################################################
@@ -261,6 +264,7 @@ $config[ApplicationConstants::BASE_URL_YVES]
     = $config[NewsletterConstants::BASE_URL_YVES]
     = $config[MerchantRelationshipConstants::BASE_URL_YVES]
     = $config[MerchantRelationRequestConstants::BASE_URL_YVES]
+    = $config[SspInquiryManagementConstants::BASE_URL_YVES]
     = sprintf(
         'http://%s',
         $yvesHost,
@@ -321,3 +325,34 @@ if ($isTestifyConstantsClassExists) {
 // ------------------------------ Glue Storefront API -------------------------------
 // ----------------------------------------------------------------------------
 $config[GlueStorefrontApiApplicationConstants::GLUE_STOREFRONT_API_HOST] = $glueStorefrontHost;
+
+// ----------------------------------------------------------------------------
+// ------------------------------ Flysystem -----------------------------------
+// ----------------------------------------------------------------------------
+$config[FileSystemConstants::FILESYSTEM_SERVICE] = [
+    's3-import' => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/',
+        'path' => '/',
+    ],
+    'files-import' => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/',
+        'path' => '/',
+    ],
+    'files' => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/',
+        'path' => '/',
+    ],
+    'ssp-files' => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/',
+        'path' => '/data/data/media',
+    ],
+    'ssp-inquiry' => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/data',
+        'path' => '/data/ssp-inquiry',
+    ],
+];
