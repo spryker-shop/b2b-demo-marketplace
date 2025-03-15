@@ -9,6 +9,15 @@
 
 {%- block class -%}{{ pageLayoutMainJsClassName }}__side-drawer-container{%- endblock -%}
 
+{% block files %}
+    {% widget 'SspFileManagerMenuItemWidget' args [data.activePage]  with {
+        data: {
+            modifiers: ['account'],
+        },
+    } only %}
+    {% endwidget %}
+{% endblock %}
+
 {% block viewport %}
     <div class="page-layout page-layout--preload">
         {% widget 'AgentControlBarWidget' only %}{% endwidget %}
@@ -93,6 +102,16 @@
                                 url: path('quote-request'),
                                 label: 'quote_request_widget.request_for_quote.list.title' | trans,
                                 icon: 'message',
+                            },
+                            {
+                                block: block('files'),
+                                name: 'ssp-file-management'
+                            },
+                            {
+                                url: url('customer/ssp-inquiry'),
+                                icon: 'inquiries',
+                                label: 'ssp_inquiry.list.widget.title' | trans,
+                                name: 'ssp-file-inquiries'
                             },
                         ],
                     }

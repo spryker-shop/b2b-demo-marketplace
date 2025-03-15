@@ -1,0 +1,22 @@
+{% extends view('ssp-file-management-menu-item', '@SprykerFeature:SspFileManagement') %}
+
+{% define data = {
+    modifiers: [],
+} %}
+
+{% block body %}
+    {% if data.canViewFiles %}
+        {% block content %}
+            {% include molecule('navigation-sidebar-item') with {
+                data: {
+                    url: url('ssp-file-management'),
+                    icon: 'files',
+                    label: 'ssp_file_management.file_management' | trans,
+                    name: 'ssp-file-management'
+                },
+                qa: 'files',
+                modifiers: data.isActivePage ? ['active'] | merge(data.modifiers) : data.modifiers,
+            } only %}
+        {% endblock %}
+    {% endif %}
+{% endblock %}

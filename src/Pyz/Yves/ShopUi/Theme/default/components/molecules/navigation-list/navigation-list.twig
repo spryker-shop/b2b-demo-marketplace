@@ -13,7 +13,9 @@
 {% block body %}
     <ul class="{{- component.renderClass('list', modifiers) -}}">
         {% for node in data.nodes %}
-            {% if node.nodeType is defined %}
+            {% if node.block is defined %}
+                {{ node.block | raw }}
+            {% elseif node.nodeType is defined %}
                 {% embed atom('node') with {
                     modifiers: modifiers,
                     class: 'list__item',

@@ -1,0 +1,49 @@
+{% extends molecule('ssp-inquiry-filters', '@SprykerFeature:SspInquiryManagement') %}
+
+{% block body %}
+    {{ block('searchRow') }}
+
+    {% block additionalFiltersRow %}
+        <div class="form__fields grid grid--bottom">
+            {% for filter in data.sspInquirySearchForm.filters.children %}
+                {% set dateFromId = 'dateTo' in filter.vars.id ? "sspInquirySearchForm_filters_dateFrom" : false %}
+                {% set dateToId = 'dateFrom' in filter.vars.id ? "sspInquirySearchForm_filters_dateTo" : false %}
+
+                <div class="{{ filter.vars.attr.class }}">
+                    {% widget 'LanguageSwitcherWidget' args [app.request.pathInfo, app.request.queryString, app.request.requestUri] with {
+                        data: {
+                            field: filter,
+                        },
+                        embed: {
+                            dateFromId: dateFromId,
+                            dateToId: dateToId,
+                        },
+                    } only %}
+                        {% block body %}
+                            {% set config = {
+                                enableTime: false,
+                                dateFormat: 'Y-m-d',
+                            } %}
+
+                            {% include molecule('date-time-picker') with {
+                                data: {
+                                    field: data.field,
+                                    hasIcon: true,
+                                },
+                                attributes: {
+                                    language: data.currentLanguage,
+                                    config: config | json_encode,
+                                    'formatted-date-time': data.field.vars.value | date('Y-m-d'),
+                                    'date-from-id': embed.dateFromId,
+                                    'date-to-id': embed.dateToId,
+                                },
+                            } only %}
+                        {% endblock %}
+                    {% endwidget %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endblock %}
+
+    {{ block('filterModeRow') }}
+{% endblock %}
