@@ -19,7 +19,7 @@
     {{ parent() }} {{ config.jsName }}
 {%- endblock -%}
 
-{% block files %}
+{% set files %}
     {% widget 'SspFileManagerMenuItemWidget' args [false] only %}
         {% block content %}
             <li>
@@ -30,7 +30,22 @@
             </li>
         {% endblock %}
     {% endwidget %}
-{% endblock %}
+{% endset %}
+
+{% set inquiry %}
+    {% if widgetGlobalExists('SspInquiryMenuItemWidget') and (can('ViewBusinessUnitSspInquiryPermissionPlugin') or can('CreateSspInquiryPermissionPlugin') or can('ViewCompanySspInquiryPermissionPlugin')) %}
+        {% widget 'SspInquiryMenuItemWidget' args [false] only %}
+            {% block body %}
+                <li>
+                    <a class="link link--secondary"
+                        href="{{ url('customer/ssp-inquiry') }}">
+                        {{ 'ssp_inquiry.list.widget.title' | trans }}
+                    </a>
+                </li>
+            {% endblock %}
+        {% endwidget %}
+    {% endif %}
+{% endset %}
 
 {% block body %}
     <li class="{{ config.name }}__item {{ config.name }}__item--user">
@@ -84,11 +99,10 @@
                     title: 'quote_request_widget.request_for_quote.list.title' | trans,
                 },
                 {
-                    url: url('customer/ssp-inquiry'),
-                    title: 'ssp_inquiry.list.widget.title' | trans,
+                    block: inquiry,
                 },
                 {
-                    block: block('files'),
+                    block: files,
                 },
                 {
                     url: url('logout'),

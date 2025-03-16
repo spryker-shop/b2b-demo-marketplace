@@ -9,14 +9,25 @@
 
 {%- block class -%}{{ pageLayoutMainJsClassName }}__side-drawer-container{%- endblock -%}
 
-{% block files %}
-    {% widget 'SspFileManagerMenuItemWidget' args [data.activePage]  with {
+{% set files %}
+    {% widget 'SspFileManagerMenuItemWidget' args [false]  with {
         data: {
             modifiers: ['account'],
         },
     } only %}
     {% endwidget %}
-{% endblock %}
+{% endset %}
+
+{% set inquiry %}
+    {% if widgetGlobalExists('SspInquiryMenuItemWidget') and (can('ViewBusinessUnitSspInquiryPermissionPlugin') or can('CreateSspInquiryPermissionPlugin') or can('ViewCompanySspInquiryPermissionPlugin')) %}
+        {% widget 'SspInquiryMenuItemWidget' args [false]  with {
+            data: {
+                modifiers: ['account'],
+            },
+        } only %}
+        {% endwidget %}
+    {% endif %}
+{% endset %}
 
 {% block viewport %}
     <div class="page-layout page-layout--preload">
@@ -98,20 +109,12 @@
                                 icon: 'cart'
                             },
                             {
-                                name: 'quote-request',
-                                url: path('quote-request'),
-                                label: 'quote_request_widget.request_for_quote.list.title' | trans,
-                                icon: 'message',
-                            },
-                            {
-                                block: block('files'),
-                                name: 'ssp-file-management'
-                            },
-                            {
-                                url: url('customer/ssp-inquiry'),
-                                icon: 'inquiries',
-                                label: 'ssp_inquiry.list.widget.title' | trans,
+                                block: inquiry,
                                 name: 'ssp-file-inquiries'
+                            },
+                            {
+                                block: files,
+                                name: 'ssp-file-management'
                             },
                         ],
                     }

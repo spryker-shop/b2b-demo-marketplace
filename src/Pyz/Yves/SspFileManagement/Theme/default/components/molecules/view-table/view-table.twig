@@ -1,19 +1,6 @@
-{# @var data.files array<\Generated\Shared\Transfer\FileTransfer> #}
-{# @var data.fileSearchFilterForm \SprykerFeature\Yves\SspFileManagement\Form\FileSearchFilterForm #}
+{% extends molecule('view-table', '@SprykerFeature:SspFileManagement') %}
 
-{% extends model('component') %}
-
-{% define config = {
-    name: 'view-table',
-} %}
-
-{% define data = {
-    files: required,
-    fileSearchFilterForm: required,
-    formClass: required,
-} %}
-
-{% block body %}
+{% block table %}
     {% set columns = [
         {
             id: 'fileReference',
@@ -43,7 +30,6 @@
         },
         {
             id: 'actions',
-            title: 'ssp_file_management.file_management.table.header.actions',
             type: 'actions',
         },
     ] %}
@@ -54,25 +40,13 @@
         fileType: file.fileInfo[0].extension,
         createdAt: file.fileInfo[0].createdAt,
         size: file.fileInfo[0].size,
-        actions: can('DownloadFilesPermissionPlugin')
-            ? [{
-                url: path('ssp-file-management/download', { 'id-file': file.uuid }),
-                label: 'ssp_file_management.file_management.table.actions.download',
-                dataQa: 'download-button',
-            }]
-            : [],
+        actions: can('DownloadFilesPermissionPlugin') ? [{
+            url: path('ssp-file-management/download', { 'id-file': file.uuid }),
+            title: 'ssp_file_management.file_management.table.actions.download',
+            icon: 'upload',
+            iconModifier: 'big',
+        }] : []
     }) %}
 
-    {% block table %}
-        {% include molecule('advanced-table', 'SspInquiryManagement') with {
-            data: {
-                columns: columns,
-                rows: rows,
-                emptyText: 'ssp_file_management.file_management.view.empty',
-                sortableForm: data.fileSearchFilterForm,
-                sortableFormClass: data.formClass,
-            },
-            qa: 'web-table-files',
-        } only %}
-    {% endblock %}
+    {{ parent() }}
 {% endblock %}

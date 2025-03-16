@@ -33,7 +33,7 @@
                                 attributes: {
                                     language: data.currentLanguage,
                                     config: config | json_encode,
-                                    'formatted-date-time': data.field.vars.value | date('Y-m-d'),
+                                    'formatted-date-time': data.field.vars.value | date(config.dateFormat),
                                     'date-from-id': embed.dateFromId,
                                     'date-to-id': embed.dateToId,
                                 },

@@ -1,34 +1,59 @@
-{% extends model('component') %}
+{% extends molecule('filters', '@SprykerFeature:SspFileManagement') %}
 
-{% define config = {
-    name: 'filters',
-} %}
+{% block filters %}
+    {% for filter in data.fileSearchFilterForm.filters.children %}
+        {% set col = 'search' in filter.vars.id ? 'col--lg-8' : 'col--lg-4' %}
+        {% set isDate = filter.vars.id == 'fileSearchFilterForm_filters_dateFrom' or filter.vars.id == 'fileSearchFilterForm_filters_dateTo' %}
 
-{% define data = {
-    fileSearchFilterForm: required,
-    jsPrefix: required,
-} %}
+        <div class="form__field col col--sm-12 {{ col }}">
+            {% if isDate %}
+                {% set dateFromId = 'dateTo' in filter.vars.id ? "fileSearchFilterForm_filters_dateFrom" : false %}
+                {% set dateToId = 'dateFrom' in filter.vars.id ? "fileSearchFilterForm_filters_dateTo" : false %}
 
-{% block body %}
-    <div class="form__fields grid grid--bottom">
-        {% block filters %}
-            {% for filter in data.fileSearchFilterForm.filters.children %}
-                <div class="form__field col col--sm-12 col--lg-4">
-                    {{ form_row(filter, {
-                        attr: {
-                            class: data.jsPrefix ~ filter.vars.name ~ '-target',
-                        }})
-                    }}
-                </div>
-            {% endfor %}
-        {% endblock %}
+                {% widget 'LanguageSwitcherWidget' args [app.request.pathInfo, app.request.queryString, app.request.requestUri] with {
+                    data: {
+                        field: filter,
+                    },
+                    embed: {
+                        dateFromId: dateFromId,
+                        dateToId: dateToId,
+                    },
+                } only %}
+                    {% block body %}
+                        {% set config = {
+                            dateFormat: 'Y-m-d H:i',
+                        } %}
 
-        {% block submitFilters %}
-            <div class="form__field col col--right">
-                <button name="buttonSubmit" class="button button--success" data-qa="filters-apply">
-                    {{ 'ssp_file_management.file_management.file_search_filter_form.field.apply.label' | trans }}
-                </button>
-            </div>
-         {% endblock %}
+                        {% include molecule('date-time-picker') with {
+                            data: {
+                                field: data.field,
+                                hasIcon: true,
+                            },
+                            attributes: {
+                                language: data.currentLanguage,
+                                config: config | json_encode,
+                                'formatted-date-time': data.field.vars.value | date(config.dateFormat),
+                                'date-from-id': embed.dateFromId,
+                                'date-to-id': embed.dateToId,
+                            },
+                        } only %}
+                    {% endblock %}
+                {% endwidget %}
+            {% else %}
+                {{ form_row(filter, {
+                    attr: {
+                        class: data.jsPrefix ~ filter.vars.name ~ '-target',
+                    }})
+                }}
+            {% endif %}
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block submitFilters %}
+    <div class="form__field col col--right">
+        <button class="button button--success" data-qa="filters-apply">
+            {{ 'ssp_file_management.file_management.file_search_filter_form.field.apply.label' | trans }}
+        </button>
     </div>
 {% endblock %}
