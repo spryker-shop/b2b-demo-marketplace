@@ -11,9 +11,9 @@ require 'common/config_oms-development.php';
 $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
     'ssp-inquiry' => [
         'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
-        'key' => getenv('TEST_BUCKET_6_SSP_CLAIM_STORAGE_S3_KEY_ACTUAL') ?: '',
-        'secret' => getenv('TEST_BUCKET_6_SSP_CLAIM_STORAGE_S3_SECRET_ACTUAL') ?: '',
-        'bucket' => 'test-bucket-6-ssp-claim-storage',
+        'key' => getenv('TEST_BUCKET_7_SSP_CLAIM_STORAGE_S3_KEY_ACTUAL') ?: '',
+        'secret' => getenv('TEST_BUCKET_7_SSP_CLAIM_STORAGE_S3_SECRET_ACTUAL') ?: '',
+        'bucket' => 'test-bucket-7-ssp-claim-storage',
         'region' => getenv('AWS_REGION'),
         'version' => 'latest',
         'root' => '/ssp-inquiry',
@@ -21,9 +21,9 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
     ],
     'ssp-files' => [
         'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
-        'key' => getenv('TEST_BUCKET_6_SSP_FILES_STORAGE_S3_KEY_ACTUAL') ?: '',
-        'secret' => getenv('TEST_BUCKET_6_SSP_FILES_STORAGE_S3_SECRET_ACTUAL') ?: '',
-        'bucket' => 'test-bucket-6-ssp-files-storage',
+        'key' => getenv('TEST_BUCKET_7_SSP_FILES_STORAGE_S3_KEY_ACTUAL') ?: '',
+        'secret' => getenv('TEST_BUCKET_7_SSP_FILES_STORAGE_S3_SECRET_ACTUAL') ?: '',
+        'bucket' => 'test-bucket-7-ssp-files-storage',
         'region' => getenv('AWS_REGION'),
         'version' => 'latest',
         'root' => '/files',
