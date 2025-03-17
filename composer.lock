@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0cabaa729f04071092fbaccbb5556b05",
+    "content-hash": "227df7dc3c600cd5f002d572585e5a58",
     "packages": [
         {
             "name": "async-aws/core",
@@ -8838,6 +8838,167 @@
             "time": "2024-10-30T13:43:58+00:00"
         },
         {
+            "name": "spryker-feature/ssp-file-management",
+            "version": "0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-feature/ssp-file-management.git",
+                "reference": "63455512989ae968487498f14bb07700d5bed964"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-feature/ssp-file-management/zipball/63455512989ae968487498f14bb07700d5bed964",
+                "reference": "63455512989ae968487498f14bb07700d5bed964",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "spryker-shop/shop-application": "^1.0.0",
+                "spryker/application": "^3.8.0",
+                "spryker/company": "^1.0.0",
+                "spryker/company-business-unit": "^2.0.0",
+                "spryker/company-user": "^2.0.0",
+                "spryker/customer": "^7.0.0",
+                "spryker/file-manager": "^2.6.0",
+                "spryker/file-manager-extension": "^1.1.0",
+                "spryker/glossary-storage": "^1.5.0",
+                "spryker/gui": "^3.56.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/permission-extension": "^1.0.0",
+                "spryker/propel-orm": "^1.5.0",
+                "spryker/sequence-number": "^3.0.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/transfer": "^3.27.0",
+                "spryker/translator": "^1.1.0",
+                "spryker/twig-extension": "^1.0.0",
+                "spryker/util-date-time": "^1.1.0",
+                "spryker/util-text": "^1.0.0",
+                "spryker/uuid-behavior": "^1.0.0",
+                "spryker/zed-request": "^3.0.0"
+            },
+            "require-dev": {
+                "spryker-feature/ssp-inquiry-management": "*",
+                "spryker-shop/customer-page": "*",
+                "spryker/code-sniffer": "*",
+                "spryker/container": "*",
+                "spryker/flysystem": "*",
+                "spryker/flysystem-local-file-system": "*",
+                "spryker/propel": "*",
+                "spryker/router": "*",
+                "spryker/store": "*",
+                "spryker/testify": "*",
+                "spryker/twig": "*"
+            },
+            "suggest": {
+                "spryker-feature/ssp-inquiry-management": "Use this module when you want to use the Inquiries with file managment",
+                "spryker-shop/customer-page": "Contains the customer page and its components.",
+                "spryker/container": "If you want to use Application plugins. Minimum required version: 1.0.0",
+                "spryker/router": "Use this module when you want to use the Router.",
+                "spryker/twig": "Use this module when using plugins that need Twig dependencies."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SprykerFeature\\": "src/SprykerFeature/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "SspFileManagement module",
+            "support": {
+                "source": "https://github.com/spryker-feature/ssp-file-management/tree/0.1.1"
+            },
+            "time": "2025-03-12T09:25:31+00:00"
+        },
+        {
+            "name": "spryker-feature/ssp-inquiry-management",
+            "version": "0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-feature/ssp-inquiry-management.git",
+                "reference": "73ff8314e22bb0a906f4f85cc66b0f2127cacbef"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-feature/ssp-inquiry-management/zipball/73ff8314e22bb0a906f4f85cc66b0f2127cacbef",
+                "reference": "73ff8314e22bb0a906f4f85cc66b0f2127cacbef",
+                "shasum": ""
+            },
+            "require": {
+                "ext-zlib": "*",
+                "php": ">=8.2",
+                "spryker-shop/shop-application": "^1.15.0",
+                "spryker-shop/shop-application-extension": "^1.2.0",
+                "spryker/application": "^3.36.0",
+                "spryker/comment": "^1.6.0",
+                "spryker/company-user": "^2.19.0",
+                "spryker/container": "^1.4.0",
+                "spryker/customer": "^7.66.0",
+                "spryker/data-import": "^1.27.0",
+                "spryker/file-manager": "^2.5.0",
+                "spryker/file-system-extension": "^1.0.0",
+                "spryker/gui": "^3.55.0",
+                "spryker/kernel": "^3.75.0",
+                "spryker/mail": "^4.9.0",
+                "spryker/mail-extension": "^1.0.0",
+                "spryker/permission-extension": "^1.2.0",
+                "spryker/propel-orm": "^1.21.0",
+                "spryker/router": "^1.23.0",
+                "spryker/sales": "^11.53.0",
+                "spryker/sequence-number": "^3.1.0",
+                "spryker/state-machine": "^2.21.0",
+                "spryker/store": "^1.28.0",
+                "spryker/symfony": "^3.18.0",
+                "spryker/twig": "^3.27.0",
+                "spryker/twig-extension": "^1.1.0",
+                "spryker/util-date-time": "^1.5.0",
+                "spryker/util-text": "^1.6.0",
+                "spryker/uuid-behavior": "^1.3.0",
+                "spryker/validator": "^1.5.0",
+                "spryker/zed-request": "^3.22.0"
+            },
+            "require-dev": {
+                "spryker-shop/customer-page": "*",
+                "spryker/code-sniffer": "*",
+                "spryker/company": "*",
+                "spryker/propel": "*",
+                "spryker/ramsey-uuid": "*",
+                "spryker/shipment": "*",
+                "spryker/testify": "*"
+            },
+            "suggest": {
+                "spryker-shop/customer-page": "Contains the customer page and its components."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SprykerFeature\\": "src/SprykerFeature/",
+                    "SprykerFeatureTest\\Zed\\SspInquiryManagement\\Helper\\": "tests/SprykerFeatureTest/Zed/SspInquiryManagement/_support/Helper/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "SspInquiryManagement module",
+            "support": {
+                "source": "https://github.com/spryker-feature/ssp-inquiry-management/tree/0.1.1"
+            },
+            "time": "2025-03-12T09:25:31+00:00"
+        },
+        {
             "name": "spryker-feature/state-machine",
             "version": "202410.0",
             "source": {
@@ -17378,16 +17539,16 @@
         },
         {
             "name": "spryker-shop/shop-ui",
-            "version": "1.84.0",
+            "version": "1.86.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-shop/shop-ui.git",
-                "reference": "f1c5b9b4432a696b865fc63c0f85e871cd07a401"
+                "reference": "1359f7ebcbc5ebc15bf35fc4880df6e7837c4c2e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-shop/shop-ui/zipball/f1c5b9b4432a696b865fc63c0f85e871cd07a401",
-                "reference": "f1c5b9b4432a696b865fc63c0f85e871cd07a401",
+                "url": "https://api.github.com/repos/spryker-shop/shop-ui/zipball/1359f7ebcbc5ebc15bf35fc4880df6e7837c4c2e",
+                "reference": "1359f7ebcbc5ebc15bf35fc4880df6e7837c4c2e",
                 "shasum": ""
             },
             "require": {
@@ -17435,9 +17596,9 @@
             ],
             "description": "ShopUi module",
             "support": {
-                "source": "https://github.com/spryker-shop/shop-ui/tree/1.84.0"
+                "source": "https://github.com/spryker-shop/shop-ui/tree/1.86.0"
             },
-            "time": "2025-01-24T10:32:32+00:00"
+            "time": "2025-03-06T16:05:25+00:00"
         },
         {
             "name": "spryker-shop/shopping-list-note-widget",
@@ -25952,20 +26113,20 @@
         },
         {
             "name": "spryker/comment",
-            "version": "1.5.0",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/comment.git",
-                "reference": "647345b38494d55db4e805583f0697ef77f5068a"
+                "reference": "b852da3d9ded0f978eda4945325ff4b67aad01ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/comment/zipball/647345b38494d55db4e805583f0697ef77f5068a",
-                "reference": "647345b38494d55db4e805583f0697ef77f5068a",
+                "url": "https://api.github.com/repos/spryker/comment/zipball/b852da3d9ded0f978eda4945325ff4b67aad01ed",
+                "reference": "b852da3d9ded0f978eda4945325ff4b67aad01ed",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.1",
+                "php": ">=8.2",
                 "spryker/acl-merchant-portal-extension": "^1.0.0",
                 "spryker/comment-extension": "^1.1.0",
                 "spryker/customer": "^7.49.0",
@@ -26002,9 +26163,9 @@
             ],
             "description": "Comment module",
             "support": {
-                "source": "https://github.com/spryker/comment/tree/1.5.0"
+                "source": "https://github.com/spryker/comment/tree/1.6.0"
             },
-            "time": "2024-05-06T12:15:28+00:00"
+            "time": "2024-11-04T14:07:47+00:00"
         },
         {
             "name": "spryker/comment-data-import",
@@ -31999,20 +32160,20 @@
         },
         {
             "name": "spryker/data-import",
-            "version": "1.25.0",
+            "version": "1.27.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/data-import.git",
-                "reference": "da7621ed86c0ff6546efcdb21620d5638e2b7e2f"
+                "reference": "9cbb764252443998ae28f8c2ffeef400db5a9d9b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/data-import/zipball/da7621ed86c0ff6546efcdb21620d5638e2b7e2f",
-                "reference": "da7621ed86c0ff6546efcdb21620d5638e2b7e2f",
+                "url": "https://api.github.com/repos/spryker/data-import/zipball/9cbb764252443998ae28f8c2ffeef400db5a9d9b",
+                "reference": "9cbb764252443998ae28f8c2ffeef400db5a9d9b",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.1",
+                "php": ">=8.2",
                 "spryker/config": "^3.0.0",
                 "spryker/data-import-extension": "^1.2.0",
                 "spryker/error-handler": "^2.1.0",
@@ -32058,9 +32219,9 @@
             ],
             "description": "DataImport module",
             "support": {
-                "source": "https://github.com/spryker/data-import/tree/1.25.0"
+                "source": "https://github.com/spryker/data-import/tree/1.27.0"
             },
-            "time": "2024-08-30T12:53:48+00:00"
+            "time": "2025-01-29T16:01:04+00:00"
         },
         {
             "name": "spryker/data-import-extension",
@@ -33662,21 +33823,21 @@
         },
         {
             "name": "spryker/file-manager",
-            "version": "2.5.0",
+            "version": "2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/file-manager.git",
-                "reference": "aa85b0bad44911e2e7d84b5856885581c05f5e03"
+                "reference": "56b59206f75e71d9f79ebcec1aef9a3eb260a758"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/file-manager/zipball/aa85b0bad44911e2e7d84b5856885581c05f5e03",
-                "reference": "aa85b0bad44911e2e7d84b5856885581c05f5e03",
+                "url": "https://api.github.com/repos/spryker/file-manager/zipball/56b59206f75e71d9f79ebcec1aef9a3eb260a758",
+                "reference": "56b59206f75e71d9f79ebcec1aef9a3eb260a758",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.2",
-                "spryker/file-manager-extension": "^1.0.0",
+                "spryker/file-manager-extension": "^1.1.0",
                 "spryker/file-system": "^2.0.0",
                 "spryker/kernel": "^3.30.0",
                 "spryker/locale": "^3.0.0 || ^4.0.0",
@@ -33689,6 +33850,7 @@
                 "spryker/flysystem": "*",
                 "spryker/flysystem-local-file-system": "*",
                 "spryker/propel": "*",
+                "spryker/symfony": "*",
                 "spryker/testify": "*"
             },
             "type": "library",
@@ -33708,9 +33870,9 @@
             ],
             "description": "FileManager module",
             "support": {
-                "source": "https://github.com/spryker/file-manager/tree/2.5.0"
+                "source": "https://github.com/spryker/file-manager/tree/2.6.0"
             },
-            "time": "2024-10-11T07:15:44+00:00"
+            "time": "2025-03-06T16:05:23+00:00"
         },
         {
             "name": "spryker/file-manager-data-import",
@@ -33761,16 +33923,16 @@
         },
         {
             "name": "spryker/file-manager-extension",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/file-manager-extension.git",
-                "reference": "e749bf872f5e2d96d3773e52b4ef1f2b6294033b"
+                "reference": "5eca976225c9ae34071a62b3ba935cb92c695258"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/file-manager-extension/zipball/e749bf872f5e2d96d3773e52b4ef1f2b6294033b",
-                "reference": "e749bf872f5e2d96d3773e52b4ef1f2b6294033b",
+                "url": "https://api.github.com/repos/spryker/file-manager-extension/zipball/5eca976225c9ae34071a62b3ba935cb92c695258",
+                "reference": "5eca976225c9ae34071a62b3ba935cb92c695258",
                 "shasum": ""
             },
             "require": {
@@ -33797,9 +33959,9 @@
             ],
             "description": "FileManagerExtension module",
             "support": {
-                "source": "https://github.com/spryker/file-manager-extension/tree/1.0.0"
+                "source": "https://github.com/spryker/file-manager-extension/tree/1.1.0"
             },
-            "time": "2024-10-11T07:15:44+00:00"
+            "time": "2025-03-06T16:05:23+00:00"
         },
         {
             "name": "spryker/file-manager-gui",
@@ -35247,16 +35409,16 @@
         },
         {
             "name": "spryker/gui",
-            "version": "3.55.5",
+            "version": "3.56.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/gui.git",
-                "reference": "70cba13bc8eb8c67862547a4c02f4e88dd5a34e2"
+                "reference": "16f7265c1ca7887fc091dea51ba43f9184c8a486"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/gui/zipball/70cba13bc8eb8c67862547a4c02f4e88dd5a34e2",
-                "reference": "70cba13bc8eb8c67862547a4c02f4e88dd5a34e2",
+                "url": "https://api.github.com/repos/spryker/gui/zipball/16f7265c1ca7887fc091dea51ba43f9184c8a486",
+                "reference": "16f7265c1ca7887fc091dea51ba43f9184c8a486",
                 "shasum": ""
             },
             "require": {
@@ -35305,9 +35467,9 @@
             ],
             "description": "Gui module",
             "support": {
-                "source": "https://github.com/spryker/gui/tree/3.55.5"
+                "source": "https://github.com/spryker/gui/tree/3.56.0"
             },
-            "time": "2024-11-28T14:30:03+00:00"
+            "time": "2025-03-06T16:05:23+00:00"
         },
         {
             "name": "spryker/gui-table",
@@ -35826,16 +35988,16 @@
         },
         {
             "name": "spryker/kernel",
-            "version": "3.75.1",
+            "version": "3.77.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/kernel.git",
-                "reference": "55cf23f44b06fd3ae9394cd93bd57a8f29153078"
+                "reference": "170ce4c34889c490dd00d4ee654c50d6663eefab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/kernel/zipball/55cf23f44b06fd3ae9394cd93bd57a8f29153078",
-                "reference": "55cf23f44b06fd3ae9394cd93bd57a8f29153078",
+                "url": "https://api.github.com/repos/spryker/kernel/zipball/170ce4c34889c490dd00d4ee654c50d6663eefab",
+                "reference": "170ce4c34889c490dd00d4ee654c50d6663eefab",
                 "shasum": ""
             },
             "require": {
@@ -35881,9 +36043,9 @@
             ],
             "description": "Kernel module",
             "support": {
-                "source": "https://github.com/spryker/kernel/tree/3.75.1"
+                "source": "https://github.com/spryker/kernel/tree/3.77.0"
             },
-            "time": "2024-12-12T16:04:55+00:00"
+            "time": "2025-02-27T08:01:24+00:00"
         },
         {
             "name": "spryker/kernel-app",
@@ -57302,16 +57464,16 @@
         },
         {
             "name": "spryker/router",
-            "version": "1.22.0",
+            "version": "1.23.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/router.git",
-                "reference": "fac365d14ce148c643241d4852d7264444926c76"
+                "reference": "884dbda6c5e728980b97390975c256d3517db598"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/router/zipball/fac365d14ce148c643241d4852d7264444926c76",
-                "reference": "fac365d14ce148c643241d4852d7264444926c76",
+                "url": "https://api.github.com/repos/spryker/router/zipball/884dbda6c5e728980b97390975c256d3517db598",
+                "reference": "884dbda6c5e728980b97390975c256d3517db598",
                 "shasum": ""
             },
             "require": {
@@ -57358,9 +57520,9 @@
             ],
             "description": "Router module",
             "support": {
-                "source": "https://github.com/spryker/router/tree/1.22.0"
+                "source": "https://github.com/spryker/router/tree/1.23.0"
             },
-            "time": "2024-11-28T15:34:08+00:00"
+            "time": "2025-01-07T16:05:54+00:00"
         },
         {
             "name": "spryker/router-extension",
@@ -63285,20 +63447,20 @@
         },
         {
             "name": "spryker/state-machine",
-            "version": "2.20.1",
+            "version": "2.21.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/state-machine.git",
-                "reference": "420ef9162a382ff729232289a5deefb58c7365b4"
+                "reference": "c09a41bce2dd75a6f347d614071ac6ed848d389a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/state-machine/zipball/420ef9162a382ff729232289a5deefb58c7365b4",
-                "reference": "420ef9162a382ff729232289a5deefb58c7365b4",
+                "url": "https://api.github.com/repos/spryker/state-machine/zipball/c09a41bce2dd75a6f347d614071ac6ed848d389a",
+                "reference": "c09a41bce2dd75a6f347d614071ac6ed848d389a",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.1",
+                "php": ">=8.2",
                 "spryker/acl-merchant-portal-extension": "^1.0.0",
                 "spryker/graph": "^3.0.0",
                 "spryker/kernel": "^3.30.0",
@@ -63333,9 +63495,9 @@
             ],
             "description": "StateMachine module",
             "support": {
-                "source": "https://github.com/spryker/state-machine/tree/2.20.1"
+                "source": "https://github.com/spryker/state-machine/tree/2.21.0"
             },
-            "time": "2024-05-06T12:15:28+00:00"
+            "time": "2024-11-04T14:07:47+00:00"
         },
         {
             "name": "spryker/step-engine",
@@ -78489,21 +78651,21 @@
         },
         {
             "name": "spryker/development",
-            "version": "3.38.0",
+            "version": "3.42.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/development.git",
-                "reference": "90bd50b0116f0a563b34f78ae21ca90ad2e7964f"
+                "reference": "d0aabc43d7e0c6ac72b9a55716f9d913952eaa88"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/development/zipball/90bd50b0116f0a563b34f78ae21ca90ad2e7964f",
-                "reference": "90bd50b0116f0a563b34f78ae21ca90ad2e7964f",
+                "url": "https://api.github.com/repos/spryker/development/zipball/d0aabc43d7e0c6ac72b9a55716f9d913952eaa88",
+                "reference": "d0aabc43d7e0c6ac72b9a55716f9d913952eaa88",
                 "shasum": ""
             },
             "require": {
                 "nette/di": "^2.4.7 || ^3.2.0",
-                "php": ">=8.1",
+                "php": ">=8.2",
                 "phpmd/phpmd": "^2.0.0",
                 "spryker/config": "^3.0.0",
                 "spryker/graph": "^3.0.0",
@@ -78521,7 +78683,8 @@
                 "spryker/testify": "*"
             },
             "bin": [
-                "bin/development"
+                "bin/development",
+                "bin/phpstorm-command-line-tools.sh"
             ],
             "type": "library",
             "extra": {
@@ -78544,9 +78707,9 @@
             ],
             "description": "Development module",
             "support": {
-                "source": "https://github.com/spryker/development/tree/3.38.0"
+                "source": "https://github.com/spryker/development/tree/3.42.0"
             },
-            "time": "2024-09-19T14:39:52+00:00"
+            "time": "2025-03-12T17:13:36+00:00"
         },
         {
             "name": "spryker/docker-chromedriver",

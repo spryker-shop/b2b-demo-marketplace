@@ -40,6 +40,14 @@ use Spryker\Client\ShoppingList\Plugin\WriteShoppingListPermissionPlugin;
 use Spryker\Shared\Checkout\Plugin\Permission\PlaceOrderWithAmountUpToPermissionPlugin;
 use Spryker\Shared\CompanyUser\Plugin\AddCompanyUserPermissionPlugin;
 use Spryker\Shared\CompanyUserInvitation\Plugin\ManageCompanyUserInvitationPermissionPlugin;
+use SprykerFeature\Shared\SspFileManagement\Plugin\Permission\DownloadFilesPermissionPlugin;
+use SprykerFeature\Shared\SspFileManagement\Plugin\Permission\ViewCompanyBusinessUnitFilesPermissionPlugin;
+use SprykerFeature\Shared\SspFileManagement\Plugin\Permission\ViewCompanyFilesPermissionPlugin;
+use SprykerFeature\Shared\SspFileManagement\Plugin\Permission\ViewCompanyUserFilesPermissionPlugin;
+use SprykerFeature\Shared\SspFileManagement\Plugin\Permission\ViewFilesPermissionPlugin;
+use SprykerFeature\Shared\SspInquiryManagement\Plugin\Permission\CreateSspInquiryPermissionPlugin;
+use SprykerFeature\Shared\SspInquiryManagement\Plugin\Permission\ViewBusinessUnitSspInquiryPermissionPlugin;
+use SprykerFeature\Shared\SspInquiryManagement\Plugin\Permission\ViewCompanySspInquiryPermissionPlugin;
 use SprykerShop\Shared\CartPage\Plugin\AddCartItemPermissionPlugin;
 use SprykerShop\Shared\CartPage\Plugin\ChangeCartItemPermissionPlugin;
 use SprykerShop\Shared\CartPage\Plugin\RemoveCartItemPermissionPlugin;
@@ -97,6 +105,14 @@ class PermissionDependencyProvider extends SprykerPermissionDependencyProvider
             new EditCompanyUsersPermissionPlugin(),
             new AddCompanyUserPermissionPlugin(),
             new ManageCompanyUserInvitationPermissionPlugin(),
+            new CreateSspInquiryPermissionPlugin(), #SspInquiryManagementFeature
+            new ViewCompanySspInquiryPermissionPlugin(), #SspInquiryManagementFeature
+            new ViewBusinessUnitSspInquiryPermissionPlugin(), #SspInquiryManagementFeature
+            new ViewFilesPermissionPlugin(), #SspFileManagementFeature
+            new DownloadFilesPermissionPlugin(), #SspFileManagementFeature
+            new ViewCompanyUserFilesPermissionPlugin(), #SspFileManagementFeature
+            new ViewCompanyBusinessUnitFilesPermissionPlugin(), #SspFileManagementFeature
+            new ViewCompanyFilesPermissionPlugin(), #SspFileManagementFeature
         ];
     }
 }
