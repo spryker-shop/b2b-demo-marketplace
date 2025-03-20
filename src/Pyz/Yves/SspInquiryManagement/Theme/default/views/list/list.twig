@@ -1,0 +1,62 @@
+{% extends view('list', '@SprykerFeature:SspInquiryManagement') %}
+
+{% block filtersToggler %}
+    <button class="button button--hollow button--justify-center js-filter-button">
+        {% include atom('icon') with {
+            modifiers: ['filter'],
+            class: 'spacing-right',
+            data: {
+                name: 'filter',
+            },
+        } only %}
+        {{ 'customer.account.button.filters' | trans }}
+    </button>
+
+    {% include molecule('toggler-click') with {
+        attributes: {
+            'trigger-class-name': 'js-filter-button',
+            'target-class-name': 'js-filter-section',
+            'trigger-class-to-toggle': 'button--hollow-active',
+        },
+    } only %}
+{% endblock %}
+
+{% block customerContent %}
+    {% if can('CreateSspInquiryPermissionPlugin') %}
+        {% include molecule('action-bar') with {
+            data: {
+                title: 'customer.account.ssp_inquiries' | trans,
+                actions: [
+                    {
+                        block: block('filtersToggler',)
+                    },
+                    {
+                        title: 'customer.ssp_inquiry.create.button' | trans,
+                        url: url('customer/ssp-inquiry/create'),
+                        primary: true,
+                    },
+                ],
+            },
+        } only %}
+    {% endif %}
+
+    {{ form_start(data.sspInquirySearchForm, {
+        attr: {
+            class: formClass,
+        },
+    }) }}
+
+        {% include molecule('ssp-inquiry-filters', 'SspInquiryManagement') with {
+            class: 'box box--small js-filter-section spacing-bottom--bigger',
+            data: {
+                sspInquirySearchForm: data.sspInquirySearchForm,
+            },
+        } only %}
+
+        {{ block('sspInquiryTable') }}
+        {{ block('pagination') }}
+
+    {% if data.sspInquirySearchForm %}
+        {{ form_end(data.sspInquirySearchForm) }}
+    {% endif %}
+{% endblock %}

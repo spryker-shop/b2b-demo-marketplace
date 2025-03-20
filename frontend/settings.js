@@ -25,6 +25,9 @@ const globalSettings = {
         // eco folders
         eco: './vendor/spryker-eco',
 
+        // features folders
+        features: './vendor/spryker-feature',
+
         // project folders
         project: './src/Pyz/Yves',
     },
@@ -146,6 +149,9 @@ const getAppSettingsByTheme = (namespaceConfig, theme, pathToConfig) => {
         // eco folders
         eco: globalSettings.paths.eco,
 
+        // eco folders
+        features: globalSettings.paths.features,
+
         // project folders
         project: globalSettings.paths.project,
     };
@@ -160,21 +166,21 @@ const getAppSettingsByTheme = (namespaceConfig, theme, pathToConfig) => {
         return isFallbackPatternAndDefaultTheme(isFallbackPattern)
             ? []
             : [
-                  ...entryPointsCollection(`**/Theme/${getThemeName(isFallbackPattern)}`),
-                  ...entryPointsCollection(
-                      `**/*${namespaceConfig.codeBucket}/Theme/${getThemeName(isFallbackPattern)}`,
-                  ),
-                  ...ignoreFiles,
-              ];
+                ...entryPointsCollection(`**/Theme/${getThemeName(isFallbackPattern)}`),
+                ...entryPointsCollection(
+                    `**/*${namespaceConfig.codeBucket}/Theme/${getThemeName(isFallbackPattern)}`,
+                ),
+                ...ignoreFiles,
+            ];
     };
 
     const shopUiEntryPointsPattern = (isFallbackPattern = false) =>
         isFallbackPatternAndDefaultTheme(isFallbackPattern)
             ? []
             : [
-                  `./ShopUi/Theme/${getThemeName(isFallbackPattern)}`,
-                  `./ShopUi${namespaceConfig.codeBucket}/Theme/${getThemeName(isFallbackPattern)}`,
-              ];
+                `./ShopUi/Theme/${getThemeName(isFallbackPattern)}`,
+                `./ShopUi${namespaceConfig.codeBucket}/Theme/${getThemeName(isFallbackPattern)}`,
+            ];
 
     // define if current mode is production
     const isProductionMode = () => {
@@ -206,6 +212,7 @@ const getAppSettingsByTheme = (namespaceConfig, theme, pathToConfig) => {
                 // absolute dirs in which look for
                 dirs: [
                     join(globalSettings.context, paths.core),
+                    join(globalSettings.context, paths.features),
                     join(globalSettings.context, paths.eco),
                     join(globalSettings.context, paths.project),
                 ],
@@ -219,7 +226,7 @@ const getAppSettingsByTheme = (namespaceConfig, theme, pathToConfig) => {
             // do not change unless necessary
             componentStyles: {
                 // absolute dirs in which look for
-                dirs: [join(globalSettings.context, paths.core)],
+                dirs: [join(globalSettings.context, paths.core), join(globalSettings.context, paths.features)],
                 // files/dirs patterns
                 patterns: [
                     `**/Theme/${namespaceConfig.defaultTheme}/components/atoms/*/*.scss`,

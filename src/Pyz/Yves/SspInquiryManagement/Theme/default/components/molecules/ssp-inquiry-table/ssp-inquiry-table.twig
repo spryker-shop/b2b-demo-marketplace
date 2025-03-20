@@ -1,0 +1,14 @@
+{% extends molecule('ssp-inquiry-table', '@SprykerFeature:SspInquiryManagement') %}
+
+{% block table %}
+    {% set rows = rows | map(row => row | merge({
+        actions: [{
+            url: path('customer/ssp-inquiry/details', { reference: row.reference }),
+            title: 'customer.ssp_inquiry.view_ssp_inquiry',
+            icon: 'eye',
+            iconModifier: 'big',
+        }]
+    })) %}
+
+    {{ parent() }}
+{% endblock %}

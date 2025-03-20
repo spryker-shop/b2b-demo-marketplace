@@ -9,6 +9,26 @@
 
 {%- block class -%}{{ pageLayoutMainJsClassName }}__side-drawer-container{%- endblock -%}
 
+{% set files %}
+    {% widget 'SspFileManagerMenuItemWidget' args [false]  with {
+        data: {
+            modifiers: ['account'],
+        },
+    } only %}
+    {% endwidget %}
+{% endset %}
+
+{% set inquiry %}
+    {% if widgetGlobalExists('SspInquiryMenuItemWidget') and (can('ViewBusinessUnitSspInquiryPermissionPlugin') or can('CreateSspInquiryPermissionPlugin') or can('ViewCompanySspInquiryPermissionPlugin')) %}
+        {% widget 'SspInquiryMenuItemWidget' args [false]  with {
+            data: {
+                modifiers: ['account'],
+            },
+        } only %}
+        {% endwidget %}
+    {% endif %}
+{% endset %}
+
 {% block viewport %}
     <div class="page-layout page-layout--preload">
         {% widget 'AgentControlBarWidget' only %}{% endwidget %}
@@ -89,10 +109,12 @@
                                 icon: 'cart'
                             },
                             {
-                                name: 'quote-request',
-                                url: path('quote-request'),
-                                label: 'quote_request_widget.request_for_quote.list.title' | trans,
-                                icon: 'message',
+                                block: inquiry,
+                                name: 'ssp-file-inquiries'
+                            },
+                            {
+                                block: files,
+                                name: 'ssp-file-management'
                             },
                         ],
                     }

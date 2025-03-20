@@ -1,0 +1,47 @@
+{% extends view('detail', '@SprykerFeature:SspInquiryManagement') %}
+
+{% block separator %}
+    <hr class="box__separator">
+{% endblock %}
+
+{% block sspInquiryCancelAction %}
+    {% if data.sspInquiry.isCancellable and data.isSspInquiryOwner %}
+        {{ form_start(data.cancelForm, {'action': path('customer/ssp-inquiry/cancel', {
+                'sspInquiryReference': data.sspInquiry.reference
+        })}) }}
+            <button class="button button--alert button--hollow" data-qa="cancel-ssp-inquiry">{{ 'ssp_inquiry.cancel' | trans }}</button>
+        {{ form_end(data.cancelForm) }}
+    {% endif %}
+{% endblock %}
+
+{% block customerContent %}
+    {% if can('CreateSspInquiryPermissionPlugin') %}
+        {% include molecule('action-bar') with {
+            data: {
+                title: 'customer.account.ssp_inquiry.details' | trans,
+                actions: [
+                    {
+                        block: block('sspInquiryCancelAction',)
+                    },
+                ],
+            },
+        } only %}
+    {% endif %}
+
+    {% block sspInquiryData %}
+        <div class="box box--hollow box--spacingless">
+            {{ block('sspInquiryMainInfo') }}
+            {{ block('separator') }}
+
+            {{ block('sspInquiryDetails') }}
+            {{ block('separator') }}
+
+            {{ block('sspInquiryOwnerInfo') }}
+
+            {% if data.sspInquiry.files is not empty %}
+                {{ block('separator') }}
+                {{ block('sspInquiryFiles') }}
+            {% endif %}
+        </div>
+    {% endblock %}
+{% endblock %}
