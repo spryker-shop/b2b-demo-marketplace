@@ -29,6 +29,28 @@
     {% endif %}
 {% endset %}
 
+{% set sspAsset %}
+    {% if widgetGlobalExists('SspAssetMenuItemWidget') and (can('ViewCompanySspAssetPermissionPlugin') or can('ViewBusinessUnitSspAssetPermissionPlugin'))  %}
+        {% widget 'SspAssetMenuItemWidget' args [false]  with {
+            data: {
+                modifiers: ['account'],
+            },
+        } only %}
+        {% endwidget %}
+    {% endif %}
+{% endset %}
+
+{% set sspDashboard %}
+    {% if widgetGlobalExists('DashboardMenuItemWidget') %}
+        {% widget 'DashboardMenuItemWidget' args [false]  with {
+            data: {
+                modifiers: ['account'],
+            },
+        } only %}
+        {% endwidget %}
+    {% endif %}
+{% endset %}
+
 {% block viewport %}
     <div class="page-layout page-layout--preload">
         {% widget 'AgentControlBarWidget' only %}{% endwidget %}

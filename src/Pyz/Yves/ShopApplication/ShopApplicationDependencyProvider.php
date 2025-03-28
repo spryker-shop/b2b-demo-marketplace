@@ -26,9 +26,14 @@ use Spryker\Yves\Session\Plugin\Application\SessionApplicationPlugin;
 use Spryker\Yves\Translator\Plugin\Application\TranslatorApplicationPlugin;
 use Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin;
 use Spryker\Yves\Validator\Plugin\Application\ValidatorApplicationPlugin;
+use SprykerFeature\Yves\SspAssetManagement\Widget\SspAssetMenuItemWidget;
+use SprykerFeature\Yves\SspDashboardManagement\Plugin\ShopApplication\SspDashboardFilterControllerEventHandlerPlugin;
+use SprykerFeature\Yves\SspDashboardManagement\Widget\DashboardMenuItemWidget;
+use SprykerFeature\Yves\SspFileManagement\Widget\DashboardFileWidget;
 use SprykerFeature\Yves\SspFileManagement\Widget\SspFileManagerMenuItemWidget;
 use SprykerFeature\Yves\SspInquiryManagement\Plugin\ShopApplication\SspInquiryRestrictionHandlerPlugin;
 use SprykerFeature\Yves\SspInquiryManagement\Widget\CreateOrderSspInquiryLinkWidget;
+use SprykerFeature\Yves\SspInquiryManagement\Widget\DashboardInquiryWidget;
 use SprykerFeature\Yves\SspInquiryManagement\Widget\SspInquiryMenuItemWidget;
 use SprykerShop\Yves\AgentWidget\Widget\AgentControlBarWidget;
 use SprykerShop\Yves\AssetWidget\Widget\AssetWidget;
@@ -337,6 +342,10 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             SspInquiryMenuItemWidget::class,
             CreateOrderSspInquiryLinkWidget::class,
             SspFileManagerMenuItemWidget::class,
+            SspAssetMenuItemWidget::class,
+            DashboardMenuItemWidget::class,
+            DashboardInquiryWidget::class,
+            DashboardFileWidget::class,
         ];
     }
 
@@ -366,6 +375,7 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             new CompanyBusinessUnitControllerRestrictionPlugin(),
             new LogoutInvalidatedCustomerFilterControllerEventHandlerPlugin(),
             new SspInquiryRestrictionHandlerPlugin(),
+            new SspDashboardFilterControllerEventHandlerPlugin(),
         ];
     }
 

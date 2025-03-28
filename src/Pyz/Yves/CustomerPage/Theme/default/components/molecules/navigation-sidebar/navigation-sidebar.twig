@@ -74,4 +74,10 @@
     {% if widgetGlobalExists('SspInquiryMenuItemWidget') and (can('ViewBusinessUnitSspInquiryPermissionPlugin') or can('CreateSspInquiryPermissionPlugin') or can('ViewCompanySspInquiryPermissionPlugin')) %}
         {% widget 'SspInquiryMenuItemWidget' args [data.activePage] only %}{% endwidget %}
     {% endif %}
+    {% if widgetGlobalExists('SspAssetMenuItemWidget') and (can('ViewCompanySspAssetPermissionPlugin') or can('ViewBusinessUnitSspAssetPermissionPlugin'))  %}
+        {% widget 'SspAssetMenuItemWidget' args [data.activePage] only %}{% endwidget %}
+    {% endif %}
+    {% if widgetGlobalExists('DashboardMenuItemWidget') %}
+        {% widget 'DashboardMenuItemWidget' args [data.activePage] only %}{% endwidget %}
+    {% endif %}
 {% endblock %}
