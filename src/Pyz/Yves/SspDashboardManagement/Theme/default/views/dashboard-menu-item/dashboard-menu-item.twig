@@ -1,6 +1,8 @@
 {% extends view('dashboard-menu-item', '@SprykerFeature:SspDashboardManagement') %}
 
 {% block body %}
+    {% set modifiers = data.modifiers | default([]) %}
+
     {% include molecule('navigation-sidebar-item') with {
         data: {
             url: url('customer/dashboard'),
@@ -9,6 +11,6 @@
             name: 'ssp-dashboard'
         },
         qa: 'dashboard',
-        modifiers: data.isActivePage ? ['active'] : [],
+        modifiers: data.isActivePage ? ['active'] | merge(modifiers) : modifiers,
     } only %}
 {% endblock %}

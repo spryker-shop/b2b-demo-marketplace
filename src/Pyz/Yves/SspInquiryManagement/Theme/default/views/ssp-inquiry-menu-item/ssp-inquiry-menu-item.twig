@@ -1,6 +1,8 @@
 {% extends view('ssp-inquiry-menu-item', '@SprykerFeature:SspInquiryManagement') %}
 
 {% block body %}
+    {% set modifiers = data.modifiers | default([]) %}
+
     {% include molecule('navigation-sidebar-item') with {
         data: {
             url: url('customer/ssp-inquiry'),
@@ -9,6 +11,6 @@
             name: 'ssp-inquiries-management'
         },
         qa: 'inquiries',
-        modifiers: data.isActivePage ? ['active'] : [],
+        modifiers: data.isActivePage ? ['active'] | merge(modifiers) : modifiers,
     } only %}
 {% endblock %}

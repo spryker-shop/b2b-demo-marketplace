@@ -1,0 +1,42 @@
+{% extends molecule('image-uploader', '@SprykerFeature:SspAssetManagement') %}
+
+{% block button %}
+    <label inert for="{{ data.inputAttrs.id }}" class="{{ config.name }}__button button button--small-space button--hollow">
+        {{ 'ssp_asset.image.upload' | trans }}
+    </label>
+{% endblock %}
+
+{% block delete %}
+    {% set deleteClass = attributes['initial-image'] ? attributes['confirmation-trigger'] : "#{config.jsName}__delete" %}
+
+    <button
+        type="button"
+        title="{{ 'general.remove.button' | trans }}"
+        class="{{ deleteClass }} {{ config.name }}__delete button button--small-space button--hollow button--alert"
+    >
+        {% include atom('icon') with {
+            data: {
+                name: 'remove',
+            }
+        } only %}
+    </button>
+{% endblock %}
+
+{% block confirmationDelete %}
+    <div class="spacing-x">
+        <p>{{ 'ssp_asset.details.confirm_delete_body' | trans }}</p>
+
+        <div class="spacing-top--inner grid grid--right">
+            <div class="col spacing-right">
+                <button type="button" class="js-main-popup-close button button--hollow">
+                    {{ 'general.cancel.button' | trans }}
+                </button>
+            </div>
+            <div class="col">
+                <button type="button" class="js-main-popup-close {{ config.jsName }}__delete button">
+                    {{ 'general.confirm.button' | trans }}
+                </button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -10,37 +10,43 @@
 {%- block class -%}{{ pageLayoutMainJsClassName }}__side-drawer-container{%- endblock -%}
 
 {% set files %}
-    {% widget 'SspFileManagerMenuItemWidget' args [false]  with {
-        data: {
-            modifiers: ['account'],
-        },
-    } only %}
-    {% endwidget %}
+    {% if widgetGlobalExists('SspFileManagerMenuItemWidget') %}
+        {% widget 'SspFileManagerMenuItemWidget' args [false]  with {
+            data: {
+                modifiers: ['account'],
+            },
+        } only %}
+        {% endwidget %}
+    {% endif %}
 {% endset %}
 
 {% set inquiry %}
-    {% if widgetGlobalExists('SspInquiryMenuItemWidget') and (can('ViewBusinessUnitSspInquiryPermissionPlugin') or can('CreateSspInquiryPermissionPlugin') or can('ViewCompanySspInquiryPermissionPlugin')) %}
-        {% widget 'SspInquiryMenuItemWidget' args [false]  with {
-            data: {
-                modifiers: ['account'],
-            },
-        } only %}
-        {% endwidget %}
+    {% if widgetGlobalExists('SspInquiryMenuItemWidget') %}
+        {% if widgetGlobalExists('SspInquiryMenuItemWidget') and (can('ViewBusinessUnitSspInquiryPermissionPlugin') or can('CreateSspInquiryPermissionPlugin') or can('ViewCompanySspInquiryPermissionPlugin')) %}
+            {% widget 'SspInquiryMenuItemWidget' args [false]  with {
+                data: {
+                    modifiers: ['account'],
+                },
+            } only %}
+            {% endwidget %}
+        {% endif %}
     {% endif %}
 {% endset %}
 
-{% set sspAsset %}
-    {% if widgetGlobalExists('SspAssetMenuItemWidget') and (can('ViewCompanySspAssetPermissionPlugin') or can('ViewBusinessUnitSspAssetPermissionPlugin'))  %}
-        {% widget 'SspAssetMenuItemWidget' args [false]  with {
-            data: {
-                modifiers: ['account'],
-            },
-        } only %}
-        {% endwidget %}
+{% set asset %}
+    {% if widgetGlobalExists('SspAssetMenuItemWidget') %}
+        {% if widgetGlobalExists('SspAssetMenuItemWidget') and (can('ViewCompanySspAssetPermissionPlugin') or can('ViewBusinessUnitSspAssetPermissionPlugin'))  %}
+            {% widget 'SspAssetMenuItemWidget' args [false]  with {
+                data: {
+                    modifiers: ['account'],
+                },
+            } only %}
+            {% endwidget %}
+        {% endif %}
     {% endif %}
 {% endset %}
 
-{% set sspDashboard %}
+{% set dashboard %}
     {% if widgetGlobalExists('DashboardMenuItemWidget') %}
         {% widget 'DashboardMenuItemWidget' args [false]  with {
             data: {
@@ -131,12 +137,20 @@
                                 icon: 'cart'
                             },
                             {
-                                block: inquiry,
-                                name: 'ssp-file-inquiries'
+                                block: dashboard,
+                                name: 'ssp-dashboard'
+                            },
+                            {
+                                block: asset,
+                                name: 'ssp-asset-management'
                             },
                             {
                                 block: files,
                                 name: 'ssp-file-management'
+                            },
+                            {
+                                block: inquiry,
+                                name: 'ssp-inquiries-management'
                             },
                         ],
                     }

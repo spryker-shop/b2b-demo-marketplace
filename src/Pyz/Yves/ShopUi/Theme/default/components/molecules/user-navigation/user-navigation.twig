@@ -20,16 +20,18 @@
 {%- endblock -%}
 
 {% set files %}
-    {% widget 'SspFileManagerMenuItemWidget' args [false] only %}
-        {% block content %}
-            <li>
-                <a class="link link--secondary"
-                    href="{{ url('ssp-file-management') }}">
-                    {{ 'ssp_file_management.file_management' | trans }}
-                </a>
-            </li>
-        {% endblock %}
-    {% endwidget %}
+    {% if widgetGlobalExists('SspFileManagerMenuItemWidget') %}
+        {% widget 'SspFileManagerMenuItemWidget' args [false] only %}
+            {% block content %}
+                <li>
+                    <a class="link link--secondary"
+                        href="{{ url('ssp-file-management') }}">
+                        {{ 'ssp_file_management.file_management' | trans }}
+                    </a>
+                </li>
+            {% endblock %}
+        {% endwidget %}
+    {% endif %}
 {% endset %}
 
 {% set inquiry %}
@@ -129,16 +131,16 @@
                     title: 'quote_request_widget.request_for_quote.list.title' | trans,
                 },
                 {
-                    block: inquiry,
-                },
-                {
-                    block: files,
+                    block: dashboard,
                 },
                 {
                     block: assets,
                 },
                 {
-                    block: dashboard,
+                    block: files,
+                },
+                {
+                    block: inquiry,
                 },
                 {
                     url: url('logout'),
