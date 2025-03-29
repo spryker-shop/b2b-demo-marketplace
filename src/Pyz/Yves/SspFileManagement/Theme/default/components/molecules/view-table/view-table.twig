@@ -1,52 +1,13 @@
 {% extends molecule('view-table', '@SprykerFeature:SspFileManagement') %}
 
 {% block table %}
-    {% set columns = [
-        {
-            id: 'fileReference',
-            title: 'ssp_file_management.file_management.table.header.file_reference',
-            sortable: true,
-        },
-        {
-            id: 'fileName',
-            title: 'ssp_file_management.file_management.table.header.file_name',
-            sortable: true,
-        },
-        {
-            id: 'fileType',
-            title: 'ssp_file_management.file_management.table.header.file_type',
-            sortable: true,
-        },
-        {
-            id: 'createdAt',
-            title: 'ssp_file_management.file_management.table.header.file_created_at',
-            sortable: true,
-            type: 'date',
-        },
-        {
-            id: 'size',
-            title: 'ssp_file_management.file_management.table.header.file_size',
-            sortable: true,
-        },
-        {
-            id: 'actions',
-            type: 'actions',
-        },
-    ] %}
-
-    {% set rows = data.files | map(file => {
-        fileReference: file.fileReference,
-        fileName: file.fileName,
-        fileType: file.fileInfo[0].extension,
-        createdAt: file.fileInfo[0].createdAt,
-        size: file.fileInfo[0].size,
-        actions: can('DownloadFilesPermissionPlugin') ? [{
-            url: path('ssp-file-management/download', { 'id-file': file.uuid }),
-            title: 'ssp_file_management.file_management.table.actions.download',
-            icon: 'upload',
+    {% set rows = rows | map(row => row | merge({
+        actions: row.actions | map(action => action | merge({
             iconModifier: 'big',
-        }] : []
-    }) %}
+            icon: 'upload',
+            title: action.label,
+        })),
+    })) %}
 
     {{ parent() }}
 {% endblock %}

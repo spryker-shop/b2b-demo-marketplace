@@ -47,7 +47,7 @@
     {% endif %}
 {% endset %}
 
-{% set sspAsset %}
+{% set assets %}
     {% if widgetGlobalExists('SspAssetMenuItemWidget') and (can('ViewCompanySspAssetPermissionPlugin') or can('ViewBusinessUnitSspAssetPermissionPlugin'))  %}
         {% widget 'SspAssetMenuItemWidget' args [false] only %}
             {% block body %}
@@ -62,14 +62,14 @@
     {% endif %}
 {% endset %}
 
-{% set sspDashboard %}
+{% set dashboard %}
    {% if widgetGlobalExists('DashboardMenuItemWidget') %}
        {% widget 'DashboardMenuItemWidget' args [false] only %}
             {% block body %}
                 <li>
                     <a class="link link--secondary"
                         href="{{ url('customer/dashboard') }}">
-                        {{ 'ssp_dashboard.list.widget.title' | trans }}
+                        {{ 'dashboard.index.widget.title' | trans }}
                     </a>
                 </li>
             {% endblock %}
@@ -133,6 +133,12 @@
                 },
                 {
                     block: files,
+                },
+                {
+                    block: assets,
+                },
+                {
+                    block: dashboard,
                 },
                 {
                     url: url('logout'),

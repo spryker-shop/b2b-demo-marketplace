@@ -1,5 +1,31 @@
 {% extends view('dashboard','@SprykerFeature:SspDashboardManagement') %}
 
-{% block news %}
-    {% cms_slot 'ssp-news' %}
+{% block customerContent %}
+    {% block userInfo %}
+        <div>
+            <div data-qa="user-info">
+                <strong class="title--h3">
+                    {{ 'dashboard.general.welcome' | trans({
+                        '%name%': data.customer.firstName ~ ' ' ~ data.customer.lastName,
+                    }) }}
+                </strong>
+            </div>
+            <span>{{ data.customer.companyUserTransfer.company.name }}</span>
+        </div>
+    {% endblock %}
+
+    {% block information %}
+        <div class="grid grid--stretch grid--with-gutter spacing-bottom--big">
+            {% set colClasses = 'col col--with-gutter col--sm-12 col--md-6' %}
+
+            {{ block('statsCol') }}
+            {{ block('representativesCol') }}
+        </div>
+    {% endblock %}
+
+    {% block news %}
+        {% cms_slot 'ssp-news' %}
+    {% endblock %}
+
+    {{ block('tables') }}
 {% endblock %}
