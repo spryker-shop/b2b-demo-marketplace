@@ -40,6 +40,12 @@ use Spryker\Client\ShoppingList\Plugin\WriteShoppingListPermissionPlugin;
 use Spryker\Shared\Checkout\Plugin\Permission\PlaceOrderWithAmountUpToPermissionPlugin;
 use Spryker\Shared\CompanyUser\Plugin\AddCompanyUserPermissionPlugin;
 use Spryker\Shared\CompanyUserInvitation\Plugin\ManageCompanyUserInvitationPermissionPlugin;
+use SprykerFeature\Shared\SspAssetManagement\Plugin\Permission\CreateSspAssetPermissionPlugin;
+use SprykerFeature\Shared\SspAssetManagement\Plugin\Permission\UnassignSspAssetPermissionPlugin;
+use SprykerFeature\Shared\SspAssetManagement\Plugin\Permission\UpdateSspAssetPermissionPlugin;
+use SprykerFeature\Shared\SspAssetManagement\Plugin\Permission\ViewBusinessUnitSspAssetPermissionPlugin;
+use SprykerFeature\Shared\SspAssetManagement\Plugin\Permission\ViewCompanySspAssetPermissionPlugin;
+use SprykerFeature\Shared\SspDashboardManagement\Plugin\Permission\ViewDashboardPermissionPlugin;
 use SprykerFeature\Shared\SspFileManagement\Plugin\Permission\DownloadFilesPermissionPlugin;
 use SprykerFeature\Shared\SspFileManagement\Plugin\Permission\ViewCompanyBusinessUnitFilesPermissionPlugin;
 use SprykerFeature\Shared\SspFileManagement\Plugin\Permission\ViewCompanyFilesPermissionPlugin;
@@ -113,6 +119,12 @@ class PermissionDependencyProvider extends SprykerPermissionDependencyProvider
             new ViewCompanyUserFilesPermissionPlugin(), #SspFileManagementFeature
             new ViewCompanyBusinessUnitFilesPermissionPlugin(), #SspFileManagementFeature
             new ViewCompanyFilesPermissionPlugin(), #SspFileManagementFeature
+            new ViewCompanySspAssetPermissionPlugin(), #SspAssetFeature
+            new ViewBusinessUnitSspAssetPermissionPlugin(), #SspAssetFeature
+            new CreateSspAssetPermissionPlugin(), #SspAssetFeature
+            new UpdateSspAssetPermissionPlugin(), #SspAssetFeature
+            new UnassignSspAssetPermissionPlugin(), #SspAssetFeature
+            new ViewDashboardPermissionPlugin(), #SspDashboardManagement Feature
         ];
     }
 }

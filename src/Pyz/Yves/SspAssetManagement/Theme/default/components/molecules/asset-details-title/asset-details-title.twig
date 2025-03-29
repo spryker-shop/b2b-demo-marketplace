@@ -1,0 +1,57 @@
+{% extends molecule('asset-details-title', '@SprykerFeature:SspAssetManagement') %}
+
+{% block unassign %}
+    {% if data.canBusinessUnitBeUnassigned and can('UnassignSspAssetPermissionPlugin') %}
+        <button title="{{ 'ssp_asset.details_page.unassign' | trans }}" class="link link--alert {{ confirmationTrigger }}" {{ qa('unassign-ssp-asset-link') }}>
+            {% include atom('icon') with {
+                data: {
+                    name: 'remove',
+                }
+            } only %}
+        </button>
+    {% endif %}
+{% endblock %}
+
+{% block edit %}
+    {% if can('UpdateSspAssetPermissionPlugin') %}
+        <a
+            href="{{ url('customer/asset/update', { reference: data.reference }) }}"
+            class="link"
+            title="{{ 'general.edit.button' | trans }}"
+            data-qa="edit-ssp-asset">
+            {% include atom('icon') with {
+                data: {
+                    name: 'edit',
+                }
+            } only %}
+        </a>
+    {% endif %}
+{% endblock %}
+
+{% block confirmationUnassign %}
+    <div class="spacing-x">
+        <p>{{ 'ssp_asset.details_page.confirm_unassign_body' | trans }}</p>
+
+        <div class="spacing-top--inner grid grid--right">
+            <div class="col">
+                <button type="button" class="js-main-popup-close button button--hollow">
+                    {{ 'general.cancel.button' | trans }}
+                </button>
+            </div>
+
+            {% if data.unassignBusinessUnitForm %}
+                {{ form_start(data.unassignBusinessUnitForm, {
+                    'action': path('customer/asset/update-relations', { reference: data.reference })
+                }) }}
+                    <div class="col spacing-left">
+                        <button class="js-main-popup-close button button--primary" {{ qa('unassign-ssp-asset') }}>
+                            {{ 'general.confirm.button' | trans }}
+                        </button>
+                    </div>
+                {{ form_end(data.unassignBusinessUnitForm) }}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+

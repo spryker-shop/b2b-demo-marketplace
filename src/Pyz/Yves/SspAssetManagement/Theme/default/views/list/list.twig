@@ -1,0 +1,74 @@
+{% extends view('list', '@SprykerFeature:SspAssetManagement') %}
+
+{% block filtersToggler %}
+    <button class="button button--hollow button--justify-center js-filter-button">
+        {% include atom('icon') with {
+            modifiers: ['filter'],
+            class: 'spacing-right',
+            data: {
+                name: 'filter',
+            },
+        } only %}
+        {{ 'customer.account.button.search_filters' | trans }}
+    </button>
+
+    {% include molecule('toggler-click') with {
+        attributes: {
+            'trigger-class-name': 'js-filter-button',
+            'target-class-name': 'js-filter-section',
+            'trigger-class-to-toggle': 'button--hollow-active',
+        },
+    } only %}
+{% endblock %}
+
+{% block customerContent %}
+    {% if can('CreateSspAssetPermissionPlugin') %}
+        {% include molecule('action-bar') with {
+            data: {
+                title: 'customer.account.ssp_assets' | trans,
+                actions: [
+                    {
+                        block: block('filtersToggler',)
+                    },
+                    {
+                        title: 'customer.ssp_asset.create.button' | trans,
+                        url: url('customer/asset/create'),
+                        primary: true,
+                    },
+                ],
+            },
+        } only %}
+    {% endif %}
+
+    {{ form_start(data.sspAssetSearchForm, {
+        attr: {
+            class: formClass,
+        },
+    }) }}
+
+     {% include molecule('ssp-asset-filters', 'SspAssetManagement') with {
+        class: 'box box--small js-filter-section spacing-bottom--bigger',
+        data: {
+            sspAssetSearchForm: data.sspAssetSearchForm,
+            jsPrefix: jsPrefix,
+        },
+    } only %}
+
+    {% block activeFilters %}
+        {% include molecule('active-filters', 'SspAssetManagement') with {
+            class: 'spacing-bottom spacing-bottom--big',
+            data: {
+                sspAssetSearchForm: data.sspAssetSearchForm,
+                jsPrefix: jsPrefix,
+                formClass: formClass,
+            },
+        } only %}
+    {% endblock %}
+
+    {{ block('sspAssetTable') }}
+    {{ block('pagination') }}
+
+    {% if data.sspAssetSearchForm %}
+        {{ form_end(data.sspAssetSearchForm) }}
+    {% endif %}
+{% endblock %}

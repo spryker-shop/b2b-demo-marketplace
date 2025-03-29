@@ -2,12 +2,11 @@
 
 {% block table %}
     {% set rows = rows | map(row => row | merge({
-        actions: [{
-            url: path('customer/ssp-inquiry/details', { reference: row.reference }),
-            title: 'customer.ssp_inquiry.view_ssp_inquiry',
-            icon: 'eye',
+        actions: row.actions | map(action => action | merge({
             iconModifier: 'big',
-        }]
+            icon: 'eye',
+            title: action.label,
+        })),
     })) %}
 
     {{ parent() }}
