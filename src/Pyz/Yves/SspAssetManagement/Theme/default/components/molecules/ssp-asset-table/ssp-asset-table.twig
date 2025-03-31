@@ -1,0 +1,13 @@
+{% extends molecule('ssp-asset-table', '@SprykerFeature:SspAssetManagement') %}
+
+{% block table %}
+    {% set rows = rows | map(row => row | merge({
+        actions: row.actions | map(action => action | merge({
+            iconModifier: 'big',
+            icon: 'eye',
+            title: action.label,
+        })),
+    })) %}
+
+    {{ parent() }}
+{% endblock %}

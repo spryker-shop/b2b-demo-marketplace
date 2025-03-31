@@ -53,8 +53,6 @@
 
     {% widget 'QuoteRequestMenuItemWidget' args [data.activePage] only %}{% endwidget %}
 
-    {% widget 'SspFileManagerMenuItemWidget' args [data.activePage] only %}{% endwidget %}
-
     {% widget 'BusinessOnBehalfStatusWidget' use view('change-company-user', 'BusinessOnBehalfWidget') with {
         isActivePage: 'change-company-user' == data.activePage
     } only %}
@@ -71,6 +69,19 @@
             } only %}
         {% endblock %}
     {% endwidget %}
+
+    {% if widgetGlobalExists('DashboardMenuItemWidget') %}
+        {% widget 'DashboardMenuItemWidget' args [data.activePage] only %}{% endwidget %}
+    {% endif %}
+
+    {% if widgetGlobalExists('SspAssetMenuItemWidget') and (can('ViewCompanySspAssetPermissionPlugin') or can('ViewBusinessUnitSspAssetPermissionPlugin'))  %}
+        {% widget 'SspAssetMenuItemWidget' args [data.activePage] only %}{% endwidget %}
+    {% endif %}
+
+    {% if widgetGlobalExists('SspFileManagerMenuItemWidget') %}
+        {% widget 'SspFileManagerMenuItemWidget' args [data.activePage] only %}{% endwidget %}
+    {% endif %}
+
     {% if widgetGlobalExists('SspInquiryMenuItemWidget') and (can('ViewBusinessUnitSspInquiryPermissionPlugin') or can('CreateSspInquiryPermissionPlugin') or can('ViewCompanySspInquiryPermissionPlugin')) %}
         {% widget 'SspInquiryMenuItemWidget' args [data.activePage] only %}{% endwidget %}
     {% endif %}

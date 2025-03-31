@@ -145,6 +145,7 @@ use SprykerShop\Shared\ShopUi\ShopUiConstants;
 use SprykerShop\Shared\StorageRouter\StorageRouterConstants;
 use SprykerShop\Shared\StoreWidget\StoreWidgetConstants;
 use Symfony\Component\HttpFoundation\Cookie;
+use SprykerFeature\Shared\SspAssetManagement\SspAssetManagementConstants;
 
 // ############################################################################
 // ############################## PRODUCTION CONFIGURATION ####################
@@ -651,6 +652,11 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'root' => '/data',
         'path' => '/data/ssp-files',
     ],
+    'ssp-asset-image' => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/data',
+        'path' => '/data/ssp-asset-image',
+    ],
 ];
 $config[FileManagerConstants::STORAGE_NAME] = 'files';
 $config[SspFileManagementConstants::STORAGE_NAME] = 'ssp-files';
@@ -713,6 +719,7 @@ $config[ApplicationConstants::BASE_URL_YVES]
     = $config[MerchantRelationshipConstants::BASE_URL_YVES]
     = $config[MerchantRelationRequestConstants::BASE_URL_YVES]
     = $config[SspInquiryManagementConstants::BASE_URL_YVES]
+    = $config[SspAssetManagementConstants::BASE_URL_YVES]
     = sprintf(
         'https://%s%s',
         $yvesHost,

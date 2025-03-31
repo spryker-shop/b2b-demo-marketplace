@@ -109,8 +109,10 @@
         "spryker-feature/shopping-lists": "^202410.0",
         "spryker-feature/spryker-core": "dev-master as 202410.0",
         "spryker-feature/spryker-core-back-office": "^202410.0",
+        "spryker-feature/ssp-asset-management": "^0.1.0",
+        "spryker-feature/ssp-dashboard-management": "^0.1.0",
         "spryker-feature/ssp-file-management": "^0.1.1",
-        "spryker-feature/ssp-inquiry-management": "^0.1.1",
+        "spryker-feature/ssp-inquiry-management": "^0.2.0",
         "spryker-feature/state-machine": "^202410.0",
         "spryker-feature/tax": "^202410.0",
         "spryker-shop/asset-widget": "^1.0.0",
@@ -345,13 +347,18 @@
             "Generated\\": "src/Generated/",
             "Orm\\": "src/Orm/",
             "Pyz\\": "src/Pyz/",
-            "SprykerConfig\\": "src/SprykerConfig/"
+            "SprykerConfig\\": "src/SprykerConfig/",
+            "SprykerTest\\Shared\\FileManager\\Helper\\": "vendor/spryker/file-manager/tests/SprykerTest/Shared/FileManager/_support/Helper/",
+            "SprykerFeatureTest\\Shared\\SspFileManagement\\Helper\\": "vendor/spryker-feature/ssp-file-management/tests/SprykerFeatureTest/Shared/SspFileManagement/Helper/"
+
         }
     },
     "autoload-dev": {
         "psr-4": {
             "PyzTest\\": "tests/PyzTest/",
-            "Acceptance\\Auth\\": "vendor/spryker/auth/tests/"
+            "Acceptance\\Auth\\": "vendor/spryker/auth/tests/",
+            "SprykerTest\\Shared\\FileManager\\Helper\\": "vendor/spryker/file-manager/tests/SprykerTest/Shared/FileManager/_support/Helper/",
+            "SprykerFeatureTest\\Shared\\SspFileManagement\\Helper\\": "vendor/spryker-feature/ssp-file-management/tests/SprykerFeatureTest/Shared/SspFileManagement/Helper/"
         },
         "files": [
             "test-autoload.php"

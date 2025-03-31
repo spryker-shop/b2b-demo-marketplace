@@ -20,16 +20,18 @@
 {%- endblock -%}
 
 {% set files %}
-    {% widget 'SspFileManagerMenuItemWidget' args [false] only %}
-        {% block content %}
-            <li>
-                <a class="link link--secondary"
-                    href="{{ url('ssp-file-management') }}">
-                    {{ 'ssp_file_management.file_management' | trans }}
-                </a>
-            </li>
-        {% endblock %}
-    {% endwidget %}
+    {% if widgetGlobalExists('SspFileManagerMenuItemWidget') %}
+        {% widget 'SspFileManagerMenuItemWidget' args [false] only %}
+            {% block content %}
+                <li>
+                    <a class="link link--secondary"
+                        href="{{ url('ssp-file-management') }}">
+                        {{ 'ssp_file_management.file_management' | trans }}
+                    </a>
+                </li>
+            {% endblock %}
+        {% endwidget %}
+    {% endif %}
 {% endset %}
 
 {% set inquiry %}
@@ -40,6 +42,36 @@
                     <a class="link link--secondary"
                         href="{{ url('customer/ssp-inquiry') }}">
                         {{ 'ssp_inquiry.list.widget.title' | trans }}
+                    </a>
+                </li>
+            {% endblock %}
+        {% endwidget %}
+    {% endif %}
+{% endset %}
+
+{% set assets %}
+    {% if widgetGlobalExists('SspAssetMenuItemWidget') and (can('ViewCompanySspAssetPermissionPlugin') or can('ViewBusinessUnitSspAssetPermissionPlugin'))  %}
+        {% widget 'SspAssetMenuItemWidget' args [false] only %}
+            {% block body %}
+                <li>
+                    <a class="link link--secondary"
+                        href="{{ url('customer/asset') }}">
+                        {{ 'ssp_asset.list.widget.title' | trans }}
+                    </a>
+                </li>
+            {% endblock %}
+        {% endwidget %}
+    {% endif %}
+{% endset %}
+
+{% set dashboard %}
+   {% if widgetGlobalExists('DashboardMenuItemWidget') %}
+       {% widget 'DashboardMenuItemWidget' args [false] only %}
+            {% block body %}
+                <li>
+                    <a class="link link--secondary"
+                        href="{{ url('customer/dashboard') }}">
+                        {{ 'dashboard.index.widget.title' | trans }}
                     </a>
                 </li>
             {% endblock %}
@@ -99,10 +131,16 @@
                     title: 'quote_request_widget.request_for_quote.list.title' | trans,
                 },
                 {
-                    block: inquiry,
+                    block: dashboard,
+                },
+                {
+                    block: assets,
                 },
                 {
                     block: files,
+                },
+                {
+                    block: inquiry,
                 },
                 {
                     url: url('logout'),

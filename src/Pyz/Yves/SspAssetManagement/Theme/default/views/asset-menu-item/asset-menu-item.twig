@@ -1,0 +1,16 @@
+{% extends view('asset-menu-item', '@SprykerFeature:SspAssetManagement') %}
+
+{% block body %}
+    {% set modifiers = data.modifiers | default([]) %}
+
+    {% include molecule('navigation-sidebar-item') with {
+        data: {
+            url: url('customer/asset'),
+            icon: 'assets',
+            label: 'ssp_asset.list.widget.title' | trans,
+            name: 'ssp-asset-management'
+        },
+        qa: 'sp-asset-customer-menu-item',
+        modifiers: data.isActivePage ? ['active'] | merge(modifiers) : modifiers,
+    } only %}
+{% endblock %}
