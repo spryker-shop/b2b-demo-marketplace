@@ -1,7 +1,7 @@
 {% extends molecule('image-uploader', '@SprykerFeature:SspAssetManagement') %}
 
 {% block button %}
-    <label inert for="{{ data.inputAttrs.id }}" class="{{ config.name }}__button button button--small-space button--hollow">
+    <label inert for="{{ data.inputAttrs.id }}" class="{{ config.name }}__button button button--small-space">
         {{ 'ssp_asset.image.upload' | trans }}
     </label>
 {% endblock %}
@@ -12,7 +12,7 @@
     <button
         type="button"
         title="{{ 'general.remove.button' | trans }}"
-        class="{{ deleteClass }} {{ config.name }}__delete button button--small-space button--hollow button--alert"
+        class="{{ deleteClass }} {{ config.name }}__delete button button--small-space button--alert"
     >
         {% include atom('icon') with {
             data: {
