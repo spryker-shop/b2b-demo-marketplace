@@ -17,7 +17,6 @@ export default class ImageUploader extends Component {
     }
 
     protected mapEvents(): void {
-        console.log('mapEvents');
         this.querySelector(`.${this.jsName}__input`)?.addEventListener('change', this.onChange.bind(this));
         document.addEventListener('click', this.onDelete.bind(this));
         this.reader.addEventListener('load', this.onLoad.bind(this));
@@ -25,7 +24,7 @@ export default class ImageUploader extends Component {
 
     protected onChange(event: Event) {
         const file = (event.target as HTMLInputElement).files[0];
-        console.log(file, 'file');
+
         if (!file) {
             return;
         }
@@ -35,7 +34,6 @@ export default class ImageUploader extends Component {
     }
 
     protected async onLoad(event: ProgressEvent<FileReader>) {
-        console.log(this.image, ' this.image');
         this.image.src = event.target.result as string;
         this.deleteInput.removeAttribute('checked');
         this.classList.remove(this.loadingClass);
