@@ -347,13 +347,18 @@
             "Generated\\": "src/Generated/",
             "Orm\\": "src/Orm/",
             "Pyz\\": "src/Pyz/",
-            "SprykerConfig\\": "src/SprykerConfig/"
+            "SprykerConfig\\": "src/SprykerConfig/",
+            "SprykerTest\\Shared\\FileManager\\Helper\\": "vendor/spryker/file-manager/tests/SprykerTest/Shared/FileManager/_support/Helper/",
+            "SprykerFeatureTest\\Shared\\SspFileManagement\\Helper\\": "vendor/spryker-feature/ssp-file-management/tests/SprykerFeatureTest/Shared/SspFileManagement/Helper/"
+
         }
     },
     "autoload-dev": {
         "psr-4": {
             "PyzTest\\": "tests/PyzTest/",
-            "Acceptance\\Auth\\": "vendor/spryker/auth/tests/"
+            "Acceptance\\Auth\\": "vendor/spryker/auth/tests/",
+            "SprykerTest\\Shared\\FileManager\\Helper\\": "vendor/spryker/file-manager/tests/SprykerTest/Shared/FileManager/_support/Helper/",
+            "SprykerFeatureTest\\Shared\\SspFileManagement\\Helper\\": "vendor/spryker-feature/ssp-file-management/tests/SprykerFeatureTest/Shared/SspFileManagement/Helper/"
         },
         "files": [
             "test-autoload.php"

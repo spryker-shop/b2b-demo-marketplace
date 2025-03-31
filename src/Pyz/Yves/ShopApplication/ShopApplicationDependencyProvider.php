@@ -34,6 +34,7 @@ use SprykerFeature\Yves\SspFileManagement\Widget\SspFileManagerMenuItemWidget;
 use SprykerFeature\Yves\SspInquiryManagement\Plugin\ShopApplication\SspInquiryRestrictionHandlerPlugin;
 use SprykerFeature\Yves\SspInquiryManagement\Widget\CreateOrderSspInquiryLinkWidget;
 use SprykerFeature\Yves\SspInquiryManagement\Widget\DashboardInquiryWidget;
+use SprykerFeature\Yves\SspInquiryManagement\Widget\SspInquiryListWidget;
 use SprykerFeature\Yves\SspInquiryManagement\Widget\SspInquiryMenuItemWidget;
 use SprykerShop\Yves\AgentWidget\Widget\AgentControlBarWidget;
 use SprykerShop\Yves\AssetWidget\Widget\AssetWidget;
@@ -346,6 +347,7 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             DashboardMenuItemWidget::class,
             DashboardInquiryWidget::class,
             DashboardFileWidget::class,
+            SspInquiryListWidget::class,
         ];
     }
 
