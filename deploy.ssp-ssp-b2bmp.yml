@@ -27,6 +27,8 @@ image:
     ini:
         max_execution_time: 300
         request_terminate_timeout: 300
+        upload_max_filesize: '100M'
+        post_max_size: '100M'
 
 composer:
     mode: --no-dev
@@ -71,6 +73,8 @@ groups:
                         services:
                             session:
                                 namespace: 1
+                http:
+                    max-request-body-size: 100M
             boffice:
                 application: backoffice
                 endpoints:
@@ -80,6 +84,8 @@ groups:
                         services:
                             session:
                                 namespace: 3
+                http:
+                    max-request-body-size: 100M
             backgw:
                 application: backend-gateway
                 endpoints:
