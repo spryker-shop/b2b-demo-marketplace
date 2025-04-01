@@ -33963,16 +33963,16 @@
         },
         {
             "name": "spryker/file-manager",
-            "version": "2.6.0",
+            "version": "2.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/file-manager.git",
-                "reference": "56b59206f75e71d9f79ebcec1aef9a3eb260a758"
+                "reference": "3f0303225309ce5970694496d76158f632b56052"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/file-manager/zipball/56b59206f75e71d9f79ebcec1aef9a3eb260a758",
-                "reference": "56b59206f75e71d9f79ebcec1aef9a3eb260a758",
+                "url": "https://api.github.com/repos/spryker/file-manager/zipball/3f0303225309ce5970694496d76158f632b56052",
+                "reference": "3f0303225309ce5970694496d76158f632b56052",
                 "shasum": ""
             },
             "require": {
@@ -34001,7 +34001,8 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Spryker\\": "src/Spryker/"
+                    "Spryker\\": "src/Spryker/",
+                    "SprykerTest\\Shared\\FileManager\\Helper\\": "tests/SprykerTest/Shared/FileManager/_support/Helper/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -34010,9 +34011,9 @@
             ],
             "description": "FileManager module",
             "support": {
-                "source": "https://github.com/spryker/file-manager/tree/2.6.0"
+                "source": "https://github.com/spryker/file-manager/tree/2.7.0"
             },
-            "time": "2025-03-06T16:05:23+00:00"
+            "time": "2025-04-01T10:03:45+00:00"
         },
         {
             "name": "spryker/file-manager-data-import",
