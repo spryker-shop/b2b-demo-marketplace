@@ -5,12 +5,14 @@
         <div>
             <div data-qa="user-info">
                 <strong class="title--h3">
-                    {{ 'dashboard.general.welcome' | trans({
+                    {{ 'ssp_dashboard.general.welcome' | trans({
                         '%name%': data.customer.firstName ~ ' ' ~ data.customer.lastName,
                     }) }}
                 </strong>
             </div>
             <span>{{ data.customer.companyUserTransfer.company.name }}</span>
+            <br>
+            <span>{{ data.customer.companyUserTransfer.companyBusinessUnit.name }}</span>
         </div>
     {% endblock %}
 
@@ -22,6 +24,8 @@
             {{ block('representativesCol') }}
         </div>
     {% endblock %}
+
+    {{ block('assets') }}
 
     {% block news %}
         {% cms_slot 'ssp-news' %}
