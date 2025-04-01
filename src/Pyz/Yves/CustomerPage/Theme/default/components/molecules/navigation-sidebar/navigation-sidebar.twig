@@ -70,7 +70,7 @@
         {% endblock %}
     {% endwidget %}
 
-    {% if widgetGlobalExists('DashboardMenuItemWidget') %}
+    {% if widgetGlobalExists('DashboardMenuItemWidget') and can('ViewDashboardPermissionPlugin') %}
         {% widget 'DashboardMenuItemWidget' args [data.activePage] only %}{% endwidget %}
     {% endif %}
 

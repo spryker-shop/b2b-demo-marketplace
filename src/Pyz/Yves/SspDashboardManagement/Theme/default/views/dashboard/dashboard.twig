@@ -20,12 +20,43 @@
         <div class="grid grid--stretch grid--with-gutter spacing-bottom--big">
             {% set colClasses = 'col col--with-gutter col--sm-12 col--md-6' %}
 
-            {{ block('statsCol') }}
+            {% block statsCol %}
+                <div class="{{ colClasses }}">
+                    {% block stats %}
+                        {% set canAccessInquiries = can('ViewBusinessUnitSspInquiryPermissionPlugin') or can('CreateSspInquiryPermissionPlugin') or can('ViewCompanySspInquiryPermissionPlugin') %}
+                        {% set canAccessAssets = can('ViewBusinessUnitSspAssetPermissionPlugin') or can('ViewCompanySspAssetPermissionPlugin') %}
+
+                        {% include molecule('stats-overview', 'SspDashboardManagement') with {
+                            class: 'box box--stretch box--dark',
+                            data: {
+                                stats: [
+                                    {
+                                        title: 'dashboard.general.assets',
+                                        value: canAccessAssets and data.dashboard.dashboardComponentAssets is not empty ? data.dashboard.dashboardComponentAssets.sspAssetCollection.pagination.nbResults: 'ssp_dashboard.overview.not_applicable' | trans,
+                                    },
+                                    {
+                                        title: 'ssp_dashboard.general.inquiries',
+                                        value: canAccessInquiries and data.dashboard.dashboardComponentInquiry is not empty ? data.dashboard.dashboardComponentInquiry.pendingItems : 'ssp_dashboard.overview.not_applicable' | trans,
+                                    },
+                                ],
+                            },
+                        } only %}
+                    {% endblock %}
+                </div>
+            {% endblock %}
             {{ block('representativesCol') }}
         </div>
     {% endblock %}
 
-    {{ block('assets') }}
+    {% block assets %}
+        {% set canAccessAssets = can('ViewBusinessUnitSspAssetPermissionPlugin') or can('ViewCompanySspAssetPermissionPlugin') %}
+        {% set sspAssetCollection = data.dashboard.dashboardComponentAssets ? data.dashboard.dashboardComponentAssets.sspAssetCollection : null %}
+
+        {%  if canAccessAssets %}
+            {% widget 'SspAssetListWidget' args [sspAssetCollection] only %}
+            {% endwidget %}
+        {% endif %}
+    {% endblock %}
 
     {% block news %}
         {% cms_slot 'ssp-news' %}
