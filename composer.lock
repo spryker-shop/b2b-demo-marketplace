@@ -8839,16 +8839,16 @@
         },
         {
             "name": "spryker-feature/ssp-asset-management",
-            "version": "0.1.0",
+            "version": "0.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/ssp-asset-management.git",
-                "reference": "c1b33fe5ddc09bd2e5056e430de44fe6f8ee2a6a"
+                "reference": "0fdbc557124f793bb24b57b5ba0335ad3417af95"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/ssp-asset-management/zipball/c1b33fe5ddc09bd2e5056e430de44fe6f8ee2a6a",
-                "reference": "c1b33fe5ddc09bd2e5056e430de44fe6f8ee2a6a",
+                "url": "https://api.github.com/repos/spryker-feature/ssp-asset-management/zipball/0fdbc557124f793bb24b57b5ba0335ad3417af95",
+                "reference": "0fdbc557124f793bb24b57b5ba0335ad3417af95",
                 "shasum": ""
             },
             "require": {
@@ -8869,6 +8869,7 @@
                 "spryker/zed-request": "^3.22.0"
             },
             "require-dev": {
+                "spryker-feature/ssp-dashboard-management": "*",
                 "spryker-feature/ssp-inquiry-management": "*",
                 "spryker-shop/customer-page": "*",
                 "spryker/code-sniffer": "*",
@@ -8881,6 +8882,7 @@
                 "spryker/util-date-time": "*"
             },
             "suggest": {
+                "spryker-feature/ssp-dashboard-management": "If you want to see assets on the dashboard.",
                 "spryker-shop/customer-page": "Provides template for customer page",
                 "spryker/router": "You need to install this module when you want to use the RouterExtension interfaces."
             },
@@ -8902,22 +8904,22 @@
             ],
             "description": "SspAssetManagement module",
             "support": {
-                "source": "https://github.com/spryker-feature/ssp-asset-management/tree/0.1.0"
+                "source": "https://github.com/spryker-feature/ssp-asset-management/tree/0.1.2"
             },
-            "time": "2025-03-27T16:46:47+00:00"
+            "time": "2025-04-01T10:03:45+00:00"
         },
         {
             "name": "spryker-feature/ssp-dashboard-management",
-            "version": "0.1.0",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/ssp-dashboard-management.git",
-                "reference": "6deee0cfdb82d117bd02756a20181561e5be53a5"
+                "reference": "edab832f84d67a22cd9bb3ba9c5bb3e211c56f1b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/ssp-dashboard-management/zipball/6deee0cfdb82d117bd02756a20181561e5be53a5",
-                "reference": "6deee0cfdb82d117bd02756a20181561e5be53a5",
+                "url": "https://api.github.com/repos/spryker-feature/ssp-dashboard-management/zipball/edab832f84d67a22cd9bb3ba9c5bb3e211c56f1b",
+                "reference": "edab832f84d67a22cd9bb3ba9c5bb3e211c56f1b",
                 "shasum": ""
             },
             "require": {
@@ -8964,22 +8966,22 @@
             ],
             "description": "SspDashboardManagement module",
             "support": {
-                "source": "https://github.com/spryker-feature/ssp-dashboard-management/tree/0.1.0"
+                "source": "https://github.com/spryker-feature/ssp-dashboard-management/tree/0.1.1"
             },
-            "time": "2025-03-27T11:30:29+00:00"
+            "time": "2025-04-01T07:47:19+00:00"
         },
         {
             "name": "spryker-feature/ssp-file-management",
-            "version": "0.1.3",
+            "version": "0.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/ssp-file-management.git",
-                "reference": "0c6f265c95992c1ac256b5ceb0080d586e76822a"
+                "reference": "7a7af79d583264b0f4fa160058496bece096f3f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/ssp-file-management/zipball/0c6f265c95992c1ac256b5ceb0080d586e76822a",
-                "reference": "0c6f265c95992c1ac256b5ceb0080d586e76822a",
+                "url": "https://api.github.com/repos/spryker-feature/ssp-file-management/zipball/7a7af79d583264b0f4fa160058496bece096f3f7",
+                "reference": "7a7af79d583264b0f4fa160058496bece096f3f7",
                 "shasum": ""
             },
             "require": {
@@ -9037,7 +9039,8 @@
             },
             "autoload": {
                 "psr-4": {
-                    "SprykerFeature\\": "src/SprykerFeature/"
+                    "SprykerFeature\\": "src/SprykerFeature/",
+                    "SprykerFeatureTest\\Shared\\SspFileManagement\\Helper\\": "tests/SprykerFeatureTest/Shared/SspFileManagement/_support/Helper/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -9046,22 +9049,22 @@
             ],
             "description": "SspFileManagement module",
             "support": {
-                "source": "https://github.com/spryker-feature/ssp-file-management/tree/0.1.3"
+                "source": "https://github.com/spryker-feature/ssp-file-management/tree/0.1.5"
             },
-            "time": "2025-03-27T16:46:47+00:00"
+            "time": "2025-04-01T10:03:45+00:00"
         },
         {
             "name": "spryker-feature/ssp-inquiry-management",
-            "version": "0.2.0",
+            "version": "0.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/ssp-inquiry-management.git",
-                "reference": "14fef646f2685fccbcc6cc3ffabd29f2dd8f7e9f"
+                "reference": "4cde10a619ab7d7cb2b788775158dea1c36919f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/ssp-inquiry-management/zipball/14fef646f2685fccbcc6cc3ffabd29f2dd8f7e9f",
-                "reference": "14fef646f2685fccbcc6cc3ffabd29f2dd8f7e9f",
+                "url": "https://api.github.com/repos/spryker-feature/ssp-inquiry-management/zipball/4cde10a619ab7d7cb2b788775158dea1c36919f3",
+                "reference": "4cde10a619ab7d7cb2b788775158dea1c36919f3",
                 "shasum": ""
             },
             "require": {
@@ -9131,9 +9134,9 @@
             ],
             "description": "SspInquiryManagement module",
             "support": {
-                "source": "https://github.com/spryker-feature/ssp-inquiry-management/tree/0.2.0"
+                "source": "https://github.com/spryker-feature/ssp-inquiry-management/tree/0.2.1"
             },
-            "time": "2025-03-27T16:46:47+00:00"
+            "time": "2025-04-01T10:03:45+00:00"
         },
         {
             "name": "spryker-feature/state-machine",
