@@ -26,6 +26,8 @@ use PyzTest\Yves\Customer\PageObject\CustomerProfilePage;
  */
 class CustomerProfileCest
 {
+    protected const SUCCESS_MESSAGE = 'Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.';
+
     /**
      * @param \PyzTest\Yves\Customer\CustomerPresentationTester $i
      *
@@ -78,7 +80,7 @@ class CustomerProfileCest
         $i->fillField(CustomerProfilePage::FORM_FIELD_SELECTOR_EMAIL, $customerEmail);
         $i->click(CustomerProfilePage::BUTTON_PROFILE_FORM_SUBMIT_TEXT, CustomerProfilePage::BUTTON_PROFILE_FORM_SUBMIT_SELECTOR);
 
-        $i->seeInSource(CustomerProfilePage::SUCCESS_MESSAGE);
+        $i->seeInSource(static::SUCCESS_MESSAGE);
     }
 
     /**
