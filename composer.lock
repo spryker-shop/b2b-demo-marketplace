@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c98af46ae3e2ba5096ce32f6d8c43240",
+    "content-hash": "158bfd0546a48867ba9ac88a75f663c5",
     "packages": [
         {
             "name": "async-aws/core",
@@ -42006,20 +42006,20 @@
         },
         {
             "name": "spryker/messenger",
-            "version": "3.6.2",
+            "version": "3.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/messenger.git",
-                "reference": "5b3b1b31163bab161427b01d3223379355d5497e"
+                "reference": "b8de134175f4078efeebc16102ecf0f361d2c68c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/messenger/zipball/5b3b1b31163bab161427b01d3223379355d5497e",
-                "reference": "5b3b1b31163bab161427b01d3223379355d5497e",
+                "url": "https://api.github.com/repos/spryker/messenger/zipball/b8de134175f4078efeebc16102ecf0f361d2c68c",
+                "reference": "b8de134175f4078efeebc16102ecf0f361d2c68c",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.3",
+                "php": ">=8.2",
                 "spryker/application-extension": "^1.0.0",
                 "spryker/kernel": "^3.52.0",
                 "spryker/messenger-extension": "^1.0.0",
@@ -42052,9 +42052,9 @@
             ],
             "description": "Messenger module",
             "support": {
-                "source": "https://github.com/spryker/messenger/tree/3.6.2"
+                "source": "https://github.com/spryker/messenger/tree/3.6.3"
             },
-            "time": "2021-07-28T15:07:53+00:00"
+            "time": "2025-03-06T16:05:23+00:00"
         },
         {
             "name": "spryker/messenger-extension",
@@ -57803,16 +57803,16 @@
         },
         {
             "name": "spryker/sales",
-            "version": "11.53.0",
+            "version": "11.54.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/sales.git",
-                "reference": "c736770e6f04d36bdacf0c673b88daf1c09517e2"
+                "reference": "edd7890918c7c3430ff3decd4233313ee744171e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/sales/zipball/c736770e6f04d36bdacf0c673b88daf1c09517e2",
-                "reference": "c736770e6f04d36bdacf0c673b88daf1c09517e2",
+                "url": "https://api.github.com/repos/spryker/sales/zipball/edd7890918c7c3430ff3decd4233313ee744171e",
+                "reference": "edd7890918c7c3430ff3decd4233313ee744171e",
                 "shasum": ""
             },
             "require": {
@@ -57879,9 +57879,9 @@
             ],
             "description": "Sales module",
             "support": {
-                "source": "https://github.com/spryker/sales/tree/11.53.0"
+                "source": "https://github.com/spryker/sales/tree/11.54.0"
             },
-            "time": "2024-12-13T10:00:48+00:00"
+            "time": "2025-02-07T10:58:55+00:00"
         },
         {
             "name": "spryker/sales-configurable-bundle",
@@ -62721,20 +62721,20 @@
         },
         {
             "name": "spryker/shipment-type",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/shipment-type.git",
-                "reference": "80831e3850d2cf04de65ef2b81f44230364c3339"
+                "reference": "15a4ae9c0625fa6fe9d20c6a65b99b967e85d16a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/shipment-type/zipball/80831e3850d2cf04de65ef2b81f44230364c3339",
-                "reference": "80831e3850d2cf04de65ef2b81f44230364c3339",
+                "url": "https://api.github.com/repos/spryker/shipment-type/zipball/15a4ae9c0625fa6fe9d20c6a65b99b967e85d16a",
+                "reference": "15a4ae9c0625fa6fe9d20c6a65b99b967e85d16a",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.1",
+                "php": ">=8.2",
                 "spryker/acl-merchant-portal-extension": "^1.0.0",
                 "spryker/kernel": "^3.30.0",
                 "spryker/propel-orm": "^1.6.0",
@@ -62767,9 +62767,9 @@
             ],
             "description": "ShipmentType module",
             "support": {
-                "source": "https://github.com/spryker/shipment-type/tree/1.1.0"
+                "source": "https://github.com/spryker/shipment-type/tree/1.1.1"
             },
-            "time": "2024-05-06T12:15:28+00:00"
+            "time": "2025-03-06T16:05:23+00:00"
         },
         {
             "name": "spryker/shipment-type-data-import",
@@ -78776,19 +78776,18 @@
         },
         {
             "name": "spryker/cypress-tests",
-            "version": "dev-master",
+            "version": "dev-bugfix/ssp-9/master-asset-cypress",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/cypress-tests.git",
-                "reference": "b7bfa6dd189102bbc6e8ce7a760129037033cbdb"
+                "reference": "78ad97cf021af019462ff50c3a327e441bce1feb"
             },
-            "default-branch": true,
             "type": "library",
             "license": [
                 "MIT"
             ],
             "description": "This repository is dedicated to housing an extensive collection of UI end-to-end tests, meticulously crafted using Cypress for Spryker applications. These tests are designed to thoroughly evaluate the user interface, ensuring that all interactions and visual elements function as intended in real-world scenarios. By leveraging Cypress's advanced browser automation capabilities, this suite provides an efficient and effective means of validating the user experience, confirming the seamless operation and aesthetic integrity of Spryker's front-end components. Our commitment to rigorous UI testing helps maintain the high standard of quality and reliability that Spryker users expect.",
-            "time": "2025-03-27T16:11:56+00:00"
+            "time": "2025-04-01T16:47:34+00:00"
         },
         {
             "name": "spryker/development",
