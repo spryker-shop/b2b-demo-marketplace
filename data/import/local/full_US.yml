@@ -43,7 +43,14 @@ actions:
     - data_entity: payment-method-store
       source: data/import/common/US/payment_method_store.csv
     - data_entity: return-reason
-
+    #10. Product Shipment Type import
+    - data_entity: product-shipment-type
+      source: data/import/common/common/product_shipment_type.csv
+    # SspServiceManagement
+    - data_entity: product-abstract-type
+      source: data/import/common/common/product_abstract_type.csv
+    - data_entity: product-abstract-product-abstract-type
+      source: data/import/common/common/product_abstract_product_abstract_type.csv
 
     #2. Catalog Setup data import - Catalog Setup category includes sub-categories: Categories, Products,Pricing, Stocks
     - data_entity: category-template
@@ -254,6 +261,7 @@ actions:
       source: data/import/common/common/quote_request.csv
     - data_entity: quote-request-version
       source: data/import/common/common/quote_request_version.csv
+
 
 # Marketplace
     - data_entity: merchant-user

@@ -25,6 +25,7 @@ use SprykerFeature\Yves\SspAssetManagement\Plugin\Router\SspAssetRouteProviderPl
 use SprykerFeature\Yves\SspDashboardManagement\Plugin\Router\DashboardRouteProviderPlugin;
 use SprykerFeature\Yves\SspFileManagement\Plugin\Router\SspFileManagementPageRouteProviderPlugin;
 use SprykerFeature\Yves\SspInquiryManagement\Plugin\Router\SspInquiryRouteProviderPlugin;
+use SprykerFeature\Yves\SspServiceManagement\Plugin\Router\SspServiceManagementPageRouteProviderPlugin;
 use SprykerShop\Yves\AgentPage\Plugin\Router\AgentPageRouteProviderPlugin;
 use SprykerShop\Yves\AgentWidget\Plugin\Router\AgentWidgetRouteProviderPlugin;
 use SprykerShop\Yves\AvailabilityNotificationPage\Plugin\Router\AvailabilityNotificationPageRouteProviderPlugin;
@@ -182,6 +183,7 @@ class RouterDependencyProvider extends SprykerRouterDependencyProvider
             new SspFileManagementPageRouteProviderPlugin(),
             new SspAssetRouteProviderPlugin(), #SspAssetManagementFeature
             new DashboardRouteProviderPlugin(), #SspDashboardManagementFeature
+            new SspServiceManagementPageRouteProviderPlugin(),
         ];
     }
 
