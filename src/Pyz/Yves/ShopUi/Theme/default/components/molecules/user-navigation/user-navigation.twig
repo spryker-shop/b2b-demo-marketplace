@@ -65,7 +65,7 @@
 {% endset %}
 
 {% set dashboard %}
-   {% if widgetGlobalExists('DashboardMenuItemWidget') %}
+   {% if widgetGlobalExists('DashboardMenuItemWidget') and can('ViewDashboardPermissionPlugin') %}
        {% widget 'DashboardMenuItemWidget' args [false] only %}
             {% block body %}
                 <li>
