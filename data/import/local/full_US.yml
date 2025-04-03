@@ -43,9 +43,6 @@ actions:
     - data_entity: payment-method-store
       source: data/import/common/US/payment_method_store.csv
     - data_entity: return-reason
-    #10. Product Shipment Type import
-    - data_entity: product-shipment-type
-      source: data/import/common/common/product_shipment_type.csv
     # SspServiceManagement
     - data_entity: product-abstract-type
       source: data/import/common/common/product_abstract_type.csv
@@ -328,3 +325,6 @@ actions:
       source: data/import/common/common/product_offer_shipment_type.csv
     - data_entity: shipment-type-service-type
       source: data/import/common/common/shipment_type_service_type.csv
+    #10. Product Shipment Type import
+    - data_entity: product-shipment-type
+      source: data/import/common/common/product_shipment_type.csv

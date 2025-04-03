@@ -354,7 +354,6 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
     protected function getDataImporterPlugins(): array
     {
         return [
-            new ProductShipmentTypeDataImportPlugin(),
             new StoreDataImportPlugin(),
             new CountryStoreDataImportPlugin(),
             new CurrencyStoreDataImportPlugin(),
@@ -479,6 +478,7 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
             new ShipmentTypeServiceTypeDataImportPlugin(),
             new ProductOfferShipmentTypeDataImportPlugin(),
             new ProductOfferServiceDataImportPlugin(),
+            new ProductShipmentTypeDataImportPlugin(),
         ];
     }
 
