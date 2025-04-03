@@ -121,6 +121,17 @@ use SprykerFeature\Zed\SspInquiryManagement\Communication\Plugin\DataImport\SspI
 use SprykerFeature\Zed\SspServiceManagement\Communication\Plugin\DataImport\ProductAbstractToProductAbstractTypeDataImportPlugin;
 use SprykerFeature\Zed\SspServiceManagement\Communication\Plugin\DataImport\ProductAbstractTypeDataImportPlugin;
 use SprykerFeature\Zed\SspServiceManagement\Communication\Plugin\DataImport\ProductShipmentTypeDataImportPlugin;
+use Spryker\Zed\ProductOfferServicePointDataImport\Communication\Plugin\DataImport\ProductOfferServiceDataImportPlugin;
+use Spryker\Zed\ProductOfferShipmentTypeDataImport\Communication\Plugin\DataImport\ProductOfferShipmentTypeDataImportPlugin;
+use Spryker\Zed\ServicePointDataImport\Communication\Plugin\DataImport\ServiceDataImportPlugin;
+use Spryker\Zed\ServicePointDataImport\Communication\Plugin\DataImport\ServicePointAddressDataImportPlugin;
+use Spryker\Zed\ServicePointDataImport\Communication\Plugin\DataImport\ServicePointDataImportPlugin;
+use Spryker\Zed\ServicePointDataImport\Communication\Plugin\DataImport\ServicePointStoreDataImportPlugin;
+use Spryker\Zed\ServicePointDataImport\Communication\Plugin\DataImport\ServiceTypeDataImportPlugin;
+use Spryker\Zed\ShipmentTypeDataImport\Communication\Plugin\DataImport\ShipmentMethodShipmentTypeDataImportPlugin;
+use Spryker\Zed\ShipmentTypeDataImport\Communication\Plugin\DataImport\ShipmentTypeDataImportPlugin;
+use Spryker\Zed\ShipmentTypeDataImport\Communication\Plugin\DataImport\ShipmentTypeStoreDataImportPlugin;
+use Spryker\Zed\ShipmentTypeServicePointDataImport\Communication\Plugin\DataImport\ShipmentTypeServiceTypeDataImportPlugin;
 
 class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
 {
@@ -457,6 +468,17 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
             new SspInquiryDataImportPlugin(),
             new ProductAbstractTypeDataImportPlugin(),
             new ProductAbstractToProductAbstractTypeDataImportPlugin(),
+            new ServicePointDataImportPlugin(),
+            new ServicePointStoreDataImportPlugin(),
+            new ServicePointAddressDataImportPlugin(),
+            new ServiceTypeDataImportPlugin(),
+            new ServiceDataImportPlugin(),
+            new ShipmentTypeDataImportPlugin(),
+            new ShipmentTypeStoreDataImportPlugin(),
+            new ShipmentMethodShipmentTypeDataImportPlugin(),
+            new ShipmentTypeServiceTypeDataImportPlugin(),
+            new ProductOfferShipmentTypeDataImportPlugin(),
+            new ProductOfferServiceDataImportPlugin(),
         ];
     }
 

@@ -73,6 +73,8 @@ use Spryker\Zed\SalesReclamationGui\Communication\Plugin\Sales\ReclamationSalesT
 use Spryker\Zed\SalesReturn\Communication\Plugin\Sales\RemunerationTotalOrderExpanderPlugin;
 use Spryker\Zed\SalesReturn\Communication\Plugin\Sales\UpdateOrderItemIsReturnableByGlobalReturnableNumberOfDaysPlugin;
 use Spryker\Zed\SalesReturn\Communication\Plugin\Sales\UpdateOrderItemIsReturnableByItemStatePlugin;
+use Spryker\Zed\SalesServicePoint\Communication\Plugin\Sales\ServicePointOrderItemExpanderPlugin;
+use Spryker\Zed\SalesServicePoint\Communication\Plugin\Sales\ServicePointOrderItemsPostSavePlugin;
 use Spryker\Zed\Shipment\Communication\Plugin\ShipmentOrderHydratePlugin;
 use SprykerFeature\Zed\SspServiceManagement\Communication\Plugin\Sales\ProductTypeOrderItemsPostSavePlugin;
 use SprykerFeature\Zed\SspServiceManagement\Communication\Plugin\Sales\ScheduleTimeOrderItemExpanderPreSavePlugin;
@@ -206,6 +208,7 @@ class SalesDependencyProvider extends SprykerSalesDependencyProvider
             new AmountSalesUnitOrderItemExpanderPlugin(),
             new ItemStateOrderItemExpanderPlugin(),
             new ProductConfigurationOrderItemExpanderPlugin(),
+            new ServicePointOrderItemExpanderPlugin(),
         ];
     }
 
@@ -267,6 +270,7 @@ class SalesDependencyProvider extends SprykerSalesDependencyProvider
             new ItemMetadataOrderItemsPostSavePlugin(),
             new ProductConfigurationOrderItemsPostSavePlugin(),
             new ProductTypeOrderItemsPostSavePlugin(),
+            new ServicePointOrderItemsPostSavePlugin(),
         ];
     }
 

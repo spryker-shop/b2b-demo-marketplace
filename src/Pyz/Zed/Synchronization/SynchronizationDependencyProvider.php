@@ -57,6 +57,8 @@ use Spryker\Zed\ProductListStorage\Communication\Plugin\Synchronization\ProductC
 use Spryker\Zed\ProductMeasurementUnitStorage\Communication\Plugin\Synchronization\ProductConcreteMeasurementUnitSynchronizationDataBulkPlugin;
 use Spryker\Zed\ProductMeasurementUnitStorage\Communication\Plugin\Synchronization\ProductMeasurementUnitSynchronizationDataBulkPlugin;
 use Spryker\Zed\ProductOfferAvailabilityStorage\Communication\Plugin\Synchronization\ProductOfferAvailabilitySynchronizationDataBulkPlugin;
+use Spryker\Zed\ProductOfferServicePointStorage\Communication\Plugin\Synchronization\ProductOfferServiceSynchronizationDataBulkRepositoryPlugin;
+use Spryker\Zed\ProductOfferShipmentTypeStorage\Communication\Plugin\Synchronization\ProductOfferShipmentTypeSynchronizationDataBulkRepositoryPlugin;
 use Spryker\Zed\ProductOfferStorage\Communication\Plugin\Synchronization\ProductConcreteProductOffersSynchronizationDataBulkRepositoryPlugin;
 use Spryker\Zed\ProductOfferStorage\Communication\Plugin\Synchronization\ProductOfferSynchronizationDataBulkRepositoryPlugin;
 use Spryker\Zed\ProductOptionStorage\Communication\Plugin\Synchronization\ProductOptionSynchronizationDataPlugin;
@@ -83,6 +85,10 @@ use Spryker\Zed\TaxProductStorage\Communication\Plugin\Synchronization\TaxProduc
 use Spryker\Zed\TaxStorage\Communication\Plugin\Synchronization\TaxSynchronizationDataPlugin;
 use Spryker\Zed\UrlStorage\Communication\Plugin\Synchronization\UrlRedirectSynchronizationDataPlugin;
 use Spryker\Zed\UrlStorage\Communication\Plugin\Synchronization\UrlSynchronizationDataPlugin;
+use Spryker\Zed\ServicePointSearch\Communication\Plugin\Synchronization\ServicePointSynchronizationDataBulkRepositoryPlugin;
+use Spryker\Zed\ServicePointStorage\Communication\Plugin\Synchronization\ServicePointSynchronizationDataBulkRepositoryPlugin as ServicePointStorageSynchronizationDataBulkRepositoryPlugin;
+use Spryker\Zed\ServicePointStorage\Communication\Plugin\Synchronization\ServiceTypeSynchronizationDataBulkRepositoryPlugin;
+use Spryker\Zed\ShipmentTypeStorage\Communication\Plugin\Synchronization\ShipmentTypeSynchronizationDataBulkRepositoryPlugin;
 
 class SynchronizationDependencyProvider extends SprykerSynchronizationDependencyProvider
 {
@@ -164,6 +170,12 @@ class SynchronizationDependencyProvider extends SprykerSynchronizationDependency
             new AssetStorageSynchronizationDataPlugin(),
             new ProductConfigurationSynchronizationDataRepositoryPlugin(),
             new SearchHttpSynchronizationDataPlugin(),
+            new ServicePointSynchronizationDataBulkRepositoryPlugin(),
+            new ServicePointStorageSynchronizationDataBulkRepositoryPlugin(),
+            new ServiceTypeSynchronizationDataBulkRepositoryPlugin(),
+            new ShipmentTypeSynchronizationDataBulkRepositoryPlugin(),
+            new ProductOfferServiceSynchronizationDataBulkRepositoryPlugin(),
+            new ProductOfferShipmentTypeSynchronizationDataBulkRepositoryPlugin(),
         ];
     }
 

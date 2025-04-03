@@ -193,7 +193,14 @@ use SprykerShop\Yves\StoreWidget\Widget\StoreSwitcherWidget;
 use SprykerShop\Yves\TabsWidget\Widget\FullTextSearchTabsWidget;
 use SprykerShop\Yves\TraceableEventWidget\Widget\TraceableEventWidget;
 use SprykerShop\Yves\WebProfilerWidget\Plugin\Application\WebProfilerApplicationPlugin;
-
+use SprykerShop\Yves\ClickAndCollectPageExample\Plugin\ShopApplication\ClickAndCollectServicePointAddressFormWidgetCacheKeyGeneratorStrategyPlugin;
+use SprykerShop\Yves\ClickAndCollectPageExample\Widget\ClickAndCollectServicePointAddressFormWidget;
+use SprykerShop\Yves\ProductOfferServicePointAvailabilityWidget\Widget\ProductOfferServicePointAvailabilityDisplayWidget;
+use SprykerShop\Yves\ProductOfferServicePointAvailabilityWidget\Widget\ProductOfferServicePointAvailabilityWidget;
+use SprykerShop\Yves\SalesServicePointWidget\Widget\SalesServicePointNameForShipmentGroupWidget;
+use SprykerShop\Yves\ServicePointWidget\Widget\ServicePointSearchWidget;
+use SprykerShop\Yves\ShipmentTypeWidget\Plugin\ShopApplication\ShipmentTypeAddressFormWidgetCacheKeyGeneratorStrategyPlugin;
+use SprykerShop\Yves\ShipmentTypeWidget\Widget\ShipmentTypeAddressFormWidget;
 /**
  * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
  */
@@ -360,6 +367,12 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             ShipmentTypeServicePointSelectorWidget::class,
             ServicePointNameForItemWidget::class,
             ListItemsByShipmentTypeWidget::class,
+            ServicePointSearchWidget::class,
+            ShipmentTypeAddressFormWidget::class,
+            SalesServicePointNameForShipmentGroupWidget::class,
+            ClickAndCollectServicePointAddressFormWidget::class,
+            ProductOfferServicePointAvailabilityWidget::class,
+            ProductOfferServicePointAvailabilityDisplayWidget::class,
         ];
     }
 
@@ -375,6 +388,8 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             new CartDiscountPromotionProductListWidgetCacheKeyGeneratorStrategyPlugin(),
             new CartItemNoteFormWidgetCacheKeyGeneratorStrategyPlugin(),
             new MerchantSalesReturnCreateFormWidgetCacheKeyGeneratorStrategyPlugin(),
+            new ShipmentTypeAddressFormWidgetCacheKeyGeneratorStrategyPlugin(),
+            new ClickAndCollectServicePointAddressFormWidgetCacheKeyGeneratorStrategyPlugin(),
         ];
     }
 
