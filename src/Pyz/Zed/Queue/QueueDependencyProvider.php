@@ -49,6 +49,9 @@ use Spryker\Shared\PublishAndSynchronizeHealthCheckStorage\PublishAndSynchronize
 use Spryker\Shared\Publisher\PublisherConfig;
 use Spryker\Shared\SalesReturnSearch\SalesReturnSearchConfig;
 use Spryker\Shared\SearchHttp\SearchHttpConfig;
+use Spryker\Shared\ServicePointSearch\ServicePointSearchConfig;
+use Spryker\Shared\ServicePointStorage\ServicePointStorageConfig;
+use Spryker\Shared\ShipmentTypeStorage\ShipmentTypeStorageConfig;
 use Spryker\Shared\ShoppingListStorage\ShoppingListStorageConfig;
 use Spryker\Shared\StoreStorage\StoreStorageConfig;
 use Spryker\Shared\TaxProductStorage\TaxProductStorageConfig;
@@ -63,9 +66,6 @@ use Spryker\Zed\RabbitMq\Communication\Plugin\Queue\RabbitMqQueueMessageCheckerP
 use Spryker\Zed\Synchronization\Communication\Plugin\Queue\SynchronizationSearchQueueMessageProcessorPlugin;
 use Spryker\Zed\Synchronization\Communication\Plugin\Queue\SynchronizationStorageQueueMessageProcessorPlugin;
 use SprykerEco\Zed\Loggly\Communication\Plugin\LogglyLoggerQueueMessageProcessorPlugin;
-use Spryker\Shared\ServicePointSearch\ServicePointSearchConfig;
-use Spryker\Shared\ServicePointStorage\ServicePointStorageConfig;
-use Spryker\Shared\ShipmentTypeStorage\ShipmentTypeStorageConfig;
 
 class QueueDependencyProvider extends SprykerDependencyProvider
 {
