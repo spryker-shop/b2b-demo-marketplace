@@ -25,6 +25,7 @@ use SprykerFeature\Yves\SspAssetManagement\Plugin\Router\SspAssetRouteProviderPl
 use SprykerFeature\Yves\SspDashboardManagement\Plugin\Router\DashboardRouteProviderPlugin;
 use SprykerFeature\Yves\SspFileManagement\Plugin\Router\SspFileManagementPageRouteProviderPlugin;
 use SprykerFeature\Yves\SspInquiryManagement\Plugin\Router\SspInquiryRouteProviderPlugin;
+use SprykerFeature\Yves\SspServiceManagement\Plugin\Router\SspServiceManagementPageRouteProviderPlugin;
 use SprykerShop\Yves\AgentPage\Plugin\Router\AgentPageRouteProviderPlugin;
 use SprykerShop\Yves\AgentWidget\Plugin\Router\AgentWidgetRouteProviderPlugin;
 use SprykerShop\Yves\AvailabilityNotificationPage\Plugin\Router\AvailabilityNotificationPageRouteProviderPlugin;
@@ -84,6 +85,7 @@ use SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProvide
 use SprykerShop\Yves\QuoteRequestWidget\Plugin\Router\QuoteRequestWidgetRouteProviderPlugin;
 use SprykerShop\Yves\ResourceSharePage\Plugin\Router\ResourceSharePageRouteProviderPlugin;
 use SprykerShop\Yves\SalesReturnPage\Plugin\Router\SalesReturnPageRouteProviderPlugin;
+use SprykerShop\Yves\ServicePointWidget\Plugin\Router\ServicePointWidgetRouteProviderPlugin;
 use SprykerShop\Yves\SharedCartPage\Plugin\Router\SharedCartPageRouteProviderPlugin;
 use SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin;
 use SprykerShop\Yves\ShoppingListWidget\Plugin\Router\ShoppingListWidgetAsyncRouteProviderPlugin;
@@ -182,6 +184,8 @@ class RouterDependencyProvider extends SprykerRouterDependencyProvider
             new SspFileManagementPageRouteProviderPlugin(),
             new SspAssetRouteProviderPlugin(), #SspAssetManagementFeature
             new DashboardRouteProviderPlugin(), #SspDashboardManagementFeature
+            new SspServiceManagementPageRouteProviderPlugin(),
+            new ServicePointWidgetRouteProviderPlugin(),
         ];
     }
 
