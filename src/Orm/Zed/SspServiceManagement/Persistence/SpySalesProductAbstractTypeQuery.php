@@ -9,7 +9,7 @@ declare(strict_types = 1);
 
 namespace Orm\Zed\SspServiceManagement\Persistence;
 
-use Orm\Zed\SspServiceManagement\Persistence\Base\SpySalesProductAbstractTypeQuery as BaseSpySalesProductAbstractTypeQuery;
+use SprykerFeature\Zed\SspServiceManagement\Persistence\Propel\AbstractSpySalesProductAbstractTypeQuery as BaseSpySalesProductAbstractTypeQuery;
 
 /**
  * Skeleton subclass for performing query and update operations on the 'spy_sales_product_abstract_type' table.

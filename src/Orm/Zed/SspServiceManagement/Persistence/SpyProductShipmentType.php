@@ -9,7 +9,7 @@ declare(strict_types = 1);
 
 namespace Orm\Zed\SspServiceManagement\Persistence;
 
-use Orm\Zed\SspServiceManagement\Persistence\Base\SpyProductShipmentType as BaseSpyProductShipmentType;
+use SprykerFeature\Zed\SspServiceManagement\Persistence\Propel\AbstractSpyProductShipmentType as BaseSpyProductShipmentType;
 
 /**
  * Skeleton subclass for representing a row from the 'spy_product_shipment_type' table.

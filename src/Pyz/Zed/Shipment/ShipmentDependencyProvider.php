@@ -84,7 +84,7 @@ class ShipmentDependencyProvider extends SprykerShipmentDependencyProvider
      *
      * @return array<\Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodFilterPluginInterface>
      */
-    protected function getMethodFilterPlugins(Container $container): array
+    protected function getMethodFilterPlugins(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
         return [
             new ShipmentTypeShipmentMethodFilterPlugin(),

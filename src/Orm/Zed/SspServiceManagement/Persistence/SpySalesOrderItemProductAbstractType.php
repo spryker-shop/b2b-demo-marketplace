@@ -9,7 +9,7 @@ declare(strict_types = 1);
 
 namespace Orm\Zed\SspServiceManagement\Persistence;
 
-use Orm\Zed\SspServiceManagement\Persistence\Base\SpySalesOrderItemProductAbstractType as BaseSpySalesOrderItemProductAbstractType;
+use SprykerFeature\Zed\SspServiceManagement\Persistence\Propel\AbstractSpySalesOrderItemProductAbstractType as BaseSpySalesOrderItemProductAbstractType;
 
 /**
  * Skeleton subclass for representing a row from the 'spy_sales_order_item_product_abstract_type' table.
