@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9b80189dcc868cd40978899930d95b10",
+    "content-hash": "d2d7c9602c2ff5347ab37566827f22c8",
     "packages": [
         {
             "name": "async-aws/core",
@@ -4961,7 +4961,7 @@
         },
         {
             "name": "spryker-feature/acl",
-            "version": "202410.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/acl.git",
@@ -4980,6 +4980,7 @@
                 "spryker/acl-entity": "^1.12.0",
                 "spryker/acl-entity-data-import": "^0.2.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -82418,6 +82419,12 @@
     ],
     "aliases": [
         {
+            "package": "spryker-feature/acl",
+            "version": "9999999-dev",
+            "alias": "202410.0",
+            "alias_normalized": "202410.0"
+        },
+        {
             "package": "spryker-feature/marketplace-merchant-portal-product-offer-service-points",
             "version": "9999999-dev",
             "alias": "202410.0",
@@ -82510,6 +82517,7 @@
     ],
     "minimum-stability": "dev",
     "stability-flags": {
+        "spryker-feature/acl": 20,
         "spryker-feature/marketplace-merchant-portal-product-offer-service-points": 20,
         "spryker-feature/marketplace-merchant-portal-product-offer-shipment": 20,
         "spryker-feature/marketplace-merchant-product-offer-service-points-availability": 20,

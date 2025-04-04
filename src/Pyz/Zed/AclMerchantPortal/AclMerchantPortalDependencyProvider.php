@@ -125,11 +125,11 @@ class AclMerchantPortalDependencyProvider extends SprykerAclMerchantPortalDepend
             new ProductMerchantPortalGuiMerchantAclRuleExpanderPlugin(),
             new SalesMerchantPortalGuiMerchantAclRuleExpanderPlugin(),
             new PriceProductMerchantRelationshipMerchantPortalGuiMerchantAclRuleExpanderPlugin(),
+            new ProductOfferServicePointMerchantPortalGuiMerchantAclRuleExpanderPlugin(),
             new MerchantRelationRequestMerchantPortalGuiMerchantAclRuleExpanderPlugin(),
             new CommentMerchantPortalGuiMerchantAclRuleExpanderPlugin(),
             new MerchantRelationshipMerchantPortalGuiMerchantAclRuleExpanderPlugin(),
             new MerchantAppMerchantPortalGuiMerchantAclRuleExpanderPlugin(),
-            new ProductOfferServicePointMerchantPortalGuiMerchantAclRuleExpanderPlugin(),
         ];
     }
 
@@ -248,13 +248,13 @@ class AclMerchantPortalDependencyProvider extends SprykerAclMerchantPortalDepend
             new TaxAclEntityConfigurationExpanderPlugin(),
             new UrlAclEntityConfigurationExpanderPlugin(),
             new UserPasswordResetAclEntityConfigurationExpanderPlugin(),
-            new MerchantRelationRequestAclEntityConfigurationExpanderPlugin(),
-            new MerchantAppAclEntityConfigurationExpanderPlugin(),
-            new SalesMerchantCommissionAclEntityConfigurationExpanderPlugin(),
             new ShipmentTypeAclEntityConfigurationExpanderPlugin(),
             new ProductOfferShipmentTypeAclEntityConfigurationExpanderPlugin(),
             new ServiceAclEntityConfigurationExpanderPlugin(),
             new ProductOfferServicePointAclEntityConfigurationExpanderPlugin(),
+            new MerchantRelationRequestAclEntityConfigurationExpanderPlugin(),
+            new MerchantAppAclEntityConfigurationExpanderPlugin(),
+            new SalesMerchantCommissionAclEntityConfigurationExpanderPlugin(),
         ];
     }
 }
