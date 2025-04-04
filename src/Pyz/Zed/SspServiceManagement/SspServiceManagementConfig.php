@@ -5,7 +5,7 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Pyz\Zed\SspServiceManagement;
 
@@ -49,8 +49,7 @@ class SspServiceManagementConfig extends SprykerSspServiceManagementConfig
     /**
      * @return \Generated\Shared\Transfer\DataImporterDataSourceConfigurationTransfer
      */
-    public function getProductAbstractToProductAbstractTypeDataImporterConfiguration(
-    ): DataImporterDataSourceConfigurationTransfer
+    public function getProductAbstractToProductAbstractTypeDataImporterConfiguration(): DataImporterDataSourceConfigurationTransfer
     {
         return (new DataImporterDataSourceConfigurationTransfer())
             ->setImportType(static::IMPORT_TYPE_PRODUCT_ABSTRACT_TO_PRODUCT_ABSTRACT_TYPE)
