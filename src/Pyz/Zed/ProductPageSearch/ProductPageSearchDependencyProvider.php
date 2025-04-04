@@ -81,7 +81,7 @@ class ProductPageSearchDependencyProvider extends SprykerProductPageSearchDepend
         $dataExpanderPlugins[MerchantProductOfferSearchConfig::PLUGIN_PRODUCT_MERCHANT_DATA] = new MerchantProductPageDataExpanderPlugin();
         $dataExpanderPlugins[SspServiceManagementConfig::PLUGIN_PRODUCT_ABSTRACT_TYPE_DATA] = new ProductAbstractTypeProductPageDataExpanderPlugin();
 
-        return $dataExpanderPlugins;
+        return $dataExpanderPlugins; // @phpstan-ignore-line
     }
 
     /**
