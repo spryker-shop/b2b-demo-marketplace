@@ -34,7 +34,7 @@
     {% block colors %}
         {% widget 'ProductGroupColorWidget' args [data.product.idProductAbstract, data.product.selectedAttributes ?? []] use view('product-detail-color-selector', 'ProductGroupWidget') only %}{% endwidget %}
     {% endblock %}
-
+{% widget 'ShipmentTypeServicePointSelectorWidget' args [data.product, false] only %}{% endwidget %}
     {% include molecule('variant-configurator', 'ProductDetailPage') with {
         data: {
             superAttributes: data.product.attributeMap.superAttributes,

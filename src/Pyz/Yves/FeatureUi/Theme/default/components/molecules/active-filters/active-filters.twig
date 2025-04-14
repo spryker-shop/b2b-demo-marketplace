@@ -1,7 +1,7 @@
-{% extends molecule('active-filters', '@SprykerFeature:SspFileManagement') %}
+{% extends molecule('active-filters', '@SprykerFeature:FeatureUi') %}
 
-{% block title %}
-    {% set titleClass = config.name ~ '__title spacing-right spacing-right--big is-hidden-sm-md' %}
+{% block label %}
+    {% set labelClass = config.name ~ '__title spacing-right spacing-right--big is-hidden-sm-md' %}
 
     {{ parent() }}
 {% endblock %}

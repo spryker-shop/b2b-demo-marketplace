@@ -1,4 +1,4 @@
-{% extends view('ssp-file-management-view', '@SprykerFeature:SspFileManagement') %}
+{% extends view('file-management-view', '@SprykerFeature:SspFileManagement') %}
 
 {% block filtersToggler %}
     <button class="button button--hollow button--justify-center js-filter-button">
@@ -33,18 +33,34 @@
         },
     } only %}
 
-    {{ block('fileSearchFilterFormStart') }}
+    {{ block('formStart') }}
+    {{ block('filtersSection') }}
+    {{ block('activeFilters') }}
+    {{ block('files') }}
+    {{ block('formEnd') }}
+{% endblock %}
 
-    {% include molecule('filters', 'SspFileManagement') with {
+{% block table %}
+    {% set rows = rows | map(row => row | merge({
+        actions: row.actions | map(action => action | merge({
+            iconModifier: 'big',
+            icon: 'download',
+            title: action.label,
+        })),
+    })) %}
+
+    {{ parent() }}
+{% endblock %}
+
+{% block filters %}
+    {% include molecule('filters', 'FeatureUi') with {
         class: 'box box--small js-filter-section spacing-bottom--bigger',
         data: {
-            fileSearchFilterForm: data.fileSearchFilterForm,
-            jsPrefix: jsPrefix,
+            filters: filters | map(_filter => _filter | merge({
+                attr: {
+                    class: "#{jsPrefix}#{ _filter.row.vars.name}-target",
+                }
+            })),
         },
     } only %}
-
-    {{ block('relationRequesActiveFilters') }}
-    {{ block('fileManagerList') }}
-    {{ block('fileManagerPagination') }}
-    {{ block('fileSearchFilterFormEnd') }}
 {% endblock %}

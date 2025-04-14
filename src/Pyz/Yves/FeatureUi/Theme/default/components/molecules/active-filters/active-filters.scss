@@ -1,4 +1,4 @@
-@mixin ssp-file-management-active-filters($name: '.active-filters') {
+@mixin feature-ui-active-filters($name: '.active-filters') {
     #{$name} {
         display: flex;
         flex-wrap: wrap;
@@ -69,4 +69,4 @@
     }
 }
 
-@include ssp-file-management-active-filters();
+@include feature-ui-active-filters();

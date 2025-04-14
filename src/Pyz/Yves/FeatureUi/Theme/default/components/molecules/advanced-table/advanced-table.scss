@@ -1,4 +1,4 @@
-@include ssp-inquiry-management-advanced-table('.advanced-table') {
+@include feature-ui-advanced-table('.advanced-table') {
     &__head {
         background-color: $setting-color-gray-7;
         text-transform: uppercase;
@@ -6,7 +6,7 @@
         font-weight: fw(bold);
     }
 
-    td,th {
+    &__col {
         padding: rem(16) rem(15);
         text-align: left;
         color: $setting-color-gray-4;
@@ -16,14 +16,14 @@
                 padding-left: rem(30);
             }
         }
-    }
 
-    th {
-        color: $setting-color-gray-5;
-        font-weight: fw(bold);
+        &--head {
+            color: $setting-color-gray-5;
+            font-weight: fw(bold);
 
-        &:empty {
-            padding: 0;
+            &:empty {
+                padding: 0;
+            }
         }
     }
 
@@ -63,11 +63,12 @@
                         background: none;
                     }
                 }
-
             }
         }
 
-        td {
+        &__col {
+            display: flex;
+            position: relative;
             padding-top: 0;
             padding-bottom: 0;
 
@@ -75,25 +76,15 @@
                 padding-top: 1rem;
             }
 
-            &:has(.web-table-actions-cell) {
-                padding-left: 0;
-                padding-right: 0;
-            }
-
-            &:nth-last-child(1 of .advanced-table__col:not(:has(.web-table-actions-cell))) {
+            &:nth-last-child(1 of .advanced-table__col:not(:has(.advanced-table-actions-cell))) {
                 padding-bottom: 1rem;
             }
-        }
 
-        &__col {
-            display: flex;
-            position: relative;
-
-            &:not(:has(.web-table-actions-cell)) {
+            &:not(:has(.advanced-table-actions-cell)) {
                 background-color: $setting-color-gray-7;
             }
 
-            &:not(&[data-content=""])::before {
+            &:not(&[data-content=''])::before {
                 content: attr(data-content) ':';
                 font-weight: fw(bold);
                 display: inline-block;
@@ -103,7 +94,7 @@
                 flex-shrink: 0;
             }
 
-            & > [class$="-cell"] {
+            & > [class$='-cell'] {
                 width: 100%;
             }
         }
