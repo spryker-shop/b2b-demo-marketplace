@@ -41,23 +41,28 @@
         } only %}
     {% endif %}
 
-    {{ form_start(data.sspInquirySearchForm, {
-        attr: {
-            class: formClass,
+    {% block list %}
+        {{ parent() }}
+    {% endblock %}
+{% endblock %}
+
+{% block table %}
+    {% set rows = rows | map(row => row | merge({
+        actions: row.actions | map(action => action | merge({
+            iconModifier: 'big',
+            icon: 'eye',
+            title: action.label,
+        })),
+    })) %}
+
+    {{ parent() }}
+{% endblock %}
+
+{% block filters %}
+    {% include molecule('filters', 'FeatureUi') with {
+        class: 'box box--small js-filter-section spacing-bottom--bigger',
+        data: {
+            filters: filters,
         },
-    }) }}
-
-        {% include molecule('ssp-inquiry-filters', 'SspInquiryManagement') with {
-            class: 'box box--small js-filter-section spacing-bottom--bigger',
-            data: {
-                sspInquirySearchForm: data.sspInquirySearchForm,
-            },
-        } only %}
-
-        {{ block('sspInquiryTable') }}
-        {{ block('pagination') }}
-
-    {% if data.sspInquirySearchForm %}
-        {{ form_end(data.sspInquirySearchForm) }}
-    {% endif %}
+    } only %}
 {% endblock %}

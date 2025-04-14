@@ -1,9 +1,4 @@
-{% extends template('widget') %}
-
-{% define data = {
-    orderReference: _widget.orderReference,
-    orderId: _widget.orderId,
-} %}
+{% extends view('inquiry-order-action-button', '@SprykerFeature:SspInquiryManagement') %}
 
 {% block body %}
     <a href="{{ url('customer/ssp-inquiry/create', parameters: {
