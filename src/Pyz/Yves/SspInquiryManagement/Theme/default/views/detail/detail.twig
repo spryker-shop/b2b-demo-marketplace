@@ -1,9 +1,5 @@
 {% extends view('detail', '@SprykerFeature:SspInquiryManagement') %}
 
-{% block separator %}
-    <hr class="box__separator">
-{% endblock %}
-
 {% block sspInquiryCancelAction %}
     {% if data.sspInquiry.isCancellable and data.isSspInquiryOwner %}
         {{ form_start(data.cancelForm, {'action': path('customer/ssp-inquiry/cancel', {
