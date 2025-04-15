@@ -7,7 +7,7 @@ export default class ImageUploader extends Component {
     protected deleteInput: HTMLInputElement;
     protected reader = new FileReader();
 
-    protected readyCallback(): void { }
+    protected readyCallback(): void {}
     protected init(): void {
         this.image = this.querySelector(`.${this.jsName}__image`);
         this.input = this.querySelector(`.${this.jsName}__input`);
