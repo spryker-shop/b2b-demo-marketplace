@@ -76,12 +76,12 @@
                 padding-top: 1rem;
             }
 
-            &:nth-last-child(1 of .advanced-table__col:not(:has(.advanced-table-actions-cell))) {
-                padding-bottom: 1rem;
-            }
-
             &:not(:has(.advanced-table-actions-cell)) {
                 background-color: $setting-color-gray-7;
+            }
+
+            &:nth-last-child(1 of .advanced-table__col:not(:has(.advanced-table-actions-cell))) {
+                padding-bottom: 1rem;
             }
 
             &:not([data-content=''])::before {
