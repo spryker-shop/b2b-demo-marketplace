@@ -46,10 +46,13 @@
     {% widget 'ProductConfigurationProductViewDisplayWidget' args [data.product] only %}{% endwidget %}
     {% widget 'ProductConfigurationProductDetailPageButtonWidget' args [data.product] only %}{% endwidget %}
 
+    {% if can('SeePricePermissionPlugin') %}
+        {% widget 'ShipmentTypeServicePointSelectorWidget' args [data.product, isDisabled] only %}{% endwidget %}
+    {% endif %}
+
     {% widget 'AddToCartFormWidget' args [config, data.product, isDisabled, options] only %}
         {% block embeddedData %}
             {% widget 'ProductOptionConfiguratorWidget' args [data.product] only %}{% endwidget %}
-            {% widget 'ShipmentTypeServicePointSelectorWidget' args [data.product, data.isDisabled] only %}{% endwidget %}
 
             {% if can('SeeAddToCartPermissionPlugin') %}
                 <div class="{{ data.config.name }}__add-to-cart">
