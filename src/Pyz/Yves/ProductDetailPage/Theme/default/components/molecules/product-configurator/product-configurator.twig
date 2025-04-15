@@ -46,7 +46,7 @@
     {% widget 'ProductConfigurationProductViewDisplayWidget' args [data.product] only %}{% endwidget %}
     {% widget 'ProductConfigurationProductDetailPageButtonWidget' args [data.product] only %}{% endwidget %}
 
-    {% if can('SeePricePermissionPlugin') %}
+    {% if can('SeePricePermissionPlugin') and isAvailable and isProductConcrete %}
         {% widget 'ShipmentTypeServicePointSelectorWidget' args [data.product, isDisabled] only %}{% endwidget %}
     {% endif %}
 

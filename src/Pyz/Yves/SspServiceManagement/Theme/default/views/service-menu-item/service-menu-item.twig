@@ -1,16 +1,16 @@
-{% extends template('widget') %}
-
-{% define data = {
-    isActivePage: _widget.isActivePage,
-    isVisible: _widget.isVisible,
-} %}
-
-{% set itemClass = data.isActivePage ? ' menu__item--active' : '' %}
+{% extends view('service-menu-item', '@SprykerFeature:SspServiceManagement') %}
 
 {% block body %}
-    {% if data.isVisible %}
-        <li class="menu__item {{ itemClass }}">
-            <a href="{{ url('customer/ssp-service') }}" data-id="sidebar-ssp-services">{{ 'ssp_service_management.list.widget.title' | trans }}</a>
-        </li>
-    {% endif %}
+    {% set modifiers = data.modifiers | default([]) %}
+
+    {% include molecule('navigation-sidebar-item') with {
+        data: {
+            url: url('customer/ssp-service'),
+            icon: 'service',
+            label: 'ssp_service_management.list.widget.title' | trans,
+            name: 'ssp-service-management'
+        },
+        qa: 'service',
+        modifiers: data.isActivePage ? ['active'] | merge(modifiers) : modifiers,
+    } only %}
 {% endblock %}

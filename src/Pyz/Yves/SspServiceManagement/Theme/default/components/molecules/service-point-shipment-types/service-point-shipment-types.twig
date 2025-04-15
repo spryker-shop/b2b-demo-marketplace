@@ -28,7 +28,7 @@
 {% endblock %}
 
 {% block body %}
-    <div class="spacing-y--bigger">
+    <div {% if not data.hasOnlyDeliveryShipmentType %}class="spacing-y--bigger"{% endif %}>
         {% if data.shipmentTypes | length %}
             {% set hasMultipleShipmentTypes = (data.shipmentTypes | length ) > 1 %}
 

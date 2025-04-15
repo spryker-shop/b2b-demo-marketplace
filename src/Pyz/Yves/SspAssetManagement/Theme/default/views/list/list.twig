@@ -36,9 +36,7 @@
         },
     } only %}
 
-    {% block list %}
-        {{ parent() }}
-    {% endblock %}
+    {{ block('list') }}
 {% endblock %}
 
 {% block table %}
