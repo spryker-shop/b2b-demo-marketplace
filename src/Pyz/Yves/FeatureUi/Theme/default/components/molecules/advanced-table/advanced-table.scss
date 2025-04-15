@@ -84,7 +84,7 @@
                 background-color: $setting-color-gray-7;
             }
 
-            &:not(&[data-content=''])::before {
+            &:not([data-content=''])::before {
                 content: attr(data-content) ':';
                 font-weight: fw(bold);
                 display: inline-block;
@@ -92,6 +92,10 @@
                 padding-right: rem(10);
                 text-transform: uppercase;
                 flex-shrink: 0;
+            }
+
+            &:has(.advanced-table-actions-cell)::before {
+                display: none;
             }
 
             & > [class$='-cell'] {

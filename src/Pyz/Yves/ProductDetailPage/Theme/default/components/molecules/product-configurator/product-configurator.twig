@@ -34,7 +34,7 @@
     {% block colors %}
         {% widget 'ProductGroupColorWidget' args [data.product.idProductAbstract, data.product.selectedAttributes ?? []] use view('product-detail-color-selector', 'ProductGroupWidget') only %}{% endwidget %}
     {% endblock %}
-{% widget 'ShipmentTypeServicePointSelectorWidget' args [data.product, false] only %}{% endwidget %}
+
     {% include molecule('variant-configurator', 'ProductDetailPage') with {
         data: {
             superAttributes: data.product.attributeMap.superAttributes,
@@ -49,6 +49,8 @@
     {% widget 'AddToCartFormWidget' args [config, data.product, isDisabled, options] only %}
         {% block embeddedData %}
             {% widget 'ProductOptionConfiguratorWidget' args [data.product] only %}{% endwidget %}
+            {% widget 'ShipmentTypeServicePointSelectorWidget' args [data.product, data.isDisabled] only %}{% endwidget %}
+
             {% if can('SeeAddToCartPermissionPlugin') %}
                 <div class="{{ data.config.name }}__add-to-cart">
                     {% widget 'ProductPackagingUnitWidget' args [data.product, data.isDisabled, data.options] only %}
