@@ -111,6 +111,8 @@
                                         } only %}
                                     {% endif %}
                                 {% endblock %}
+
+                                {% widget 'SspServiceChangeScheduledTimeLinkWidget' args [data.listItem] only %}{% endwidget %}
                             {% endblock %}
 
                             {% block packagingUnitCartContent %}
