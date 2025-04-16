@@ -86,32 +86,16 @@
             {% set multipleShipmentHiddenClassName = not isMultipleShipmentSelected ? ' ' ~ hiddenClassName %}
             {% set billingSameAsShippingHiddenClassName = isMultipleShipmentSelected ? hiddenClassName %}
 
-
             {% set deliveryContainerClassName = embed.jsAddressClass ~ '__delivery' %}
             {% set singleDeliveryContainerClassName = embed.jsAddressClass ~ '__single-delivery' %}
-            {% set deliverySelectClassName = embed.jsAddressClass ~ '__form-select-shipping-address' %}
             {% set validatorTriggerClassName = embed.jsAddressClass ~ '__validator-trigger' %}
-            {% set shippingValidationContainerClassName = embed.jsAddressClass ~ '__shipping-validation-container' %}
-            {% set shippingClassName = embed.jsAddressClass ~ '__shipping' %}
-            {% set multishipmentTargetClassName = embed.jsAddressClass ~ '__items-target' %}
-            {% set validatorClassName = embed.jsAddressClass ~ '__validate-next-checkout-step' %}
-            {% set multishipmentValidatorClassName = embed.jsAddressClass ~ '__multishipment-validate-next-checkout-step' %}
             {% set billingSameAsShippingContainerClassName = embed.jsAddressClass ~ '__billing-same-as-shipping-container' %}
-            {% set billingSameAsShippingClassName = embed.jsAddressClass ~ '__billing-same-as-shipping' %}
-            {% set selectBillingAddressClassName = embed.jsAddressClass ~ '__form-select-billing-address' %}
-            {% set billingClassName = embed.jsAddressClass ~ '__billing' %}
-            {% set billingFormClassName = embed.jsAddressClass ~ '__billing-form' %}
-            {% set hiddenClassName = 'is-hidden' %}
-
-            {% set shippingAddressValue = shippingAddress.id_customer_address.vars.value | default %}
-            {% set optionValueDeliverToMultipleAddresses = '-1' %}
             {% set hasShipmentTypes = data.form.shipmentType is defined %}
             {% set defaultShipmentType = 'delivery' %}
-            {% set currentShipmentType = data.form.shipmentType.key.vars.value | default %}
+            {% set currentShipmentType = data.form.shipmentType.key.vars.value | default(defaultShipmentType) %}
             {% set isDefaultShipmentType = currentShipmentType == defaultShipmentType %}
             {% set shipmentTypeHiddenClassName = hasShipmentTypes and not isDefaultShipmentType ? hiddenClassName %}
-            {% set isMultipleShipmentSelected = shippingAddressValue == optionValueDeliverToMultipleAddresses %}
-            {% set isAddressSelected = shippingAddressValue is not empty and shippingAddressValue != '0' %}
+
 
             <div class="{{ shippingFormHandlerClassName }} grid grid--bottom spacing-bottom spacing-bottom--big col col--sm-12">
                 {% if hasShippingAddressesAndApplicable %}
@@ -124,7 +108,7 @@
                                 billingSameAsShippingContainerClassName: billingSameAsShippingContainerClassName,
                                 shipmentTypesClassName: validatorTriggerClassName,
                                 servicePointClassName: addressFormClassName,
-                                deliverySelectClassName: deliverySelectClassName,
+                                deliverySelectClassName: '.' ~ shippingSelectClassName,
                             },
                         } only %}
                             {% block body %}
@@ -213,18 +197,20 @@
                 {% endif %}
             </div>
 
-            <div class="{{ billingSameAsShippingClassName }} {{ billingSameAsShippingHiddenClassName }} col col--sm-12">
-                {{ form_row(data.form.billingSameAsShipping, {
-                    component: molecule('toggler-checkbox'),
-                    label: 'customer.billingSameAsShipping' | trans,
-                    componentClass: billingFormTriggerClassName,
-                    attributes: {
-                        'target-class-name': billingClassName,
-                        'class-to-toggle': hiddenClassName,
-                        'add-class-when-checked': true,
-                        checked: not isMultipleShipmentSelected ? embed.isBillingSameAsShippingChecked : false,
-                    },
-                }) }}
+            <div class="col col--sm-12 {{ billingSameAsShippingContainerClassName }} {{ shipmentTypeHiddenClassName }}">
+                <div class="{{ billingSameAsShippingClassName }} {{ billingSameAsShippingHiddenClassName }} col col--sm-12">
+                    {{ form_row(data.form.billingSameAsShipping, {
+                        component: molecule('toggler-checkbox'),
+                        label: 'customer.billingSameAsShipping' | trans,
+                        componentClass: billingFormTriggerClassName,
+                        attributes: {
+                            'target-class-name': billingClassName,
+                            'class-to-toggle': hiddenClassName,
+                            'add-class-when-checked': true,
+                            checked: not isMultipleShipmentSelected ? embed.isBillingSameAsShippingChecked : false,
+                        },
+                    }) }}
+                </div>
             </div>
 
             <div class="{{ billingFormHandlerClassName }} col col--sm-12">
@@ -333,6 +319,8 @@
                     'extra-container-selector': '.' ~ addressFormContainerClassName,
                     'target-selector': '.' ~ embed.formSubmitClassName,
                     'dropdown-trigger-selector': '.' ~ addressSelectClassName ~ ':not(.' ~ hiddenClassName ~ ')',
+                    'extra-triggers-class-name': validatorTriggerClassName,
+                    'parent-target-class-name': singleDeliveryContainerClassName,
                     'is-enable': false,
                 },
             } only %}
