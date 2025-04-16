@@ -90,18 +90,19 @@
             {% set singleDeliveryContainerClassName = embed.jsAddressClass ~ '__single-delivery' %}
             {% set validatorTriggerClassName = embed.jsAddressClass ~ '__validator-trigger' %}
             {% set billingSameAsShippingContainerClassName = embed.jsAddressClass ~ '__billing-same-as-shipping-container' %}
+
             {% set hasShipmentTypes = data.form.shipmentType is defined %}
             {% set defaultShipmentType = 'delivery' %}
             {% set currentShipmentType = data.form.shipmentType.key.vars.value | default(defaultShipmentType) %}
             {% set isDefaultShipmentType = currentShipmentType == defaultShipmentType %}
             {% set shipmentTypeHiddenClassName = hasShipmentTypes and not isDefaultShipmentType ? hiddenClassName %}
-
+            {% set elementToToggleOnMultiShipment = "#{embed.jsAddressClass}__toggler-on-multi-shipment" %}
 
             <div class="{{ shippingFormHandlerClassName }} grid grid--bottom spacing-bottom spacing-bottom--big col col--sm-12">
                 {% if hasShippingAddressesAndApplicable %}
                     {% set singleDeliveryContainerHiddenClassName = hasShipmentTypes and isMultipleShipmentSelected ? hiddenClassName %}
 
-                    <div class="{{ singleDeliveryContainerClassName }} {{ singleDeliveryContainerHiddenClassName }} spacing-y">
+                    <div class="{{ elementToToggleOnMultiShipment }} {{ singleDeliveryContainerClassName }} {{ singleDeliveryContainerHiddenClassName }} spacing-y">
                         {% widget 'ShipmentTypeAddressFormWidget' args [data.form] with {
                             data: {
                                 deliveryContainerClassName: deliveryContainerClassName,
@@ -334,6 +335,7 @@
                     'billing-same-as-shipping-selector': '.' ~ billingSameAsShippingClassName,
                     'billing-same-as-shipping-toggler-selector': 'input[name="addressesForm[billingSameAsShipping]"]',
                     'toggle-option-value': optionValueDeliverToMultipleAddresses,
+                    'elements-to-toggle': '.' ~ elementToToggleOnMultiShipment,
                 },
             } only %}
 
