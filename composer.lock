@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "101553faca9c80da73c64ba1e51c7c11",
+    "content-hash": "531f999d50c41050631ad376684dc92b",
     "packages": [
         {
             "name": "async-aws/core",
@@ -24697,24 +24697,26 @@
         },
         {
             "name": "spryker/click-and-collect-example",
-            "version": "0.8.2",
+            "version": "0.9.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/click-and-collect-example.git",
-                "reference": "d6590b7324807464d29269d908f4ef6f780acdbd"
+                "reference": "60697d64174e1ad772afcf13ecbe46e4f812fe57"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/click-and-collect-example/zipball/d6590b7324807464d29269d908f4ef6f780acdbd",
-                "reference": "d6590b7324807464d29269d908f4ef6f780acdbd",
+                "url": "https://api.github.com/repos/spryker/click-and-collect-example/zipball/60697d64174e1ad772afcf13ecbe46e4f812fe57",
+                "reference": "60697d64174e1ad772afcf13ecbe46e4f812fe57",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.1",
+                "php": ">=8.2",
                 "spryker/availability": "^9.20.0",
                 "spryker/checkout-rest-api-extension": "^1.5.0",
                 "spryker/currency": "^3.0.0 || ^4.0.0",
+                "spryker/glue-application-extension": "^1.10.0",
                 "spryker/kernel": "^3.30.0",
+                "spryker/merchant-user": "^1.0.0",
                 "spryker/price-product-offer": "^1.0.0",
                 "spryker/product-offer": "^1.0.0",
                 "spryker/product-offer-service-point": "^1.0.0",
@@ -24730,16 +24732,20 @@
                 "spryker/shipment-type-service-point": "^1.0.0",
                 "spryker/shipment-type-storage-extension": "^1.0.0",
                 "spryker/store": "^1.19.0",
+                "spryker/symfony": "^3.7.0",
                 "spryker/transfer": "^3.27.0"
             },
             "require-dev": {
                 "spryker/code-sniffer": "*",
+                "spryker/container": "*",
                 "spryker/decimal-object": "*",
+                "spryker/merchant": "*",
                 "spryker/price-product": "*",
                 "spryker/product": "*",
                 "spryker/propel": "*",
                 "spryker/stock": "*",
-                "spryker/testify": "*"
+                "spryker/testify": "*",
+                "spryker/user": "*"
             },
             "type": "library",
             "extra": {
@@ -24754,13 +24760,13 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "MIT"
+                "proprietary"
             ],
             "description": "ClickAndCollectExample module",
             "support": {
-                "source": "https://github.com/spryker/click-and-collect-example/tree/0.8.2"
+                "source": "https://github.com/spryker/click-and-collect-example/tree/0.9.3"
             },
-            "time": "2023-11-13T14:37:10+00:00"
+            "time": "2025-04-01T17:15:15+00:00"
         },
         {
             "name": "spryker/cms",
