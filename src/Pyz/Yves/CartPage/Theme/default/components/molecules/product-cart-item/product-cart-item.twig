@@ -28,8 +28,6 @@
 {% endblock %}
 
 {% block productDescription %}
-    {% widget 'ServicePointNameForItemWidget' args [data.listItem] only %}{% endwidget %}
-
     <div class="{{ config.name }}__col {{ config.name }}__col--description col">
         <div class="{{ config.name }}__inner grid grid--stretch grid--gap">
             <div class="{{ config.name }}__col {{ config.name }}__col--content col">
@@ -108,6 +106,11 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block soldBy %}
+    {{ parent() }}
+    {% widget 'ServicePointNameForItemWidget' args [data.listItem] only %}{% endwidget %}
 {% endblock %}
 
 {% block itemAttributes %}
