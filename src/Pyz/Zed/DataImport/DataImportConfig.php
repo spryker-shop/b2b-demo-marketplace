@@ -14,6 +14,7 @@ use Spryker\Zed\MerchantProductApprovalDataImport\MerchantProductApprovalDataImp
 use Spryker\Zed\ProductApprovalDataImport\ProductApprovalDataImportConfig;
 use Spryker\Zed\ProductOfferShoppingListDataImport\ProductOfferShoppingListDataImportConfig;
 use Spryker\Zed\StockAddressDataImport\StockAddressDataImportConfig;
+use SprykerFeature\Zed\SspServiceManagement\SspServiceManagementConfig;
 
 /**
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
@@ -246,6 +247,9 @@ class DataImportConfig extends SprykerDataImportConfig
             MerchantProductApprovalDataImportConfig::IMPORT_TYPE_MERCHANT_PRODUCT_APPROVAL_STATUS_DEFAULT,
             ProductApprovalDataImportConfig::IMPORT_TYPE_PRODUCT_APPROVAL_STATUS,
             ProductOfferShoppingListDataImportConfig::IMPORT_TYPE_PRODUCT_OFFER_SHOPPING_LIST_ITEM,
+            SspServiceManagementConfig::IMPORT_TYPE_PRODUCT_ABSTRACT_TYPE,
+            SspServiceManagementConfig::IMPORT_TYPE_PRODUCT_ABSTRACT_TO_PRODUCT_ABSTRACT_TYPE,
+            SspServiceManagementConfig::IMPORT_TYPE_PRODUCT_SHIPMENT_TYPE,
         ];
 
         return array_merge(parent::getFullImportTypes(), $customImportTypes);

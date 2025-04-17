@@ -57,6 +57,17 @@
     {% endif %}
 {% endset %}
 
+{% set service %}
+    {% if widgetGlobalExists('SspServiceMenuItemWidget') %}
+        {% widget 'SspServiceMenuItemWidget' args [false]  with {
+            data: {
+                modifiers: ['account'],
+            },
+        } only %}
+        {% endwidget %}
+    {% endif %}
+{% endset %}
+
 {% block viewport %}
     <div class="page-layout page-layout--preload">
         {% widget 'AgentControlBarWidget' only %}{% endwidget %}
@@ -139,6 +150,10 @@
                             {
                                 block: dashboard,
                                 name: 'ssp-dashboard'
+                            },
+                            {
+                                block: service,
+                                name: 'ssp-service-management'
                             },
                             {
                                 block: asset,

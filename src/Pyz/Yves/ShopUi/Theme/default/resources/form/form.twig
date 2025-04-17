@@ -126,6 +126,7 @@
                 }) -}}
                 {{- form_widget(child, {
                     parent_label_class: label_attr.class|default(''),
+                    choices_attr: choices_attr | default({}),
                 }) -}}
             </li>
         {% endfor %}
@@ -138,16 +139,18 @@
     {%- set label = label | default(name | humanize) | trans -%}
     {%- set componentClass = componentClass | default -%}
     {%- set modifiers = errors is empty ? ['expand'] : ['expand', 'error'] -%}
-    {%- set inputClass = attr.class | default -%}
+    {%- set inputClass = attr.class | default ~ ' ' ~ choices_attr.class | default -%}
 
     {% define attributes = {
         id: id,
         name: full_name,
         checked: checked | default(false),
         required: required | default(false),
-        disabled: disabled | default(false),
+        disabled: disabled ?: attr.disabled | default(false),
         value: value | default()
     } %}
+
+    {%- set modifiers = modifiers | merge([attributes.additionalModifier | default], choices_attr.modifiers | default([])) -%}
 
     {% include component with {
         class: componentClass,

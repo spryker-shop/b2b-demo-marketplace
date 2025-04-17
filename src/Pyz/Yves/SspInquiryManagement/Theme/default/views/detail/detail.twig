@@ -1,9 +1,5 @@
 {% extends view('detail', '@SprykerFeature:SspInquiryManagement') %}
 
-{% block separator %}
-    <hr class="box__separator">
-{% endblock %}
-
 {% block sspInquiryCancelAction %}
     {% if data.sspInquiry.isCancellable and data.isSspInquiryOwner %}
         {{ form_start(data.cancelForm, {'action': path('customer/ssp-inquiry/cancel', {
@@ -21,30 +17,41 @@
                 title: 'customer.account.ssp_inquiry.details' | trans,
                 actions: [
                     {
-                        block: block('sspInquiryCancelAction',)
+                        block: block('actions',)
                     },
                 ],
             },
         } only %}
     {% endif %}
 
-    {% block sspInquiryData %}
-        <div class="box box--hollow box--spacingless">
-            {{ block('sspInquiryMainInfo') }}
-            {{ block('separator') }}
-
-            {{ block('sspInquiryDetails') }}
-            {{ block('separator') }}
-
-            {{ block('sspAssetDetails') }}
-            {{ block('separator') }}
-
-            {{ block('sspInquiryOwnerInfo') }}
-
-            {% if data.sspInquiry.files is not empty %}
-                {{ block('separator') }}
-                {{ block('sspInquiryFiles') }}
-            {% endif %}
-        </div>
+    {% block information %}
+        {{ parent() }}
     {% endblock %}
+{% endblock %}
+
+{% block table %}
+    {% set rows = rows | map(row => row | merge({
+        actions: row.actions | map(action => action | merge({
+            iconModifier: 'big',
+            icon: 'download',
+            title: action.label,
+        })),
+    })) %}
+
+    {% include molecule('advanced-table', 'FeatureUi') with {
+        data: {
+            columns: columns,
+            rows: rows,
+        },
+    } only %}
+{% endblock %}
+
+{% block actions %}
+    {% if data.inquiry.isCancellable and data.isInquiryOwner %}
+        {{ form_start(data.cancelForm, {'action': path('customer/ssp-inquiry/cancel', {
+            'sspInquiryReference': data.inquiry.reference
+        })}) }}
+            <button class="button button--alert button--hollow" data-qa="cancel-ssp-inquiry">{{ 'ssp_inquiry.cancel' | trans }}</button>
+        {{ form_end(data.cancelForm) }}
+    {% endif %}
 {% endblock %}

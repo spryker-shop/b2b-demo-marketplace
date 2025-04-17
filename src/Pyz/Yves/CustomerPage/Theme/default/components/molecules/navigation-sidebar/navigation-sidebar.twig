@@ -74,6 +74,10 @@
         {% widget 'DashboardMenuItemWidget' args [data.activePage] only %}{% endwidget %}
     {% endif %}
 
+    {% if widgetGlobalExists('SspServiceMenuItemWidget') %}
+        {% widget 'SspServiceMenuItemWidget' args [data.activePage] only %}{% endwidget %}
+    {% endif %}
+
     {% if widgetGlobalExists('SspAssetMenuItemWidget') and (can('ViewCompanySspAssetPermissionPlugin') or can('ViewBusinessUnitSspAssetPermissionPlugin'))  %}
         {% widget 'SspAssetMenuItemWidget' args [data.activePage] only %}{% endwidget %}
     {% endif %}

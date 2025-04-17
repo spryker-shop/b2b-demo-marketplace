@@ -1,9 +1,0 @@
-@include shop-ui-input-dropzone($name: '.input-dropzone') {
-    &__area:has(:focus-visible) {
-        @include helper-outline;
-    }
-
-    &__file {
-        background: $setting-color-gray-7;
-    }
-}
