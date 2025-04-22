@@ -18,7 +18,7 @@ class ClickAndCollectPageExampleConfig extends SprykerClickAndCollectPageExample
      *
      * @var string
      */
-    protected const SHIPMENT_TYPE_ON_SITE_SERVICE = 'on-site-service';
+    public const SHIPMENT_TYPE_ON_SITE_SERVICE = 'on-site-service';
 
     /**
      * @var list<string>
