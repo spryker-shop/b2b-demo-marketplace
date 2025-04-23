@@ -1,0 +1,9 @@
+{% extends molecule('advanced-table-actions-cell', '@SprykerFeature:FeatureUi') %}
+
+{% block body %}
+    {% include molecule('table-action-list') with {
+        data: {
+            items: data.cell,
+        },
+    } only %}
+{% endblock %}

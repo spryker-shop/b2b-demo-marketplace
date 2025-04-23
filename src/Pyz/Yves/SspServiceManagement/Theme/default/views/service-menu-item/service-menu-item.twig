@@ -1,0 +1,16 @@
+{% extends view('service-menu-item', '@SprykerFeature:SspServiceManagement') %}
+
+{% block body %}
+    {% set modifiers = data.modifiers | default([]) %}
+
+    {% include molecule('navigation-sidebar-item') with {
+        data: {
+            url: url('customer/ssp-service'),
+            icon: 'service',
+            label: 'ssp_service_management.list.widget.title' | trans,
+            name: 'ssp-service-management'
+        },
+        qa: 'service',
+        modifiers: data.isActivePage ? ['active'] | merge(modifiers) : modifiers,
+    } only %}
+{% endblock %}

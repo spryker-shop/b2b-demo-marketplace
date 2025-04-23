@@ -108,6 +108,11 @@
     </div>
 {% endblock %}
 
+{% block soldBy %}
+    {{ parent() }}
+    {% widget 'ServicePointNameForItemWidget' args [data.listItem] only %}{% endwidget %}
+{% endblock %}
+
 {% block itemAttributes %}
     {% if data.attributes is not empty %}
         {% embed molecule('product-item-variant-selector') with {
