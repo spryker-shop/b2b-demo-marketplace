@@ -43,6 +43,7 @@ sections:
 
         publish-and-sync:
             command: 'vendor/bin/console queue:worker:start --stop-when-empty'
+            timeout: 2000
 
     setup-queue:
         queue-setup:
