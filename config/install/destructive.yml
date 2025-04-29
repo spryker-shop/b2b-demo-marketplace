@@ -41,10 +41,6 @@ sections:
         init-database:
             command: 'vendor/bin/console setup:init-db -vvv --no-ansi'
 
-        publish-and-sync:
-            command: 'vendor/bin/console queue:worker:start --stop-when-empty'
-            timeout: 2000
-
     setup-queue:
         queue-setup:
             command: 'vendor/bin/console queue:setup'
