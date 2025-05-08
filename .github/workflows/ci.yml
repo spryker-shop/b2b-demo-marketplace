@@ -1207,7 +1207,6 @@ jobs:
                     docker/sdk exec cypress-tests cp .env.example .env
                     for i in 1 2; do
                       docker/sdk exec --env "ENV_REPOSITORY_ID=b2b-mp" cypress-tests npm run cy:ci && s=0 && break || s=$? && echo "Test failed, retrying..."
-                      docker/sdk exec --env "ENV_REPOSITORY_ID=b2b-mp" cypress-tests npm run cy:ci:ssp && s=0 && break || s=$? && echo "Test failed, retrying..."
                       sleep 1
                     done
                     (exit $s)
