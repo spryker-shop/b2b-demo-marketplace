@@ -32,33 +32,33 @@
                         {% widget 'LanguageSwitcherWidget' args [app.request.pathInfo, app.request.queryString, app.request.requestUri] only %}{% endwidget %}
                     </div>
 
-                    {% widget 'StoreSwitcher' with {
-                        embed: {
-                            configName: config.name,
-                        },
-                    } only %}
-                        {% block body %}
-                            <div class="col {{ embed.configName }}__navigation-top-actions">
-                                {{ parent() }}
-                            </div>
-                        {% endblock %}
-                    {% endwidget %}
+{#                    {% widget 'StoreSwitcher' with {#}
+{#                        embed: {#}
+{#                            configName: config.name,#}
+{#                        },#}
+{#                    } only %}#}
+{#                        {% block body %}#}
+{#                            <div class="col {{ embed.configName }}__navigation-top-actions">#}
+{#                                {{ parent() }}#}
+{#                            </div>#}
+{#                        {% endblock %}#}
+{#                    {% endwidget %}#}
                 {% else %}
                     <div class="col col--sm-4 {{ config.name }}__navigation-top-actions">
                         {% widget 'LanguageSwitcherWidget' args [app.request.pathInfo, app.request.queryString, app.request.requestUri] only %}{% endwidget %}
                     </div>
 
-                    {% widget 'StoreSwitcher' with {
-                        embed: {
-                            configName: config.name,
-                        },
-                    } only %}
-                        {% block body %}
-                            <div class="col col--sm-4 {{ embed.configName }}__navigation-top-actions">
-                                {{ parent() }}
-                            </div>
-                        {% endblock %}
-                    {% endwidget %}
+{#                    {% widget 'StoreSwitcher' with {#}
+{#                        embed: {#}
+{#                            configName: config.name,#}
+{#                        },#}
+{#                    } only %}#}
+{#                        {% block body %}#}
+{#                            <div class="col col--sm-4 {{ embed.configName }}__navigation-top-actions">#}
+{#                                {{ parent() }}#}
+{#                            </div>#}
+{#                        {% endblock %}#}
+{#                    {% endwidget %}#}
                 {% endif %}
             </div>
         {% endblock %}

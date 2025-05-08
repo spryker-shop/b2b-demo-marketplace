@@ -1,74 +1,74 @@
 {% extends view('list', '@SprykerFeature:SspAssetManagement') %}
 
-{% block filtersToggler %}
-    <button class="button button--hollow button--justify-center js-filter-button">
-        {% include atom('icon') with {
-            modifiers: ['filter'],
-            class: 'spacing-right',
-            data: {
-                name: 'filter',
-            },
-        } only %}
-        {{ 'customer.account.button.search_filters' | trans }}
-    </button>
+{#{% block filtersToggler %}#}
+{#    <button class="button button--hollow button--justify-center js-filter-button">#}
+{#        {% include atom('icon') with {#}
+{#            modifiers: ['filter'],#}
+{#            class: 'spacing-right',#}
+{#            data: {#}
+{#                name: 'filter',#}
+{#            },#}
+{#        } only %}#}
+{#        {{ 'customer.account.button.search_filters' | trans }}#}
+{#    </button>#}
 
-    {% include molecule('toggler-click') with {
-        attributes: {
-            'trigger-class-name': 'js-filter-button',
-            'target-class-name': 'js-filter-section',
-            'trigger-class-to-toggle': 'button--hollow-active',
-        },
-    } only %}
-{% endblock %}
+{#    {% include molecule('toggler-click') with {#}
+{#        attributes: {#}
+{#            'trigger-class-name': 'js-filter-button',#}
+{#            'target-class-name': 'js-filter-section',#}
+{#            'trigger-class-to-toggle': 'button--hollow-active',#}
+{#        },#}
+{#    } only %}#}
+{#{% endblock %}#}
 
-{% block customerContent %}
-    {% include molecule('action-bar') with {
-        data: {
-            title: 'customer.account.ssp_assets' | trans,
-            actions: [
-                {
-                    block: block('filtersToggler',)
-                },
-                {
-                    block: block('actions'),
-                },
-            ],
-        },
-    } only %}
+{#{% block customerContent %}#}
+{#    {% if can('CreateSspAssetPermissionPlugin') %}#}
+{#        {% include molecule('action-bar') with {#}
+{#            data: {#}
+{#                title: 'customer.account.ssp_assets' | trans,#}
+{#                actions: [#}
+{#                    {#}
+{#                        block: block('filtersToggler',)#}
+{#                    },#}
+{#                    {#}
+{#                        title: 'customer.ssp_asset.create.button' | trans,#}
+{#                        url: url('customer/asset/create'),#}
+{#                        primary: true,#}
+{#                    },#}
+{#                ],#}
+{#            },#}
+{#        } only %}#}
+{#    {% endif %}#}
 
-    {{ block('list') }}
-{% endblock %}
+{#    {{ form_start(data.sspAssetSearchForm, {#}
+{#        attr: {#}
+{#            class: formClass,#}
+{#        },#}
+{#    }) }}#}
 
-{% block table %}
-    {% set rows = rows | map(row => row | merge({
-        actions: row.actions | map(action => action | merge({
-            iconModifier: 'big',
-            icon: 'eye',
-            title: action.label,
-        })),
-    })) %}
+{#     {% include molecule('ssp-asset-filters', 'SspAssetManagement') with {#}
+{#        class: 'box box--small js-filter-section spacing-bottom--bigger',#}
+{#        data: {#}
+{#            sspAssetSearchForm: data.sspAssetSearchForm,#}
+{#            jsPrefix: jsPrefix,#}
+{#        },#}
+{#    } only %}#}
 
-    {{ parent() }}
-{% endblock %}
+{#    {% block activeFilters %}#}
+{#        {% include molecule('active-filters', 'SspAssetManagement') with {#}
+{#            class: 'spacing-bottom spacing-bottom--big',#}
+{#            data: {#}
+{#                sspAssetSearchForm: data.sspAssetSearchForm,#}
+{#                jsPrefix: jsPrefix,#}
+{#                formClass: formClass,#}
+{#            },#}
+{#        } only %}#}
+{#    {% endblock %}#}
 
-{% block filters %}
-    {% include molecule('filters', 'FeatureUi') with {
-        class: 'box box--small js-filter-section spacing-bottom--bigger',
-        data: {
-            filters: filters | map(_filter => _filter | merge({
-                attr: {
-                    class: "#{jsPrefix}#{ _filter.row.vars.name}-target",
-                }
-            })),
-        },
-    } only %}
-{% endblock %}
+{#    {{ block('sspAssetTable') }}#}
+{#    {{ block('pagination') }}#}
 
-{% block actions %}
-    {% if can('CreateSspAssetPermissionPlugin') %}
-        <a class="button action-bar__action" data-qa="create-ssp-asset"
-            href="{{ url('customer/asset/create') }}">
-            {{ 'customer.ssp_asset.create.button' | trans }}
-        </a>
-    {% endif %}
-{% endblock %}
+{#    {% if data.sspAssetSearchForm %}#}
+{#        {{ form_end(data.sspAssetSearchForm) }}#}
+{#    {% endif %}#}
+{#{% endblock %}#}

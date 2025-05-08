@@ -1,16 +1,16 @@
 {% extends view('details', '@SprykerFeature:SspAssetManagement') %}
 
-{% block customerContent %}
-    {{ block('heading') }}
-    {{ block('information') }}
+{#{% block customerContent %}#}
+{#    {{ block('assetTitle') }}#}
+{#    {{ block('information') }}#}
 
-    <div class="grid grid--stretch grid--with-gutter">
-        {% set colClasses = 'col col--with-gutter col--sm-12 col--xl-6' %}
+{#    <div class="grid grid--stretch grid--with-gutter">#}
+{#        {% set colClasses = 'col col--with-gutter col--sm-12 col--xl-6' %}#}
 
-        <div class="{{ colClasses }}">
-            {% if data.asset.sspInquiryCollection and (can('ViewBusinessUnitSspInquiryPermissionPlugin') or can('ViewCompanySspInquiryPermissionPlugin')) %}
-                {% widget 'SspInquiryListWidget' args [data.asset.sspInquiryCollection, url('customer/ssp-inquiry', { ssp_asset_reference: data.asset.reference })] only %}{% endwidget %}
-            {% endif %}
-        </div>
-    </div>
-{% endblock %}
+{#        <div class="{{ colClasses }}">#}
+{#            {% if data.sspAsset.sspInquiryCollection and (can('ViewBusinessUnitSspInquiryPermissionPlugin') or can('ViewCompanySspInquiryPermissionPlugin')) %}#}
+{#                {% widget 'SspInquiryListWidget' args [data.sspAsset.sspInquiryCollection, url('customer/ssp-inquiry', { ssp_asset_reference: data.sspAsset.reference })] only %}{% endwidget %}#}
+{#            {% endif %}#}
+{#        </div>#}
+{#    </div>#}
+{#{% endblock %}#}

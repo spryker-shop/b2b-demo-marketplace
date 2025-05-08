@@ -89,4 +89,7 @@
     {% if widgetGlobalExists('SspInquiryMenuItemWidget') and (can('ViewBusinessUnitSspInquiryPermissionPlugin') or can('CreateSspInquiryPermissionPlugin') or can('ViewCompanySspInquiryPermissionPlugin')) %}
         {% widget 'SspInquiryMenuItemWidget' args [data.activePage] only %}{% endwidget %}
     {% endif %}
+
+    {% widget 'SspServiceMenuItemWidget' args [data.activePage] only %}{% endwidget %}
+
 {% endblock %}

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "531f999d50c41050631ad376684dc92b",
+    "content-hash": "61f2dedb93d8204205450fa532ca7273",
     "packages": [
         {
             "name": "async-aws/core",
@@ -5834,16 +5834,16 @@
         },
         {
             "name": "spryker-feature/feature-ui",
-            "version": "0.1.1",
+            "version": "0.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/feature-ui.git",
-                "reference": "502d4b4db8b1caa30dd4127cb1a9bbd69767bab0"
+                "reference": "68e5acc357e1a7a69aa5ef75b4d84bdad15cf7ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/feature-ui/zipball/502d4b4db8b1caa30dd4127cb1a9bbd69767bab0",
-                "reference": "502d4b4db8b1caa30dd4127cb1a9bbd69767bab0",
+                "url": "https://api.github.com/repos/spryker-feature/feature-ui/zipball/68e5acc357e1a7a69aa5ef75b4d84bdad15cf7ff",
+                "reference": "68e5acc357e1a7a69aa5ef75b4d84bdad15cf7ff",
                 "shasum": ""
             },
             "require": {
@@ -5873,9 +5873,9 @@
             ],
             "description": "FeatureUi module",
             "support": {
-                "source": "https://github.com/spryker-feature/feature-ui/tree/0.1.1"
+                "source": "https://github.com/spryker-feature/feature-ui/tree/0.1.2"
             },
-            "time": "2025-04-14T11:03:19+00:00"
+            "time": "2025-04-24T15:03:28+00:00"
         },
         {
             "name": "spryker-feature/file-manager",
@@ -9403,16 +9403,16 @@
         },
         {
             "name": "spryker-feature/ssp-asset-management",
-            "version": "0.2.1",
+            "version": "0.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/ssp-asset-management.git",
-                "reference": "6ec314f0765572f1bd544f16956a6d045c34a89b"
+                "reference": "7901954f5aae97bba9e3075d9258fe482214e143"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/ssp-asset-management/zipball/6ec314f0765572f1bd544f16956a6d045c34a89b",
-                "reference": "6ec314f0765572f1bd544f16956a6d045c34a89b",
+                "url": "https://api.github.com/repos/spryker-feature/ssp-asset-management/zipball/7901954f5aae97bba9e3075d9258fe482214e143",
+                "reference": "7901954f5aae97bba9e3075d9258fe482214e143",
                 "shasum": ""
             },
             "require": {
@@ -9424,10 +9424,12 @@
                 "spryker/file-manager": "^2.5.0",
                 "spryker/file-manager-extension": "^1.1.0",
                 "spryker/file-system-extension": "^1.0.0",
+                "spryker/gui": "^3.60.0",
                 "spryker/kernel": "^3.75.0",
                 "spryker/permission-extension": "^1.2.0",
                 "spryker/propel-orm": "^1.21.0",
                 "spryker/sequence-number": "^3.1.0",
+                "spryker/state-machine": "^2.21.0",
                 "spryker/symfony": "^3.18.0",
                 "spryker/util-text": "^1.6.0",
                 "spryker/validator": "^1.5.0",
@@ -9449,6 +9451,7 @@
             "suggest": {
                 "spryker-feature/ssp-dashboard-management": "If you want to see assets on the dashboard.",
                 "spryker-shop/customer-page": "Provides template for customer page",
+                "spryker/company-business-unit-gui": "Provides GUI for company business unit suggestion. You can install this module of min version 2.13.0 when you want to use /company-business-unit-gui/suggest endpoint.",
                 "spryker/router": "You need to install this module when you want to use the RouterExtension interfaces."
             },
             "type": "library",
@@ -9469,22 +9472,22 @@
             ],
             "description": "SspAssetManagement module",
             "support": {
-                "source": "https://github.com/spryker-feature/ssp-asset-management/tree/0.2.1"
+                "source": "https://github.com/spryker-feature/ssp-asset-management/tree/0.4.0"
             },
-            "time": "2025-04-14T11:03:19+00:00"
+            "time": "2025-05-05T13:27:46+00:00"
         },
         {
             "name": "spryker-feature/ssp-dashboard-management",
-            "version": "0.2.1",
+            "version": "0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/ssp-dashboard-management.git",
-                "reference": "663d2c475124e772611552fb67d77ee095bf80dd"
+                "reference": "1433d7f834d950319f383c54aeddd7d1737111b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/ssp-dashboard-management/zipball/663d2c475124e772611552fb67d77ee095bf80dd",
-                "reference": "663d2c475124e772611552fb67d77ee095bf80dd",
+                "url": "https://api.github.com/repos/spryker-feature/ssp-dashboard-management/zipball/1433d7f834d950319f383c54aeddd7d1737111b0",
+                "reference": "1433d7f834d950319f383c54aeddd7d1737111b0",
                 "shasum": ""
             },
             "require": {
@@ -9506,6 +9509,7 @@
             },
             "require-dev": {
                 "spryker-shop/customer-page": "*",
+                "spryker/cms-block": "*",
                 "spryker/code-sniffer": "*",
                 "spryker/propel": "*",
                 "spryker/testify": "*"
@@ -9522,7 +9526,8 @@
             },
             "autoload": {
                 "psr-4": {
-                    "SprykerFeature\\": "src/SprykerFeature/"
+                    "SprykerFeature\\": "src/SprykerFeature/",
+                    "SprykerFeatureTest\\Zed\\SspDashboardManagement\\Helper\\": "tests/SprykerFeatureTest/Zed/SspDashboardManagement/_support/Helper/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -9531,27 +9536,28 @@
             ],
             "description": "SspDashboardManagement module",
             "support": {
-                "source": "https://github.com/spryker-feature/ssp-dashboard-management/tree/0.2.1"
+                "source": "https://github.com/spryker-feature/ssp-dashboard-management/tree/0.3.0"
             },
-            "time": "2025-04-14T11:03:19+00:00"
+            "time": "2025-05-05T13:27:46+00:00"
         },
         {
             "name": "spryker-feature/ssp-file-management",
-            "version": "0.2.1",
+            "version": "0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/ssp-file-management.git",
-                "reference": "e7603bc865f5047964ae4e4a7c2874b88605d6ca"
+                "reference": "e7568f90bb921a65d25458a7211d0279d56bd728"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/ssp-file-management/zipball/e7603bc865f5047964ae4e4a7c2874b88605d6ca",
-                "reference": "e7603bc865f5047964ae4e4a7c2874b88605d6ca",
+                "url": "https://api.github.com/repos/spryker-feature/ssp-file-management/zipball/e7568f90bb921a65d25458a7211d0279d56bd728",
+                "reference": "e7568f90bb921a65d25458a7211d0279d56bd728",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.2",
                 "spryker-feature/feature-ui": "^0.1.0",
+                "spryker-feature/ssp-asset-management": "^0.4.0",
                 "spryker-shop/shop-application": "^1.0.0",
                 "spryker/application": "^3.8.0",
                 "spryker/company": "^1.0.0",
@@ -9613,29 +9619,29 @@
             ],
             "description": "SspFileManagement module",
             "support": {
-                "source": "https://github.com/spryker-feature/ssp-file-management/tree/0.2.1"
+                "source": "https://github.com/spryker-feature/ssp-file-management/tree/0.3.0"
             },
-            "time": "2025-04-14T11:03:19+00:00"
+            "time": "2025-05-05T13:27:46+00:00"
         },
         {
             "name": "spryker-feature/ssp-inquiry-management",
-            "version": "0.3.2",
+            "version": "0.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/ssp-inquiry-management.git",
-                "reference": "605376e0681955d57fe50c6bb61835629e6292ac"
+                "reference": "c481ae41eeec113ba89a4e89c6c5e2e782fab150"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/ssp-inquiry-management/zipball/605376e0681955d57fe50c6bb61835629e6292ac",
-                "reference": "605376e0681955d57fe50c6bb61835629e6292ac",
+                "url": "https://api.github.com/repos/spryker-feature/ssp-inquiry-management/zipball/c481ae41eeec113ba89a4e89c6c5e2e782fab150",
+                "reference": "c481ae41eeec113ba89a4e89c6c5e2e782fab150",
                 "shasum": ""
             },
             "require": {
                 "ext-zlib": "*",
                 "php": ">=8.2",
                 "spryker-feature/feature-ui": "^0.1.0",
-                "spryker-feature/ssp-asset-management": "^0.2.0",
+                "spryker-feature/ssp-asset-management": "^0.4.0",
                 "spryker-shop/shop-application": "^1.15.0",
                 "spryker-shop/shop-application-extension": "^1.2.0",
                 "spryker/application": "^3.36.0",
@@ -9699,9 +9705,9 @@
             ],
             "description": "SspInquiryManagement module",
             "support": {
-                "source": "https://github.com/spryker-feature/ssp-inquiry-management/tree/0.3.2"
+                "source": "https://github.com/spryker-feature/ssp-inquiry-management/tree/0.5.0"
             },
-            "time": "2025-04-14T11:03:19+00:00"
+            "time": "2025-05-05T13:27:46+00:00"
         },
         {
             "name": "spryker-feature/ssp-service-management",
@@ -27884,20 +27890,20 @@
         },
         {
             "name": "spryker/company-business-unit",
-            "version": "2.17.2",
+            "version": "2.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/company-business-unit.git",
-                "reference": "b22e90b89618267fc1fd83b0ece6a44f1678e944"
+                "reference": "2429d9920ab2867b9a2ab62d6f230931889b3292"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/company-business-unit/zipball/b22e90b89618267fc1fd83b0ece6a44f1678e944",
-                "reference": "b22e90b89618267fc1fd83b0ece6a44f1678e944",
+                "url": "https://api.github.com/repos/spryker/company-business-unit/zipball/2429d9920ab2867b9a2ab62d6f230931889b3292",
+                "reference": "2429d9920ab2867b9a2ab62d6f230931889b3292",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.1",
+                "php": ">=8.2",
                 "spryker/acl-merchant-portal-extension": "^1.0.0",
                 "spryker/company": "^1.0.0",
                 "spryker/company-business-unit-extension": "^1.2.0",
@@ -27935,9 +27941,9 @@
             ],
             "description": "CompanyBusinessUnit module",
             "support": {
-                "source": "https://github.com/spryker/company-business-unit/tree/2.17.2"
+                "source": "https://github.com/spryker/company-business-unit/tree/2.18.0"
             },
-            "time": "2024-09-09T10:40:33+00:00"
+            "time": "2025-04-24T15:03:28+00:00"
         },
         {
             "name": "spryker/company-business-unit-addresses-rest-api",
@@ -28093,23 +28099,23 @@
         },
         {
             "name": "spryker/company-business-unit-gui",
-            "version": "2.12.1",
+            "version": "2.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/company-business-unit-gui.git",
-                "reference": "e1206c930eaa3edd71e519aee167bb0641f89dff"
+                "reference": "9f96f6d9e5bf29ac7577182f7288afd625cafde2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/company-business-unit-gui/zipball/e1206c930eaa3edd71e519aee167bb0641f89dff",
-                "reference": "e1206c930eaa3edd71e519aee167bb0641f89dff",
+                "url": "https://api.github.com/repos/spryker/company-business-unit-gui/zipball/9f96f6d9e5bf29ac7577182f7288afd625cafde2",
+                "reference": "9f96f6d9e5bf29ac7577182f7288afd625cafde2",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.2",
                 "spryker/business-on-behalf-gui-extension": "^1.0.0",
                 "spryker/company": "^1.0.0",
-                "spryker/company-business-unit": "^2.16.0",
+                "spryker/company-business-unit": "^2.18.0",
                 "spryker/company-business-unit-gui-extension": "^1.0.0",
                 "spryker/company-user-gui-extension": "^1.0.0",
                 "spryker/gui": "^3.45.0",
@@ -28143,9 +28149,9 @@
             ],
             "description": "CompanyBusinessUnitGui module",
             "support": {
-                "source": "https://github.com/spryker/company-business-unit-gui/tree/2.12.1"
+                "source": "https://github.com/spryker/company-business-unit-gui/tree/2.13.0"
             },
-            "time": "2025-03-06T16:05:23+00:00"
+            "time": "2025-04-24T15:03:28+00:00"
         },
         {
             "name": "spryker/company-business-unit-gui-extension",
@@ -36631,16 +36637,16 @@
         },
         {
             "name": "spryker/gui",
-            "version": "3.57.0",
+            "version": "3.60.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/gui.git",
-                "reference": "1c18af8fc35f6eeac1bd6f3990c78e485067cf6f"
+                "reference": "ecd0a594989f531d46500c8310ce10bbb4e31823"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/gui/zipball/1c18af8fc35f6eeac1bd6f3990c78e485067cf6f",
-                "reference": "1c18af8fc35f6eeac1bd6f3990c78e485067cf6f",
+                "url": "https://api.github.com/repos/spryker/gui/zipball/ecd0a594989f531d46500c8310ce10bbb4e31823",
+                "reference": "ecd0a594989f531d46500c8310ce10bbb4e31823",
                 "shasum": ""
             },
             "require": {
@@ -36689,9 +36695,9 @@
             ],
             "description": "Gui module",
             "support": {
-                "source": "https://github.com/spryker/gui/tree/3.57.0"
+                "source": "https://github.com/spryker/gui/tree/3.60.0"
             },
-            "time": "2025-04-01T17:15:15+00:00"
+            "time": "2025-04-24T15:03:28+00:00"
         },
         {
             "name": "spryker/gui-table",
@@ -81391,19 +81397,18 @@
         },
         {
             "name": "spryker/cypress-tests",
-            "version": "dev-master",
+            "version": "dev-bugfix/ssp-9/master-asset-cypress",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/cypress-tests.git",
-                "reference": "4d94f397c79928560870b72ae54c3b1b5931e52e"
+                "reference": "e17c4982139df57c792a029eaf3c45191f32897d"
             },
-            "default-branch": true,
             "type": "library",
             "license": [
                 "MIT"
             ],
             "description": "This repository is dedicated to housing an extensive collection of UI end-to-end tests, meticulously crafted using Cypress for Spryker applications. These tests are designed to thoroughly evaluate the user interface, ensuring that all interactions and visual elements function as intended in real-world scenarios. By leveraging Cypress's advanced browser automation capabilities, this suite provides an efficient and effective means of validating the user experience, confirming the seamless operation and aesthetic integrity of Spryker's front-end components. Our commitment to rigorous UI testing helps maintain the high standard of quality and reliability that Spryker users expect.",
-            "time": "2025-04-01T17:11:11+00:00"
+            "time": "2025-05-08T18:28:53+00:00"
         },
         {
             "name": "spryker/development",
