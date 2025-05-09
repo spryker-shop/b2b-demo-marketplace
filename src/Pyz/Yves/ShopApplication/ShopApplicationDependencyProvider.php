@@ -26,6 +26,7 @@ use Spryker\Yves\Session\Plugin\Application\SessionApplicationPlugin;
 use Spryker\Yves\Translator\Plugin\Application\TranslatorApplicationPlugin;
 use Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin;
 use Spryker\Yves\Validator\Plugin\Application\ValidatorApplicationPlugin;
+use SprykerFeature\Yves\FeatureUi\Widget\SspListMenuItemWidget;
 use SprykerFeature\Yves\SspAssetManagement\Widget\SspAssetListWidget;
 use SprykerFeature\Yves\SspAssetManagement\Widget\SspAssetMenuItemWidget;
 use SprykerFeature\Yves\SspDashboardManagement\Plugin\ShopApplication\SspDashboardFilterControllerEventHandlerPlugin;
@@ -374,6 +375,7 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             ClickAndCollectServicePointAddressFormWidget::class,
             ProductOfferServicePointAvailabilityWidget::class,
             ProductOfferServicePointAvailabilityDisplayWidget::class,
+            SspListMenuItemWidget::class,
         ];
     }
 
