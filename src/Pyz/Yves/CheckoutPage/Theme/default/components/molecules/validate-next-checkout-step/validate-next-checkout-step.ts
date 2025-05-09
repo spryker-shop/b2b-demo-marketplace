@@ -6,6 +6,8 @@ export default class ValidateNextCheckoutStep extends ValidateNextCheckoutStepCo
             return false;
         }
 
-        return this.dropdownTriggers.some((element: HTMLSelectElement) => element.closest('is-hidden') && !element.value);
+        return this.dropdownTriggers.some(
+            (element: HTMLSelectElement) => element.closest('is-hidden') && !element.value,
+        );
     }
 }
