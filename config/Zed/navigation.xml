@@ -47,13 +47,6 @@
                 <action>index</action>
                 <visible>1</visible>
             </merchant-sales-order>
-            <ssp-service-management>
-                <label>Services</label>
-                <title>Services</title>
-                <bundle>ssp-service-management</bundle>
-                <controller>list</controller>
-                <action>index</action>
-            </ssp-service-management>
             <sales-reclamations>
                 <label>Reclamations</label>
                 <title>Reclamations</title>
@@ -85,6 +78,28 @@
                 <controller>table</controller>
                 <action>index</action>
             </table>
+        </pages>
+    </sales>
+    <ssp>
+        <label>Customer portal</label>
+        <title>Customer portal</title>
+        <icon>fa-id-badge</icon>
+        <pages>
+            <ssp-assets>
+                <label>Assets</label>
+                <title>Assets</title>
+                <bundle>ssp-asset-management</bundle>
+                <controller>index</controller>
+                <action>index</action>
+            </ssp-assets>
+            <ssp-file-management>
+                <label>File Attachments</label>
+                <title>File Attachments</title>
+                <bundle>ssp-file-management</bundle>
+                <controller>list</controller>
+                <action>index</action>
+                <visible>1</visible>
+            </ssp-file-management>
             <ssp-inquiries>
                 <label>Ssp Inquiries</label>
                 <title>Ssp Inquiries</title>
@@ -92,8 +107,15 @@
                 <controller>index</controller>
                 <action>index</action>
             </ssp-inquiries>
+            <ssp-service-management>
+                <label>Services</label>
+                <title>Services</title>
+                <bundle>ssp-service-management</bundle>
+                <controller>list</controller>
+                <action>index</action>
+            </ssp-service-management>
         </pages>
-    </sales>
+    </ssp>
     <customer>
         <label>Customers</label>
         <title>Customers</title>
@@ -297,14 +319,6 @@
                 <action>index</action>
                 <visible>1</visible>
             </tree>
-            <ssp-file-management>
-                <label>File Attachments</label>
-                <title>File Attachments</title>
-                <bundle>ssp-file-management</bundle>
-                <controller>list</controller>
-                <action>index</action>
-                <visible>1</visible>
-            </ssp-file-management>
         </pages>
     </content>
     <merchandising>

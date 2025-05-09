@@ -50,7 +50,6 @@ use SprykerFeature\Shared\SspFileManagement\Plugin\Permission\DownloadFilesPermi
 use SprykerFeature\Shared\SspFileManagement\Plugin\Permission\ViewCompanyBusinessUnitFilesPermissionPlugin;
 use SprykerFeature\Shared\SspFileManagement\Plugin\Permission\ViewCompanyFilesPermissionPlugin;
 use SprykerFeature\Shared\SspFileManagement\Plugin\Permission\ViewCompanyUserFilesPermissionPlugin;
-use SprykerFeature\Shared\SspFileManagement\Plugin\Permission\ViewFilesPermissionPlugin;
 use SprykerFeature\Shared\SspInquiryManagement\Plugin\Permission\CreateSspInquiryPermissionPlugin;
 use SprykerFeature\Shared\SspInquiryManagement\Plugin\Permission\ViewBusinessUnitSspInquiryPermissionPlugin;
 use SprykerFeature\Shared\SspInquiryManagement\Plugin\Permission\ViewCompanySspInquiryPermissionPlugin;
@@ -114,7 +113,6 @@ class PermissionDependencyProvider extends SprykerPermissionDependencyProvider
             new CreateSspInquiryPermissionPlugin(), #SspInquiryManagementFeature
             new ViewCompanySspInquiryPermissionPlugin(), #SspInquiryManagementFeature
             new ViewBusinessUnitSspInquiryPermissionPlugin(), #SspInquiryManagementFeature
-            new ViewFilesPermissionPlugin(), #SspFileManagementFeature
             new DownloadFilesPermissionPlugin(), #SspFileManagementFeature
             new ViewCompanyUserFilesPermissionPlugin(), #SspFileManagementFeature
             new ViewCompanyBusinessUnitFilesPermissionPlugin(), #SspFileManagementFeature
