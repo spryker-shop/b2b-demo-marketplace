@@ -1,7 +1,21 @@
 {% extends view('dashboard','@SprykerFeature:SspDashboardManagement') %}
 
 {% block customerContent %}
-    {{ block('userInfo') }}
+    {% block userInfo %}
+        <div data-qa="welcome-block">
+            <div data-qa="user-info">
+                <strong class="title--h3">
+                    {{ 'ssp_dashboard.general.welcome' | trans({
+                        '%name%': data.customer.firstName ~ ' ' ~ data.customer.lastName,
+                    }) }}
+                </strong>
+            </div>
+            <span>{{ data.customer.companyUserTransfer.company.name }}</span>
+            <br>
+            <span>{{ data.customer.companyUserTransfer.companyBusinessUnit.name }}</span>
+        </div>
+    {% endblock %}
+
     {{ block('information') }}
 
     {% if canAccessAssets %}
