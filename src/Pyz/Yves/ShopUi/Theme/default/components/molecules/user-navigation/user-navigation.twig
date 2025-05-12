@@ -19,81 +19,6 @@
     {{ parent() }} {{ config.jsName }}
 {%- endblock -%}
 
-{% set files %}
-    {% if widgetGlobalExists('SspFileManagerMenuItemWidget') %}
-        {% widget 'SspFileManagerMenuItemWidget' args [false] only %}
-            {% block content %}
-                <li>
-                    <a class="link link--secondary"
-                        href="{{ url('ssp-file-management') }}">
-                        {{ 'ssp_file_management.file_management' | trans }}
-                    </a>
-                </li>
-            {% endblock %}
-        {% endwidget %}
-    {% endif %}
-{% endset %}
-
-{% set inquiry %}
-    {% if widgetGlobalExists('SspInquiryMenuItemWidget') and (can('ViewBusinessUnitSspInquiryPermissionPlugin') or can('CreateSspInquiryPermissionPlugin') or can('ViewCompanySspInquiryPermissionPlugin')) %}
-        {% widget 'SspInquiryMenuItemWidget' args [false] only %}
-            {% block body %}
-                <li>
-                    <a class="link link--secondary"
-                        href="{{ url('customer/ssp-inquiry') }}">
-                        {{ 'ssp_inquiry.list.widget.title' | trans }}
-                    </a>
-                </li>
-            {% endblock %}
-        {% endwidget %}
-    {% endif %}
-{% endset %}
-
-{% set assets %}
-    {% if widgetGlobalExists('SspAssetMenuItemWidget') and (can('ViewCompanySspAssetPermissionPlugin') or can('ViewBusinessUnitSspAssetPermissionPlugin'))  %}
-        {% widget 'SspAssetMenuItemWidget' args [false] only %}
-            {% block body %}
-                <li>
-                    <a class="link link--secondary"
-                        href="{{ url('customer/asset') }}">
-                        {{ 'ssp_asset.list.widget.title' | trans }}
-                    </a>
-                </li>
-            {% endblock %}
-        {% endwidget %}
-    {% endif %}
-{% endset %}
-
-{% set dashboard %}
-   {% if widgetGlobalExists('DashboardMenuItemWidget') and can('ViewDashboardPermissionPlugin') %}
-       {% widget 'DashboardMenuItemWidget' args [false] only %}
-            {% block body %}
-                <li>
-                    <a class="link link--secondary"
-                        href="{{ url('customer/dashboard') }}">
-                        {{ 'dashboard.index.widget.title' | trans }}
-                    </a>
-                </li>
-            {% endblock %}
-        {% endwidget %}
-    {% endif %}
-{% endset %}
-
-{% set service %}
-    {% if widgetGlobalExists('SspServiceMenuItemWidget') %}
-        {% widget 'SspServiceMenuItemWidget' args [false] only %}
-            {% block body %}
-                <li>
-                    <a class="link link--secondary"
-                        href="{{ url('customer/ssp-service') }}">
-                        {{ 'ssp_service_management.list.widget.title' | trans }}
-                    </a>
-                </li>
-            {% endblock %}
-        {% endwidget %}
-    {% endif %}
-{% endset %}
-
 {% block body %}
     <li class="{{ config.name }}__item {{ config.name }}__item--user">
         <div class="{{ config.name }}__user-name">
@@ -146,27 +71,49 @@
                     title: 'quote_request_widget.request_for_quote.list.title' | trans,
                 },
                 {
-                    block: dashboard,
-                },
-                {
-                    block: service,
-                },
-                {
-                    block: assets,
-                },
-                {
-                    block: files,
-                },
-                {
-                    block: inquiry,
-                },
-                {
                     url: url('logout'),
                     title: 'customer.logout' | trans,
                     additionalClass: 'link--additional',
                 },
             ]},
         } only %}
+    </li>
+    <li class="{{ config.name }}__item {{ config.name }}__item--user">
+        <div class="{{ config.name }}__user-name">
+            <span class="{{ config.name }}__icon">
+                {% include atom('icon') with {
+                    modifiers: ['ssp'],
+                    data: {
+                        name: 'ssp',
+                    },
+                } only %}
+                {% include atom('icon') with {
+                    class: config.name ~ '__arrow',
+                    data: {
+                        name: 'caret-down',
+                    },
+                } only %}
+            </span>
+            <span class="{{ config.name }}__text">{{ 'ssp_general.customer_navigation.title' | trans }}</span>
+        </div>
+        {% embed molecule('navigation-list') with {
+            modifiers: ['secondary'],
+            class: config.name ~ '__sub-nav',
+        } only %}
+            {% block menu %}
+                {% widget 'SspListMenuItemWidget' args [false] only %}
+                    {% block menu %}
+                        {% widget widgetData only %}
+                            {% block content %}
+                                <li>
+                                    <a class="link link--secondary" href="{{ data.url }}">{{ data.label }}</a>
+                                </li>
+                            {% endblock %}
+                        {% endwidget %}
+                    {% endblock %}
+                {% endwidget %}
+            {% endblock %}
+        {% endembed %}
     </li>
     <li class="{{ config.name }}__item">
         <a class="{{ config.name }}__link" href="{{ url('quick-order') }}">

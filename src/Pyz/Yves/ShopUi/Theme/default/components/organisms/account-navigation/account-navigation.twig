@@ -11,6 +11,7 @@
     activePage: '',
     items: required,
     title: '',
+    isSSP: false,
 } %}
 
 {% block close %}
@@ -40,11 +41,26 @@
 {% endblock %}
 
 {% block navigation %}
-    {% include molecule('navigation-sidebar') with {
+    {% embed molecule('navigation-sidebar') with {
         modifiers: ['account'],
         data: {
             activePage: data.activePage,
             items: data.items,
         },
+        embed: {
+            isSSP: data.isSSP,
+        }
     } only %}
+        {% block menu %}
+            {% widget 'SspListMenuItemWidget' args [data.activePage] only %}
+                {% block menu %}
+                    {% widget widgetData  with {
+                        data: {
+                            modifiers: ['account'],
+                        },
+                    } only %}{% endwidget %}
+                {% endblock %}
+            {% endwidget %}
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

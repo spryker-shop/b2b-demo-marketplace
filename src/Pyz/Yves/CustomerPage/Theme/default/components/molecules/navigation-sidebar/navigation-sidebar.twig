@@ -69,15 +69,13 @@
             } only %}
         {% endblock %}
     {% endwidget %}
+{% endblock %}
 
-    {% if widgetGlobalExists('DashboardMenuItemWidget') and can('ViewDashboardPermissionPlugin') %}
-        {% widget 'DashboardMenuItemWidget' args [data.activePage] only %}{% endwidget %}
-    {% endif %}
+{% block body %}
+    {{ parent() }}
 
-    {% if widgetGlobalExists('SspServiceMenuItemWidget') %}
-        {% widget 'SspServiceMenuItemWidget' args [data.activePage] only %}{% endwidget %}
-    {% endif %}
-
-    {% widget 'SspListMenuItemWidget' args [data.activePage] only %}{% endwidget %}
-
+    <div class="title--h5 spacing-top--biggest spacing-bottom"><strong>{{ 'ssp_general.customer_navigation.title' | trans }}</strong></div>
+    <ul class="{{ _self.renderClass(config.name ~ '__list', modifiers) }}">
+        {% widget 'SspListMenuItemWidget' args [data.activePage] only %}{% endwidget %}
+    </ul>
 {% endblock %}

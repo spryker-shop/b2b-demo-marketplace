@@ -1,16 +1,25 @@
 {% extends view('service-menu-item', '@SprykerFeature:SspServiceManagement') %}
 
+{% define data = {
+    modifiers: [],
+    url: url('customer/ssp-service'),
+    label: 'ssp_service_management.list.widget.title' | trans,
+    name: 'ssp-service-management'
+} %}
+
 {% block body %}
     {% set modifiers = data.modifiers | default([]) %}
 
-    {% include molecule('navigation-sidebar-item') with {
-        data: {
-            url: url('customer/ssp-service'),
-            icon: 'service',
-            label: 'ssp_service_management.list.widget.title' | trans,
-            name: 'ssp-service-management'
-        },
-        qa: 'service',
-        modifiers: data.isActivePage ? ['active'] | merge(modifiers) : modifiers,
-    } only %}
+    {% block content %}
+        {% include molecule('navigation-sidebar-item') with {
+            data: {
+                url: data.url,
+                icon: 'service',
+                label: data.label,
+                name: data.name
+            },
+            qa: 'service',
+            modifiers: data.isActivePage ? ['active'] | merge(modifiers) : modifiers,
+        } only %}
+    {% endblock %}
 {% endblock %}
