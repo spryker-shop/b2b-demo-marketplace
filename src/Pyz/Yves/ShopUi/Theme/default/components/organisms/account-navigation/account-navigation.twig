@@ -52,15 +52,19 @@
         }
     } only %}
         {% block menu %}
-            {% widget 'SspListMenuItemWidget' args [data.activePage] only %}
-                {% block menu %}
-                    {% widget widgetData  with {
-                        data: {
-                            modifiers: ['account'],
-                        },
-                    } only %}{% endwidget %}
-                {% endblock %}
-            {% endwidget %}
+            {% if embed.isSSP %}
+                {% widget 'SspListMenuItemWidget' args [data.activePage] only %}
+                    {% block menu %}
+                        {% widget widgetData  with {
+                            data: {
+                                modifiers: ['account'],
+                            },
+                        } only %}{% endwidget %}
+                    {% endblock %}
+                {% endwidget %}
+            {% else %}
+                {{ parent() }}
+            {% endif %}
         {% endblock %}
     {% endembed %}
 {% endblock %}
