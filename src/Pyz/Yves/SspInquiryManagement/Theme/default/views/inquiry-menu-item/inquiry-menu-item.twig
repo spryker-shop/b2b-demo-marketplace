@@ -1,16 +1,24 @@
 {% extends view('inquiry-menu-item', '@SprykerFeature:SspInquiryManagement') %}
 
+{% define data = {
+    url: url('customer/ssp-inquiry'),
+    label: 'ssp_inquiry.list.widget.title' | trans,
+    name: 'ssp-inquiries-management'
+} %}
+
 {% block body %}
     {% set modifiers = data.modifiers | default([]) %}
 
-    {% include molecule('navigation-sidebar-item') with {
-        data: {
-            url: url('customer/ssp-inquiry'),
-            icon: 'inquiries',
-            label: 'ssp_inquiry.list.widget.title' | trans,
-            name: 'ssp-inquiries-management'
-        },
-        qa: 'inquiries',
-        modifiers: data.isActivePage ? ['active'] | merge(modifiers) : modifiers,
-    } only %}
+    {% block content %}
+        {% include molecule('navigation-sidebar-item') with {
+            data: {
+                url: data.url,
+                icon: 'inquiries',
+                label: data.label,
+                name: data.name
+            },
+            qa: 'inquiries',
+            modifiers: data.isActivePage ? ['active'] | merge(modifiers) : modifiers,
+        } only %}
+    {% endblock %}
 {% endblock %}

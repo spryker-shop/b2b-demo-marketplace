@@ -1,16 +1,24 @@
 {% extends view('dashboard-menu-item', '@SprykerFeature:SspDashboardManagement') %}
 
+{% define data = {
+    url: url('customer/dashboard'),
+    label: 'ssp_dashboard.index.widget.title' | trans,
+    name: 'ssp-dashboard'
+} %}
+
 {% block body %}
     {% set modifiers = data.modifiers | default([]) %}
 
-    {% include molecule('navigation-sidebar-item') with {
-        data: {
-            url: url('customer/dashboard'),
-            icon: 'dashboard',
-            label: 'ssp_dashboard.index.widget.title' | trans,
-            name: 'ssp-dashboard'
-        },
-        qa: 'dashboard',
-        modifiers: data.isActivePage ? ['active'] | merge(modifiers) : modifiers,
-    } only %}
+    {% block content %}
+        {% include molecule('navigation-sidebar-item') with {
+            data: {
+                url: data.url,
+                icon: 'dashboard',
+                label: data.label,
+                name: data.name
+            },
+            qa: 'dashboard',
+            modifiers: data.isActivePage ? ['active'] | merge(modifiers) : modifiers,
+        } only %}
+    {% endblock %}
 {% endblock %}

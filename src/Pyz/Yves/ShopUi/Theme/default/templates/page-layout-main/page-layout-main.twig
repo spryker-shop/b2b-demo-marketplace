@@ -9,65 +9,6 @@
 
 {%- block class -%}{{ pageLayoutMainJsClassName }}__side-drawer-container{%- endblock -%}
 
-{% set files %}
-    {% if widgetGlobalExists('SspFileManagerMenuItemWidget') %}
-        {% widget 'SspFileManagerMenuItemWidget' args [false]  with {
-            data: {
-                modifiers: ['account'],
-            },
-        } only %}
-        {% endwidget %}
-    {% endif %}
-{% endset %}
-
-{% set inquiry %}
-    {% if widgetGlobalExists('SspInquiryMenuItemWidget') %}
-        {% if widgetGlobalExists('SspInquiryMenuItemWidget') and (can('ViewBusinessUnitSspInquiryPermissionPlugin') or can('CreateSspInquiryPermissionPlugin') or can('ViewCompanySspInquiryPermissionPlugin')) %}
-            {% widget 'SspInquiryMenuItemWidget' args [false]  with {
-                data: {
-                    modifiers: ['account'],
-                },
-            } only %}
-            {% endwidget %}
-        {% endif %}
-    {% endif %}
-{% endset %}
-
-{% set asset %}
-    {% if widgetGlobalExists('SspAssetMenuItemWidget') %}
-        {% if widgetGlobalExists('SspAssetMenuItemWidget') and (can('ViewCompanySspAssetPermissionPlugin') or can('ViewBusinessUnitSspAssetPermissionPlugin'))  %}
-            {% widget 'SspAssetMenuItemWidget' args [false]  with {
-                data: {
-                    modifiers: ['account'],
-                },
-            } only %}
-            {% endwidget %}
-        {% endif %}
-    {% endif %}
-{% endset %}
-
-{% set dashboard %}
-    {% if widgetGlobalExists('DashboardMenuItemWidget') %}
-        {% widget 'DashboardMenuItemWidget' args [false]  with {
-            data: {
-                modifiers: ['account'],
-            },
-        } only %}
-        {% endwidget %}
-    {% endif %}
-{% endset %}
-
-{% set service %}
-    {% if widgetGlobalExists('SspServiceMenuItemWidget') %}
-        {% widget 'SspServiceMenuItemWidget' args [false]  with {
-            data: {
-                modifiers: ['account'],
-            },
-        } only %}
-        {% endwidget %}
-    {% endif %}
-{% endset %}
-
 {% block viewport %}
     <div class="page-layout page-layout--preload">
         {% widget 'AgentControlBarWidget' only %}{% endwidget %}
@@ -147,27 +88,21 @@
                                 label: 'page.multi_cart.shopping_cart.list.title' | trans,
                                 icon: 'cart'
                             },
-                            {
-                                block: dashboard,
-                                name: 'ssp-dashboard'
-                            },
-                            {
-                                block: service,
-                                name: 'ssp-service-management'
-                            },
-                            {
-                                block: asset,
-                                name: 'ssp-asset-management'
-                            },
-                            {
-                                block: files,
-                                name: 'ssp-file-management'
-                            },
-                            {
-                                block: inquiry,
-                                name: 'ssp-inquiries-management'
-                            },
                         ],
+                    }
+                } only %}
+
+                {% include organism('account-navigation') with {
+                    attributes: {
+                        'trigger-selector': pageLayoutMainJsClassName ~ '__ssp-navigation-trigger',
+                        'container-selector': pageLayoutMainJsClassName ~ '__side-drawer-container',
+                        'locked-body-class-name': 'is-locked-mobile',
+                        'overlay-breakpoint': 768,
+                    },
+                    data: {
+                        title: 'ssp_general.customer_navigation.title' | trans,
+                        introIcon: '',
+                        isSSP: true,
                     }
                 } only %}
 

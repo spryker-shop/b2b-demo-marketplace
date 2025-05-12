@@ -4331,8 +4331,6 @@ customer.change_customer_email_mail_sent,"Almost there! We send you an email to 
 customer.change_customer_email_mail_sent,"Fast dort! Wir senden Ihnen eine E-Mail, um Ihre E-Mail-Adresse zu bestätigen. Bitte bestätigen Sie dies, um sich anmelden zu können.",de_DE
 permission.name.DownloadFilesPermissionPlugin,Download file(s) ,en_US
 permission.name.DownloadFilesPermissionPlugin,Datei(en) herunterladen,de_DE
-permission.name.ViewFilesPermissionPlugin,Open My Files page,en_US
-permission.name.ViewFilesPermissionPlugin,Meine Dateien anzeigen,de_DE
 permission.name.ViewCompanyFilesPermissionPlugin,View Company Files,en_US
 permission.name.ViewCompanyFilesPermissionPlugin,Firmendateien anzeigen,de_DE
 permission.name.ViewCompanyUserFilesPermissionPlugin,View My Files,en_US
@@ -4537,8 +4535,8 @@ ssp_file_management.file_management.table.header.actions,Actions,en_US
 ssp_file_management.file_management.table.header.actions,Aktionen,de_DE
 ssp_file_management.file_management.table.actions.download,Download,en_US
 ssp_file_management.file_management.table.actions.download,Herunterladen,de_DE
-ssp_file_management.file_management,My Files,en_US
-ssp_file_management.file_management,Meine Dateien,de_DE
+ssp_file_management.file_management,Files,en_US
+ssp_file_management.file_management,Dateien,de_DE
 ssp_file_management.file_management.view.empty,You do not have any files yet.,en_US
 ssp_file_management.file_management.view.empty,Sie haben noch keine Dateien.,de_DE
 ssp_file_management.file_management.file_search_filter_form.field.type.placeholder,Select type,en_US
@@ -4631,10 +4629,12 @@ ssp_asset.details_page.note,Note,en_US
 ssp_asset.details_page.note,Notiz,de_DE
 ssp_asset.details_page.reference,Reference,en_US
 ssp_asset.details_page.reference,Referenz,de_DE
-ssp_asset.details_page.confirm_unassign_title,Confirm unassign,en_US
-ssp_asset.details_page.confirm_unassign_title,Aufheben der Zuweisung bestätigen,de_DE
+ssp_asset.details_page.confirm_unassign_title,Confirm delete,en_US
+ssp_asset.details_page.confirm_unassign_title,Löschen bestätigen,de_DE
 ssp_asset.details_page.confirm_unassign_body,Unassign this asset from the business unit. Do you want to proceed?,en_US
 ssp_asset.details_page.confirm_unassign_body,Möchten Sie dieses Asset wirklich von der Geschäftseinheit entfernen?,de_DE
+ssp_asset.details_page.confirm_unassign_in_review,Asset is in Review. You can delete it after it is approved.,en_US
+ssp_asset.details_page.confirm_unassign_in_review,"Die Ressource wird überprüft. Du kannst sie löschen, nachdem sie genehmigt wurde.",de_DE
 ssp_asset.details_page.unassign,Unassign,en_US
 ssp_asset.details_page.unassign,Zuweisung aufheben,de_DE
 ssp_inquiry.type.ssp_asset,Asset,en_US
@@ -4675,10 +4675,6 @@ customer.account.no_ssp_assets,No assets at the moment,en_US
 customer.account.no_ssp_assets,Keine Assets vorhanden,de_DE
 ssp_asset.list.filter.apply,Apply,en_US
 ssp_asset.list.filter.apply,Anwenden,de_DE
-ssp_asset.status.active,Active,en_US
-ssp_asset.status.active,Aktiv,de_DE
-ssp_asset.status.inactive,Inactive,en_US
-ssp_asset.status.inactive,Inaktiv,de_DE
 company.error.company_user_not_found,Company user not found,en_US
 company.error.company_user_not_found,Firmenbenutzer nicht gefunden,de_DE
 customer.ssp_asset.list.business_unit,Business Unit,en_US
@@ -4699,6 +4695,12 @@ ssp_asset.details.status,Status,en_US
 ssp_asset.details.status,Status,de_DE
 ssp_asset.status.pending,Pending,en_US
 ssp_asset.status.pending,Ausstehend,de_DE
+ssp_asset.status.approved,Approved,en_US
+ssp_asset.status.approved,Genehmigt,de_DE
+ssp_asset.status.in_review,In Review,en_US
+ssp_asset.status.in_review,In Überprüfung,de_DE
+ssp_asset.status.declined,Declined,en_US
+ssp_asset.status.declined,Abgelehnt,de_DE
 customer.ssp_asset.list.business_unit,Business Unit Owner,en_US
 customer.ssp_asset.list.business_unit,Inhaber der Geschäftseinheit,de_DE
 ssp_asset.information.assigned_bu,Assigned business units,en_US
@@ -4969,3 +4971,11 @@ product_offer_shipment_type.validation.product_offer_not_unique,A product offer 
 product_offer_shipment_type.validation.product_offer_not_unique,Ein Product Offer mit der gleichen Referenz liegt bereits in der Anfrage vor.,de_DE
 product_offer_shipment_type.validation.shipment_type_not_unique,A delivery type for product offer '%product_offer_reference%' with the same uuid already exists in request.,de_DE
 product_offer_shipment_type.validation.shipment_type_not_unique,Ein Lieferart für Product Offer '%product_offer_reference%' mit derselben UUID ist bereits in der Anfrage vorhanden.,de_DE
+ssp_asset.access.denied,Access denied.,en_US
+ssp_asset.access.denied,Zugriff verweigert.,de_DE
+ssp_asset.access.status.restricted,Restricted access.,en_US
+ssp_asset.access.status.restricted,Eingeschränkter Zugriff.,de_DE
+ssp_general.customer_navigation.title,Self-Service,en_US
+ssp_general.customer_navigation.title,Self-Service,de_DE
+customer.customer_navigation.title,Account & Shopping,en_US
+customer.customer_navigation.title,Konto und Shopping,de_DE

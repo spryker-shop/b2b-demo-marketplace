@@ -69,24 +69,14 @@
             } only %}
         {% endblock %}
     {% endwidget %}
+{% endblock %}
 
-    {% if widgetGlobalExists('DashboardMenuItemWidget') and can('ViewDashboardPermissionPlugin') %}
-        {% widget 'DashboardMenuItemWidget' args [data.activePage] only %}{% endwidget %}
-    {% endif %}
+{% block body %}
+    <div class="title--h5 spacing-bottom"><strong>{{ 'ssp_general.customer_navigation.title' | trans }}</strong></div>
+    <ul class="{{ _self.renderClass(config.name ~ '__list', modifiers) }}">
+        {% widget 'SspListMenuItemWidget' args [data.activePage] only %}{% endwidget %}
+    </ul>
 
-    {% if widgetGlobalExists('SspServiceMenuItemWidget') %}
-        {% widget 'SspServiceMenuItemWidget' args [data.activePage] only %}{% endwidget %}
-    {% endif %}
-
-    {% if widgetGlobalExists('SspAssetMenuItemWidget') and (can('ViewCompanySspAssetPermissionPlugin') or can('ViewBusinessUnitSspAssetPermissionPlugin'))  %}
-        {% widget 'SspAssetMenuItemWidget' args [data.activePage] only %}{% endwidget %}
-    {% endif %}
-
-    {% if widgetGlobalExists('SspFileManagerMenuItemWidget') %}
-        {% widget 'SspFileManagerMenuItemWidget' args [data.activePage] only %}{% endwidget %}
-    {% endif %}
-
-    {% if widgetGlobalExists('SspInquiryMenuItemWidget') and (can('ViewBusinessUnitSspInquiryPermissionPlugin') or can('CreateSspInquiryPermissionPlugin') or can('ViewCompanySspInquiryPermissionPlugin')) %}
-        {% widget 'SspInquiryMenuItemWidget' args [data.activePage] only %}{% endwidget %}
-    {% endif %}
+    <div class="title--h5 spacing-top--biggest spacing-bottom"><strong>{{ 'customer.customer_navigation.title' | trans }}</strong></div>
+    {{ parent() }}
 {% endblock %}
