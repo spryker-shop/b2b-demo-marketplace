@@ -64,7 +64,7 @@ sections:
 
     build-static:
         dependencies-install:
-            command: 'vendor/bin/console frontend:project:install-dependencies'
+            command: 'vendor/bin/console frontend:project:install-dependencies -vvv'
 
     build-static-production:
         excluded: true
