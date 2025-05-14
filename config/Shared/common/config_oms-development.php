@@ -7,6 +7,7 @@ use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Nopayment\NopaymentConfig;
 use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Shared\Sales\SalesConstants;
+use SprykerFeature\Shared\SspServiceManagement\SspServiceManagementConstants;
 
 // ----------------------------------------------------------------------------
 // ------------------------------ OMS -----------------------------------------
@@ -40,3 +41,5 @@ $config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = array_replace(
         NopaymentConfig::PAYMENT_PROVIDER_NAME => 'Nopayment01',
     ],
 );
+
+$config[SspServiceManagementConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = $config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING];

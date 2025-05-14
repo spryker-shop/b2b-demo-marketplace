@@ -20,6 +20,8 @@ use SprykerShop\Yves\MerchantProductWidget\Plugin\CartPage\MerchantProductPreAdd
 use SprykerShop\Yves\MultiCartWidget\Plugin\CartPage\MultiCartMiniCartViewExpanderPlugin;
 use SprykerShop\Yves\ProductBundleWidget\Plugin\CartPage\ProductBundleCartItemTransformerPlugin;
 use SprykerShop\Yves\UrlPage\Plugin\CartPage\UrlCartItemTransformerPlugin;
+use SprykerFeature\Yves\SspAssetManagement\Plugin\CartPage\SspAssetPreAddToCartPlugin;
+use SprykerFeature\Yves\SspServiceManagement\Plugin\CartPage\ServiceDateTimeEnabledPreAddToCartPlugin;
 
 class CartPageDependencyProvider extends SprykerCartPageDependencyProvider
 {
@@ -54,8 +56,10 @@ class CartPageDependencyProvider extends SprykerCartPageDependencyProvider
             new MerchantProductOfferPreAddToCartPlugin(),
             new ProductOfferPreAddToCartPlugin(),
             new ServicePointPreAddToCartPlugin(),
+            new SspAssetPreAddToCartPlugin(),
             new ShipmentTypePreAddToCartPlugin(),
             new ServiceDateTimePreAddToCartPlugin(),
+            new ServiceDateTimeEnabledPreAddToCartPlugin(),
         ];
     }
 

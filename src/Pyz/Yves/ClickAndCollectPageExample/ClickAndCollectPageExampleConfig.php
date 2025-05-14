@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Spryker Commerce OS.
+ * This file is part of the Spryker Suite.
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
@@ -14,17 +14,24 @@ use SprykerShop\Yves\ClickAndCollectPageExample\ClickAndCollectPageExampleConfig
 class ClickAndCollectPageExampleConfig extends SprykerClickAndCollectPageExampleConfig
 {
     /**
-     * @uses \SprykerFeature\Yves\SspServiceManagement\SspServiceManagementConfig::SHIPMENT_TYPE_ON_SITE_SERVICE
-     *
      * @var string
      */
-    public const SHIPMENT_TYPE_ON_SITE_SERVICE = 'on-site-service';
+    protected const SHIPMENT_TYPE_IN_CENTER_SERVICE = 'in-center-service';
 
     /**
      * @var list<string>
      */
     protected const CLICK_AND_COLLECT_SHIPMENT_TYPES = [
-        self::SHIPMENT_TYPE_ON_SITE_SERVICE,
+        self::SHIPMENT_TYPE_IN_CENTER_SERVICE,
         self::SHIPMENT_TYPE_DELIVERY,
+        self::SHIPMENT_TYPE_PICKUP,
+    ];
+
+    /**
+     * @var list<string>
+     */
+    protected const DEFAULT_PICKABLE_SERVICE_TYPES = [
+        self::SERVICE_TYPE_PICKUP,
+        self::SHIPMENT_TYPE_IN_CENTER_SERVICE,
     ];
 }

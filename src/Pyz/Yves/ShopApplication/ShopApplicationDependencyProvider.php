@@ -202,6 +202,14 @@ use SprykerShop\Yves\StoreWidget\Widget\StoreSwitcherWidget;
 use SprykerShop\Yves\TabsWidget\Widget\FullTextSearchTabsWidget;
 use SprykerShop\Yves\TraceableEventWidget\Widget\TraceableEventWidget;
 use SprykerShop\Yves\WebProfilerWidget\Plugin\Application\WebProfilerApplicationPlugin;
+use SprykerFeature\Yves\SspAssetManagement\Widget\SspAssetInfoForItemWidget;
+use SprykerFeature\Yves\SspAssetManagement\Widget\SspItemAssetSelectorWidget;
+use SprykerFeature\Yves\SspServiceManagement\Plugin\ShopApplication\AddressFormItemsByShipmentTypeWidgetCacheKeyGeneratorStrategyPlugin;
+use SprykerFeature\Yves\SspServiceManagement\Widget\SspAddressFormItemsByShipmentTypeWidget;
+use SprykerFeature\Yves\SspServiceManagement\Widget\SspProductOfferPriceWidget;
+use SprykerFeature\Yves\SspServiceManagement\Widget\SspServiceCancelWidget;
+use SprykerFeature\Yves\SspServiceManagement\Widget\SspServicePointNameForItemWidget;
+use SprykerFeature\Yves\SspServiceManagement\Widget\SspShipmentTypeServicePointSelectorWidget;
 
 /**
  * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
@@ -366,8 +374,8 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             SspAssetListWidget::class,
             SspServiceMenuItemWidget::class,
             SspServiceChangeScheduledTimeLinkWidget::class,
-            ShipmentTypeServicePointSelectorWidget::class,
-            ServicePointNameForItemWidget::class,
+            SspShipmentTypeServicePointSelectorWidget::class,
+            SspServicePointNameForItemWidget::class,
             ListItemsByShipmentTypeWidget::class,
             ServicePointSearchWidget::class,
             ShipmentTypeAddressFormWidget::class,
@@ -376,6 +384,11 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             ProductOfferServicePointAvailabilityWidget::class,
             ProductOfferServicePointAvailabilityDisplayWidget::class,
             SspListMenuItemWidget::class,
+            SspServiceCancelWidget::class,
+            SspAssetInfoForItemWidget::class,
+            SspItemAssetSelectorWidget::class,
+            SspProductOfferPriceWidget::class,
+            SspAddressFormItemsByShipmentTypeWidget::class,
         ];
     }
 
@@ -393,6 +406,7 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             new MerchantSalesReturnCreateFormWidgetCacheKeyGeneratorStrategyPlugin(),
             new ShipmentTypeAddressFormWidgetCacheKeyGeneratorStrategyPlugin(),
             new ClickAndCollectServicePointAddressFormWidgetCacheKeyGeneratorStrategyPlugin(),
+            new AddressFormItemsByShipmentTypeWidgetCacheKeyGeneratorStrategyPlugin(),
         ];
     }
 
