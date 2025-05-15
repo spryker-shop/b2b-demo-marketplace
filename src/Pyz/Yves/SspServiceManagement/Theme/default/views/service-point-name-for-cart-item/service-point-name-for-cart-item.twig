@@ -1,5 +1,9 @@
 {% extends view('service-point-name-for-cart-item', '@SprykerFeature:SspServiceManagement') %}
 
 {% block body %}
-    <div class="title--h6 spacing-y--big"><strong>{{ 'ssp_service_management.cart_item.service_point.name' | trans }}</strong>: {{ data.servicePointName }}</div>
+    <div class="title--h6"><strong>{{ 'ssp_service_management.cart_item.service_point.name' | trans }}</strong>: {{ data.servicePointName }}</div>
+
+    {% if data.scheduledAt %}
+        <div class="title--h6 spacing-bottom--big"><strong>{{ 'ssp_service_management.cart_item.scheduled_at' | trans }}</strong>: {{ data.scheduledAt | formatDateTime }}</div>
+    {% endif %}
 {% endblock %}

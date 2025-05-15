@@ -14,17 +14,21 @@
     </div>
 
     {% if can('SeePricePermissionPlugin') %}
-        {% widget 'CurrentProductPriceVolumeWidget' args [data.product.currentProductPrice] only %}
-        {% elsewidget 'ProductPriceVolumeWidget' args [data.product] only %} {# @deprecated Use CurrentProductPriceVolumeWidget instead. #}
-        {% nowidget %}
-            {% include molecule('money-price') with {
-                modifiers: ['big'],
-                data: {
-                    amount: data.product.price,
-                    originalAmount: data.product.prices.ORIGINAL ?? null,
-                },
-            } only %}
-        {% endwidget %}
+        {% if 'isSspService' is defined and isSspService(data.product) %}
+            {% widget 'SspProductOfferPriceWidget' args [data.product] only %}{% endwidget %}
+        {% else %}
+            {% widget 'CurrentProductPriceVolumeWidget' args [data.product.currentProductPrice] only %}
+            {% elsewidget 'ProductPriceVolumeWidget' args [data.product] only %} {# @deprecated Use CurrentProductPriceVolumeWidget instead. #}
+            {% nowidget %}
+                {% include molecule('money-price') with {
+                    modifiers: ['big'],
+                    data: {
+                        amount: data.product.price,
+                        originalAmount: data.product.prices.ORIGINAL ?? null,
+                    },
+                } only %}
+            {% endwidget %}
+        {% endif %}
     {% endif %}
 
     {% block bundleProducts %}
@@ -49,10 +53,18 @@
     {% widget 'AddToCartFormWidget' args [config, data.product, isDisabled, options] only %}
         {% block embeddedData %}
             {% widget 'ProductOptionConfiguratorWidget' args [data.product] only %}{% endwidget %}
+            {% set shipmentTypeServicePointSelectorWidget = findWidget('SspShipmentTypeServicePointSelectorWidget', [data.product, data.isDisabled]) %}
+
+            {% if not shipmentTypeServicePointSelectorWidget %}
+                {% set shipmentTypeServicePointSelectorWidget = findWidget('ShipmentTypeServicePointSelectorWidget', [data.product, data.isDisabled]) %}
+            {% endif %}
 
             {% if can('SeeAddToCartPermissionPlugin') %}
+                {% widget 'SspItemAssetSelectorWidget' args [data.product, data.isDisabled] only %}{% endwidget %}
 
-                {% widget 'SspShipmentTypeServicePointSelectorWidget' args [data.product, data.isDisabled] only %}{% endwidget %}
+                {% if shipmentTypeServicePointSelectorWidget %}
+                    {% widget shipmentTypeServicePointSelectorWidget only %}{% endwidget %}
+                {% endif %}
 
                 <div class="{{ data.config.name }}__add-to-cart">
                     {% widget 'ProductPackagingUnitWidget' args [data.product, data.isDisabled, data.options] only %}
@@ -90,35 +102,39 @@
                 {% widget 'CartAddProductAsSeparateItemWidget' only %}{% endwidget %}
             {% endif %}
 
-            {% set merchantProductOfferWidget = findWidget('MerchantProductOfferWidget', [data.product]) %}
-            {% set productOffersCount = merchantProductOfferWidget ? merchantProductOfferWidget.productOffers | length : 0 %}
-            {% set isRadioButtonVisible = productOffersCount > 0  %}
-            {% set isChecked = merchantProductOfferWidget ? not merchantProductOfferWidget.productView.productOfferReference : true %}
-            {% set merchantProductWidget = findWidget('MerchantProductWidget', [
-                data.product,
-                isRadioButtonVisible,
-                isChecked,
-            ]) %}
-            {% set hasMerchantProduct = merchantProductWidget.merchantProductView is defined %}
+            {% set isSsp = 'isSspService' is defined and isSspService(data.product) %}
 
-            <div class="spacing-bottom spacing-bottom--bigger">
-                {% widget merchantProductWidget %}{% endwidget %}
-                {% widget merchantProductOfferWidget with {
-                    data: {
-                        isTitleVisible: not hasMerchantProduct,
-                    },
-                    embed: {
-                        hasMerchantProduct: hasMerchantProduct,
-                        productOffersCount: merchantProductOfferWidget.productOffers | length,
-                    },
-                } %}
-                    {% block content %}
-                        {% set isRadioButtonVisible = embed.productOffersCount > 1 or embed.hasMerchantProduct %}
+            {% if not shipmentTypeServicePointSelectorWidget or not shipmentTypeServicePointSelectorWidget.hasShipmentTypeWithRequiredLocation %}
+                {% set merchantProductOfferWidget = findWidget('MerchantProductOfferWidget', [data.product]) %}
+                {% set productOffersCount = merchantProductOfferWidget ? merchantProductOfferWidget.productOffers | length : 0 %}
+                {% set isRadioButtonVisible = productOffersCount > 0  %}
+                {% set isChecked = merchantProductOfferWidget ? not merchantProductOfferWidget.productView.productOfferReference : true %}
+                {% set merchantProductWidget = findWidget('MerchantProductWidget', [
+                    data.product,
+                    isRadioButtonVisible,
+                    isChecked,
+                ]) %}
+                {% set hasMerchantProduct = merchantProductWidget.merchantProductView is defined %}
 
-                        {{ parent() }}
-                    {% endblock %}
-                {% endwidget %}
-            </div>
+                <div class="spacing-bottom spacing-bottom--bigger">
+                    {% widget merchantProductWidget %}{% endwidget %}
+                    {% widget merchantProductOfferWidget with {
+                        data: {
+                            isTitleVisible: not hasMerchantProduct,
+                        },
+                        embed: {
+                            hasMerchantProduct: hasMerchantProduct,
+                            productOffersCount: merchantProductOfferWidget.productOffers | length,
+                        },
+                    } %}
+                        {% block content %}
+                            {% set isRadioButtonVisible = embed.productOffersCount > 1 or embed.hasMerchantProduct %}
+
+                            {{ parent() }}
+                        {% endblock %}
+                    {% endwidget %}
+                </div>
+            {% endif %}
 
             {% if not data.product.available %}
                 <p class="text-alert">{{ 'product.detail.out_of_stock' | trans }}</p>
