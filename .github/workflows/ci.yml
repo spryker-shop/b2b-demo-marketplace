@@ -1274,7 +1274,7 @@ jobs:
                 run: |
                     docker/sdk exec cypress-tests cp .env.dynamic-store.example .env
                     docker/sdk exec cypress-tests git log -3
-                    docker/sdk exec --env "ENV_REPOSITORY_ID=b2b-mp" cypress-tests cypress run --spec \"cypress/e2e/yves/**/!(ssp)*.ts\" --headless --browser chrome
+                    docker/sdk exec --env ENV_REPOSITORY_ID=b2b-mp cypress-tests cypress run --spec "cypress/e2e/yves/**/!(ssp)*.ts" --headless --browser chrome
             -   name: Upload artifacts
                 if: failure()
                 run: |
