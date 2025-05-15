@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "09ab510f1669a8b32d11d9e9f1095620",
+    "content-hash": "229c9082a4330dfe0dfb46200f7b5595",
     "packages": [
         {
             "name": "async-aws/core",
@@ -9404,7 +9404,7 @@
         },
         {
             "name": "spryker-feature/ssp-asset-management",
-            "version": "dev-master",
+            "version": "0.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/ssp-asset-management.git",
@@ -9462,7 +9462,6 @@
                 "spryker/company-business-unit-gui": "Provides GUI for company business unit suggestion. You can install this module of min version 2.13.0 when you want to use /company-business-unit-gui/suggest endpoint.",
                 "spryker/router": "You need to install this module when you want to use the RouterExtension interfaces."
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -9551,22 +9550,22 @@
         },
         {
             "name": "spryker-feature/ssp-file-management",
-            "version": "0.3.0",
+            "version": "0.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/ssp-file-management.git",
-                "reference": "e7568f90bb921a65d25458a7211d0279d56bd728"
+                "reference": "e2fef10e4c333339f9ac2806b2d801b1bcb191bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/ssp-file-management/zipball/e7568f90bb921a65d25458a7211d0279d56bd728",
-                "reference": "e7568f90bb921a65d25458a7211d0279d56bd728",
+                "url": "https://api.github.com/repos/spryker-feature/ssp-file-management/zipball/e2fef10e4c333339f9ac2806b2d801b1bcb191bb",
+                "reference": "e2fef10e4c333339f9ac2806b2d801b1bcb191bb",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.2",
                 "spryker-feature/feature-ui": "^0.1.0",
-                "spryker-feature/ssp-asset-management": "^0.4.0",
+                "spryker-feature/ssp-asset-management": "^0.5.0",
                 "spryker-shop/shop-application": "^1.0.0",
                 "spryker/application": "^3.8.0",
                 "spryker/company": "^1.0.0",
@@ -9628,29 +9627,29 @@
             ],
             "description": "SspFileManagement module",
             "support": {
-                "source": "https://github.com/spryker-feature/ssp-file-management/tree/0.3.0"
+                "source": "https://github.com/spryker-feature/ssp-file-management/tree/0.3.1"
             },
-            "time": "2025-05-05T13:27:46+00:00"
+            "time": "2025-05-15T12:31:30+00:00"
         },
         {
             "name": "spryker-feature/ssp-inquiry-management",
-            "version": "0.5.0",
+            "version": "0.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/ssp-inquiry-management.git",
-                "reference": "c481ae41eeec113ba89a4e89c6c5e2e782fab150"
+                "reference": "b76d603b2c7f5f218a36ddcd768ac2559920b764"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/ssp-inquiry-management/zipball/c481ae41eeec113ba89a4e89c6c5e2e782fab150",
-                "reference": "c481ae41eeec113ba89a4e89c6c5e2e782fab150",
+                "url": "https://api.github.com/repos/spryker-feature/ssp-inquiry-management/zipball/b76d603b2c7f5f218a36ddcd768ac2559920b764",
+                "reference": "b76d603b2c7f5f218a36ddcd768ac2559920b764",
                 "shasum": ""
             },
             "require": {
                 "ext-zlib": "*",
                 "php": ">=8.2",
                 "spryker-feature/feature-ui": "^0.1.0",
-                "spryker-feature/ssp-asset-management": "^0.4.0",
+                "spryker-feature/ssp-asset-management": "^0.5.0",
                 "spryker-shop/shop-application": "^1.15.0",
                 "spryker-shop/shop-application-extension": "^1.2.0",
                 "spryker/application": "^3.36.0",
@@ -9687,6 +9686,7 @@
                 "spryker-shop/customer-page": "*",
                 "spryker/code-sniffer": "*",
                 "spryker/company": "*",
+                "spryker/payment": "*",
                 "spryker/propel": "*",
                 "spryker/ramsey-uuid": "*",
                 "spryker/shipment": "*",
@@ -9714,13 +9714,13 @@
             ],
             "description": "SspInquiryManagement module",
             "support": {
-                "source": "https://github.com/spryker-feature/ssp-inquiry-management/tree/0.5.0"
+                "source": "https://github.com/spryker-feature/ssp-inquiry-management/tree/0.5.2"
             },
-            "time": "2025-05-05T13:27:46+00:00"
+            "time": "2025-05-15T12:31:30+00:00"
         },
         {
             "name": "spryker-feature/ssp-service-management",
-            "version": "dev-master",
+            "version": "0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/ssp-service-management.git",
@@ -9805,7 +9805,6 @@
                 "spryker/router": "If you want to use the router, you need to install the spryker/router module.",
                 "spryker/search": "If you want to use the search module, you need to install the spryker/search module."
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -82592,18 +82591,6 @@
             "version": "9999999-dev",
             "alias": "202410.0",
             "alias_normalized": "202410.0"
-        },
-        {
-            "package": "spryker-feature/ssp-asset-management",
-            "version": "9999999-dev",
-            "alias": "0.4.0",
-            "alias_normalized": "0.4.0.0"
-        },
-        {
-            "package": "spryker-feature/ssp-service-management",
-            "version": "9999999-dev",
-            "alias": "0.4.0",
-            "alias_normalized": "0.4.0.0"
         }
     ],
     "minimum-stability": "dev",
@@ -82624,8 +82611,6 @@
         "spryker-feature/shipment-product-offer-service-points-availability": 20,
         "spryker-feature/shipment-service-points": 20,
         "spryker-feature/spryker-core": 20,
-        "spryker-feature/ssp-asset-management": 20,
-        "spryker-feature/ssp-service-management": 20,
         "spryker/cypress-tests": 20,
         "spryker/docker-chromedriver": 20,
         "spryker/robotframework-suite-tests": 20
