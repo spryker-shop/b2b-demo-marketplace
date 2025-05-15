@@ -105,7 +105,11 @@ actions:
     # Store relation
     - data_entity: product-measurement-sales-unit-store
       source: data/import/common/US/product_measurement_sales_unit_store.csv
-
+    # SspServiceManagement
+    - data_entity: product-abstract-type
+      source: data/import/common/common/product_abstract_type.csv
+    - data_entity: product-abstract-product-abstract-type
+      source: data/import/common/common/product_abstract_product_abstract_type.csv
 
     #4. Merchandising Setup import
     - data_entity: discount
