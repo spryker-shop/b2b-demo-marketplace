@@ -39,8 +39,6 @@ use SprykerFeature\Yves\SspInquiryManagement\Widget\DashboardInquiryWidget;
 use SprykerFeature\Yves\SspInquiryManagement\Widget\SspInquiryListWidget;
 use SprykerFeature\Yves\SspInquiryManagement\Widget\SspInquiryMenuItemWidget;
 use SprykerFeature\Yves\SspServiceManagement\Widget\ListItemsByShipmentTypeWidget;
-use SprykerFeature\Yves\SspServiceManagement\Widget\ServicePointNameForItemWidget;
-use SprykerFeature\Yves\SspServiceManagement\Widget\ShipmentTypeServicePointSelectorWidget;
 use SprykerFeature\Yves\SspServiceManagement\Widget\SspServiceChangeScheduledTimeLinkWidget;
 use SprykerFeature\Yves\SspServiceManagement\Widget\SspServiceMenuItemWidget;
 use SprykerShop\Yves\AgentWidget\Widget\AgentControlBarWidget;

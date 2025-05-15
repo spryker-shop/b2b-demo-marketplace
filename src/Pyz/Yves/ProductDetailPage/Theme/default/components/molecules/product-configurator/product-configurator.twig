@@ -52,7 +52,7 @@
 
             {% if can('SeeAddToCartPermissionPlugin') %}
 
-                {% widget 'ShipmentTypeServicePointSelectorWidget' args [data.product, data.isDisabled] only %}{% endwidget %}
+                {% widget 'SspShipmentTypeServicePointSelectorWidget' args [data.product, data.isDisabled] only %}{% endwidget %}
 
                 <div class="{{ data.config.name }}__add-to-cart">
                     {% widget 'ProductPackagingUnitWidget' args [data.product, data.isDisabled, data.options] only %}
