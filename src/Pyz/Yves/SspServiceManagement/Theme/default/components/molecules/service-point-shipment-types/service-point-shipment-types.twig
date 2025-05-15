@@ -140,41 +140,5 @@
                 </div>
             {% endif %}
         {% endblock %}
-
-        {% include molecule('service-point-attributes-transfer', 'SspServiceManagement') with {
-            attributes: {
-                'trigger-class-name': 'js-service-point__select-button',
-                'transferable-data': [
-                    {
-                        from: {
-                            selector: '[data-service-point-product-offer-availability]',
-                            attribute: 'data-service-point-product-offer-availability',
-                        },
-                        to: {
-                            selector: '[data-service-point-uuid-input]',
-                            attribute: 'value',
-                        },
-                        json: {
-                            index: 0,
-                            prop: 'servicePointUuid',
-                        }
-                    },
-                    {
-                        from: {
-                            selector: '[data-service-point-product-offer-availability]',
-                            attribute: 'data-service-point-product-offer-availability',
-                        },
-                        to: {
-                            selector: '[data-product-offer-reference-input]',
-                            attribute: 'value',
-                        },
-                        json: {
-                            index: 0,
-                            prop: 'productOfferReference',
-                        }
-                    },
-                ] | json_encode
-            },
-        } only %}
     </div>
 {% endblock %}
