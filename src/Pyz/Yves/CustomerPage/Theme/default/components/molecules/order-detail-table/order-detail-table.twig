@@ -112,7 +112,13 @@
                                     {% endif %}
                                 {% endblock %}
 
-                                {% widget 'SspServicePointNameForItemWidget' args [data.listItem, false] only %}{% endwidget %}
+                                {% widget 'SspServicePointNameForItemWidget' args [data.listItem, false] with {
+                                    item: data.listItem,
+                                } only %}
+                                    {% block serviceName %}
+                                        {{ item.salesOrderItemServicePoint.name }}
+                                    {% endblock %}
+                                {% endwidget %}
                                 {% widget 'SspAssetInfoForItemWidget' args [data.listItem] only %}{% endwidget %}
                                 <div class="spacing-y">
                                     {% widget 'SspServiceChangeScheduledTimeLinkWidget' args [data.listItem] only %}{% endwidget %}
