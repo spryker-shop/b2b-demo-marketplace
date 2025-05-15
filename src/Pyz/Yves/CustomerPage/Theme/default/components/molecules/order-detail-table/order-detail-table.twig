@@ -116,7 +116,13 @@
                                     item: data.listItem,
                                 } only %}
                                     {% block serviceName %}
-                                        {{ item.salesOrderItemServicePoint.name }}
+                                        {{ item.salesOrderItemServicePoint.name | default }}
+                                    {% endblock %}
+
+                                    {% block title %}
+                                        {% if item.salesOrderItemServicePoint.name | default %}
+                                            {{ parent() }}
+                                        {% endif %}
                                     {% endblock %}
                                 {% endwidget %}
                                 {% widget 'SspAssetInfoForItemWidget' args [data.listItem] only %}{% endwidget %}
