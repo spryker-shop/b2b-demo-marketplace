@@ -1219,14 +1219,21 @@ jobs:
     #             uses: ./.github/actions/scheduled-job-slack-notifications
     #             if: always()
 
-    docker-alpine-php-83-mariadb-cypress-setup:
+    docker-alpine-php-83-mariadb-cypress:
         if: >
             !contains(github.event.pull_request.head.ref, 'hackathon')
             && (contains(github.event.pull_request.labels.*.name, 'run-ui-ci')
                 || contains(github.event.pull_request.labels.*.name, 'run-latest-ci'))
             || (github.event_name == 'schedule' && github.ref == 'refs/heads/master')
-        name: "Docker / Alpine / PHP 8.3 / MariaDB / Cypress / UI / Setup"
+        name: "Docker / Alpine / PHP 8.3 / MariaDB / Cypress / UI"
         runs-on: ubuntu-22.04
+        env:
+            PROGRESS_TYPE: plain
+            SPRYKER_PLATFORM_IMAGE: spryker/php:8.3
+            TRAVIS: 1
+            ROBOT_TESTS_ARTIFACTS_BUCKET_REGION: eu-west-1
+            SPRYKER_CURRENT_REGION: EU
+            DYNAMIC_STORE_MODE: true
         steps:
             -   uses: actions/checkout@v4
             -   name: Install packages
@@ -1256,44 +1263,15 @@ jobs:
                     for i in {1..5}; do
                       docker/sdk cli console queue:worker:start --stop-when-empty
                     done
-            -   name: Upload Environment Artifact
-                uses: actions/upload-artifact@v4
-                with:
-                    name: cypress-env
-                    path: .
-
-    docker-alpine-php-83-mariadb-cypress-run-tests:
-        needs: docker-alpine-php-83-mariadb-cypress-setup
-        name: "Docker / Alpine / PHP 8.3 / MariaDB / Cypress / UI / Run"
-        runs-on: ubuntu-22.04
-        strategy:
-            fail-fast: false
-            matrix:
-                container: [1, 2]
-        env:
-            PROGRESS_TYPE: plain
-            ROBOT_TESTS_ARTIFACTS_BUCKET_REGION: eu-west-1
-            SPRYKER_CURRENT_REGION: EU
-            DYNAMIC_STORE_MODE: true
-            SPLIT: ${{strategy.job-total}}
-            SPLIT_INDEX: ${{strategy.job-index}}
-            SPEC_FILTER: "cypress/e2e/yves/**/!(ssp)*.ts"
-        steps:
-            -   uses: actions/download-artifact@v4
-                with:
-                    name: cypress-env
-                    path: .
             -   name: Run Tests
                 run: |
                     docker/sdk exec cypress-tests cp .env.dynamic-store.example .env
                     docker/sdk exec cypress-tests git log -3
-                    docker/sdk exec cypress-tests npx cypress-split-preview --split 2
-                    docker/sdk exec cypress-tests bash -c "echo 'SPLIT value: $SPLIT, SPLIT_INDEX value: $SPLIT_INDEX'"
-                    docker/sdk exec --env "ENV_REPOSITORY_ID=b2b-mp" cypress-tests npx cypress run --spec "$SPEC_FILTER" --headless --browser chrome
+                    docker/sdk exec --env "ENV_REPOSITORY_ID=b2b-mp" cypress-tests npx cypress-parallel -s cypress run -t 2 -d 'cypress/e2e/yves/**/!(ssp)*.ts' -a '"--headless --browser chrome"'
             -   name: Upload artifacts
                 if: failure()
                 run: |
-                    AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp .cypress s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/b2b-mp/dms-on/cypress/${GITHUB_RUN_ID}/PHP8.3MariaDB/split-${{matrix.container}}/ --recursive
+                    AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp .cypress s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/b2b-mp/dms-on/cypress/${GITHUB_RUN_ID}/PHP8.3MariaDB/ --recursive
 
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
