@@ -110,7 +110,10 @@
 
 {% block soldBy %}
     {{ parent() }}
-    {% widget 'ServicePointNameForItemWidget' args [data.listItem] only %}{% endwidget %}
+    {% widget 'SspServicePointNameForItemWidget' args [data.listItem] only %}
+        {% elsewidget 'ServicePointNameForItemWidget' args [data.listItem] only %}
+    {% endwidget %}
+    {% widget 'SspAssetInfoForItemWidget' args [data.listItem] only %}{% endwidget %}
 {% endblock %}
 
 {% block itemAttributes %}

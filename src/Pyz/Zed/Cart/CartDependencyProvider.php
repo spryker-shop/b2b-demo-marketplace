@@ -92,6 +92,8 @@ use Spryker\Zed\ShipmentCartConnector\Communication\Plugin\Cart\SanitizeCartShip
 use SprykerFeature\Zed\SspServiceManagement\Communication\Plugin\Cart\ProductAbstactTypeItemExpanderPlugin;
 use SprykerFeature\Zed\SspServiceManagement\Communication\Plugin\Cart\ServicePointItemExpanderPlugin;
 use SprykerFeature\Zed\SspServiceManagement\Communication\Plugin\Cart\SspShipmentTypeItemExpanderPlugin;
+use SprykerFeature\Zed\SspAssetManagement\Communication\Plugin\Cart\SspAssetItemExpanderPlugin;
+use SprykerFeature\Zed\SspServiceManagement\Communication\Plugin\Cart\SspServiceShipmentTypePreReloadItemsPlugin;
 
 class CartDependencyProvider extends SprykerCartDependencyProvider
 {
@@ -133,6 +135,7 @@ class CartDependencyProvider extends SprykerCartDependencyProvider
             new SspShipmentTypeItemExpanderPlugin(),
             new ProductAbstactTypeItemExpanderPlugin(),
             new ServicePointItemExpanderPlugin(),
+            new SspAssetItemExpanderPlugin(),
         ];
     }
 
@@ -216,6 +219,7 @@ class CartDependencyProvider extends SprykerCartDependencyProvider
             new ConfiguredBundleQuantityPerSlotPreReloadItemsPlugin(),
             new FilterInactiveProductOfferPreReloadItemsPlugin(),
             new ProductApprovalPreReloadItemsPlugin(),
+            new SspServiceShipmentTypePreReloadItemsPlugin(),
             new SanitizeMerchantCommissionPreReloadPlugin(),
         ];
     }
