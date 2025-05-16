@@ -121,7 +121,7 @@
 
                                     {% block title %}
                                         {% if item.salesOrderItemServicePoint.name | default %}
-                                            {{ parent() }}
+                                            {{ block('titleInner') }}
                                         {% endif %}
                                     {% endblock %}
                                 {% endwidget %}

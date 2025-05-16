@@ -3,13 +3,15 @@
 {% block body %}
     {% block title %}
         {% if data.servicePointName %}
-            <div class="title--h6">
-                <strong>{{ 'ssp_service_management.cart_item.service_point.name' | trans }}</strong>:
+            {% block titleInner %}
+                <div class="title--h6">
+                    <strong>{{ 'ssp_service_management.cart_item.service_point.name' | trans }}</strong>:
 
-                {% block serviceName %}
-                    {{ data.servicePointName }}
-                {% endblock %}
-            </div>
+                    {% block serviceName %}
+                        {{ data.servicePointName }}
+                    {% endblock %}
+                </div>
+            {% endblock %}
         {% endif %}
     {% endblock %}
 
