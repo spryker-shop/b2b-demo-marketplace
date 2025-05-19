@@ -17,6 +17,7 @@ use Spryker\Shared\Log\LogConstants;
 use Spryker\Shared\Product\ProductConstants;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Shared\Queue\QueueConstants;
+use Spryker\Shared\Redis\RedisConstants;
 use SprykerFeature\Shared\SspFileManagement\SspFileManagementConstants;
 
 require 'config_default-docker.dev.php';
@@ -68,3 +69,11 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'path' => '/data/ssp-asset-image',
     ],
 ];
+
+// ----------------------------------------------------------------------------
+// ------------------------------ SERVICES ------------------------------------
+// ----------------------------------------------------------------------------
+
+// >>> STORAGE
+
+$config[RedisConstants::REDIS_IS_DEV_MODE] = false;
