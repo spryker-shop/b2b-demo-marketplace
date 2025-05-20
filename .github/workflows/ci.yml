@@ -1279,12 +1279,12 @@ jobs:
                 run: |
                     cp .env.dynamic-store.example .env
                     git log -3
-                    npm run cy:ci
+                    npx cypress-parallel -s cy:ci -t 2 -d 'cypress/e2e/!(smoke)/**/!(ssp)*.ts' -a '"--headless --browser chrome"'
 
             -   name: Upload artifacts
                 if: failure()
                 run: |
-                    AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{secrets.ROBOT_TESTS_ARTIFACTS_KEY}}  AWS_SECRET_ACCESS_KEY=${{secrets.ROBOT_TESTS_ARTIFACTS_SECRET}} aws s3 cp ./cypress-tests/.cypress s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/b2b-mp/dms-on/cypress/${GITHUB_RUN_ID}/PHP8.3MariaDB/ --recursive
+                    AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{secrets.ROBOT_TESTS_ARTIFACTS_KEY}}  AWS_SECRET_ACCESS_KEY=${{secrets.ROBOT_TESTS_ARTIFACTS_SECRET}} aws s3 cp ./cypress-tests/cypress s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/b2b-mp/dms-on/cypress/${GITHUB_RUN_ID}/PHP8.3MariaDB/ --recursive
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
                 if: always()
