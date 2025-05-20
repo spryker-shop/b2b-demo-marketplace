@@ -1219,13 +1219,13 @@ jobs:
     #             uses: ./.github/actions/scheduled-job-slack-notifications
     #             if: always()
 
-    standalone-alpine-php-83-mariadb-cypress:
+    docker-alpine-php-83-mariadb-cypress:
         if: >
             !contains(github.event.pull_request.head.ref, 'hackathon')
             && (contains(github.event.pull_request.labels.*.name, 'run-ui-ci')
                 || contains(github.event.pull_request.labels.*.name, 'run-latest-ci'))
             || (github.event_name == 'schedule' && github.ref == 'refs/heads/master')
-        name: "Standalone / Alpine / PHP 8.3 / MariaDB / Cypress / UI"
+        name: "Docker / Alpine / PHP 8.3 / MariaDB / Cypress / UI"
         runs-on: ubuntu-22.04
         env:
             PROGRESS_TYPE: plain
@@ -1240,17 +1240,11 @@ jobs:
                 run: |
                     sudo apt-get update
                     sudo apt install awscli -q
-            -   name: Set up Node.js
-                uses: actions/setup-node@v4
-                with:
-                    node-version: 18            
 
             -   name: Install cypress-tests folder
                 run: |
-                    composer require "spryker/cypress-tests:dev-master" --dev --no-interaction
-                    cd vendor/spryker/cypress-tests
-                    npm ci
-                    echo "CYPRESS_TESTS_PATH=$(pwd)" >> $GITHUB_ENV
+                    cd ./data && composer require "spryker/cypress-tests:dev-master" --dev --no-interaction
+                    cp -r vendor ../vendor
 
             -   name: Install docker-compose
                 run: |
@@ -1271,15 +1265,13 @@ jobs:
                     done
             -   name: Run Tests
                 run: |
-                    cd ${{env.CYPRESS_TESTS_PATH}}
-                    cp .env.dynamic-store.example .env
-                    git log -3
-                    npm run cy:ci
-
+                    docker/sdk exec cypress-tests cp .env.dynamic-store.example .env
+                    docker/sdk exec cypress-tests git log -3
+                    docker/sdk exec --env "ENV_REPOSITORY_ID=b2b-mp" cypress-tests npx cypress-parallel -s cy:ci -t 2 -d 'cypress/e2e/!(smoke)/**/!(ssp)*.ts' -a '"--headless --browser chrome"'
             -   name: Upload artifacts
                 if: failure()
                 run: |
-                    AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp ${{ env.CYPRESS_TESTS_PATH }}/.cypress s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/b2b-mp/dms-on/cypress/${GITHUB_RUN_ID}/PHP8.3MariaDB/ --recursive
+                    AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp .cypress s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/b2b-mp/dms-on/cypress/${GITHUB_RUN_ID}/PHP8.3MariaDB/ --recursive
 
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
