@@ -1239,7 +1239,7 @@ jobs:
             -   name: Install packages
                 run: |
                     sudo apt-get update
-                    sudo apt-get install -y awscli curl git
+                    sudo apt install awscli -q
 
             -   name: Install docker-compose
                 run: |
@@ -1251,10 +1251,10 @@ jobs:
                 run: |
                     git clone https://github.com/spryker/docker-sdk.git ./docker
                     docker/sdk boot deploy.ci.acceptance.mariadb.cypress.yml
-                    sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local' >> /etc/hosts"
+                    echo "127.0.0.1 yves.eu.spryker.local yves.us.spryker.local glue.eu.spryker.local glue.us.spryker.local ..." | sudo tee -a /etc/hosts
                     docker/sdk up -t
                     docker/sdk cli composer dump-autoload -o -a --apcu
-                    
+
             -   name: Publish & Sync
                 run: |
                     for i in {1..5}; do
@@ -1284,8 +1284,7 @@ jobs:
             -   name: Upload artifacts
                 if: failure()
                 run: |
-                    AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp ./cypress-tests/.cypress  s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/b2b-mp/dms-on/cypress/${GITHUB_RUN_ID}/PHP8.3MariaDB/ --recursive
-
+                    AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{secrets.ROBOT_TESTS_ARTIFACTS_KEY}}  AWS_SECRET_ACCESS_KEY=${{secrets.ROBOT_TESTS_ARTIFACTS_SECRET}} aws s3 cp ./cypress-tests/.cypress s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/b2b-mp/dms-on/cypress/${GITHUB_RUN_ID}/PHP8.3MariaDB/ --recursive
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
                 if: always()
