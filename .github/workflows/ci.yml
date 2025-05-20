@@ -1279,7 +1279,7 @@ jobs:
                 run: |
                     cp .env.dynamic-store.example .env
                     git log -3
-                    npx cypress-parallel -s cy:ci -t 2 -d 'cypress/e2e/!(smoke)/**/!(ssp)*.ts' -a '"--headless --browser chrome"'
+                    npx cypress-parallel -s cy:ci -t 2 -d 'cypress/e2e/!(smoke)/**/!(ssp)*.ts' -a '"--headless --browser chrome  --reporter spec"'
 
             -   name: Upload artifacts
                 if: failure()
