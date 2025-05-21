@@ -119,6 +119,7 @@ use Spryker\Shared\Session\SessionConfig;
 use Spryker\Shared\Session\SessionConstants;
 use Spryker\Shared\SessionRedis\SessionRedisConfig;
 use Spryker\Shared\SessionRedis\SessionRedisConstants;
+use Spryker\Shared\Sitemap\SitemapConstants;
 use Spryker\Shared\Storage\StorageConstants;
 use Spryker\Shared\StorageRedis\StorageRedisConstants;
 use Spryker\Shared\SymfonyMailer\SymfonyMailerConstants;
@@ -430,7 +431,7 @@ $config[SessionRedisConstants::LOCKING_LOCK_TTL_MILLISECONDS] = 0;
 $config[SessionConstants::YVES_SESSION_COOKIE_NAME]
     = $config[SessionConstants::YVES_SESSION_COOKIE_DOMAIN]
     = $sprykerFrontendHost;
-$config[SessionConstants::YVES_SESSION_SAVE_HANDLER] = SessionRedisConfig::SESSION_HANDLER_REDIS_LOCKING;
+$config[SessionConstants::YVES_SESSION_SAVE_HANDLER] = SessionRedisConfig::SESSION_HANDLER_CONFIGURABLE_REDIS_LOCKING;
 $config[SessionRedisConstants::YVES_SESSION_REDIS_SCHEME] = getenv('SPRYKER_SESSION_FE_PROTOCOL') ?: 'tcp';
 $config[SessionRedisConstants::YVES_SESSION_REDIS_HOST] = getenv('SPRYKER_SESSION_FE_HOST');
 $config[SessionRedisConstants::YVES_SESSION_REDIS_PORT] = getenv('SPRYKER_SESSION_FE_PORT');
@@ -630,13 +631,23 @@ $config[SymfonyMailerConstants::SMTP_PASSWORD] = getenv('SPRYKER_SMTP_PASSWORD')
 
 // >>> FILESYSTEM
 $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
+    SitemapConstants::FILESYSTEM_NAME => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => APPLICATION_ROOT_DIR . '/data/sitemaps/',
+        'path' => '/',
+    ],
+    SitemapConstants::FILESYSTEM_NAME_CACHE => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => APPLICATION_ROOT_DIR . '/data/sitemaps/cache',
+        'path' => '/',
+    ],
     's3-import' => [
         'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
         'path' => '/',
         'key' => '',
         'secret' => '',
         'bucket' => '',
-        'region' => '',
+        'region' => 'eu-central-1',
     ],
     'files-import' => [
         'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
@@ -717,13 +728,17 @@ $config[ApplicationConstants::BASE_URL_YVES]
 $config[ShopUiConstants::YVES_ASSETS_URL_PATTERN] = '/assets/' . (getenv('SPRYKER_BUILD_HASH') ?: 'current') . '/%theme%/';
 
 // >>> Availability Notification
-$config[AvailabilityNotificationConstants::BASE_URL_YVES_PORT] = $yvesPort;
-$config[AvailabilityNotificationConstants::STORE_TO_YVES_HOST_MAPPING] = [
+$config[AvailabilityNotificationConstants::BASE_URL_YVES_PORT]
+    = $config[SitemapConstants::BASE_URL_YVES_PORT]
+    = $yvesPort;
+$config[AvailabilityNotificationConstants::STORE_TO_YVES_HOST_MAPPING]
+    = $config[SitemapConstants::STORE_TO_YVES_HOST_MAPPING] = [
     'DE' => getenv('SPRYKER_YVES_HOST_DE'),
     'AT' => getenv('SPRYKER_YVES_HOST_AT'),
     'US' => getenv('SPRYKER_YVES_HOST_US'),
 ];
-$config[AvailabilityNotificationConstants::REGION_TO_YVES_HOST_MAPPING] = [
+$config[AvailabilityNotificationConstants::REGION_TO_YVES_HOST_MAPPING]
+    = $config[SitemapConstants::REGION_TO_YVES_HOST_MAPPING] = [
     'EU' => getenv('SPRYKER_YVES_HOST_EU'),
     'US' => getenv('SPRYKER_YVES_HOST_US'),
 ];
