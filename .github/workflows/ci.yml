@@ -1241,11 +1241,15 @@ jobs:
                     sudo apt-get update
                     sudo apt install awscli -q
 
+            -   name: Install cypress-tests folder
+                run: |
+                    cd ./data && composer require "spryker/cypress-tests:dev-master" --dev --no-interaction
+                    cp -r vendor ../vendor
+
             -   name: Install docker-compose
                 run: |
                     sudo curl -L "https://github.com/docker/compose/releases/download/2.12.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
                     sudo chmod +x /usr/local/bin/docker-compose
-
             -   name: Install Project
                 continue-on-error: true
                 run: |
@@ -1254,37 +1258,21 @@ jobs:
                     sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local' >> /etc/hosts"
                     docker/sdk up -t
                     docker/sdk cli composer dump-autoload -o -a --apcu
-
             -   name: Publish & Sync
                 run: |
                     for i in {1..5}; do
                       docker/sdk cli console queue:worker:start --stop-when-empty
                     done
-
-            -   name: Checkout Cypress Tests
+            -   name: Run Tests
                 run: |
-                    git clone https://github.com/spryker/cypress-tests.git ./cypress-tests
-
-            -   name: Install Cypress dependencies
-                working-directory: ./cypress-tests
-                run: |
-                    curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-                    sudo apt-get install -y nodejs
-                    npm ci
-
-            -   name: Run Cypress Tests
-                working-directory: ./cypress-tests
-                env:
-                    ENV_REPOSITORY_ID: b2b-mp
-                run: |
-                    cp .env.dynamic-store.example .env
-                    git log -3
-                    npx cypress-parallel -s cy:ci -t 2 -d 'cypress/e2e/!(smoke)/**/!(ssp)*.ts' -a '"--headless --browser chrome  --reporter spec"'
-
+                    docker/sdk exec cypress-tests cp .env.dynamic-store.example .env
+                    docker/sdk exec cypress-tests git log -3
+                    docker/sdk exec --env "ENV_REPOSITORY_ID=b2b-mp" cypress-tests npx cypress-parallel -s cy:run -t 2 -d 'cypress/e2e/yves/cart/*.ts' -a '"--headless --browser chrome --config video=true"'
             -   name: Upload artifacts
                 if: failure()
                 run: |
-                    AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{secrets.ROBOT_TESTS_ARTIFACTS_KEY}}  AWS_SECRET_ACCESS_KEY=${{secrets.ROBOT_TESTS_ARTIFACTS_SECRET}} aws s3 cp ./cypress-tests/cypress s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/b2b-mp/dms-on/cypress/${GITHUB_RUN_ID}/PHP8.3MariaDB/ --recursive
+                    AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp .cypress s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/b2b-mp/dms-on/cypress/${GITHUB_RUN_ID}/PHP8.3MariaDB/ --recursive
+
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
                 if: always()
