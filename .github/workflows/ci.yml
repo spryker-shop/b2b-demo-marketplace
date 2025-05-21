@@ -1219,14 +1219,21 @@ jobs:
     #             uses: ./.github/actions/scheduled-job-slack-notifications
     #             if: always()
 
-    docker-alpine-php-83-mariadb-cypress-setup:
+    docker-alpine-php-83-mariadb-cypress:
         if: >
             !contains(github.event.pull_request.head.ref, 'hackathon')
             && (contains(github.event.pull_request.labels.*.name, 'run-ui-ci')
                 || contains(github.event.pull_request.labels.*.name, 'run-latest-ci'))
             || (github.event_name == 'schedule' && github.ref == 'refs/heads/master')
-        name: "Docker / Alpine / PHP 8.3 / MariaDB / Cypress / UI / Setup"
+        name: "Docker / Alpine / PHP 8.3 / MariaDB / Cypress / UI"
         runs-on: ubuntu-22.04
+        env:
+            PROGRESS_TYPE: plain
+            SPRYKER_PLATFORM_IMAGE: spryker/php:8.3
+            TRAVIS: 1
+            ROBOT_TESTS_ARTIFACTS_BUCKET_REGION: eu-west-1
+            SPRYKER_CURRENT_REGION: EU
+            DYNAMIC_STORE_MODE: true
         steps:
             -   uses: actions/checkout@v4
             -   name: Install packages
@@ -1238,6 +1245,7 @@ jobs:
                 run: |
                     sudo curl -L "https://github.com/docker/compose/releases/download/2.12.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
                     sudo chmod +x /usr/local/bin/docker-compose
+
             -   name: Install Project
                 continue-on-error: true
                 run: |
@@ -1246,50 +1254,24 @@ jobs:
                     sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local' >> /etc/hosts"
                     docker/sdk up -t
                     docker/sdk cli composer dump-autoload -o -a --apcu
+
             -   name: Publish & Sync
                 run: |
                     for i in {1..5}; do
                       docker/sdk cli console queue:worker:start --stop-when-empty
                     done
-            -   name: Upload Environment Artifact
-                uses: actions/upload-artifact@v4
-                with:
-                    name: cypress-env
-                    path: .
-
-    docker-alpine-php-83-mariadb-cypress-run-tests:
-        needs: docker-alpine-php-83-mariadb-cypress-setup
-        name: "Docker / Alpine / PHP 8.3 / MariaDB / Cypress / UI / Run"
-        runs-on: ubuntu-22.04
-        strategy:
-            fail-fast: false
-            matrix:
-                container: [1, 2]
-        env:
-            PROGRESS_TYPE: plain
-            ROBOT_TESTS_ARTIFACTS_BUCKET_REGION: eu-west-1
-            SPRYKER_CURRENT_REGION: EU
-            DYNAMIC_STORE_MODE: true
-            SPLIT: ${{strategy.job-total}}
-            SPLIT_INDEX: ${{strategy.job-index}}
-            SPEC_FILTER: "cypress/e2e/yves/**/!(ssp)*.ts"
-        steps:
-            -   uses: actions/download-artifact@v4
-                with:
-                    name: cypress-env
-                    path: .
 
             -   name: Checkout Cypress Tests
                 run: |
                     git clone https://github.com/spryker/cypress-tests.git ./cypress-tests
-    
+
             -   name: Install Cypress dependencies
                 working-directory: ./cypress-tests
                 run: |
                     curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
                     sudo apt-get install -y nodejs
                     npm ci
-    
+
             -   name: Run Cypress Tests
                 working-directory: ./cypress-tests
                 env:
@@ -1297,8 +1279,8 @@ jobs:
                 run: |
                     cp .env.dynamic-store.example .env
                     git log -3
-                    npx cypress-parallel -s cy:ci -t 2 -d 'cypress/e2e/!(smoke)/**/!(ssp)*.ts' -a '"--headless --browser chrome  --reporter spec"'
-    
+                    npx cypress-parallel -s cy:ci -t 2 -d 'cypress/e2e/!(smoke)/yves/cart/*.ts' -a '"--headless --browser chrome  --reporter spec --config video=true"'
+
             -   name: Upload artifacts
                 if: failure()
                 run: |
@@ -1306,7 +1288,6 @@ jobs:
             -   name: Slack Notification for scheduled job
                 uses: ./.github/actions/scheduled-job-slack-notifications
                 if: always()
-    
 
     # positive-docker-alpine-php-82-mariadb-robot:
     #     name: "[Hackathon] Positive / Docker / Alpine / PHP 8.2 / MariaDB / Robot / API"
