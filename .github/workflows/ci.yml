@@ -1219,7 +1219,7 @@ jobs:
     #             uses: ./.github/actions/scheduled-job-slack-notifications
     #             if: always()
 
-    docker-alpine-php-83-mariadb-cypress:
+    docker-alpine-php-83-mariadb-cypress-build:
         if: >
             !contains(github.event.pull_request.head.ref, 'hackathon')
             && (contains(github.event.pull_request.labels.*.name, 'run-ui-ci')
@@ -1254,40 +1254,92 @@ jobs:
                     sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local' >> /etc/hosts"
                     docker/sdk up -t
                     docker/sdk cli composer dump-autoload -o -a --apcu
+                    echo "::set-output name=image-tag::spryker-app:latest"
 
             -   name: Publish & Sync
                 run: |
                     for i in {1..5}; do
                       docker/sdk cli console queue:worker:start --stop-when-empty
                     done
+                    
+    docker-alpine-php-83-mariadb-cypress-run:
+        if: >
+            !contains(github.event.pull_request.head.ref, 'hackathon')
+            && (contains(github.event.pull_request.labels.*.name, 'run-ui-ci')
+                || contains(github.event.pull_request.labels.*.name, 'run-latest-ci'))
+            || (github.event_name == 'schedule' && github.ref == 'refs/heads/master')
+        name: "Docker / Alpine / PHP 8.3 / MariaDB / Cypress / Run"
+        needs: docker-alpine-php-83-mariadb-cypress-build
+        strategy:
+            matrix:
+                threads: [1, 2]  
+                thread_index: [0, 1]
 
-            -   name: Checkout Cypress Tests
+        runs-on: ubuntu-22.04
+        env:
+            PROGRESS_TYPE: plain
+            SPRYKER_PLATFORM_IMAGE: spryker/php:8.3
+            TRAVIS: 1
+            ROBOT_TESTS_ARTIFACTS_BUCKET_REGION: eu-west-1
+            SPRYKER_CURRENT_REGION: EU
+            DYNAMIC_STORE_MODE: true
+        steps:
+            -   name: Pull Spryker image
                 run: |
-                    git clone https://github.com/spryker/cypress-tests.git ./cypress-tests
+                    docker pull ${{ needs.build-spryker.outputs.image }}
 
-            -   name: Install Cypress dependencies
-                working-directory: ./cypress-tests
+            -   name: Start Spryker stack
                 run: |
-                    curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-                    sudo apt-get install -y nodejs
-                    npm ci
+                    docker-compose up -d
+                    - name: Wait for Yves to be ready
+                    run: |
+                      i=0
+                      until curl -sSf http://localhost:8080 || (( i >= 30 )); do
+                        echo "Waiting for Yves… ($(( ++i ))/30)"
+                        sleep 2
+                      done
+            
+            -   name: Install dependencies
+                run: npm ci
+                working-directory: cypress-tests
+            
+            -   name: Run Cypress Tests in Parallel
+                working-directory: cypress-tests
+                run: |
+                      npx cypress-parallel \
+                        -s cy:run \
+                        -t ${{ matrix.threads }} \
+                        -i ${{ matrix.thread_index }} \
+                        -d 'cypress/e2e/!(smoke)/**/!(ssp)*.ts' \
+                        -a '"--headless --browser chrome"'
 
-            -   name: Run Cypress Tests
-                working-directory: ./cypress-tests
-                env:
-                    ENV_REPOSITORY_ID: b2b-mp
-                run: |
-                    cp .env.dynamic-store.example .env
-                    git log -3
-                    npx cypress-parallel -s cy:ci -t 2 -d 'cypress/e2e/!(smoke)/**/!(ssp)*.ts' -a '"--headless --browser chrome  --reporter spec"'
+            # -   name: Checkout Cypress Tests
+            #     run: |
+            #         git clone https://github.com/spryker/cypress-tests.git ./cypress-tests
 
-            -   name: Upload artifacts
-                if: failure()
-                run: |
-                    AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{secrets.ROBOT_TESTS_ARTIFACTS_KEY}}  AWS_SECRET_ACCESS_KEY=${{secrets.ROBOT_TESTS_ARTIFACTS_SECRET}} aws s3 cp ./cypress-tests/cypress s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/b2b-mp/dms-on/cypress/${GITHUB_RUN_ID}/PHP8.3MariaDB/ --recursive
-            -   name: Slack Notification for scheduled job
-                uses: ./.github/actions/scheduled-job-slack-notifications
-                if: always()
+            # -   name: Install Cypress dependencies
+            #     working-directory: ./cypress-tests
+            #     run: |
+            #         curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+            #         sudo apt-get install -y nodejs
+            #         npm ci
+
+            # -   name: Run Cypress Tests
+            #     working-directory: ./cypress-tests
+            #     env:
+            #         ENV_REPOSITORY_ID: b2b-mp
+            #     run: |
+            #         cp .env.dynamic-store.example .env
+            #         git log -3
+            #         npx cypress-parallel -s cy:ci -t 2 -d 'cypress/e2e/!(smoke)/**/!(ssp)*.ts' -a '"--headless --browser chrome  --reporter spec"'
+
+            # -   name: Upload artifacts
+            #     if: failure()
+            #     run: |
+            #         AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{secrets.ROBOT_TESTS_ARTIFACTS_KEY}}  AWS_SECRET_ACCESS_KEY=${{secrets.ROBOT_TESTS_ARTIFACTS_SECRET}} aws s3 cp ./cypress-tests/cypress s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/b2b-mp/dms-on/cypress/${GITHUB_RUN_ID}/PHP8.3MariaDB/ --recursive
+            # -   name: Slack Notification for scheduled job
+            #     uses: ./.github/actions/scheduled-job-slack-notifications
+            #     if: always()
 
     # positive-docker-alpine-php-82-mariadb-robot:
     #     name: "[Hackathon] Positive / Docker / Alpine / PHP 8.2 / MariaDB / Robot / API"
