@@ -162,6 +162,7 @@ use Spryker\Zed\SetupFrontend\Communication\Console\ZedInstallDependenciesConsol
 use Spryker\Zed\SharedCartDataImport\SharedCartDataImportConfig;
 use Spryker\Zed\ShipmentDataImport\ShipmentDataImportConfig;
 use Spryker\Zed\ShoppingListDataImport\ShoppingListDataImportConfig;
+use Spryker\Zed\Sitemap\Communication\Console\SitemapGenerateConsole;
 use Spryker\Zed\StateMachine\Communication\Console\CheckConditionConsole as StateMachineCheckConditionConsole;
 use Spryker\Zed\StateMachine\Communication\Console\CheckTimeoutConsole as StateMachineCheckTimeoutConsole;
 use Spryker\Zed\StateMachine\Communication\Console\ClearLocksConsole as StateMachineClearLocksConsole;
@@ -413,6 +414,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new OrderMatrixConsole(),
             new AclEntitySynchronizeConsole(),
             new StorageRedisDataReSaveConsole(),
+            new SitemapGenerateConsole(),
         ];
 
         $propelCommands = $container->getLocator()->propel()->facade()->getConsoleCommands();
