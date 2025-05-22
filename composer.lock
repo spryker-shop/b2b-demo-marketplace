@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "296bb9ec3e0f8f0d211757f12eeb1997",
+    "content-hash": "1593a29b28ec1ea7e1b54d1c154c466b",
     "packages": [
         {
             "name": "async-aws/core",
@@ -63349,6 +63349,100 @@
                 "source": "https://github.com/spryker/shopping-lists-rest-api-extension/tree/1.0.0"
             },
             "time": "2022-09-09T11:38:53+00:00"
+        },
+        {
+            "name": "spryker/sitemap",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/sitemap.git",
+                "reference": "a7156e37668060f0034f58f589adfb6e22290bfa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/sitemap/zipball/a7156e37668060f0034f58f589adfb6e22290bfa",
+                "reference": "a7156e37668060f0034f58f589adfb6e22290bfa",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "spryker/file-system": "^2.0.0",
+                "spryker/flysystem": "^3.0.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/sitemap-extension": "^1.1.0",
+                "spryker/store": "^1.19.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/router": "*"
+            },
+            "suggest": {
+                "spryker/router": "If you want to use the router plugin, you need to install the Spryker Router module."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Sitemap module",
+            "support": {
+                "source": "https://github.com/spryker/sitemap/tree/1.0.0"
+            },
+            "time": "2025-05-20T13:23:34+00:00"
+        },
+        {
+            "name": "spryker/sitemap-extension",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/sitemap-extension.git",
+                "reference": "70ac0fb2da0cb82dc2f756f6596f2fdb7f753898"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/sitemap-extension/zipball/70ac0fb2da0cb82dc2f756f6596f2fdb7f753898",
+                "reference": "70ac0fb2da0cb82dc2f756f6596f2fdb7f753898",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "SitemapExtension module",
+            "support": {
+                "source": "https://github.com/spryker/sitemap-extension/tree/1.1.0"
+            },
+            "time": "2025-05-20T13:23:34+00:00"
         },
         {
             "name": "spryker/sql-criteria-builder",
