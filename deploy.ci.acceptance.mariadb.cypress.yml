@@ -153,6 +153,6 @@ docker:
             platforms:
                 - linux
 
-    # compose:
-    #     yamls:
-    #         - vendor/spryker/cypress-tests/docker-compose.cypress.yml
+    compose:
+        yamls:
+            - vendor/spryker/cypress-tests/docker-compose.cypress.yml
