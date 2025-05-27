@@ -12245,16 +12245,16 @@
         },
         {
             "name": "spryker-shop/language-switcher-widget",
-            "version": "1.6.1",
+            "version": "1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-shop/language-switcher-widget.git",
-                "reference": "63259734b6842c832ac2bf8de635657416d5d067"
+                "reference": "96dae32a0c190bfde09cc22fbf94dd501550d4fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-shop/language-switcher-widget/zipball/63259734b6842c832ac2bf8de635657416d5d067",
-                "reference": "63259734b6842c832ac2bf8de635657416d5d067",
+                "url": "https://api.github.com/repos/spryker-shop/language-switcher-widget/zipball/96dae32a0c190bfde09cc22fbf94dd501550d4fb",
+                "reference": "96dae32a0c190bfde09cc22fbf94dd501550d4fb",
                 "shasum": ""
             },
             "require": {
@@ -12265,7 +12265,11 @@
                 "spryker/url-storage": "^1.0.0"
             },
             "require-dev": {
-                "spryker/code-sniffer": "*"
+                "spryker/code-sniffer": "*",
+                "spryker/container": "*",
+                "spryker/store": "*",
+                "spryker/symfony": "*",
+                "spryker/testify": "*"
             },
             "suggest": {
                 "spryker/symfony": "3.0.0 for using LanguageSwitcherPlugin"
@@ -12287,9 +12291,9 @@
             ],
             "description": "LanguageSwitcherWidget module",
             "support": {
-                "source": "https://github.com/spryker-shop/language-switcher-widget/tree/1.6.1"
+                "source": "https://github.com/spryker-shop/language-switcher-widget/tree/1.7.0"
             },
-            "time": "2024-12-10T15:32:25+00:00"
+            "time": "2025-04-08T10:42:49+00:00"
         },
         {
             "name": "spryker-shop/merchant-opening-hours-widget",
