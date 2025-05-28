@@ -2,10 +2,16 @@ name: B2B-MP-CI
 
 on:
     pull_request:
+        types: [ labeled, unlabeled, synchronize, opened ]
     push:
         branches:
             - master
     workflow_dispatch:
+
+env:
+    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+    WEEKLY_CI_SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
+    JIRA_TICKET_SLACK_USER_GROUP_MAPPING: ${{ secrets.JIRA_TICKET_SLACK_USER_GROUP_MAPPING }}
 
 concurrency:
     group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -120,24 +126,6 @@ jobs:
             -   name: Speccy lint Glue specification
                 run: speccy lint src/Generated/Glue/Specification/spryker_rest_api.schema.yml --rules=default
 
-            -   name: Style lint
-                run: npm run yves:stylelint
-
-            -   name: ES lint
-                run: npm run yves:lint
-
-            -   name: Front-end Formatter
-                run: npm run formatter
-
-            -   name: Front-end MP Lint
-                run: npm run mp:lint
-
-            -   name: Front-end MP Style lint
-                run: npm run mp:stylelint
-
-            -   name: Front-end MP Unit Tests
-                run: npm run mp:test
-
             -   name: Validate propel files
                 run: |
                     vendor/bin/console propel:schema:validate
@@ -162,7 +150,52 @@ jobs:
             -   name: Run Evaluator for all branches
                 run: vendor/bin/evaluator evaluate --exclude-checkers=SPRYKER_DEV_PACKAGES_CHECKER --format=compact
 
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
+
+    js-validation:
+        name: "NPM validation"
+        runs-on: ubuntu-22.04
+        strategy:
+            fail-fast: false
+
+        env:
+            APPLICATION_ENV: ci.mysql
+            PROJECT: suite
+
+        steps:
+            -   uses: actions/checkout@v4
+
+            -   name: Install NPM packages
+                run: npm ci
+
+            -   name: Style lint
+                run: npm run yves:stylelint
+
+            -   name: ES lint
+                run: npm run yves:lint
+
+            -   name: Front-end Formatter
+                run: npm run formatter
+
+            -   name: Front-end MP Lint
+                run: npm run mp:lint
+
+            -   name: Front-end MP Style lint
+                run: npm run mp:stylelint
+
+            -   name: Front-end MP Unit Tests
+                run: npm run mp:test
+
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
+
     php-83-mariadb-glue-alpine-dynamic-store-off:
+        if: >
+            contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci')
+            || github.ref == 'refs/heads/master'
         name: "PHP 8.3 / MariaDB / Glue / Alpine / Dynamic Store OFF"
         runs-on: ubuntu-22.04
         env:
@@ -187,9 +220,16 @@ jobs:
                     docker/sdk cli composer dump-autoload -o -a --apcu
                     docker/sdk testing codecept run -c codeception.api.yml
 
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
+
     php-83-mariadb-glue-alpine:
-        name: "PHP 8.3 / MariaDB / Glue / Alpine"
-        if: "!contains(github.event.pull_request.head.ref, 'hackathon')"
+        name: "[run-api-ci] PHP 8.3 / MariaDB / Glue / Alpine"
+        if: >
+            contains(github.event.pull_request.labels.*.name, 'run-api-ci')
+            || contains(github.event.pull_request.labels.*.name, 'run-latest-ci')
+            || github.ref == 'refs/heads/master'
         runs-on: ubuntu-22.04
         env:
             PROGRESS_TYPE: plain
@@ -215,7 +255,14 @@ jobs:
                     docker/sdk cli composer dump-autoload -o -a --apcu
                     docker/sdk testing codecept run -c codeception.api.yml
 
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
+
     php-83-postgresql-glue-alpine-dynamic-store-off:
+        if: >
+            contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci')
+            || github.ref == 'refs/heads/master'
         name: "PHP 8.3 / PostgreSQL / Glue / Alpine / Dynamic Store OFF"
         runs-on: ubuntu-22.04
         env:
@@ -240,9 +287,15 @@ jobs:
                     docker/sdk cli composer dump-autoload -o -a --apcu
                     docker/sdk testing codecept run -c codeception.api.yml
 
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
+
     php-83-postgresql-glue-alpine:
         name: "PHP 8.3 / PostgreSQL / Glue / Alpine"
-        if: "!contains(github.event.pull_request.head.ref, 'hackathon')"
+        if: >
+            contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci')
+            || github.ref == 'refs/heads/master'
         runs-on: ubuntu-22.04
         env:
             PROGRESS_TYPE: plain
@@ -268,8 +321,14 @@ jobs:
                     docker/sdk cli composer dump-autoload -o -a --apcu
                     docker/sdk testing codecept run -c codeception.api.yml
 
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
 
     php-83-mariadb-acceptance-alpine-dynamic-store-off:
+        if: >
+            contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci')
+            || github.ref == 'refs/heads/master'
         name: "PHP 8.3 / MariaDB / Acceptance / Alpine / Dynamic Store OFF"
         runs-on: ubuntu-22.04
         env:
@@ -293,9 +352,16 @@ jobs:
                     docker/sdk cli composer dump-autoload -o -a --apcu
                     docker/sdk testing codecept run -c codeception.acceptance.yml
 
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
+
     php-83-mariadb-acceptance-alpine:
-        name: "PHP 8.3 / MariaDB / Acceptance / Alpine"
-        if: "!contains(github.event.pull_request.head.ref, 'hackathon')"
+        name: "[run-ui-ci] PHP 8.3 / MariaDB / Acceptance / Alpine"
+        if: >
+            contains(github.event.pull_request.labels.*.name, 'run-ui-ci')
+            || contains(github.event.pull_request.labels.*.name, 'run-latest-ci')
+            || github.ref == 'refs/heads/master'
         runs-on: ubuntu-22.04
         env:
             PROGRESS_TYPE: plain
@@ -320,8 +386,14 @@ jobs:
                     docker/sdk cli composer dump-autoload -o -a --apcu
                     docker/sdk testing codecept run -c codeception.acceptance.yml
 
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
 
     php-83-postgresql-acceptance-alpine-dynamic-store-off:
+        if: >
+            contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci')
+            || github.ref == 'refs/heads/master'
         name: "PHP 8.3 / PostgreSQL / Acceptance / Alpine / Dynamic Store OFF"
         runs-on: ubuntu-22.04
         env:
@@ -345,9 +417,15 @@ jobs:
                     docker/sdk cli composer dump-autoload -o -a --apcu
                     docker/sdk testing codecept run -c codeception.acceptance.yml
 
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
+
     php-83-postgresql-acceptance-alpine:
+        if: >
+            contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci')
+            || github.ref == 'refs/heads/master'
         name: "PHP 8.3 / PostgreSQL / Acceptance / Alpine"
-        if: "!contains(github.event.pull_request.head.ref, 'hackathon')"
         runs-on: ubuntu-22.04
         env:
             PROGRESS_TYPE: plain
@@ -372,8 +450,14 @@ jobs:
                     docker/sdk cli composer dump-autoload -o -a --apcu
                     docker/sdk testing codecept run -c codeception.acceptance.yml
 
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
 
     php-83-mariadb-functional-alpine-dynamic-store-off:
+        if: >
+            contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci')
+            || github.ref == 'refs/heads/master'
         name: "PHP 8.3 / MariaDB / Functional / Alpine / Dynamic Store OFF"
         runs-on: ubuntu-22.04
         env:
@@ -396,8 +480,16 @@ jobs:
                     docker/sdk cli composer dump-autoload -o -a --apcu
                     docker/sdk testing codecept run -c codeception.functional.yml
 
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
+
     php-83-mariadb-functional-alpine:
-        name: "PHP 8.3 / MariaDB / Functional / Alpine"
+        if: >
+            contains(github.event.pull_request.labels.*.name, 'run-functional-ci')
+            || contains(github.event.pull_request.labels.*.name, 'run-latest-ci')
+            || github.ref == 'refs/heads/master'
+        name: "[run-functional-ci] PHP 8.3 / MariaDB / Functional / Alpine"
         runs-on: ubuntu-22.04
         env:
             PROGRESS_TYPE: plain
@@ -421,8 +513,14 @@ jobs:
                     docker/sdk cli composer dump-autoload -o -a --apcu
                     docker/sdk testing codecept run -c codeception.functional.yml
 
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
 
     php-83-postgresql-functional-alpine-dynamic-store-off:
+        if: >
+            contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci')
+            || github.ref == 'refs/heads/master'
         name: "PHP 8.3 / PostgreSQL / Functional / Alpine / Dynamic Store OFF"
         runs-on: ubuntu-22.04
         env:
@@ -446,9 +544,15 @@ jobs:
                     docker/sdk cli composer dump-autoload -o -a --apcu
                     docker/sdk testing codecept run -c codeception.functional.yml
 
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
+
     php-83-postgresql-functional-alpine:
+        if: >
+            contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci')
+            || github.ref == 'refs/heads/master'
         name: "PHP 8.3 / PostgreSQL / Functional / Alpine"
-        if: "!contains(github.event.pull_request.head.ref, 'hackathon')"
         runs-on: ubuntu-22.04
         env:
             PROGRESS_TYPE: plain
@@ -473,8 +577,14 @@ jobs:
                     docker/sdk cli composer dump-autoload -o -a --apcu
                     docker/sdk testing codecept run -c codeception.functional.yml
 
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
 
     php-82-mariadb-glue-alpine-dynamic-store-off:
+        if: >
+            contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci')
+            || github.ref == 'refs/heads/master'
         name: "PHP 8.2 / MariaDB / Glue / Alpine / Dynamic Store OFF"
         runs-on: ubuntu-22.04
         env:
@@ -499,7 +609,14 @@ jobs:
                     docker/sdk cli composer dump-autoload -o -a --apcu
                     docker/sdk testing codecept run -c codeception.api.yml
 
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
+
     php-82-mariadb-glue-alpine:
+        if: >
+            contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci')
+            || github.ref == 'refs/heads/master'
         name: "PHP 8.2 / MariaDB / Glue / Alpine"
         runs-on: ubuntu-22.04
         env:
@@ -526,7 +643,14 @@ jobs:
                     docker/sdk cli composer dump-autoload -o -a --apcu
                     docker/sdk testing codecept run -c codeception.api.yml
 
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
+
     php-82-postgresql-acceptance-alpine-dynamic-store-off:
+        if: >
+            contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci')
+            || github.ref == 'refs/heads/master'
         name: "PHP 8.2 / PostgreSQL / Acceptance / Alpine / Dynamic Store OFF"
         runs-on: ubuntu-22.04
         env:
@@ -550,7 +674,14 @@ jobs:
                     docker/sdk cli composer dump-autoload -o -a --apcu
                     docker/sdk testing codecept run -c codeception.acceptance.yml
 
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
+
     php-82-postgresql-acceptance-alpine:
+        if: >
+            contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci')
+            || github.ref == 'refs/heads/master'
         name: "PHP 8.2 / PostgreSQL / Acceptance / Alpine"
         runs-on: ubuntu-22.04
         env:
@@ -576,8 +707,14 @@ jobs:
                     docker/sdk cli composer dump-autoload -o -a --apcu
                     docker/sdk testing codecept run -c codeception.acceptance.yml
 
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
 
     php-82-postgresql-functional-alpine-dynamic-store-off:
+        if: >
+            contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci')
+            || github.ref == 'refs/heads/master'
         name: "PHP 8.2 / PostgreSQL / Functional / Alpine / Dynamic Store OFF"
         runs-on: ubuntu-22.04
         env:
@@ -601,9 +738,15 @@ jobs:
                     docker/sdk cli composer dump-autoload -o -a --apcu
                     docker/sdk testing codecept run -c codeception.functional.yml
 
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
+
     php-82-postgresql-functional-alpine:
+        if: >
+            contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci')
+            || github.ref == 'refs/heads/master'
         name: "PHP 8.2 / PostgreSQL / Functional / Alpine"
-        if: "!contains(github.event.pull_request.head.ref, 'hackathon')"
         runs-on: ubuntu-22.04
         env:
             PROGRESS_TYPE: plain
@@ -628,7 +771,14 @@ jobs:
                     docker/sdk cli composer dump-autoload -o -a --apcu
                     docker/sdk testing codecept run -c codeception.functional.yml
 
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
+
     php-82-mariadb-acceptance-alpine-dynamic-store-off:
+        if: >
+            contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci')
+            || github.ref == 'refs/heads/master'
         name: "PHP 8.2 / MariaDB / Acceptance / Alpine / Dynamic Store OFF"
         runs-on: ubuntu-22.04
         env:
@@ -652,9 +802,15 @@ jobs:
                     docker/sdk cli composer dump-autoload -o -a --apcu
                     docker/sdk testing codecept run -c codeception.acceptance.yml
 
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
+
     php-82-mariadb-acceptance-alpine:
+        if: >
+            contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci')
+            || github.ref == 'refs/heads/master'
         name: "PHP 8.2 / MariaDB / Acceptance / Alpine"
-        if: "!contains(github.event.pull_request.head.ref, 'hackathon')"
         runs-on: ubuntu-22.04
         env:
             PROGRESS_TYPE: plain
@@ -679,8 +835,14 @@ jobs:
                     docker/sdk cli composer dump-autoload -o -a --apcu
                     docker/sdk testing codecept run -c codeception.acceptance.yml
 
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
 
     php-82-mariadb-functional-alpine-dynamic-store-off:
+        if: >
+            contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci')
+            || github.ref == 'refs/heads/master'
         name: "PHP 8.2 / MariaDB / Functional / Alpine / Dynamic Store OFF"
         runs-on: ubuntu-22.04
         env:
@@ -703,9 +865,15 @@ jobs:
                     docker/sdk cli composer dump-autoload -o -a --apcu
                     docker/sdk testing codecept run -c codeception.functional.yml
 
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
+
     php-82-mariadb-functional-alpine:
+        if: >
+            contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci')
+            || github.ref == 'refs/heads/master'
         name: "PHP 8.2 / MariaDB / Functional / Alpine"
-        if: "!contains(github.event.pull_request.head.ref, 'hackathon')"
         runs-on: ubuntu-22.04
         env:
             PROGRESS_TYPE: plain
@@ -729,8 +897,14 @@ jobs:
                     docker/sdk cli composer dump-autoload -o -a --apcu
                     docker/sdk testing codecept run -c codeception.functional.yml
 
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
 
     php-82-postgres-functional-debian-dynamic-store-off:
+        if: >
+            contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci')
+            || github.ref == 'refs/heads/master'
         name: "PHP 8.2 / PostgreSQL / Functional / Debian / Dynamic Store OFF"
         runs-on: ubuntu-22.04
         env:
@@ -753,9 +927,15 @@ jobs:
                     docker/sdk cli composer dump-autoload -o -a --apcu
                     docker/sdk testing codecept run -c codeception.functional.yml
 
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
+
     php-82-postgres-functional-debian:
+        if: >
+            contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci')
+            || github.ref == 'refs/heads/master'
         name: "PHP 8.2 / PostgreSQL / Functional / Debian"
-        if: "!contains(github.event.pull_request.head.ref, 'hackathon')"
         runs-on: ubuntu-22.04
         env:
             PROGRESS_TYPE: plain
@@ -779,9 +959,16 @@ jobs:
                     docker/sdk cli composer dump-autoload -o -a --apcu
                     docker/sdk testing codecept run -c codeception.functional.yml
 
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
+
     frontend-assets-via-docker-php-8-2:
-        name: "Docker / Alpine / PHP 8.2 / Frontend & Assets"
-        if: "!contains(github.event.pull_request.head.ref, 'hackathon')"
+        if: >
+            contains(github.event.pull_request.labels.*.name, 'run-functional-ci')
+            || contains(github.event.pull_request.labels.*.name, 'run-latest-ci')
+            || github.ref == 'refs/heads/master'
+        name: "[run-functional-ci] PHP 8.2 / Frontend & Assets"
         runs-on: ubuntu-22.04
         env:
             PROGRESS_TYPE: plain
@@ -800,9 +987,15 @@ jobs:
             -   run: docker run -t --rm --entrypoint='' spryker_b2b_marketplace_frontend:1.0-frontend ls -al /data/public/Yves/assets/myhash
             -   run: docker run -t --rm --entrypoint='' spryker_b2b_marketplace_frontend:1.0-frontend ls -al /data/public/Zed/assets/
 
-    docker-alpine-php-82-mariadb-robot-dynamic-store-off:
-        name: "Docker / Alpine / PHP 8.2 / MariaDB / Robot / API / Dynamic Store OFF"
-        if: "!contains(github.event.pull_request.head.ref, 'hackathon')"
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
+
+    docker-alpine-php-82-postgresql-robot-dynamic-store-off:
+        if: >
+            contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci')
+            || github.ref == 'refs/heads/master'
+        name: "Docker / Alpine / PHP 8.2 / PostgreSQL / Robot / API / Dynamic Store OFF"
         runs-on: ubuntu-22.04
         env:
             PROGRESS_TYPE: plain
@@ -829,7 +1022,7 @@ jobs:
                 continue-on-error: true
                 run: |
                     git clone https://github.com/spryker/docker-sdk.git ./docker
-                    docker/sdk boot deploy.ci.acceptance.mariadb.dynamic-store-off.yml
+                    docker/sdk boot deploy.ci.acceptance.dynamic-store-off.yml
                     sudo bash -c "echo '127.0.0.1 backend-api.at.spryker.local backend-api.de.spryker.local glue-backend.de.spryker.local glue-backend.at.spryker.local glue-storefront.de.spryker.local glue-storefront.at.spryker.local backend-gateway.at.spryker.local backend-gateway.de.spryker.local backoffice.at.spryker.local backoffice.de.spryker.local date-time-configurator-example.spryker.local glue.at.spryker.local glue.de.spryker.local yves.at.spryker.local yves.de.spryker.local mp.de.spryker.local mp.at.spryker.local' >> /etc/hosts"
                     docker/sdk up -t
                     docker/sdk cli composer dump-autoload -o -a --apcu
@@ -837,60 +1030,22 @@ jobs:
                     APPLICATION_STORE=AT docker/sdk console queue:worker:start --stop-when-empty
             -   name: Run Tests
                 run: |
-                    docker/sdk exec robot-framework robot -v env:api_mp_b2b -v docker:True --exclude skip-due-to-issueORskip-due-to-refactoring -d results -s robotframework.tests.api.mp_b2b .
+                    docker/sdk exec robot-framework robot -v env:api_mp_b2b -v db_engine:psycopg2 -v docker:True --exclude skip-due-to-issueORskip-due-to-refactoring -d results -s robotframework.tests.api.mp_b2b .
             -   name: Upload artifacts
                 if: failure()
                 run: |
-                    AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp .robot/results/log.html s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/b2b-mp/dms-off/robot-api/${GITHUB_RUN_ID}/PHP8.2MariaDB/log.html
+                    AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp .robot/results/log.html s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/b2b-mp/dms-off/robot-api/${GITHUB_RUN_ID}/PHP8.2PostgresSQL/log.html
 
-    docker-alpine-php-83-postgresql-robot:
-        name: "Docker / Alpine / PHP 8.3 / PostgreSQL / Robot / API"
-        if: "!contains(github.event.pull_request.head.ref, 'hackathon')"
-        runs-on: ubuntu-22.04
-        env:
-            PROGRESS_TYPE: plain
-            SPRYKER_PLATFORM_IMAGE: spryker/php:8.3
-            TRAVIS: 1
-            ROBOT_TESTS_ARTIFACTS_BUCKET_REGION: eu-west-1
-            SPRYKER_CURRENT_REGION: EU
-            DYNAMIC_STORE_MODE: true
-        steps:
-            -   uses: actions/checkout@v4
-            -   name: Install packages
-                run: |
-                    sudo apt-get update
-                    sudo apt install awscli -q
-
-            -   name: Install robotframework-suite-tests folder
-                run: |
-                    cd ./data && composer require "spryker/robotframework-suite-tests:dev-master" --dev --no-interaction
-                    cp -r vendor ../vendor
-
-            -   name: Install docker-compose
-                run: |
-                    sudo curl -L "https://github.com/docker/compose/releases/download/2.12.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-                    sudo chmod +x /usr/local/bin/docker-compose
-            -   name: Install Project
-                continue-on-error: true
-                run: |
-                    git clone https://github.com/spryker/docker-sdk.git ./docker
-                    docker/sdk boot deploy.ci.acceptance.yml
-                    sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local' >> /etc/hosts"
-                    docker/sdk up -t
-                    docker/sdk cli composer dump-autoload -o -a --apcu
-                    docker/sdk testing console queue:worker:start --stop-when-empty
-                    docker/sdk console queue:worker:start --stop-when-empty
-            -   name: Run Tests
-                run: |
-                    docker/sdk exec robot-framework robot -v env:api_mp_b2b -v db_engine:psycopg2 -v docker:True -v dms:true -v glue_env:http://glue.eu.spryker.local -v bapi_env:http://glue-backend.eu.spryker.local -v sapi_env:http://glue-storefront.eu.spryker.local --exclude skip-due-to-issueORskip-due-to-refactoring -d results -s robotframework.tests.api.mp_b2b .
-            -   name: Upload artifacts
-                if: failure()
-                run: |
-                    AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp .robot/results/log.html s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/b2b-mp/dms-on/robot-api/${GITHUB_RUN_ID}/PHP8.3PostgreSQL/log.html
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
 
     docker-alpine-php-83-mariadb-robot:
-        name: "Docker / Alpine / PHP 8.3 / MariaDB / Robot / API"
-        if: "!contains(github.event.pull_request.head.ref, 'hackathon')"
+        if: >
+            contains(github.event.pull_request.labels.*.name, 'run-api-ci')
+            || contains(github.event.pull_request.labels.*.name, 'run-latest-ci')
+            || github.ref == 'refs/heads/master'
+        name: "[run-api-ci] PHP 8.3 / MariaDB / Robot / API"
         runs-on: ubuntu-22.04
         env:
             PROGRESS_TYPE: plain
@@ -932,9 +1087,15 @@ jobs:
                 run: |
                     AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp .robot/results/log.html s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/b2b-mp/dms-on/robot-api/${GITHUB_RUN_ID}/PHP8.3MariaDB/log.html
 
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
+
     docker-alpine-php-8-3-mariadb-cypress-dynamic-store-off:
+        if: >
+            contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci')
+            || github.ref == 'refs/heads/master'
         name: "Docker / Alpine / PHP 8.3 / MariaDB / Cypress / UI / Dynamic Store OFF"
-        if: "!contains(github.event.pull_request.head.ref, 'hackathon')"
         runs-on: ubuntu-22.04
         env:
             PROGRESS_TYPE: plain
@@ -983,9 +1144,16 @@ jobs:
                 run: |
                     AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp .cypress s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/b2b-mp/dms-off/cypress/${GITHUB_RUN_ID}/PHP8.3MariaDB/ --recursive
 
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
+
     docker-alpine-php-83-mariadb-cypress:
-        name: "Docker / Alpine / PHP 8.3 / MariaDB / Cypress / UI"
-        if: "!contains(github.event.pull_request.head.ref, 'hackathon')"
+        if: >
+            contains(github.event.pull_request.labels.*.name, 'run-ui-ci')
+            || contains(github.event.pull_request.labels.*.name, 'run-latest-ci')
+            || github.ref == 'refs/heads/master'
+        name: "[run-ui-ci] PHP 8.3 / MariaDB / Cypress / UI"
         runs-on: ubuntu-22.04
         env:
             PROGRESS_TYPE: plain
@@ -1033,92 +1201,6 @@ jobs:
                 run: |
                     AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp .cypress s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/b2b-mp/dms-on/cypress/${GITHUB_RUN_ID}/PHP8.3MariaDB/ --recursive
 
-    positive-docker-alpine-php-82-mariadb-robot:
-        name: "[Hackathon] Positive / Docker / Alpine / PHP 8.2 / MariaDB / Robot / API"
-        if: "contains(github.event.pull_request.head.ref, 'hackathon')"
-        runs-on: ubuntu-22.04
-        env:
-            PROGRESS_TYPE: plain
-            SPRYKER_PLATFORM_IMAGE: spryker/php:8.2
-            TRAVIS: 1
-            ROBOT_TESTS_ARTIFACTS_BUCKET_REGION: eu-west-1
-            SPRYKER_CURRENT_REGION: EU
-            DYNAMIC_STORE_MODE: true
-        steps:
-            -   uses: actions/checkout@v4
-            -   name: Install packages
-                run: |
-                    sudo apt-get update
-                    sudo apt install awscli -q
-
-            -   name: Install robotframework-suite-tests folder
-                run: |
-                    cd ./data && composer require "spryker/robotframework-suite-tests:dev-master" --dev --no-interaction
-                    cp -r vendor ../vendor
-
-            -   name: Install docker-compose
-                run: |
-                    sudo curl -L "https://github.com/docker/compose/releases/download/2.12.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-                    sudo chmod +x /usr/local/bin/docker-compose
-            -   name: Install Project
-                continue-on-error: true
-                run: |
-                    git clone https://github.com/spryker/docker-sdk.git ./docker
-                    docker/sdk boot deploy.ci.api.mariadb.robot.yml
-                    sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local' >> /etc/hosts"
-                    docker/sdk up -t
-                    docker/sdk cli composer dump-autoload -o -a --apcu
-                    docker/sdk testing console queue:worker:start --stop-when-empty
-                    docker/sdk console queue:worker:start --stop-when-empty
-            -   name: Run Tests
-                run: |
-                    docker/sdk exec robot-framework robot -v env:api_mp_b2b -v docker:True -v dms:true -v glue_env:http://glue.eu.spryker.local -v bapi_env:http://glue-backend.eu.spryker.local -v sapi_env:http://glue-storefront.eu.spryker.local --exclude skip-due-to-issueORskip-due-to-refactoring -d results -s robotframework.tests.api.mp_b2b.'*'.positive .
-            -   name: Upload artifacts
-                if: failure()
-                run: |
-                    AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp .robot/results/log.html s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/b2b-mp/dms-on/robot-api/${GITHUB_RUN_ID}/PHP8.2MariaDB/positive/log.html
-
-    negative-docker-alpine-php-82-mariadb-robot:
-        name: "[Hackathon] Negative / Docker / Alpine / PHP 8.2 / MariaDB / Robot / API"
-        if: "contains(github.event.pull_request.head.ref, 'hackathon')"
-        runs-on: ubuntu-22.04
-        env:
-            PROGRESS_TYPE: plain
-            SPRYKER_PLATFORM_IMAGE: spryker/php:8.2
-            TRAVIS: 1
-            ROBOT_TESTS_ARTIFACTS_BUCKET_REGION: eu-west-1
-            SPRYKER_CURRENT_REGION: EU
-            DYNAMIC_STORE_MODE: true
-        steps:
-            -   uses: actions/checkout@v4
-            -   name: Install packages
-                run: |
-                    sudo apt-get update
-                    sudo apt install awscli -q
-
-            -   name: Install robotframework-suite-tests folder
-                run: |
-                    cd ./data && composer require "spryker/robotframework-suite-tests:dev-master" --dev --no-interaction
-                    cp -r vendor ../vendor
-
-            -   name: Install docker-compose
-                run: |
-                    sudo curl -L "https://github.com/docker/compose/releases/download/2.12.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-                    sudo chmod +x /usr/local/bin/docker-compose
-            -   name: Install Project
-                continue-on-error: true
-                run: |
-                    git clone https://github.com/spryker/docker-sdk.git ./docker
-                    docker/sdk boot deploy.ci.api.mariadb.robot.yml
-                    sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local' >> /etc/hosts"
-                    docker/sdk up -t
-                    docker/sdk cli composer dump-autoload -o -a --apcu
-                    docker/sdk testing console queue:worker:start --stop-when-empty
-                    docker/sdk console queue:worker:start --stop-when-empty
-            -   name: Run Tests
-                run: |
-                    docker/sdk exec robot-framework robot -v env:api_mp_b2b -v docker:True -v dms:true -v glue_env:http://glue.eu.spryker.local -v bapi_env:http://glue-backend.eu.spryker.local -v sapi_env:http://glue-storefront.eu.spryker.local --exclude skip-due-to-issueORskip-due-to-refactoring -d results -s robotframework.tests.api.mp_b2b.'*'.negative .
-            -   name: Upload artifacts
-                if: failure()
-                run: |
-                    AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp .robot/results/log.html s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/b2b-mp/dms-on/robot-api/${GITHUB_RUN_ID}/PHP8.2MariaDB/negative/log.html
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
