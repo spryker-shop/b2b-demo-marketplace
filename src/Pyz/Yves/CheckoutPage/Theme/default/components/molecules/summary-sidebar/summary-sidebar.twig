@@ -50,6 +50,10 @@
             {% endif %}
         </h4>
 
+        {% block servicePointNameForShipmentGroup %}
+            {% widget 'SalesServicePointNameForShipmentGroupWidget' args [data.shipmentGroup] only %}{% endwidget %}
+        {% endblock %}
+
         {% include molecule('display-address') with {
             data: {
                 address: data.shipmentGroup.shipment.shippingAddress,
