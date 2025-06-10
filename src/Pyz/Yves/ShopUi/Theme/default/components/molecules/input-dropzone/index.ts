@@ -7,5 +7,5 @@ export default register(
             /* webpackMode: "lazy" */
             /* webpackChunkName: "input-dropzone" */
             'ShopUi/components/molecules/input-dropzone/input-dropzone'
-            ),
+        ),
 );
