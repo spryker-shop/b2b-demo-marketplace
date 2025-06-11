@@ -2,34 +2,19 @@
 
 {% block body %}
     <div class="{{ config.name }}__content">
-        {{ block('title') }}
-        {{ block('text') }}
-        {{ block('textOrderForm') }}
+        <h5 class="{{ config.name }}__title spacing-bottom">{{ 'quick-order.paste-order.title' | trans }}</h5>
+        <p>{{ 'quick-order.paste-order.description' | trans }}</p>
+        {% include molecule('form') with {
+            class: 'spacing-top spacing-top--big spacing-x spacing-x--inner spacing-x--reset',
+            modifiers: ['text-order'],
+            data: {
+                form: data.textOrderForm,
+                enableStart: false,
+                enableEnd: false,
+            },
+        } only %}
     </div>
-
-    {{ block('button') }}
-{% endblock %}
-
-{% block title %}
-    <h5 class="{{ config.name }}__title spacing-bottom">
-        {{ 'quick-order.paste-order.title' | trans }}
-    </h5>
-{% endblock %}
-
-{% block textOrderForm %}
-    {% include molecule('form') with {
-        class: 'spacing-top spacing-top--big spacing-x spacing-x--inner spacing-x--reset',
-        modifiers: ['text-order'],
-        data: {
-            form: data.textOrderForm,
-            enableStart: false,
-            enableEnd: false,
-        },
-    } only %}
-{% endblock %}
-
-{% block button %}
-    <button type="submit" name="textOrder" class="button button--success spacing-top spacing-top--big">
+    <button type="submit" name="textOrder" class="button button--expand spacing-top">
         {{ 'quick-order.paste-order.button.verify' | trans }}
     </button>
 {% endblock %}
