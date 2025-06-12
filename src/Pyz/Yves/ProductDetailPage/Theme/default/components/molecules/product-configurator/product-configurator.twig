@@ -14,7 +14,8 @@
     </div>
 
     {% if can('SeePricePermissionPlugin') %}
-        {% if 'isSspService' is defined and isSspService(data.product) %}
+        {% set sspServiceDetectorWidget = findWidget('SspServiceDetectorWidget', [data.product]) %}
+        {% if (sspServiceDetectorWidget and sspServiceDetectorWidget.isService) %}
             {% widget 'SspProductOfferPriceWidget' args [data.product] only %}{% endwidget %}
         {% else %}
             {% widget 'CurrentProductPriceVolumeWidget' args [data.product.currentProductPrice] only %}
@@ -102,7 +103,8 @@
                 {% widget 'CartAddProductAsSeparateItemWidget' only %}{% endwidget %}
             {% endif %}
 
-            {% set isSsp = 'isSspService' is defined and isSspService(data.product) %}
+            {% set sspServiceDetectorWidget = findWidget('SspServiceDetectorWidget', [data.product]) %}
+            {% set isSsp = sspServiceDetectorWidget.isService %}
 
             {% if not shipmentTypeServicePointSelectorWidget or not shipmentTypeServicePointSelectorWidget.hasShipmentTypeWithRequiredLocation %}
                 {% set merchantProductOfferWidget = findWidget('MerchantProductOfferWidget', [data.product]) %}

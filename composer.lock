@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "229c9082a4330dfe0dfb46200f7b5595",
+    "content-hash": "8952b22c85776984c9561d024b8bce13",
     "packages": [
         {
             "name": "async-aws/core",
@@ -9404,16 +9404,16 @@
         },
         {
             "name": "spryker-feature/ssp-asset-management",
-            "version": "0.5.0",
+            "version": "0.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/ssp-asset-management.git",
-                "reference": "706462d3864cd0cc23dfc71ebb080d7abde8b062"
+                "reference": "156bbe71ce424008f99c6b1fbcd7a07c6dbe98bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/ssp-asset-management/zipball/706462d3864cd0cc23dfc71ebb080d7abde8b062",
-                "reference": "706462d3864cd0cc23dfc71ebb080d7abde8b062",
+                "url": "https://api.github.com/repos/spryker-feature/ssp-asset-management/zipball/156bbe71ce424008f99c6b1fbcd7a07c6dbe98bd",
+                "reference": "156bbe71ce424008f99c6b1fbcd7a07c6dbe98bd",
                 "shasum": ""
             },
             "require": {
@@ -9480,9 +9480,9 @@
             ],
             "description": "SspAssetManagement module",
             "support": {
-                "source": "https://github.com/spryker-feature/ssp-asset-management/tree/0.5.0"
+                "source": "https://github.com/spryker-feature/ssp-asset-management/tree/0.5.2"
             },
-            "time": "2025-05-14T11:04:37+00:00"
+            "time": "2025-06-03T13:54:34+00:00"
         },
         {
             "name": "spryker-feature/ssp-dashboard-management",
@@ -9633,16 +9633,16 @@
         },
         {
             "name": "spryker-feature/ssp-inquiry-management",
-            "version": "0.5.2",
+            "version": "0.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/ssp-inquiry-management.git",
-                "reference": "b76d603b2c7f5f218a36ddcd768ac2559920b764"
+                "reference": "ea225052190e4cbc10cab2825785910dceca62bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/ssp-inquiry-management/zipball/b76d603b2c7f5f218a36ddcd768ac2559920b764",
-                "reference": "b76d603b2c7f5f218a36ddcd768ac2559920b764",
+                "url": "https://api.github.com/repos/spryker-feature/ssp-inquiry-management/zipball/ea225052190e4cbc10cab2825785910dceca62bd",
+                "reference": "ea225052190e4cbc10cab2825785910dceca62bd",
                 "shasum": ""
             },
             "require": {
@@ -9714,22 +9714,22 @@
             ],
             "description": "SspInquiryManagement module",
             "support": {
-                "source": "https://github.com/spryker-feature/ssp-inquiry-management/tree/0.5.2"
+                "source": "https://github.com/spryker-feature/ssp-inquiry-management/tree/0.6.1"
             },
-            "time": "2025-05-15T12:31:30+00:00"
+            "time": "2025-06-10T08:04:28+00:00"
         },
         {
             "name": "spryker-feature/ssp-service-management",
-            "version": "0.3.0",
+            "version": "0.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/ssp-service-management.git",
-                "reference": "6f576fdae5b299bc46508c6070d5e136cf12185b"
+                "reference": "76c5e90416a73f51dac67413cb82baa4943e0712"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/ssp-service-management/zipball/6f576fdae5b299bc46508c6070d5e136cf12185b",
-                "reference": "6f576fdae5b299bc46508c6070d5e136cf12185b",
+                "url": "https://api.github.com/repos/spryker-feature/ssp-service-management/zipball/76c5e90416a73f51dac67413cb82baa4943e0712",
+                "reference": "76c5e90416a73f51dac67413cb82baa4943e0712",
                 "shasum": ""
             },
             "require": {
@@ -9757,6 +9757,7 @@
                 "spryker/product-image": "^3.0.0",
                 "spryker/product-management-extension": "^1.2.0",
                 "spryker/product-offer": "^1.0.0",
+                "spryker/product-offer-gui-extension": "^1.0.0",
                 "spryker/product-offer-shipment-type": "^1.0.0",
                 "spryker/product-offer-storage": "^1.0.0",
                 "spryker/product-page-search-extension": "^1.6.0",
@@ -9781,6 +9782,7 @@
                 "spryker/zed-request": "^3.0.0"
             },
             "require-dev": {
+                "spryker-feature/ssp-asset-management": "*",
                 "spryker-shop/customer-page": "*",
                 "spryker/catalog": "*",
                 "spryker/code-sniffer": "*",
@@ -9798,6 +9800,7 @@
                 "spryker/testify": "*"
             },
             "suggest": {
+                "spryker-feature/ssp-asset-management": "If you want to use tests for the ssp asset service relation, you need to install the spryker-feature/ssp-asset-management module.",
                 "spryker-shop/customer-page": "If you want to use the customer page module, you need to install the spryker-shop/customer-page module.",
                 "spryker/catalog": "If you want to use the catalog module, you need to install the spryker/catalog module.",
                 "spryker/container": "Add this module when you want to use the ProductServiceTypeNameTwigPlugin.",
@@ -9823,9 +9826,9 @@
             ],
             "description": "SspServiceManagement module",
             "support": {
-                "source": "https://github.com/spryker-feature/ssp-service-management/tree/0.3.0"
+                "source": "https://github.com/spryker-feature/ssp-service-management/tree/0.4.2"
             },
-            "time": "2025-05-14T11:04:37+00:00"
+            "time": "2025-06-05T19:20:02+00:00"
         },
         {
             "name": "spryker-feature/state-machine",
@@ -15480,16 +15483,16 @@
         },
         {
             "name": "spryker-shop/product-detail-page",
-            "version": "3.26.0",
+            "version": "3.26.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-shop/product-detail-page.git",
-                "reference": "f03c056c8c170623f3d7ef0ee2aa4e8d5b8a6c40"
+                "reference": "8dd8c84a4821dd7156c01a2fbcd87a0c1eb8c32b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-shop/product-detail-page/zipball/f03c056c8c170623f3d7ef0ee2aa4e8d5b8a6c40",
-                "reference": "f03c056c8c170623f3d7ef0ee2aa4e8d5b8a6c40",
+                "url": "https://api.github.com/repos/spryker-shop/product-detail-page/zipball/8dd8c84a4821dd7156c01a2fbcd87a0c1eb8c32b",
+                "reference": "8dd8c84a4821dd7156c01a2fbcd87a0c1eb8c32b",
                 "shasum": ""
             },
             "require": {
@@ -15540,9 +15543,9 @@
             ],
             "description": "ProductDetailPage module",
             "support": {
-                "source": "https://github.com/spryker-shop/product-detail-page/tree/3.26.0"
+                "source": "https://github.com/spryker-shop/product-detail-page/tree/3.26.1"
             },
-            "time": "2025-05-14T11:04:40+00:00"
+            "time": "2025-05-23T12:55:57+00:00"
         },
         {
             "name": "spryker-shop/product-discontinued-widget",
@@ -18684,16 +18687,16 @@
         },
         {
             "name": "spryker-shop/shop-ui",
-            "version": "1.92.0",
+            "version": "1.93.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-shop/shop-ui.git",
-                "reference": "7c5055e6b77c8e733cde9c06a916e89bab9fa13a"
+                "reference": "b64b4667a773ff1da169ce99a2af5342cc58c66c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-shop/shop-ui/zipball/7c5055e6b77c8e733cde9c06a916e89bab9fa13a",
-                "reference": "7c5055e6b77c8e733cde9c06a916e89bab9fa13a",
+                "url": "https://api.github.com/repos/spryker-shop/shop-ui/zipball/b64b4667a773ff1da169ce99a2af5342cc58c66c",
+                "reference": "b64b4667a773ff1da169ce99a2af5342cc58c66c",
                 "shasum": ""
             },
             "require": {
@@ -18741,9 +18744,9 @@
             ],
             "description": "ShopUi module",
             "support": {
-                "source": "https://github.com/spryker-shop/shop-ui/tree/1.92.0"
+                "source": "https://github.com/spryker-shop/shop-ui/tree/1.93.2"
             },
-            "time": "2025-05-14T11:04:40+00:00"
+            "time": "2025-06-11T13:27:28+00:00"
         },
         {
             "name": "spryker-shop/shopping-list-note-widget",
