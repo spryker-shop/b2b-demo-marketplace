@@ -42,6 +42,7 @@ use SprykerFeature\Yves\SspInquiryManagement\Widget\SspInquiryListWidget;
 use SprykerFeature\Yves\SspInquiryManagement\Widget\SspInquiryMenuItemWidget;
 use SprykerFeature\Yves\SspServiceManagement\Plugin\ShopApplication\AddressFormItemsByShipmentTypeWidgetCacheKeyGeneratorStrategyPlugin;
 use SprykerFeature\Yves\SspServiceManagement\Widget\ListItemsByShipmentTypeWidget;
+use SprykerFeature\Yves\SspServiceManagement\Widget\ServiceListWidget;
 use SprykerFeature\Yves\SspServiceManagement\Widget\SspAddressFormItemsByShipmentTypeWidget;
 use SprykerFeature\Yves\SspServiceManagement\Widget\SspProductOfferPriceWidget;
 use SprykerFeature\Yves\SspServiceManagement\Widget\SspServiceCancelWidget;
@@ -389,6 +390,7 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             SspProductOfferPriceWidget::class,
             SspAddressFormItemsByShipmentTypeWidget::class,
             SspServiceDetectorWidget::class,
+            ServiceListWidget::class,
         ];
     }
 
