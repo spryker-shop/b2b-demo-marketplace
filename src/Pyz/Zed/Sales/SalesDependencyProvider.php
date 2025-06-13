@@ -76,12 +76,13 @@ use Spryker\Zed\SalesReturn\Communication\Plugin\Sales\UpdateOrderItemIsReturnab
 use Spryker\Zed\SalesServicePoint\Communication\Plugin\Sales\ServicePointOrderItemExpanderPlugin;
 use Spryker\Zed\SalesServicePoint\Communication\Plugin\Sales\ServicePointOrderItemsPostSavePlugin;
 use Spryker\Zed\Shipment\Communication\Plugin\ShipmentOrderHydratePlugin;
-use SprykerFeature\Zed\SspServiceManagement\Communication\Plugin\Sales\ProductTypeOrderItemsPostSavePlugin;
-use SprykerFeature\Zed\SspServiceManagement\Communication\Plugin\Sales\ScheduleTimeOrderItemExpanderPreSavePlugin;
 use SprykerFeature\Zed\SspAssetManagement\Communication\Plugin\Sales\SspAssetOrderExpanderPlugin;
 use SprykerFeature\Zed\SspAssetManagement\Communication\Plugin\Sales\SspAssetOrderItemsPostSavePlugin;
 use SprykerFeature\Zed\SspServiceManagement\Communication\Plugin\Sales\ProductTypeOrderExpanderPlugin;
+use SprykerFeature\Zed\SspServiceManagement\Communication\Plugin\Sales\ProductTypeOrderItemsPostSavePlugin;
+use SprykerFeature\Zed\SspServiceManagement\Communication\Plugin\Sales\ScheduleTimeOrderItemExpanderPreSavePlugin;
 use SprykerFeature\Zed\SspServiceManagement\Communication\Plugin\Sales\ServiceDateTimeEnabledOrderItemsPostSavePlugin;
+use SprykerFeature\Zed\SspServiceManagement\Communication\Plugin\Sales\SspProductAbstractTypeSalesOrderItemCollectionPreDeletePlugin;
 use SprykerFeature\Zed\SspServiceManagement\Communication\Plugin\Sales\SspServiceCancellableOrderItemExpanderPlugin;
 
 class SalesDependencyProvider extends SprykerSalesDependencyProvider
@@ -291,6 +292,16 @@ class SalesDependencyProvider extends SprykerSalesDependencyProvider
     {
         return [
             new MerchantCommissionOrderPostCancelPlugin(),
+        ];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemCollectionPreDeletePluginInterface>
+     */
+    protected function getSalesOrderItemCollectionPreDeletePlugins(): array
+    {
+        return [
+            new SspProductAbstractTypeSalesOrderItemCollectionPreDeletePlugin(),
         ];
     }
 }
