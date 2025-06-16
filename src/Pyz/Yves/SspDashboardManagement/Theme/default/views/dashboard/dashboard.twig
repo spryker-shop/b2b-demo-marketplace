@@ -36,3 +36,9 @@
     {% set colClasses = 'col col--with-gutter col--sm-12 col--lg-6' %}
     {{ parent() }}
 {% endblock %}
+
+{% block tablesCols %}
+    {% set colClasses = 'col col--with-gutter col--sm-12' %}
+
+    {{ parent() }}
+{% endblock %}
