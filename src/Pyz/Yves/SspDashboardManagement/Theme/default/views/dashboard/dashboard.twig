@@ -26,3 +26,13 @@
 
     {{ block('tables') }}
 {% endblock %}
+
+{% block statsCol %}
+    {% set colClasses = 'col col--with-gutter col--sm-12 col--lg-6' %}
+    {{ parent() }}
+{% endblock %}
+
+{% block representativesCol %}
+    {% set colClasses = 'col col--with-gutter col--sm-12 col--lg-6' %}
+    {{ parent() }}
+{% endblock %}
