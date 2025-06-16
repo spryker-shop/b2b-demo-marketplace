@@ -40,5 +40,9 @@
 {% block tablesCols %}
     {% set colClasses = 'col col--with-gutter col--sm-12' %}
 
-    {{ parent() }}
+    {{ block('inquiryCol') }}
+
+    {% if can('ViewCompanyFilesPermissionPlugin') or can('ViewCompanyUserFilesPermissionPlugin') or can('ViewCompanyBusinessUnitFilesPermissionPlugin') %}
+        {{ block('filesCol') }}
+    {% endif %}
 {% endblock %}
