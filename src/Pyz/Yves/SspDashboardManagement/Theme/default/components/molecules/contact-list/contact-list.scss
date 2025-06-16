@@ -1,14 +1,13 @@
 @include ssp-dashboard-management-contact-list($name: '.contact-list') {
-    &__representative-mail,
-    &__representative-phone {
-        color: $setting-color-gray-4;
-    }
-
-    &__representative-icon {
-        color: $setting-color-main;
+    &__representative-name {
+        font-size: rem(13);
     }
 
     &__representative-logo {
         background-color: $setting-color-gray-2;
+    }
+
+    &__representative-data {
+        justify-content: flex-start;
     }
 }

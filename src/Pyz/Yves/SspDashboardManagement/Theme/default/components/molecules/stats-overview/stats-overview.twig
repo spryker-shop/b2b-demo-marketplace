@@ -1,0 +1,8 @@
+{% extends molecule('stats-overview','@SprykerFeature:SspDashboardManagement') %}
+
+{% block stat %}
+    <div class="{{ config.name }}__stat text-center" data-qa="stats-column">
+        <strong class="{{ config.name }}__counter" data-qa="stats-column-counter">{{ stat.value | default('ssp_dashboard.overview.not_applicable' | trans) }}</strong>
+        <div class="{{ config.name }}__title" data-qa="stats-column-title">{{ stat.title | trans }}</div>
+    </div>
+{% endblock %}
