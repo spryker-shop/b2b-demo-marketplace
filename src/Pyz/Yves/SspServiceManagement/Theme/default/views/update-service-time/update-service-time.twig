@@ -2,6 +2,7 @@
 
 {% block customerContent %}
     {% include molecule('action-bar') with {
+        modifiers: ['first'],
         data: {
             title: 'ssp_service_management.update_scheduled_time.title' | trans,
         },

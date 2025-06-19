@@ -1,7 +1,7 @@
 {% extends view('file-management-view', '@SprykerFeature:SspFileManagement') %}
 
 {% block filtersToggler %}
-    <button class="button button--hollow button--justify-center js-filter-button">
+    <button class="button button--hollow button--hollow-active button--justify-center js-filter-button">
         {% include atom('icon') with {
             modifiers: ['filter'],
             class: 'spacing-right',
@@ -23,6 +23,7 @@
 
 {% block customerContent %}
     {% include molecule('action-bar') with {
+        modifiers: ['first'],
         data: {
             title: 'ssp_file_management.file_management' | trans,
             actions: [
@@ -54,7 +55,7 @@
 
 {% block filters %}
     {% include molecule('filters', 'FeatureUi') with {
-        class: 'box box--small js-filter-section spacing-bottom--bigger',
+        class: 'is-hidden box box--small js-filter-section spacing-bottom--bigger',
         data: {
             filters: filters | map(_filter => _filter | merge({
                 attr: {

@@ -1,7 +1,37 @@
 {% extends view('dashboard-inquiry', '@SprykerFeature:SspInquiryManagement') %}
 
 {% block table %}
-    {% set rows = rows | map(row => row | merge({
+    {% set columns = [
+        {
+            id: 'reference',
+            title: 'customer.ssp_inquiry.list.reference' | trans,
+        },
+        {
+            id: 'type',
+            title: 'customer.ssp_inquiry.list.type' | trans,
+        },
+        {
+            id: 'subject',
+            title: 'customer.ssp_inquiry.list.subject' | trans,
+        },
+        {
+            id: 'date',
+            title: 'customer.ssp_inquiry.list.date_created' | trans,
+            type: 'date',
+        },
+        {
+            id: 'status',
+            title: 'customer.ssp_inquiry.list.status' | trans,
+            type: 'status',
+        },
+        {
+            id: 'actions',
+            type: 'actions',
+        },
+    ] %}
+
+    {% set rows = rows | map((row, index) => row | merge({
+        subject: data.inquiries[index].subject,
         actions: row.actions | map(action => action | merge({
             iconModifier: 'big',
             icon: 'eye',

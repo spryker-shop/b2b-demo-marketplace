@@ -45,6 +45,10 @@
             {% endblock %}
         {% endwidget %}
     {% else %}
-        {{ form_row(filter.row, { attr: filter.attr | default({}) }) }}
+        {% set isSelect = filter.row.vars.choices | default([]) | length %}
+
+        {{ form_row(filter.row, { attr: (filter.attr | default({})) | merge({
+            class: isSelect ? 'light',
+        }) }) }}
     {% endif %}
 {% endblock %}
