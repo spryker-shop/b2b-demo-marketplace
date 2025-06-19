@@ -20,7 +20,7 @@
                     rows: data.rows | map(row => row | merge({
                         actions: row.actions | map(action => action | merge({
                             iconModifier: 'big',
-                            icon: 'eye',
+                            icon: 'file' in data.moreLink ? 'download' : 'eye',
                             title: action.label,
                         })),
                     })),

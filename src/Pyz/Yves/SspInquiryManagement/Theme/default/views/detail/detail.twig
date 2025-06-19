@@ -13,6 +13,7 @@
 {% block customerContent %}
     {% if can('CreateSspInquiryPermissionPlugin') %}
         {% include molecule('action-bar') with {
+            modifiers: ['first'],
             data: {
                 title: 'customer.account.ssp_inquiry.details' | trans,
                 actions: [
@@ -54,4 +55,17 @@
             <button class="button button--alert button--hollow" data-qa="cancel-ssp-inquiry">{{ 'ssp_inquiry.cancel' | trans }}</button>
         {{ form_end(data.cancelForm) }}
     {% endif %}
+{% endblock %}
+
+{% block status %}
+    <li>
+        <span class="text-color-auxiliary">{{ 'customer.ssp_inquiry.details.status' | trans  ~ ': ' }}</span>
+
+        {% include molecule('status') with {
+            data: {
+                label: ('ssp_inquiry.status.' ~ data.inquiry.status) | trans ,
+                status: data.inquiry.status,
+            },
+        } only %}
+    </li>
 {% endblock %}
