@@ -6,6 +6,6 @@ export default register(
         import(
             /* webpackMode: "lazy" */
             /* webpackChunkName: "image-uploader" */
-            './image-uploader'
+            'FeatureUi/components/molecules/image-uploader/image-uploader'
         ),
 );
