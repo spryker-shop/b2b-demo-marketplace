@@ -1,7 +1,7 @@
 {% extends view('list', '@SprykerFeature:SspServiceManagement') %}
 
 {% block filtersToggler %}
-    <button class="button button--hollow button--justify-center js-filter-button">
+    <button class="button button--hollow button--hollow-active button--justify-center js-filter-button">
         {% include atom('icon') with {
             modifiers: ['filter'],
             class: 'spacing-right',
@@ -23,6 +23,7 @@
 
 {% block customerContent %}
     {% include molecule('action-bar') with {
+        modifiers: ['first'],
         data: {
             title: 'customer.account.ssp_assets' | trans,
             actions: [
@@ -50,7 +51,7 @@
 
 {% block filters %}
     {% include molecule('filters', 'FeatureUi') with {
-        class: 'box box--small js-filter-section spacing-bottom--bigger',
+        class: 'is-hidden box box--small js-filter-section spacing-bottom--bigger',
         data: {
             filters: filters,
         },

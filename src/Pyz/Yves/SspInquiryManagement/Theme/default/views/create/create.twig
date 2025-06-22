@@ -1,5 +1,12 @@
 {% extends view('create', '@SprykerFeature:SspInquiryManagement') %}
 
 {% block customerContent %}
+    {% include molecule('action-bar') with {
+        modifiers: ['first'],
+        data: {
+            title: 'customer.ssp_inquiry.create_ssp_inquiry' | trans,
+        },
+    } only %}
+
     {{ block('form') }}
 {% endblock %}

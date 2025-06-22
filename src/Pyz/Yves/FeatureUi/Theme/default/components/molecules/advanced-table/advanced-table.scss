@@ -1,9 +1,19 @@
 @include feature-ui-advanced-table('.advanced-table') {
+    overflow-y: auto;
+
+    &__heading {
+        white-space: nowrap;
+    }
+
     &__head {
         background-color: $setting-color-gray-7;
         text-transform: uppercase;
         font-size: map_get($setting-font-size, tiny);
         font-weight: fw(bold);
+    }
+
+    &__row:nth-child(even) &__col {
+        background: none;
     }
 
     &__col {
