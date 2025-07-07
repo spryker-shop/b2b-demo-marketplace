@@ -10,6 +10,7 @@
             <process>DummyReturn</process>
             <process>DummyInvoice</process>
             <process>DummyMerchantCommission</process>
+            <process>DummyOrderAmendment</process>
         </subprocesses>
 
         <states>
@@ -18,6 +19,7 @@
             </state>
             <state name="payment pending" reserved="true" display="oms.state.payment-pending">
                 <flag>cancellable</flag>
+                <flag>amendable</flag>
             </state>
             <state name="invalid" display="oms.state.invalid">
                 <flag>exclude from customer</flag>
@@ -144,5 +146,6 @@
     <process name="DummyReturn" file="DummySubprocess/DummyReturn01.xml"/>
     <process name="DummyInvoice" file="DummySubprocess/DummyInvoice01.xml"/>
     <process name="DummyMerchantCommission" file="DummySubprocess/DummyMerchantCommission01.xml"/>
+    <process name="DummyOrderAmendment" file="DummySubprocess/DummyOrderAmendment01.xml"/>
 
 </statemachine>

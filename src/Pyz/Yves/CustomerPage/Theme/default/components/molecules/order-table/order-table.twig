@@ -7,34 +7,7 @@
 {% block extraClass %}{% endblock %}
 
 {% block customReorderAction %}
-    {% widget 'CustomerReorderFormWidget' args [order] only %}
-        {% block body %}
-            {% embed molecule('remote-form-submit') with {
-                data: {
-                    label: 'customer.order.reorder' | trans,
-                    buttonClass: 'button--expand-sm-lg link',
-                },
-                attributes: {
-                    'form-name': 'customerReorderWidgetForm_' ~ data.order.idSalesOrder,
-                    'form-action': path('customer/order/reorder', {'idSalesOrder': data.order.idSalesOrder}),
-                    'field-id': 'customerReorderWidgetForm__token_' ~ data.order.idSalesOrder,
-                    'field-name': 'customerReorderWidgetForm[_token]',
-                    'field-value': csrf_token('customerReorderWidgetForm'),
-                },
-            } only %}
-                {% block innerSubmitActionContent %}
-                    {% include molecule('table-action-span') with {
-                        class: 'link link--alt link--action',
-                        data: {
-                            icon: 'cart',
-                            title: data.label,
-                            iconModifiers: ['big'],
-                        },
-                    } only %}
-                {% endblock %}
-            {% endembed %}
-        {% endblock %}
-    {% endwidget %}
+    {% widget 'CartReorderWidget' args [order, 'link'] only %}{% endwidget %}
 {% endblock %}
 
 {% block customOrderCancelAction %}
