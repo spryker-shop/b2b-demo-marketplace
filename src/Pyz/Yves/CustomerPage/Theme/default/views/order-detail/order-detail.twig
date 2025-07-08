@@ -1,33 +1,26 @@
 {% extends view('order-detail', '@SprykerShop:CustomerPage') %}
 
 {% block customerContent %}
-    {% include molecule('order-detail', 'CustomerPage') with {
+    {% embed molecule('cart-reorder-form', 'CartReorderPage') ignore missing with {
         data: {
+            order: data.order,
+        },
+        embed: {
             order: data.order,
             shipmentGroups: data.shipmentGroups,
             orderShipmentExpenses: data.orderShipmentExpenses,
         },
     } only %}
-{#    {% embed molecule('customer-reorder-form', 'CustomerReorderWidget') ignore missing with {#}
-{#        data: {#}
-{#            order: data.order,#}
-{#        },#}
-{#        embed: {#}
-{#            order: data.order,#}
-{#            shipmentGroups: data.shipmentGroups,#}
-{#            orderShipmentExpenses: data.orderShipmentExpenses,#}
-{#        },#}
-{#    } only %}#}
-{#        {% block formContent %}#}
-{#            {% include molecule('order-detail', 'CustomerPage') with {#}
-{#                data: {#}
-{#                    order: embed.order,#}
-{#                    shipmentGroups: embed.shipmentGroups,#}
-{#                    orderShipmentExpenses: embed.orderShipmentExpenses,#}
-{#                },#}
-{#            } only %}#}
-{#        {% endblock %}#}
-{#    {% endembed %}#}
+        {% block formContent %}
+            {% include molecule('order-detail', 'CustomerPage') with {
+                data: {
+                    order: embed.order,
+                    shipmentGroups: embed.shipmentGroups,
+                    orderShipmentExpenses: embed.orderShipmentExpenses,
+                },
+            } only %}
+        {% endblock %}
+    {% endembed %}
 
     <div class="box box--medium">
         {% widget 'CommentThreadWidget' args [
