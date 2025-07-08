@@ -63,7 +63,7 @@
                     {{ 'customer.order.reorder_selected' | trans }}
                 </button>
 
-                {% widget 'CustomerReorderFormWidget' args [embed.order] with {
+                {% widget 'CartReorderWidget' args [embed.order] with {
                     embed: {
                         configName: config.name,
                     },
