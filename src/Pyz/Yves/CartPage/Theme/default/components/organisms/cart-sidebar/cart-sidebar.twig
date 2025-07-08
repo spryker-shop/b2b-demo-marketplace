@@ -233,6 +233,13 @@
                         } only %}
                     {% endif %}
                 {% endblock %}
+
+                {% widget 'CancelOrderAmendmentWidget' args [data.cart] only %}
+                    {% block body %}
+                        <hr>
+                        {{ parent() }}
+                    {% endblock %}
+                {% endwidget %}
             {% endblock %}
         {% endembed %}
     {% endblock %}

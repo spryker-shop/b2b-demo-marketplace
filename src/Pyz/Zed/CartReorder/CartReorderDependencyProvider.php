@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * This file is part of the Spryker Commerce OS.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
+ */
+
+declare(strict_types = 1);
+
 namespace Pyz\Zed\CartReorder;
 
 use Spryker\Zed\AvailabilityCartConnector\Communication\Plugin\CartReorder\RemoveUnavailableItemsCartReorderPreAddToCartPlugin;
@@ -16,6 +23,8 @@ use Spryker\Zed\OrderCustomReference\Communication\Plugin\CartReorder\OrderCusto
 use Spryker\Zed\PersistentCart\Communication\Plugin\CartReorder\ReplacePersistentCartReorderQuoteProviderStrategyPlugin;
 use Spryker\Zed\PersistentCart\Communication\Plugin\CartReorder\UpdateQuoteCartPostReorderPlugin;
 use Spryker\Zed\Price\Communication\Plugin\CartReorder\CopyOrderPriceModeCartPreReorderPlugin;
+use Spryker\Zed\PriceProductSalesOrderAmendment\Communication\Plugin\CartReorder\OriginalSalesOrderItemPriceCartPreReorderPlugin;
+use Spryker\Zed\ProductBundle\Communication\Plugin\CartReorder\OriginalOrderBundleItemCartPreReorderPlugin;
 use Spryker\Zed\ProductBundle\Communication\Plugin\CartReorder\ProductBundleCartReorderOrderItemFilterPlugin;
 use Spryker\Zed\ProductBundle\Communication\Plugin\CartReorder\ReplaceBundledItemsCartPreReorderPlugin;
 use Spryker\Zed\ProductCartConnector\Communication\Plugin\CartReorder\RemoveInactiveItemsCartReorderPreAddToCartPlugin;
@@ -36,7 +45,9 @@ use Spryker\Zed\SalesOrderAmendment\Communication\Plugin\CartReorder\AmendmentOr
 use Spryker\Zed\SalesOrderAmendment\Communication\Plugin\CartReorder\AmendmentQuoteNameCartPreReorderPlugin;
 use Spryker\Zed\SalesOrderAmendment\Communication\Plugin\CartReorder\OrderAmendmentCartReorderValidatorPlugin;
 use Spryker\Zed\SalesOrderAmendment\Communication\Plugin\CartReorder\OrderAmendmentQuoteProcessFlowExpanderCartPreReorderPlugin;
+use Spryker\Zed\SalesOrderAmendment\Communication\Plugin\CartReorder\OriginalSalesOrderItemCartPreReorderPlugin;
 use Spryker\Zed\SalesOrderAmendment\Communication\Plugin\CartReorder\OriginalSalesOrderItemGroupKeyCartReorderItemHydratorPlugin;
+use Spryker\Zed\SalesOrderAmendment\Communication\Plugin\CartReorder\QuoteRequestVersionCartReorderValidatorPlugin;
 use Spryker\Zed\SalesOrderAmendmentOms\Communication\Plugin\CartReorder\IsAmendableOrderCartReorderRequestValidatorPlugin;
 use Spryker\Zed\SalesOrderAmendmentOms\Communication\Plugin\CartReorder\StartOrderAmendmentCartReorderPostCreatePlugin;
 use Spryker\Zed\SalesProductConfiguration\Communication\Plugin\CartReorder\ProductConfigurationCartReorderItemHydratorPlugin;
@@ -83,6 +94,7 @@ class CartReorderDependencyProvider extends SprykerCartReorderDependencyProvider
         return [
             new CurrentStoreCartReorderValidatorPlugin(),
             new OrderAmendmentCartReorderValidatorPlugin(),
+            new QuoteRequestVersionCartReorderValidatorPlugin(),
         ];
     }
 
@@ -95,9 +107,6 @@ class CartReorderDependencyProvider extends SprykerCartReorderDependencyProvider
             new CopyOrderCurrencyCartPreReorderPlugin(),
             new CopyOrderPriceModeCartPreReorderPlugin(),
             new ProductListRestrictedItemsCartPreReorderPlugin(),
-            new OrderAmendmentQuoteProcessFlowExpanderCartPreReorderPlugin(),
-            new AmendmentOrderReferenceCartPreReorderPlugin(),
-            new AmendmentQuoteNameCartPreReorderPlugin(),
             new ReplaceBundledItemsCartPreReorderPlugin(),
             new MergeProductMeasurementUnitItemsCartPreReorderPlugin(),
             new MergeProductPackagingUnitItemsCartPreReorderPlugin(),
@@ -106,6 +115,12 @@ class CartReorderDependencyProvider extends SprykerCartReorderDependencyProvider
             new OrderCustomReferenceCartPreReorderPlugin(),
             new MergeProductQuantityRestrictionItemsCartPreReorderPlugin(),
             new CopyOrderCommentThreadCartPreReorderPlugin(),
+            new OrderAmendmentQuoteProcessFlowExpanderCartPreReorderPlugin(), #Order Amendment Feature
+            new AmendmentOrderReferenceCartPreReorderPlugin(), #Order Amendment Feature
+            new AmendmentQuoteNameCartPreReorderPlugin(), #Order Amendment Feature
+            new OriginalSalesOrderItemPriceCartPreReorderPlugin(), #Order Amendment Feature
+            new OriginalSalesOrderItemCartPreReorderPlugin(), #Order Amendment Feature
+            new OriginalOrderBundleItemCartPreReorderPlugin(), #Order Amendment Feature
         ];
     }
 
@@ -150,6 +165,16 @@ class CartReorderDependencyProvider extends SprykerCartReorderDependencyProvider
             new RemoveUnavailableItemsCartReorderPreAddToCartPlugin(),
             new RemoveInactiveItemsCartReorderPreAddToCartPlugin(),
             new RemoveInactiveProductOffersCartReorderPreAddToCartPlugin(),
+            new RemoveInactiveProductOptionItemsCartReorderPreAddToCartPlugin(),
+        ];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderPreAddToCartPluginInterface>
+     */
+    protected function getCartReorderPreAddToCartPluginsForOrderAmendment(): array
+    {
+        return [
             new RemoveInactiveProductOptionItemsCartReorderPreAddToCartPlugin(),
         ];
     }

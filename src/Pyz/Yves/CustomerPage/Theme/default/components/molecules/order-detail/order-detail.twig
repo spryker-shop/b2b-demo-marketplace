@@ -85,6 +85,8 @@
                         } only %}
                     {% endblock %}
                 {% endwidget %}
+
+                {% widget 'OrderAmendmentWidget' args [embed.order] only %}{% endwidget %}
             {% endblock %}
         {% endembed %}
     {% endblock %}
