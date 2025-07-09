@@ -35,6 +35,9 @@
             {% endembed %}
         {% endblock %}
     {% endwidget %}
+
+    {% widget 'OrderAmendmentWidget' args [order] only %}{% endwidget %}
+
 {% endblock %}
 
 {% block customOrderCancelAction %}
