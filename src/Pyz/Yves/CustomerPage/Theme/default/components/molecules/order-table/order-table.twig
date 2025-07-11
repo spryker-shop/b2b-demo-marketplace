@@ -76,7 +76,6 @@
                         form: data.form,
                         order: data.order,
                         hasConfirmationPopup: data.hasConfirmationPopup,
-                        buttonClass: data.buttonClass,
                     }
                 } only %}
                     {% block form %}
@@ -85,7 +84,7 @@
                         {% embed molecule('remote-form-submit') with {
                             data: {
                                 label: (data.hasConfirmationPopup ? 'sales_order_amendment_widget.edit_order.confirm' : 'sales_order_amendment_widget.edit_order') | trans,
-                                buttonClass: data.buttonClass,
+                                buttonClass: 'button--expand-sm-lg link',
                             },
                             attributes: {
                                 'form-name': formVars.id ~ order.orderReference,
