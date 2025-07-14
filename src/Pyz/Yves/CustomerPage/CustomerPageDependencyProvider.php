@@ -39,7 +39,7 @@ class CustomerPageDependencyProvider extends SprykerShopCustomerPageDependencyPr
     {
         $container = parent::provideDependencies($container);
 
-//        $container = $this->addSessionClient($container);
+        $container = $this->addSessionClient($container);
 
         return $container;
     }
@@ -106,19 +106,19 @@ class CustomerPageDependencyProvider extends SprykerShopCustomerPageDependencyPr
         ];
     }
 
-//    /**
-//     * @param \Spryker\Yves\Kernel\Container $container
-//     *
-//     * @return \Spryker\Yves\Kernel\Container
-//     */
-//    protected function addSessionClient(Container $container): Container
-//    {
-//        $container->set(static::CLIENT_SESSION, function (Container $container) {
-//            return $container->getLocator()->session()->client();
-//        });
-//
-//        return $container;
-//    }
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addSessionClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_SESSION, function (Container $container) {
+            return $container->getLocator()->session()->client();
+        });
+
+        return $container;
+    }
 
     /**
      * @return array<\SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\OrderSearchFormExpanderPluginInterface>
