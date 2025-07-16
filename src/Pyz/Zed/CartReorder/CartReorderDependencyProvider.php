@@ -18,6 +18,7 @@ use Spryker\Zed\ConfigurableBundleNote\Communication\Plugin\CartReorder\Configur
 use Spryker\Zed\Currency\Communication\Plugin\CartReorder\CopyOrderCurrencyCartPreReorderPlugin;
 use Spryker\Zed\MerchantProduct\Communication\Plugin\CartReorder\MerchantProductCartReorderItemHydratorPlugin;
 use Spryker\Zed\MerchantProductOffer\Communication\Plugin\CartReorder\MerchantProductOfferCartReorderItemHydratorPlugin;
+use Spryker\Zed\MultiCart\Communication\Plugin\CartReorder\DefaultReorderQuoteNameCartPreReorderPlugin;
 use Spryker\Zed\MultiCart\Communication\Plugin\CartReorder\NewPersistentCartReorderQuoteProviderStrategyPlugin;
 use Spryker\Zed\OrderCustomReference\Communication\Plugin\CartReorder\OrderCustomReferenceCartPreReorderPlugin;
 use Spryker\Zed\PersistentCart\Communication\Plugin\CartReorder\ReplacePersistentCartReorderQuoteProviderStrategyPlugin;
@@ -107,6 +108,7 @@ class CartReorderDependencyProvider extends SprykerCartReorderDependencyProvider
             new CopyOrderCurrencyCartPreReorderPlugin(),
             new CopyOrderPriceModeCartPreReorderPlugin(),
             new ProductListRestrictedItemsCartPreReorderPlugin(),
+            new DefaultReorderQuoteNameCartPreReorderPlugin(),
             new ReplaceBundledItemsCartPreReorderPlugin(),
             new MergeProductMeasurementUnitItemsCartPreReorderPlugin(),
             new MergeProductPackagingUnitItemsCartPreReorderPlugin(),

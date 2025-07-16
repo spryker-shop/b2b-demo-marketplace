@@ -49,7 +49,6 @@ class PersistentCartDependencyProvider extends SprykerPersistentCartDependencyPr
             new AddDiscountPromotionPersistentCartRequestExpanderPlugin(),
             new QuoteSelectorPersistentCartChangeExpanderPlugin(), #MultiCartFeature
             new QuickOrderQuoteNameExpanderPlugin(), #MultiCartFeature
-            new ReorderPersistentCartChangeExpanderPlugin(), #MultiCartFeature
             new ProductSeparatePersistentCartChangeExpanderPlugin(), #SharedCartFeature
             new SingleItemQuantitySalesUnitPersistentCartChangeExpanderPlugin(),
             new ProductPackagingUnitAmountPersistentCartChangeExpanderPlugin(), #ProductPackagingUnit
