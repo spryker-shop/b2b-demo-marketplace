@@ -35,6 +35,8 @@ use Spryker\Zed\ProductPackagingUnit\Communication\Plugin\Reservation\LeadProduc
 use Spryker\Zed\Refund\Communication\Plugin\Oms\RefundCommandPlugin;
 use Spryker\Zed\SalesInvoice\Communication\Plugin\Oms\GenerateOrderInvoiceCommandPlugin;
 use Spryker\Zed\SalesMerchantCommission\Communication\Plugin\Oms\Command\SalesMerchantCommissionCalculationCommandByOrderPlugin;
+use Spryker\Zed\SalesOrderAmendmentOms\Communication\Plugin\Oms\DeleteOrderAmendmentQuoteCommandByOrderPlugin;
+use Spryker\Zed\SalesOrderAmendmentOms\Communication\Plugin\Oms\UpdateDeletedItemReservationCommandByOrderPlugin;
 use Spryker\Zed\SalesPayment\Communication\Plugin\Oms\SendCancelPaymentMessageCommandPlugin;
 use Spryker\Zed\SalesPayment\Communication\Plugin\Oms\SendCapturePaymentMessageCommandPlugin;
 use Spryker\Zed\SalesPayment\Communication\Plugin\Oms\SendRefundPaymentMessageCommandPlugin;
@@ -220,6 +222,8 @@ class OmsDependencyProvider extends SprykerOmsDependencyProvider
             $commandCollection->add(new SalesMerchantCommissionCalculationCommandByOrderPlugin(), 'MerchantCommission/Calculate');
             $commandCollection->add(new MerchantPayoutCommandByOrderPlugin(), 'SalesPaymentMerchant/Payout');
             $commandCollection->add(new MerchantPayoutReverseCommandByOrderPlugin(), 'SalesPaymentMerchant/ReversePayout');
+            $commandCollection->add(new UpdateDeletedItemReservationCommandByOrderPlugin(), 'OrderAmendment/UnreserveDeletedItems');
+            $commandCollection->add(new DeleteOrderAmendmentQuoteCommandByOrderPlugin(), 'OrderAmendment/StartGracePeriod');
 
             return $commandCollection;
         });
