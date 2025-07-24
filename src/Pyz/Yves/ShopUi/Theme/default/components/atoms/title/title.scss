@@ -22,6 +22,7 @@
     &--subscription {
         font: fw(bold) rem(16) / rem(50) $setting-font-family;
         position: relative;
+        display: block;
 
         @include helper-breakpoint-media-min($md) {
             font-weight: fw(medium);
@@ -138,7 +139,7 @@
 
     &--price-mode {
         font-size: rem(13);
-        color: $setting-color-gray-2;
+        color: $setting-color-gray-4;
     }
 
     &--mobile-toggler-section {
