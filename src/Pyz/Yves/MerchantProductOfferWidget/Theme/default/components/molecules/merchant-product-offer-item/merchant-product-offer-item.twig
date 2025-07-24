@@ -19,7 +19,7 @@
         {% endblock %}
 
         {% block merchantLink %}
-            <a class="{{ config.name }}__link" href="{{ data.merchantUrl }}">
+            <a class="{{ config.name }}__link" href="{{ functionExists('generatePath') ? generatePath(data.merchantUrl) : data.merchantUrl }}">
                 {{ 'merchant_product_offer.view_seller' | trans }}
             </a>
         {% endblock %}
