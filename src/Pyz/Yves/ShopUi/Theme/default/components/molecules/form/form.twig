@@ -41,3 +41,22 @@
         {{ form_end(data.form) }}
     {% endif %}
 {% endblock %}
+
+{% block submit %}
+    <button type="submit"
+            class="{{config.name}}__action {{data.submit.class}}"
+        {{ data.submit.isSingleClickEnforcerEnabled ? 'data-init-single-click' }}
+        {{ data.submit.attributes }}
+        {{qa(data.submit.qa)}}>
+        {% if data.submit.icon is not empty %}
+            {% include atom('icon') with {
+                modifiers: ['big'],
+                data: {
+                    name: data.submit.icon
+                }
+            } only %}
+        {% endif %}
+        {{data.submit.text}}
+    </button>
+{% endblock %}
+
