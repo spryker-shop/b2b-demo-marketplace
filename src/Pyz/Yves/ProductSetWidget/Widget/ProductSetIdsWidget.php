@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Yves\ProductSetWidget\Widget;
 
 use Generated\Shared\Transfer\ProductSetDataStorageTransfer;
@@ -83,7 +85,7 @@ class ProductSetIdsWidget extends AbstractWidget
      *
      * @return array<string, mixed>
      */
-    protected function getSingleProductSet($productSetId): array
+    protected function getSingleProductSet(int $productSetId): array
     {
         $productSet = $this->getProductSetStorageTransfer($productSetId);
         if (!$productSet || !$productSet->getIsActive()) {
@@ -101,7 +103,7 @@ class ProductSetIdsWidget extends AbstractWidget
      *
      * @return \Generated\Shared\Transfer\ProductSetDataStorageTransfer|null
      */
-    protected function getProductSetStorageTransfer($idProductSet): ?ProductSetDataStorageTransfer
+    protected function getProductSetStorageTransfer(int $idProductSet): ?ProductSetDataStorageTransfer
     {
         return $this->getFactory()->getProductSetStorageClient()->getProductSetByIdProductSet($idProductSet, $this->getLocale());
     }
