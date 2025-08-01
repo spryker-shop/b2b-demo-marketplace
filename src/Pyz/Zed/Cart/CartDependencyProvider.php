@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\Cart;
 
 use Spryker\Zed\AvailabilityCartConnector\Communication\Plugin\Cart\CheckAvailabilityPlugin;
@@ -23,14 +25,21 @@ use Spryker\Zed\Discount\Communication\Plugin\Cart\DiscountQuoteChangeObserverPl
 use Spryker\Zed\DiscountPromotion\Communication\Plugin\Cart\CartGroupPromotionItems;
 use Spryker\Zed\DiscountPromotion\Communication\Plugin\Cart\DiscountPromotionCartPreCheckPlugin;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Merchant\Communication\Plugin\Cart\MerchantCartPreCheckPlugin;
 use Spryker\Zed\MerchantProduct\Communication\Plugin\Cart\MerchantProductCartPreCheckPlugin;
 use Spryker\Zed\MerchantProductOption\Communication\Plugin\Cart\MerchantProductOptionCartPreCheckPlugin;
 use Spryker\Zed\MerchantShipment\Communication\Plugin\Cart\MerchantShipmentItemExpanderPlugin;
 use Spryker\Zed\PaymentCartConnector\Communication\Plugin\Cart\RemovePaymentCartPostSavePlugin;
+use Spryker\Zed\PaymentCartConnector\Communication\Plugin\Cart\RemoveQuotePaymentCartItemExpanderPlugin;
+use Spryker\Zed\PriceCartConnector\Communication\Plugin\Cart\PriceItemExpanderPlugin;
 use Spryker\Zed\PriceCartConnector\Communication\Plugin\Cart\SanitizeSourcePricesQuoteLockPreResetPlugin;
 use Spryker\Zed\PriceCartConnector\Communication\Plugin\CartItemPricePlugin;
 use Spryker\Zed\PriceCartConnector\Communication\Plugin\CartItemPricePreCheckPlugin;
 use Spryker\Zed\PriceCartConnector\Communication\Plugin\FilterItemsWithoutPricePlugin;
+use Spryker\Zed\PriceProductSalesOrderAmendment\Communication\Plugin\Cart\OriginalSalesOrderItemPriceItemExpanderPlugin;
+use Spryker\Zed\PriceProductSalesOrderAmendment\Communication\Plugin\Cart\ResetOriginalSalesOrderItemUnitPricesPreReloadItemsPlugin;
+use Spryker\Zed\ProductApproval\Communication\Plugin\Cart\OrderAmendmentProductApprovalCartPreCheckPlugin;
+use Spryker\Zed\ProductApproval\Communication\Plugin\Cart\OrderAmendmentProductApprovalPreReloadItemsPlugin;
 use Spryker\Zed\ProductApproval\Communication\Plugin\Cart\ProductApprovalCartPreCheckPlugin;
 use Spryker\Zed\ProductApproval\Communication\Plugin\Cart\ProductApprovalPreReloadItemsPlugin;
 use Spryker\Zed\ProductBundle\Communication\Plugin\Cart\BundleItemPriceQuoteChangeObserverPlugin;
@@ -42,11 +51,16 @@ use Spryker\Zed\ProductBundle\Communication\Plugin\Cart\CartItemWithBundleGroupK
 use Spryker\Zed\ProductBundle\Communication\Plugin\Cart\CartPostSaveUpdateBundlesPlugin;
 use Spryker\Zed\ProductBundle\Communication\Plugin\Cart\ExpandBundleItemsPlugin;
 use Spryker\Zed\ProductBundle\Communication\Plugin\Cart\ExpandBundleItemsWithImagesPlugin;
+use Spryker\Zed\ProductBundle\Communication\Plugin\Cart\OrderAmendmentProductBundleAvailabilityCartPreCheckPlugin;
+use Spryker\Zed\ProductBundle\Communication\Plugin\Cart\OrderAmendmentProductBundleStatusCartPreCheckPlugin;
+use Spryker\Zed\ProductCartConnector\Communication\Plugin\Cart\OrderAmendmentProductExistsCartPreCheckPlugin;
+use Spryker\Zed\ProductCartConnector\Communication\Plugin\Cart\OrderAmendmentRemoveInactiveItemsPreReloadPlugin;
 use Spryker\Zed\ProductCartConnector\Communication\Plugin\ProductCartPlugin;
 use Spryker\Zed\ProductCartConnector\Communication\Plugin\ProductExistsCartPreCheckPlugin;
 use Spryker\Zed\ProductCartConnector\Communication\Plugin\ProductUrlItemExpanderPlugin;
 use Spryker\Zed\ProductCartConnector\Communication\Plugin\RemoveInactiveItemsPreReloadPlugin;
 use Spryker\Zed\ProductConfigurationCart\Communication\Plugin\Cart\ProductConfigurationGroupKeyItemExpanderPlugin;
+use Spryker\Zed\ProductDiscontinued\Communication\Plugin\Cart\OrderAmendmentProductDiscontinuedCartPreCheckPlugin;
 use Spryker\Zed\ProductDiscontinued\Communication\Plugin\Cart\ProductDiscontinuedCartPreCheckPlugin;
 use Spryker\Zed\ProductImageCartConnector\Communication\Plugin\Cart\ProductImageItemExpanderPlugin;
 use Spryker\Zed\ProductList\Communication\Plugin\CartExtension\ProductListRestrictedItemsPreCheckPlugin;
@@ -57,6 +71,8 @@ use Spryker\Zed\ProductMeasurementUnit\Communication\Plugin\Cart\QuantitySalesUn
 use Spryker\Zed\ProductMeasurementUnit\Communication\Plugin\Cart\QuantitySalesUnitItemExpanderPlugin;
 use Spryker\Zed\ProductMeasurementUnit\Communication\Plugin\Cart\QuantitySalesUnitValuePostSavePlugin;
 use Spryker\Zed\ProductOffer\Communication\Plugin\Cart\FilterInactiveProductOfferPreReloadItemsPlugin;
+use Spryker\Zed\ProductOffer\Communication\Plugin\Cart\OrderAmendmentFilterInactiveProductOfferPreReloadItemsPlugin;
+use Spryker\Zed\ProductOffer\Communication\Plugin\Cart\OrderAmendmentProductOfferCartPreCheckPlugin;
 use Spryker\Zed\ProductOffer\Communication\Plugin\Cart\ProductOfferCartPreCheckPlugin;
 use Spryker\Zed\ProductOffer\Communication\Plugin\Cart\ProductOfferGroupKeyItemExpanderPlugin;
 use Spryker\Zed\ProductOptionCartConnector\Communication\Plugin\Cart\CartItemOptionPreCheckPlugin;
@@ -79,6 +95,9 @@ use Spryker\Zed\ProductQuantity\Communication\Plugin\Cart\ProductQuantityRestric
 use Spryker\Zed\ProductQuantity\Communication\Plugin\CartExtension\ProductQuantityRestrictionCartRemovalPreCheckPlugin;
 use Spryker\Zed\QuoteApproval\Communication\Plugin\Cart\SanitizeQuoteApprovalQuoteLockPreResetPlugin;
 use Spryker\Zed\QuoteRequest\Communication\Plugin\Cart\SanitizeQuoteRequestQuoteLockPreResetPlugin;
+use Spryker\Zed\SalesMerchantCommission\Communication\Plugin\Cart\SanitizeMerchantCommissionPreReloadPlugin;
+use Spryker\Zed\SalesOrderAmendment\Communication\Plugin\Cart\OrderAmendmentCartPreCheckPlugin;
+use Spryker\Zed\SalesOrderAmendment\Communication\Plugin\Cart\ResetAmendmentOrderReferencePreReloadItemsPlugin;
 use Spryker\Zed\SalesOrderThreshold\Communication\Plugin\Cart\AddThresholdMessagesCartPostReloadItemsPlugin;
 use Spryker\Zed\SalesOrderThreshold\Communication\Plugin\Cart\SalesOrderThresholdCartTerminationPlugin;
 use Spryker\Zed\SalesQuantity\Communication\Plugin\Cart\IsQuantitySplittableItemExpanderPlugin;
@@ -93,7 +112,7 @@ class CartDependencyProvider extends SprykerCartDependencyProvider
      *
      * @return array<\Spryker\Zed\CartExtension\Dependency\Plugin\ItemExpanderPluginInterface>
      */
-    protected function getExpanderPlugins(Container $container): array
+    protected function getExpanderPlugins(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
         return [
             new ProductCartPlugin(),
@@ -122,6 +141,46 @@ class CartDependencyProvider extends SprykerCartDependencyProvider
             new MerchantShipmentItemExpanderPlugin(),
             new GroupKeyWithCartIdentifierItemExpanderPlugin(),
             new ProductConfigurationGroupKeyItemExpanderPlugin(),
+            new RemoveQuotePaymentCartItemExpanderPlugin(),
+        ];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return list<\Spryker\Zed\CartExtension\Dependency\Plugin\ItemExpanderPluginInterface>
+     */
+    protected function getExpanderPluginsForOrderAmendment(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
+    {
+        return [
+            new ProductCartPlugin(),
+            new IsQuantitySplittableItemExpanderPlugin(),
+            new PriceItemExpanderPlugin(),
+            new OriginalSalesOrderItemPriceItemExpanderPlugin(),
+            new CartItemProductOptionPlugin(),
+            new ExpandBundleItemsPlugin(),
+            new ExpandBundleItemsWithImagesPlugin(),
+            new SkuGroupKeyPlugin(),
+            new DefaultQuantitySalesUnitItemExpanderPlugin(),
+            new QuantitySalesUnitGroupKeyItemExpanderPlugin(),
+            new CartItemGroupKeyOptionPlugin(),
+            new CartItemWithBundleGroupKeyExpanderPlugin(),
+            new ProductImageItemExpanderPlugin(),
+            new CartGroupPromotionItems(),
+            new QuantitySalesUnitItemExpanderPlugin(),
+            new ProductPackagingUnitItemExpanderPlugin(), #ProductPackagingUnit
+            new AmountGroupKeyItemExpanderPlugin(), #ProductPackagingUnit
+            new AmountSalesUnitItemExpanderPlugin(), #ProductPackagingUnit
+            new CustomAmountPriceItemExpanderPlugin(), #ProductPackagingUnitFeature
+            new ConfiguredBundleQuantityPerSlotItemExpanderPlugin(),
+            new ConfiguredBundleGroupKeyItemExpanderPlugin(),
+            new ProductOfferGroupKeyItemExpanderPlugin(),
+            new ProductUrlItemExpanderPlugin(),
+            new SanitizeCartShipmentItemExpanderPlugin(),
+            new ProductConfigurationGroupKeyItemExpanderPlugin(),
+            new MerchantShipmentItemExpanderPlugin(),
+            new GroupKeyWithCartIdentifierItemExpanderPlugin(),
+            new RemoveQuotePaymentCartItemExpanderPlugin(),
         ];
     }
 
@@ -130,7 +189,7 @@ class CartDependencyProvider extends SprykerCartDependencyProvider
      *
      * @return array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartChangeTransferNormalizerPluginInterface>
      */
-    protected function getCartBeforePreCheckNormalizerPlugins(Container $container): array
+    protected function getCartBeforePreCheckNormalizerPlugins(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
         return [
             new CartChangeTransferQuantityNormalizerPlugin(),
@@ -142,7 +201,7 @@ class CartDependencyProvider extends SprykerCartDependencyProvider
      *
      * @return array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface>
      */
-    protected function getCartPreCheckPlugins(Container $container): array
+    protected function getCartPreCheckPlugins(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
         return [
             new ProductExistsCartPreCheckPlugin(),
@@ -171,11 +230,43 @@ class CartDependencyProvider extends SprykerCartDependencyProvider
     }
 
     /**
+     * @return list<\Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface>
+     */
+    protected function getCartPreCheckPluginsForOrderAmendment(): array
+    {
+        return [
+            new CheckAvailabilityPlugin(),
+            new CartBundlePricesPreCheckPlugin(),
+            new CartItemOptionPreCheckPlugin(),
+            new ProductOptionValuePriceExistsCartPreCheckPlugin(),
+            new CartShipmentPreCheckPlugin(),
+            new ProductQuantityRestrictionCartPreCheckPlugin(),
+            new ProductListRestrictedItemsPreCheckPlugin(),
+            new ProductPackagingUnitCartPreCheckPlugin(),
+            new AmountAvailabilityCartPreCheckPlugin(), #ProductPackagingUnit
+            new AmountRestrictionCartPreCheckPlugin(), #ProductPackagingUnit
+            new ConfiguredBundleTemplateSlotCombinationPreCheckPlugin(),
+            new MerchantCartPreCheckPlugin(),
+            new ProductMeasurementSalesUnitCartPreCheckPlugin(),
+            new DiscountPromotionCartPreCheckPlugin(),
+            new MerchantProductCartPreCheckPlugin(),
+            new MerchantProductOptionCartPreCheckPlugin(),
+            new OrderAmendmentProductExistsCartPreCheckPlugin(),
+            new OrderAmendmentProductBundleAvailabilityCartPreCheckPlugin(),
+            new OrderAmendmentProductBundleStatusCartPreCheckPlugin(),
+            new OrderAmendmentProductDiscontinuedCartPreCheckPlugin(), #ProductDiscontinuedFeature
+            new OrderAmendmentProductOfferCartPreCheckPlugin(),
+            new OrderAmendmentProductApprovalCartPreCheckPlugin(),
+            new OrderAmendmentCartPreCheckPlugin(),
+        ];
+    }
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationPostSavePluginInterface>
      */
-    protected function getPostSavePlugins(Container $container): array
+    protected function getPostSavePlugins(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
         return [
             new ChangeProductOptionQuantityPlugin(),
@@ -193,7 +284,7 @@ class CartDependencyProvider extends SprykerCartDependencyProvider
      *
      * @return array<\Spryker\Zed\CartExtension\Dependency\Plugin\PreReloadItemsPluginInterface>
      */
-    protected function getPreReloadPlugins(Container $container): array
+    protected function getPreReloadPlugins(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
         return [
             new CartConfigurableBundlePreReloadPlugin(),
@@ -205,6 +296,29 @@ class CartDependencyProvider extends SprykerCartDependencyProvider
             new ConfiguredBundleQuantityPerSlotPreReloadItemsPlugin(),
             new FilterInactiveProductOfferPreReloadItemsPlugin(),
             new ProductApprovalPreReloadItemsPlugin(),
+            new SanitizeMerchantCommissionPreReloadPlugin(),
+            new ResetAmendmentOrderReferencePreReloadItemsPlugin(),
+            new ResetOriginalSalesOrderItemUnitPricesPreReloadItemsPlugin(),
+        ];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return list<\Spryker\Zed\CartExtension\Dependency\Plugin\PreReloadItemsPluginInterface>
+     */
+    protected function getPreReloadPluginsForOrderAmendment(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
+    {
+        return [
+            new CartConfigurableBundlePreReloadPlugin(),
+            new CartBundleItemsPreReloadPlugin(),
+            new RemoveRestrictedItemsPreReloadPlugin(),
+            new CleanUpItemsPreReloadPlugin(),
+            new ConfiguredBundleQuantityPerSlotPreReloadItemsPlugin(),
+            new SanitizeMerchantCommissionPreReloadPlugin(),
+            new OrderAmendmentRemoveInactiveItemsPreReloadPlugin(),
+            new OrderAmendmentFilterInactiveProductOfferPreReloadItemsPlugin(),
+            new OrderAmendmentProductApprovalPreReloadItemsPlugin(),
         ];
     }
 
@@ -213,7 +327,7 @@ class CartDependencyProvider extends SprykerCartDependencyProvider
      *
      * @return array<\Spryker\Zed\CartExtension\Dependency\Plugin\PostReloadItemsPluginInterface>
      */
-    protected function getPostReloadItemsPlugins(Container $container): array
+    protected function getPostReloadItemsPlugins(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
         return [
             new AddThresholdMessagesCartPostReloadItemsPlugin(), #SalesOrderThresholdFeature
@@ -225,7 +339,7 @@ class CartDependencyProvider extends SprykerCartDependencyProvider
      *
      * @return array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartTerminationPluginInterface>
      */
-    protected function getTerminationPlugins(Container $container): array
+    protected function getTerminationPlugins(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
         return [
             new ConfiguredBundleQuantityCartTerminationPlugin(),
@@ -238,7 +352,7 @@ class CartDependencyProvider extends SprykerCartDependencyProvider
      *
      * @return array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartRemovalPreCheckPluginInterface>
      */
-    protected function getCartRemovalPreCheckPlugins(Container $container): array
+    protected function getCartRemovalPreCheckPlugins(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
         return [
             new ProductQuantityRestrictionCartRemovalPreCheckPlugin(),
@@ -250,7 +364,7 @@ class CartDependencyProvider extends SprykerCartDependencyProvider
      *
      * @return array<\Spryker\Zed\CartExtension\Dependency\Plugin\QuoteChangeObserverPluginInterface>
      */
-    protected function getQuoteChangeObserverPlugins(Container $container): array
+    protected function getQuoteChangeObserverPlugins(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
         return [
             new DiscountQuoteChangeObserverPlugin(),
@@ -263,7 +377,7 @@ class CartDependencyProvider extends SprykerCartDependencyProvider
      *
      * @return array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface>
      */
-    protected function getCartAddItemStrategyPlugins(Container $container): array
+    protected function getCartAddItemStrategyPlugins(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
         return [
             new ProductPackagingUnitCartAddItemStrategyPlugin(),
@@ -275,7 +389,7 @@ class CartDependencyProvider extends SprykerCartDependencyProvider
      *
      * @return array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface>
      */
-    protected function getCartRemoveItemStrategyPlugins(Container $container): array
+    protected function getCartRemoveItemStrategyPlugins(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
         return [
             new ProductPackagingUnitCartRemoveItemStrategyPlugin(),

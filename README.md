@@ -1,7 +1,7 @@
 # Spryker B2B Marketplace Demo Shop
 [![Build Status](https://github.com/spryker-shop/b2b-demo-marketplace/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/spryker-shop/b2b-demo-marketplace/actions?query=branch:master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker-shop/b2b-demo-marketplace/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spryker-shop/b2b-demo-marketplace/?branch=master)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.1-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.2-8892BF.svg)](https://php.net/)
 
 ## Description
 
@@ -11,14 +11,13 @@ Spryker B2B Marketplace Demo Shop is a collection of Spryker Marketplace B2B-spe
 
 This section describes how to get started with the B2B Marketplace Demo Shop quickly.
 
-For detailed installation instructions, see [Installing Spryker with Docker](https://docs.spryker.com/docs/scos/dev/setup/installing-spryker-with-docker/installing-spryker-with-docker.html) or [Installing with Development Virtual Machine](https://docs.spryker.com/docs/scos/dev/developer-getting-started-guide.html#installing-spryker-with-development-virtual-machine).
+For detailed installation instructions, see [Install Spryker](https://docs.spryker.com/docs/dg/dev/set-up-spryker-locally/install-spryker/install-spryker.html).
 
 ### Prerequisites
 
-For full installation prerequisites, see one of the following:
-* [Installing Docker prerequisites on MacOS](https://docs.spryker.com/docs/scos/dev/setup/installing-spryker-with-docker/docker-installation-prerequisites/installing-docker-prerequisites-on-macos.html)
-* [Installing Docker prerequisites on Linux](https://docs.spryker.com/docs/scos/dev/setup/installing-spryker-with-docker/docker-installation-prerequisites/installing-docker-prerequisites-on-linux.html)
-* [Installing Docker prerequisites on Windows](https://docs.spryker.com/docs/scos/dev/setup/installing-spryker-with-docker/docker-installation-prerequisites/installing-docker-prerequisites-on-windows-with-wsl2.html)
+* [Install Docker prerequisites on MacOS](https://docs.spryker.com/docs/dg/dev/set-up-spryker-locally/install-spryker/install-docker-prerequisites/install-docker-prerequisites-on-macos.html)
+* [Install Docker prerequisites on Linux](https://docs.spryker.com/docs/dg/dev/set-up-spryker-locally/install-spryker/install-docker-prerequisites/install-docker-prerequisites-on-linux.html)
+* [Install Docker prerequisites on Windows](https://docs.spryker.com/docs/dg/dev/set-up-spryker-locally/install-spryker/install-docker-prerequisites/install-docker-prerequisites-on-windows-with-wsl2.html)
 
 Recommended system requirements for MacOS:
 
@@ -27,9 +26,7 @@ Recommended system requirements for MacOS:
 |15'|	4	|6GB|
 |13'|	2	|4GB|
 
-### Installing the B2B Marketplace Demo Shop
-
-To set up the B2B Marketplace Demo Shop and its environment, do the following:
+### Install the B2B Marketplace Demo Shop
 
 1. Create a project folder and navigate into it:
 ```bash
@@ -47,10 +44,10 @@ git clone git@github.com:spryker/docker-sdk.git docker
 ```
 
 2. Set up a desired environment:
-  * [Setting up a development environment](#setting-up-a-development-environment)
-  * [Setting up a production-like environment](#setting-up-a-production-like-environment)
+* [Set up a development environment](#set-up-a-development-environment)
+* [Set up a production-like environment](#set-up-a-production-like-environment)
 
-#### Setting up a development environment
+#### Set up a development environment
 
 1. Bootstrap the docker setup:
 
@@ -81,7 +78,7 @@ docker/sdk up --build --assets --data
 You've set up your Spryker B2B Marketplace Demo Shop and can access your applications.
 
 
-### Setting up a production-like environment
+### Set up a production-like environment
 
 1. Bootstrap the docker setup:
 
@@ -133,7 +130,7 @@ You've set up your Spryker B2B Marketplace Demo Shop and can access your applica
 
 This section describes the most common issues related to the installation of the B2B Marketplace Demo Shop.
 
-For a complete troubleshooting, see [Troubleshooting Spryker in Docker issues](https://documentation.spryker.com/docs/troubleshooting-spryker-in-docker-issues).
+For a complete troubleshooting, see [Troubleshooting Spryker installation issues](https://docs.spryker.com/docs/dg/dev/set-up-spryker-locally/troubleshooting-installation/an-error-during-front-end-setup.html).
 
 **when**
 
@@ -170,15 +167,6 @@ docker/sdk up --build --assets --data
 ```
 
 
-
-## Installation of B2B Marketplace Demo Shop with Docker
-
-For detailed installation instructions of Spryker with Docker, see [Installing Spryker with Docker](https://docs.spryker.com/docs/scos/dev/setup/installing-spryker-with-docker/installing-spryker-with-docker.html).
-
-## Glue API reference
-
-See Glue API reference at [REST API reference](https://docs.spryker.com/docs/scos/dev/glue-api-guides/202108.0/rest-api-reference.html)
-
 ## Contributing to the repository
 
-For contribution guidelines, see [Code contribution guide](https://docs.spryker.com/docs/scos/dev/code-contribution-guide.html#opening-pull-requests)
+For contribution guidelines, see [Code contribution guide](https://docs.spryker.com/docs/dg/dev/code-contribution-guide.html).

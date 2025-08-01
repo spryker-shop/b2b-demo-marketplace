@@ -21,6 +21,10 @@ actions:
     # Merchants
     - data_entity: product-price-merchant-relationship
       source: data/import/common/AT/price_product_merchant_relationship.csv
+    - data_entity: merchant-commission-amount
+      source: data/import/common/AT/marketplace/merchant_commission_amount.csv
+    - data_entity: merchant-commission-store
+      source: data/import/common/AT/marketplace/merchant_commission_store.csv
     # Payment methods
     - data_entity: payment-method-store
       source: data/import/common/AT/payment_method_store.csv

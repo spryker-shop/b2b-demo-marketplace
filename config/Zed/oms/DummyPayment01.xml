@@ -9,10 +9,20 @@
             <process>DummyRefund</process>
             <process>DummyReturn</process>
             <process>DummyInvoice</process>
+            <process>DummyMerchantCommission</process>
+            <process>DummyOrderAmendment</process>
         </subprocesses>
 
         <states>
             <state name="new" display="oms.state.new">
+                <flag>cancellable</flag>
+            </state>
+            <state name="grace period pending" display="oms.state.new"/>
+            <state name="grace period started" reserved="true" display="oms.state.new">
+                <flag>cancellable</flag>
+                <flag>amendable</flag>
+            </state>
+            <state name="grace period finished" reserved="true" display="oms.state.new">
                 <flag>cancellable</flag>
             </state>
             <state name="payment pending" reserved="true" display="oms.state.payment-pending">
@@ -25,6 +35,7 @@
             <state name="paid" reserved="true" display="oms.state.paid">
                 <flag>cancellable</flag>
             </state>
+            <state name="tax pending" reserved="true" display="oms.state.tax-pending"/>
             <state name="tax invoice submitted" reserved="true" display="oms.state.paid"/>
             <state name="product review requested" reserved="true" display="oms.state.paid"/>
             <state name="confirmed" reserved="true" display="oms.state.confirmed"/>
@@ -38,7 +49,7 @@
         <transitions>
             <transition happy="true" condition="DummyPayment/IsAuthorized">
                 <source>new</source>
-                <target>payment pending</target>
+                <target>grace period pending</target>
                 <event>authorize</event>
             </transition>
 
@@ -54,6 +65,23 @@
                 <event>cancel</event>
             </transition>
 
+            <transition happy="true">
+                <source>grace period started</source>
+                <target>grace period finished</target>
+                <event>skip grace period</event>
+            </transition>
+
+            <transition>
+                <source>grace period started</source>
+                <target>cancelled</target>
+                <event>cancel</event>
+            </transition>
+
+            <transition happy="true">
+                <source>grace period finished</source>
+                <target>payment pending</target>
+            </transition>
+
             <transition happy="true" condition="DummyPayment/IsPayed">
                 <source>payment pending</source>
                 <target>paid</target>
@@ -61,7 +89,7 @@
             </transition>
 
             <transition happy="true">
-                <source>paid</source>
+                <source>tax pending</source>
                 <target>tax invoice submitted</target>
                 <event>submit tax invoice</event>
             </transition>
@@ -124,6 +152,7 @@
 
         <events>
             <event name="authorize" timeout="1 second"/>
+            <event name="skip grace period" manual="true" timeout="2 hour"/>
             <event name="pay" manual="true" timeout="1 hour" timeoutProcessor="OmsTimeout/Initiation" command="DummyPayment/Pay"/>
             <event name="submit tax invoice" onEnter="true" command="TaxApp/SubmitPaymentTaxInvoice"/>
             <event name="request product review" onEnter="true" command="Order/RequestProductReviews"/>
@@ -141,5 +170,7 @@
     <process name="DummyRefund" file="DummySubprocess/DummyRefund01.xml"/>
     <process name="DummyReturn" file="DummySubprocess/DummyReturn01.xml"/>
     <process name="DummyInvoice" file="DummySubprocess/DummyInvoice01.xml"/>
+    <process name="DummyMerchantCommission" file="DummySubprocess/DummyMerchantCommission01.xml"/>
+    <process name="DummyOrderAmendment" file="DummySubprocess/DummyOrderAmendment01.xml"/>
 
 </statemachine>

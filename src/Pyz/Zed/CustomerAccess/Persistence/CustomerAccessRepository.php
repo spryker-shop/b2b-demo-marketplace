@@ -5,6 +5,8 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types = 1);
+
 namespace Pyz\Zed\CustomerAccess\Persistence;
 
 use Generated\Shared\Transfer\ContentTypeAccessTransfer;
@@ -21,7 +23,7 @@ class CustomerAccessRepository extends AbstractRepository implements CustomerAcc
      *
      * @return \Generated\Shared\Transfer\ContentTypeAccessTransfer|null
      */
-    public function findCustomerAccessByContentType($contentType): ?ContentTypeAccessTransfer
+    public function findCustomerAccessByContentType($contentType): ?ContentTypeAccessTransfer // phpcs:ignore
     {
         $customerAccessEntity = $this->getFactory()
             ->getUnauthenticatedCustomerAccessQuery()
