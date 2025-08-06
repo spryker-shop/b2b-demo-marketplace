@@ -5,9 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Event\Business;
+namespace Pyz\Zed\Event\Business;
 
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
+use Spryker\Zed\Event\Business\EventFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
