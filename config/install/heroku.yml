@@ -54,9 +54,6 @@ sections:
         remove-source-map:
             command: 'vendor/bin/console search:source-map:remove'
 
-        remove-databuilder:
-            command: 'vendor/bin/console transfer:databuilder:remove'
-
         remove-entity-transfer:
             command: 'vendor/bin/console transfer:entity:remove'
 
@@ -66,12 +63,6 @@ sections:
     generate:
         generate-transfers:
             command: 'vendor/bin/console transfer:generate'
-
-        generate-transfer-databuilders:
-            command: 'vendor/bin/console transfer:databuilder:generate'
-
-        generate-ide-auto-completion:
-            command: 'vendor/bin/console dev:ide-auto-completion:generate'
 
         generate-scope-collection-file:
             command: 'vendor/bin/console oauth:scope-collection-file:generate'
