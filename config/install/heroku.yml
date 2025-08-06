@@ -151,11 +151,11 @@ sections:
         propel-migration-cleanup:
             command: 'vendor/bin/console propel:migration:delete -vvv --no-ansi'
 
-        init-database:
-            command: 'vendor/bin/console setup:init-db -vvv --no-ansi'
-
         generate-entity-transfer:
             command: 'vendor/bin/console transfer:entity:generate'
+
+        init-database:
+            command: 'vendor/bin/console setup:init-db -vvv --no-ansi'
 
 #        queue-setup:
 #            command: 'vendor/bin/console queue:setup'
