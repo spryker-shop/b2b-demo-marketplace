@@ -397,7 +397,7 @@
         "compile": [
             "mkdir -p ./data/DE/logs/ZED",
             "echo '<?php return \"development-heroku\";' > config/Shared/console_env_local.php",
-            "vendor/bin/install -r development DE"
+            "vendor/bin/install -r heroku DE"
         ],
         "post-install-cmd": [
             "ChromedriverInstaller\\Installer::installChromedriver"
