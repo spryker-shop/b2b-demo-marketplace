@@ -211,6 +211,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
      */
     protected function getConsoleCommands(Container $container): array
     {
+        \Spryker\Zed\EventBehavior\EventBehaviorConfig::disableEvent();
         $commands = [
             new CacheWarmerConsole(),
             new TwigTemplateWarmerConsole(),
