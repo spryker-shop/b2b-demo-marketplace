@@ -498,7 +498,7 @@ if ($redisUrl) {
     ];
     $config[SessionRedisConstants::ZED_SESSION_REDIS_SCHEME] = $url['scheme'];
     $config[SessionRedisConstants::ZED_SESSION_REDIS_HOST] = $url['host'];
-    $config[SessionRedisConstants::ZED_SESSION_REDIS_PORT] = $url['port'] . '?ssl[verify_peer_name]=0&ssl[verify_peer]=0';
+    $config[SessionRedisConstants::ZED_SESSION_REDIS_PORT] = $url['port'];
     $config[SessionRedisConstants::ZED_SESSION_REDIS_PASSWORD] = $url['pass'];
     $config[SessionRedisConstants::ZED_SESSION_REDIS_CLIENT_OPTIONS] = $options;
     $config[SessionRedisConstants::ZED_SESSION_REDIS_DATABASE] = false;

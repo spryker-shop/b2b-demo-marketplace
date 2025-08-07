@@ -1,1 +1,1 @@
-web: heroku-php-nginx public/Backoffice/
+web: heroku-php-nginx public/Backoffice/index.php
