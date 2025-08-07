@@ -474,6 +474,36 @@ $config[SessionConstants::ZED_SESSION_TIME_TO_LIVE]
 $config[SessionConstants::ZED_SESSION_COOKIE_TIME_TO_LIVE] = SessionConfig::SESSION_LIFETIME_BROWSER_SESSION;
 $config[SessionConstants::ZED_SESSION_COOKIE_SAMESITE] = getenv('SPRYKER_ZED_SESSION_COOKIE_SAMESITE') ?: Cookie::SAMESITE_STRICT;
 
+// Heroku RDS configuration
+$databaseUrl = getenv('DATABASE_URL');
+if ($databaseUrl) {
+    $url = parse_url($databaseUrl);
+    $config[PropelConstants::ZED_DB_HOST] = $url['host'];
+    $config[PropelConstants::ZED_DB_PORT] = $url['port'];
+    $config[PropelConstants::ZED_DB_USERNAME] = $url['user'];
+    $config[PropelConstants::ZED_DB_PASSWORD] = $url['pass'];
+    $config[PropelConstants::ZED_DB_DATABASE] = ltrim($url['path'] ?? '', '/');
+}
+
+// Heroku Redis configuration
+$redisUrl = getenv('REDIS_URL');
+if ($redisUrl) {
+    $url = parse_url($redisUrl);
+    $options = [
+        'ssl' => [
+            'verify_peer' => false,
+            'verify_peer_name' => false,
+            'allow_self_signed' => true,
+        ],
+    ];
+    $config[SessionRedisConstants::ZED_SESSION_REDIS_SCHEME] = $url['scheme'];
+    $config[SessionRedisConstants::ZED_SESSION_REDIS_HOST] = $url['host'];
+    $config[SessionRedisConstants::ZED_SESSION_REDIS_PORT] = $url['port'] . '?ssl[verify_peer_name]=0&ssl[verify_peer]=0';
+    $config[SessionRedisConstants::ZED_SESSION_REDIS_PASSWORD] = $url['pass'];
+    $config[SessionRedisConstants::ZED_SESSION_REDIS_CLIENT_OPTIONS] = $options;
+    $config[SessionRedisConstants::ZED_SESSION_REDIS_DATABASE] = false;
+}
+
 // >>> Product Relation
 $config[ProductRelationConstants::PRODUCT_RELATION_READ_CHUNK] = 1000;
 $config[ProductRelationConstants::PRODUCT_RELATION_UPDATE_CHUNK] = 1000;
