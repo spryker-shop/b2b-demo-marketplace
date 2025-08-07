@@ -403,7 +403,7 @@
             "vendor/bin/install -r heroku -s cache DE",
             "vendor/bin/install -r heroku -s database-flush DE",
             "vendor/bin/install -r heroku -s database-migrate DE",
-            "vendor/bin/install -r heroku -s frontend DE"
+            "vendor/bin/console frontend:zed:build -e production"
         ],
         "post-install-cmd": [
             "ChromedriverInstaller\\Installer::installChromedriver"
