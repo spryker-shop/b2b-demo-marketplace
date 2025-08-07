@@ -398,13 +398,13 @@
             "mkdir -p ./data/DE/logs/ZED",
             "composer dumpautoload --apcu",
             "if [ ! -f ./config/Shared/console_env_local.php ]; then cp ./config/Shared/console_env_local.dist.php ./config/Shared/console_env_local.php ; fi",
-            "vendor/bin/install -r heroku -g clear DE",
-            "vendor/bin/install -r heroku -g generate DE",
-            "vendor/bin/install -r heroku -g cache DE",
-            "vendor/bin/install -r heroku -g database-flush DE",
-            "vendor/bin/install -r heroku -g database-migrate DE",
-            "vendor/bin/install -r heroku -g demodata DE",
-            "vendor/bin/install -r heroku -g frontend DE"
+            "vendor/bin/install -r heroku -s clear DE",
+            "vendor/bin/install -r heroku -s generate DE",
+            "vendor/bin/install -r heroku -s cache DE",
+            "vendor/bin/install -r heroku -s database-flush DE",
+            "vendor/bin/install -r heroku -s database-migrate DE",
+            "vendor/bin/install -r heroku -s demodata DE",
+            "vendor/bin/install -r heroku -s frontend DE"
         ],
         "post-install-cmd": [
             "ChromedriverInstaller\\Installer::installChromedriver"
