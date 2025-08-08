@@ -106,6 +106,10 @@ sections:
 #            stores: true
 #            groups:
 #                - redis
+
+        propel-migration-delete:
+            command: 'vendor/bin/console propel:migration:delete -vvv --no-ansi'
+
         clean-db:
             command: 'vendor/bin/console propel:tables:drop -vvv --no-ansi'
 
@@ -115,12 +119,6 @@ sections:
 
         propel-postgres-compatibility:
             command: 'vendor/bin/console propel:pg-sql-compat -vvv --no-ansi'
-
-        propel-migration-delete:
-            command: 'vendor/bin/console propel:migration:delete -vvv --no-ansi'
-
-        propel-tables-drop:
-            command: 'vendor/bin/console propel:tables:drop -vvv --no-ansi'
 
         propel-diff:
             command: 'vendor/bin/console propel:diff -vvv --no-ansi'
