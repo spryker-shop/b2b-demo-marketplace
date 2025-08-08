@@ -19,6 +19,6 @@ class SessionRedisConfig extends \Spryker\Zed\SessionRedis\SessionRedisConfig
             ->setPort($this->get(SessionRedisConstants::ZED_SESSION_REDIS_PORT))
             ->setDatabase($this->get(SessionRedisConstants::ZED_SESSION_REDIS_DATABASE))
             ->setPassword($this->get(SessionRedisConstants::ZED_SESSION_REDIS_PASSWORD, false))
-            ->setSsl($this->get(SessionRedisConstants::ZED_SESSION_REDIS_CLIENT_OPTIONS, [])['ssl'] ?: []);
+            ->setSsl($this->get(SessionRedisConstants::ZED_SESSION_REDIS_CLIENT_OPTIONS, [])['ssl'] ?? []);
     }
 }

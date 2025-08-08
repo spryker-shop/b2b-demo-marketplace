@@ -1,1 +1,1 @@
-web: heroku-php-nginx -C nginx_app.conf public/Backoffice/
+web: heroku-php-nginx -C nginx_app.conf public/Backoffice
