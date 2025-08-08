@@ -134,6 +134,9 @@ sections:
         generate-entity-transfer:
             command: 'vendor/bin/console transfer:entity:generate'
 
+        generate-composer:
+            command: 'composer dumpautoload -o --classmap-authoritative --apcu'
+
         init-database:
             command: 'vendor/bin/console setup:init-db -vvv --no-ansi'
 
