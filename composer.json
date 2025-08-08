@@ -400,7 +400,7 @@
             "if [ ! -f ./config/Shared/console_env_local.php ]; then cp ./config/Shared/console_env_local.dist.php ./config/Shared/console_env_local.php ; fi",
             "vendor/bin/install -r heroku -s clear DE",
             "vendor/bin/install -r heroku -s generate DE",
-
+            "vendor/bin/install -r heroku -s cache DE",
             "vendor/bin/install -r heroku -s database-migrate DE",
             "npm install",
             "vendor/bin/console frontend:project:install-dependencies | tail -100 && echo \"Output trimmed, only last 100 lines shown.\"",
