@@ -8,6 +8,8 @@ use Spryker\Shared\SessionRedis\SessionRedisConstants;
 use Spryker\Shared\Storage\StorageConstants;
 use Spryker\Shared\StorageRedis\StorageRedisConstants;
 
+require 'config_default-docker.production.php';
+
 $databaseUrl = getenv('DATABASE_URL');
 if ($databaseUrl) {
     $url = parse_url($databaseUrl);
