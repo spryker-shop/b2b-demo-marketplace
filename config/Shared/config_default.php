@@ -1073,12 +1073,12 @@ $rmqUrl = getenv('CLOUDAMQP_CHARCOAL_URL');
 $rmqApiKey = getenv('CLOUDAMQP_CHARCOAL_APIKEY');
 if ($rmqUrl) {
     $url = parse_url($rmqUrl);
+    $virtualHost = ltrim($url['path'] ?? '', '/');
 
     $config[RabbitMqEnv::RABBITMQ_API_HOST] = $url['host'];
     $config[RabbitMqEnv::RABBITMQ_API_PORT] = $url['port'] ?? 5672;
     $config[RabbitMqEnv::RABBITMQ_API_USERNAME] = $url['user'];
     $config[RabbitMqEnv::RABBITMQ_API_PASSWORD] = $url['pass'] ?? $rmqApiKey;
-    $virtualHost = getenv('SPRYKER_CURRENT_REGION');
     $config[RabbitMqEnv::RABBITMQ_API_VIRTUAL_HOST] = $virtualHost;
 
     $defaultConnection = [
