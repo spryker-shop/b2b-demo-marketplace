@@ -69,14 +69,14 @@ if ($rmqUrl) {
     $url = parse_url($rmqUrl);
 
     $config[RabbitMqEnv::RABBITMQ_API_HOST] = $url['host'];
-    $config[RabbitMqEnv::RABBITMQ_API_PORT] = $url['port'];
+    $config[RabbitMqEnv::RABBITMQ_API_PORT] = $url['port'] ?? 5672;
     $config[RabbitMqEnv::RABBITMQ_API_USERNAME] = $url['user'];
-    $config[RabbitMqEnv::RABBITMQ_API_PASSWORD] = $url['pass'];
+    $config[RabbitMqEnv::RABBITMQ_API_PASSWORD] = $url['pass'] ?? $rmqApiKey;
     $config[RabbitMqEnv::RABBITMQ_API_VIRTUAL_HOST] = getenv('SPRYKER_CURRENT_REGION');
 
     $defaultConnection = [
         RabbitMqEnv::RABBITMQ_HOST => $url['host'],
-        RabbitMqEnv::RABBITMQ_PORT => $url['port'],
+        RabbitMqEnv::RABBITMQ_PORT => $url['port'] ?? 5672,
         RabbitMqEnv::RABBITMQ_USERNAME => $url['user'],
         RabbitMqEnv::RABBITMQ_PASSWORD => $url['pass'],
         RabbitMqEnv::RABBITMQ_CONNECTION_NAME => 'default-connection',
