@@ -53,8 +53,8 @@ sections:
 #            stores: true
 
     cache:
-#        router-cache-warmup-yves:
-#            command: 'vendor/bin/yves router:cache:warm-up'
+        router-cache-warmup-yves:
+            command: 'vendor/bin/yves router:cache:warm-up'
 
         router-cache-warmup-backoffice:
             command: 'vendor/bin/console router:cache:warm-up:backoffice'
@@ -74,22 +74,22 @@ sections:
         class-resolver-build:
             command: 'vendor/bin/console cache:class-resolver:build'
 
-#    queue-flush:
-#        set-permissions:
-#            command: 'vendor/bin/console queue:permission:set'
-#            stores: true
-#
-#        purge-all-queues:
-#            command: 'vendor/bin/console queue:queue:purge-all'
-#            stores: true
-#
-#        delete-all-queues:
-#            command: 'vendor/bin/console queue:queue:delete-all'
-#            stores: true
-#
-#        delete-all-exchanges:
-#            command: 'vendor/bin/console queue:exchanges:delete-all'
-#            stores: true
+    queue-flush:
+        set-permissions:
+            command: 'vendor/bin/console queue:permission:set'
+            stores: true
+
+        purge-all-queues:
+            command: 'vendor/bin/console queue:queue:purge-all'
+            stores: true
+
+        delete-all-queues:
+            command: 'vendor/bin/console queue:queue:delete-all'
+            stores: true
+
+        delete-all-exchanges:
+            command: 'vendor/bin/console queue:exchanges:delete-all'
+            stores: true
 
     database-flush:
 #        delete-elastic-search-index:
@@ -135,9 +135,9 @@ sections:
         init-database:
             command: 'vendor/bin/console setup:init-db -vvv --no-ansi'
 
-#        queue-setup:
-#            command: 'vendor/bin/console queue:setup'
-#            stores: true
+        queue-setup:
+            command: 'vendor/bin/console queue:setup'
+            stores: true
 
 #        setup-search-create-sources:
 #            command: 'vendor/bin/console search:setup:sources'

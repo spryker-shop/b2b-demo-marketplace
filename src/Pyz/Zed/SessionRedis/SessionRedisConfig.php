@@ -13,12 +13,7 @@ class SessionRedisConfig extends \Spryker\Zed\SessionRedis\SessionRedisConfig
      */
     protected function getZedConnectionCredentials(): RedisCredentialsTransfer
     {
-        return (new RedisCredentialsTransfer())
-            ->setScheme($this->getZedScheme())
-            ->setHost($this->get(SessionRedisConstants::ZED_SESSION_REDIS_HOST))
-            ->setPort($this->get(SessionRedisConstants::ZED_SESSION_REDIS_PORT))
-            ->setDatabase($this->get(SessionRedisConstants::ZED_SESSION_REDIS_DATABASE))
-            ->setPassword($this->get(SessionRedisConstants::ZED_SESSION_REDIS_PASSWORD, false))
+        return parent::getZedConnectionCredentials()
             ->setSsl($this->get(SessionRedisConstants::ZED_SESSION_REDIS_CLIENT_OPTIONS, [])['ssl'] ?? []);
     }
 }

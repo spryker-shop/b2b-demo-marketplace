@@ -9,6 +9,8 @@ declare(strict_types = 1);
 
 namespace Pyz\Yves\SessionRedis;
 
+use Generated\Shared\Transfer\RedisCredentialsTransfer;
+use Spryker\Shared\SessionRedis\SessionRedisConstants;
 use Spryker\Yves\SessionRedis\SessionRedisConfig as SprykerSessionRedisConfig;
 
 class SessionRedisConfig extends SprykerSessionRedisConfig
@@ -68,5 +70,14 @@ class SessionRedisConfig extends SprykerSessionRedisConfig
             'robot',
             'bot/',
         ];
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RedisCredentialsTransfer
+     */
+    protected function getConnectionCredentials(): RedisCredentialsTransfer
+    {
+        return parent::getConnectionCredentials()
+            ->setSsl($this->get(SessionRedisConstants::YVES_SESSION_REDIS_CLIENT_OPTIONS, [])['ssl'] ?? []);
     }
 }
