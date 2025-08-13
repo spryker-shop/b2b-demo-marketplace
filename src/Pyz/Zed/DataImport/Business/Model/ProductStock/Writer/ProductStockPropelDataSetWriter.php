@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\DataImport\Business\Model\ProductStock\Writer;
 
+use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\Map\SpyAvailabilityAbstractTableMap;
 use Orm\Zed\Availability\Persistence\Map\SpyAvailabilityTableMap;
@@ -18,6 +19,8 @@ use Orm\Zed\Availability\Persistence\SpyAvailabilityQuery;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsProductReservationTableMap;
 use Orm\Zed\Oms\Persistence\SpyOmsProductReservationQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsProductReservationStoreQuery;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\Stock\Persistence\Map\SpyStockProductTableMap;
 use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
@@ -160,6 +163,7 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
     public function flush(): void
     {
         $this->triggerAvailabilityPublishEvents();
+        $this->triggerAvailabilityPublishEventsForBundleProducts();
         $this->productRepository->flush();
     }
 
@@ -214,7 +218,20 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
      */
     protected function triggerAvailabilityPublishEvents(): void
     {
-        $availabilityAbstractIds = $this->getAvailabilityAbstractIdsForCollectedAbstractSkus();
+        $availabilityAbstractIds = $this->getAvailabilityAbstractIdsByAbstractSkus(static::$productAbstractSkus);
+
+        foreach ($availabilityAbstractIds as $idAvailabilityAbstract) {
+            DataImporterPublisher::addEvent(AvailabilityEvents::AVAILABILITY_ABSTRACT_PUBLISH, $idAvailabilityAbstract);
+        }
+    }
+
+    /**
+     * @return void
+     */
+    protected function triggerAvailabilityPublishEventsForBundleProducts(): void
+    {
+        $productAbstractSkus = $this->getBundleProductAbstractSkus();
+        $availabilityAbstractIds = $this->getAvailabilityAbstractIdsByAbstractSkus($productAbstractSkus);
 
         foreach ($availabilityAbstractIds as $availabilityAbstractId) {
             DataImporterPublisher::addEvent(AvailabilityEvents::AVAILABILITY_ABSTRACT_PUBLISH, $availabilityAbstractId);
@@ -222,9 +239,11 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
     }
 
     /**
+     * @param array<string> $productAbstractSkus
+     *
      * @return array<int>
      */
-    protected function getAvailabilityAbstractIdsForCollectedAbstractSkus(): array
+    protected function getAvailabilityAbstractIdsByAbstractSkus(array $productAbstractSkus): array
     {
         $storeIds = $this->getStoreIds();
 
@@ -233,7 +252,7 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
             ->useSpyAvailabilityQuery()
             ->filterByFkStore_In($storeIds)
             ->endUse()
-            ->filterByAbstractSku_In(static::$productAbstractSkus)
+            ->filterByAbstractSku_In($productAbstractSkus)
             ->select([
                 SpyAvailabilityAbstractTableMap::COL_ID_AVAILABILITY_ABSTRACT,
             ])
@@ -363,25 +382,18 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
     {
         $idStore = $this->getIdStore($storeTransfer);
 
-        /**
-         * @var \Propel\Runtime\Collection\ObjectCollection $productReservationsCollection
-         */
-        $productReservationsCollection = SpyOmsProductReservationQuery::create()
+        $productReservations = SpyOmsProductReservationQuery::create()
             ->filterBySku($sku)
             ->filterByFkStore($idStore)
             ->select([
                 SpyOmsProductReservationTableMap::COL_RESERVATION_QUANTITY,
             ])
-            ->find();
-
-        $productReservations = $productReservationsCollection->toArray();
+            ->find()
+            ->toArray();
 
         $reservationQuantity = new Decimal(0);
 
         foreach ($productReservations as $productReservationQuantity) {
-            /**
-             * @var string $productReservationQuantity
-             */
             $reservationQuantity = $reservationQuantity->add($productReservationQuantity);
         }
 
@@ -515,5 +527,35 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
         $availabilityAbstractEntity->save();
 
         return $availabilityAbstractEntity;
+    }
+
+    /**
+     * @psalm-suppress MissingTemplateParam
+     *
+     * @return array<string>
+     */
+    protected function getBundleProductAbstractSkus(): array
+    {
+        $concreteProductIds = [];
+        $productBundleTransfers = $this->productBundleFacade
+            ->getProductBundleCollectionByCriteriaFilter((new ProductBundleCriteriaFilterTransfer())->setApplyGrouped(true))
+            ->getProductBundles();
+
+        if (!$productBundleTransfers->count()) {
+            return [];
+        }
+
+        foreach ($productBundleTransfers as $productBundleTransfer) {
+            $concreteProductIds[] = $productBundleTransfer->getIdProductConcreteBundle();
+        }
+
+        return SpyProductQuery::create()
+            ->filterByIdProduct_In($concreteProductIds)
+            ->joinWithSpyProductAbstract()
+            ->select([
+                SpyProductAbstractTableMap::COL_SKU,
+            ])
+            ->find()
+            ->getData();
     }
 }
