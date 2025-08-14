@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\DataImport\Business\Model\DiscountVoucher;
 
+use Exception;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
@@ -109,7 +110,11 @@ class DiscountVoucherWriterStep implements DataImportStepInterface
             $voucherCodeCollection->append($discountVoucherEntity);
         }
 
-        $voucherCodeCollection->save();
+        try {
+            $voucherCodeCollection->save();
+        } catch (Exception) {
+            throw new Exception('Failed to save. Data:' . json_encode($voucherCodeCollection->toArray()));
+        }
     }
 
     /**
