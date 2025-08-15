@@ -113,7 +113,12 @@ class DiscountVoucherWriterStep implements DataImportStepInterface
         try {
             $voucherCodeCollection->save();
         } catch (Exception) {
-            throw new Exception('Failed to save. Data:' . json_encode($voucherCodeCollection->toArray()));
+            $logData = [
+                'dataSet' => $dataSet->getArrayCopy(),
+                'voucherCodeCollection' => $voucherCodeCollection->toArray(),
+            ];
+            
+            throw new Exception('Failed to save. Data:' . json_encode($logData));
         }
     }
 
