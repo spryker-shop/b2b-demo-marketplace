@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\Acl;
 
+use Pyz\Zed\TenantOnboarding\TenantOnboardingConfig;
 use Spryker\Shared\Acl\AclConstants;
 use Spryker\Zed\Acl\AclConfig as SprykerAclConfig;
 
@@ -81,6 +82,52 @@ class AclConfig extends SprykerAclConfig
     {
         $installerRules = parent::getInstallerRules();
         $installerRules = $this->addMerchantPortalInstallerRules($installerRules);
+        $installerRules = $this->addTenantManagerInstallerRules($installerRules);
+
+        return $installerRules;
+    }
+
+    public function getInstallerRoles(): array
+    {
+        $installerRoles = parent::getInstallerRoles();
+        $installerRoles[] = [
+            'name' => TenantOnboardingConfig::ROLE_TENANT_MANAGER,
+            'description' => 'Role for the Tenant Manager',
+            'group' => TenantOnboardingConfig::GROUP_TENANT_MANAGER,
+            'parent' => AclConstants::ROOT_ROLE,
+        ];
+
+        return $installerRoles;
+    }
+
+    public function getInstallerGroups(): array
+    {
+        $installerGroups = parent::getInstallerGroups();
+        $installerGroups[] = [
+            'name' => TenantOnboardingConfig::GROUP_TENANT_MANAGER,
+            'description' => 'Root group for the Tenant Manager',
+        ];
+
+        return $installerGroups;
+    }
+
+    protected function addTenantManagerInstallerRules(array $installerRules): array
+    {
+        $bundleNames = [
+            'user',
+            'tenant-onboarding',
+            'tenant-assigner',
+        ];
+
+        foreach ($bundleNames as $bundleName) {
+            $installerRules[] = [
+                'bundle' => $bundleName,
+                'controller' => AclConstants::VALIDATOR_WILDCARD,
+                'action' => AclConstants::VALIDATOR_WILDCARD,
+                'type' => static::RULE_TYPE_DENY,
+                'role' => TenantOnboardingConfig::ROLE_TENANT_MANAGER,
+            ];
+        }
 
         return $installerRules;
     }

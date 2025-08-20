@@ -13,6 +13,7 @@ use Pyz\Yves\CompanyPage\Plugin\ShopApplication\CompanyUserRestrictionHandlerPlu
 use Pyz\Yves\CompanyWidget\Widget\MenuItemCompanyWidget;
 use Pyz\Yves\CustomerFullNameWidget\Widget\CustomerFullNameWidget;
 use Pyz\Yves\ProductSetWidget\Widget\ProductSetIdsWidget;
+use Spryker\Service\Container\ContainerInterface;
 use Spryker\Yves\CustomerDataChangeRequest\Widget\CustomerEmailChangeRequestWidget;
 use Spryker\Yves\ErrorHandler\Plugin\Application\ErrorHandlerApplicationPlugin;
 use Spryker\Yves\EventDispatcher\Plugin\Application\EventDispatcherApplicationPlugin;
@@ -398,6 +399,38 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             new ValidatorApplicationPlugin(),
             new YvesSecurityApplicationPlugin(),
             new CustomerConfirmationUserCheckerApplicationPlugin(),
+            new class implements \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface
+            {
+                public const SERVICE_TENANT_ID = 'SERVICE_TENANT_ID';
+
+                protected const SERVICE_REQUEST_STACK = 'request_stack';
+
+                public function provide(ContainerInterface $container): ContainerInterface
+                {
+                    $container->set(static::SERVICE_TENANT_ID, function (ContainerInterface $container) {
+                        $hostname = $_SERVER['HTTP_HOST'] ?? '';
+                        // This is a placeholder for tenant resolution logic.
+                        // In a real application, you would fetch the tenant ID based on the hostname.
+                        // For example, you might query a database or use a service to get the tenant ID
+                        // associated with the hostname.
+                        $tenantsList = [
+                            'yves.eu.spryker.local' => 'tenant_de',
+                            'yves_1.eu.spryker.local' => 'tenant_us',
+                            'yves_2.eu.spryker.local' => 'tenant_uk',
+                            'yves_3.eu.spryker.local' => 'tenant_fr',
+                            'yves_4.eu.spryker.local' => 'tenant_es',
+                        ];
+
+                        if (!isset($tenantsList[$hostname])) {
+                            throw new \Exception('Tenant not found for hostname: ' . $hostname);
+                        }
+
+                        return $tenantsList[$hostname];
+                    });
+
+                    return $container;
+                }
+            },
         ];
 
         if (class_exists(WebProfilerApplicationPlugin::class)) {

@@ -501,6 +501,14 @@
                 <bundle>glossary</bundle>
                 <uri>/glossary</uri>
             </glossary>
+            <shop-configurator>
+                <label>Shop configurator</label>
+                <title>Shop configurator</title>
+                <bundle>shop-configuration</bundle>
+                <controller>index</controller>
+                <action>index</action>
+                <visible>1</visible>
+            </shop-configurator>
             <tax-rates>
                 <label>Tax Rates</label>
                 <title>Tax Rates</title>
@@ -667,6 +675,14 @@
                 <controller>maintenance</controller>
                 <action>index</action>
             </storage-gui>
+            <tenant-assigner>
+                <label>Tenant Assigner</label>
+                <title>Tenant Assignment</title>
+                <bundle>tenant-assigner</bundle>
+                <controller>index</controller>
+                <action>index</action>
+                <visible>1</visible>
+            </tenant-assigner>
         </pages>
     </maintenance>
 </config>

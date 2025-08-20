@@ -352,7 +352,15 @@
             "Orm\\": "src/Orm/",
             "Pyz\\": "src/Pyz/",
             "SprykerConfig\\": "src/SprykerConfig/"
-        }
+        },
+        "exclude-from-classmap": [
+            "vendor/spryker/synchronization-behavior/src/Spryker/Zed/SynchronizationBehavior/Persistence/Propel/Behavior/SynchronizationBehavior.php",
+            "vendor/spryker/event-behavior/src/Spryker/Zed/EventBehavior/Persistence/Propel/Behavior/EventBehavior.php"
+        ],
+        "files": [
+            "src/Spryker/Zed/SynchronizationBehavior/Persistence/Propel/Behavior/SynchronizationBehavior.php",
+            "src/Spryker/Zed/EventBehavior/Persistence/Propel/Behavior/EventBehavior.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
@@ -398,13 +406,13 @@
             "mkdir -p ./data/DE/logs/ZED",
             "composer dumpautoload --apcu",
             "if [ ! -f ./config/Shared/console_env_local.php ]; then cp ./config/Shared/console_env_local.dist.php ./config/Shared/console_env_local.php ; fi",
-            "vendor/bin/install -r heroku -s clear DE",
-            "vendor/bin/install -r heroku -s generate DE",
-            "vendor/bin/install -r heroku -s cache DE",
-            "vendor/bin/install -r heroku -s database-migrate DE",
+            "vendor/bin/install -r heroku -s clear",
+            "vendor/bin/install -r heroku -s generate",
+            "vendor/bin/install -r heroku -s cache",
+            "vendor/bin/install -r heroku -s queue-flush",
+            "vendor/bin/install -r heroku -s database-migrate",
             "npm install",
-            "vendor/bin/console frontend:project:install-dependencies | tail -100 && echo \"Output trimmed, only last 100 lines shown.\"",
-            "vendor/bin/console frontend:zed:build -e production"
+            "vendor/bin/install -r heroku -s frontend"
         ],
         "post-install-cmd": [
             "ChromedriverInstaller\\Installer::installChromedriver"

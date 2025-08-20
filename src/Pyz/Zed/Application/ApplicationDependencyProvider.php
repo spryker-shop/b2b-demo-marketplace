@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\Application;
 
+use Spryker\Service\Container\ContainerInterface;
 use Spryker\Zed\Application\ApplicationDependencyProvider as SprykerApplicationDependencyProvider;
 use Spryker\Zed\Currency\Communication\Plugin\Application\CurrencyBackendGatewayApplicationPlugin;
 use Spryker\Zed\ErrorHandler\Communication\Plugin\Application\ErrorHandlerApplicationPlugin;
@@ -35,6 +36,7 @@ use Spryker\Zed\Store\Communication\Plugin\Application\StoreBackendGatewayApplic
 use Spryker\Zed\Translator\Communication\Plugin\Application\TranslatorApplicationPlugin;
 use Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin;
 use Spryker\Zed\Twig\Communication\Plugin\Application\TwigGatewayApplicationPlugin;
+use Spryker\Zed\User\Business\UserFacade;
 use Spryker\Zed\UtilNumber\Communication\Plugin\Application\NumberFormatterApplicationPlugin;
 use Spryker\Zed\Validator\Communication\Plugin\Application\ValidatorApplicationPlugin;
 use Spryker\Zed\WebProfiler\Communication\Plugin\Application\WebProfilerApplicationPlugin;
@@ -94,6 +96,25 @@ class ApplicationDependencyProvider extends SprykerApplicationDependencyProvider
             new GuiTableApplicationPlugin(),
             new NumberFormatterApplicationPlugin(),
             new BackofficeStoreApplicationPlugin(),
+            new class implements \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface
+            {
+                /**
+                 * @var string
+                 */
+                public const SERVICE_TENANT_ID = 'SERVICE_TENANT_ID';
+                public function provide(ContainerInterface $container): ContainerInterface
+                {
+                    $container->set(static::SERVICE_TENANT_ID, function (ContainerInterface $container) {
+                        $userFacade = new UserFacade();
+
+                        return $userFacade->hasCurrentUser()
+                            ? $userFacade->getCurrentUser()->getIdTenant()
+                            : null;
+                    });
+
+                    return $container;
+                }
+            },
         ];
 
         if (class_exists(WebProfilerApplicationPlugin::class)) {
@@ -122,6 +143,26 @@ class ApplicationDependencyProvider extends SprykerApplicationDependencyProvider
             new PropelApplicationPlugin(),
             new BackendGatewayRouterApplicationPlugin(),
             new HttpApplicationPlugin(),
+            new class implements \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface
+            {
+                public const SERVICE_TENANT_ID = 'SERVICE_TENANT_ID';
+
+                protected const SERVICE_ZED_REQUEST = 'service_zed_request';
+                public function provide(ContainerInterface $container): ContainerInterface
+                {
+                    $container->set(static::SERVICE_TENANT_ID, function (ContainerInterface $container) {
+                        /** @var \Spryker\Shared\ZedRequest\Client\AbstractRequest $zedRequest */
+                        $zedRequest = $container->get(static::SERVICE_ZED_REQUEST);
+
+                        /** @var \Generated\Shared\Transfer\TenantTransfer $tenantTransfer */
+                        $tenantTransfer = $zedRequest->getMetaTransfer('tenant');
+
+                        return $tenantTransfer->getIdOrFail();
+                    });
+
+                    return $container;
+                }
+            },
         ];
     }
 
