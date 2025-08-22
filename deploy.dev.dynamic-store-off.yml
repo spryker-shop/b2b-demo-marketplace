@@ -8,7 +8,7 @@ image:
     tag: spryker/php:8.3
     php:
         enabled-extensions:
-            - blackfire
+            - otel
     environment:
         SPRYKER_YVES_HOST_DE: yves.de.spryker.local
         SPRYKER_YVES_HOST_AT: yves.at.spryker.local
@@ -251,9 +251,9 @@ services:
             localhost:5672:
                 protocol: tcp
     session:
-        engine: redis
+        engine: valkey
     key_value_store:
-        engine: redis
+        engine: valkey
         endpoints:
             localhost:16379:
                 protocol: tcp
