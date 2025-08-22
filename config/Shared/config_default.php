@@ -340,6 +340,12 @@ $config[AclConstants::ACL_DEFAULT_RULES] = [
         'type' => 'allow',
     ],
     [
+        'bundle' => 'tenant-onboarding',
+        'controller' => 'registration',
+        'action' => '*',
+        'type' => 'allow',
+    ],
+    [
         'bundle' => 'multi-factor-auth',
         'controller' => '*',
         'action' => '*',

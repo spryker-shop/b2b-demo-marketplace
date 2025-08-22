@@ -1,0 +1,89 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Tenant Details' %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+            {% if error is defined %}
+                <div class="alert alert-danger">
+                    {{ error }}
+                </div>
+            {% else %}
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>{{ 'Tenant Information' | trans }}</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="form-group">
+                                    <label class="control-label">ID:</label>
+                                    <p class="form-control-static">{{ tenant.idTenant }}</p>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Identifier:</label>
+                                    <p class="form-control-static">{{ tenant.identifier }}</p>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Host:</label>
+                                    <p class="form-control-static">{{ tenant.tenantHost }}</p>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Created:</label>
+                                    <p class="form-control-static">{{ tenant.createdAt }}</p>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Updated:</label>
+                                    <p class="form-control-static">{{ tenant.updatedAt }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>{{ 'Tenant Data' | trans }}</h5>
+                            </div>
+                            <div class="ibox-content">
+                                {% if tenantData %}
+                                    {% for key, value in tenantData %}
+                                        <div class="form-group">
+                                            <label class="control-label">{{ key | title }}:</label>
+                                            <p class="form-control-static">
+                                                {% if value is iterable %}
+                                                    {{ value | json_encode }}
+                                                {% else %}
+                                                    {{ value }}
+                                                {% endif %}
+                                            </p>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <p class="text-muted">No additional data available.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <a href="{{ url('/tenant-onboarding/tenant') }}" class="btn btn-default">
+                                <i class="fa fa-arrow-left"></i> Back to Tenant List
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

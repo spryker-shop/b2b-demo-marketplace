@@ -7,7 +7,6 @@
 
 namespace Pyz\Zed\Event\Business;
 
-use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Event\Business\EventFacadeInterface;
 
 /**

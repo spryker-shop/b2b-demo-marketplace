@@ -1,0 +1,23 @@
+# Example of B2B Marketplace Demo Shop 'full' data import (all categories).
+version: 0
+
+actions:
+    #1. Commerce Setup data import
+    - data_entity: currency
+      source: data/import/common/common/currency.csv
+    - data_entity: tax
+      source: data/import/common/common/tax.csv
+
+
+    #3. Special Product Types Setup import - Special Product Types category includes sub-categories: Product Options, Measurements, Product Bundles, Gift Cards
+
+    - data_entity: product-measurement-unit
+      source: data/import/common/common/product_measurement_unit.csv
+    - data_entity: product-packaging-unit-type
+      source: data/import/common/common/product_packaging_unit_type.csv
+
+    #4. Merchandising Setup import
+    - data_entity: product-label
+      source: data/import/tenant/product_label.csv
+    - data_entity: mime-type
+      source: data/import/common/common/mime_type.csv
