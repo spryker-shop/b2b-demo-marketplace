@@ -56,6 +56,7 @@ class TenantTable extends AbstractTable
             static::COL_IDENTIFIER,
             static::COL_TENANT_HOST,
         ]);
+        $config->addRawColumn(static::COL_ACTIONS);
 
         $config->setDefaultSortField(static::COL_CREATED_AT, TableConfiguration::SORT_DESC);
 
@@ -72,13 +73,15 @@ class TenantTable extends AbstractTable
         $query = $this->tenantQuery;
         $queryResults = $this->runQuery($query, $config, true);
 
+        $utilDataTimeService = (new \Spryker\Service\UtilDateTime\UtilDateTimeService());
         $results = [];
         foreach ($queryResults as $tenantEntity) {
+            /** @var \Orm\Zed\TenantOnboarding\Persistence\PyzTenant $tenantEntity */
             $results[] = [
-                static::COL_ID_TENANT => $tenantEntity['id_tenant'],
-                static::COL_IDENTIFIER => $tenantEntity['identifier'],
-                static::COL_TENANT_HOST => $tenantEntity['tenant_host'],
-                static::COL_CREATED_AT => $tenantEntity['created_at'],
+                static::COL_ID_TENANT => $tenantEntity->getIdTenant(),
+                static::COL_IDENTIFIER => $tenantEntity->getIdentifier(),
+                static::COL_TENANT_HOST => $tenantEntity->getTenantHost(),
+                static::COL_CREATED_AT => $utilDataTimeService->formatDateTime($tenantEntity->getCreatedAt()),
                 static::COL_ACTIONS => $this->buildLinks($tenantEntity),
             ];
         }
@@ -87,17 +90,17 @@ class TenantTable extends AbstractTable
     }
 
     /**
-     * @param array $tenantEntity
+     * @param \Orm\Zed\TenantOnboarding\Persistence\PyzTenant $tenantEntity
      *
      * @return string
      */
-    protected function buildLinks(array $tenantEntity): string
+    protected function buildLinks(\Orm\Zed\TenantOnboarding\Persistence\PyzTenant $tenantEntity): string
     {
         $buttons = [];
 
         $buttons[] = $this->generateViewButton(
             Url::generate('/tenant-onboarding/tenant/view', [
-                'id-tenant' => $tenantEntity['id_tenant'],
+                'id-tenant' => $tenantEntity->getIdTenant(),
             ]),
             'View'
         );

@@ -54,7 +54,7 @@ class OnboardingProcessor implements OnboardingProcessorInterface
             if (!$result->getIsSuccessful()) {
                 $success = false;
                 $errors = array_merge($errors, $result->getErrors());
-                break; // Stop on first failure
+                break;
             }
         }
 
@@ -63,11 +63,10 @@ class OnboardingProcessor implements OnboardingProcessorInterface
             $registrationTransfer->setStatus(TenantOnboardingConfig::REGISTRATION_STATUS_COMPLETED);
         } else {
             $registrationTransfer->setStatus(TenantOnboardingConfig::REGISTRATION_STATUS_FAILED);
-            // Could log errors or send notification here
+            $registrationTransfer->setErrors(json_encode($errors));
         }
 
         $this->entityManager->updateTenantRegistration($registrationTransfer);
         $this->tenantBehaviorFacade->setCurrentTenantId($currentTenantId);
-        dd($registrationTransfer->toArray(),$result->toArray());
     }
 }

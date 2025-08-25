@@ -149,6 +149,9 @@ sections:
         import-eu-region-demodata:
             command: 'SPRYKER_TENANT_IDENTIFIER=tenant_de vendor/bin/console data:import --config=data/import/local/full_EU.yml -t -vvv'
 
+        setup-search-create-sources:
+            command: 'vendor/bin/console search:setup:sources'
+
         update-product-labels:
             command: 'vendor/bin/console product-label:relations:update'
 

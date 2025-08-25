@@ -1,27 +1,13 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Tenant Management' %}
-
-{% block head_title widget_title %}
-{% block section_title widget_title %}
+{% block section_title %}{{ 'Tenant Management' | trans }}{% endblock %}
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Tenants' | trans } %}
 
         {% block widget_content %}
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-title">
-                            <h5>{{ 'Active Tenants' | trans }}</h5>
-                        </div>
-                        <div class="ibox-content">
-                            {{ tenantsTable | raw }}
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {{ tenantsTable | raw }}
         {% endblock %}
 
     {% endembed %}

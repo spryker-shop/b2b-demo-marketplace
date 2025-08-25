@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\TenantOnboarding\Persistence" package="src.Orm.Zed.TenantOnboarding.Persistence">
 
-    <table name="pyz_tenant_registration" idMethod="native" allowPkInsert="true">
+    <table name="pyz_tenant_registration" idMethod="native" identifierQuoting="true">
         <column name="id_tenant_registration" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="company_name" required="true" type="VARCHAR" size="255"/>
         <column name="tenant_name" required="true" type="VARCHAR" size="64"/>
@@ -9,6 +9,7 @@
         <column name="password_hash" required="true" type="VARCHAR" size="255"/>
         <column name="status" required="true" type="VARCHAR" size="255" default="pending"/>
         <column name="decline_reason" type="LONGVARCHAR"/>
+        <column name="errors" type="LONGVARCHAR"/>
         <column name="created_at" type="TIMESTAMP"/>
         <column name="updated_at" type="TIMESTAMP"/>
 

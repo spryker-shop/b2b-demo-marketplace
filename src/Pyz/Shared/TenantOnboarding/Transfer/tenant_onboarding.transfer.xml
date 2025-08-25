@@ -12,6 +12,7 @@
         <property name="declineReason" type="string"/>
         <property name="createdAt" type="string"/>
         <property name="updatedAt" type="string"/>
+        <property name="errors" type="string"/>
     </transfer>
 
     <transfer name="TenantRegistrationResponse" strict="true">
@@ -45,18 +46,18 @@
     </transfer>
 
     <transfer name="PasswordPolicy" strict="true">
-        <property name="minLength" type="int" default="12"/>
-        <property name="requireUpper" type="bool" default="true"/>
-        <property name="requireLower" type="bool" default="true"/>
-        <property name="requireNumber" type="bool" default="true"/>
-        <property name="requireSpecial" type="bool" default="true"/>
+        <property name="minLength" type="int"/>
+        <property name="requireUpper" type="bool"/>
+        <property name="requireLower" type="bool"/>
+        <property name="requireNumber" type="bool"/>
+        <property name="requireSpecial" type="bool"/>
     </transfer>
 
     <transfer name="TenantOnboardingMessage" strict="true">
         <property name="idTenantRegistration" type="int"/>
         <property name="tenantRegistration" type="TenantRegistration"/>
-        <property name="attempt" type="int" default="1"/>
-        <property name="maxAttempts" type="int" default="3"/>
+        <property name="attempt" type="int"/>
+        <property name="maxAttempts" type="int"/>
     </transfer>
 
     <transfer name="TenantRegistrationForm" strict="true">
@@ -68,6 +69,7 @@
     </transfer>
 
     <transfer name="Tenant" strict="true">
+        <property name="id" type="string"/>
         <property name="idTenant" type="int"/>
         <property name="identifier" type="string"/>
         <property name="tenantHost" type="string"/>
@@ -99,8 +101,12 @@
         <property name="pagination" type="Pagination"/>
     </transfer>
 
-    <transfer name="Tenant" strict="true">
-        <property name="id" type="string"/>
+    <transfer name="TenantStorage" strict="true">
+        <property name="idTenant" type="string"/>
+        <property name="identifier" type="string"/>
+        <property name="companyName" type="string"/>
+        <property name="email" type="string"/>
+        <property name="registrationDate" type="string"/>
     </transfer>
 
     <transfer name="SynchronizationData">
@@ -120,6 +126,10 @@
     </transfer>
 
     <transfer name="Store">
+        <property name="idTenant" type="string"/>
+    </transfer>
+
+    <transfer name="StoreStorage">
         <property name="idTenant" type="string"/>
     </transfer>
 

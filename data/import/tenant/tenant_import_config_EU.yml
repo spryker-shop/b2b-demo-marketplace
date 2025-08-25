@@ -2,6 +2,18 @@
 version: 0
 
 actions:
+    - data_entity: store
+      source: data/import/tenant/store.csv
+    - data_entity: currency-store
+      source: data/import/tenant/currency_store.csv
+    - data_entity: country-store
+      source: data/import/tenant/country_store.csv
+    - data_entity: locale-store
+      source: data/import/tenant/locale_store.csv
+    - data_entity: default-locale-store
+      source: data/import/tenant/default_locale_store.csv
+    - data_entity: context-store
+      source: data/import/tenant/store_context.csv
     - data_entity: glossary
       source: data/import/common/common/glossary.csv
     - data_entity: return-reason

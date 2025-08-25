@@ -55,7 +55,7 @@ class DefaultKeyGeneratorPlugin extends \Spryker\Service\Synchronization\Plugin\
      */
     protected function getIdTenant(SynchronizationDataTransfer $dataTransfer): ?string
     {
-        if ($dataTransfer->getIdTenant()) {
+        if ($dataTransfer->getIdTenant() !== null) {
             return $dataTransfer->getIdTenant();
         }
 

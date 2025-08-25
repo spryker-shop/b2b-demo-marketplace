@@ -38,9 +38,10 @@ class CreateTenantOnboardingStepPlugin extends AbstractPlugin implements Onboard
         $result = new TenantOnboardingStepResultTransfer();
         $result->setIsSuccessful(true);
 
-        //try {
+        try {
             // Prepare tenant data with all additional information
             $tenantData = [
+                'identifier' => $registrationTransfer->getTenantName(),
                 'companyName' => $registrationTransfer->getCompanyName(),
                 'email' => $registrationTransfer->getEmail(),
                 'registrationDate' => $registrationTransfer->getCreatedAt(),
@@ -53,7 +54,7 @@ class CreateTenantOnboardingStepPlugin extends AbstractPlugin implements Onboard
             $tenantTransfer = new TenantTransfer();
             $tenantTransfer->setIdentifier($registrationTransfer->getTenantName());
             $tenantTransfer->setTenantHost($tenantHost);
-            //$tenantTransfer->setData(json_encode($tenantData));
+            $tenantTransfer->setData(json_encode($tenantData));
 
             $createdTenant = $this->getFacade()->createTenant($tenantTransfer);
 
@@ -63,10 +64,10 @@ class CreateTenantOnboardingStepPlugin extends AbstractPlugin implements Onboard
                 'tenant_host' => $createdTenant->getTenantHost(),
             ]);
 
-//        } catch (\Exception $e) {
-//            $result->setIsSuccessful(false);
-//            $result->addError('Failed to create tenant: ' . $e->getMessage());
-//        }
+        } catch (\Exception $e) {
+            $result->setIsSuccessful(false);
+            $result->addError('Failed to create tenant: ' . $e->getMessage());
+        }
 
         return $result;
     }
@@ -78,6 +79,6 @@ class CreateTenantOnboardingStepPlugin extends AbstractPlugin implements Onboard
      */
     protected function generateTenantHost(string $tenantName): string
     {
-        return 'asd';
+        return 'yves.eu.spryker.local';
     }
 }

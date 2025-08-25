@@ -160,7 +160,6 @@ class TenantOnboardingDependencyProvider extends AbstractBundleDependencyProvide
     {
         return [
             new CreateTenantOnboardingStepPlugin(),
-            new CreateDefaultStoreOnboardingStepPlugin(),
             new CreateBackofficeUserOnboardingStepPlugin(),
             new TenantDataImportOnboardingStepPlugin(),
         ];

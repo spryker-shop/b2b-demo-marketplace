@@ -56,7 +56,7 @@ class TenantOnboardingRepository extends AbstractRepository implements TenantOnb
         $entities = $query->find();
 
         $collectionTransfer = new TenantRegistrationCollectionTransfer();
-        
+
         foreach ($entities as $entity) {
             $tenantRegistrationTransfer = new TenantRegistrationTransfer();
             $tenantRegistrationTransfer->fromArray($entity->toArray(), true);
@@ -155,10 +155,9 @@ class TenantOnboardingRepository extends AbstractRepository implements TenantOnb
         $entities = $query->find();
 
         $collectionTransfer = new TenantCollectionTransfer();
-        
+
         foreach ($entities as $entity) {
-            $tenantTransfer = new TenantTransfer();
-            $tenantTransfer->fromArray($entity->toArray(), true);
+            $tenantTransfer = $this->getTenantTransfer($entity);
             $collectionTransfer->addTenant($tenantTransfer);
         }
 
@@ -188,8 +187,7 @@ class TenantOnboardingRepository extends AbstractRepository implements TenantOnb
             return null;
         }
 
-        $tenantTransfer = new TenantTransfer();
-        $tenantTransfer->fromArray($entity->toArray(), true);
+        $tenantTransfer = $this->getTenantTransfer($entity);
 
         return $tenantTransfer;
     }
@@ -210,8 +208,7 @@ class TenantOnboardingRepository extends AbstractRepository implements TenantOnb
             return null;
         }
 
-        $tenantTransfer = new TenantTransfer();
-        $tenantTransfer->fromArray($entity->toArray(), true);
+        $tenantTransfer = $this->getTenantTransfer($entity);
 
         return $tenantTransfer;
     }
@@ -232,8 +229,7 @@ class TenantOnboardingRepository extends AbstractRepository implements TenantOnb
             return null;
         }
 
-        $tenantTransfer = new TenantTransfer();
-        $tenantTransfer->fromArray($entity->toArray(), true);
+        $tenantTransfer = $this->getTenantTransfer($entity);
 
         return $tenantTransfer;
     }
@@ -266,5 +262,20 @@ class TenantOnboardingRepository extends AbstractRepository implements TenantOnb
             ->count();
 
         return $count === 0;
+    }
+
+    /**
+     * @param mixed $entity
+     *
+     * @return \Generated\Shared\Transfer\TenantTransfer
+     */
+    public function getTenantTransfer(mixed $entity): TenantTransfer
+    {
+        $tenantTransfer = new TenantTransfer();
+        $data = $entity->toArray();
+        $data['data'] = json_encode($data['data']);
+        $tenantTransfer->fromArray($data, true);
+
+        return $tenantTransfer;
     }
 }
