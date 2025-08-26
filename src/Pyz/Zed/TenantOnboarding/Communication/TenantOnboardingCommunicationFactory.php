@@ -14,10 +14,13 @@ use Orm\Zed\TenantOnboarding\Persistence\PyzTenantQuery;
 use Pyz\Zed\TenantOnboarding\TenantOnboardingDependencyProvider;
 use Spryker\Zed\Acl\Business\AclFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\SalesInvoice\Dependency\Facade\SalesInvoiceToMailFacadeInterface;
+use Spryker\Zed\SalesInvoice\SalesInvoiceDependencyProvider;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
 use Spryker\Zed\User\Business\UserFacade;
 use Spryker\Zed\User\Business\UserFacadeInterface;
 use Symfony\Component\Form\FormInterface;
+use Twig\Environment;
 
 /**
  * @method \Pyz\Zed\TenantOnboarding\TenantOnboardingConfig getConfig()
@@ -63,5 +66,15 @@ class TenantOnboardingCommunicationFactory extends AbstractCommunicationFactory
     public function getStoreFacade(): StoreFacadeInterface
     {
         return $this->getProvidedDependency(TenantOnboardingDependencyProvider::FACADE_STORE);
+    }
+
+    public function getTwigEnvironment(): Environment
+    {
+        return $this->getProvidedDependency(TenantOnboardingDependencyProvider::TWIG_ENVIRONMENT);
+    }
+
+    public function getMailFacade(): \Spryker\Zed\Mail\Business\MailFacadeInterface
+    {
+        return $this->getProvidedDependency(TenantOnboardingDependencyProvider::FACADE_MAIL);
     }
 }

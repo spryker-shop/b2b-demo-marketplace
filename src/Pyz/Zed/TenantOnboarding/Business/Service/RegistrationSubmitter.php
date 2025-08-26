@@ -14,47 +14,18 @@ use Pyz\Zed\TenantOnboarding\Business\Validator\RegistrationValidatorInterface;
 use Pyz\Zed\TenantOnboarding\Business\Validator\PasswordValidatorInterface;
 use Pyz\Zed\TenantOnboarding\Persistence\TenantOnboardingEntityManagerInterface;
 use Pyz\Zed\TenantOnboarding\Persistence\TenantOnboardingRepositoryInterface;
+use Pyz\Zed\TenantOnboarding\TenantOnboardingConfig;
 
 class RegistrationSubmitter implements RegistrationSubmitterInterface
 {
-    private const STATUS_PENDING = 'pending';
-
-    /**
-     * @var \Pyz\Zed\TenantOnboarding\Business\Validator\RegistrationValidatorInterface
-     */
-    protected RegistrationValidatorInterface $registrationValidator;
-
-    /**
-     * @var \Pyz\Zed\TenantOnboarding\Business\Validator\PasswordValidatorInterface
-     */
-    protected PasswordValidatorInterface $passwordValidator;
-
-    /**
-     * @var \Pyz\Zed\TenantOnboarding\Persistence\TenantOnboardingEntityManagerInterface
-     */
-    protected TenantOnboardingEntityManagerInterface $entityManager;
-
-    /**
-     * @var \Pyz\Zed\TenantOnboarding\Persistence\TenantOnboardingRepositoryInterface
-     */
-    protected TenantOnboardingRepositoryInterface $repository;
-
-    /**
-     * @param \Pyz\Zed\TenantOnboarding\Business\Validator\RegistrationValidatorInterface $registrationValidator
-     * @param \Pyz\Zed\TenantOnboarding\Business\Validator\PasswordValidatorInterface $passwordValidator
-     * @param \Pyz\Zed\TenantOnboarding\Persistence\TenantOnboardingEntityManagerInterface $entityManager
-     * @param \Pyz\Zed\TenantOnboarding\Persistence\TenantOnboardingRepositoryInterface $repository
-     */
     public function __construct(
-        RegistrationValidatorInterface $registrationValidator,
-        PasswordValidatorInterface $passwordValidator,
-        TenantOnboardingEntityManagerInterface $entityManager,
-        TenantOnboardingRepositoryInterface $repository
+        protected RegistrationValidatorInterface $registrationValidator,
+        protected PasswordValidatorInterface $passwordValidator,
+        protected TenantOnboardingEntityManagerInterface $entityManager,
+        protected TenantOnboardingRepositoryInterface $repository,
+        protected TenantOnboardingConfig $config,
+        protected RegistrationAccepterInterface $registrationAccepter,
     ) {
-        $this->registrationValidator = $registrationValidator;
-        $this->passwordValidator = $passwordValidator;
-        $this->entityManager = $entityManager;
-        $this->repository = $repository;
     }
 
     /**
@@ -108,10 +79,14 @@ class RegistrationSubmitter implements RegistrationSubmitterInterface
             PASSWORD_BCRYPT
         );
         $tenantRegistrationTransfer->setPasswordHash($hashedPassword);
-        $tenantRegistrationTransfer->setStatus(static::STATUS_PENDING);
+        $tenantRegistrationTransfer->setStatus(TenantOnboardingConfig::REGISTRATION_STATUS_PENDING);
 
         // Save registration
         $savedRegistration = $this->entityManager->createTenantRegistration($tenantRegistrationTransfer);
+
+        if ($this->config->isRequestAutoApproved()) {
+            return $this->registrationAccepter->accept($savedRegistration->getIdTenantRegistration());
+        }
 
         $responseTransfer->setIsSuccessful(true);
         $responseTransfer->setIdTenantRegistration($savedRegistration->getIdTenantRegistration());

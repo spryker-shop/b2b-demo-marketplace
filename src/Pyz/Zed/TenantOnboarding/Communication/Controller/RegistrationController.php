@@ -21,9 +21,9 @@ class RegistrationController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\Response
      */
-    public function formAction(Request $request): array
+    public function formAction(Request $request): array|\Symfony\Component\HttpFoundation\Response
     {
         $form = $this->getFactory()
             ->createTenantRegistrationForm()
@@ -34,17 +34,20 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            
+
             $tenantRegistrationTransfer = new TenantRegistrationTransfer();
             $tenantRegistrationTransfer->setCompanyName($data['companyName']);
             $tenantRegistrationTransfer->setTenantName($data['tenantName']);
             $tenantRegistrationTransfer->setEmail($data['email']);
             $tenantRegistrationTransfer->setPassword($data['password']);
+            $tenantRegistrationTransfer->setDataSet($data['dataSetType']);
 
             $responseTransfer = $this->getFacade()->submitRegistration($tenantRegistrationTransfer);
 
             if ($responseTransfer->getIsSuccessful()) {
                 $successMessage = 'Your tenant registration has been submitted successfully. You will receive an email notification once it is reviewed.';
+
+                return $this->redirectResponse('/tenant-onboarding/registration/success');
             } else {
                 $errors = [];
                 foreach ($responseTransfer->getErrors() as $error) {
@@ -81,7 +84,7 @@ class RegistrationController extends AbstractController
     public function checkEmailAction(Request $request): JsonResponse
     {
         $email = $request->get('email');
-        
+
         if (!$email) {
             return $this->jsonResponse(['available' => false]);
         }
@@ -99,7 +102,7 @@ class RegistrationController extends AbstractController
     public function checkTenantNameAction(Request $request): JsonResponse
     {
         $tenantName = $request->get('tenantName');
-        
+
         if (!$tenantName) {
             return $this->jsonResponse(['available' => false]);
         }

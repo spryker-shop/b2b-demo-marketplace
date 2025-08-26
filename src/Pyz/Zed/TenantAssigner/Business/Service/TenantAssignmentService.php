@@ -41,7 +41,7 @@ class TenantAssignmentService implements TenantAssignmentServiceInterface
             $response->setIsSuccess(false);
             $response->setMessage('Validation failed');
             $response->setErrorMessages($validationErrors);
-            
+
             return $response;
         }
 
@@ -91,9 +91,7 @@ class TenantAssignmentService implements TenantAssignmentServiceInterface
             $errors[] = 'ID column name is required';
         }
 
-        // Validate tenant exists in configuration
-        $availableTenants = $this->config->getAvailableTenants();
-        if ($tenantAssignmentTransfer->getTenantId() && !array_key_exists($tenantAssignmentTransfer->getTenantId(), $availableTenants)) {
+        if (!(new \Pyz\Zed\TenantOnboarding\Business\TenantOnboardingFacade())->findTenantByIdentifier($tenantAssignmentTransfer->getTenantId())) {
             $errors[] = 'Invalid tenant ID';
         }
 

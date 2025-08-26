@@ -68,14 +68,4 @@ interface TenantAssignerFacadeInterface
      * @return \Generated\Shared\Transfer\TenantDuplicationResponseTransfer
      */
     public function duplicateRowForTenant(\Generated\Shared\Transfer\TenantDuplicationTransfer $tenantDuplicationTransfer): \Generated\Shared\Transfer\TenantDuplicationResponseTransfer;
-
-    /**
-     * Specification:
-     * - Returns the list of available tenants from configuration.
-     *
-     * @api
-     *
-     * @return array<string, string>
-     */
-    public function getAvailableTenants(): array;
 }

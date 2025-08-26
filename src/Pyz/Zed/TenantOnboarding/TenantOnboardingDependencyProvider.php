@@ -10,19 +10,31 @@ namespace Pyz\Zed\TenantOnboarding;
 use Pyz\Zed\TenantOnboarding\Communication\Plugin\TenantOnboarding\CreateBackofficeUserOnboardingStepPlugin;
 use Pyz\Zed\TenantOnboarding\Communication\Plugin\TenantOnboarding\CreateDefaultStoreOnboardingStepPlugin;
 use Pyz\Zed\TenantOnboarding\Communication\Plugin\TenantOnboarding\CreateTenantOnboardingStepPlugin;
+use Pyz\Zed\TenantOnboarding\Communication\Plugin\TenantOnboarding\EmailNotificationUserOnboardingStepPlugin;
 use Pyz\Zed\TenantOnboarding\Communication\Plugin\TenantOnboarding\TenantDataImportOnboardingStepPlugin;
+use Spryker\Shared\Kernel\ContainerInterface;
+use Spryker\Zed\Glossary\Communication\Plugin\TwigTranslatorPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\SalesInvoice\Dependency\Facade\SalesInvoiceToMailFacadeBridge;
 
 class TenantOnboardingDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_QUEUE = 'CLIENT_QUEUE';
-    public const CLIENT_MAIL = 'CLIENT_MAIL';
+    public const FACADE_MAIL = 'FACADE_MAIL';
     public const PLUGINS_ONBOARDING_STEP = 'PLUGINS_ONBOARDING_STEP';
 
     public const FACADE_USER = 'FACADE_USER';
     public const FACADE_ACL = 'FACADE_ACL';
     public const FACADE_STORE = 'FACADE_STORE';
+    public const TWIG_ENVIRONMENT = 'TWIG_ENVIRONMENT';
+
+    /**
+     * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     *
+     * @var string
+     */
+    public const SERVICE_TWIG = 'twig';
 
     public const FACADE_TENANT_BEHAVIOR = 'FACADE_TENANT_BEHAVIOR';
 
@@ -35,7 +47,6 @@ class TenantOnboardingDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addQueueClient($container);
-        $container = $this->addMailClient($container);
         $container = $this->addOnboardingStepPlugins($container);
         $container = $this->addTenantBehaviorFacade($container);
 
@@ -45,9 +56,7 @@ class TenantOnboardingDependencyProvider extends AbstractBundleDependencyProvide
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
-        $container = $this->addQueueClient($container);
-        $container = $this->addMailClient($container);
-        $container = $this->addOnboardingStepPlugins($container);
+        $container = $this->addMailFacade($container);
         $container = $this->addUserFacade($container);
         $container = $this->addAclFacade($container);
         $container = $this->addStoreFacade($container);
@@ -130,10 +139,30 @@ class TenantOnboardingDependencyProvider extends AbstractBundleDependencyProvide
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addMailClient(Container $container): Container
+    protected function addMailFacade(Container $container): Container
     {
-        $container->set(static::CLIENT_MAIL, function (Container $container) {
-            return $container->getLocator()->mail()->client();
+        $container->set(static::FACADE_MAIL, function (Container $container) {
+            return $container->getLocator()->mail()->facade();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addTwigEnvironment(Container $container): Container
+    {
+        $container->set(static::TWIG_ENVIRONMENT, function (ContainerInterface $container) {
+            $twig = $container->getApplicationService(static::SERVICE_TWIG);
+            if (!$twig->hasExtension(TwigTranslatorPlugin::class)) {
+                $translator = new TwigTranslatorPlugin();
+                $twig->addExtension($translator);
+            }
+
+            return $twig;
         });
 
         return $container;
@@ -162,6 +191,7 @@ class TenantOnboardingDependencyProvider extends AbstractBundleDependencyProvide
             new CreateTenantOnboardingStepPlugin(),
             new CreateBackofficeUserOnboardingStepPlugin(),
             new TenantDataImportOnboardingStepPlugin(),
+            new EmailNotificationUserOnboardingStepPlugin(),
         ];
     }
 }

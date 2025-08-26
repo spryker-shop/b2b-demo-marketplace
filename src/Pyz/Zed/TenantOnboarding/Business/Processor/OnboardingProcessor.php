@@ -14,9 +14,12 @@ use Pyz\Zed\TenantOnboarding\Business\Plugin\OnboardingStepPluginInterface;
 use Pyz\Zed\TenantOnboarding\Business\TenantOnboardingBusinessFactory;
 use Pyz\Zed\TenantOnboarding\Persistence\TenantOnboardingEntityManagerInterface;
 use Pyz\Zed\TenantOnboarding\TenantOnboardingConfig;
+use Spryker\Zed\Company\Business\Exception\InvalidCompanyCreationException;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class OnboardingProcessor implements OnboardingProcessorInterface
 {
+    use TransactionTrait;
     /**
      * @param array<\Pyz\Zed\TenantOnboarding\Business\Plugin\OnboardingStepPluginInterface> $onboardingStepPlugins
      */
@@ -41,29 +44,38 @@ class OnboardingProcessor implements OnboardingProcessorInterface
         $currentTenantId = $this->tenantBehaviorFacade->getCurrentTenantId();
         $this->tenantBehaviorFacade->setCurrentTenantId($registrationTransfer->getTenantName());
 
-        // Update status to processing
         $registrationTransfer->setStatus(TenantOnboardingConfig::REGISTRATION_STATUS_PROCESSING);
         $this->entityManager->updateTenantRegistration($registrationTransfer);
 
-        $success = true;
-        $errors = [];
+        try {
+            $result = $this->getTransactionHandler()->handleTransaction(function () use ($registrationTransfer): TenantOnboardingStepResultTransfer {
+                $result = (new TenantOnboardingStepResultTransfer())
+                    ->setIsSuccessful(true);
+                foreach ($this->onboardingStepPlugins as $plugin) {
+                    $result = $plugin->execute($registrationTransfer);
 
-        foreach ($this->onboardingStepPlugins as $plugin) {
-            $result = $plugin->execute($registrationTransfer);
+                    if (!$result->getIsSuccessful()) {
+                        throw new \Exception(implode(', ', $result->getErrors()));
+                    }
 
-            if (!$result->getIsSuccessful()) {
-                $success = false;
-                $errors = array_merge($errors, $result->getErrors());
-                break;
-            }
+                    if ($result->getTenantRegistration()) {
+                        $registrationTransfer = $result->getTenantRegistrationOrFail();
+                    }
+                }
+
+                return $result;
+            });
+        } catch (\Exception|\Throwable $exception) {
+            $result = (new TenantOnboardingStepResultTransfer())
+                ->setIsSuccessful(false)
+                ->addError($exception->getMessage());
         }
 
-        // Update final status
-        if ($success) {
+        if ($result->getIsSuccessful()) {
             $registrationTransfer->setStatus(TenantOnboardingConfig::REGISTRATION_STATUS_COMPLETED);
         } else {
             $registrationTransfer->setStatus(TenantOnboardingConfig::REGISTRATION_STATUS_FAILED);
-            $registrationTransfer->setErrors(json_encode($errors));
+            $registrationTransfer->setErrors(json_encode($result->getErrors()));
         }
 
         $this->entityManager->updateTenantRegistration($registrationTransfer);

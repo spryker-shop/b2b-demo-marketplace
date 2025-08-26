@@ -28,3 +28,21 @@
         .badge-secondary { background-color: #6c757d; color: white; }
     </style>
 {% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script>
+        function declineRegistration(id) {
+            var reason = prompt('Please provide a reason for declining:');
+            if (reason !== null && reason.trim() !== '') {
+                var confirmed = confirm('Are you sure you want to decline this registration?');
+                if (confirmed) {
+                    window.location.href = '/tenant-onboarding/index/decline?id=' + id + '&reason=' + encodeURIComponent(reason);
+                }
+            } else if (reason !== null) {
+                alert('Please provide a reason for declining.');
+            }
+            return false;
+        }
+    </script>
+{% endblock %}

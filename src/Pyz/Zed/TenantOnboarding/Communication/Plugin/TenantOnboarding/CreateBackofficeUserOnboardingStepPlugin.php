@@ -32,7 +32,6 @@ class CreateBackofficeUserOnboardingStepPlugin extends AbstractPlugin implements
         $result->setIsSuccessful(true);
 
         try {
-            // Create a backoffice user for the tenant
             $userTransfer = (new UserTransfer())
                 ->setFirstName($tenantRegistrationTransfer->getCompanyName())
                 ->setLastName('Admin')
@@ -43,12 +42,14 @@ class CreateBackofficeUserOnboardingStepPlugin extends AbstractPlugin implements
                 ->setIdTenant($tenantRegistrationTransfer->getTenantName());
 
             $userTransfer = $this->getFactory()->getUserFacade()->createUser($userTransfer);
+
             $aclGroup = $this->getFactory()->getAclFacade()->getGroupByName(TenantOnboardingConfig::GROUP_TENANT_MANAGER);
             if ($userTransfer->getIdUser() && $aclGroup->getIdAclGroup()) {
                 $this->getFactory()->getAclFacade()->addUserToGroup($userTransfer->getIdUserOrFail(), $aclGroup->getIdAclGroupOrFail());
             }
 
             $result
+                ->setTenantRegistration($tenantRegistrationTransfer)
                 ->setContext([
                     'userId' => $userTransfer->getIdUser(),
                     'username' => $userTransfer->getUsername(),

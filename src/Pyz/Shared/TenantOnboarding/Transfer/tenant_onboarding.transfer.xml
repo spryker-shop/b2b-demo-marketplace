@@ -8,11 +8,14 @@
         <property name="email" type="string"/>
         <property name="password" type="string"/>
         <property name="passwordHash" type="string"/>
+        <property name="dataSet" type="string"/>
+        <property name="tenant" type="Tenant"/>
         <property name="status" type="string"/>
         <property name="declineReason" type="string"/>
         <property name="createdAt" type="string"/>
         <property name="updatedAt" type="string"/>
         <property name="errors" type="string"/>
+        <property name="backofficeHost" type="string"/>
     </transfer>
 
     <transfer name="TenantRegistrationResponse" strict="true">
@@ -41,6 +44,7 @@
 
     <transfer name="TenantOnboardingStepResult" strict="true">
         <property name="isSuccessful" type="bool"/>
+        <property name="tenantRegistration" type="TenantRegistration"/>
         <property name="errors" type="string[]" singular="error"/>
         <property name="context" type="array" singular="contextItem"/>
     </transfer>
@@ -107,6 +111,10 @@
         <property name="companyName" type="string"/>
         <property name="email" type="string"/>
         <property name="registrationDate" type="string"/>
+    </transfer>
+
+    <transfer name="Mail">
+        <property name="tenantRegistration" type="TenantRegistration"/>
     </transfer>
 
     <transfer name="SynchronizationData">

@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\TenantOnboardingStepResultTransfer;
 use Generated\Shared\Transfer\TenantRegistrationTransfer;
 use Pyz\Zed\TenantOnboarding\Business\Plugin\OnboardingStepPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
 /**
@@ -21,6 +22,7 @@ use Symfony\Component\Process\Process;
 class TenantDataImportOnboardingStepPlugin extends AbstractPlugin implements OnboardingStepPluginInterface
 {
     protected const DATA_IMPORT_CONFIG_PATH = 'data/import/tenant/tenant_import_config_EU.yml';
+    protected const DATA_IMPORT_FULL_CONFIG_PATH = 'data/import/local/full_EU.yml';
     protected const COMMAND_TIMEOUT = 300; // 5 minutes
 
     /**
@@ -37,34 +39,50 @@ class TenantDataImportOnboardingStepPlugin extends AbstractPlugin implements Onb
     public function execute(TenantRegistrationTransfer $tenantRegistrationTransfer): TenantOnboardingStepResultTransfer
     {
         $result = new TenantOnboardingStepResultTransfer();
-        $result->setIsSuccessful(false);
+        $result->setIsSuccessful(false)
+            ->setTenantRegistration($tenantRegistrationTransfer);
 
         try {
             $tenantIdentifier = $tenantRegistrationTransfer->getTenantName();
-            $command = $this->buildDataImportCommand($tenantIdentifier);
-            
-            $process = new Process($command);
-            $process->setTimeout(static::COMMAND_TIMEOUT);
-            
-            // Set environment variables
-            $env = $process->getEnv();
-            $env['SPRYKER_TENANT_IDENTIFIER'] = $tenantIdentifier;
-            $process->setEnv($env);
-            
-            // Execute the command
-            $process->run();
-            
+
+            $commands = [
+                $this->buildSetupCommand(),
+                $this->buildStoreDataImportCommand($tenantRegistrationTransfer),
+                $this->buildSetupESCommand(),
+                $this->buildDataImportCommand($tenantRegistrationTransfer),
+            ];
+
+            foreach ($commands as $command) {
+                $process = new Process($command);
+                $process->setTimeout(static::COMMAND_TIMEOUT);
+
+                $env = $process->getEnv();
+                $env['SPRYKER_TENANT_IDENTIFIER'] = $tenantIdentifier;
+                $process->setEnv($env);
+
+                try {
+                    $process->mustRun();
+
+                    echo $process->getOutput();
+                } catch (ProcessFailedException $exception) {
+                    $result->addError('Data import command failed: ' . $process->getErrorOutput());
+                    $result->addContextItem('command_output:' .  $process->getOutput());
+                    $result->addContextItem('error_output:' . $process->getErrorOutput());
+
+                    return $result;
+                }
+            }
+
             if ($process->isSuccessful()) {
                 $result->setIsSuccessful(true);
-                $result->addContextItem('tenant_identifier', $tenantIdentifier);
-                $result->addContextItem('command_output', $process->getOutput());
-                $result->addContextItem('message', 'Tenant data import completed successfully');
+                $result->addContextItem('tenant_identifier: ' . $tenantIdentifier);
+                $result->addContextItem('command_output: ' . $process->getOutput());
+                $result->addContextItem('message: ' . 'Tenant data import completed successfully');
             } else {
                 $result->addError('Data import command failed: ' . $process->getErrorOutput());
-                $result->addContextItem('command_output', $process->getOutput());
-                $result->addContextItem('error_output', $process->getErrorOutput());
+                $result->addContextItem('command_output: ' .  $process->getOutput());
+                $result->addContextItem('error_output: ' . $process->getErrorOutput());
             }
-            
         } catch (\Exception $e) {
             $result->setIsSuccessful(false);
             $result->addError('Failed to execute tenant data import: ' . $e->getMessage());
@@ -82,16 +100,66 @@ class TenantDataImportOnboardingStepPlugin extends AbstractPlugin implements Onb
     }
 
     /**
-     * @param string $tenantIdentifier
-     *
      * @return array<string>
      */
-    protected function buildDataImportCommand(string $tenantIdentifier): array
+    protected function buildDataImportCommand(TenantRegistrationTransfer $tenantRegistrationTransfer): array
     {
+        if ($tenantRegistrationTransfer->getDataSetOrFail() === 'full') {
+            return [
+                'vendor/bin/console',
+                'data:import',
+                '--config=' . static::DATA_IMPORT_FULL_CONFIG_PATH,
+            ];
+        }
+
         return [
             'vendor/bin/console',
             'data:import',
             '--config=' . static::DATA_IMPORT_CONFIG_PATH,
+        ];
+    }
+
+    /**
+     * @return array<string>
+     */
+    protected function buildStoreDataImportCommand(TenantRegistrationTransfer $tenantRegistrationTransfer): array
+    {
+        if ($tenantRegistrationTransfer->getDataSetOrFail() === 'full') {
+            return [
+                'vendor/bin/console',
+                'data:import',
+                'store',
+                '--config=' . static::DATA_IMPORT_FULL_CONFIG_PATH,
+            ];
+        }
+
+        return [
+            'vendor/bin/console',
+            'data:import',
+            'store',
+            '--config=' . static::DATA_IMPORT_CONFIG_PATH,
+        ];
+    }
+
+    /**
+     * @return array<string>
+     */
+    protected function buildSetupCommand(): array
+    {
+        return [
+            'vendor/bin/console',
+            'setup:init-db',
+        ];
+    }
+
+    /**
+     * @return array<string>
+     */
+    protected function buildSetupESCommand(): array
+    {
+        return [
+            'vendor/bin/console',
+            'search:setup:sources',
         ];
     }
 }

@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\TenantRegistrationCriteriaTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * @method \Pyz\Zed\TenantOnboarding\Business\TenantOnboardingFacadeInterface getFacade()
@@ -47,39 +48,65 @@ class IndexController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function approveAction(Request $request): JsonResponse
+    public function approveAction(Request $request)
     {
         $idTenantRegistration = (int)$request->get('id');
         
         $responseTransfer = $this->getFacade()->acceptRegistration($idTenantRegistration);
 
-        return $this->jsonResponse([
-            'success' => $responseTransfer->getIsSuccessful(),
-            'message' => $responseTransfer->getIsSuccessful() 
-                ? 'Tenant registration approved successfully'
-                : 'Failed to approve tenant registration'
-        ]);
+        if ($request->isXmlHttpRequest()) {
+            // AJAX request - return JSON
+            return $this->jsonResponse([
+                'success' => $responseTransfer->getIsSuccessful(),
+                'message' => $responseTransfer->getIsSuccessful() 
+                    ? 'Tenant registration approved successfully'
+                    : 'Failed to approve tenant registration',
+                'redirect' => $responseTransfer->getIsSuccessful() ? '/tenant-onboarding' : null
+            ]);
+        }
+
+        // Regular browser request - redirect with flash message
+        if ($responseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage('Tenant registration approved successfully');
+        } else {
+            $this->addErrorMessage('Failed to approve tenant registration');
+        }
+
+        return $this->redirectResponse('/tenant-onboarding');
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function declineAction(Request $request): JsonResponse
+    public function declineAction(Request $request)
     {
         $idTenantRegistration = (int)$request->get('id');
         $reason = $request->get('reason', 'Registration declined by administrator');
         
         $responseTransfer = $this->getFacade()->declineRegistration($idTenantRegistration, $reason);
 
-        return $this->jsonResponse([
-            'success' => $responseTransfer->getIsSuccessful(),
-            'message' => $responseTransfer->getIsSuccessful() 
-                ? 'Tenant registration declined successfully'
-                : 'Failed to decline tenant registration'
-        ]);
+        if ($request->isXmlHttpRequest()) {
+            // AJAX request - return JSON
+            return $this->jsonResponse([
+                'success' => $responseTransfer->getIsSuccessful(),
+                'message' => $responseTransfer->getIsSuccessful() 
+                    ? 'Tenant registration declined successfully'
+                    : 'Failed to decline tenant registration',
+                'redirect' => $responseTransfer->getIsSuccessful() ? '/tenant-onboarding' : null
+            ]);
+        }
+
+        // Regular browser request - redirect with flash message
+        if ($responseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage('Tenant registration declined successfully');
+        } else {
+            $this->addErrorMessage('Failed to decline tenant registration');
+        }
+
+        return $this->redirectResponse('/tenant-onboarding');
     }
 }

@@ -1,0 +1,241 @@
+{# @var tenantRegistration \Generated\Shared\Transfer\TenantRegistrationTransfer #}
+
+{% set tenantRegistration = mail.tenantRegistration %}
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Your New B2B Marketplace</title>
+
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .content {
+            padding: 30px 20px;
+        }
+        .welcome-section {
+            margin-bottom: 30px;
+        }
+        .welcome-section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+        .info-card {
+            background-color: #f8f9ff;
+            border: 1px solid #e1e5f2;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .info-card h3 {
+            margin-top: 0;
+            color: #333;
+            font-size: 18px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        .credential-item {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 12px 15px;
+            margin: 8px 0;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        .credential-label {
+            font-weight: bold;
+            color: #555;
+            display: inline-block;
+            width: 80px;
+        }
+        .credential-value {
+            color: #333;
+        }
+        .links-section {
+            background-color: #ffffff;
+            border: 2px solid #667eea;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+        .link-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            margin: 8px 5px;
+            font-weight: bold;
+            transition: opacity 0.3s;
+        }
+        .link-button:hover {
+            opacity: 0.9;
+        }
+        .storefront-link {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+        .backoffice-link {
+            background: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%);
+        }
+        .note-section {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .note-section h4 {
+            color: #856404;
+            margin-top: 0;
+        }
+        .footer {
+            background-color: #f8f9fa;
+            color: #6c757d;
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            border-top: 1px solid #e9ecef;
+        }
+        .text-center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🎉 Welcome to Your B2B Marketplace!</h1>
+            <p>Your tenant registration has been successfully approved</p>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Welcome Section -->
+            <div class="welcome-section">
+                <h2>Hello {{ tenantRegistration.companyName }}!</h2>
+                <p>We're excited to inform you that your B2B marketplace tenant registration has been <strong>approved and successfully set up</strong>. You can now access your dedicated marketplace environment.</p>
+            </div>
+
+            <!-- Tenant Information -->
+            <div class="info-card">
+                <h3>📋 Your Tenant Information</h3>
+                <div class="credential-item">
+                    <span class="credential-label">Company:</span>
+                    <span class="credential-value">{{ tenantRegistration.companyName }}</span>
+                </div>
+                <div class="credential-item">
+                    <span class="credential-label">Tenant ID:</span>
+                    <span class="credential-value">{{ tenantRegistration.tenantName }}</span>
+                </div>
+                <div class="credential-item">
+                    <span class="credential-label">Email:</span>
+                    <span class="credential-value">{{ tenantRegistration.email }}</span>
+                </div>
+            </div>
+
+            <!-- Access Links -->
+            <div class="links-section">
+                <h3>🔗 Access Your Marketplace</h3>
+                <p>You now have access to the following areas of your marketplace:</p>
+
+                <div class="text-center">
+                    <a href="https://{{ tenantRegistration.tenant.tenantHost }}" class="link-button storefront-link">
+                        🛒 Your Storefront
+                    </a>
+                    <a href="{{ tenantRegistration.backofficeHost }}" class="link-button backoffice-link">
+                        ⚙️ Backoffice Admin
+                    </a>
+                </div>
+
+                <div style="margin-top: 15px;">
+                    <p><strong>Storefront URL:</strong> <code>https://{{ tenantRegistration.tenant.tenantHost }}</code></p>
+                    <p><strong>Backoffice URL:</strong> <code>{{ tenantRegistration.backofficeHost }}</code></p>
+                </div>
+            </div>
+
+            <!-- Backoffice Credentials -->
+            <div class="info-card">
+                <h3>🔐 Backoffice Admin Credentials</h3>
+                <p>Use these credentials to log into your backoffice administration panel:</p>
+
+                <div class="credential-item">
+                    <span class="credential-label">Username:</span>
+                    <span class="credential-value">{{ tenantRegistration.email }}</span>
+                </div>
+                <div class="credential-item">
+                    <span class="credential-label">Password:</span>
+                    <span class="credential-value">Use password provided during registration</span>
+                </div>
+            </div>
+
+            <!-- Important Notes -->
+            <div class="note-section">
+                <h4>⚠️ Important Security Notes</h4>
+                <ul>
+                    <li><strong>Change your password immediately</strong> after your first login for security</li>
+                    <li>Keep your credentials secure and do not share them with unauthorized personnel</li>
+                    <li>Your tenant-specific storefront is available at your unique subdomain</li>
+                    <li>The backoffice admin panel manages all aspects of your marketplace</li>
+                </ul>
+            </div>
+
+            <!-- Next Steps -->
+            <div class="info-card">
+                <h3>🚀 Next Steps</h3>
+                <ol>
+                    <li><strong>Access your backoffice</strong> using the credentials above</li>
+                    <li><strong>Change your password</strong> in the user profile section</li>
+                    <li><strong>Configure your store</strong> settings, products, and categories</li>
+                    <li><strong>Customize your storefront</strong> appearance and content</li>
+                    <li><strong>Test your marketplace</strong> by visiting your storefront URL</li>
+                </ol>
+            </div>
+
+            <!-- Support -->
+            <div class="info-card">
+                <h3>📞 Need Help?</h3>
+                <p>If you have any questions or need assistance setting up your marketplace, please don't hesitate to contact our support team.</p>
+                <p>We're here to help you succeed with your B2B marketplace!</p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>This email was sent automatically. Please do not reply to this email.</p>
+            <p>&copy; {{ "now"|date("Y") }} Spryker B2B Marketplace. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -7,6 +7,7 @@
 
 namespace Pyz\Zed\TenantOnboarding\Communication\Form;
 
+use Spryker\Zed\Gui\Communication\Form\Type\SelectType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -27,6 +28,7 @@ class TenantRegistrationForm extends AbstractType
     public const FIELD_EMAIL = 'email';
     public const FIELD_PASSWORD = 'password';
     public const FIELD_SUBMIT = 'submit';
+    public const DATA_SET_TYPE = 'dataSetType';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -38,6 +40,7 @@ class TenantRegistrationForm extends AbstractType
     {
         $this->addCompanyNameField($builder)
             ->addTenantNameField($builder)
+            ->addInitialDataSet($builder)
             ->addEmailField($builder)
             ->addPasswordField($builder)
             ->addSubmitField($builder);
@@ -78,6 +81,20 @@ class TenantRegistrationForm extends AbstractType
                 'placeholder' => 'Enter your company name',
                 'class' => 'form-control',
             ],
+        ]);
+
+        return $this;
+    }
+
+    protected function addInitialDataSet(FormBuilderInterface $builder): self
+    {
+        $builder->add(static::DATA_SET_TYPE, SelectType::class, [
+            'label' => 'Initial Data Set',
+            'choices' => [
+                'Minimal Demo Data' => 'demo',
+                'Full Demo Data' => 'full',
+            ],
+            'required' => true,
         ]);
 
         return $this;

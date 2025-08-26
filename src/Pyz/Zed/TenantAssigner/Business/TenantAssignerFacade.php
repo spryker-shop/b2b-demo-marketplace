@@ -84,18 +84,4 @@ class TenantAssignerFacade extends AbstractFacade implements TenantAssignerFacad
             ->createTenantDuplicationService()
             ->duplicateRowForTenant($tenantDuplicationTransfer);
     }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @return array<string, string>
-     */
-    public function getAvailableTenants(): array
-    {
-        return $this->getFactory()
-            ->getConfig()
-            ->getAvailableTenants();
-    }
 }

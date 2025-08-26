@@ -8,6 +8,7 @@
 namespace Pyz\Zed\TenantOnboarding;
 
 use Generated\Shared\Transfer\PasswordPolicyTransfer;
+use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class TenantOnboardingConfig extends AbstractBundleConfig
@@ -40,34 +41,18 @@ class TenantOnboardingConfig extends AbstractBundleConfig
         return $policy;
     }
 
-    /**
-     * @return string
-     */
-    public function getOnboardingQueueName(): string
+    public function isRequestAutoApproved(): bool
     {
-        return static::QUEUE_NAME_TENANT_ONBOARDING;
+        return true;
     }
 
-    /**
-     * @return int
-     */
-    public function getOnboardingMaxAttempts(): int
+    public function getStoreFrontHost(): string
     {
-        return 3;
+        return $this->get(ApplicationConstants::HOST_YVES);
     }
 
-    /**
-     * @return array<string>
-     */
-    public function getValidRegistrationStatuses(): array
+    public function getBackofficeHost(): string
     {
-        return [
-            static::REGISTRATION_STATUS_PENDING,
-            static::REGISTRATION_STATUS_APPROVED,
-            static::REGISTRATION_STATUS_DECLINED,
-            static::REGISTRATION_STATUS_PROCESSING,
-            static::REGISTRATION_STATUS_COMPLETED,
-            static::REGISTRATION_STATUS_FAILED,
-        ];
+        return $this->get(ApplicationConstants::BASE_URL_ZED);
     }
 }

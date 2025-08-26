@@ -3,6 +3,7 @@
 use Spryker\Shared\Config\Application\Environment;
 use Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment;
 use Spryker\Zed\Application\Communication\Bootstrap\BackofficeBootstrap;
+use Spryker\Zed\Application\Communication\Bootstrap\BackendGatewayBootstrap;
 
 require __DIR__ . '/maintenance/maintenance.php';
 
@@ -16,7 +17,11 @@ Environment::initialize();
 $errorHandlerEnvironment = new ErrorHandlerEnvironment();
 $errorHandlerEnvironment->initialize();
 
-$bootstrap = new BackofficeBootstrap();
+if ($_SERVER['HTTP_USER_AGENT'] === 'Yves 2.0') {
+    $bootstrap = new BackendGatewayBootstrap();
+} else {
+    $bootstrap = new BackofficeBootstrap();
+}
 $bootstrap
     ->boot()
     ->run();

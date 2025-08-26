@@ -7,6 +7,23 @@
 
 {% block content %}
 
+    <style>
+        .configuration-section .panel-collapse[data-collapsed="true"] {
+            display: none !important;
+        }
+        .configuration-section .panel-heading[role="button"] {
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .configuration-section .panel-heading[role="button"]:hover {
+            background-color: #f5f5f5;
+        }
+        .configuration-section .panel-heading .fa {
+            transition: transform 0.2s;
+            margin-right: 5px;
+        }
+    </style>
+
     {% embed '@Gui/Partials/widget.twig' %}
 
         {% block widget_content %}
@@ -212,10 +229,13 @@
                 }
             });
 
-            // Section toggle
+            // Section toggle - improved event handling
             document.addEventListener('click', (e) => {
-                if (e.target.closest('[data-toggle="collapse"]')) {
-                    this.handleSectionToggle(e.target.closest('[data-toggle="collapse"]'));
+                const toggleElement = e.target.closest('.panel-heading[data-toggle="collapse"]');
+                if (toggleElement) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.handleSectionToggle(toggleElement);
                 }
             });
 
@@ -315,12 +335,20 @@
                     if (matches) {
                         option.style.display = '';
                         hasVisibleOptions = true;
-                        // Expand section if it contains matches
+                        // Only expand section if it contains matches and user hasn't manually collapsed it
                         const collapseElement = section.querySelector('.panel-collapse');
-                        if (collapseElement && !collapseElement.classList.contains('in')) {
+                        const isManuallyCollapsed = collapseElement?.hasAttribute('data-collapsed');
+                        
+                        if (collapseElement && !isManuallyCollapsed) {
+                            collapseElement.style.display = 'block';
                             collapseElement.classList.add('in');
-                            section.querySelector('[data-toggle="collapse"] i')?.classList.add('fa-chevron-down');
-                            section.querySelector('[data-toggle="collapse"] i')?.classList.remove('fa-chevron-right');
+                            collapseElement.removeAttribute('data-collapsed');
+                            
+                            const toggleIcon = section.querySelector('[data-toggle="collapse"] i');
+                            if (toggleIcon) {
+                                toggleIcon.classList.add('fa-chevron-down');
+                                toggleIcon.classList.remove('fa-chevron-right');
+                            }
                         }
                     } else {
                         option.style.display = 'none';
@@ -332,24 +360,47 @@
         }
 
         handleSectionToggle(toggleElement) {
-            const target = toggleElement.dataset.target;
-            const collapseElement = document.querySelector(target);
+            const targetId = toggleElement.dataset.target;
+            const collapseElement = document.querySelector(targetId);
             const icon = toggleElement.querySelector('i');
 
-            if (collapseElement) {
-                const isExpanded = collapseElement.classList.contains('in');
+            if (!collapseElement) {
+                console.log('Collapse element not found:', targetId);
+                return;
+            }
 
-                if (isExpanded) {
-                    collapseElement.classList.remove('in');
-                    icon?.classList.remove('fa-chevron-down');
-                    icon?.classList.add('fa-chevron-right');
-                    toggleElement.setAttribute('aria-expanded', 'false');
-                } else {
-                    collapseElement.classList.add('in');
-                    icon?.classList.remove('fa-chevron-right');
-                    icon?.classList.add('fa-chevron-down');
-                    toggleElement.setAttribute('aria-expanded', 'true');
+            // Simple toggle logic
+            const isCurrentlyVisible = collapseElement.style.display !== 'none' && 
+                                     !collapseElement.hasAttribute('data-collapsed');
+
+            if (isCurrentlyVisible) {
+                // Collapse the section
+                collapseElement.style.display = 'none';
+                collapseElement.setAttribute('data-collapsed', 'true');
+                collapseElement.classList.remove('in');
+                
+                // Update icon
+                if (icon) {
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-right');
                 }
+                
+                toggleElement.setAttribute('aria-expanded', 'false');
+                console.log('Collapsed section:', targetId);
+            } else {
+                // Expand the section
+                collapseElement.style.display = 'block';
+                collapseElement.removeAttribute('data-collapsed');
+                collapseElement.classList.add('in');
+                
+                // Update icon
+                if (icon) {
+                    icon.classList.remove('fa-chevron-right');
+                    icon.classList.add('fa-chevron-down');
+                }
+                
+                toggleElement.setAttribute('aria-expanded', 'true');
+                console.log('Expanded section:', targetId);
             }
         }
 
@@ -364,6 +415,11 @@
             const isValid = this.validateField(field, value);
             if (!isValid) return;
 
+            // Convert boolean to string for storage consistency
+            if (field.type === 'checkbox') {
+                value = value ? 'true' : 'false';
+            }
+
             this.currentValues[key] = value;
             this.markFieldAsChanged(option);
             this.updateResetSectionButton();
@@ -376,9 +432,14 @@
 
             let errors = [];
 
-            // Required validation
-            if (isRequired && (!value || value === '')) {
-                errors.push('This field is required');
+            // Required validation - handle boolean fields properly
+            if (isRequired) {
+                if (field.type === 'checkbox') {
+                    // For checkboxes, both true and false are valid values
+                    // No validation needed as boolean is always defined
+                } else if (!value || value === '') {
+                    errors.push('This field is required');
+                }
             }
 
             // Type-specific validation
@@ -474,16 +535,24 @@
             this.showLoading(true);
 
             try {
+                // Prepare form data with proper array structure
+                const formData = new URLSearchParams();
+                formData.append('store', this.data.currentStore);
+                formData.append('locale', this.data.currentLocale || '');
+                
+                // Add each value as a separate parameter in array format
+                Object.keys(this.currentValues).forEach(key => {
+                    formData.append(`values[${key}]`, this.currentValues[key]);
+                });
+
+                console.log('Sending configuration data:', Object.fromEntries(formData));
+
                 const response = await fetch(this.data.saveUrl, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
-                    body: new URLSearchParams({
-                        store: this.data.currentStore,
-                        locale: this.data.currentLocale || '',
-                        values: JSON.stringify(this.currentValues)
-                    })
+                    body: formData
                 });
 
                 const result = await response.json();
@@ -671,7 +740,21 @@
         }
 
         showContent() {
-            document.querySelector('[data-configuration-app]').style.display = 'block';
+            const container = document.querySelector('[data-configuration-app]');
+            container.style.display = 'block';
+            
+            // Initialize all sections as expanded by default
+            document.querySelectorAll('.panel-collapse').forEach(element => {
+                element.style.display = 'block';
+                element.classList.add('in');
+                element.removeAttribute('data-collapsed');
+            });
+            
+            // Initialize all toggle icons
+            document.querySelectorAll('.panel-heading[data-toggle="collapse"] i').forEach(icon => {
+                icon.classList.remove('fa-chevron-right');
+                icon.classList.add('fa-chevron-down');
+            });
         }
 
         announceToScreenReader(message) {

@@ -92,9 +92,11 @@ class AclConfig extends SprykerAclConfig
         $installerRoles = parent::getInstallerRoles();
         $installerRoles[] = [
             'name' => TenantOnboardingConfig::ROLE_TENANT_MANAGER,
-            'description' => 'Role for the Tenant Manager',
             'group' => TenantOnboardingConfig::GROUP_TENANT_MANAGER,
-            'parent' => AclConstants::ROOT_ROLE,
+        ];
+        $installerRoles[] = [
+            'name' => AclConstants::ROOT_ROLE,
+            'group' => TenantOnboardingConfig::GROUP_TENANT_MANAGER,
         ];
 
         return $installerRoles;
@@ -115,6 +117,14 @@ class AclConfig extends SprykerAclConfig
     {
         $bundleNames = [
             'user',
+            'acl',
+            'storage-gui',
+            'spryk-gui',
+            'queue',
+            'search-elasticsearch-gui',
+            'development',
+            'maintenance',
+            'permission',
             'tenant-onboarding',
             'tenant-assigner',
         ];

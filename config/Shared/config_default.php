@@ -733,7 +733,7 @@ $config[ApplicationConstants::BASE_URL_ZED] = sprintf(
 
 $merchantPortalPort = (int)(getenv('SPRYKER_MP_PORT')) ?: 443;
 $config[MerchantPortalConstants::BASE_URL_MP] = sprintf(
-    'http://%s%s',
+    'https://%s%s',
     getenv('SPRYKER_MP_HOST'),
     $merchantPortalPort !== 80 ? ':' . $merchantPortalPort : '',
 );
@@ -1119,4 +1119,14 @@ if ($rmqUrl) {
 
     $config[RabbitMqEnv::RABBITMQ_CONNECTIONS] = [];
     $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$defaultKey] = $defaultConnection;
+}
+
+$bonsai = getenv('BONSAI_URL') ?: getenv('BONSAI_SHARED');
+if ($bonsai) {
+    $url = parse_url($bonsai);
+
+    $config[SearchElasticsearchConstants::HOST] = $url['host'];
+    $config[SearchElasticsearchConstants::TRANSPORT] = $url['scheme'];
+    $config[SearchElasticsearchConstants::PORT] = $url['port'];
+    $config[SearchElasticsearchConstants::AUTH_HEADER] = isset($url['user'], $url['pass']) ? $url['user'] . ':' . $url['pass'] : '';
 }

@@ -53,6 +53,11 @@ class TenantOnboardingEntityManager extends AbstractEntityManager implements Ten
         }
 
         $entity->fromArray($tenantRegistrationTransfer->toArray());
+
+        if ($tenantRegistrationTransfer->getTenant() && $tenantRegistrationTransfer->getTenant()->getIdTenant()) {
+            $entity->setFkTenant($tenantRegistrationTransfer->getTenant()->getIdTenant());
+        }
+
         $entity->save();
 
         $tenantRegistrationTransfer->setUpdatedAt($entity->getUpdatedAt('Y-m-d H:i:s'));

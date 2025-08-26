@@ -57,7 +57,15 @@ class IndexController extends AbstractController
         $tenantTableRowsRequest->setShowUnassignedOnly((bool)$request->query->get('showUnassignedOnly', false));
 
         $response = $this->getFacade()->getTableRowsWithPagination($tenantTableRowsRequest);
-        $availableTenants = $this->getFacade()->getAvailableTenants();
+        $tenantTransfers = (new \Pyz\Zed\TenantOnboarding\Business\TenantOnboardingFacade())->getTenants(
+            (new \Generated\Shared\Transfer\TenantCriteriaTransfer())
+        );
+
+        $availableTenants = [];
+        foreach ($tenantTransfers->getTenants() as $tenantTransfer) {
+            $data = json_decode($tenantTransfer->getData(), true);
+            $availableTenants[$tenantTransfer->getIdentifier()] = $data['companyName'];
+        }
 
         return $this->viewResponse([
             'tableResponse' => $response,

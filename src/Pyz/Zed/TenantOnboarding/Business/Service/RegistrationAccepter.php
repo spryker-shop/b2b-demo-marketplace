@@ -17,34 +17,11 @@ use Spryker\Client\Queue\QueueClientInterface;
 
 class RegistrationAccepter implements RegistrationAccepterInterface
 {
-    /**
-     * @var \Pyz\Zed\TenantOnboarding\Persistence\TenantOnboardingEntityManagerInterface
-     */
-    protected TenantOnboardingEntityManagerInterface $entityManager;
-
-    /**
-     * @var \Pyz\Zed\TenantOnboarding\Persistence\TenantOnboardingRepositoryInterface
-     */
-    protected TenantOnboardingRepositoryInterface $repository;
-
-    /**
-     * @var \Spryker\Client\Queue\QueueClientInterface
-     */
-    protected QueueClientInterface $queueClient;
-
-    /**
-     * @param \Pyz\Zed\TenantOnboarding\Persistence\TenantOnboardingEntityManagerInterface $entityManager
-     * @param \Pyz\Zed\TenantOnboarding\Persistence\TenantOnboardingRepositoryInterface $repository
-     * @param \Spryker\Client\Queue\QueueClientInterface $queueClient
-     */
     public function __construct(
-        TenantOnboardingEntityManagerInterface $entityManager,
-        TenantOnboardingRepositoryInterface $repository,
-        QueueClientInterface $queueClient
+        protected TenantOnboardingEntityManagerInterface $entityManager,
+        protected TenantOnboardingRepositoryInterface $repository,
+        protected QueueClientInterface $queueClient
     ) {
-        $this->entityManager = $entityManager;
-        $this->repository = $repository;
-        $this->queueClient = $queueClient;
     }
 
     /**

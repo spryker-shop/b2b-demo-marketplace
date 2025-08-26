@@ -75,7 +75,7 @@
             <h1 class="mb-0">Join Our B2B Marketplace</h1>
             <p class="mb-0 mt-2">Register your tenant to get started</p>
         </div>
-        
+
         <div class="registration-form">
             {% if successMessage is defined and successMessage %}
                 <div class="alert alert-success" role="alert">
@@ -102,6 +102,15 @@
                     {{ form_errors(form.tenantName) }}
                     <div id="tenant-name-availability" class="availability-indicator"></div>
                     <small class="text-muted">This will be your unique identifier in the system</small>
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.dataSetType, null, {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                    {{ form_widget(form.dataSetType, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.dataSetType) }}
+                    <div id="tenant-name-availability" class="availability-indicator"></div>
+                    <small class="text-muted">Minimal data set contains only Content for pages, navigation and translations.</small><br>
+                    <small class="text-muted">Full data set has all data to has fully functional demo store including products and customer.</small>
                 </div>
 
                 <div class="form-group">
@@ -139,26 +148,26 @@
         document.addEventListener('DOMContentLoaded', function() {
             const tenantNameField = document.querySelector('input[name="tenantRegistrationForm[tenantName]"]');
             const emailField = document.querySelector('input[name="tenantRegistrationForm[email]"]');
-            
+
             if (tenantNameField) {
                 tenantNameField.addEventListener('blur', function() {
                     checkAvailability('tenant-name', this.value, '/tenant-onboarding/registration/check-tenant-name');
                 });
             }
-            
+
             if (emailField) {
                 emailField.addEventListener('blur', function() {
                     checkAvailability('email', this.value, '/tenant-onboarding/registration/check-email');
                 });
             }
         });
-        
+
         function checkAvailability(type, value, url) {
             if (!value) return;
-            
+
             const indicator = document.getElementById(type + '-availability');
             indicator.innerHTML = 'Checking...';
-            
+
             fetch(url + '?' + type.replace('-', '') + '=' + encodeURIComponent(value))
                 .then(response => response.json())
                 .then(data => {

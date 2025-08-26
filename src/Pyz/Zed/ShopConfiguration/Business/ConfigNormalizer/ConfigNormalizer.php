@@ -18,12 +18,11 @@ class ConfigNormalizer implements ConfigNormalizerInterface
     public function normalizeConfigurationData(array $fileDataTransfers): array
     {
         $sections = [];
-        $optionsByKey = [];
 
         foreach ($fileDataTransfers as $fileDataTransfer) {
             $normalizedData = $this->normalizeFileData($fileDataTransfer);
 
-            // Merge sections
+            // Process sections with their nested options
             foreach ($normalizedData['sections'] as $sectionKey => $sectionData) {
                 if (!isset($sections[$sectionKey])) {
                     $sections[$sectionKey] = (new ShopConfigurationSectionTransfer())
@@ -32,20 +31,20 @@ class ConfigNormalizer implements ConfigNormalizerInterface
                         ->setDescription($sectionData['description'] ?? '')
                         ->setOrder($sectionData['order'] ?? 0);
                 }
-            }
 
-            // Merge options (last write wins for same module.key)
-            foreach ($normalizedData['options'] as $optionData) {
-                $optionKey = $optionData['module'] . '.' . $optionData['key'];
-                $optionsByKey[$optionKey] = $this->createOptionTransfer($optionData);
-            }
-        }
-
-        // Assign options to sections
-        foreach ($optionsByKey as $optionTransfer) {
-            $sectionKey = $optionTransfer->getSection();
-            if (isset($sections[$sectionKey])) {
-                $sections[$sectionKey]->addOption($optionTransfer);
+                // Add options for this section
+                if (isset($sectionData['options']) && is_array($sectionData['options'])) {
+                    foreach ($sectionData['options'] as $optionData) {
+                        // Ensure optionData is an array and has required fields
+                        if (!is_array($optionData) || !isset($optionData['key'])) {
+                            continue;
+                        }
+                        
+                        $optionData['section'] = $sectionKey; // Set the section for this option
+                        $optionTransfer = $this->createOptionTransfer($optionData);
+                        $sections[$sectionKey]->addOption($optionTransfer);
+                    }
+                }
             }
         }
 
@@ -68,7 +67,6 @@ class ConfigNormalizer implements ConfigNormalizerInterface
 
         return [
             'sections' => $data['sections'] ?? [],
-            'options' => $data['options'] ?? [],
         ];
     }
 
@@ -80,9 +78,9 @@ class ConfigNormalizer implements ConfigNormalizerInterface
     protected function createOptionTransfer(array $optionData): ShopConfigurationOptionTransfer
     {
         return (new ShopConfigurationOptionTransfer())
-            ->setKey($optionData['key'])
-            ->setModule($optionData['module'])
-            ->setSection($optionData['section'])
+            ->setKey($optionData['key'] ?? '')
+            ->setModule($optionData['module'] ?? '')
+            ->setSection($optionData['section'] ?? '')
             ->setLabel($optionData['label'] ?? '')
             ->setDescription($optionData['description'] ?? '')
             ->setDataType($optionData['dataType'] ?? 'string')

@@ -156,8 +156,8 @@ class TenantRegistrationTable extends AbstractTable
             );
 
             $buttons[] = sprintf(
-                '<a href="%s" class="btn btn-sm btn-danger" onclick="var reason = prompt(\'Please provide a reason for declining:\'); return reason !== null ? (this.href += \'&reason=\' + encodeURIComponent(reason), confirm(\'Are you sure you want to decline this registration?\')) : false;">Decline</a>',
-                $declineUrl
+                '<a href="#" class="btn btn-sm btn-danger" onclick="return declineRegistration(%d);">Decline</a>',
+                $idTenantRegistration
             );
         }
 

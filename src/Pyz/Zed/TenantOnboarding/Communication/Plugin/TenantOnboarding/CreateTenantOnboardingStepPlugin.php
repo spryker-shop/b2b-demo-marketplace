@@ -33,37 +33,50 @@ class CreateTenantOnboardingStepPlugin extends AbstractPlugin implements Onboard
      *
      * @return \Generated\Shared\Transfer\TenantOnboardingStepResultTransfer
      */
-    public function execute(TenantRegistrationTransfer $registrationTransfer): TenantOnboardingStepResultTransfer
+    public function execute(TenantRegistrationTransfer $tenantRegistrationTransfer): TenantOnboardingStepResultTransfer
     {
         $result = new TenantOnboardingStepResultTransfer();
-        $result->setIsSuccessful(true);
+        $result->setIsSuccessful(true)
+            ->setTenantRegistration($tenantRegistrationTransfer);
+
+        $tenantTransfer = $this->getFacade()->findTenantByIdentifier($tenantRegistrationTransfer->getTenantName());
+        if ($tenantTransfer) {
+            $tenantRegistrationTransfer->setTenant($tenantTransfer);
+            $result->setContext([
+                'tenant_id' => $tenantTransfer->getIdTenant(),
+                'tenant_identifier' => $tenantTransfer->getIdentifier(),
+                'tenant_host' => $tenantTransfer->getTenantHost(),
+            ]);
+
+            return $result;
+        }
 
         try {
-            // Prepare tenant data with all additional information
             $tenantData = [
-                'identifier' => $registrationTransfer->getTenantName(),
-                'companyName' => $registrationTransfer->getCompanyName(),
-                'email' => $registrationTransfer->getEmail(),
-                'registrationDate' => $registrationTransfer->getCreatedAt(),
-                'status' => $registrationTransfer->getStatus(),
+                'identifier' => $tenantRegistrationTransfer->getTenantName(),
+                'companyName' => $tenantRegistrationTransfer->getCompanyName(),
+                'email' => $tenantRegistrationTransfer->getEmail(),
+                'registrationDate' => $tenantRegistrationTransfer->getCreatedAt(),
+                'status' => $tenantRegistrationTransfer->getStatus(),
             ];
 
-            // Create tenant host from tenant name
-            $tenantHost = $this->generateTenantHost($registrationTransfer->getTenantName());
+            $tenantHost = $this->generateTenantHost($tenantRegistrationTransfer->getTenantName());
 
             $tenantTransfer = new TenantTransfer();
-            $tenantTransfer->setIdentifier($registrationTransfer->getTenantName());
+            $tenantTransfer->setIdentifier($tenantRegistrationTransfer->getTenantName());
             $tenantTransfer->setTenantHost($tenantHost);
             $tenantTransfer->setData(json_encode($tenantData));
 
             $createdTenant = $this->getFacade()->createTenant($tenantTransfer);
 
-            $result->setContext([
-                'tenant_id' => $createdTenant->getIdTenant(),
-                'tenant_identifier' => $createdTenant->getIdentifier(),
-                'tenant_host' => $createdTenant->getTenantHost(),
-            ]);
+            $tenantRegistrationTransfer->setTenant($createdTenant);
 
+            $result
+                ->setContext([
+                    'tenant_id' => $createdTenant->getIdTenant(),
+                    'tenant_identifier' => $createdTenant->getIdentifier(),
+                    'tenant_host' => $createdTenant->getTenantHost(),
+                ]);
         } catch (\Exception $e) {
             $result->setIsSuccessful(false);
             $result->addError('Failed to create tenant: ' . $e->getMessage());
@@ -79,6 +92,6 @@ class CreateTenantOnboardingStepPlugin extends AbstractPlugin implements Onboard
      */
     protected function generateTenantHost(string $tenantName): string
     {
-        return 'yves.eu.spryker.local';
+        return $tenantName . '.' . $this->getConfig()->getStoreFrontHost();
     }
 }
