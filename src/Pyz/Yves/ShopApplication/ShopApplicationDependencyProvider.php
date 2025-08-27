@@ -388,7 +388,38 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             new TwigApplicationPlugin(),
             new EventDispatcherApplicationPlugin(),
             new ShopApplicationApplicationPlugin(),
-            new StoreApplicationPlugin(),
+            new class extends \SprykerShop\Yves\StoreWidget\Plugin\ShopApplication\StoreApplicationPlugin
+            {
+                protected function resolveStoreName(ContainerInterface $container): string
+                {
+                    $storeName = $this->getStoreRequestUrlParameter();
+                    $storeNames = $this->getFactory()->getStoreStorageClient()->getStoreNames();
+                    if ($storeName) {
+                        if (in_array($storeName, $storeNames, true)) {
+                            return $storeName;
+                        }
+                    }
+
+                    $storeName = $this->getFactory()->getSessionClient()->get(static::SESSION_STORE);
+                    if ($storeName) {
+                        return $storeName;
+                    }
+
+                    if (defined('APPLICATION_STORE')) {
+                        return APPLICATION_STORE;
+                    }
+
+                    $defaultStoreName = current($storeNames);
+
+                    if (!$defaultStoreName) {
+                        $hostname = $_SERVER['HTTP_HOST'] ?? '';
+                        echo 'No store not found for hostname: ' . $hostname;
+                        die;
+                    }
+
+                    return $defaultStoreName;
+                }
+            },
             new LocaleApplicationPlugin(),
             new TranslatorApplicationPlugin(),
             new RouterApplicationPlugin(),
@@ -415,7 +446,8 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
                         $tenantTransfer = $tenantOnboardingClient->findTenantByID($hostname);
 
                         if (!$tenantTransfer) {
-                            throw new \Exception('Tenant not found for hostname: ' . $hostname);
+                            echo 'Setup not found for hostname: ' . $hostname;
+                            die;
                         }
 
                         return $tenantTransfer->getIdentifierOrFail();

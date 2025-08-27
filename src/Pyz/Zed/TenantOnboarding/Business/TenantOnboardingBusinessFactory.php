@@ -40,6 +40,8 @@ class TenantOnboardingBusinessFactory extends AbstractBusinessFactory
             $this->createPasswordValidator(),
             $this->getEntityManager(),
             $this->getRepository(),
+            $this->getConfig(),
+            $this->createRegistrationAccepter(),
         );
     }
 

@@ -47,6 +47,8 @@ actions:
     - data_entity: payment-method
       source: data/import/common/common/payment_method.csv
     #2. Catalog Setup data import
+    - data_entity: product-label
+      source: data/import/tenant/product_label.csv
     - data_entity: category
       source: data/import/tenant/category.csv
     - data_entity: product-attribute-key
