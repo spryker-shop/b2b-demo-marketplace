@@ -414,7 +414,6 @@
         ],
         "compile-zed": [
             "vendor/bin/install -r heroku -s database-migrate",
-            "vendor/bin/install -r heroku -s demodata",
             "php vendor/bin/console twig:cache:warmer"
         ],
         "post-install-cmd": [

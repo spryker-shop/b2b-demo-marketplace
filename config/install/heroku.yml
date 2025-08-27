@@ -43,7 +43,7 @@ sections:
             command: 'vendor/bin/console transfer:entity:generate'
 
         setup-search-create-source-map:
-            command: 'vendor/bin/console search:setup:source-map'
+            command: 'SPRYKER_DYNAMIC_STORE_MODE=true vendor/bin/console search:setup:source-map'
 
         generate-composer:
             command: 'composer dumpautoload -o --classmap-authoritative --apcu'
