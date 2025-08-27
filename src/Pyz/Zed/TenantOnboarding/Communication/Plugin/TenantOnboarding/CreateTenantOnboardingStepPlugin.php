@@ -51,36 +51,31 @@ class CreateTenantOnboardingStepPlugin extends AbstractPlugin implements Onboard
             return $result;
         }
 
-        try {
-            $tenantData = [
-                'identifier' => $tenantRegistrationTransfer->getTenantName(),
-                'companyName' => $tenantRegistrationTransfer->getCompanyName(),
-                'email' => $tenantRegistrationTransfer->getEmail(),
-                'registrationDate' => $tenantRegistrationTransfer->getCreatedAt(),
-                'status' => $tenantRegistrationTransfer->getStatus(),
-            ];
+        $tenantData = [
+            'identifier' => $tenantRegistrationTransfer->getTenantName(),
+            'companyName' => $tenantRegistrationTransfer->getCompanyName(),
+            'email' => $tenantRegistrationTransfer->getEmail(),
+            'registrationDate' => $tenantRegistrationTransfer->getCreatedAt(),
+            'status' => $tenantRegistrationTransfer->getStatus(),
+        ];
 
-            $tenantHost = $this->generateTenantHost($tenantRegistrationTransfer->getTenantName());
+        $tenantHost = $this->generateTenantHost($tenantRegistrationTransfer->getTenantName());
 
-            $tenantTransfer = new TenantTransfer();
-            $tenantTransfer->setIdentifier($tenantRegistrationTransfer->getTenantName());
-            $tenantTransfer->setTenantHost($tenantHost);
-            $tenantTransfer->setData(json_encode($tenantData));
+        $tenantTransfer = new TenantTransfer();
+        $tenantTransfer->setIdentifier($tenantRegistrationTransfer->getTenantName());
+        $tenantTransfer->setTenantHost($tenantHost);
+        $tenantTransfer->setData(json_encode($tenantData));
 
-            $createdTenant = $this->getFacade()->createTenant($tenantTransfer);
+        $createdTenant = $this->getFacade()->createTenant($tenantTransfer);
 
-            $tenantRegistrationTransfer->setTenant($createdTenant);
+        $tenantRegistrationTransfer->setTenant($createdTenant);
 
-            $result
-                ->setContext([
-                    'tenant_id' => $createdTenant->getIdTenant(),
-                    'tenant_identifier' => $createdTenant->getIdentifier(),
-                    'tenant_host' => $createdTenant->getTenantHost(),
-                ]);
-        } catch (\Exception $e) {
-            $result->setIsSuccessful(false);
-            $result->addError('Failed to create tenant: ' . $e->getMessage());
-        }
+        $result
+            ->setContext([
+                'tenant_id' => $createdTenant->getIdTenant(),
+                'tenant_identifier' => $createdTenant->getIdentifier(),
+                'tenant_host' => $createdTenant->getTenantHost(),
+            ]);
 
         return $result;
     }

@@ -42,49 +42,36 @@ class TenantDataImportOnboardingStepPlugin extends AbstractPlugin implements Onb
         $result->setIsSuccessful(false)
             ->setTenantRegistration($tenantRegistrationTransfer);
 
-        try {
-            $tenantIdentifier = $tenantRegistrationTransfer->getTenantName();
+        $tenantIdentifier = $tenantRegistrationTransfer->getTenantName();
 
-            $commands = [
-                $this->buildSetupCommand(),
-                $this->buildStoreDataImportCommand($tenantRegistrationTransfer),
-                $this->buildSetupESCommand(),
-                $this->buildDataImportCommand($tenantRegistrationTransfer),
-                $this->buildProductLabelCommand(),
-            ];
+        $commands = [
+            $this->buildSetupCommand(),
+            $this->buildStoreDataImportCommand($tenantRegistrationTransfer),
+            $this->buildSetupESCommand(),
+            $this->buildDataImportCommand($tenantRegistrationTransfer),
+            $this->buildProductLabelCommand(),
+        ];
 
-            foreach ($commands as $command) {
-                $process = new Process($command);
-                $process->setTimeout(static::COMMAND_TIMEOUT);
+        foreach ($commands as $command) {
+            $process = new Process($command);
+            $process->setTimeout(static::COMMAND_TIMEOUT);
 
-                $env = $process->getEnv();
-                $env['SPRYKER_TENANT_IDENTIFIER'] = $tenantIdentifier;
-                $process->setEnv($env);
+            $env = $process->getEnv();
+            $env['SPRYKER_TENANT_IDENTIFIER'] = $tenantIdentifier;
+            $process->setEnv($env);
 
-                try {
-                    $process->mustRun();
-                } catch (ProcessFailedException $exception) {
-                    $result->addError('Data import command failed: ' . $process->getErrorOutput());
-                    $result->addContextItem('command_output:' .  $process->getOutput());
-                    $result->addContextItem('error_output:' . $process->getErrorOutput());
+            $process->mustRun();
+        }
 
-                    return $result;
-                }
-            }
-
-            if ($process->isSuccessful()) {
-                $result->setIsSuccessful(true);
-                $result->addContextItem('tenant_identifier: ' . $tenantIdentifier);
-                $result->addContextItem('command_output: ' . $process->getOutput());
-                $result->addContextItem('message: ' . 'Tenant data import completed successfully');
-            } else {
-                $result->addError('Data import command failed: ' . $process->getErrorOutput());
-                $result->addContextItem('command_output: ' .  $process->getOutput());
-                $result->addContextItem('error_output: ' . $process->getErrorOutput());
-            }
-        } catch (\Exception $e) {
-            $result->setIsSuccessful(false);
-            $result->addError('Failed to execute tenant data import: ' . $e->getMessage());
+        if ($process->isSuccessful()) {
+            $result->setIsSuccessful(true);
+            $result->addContextItem('tenant_identifier: ' . $tenantIdentifier);
+            $result->addContextItem('command_output: ' . $process->getOutput());
+            $result->addContextItem('message: ' . 'Tenant data import completed successfully');
+        } else {
+            $result->addError('Data import command failed: ' . $process->getErrorOutput());
+            $result->addContextItem('command_output: ' .  $process->getOutput());
+            $result->addContextItem('error_output: ' . $process->getErrorOutput());
         }
 
         return $result;

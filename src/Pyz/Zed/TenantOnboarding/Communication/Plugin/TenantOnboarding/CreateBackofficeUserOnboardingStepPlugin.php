@@ -31,35 +31,29 @@ class CreateBackofficeUserOnboardingStepPlugin extends AbstractPlugin implements
         $result = new TenantOnboardingStepResultTransfer();
         $result->setIsSuccessful(true);
 
-        try {
-            $userTransfer = (new UserTransfer())
-                ->setFirstName($tenantRegistrationTransfer->getCompanyName())
-                ->setLastName('Admin')
-                ->setUsername($tenantRegistrationTransfer->getEmail())
-                ->setEmail($tenantRegistrationTransfer->getEmail())
-                ->setPassword($tenantRegistrationTransfer->getPasswordHash())
-                ->setLocaleName('en_US')
-                ->setIdTenant($tenantRegistrationTransfer->getTenantName());
+        $userTransfer = (new UserTransfer())
+            ->setFirstName($tenantRegistrationTransfer->getCompanyName())
+            ->setLastName('Admin')
+            ->setUsername($tenantRegistrationTransfer->getEmail())
+            ->setEmail($tenantRegistrationTransfer->getEmail())
+            ->setPassword($tenantRegistrationTransfer->getPasswordHash())
+            ->setLocaleName('en_US')
+            ->setIdTenant($tenantRegistrationTransfer->getTenantName());
 
-            $userTransfer = $this->getFactory()->getUserFacade()->createUser($userTransfer);
+        $userTransfer = $this->getFactory()->getUserFacade()->createUser($userTransfer);
 
-            $aclGroup = $this->getFactory()->getAclFacade()->getGroupByName(TenantOnboardingConfig::GROUP_TENANT_MANAGER);
-            if ($userTransfer->getIdUser() && $aclGroup->getIdAclGroup()) {
-                $this->getFactory()->getAclFacade()->addUserToGroup($userTransfer->getIdUserOrFail(), $aclGroup->getIdAclGroupOrFail());
-            }
-
-            $result
-                ->setTenantRegistration($tenantRegistrationTransfer)
-                ->setContext([
-                    'userId' => $userTransfer->getIdUser(),
-                    'username' => $userTransfer->getUsername(),
-                ])
-                ->setIsSuccessful(!!$userTransfer->getIdUser());
-
-        } catch (\Exception $e) {
-            $result->setIsSuccessful(false);
-            $result->setErrors(['Failed to create backoffice user: ' . $e->getMessage()]);
+        $aclGroup = $this->getFactory()->getAclFacade()->getGroupByName(TenantOnboardingConfig::GROUP_TENANT_MANAGER);
+        if ($userTransfer->getIdUser() && $aclGroup->getIdAclGroup()) {
+            $this->getFactory()->getAclFacade()->addUserToGroup($userTransfer->getIdUserOrFail(), $aclGroup->getIdAclGroupOrFail());
         }
+
+        $result
+            ->setTenantRegistration($tenantRegistrationTransfer)
+            ->setContext([
+                'userId' => $userTransfer->getIdUser(),
+                'username' => $userTransfer->getUsername(),
+            ])
+            ->setIsSuccessful(!!$userTransfer->getIdUser());
 
         return $result;
     }

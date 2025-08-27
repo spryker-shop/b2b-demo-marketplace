@@ -66,6 +66,7 @@ class OnboardingProcessor implements OnboardingProcessorInterface
                 return $result;
             });
         } catch (\Exception|\Throwable $exception) {
+            throw $exception;
             $result = (new TenantOnboardingStepResultTransfer())
                 ->setIsSuccessful(false)
                 ->addError($exception->getMessage());

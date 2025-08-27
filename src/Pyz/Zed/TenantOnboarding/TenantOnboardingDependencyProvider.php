@@ -8,7 +8,6 @@
 namespace Pyz\Zed\TenantOnboarding;
 
 use Pyz\Zed\TenantOnboarding\Communication\Plugin\TenantOnboarding\CreateBackofficeUserOnboardingStepPlugin;
-use Pyz\Zed\TenantOnboarding\Communication\Plugin\TenantOnboarding\CreateDefaultStoreOnboardingStepPlugin;
 use Pyz\Zed\TenantOnboarding\Communication\Plugin\TenantOnboarding\CreateTenantOnboardingStepPlugin;
 use Pyz\Zed\TenantOnboarding\Communication\Plugin\TenantOnboarding\EmailNotificationUserOnboardingStepPlugin;
 use Pyz\Zed\TenantOnboarding\Communication\Plugin\TenantOnboarding\TenantDataImportOnboardingStepPlugin;
@@ -16,7 +15,6 @@ use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Zed\Glossary\Communication\Plugin\TwigTranslatorPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\SalesInvoice\Dependency\Facade\SalesInvoiceToMailFacadeBridge;
 
 class TenantOnboardingDependencyProvider extends AbstractBundleDependencyProvider
 {
