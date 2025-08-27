@@ -1,8 +1,5 @@
 env:
-    APPLICATION_ENV: development
-
-stores:
-    - DE
+    APPLICATION_ENV: production
 
 command-timeout: 3600
 
@@ -124,17 +121,14 @@ sections:
 
         queue-setup:
             command: 'vendor/bin/console queue:setup'
-            stores: true
 
         setup-search-create-sources:
             command: 'vendor/bin/console search:setup:sources'
-            stores: true
             groups:
                 - elastic
 
         setup-seach-create-source-map:
             command: 'vendor/bin/console search:setup:source-map'
-            stores: true
             groups:
                 - elastic
 
@@ -153,7 +147,6 @@ sections:
 
         acl-entity-synchronize:
             command: 'vendor/bin/console acl-entity:synchronize -vvv --no-ansi'
-            stores: true
 
     frontend:
         project-install-dependencies:
