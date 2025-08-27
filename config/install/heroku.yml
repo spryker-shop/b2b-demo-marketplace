@@ -42,6 +42,9 @@ sections:
         generate-entity-transfer:
             command: 'vendor/bin/console transfer:entity:generate'
 
+        setup-search-create-source-map:
+            command: 'vendor/bin/console search:setup:source-map'
+
         generate-composer:
             command: 'composer dumpautoload -o --classmap-authoritative --apcu'
 
@@ -70,24 +73,19 @@ sections:
     queue-flush:
         set-permissions:
             command: 'vendor/bin/console queue:permission:set'
-            stores: true
 
         purge-all-queues:
             command: 'vendor/bin/console queue:queue:purge-all'
-            stores: true
 
         delete-all-queues:
             command: 'vendor/bin/console queue:queue:delete-all'
-            stores: true
 
         delete-all-exchanges:
             command: 'vendor/bin/console queue:exchanges:delete-all'
-            stores: true
 
     database-flush:
         delete-elastic-search-index:
             command: 'vendor/bin/console search:index:delete'
-            stores: true
             groups:
                 - elastic
 
@@ -119,22 +117,12 @@ sections:
         init-database:
             command: 'vendor/bin/console setup:init-db -vvv --no-ansi'
 
+    demodata:
         queue-setup:
             command: 'vendor/bin/console queue:setup'
 
-        setup-search-create-sources:
-            command: 'vendor/bin/console search:setup:sources'
-            groups:
-                - elastic
-
-        setup-seach-create-source-map:
-            command: 'vendor/bin/console search:setup:source-map'
-            groups:
-                - elastic
-
-    demodata:
         import-eu-region-demodata:
-            command: 'SPRYKER_TENANT_IDENTIFIER=tenant_de vendor/bin/console data:import --config=data/import/local/full_EU.yml -t -vvv'
+            command: 'vendor/bin/console data:import --config=data/import/tenant/deployment.yml'
 
         setup-search-create-sources:
             command: 'vendor/bin/console search:setup:sources'
@@ -156,6 +144,6 @@ sections:
             command: 'vendor/bin/console frontend:zed:build -e production'
 
         yves-build-frontend:
-            command: "vendor/bin/console frontend:yves:build -vvv"
+            command: "vendor/bin/console frontend:yves:build -e production -vvv"
             groups:
                 - yves
