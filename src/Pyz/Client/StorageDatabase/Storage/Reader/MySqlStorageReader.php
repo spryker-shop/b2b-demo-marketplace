@@ -86,5 +86,4 @@ class MySqlStorageReader extends SprykerMySqlStorageReader
 
         return [$queryData, $this->createPreparedStatement($selectSqlString)];
     }
-
 }
