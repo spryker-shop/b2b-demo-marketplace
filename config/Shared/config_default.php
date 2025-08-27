@@ -1032,12 +1032,12 @@ if ($isTestifyConstantsClassExists) {
 $config[RedisConstants::REDIS_COMPRESSION_ENABLED] = getenv('SPRYKER_KEY_VALUE_COMPRESSING_ENABLED') ?: false;
 
 
-$databaseUrl = getenv('JAWSDB_MARIA_URL');
+$databaseUrl = getenv('DATABASE_URL');
 if ($databaseUrl) {
     $url = parse_url($databaseUrl);
     $config[PropelConstants::ZED_DB_ENGINE]
         = $config[PropelQueryBuilderConstants::ZED_DB_ENGINE]
-        = PropelConfig::DB_ENGINE_MYSQL;
+        = PropelConfig::DB_ENGINE_PGSQL;
     $config[PropelConstants::ZED_DB_HOST] = $url['host'];
     $config[PropelConstants::ZED_DB_PORT] = $url['port'];
     $config[PropelConstants::ZED_DB_USERNAME] = $url['user'];
@@ -1045,7 +1045,7 @@ if ($databaseUrl) {
     $config[PropelConstants::ZED_DB_DATABASE] = ltrim($url['path'] ?? '', '/');
 
     $config[StorageDatabaseConstants::DB_DEBUG] = false;
-    $config[StorageDatabaseConstants::DB_ENGINE] = StorageDatabaseConfig::DB_ENGINE_MYSQL;
+    $config[StorageDatabaseConstants::DB_ENGINE] = StorageDatabaseConfig::DB_ENGINE_PGSQL;
     $config[StorageDatabaseConstants::DB_HOST] = $url['host'];
     $config[StorageDatabaseConstants::DB_PORT] = $url['port'];
     $config[StorageDatabaseConstants::DB_USERNAME] = $url['user'];
