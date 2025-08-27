@@ -42,8 +42,9 @@ sections:
         propel-build:
             command: 'vendor/bin/console propel:model:build'
 
-        generate-page-source-map:
-            command: 'vendor/bin/console search:setup:source-map'
+        generate-entity-transfer:
+            command: 'vendor/bin/console transfer:entity:generate'
+
         generate-composer:
             command: 'composer dumpautoload -o --classmap-authoritative --apcu'
 
@@ -119,9 +120,6 @@ sections:
 
         propel-migration-cleanup:
             command: 'vendor/bin/console propel:migration:delete -vvv --no-ansi'
-
-        generate-entity-transfer:
-            command: 'vendor/bin/console transfer:entity:generate'
 
         generate-composer:
             command: 'composer dumpautoload -o --classmap-authoritative --apcu'
