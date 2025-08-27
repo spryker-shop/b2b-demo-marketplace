@@ -50,6 +50,7 @@ class TenantDataImportOnboardingStepPlugin extends AbstractPlugin implements Onb
                 $this->buildStoreDataImportCommand($tenantRegistrationTransfer),
                 $this->buildSetupESCommand(),
                 $this->buildDataImportCommand($tenantRegistrationTransfer),
+                $this->buildProductLabelCommand(),
             ];
 
             foreach ($commands as $command) {
@@ -62,8 +63,6 @@ class TenantDataImportOnboardingStepPlugin extends AbstractPlugin implements Onb
 
                 try {
                     $process->mustRun();
-
-                    echo $process->getOutput();
                 } catch (ProcessFailedException $exception) {
                     $result->addError('Data import command failed: ' . $process->getErrorOutput());
                     $result->addContextItem('command_output:' .  $process->getOutput());
@@ -160,6 +159,17 @@ class TenantDataImportOnboardingStepPlugin extends AbstractPlugin implements Onb
         return [
             'vendor/bin/console',
             'search:setup:sources',
+        ];
+    }
+
+    /**
+     * @return array<string>
+     */
+    protected function buildProductLabelCommand(): array
+    {
+        return [
+            'vendor/bin/console',
+            'product-label:relations:update',
         ];
     }
 }

@@ -1101,6 +1101,7 @@ $rmqApiKey = getenv('CLOUDAMQP_CHARCOAL_APIKEY');
 if ($rmqUrl) {
     $url = parse_url($rmqUrl);
     $virtualHost = ltrim($url['path'] ?? '', '/');
+    $config[QueueConstants::QUEUE_WORKER_MAX_THRESHOLD_SECONDS] = 600;
 
     $config[RabbitMqEnv::RABBITMQ_API_HOST] = $url['host'];
     $config[RabbitMqEnv::RABBITMQ_API_PORT] = $url['port'] ?? 5672;
