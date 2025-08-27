@@ -410,9 +410,13 @@
             "vendor/bin/install -r heroku -s generate",
             "vendor/bin/install -r heroku -s cache",
             "vendor/bin/install -r heroku -s queue-flush",
-            "vendor/bin/install -r heroku -s database-migrate",
             "npm install",
             "vendor/bin/install -r heroku -s frontend"
+        ],
+        "compile-zed": [
+            "vendor/bin/install -r heroku -s database-migrate",
+            "vendor/bin/install -r heroku -s demodata",
+            "php vendor/bin/console twig:cache:warmer"
         ],
         "post-install-cmd": [
             "ChromedriverInstaller\\Installer::installChromedriver"
