@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\Queue;
 
+use Pyz\Zed\TenantOnboarding\Communication\Plugin\Queue\TenantOnboardingEventQueueMessageProcessorPlugin;
 use Pyz\Zed\TenantOnboarding\Communication\Plugin\Queue\TenantOnboardingQueueMessageProcessorPlugin;
 use Pyz\Zed\TenantOnboarding\TenantOnboardingConfig;
 use Spryker\Shared\AssetStorage\AssetStorageConfig;
@@ -127,7 +128,8 @@ class QueueDependencyProvider extends SprykerDependencyProvider
 //            SearchHttpConfig::SEARCH_HTTP_CONFIG_SYNC_QUEUE => new SynchronizationStorageQueueMessageProcessorPlugin(),
             UrlStorageConfig::PUBLISH_URL_RETRY => new EventRetryQueueMessageProcessorPlugin(),
             'publish.product_offer' => new EventQueueMessageProcessorPlugin(),
-            TenantOnboardingConfig::QUEUE_NAME_TENANT_ONBOARDING => new TenantOnboardingQueueMessageProcessorPlugin(),
+            TenantOnboardingConfig::QUEUE_NAME_TENANT_ONBOARDING => new TenantOnboardingEventQueueMessageProcessorPlugin(),
+            TenantOnboardingConfig::QUEUE_NAME_TENANT_ONBOARDING_RETRY => new EventRetryQueueMessageProcessorPlugin(),
         ];
     }
 

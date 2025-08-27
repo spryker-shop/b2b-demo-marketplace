@@ -51,7 +51,9 @@ class RegistrationAccepter implements RegistrationAccepterInterface
         $queueMessage = new QueueSendMessageTransfer();
         $queueMessage->setBody(json_encode($messageTransfer->toArray()));
 
-        $this->queueClient->sendMessage(TenantOnboardingConfig::QUEUE_NAME_TENANT_ONBOARDING, $queueMessage);
+        (new \Spryker\Zed\Event\Business\EventFacade())->trigger(TenantOnboardingConfig::TENANT_REGISTERED_EVENT, $queueMessage);
+
+        //$this->queueClient->sendMessage(TenantOnboardingConfig::QUEUE_NAME_TENANT_ONBOARDING, $queueMessage);
 
         $responseTransfer->setIsSuccessful(true);
         $responseTransfer->setIdTenantRegistration($idTenantRegistration);

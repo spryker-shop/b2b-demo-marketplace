@@ -66,7 +66,6 @@ class OnboardingProcessor implements OnboardingProcessorInterface
                 return $result;
             });
         } catch (\Exception|\Throwable $exception) {
-            throw $exception;
             $result = (new TenantOnboardingStepResultTransfer())
                 ->setIsSuccessful(false)
                 ->addError($exception->getMessage());
@@ -81,5 +80,9 @@ class OnboardingProcessor implements OnboardingProcessorInterface
 
         $this->entityManager->updateTenantRegistration($registrationTransfer);
         $this->tenantBehaviorFacade->setCurrentTenantId($currentTenantId);
+
+        if (!$result->getIsSuccessful()) {
+            throw new \Exception(implode(', ', $result->getErrors()));
+        }
     }
 }

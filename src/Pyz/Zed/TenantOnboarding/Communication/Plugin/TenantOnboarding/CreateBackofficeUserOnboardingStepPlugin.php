@@ -9,6 +9,8 @@ namespace Pyz\Zed\TenantOnboarding\Communication\Plugin\TenantOnboarding;
 
 use Generated\Shared\Transfer\TenantOnboardingStepResultTransfer;
 use Generated\Shared\Transfer\TenantRegistrationTransfer;
+use Generated\Shared\Transfer\UserCollectionTransfer;
+use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Pyz\Zed\TenantOnboarding\Business\Plugin\OnboardingStepPluginInterface;
 use Pyz\Zed\TenantOnboarding\TenantOnboardingConfig;
@@ -31,14 +33,25 @@ class CreateBackofficeUserOnboardingStepPlugin extends AbstractPlugin implements
         $result = new TenantOnboardingStepResultTransfer();
         $result->setIsSuccessful(true);
 
+        $userCollectionTransfer = $this->getFactory()->getUserFacade()->getUserCollection(
+            (new UserCriteriaTransfer())->setUserConditions(
+                (new \Generated\Shared\Transfer\UserConditionsTransfer())
+                    ->addUsername($tenantRegistrationTransfer->getEmailOrFail())
+            )
+        );
+
+        if ($userCollectionTransfer->getUsers()->count() > 0) {
+            return $result;
+        }
+
         $userTransfer = (new UserTransfer())
-            ->setFirstName($tenantRegistrationTransfer->getCompanyName())
+            ->setFirstName($tenantRegistrationTransfer->getCompanyNameOrFail())
             ->setLastName('Admin')
-            ->setUsername($tenantRegistrationTransfer->getEmail())
-            ->setEmail($tenantRegistrationTransfer->getEmail())
-            ->setPassword($tenantRegistrationTransfer->getPasswordHash())
+            ->setUsername($tenantRegistrationTransfer->getEmailOrFail())
+            ->setEmail($tenantRegistrationTransfer->getEmailOrFail())
+            ->setPassword($tenantRegistrationTransfer->getPasswordHashOrFail())
             ->setLocaleName('en_US')
-            ->setIdTenant($tenantRegistrationTransfer->getTenantName());
+            ->setIdTenant($tenantRegistrationTransfer->getTenantNameOrFail());
 
         $userTransfer = $this->getFactory()->getUserFacade()->createUser($userTransfer);
 

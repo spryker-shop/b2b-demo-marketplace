@@ -10,7 +10,6 @@ namespace Pyz\Zed\TenantOnboarding;
 use Pyz\Zed\TenantOnboarding\Communication\Plugin\TenantOnboarding\CreateBackofficeUserOnboardingStepPlugin;
 use Pyz\Zed\TenantOnboarding\Communication\Plugin\TenantOnboarding\CreateTenantOnboardingStepPlugin;
 use Pyz\Zed\TenantOnboarding\Communication\Plugin\TenantOnboarding\EmailNotificationUserOnboardingStepPlugin;
-use Pyz\Zed\TenantOnboarding\Communication\Plugin\TenantOnboarding\TenantDataImportOnboardingStepPlugin;
 use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Zed\Glossary\Communication\Plugin\TwigTranslatorPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
@@ -188,7 +187,6 @@ class TenantOnboardingDependencyProvider extends AbstractBundleDependencyProvide
         return [
             new CreateTenantOnboardingStepPlugin(),
             new CreateBackofficeUserOnboardingStepPlugin(),
-            new TenantDataImportOnboardingStepPlugin(),
             new EmailNotificationUserOnboardingStepPlugin(),
         ];
     }
