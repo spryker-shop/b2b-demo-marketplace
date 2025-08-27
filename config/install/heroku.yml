@@ -48,11 +48,6 @@ sections:
         generate-composer:
             command: 'composer dumpautoload -o --classmap-authoritative --apcu'
 
-#    jenkins-down:
-#        jenkins-stop:
-#            command: 'vendor/bin/console scheduler:clean'
-#            stores: true
-
     cache:
         router-cache-warmup-yves:
             command: 'vendor/bin/yves router:cache:warm-up'
@@ -159,15 +154,6 @@ sections:
         acl-entity-synchronize:
             command: 'vendor/bin/console acl-entity:synchronize -vvv --no-ansi'
             stores: true
-
-#    jenkins-up:
-#        jenkins-generate:
-#            command: 'vendor/bin/console scheduler:setup'
-#            stores: true
-#
-#        jenkins-enable:
-#            command: 'vendor/bin/console scheduler:resume'
-#            stores: true
 
     frontend:
         project-install-dependencies:
