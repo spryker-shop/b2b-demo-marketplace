@@ -94,10 +94,6 @@ class AclConfig extends SprykerAclConfig
             'name' => TenantOnboardingConfig::ROLE_TENANT_MANAGER,
             'group' => TenantOnboardingConfig::GROUP_TENANT_MANAGER,
         ];
-        $installerRoles[] = [
-            'name' => AclConstants::ROOT_ROLE,
-            'group' => TenantOnboardingConfig::GROUP_TENANT_MANAGER,
-        ];
 
         return $installerRoles;
     }
@@ -138,6 +134,13 @@ class AclConfig extends SprykerAclConfig
                 'role' => TenantOnboardingConfig::ROLE_TENANT_MANAGER,
             ];
         }
+        $installerRules[] = [
+                'bundle' => AclConstants::VALIDATOR_WILDCARD,
+                'controller' => AclConstants::VALIDATOR_WILDCARD,
+                'action' => AclConstants::VALIDATOR_WILDCARD,
+                'type' => AclConstants::ALLOW,
+                'role' => TenantOnboardingConfig::ROLE_TENANT_MANAGER,
+        ];
 
         return $installerRules;
     }
