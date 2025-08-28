@@ -67,6 +67,7 @@
             color: #6c757d;
             margin-top: 5px;
         }
+        .help-block{ color: RED; font-size: 12px; }
     </style>
 </head>
 <body>
@@ -108,7 +109,6 @@
                     {{ form_label(form.dataSetType, null, {'label_attr': {'class': 'form-label fw-bold'}}) }}
                     {{ form_widget(form.dataSetType, {'attr': {'class': 'form-control'}}) }}
                     {{ form_errors(form.dataSetType) }}
-                    <div id="tenant-name-availability" class="availability-indicator"></div>
                     <small class="text-muted">Minimal data set contains only Content for pages, navigation and translations.</small><br>
                     <small class="text-muted">Full data set has all data to has fully functional demo store including products and customer.</small>
                 </div>

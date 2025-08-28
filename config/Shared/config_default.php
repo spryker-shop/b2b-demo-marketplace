@@ -1129,8 +1129,8 @@ $bonsai = getenv('BONSAI_URL') ?: getenv('BONSAI_SHARED');
 if ($bonsai) {
     $url = parse_url($bonsai);
 
-    $config[SearchElasticsearchConstants::HOST] = $url['host'];
+    $config[SearchElasticsearchConstants::HOST] = $url['user'] . ':' . $url['pass'] . '@' . $url['host'];
     $config[SearchElasticsearchConstants::TRANSPORT] = $url['scheme'];
     $config[SearchElasticsearchConstants::PORT] = $url['port'];
-    $config[SearchElasticsearchConstants::AUTH_HEADER] = isset($url['user'], $url['pass']) ? $url['user'] . ':' . $url['pass'] : '';
+    $config[SearchElasticsearchConstants::AUTH_HEADER] = '';
 }

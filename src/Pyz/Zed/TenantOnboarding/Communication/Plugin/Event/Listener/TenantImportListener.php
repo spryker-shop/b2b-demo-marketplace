@@ -3,7 +3,6 @@
 namespace Pyz\Zed\TenantOnboarding\Communication\Plugin\Event\Listener;
 
 use Generated\Shared\Transfer\TenantOnboardingMessageTransfer;
-use Generated\Shared\Transfer\TenantOnboardingStepResultTransfer;
 use Generated\Shared\Transfer\TenantRegistrationTransfer;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;

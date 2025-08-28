@@ -30,16 +30,16 @@ class IndexNameResolver extends \Spryker\Client\SearchElasticsearch\Index\IndexN
     protected function getIdTenant(string $storeName): string
     {
         if (APPLICATION === 'YVES' || APPLICATION === 'GLUE') {
-            /** @var \Spryker\Client\Store\StoreClientInterface $storeClient */
-            $storeClient = \Spryker\Client\Kernel\Locator::getInstance()->store()->client();
-            $storeTransfer = $storeClient->getStoreByName($storeName);
+            /** @var \Spryker\Client\Store\StoreClientInterface $storeFacade */
+            $storeFacade = \Spryker\Client\Kernel\Locator::getInstance()->store()->client();
+            $storeTransfer = $storeFacade->getStoreByName($storeName);
 
             return $storeTransfer->getIdTenantOrFail();
         }
 
-        /** @var \Spryker\Zed\Store\Business\StoreFacadeInterface $storeClient */
-        $storeClient = \Spryker\Zed\Kernel\Locator::getInstance()->store()->facade();
-        $storeTransfer = $storeClient->getStoreByName($storeName);
+        /** @var \Spryker\Zed\Store\Business\StoreFacadeInterface $storeFacade */
+        $storeFacade = \Spryker\Zed\Kernel\Locator::getInstance()->store()->facade();
+        $storeTransfer = $storeFacade->getStoreByName($storeName);
 
         return $storeTransfer->getIdTenantOrFail();
     }

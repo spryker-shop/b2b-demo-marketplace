@@ -75,7 +75,6 @@ class OnboardingProcessor implements OnboardingProcessorInterface
             $registrationTransfer->setStatus(TenantOnboardingConfig::REGISTRATION_STATUS_COMPLETED);
         } else {
             $registrationTransfer->setStatus(TenantOnboardingConfig::REGISTRATION_STATUS_FAILED);
-            $registrationTransfer->setErrors(json_encode($result->getErrors()));
         }
 
         $this->entityManager->updateTenantRegistration($registrationTransfer);
