@@ -708,7 +708,7 @@ $config[ZedRequestConstants::HOST_ZED_API] = sprintf(
     $zedPort !== $backofficeDefaultPort ? ':' . $zedPort : '',
 );
 $config[ZedRequestConstants::BASE_URL_ZED_API] = sprintf(
-    'http://%s',
+    'https://%s',
     $config[ZedRequestConstants::HOST_ZED_API],
 );
 $config[ZedRequestConstants::BASE_URL_SSL_ZED_API] = sprintf(
