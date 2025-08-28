@@ -529,7 +529,7 @@ jobs:
         runs-on: ubuntu-latest
         env:
             PROGRESS_TYPE: plain
-            SPRYKER_PLATFORM_IMAGE: spryker/php:8.2-debian
+            SPRYKER_PLATFORM_IMAGE: spryker/php:8.3-debian
             TRAVIS: 1
             ROBOT_TESTS_ARTIFACTS_BUCKET_REGION: eu-west-1
         steps:
