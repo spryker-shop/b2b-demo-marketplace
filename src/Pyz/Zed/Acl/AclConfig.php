@@ -28,10 +28,10 @@ class AclConfig extends SprykerAclConfig
         if ((new \Pyz\Zed\TenantBehavior\Business\TenantBehaviorFacade())->getCurrentTenantId()) {
             return [
                 'richard@spryker.com' => [
-                    'group' => AclConstants::ROOT_GROUP,
+                    'group' => TenantOnboardingConfig::GROUP_TENANT_MANAGER,
                 ],
                 'agent-merchant@spryker.com' => [
-                    'group' => AclConstants::ROOT_GROUP,
+                    'group' => TenantOnboardingConfig::GROUP_TENANT_MANAGER,
                 ],
             ];
         }

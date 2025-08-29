@@ -9,15 +9,21 @@ declare(strict_types = 1);
 
 namespace Pyz\Yves\Twig;
 
+use Pyz\Client\ShopConfiguration\ShopConfigurationClientInterface;
+use Twig\Environment;
+use Twig\TwigFunction;
+use Spryker\Service\Container\ContainerInterface;
 use Pyz\Yves\PriceWidget\Plugin\Twig\PriceModeTwigPlugin;
 use Spryker\Service\UtilDateTime\Plugin\Twig\DateTimeFormatterTwigPlugin;
 use Spryker\Shared\Twig\Plugin\FormTwigPlugin;
 use Spryker\Shared\Twig\Plugin\RoutingTwigPlugin;
 use Spryker\Shared\Twig\Plugin\SecurityTwigPlugin;
 use Spryker\Shared\Twig\Plugin\VarDumperTwigPlugin;
+use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface;
 use Spryker\Yves\CmsContentWidget\Plugin\Twig\CmsContentWidgetTwigPlugin;
 use Spryker\Yves\Http\Plugin\Twig\HttpKernelTwigPlugin;
 use Spryker\Yves\Http\Plugin\Twig\RuntimeLoaderTwigPlugin;
+use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Yves\Translator\Plugin\Twig\TranslatorTwigPlugin;
 use Spryker\Yves\Twig\Plugin\FilesystemTwigLoaderPlugin;
 use Spryker\Yves\Twig\Plugin\FormFilesystemTwigLoaderPlugin;
@@ -91,6 +97,36 @@ class TwigDependencyProvider extends SprykerTwigDependencyProvider
             new PriceModeTwigPlugin(),
             new NumberFormatterTwigPlugin(),
             new GeneratePathTwigPlugin(),
+            new class extends AbstractPlugin implements TwigPluginInterface
+            {
+                /**
+                 * @var string
+                 */
+                protected const FUNCTION_NAME = 'getConfig';
+
+                /**
+                 * {@inheritDoc}
+                 *
+                 * @api
+                 *
+                 * @param \Twig\Environment $twig
+                 * @param \Spryker\Service\Container\ContainerInterface $container
+                 *
+                 * @return \Twig\Environment
+                 */
+                public function extend(Environment $twig, ContainerInterface $container): Environment
+                {
+                    $function = new TwigFunction(static::FUNCTION_NAME, function (string $key, mixed $default = null) {
+                        $config = (new \Pyz\Client\ShopConfiguration\ShopConfigurationClient())->getConfig($key);
+
+                        return $config ?? $default;
+                    });
+
+                    $twig->addFunction($function);
+
+                    return $twig;
+                }
+            }
         ];
     }
 

@@ -21,13 +21,13 @@ class ShopConfigurationClient extends AbstractClient implements ShopConfiguratio
     {
         $storeTransfer = $this->getFactory()->getStoreClient()->getCurrentStore();
         $storeName = $storeTransfer->getName();
-        
+
         $keyBuilder = new ShopConfigurationKeyBuilder();
         $key = $keyBuilder->buildStoreLocaleKey($storeName, $locale);
-        
+
         try {
             $data = $this->getFactory()->getStorageClient()->get($key);
-            
+
             if ($data && isset($data['configurations'])) {
                 return $data['configurations'];
             }
@@ -49,7 +49,7 @@ class ShopConfigurationClient extends AbstractClient implements ShopConfiguratio
     public function get(string $configKey, $default = null, ?string $locale = null)
     {
         $configuration = $this->getConfiguration($locale);
-        
+
         return $configuration[$configKey] ?? $default;
     }
 
@@ -62,7 +62,7 @@ class ShopConfigurationClient extends AbstractClient implements ShopConfiguratio
     public function has(string $configKey, ?string $locale = null): bool
     {
         $configuration = $this->getConfiguration($locale);
-        
+
         return array_key_exists($configKey, $configuration);
     }
 
@@ -76,13 +76,13 @@ class ShopConfigurationClient extends AbstractClient implements ShopConfiguratio
     {
         $configuration = $this->getConfiguration($locale);
         $moduleConfig = [];
-        
+
         foreach ($configuration as $key => $value) {
             if (strpos($key, $module . '.') === 0) {
                 $moduleConfig[$key] = $value;
             }
         }
-        
+
         return $moduleConfig;
     }
 
@@ -96,12 +96,24 @@ class ShopConfigurationClient extends AbstractClient implements ShopConfiguratio
     {
         $keyBuilder = new ShopConfigurationKeyBuilder();
         $key = $keyBuilder->buildStoreLocaleKey($store, $locale);
-        
+
         try {
             $data = $this->getFactory()->getStorageClient()->get($key);
             return $data !== null;
         } catch (\Exception $e) {
             return false;
         }
+    }
+
+    public function getConfig(string $key): string|int|array|bool|null
+    {
+        $tenantStorageReader = new Reader\StoreConfigStorageReader(
+            \Spryker\Client\Kernel\Locator::getInstance()->synchronization()->service(),
+            \Spryker\Client\Kernel\Locator::getInstance()->storage()->client(),
+            \Spryker\Client\Kernel\Locator::getInstance()->tenantBehavior()->client(),
+            \Spryker\Client\Kernel\Locator::getInstance()->store()->client(),
+        );
+
+        return $tenantStorageReader->getConfig($key);
     }
 }

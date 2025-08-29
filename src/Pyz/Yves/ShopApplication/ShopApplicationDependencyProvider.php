@@ -182,7 +182,7 @@ use SprykerShop\Yves\ShoppingListWidget\Widget\ShoppingListMenuItemWidget;
 use SprykerShop\Yves\ShoppingListWidget\Widget\ShoppingListNavigationMenuWidget;
 use SprykerShop\Yves\ShoppingListWidget\Widget\ShoppingListSubtotalWidget;
 use SprykerShop\Yves\StoreWidget\Plugin\ShopApplication\StoreApplicationPlugin;
-use SprykerShop\Yves\StoreWidget\Widget\StoreSwitcherWidget;
+use Pyz\Yves\StoreWidget\Widget\StoreSwitcherWidget;
 use SprykerShop\Yves\TabsWidget\Widget\FullTextSearchTabsWidget;
 use SprykerShop\Yves\TraceableEventWidget\Widget\TraceableEventWidget;
 use SprykerShop\Yves\WebProfilerWidget\Plugin\Application\WebProfilerApplicationPlugin;
@@ -393,6 +393,7 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
                 protected function resolveStoreName(ContainerInterface $container): string
                 {
                     $storeName = $this->getStoreRequestUrlParameter();
+                    $storeName = strtoupper($storeName);
                     $storeNames = $this->getFactory()->getStoreStorageClient()->getStoreNames();
                     if ($storeName) {
                         if (in_array($storeName, $storeNames, true)) {
@@ -400,24 +401,33 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
                         }
                     }
 
-                    $storeName = $this->getFactory()->getSessionClient()->get(static::SESSION_STORE);
-                    if ($storeName) {
-                        return $storeName;
-                    }
-
-                    if (defined('APPLICATION_STORE')) {
-                        return APPLICATION_STORE;
-                    }
-
                     $defaultStoreName = current($storeNames);
 
+
                     if (!$defaultStoreName) {
-                        $hostname = $_SERVER['HTTP_HOST'] ?? '';
-                        echo 'No store not found for hostname: ' . $hostname;
+                        echo 'No store not found';
                         die;
                     }
 
+                    header(
+                        sprintf('Location: %s://%s_%s', $_SERVER['REQUEST_SCHEME'], strtolower($defaultStoreName), $_SERVER['HTTP_HOST'])
+                    );
+                    die;
+
                     return $defaultStoreName;
+                }
+
+                /**
+                 * @param string $requestUri
+                 *
+                 * @return string|null
+                 */
+                protected function extractStoreCode(string $requestUri): ?string
+                {
+                    $hostname = $_SERVER['HTTP_HOST'] ?? '';
+                    $pathElements = explode('_', $hostname);
+
+                    return $pathElements[$this->getConfig()->getStoreCodeIndex()] ?? null;
                 }
             },
             new LocaleApplicationPlugin(),
@@ -438,12 +448,17 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
                 {
                     $container->set(static::SERVICE_TENANT_ID, function (ContainerInterface $container) {
                         $hostname = $_SERVER['HTTP_HOST'] ?? '';
+                        $explode = explode('_', $hostname, 2);
+                        $tenantId = $hostname;
+                        if (count($explode) === 2) {
+                            $tenantId = $explode[1];
+                        }
                         /** @var \Pyz\Client\TenantOnboarding\TenantOnboardingClientInterface $tenantOnboardingClient */
                         $tenantOnboardingClient = \Spryker\Client\Kernel\Locator::getInstance()
                             ->tenantOnboarding()
                             ->client();
 
-                        $tenantTransfer = $tenantOnboardingClient->findTenantByID($hostname);
+                        $tenantTransfer = $tenantOnboardingClient->findTenantByID($tenantId);
 
                         if (!$tenantTransfer) {
                             echo 'Setup not found for hostname: ' . $hostname;

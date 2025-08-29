@@ -78,8 +78,21 @@ groups:
                 application: yves
                 endpoints:
                     test.yves.eu.spryker.local:
-                    test1.yves.eu.spryker.local:
-                    test2.yves.eu.spryker.local:
+                        region: EU
+                    default_test.yves.eu.spryker.local:
+                        region: EU
+                    de_test.yves.eu.spryker.local:
+                        region: EU
+                    at_test.yves.eu.spryker.local:
+                        region: EU
+                    spryker.yves.eu.spryker.local:
+                        region: EU
+                    default_spryker.yves.eu.spryker.local:
+                        region: EU
+                    de_spryker.yves.eu.spryker.local:
+                        region: EU
+                    at_spryker.yves.eu.spryker.local:
+                        region: EU
                     yves.eu.spryker.local:
                         region: EU
                         services:
@@ -115,12 +128,6 @@ groups:
                     backend-gateway.eu.spryker.local:
                         region: EU
                         primal: true
-            backend_api_eu:
-                application: zed
-                endpoints:
-                    backend-api.eu.spryker.local:
-                        region: EU
-                        entry-point: BackendApi
 
 services:
     database:

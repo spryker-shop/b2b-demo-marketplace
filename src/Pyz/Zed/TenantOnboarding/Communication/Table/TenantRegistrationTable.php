@@ -50,7 +50,7 @@ class TenantRegistrationTable extends AbstractTable
         $config->setHeader([
             static::COL_ID => 'ID',
             static::COL_COMPANY_NAME => 'Company Name',
-            static::COL_TENANT_NAME => 'Tenant Name',
+            static::COL_TENANT_NAME => 'Tenant Identifier',
             static::COL_EMAIL => 'Email',
             static::COL_STATUS => 'Status',
             static::COL_CREATED_AT => 'Created At',
@@ -95,7 +95,7 @@ class TenantRegistrationTable extends AbstractTable
             $results[] = [
                 static::COL_ID => $queryResult[PyzTenantRegistrationTableMap::COL_ID_TENANT_REGISTRATION],
                 static::COL_TENANT_NAME => $queryResult[PyzTenantRegistrationTableMap::COL_TENANT_NAME],
-                static::COL_EMAIL => $queryResult[PyzTenantRegistrationTableMap::COL_ID_TENANT_REGISTRATION],
+                static::COL_EMAIL => $queryResult[PyzTenantRegistrationTableMap::COL_EMAIL],
                 static::COL_COMPANY_NAME => $queryResult[PyzTenantRegistrationTableMap::COL_COMPANY_NAME],
                 static::COL_STATUS => $this->formatStatusBadge($queryResult[PyzTenantRegistrationTableMap::COL_STATUS]),
                 static::COL_CREATED_AT => $queryResult[PyzTenantRegistrationTableMap::COL_CREATED_AT],

@@ -196,7 +196,9 @@ $config[RouterConstants::IS_STORE_ROUTING_ENABLED]
     = $config[ShopUiConstants::IS_STORE_ROUTING_ENABLED]
     = $config[CustomerPageConstants::IS_STORE_ROUTING_ENABLED]
     = $config[AgentPageConstants::IS_STORE_ROUTING_ENABLED]
-    = $config[LocaleConstants::IS_STORE_ROUTING_ENABLED] = (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
+    = $config[LocaleConstants::IS_STORE_ROUTING_ENABLED] = false;
+
+$config[StoreWidgetConstants::IS_STORE_ROUTING_ENABLED] = (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
 
 // >>> DEV TOOLS
 
@@ -708,7 +710,7 @@ $config[ZedRequestConstants::HOST_ZED_API] = sprintf(
     $zedPort !== $backofficeDefaultPort ? ':' . $zedPort : '',
 );
 $config[ZedRequestConstants::BASE_URL_ZED_API] = sprintf(
-    'https://%s',
+    'http://%s',
     $config[ZedRequestConstants::HOST_ZED_API],
 );
 $config[ZedRequestConstants::BASE_URL_SSL_ZED_API] = sprintf(

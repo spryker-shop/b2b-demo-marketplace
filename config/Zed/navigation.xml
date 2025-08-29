@@ -501,6 +501,14 @@
                 <controller>list</controller>
                 <action>index</action>
             </stores>
+            <shop-configurator>
+                <label>Shop configurator</label>
+                <title>Shop configurator</title>
+                <bundle>shop-configuration</bundle>
+                <controller>configuration</controller>
+                <action>index</action>
+                <visible>1</visible>
+            </shop-configurator>
             <product-measurement-units>
                 <label>Measurement Units</label>
                 <title>Measurement Units</title>
@@ -535,14 +543,6 @@
                 <bundle>glossary</bundle>
                 <uri>/glossary</uri>
             </glossary>
-            <shop-configurator>
-                <label>Shop configurator</label>
-                <title>Shop configurator</title>
-                <bundle>shop-configuration</bundle>
-                <controller>index</controller>
-                <action>index</action>
-                <visible>1</visible>
-            </shop-configurator>
             <tax-rates>
                 <label>Tax Rates</label>
                 <title>Tax Rates</title>

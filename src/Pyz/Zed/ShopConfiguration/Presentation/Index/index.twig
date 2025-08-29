@@ -22,6 +22,39 @@
             transition: transform 0.2s;
             margin-right: 5px;
         }
+        
+        /* Color Picker Styles */
+        .color-picker-container {
+            position: relative;
+        }
+        
+        .color-preview {
+            border: 2px solid #ddd !important;
+            border-radius: 4px !important;
+            cursor: pointer !important;
+            transition: border-color 0.2s, box-shadow 0.2s !important;
+        }
+        
+        .color-preview:hover {
+            border-color: #337ab7 !important;
+            box-shadow: 0 0 0 2px rgba(51, 122, 183, 0.2) !important;
+        }
+        
+        .color-preview:focus {
+            outline: none !important;
+            border-color: #337ab7 !important;
+            box-shadow: 0 0 0 2px rgba(51, 122, 183, 0.3) !important;
+        }
+        
+        /* Ensure color picker inputs are styled properly */
+        input.color-picker {
+            padding-right: 5px !important;
+        }
+        
+        /* Override Pickr positioning if needed */
+        .pcr-app {
+            z-index: 9999 !important;
+        }
     </style>
 
     {% embed '@Gui/Partials/widget.twig' %}
@@ -148,6 +181,10 @@
 
 {% block footer_js %}
     {{ parent() }}
+    <!-- Color Picker CSS and JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
+    
     <script>
         window.shopConfigurationData = {
             defaultConfiguration: {{ defaultConfiguration | json_encode | raw }},
@@ -176,6 +213,7 @@
             this.bindEvents();
             this.loadCurrentValues();
             this.setupAccessibility();
+            this.initializeColorPickers();
             this.showContent();
         }
 
@@ -274,6 +312,227 @@
             if (window.matchMedia && window.matchMedia('(prefers-contrast: high)').matches) {
                 document.body.classList.add('high-contrast');
             }
+        }
+
+        initializeColorPickers() {
+            // Initialize color pickers for all inputs with 'color-picker' class
+            document.querySelectorAll('input.color-picker').forEach((input) => {
+                this.setupColorPicker(input);
+            });
+
+            // Also initialize for dynamically added color picker inputs
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    mutation.addedNodes.forEach((node) => {
+                        if (node.nodeType === Node.ELEMENT_NODE) {
+                            const colorInputs = node.querySelectorAll ? node.querySelectorAll('input.color-picker') : [];
+                            colorInputs.forEach((input) => {
+                                if (!input.dataset.colorPickerInitialized) {
+                                    this.setupColorPicker(input);
+                                }
+                            });
+                        }
+                    });
+                });
+            });
+
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
+        }
+
+        setupColorPicker(input) {
+            if (input.dataset.colorPickerInitialized || !window.Pickr) {
+                return;
+            }
+
+            // Mark as initialized to prevent duplicate initialization
+            input.dataset.colorPickerInitialized = 'true';
+
+            // Create a container for the color picker
+            const pickerContainer = document.createElement('div');
+            pickerContainer.className = 'color-picker-container';
+            pickerContainer.style.position = 'relative';
+            pickerContainer.style.display = 'inline-block';
+            pickerContainer.style.width = '100%';
+
+            // Create the color picker trigger button
+            const colorPreview = document.createElement('div');
+            colorPreview.className = 'color-preview';
+            colorPreview.style.cssText = `
+                width: 40px;
+                height: 38px;
+                border: 2px solid #ddd;
+                border-radius: 4px;
+                display: inline-block;
+                cursor: pointer;
+                vertical-align: top;
+                margin-left: 5px;
+                background-color: ${input.value || '#ffffff'};
+                position: relative;
+                box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
+            `;
+
+            // Add a small icon to indicate it's clickable
+            const icon = document.createElement('span');
+            icon.innerHTML = '🎨';
+            icon.style.cssText = `
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-size: 16px;
+                opacity: 0.7;
+                pointer-events: none;
+            `;
+            colorPreview.appendChild(icon);
+
+            // Wrap the input and add the color preview
+            input.parentNode.insertBefore(pickerContainer, input);
+            pickerContainer.appendChild(input);
+            pickerContainer.appendChild(colorPreview);
+
+            // Adjust input styling
+            input.style.width = 'calc(100% - 50px)';
+            input.style.display = 'inline-block';
+
+            // Initialize Pickr color picker
+            const pickr = Pickr.create({
+                el: colorPreview,
+                theme: 'classic',
+                default: input.value || '#ffffff',
+                
+                swatches: [
+                    '#f44336', '#e91e63', '#9c27b0', '#673ab7',
+                    '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4',
+                    '#009688', '#4caf50', '#8bc34a', '#cddc39',
+                    '#ffeb3b', '#ffc107', '#ff9800', '#ff5722',
+                    '#795548', '#9e9e9e', '#607d8b', '#000000',
+                    '#ffffff'
+                ],
+
+                components: {
+                    preview: true,
+                    opacity: true,
+                    hue: true,
+
+                    interaction: {
+                        hex: true,
+                        rgba: true,
+                        hsla: true,
+                        hsva: true,
+                        cmyk: true,
+                        input: true,
+                        clear: true,
+                        save: true
+                    }
+                },
+
+                strings: {
+                    save: 'Save',
+                    clear: 'Clear',
+                    cancel: 'Cancel'
+                }
+            });
+
+            // Handle color changes
+            pickr.on('change', (color) => {
+                const hexColor = color.toHEXA().toString();
+                input.value = hexColor;
+                colorPreview.style.backgroundColor = hexColor;
+                
+                // Trigger change event for the form field
+                const changeEvent = new Event('change', { bubbles: true });
+                input.dispatchEvent(changeEvent);
+            });
+
+            pickr.on('save', (color) => {
+                if (color) {
+                    const hexColor = color.toHEXA().toString();
+                    input.value = hexColor;
+                    colorPreview.style.backgroundColor = hexColor;
+                    
+                    // Trigger change event for the form field
+                    const changeEvent = new Event('change', { bubbles: true });
+                    input.dispatchEvent(changeEvent);
+                }
+                pickr.hide();
+            });
+
+            pickr.on('clear', () => {
+                input.value = '';
+                colorPreview.style.backgroundColor = '#ffffff';
+                
+                // Trigger change event for the form field
+                const changeEvent = new Event('change', { bubbles: true });
+                input.dispatchEvent(changeEvent);
+                pickr.hide();
+            });
+
+            // Handle manual input changes
+            input.addEventListener('input', (e) => {
+                const value = e.target.value;
+                if (this.isValidColor(value)) {
+                    colorPreview.style.backgroundColor = value;
+                    if (pickr) {
+                        pickr.setColor(value);
+                    }
+                }
+            });
+
+            // Handle input blur to validate color
+            input.addEventListener('blur', (e) => {
+                const value = e.target.value;
+                if (value && !this.isValidColor(value)) {
+                    // Invalid color, reset to previous valid color or default
+                    const currentBgColor = colorPreview.style.backgroundColor;
+                    if (currentBgColor && currentBgColor !== 'rgb(255, 255, 255)') {
+                        input.value = this.rgbToHex(currentBgColor);
+                    } else {
+                        input.value = '#ffffff';
+                        colorPreview.style.backgroundColor = '#ffffff';
+                    }
+                }
+            });
+
+            // Store the pickr instance for cleanup if needed
+            input.colorPickrInstance = pickr;
+        }
+
+        isValidColor(color) {
+            if (!color) return false;
+            
+            // Check hex format
+            if (/^#[0-9A-F]{6}$/i.test(color) || /^#[0-9A-F]{3}$/i.test(color)) {
+                return true;
+            }
+            
+            // Check rgb/rgba format
+            if (/^rgba?\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*(,\s*[\d.]+)?\s*\)$/i.test(color)) {
+                return true;
+            }
+            
+            // Check color names (basic validation)
+            const colorNames = [
+                'red', 'green', 'blue', 'yellow', 'orange', 'purple', 'pink', 'brown',
+                'black', 'white', 'gray', 'grey', 'cyan', 'magenta', 'lime', 'navy',
+                'maroon', 'olive', 'aqua', 'silver', 'fuchsia', 'teal'
+            ];
+            
+            return colorNames.includes(color.toLowerCase());
+        }
+
+        rgbToHex(rgb) {
+            // Convert rgb(r, g, b) or rgba(r, g, b, a) to hex
+            const match = rgb.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
+            if (match) {
+                const r = parseInt(match[1]);
+                const g = parseInt(match[2]);
+                const b = parseInt(match[3]);
+                return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+            }
+            return rgb;
         }
 
         loadCurrentValues() {
@@ -785,6 +1044,15 @@
                 }
             });
             window.location.href = url.toString();
+        }
+
+        // Cleanup method for color pickers
+        destroy() {
+            document.querySelectorAll('input.color-picker').forEach((input) => {
+                if (input.colorPickrInstance) {
+                    input.colorPickrInstance.destroyAndRemove();
+                }
+            });
         }
     }
 
