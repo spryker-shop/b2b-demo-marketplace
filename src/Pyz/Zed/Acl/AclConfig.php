@@ -25,17 +25,21 @@ class AclConfig extends SprykerAclConfig
      */
     public function getInstallerUsers(): array
     {
+        if ((new \Pyz\Zed\TenantBehavior\Business\TenantBehaviorFacade())->getCurrentTenantId()) {
+            return [
+                'richard@spryker.com' => [
+                    'group' => TenantOnboardingConfig::GROUP_TENANT_MANAGER,
+                ],
+                'agent-merchant@spryker.com' => [
+                    'group' => TenantOnboardingConfig::GROUP_TENANT_MANAGER,
+                ],
+            ];
+        }
         return [
             'admin@spryker.com' => [
                 'group' => AclConstants::ROOT_GROUP,
             ],
             'admin_de@spryker.com' => [
-                'group' => AclConstants::ROOT_GROUP,
-            ],
-            'richard@spryker.com' => [
-                'group' => AclConstants::ROOT_GROUP,
-            ],
-            'agent-merchant@spryker.com' => [
                 'group' => AclConstants::ROOT_GROUP,
             ],
         ];
@@ -92,9 +96,7 @@ class AclConfig extends SprykerAclConfig
         $installerRoles = parent::getInstallerRoles();
         $installerRoles[] = [
             'name' => TenantOnboardingConfig::ROLE_TENANT_MANAGER,
-            'description' => 'Role for the Tenant Manager',
             'group' => TenantOnboardingConfig::GROUP_TENANT_MANAGER,
-            'parent' => AclConstants::ROOT_ROLE,
         ];
 
         return $installerRoles;
@@ -115,6 +117,14 @@ class AclConfig extends SprykerAclConfig
     {
         $bundleNames = [
             'user',
+            'acl',
+            'storage-gui',
+            'spryk-gui',
+            'queue',
+            'search-elasticsearch-gui',
+            'development',
+            'maintenance',
+            'permission',
             'tenant-onboarding',
             'tenant-assigner',
         ];
@@ -128,6 +138,13 @@ class AclConfig extends SprykerAclConfig
                 'role' => TenantOnboardingConfig::ROLE_TENANT_MANAGER,
             ];
         }
+        $installerRules[] = [
+                'bundle' => AclConstants::VALIDATOR_WILDCARD,
+                'controller' => AclConstants::VALIDATOR_WILDCARD,
+                'action' => AclConstants::VALIDATOR_WILDCARD,
+                'type' => AclConstants::ALLOW,
+                'role' => TenantOnboardingConfig::ROLE_TENANT_MANAGER,
+        ];
 
         return $installerRules;
     }

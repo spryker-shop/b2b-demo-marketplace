@@ -196,7 +196,9 @@ $config[RouterConstants::IS_STORE_ROUTING_ENABLED]
     = $config[ShopUiConstants::IS_STORE_ROUTING_ENABLED]
     = $config[CustomerPageConstants::IS_STORE_ROUTING_ENABLED]
     = $config[AgentPageConstants::IS_STORE_ROUTING_ENABLED]
-    = $config[LocaleConstants::IS_STORE_ROUTING_ENABLED] = (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
+    = $config[LocaleConstants::IS_STORE_ROUTING_ENABLED] = false;
+
+$config[StoreWidgetConstants::IS_STORE_ROUTING_ENABLED] = (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
 
 // >>> DEV TOOLS
 
@@ -336,6 +338,12 @@ $config[AclConstants::ACL_DEFAULT_RULES] = [
     [
         'bundle' => 'security-gui',
         'controller' => '*',
+        'action' => '*',
+        'type' => 'allow',
+    ],
+    [
+        'bundle' => 'tenant-onboarding',
+        'controller' => 'registration',
         'action' => '*',
         'type' => 'allow',
     ],
@@ -580,13 +588,13 @@ $config[QueueConstants::QUEUE_PROCESS_TRIGGER_INTERVAL_MICROSECONDS] = 1001;
 $config[QueueConstants::QUEUE_ADAPTER_CONFIGURATION] = [
     EventConstants::EVENT_QUEUE => [
         QueueConfig::CONFIG_QUEUE_ADAPTER => RabbitMqAdapter::class,
-        QueueConfig::CONFIG_MAX_WORKER_NUMBER => 5,
+        QueueConfig::CONFIG_MAX_WORKER_NUMBER => 1,
     ],
 ];
 
 $config[QueueConstants::QUEUE_ADAPTER_CONFIGURATION_DEFAULT] = [
     QueueConfig::CONFIG_QUEUE_ADAPTER => RabbitMqAdapter::class,
-    QueueConfig::CONFIG_MAX_WORKER_NUMBER => 5,
+    QueueConfig::CONFIG_MAX_WORKER_NUMBER => 1,
 ];
 
 $config[RabbitMqEnv::RABBITMQ_API_HOST] = getenv('SPRYKER_BROKER_API_HOST');
@@ -727,7 +735,7 @@ $config[ApplicationConstants::BASE_URL_ZED] = sprintf(
 
 $merchantPortalPort = (int)(getenv('SPRYKER_MP_PORT')) ?: 443;
 $config[MerchantPortalConstants::BASE_URL_MP] = sprintf(
-    'http://%s%s',
+    'https://%s%s',
     getenv('SPRYKER_MP_HOST'),
     $merchantPortalPort !== 80 ? ':' . $merchantPortalPort : '',
 );
@@ -1029,6 +1037,9 @@ $config[RedisConstants::REDIS_COMPRESSION_ENABLED] = getenv('SPRYKER_KEY_VALUE_C
 $databaseUrl = getenv('DATABASE_URL');
 if ($databaseUrl) {
     $url = parse_url($databaseUrl);
+    $config[PropelConstants::ZED_DB_ENGINE]
+        = $config[PropelQueryBuilderConstants::ZED_DB_ENGINE]
+        = PropelConfig::DB_ENGINE_PGSQL;
     $config[PropelConstants::ZED_DB_HOST] = $url['host'];
     $config[PropelConstants::ZED_DB_PORT] = $url['port'];
     $config[PropelConstants::ZED_DB_USERNAME] = $url['user'];
@@ -1036,7 +1047,7 @@ if ($databaseUrl) {
     $config[PropelConstants::ZED_DB_DATABASE] = ltrim($url['path'] ?? '', '/');
 
     $config[StorageDatabaseConstants::DB_DEBUG] = false;
-    $config[StorageDatabaseConstants::DB_ENGINE] = StorageDatabaseConfig::DB_ENGINE_MYSQL;
+    $config[StorageDatabaseConstants::DB_ENGINE] = StorageDatabaseConfig::DB_ENGINE_PGSQL;
     $config[StorageDatabaseConstants::DB_HOST] = $url['host'];
     $config[StorageDatabaseConstants::DB_PORT] = $url['port'];
     $config[StorageDatabaseConstants::DB_USERNAME] = $url['user'];
@@ -1092,6 +1103,7 @@ $rmqApiKey = getenv('CLOUDAMQP_CHARCOAL_APIKEY');
 if ($rmqUrl) {
     $url = parse_url($rmqUrl);
     $virtualHost = ltrim($url['path'] ?? '', '/');
+    $config[QueueConstants::QUEUE_WORKER_MAX_THRESHOLD_SECONDS] = 600;
 
     $config[RabbitMqEnv::RABBITMQ_API_HOST] = $url['host'];
     $config[RabbitMqEnv::RABBITMQ_API_PORT] = $url['port'] ?? 5672;
@@ -1113,4 +1125,14 @@ if ($rmqUrl) {
 
     $config[RabbitMqEnv::RABBITMQ_CONNECTIONS] = [];
     $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$defaultKey] = $defaultConnection;
+}
+
+$bonsai = getenv('BONSAI_URL') ?: getenv('BONSAI_SHARED');
+if ($bonsai) {
+    $url = parse_url($bonsai);
+
+    $config[SearchElasticsearchConstants::HOST] = $url['user'] . ':' . $url['pass'] . '@' . $url['host'];
+    $config[SearchElasticsearchConstants::TRANSPORT] = $url['scheme'];
+    $config[SearchElasticsearchConstants::PORT] = $url['port'];
+    $config[SearchElasticsearchConstants::AUTH_HEADER] = '';
 }

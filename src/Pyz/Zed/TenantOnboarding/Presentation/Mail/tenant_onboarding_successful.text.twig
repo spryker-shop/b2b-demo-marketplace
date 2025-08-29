@@ -1,0 +1,80 @@
+{# @var tenantRegistration \Generated\Shared\Transfer\TenantRegistrationTransfer #}
+
+{% set tenantRegistration = mail.tenantRegistration %}
+================================================================================
+🎉 WELCOME TO YOUR B2B MARKETPLACE!
+================================================================================
+
+Hello {{ tenantRegistration.companyName }}!
+
+We're excited to inform you that your B2B marketplace tenant registration has
+been APPROVED and successfully set up. You can now access your dedicated
+marketplace environment.
+
+================================================================================
+📋 YOUR TENANT INFORMATION
+================================================================================
+
+Company Name: {{ tenantRegistration.companyName }}
+Tenant ID:    {{ tenantRegistration.tenantName }}
+Email:        {{ tenantRegistration.email }}
+
+================================================================================
+🔗 ACCESS YOUR MARKETPLACE
+================================================================================
+
+You now have access to the following areas of your marketplace:
+
+STOREFRONT (Customer-facing store):
+🛒 {{ tenantRegistration.tenant.tenantHost }}
+   https://{{ tenantRegistration.tenant.tenantHost }}
+
+BACKOFFICE (Admin panel):
+⚙️ {{ tenantRegistration.backofficeHost }}
+   {{ tenantRegistration.backofficeHost }}
+
+================================================================================
+🔐 BACKOFFICE ADMIN CREDENTIALS
+================================================================================
+
+Use these credentials to log into your backoffice administration panel:
+
+Username: {{ tenantRegistration.email }}
+Password: Use password provided during registration
+
+⚠️ IMPORTANT: Change your password immediately after your first login for security!
+
+================================================================================
+🚀 NEXT STEPS
+================================================================================
+
+1. Access your backoffice using the credentials above
+2. Change your password in the user profile section
+3. Configure your store settings, products, and categories
+4. Customize your storefront appearance and content
+5. Test your marketplace by visiting your storefront URL
+
+================================================================================
+⚠️ IMPORTANT SECURITY NOTES
+================================================================================
+
+• Change your password immediately after your first login for security
+• Keep your credentials secure and do not share them with unauthorized personnel
+• Your tenant-specific storefront is available at your unique subdomain
+• The backoffice admin panel manages all aspects of your marketplace
+
+================================================================================
+📞 NEED HELP?
+================================================================================
+
+If you have any questions or need assistance setting up your marketplace,
+please don't hesitate to contact our support team.
+
+We're here to help you succeed with your B2B marketplace!
+
+================================================================================
+
+This email was sent automatically. Please do not reply to this email.
+© {{ "now"|date("Y") }} Spryker B2B Marketplace. All rights reserved.
+
+================================================================================

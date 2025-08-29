@@ -182,7 +182,7 @@ use SprykerShop\Yves\ShoppingListWidget\Widget\ShoppingListMenuItemWidget;
 use SprykerShop\Yves\ShoppingListWidget\Widget\ShoppingListNavigationMenuWidget;
 use SprykerShop\Yves\ShoppingListWidget\Widget\ShoppingListSubtotalWidget;
 use SprykerShop\Yves\StoreWidget\Plugin\ShopApplication\StoreApplicationPlugin;
-use SprykerShop\Yves\StoreWidget\Widget\StoreSwitcherWidget;
+use Pyz\Yves\StoreWidget\Widget\StoreSwitcherWidget;
 use SprykerShop\Yves\TabsWidget\Widget\FullTextSearchTabsWidget;
 use SprykerShop\Yves\TraceableEventWidget\Widget\TraceableEventWidget;
 use SprykerShop\Yves\WebProfilerWidget\Plugin\Application\WebProfilerApplicationPlugin;
@@ -388,7 +388,48 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             new TwigApplicationPlugin(),
             new EventDispatcherApplicationPlugin(),
             new ShopApplicationApplicationPlugin(),
-            new StoreApplicationPlugin(),
+            new class extends \SprykerShop\Yves\StoreWidget\Plugin\ShopApplication\StoreApplicationPlugin
+            {
+                protected function resolveStoreName(ContainerInterface $container): string
+                {
+                    $storeName = $this->getStoreRequestUrlParameter();
+                    $storeName = strtoupper($storeName);
+                    $storeNames = $this->getFactory()->getStoreStorageClient()->getStoreNames();
+                    if ($storeName) {
+                        if (in_array($storeName, $storeNames, true)) {
+                            return $storeName;
+                        }
+                    }
+
+                    $defaultStoreName = current($storeNames);
+
+
+                    if (!$defaultStoreName) {
+                        echo 'No store not found';
+                        die;
+                    }
+
+                    header(
+                        sprintf('Location: %s://%s_%s', $_SERVER['REQUEST_SCHEME'], strtolower($defaultStoreName), $_SERVER['HTTP_HOST'])
+                    );
+                    die;
+
+                    return $defaultStoreName;
+                }
+
+                /**
+                 * @param string $requestUri
+                 *
+                 * @return string|null
+                 */
+                protected function extractStoreCode(string $requestUri): ?string
+                {
+                    $hostname = $_SERVER['HTTP_HOST'] ?? '';
+                    $pathElements = explode('_', $hostname);
+
+                    return $pathElements[$this->getConfig()->getStoreCodeIndex()] ?? null;
+                }
+            },
             new LocaleApplicationPlugin(),
             new TranslatorApplicationPlugin(),
             new RouterApplicationPlugin(),
@@ -403,29 +444,28 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             {
                 public const SERVICE_TENANT_ID = 'SERVICE_TENANT_ID';
 
-                protected const SERVICE_REQUEST_STACK = 'request_stack';
-
                 public function provide(ContainerInterface $container): ContainerInterface
                 {
                     $container->set(static::SERVICE_TENANT_ID, function (ContainerInterface $container) {
                         $hostname = $_SERVER['HTTP_HOST'] ?? '';
-                        // This is a placeholder for tenant resolution logic.
-                        // In a real application, you would fetch the tenant ID based on the hostname.
-                        // For example, you might query a database or use a service to get the tenant ID
-                        // associated with the hostname.
-                        $tenantsList = [
-                            'yves.eu.spryker.local' => 'tenant_de',
-                            'yves_1.eu.spryker.local' => 'tenant_us',
-                            'yves_2.eu.spryker.local' => 'tenant_uk',
-                            'yves_3.eu.spryker.local' => 'tenant_fr',
-                            'yves_4.eu.spryker.local' => 'tenant_es',
-                        ];
+                        $explode = explode('_', $hostname, 2);
+                        $tenantId = $hostname;
+                        if (count($explode) === 2) {
+                            $tenantId = $explode[1];
+                        }
+                        /** @var \Pyz\Client\TenantOnboarding\TenantOnboardingClientInterface $tenantOnboardingClient */
+                        $tenantOnboardingClient = \Spryker\Client\Kernel\Locator::getInstance()
+                            ->tenantOnboarding()
+                            ->client();
 
-                        if (!isset($tenantsList[$hostname])) {
-                            throw new \Exception('Tenant not found for hostname: ' . $hostname);
+                        $tenantTransfer = $tenantOnboardingClient->findTenantByID($tenantId);
+
+                        if (!$tenantTransfer) {
+                            echo 'Setup not found for hostname: ' . $hostname;
+                            die;
                         }
 
-                        return $tenantsList[$hostname];
+                        return $tenantTransfer->getIdentifierOrFail();
                     });
 
                     return $container;

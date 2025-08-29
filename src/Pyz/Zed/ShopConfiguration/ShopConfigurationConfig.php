@@ -30,8 +30,8 @@ class ShopConfigurationConfig extends AbstractBundleConfig
     public function getDiscoveryPaths(): array
     {
         return [
-            'src/{namespace}/Shared/{module}/ShopConfiguration/',
-            'src/{namespace}/Zed/{module}/Communication/Resources/shop_configuration/',
+            '{namespace}/Shared/{module}/ShopConfiguration/',
+            '{namespace}/Zed/{module}/Communication/Resources/shop_configuration/',
         ];
     }
 

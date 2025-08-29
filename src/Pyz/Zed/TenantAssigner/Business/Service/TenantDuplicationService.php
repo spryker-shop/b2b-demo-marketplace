@@ -41,7 +41,7 @@ class TenantDuplicationService implements TenantDuplicationServiceInterface
             $response->setIsSuccess(false);
             $response->setMessage('Validation failed');
             $response->setErrorMessages($validationErrors);
-            
+
             return $response;
         }
 
@@ -92,9 +92,7 @@ class TenantDuplicationService implements TenantDuplicationServiceInterface
             $errors[] = 'ID column name is required';
         }
 
-        // Validate tenant exists in configuration
-        $availableTenants = $this->config->getAvailableTenants();
-        if ($tenantDuplicationTransfer->getTargetTenantId() && !array_key_exists($tenantDuplicationTransfer->getTargetTenantId(), $availableTenants)) {
+        if (!(new \Pyz\Zed\TenantOnboarding\Business\TenantOnboardingFacade())->findTenantByIdentifier($tenantDuplicationTransfer->getTargetTenantId())) {
             $errors[] = 'Invalid target tenant ID';
         }
 

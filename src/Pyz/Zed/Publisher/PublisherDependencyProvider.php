@@ -252,6 +252,7 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
             new AssetPublisherTriggerPlugin(),
             new PriceProductOfferPublisherTriggerPlugin(),
             new CustomerAccessPublisherTriggerPlugin(),
+            new \Spryker\Zed\StoreStorage\Communication\Plugin\Publisher\StorePublisherTriggerPlugin(),
         ];
     }
 

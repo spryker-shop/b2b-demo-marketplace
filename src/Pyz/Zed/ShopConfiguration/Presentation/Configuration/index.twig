@@ -1,0 +1,253 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Edit Store Configuration' %}
+
+{% block head_title widget_title | trans %}
+{% block section_title widget_title | trans %}
+
+{% block action %}
+    <form action="?" method="get" class="form-inline">
+        <div class="form-group">
+            <label>Select Store:
+                <select name="storeName" class="form-control" onchange="this.form.submit();">
+                {% for storeTransfer in stores %}
+                    {# @var \Generated\Shared\Transfer\StoreTransfer storeTransfer #}
+                    <option value="{{ storeTransfer.name }}" {% if storeTransfer.name == currentStore %}selected{% endif %}>
+                        {{ storeTransfer.name }}
+                        {% if currentTenant is null %}
+                        ({{ storeTransfer.idTenant }})
+                        {% endif %}
+                    </option>
+                {% endfor %}
+                </select>
+            </label>
+        </div>
+    </form>
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_content %}
+
+            {{ form_start(form, { attr: { enctype: 'multipart/form-data' } }) }}
+
+            {% embed '@Gui/Partials/ibox.twig' with {'collapsed': false } %}
+                {% block title %}
+                    Main
+                {% endblock %}
+                {% block content %}
+                    <div class="form-group">
+                        {{ form_label(form.shop_name) }}
+                        {{ form_widget(form.shop_name) }}
+                        {{ form_errors(form.shop_name) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.logo) }}<br>
+                        {% if form.vars.value.logo | default %}
+                            {{ '<span style="color: red;">{{yves}}</span>' }}{{ form.vars.value.logo}}
+                        {% else %}
+                            {{ 'Nothing is uploaded' }}
+                        {% endif %}
+                        {{ form_widget(form.logo) }}
+                        {{ form_errors(form.logo) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.favicon) }}<br>
+                        {% if form.vars.value.favicon | default %}
+                            {{ '<span style="color: red;">{{yves}}</span>' }}{{ form.vars.value.favicon}}
+                        {% else %}
+                            {{ 'Nothing is uploaded' }}
+                        {% endif %}
+                        {{ form_widget(form.favicon) }}
+                        {{ form_errors(form.favicon) }}
+                    </div>
+                {% endblock %}
+            {% endembed %}
+
+            {% embed '@Gui/Partials/ibox.twig' with {'collapsed': false } %}
+                {% block title %}
+                    Seo
+                {% endblock %}
+                {% block content %}
+                    <div class="form-group">
+                        {{ form_label(form.default_title) }}
+                        {{ form_widget(form.default_title) }}
+                        {{ form_errors(form.default_title) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.default_description) }}
+                        {{ form_widget(form.default_description) }}
+                        {{ form_errors(form.default_description) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.default_keywords) }}
+                        {{ form_widget(form.default_keywords) }}
+                        {{ form_errors(form.default_keywords) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.google_analytics) }}
+                        {{ form_widget(form.google_analytics) }}
+                        {{ form_errors(form.google_analytics) }}
+                    </div>
+                {% endblock %}
+            {% endembed %}
+
+            {% embed '@Gui/Partials/ibox.twig' with {'collapsed': false } %}
+                {% block title %}
+                    Color Settings
+                {% endblock %}
+                {% block content %}
+                    <div class="form-group">
+                        {{ form_label(form.primary_color) }}
+                        {{ form_widget(form.primary_color) }}
+                        {{ form_errors(form.primary_color) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.secondary_color) }}
+                        {{ form_widget(form.secondary_color) }}
+                        {{ form_errors(form.secondary_color) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.button_hover_color) }}
+                        {{ form_widget(form.button_hover_color) }}
+                        {{ form_errors(form.button_hover_color) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.header_background) }}
+                        {{ form_widget(form.header_background) }}
+                        {{ form_errors(form.header_background) }}
+                    </div>
+                {% endblock %}
+            {% endembed %}
+
+            <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
+            {{ form_end(form) }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+
+    <style>
+        .color-picker-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 5px;
+        }
+
+        .color-picker-wrapper input[type="text"] {
+            flex: 1;
+        }
+
+        .color-picker-wrapper input[type="color"] {
+            width: 40px;
+            height: 38px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .color-picker-wrapper input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 0;
+            border-radius: 4px;
+        }
+
+        .color-picker-wrapper input[type="color"]::-webkit-color-swatch {
+            border: none;
+            border-radius: 4px;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize color pickers for all inputs with 'color-picker' class
+            initializeColorPickers();
+
+            // Watch for dynamically added elements
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    mutation.addedNodes.forEach(function(node) {
+                        if (node.nodeType === Node.ELEMENT_NODE) {
+                            const colorInputs = node.querySelectorAll ? node.querySelectorAll('input.color-picker') : [];
+                            colorInputs.forEach(function(input) {
+                                if (!input.dataset.colorPickerInitialized) {
+                                    setupColorPicker(input);
+                                }
+                            });
+                        }
+                    });
+                });
+            });
+
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
+        });
+
+        function initializeColorPickers() {
+            document.querySelectorAll('input.color-picker').forEach(function(input) {
+                setupColorPicker(input);
+            });
+        }
+
+        function setupColorPicker(input) {
+            if (input.dataset.colorPickerInitialized) {
+                return;
+            }
+
+            input.dataset.colorPickerInitialized = 'true';
+
+            // Create a wrapper div for the color picker
+            const wrapper = document.createElement('div');
+            wrapper.className = 'color-picker-wrapper';
+
+            // Create a simple color input as trigger
+            const colorTrigger = document.createElement('input');
+            colorTrigger.type = 'color';
+            colorTrigger.value = input.value || '#ffffff';
+
+            // Insert wrapper before the input
+            input.parentNode.insertBefore(wrapper, input);
+
+            // Move input into wrapper and add color trigger
+            wrapper.appendChild(input);
+            wrapper.appendChild(colorTrigger);
+
+            // Sync color picker with input
+            colorTrigger.addEventListener('change', function(e) {
+                input.value = e.target.value;
+                input.dispatchEvent(new Event('change', { bubbles: true }));
+            });
+
+            // Sync input with color picker
+            input.addEventListener('input', function(e) {
+                if (isValidColor(e.target.value)) {
+                    colorTrigger.value = e.target.value;
+                }
+            });
+
+            // Handle blur to validate color
+            input.addEventListener('blur', function(e) {
+                const value = e.target.value;
+                if (value && !isValidColor(value)) {
+                    // Reset to current color picker value
+                    input.value = colorTrigger.value;
+                }
+            });
+        }
+
+        function isValidColor(color) {
+            if (!color) return false;
+            return /^#[0-9A-F]{6}$/i.test(color) ||
+                   /^#[0-9A-F]{3}$/i.test(color) ||
+                   /^rgba?\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*(,\s*[\d.]+)?\s*\)$/i.test(color);
+        }
+    </script>
+{% endblock %}

@@ -14,17 +14,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class TenantAssignerConfig extends AbstractBundleConfig
 {
     /**
-     * @var array<string>
-     */
-    public const AVAILABLE_TENANTS = [
-        'tenant_us' => 'United States',
-        'tenant_de' => 'Germany',
-        'tenant_uk' => 'United Kingdom',
-        'tenant_fr' => 'France',
-        'tenant_es' => 'Spain',
-    ];
-
-    /**
      * @var int
      */
     public const DEFAULT_PAGE_SIZE = 20;
@@ -38,14 +27,6 @@ class TenantAssignerConfig extends AbstractBundleConfig
      * @var string
      */
     public const TENANT_COLUMN_NAME = 'id_tenant';
-
-    /**
-     * @return array<string, string>
-     */
-    public function getAvailableTenants(): array
-    {
-        return static::AVAILABLE_TENANTS;
-    }
 
     /**
      * @return int

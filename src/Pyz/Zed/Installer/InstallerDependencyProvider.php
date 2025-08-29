@@ -40,29 +40,44 @@ class InstallerDependencyProvider extends SprykerInstallerDependencyProvider
      */
     public function getInstallerPlugins(): array
     {
-        return [
+        $plugins = [
             new PriceInstallerPlugin(),
             new LocaleInstallerPlugin(),
             new CountryInstallerPlugin(),
             new UserInstallerPlugin(),
             new AclInstallerPlugin(),
             new NewsletterInstallerPlugin(),
-            new GlossaryInstallerPlugin(),
-            new CustomerAccessInstallerPlugin(),
             new TranslatorInstallerPlugin(),
-            new ShoppingListPermissionsInstallerPlugin(),
-            new SharedCartPermissionInstallerPlugin(), #SharedCartFeature
-            new ProductMeasurementUnitInstallerPlugin(),
-            new ProductAlternativeProductLabelConnectorInstallerPlugin(), #ProductAlternativeFeature
-            new ProductDiscontinuedProductLabelConnectorInstallerPlugin(), #ProductDiscontinuedFeature
-            new CompanyUserInvitationStatusInstallerPlugin(), #BulkImportCompanyUserInvitationsFeature
             new ProductPackagingUnitTypeInstallerPlugin(),
-            new SalesOrderThresholdTypeInstallerPlugin(), #SalesOrderThresholdFeature
-            new OauthClientInstallerPlugin(),
-            new OauthCustomerScopeInstallerPlugin(),
-            new OauthCompanyUserInstallerPlugin(),
-            new AgentOauthScopeInstallerPlugin(),
-            new DynamicEntityInstallerPlugin(),
         ];
+
+        if ((new \Pyz\Zed\TenantBehavior\Business\TenantBehaviorFacade())->getCurrentTenantId()) {
+            $plugins = [
+                new PriceInstallerPlugin(),
+                new LocaleInstallerPlugin(),
+                new CountryInstallerPlugin(),
+                new UserInstallerPlugin(),
+                new AclInstallerPlugin(),
+                new NewsletterInstallerPlugin(),
+                new GlossaryInstallerPlugin(),
+                new CustomerAccessInstallerPlugin(),
+                new TranslatorInstallerPlugin(),
+                new ShoppingListPermissionsInstallerPlugin(),
+                new SharedCartPermissionInstallerPlugin(), #SharedCartFeature
+                new ProductMeasurementUnitInstallerPlugin(),
+                new ProductAlternativeProductLabelConnectorInstallerPlugin(), #ProductAlternativeFeature
+                new ProductDiscontinuedProductLabelConnectorInstallerPlugin(), #ProductDiscontinuedFeature
+                new CompanyUserInvitationStatusInstallerPlugin(), #BulkImportCompanyUserInvitationsFeature
+                new ProductPackagingUnitTypeInstallerPlugin(),
+                new SalesOrderThresholdTypeInstallerPlugin(), #SalesOrderThresholdFeature
+                new OauthClientInstallerPlugin(),
+                new OauthCustomerScopeInstallerPlugin(),
+                new OauthCompanyUserInstallerPlugin(),
+                new AgentOauthScopeInstallerPlugin(),
+                new DynamicEntityInstallerPlugin(),
+            ];
+        }
+
+        return $plugins;
     }
 }
