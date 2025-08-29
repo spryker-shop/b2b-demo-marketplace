@@ -130,6 +130,7 @@ class RabbitMqConfig extends SprykerRabbitMqConfig
             ProductStorageConfig::PUBLISH_PRODUCT_ABSTRACT,
             ProductStorageConfig::PUBLISH_PRODUCT_CONCRETE,
             CustomerStorageConfig::PUBLISH_CUSTOMER_INVALIDATED,
+            'publish.product_offer',
         ];
     }
 

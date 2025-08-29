@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Comment\Persistence" package="src.Orm.Zed.Comment.Persistence">
+
+    <table name="spy_comment" idMethod="native">
+        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+    </table>
+
+    <table name="spy_comment_tag" idMethod="native">
+        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+    </table>
+
+    <table name="spy_comment_thread" idMethod="native">
+        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+    </table>
+
+    <table name="spy_comment_to_comment_tag" idMethod="native">
+        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+    </table>
+
+</database>

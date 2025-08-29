@@ -58,6 +58,7 @@ use Spryker\Shared\CartsRestApi\CartsRestApiConstants;
 use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Shared\CmsGui\CmsGuiConstants;
 use Spryker\Shared\Customer\CustomerConstants;
+use Spryker\Shared\StorageDatabase\StorageDatabaseConfig;
 use Spryker\Shared\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConstants;
 use Spryker\Shared\DummyMarketplacePayment\DummyMarketplacePaymentConfig;
 use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
@@ -121,6 +122,7 @@ use Spryker\Shared\SessionRedis\SessionRedisConfig;
 use Spryker\Shared\SessionRedis\SessionRedisConstants;
 use Spryker\Shared\Sitemap\SitemapConstants;
 use Spryker\Shared\Storage\StorageConstants;
+use Spryker\Shared\StorageDatabase\StorageDatabaseConstants;
 use Spryker\Shared\StorageRedis\StorageRedisConstants;
 use Spryker\Shared\SymfonyMailer\SymfonyMailerConstants;
 use Spryker\Shared\Synchronization\SynchronizationConstants;
@@ -420,7 +422,7 @@ $config[SearchElasticsearchConstants::INDEX_PREFIX] = getenv('SPRYKER_SEARCH_IND
 
 $config[SearchElasticsearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE] = 3;
 
-// >>> STORAGE
+// >>> Redis STORAGE
 
 $keyValueRegionNamespaces = json_decode(getenv('SPRYKER_KEY_VALUE_REGION_NAMESPACES') ?: '[]', true);
 $config[StorageConstants::STORAGE_KV_SOURCE] = getenv('SPRYKER_KEY_VALUE_STORE_ENGINE') ? strtolower(getenv('SPRYKER_KEY_VALUE_STORE_ENGINE')) : 'redis';
@@ -432,6 +434,16 @@ $config[StorageRedisConstants::STORAGE_REDIS_PASSWORD] = getenv('SPRYKER_KEY_VAL
 $config[StorageRedisConstants::STORAGE_REDIS_DATABASE] = getenv('SPRYKER_KEY_VALUE_STORE_NAMESPACE') ?: $keyValueRegionNamespaces[APPLICATION_CODE_BUCKET] ?? 1;
 $config[StorageRedisConstants::STORAGE_REDIS_DATA_SOURCE_NAMES] = json_decode(getenv('SPRYKER_KEY_VALUE_STORE_SOURCE_NAMES') ?: '[]', true) ?: [];
 $config[StorageRedisConstants::STORAGE_REDIS_CONNECTION_OPTIONS] = json_decode(getenv('SPRYKER_KEY_VALUE_STORE_CONNECTION_OPTIONS') ?: '[]', true) ?: [];
+
+// ---------- Database storage
+$config[StorageConstants::STORAGE_KV_SOURCE] = 'database';
+$config[StorageDatabaseConstants::DB_DEBUG] = false;
+$config[StorageDatabaseConstants::DB_ENGINE] = strtolower(getenv('SPRYKER_DB_ENGINE') ?: '') ?: PropelConfig::DB_ENGINE_MYSQL;
+$config[StorageDatabaseConstants::DB_HOST] = getenv('SPRYKER_DB_HOST');
+$config[StorageDatabaseConstants::DB_PORT] = getenv('SPRYKER_DB_PORT');
+$config[StorageDatabaseConstants::DB_USERNAME] = getenv('SPRYKER_DB_USERNAME');
+$config[StorageDatabaseConstants::DB_PASSWORD] = getenv('SPRYKER_DB_PASSWORD');
+$config[StorageDatabaseConstants::DB_DATABASE] = getenv('SPRYKER_DB_DATABASE');
 
 // >>> SESSION
 
@@ -574,7 +586,7 @@ $config[QueueConstants::QUEUE_ADAPTER_CONFIGURATION] = [
 
 $config[QueueConstants::QUEUE_ADAPTER_CONFIGURATION_DEFAULT] = [
     QueueConfig::CONFIG_QUEUE_ADAPTER => RabbitMqAdapter::class,
-    QueueConfig::CONFIG_MAX_WORKER_NUMBER => 1,
+    QueueConfig::CONFIG_MAX_WORKER_NUMBER => 5,
 ];
 
 $config[RabbitMqEnv::RABBITMQ_API_HOST] = getenv('SPRYKER_BROKER_API_HOST');
@@ -1022,6 +1034,14 @@ if ($databaseUrl) {
     $config[PropelConstants::ZED_DB_USERNAME] = $url['user'];
     $config[PropelConstants::ZED_DB_PASSWORD] = $url['pass'];
     $config[PropelConstants::ZED_DB_DATABASE] = ltrim($url['path'] ?? '', '/');
+
+    $config[StorageDatabaseConstants::DB_DEBUG] = false;
+    $config[StorageDatabaseConstants::DB_ENGINE] = StorageDatabaseConfig::DB_ENGINE_MYSQL;
+    $config[StorageDatabaseConstants::DB_HOST] = $url['host'];
+    $config[StorageDatabaseConstants::DB_PORT] = $url['port'];
+    $config[StorageDatabaseConstants::DB_USERNAME] = $url['user'];
+    $config[StorageDatabaseConstants::DB_PASSWORD] = $url['pass'];
+    $config[StorageDatabaseConstants::DB_DATABASE] = ltrim($url['path'] ?? '', '/');
 }
 
 // Heroku Redis configuration
@@ -1050,8 +1070,6 @@ if ($redisUrl) {
     $config[SessionRedisConstants::YVES_SESSION_REDIS_DATABASE] = false;
     $config[SessionRedisConstants::YVES_SESSION_REDIS_CLIENT_OPTIONS] = $options;
 
-
-    $config[StorageConstants::STORAGE_KV_SOURCE] = 'redis';
     $config[StorageRedisConstants::STORAGE_REDIS_PERSISTENT_CONNECTION] = true;
     $config[StorageRedisConstants::STORAGE_REDIS_SCHEME] = $url['scheme'];
     $config[StorageRedisConstants::STORAGE_REDIS_HOST] = $url['host'];

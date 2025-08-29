@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Client\ZedRequest;
 
+use Pyz\Client\TenantBehavior\Plugin\ZedRequest\TenantMetaDataProviderPlugin;
 use Spryker\Client\Currency\Plugin\ZedRequestMetaDataProviderPlugin;
 use Spryker\Client\Locale\Plugin\ZedRequest\LocaleMetaDataProviderPlugin;
 use Spryker\Client\Store\Plugin\ZedRequest\StoreMetaDataProviderPlugin;
@@ -28,6 +29,7 @@ class ZedRequestDependencyProvider extends SprykerZedRequestDependencyProvider
             'currency' => new ZedRequestMetaDataProviderPlugin(),
             'store' => new StoreMetaDataProviderPlugin(),
             'locale' => new LocaleMetaDataProviderPlugin(),
+            'tenant' => new TenantMetaDataProviderPlugin(),
         ];
     }
 

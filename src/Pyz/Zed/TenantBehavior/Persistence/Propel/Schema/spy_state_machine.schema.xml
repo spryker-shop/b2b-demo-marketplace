@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\StateMachine\Persistence" package="src.Orm.Zed.StateMachine.Persistence">
+
+    <table name="spy_state_machine_event_timeout" idMethod="native">
+        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+    </table>
+
+    <table name="spy_state_machine_item_state" idMethod="native">
+        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+    </table>
+
+    <table name="spy_state_machine_item_state_history" idMethod="native">
+        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+    </table>
+
+    <table name="spy_state_machine_lock" idMethod="native">
+        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+    </table>
+
+    <table name="spy_state_machine_process" idMethod="native">
+        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+    </table>
+
+    <table name="spy_state_machine_transition_log" idMethod="native">
+        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+    </table>
+
+</database>

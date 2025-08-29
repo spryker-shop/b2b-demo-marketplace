@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\ProductAttribute\Persistence" package="src.Orm.Zed.ProductAttribute.Persistence">
+
+    <table name="spy_product_management_attribute" idMethod="native">
+        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+    </table>
+
+    <table name="spy_product_management_attribute_value" idMethod="native">
+        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+    </table>
+
+    <table name="spy_product_management_attribute_value_translation" idMethod="native">
+        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+    </table>
+
+</database>

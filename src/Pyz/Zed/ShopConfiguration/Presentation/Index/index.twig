@@ -1,0 +1,716 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Shop Configuration' | trans %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+            <div id="shop-configuration-app">
+                <!-- Vue.js app will be mounted here -->
+            </div>
+
+            <div class="shop-configuration-container" style="display: none;" data-configuration-app>
+                <!-- Store and Locale Selection -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="store-selector">{{ 'Store' | trans }}</label>
+                            <select id="store-selector" class="form-control">
+                                {% for store in availableStores %}
+                                    <option value="{{ store }}" {% if store == currentStore %}selected{% endif %}>
+                                        {{ store }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="locale-selector">{{ 'Locale' | trans }}</label>
+                            <select id="locale-selector" class="form-control">
+                                <option value="">{{ 'All Locales' | trans }}</option>
+                                {% for locale in availableLocales %}
+                                    <option value="{{ locale }}" {% if locale == currentLocale %}selected{% endif %}>
+                                        {{ locale }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="search-input">{{ 'Search Configuration' | trans }}</label>
+                            <input type="text" id="search-input" class="form-control"
+                                   placeholder="{{ 'Type to search options...' | trans }}"
+                                   aria-label="{{ 'Search configuration options' | trans }}">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="btn-toolbar" role="toolbar" aria-label="{{ 'Configuration actions' | trans }}">
+                            <div class="btn-group mr-2" role="group">
+                                <button type="button" id="save-btn" class="btn btn-primary">
+                                    <i class="fa fa-save"></i> {{ 'Save Configuration' | trans }}
+                                </button>
+                                <button type="button" id="publish-btn" class="btn btn-success">
+                                    <i class="fa fa-cloud-upload"></i> {{ 'Publish to Storage' | trans }}
+                                </button>
+                            </div>
+                            <div class="btn-group" role="group">
+                                <button type="button" id="rebuild-btn" class="btn btn-warning">
+                                    <i class="fa fa-refresh"></i> {{ 'Rebuild from Files' | trans }}
+                                </button>
+                                <button type="button" id="reset-section-btn" class="btn btn-secondary" disabled>
+                                    <i class="fa fa-undo"></i> {{ 'Reset Section' | trans }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+
+                <!-- Configuration Sections -->
+                <div id="configuration-sections">
+                    {% for section in effectiveConfiguration.sections %}
+                        <div class="configuration-section" data-section="{{ section.key }}">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="button" data-toggle="collapse"
+                                     data-target="#section-{{ section.key }}" aria-expanded="true"
+                                     aria-controls="section-{{ section.key }}">
+                                    <h4 class="panel-title">
+                                        <i class="fa fa-chevron-down"></i>
+                                        {{ section.label | trans }}
+                                        {% if section.description %}
+                                            <small class="text-muted">{{ section.description | trans }}</small>
+                                        {% endif %}
+                                    </h4>
+                                </div>
+                                <div id="section-{{ section.key }}" class="panel-collapse collapse in"
+                                     role="tabpanel" aria-labelledby="heading-{{ section.key }}">
+                                    <div class="panel-body">
+                                        {% for option in section.options %}
+                                            {% include '@ShopConfiguration/Index/_option-field.twig' with {
+                                                option: option,
+                                                sectionKey: section.key
+                                            } %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Loading Indicator -->
+            <div id="loading-indicator" style="display: none;">
+                <div class="text-center">
+                    <i class="fa fa-spinner fa-spin fa-2x"></i>
+                    <p>{{ 'Loading...' | trans }}</p>
+                </div>
+            </div>
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script>
+        window.shopConfigurationData = {
+            defaultConfiguration: {{ defaultConfiguration | json_encode | raw }},
+            effectiveConfiguration: {{ effectiveConfiguration | json_encode | raw }},
+            currentStore: '{{ currentStore }}',
+            currentLocale: '{{ currentLocale }}',
+            availableStores: {{ availableStores | json_encode | raw }},
+            availableLocales: {{ availableLocales | json_encode | raw }},
+            saveUrl: '{{ url('/shop-configuration/index/save') }}',
+            publishUrl: '{{ url('/shop-configuration/index/publish') }}',
+            rebuildUrl: '{{ url('/shop-configuration/index/rebuild') }}'
+        };
+    </script>
+    <script>
+        class ShopConfigurationManager {
+        constructor(data) {
+            this.data = data;
+            this.currentValues = {};
+            this.searchQuery = '';
+            this.currentSection = null;
+
+            this.init();
+        }
+
+        init() {
+            this.bindEvents();
+            this.loadCurrentValues();
+            this.setupAccessibility();
+            this.showContent();
+        }
+
+        bindEvents() {
+            // Store/Locale selection
+            document.getElementById('store-selector')?.addEventListener('change', (e) => {
+                this.handleStoreChange(e.target.value);
+            });
+
+            document.getElementById('locale-selector')?.addEventListener('change', (e) => {
+                this.handleLocaleChange(e.target.value);
+            });
+
+            // Search functionality
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    this.handleSearch(e.target.value);
+                });
+
+                // Keyboard navigation for search
+                searchInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        e.target.value = '';
+                        this.handleSearch('');
+                    }
+                });
+            }
+
+            // Action buttons
+            document.getElementById('save-btn')?.addEventListener('click', () => {
+                this.saveConfiguration();
+            });
+
+            document.getElementById('publish-btn')?.addEventListener('click', () => {
+                this.publishConfiguration();
+            });
+
+            document.getElementById('rebuild-btn')?.addEventListener('click', () => {
+                this.rebuildConfiguration();
+            });
+
+            document.getElementById('reset-section-btn')?.addEventListener('click', () => {
+                this.resetSection();
+            });
+
+            // Form field changes
+            document.addEventListener('change', (e) => {
+                if (e.target.closest('.configuration-option')) {
+                    this.handleFieldChange(e.target);
+                }
+            });
+
+            // Section toggle
+            document.addEventListener('click', (e) => {
+                if (e.target.closest('[data-toggle="collapse"]')) {
+                    this.handleSectionToggle(e.target.closest('[data-toggle="collapse"]'));
+                }
+            });
+
+            // JSON validation
+            document.addEventListener('input', (e) => {
+                if (e.target.classList.contains('json-editor')) {
+                    this.validateJsonField(e.target);
+                }
+            });
+        }
+
+        setupAccessibility() {
+            // Add ARIA labels and keyboard navigation
+            document.querySelectorAll('.panel-heading[role="button"]').forEach(header => {
+                header.setAttribute('tabindex', '0');
+                header.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        header.click();
+                    }
+                });
+            });
+
+            // Add focus management for form fields
+            document.querySelectorAll('input, select, textarea').forEach(field => {
+                field.addEventListener('focus', () => {
+                    const option = field.closest('.configuration-option');
+                    if (option) {
+                        this.currentSection = option.dataset.section;
+                        this.updateResetSectionButton();
+                    }
+                });
+            });
+
+            // High contrast support
+            if (window.matchMedia && window.matchMedia('(prefers-contrast: high)').matches) {
+                document.body.classList.add('high-contrast');
+            }
+        }
+
+        loadCurrentValues() {
+            if (!this.data.effectiveConfiguration?.sections) return;
+
+            this.data.effectiveConfiguration.sections.forEach(section => {
+                section.options?.forEach(option => {
+                    const key = `${option.module}.${option.key}`;
+                    this.currentValues[key] = option.currentValue || option.default;
+                });
+            });
+        }
+
+        handleStoreChange(store) {
+            this.reloadPage({ store });
+        }
+
+        handleLocaleChange(locale) {
+            this.reloadPage({ locale });
+        }
+
+        handleSearch(query) {
+            this.searchQuery = query.toLowerCase();
+            this.filterSections();
+
+            // Announce search results to screen readers
+            const visibleSections = document.querySelectorAll('.configuration-section:not([style*="display: none"])');
+            this.announceToScreenReader(
+                `${visibleSections.length} sections found for "${query}"`
+            );
+        }
+
+        filterSections() {
+            const sections = document.querySelectorAll('.configuration-section');
+
+            sections.forEach(section => {
+                const sectionElement = section;
+                const options = section.querySelectorAll('.configuration-option');
+                let hasVisibleOptions = false;
+
+                if (!this.searchQuery) {
+                    // Show all if no search query
+                    sectionElement.style.display = '';
+                    options.forEach(option => {
+                        option.style.display = '';
+                    });
+                    return;
+                }
+
+                options.forEach(option => {
+                    const label = option.querySelector('label')?.textContent?.toLowerCase() || '';
+                    const description = option.querySelector('.help-block')?.textContent?.toLowerCase() || '';
+                    const fieldName = option.dataset.optionKey?.toLowerCase() || '';
+
+                    const matches = label.includes(this.searchQuery) ||
+                                description.includes(this.searchQuery) ||
+                                fieldName.includes(this.searchQuery);
+
+                    if (matches) {
+                        option.style.display = '';
+                        hasVisibleOptions = true;
+                        // Expand section if it contains matches
+                        const collapseElement = section.querySelector('.panel-collapse');
+                        if (collapseElement && !collapseElement.classList.contains('in')) {
+                            collapseElement.classList.add('in');
+                            section.querySelector('[data-toggle="collapse"] i')?.classList.add('fa-chevron-down');
+                            section.querySelector('[data-toggle="collapse"] i')?.classList.remove('fa-chevron-right');
+                        }
+                    } else {
+                        option.style.display = 'none';
+                    }
+                });
+
+                sectionElement.style.display = hasVisibleOptions ? '' : 'none';
+            });
+        }
+
+        handleSectionToggle(toggleElement) {
+            const target = toggleElement.dataset.target;
+            const collapseElement = document.querySelector(target);
+            const icon = toggleElement.querySelector('i');
+
+            if (collapseElement) {
+                const isExpanded = collapseElement.classList.contains('in');
+
+                if (isExpanded) {
+                    collapseElement.classList.remove('in');
+                    icon?.classList.remove('fa-chevron-down');
+                    icon?.classList.add('fa-chevron-right');
+                    toggleElement.setAttribute('aria-expanded', 'false');
+                } else {
+                    collapseElement.classList.add('in');
+                    icon?.classList.remove('fa-chevron-right');
+                    icon?.classList.add('fa-chevron-down');
+                    toggleElement.setAttribute('aria-expanded', 'true');
+                }
+            }
+        }
+
+        handleFieldChange(field) {
+            const option = field.closest('.configuration-option');
+            if (!option) return;
+
+            const key = option.dataset.optionKey;
+            let value = field.type === 'checkbox' ? field.checked : field.value;
+
+            // Validate field
+            const isValid = this.validateField(field, value);
+            if (!isValid) return;
+
+            this.currentValues[key] = value;
+            this.markFieldAsChanged(option);
+            this.updateResetSectionButton();
+        }
+
+        validateField(field, value) {
+            const option = field.closest('.configuration-option');
+            const errorElement = option.querySelector('.field-validation-error');
+            const isRequired = option.dataset.required === 'true';
+
+            let errors = [];
+
+            // Required validation
+            if (isRequired && (!value || value === '')) {
+                errors.push('This field is required');
+            }
+
+            // Type-specific validation
+            if (field.type === 'number') {
+                const min = field.getAttribute('min');
+                const max = field.getAttribute('max');
+                const numValue = parseFloat(value);
+
+                if (min && numValue < parseFloat(min)) {
+                    errors.push(`Value must be at least ${min}`);
+                }
+                if (max && numValue > parseFloat(max)) {
+                    errors.push(`Value must not exceed ${max}`);
+                }
+            }
+
+            // Pattern validation
+            const pattern = field.getAttribute('pattern');
+            if (pattern && value && !new RegExp(pattern).test(value)) {
+                errors.push('Value does not match the required format');
+            }
+
+            // JSON validation for JSON editors
+            if (field.classList.contains('json-editor')) {
+                try {
+                    JSON.parse(value);
+                } catch (e) {
+                    errors.push('Invalid JSON format');
+                }
+            }
+
+            // Display errors
+            if (errors.length > 0) {
+                errorElement.textContent = errors[0];
+                errorElement.style.display = 'block';
+                field.classList.add('has-error');
+                field.setAttribute('aria-invalid', 'true');
+                field.setAttribute('aria-describedby', errorElement.id || 'error-' + field.id);
+                return false;
+            } else {
+                errorElement.style.display = 'none';
+                field.classList.remove('has-error');
+                field.removeAttribute('aria-invalid');
+                return true;
+            }
+        }
+
+        validateJsonField(field) {
+            const value = field.value;
+            if (!value) return true;
+
+            try {
+                JSON.parse(value);
+                return this.validateField(field, value);
+            } catch (e) {
+                return this.validateField(field, value);
+            }
+        }
+
+        markFieldAsChanged(option) {
+            if (!option.classList.contains('field-changed')) {
+                option.classList.add('field-changed');
+
+                // Add visual indicator
+                const label = option.querySelector('label');
+                if (label && !label.querySelector('.changed-indicator')) {
+                    const indicator = document.createElement('span');
+                    indicator.className = 'changed-indicator text-warning';
+                    indicator.innerHTML = ' <i class="fa fa-pencil" title="Modified"></i>';
+                    indicator.setAttribute('aria-label', 'This field has been modified');
+                    label.appendChild(indicator);
+                }
+            }
+        }
+
+        updateResetSectionButton() {
+            const resetBtn = document.getElementById('reset-section-btn');
+            if (!resetBtn) return;
+
+            const hasChanges = this.currentSection &&
+                document.querySelector(`[data-section="${this.currentSection}"] .field-changed`);
+
+            resetBtn.disabled = !hasChanges;
+            resetBtn.setAttribute('aria-disabled', hasChanges ? 'false' : 'true');
+        }
+
+        async saveConfiguration() {
+            if (!this.validateAllFields()) {
+                this.showNotification('Please fix validation errors before saving', 'error');
+                return;
+            }
+
+            this.showLoading(true);
+
+            try {
+                const response = await fetch(this.data.saveUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        store: this.data.currentStore,
+                        locale: this.data.currentLocale || '',
+                        values: JSON.stringify(this.currentValues)
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    this.showNotification('Configuration saved and published successfully', 'success');
+                    this.clearChangeIndicators();
+                } else {
+                    this.showNotification(result.message || 'Failed to save configuration', 'error');
+                }
+            } catch (error) {
+                this.showNotification('Network error: ' + error.message, 'error');
+            } finally {
+                this.showLoading(false);
+            }
+        }
+
+        async publishConfiguration() {
+            this.showLoading(true);
+
+            try {
+                const response = await fetch(this.data.publishUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        store: this.data.currentStore,
+                        locale: this.data.currentLocale || ''
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    this.showNotification('Configuration published successfully', 'success');
+                } else {
+                    this.showNotification(result.message || 'Failed to publish configuration', 'error');
+                }
+            } catch (error) {
+                this.showNotification('Network error: ' + error.message, 'error');
+            } finally {
+                this.showLoading(false);
+            }
+        }
+
+        async rebuildConfiguration() {
+            if (!confirm('This will reload configuration from files. Continue?')) {
+                return;
+            }
+
+            this.showLoading(true);
+
+            try {
+                const response = await fetch(this.data.rebuildUrl, {
+                    method: 'POST'
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    this.showNotification('Configuration rebuilt from files', 'success');
+                    // Reload page to show updated configuration
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1500);
+                } else {
+                    this.showNotification(result.message || 'Failed to rebuild configuration', 'error');
+                }
+            } catch (error) {
+                this.showNotification('Network error: ' + error.message, 'error');
+            } finally {
+                this.showLoading(false);
+            }
+        }
+
+        resetSection() {
+            if (!this.currentSection) return;
+
+            const sectionElement = document.querySelector(`[data-section="${this.currentSection}"]`);
+            if (!sectionElement) return;
+
+            const changedFields = sectionElement.querySelectorAll('.field-changed');
+
+            changedFields.forEach(option => {
+                const key = option.dataset.optionKey;
+                const field = option.querySelector('input, select, textarea');
+
+                if (field && this.data.effectiveConfiguration?.sections) {
+                    // Find default value
+                    for (const section of this.data.effectiveConfiguration.sections) {
+                        const configOption = section.options?.find(opt =>
+                            `${opt.module}.${opt.key}` === key
+                        );
+
+                        if (configOption) {
+                            const defaultValue = configOption.default;
+
+                            if (field.type === 'checkbox') {
+                                field.checked = defaultValue === 'true' || defaultValue === '1' || defaultValue === true;
+                            } else {
+                                field.value = defaultValue;
+                            }
+
+                            this.currentValues[key] = defaultValue;
+                            break;
+                        }
+                    }
+                }
+
+                option.classList.remove('field-changed');
+                const indicator = option.querySelector('.changed-indicator');
+                if (indicator) {
+                    indicator.remove();
+                }
+            });
+
+            this.updateResetSectionButton();
+            this.showNotification(`Section "${this.currentSection}" reset to defaults`, 'info');
+        }
+
+        validateAllFields() {
+            let isValid = true;
+            const fields = document.querySelectorAll('.configuration-option input, .configuration-option select, .configuration-option textarea');
+
+            fields.forEach(field => {
+                const fieldValid = this.validateField(field, field.type === 'checkbox' ? field.checked : field.value);
+                if (!fieldValid) {
+                    isValid = false;
+                }
+            });
+
+            return isValid;
+        }
+
+        clearChangeIndicators() {
+            document.querySelectorAll('.field-changed').forEach(option => {
+                option.classList.remove('field-changed');
+                const indicator = option.querySelector('.changed-indicator');
+                if (indicator) {
+                    indicator.remove();
+                }
+            });
+            this.updateResetSectionButton();
+        }
+
+        showNotification(message, type = 'info') {
+            // Create or update notification element
+            let notification = document.getElementById('notification');
+            if (!notification) {
+                notification = document.createElement('div');
+                notification.id = 'notification';
+                notification.className = 'alert';
+                notification.setAttribute('role', 'alert');
+                notification.setAttribute('aria-live', 'polite');
+                document.querySelector('.shop-configuration-container').prepend(notification);
+            }
+
+            notification.className = `alert alert-${type === 'error' ? 'danger' : type}`;
+            notification.textContent = message;
+            notification.style.display = 'block';
+
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 5000);
+
+            // Announce to screen readers
+            this.announceToScreenReader(message);
+        }
+
+        showLoading(show) {
+            const indicator = document.getElementById('loading-indicator');
+            const container = document.querySelector('[data-configuration-app]');
+
+            if (show) {
+                indicator.style.display = 'block';
+                container.style.opacity = '0.5';
+                container.style.pointerEvents = 'none';
+            } else {
+                indicator.style.display = 'none';
+                container.style.opacity = '1';
+                container.style.pointerEvents = 'auto';
+            }
+        }
+
+        showContent() {
+            document.querySelector('[data-configuration-app]').style.display = 'block';
+        }
+
+        announceToScreenReader(message) {
+            const announcement = document.createElement('div');
+            announcement.setAttribute('aria-live', 'polite');
+            announcement.setAttribute('aria-atomic', 'true');
+            announcement.style.position = 'absolute';
+            announcement.style.left = '-10000px';
+            announcement.style.width = '1px';
+            announcement.style.height = '1px';
+            announcement.style.overflow = 'hidden';
+
+            document.body.appendChild(announcement);
+            announcement.textContent = message;
+
+            setTimeout(() => {
+                document.body.removeChild(announcement);
+            }, 1000);
+        }
+
+        reloadPage(params) {
+            const url = new URL(window.location);
+            Object.keys(params).forEach(key => {
+                if (params[key]) {
+                    url.searchParams.set(key, params[key]);
+                } else {
+                    url.searchParams.delete(key);
+                }
+            });
+            window.location.href = url.toString();
+        }
+    }
+
+    // Initialize when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        if (window.shopConfigurationData) {
+            new ShopConfigurationManager(window.shopConfigurationData);
+        }
+    });
+
+    </script>
+{% endblock %}

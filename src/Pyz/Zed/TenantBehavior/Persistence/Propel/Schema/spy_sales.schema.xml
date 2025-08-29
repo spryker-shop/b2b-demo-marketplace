@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Sales\Persistence" package="src.Orm.Zed.Sales.Persistence">
+
+    <table name="spy_sales_discount" idMethod="native">
+        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+    </table>
+
+    <table name="spy_sales_discount_code" idMethod="native">
+        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+    </table>
+
+    <table name="spy_sales_expense" idMethod="native">
+        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+    </table>
+
+    <table name="spy_sales_order" idMethod="native">
+        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+    </table>
+
+    <table name="spy_sales_order_address" idMethod="native">
+        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+    </table>
+
+    <table name="spy_sales_order_address_history" idMethod="native">
+        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+    </table>
+
+    <table name="spy_sales_order_comment" idMethod="native">
+        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+    </table>
+
+    <table name="spy_sales_order_item" idMethod="native">
+        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+    </table>
+
+    <table name="spy_sales_order_item_metadata" idMethod="native">
+        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+    </table>
+
+    <table name="spy_sales_order_item_option" idMethod="native">
+        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+    </table>
+
+    <table name="spy_sales_order_note" idMethod="native">
+        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+    </table>
+
+    <table name="spy_sales_order_totals" idMethod="native">
+        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+    </table>
+
+    <table name="spy_sales_shipment" idMethod="native">
+        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+    </table>
+
+</database>

@@ -1,0 +1,127 @@
+sections:
+  ui_general:
+    label: glossary.shop.config.ui_general
+    description: glossary.shop.config.ui_general.desc
+    order: 1
+  ui_theme:
+    label: glossary.shop.config.ui_theme
+    description: glossary.shop.config.ui_theme.desc
+    order: 2
+  ui_features:
+    label: glossary.shop.config.ui_features
+    description: glossary.shop.config.ui_features.desc
+    order: 3
+
+options:
+  - key: website.name
+    module: ShopUiConfiguration
+    section: ui_general
+    label: glossary.shop.config.website_name
+    description: glossary.shop.config.website_name.desc
+    dataType: string
+    default: "My Spryker Shop"
+    required: true
+    overridable: true
+    validation:
+      minLength: 1
+      maxLength: 100
+
+  - key: website.logo_url
+    module: ShopUiConfiguration
+    section: ui_general
+    label: glossary.shop.config.website_logo
+    description: glossary.shop.config.website_logo.desc
+    dataType: string
+    default: "/assets/logo.png"
+    required: false
+    overridable: true
+    validation:
+      pattern: '^\/.*\.(png|jpg|jpeg|gif|svg)$'
+
+  - key: website.favicon_url
+    module: ShopUiConfiguration
+    section: ui_general
+    label: glossary.shop.config.website_favicon
+    description: glossary.shop.config.website_favicon.desc
+    dataType: string
+    default: "/assets/favicon.ico"
+    required: false
+    overridable: true
+
+  - key: theme.color_primary
+    module: ShopUiConfiguration
+    section: ui_theme
+    label: glossary.shop.config.theme_color_primary
+    description: glossary.shop.config.theme_color_primary.desc
+    dataType: string
+    default: "#FF6600"
+    required: true
+    overridable: true
+    validation:
+      pattern: '^#[0-9A-Fa-f]{6}$'
+
+  - key: theme.color_secondary
+    module: ShopUiConfiguration
+    section: ui_theme
+    label: glossary.shop.config.theme_color_secondary
+    description: glossary.shop.config.theme_color_secondary.desc
+    dataType: string
+    default: "#0066CC"
+    required: false
+    overridable: true
+    validation:
+      pattern: '^#[0-9A-Fa-f]{6}$'
+
+  - key: theme.layout_mode
+    module: ShopUiConfiguration
+    section: ui_theme
+    label: glossary.shop.config.theme_layout_mode
+    description: glossary.shop.config.theme_layout_mode.desc
+    dataType: enum
+    default: "fluid"
+    required: true
+    overridable: true
+    enumValues: ["fluid", "boxed", "compact"]
+
+  - key: features.enable_wishlist
+    module: ShopUiConfiguration
+    section: ui_features
+    label: glossary.shop.config.enable_wishlist
+    description: glossary.shop.config.enable_wishlist.desc
+    dataType: bool
+    default: true
+    required: false
+    overridable: true
+
+  - key: features.enable_compare
+    module: ShopUiConfiguration
+    section: ui_features
+    label: glossary.shop.config.enable_compare
+    description: glossary.shop.config.enable_compare.desc
+    dataType: bool
+    default: false
+    required: false
+    overridable: true
+
+  - key: features.max_cart_items
+    module: ShopUiConfiguration
+    section: ui_features
+    label: glossary.shop.config.max_cart_items
+    description: glossary.shop.config.max_cart_items.desc
+    dataType: int
+    default: 100
+    required: false
+    overridable: true
+    validation:
+      min: 1
+      max: 1000
+
+  - key: features.social_media_links
+    module: ShopUiConfiguration
+    section: ui_features
+    label: glossary.shop.config.social_media_links
+    description: glossary.shop.config.social_media_links.desc
+    dataType: json
+    default: '{"facebook": "", "twitter": "", "instagram": ""}'
+    required: false
+    overridable: true

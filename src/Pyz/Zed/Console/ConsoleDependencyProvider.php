@@ -13,7 +13,12 @@ use Pyz\Zed\DataImport\DataImportConfig;
 use Pyz\Zed\Development\Communication\Console\AcceptanceCodeTestConsole;
 use Pyz\Zed\Development\Communication\Console\ApiCodeTestConsole;
 use Pyz\Zed\Development\Communication\Console\FunctionalCodeTestConsole;
+use Pyz\Zed\ShopConfiguration\Communication\Console\ShopConfigurationPublishAllConsole;
+use Pyz\Zed\ShopConfiguration\Communication\Console\ShopConfigurationPublishConsole;
+use Pyz\Zed\ShopConfiguration\Communication\Console\ShopConfigurationRebuildConsole;
+use Pyz\Zed\ShopConfiguration\Communication\Console\ShopConfigurationSetupConsole;
 use SecurityChecker\Command\SecurityCheckerCommand;
+use Spryker\Service\Container\ContainerInterface;
 use Spryker\Zed\AclMerchantPortal\Communication\Console\AclEntitySynchronizeConsole;
 use Spryker\Zed\BusinessOnBehalfDataImport\BusinessOnBehalfDataImportConfig;
 use Spryker\Zed\Cache\Communication\Console\EmptyAllCachesConsole;
@@ -187,11 +192,14 @@ use Spryker\Zed\Translator\Communication\Console\GenerateTranslationCacheConsole
 use Spryker\Zed\Twig\Communication\Console\CacheWarmerConsole;
 use Spryker\Zed\Twig\Communication\Console\TwigTemplateWarmerConsole;
 use Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin;
+use Spryker\Zed\User\Business\UserFacade;
 use Spryker\Zed\Uuid\Communication\Console\UuidGeneratorConsole;
 use Spryker\Zed\ZedNavigation\Communication\Console\BuildNavigationConsole;
 use Spryker\Zed\ZedNavigation\Communication\Console\RemoveNavigationCacheConsole;
 use SprykerEco\Zed\NewRelic\Communication\Console\RecordDeploymentConsole;
 use SprykerShop\Zed\DateTimeConfiguratorPageExample\Communication\Console\DateTimeProductConfiguratorBuildFrontendConsole;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
@@ -245,86 +253,6 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new ProductValidityConsole(),
             new OauthTokenConsole(),
             new DataImportConsole(),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_STORE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_CURRENCY),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . CategoryDataImportConfig::IMPORT_TYPE_CATEGORY),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . CategoryDataImportConfig::IMPORT_TYPE_CATEGORY_STORE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_CATEGORY_TEMPLATE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_CUSTOMER),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_GLOSSARY),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_NAVIGATION),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_NAVIGATION_NODE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_CMS_TEMPLATE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_CMS_BLOCK),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_CMS_BLOCK_STORE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_DISCOUNT),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_DISCOUNT_STORE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_DISCOUNT_VOUCHER),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_PRODUCT_ABSTRACT),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_PRODUCT_ABSTRACT_STORE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_PRODUCT_CONCRETE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_PRODUCT_IMAGE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_PRODUCT_STOCK),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_PRODUCT_ATTRIBUTE_KEY),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_PRODUCT_MANAGEMENT_ATTRIBUTE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_PRODUCT_GROUP),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_PRODUCT_OPTION),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_PRODUCT_OPTION_PRICE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_PRODUCT_REVIEW),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ProductLabelDataImportConfig::IMPORT_TYPE_PRODUCT_LABEL),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ProductLabelDataImportConfig::IMPORT_TYPE_PRODUCT_LABEL_STORE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_PRODUCT_SET),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_PRODUCT_SEARCH_ATTRIBUTE_MAP),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_PRODUCT_SEARCH_ATTRIBUTE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_SHIPMENT),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_SHIPMENT_PRICE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_TAX),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_DISCOUNT_AMOUNT),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ShipmentDataImportConfig::IMPORT_TYPE_SHIPMENT),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ShipmentDataImportConfig::IMPORT_TYPE_SHIPMENT_PRICE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ShipmentDataImportConfig::IMPORT_TYPE_SHIPMENT_METHOD_STORE),
-
-            //core data importers
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . PriceProductDataImportConfig::IMPORT_TYPE_PRODUCT_PRICE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . CompanyDataImportConfig::IMPORT_TYPE_COMPANY),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . CompanyBusinessUnitDataImportConfig::IMPORT_TYPE_COMPANY_BUSINESS_UNIT),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . CompanyUnitAddressDataImportConfig::IMPORT_TYPE_COMPANY_UNIT_ADDRESS),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . CompanyUnitAddressLabelDataImportConfig::IMPORT_TYPE_COMPANY_UNIT_ADDRESS_LABEL),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . CompanyUnitAddressLabelDataImportConfig::IMPORT_TYPE_COMPANY_UNIT_ADDRESS_LABEL_RELATION),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ProductAlternativeDataImportConfig::IMPORT_TYPE_PRODUCT_ALTERNATIVE), #ProductAlternativeFeature
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . BusinessOnBehalfDataImportConfig::IMPORT_TYPE_COMPANY_USER),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ProductDiscontinuedDataImportConfig::IMPORT_TYPE_PRODUCT_DISCONTINUED), #ProductDiscontinuedFeature
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . MultiCartDataImportConfig::IMPORT_TYPE_MULTI_CART),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . SharedCartDataImportConfig::IMPORT_TYPE_SHARED_CART),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ProductPackagingUnitDataImportConfig::IMPORT_TYPE_PRODUCT_PACKAGING_UNIT),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . PriceProductScheduleDataImportConfig::IMPORT_TYPE_PRODUCT_PRICE_SCHEDULE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ProductRelationDataImportConfig::IMPORT_TYPE_PRODUCT_RELATION),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ProductRelationDataImportConfig::IMPORT_TYPE_PRODUCT_RELATION_STORE),
-
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ShoppingListDataImportConfig::IMPORT_TYPE_SHOPPING_LIST),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ShoppingListDataImportConfig::IMPORT_TYPE_SHOPPING_LIST_ITEM),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ShoppingListDataImportConfig::IMPORT_TYPE_SHOPPING_LIST_COMPANY_USER),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ShoppingListDataImportConfig::IMPORT_TYPE_SHOPPING_LIST_COMPANY_BUSINESS_UNIT),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ProductQuantityDataImportConfig::IMPORT_TYPE_PRODUCT_QUANTITY),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . StockDataImportConfig::IMPORT_TYPE_STOCK),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . StockDataImportConfig::IMPORT_TYPE_STOCK_STORE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . PaymentDataImportConfig::IMPORT_TYPE_PAYMENT_METHOD),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . PaymentDataImportConfig::IMPORT_TYPE_PAYMENT_METHOD_STORE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ContentNavigationDataImportConfig::IMPORT_TYPE_CONTENT_NAVIGATION),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . MerchantProductApprovalDataImportConfig::IMPORT_TYPE_MERCHANT_PRODUCT_APPROVAL_STATUS_DEFAULT),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ProductApprovalDataImportConfig::IMPORT_TYPE_PRODUCT_APPROVAL_STATUS),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . CountryDataImportConfig::IMPORT_TYPE_COUNTRY_STORE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . CurrencyDataImportConfig::IMPORT_TYPE_CURRENCY_STORE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . LocaleDataImportConfig::IMPORT_TYPE_LOCALE_STORE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . LocaleDataImportConfig::IMPORT_TYPE_DEFAULT_LOCALE_STORE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . StoreContextDataImportConfig::IMPORT_TYPE_STORE_CONTEXT),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . StoreDataImportConfig::IMPORT_TYPE_STORE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ProductOfferShoppingListDataImportConfig::IMPORT_TYPE_PRODUCT_OFFER_SHOPPING_LIST_ITEM),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . MerchantCommissionDataImportConfig::IMPORT_TYPE_MERCHANT_COMMISSION_GROUP),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . MerchantCommissionDataImportConfig::IMPORT_TYPE_MERCHANT_COMMISSION),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . MerchantCommissionDataImportConfig::IMPORT_TYPE_MERCHANT_COMMISSION_AMOUNT),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . MerchantCommissionDataImportConfig::IMPORT_TYPE_MERCHANT_COMMISSION_STORE),
-            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . MerchantCommissionDataImportConfig::IMPORT_TYPE_MERCHANT_COMMISSION_MERCHANT),
 
             // Publish and Synchronization
             new EventBehaviorTriggerTimeoutConsole(),
@@ -419,6 +347,61 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new AclEntitySynchronizeConsole(),
             new StorageRedisDataReSaveConsole(),
             new SitemapGenerateConsole(),
+            new class extends \Spryker\Zed\Kernel\Communication\Console\Console
+            {
+                /**
+                 * @var string
+                 */
+                public const COMMAND_NAME = 'test';
+
+                /**
+                 * @var string
+                 */
+                public const DESCRIPTION = 'SOme description';
+
+                /**
+                 * @return void
+                 */
+                protected function configure(): void
+                {
+                    $this->setName(static::COMMAND_NAME);
+                    $this->setDescription(static::DESCRIPTION);
+
+                    parent::configure();
+                }
+
+                /**
+                 * @param \Symfony\Component\Console\Input\InputInterface $input
+                 * @param \Symfony\Component\Console\Output\OutputInterface $output
+                 *
+                 * @return int
+                 */
+                protected function execute(InputInterface $input, OutputInterface $output): int
+                {
+                   (new \Spryker\Zed\MerchantProductOfferStorage\Communication\Plugin\Publisher\ProductConcreteProductOffer\MerchantProductConcreteProductOfferWritePublisherPlugin())
+                       ->handleBulk(
+                           [(new \Generated\Shared\Transfer\EventEntityTransfer())
+                                 ->fromArray([
+                                     "additional_values" => [],
+    "id"=> 11,
+    "foreign_keys"=> [],
+    "modified_columns"=> [],
+    "event"=> null,
+    "name"=> null,
+    "original_values"=> []
+                                 ])],
+                           "Merchant.merchant.publish"
+                       );
+
+                    return static::CODE_SUCCESS;
+                }
+            },
+
+            // Shop Configuration commands
+            new ShopConfigurationSetupConsole(),
+            new ShopConfigurationPublishConsole(),
+            new ShopConfigurationPublishAllConsole(),
+            new ShopConfigurationRebuildConsole(),
         ];
 
         $propelCommands = $container->getLocator()->propel()->facade()->getConsoleCommands();
@@ -503,6 +486,21 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
         $applicationPlugins[] = new PropelApplicationPlugin();
         $applicationPlugins[] = new TwigApplicationPlugin();
         $applicationPlugins[] = new FormApplicationPlugin();
+        $applicationPlugins[] = new class implements \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface
+        {
+            /**
+             * @var string
+             */
+            public const SERVICE_TENANT_ID = 'SERVICE_TENANT_ID';
+            public function provide(ContainerInterface $container): ContainerInterface
+            {
+                $container->set(static::SERVICE_TENANT_ID, function (ContainerInterface $container) {
+                    return getenv('SPRYKER_TENANT_IDENTIFIER') ?: null;
+                });
+
+                return $container;
+            }
+        };
 
         return $applicationPlugins;
     }

@@ -92,17 +92,11 @@ sections:
             stores: true
 
     database-flush:
-#        delete-elastic-search-index:
-#            command: 'vendor/bin/console search:index:delete'
-#            stores: true
-#            groups:
-#                - elastic
-#
-#        delete-storage:
-#            command: 'vendor/bin/console storage:delete'
-#            stores: true
-#            groups:
-#                - redis
+        delete-elastic-search-index:
+            command: 'vendor/bin/console search:index:delete'
+            stores: true
+            groups:
+                - elastic
 
         propel-migration-delete:
             command: 'vendor/bin/console propel:migration:delete -vvv --no-ansi'
@@ -139,21 +133,21 @@ sections:
             command: 'vendor/bin/console queue:setup'
             stores: true
 
-#        setup-search-create-sources:
-#            command: 'vendor/bin/console search:setup:sources'
-#            stores: true
-#            groups:
-#                - elastic
-#
-#        setup-seach-create-source-map:
-#            command: 'vendor/bin/console search:setup:source-map'
-#            stores: true
-#            groups:
-#                - elastic
+        setup-search-create-sources:
+            command: 'vendor/bin/console search:setup:sources'
+            stores: true
+            groups:
+                - elastic
+
+        setup-seach-create-source-map:
+            command: 'vendor/bin/console search:setup:source-map'
+            stores: true
+            groups:
+                - elastic
 
     demodata:
         import-eu-region-demodata:
-            command: 'vendor/bin/console data:import --config=data/import/local/full_EU.yml'
+            command: 'SPRYKER_TENANT_IDENTIFIER=tenant_de vendor/bin/console data:import --config=data/import/local/full_EU.yml -t -vvv'
 
         update-product-labels:
             command: 'vendor/bin/console product-label:relations:update'
@@ -181,7 +175,7 @@ sections:
         zed-build-frontend:
             command: 'vendor/bin/console frontend:zed:build -e production'
 
-#        yves-build-frontend:
-#            command: "vendor/bin/console frontend:yves:build -vvv"
-#            groups:
-#                - yves
+        yves-build-frontend:
+            command: "vendor/bin/console frontend:yves:build -vvv"
+            groups:
+                - yves

@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="TenantTable" strict="true">
+        <property name="tableName" type="string"/>
+        <property name="displayName" type="string"/>
+        <property name="rowCount" type="int"/>
+        <property name="tenantRowCount" type="int"/>
+        <property name="unassignedRowCount" type="int"/>
+    </transfer>
+
+    <transfer name="TenantTableRowsRequest" strict="true">
+        <property name="tableName" type="string"/>
+        <property name="page" type="int" default="1"/>
+        <property name="pageSize" type="int" default="20"/>
+        <property name="tenantFilter" type="string"/>
+        <property name="showUnassignedOnly" type="bool" default="false"/>
+    </transfer>
+
+    <transfer name="TenantTableRowsResponse" strict="true">
+        <property name="rows" type="TenantTableRow[]" singular="row"/>
+        <property name="pagination" type="Pagination"/>
+        <property name="tableName" type="string"/>
+        <property name="columns" type="string[]" singular="column"/>
+    </transfer>
+
+    <transfer name="TenantTableRow" strict="true">
+        <property name="id" type="string"/>
+        <property name="data" type="array" singular="datum"/>
+        <property name="tenantId" type="string"/>
+        <property name="displayColumns" type="array" singular="displayColumn"/>
+    </transfer>
+
+    <transfer name="TenantAssignment" strict="true">
+        <property name="tableName" type="string"/>
+        <property name="rowId" type="string"/>
+        <property name="tenantId" type="string"/>
+        <property name="idColumnName" type="string"/>
+    </transfer>
+
+    <transfer name="TenantAssignmentResponse" strict="true">
+        <property name="isSuccess" type="bool"/>
+        <property name="message" type="string"/>
+        <property name="errorMessages" type="string[]" singular="errorMessage"/>
+    </transfer>
+
+    <transfer name="TenantDuplication" strict="true">
+        <property name="tableName" type="string"/>
+        <property name="sourceRowId" type="string"/>
+        <property name="targetTenantId" type="string"/>
+        <property name="idColumnName" type="string"/>
+    </transfer>
+
+    <transfer name="TenantDuplicationResponse" strict="true">
+        <property name="isSuccess" type="bool"/>
+        <property name="message" type="string"/>
+        <property name="newRowId" type="string"/>
+        <property name="errorMessages" type="string[]" singular="errorMessage"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="page" type="int"/>
+        <property name="maxPerPage" type="int"/>
+        <property name="nbResults" type="int"/>
+        <property name="previousPage" type="int"/>
+        <property name="nextPage" type="int"/>
+        <property name="firstIndex" type="int"/>
+        <property name="lastIndex" type="int"/>
+        <property name="firstPage" type="int"/>
+        <property name="lastPage" type="int"/>
+    </transfer>
+
+</transfers>

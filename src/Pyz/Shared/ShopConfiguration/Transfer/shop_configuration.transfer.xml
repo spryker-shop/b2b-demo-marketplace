@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ShopConfigurationSection">
+        <property name="key" type="string"/>
+        <property name="label" type="string"/>
+        <property name="description" type="string"/>
+        <property name="order" type="int"/>
+        <property name="options" type="ShopConfigurationOption[]" singular="option"/>
+    </transfer>
+
+    <transfer name="ShopConfigurationOption">
+        <property name="key" type="string"/>
+        <property name="module" type="string"/>
+        <property name="section" type="string"/>
+        <property name="label" type="string"/>
+        <property name="description" type="string"/>
+        <property name="dataType" type="string"/>
+        <property name="default" type="string"/>
+        <property name="required" type="bool"/>
+        <property name="overridable" type="bool"/>
+        <property name="currentValue" type="string"/>
+        <property name="isOverridden" type="bool"/>
+        <property name="enumValues" type="array" singular="enumValue"/>
+        <property name="validation" type="array"/>
+    </transfer>
+
+    <transfer name="ShopConfigurationCollection">
+        <property name="sections" type="ShopConfigurationSection[]" singular="section"/>
+        <property name="store" type="string"/>
+        <property name="locale" type="string"/>
+    </transfer>
+
+    <transfer name="ShopConfigurationValue">
+        <property name="scopeStore" type="string"/>
+        <property name="scopeLocale" type="string"/>
+        <property name="module" type="string"/>
+        <property name="section" type="string"/>
+        <property name="configKey" type="string"/>
+        <property name="valueJson" type="string"/>
+        <property name="dataType" type="string"/>
+        <property name="isOverridden" type="bool"/>
+    </transfer>
+
+    <transfer name="ShopConfigurationStorage">
+        <property name="store" type="string"/>
+        <property name="locale" type="string"/>
+        <property name="configurations" type="array"/>
+        <property name="timestamp" type="int"/>
+    </transfer>
+
+    <transfer name="ShopConfigurationSaveRequest">
+        <property name="store" type="string"/>
+        <property name="locale" type="string"/>
+        <property name="values" type="array"/>
+    </transfer>
+
+    <transfer name="ShopConfigurationFileData">
+        <property name="module" type="string"/>
+        <property name="filePath" type="string"/>
+        <property name="format" type="string"/>
+        <property name="data" type="array"/>
+        <property name="sections" type="ShopConfigurationSection[]" singular="section"/>
+    </transfer>
+
+</transfers>

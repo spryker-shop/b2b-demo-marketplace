@@ -21,4 +21,10 @@ class ProductOfferStorageConfig extends SprykerProductOfferStorageConfig
     {
         return SynchronizationConfig::DEFAULT_SYNCHRONIZATION_POOL_NAME;
     }
+
+    public function getEventQueueName(): ?string
+    {
+        return 'publish.product_offer';
+    }
+
 }
