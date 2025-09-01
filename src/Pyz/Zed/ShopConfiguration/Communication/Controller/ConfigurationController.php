@@ -21,6 +21,10 @@ class ConfigurationController extends \Spryker\Zed\Kernel\Communication\Controll
         $tenantId = $this->getFactory()->getLocator()->tenantBehavior()->facade()->getCurrentTenantId();
         $currentTenant = $tenantId;
         $storeTransfers = $this->getFactory()->getLocator()->store()->facade()->getAllStores();
+        if (count($storeTransfers) === 0) {
+            $this->addErrorMessage('Create at least one store to use Shop configurator.');
+            return $this->redirectResponse('/store-gui/list');
+        }
 
         $storeName = $request->query->get('storeName');
         if (!$storeName) {

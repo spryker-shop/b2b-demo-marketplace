@@ -2,10 +2,12 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\CompanyUnitAddressLabel\Persistence" package="src.Orm.Zed.CompanyUnitAddressLabel.Persistence">
 
     <table name="spy_company_unit_address_label" idMethod="native">
+        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation" />
         <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 
     <table name="spy_company_unit_address_label_to_company_unit_address" idMethod="native">
+        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation" />
         <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 
