@@ -10,6 +10,7 @@ declare(strict_types = 1);
 namespace Pyz\Zed\Event;
 
 use Monolog\Logger;
+use Spryker\Shared\Event\EventConstants;
 use Spryker\Zed\Event\EventConfig as SprykerEventConfig;
 
 class EventConfig extends SprykerEventConfig
@@ -18,4 +19,14 @@ class EventConfig extends SprykerEventConfig
      * @var string|int
      */
     protected const DEFAULT_EVENT_LOGGER_MIN_LEVEL = Logger::WARNING;
+
+    /**
+     * @api
+     *
+     * @return int
+     */
+    public function getEventQueueMessageChunkSize()
+    {
+        return 200;
+    }
 }

@@ -8,23 +8,14 @@
 namespace Pyz\Zed\ShopConfiguration\Communication\Form;
 
 use Spryker\Zed\FileManagerGui\Communication\File\UploadedFile;
-use Spryker\Zed\Gui\Communication\Form\Type\SelectType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Email;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Regex;
 
 class StoreConfigurationForm extends AbstractType
 {
@@ -52,76 +43,76 @@ class StoreConfigurationForm extends AbstractType
 
     protected function addLogoField(FormBuilderInterface $builder): self
     {
-        $builder->add('logo', FileType::class, [
+        $builder->add('logo', TextType::class, [
             'label' => 'Store Logo URL',
             'required' => false,
-            'mapped' => false,
+//            'mapped' => false,
             'attr' => [
                 'placeholder' => 'Enter url to the logo image',
                 'class' => 'form-control',
             ],
         ]);
 
-        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
-            $form = $event->getForm();
-
-            /** @var UploadedFile|null $file */
-            $file = $form->get('logo')->getData();
-            if (!$file) {
-                return;
-            }
-
-            $original = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            $safe = (new \Symfony\Component\String\Slugger\AsciiSlugger())
-                ->slug($original);
-            $filename = sprintf('%s-%s.%s', $safe, uniqid('', true), $file->guessExtension());
-
-            $file->move(APPLICATION_ROOT_DIR . '/public/Yves/media', $filename);
-
-            $data = (array) $event->getData();
-            $data['logo'] = '/media/' . $filename;
-
-            $event->setData($data);
-        });
+//        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
+//            $form = $event->getForm();
+//
+//            /** @var UploadedFile|null $file */
+//            $file = $form->get('logo')->getData();
+//            if (!$file) {
+//                return;
+//            }
+//
+//            $original = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+//            $safe = (new \Symfony\Component\String\Slugger\AsciiSlugger())
+//                ->slug($original);
+//            $filename = sprintf('%s-%s.%s', $safe, uniqid('', true), $file->guessExtension());
+//
+//            $file->move(APPLICATION_ROOT_DIR . '/public/Yves/media', $filename);
+//
+//            $data = (array) $event->getData();
+//            $data['logo'] = '/media/' . $filename;
+//
+//            $event->setData($data);
+//        });
 
         return $this;
     }
 
     protected function addFavicon(FormBuilderInterface $builder): self
     {
-        $builder->add('favicon', FileType::class, [
+        $builder->add('favicon', TextType::class, [
             'label' => 'Favicon URL',
             'required' => false,
-            'mapped' => false,
+//            'mapped' => false,
             'attr' => [
                 'placeholder' => 'Enter favicon url',
                 'class' => 'form-control',
             ],
         ]);
 
-        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
-            $form = $event->getForm();
-
-            /** @var UploadedFile|null $file */
-            $file = $form->get('favicon')->getData();
-            if (!$file) {
-                return;
-            }
-
-            $original = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            $safe = (new \Symfony\Component\String\Slugger\AsciiSlugger())
-                ->slug($original);
-            $filename = sprintf('%s-%s.%s', $safe, uniqid('', true), $file->guessExtension());
-
-            $file->move(APPLICATION_ROOT_DIR . '/public/Yves/media', $filename);
-
-            // Write the public path back into the array data:
-            $data = (array) $event->getData(); // your array model
-            $data['favicon'] = '/media/' . $filename;
-
-            // Make the updated array the form's final data:
-            $event->setData($data);
-        });
+//        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
+//            $form = $event->getForm();
+//
+//            /** @var UploadedFile|null $file */
+//            $file = $form->get('favicon')->getData();
+//            if (!$file) {
+//                return;
+//            }
+//
+//            $original = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+//            $safe = (new \Symfony\Component\String\Slugger\AsciiSlugger())
+//                ->slug($original);
+//            $filename = sprintf('%s-%s.%s', $safe, uniqid('', true), $file->guessExtension());
+//
+//            $file->move(APPLICATION_ROOT_DIR . '/public/Yves/media', $filename);
+//
+//            // Write the public path back into the array data:
+//            $data = (array) $event->getData(); // your array model
+//            $data['favicon'] = '/media/' . $filename;
+//
+//            // Make the updated array the form's final data:
+//            $event->setData($data);
+//        });
 
         return $this;
     }
