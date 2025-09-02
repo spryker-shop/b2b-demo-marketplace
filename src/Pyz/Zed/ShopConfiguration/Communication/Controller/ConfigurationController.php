@@ -3,6 +3,7 @@
 namespace Pyz\Zed\ShopConfiguration\Communication\Controller;
 
 use Orm\Zed\TenantOnboarding\Persistence\SpyStoreConfigQuery;
+use Orm\Zed\TenantOnboarding\Persistence\SpyStoreDomainQuery;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -47,12 +48,21 @@ class ConfigurationController extends \Spryker\Zed\Kernel\Communication\Controll
             $data = $storeConfigEntity->getData();
         }
 
+        $storeDomainEntity = SpyStoreDomainQuery::create()
+            ->filterByStoreName($storeName)
+            ->filterByTenantIdentifier($tenantId)
+            ->findOne();
+        if ($storeDomainEntity) {
+            $data['shop_domain'] = str_replace('.' . $this->getFactory()->getConfig()->getStoreFrontHost(), '', $storeDomainEntity->getDomainHost());
+        }
+
         $form = $this->getFactory()
             ->getStoreConfigurationForm($data)
             ->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
+            $data['shop_domain'] = $data['shop_domain'] . '.' . $this->getFactory()->getConfig()->getStoreFrontHost();
 
             $storeConfigEntity = SpyStoreConfigQuery::create()
                 ->filterByTenantIdentifier($tenantId)
@@ -60,6 +70,37 @@ class ConfigurationController extends \Spryker\Zed\Kernel\Communication\Controll
                 ->findOneOrCreate();
             $storeConfigEntity->setData($data);
             $storeConfigEntity->save();
+
+            if (isset($data['shop_domain'])) {
+                $storeDomainEntity = SpyStoreDomainQuery::create()
+                    ->filterByStoreName($storeName)
+                    ->filterByTenantIdentifier($tenantId)
+                    ->findOneOrCreate();
+                $storeDomainEntity->setDomainHost($data['shop_domain']);
+                $storeDomainEntity->setData([
+                    'tenant' => $tenantId,
+                    'store' => $storeName,
+                ]);
+                $storeDomainEntity->save();
+
+                $storeDomainEntities = SpyStoreDomainQuery::create()
+                    ->filterByTenantIdentifier($tenantId)
+                    ->filterByStorename(null, \Propel\Runtime\ActiveQuery\Criteria::ISNOTNULL)
+                    ->find();
+
+                $storeDomainListData = [];
+                foreach ($storeDomainEntities as $storeDomainEntity) {
+                    $storeDomainListData[$storeDomainEntity->getStorename()] = $storeDomainEntity->getDomainHost();
+                }
+
+                $storeDomainEntity = SpyStoreDomainQuery::create()
+                    ->filterByTenantIdentifier($tenantId)
+                    ->filterByStorename(null, \Propel\Runtime\ActiveQuery\Criteria::ISNULL)
+                    ->findOneOrCreate();
+                $storeDomainEntity->setDomainHost($tenantId);
+                $storeDomainEntity->setData($storeDomainListData);
+                $storeDomainEntity->save();
+            }
 
             if (!$storeConfigEntity->getIdStoreConfig()) {
                 $this->addErrorMessage('Failed to update Store Configuration.');

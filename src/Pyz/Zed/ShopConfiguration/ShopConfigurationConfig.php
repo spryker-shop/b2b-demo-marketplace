@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pyz\Zed\ShopConfiguration;
 
+use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ShopConfigurationConfig extends AbstractBundleConfig
@@ -65,5 +66,10 @@ class ShopConfigurationConfig extends AbstractBundleConfig
     public function getCacheExpirationTime(): int
     {
         return 3600; // 1 hour
+    }
+
+    public function getStoreFrontHost(): string
+    {
+        return $this->get(ApplicationConstants::HOST_YVES);
     }
 }

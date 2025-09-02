@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\Store;
 
+use Pyz\Zed\ShopConfiguration\Communication\Plugin\Store\CreateStoreDomainStorePostCreate;
 use Spryker\Zed\Country\Communication\Plugin\Store\CountryStoreCollectionExpanderPlugin;
 use Spryker\Zed\Country\Communication\Plugin\Store\CountryStorePostCreatePlugin;
 use Spryker\Zed\Country\Communication\Plugin\Store\CountryStorePostUpdatePlugin;
@@ -71,6 +72,7 @@ class StoreDependencyProvider extends SprykerStoreDependencyProvider
             new LocaleStorePostCreatePlugin(),
             new SearchSetupSourcesStorePostCreatePlugin(),
             new ContextStorePostCreatePlugin(),
+            new CreateStoreDomainStorePostCreate(),
         ];
     }
 

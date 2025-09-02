@@ -42,6 +42,11 @@
                         {{ form_errors(form.shop_name) }}
                     </div>
                     <div class="form-group">
+                        {{ form_label(form.shop_domain) }}
+                        {{ form_widget(form.shop_domain) }}
+                        {{ form_errors(form.shop_domain) }}
+                    </div>
+                    <div class="form-group">
                         {{ form_label(form.logo) }}
                         {{ form_widget(form.logo) }}
                         {{ form_errors(form.logo) }}

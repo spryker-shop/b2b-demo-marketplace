@@ -45,4 +45,8 @@ interface ShopConfigurationClientInterface
      * @return bool
      */
     public function isConfigurationAvailable(string $store, ?string $locale = null): bool;
+
+    public function getConfig(string $key): string|int|array|bool|null;
+
+    public function resolveDomainByHost(string $host): ?array;
 }

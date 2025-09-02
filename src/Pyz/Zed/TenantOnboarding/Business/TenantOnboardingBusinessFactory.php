@@ -21,7 +21,9 @@ use Pyz\Zed\TenantOnboarding\Business\Validator\PasswordValidatorInterface;
 use Pyz\Zed\TenantOnboarding\Business\Validator\RegistrationValidator;
 use Pyz\Zed\TenantOnboarding\Business\Validator\RegistrationValidatorInterface;
 use Pyz\Zed\TenantOnboarding\TenantOnboardingDependencyProvider;
+use Spryker\Zed\Event\Business\EventFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Mail\Business\MailFacadeInterface;
 
 /**
  * @method \Pyz\Zed\TenantOnboarding\TenantOnboardingConfig getConfig()
@@ -53,7 +55,7 @@ class TenantOnboardingBusinessFactory extends AbstractBusinessFactory
         return new RegistrationAccepter(
             $this->getEntityManager(),
             $this->getRepository(),
-            $this->getQueueClient(),
+            $this->getEventFacade(),
         );
     }
 
@@ -65,7 +67,7 @@ class TenantOnboardingBusinessFactory extends AbstractBusinessFactory
         return new RegistrationDecliner(
             $this->getEntityManager(),
             $this->getRepository(),
-            $this->getMailClient(),
+            $this->getMailFacade(),
         );
     }
 
@@ -78,6 +80,7 @@ class TenantOnboardingBusinessFactory extends AbstractBusinessFactory
             $this->getOnboardingStepPlugins(),
             $this->getEntityManager(),
             $this->getTenantBehaviorFacade(),
+            $this->getContainer()->getLocator()->store()->facade(),
         );
     }
 
@@ -98,22 +101,6 @@ class TenantOnboardingBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Client\Queue\QueueClientInterface
-     */
-    public function getQueueClient()
-    {
-        return $this->getProvidedDependency(TenantOnboardingDependencyProvider::CLIENT_QUEUE);
-    }
-
-    /**
-     * @return \Spryker\Client\Mail\MailClientInterface
-     */
-    public function getMailClient()
-    {
-        return $this->getProvidedDependency(TenantOnboardingDependencyProvider::CLIENT_MAIL);
-    }
-
-    /**
      * @return array<\Pyz\Zed\TenantOnboarding\Business\Plugin\OnboardingStepPluginInterface>
      */
     public function getOnboardingStepPlugins(): array
@@ -124,5 +111,15 @@ class TenantOnboardingBusinessFactory extends AbstractBusinessFactory
     public function getTenantBehaviorFacade(): TenantBehaviorFacadeInterface
     {
         return $this->getProvidedDependency(TenantOnboardingDependencyProvider::FACADE_TENANT_BEHAVIOR);
+    }
+
+    protected function getEventFacade(): EventFacadeInterface
+    {
+        return $this->getContainer()->getLocator()->event()->facade();
+    }
+
+    protected function getMailFacade(): MailFacadeInterface
+    {
+        return $this->getContainer()->getLocator()->mail()->facade();
     }
 }

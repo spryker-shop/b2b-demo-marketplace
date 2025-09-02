@@ -16,6 +16,7 @@ use Pyz\Zed\TenantOnboarding\Persistence\TenantOnboardingEntityManagerInterface;
 use Pyz\Zed\TenantOnboarding\TenantOnboardingConfig;
 use Spryker\Zed\Company\Business\Exception\InvalidCompanyCreationException;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\Store\Business\StoreFacadeInterface;
 
 class OnboardingProcessor implements OnboardingProcessorInterface
 {
@@ -27,6 +28,7 @@ class OnboardingProcessor implements OnboardingProcessorInterface
         protected array $onboardingStepPlugins,
         protected TenantOnboardingEntityManagerInterface $entityManager,
         protected TenantBehaviorFacadeInterface $tenantBehaviorFacade,
+        protected StoreFacadeInterface $storeFacade,
     ) {
     }
 
@@ -43,6 +45,13 @@ class OnboardingProcessor implements OnboardingProcessorInterface
         }
         $currentTenantId = $this->tenantBehaviorFacade->getCurrentTenantId();
         $this->tenantBehaviorFacade->setCurrentTenantId($registrationTransfer->getTenantName());
+        if (count($this->storeFacade->getAllStores()) === 0) {
+            $registrationTransfer->setStatus(TenantOnboardingConfig::REGISTRATION_STATUS_FAILED);
+            $this->entityManager->updateTenantRegistration($registrationTransfer);
+            $this->tenantBehaviorFacade->setCurrentTenantId($currentTenantId);
+
+            throw new InvalidCompanyCreationException('No stores found. Tenant Data Import was not processed correctly.');
+        }
 
         $registrationTransfer->setStatus(TenantOnboardingConfig::REGISTRATION_STATUS_PROCESSING);
         $this->entityManager->updateTenantRegistration($registrationTransfer);

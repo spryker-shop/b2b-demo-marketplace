@@ -12,16 +12,18 @@ class StoreSwitcherWidget extends \SprykerShop\Yves\StoreWidget\Widget\StoreSwit
      */
     protected function generateStoreUrls(string $route, array $parameters): array
     {
-        $storeNames = $this->getFactory()->getStoreStorageClient()->getStoreNames();
-        $urls = [];
+        /** @var \Pyz\Client\ShopConfiguration\ShopConfigurationClient $shopConfigurationClient */
+        $shopConfigurationClient = \Spryker\Client\Kernel\Locator::getInstance()
+            ->shopConfiguration()
+            ->client();
+        /** @var \Pyz\Client\TenantBehavior\TenantBehaviorClientInterface $tenantBehaviorClient */
+        $tenantBehaviorClient = \Spryker\Client\Kernel\Locator::getInstance()
+            ->tenantBehavior()
+            ->client();
+        $tenantId = $tenantBehaviorClient->getCurrentTenantId();
 
-        $hostname = $_SERVER['HTTP_HOST'] ?? '';
-        $explode = explode('_', $hostname, 2);
-        $tenantHost = $explode[1] ?? $hostname;
-        foreach ($storeNames as $storeName) {
-            $urls[$storeName] = sprintf('%s://%s_%s', $_SERVER['REQUEST_SCHEME'], strtolower($storeName), $tenantHost);
-        }
-
-        return $urls;
+        return array_map(function ($tenantHost) {
+            return sprintf('%s://%s', $_SERVER['REQUEST_SCHEME'], $tenantHost);
+        }, $shopConfigurationClient->resolveDomainByHost($tenantId));
     }
 }

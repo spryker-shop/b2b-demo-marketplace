@@ -12,38 +12,15 @@ use Generated\Shared\Transfer\MailTransfer;
 use Pyz\Zed\TenantOnboarding\Persistence\TenantOnboardingEntityManagerInterface;
 use Pyz\Zed\TenantOnboarding\Persistence\TenantOnboardingRepositoryInterface;
 use Pyz\Zed\TenantOnboarding\TenantOnboardingConfig;
-use Spryker\Client\Mail\MailClientInterface;
+use Spryker\Zed\Mail\Business\MailFacadeInterface;
 
 class RegistrationDecliner implements RegistrationDeclinerInterface
 {
-    /**
-     * @var \Pyz\Zed\TenantOnboarding\Persistence\TenantOnboardingEntityManagerInterface
-     */
-    protected TenantOnboardingEntityManagerInterface $entityManager;
-
-    /**
-     * @var \Pyz\Zed\TenantOnboarding\Persistence\TenantOnboardingRepositoryInterface
-     */
-    protected TenantOnboardingRepositoryInterface $repository;
-
-    /**
-     * @var \Spryker\Client\Mail\MailClientInterface
-     */
-    protected MailClientInterface $mailClient;
-
-    /**
-     * @param \Pyz\Zed\TenantOnboarding\Persistence\TenantOnboardingEntityManagerInterface $entityManager
-     * @param \Pyz\Zed\TenantOnboarding\Persistence\TenantOnboardingRepositoryInterface $repository
-     * @param \Spryker\Client\Mail\MailClientInterface $mailClient
-     */
     public function __construct(
-        TenantOnboardingEntityManagerInterface $entityManager,
-        TenantOnboardingRepositoryInterface $repository,
-        MailClientInterface $mailClient
+        protected TenantOnboardingEntityManagerInterface $entityManager,
+        protected TenantOnboardingRepositoryInterface $repository,
+        protected MailFacadeInterface $mailFacade
     ) {
-        $this->entityManager = $entityManager;
-        $this->repository = $repository;
-        $this->mailClient = $mailClient;
     }
 
     /**
@@ -70,15 +47,8 @@ class RegistrationDecliner implements RegistrationDeclinerInterface
         // Send decline notification email
         $mailTransfer = new MailTransfer();
         $mailTransfer->setType('tenant-registration-declined');
-        $mailTransfer->setLocale('en_US');
-        $mailTransfer->addRecipient($registrationTransfer->getEmail(), $registrationTransfer->getCompanyName());
-        $mailTransfer->setData([
-            'companyName' => $registrationTransfer->getCompanyName(),
-            'tenantName' => $registrationTransfer->getTenantName(),
-            'declineReason' => $reason,
-        ]);
 
-        $this->mailClient->sendMail($mailTransfer);
+        $this->mailFacade->handleMail($mailTransfer);
 
         $responseTransfer->setIsSuccessful(true);
         $responseTransfer->setIdTenantRegistration($idTenantRegistration);

@@ -186,6 +186,8 @@ use Pyz\Yves\StoreWidget\Widget\StoreSwitcherWidget;
 use SprykerShop\Yves\TabsWidget\Widget\FullTextSearchTabsWidget;
 use SprykerShop\Yves\TraceableEventWidget\Widget\TraceableEventWidget;
 use SprykerShop\Yves\WebProfilerWidget\Plugin\Application\WebProfilerApplicationPlugin;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
@@ -388,48 +390,6 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             new TwigApplicationPlugin(),
             new EventDispatcherApplicationPlugin(),
             new ShopApplicationApplicationPlugin(),
-            new class extends \SprykerShop\Yves\StoreWidget\Plugin\ShopApplication\StoreApplicationPlugin
-            {
-                protected function resolveStoreName(ContainerInterface $container): string
-                {
-                    $storeName = $this->getStoreRequestUrlParameter();
-                    $storeName = strtoupper($storeName);
-                    $storeNames = $this->getFactory()->getStoreStorageClient()->getStoreNames();
-                    if ($storeName) {
-                        if (in_array($storeName, $storeNames, true)) {
-                            return $storeName;
-                        }
-                    }
-
-                    $defaultStoreName = current($storeNames);
-
-
-                    if (!$defaultStoreName) {
-                        echo 'No store not found';
-                        die;
-                    }
-
-                    header(
-                        sprintf('Location: %s://%s_%s', $_SERVER['REQUEST_SCHEME'], strtolower($defaultStoreName), $_SERVER['HTTP_HOST'])
-                    );
-                    die;
-
-                    return $defaultStoreName;
-                }
-
-                /**
-                 * @param string $requestUri
-                 *
-                 * @return string|null
-                 */
-                protected function extractStoreCode(string $requestUri): ?string
-                {
-                    $hostname = $_SERVER['HTTP_HOST'] ?? '';
-                    $pathElements = explode('_', $hostname);
-
-                    return $pathElements[$this->getConfig()->getStoreCodeIndex()] ?? null;
-                }
-            },
             new LocaleApplicationPlugin(),
             new TranslatorApplicationPlugin(),
             new RouterApplicationPlugin(),
@@ -443,32 +403,82 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             new class implements \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface
             {
                 public const SERVICE_TENANT_ID = 'SERVICE_TENANT_ID';
+                protected const STORE = 'store';
+
+                /**
+                 * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+                 *
+                 * @var string
+                 */
+                public const SERVICE_REQUEST_STACK = 'request_stack';
 
                 public function provide(ContainerInterface $container): ContainerInterface
                 {
+                    $container->set(static::STORE, function (ContainerInterface $container) {
+                        return $this->resolve($container, 'store');
+                    });
                     $container->set(static::SERVICE_TENANT_ID, function (ContainerInterface $container) {
-                        $hostname = $_SERVER['HTTP_HOST'] ?? '';
-                        $explode = explode('_', $hostname, 2);
-                        $tenantId = $hostname;
-                        if (count($explode) === 2) {
-                            $tenantId = $explode[1];
-                        }
-                        /** @var \Pyz\Client\TenantOnboarding\TenantOnboardingClientInterface $tenantOnboardingClient */
-                        $tenantOnboardingClient = \Spryker\Client\Kernel\Locator::getInstance()
-                            ->tenantOnboarding()
-                            ->client();
-
-                        $tenantTransfer = $tenantOnboardingClient->findTenantByID($tenantId);
-
-                        if (!$tenantTransfer) {
-                            echo 'Setup not found for hostname: ' . $hostname;
-                            die;
-                        }
-
-                        return $tenantTransfer->getIdentifierOrFail();
+                        return $this->resolve($container, 'tenant');
                     });
 
                     return $container;
+                }
+
+                protected function resolve(ContainerInterface $container, string $parameter): string
+                {
+                    /** @var \Pyz\Client\ShopConfiguration\ShopConfigurationClient $shopConfigurationClient */
+                    $shopConfigurationClient = \Spryker\Client\Kernel\Locator::getInstance()
+                        ->shopConfiguration()
+                        ->client();
+                    $request = $this->getRequest($container);
+                    $host = $request->getHttpHost();
+                    $storeDomainData = $shopConfigurationClient->resolveDomainByHost($host);
+                    if ($storeDomainData) {
+                        if (isset($storeDomainData[$parameter])) {
+                            return $storeDomainData[$parameter];
+                        }
+                        echo 'Parameter not found: ' . $parameter;
+                        die;
+                    }
+
+                    /** @var \Pyz\Client\TenantOnboarding\TenantOnboardingClientInterface $tenantOnboardingClient */
+                    $tenantOnboardingClient = \Spryker\Client\Kernel\Locator::getInstance()
+                        ->tenantOnboarding()
+                        ->client();
+                    $tenantTransfer = $tenantOnboardingClient->findTenantByID($host);
+
+                    if ($tenantTransfer) {
+                        if ($parameter === 'tenant') {
+                            return (string)$tenantTransfer->getIdentifier();
+                        }
+                        if ($parameter === 'store') {
+                            $storeDomainData = $shopConfigurationClient->resolveDomainByHost($tenantTransfer->getIdentifier());
+
+                            if ($storeDomainData) {
+                                $defaultDomain = reset($storeDomainData);
+                                header(
+                                    sprintf('Location: %s://%s', $request->getScheme(), $defaultDomain),
+                                );
+                                die;
+                            }
+                        }
+                    }
+
+                    echo 'Domain not found';
+                    die;
+                }
+
+                protected function getRequest(ContainerInterface $container): \Symfony\Component\HttpFoundation\Request
+                {
+                    $requestStack = $container->get(static::SERVICE_REQUEST_STACK);
+
+                    if ($requestStack->getCurrentRequest() === null) {
+                        $requestStack = new RequestStack();
+                        $requestStack->push(Request::createFromGlobals());
+                    }
+
+                    /** @var \Symfony\Component\HttpFoundation\Request $currentRequest */
+                    return $requestStack->getCurrentRequest();
                 }
             },
         ];

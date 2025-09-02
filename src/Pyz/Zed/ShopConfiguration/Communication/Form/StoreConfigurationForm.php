@@ -24,6 +24,7 @@ class StoreConfigurationForm extends AbstractType
         $this->addLogoField($builder)
             ->addFavicon($builder)
             ->addShopName($builder)
+            ->addShopDomain($builder)
             ->addDefaultTitle($builder)
             ->addDefaultDescription($builder)
             ->addDefaultKeyWords($builder)
@@ -124,6 +125,20 @@ class StoreConfigurationForm extends AbstractType
             'required' => false,
             'attr' => [
                 'placeholder' => 'Enter Shop Name',
+                'class' => 'form-control',
+            ],
+        ]);
+
+        return $this;
+    }
+
+    protected function addShopDomain(FormBuilderInterface $builder): self
+    {
+        $builder->add('shop_domain', TextType::class, [
+            'label' => 'Shop Sub-Domain',
+            'required' => true,
+            'attr' => [
+                'placeholder' => 'Enter Shop Sub-Domain',
                 'class' => 'form-control',
             ],
         ]);

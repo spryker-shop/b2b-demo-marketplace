@@ -6,4 +6,9 @@
         <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 
+    <table name="spy_product_label" idMethod="native">
+        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation" />
+        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+    </table>
+
 </database>

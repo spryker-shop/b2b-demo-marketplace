@@ -116,4 +116,16 @@ class ShopConfigurationClient extends AbstractClient implements ShopConfiguratio
 
         return $tenantStorageReader->getConfig($key);
     }
+
+    public function resolveDomainByHost(string $host): ?array
+    {
+        $tenantStorageReader = new Reader\StoreDomainStorageReader(
+            \Spryker\Client\Kernel\Locator::getInstance()->synchronization()->service(),
+            \Spryker\Client\Kernel\Locator::getInstance()->storage()->client(),
+            \Spryker\Client\Kernel\Locator::getInstance()->tenantBehavior()->client(),
+            \Spryker\Client\Kernel\Locator::getInstance()->store()->client(),
+        );
+
+        return $tenantStorageReader->getConfig($host);
+    }
 }

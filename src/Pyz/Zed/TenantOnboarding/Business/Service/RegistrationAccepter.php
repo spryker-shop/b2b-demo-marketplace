@@ -14,13 +14,14 @@ use Pyz\Zed\TenantOnboarding\Persistence\TenantOnboardingEntityManagerInterface;
 use Pyz\Zed\TenantOnboarding\Persistence\TenantOnboardingRepositoryInterface;
 use Pyz\Zed\TenantOnboarding\TenantOnboardingConfig;
 use Spryker\Client\Queue\QueueClientInterface;
+use Spryker\Zed\Event\Business\EventFacadeInterface;
 
 class RegistrationAccepter implements RegistrationAccepterInterface
 {
     public function __construct(
         protected TenantOnboardingEntityManagerInterface $entityManager,
         protected TenantOnboardingRepositoryInterface $repository,
-        protected QueueClientInterface $queueClient
+        protected EventFacadeInterface $eventFacade
     ) {
     }
 
@@ -51,9 +52,7 @@ class RegistrationAccepter implements RegistrationAccepterInterface
         $queueMessage = new QueueSendMessageTransfer();
         $queueMessage->setBody(json_encode($messageTransfer->toArray()));
 
-        (new \Spryker\Zed\Event\Business\EventFacade())->trigger(TenantOnboardingConfig::TENANT_REGISTERED_EVENT, $queueMessage);
-
-        //$this->queueClient->sendMessage(TenantOnboardingConfig::QUEUE_NAME_TENANT_ONBOARDING, $queueMessage);
+        $this->eventFacade->trigger(TenantOnboardingConfig::TENANT_REGISTERED_EVENT, $queueMessage);
 
         $responseTransfer->setIsSuccessful(true);
         $responseTransfer->setIdTenantRegistration($idTenantRegistration);
