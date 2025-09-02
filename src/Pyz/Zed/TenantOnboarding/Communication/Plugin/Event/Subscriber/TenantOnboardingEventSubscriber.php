@@ -21,55 +21,62 @@ class TenantOnboardingEventSubscriber extends AbstractPlugin implements EventSub
         $eventCollection->addListenerQueued(
             \Pyz\Zed\TenantOnboarding\TenantOnboardingConfig::TENANT_REGISTERED_EVENT,
             new \Pyz\Zed\TenantOnboarding\Communication\Plugin\Event\Listener\TenantImportStoreListener(),
-            9,
+            10,
             null,
             \Pyz\Zed\TenantOnboarding\TenantOnboardingConfig::QUEUE_NAME_TENANT_ONBOARDING,
         );
         $eventCollection->addListenerQueued(
             \Pyz\Zed\TenantOnboarding\TenantOnboardingConfig::TENANT_REGISTERED_EVENT,
             new \Pyz\Zed\TenantOnboarding\Communication\Plugin\Event\Listener\TenantImportCommerceListener(),
-            8,
+            9,
             null,
             \Pyz\Zed\TenantOnboarding\TenantOnboardingConfig::QUEUE_NAME_TENANT_ONBOARDING,
         );
         $eventCollection->addListenerQueued(
             \Pyz\Zed\TenantOnboarding\TenantOnboardingConfig::TENANT_REGISTERED_EVENT,
             new \Pyz\Zed\TenantOnboarding\Communication\Plugin\Event\Listener\TenantImportCatalogListener(),
-            7,
+            8,
             null,
             \Pyz\Zed\TenantOnboarding\TenantOnboardingConfig::QUEUE_NAME_TENANT_ONBOARDING,
         );
         $eventCollection->addListenerQueued(
             \Pyz\Zed\TenantOnboarding\TenantOnboardingConfig::TENANT_REGISTERED_EVENT,
             new \Pyz\Zed\TenantOnboarding\Communication\Plugin\Event\Listener\TenantImportSpecialCatalogListener(),
-            6,
+            7,
             null,
             \Pyz\Zed\TenantOnboarding\TenantOnboardingConfig::QUEUE_NAME_TENANT_ONBOARDING,
         );
         $eventCollection->addListenerQueued(
             \Pyz\Zed\TenantOnboarding\TenantOnboardingConfig::TENANT_REGISTERED_EVENT,
             new \Pyz\Zed\TenantOnboarding\Communication\Plugin\Event\Listener\TenantImportMerchantListener(),
-            5,
+            6,
             null,
             \Pyz\Zed\TenantOnboarding\TenantOnboardingConfig::QUEUE_NAME_TENANT_ONBOARDING,
         );
         $eventCollection->addListenerQueued(
             \Pyz\Zed\TenantOnboarding\TenantOnboardingConfig::TENANT_REGISTERED_EVENT,
             new \Pyz\Zed\TenantOnboarding\Communication\Plugin\Event\Listener\TenantImportCmsListener(),
-            4,
+            5,
             null,
             \Pyz\Zed\TenantOnboarding\TenantOnboardingConfig::QUEUE_NAME_TENANT_ONBOARDING,
         );
         $eventCollection->addListenerQueued(
             \Pyz\Zed\TenantOnboarding\TenantOnboardingConfig::TENANT_REGISTERED_EVENT,
             new \Pyz\Zed\TenantOnboarding\Communication\Plugin\Event\Listener\TenantImportB2BListener(),
-            3,
+            4,
             null,
             \Pyz\Zed\TenantOnboarding\TenantOnboardingConfig::QUEUE_NAME_TENANT_ONBOARDING,
         );
         $eventCollection->addListenerQueued(
             \Pyz\Zed\TenantOnboarding\TenantOnboardingConfig::TENANT_REGISTERED_EVENT,
             new \Pyz\Zed\TenantOnboarding\Communication\Plugin\Event\Listener\TenantImportB2BProductListener(),
+            3,
+            null,
+            \Pyz\Zed\TenantOnboarding\TenantOnboardingConfig::QUEUE_NAME_TENANT_ONBOARDING,
+        );
+        $eventCollection->addListenerQueued(
+            \Pyz\Zed\TenantOnboarding\TenantOnboardingConfig::TENANT_REGISTERED_EVENT,
+            new \Pyz\Zed\TenantOnboarding\Communication\Plugin\Event\Listener\TenantImportB2BProducStocktListener(),
             2,
             null,
             \Pyz\Zed\TenantOnboarding\TenantOnboardingConfig::QUEUE_NAME_TENANT_ONBOARDING,
