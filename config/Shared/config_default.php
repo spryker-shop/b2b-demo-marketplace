@@ -1129,7 +1129,7 @@ if ($rmqUrl) {
     $config[RabbitMqEnv::RABBITMQ_CONNECTIONS] = [];
     $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$defaultKey] = $defaultConnection;
 
-    $config[QueueConstants::QUEUE_WORKER_MAX_THRESHOLD_SECONDS] = 600;
+    $config[QueueConstants::QUEUE_WORKER_MAX_THRESHOLD_SECONDS] = (int)getenv('QUEUE_WORKER_MAX_THRESHOLD_SECONDS') ?: 600;
     $config[EventConstants::EVENT_CHUNK] = 337;
     $config[QueueConstants::QUEUE_MESSAGE_CHUNK_SIZE_MAP] = [
         EventConstants::EVENT_QUEUE => 132,

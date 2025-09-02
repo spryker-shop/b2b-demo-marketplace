@@ -264,7 +264,8 @@ class WorkerV2 implements WorkerInterface
         }
 
         $processCommand = sprintf(
-            '%s %s',
+            '%s %s %s',
+            'php -d memory_limit=-1',
             QueueWorkerConsole::QUEUE_RUNNER_COMMAND,
             $queueTransfer->getQueueName(),
         );

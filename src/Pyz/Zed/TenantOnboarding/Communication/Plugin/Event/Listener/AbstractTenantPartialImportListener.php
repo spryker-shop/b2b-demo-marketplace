@@ -16,7 +16,7 @@ use Symfony\Component\Process\Process;
 abstract class AbstractTenantPartialImportListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     protected const DATA_IMPORT_FULL_CONFIG_PATH = '';
-    protected const COMMAND_TIMEOUT = 300; // 5 minutes
+    protected const COMMAND_TIMEOUT = 540; // 9 minutes
 
     /**
      * @param array<\Generated\Shared\Transfer\QueueSendMessageTransfer> $eventEntityTransfers
