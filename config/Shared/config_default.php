@@ -1143,18 +1143,6 @@ if ($rmqUrl) {
         'publish.product_concrete'	=>  89,
         'publish'	=>  300,
     ];
-
-    $config[QueueConstants::QUEUE_ADAPTER_CONFIGURATION] = [
-        EventConstants::EVENT_QUEUE => [
-            QueueConfig::CONFIG_QUEUE_ADAPTER => RabbitMqAdapter::class,
-            QueueConfig::CONFIG_MAX_WORKER_NUMBER => 5,
-        ],
-    ];
-
-    $config[QueueConstants::QUEUE_ADAPTER_CONFIGURATION_DEFAULT] = [
-        QueueConfig::CONFIG_QUEUE_ADAPTER => RabbitMqAdapter::class,
-        QueueConfig::CONFIG_MAX_WORKER_NUMBER => 5,
-    ];
 }
 
 $config[\Pyz\Shared\Queue\QueueConstants::QUEUE_WORKER_MAX_PROCESSES] = (int)getenv('MAX_NUMBER_OF_WORKER_PROCESSES') ?: 5;
