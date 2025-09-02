@@ -111,9 +111,6 @@ sections:
         propel-migration-cleanup:
             command: 'vendor/bin/console propel:migration:delete -vvv --no-ansi'
 
-        generate-composer:
-            command: 'composer dumpautoload -o --classmap-authoritative --apcu'
-
         init-database:
             command: 'vendor/bin/console setup:init-db -vvv --no-ansi'
 
@@ -147,3 +144,42 @@ sections:
             command: "vendor/bin/console frontend:yves:build -e production -vvv"
             groups:
                 - yves
+
+    reload:
+        delete-elastic-search-index:
+            command: 'vendor/bin/console search:index:delete'
+            groups:
+                - elastic
+
+        propel-migration-delete:
+            command: 'vendor/bin/console propel:migration:delete -vvv --no-ansi'
+
+        clean-db:
+            command: 'vendor/bin/console propel:tables:drop -vvv --no-ansi'
+
+        propel-copy-schema:
+            command: 'vendor/bin/console propel:schema:copy -vvv --no-ansi'
+
+        propel-postgres-compatibility:
+            command: 'vendor/bin/console propel:pg-sql-compat -vvv --no-ansi'
+
+        propel-diff:
+            command: 'vendor/bin/console propel:diff -vvv --no-ansi'
+
+        propel-migrate:
+            command: 'vendor/bin/console propel:migrate -vvv --no-ansi'
+
+        propel-migration-cleanup:
+            command: 'vendor/bin/console propel:migration:delete -vvv --no-ansi'
+
+        init-database:
+            command: 'vendor/bin/console setup:init-db -vvv --no-ansi'
+
+        queue-setup:
+            command: 'vendor/bin/console queue:setup'
+
+        import-eu-region-demodata:
+            command: 'vendor/bin/console data:import --config=data/import/tenant/deployment.yml'
+
+        setup-search-create-sources:
+            command: 'vendor/bin/console search:setup:sources'

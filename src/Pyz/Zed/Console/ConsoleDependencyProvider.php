@@ -9,7 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\Console;
 
-use Pyz\Zed\DataImport\DataImportConfig;
+use Generated\Shared\Transfer\TenantOnboardingMessageTransfer;
 use Pyz\Zed\Development\Communication\Console\AcceptanceCodeTestConsole;
 use Pyz\Zed\Development\Communication\Console\ApiCodeTestConsole;
 use Pyz\Zed\Development\Communication\Console\FunctionalCodeTestConsole;
@@ -20,17 +20,8 @@ use Pyz\Zed\ShopConfiguration\Communication\Console\ShopConfigurationSetupConsol
 use SecurityChecker\Command\SecurityCheckerCommand;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Zed\AclMerchantPortal\Communication\Console\AclEntitySynchronizeConsole;
-use Spryker\Zed\BusinessOnBehalfDataImport\BusinessOnBehalfDataImportConfig;
 use Spryker\Zed\Cache\Communication\Console\EmptyAllCachesConsole;
-use Spryker\Zed\CategoryDataImport\CategoryDataImportConfig;
-use Spryker\Zed\CompanyBusinessUnitDataImport\CompanyBusinessUnitDataImportConfig;
-use Spryker\Zed\CompanyDataImport\CompanyDataImportConfig;
-use Spryker\Zed\CompanyUnitAddressDataImport\CompanyUnitAddressDataImportConfig;
-use Spryker\Zed\CompanyUnitAddressLabelDataImport\CompanyUnitAddressLabelDataImportConfig;
 use Spryker\Zed\Console\ConsoleDependencyProvider as SprykerConsoleDependencyProvider;
-use Spryker\Zed\ContentNavigationDataImport\ContentNavigationDataImportConfig;
-use Spryker\Zed\CountryDataImport\CountryDataImportConfig;
-use Spryker\Zed\CurrencyDataImport\CurrencyDataImportConfig;
 use Spryker\Zed\Customer\Communication\Console\CustomerPasswordResetConsole;
 use Spryker\Zed\Customer\Communication\Console\CustomerPasswordSetConsole;
 use Spryker\Zed\CustomerStorage\Communication\Console\DeleteExpiredCustomerInvalidatedRecordsConsole;
@@ -68,20 +59,16 @@ use Spryker\Zed\Installer\Communication\Console\InitializeDatabaseConsole;
 use Spryker\Zed\Kernel\Communication\Console\ResolvableClassCacheConsole;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Communication\Plugin\Application\ConsoleLocaleApplicationPlugin;
-use Spryker\Zed\LocaleDataImport\LocaleDataImportConfig;
 use Spryker\Zed\Log\Communication\Console\DeleteLogFilesConsole;
 use Spryker\Zed\Maintenance\Communication\Console\MaintenanceDisableConsole;
 use Spryker\Zed\Maintenance\Communication\Console\MaintenanceEnableConsole;
-use Spryker\Zed\MerchantCommissionDataImport\MerchantCommissionDataImportConfig;
 use Spryker\Zed\MerchantOms\Communication\Console\TriggerEventFromCsvFileConsole;
-use Spryker\Zed\MerchantProductApprovalDataImport\MerchantProductApprovalDataImportConfig;
 use Spryker\Zed\MessageBroker\Communication\Plugin\Console\MessageBrokerDebugConsole;
 use Spryker\Zed\MessageBroker\Communication\Plugin\Console\MessageBrokerWorkerConsole;
 use Spryker\Zed\MessageBrokerAws\Communication\Console\MessageBrokerAwsSnsTopicsCreatorConsole;
 use Spryker\Zed\MessageBrokerAws\Communication\Console\MessageBrokerAwsSqsQueuesCreatorConsole;
 use Spryker\Zed\MessageBrokerAws\Communication\Console\MessageBrokerSqsToSnsSubscriberConsole;
 use Spryker\Zed\Monitoring\Communication\Plugin\Console\MonitoringConsolePlugin;
-use Spryker\Zed\MultiCartDataImport\MultiCartDataImportConfig;
 use Spryker\Zed\Oauth\Communication\Console\OauthTokenConsole;
 use Spryker\Zed\Oauth\Communication\Console\ScopeCacheCollectorConsole;
 use Spryker\Zed\Oms\Communication\Console\CheckConditionConsole as OmsCheckConditionConsole;
@@ -89,26 +76,15 @@ use Spryker\Zed\Oms\Communication\Console\CheckTimeoutConsole as OmsCheckTimeout
 use Spryker\Zed\Oms\Communication\Console\ClearLocksConsole as OmsClearLocksConsole;
 use Spryker\Zed\Oms\Communication\Console\ProcessCacheWarmUpConsole as OmsProcessCacheWarmUpConsole;
 use Spryker\Zed\OrderMatrix\Communication\Console\OrderMatrixConsole;
-use Spryker\Zed\PaymentDataImport\PaymentDataImportConfig;
 use Spryker\Zed\PriceProduct\Communication\Console\PriceProductStoreOptimizeConsole;
-use Spryker\Zed\PriceProductDataImport\PriceProductDataImportConfig;
 use Spryker\Zed\PriceProductMerchantRelationship\Communication\Console\PriceProductMerchantRelationshipDeleteConsole;
 use Spryker\Zed\PriceProductSchedule\Communication\Console\PriceProductScheduleApplyConsole;
 use Spryker\Zed\PriceProductSchedule\Communication\Console\PriceProductScheduleCleanupConsole;
-use Spryker\Zed\PriceProductScheduleDataImport\PriceProductScheduleDataImportConfig;
-use Spryker\Zed\ProductAlternativeDataImport\ProductAlternativeDataImportConfig;
-use Spryker\Zed\ProductApprovalDataImport\ProductApprovalDataImportConfig;
 use Spryker\Zed\ProductDiscontinued\Communication\Console\DeactivateDiscontinuedProductsConsole;
-use Spryker\Zed\ProductDiscontinuedDataImport\ProductDiscontinuedDataImportConfig;
 use Spryker\Zed\ProductLabel\Communication\Console\ProductLabelRelationUpdaterConsole;
 use Spryker\Zed\ProductLabel\Communication\Console\ProductLabelValidityConsole;
-use Spryker\Zed\ProductLabelDataImport\ProductLabelDataImportConfig;
-use Spryker\Zed\ProductOfferShoppingListDataImport\ProductOfferShoppingListDataImportConfig;
 use Spryker\Zed\ProductOfferValidity\Communication\Console\ProductOfferValidityConsole;
-use Spryker\Zed\ProductPackagingUnitDataImport\ProductPackagingUnitDataImportConfig;
-use Spryker\Zed\ProductQuantityDataImport\ProductQuantityDataImportConfig;
 use Spryker\Zed\ProductRelation\Communication\Console\ProductRelationUpdaterConsole;
-use Spryker\Zed\ProductRelationDataImport\ProductRelationDataImportConfig;
 use Spryker\Zed\ProductValidity\Communication\Console\ProductValidityConsole;
 use Spryker\Zed\Propel\Communication\Console\DatabaseDropConsole;
 use Spryker\Zed\Propel\Communication\Console\DatabaseDropTablesConsole;
@@ -166,20 +142,14 @@ use Spryker\Zed\SetupFrontend\Communication\Console\YvesBuildFrontendConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\YvesInstallDependenciesConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\ZedBuildFrontendConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\ZedInstallDependenciesConsole;
-use Spryker\Zed\SharedCartDataImport\SharedCartDataImportConfig;
-use Spryker\Zed\ShipmentDataImport\ShipmentDataImportConfig;
-use Spryker\Zed\ShoppingListDataImport\ShoppingListDataImportConfig;
 use Spryker\Zed\Sitemap\Communication\Console\SitemapGenerateConsole;
 use Spryker\Zed\StateMachine\Communication\Console\CheckConditionConsole as StateMachineCheckConditionConsole;
 use Spryker\Zed\StateMachine\Communication\Console\CheckTimeoutConsole as StateMachineCheckTimeoutConsole;
 use Spryker\Zed\StateMachine\Communication\Console\ClearLocksConsole as StateMachineClearLocksConsole;
-use Spryker\Zed\StockDataImport\StockDataImportConfig;
 use Spryker\Zed\Storage\Communication\Console\StorageDeleteAllConsole;
 use Spryker\Zed\StorageRedis\Communication\Console\StorageRedisDataReSaveConsole;
 use Spryker\Zed\StorageRedis\Communication\Console\StorageRedisExportRdbConsole;
 use Spryker\Zed\StorageRedis\Communication\Console\StorageRedisImportRdbConsole;
-use Spryker\Zed\StoreContextDataImport\StoreContextDataImportConfig;
-use Spryker\Zed\StoreDataImport\StoreDataImportConfig;
 use Spryker\Zed\Synchronization\Communication\Console\ExportSynchronizedDataConsole;
 use Spryker\Zed\Synchronization\Communication\Plugin\Console\DirectSynchronizationConsolePlugin;
 use Spryker\Zed\Transfer\Communication\Console\DataBuilderGeneratorConsole;
@@ -192,7 +162,6 @@ use Spryker\Zed\Translator\Communication\Console\GenerateTranslationCacheConsole
 use Spryker\Zed\Twig\Communication\Console\CacheWarmerConsole;
 use Spryker\Zed\Twig\Communication\Console\TwigTemplateWarmerConsole;
 use Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin;
-use Spryker\Zed\User\Business\UserFacade;
 use Spryker\Zed\Uuid\Communication\Console\UuidGeneratorConsole;
 use Spryker\Zed\ZedNavigation\Communication\Console\BuildNavigationConsole;
 use Spryker\Zed\ZedNavigation\Communication\Console\RemoveNavigationCacheConsole;
@@ -378,21 +347,88 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
                  */
                 protected function execute(InputInterface $input, OutputInterface $output): int
                 {
-                   (new \Spryker\Zed\MerchantProductOfferStorage\Communication\Plugin\Publisher\ProductConcreteProductOffer\MerchantProductConcreteProductOfferWritePublisherPlugin())
-                       ->handleBulk(
-                           [(new \Generated\Shared\Transfer\EventEntityTransfer())
-                                 ->fromArray([
-                                     "additional_values" => [],
-    "id"=> 11,
-    "foreign_keys"=> [],
-    "modified_columns"=> [],
-    "event"=> null,
-    "name"=> null,
-    "original_values"=> []
-                                 ])],
-                           "Merchant.merchant.publish"
-                       );
+                    (new \Spryker\Zed\RabbitMq\Business\RabbitMqFacade())->purgeAllQueues(
+                        $this->getMessenger(),
+                    );
+                    $dataArray = [
+                        json_decode('{
+                          "id_tenant_registration": 1,
+                          "attempt": null,
+                          "max_attempts": null,
+                          "tenant_registration": {
+                            "id_tenant_registration": 1,
+                            "company_name": "Spryker",
+                            "tenant_name": "spryker",
+                            "email": "dmitriy.krainiy@spryker.com",
+                            "password": null,
+                            "password_hash": "$2y$10$oLZdG6DkdN2HcD\/xCGQEz.UGj9xwllghwpEtpLDX2YQhthMaOYaky",
+                            "data_set": "demo",
+                            "status": "approved",
+                            "decline_reason": null,
+                            "created_at": "2025-08-28 08:20:35.329398",
+                            "updated_at": "2025-08-28 08:48:10",
+                            "errors": null,
+                            "backoffice_host": null,
+                            "tenant": null
+                          }
+                        }', true),
+                        json_decode('{
+                          "id_tenant_registration": 2,
+                          "attempt": null,
+                          "max_attempts": null,
+                          "tenant_registration": {
+                            "id_tenant_registration": 2,
+                            "company_name": "Test",
+                            "tenant_name": "test",
+                            "email": "dmitriy.krainiy+1@spryker.com",
+                            "password": null,
+                            "password_hash": "$2y$10$oLZdG6DkdN2HcD\/xCGQEz.UGj9xwllghwpEtpLDX2YQhthMaOYaky",
+                            "data_set": "full",
+                            "status": "approved",
+                            "decline_reason": null,
+                            "created_at": "2025-08-28 08:20:35.329398",
+                            "updated_at": "2025-08-28 08:48:10",
+                            "errors": null,
+                            "backoffice_host": null,
+                            "tenant": null
+                          }
+                        }', true),
+                        json_decode('{
+                          "id_tenant_registration": 3,
+                          "attempt": null,
+                          "max_attempts": null,
+                          "tenant_registration": {
+                            "id_tenant_registration": 3,
+                            "company_name": "Spryker 2",
+                            "tenant_name": "spryker_2",
+                            "email": "dmitriy.krainiy+3@spryker.com",
+                            "password": null,
+                            "password_hash": "$2y$10$oLZdG6DkdN2HcD\/xCGQEz.UGj9xwllghwpEtpLDX2YQhthMaOYaky",
+                            "data_set": "demo",
+                            "status": "approved",
+                            "decline_reason": null,
+                            "created_at": "2025-08-28 08:20:35.329398",
+                            "updated_at": "2025-08-28 08:48:10",
+                            "errors": null,
+                            "backoffice_host": null,
+                            "tenant": null
+                          }
+                        }', true),
+                    ];
+                    foreach ($dataArray as $data) {
+                        $dataSave = $data['tenant_registration'];
+                        unset($dataSave['id_tenant_registration']);
+                        if (!(\Orm\Zed\TenantOnboarding\Persistence\PyzTenantRegistrationQuery::create()->filterByPrimaryKey($data['id_tenant_registration'])->findOne())) {
+                            (new \Orm\Zed\TenantOnboarding\Persistence\PyzTenantRegistration())
+                                ->fromArray($dataSave)
+                                ->save();
+                        }
 
+                        (new \Spryker\Zed\Event\Business\EventFacade())->trigger(
+                            \Pyz\Zed\TenantOnboarding\TenantOnboardingConfig::TENANT_REGISTERED_EVENT,
+                            (new \Generated\Shared\Transfer\QueueSendMessageTransfer())->setBody(json_encode($data)),
+                        );
+                    }
                     return static::CODE_SUCCESS;
                 }
             },

@@ -588,13 +588,17 @@ $config[QueueConstants::QUEUE_PROCESS_TRIGGER_INTERVAL_MICROSECONDS] = 1001;
 $config[QueueConstants::QUEUE_ADAPTER_CONFIGURATION] = [
     EventConstants::EVENT_QUEUE => [
         QueueConfig::CONFIG_QUEUE_ADAPTER => RabbitMqAdapter::class,
+        QueueConfig::CONFIG_MAX_WORKER_NUMBER => 5,
+    ],
+    \Pyz\Zed\TenantOnboarding\TenantOnboardingConfig::QUEUE_NAME_TENANT_ONBOARDING => [
+        QueueConfig::CONFIG_QUEUE_ADAPTER => RabbitMqAdapter::class,
         QueueConfig::CONFIG_MAX_WORKER_NUMBER => 1,
     ],
 ];
 
 $config[QueueConstants::QUEUE_ADAPTER_CONFIGURATION_DEFAULT] = [
     QueueConfig::CONFIG_QUEUE_ADAPTER => RabbitMqAdapter::class,
-    QueueConfig::CONFIG_MAX_WORKER_NUMBER => 1,
+    QueueConfig::CONFIG_MAX_WORKER_NUMBER => 5,
 ];
 
 $config[RabbitMqEnv::RABBITMQ_API_HOST] = getenv('SPRYKER_BROKER_API_HOST');
