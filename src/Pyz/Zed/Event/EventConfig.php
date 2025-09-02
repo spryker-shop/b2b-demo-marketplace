@@ -19,14 +19,4 @@ class EventConfig extends SprykerEventConfig
      * @var string|int
      */
     protected const DEFAULT_EVENT_LOGGER_MIN_LEVEL = Logger::WARNING;
-
-    /**
-     * @api
-     *
-     * @return int
-     */
-    public function getEventQueueMessageChunkSize()
-    {
-        return 200;
-    }
 }

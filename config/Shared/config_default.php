@@ -735,7 +735,7 @@ $config[ApplicationConstants::BASE_URL_ZED] = sprintf(
 
 $merchantPortalPort = (int)(getenv('SPRYKER_MP_PORT')) ?: 443;
 $config[MerchantPortalConstants::BASE_URL_MP] = sprintf(
-    'https://%s%s',
+    'http://%s%s',
     getenv('SPRYKER_MP_HOST'),
     $merchantPortalPort !== 80 ? ':' . $merchantPortalPort : '',
 );
@@ -1103,7 +1103,6 @@ $rmqApiKey = getenv('CLOUDAMQP_CHARCOAL_APIKEY');
 if ($rmqUrl) {
     $url = parse_url($rmqUrl);
     $virtualHost = ltrim($url['path'] ?? '', '/');
-    $config[QueueConstants::QUEUE_WORKER_MAX_THRESHOLD_SECONDS] = 600;
 
     $config[RabbitMqEnv::RABBITMQ_API_HOST] = $url['host'];
     $config[RabbitMqEnv::RABBITMQ_API_PORT] = $url['port'] ?? 5672;
@@ -1125,14 +1124,33 @@ if ($rmqUrl) {
 
     $config[RabbitMqEnv::RABBITMQ_CONNECTIONS] = [];
     $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$defaultKey] = $defaultConnection;
+
+    $config[QueueConstants::QUEUE_WORKER_MAX_THRESHOLD_SECONDS] = 600;
+    $config[EventConstants::EVENT_CHUNK] = 337;
+    $config[QueueConstants::QUEUE_MESSAGE_CHUNK_SIZE_MAP] = [
+        EventConstants::EVENT_QUEUE => 132,
+        'publish.page_product_abstract'	=>  30,
+        'publish.page_product_concrete'	=>  21,
+        'publish.product_image_abstract'	=>  334,
+        'publish.product_image_concrete'	=>  500,
+        'publish.price_product_abstract'	=>  500,
+        'publish.price_product_concrete'	=>  175,
+        'publish.product_abstract'	=>  96,
+        'publish.product_concrete'	=>  89,
+        'publish'	=>  300,
+    ];
+
+    $config[QueueConstants::QUEUE_ADAPTER_CONFIGURATION] = [
+        EventConstants::EVENT_QUEUE => [
+            QueueConfig::CONFIG_QUEUE_ADAPTER => RabbitMqAdapter::class,
+            QueueConfig::CONFIG_MAX_WORKER_NUMBER => 5,
+        ],
+    ];
+
+    $config[QueueConstants::QUEUE_ADAPTER_CONFIGURATION_DEFAULT] = [
+        QueueConfig::CONFIG_QUEUE_ADAPTER => RabbitMqAdapter::class,
+        QueueConfig::CONFIG_MAX_WORKER_NUMBER => 5,
+    ];
 }
 
-$bonsai = getenv('BONSAI_URL') ?: getenv('BONSAI_SHARED');
-if ($bonsai) {
-    $url = parse_url($bonsai);
-
-    $config[SearchElasticsearchConstants::HOST] = $url['user'] . ':' . $url['pass'] . '@' . $url['host'];
-    $config[SearchElasticsearchConstants::TRANSPORT] = $url['scheme'];
-    $config[SearchElasticsearchConstants::PORT] = $url['port'];
-    $config[SearchElasticsearchConstants::AUTH_HEADER] = '';
-}
+$config[\Pyz\Shared\Queue\QueueConstants::QUEUE_WORKER_MAX_PROCESSES] = (int)getenv('MAX_NUMBER_OF_WORKER_PROCESSES') ?: 5;

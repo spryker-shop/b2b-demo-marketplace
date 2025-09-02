@@ -54,13 +54,13 @@ class CreateStoreDomainsOnboardingStepPlugin extends AbstractPlugin implements O
         }
 
         $storeDomainEntities = SpyStoreDomainQuery::create()
-            ->filterByStore_In($storeNames)
+            ->filterByStoreName_In($storeNames)
             ->filterByTenantIdentifier($tenantRegistrationTransfer->getTenantNameOrFail())
             ->find();
 
         $processedStores = [];
         foreach ($storeDomainEntities as $storeDomainEntity) {
-            $processedStores[] = $storeDomainEntity->getStore();
+            $processedStores[] = $storeDomainEntity->getStorename();
         }
 
         $createdHosts = [];
@@ -80,7 +80,6 @@ class CreateStoreDomainsOnboardingStepPlugin extends AbstractPlugin implements O
                 ->save();
             $createdHosts[] = $generateTenantHost;
         }
-
 
         $storeDomainEntities = SpyStoreDomainQuery::create()
             ->filterByTenantIdentifier($tenantRegistrationTransfer->getTenantNameOrFail())

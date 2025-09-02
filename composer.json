@@ -417,6 +417,12 @@
         "compile-zed": [
             "php vendor/bin/console twig:cache:warmer"
         ],
+        "clean-env": [
+            "vendor/bin/console queue:queue:purge-all",
+            "vendor/bin/install -r heroku -s database-flush",
+            "vendor/bin/install -r heroku -s database-migrate",
+            "vendor/bin/install -r heroku -s demodata"
+        ],
         "post-install-cmd": [
             "ChromedriverInstaller\\Installer::installChromedriver"
         ],
