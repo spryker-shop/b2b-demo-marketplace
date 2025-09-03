@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # Config (env vars let you tune without redeploying)
-: "${CMD:=php vendor/bin/console q:w:s -vv}"   # replace with your command
+: "${CMD:=php vendor/bin/console q:w:s -v}"   # replace with your command
 : "${SLEEP_SECS:=5}"                       # pause between runs
 : "${RUN_TIMEOUT:=0}"                      # 0 = no timeout; else seconds
 
