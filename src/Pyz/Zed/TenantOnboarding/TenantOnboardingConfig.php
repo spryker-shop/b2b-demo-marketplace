@@ -18,6 +18,7 @@ class TenantOnboardingConfig extends AbstractBundleConfig
     public const QUEUE_NAME_TENANT_ONBOARDING_ERROR = 'tenant-onboarding.error';
 
     public const TENANT_REGISTERED_EVENT = 'TenantRegistered';
+    public const TENANT_REGISTERED_EVENT_WITH_FULL_DATA = 'TenantRegisteredFullData';
     public const REGISTRATION_STATUS_PENDING = 'pending';
     public const REGISTRATION_STATUS_APPROVED = 'approved';
     public const REGISTRATION_STATUS_DECLINED = 'declined';

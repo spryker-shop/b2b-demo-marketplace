@@ -52,7 +52,11 @@ class RegistrationAccepter implements RegistrationAccepterInterface
         $queueMessage = new QueueSendMessageTransfer();
         $queueMessage->setBody(json_encode($messageTransfer->toArray()));
 
-        $this->eventFacade->trigger(TenantOnboardingConfig::TENANT_REGISTERED_EVENT, $queueMessage);
+        $eventName = TenantOnboardingConfig::TENANT_REGISTERED_EVENT;
+        if ($registrationTransfer->getDataSet() === 'full') {
+            $eventName = TenantOnboardingConfig::TENANT_REGISTERED_EVENT_WITH_FULL_DATA;
+        }
+        $this->eventFacade->trigger($eventName, $queueMessage);
 
         $responseTransfer->setIsSuccessful(true);
         $responseTransfer->setIdTenantRegistration($idTenantRegistration);

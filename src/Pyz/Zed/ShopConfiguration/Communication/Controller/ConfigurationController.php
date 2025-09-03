@@ -2,8 +2,10 @@
 
 namespace Pyz\Zed\ShopConfiguration\Communication\Controller;
 
+use Generated\Shared\Transfer\FileSystemStreamTransfer;
 use Orm\Zed\TenantOnboarding\Persistence\SpyStoreConfigQuery;
 use Orm\Zed\TenantOnboarding\Persistence\SpyStoreDomainQuery;
+use Spryker\Zed\FileManagerGui\Communication\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -63,6 +65,14 @@ class ConfigurationController extends \Spryker\Zed\Kernel\Communication\Controll
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $data['shop_domain'] = $data['shop_domain'] . '.' . $this->getFactory()->getConfig()->getStoreFrontHost();
+            $logoUrl = $this->saveConfigurationFile('logo', $tenantId, $storeName, $form);
+            if ($logoUrl) {
+                $data['logo'] = $logoUrl;
+            }
+            $faviconUrl = $this->saveConfigurationFile('favicon', $tenantId, $storeName, $form);
+            if ($faviconUrl) {
+                $data['favicon'] = $faviconUrl;
+            }
 
             $storeConfigEntity = SpyStoreConfigQuery::create()
                 ->filterByTenantIdentifier($tenantId)
@@ -111,9 +121,56 @@ class ConfigurationController extends \Spryker\Zed\Kernel\Communication\Controll
 
         return $this->viewResponse([
             'form' => $form->createView(),
+            'data' => $data,
             'stores' => $storeTransfers,
             'currentStore' => $storeName,
             'currentTenant' => $currentTenant,
         ]);
+    }
+
+    protected function saveConfigurationFile(string $propertyName, string $tenantId, string $storeName, \Symfony\Component\Form\FormInterface $form): ?string
+    {
+        /** @var UploadedFile|null $file */
+        $file = $form->get($propertyName)->getData();
+        $awsFileStorageBucket = $this->getFactory()->getConfig()->getAwsFileStorageBucket();
+        if (!$file || !$awsFileStorageBucket) {
+            return null;
+        }
+
+        $extension = $file->guessExtension() ?: 'png';
+        $key = sprintf('%s/%s/%s.%s',
+            $tenantId,
+            $storeName,
+            bin2hex(random_bytes(16)),
+            $extension
+        );
+
+        $stream = fopen($file->getRealPath(), 'rb'); // short-lived tmp path
+        try {
+            $fileSystemStreamTransfer = (new FileSystemStreamTransfer())
+                ->setPath($key)
+                ->setFileSystemName('configuration')
+                ->setConfig([
+                    'mimetype'           => $file->getMimeType(),
+                    'CacheControl'       => 'public, max-age=31536000, immutable',
+                    'ContentDisposition' => 'inline',
+                ]);
+            $this->getFactory()
+                ->getFileSystemService()
+                ->writeStream($fileSystemStreamTransfer, $stream);
+        } finally {
+            if (is_resource($stream)) {
+                fclose($stream);
+            }
+        }
+
+        // Persist a reference (public URL or storage key) on your entity/transfer:
+        $publicUrl = sprintf(
+            'https://%s.s3.amazonaws.com/config/%s',
+            $awsFileStorageBucket,
+            $key
+        );
+
+        return $publicUrl;
     }
 }

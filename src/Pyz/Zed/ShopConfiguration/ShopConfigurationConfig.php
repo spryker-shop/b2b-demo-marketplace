@@ -9,6 +9,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ShopConfigurationConfig extends AbstractBundleConfig
 {
+    public const AWS_FILE_STORAGE_BUCKET = 'AWS_FILE_STORAGE_BUCKET';
+
     /**
      * @return string
      */
@@ -71,5 +73,10 @@ class ShopConfigurationConfig extends AbstractBundleConfig
     public function getStoreFrontHost(): string
     {
         return $this->get(ApplicationConstants::HOST_YVES);
+    }
+
+    public function getAwsFileStorageBucket()
+    {
+        return $this->get(static::AWS_FILE_STORAGE_BUCKET);
     }
 }

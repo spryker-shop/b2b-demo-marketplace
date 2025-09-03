@@ -60,6 +60,20 @@ trait ScanQueuesTrait
         $fullQueues = 0;
         $msgCount = 0;
 
+        $qCount++;
+
+        $queueMessageCount = $this->mqClient->getQueueMetrics(
+            'tenant-onboarding',
+        )['messageCount'] ?? 0;
+
+        if ($queueMessageCount !== 0) {
+            $queuesPerStore->append(
+                (new QueueTransfer())->setQueueName('tenant-onboarding')
+                    ->setMsgCount($queueMessageCount),
+            );
+            return $queuesPerStore;
+        }
+
         foreach ($queueNames as $queueName) {
             $qCount++;
 

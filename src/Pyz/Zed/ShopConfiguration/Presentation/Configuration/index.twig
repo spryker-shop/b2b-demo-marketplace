@@ -47,12 +47,22 @@
                         {{ form_errors(form.shop_domain) }}
                     </div>
                     <div class="form-group">
-                        {{ form_label(form.logo) }}
+                        {{ form_label(form.logo) }}<br>
+                        {% if data.logo | default %}
+                            {{ data.logo }}
+                        {% else %}
+                            {{ 'Nothing is uploaded' }}
+                        {% endif %}
                         {{ form_widget(form.logo) }}
                         {{ form_errors(form.logo) }}
                     </div>
                     <div class="form-group">
-                        {{ form_label(form.favicon) }}
+                        {{ form_label(form.favicon) }}<br>
+                        {% if data.favicon | default %}
+                            {{ data.favicon }}
+                        {% else %}
+                            {{ 'Nothing is uploaded' }}
+                        {% endif %}
                         {{ form_widget(form.favicon) }}
                         {{ form_errors(form.favicon) }}
                     </div>

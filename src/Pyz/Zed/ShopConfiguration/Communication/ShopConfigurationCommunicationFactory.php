@@ -8,6 +8,7 @@ use Pyz\Zed\ShopConfiguration\Communication\Form\StoreConfigurationForm;
 use Pyz\Zed\ShopConfiguration\ShopConfigurationDependencyProvider;
 use Spryker\Zed\Company\Business\CompanyFacadeInterface;
 use Spryker\Zed\CompanyGui\Communication\Form\CompanyForm;
+use Spryker\Zed\FileManager\FileManagerDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
 use Symfony\Component\Form\FormInterface;
@@ -45,5 +46,13 @@ class ShopConfigurationCommunicationFactory extends AbstractCommunicationFactory
     public function getLocator(): \Spryker\Shared\Kernel\LocatorLocatorInterface
     {
         return $this->getContainer()->getLocator();
+    }
+
+    /**
+     * @return \Spryker\Service\FileSystem\FileSystemServiceInterface
+     */
+    public function getFileSystemService(): \Spryker\Service\FileSystem\FileSystemServiceInterface
+    {
+        return $this->getLocator()->fileSystem()->service();
     }
 }

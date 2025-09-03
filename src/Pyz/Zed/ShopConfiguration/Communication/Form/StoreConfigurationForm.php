@@ -7,6 +7,8 @@
 
 namespace Pyz\Zed\ShopConfiguration\Communication\Form;
 
+use Generated\Shared\Transfer\FileSystemContentTransfer;
+use Generated\Shared\Transfer\FileTransfer;
 use Spryker\Zed\FileManagerGui\Communication\File\UploadedFile;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -16,7 +18,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Image;
 
+/**
+ * @method \Pyz\Zed\ShopConfiguration\Communication\ShopConfigurationCommunicationFactory getFactory()
+ */
 class StoreConfigurationForm extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -44,76 +50,44 @@ class StoreConfigurationForm extends AbstractType
 
     protected function addLogoField(FormBuilderInterface $builder): self
     {
-        $builder->add('logo', TextType::class, [
+        $builder->add('logo', FileType::class, [
             'label' => 'Store Logo URL',
             'required' => false,
-//            'mapped' => false,
+            'mapped' => false,
             'attr' => [
                 'placeholder' => 'Enter url to the logo image',
                 'class' => 'form-control',
             ],
+            'constraints' => [
+                new Image([
+                    'maxSize' => '5M',
+                    'mimeTypes' => ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml'],
+                    'detectCorrupted' => true,
+                ]),
+            ],
         ]);
-
-//        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
-//            $form = $event->getForm();
-//
-//            /** @var UploadedFile|null $file */
-//            $file = $form->get('logo')->getData();
-//            if (!$file) {
-//                return;
-//            }
-//
-//            $original = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-//            $safe = (new \Symfony\Component\String\Slugger\AsciiSlugger())
-//                ->slug($original);
-//            $filename = sprintf('%s-%s.%s', $safe, uniqid('', true), $file->guessExtension());
-//
-//            $file->move(APPLICATION_ROOT_DIR . '/public/Yves/media', $filename);
-//
-//            $data = (array) $event->getData();
-//            $data['logo'] = '/media/' . $filename;
-//
-//            $event->setData($data);
-//        });
 
         return $this;
     }
 
     protected function addFavicon(FormBuilderInterface $builder): self
     {
-        $builder->add('favicon', TextType::class, [
+        $builder->add('favicon', FileType::class, [
             'label' => 'Favicon URL',
             'required' => false,
-//            'mapped' => false,
+            'mapped' => false,
             'attr' => [
                 'placeholder' => 'Enter favicon url',
                 'class' => 'form-control',
             ],
+            'constraints' => [
+                new Image([
+                    'maxSize' => '5M',
+                    'mimeTypes' => ['image/jpeg', 'image/png', 'image/webp', 'image/ico', 'image/svg+xml'],
+                    'detectCorrupted' => true,
+                ]),
+            ],
         ]);
-
-//        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
-//            $form = $event->getForm();
-//
-//            /** @var UploadedFile|null $file */
-//            $file = $form->get('favicon')->getData();
-//            if (!$file) {
-//                return;
-//            }
-//
-//            $original = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-//            $safe = (new \Symfony\Component\String\Slugger\AsciiSlugger())
-//                ->slug($original);
-//            $filename = sprintf('%s-%s.%s', $safe, uniqid('', true), $file->guessExtension());
-//
-//            $file->move(APPLICATION_ROOT_DIR . '/public/Yves/media', $filename);
-//
-//            // Write the public path back into the array data:
-//            $data = (array) $event->getData(); // your array model
-//            $data['favicon'] = '/media/' . $filename;
-//
-//            // Make the updated array the form's final data:
-//            $event->setData($data);
-//        });
 
         return $this;
     }

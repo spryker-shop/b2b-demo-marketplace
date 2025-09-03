@@ -9,7 +9,6 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\Console;
 
-use Generated\Shared\Transfer\TenantOnboardingMessageTransfer;
 use Pyz\Zed\Development\Communication\Console\AcceptanceCodeTestConsole;
 use Pyz\Zed\Development\Communication\Console\ApiCodeTestConsole;
 use Pyz\Zed\Development\Communication\Console\FunctionalCodeTestConsole;
@@ -424,8 +423,12 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
                                 ->save();
                         }
 
+                        $eventName = \Pyz\Zed\TenantOnboarding\TenantOnboardingConfig::TENANT_REGISTERED_EVENT;
+                        if ($dataSave['data_set'] === 'full') {
+                            $eventName = \Pyz\Zed\TenantOnboarding\TenantOnboardingConfig::TENANT_REGISTERED_EVENT_WITH_FULL_DATA;
+                        }
                         (new \Spryker\Zed\Event\Business\EventFacade())->trigger(
-                            \Pyz\Zed\TenantOnboarding\TenantOnboardingConfig::TENANT_REGISTERED_EVENT,
+                            $eventName,
                             (new \Generated\Shared\Transfer\QueueSendMessageTransfer())->setBody(json_encode($data)),
                         );
                     }

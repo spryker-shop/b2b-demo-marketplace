@@ -1146,3 +1146,16 @@ if ($rmqUrl) {
 }
 
 $config[\Pyz\Shared\Queue\QueueConstants::QUEUE_WORKER_MAX_PROCESSES] = (int)getenv('MAX_NUMBER_OF_WORKER_PROCESSES') ?: 5;
+
+$fileStorageBucket = getenv('BUCKETEER_BUCKET_NAME') ?: '';
+if ($fileStorageBucket) {
+    $config[\Pyz\Zed\ShopConfiguration\ShopConfigurationConfig::AWS_FILE_STORAGE_BUCKET] = $fileStorageBucket;
+    $config[FileSystemConstants::FILESYSTEM_SERVICE]['configuration'] = [
+        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
+        'path' => 'config/',
+        'key' => getenv('BUCKETEER_AWS_ACCESS_KEY_ID'),
+        'secret' => getenv('BUCKETEER_AWS_SECRET_ACCESS_KEY'),
+        'bucket' => $fileStorageBucket,
+        'region' => getenv('BUCKETEER_AWS_REGION'),
+    ];
+}
