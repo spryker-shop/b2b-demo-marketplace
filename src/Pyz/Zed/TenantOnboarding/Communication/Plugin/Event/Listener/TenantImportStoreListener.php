@@ -16,7 +16,7 @@ use Symfony\Component\Process\Process;
 class TenantImportStoreListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     protected const DATA_IMPORT_CONFIG_PATH = 'data/import/tenant/tenant_import_config_EU.yml';
-    protected const DATA_IMPORT_FULL_CONFIG_PATH = 'data/import/tenant/partial/catalog.yml';
+    protected const DATA_IMPORT_FULL_CONFIG_PATH = 'data/import/tenant/partial/store.yml';
     protected const COMMAND_TIMEOUT = 300; // 5 minutes
 
     /**
@@ -81,7 +81,6 @@ class TenantImportStoreListener extends AbstractPlugin implements EventBulkHandl
             return [
                 'vendor/bin/console',
                 'data:import',
-                'store',
                 '--config=' . static::DATA_IMPORT_FULL_CONFIG_PATH,
             ];
         }
