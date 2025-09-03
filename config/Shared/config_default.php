@@ -1130,17 +1130,17 @@ if ($rmqUrl) {
     $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$defaultKey] = $defaultConnection;
 
     $config[QueueConstants::QUEUE_WORKER_MAX_THRESHOLD_SECONDS] = (int)getenv('QUEUE_WORKER_MAX_THRESHOLD_SECONDS') ?: 600;
-    $config[EventConstants::EVENT_CHUNK] = 337;
+    $config[EventConstants::EVENT_CHUNK] = 300;
     $config[QueueConstants::QUEUE_MESSAGE_CHUNK_SIZE_MAP] = [
-        EventConstants::EVENT_QUEUE => 132,
+        EventConstants::EVENT_QUEUE => 100,
         'publish.page_product_abstract'	=>  30,
-        'publish.page_product_concrete'	=>  21,
-        'publish.product_image_abstract'	=>  334,
+        'publish.page_product_concrete'	=>  50,
+        'publish.product_image_abstract'	=>  500,
         'publish.product_image_concrete'	=>  500,
         'publish.price_product_abstract'	=>  500,
-        'publish.price_product_concrete'	=>  175,
-        'publish.product_abstract'	=>  96,
-        'publish.product_concrete'	=>  89,
+        'publish.price_product_concrete'	=>  500,
+        'publish.product_abstract'	=>  100,
+        'publish.product_concrete'	=>  100,
         'publish'	=>  300,
     ];
 }
