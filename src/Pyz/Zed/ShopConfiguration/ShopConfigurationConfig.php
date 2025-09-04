@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Pyz\Zed\ShopConfiguration;
 
+use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ShopConfigurationConfig extends AbstractBundleConfig
 {
+    public const AWS_FILE_STORAGE_BUCKET = 'AWS_FILE_STORAGE_BUCKET';
+
     /**
      * @return string
      */
@@ -30,8 +33,8 @@ class ShopConfigurationConfig extends AbstractBundleConfig
     public function getDiscoveryPaths(): array
     {
         return [
-            'src/{namespace}/Shared/{module}/ShopConfiguration/',
-            'src/{namespace}/Zed/{module}/Communication/Resources/shop_configuration/',
+            '{namespace}/Shared/{module}/ShopConfiguration/',
+            '{namespace}/Zed/{module}/Communication/Resources/shop_configuration/',
         ];
     }
 
@@ -65,5 +68,15 @@ class ShopConfigurationConfig extends AbstractBundleConfig
     public function getCacheExpirationTime(): int
     {
         return 3600; // 1 hour
+    }
+
+    public function getStoreFrontHost(): string
+    {
+        return $this->get(ApplicationConstants::HOST_YVES);
+    }
+
+    public function getAwsFileStorageBucket()
+    {
+        return $this->get(static::AWS_FILE_STORAGE_BUCKET);
     }
 }

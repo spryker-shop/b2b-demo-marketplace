@@ -15,6 +15,7 @@ class StoreEntityManager extends \Spryker\Zed\Store\Persistence\StoreEntityManag
         $storeEntity->save();
 
         $storeTransfer->setIdStore($storeEntity->getIdStore());
+        $storeTransfer->setIdTenant($storeEntity->getIdTenant());
 
         return $storeTransfer;
     }

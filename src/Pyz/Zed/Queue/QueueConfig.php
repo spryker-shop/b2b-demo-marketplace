@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\RabbitMqConsumerOptionTransfer;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Event\EventConstants;
 use Spryker\Shared\Log\LogConstants;
-use Spryker\Shared\Queue\QueueConstants;
+use Pyz\Shared\Queue\QueueConstants;
 use Spryker\Zed\Queue\QueueConfig as SprykerQueueConfig;
 
 class QueueConfig extends SprykerQueueConfig
@@ -22,6 +22,8 @@ class QueueConfig extends SprykerQueueConfig
      * @var string
      */
     public const RABBITMQ = 'rabbitmq';
+
+    public const QUEUE_WORKER_MAX_PROCESSES = 'QUEUE_WORKER_MAX_PROCESSES';
 
     /**
      * @return array<int>
@@ -87,5 +89,31 @@ class QueueConfig extends SprykerQueueConfig
         $queueOptionTransfer->setNoWait(false);
 
         return $queueOptionTransfer;
+    }
+
+    public function getQueueWorkerMaxProcesses(): int
+    {
+        return $this->get(QueueConstants::QUEUE_WORKER_MAX_PROCESSES, 5);
+    }
+
+    public function shouldIgnoreNotDetectedFreeMemory(): bool
+    {
+        return $this->get(QueueConstants::QUEUE_WORKER_IGNORE_MEM_READ_FAILURE, false);
+    }
+
+    /**
+     * @return int
+     */
+    public function getFreeMemoryBuffer(): int
+    {
+        return $this->get(QueueConstants::QUEUE_WORKER_FREE_MEMORY_BUFFER, 250);
+    }
+
+    /**
+     * @return int
+     */
+    public function memoryReadProcessTimeout(): int
+    {
+        return $this->get(QueueConstants::QUEUE_WORKER_MEMORY_READ_PROCESS_TIMEOUT, 5);
     }
 }

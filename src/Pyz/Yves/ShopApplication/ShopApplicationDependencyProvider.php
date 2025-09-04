@@ -182,10 +182,12 @@ use SprykerShop\Yves\ShoppingListWidget\Widget\ShoppingListMenuItemWidget;
 use SprykerShop\Yves\ShoppingListWidget\Widget\ShoppingListNavigationMenuWidget;
 use SprykerShop\Yves\ShoppingListWidget\Widget\ShoppingListSubtotalWidget;
 use SprykerShop\Yves\StoreWidget\Plugin\ShopApplication\StoreApplicationPlugin;
-use SprykerShop\Yves\StoreWidget\Widget\StoreSwitcherWidget;
+use Pyz\Yves\StoreWidget\Widget\StoreSwitcherWidget;
 use SprykerShop\Yves\TabsWidget\Widget\FullTextSearchTabsWidget;
 use SprykerShop\Yves\TraceableEventWidget\Widget\TraceableEventWidget;
 use SprykerShop\Yves\WebProfilerWidget\Plugin\Application\WebProfilerApplicationPlugin;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
@@ -388,7 +390,6 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             new TwigApplicationPlugin(),
             new EventDispatcherApplicationPlugin(),
             new ShopApplicationApplicationPlugin(),
-            new StoreApplicationPlugin(),
             new LocaleApplicationPlugin(),
             new TranslatorApplicationPlugin(),
             new RouterApplicationPlugin(),
@@ -402,33 +403,82 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             new class implements \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface
             {
                 public const SERVICE_TENANT_ID = 'SERVICE_TENANT_ID';
+                protected const STORE = 'store';
 
-                protected const SERVICE_REQUEST_STACK = 'request_stack';
+                /**
+                 * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+                 *
+                 * @var string
+                 */
+                public const SERVICE_REQUEST_STACK = 'request_stack';
 
                 public function provide(ContainerInterface $container): ContainerInterface
                 {
+                    $container->set(static::STORE, function (ContainerInterface $container) {
+                        return $this->resolve($container, 'store');
+                    });
                     $container->set(static::SERVICE_TENANT_ID, function (ContainerInterface $container) {
-                        $hostname = $_SERVER['HTTP_HOST'] ?? '';
-                        // This is a placeholder for tenant resolution logic.
-                        // In a real application, you would fetch the tenant ID based on the hostname.
-                        // For example, you might query a database or use a service to get the tenant ID
-                        // associated with the hostname.
-                        $tenantsList = [
-                            'yves.eu.spryker.local' => 'tenant_de',
-                            'yves_1.eu.spryker.local' => 'tenant_us',
-                            'yves_2.eu.spryker.local' => 'tenant_uk',
-                            'yves_3.eu.spryker.local' => 'tenant_fr',
-                            'yves_4.eu.spryker.local' => 'tenant_es',
-                        ];
-
-                        if (!isset($tenantsList[$hostname])) {
-                            throw new \Exception('Tenant not found for hostname: ' . $hostname);
-                        }
-
-                        return $tenantsList[$hostname];
+                        return $this->resolve($container, 'tenant');
                     });
 
                     return $container;
+                }
+
+                protected function resolve(ContainerInterface $container, string $parameter): string
+                {
+                    /** @var \Pyz\Client\ShopConfiguration\ShopConfigurationClient $shopConfigurationClient */
+                    $shopConfigurationClient = \Spryker\Client\Kernel\Locator::getInstance()
+                        ->shopConfiguration()
+                        ->client();
+                    $request = $this->getRequest($container);
+                    $host = $request->getHttpHost();
+                    $storeDomainData = $shopConfigurationClient->resolveDomainByHost($host);
+                    if ($storeDomainData) {
+                        if (isset($storeDomainData[$parameter])) {
+                            return $storeDomainData[$parameter];
+                        }
+                        echo 'Parameter not found: ' . $parameter;
+                        die;
+                    }
+
+                    /** @var \Pyz\Client\TenantOnboarding\TenantOnboardingClientInterface $tenantOnboardingClient */
+                    $tenantOnboardingClient = \Spryker\Client\Kernel\Locator::getInstance()
+                        ->tenantOnboarding()
+                        ->client();
+                    $tenantTransfer = $tenantOnboardingClient->findTenantByID($host);
+
+                    if ($tenantTransfer) {
+                        if ($parameter === 'tenant') {
+                            return (string)$tenantTransfer->getIdentifier();
+                        }
+                        if ($parameter === 'store') {
+                            $storeDomainData = $shopConfigurationClient->resolveDomainByHost($tenantTransfer->getIdentifier());
+
+                            if ($storeDomainData) {
+                                $defaultDomain = reset($storeDomainData);
+                                header(
+                                    sprintf('Location: %s://%s', $request->getScheme(), $defaultDomain),
+                                );
+                                die;
+                            }
+                        }
+                    }
+
+                    echo 'Domain not found';
+                    die;
+                }
+
+                protected function getRequest(ContainerInterface $container): \Symfony\Component\HttpFoundation\Request
+                {
+                    $requestStack = $container->get(static::SERVICE_REQUEST_STACK);
+
+                    if ($requestStack->getCurrentRequest() === null) {
+                        $requestStack = new RequestStack();
+                        $requestStack->push(Request::createFromGlobals());
+                    }
+
+                    /** @var \Symfony\Component\HttpFoundation\Request $currentRequest */
+                    return $requestStack->getCurrentRequest();
                 }
             },
         ];

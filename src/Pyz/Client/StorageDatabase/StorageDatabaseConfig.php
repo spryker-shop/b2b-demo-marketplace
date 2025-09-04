@@ -43,6 +43,21 @@ class StorageDatabaseConfig extends SprykerStorageDatabaseConfig
                 SharedStorageDatabaseConfig::KEY_STORAGE_TABLE_NAME => 'search_http_config',
                 SharedStorageDatabaseConfig::KEY_STORAGE_TABLE_SUFFIX => '',
             ],
+            'tenant' => [
+                SharedStorageDatabaseConfig::KEY_STORAGE_TABLE_PREFIX => 'pyz',
+                SharedStorageDatabaseConfig::KEY_STORAGE_TABLE_NAME => 'tenant',
+                SharedStorageDatabaseConfig::KEY_STORAGE_TABLE_SUFFIX => '',
+            ],
+            'store_config' => [
+                SharedStorageDatabaseConfig::KEY_STORAGE_TABLE_PREFIX => 'spy',
+                SharedStorageDatabaseConfig::KEY_STORAGE_TABLE_NAME => 'store_config',
+                SharedStorageDatabaseConfig::KEY_STORAGE_TABLE_SUFFIX => '',
+            ],
+            'store_domain' => [
+                SharedStorageDatabaseConfig::KEY_STORAGE_TABLE_PREFIX => 'spy',
+                SharedStorageDatabaseConfig::KEY_STORAGE_TABLE_NAME => 'store_domain',
+                SharedStorageDatabaseConfig::KEY_STORAGE_TABLE_SUFFIX => '',
+            ],
         ];
     }
 }

@@ -1,8 +1,68 @@
 {% extends template('page-blank', '@SprykerShop:ShopUi') %}
 
+{% define data = {
+    locale: app.locale | slice(0, 2),
+    title: getConfig('shop_name', 'global.spryker.shop' | trans),
+    metaTitle: getConfig('default_title', 'global.spryker.shop' | trans),
+    metaDescription: getConfig('default_description', ''),
+    metaKeywords: getConfig('default_keywords', ''),
+    hasCookies: app.request.cookies.get('last-visit'),
+    appLocale: app.locale,
+} %}
+
 {% block template %}
     {% set isCssLazyLoadSupported = true %}
     {% set viewportUserScaleable = 'yes' %}
 
     {{ parent() }}
+{% endblock %}
+
+{% block meta %}
+    {{ parent() }}
+    {% set favicon = getConfig('favicon') %}
+    {% if favicon %}
+        <link rel="icon" type="image/png" href="{{ favicon }}">
+    {% endif %}
+{% endblock %}
+
+{% block headStyles %}
+    {{ parent() }}
+    <style>
+    {% set primaryColor = getConfig('primary_color') %}
+    {% if primaryColor %}
+    .button {
+        background-color: {{ primaryColor }};
+        border-color: {{ primaryColor }};
+    }
+    {% endif %}
+
+    {% set secondaryColor = getConfig('secondary_color') %}
+    {% if secondaryColor %}
+    .button--hollow {
+        background-color: {{ secondaryColor }};
+        border-color: {{ secondaryColor }};
+    }
+    {% endif %}
+
+    {% set buttonHoverColor = getConfig('button_hover_color') %}
+    {% if buttonHoverColor %}
+    .button:hover,
+    .button:focus {
+        background-color: {{ buttonHoverColor }};
+        border-color: {{ buttonHoverColor }};
+    }
+    {% endif %}
+
+    {% set headerBackground = getConfig('header_background') %}
+    {% if headerBackground %}
+    .header__main {
+        background-color: {{ headerBackground }};
+    }
+    {% endif %}
+    </style>
+{% endblock %}
+
+{% block headScripts %}
+    {{ parent() }}
+    {{ getConfig('google_analytics') | raw }}
 {% endblock %}

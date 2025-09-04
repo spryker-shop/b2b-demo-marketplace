@@ -1,0 +1,20 @@
+# Example of B2B Marketplace Demo Shop 'full' data import (all categories).
+version: 0
+
+actions:
+#1. Commerce Setup data import
+  - data_entity: store
+    source: data/import/tenant/partial/store.csv
+  - data_entity: currency
+    source: data/import/common/common/currency.csv
+  - data_entity: currency-store
+    source: data/import/common/DE/currency_store.csv
+  - data_entity: country-store
+    source: data/import/common/DE/country_store.csv
+  - data_entity: locale-store
+    source: data/import/common/DE/locale_store.csv
+  - data_entity: default-locale-store
+    source: data/import/common/DE/default_locale_store.csv
+  - data_entity: context-store
+    source: data/import/common/DE/store_context.csv
+

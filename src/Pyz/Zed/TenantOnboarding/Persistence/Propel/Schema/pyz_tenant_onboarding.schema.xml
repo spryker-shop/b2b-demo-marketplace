@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\TenantOnboarding\Persistence" package="src.Orm.Zed.TenantOnboarding.Persistence">
+
+    <table name="pyz_tenant_registration" idMethod="native" identifierQuoting="true">
+        <column name="id_tenant_registration" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="company_name" required="true" type="VARCHAR" size="255"/>
+        <column name="tenant_name" required="true" type="VARCHAR" size="64"/>
+        <column name="email" required="true" type="VARCHAR" size="255"/>
+        <column name="data_set" required="true" type="VARCHAR" size="255"/>
+        <column name="password_hash" required="true" type="VARCHAR" size="255"/>
+        <column name="status" required="true" type="VARCHAR" size="255" default="pending"/>
+        <column name="decline_reason" type="LONGVARCHAR"/>
+        <column name="fk_tenant" required="false" type="INTEGER"/>
+        <column name="errors" type="LONGVARCHAR"/>
+        <column name="created_at" type="TIMESTAMP"/>
+        <column name="updated_at" type="TIMESTAMP"/>
+
+        <unique name="pyz_tenant_registration-tenant_name">
+            <unique-column name="tenant_name"/>
+        </unique>
+
+        <unique name="pyz_tenant_registration-email">
+            <unique-column name="email"/>
+        </unique>
+
+        <foreign-key name="pyz_tenant_registration-fk_tenant" foreignTable="pyz_tenant">
+            <reference local="fk_tenant" foreign="id_tenant"/>
+        </foreign-key>
+
+        <index name="pyz_tenant_registration-status">
+            <index-column name="status"/>
+        </index>
+
+        <behavior name="timestampable">
+            <parameter name="create_column" value="created_at"/>
+            <parameter name="update_column" value="updated_at"/>
+        </behavior>
+
+        <id-method-parameter value="pyz_tenant_registration_pk_seq"/>
+    </table>
+
+</database>

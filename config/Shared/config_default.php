@@ -196,7 +196,9 @@ $config[RouterConstants::IS_STORE_ROUTING_ENABLED]
     = $config[ShopUiConstants::IS_STORE_ROUTING_ENABLED]
     = $config[CustomerPageConstants::IS_STORE_ROUTING_ENABLED]
     = $config[AgentPageConstants::IS_STORE_ROUTING_ENABLED]
-    = $config[LocaleConstants::IS_STORE_ROUTING_ENABLED] = (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
+    = $config[LocaleConstants::IS_STORE_ROUTING_ENABLED] = false;
+
+$config[StoreWidgetConstants::IS_STORE_ROUTING_ENABLED] = (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
 
 // >>> DEV TOOLS
 
@@ -336,6 +338,12 @@ $config[AclConstants::ACL_DEFAULT_RULES] = [
     [
         'bundle' => 'security-gui',
         'controller' => '*',
+        'action' => '*',
+        'type' => 'allow',
+    ],
+    [
+        'bundle' => 'tenant-onboarding',
+        'controller' => 'registration',
         'action' => '*',
         'type' => 'allow',
     ],
@@ -581,6 +589,10 @@ $config[QueueConstants::QUEUE_ADAPTER_CONFIGURATION] = [
     EventConstants::EVENT_QUEUE => [
         QueueConfig::CONFIG_QUEUE_ADAPTER => RabbitMqAdapter::class,
         QueueConfig::CONFIG_MAX_WORKER_NUMBER => 5,
+    ],
+    \Pyz\Zed\TenantOnboarding\TenantOnboardingConfig::QUEUE_NAME_TENANT_ONBOARDING => [
+        QueueConfig::CONFIG_QUEUE_ADAPTER => RabbitMqAdapter::class,
+        QueueConfig::CONFIG_MAX_WORKER_NUMBER => 1,
     ],
 ];
 
@@ -1029,6 +1041,9 @@ $config[RedisConstants::REDIS_COMPRESSION_ENABLED] = getenv('SPRYKER_KEY_VALUE_C
 $databaseUrl = getenv('DATABASE_URL');
 if ($databaseUrl) {
     $url = parse_url($databaseUrl);
+    $config[PropelConstants::ZED_DB_ENGINE]
+        = $config[PropelQueryBuilderConstants::ZED_DB_ENGINE]
+        = PropelConfig::DB_ENGINE_PGSQL;
     $config[PropelConstants::ZED_DB_HOST] = $url['host'];
     $config[PropelConstants::ZED_DB_PORT] = $url['port'];
     $config[PropelConstants::ZED_DB_USERNAME] = $url['user'];
@@ -1036,7 +1051,7 @@ if ($databaseUrl) {
     $config[PropelConstants::ZED_DB_DATABASE] = ltrim($url['path'] ?? '', '/');
 
     $config[StorageDatabaseConstants::DB_DEBUG] = false;
-    $config[StorageDatabaseConstants::DB_ENGINE] = StorageDatabaseConfig::DB_ENGINE_MYSQL;
+    $config[StorageDatabaseConstants::DB_ENGINE] = StorageDatabaseConfig::DB_ENGINE_PGSQL;
     $config[StorageDatabaseConstants::DB_HOST] = $url['host'];
     $config[StorageDatabaseConstants::DB_PORT] = $url['port'];
     $config[StorageDatabaseConstants::DB_USERNAME] = $url['user'];
@@ -1113,4 +1128,34 @@ if ($rmqUrl) {
 
     $config[RabbitMqEnv::RABBITMQ_CONNECTIONS] = [];
     $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$defaultKey] = $defaultConnection;
+
+    $config[QueueConstants::QUEUE_WORKER_MAX_THRESHOLD_SECONDS] = (int)getenv('QUEUE_WORKER_MAX_THRESHOLD_SECONDS') ?: 600;
+    $config[EventConstants::EVENT_CHUNK] = 300;
+    $config[QueueConstants::QUEUE_MESSAGE_CHUNK_SIZE_MAP] = [
+        EventConstants::EVENT_QUEUE => 100,
+        'publish.page_product_abstract'	=>  30,
+        'publish.page_product_concrete'	=>  50,
+        'publish.product_image_abstract'	=>  500,
+        'publish.product_image_concrete'	=>  500,
+        'publish.price_product_abstract'	=>  500,
+        'publish.price_product_concrete'	=>  500,
+        'publish.product_abstract'	=>  100,
+        'publish.product_concrete'	=>  100,
+        'publish'	=>  100,
+    ];
+}
+
+$config[\Pyz\Shared\Queue\QueueConstants::QUEUE_WORKER_MAX_PROCESSES] = (int)getenv('MAX_NUMBER_OF_WORKER_PROCESSES') ?: 5;
+
+$fileStorageBucket = getenv('BUCKETEER_BUCKET_NAME') ?: '';
+if ($fileStorageBucket) {
+    $config[\Pyz\Zed\ShopConfiguration\ShopConfigurationConfig::AWS_FILE_STORAGE_BUCKET] = $fileStorageBucket;
+    $config[FileSystemConstants::FILESYSTEM_SERVICE]['configuration'] = [
+        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
+        'path' => 'config/',
+        'key' => getenv('BUCKETEER_AWS_ACCESS_KEY_ID'),
+        'secret' => getenv('BUCKETEER_AWS_SECRET_ACCESS_KEY'),
+        'bucket' => $fileStorageBucket,
+        'region' => getenv('BUCKETEER_AWS_REGION'),
+    ];
 }

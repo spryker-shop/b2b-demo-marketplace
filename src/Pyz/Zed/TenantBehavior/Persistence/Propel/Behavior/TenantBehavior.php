@@ -258,7 +258,7 @@ protected \$_tenantId;
 /**
  * @return void
  */
-protected function setTenantIdFromContainer(): void
+public function setTenantIdFromContainer(): void
 {
     if (\$this->$tenantIdColumnName) {
         return;

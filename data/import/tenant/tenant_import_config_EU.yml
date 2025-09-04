@@ -1,0 +1,63 @@
+# Example of B2B Marketplace Demo Shop 'Content Management category' data import.
+version: 0
+
+actions:
+    - data_entity: store
+      source: data/import/tenant/store.csv
+    - data_entity: currency-store
+      source: data/import/tenant/currency_store.csv
+    - data_entity: country-store
+      source: data/import/tenant/country_store.csv
+    - data_entity: locale-store
+      source: data/import/tenant/locale_store.csv
+    - data_entity: default-locale-store
+      source: data/import/tenant/default_locale_store.csv
+    - data_entity: context-store
+      source: data/import/tenant/store_context.csv
+    - data_entity: glossary
+      source: data/import/common/common/glossary.csv
+    - data_entity: return-reason
+    - data_entity: navigation
+      source: data/import/common/common/navigation.csv
+    - data_entity: cms-template
+      source: data/import/common/common/cms_template.csv
+    - data_entity: cms-block
+      source: data/import/common/common/cms_block.csv
+    - data_entity: content-banner
+      source: data/import/common/common/content_banner.csv
+    - data_entity: content-navigation
+      source: data/import/common/common/content_navigation.csv
+    - data_entity: cms-page
+      source: data/import/common/common/cms_page.csv
+    - data_entity: cms-slot-template
+      source: data/import/common/common/cms_slot_template.csv
+    - data_entity: cms-slot
+      source: data/import/common/common/cms_slot.csv
+    - data_entity: cms-slot-block
+      source: data/import/tenant/cms_slot_block.csv
+    # Store relation
+    - data_entity: cms-page-store
+      source: data/import/tenant/cms_page_store.csv
+    - data_entity: cms-block-store
+      source: data/import/tenant/cms_block_store.csv
+    - data_entity: navigation-node
+      source: data/import/common/common/navigation_node.csv
+    - data_entity: shipment
+      source: data/import/common/common/shipment.csv
+    - data_entity: payment-method
+      source: data/import/common/common/payment_method.csv
+    #2. Catalog Setup data import
+    - data_entity: product-label
+      source: data/import/tenant/product_label.csv
+    - data_entity: category
+      source: data/import/tenant/category.csv
+    - data_entity: category-store
+      source: data/import/tenant/category_store.csv
+    - data_entity: product-attribute-key
+      source: data/import/common/common/product_attribute_key.csv
+    - data_entity: product-management-attribute
+      source: data/import/common/common/product_management_attribute.csv
+    - data_entity: product-search-attribute
+      source: data/import/common/common/product_search_attribute.csv
+    - data_entity: product-search-attribute-map
+      source: data/import/common/common/product_search_attribute_map.csv
