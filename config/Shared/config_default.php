@@ -1141,7 +1141,7 @@ if ($rmqUrl) {
         'publish.price_product_concrete'	=>  500,
         'publish.product_abstract'	=>  100,
         'publish.product_concrete'	=>  100,
-        'publish'	=>  300,
+        'publish'	=>  100,
     ];
 }
 

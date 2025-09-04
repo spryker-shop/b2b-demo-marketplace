@@ -346,9 +346,9 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
                  */
                 protected function execute(InputInterface $input, OutputInterface $output): int
                 {
-//                    (new \Spryker\Zed\RabbitMq\Business\RabbitMqFacade())->purgeAllQueues(
-//                        $this->getMessenger(),
-//                    );
+                    (new \Spryker\Zed\RabbitMq\Business\RabbitMqFacade())->purgeAllQueues(
+                        $this->getMessenger(),
+                    );
                     $dataArray = [
                         json_decode('{
                           "id_tenant_registration": 1,
