@@ -154,6 +154,7 @@ use Spryker\Zed\StoreStorage\Communication\Plugin\Publisher\CurrencyStore\Curren
 use Spryker\Zed\StoreStorage\Communication\Plugin\Publisher\LocaleStore\LocaleStoreWritePublisherPlugin;
 use Spryker\Zed\StoreStorage\Communication\Plugin\Publisher\Store\StoreSynchronizationTriggeringPublisherPlugin;
 use Spryker\Zed\StoreStorage\Communication\Plugin\Publisher\Store\StoreWritePublisherPlugin;
+use Spryker\Zed\StoreStorage\Communication\Plugin\Publisher\StorePublisherTriggerPlugin;
 use Spryker\Zed\TaxApp\Communication\Plugin\Publisher\Store\RefreshTaxAppStoreRelationPublisherPlugin;
 use Spryker\Zed\TaxProductStorage\Communication\Plugin\Publisher\TaxProductPublisherTriggerPlugin;
 use Spryker\Zed\TaxStorage\Communication\Plugin\Publisher\TaxSetPublisherTriggerPlugin;
@@ -177,6 +178,7 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
             $this->getCategoryPageSearchPlugins(),
             $this->getProductCategoryStoragePlugins(),
             $this->getMerchantCategoryPlugins(),
+            $this->getMerchantProductSearchPlugins(),
             $this->getMerchantOpeningHoursStoragePlugins(),
             $this->getMerchantProductPlugins(),
             $this->getMerchantSearchPlugins(),
@@ -229,11 +231,12 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
             new ProductLabelDictionaryPublisherTriggerPlugin(),
             new ReturnReasonPublisherTriggerPlugin(),
             new ProductBundlePublisherTriggerPlugin(),
+            new ProductConfigurationPublisherTriggerPlugin(),
             new CategoryNodePublisherTriggerPlugin(),
             new CategoryTreePublisherTriggerPlugin(),
             new ProductCategoryPublisherTriggerPlugin(),
             new CategoryPagePublisherTriggerPlugin(),
-            new ProductConfigurationPublisherTriggerPlugin(),
+            new StorePublisherTriggerPlugin(),
             new ProductConcretePublisherTriggerPlugin(),
             new ProductAlternativePublisherTriggerPlugin(),
             new ProductDiscontinuedPublisherTriggerPlugin(),

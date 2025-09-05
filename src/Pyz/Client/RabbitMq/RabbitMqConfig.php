@@ -119,7 +119,6 @@ class RabbitMqConfig extends SprykerRabbitMqConfig
                 PublisherConfig::PUBLISH_ROUTING_KEY_RETRY => PublisherConfig::PUBLISH_RETRY_QUEUE,
                 PublisherConfig::PUBLISH_ROUTING_KEY_ERROR => PublisherConfig::PUBLISH_ERROR_QUEUE,
             ],
-            AvailabilityStorageConfig::PUBLISH_AVAILABILITY,
             PriceProductStorageConfig::PUBLISH_PRICE_PRODUCT_ABSTRACT,
             PriceProductStorageConfig::PUBLISH_PRICE_PRODUCT_CONCRETE,
             ProductImageStorageConfig::PUBLISH_PRODUCT_ABSTRACT_IMAGE,
