@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\MerchantCommission\Persistence" package="src.Orm.Zed.MerchantCommission.Persistence">
     <table name="spy_merchant_commission_group" identifierQuoting="true" idMethod="native">
         <column name="id_merchant_commission_group" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="key" type="VARCHAR" required="true" size="255"/>
         <column name="name" type="VARCHAR" required="true" size="255"/>
         <column name="uuid" type="VARCHAR" required="false" size="36"/>
@@ -16,11 +16,11 @@
         <behavior name="uuid">
             <parameter name="key_columns" value="id_merchant_commission_group"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_merchant_commission" identifierQuoting="true" idMethod="native">
         <column name="id_merchant_commission" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_merchant_commission_group" type="INTEGER" required="true"/>
         <column name="amount" type="INTEGER" required="false"/>
         <column name="calculator_type_plugin" type="VARCHAR" size="255" required="true"/>
@@ -54,11 +54,11 @@
             <parameter name="key_columns" value="id_merchant_commission"/>
         </behavior>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_merchant_commission_amount" idMethod="native">
         <column name="id_merchant_commission_amount" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_currency" type="INTEGER" required="true"/>
         <column name="fk_merchant_commission" type="INTEGER" required="true"/>
         <column name="gross_amount" type="INTEGER" required="false"/>
@@ -77,11 +77,11 @@
         <behavior name="uuid">
             <parameter name="key_columns" value="id_merchant_commission_amount"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_merchant_commission_store" idMethod="native">
         <column name="id_merchant_commission_store" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_merchant_commission" type="INTEGER" required="true"/>
         <column name="fk_store" type="INTEGER" required="true"/>
         <foreign-key name="spy_merchant_commission_store-fk_merchant_commission" foreignTable="spy_merchant_commission" phpName="MerchantCommission" refPhpName="MerchantCommissionStore">
@@ -95,11 +95,11 @@
             <unique-column name="fk_store"/>
         </unique>
         <id-method-parameter value="spy_merchant_commission_store_pk_seq"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_merchant_commission_merchant" idMethod="native">
         <column name="id_merchant_commission_merchant" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_merchant" type="INTEGER" required="true"/>
         <column name="fk_merchant_commission" type="INTEGER" required="true"/>
         <foreign-key name="spy_merchant_commission_merchant-fk_merchant_commission" foreignTable="spy_merchant_commission" phpName="MerchantCommission" refPhpName="MerchantCommissionMerchant">
@@ -113,6 +113,6 @@
             <unique-column name="fk_merchant"/>
         </unique>
         <id-method-parameter value="spy_merchant_commission_merchant_pk_seq"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

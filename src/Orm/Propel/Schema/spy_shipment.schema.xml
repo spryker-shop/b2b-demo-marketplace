@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Shipment\Persistence" package="src.Orm.Zed.Shipment.Persistence">
     <table name="spy_shipment_method" identifierQuoting="true" idMethod="native">
         <column name="id_shipment_method" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_shipment_carrier" type="INTEGER" required="true"/>
         <column name="fk_shipment_type" type="INTEGER" required="false"/>
         <column name="fk_tax_set" type="INTEGER" required="false"/>
@@ -32,22 +32,22 @@
             <index-column name="fk_tax_set"/>
         </index>
         <id-method-parameter value="spy_shipment_method_pk_seq"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_shipment_carrier" identifierQuoting="true" idMethod="native">
         <column name="id_shipment_carrier" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="is_active" type="BOOLEAN" default="true" required="true"/>
         <column name="name" required="true" size="255" type="VARCHAR"/>
         <index name="spy_shipment_carrier-is_active">
             <index-column name="is_active"/>
         </index>
         <id-method-parameter value="spy_shipment_carrier_pk_seq"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_shipment_method_price" identifierQuoting="true" idMethod="native">
         <column name="id_shipment_method_price" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_currency" required="true" type="INTEGER"/>
         <column name="fk_shipment_method" required="true" type="INTEGER"/>
         <column name="fk_store" required="false" type="INTEGER"/>
@@ -74,11 +74,11 @@
             <unique-column name="fk_currency"/>
         </unique>
         <id-method-parameter value="spy_shipment_method_price_pk_seq"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_shipment_method_store" idMethod="native">
         <column name="id_shipment_method_store" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_shipment_method" type="INTEGER" required="true"/>
         <column name="fk_store" type="INTEGER" required="true"/>
         <foreign-key name="spy_shipment_method_store-fk_shipment_method" foreignTable="spy_shipment_method" phpName="ShipmentMethod" refPhpName="ShipmentMethodStore">
@@ -95,6 +95,6 @@
             <unique-column name="fk_store"/>
         </unique>
         <id-method-parameter value="spy_shipment_method_store_pk_seq"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

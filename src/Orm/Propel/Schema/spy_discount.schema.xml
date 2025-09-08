@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Discount\Persistence" package="src.Orm.Zed.Discount.Persistence">
     <table name="spy_discount" phpName="SpyDiscount" idMethod="native">
         <column name="id_discount" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_discount_voucher_pool" type="INTEGER" required="false"/>
         <column name="fk_store" type="INTEGER" required="false"/>
         <column name="amount" type="INTEGER" required="true"/>
@@ -42,11 +42,11 @@
         </unique>
         <id-method-parameter value="spy_discount_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_discount_store" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_discount_store" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_discount" required="true" type="INTEGER"/>
         <column name="fk_store" required="true" type="INTEGER"/>
         <foreign-key name="spy_discount_store-fk_discount" foreignTable="spy_discount">
@@ -63,20 +63,20 @@
             <unique-column name="fk_store"/>
         </unique>
         <id-method-parameter value="id_discount_store_pk_seq"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_discount_voucher_pool" idMethod="native">
         <column name="id_discount_voucher_pool" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="is_active" type="BOOLEAN" default="false"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
         <id-method-parameter value="spy_discount_voucher_pool_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_discount_voucher" idMethod="native">
         <column name="id_discount_voucher" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_discount_voucher_pool" type="INTEGER" required="false"/>
         <column name="code" type="VARCHAR" size="255" required="true"/>
         <column name="is_active" type="BOOLEAN" default="false"/>
@@ -94,11 +94,11 @@
         </unique>
         <id-method-parameter value="spy_discount_voucher_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_discount_amount" idMethod="native">
         <column name="id_discount_amount" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_currency" type="INTEGER" required="true"/>
         <column name="fk_discount" type="INTEGER" required="true"/>
         <column name="gross_amount" type="INTEGER" required="false"/>
@@ -117,6 +117,6 @@
             <unique-column name="fk_discount"/>
         </unique>
         <id-method-parameter value="spy_discount_amount_pk_seq"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

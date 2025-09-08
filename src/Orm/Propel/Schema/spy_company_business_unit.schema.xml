@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\CompanyBusinessUnit\Persistence" package="src.Orm.Zed.CompanyBusinessUnit.Persistence">
     <table name="spy_company_business_unit" identifierQuoting="true" idMethod="native">
         <column name="id_company_business_unit" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_company" type="INTEGER" required="true"/>
         <column name="fk_parent_company_business_unit" type="INTEGER" required="false"/>
         <column name="bic" type="VARCHAR" size="255" required="false"/>
@@ -42,6 +42,6 @@
         <behavior name="uuid">
             <parameter name="key_columns" value="id_company_business_unit.fk_company"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

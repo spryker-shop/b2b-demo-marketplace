@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\ShopConfiguration\Persistence" package="src.Orm.Zed.ShopConfiguration.Persistence">
     <table name="spy_shop_configuration" phpName="SpyShopConfiguration" idMethod="native">
         <column name="id_shop_configuration" type="BIGINT" primaryKey="true" autoIncrement="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="config_key" type="VARCHAR" size="255" required="true"/>
         <column name="created_at" type="TIMESTAMP"/>
         <column name="data_type" type="VARCHAR" size="32" required="true"/>
@@ -29,6 +29,6 @@
             <unique-column name="config_key"/>
         </unique>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

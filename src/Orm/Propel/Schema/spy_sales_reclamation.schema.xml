@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\SalesReclamation\Persistence" package="src.Orm.Zed.SalesReclamation.Persistence">
     <table name="spy_sales_reclamation" idMethod="native">
         <column name="id_sales_reclamation" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_sales_order" type="INTEGER" required="true"/>
         <column name="customer_email" size="255" type="VARCHAR" required="true"/>
         <column name="customer_name" size="511" type="VARCHAR" required="true"/>
@@ -16,11 +16,11 @@
         </index>
         <id-method-parameter value="spy_sales_reclamation_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_sales_reclamation_item" idMethod="native">
         <column name="id_sales_reclamation_item" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_sales_order_item" type="INTEGER" required="true"/>
         <column name="fk_sales_reclamation" type="INTEGER" required="true"/>
         <foreign-key name="spy_sales_reclamation_item-fk_sales_reclamation" foreignTable="spy_sales_reclamation">
@@ -36,6 +36,6 @@
             <index-column name="fk_sales_order_item"/>
         </index>
         <id-method-parameter value="spy_sales_reclamation_item_pk_seq"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

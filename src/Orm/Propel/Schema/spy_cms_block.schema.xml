@@ -2,18 +2,18 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\CmsBlock\Persistence" package="src.Orm.Zed.CmsBlock.Persistence">
     <table name="spy_cms_block_template" idMethod="native">
         <column name="id_cms_block_template" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="template_name" type="VARCHAR" size="255" required="true"/>
         <column name="template_path" type="VARCHAR" size="255" required="true"/>
         <unique name="spy_cms_block_template-unique-template_path">
             <unique-column name="template_path"/>
         </unique>
         <id-method-parameter value="spy_cms_block_template_pk_seq"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_cms_block_glossary_key_mapping" idMethod="native">
         <column name="id_cms_block_glossary_key_mapping" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_cms_block" type="INTEGER" required="true"/>
         <column name="fk_glossary_key" type="INTEGER" required="true"/>
         <column name="placeholder" type="VARCHAR" size="255" required="true"/>
@@ -37,11 +37,11 @@
         <behavior name="event">
             <parameter name="spy_cms_block_glossary_key_mapping_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_cms_block" identifierQuoting="true" phpName="SpyCmsBlock" idMethod="native">
         <column name="id_cms_block" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_template" type="INTEGER" required="false"/>
         <column name="is_active" type="BOOLEAN" required="true" default="false"/>
         <column name="key" required="true" type="VARCHAR" size="255" description="Identifier for existing entities. It should never be changed."/>
@@ -64,11 +64,11 @@
         <behavior name="event">
             <parameter name="spy_cms_block_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_cms_block_store" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_cms_block_store" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_cms_block" required="true" type="INTEGER"/>
         <column name="fk_store" required="true" type="INTEGER"/>
         <foreign-key name="spy_cms_block_store-fk_cms_block" foreignTable="spy_cms_block">
@@ -88,6 +88,6 @@
         <behavior name="event">
             <parameter name="spy_cms_block_store_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

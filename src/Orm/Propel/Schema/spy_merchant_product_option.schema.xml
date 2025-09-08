@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\MerchantProductOption\Persistence" package="src.Orm.Zed.MerchantProductOption.Persistence">
     <table name="spy_merchant_product_option_group" idMethod="native">
         <column name="id_merchant_product_option_group" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_product_option_group" type="integer" required="true"/>
         <column name="approval_status" type="VARCHAR" size="64" required="true"/>
         <column name="merchant_reference" required="true" size="255" type="VARCHAR"/>
@@ -25,6 +25,6 @@
         </unique>
         <id-method-parameter value="spy_merchant_product_option_group_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

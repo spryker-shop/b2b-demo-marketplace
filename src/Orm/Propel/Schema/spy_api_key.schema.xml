@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\ApiKey\Persistence" package="src.Orm.Zed.ApiKey.Persistence">
     <table name="spy_api_key" idMethod="native" identifierQuoting="true">
         <column name="id_api_key" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="created_by" type="INTEGER" required="true"/>
         <column name="key_hash" required="true" size="64" type="VARCHAR"/>
         <column name="name" required="true" size="255" type="VARCHAR"/>
@@ -19,6 +19,6 @@
         </unique>
         <id-method-parameter value="spy_api_key_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

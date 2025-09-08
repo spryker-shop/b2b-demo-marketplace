@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Newsletter\Persistence" package="src.Orm.Zed.Newsletter.Persistence">
     <table name="spy_newsletter_subscriber" idMethod="native" identifierQuoting="true">
         <column name="id_newsletter_subscriber" primaryKey="true" autoIncrement="true" type="INTEGER"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_customer" type="INTEGER"/>
         <column name="email" type="VARCHAR" size="255" required="true"/>
         <column name="is_confirmed" type="BOOLEAN" required="true" default="false"/>
@@ -27,7 +27,7 @@
         </unique>
         <id-method-parameter value="spy_newsletter_subscriber_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_newsletter_type" idMethod="native" identifierQuoting="true">
         <column name="id_newsletter_type" primaryKey="true" autoIncrement="true" type="INTEGER"/>
@@ -42,7 +42,7 @@
         <behavior name="timestampable"/>
     </table>
     <table name="spy_newsletter_subscription" idMethod="native" identifierQuoting="true" isCrossRef="true">
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_newsletter_subscriber" primaryKey="true" type="INTEGER"/>
         <column name="fk_newsletter_type" primaryKey="true" type="INTEGER"/>
         <foreign-key name="spy_newsletter_subscription-fk_newsletter_subscriber" foreignTable="spy_newsletter_subscriber">
@@ -52,6 +52,6 @@
             <reference local="fk_newsletter_type" foreign="id_newsletter_type"/>
         </foreign-key>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

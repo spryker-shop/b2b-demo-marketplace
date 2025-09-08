@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Merchant\Persistence" package="src.Orm.Zed.Merchant.Persistence">
     <table name="spy_merchant" identifierQuoting="true" idMethod="native">
         <column name="id_merchant" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_state_machine_process" required="false" type="INTEGER"/>
         <column name="default_product_abstract_approval_status" type="VARCHAR" size="64" required="false"/>
         <column name="email" required="true" type="VARCHAR" size="255"/>
@@ -28,11 +28,11 @@
             <parameter name="spy_merchant-is_active" column="is_active"/>
         </behavior>
         <behavior name="\Spryker\Zed\AclEntity\Persistence\Propel\Behavior\AclEntityBehavior"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_merchant_store" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_merchant_store" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_merchant" required="true" type="INTEGER"/>
         <column name="fk_store" required="true" type="INTEGER"/>
         <foreign-key name="spy_merchant_store-fk_merchant" foreignTable="spy_merchant">
@@ -46,6 +46,6 @@
             <unique-column name="fk_store"/>
         </unique>
         <id-method-parameter value="id_merchant_store_pk_seq"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\AvailabilityNotification\Persistence" package="src.Orm.Zed.AvailabilityNotification.Persistence">
     <table name="spy_availability_notification_subscription" idMethod="native" allowPkInsert="true">
         <column name="id_availability_notification_subscription" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_locale" required="true" type="INTEGER"/>
         <column name="fk_store" required="true" type="INTEGER"/>
         <column name="customer_reference" required="false" type="VARCHAR" size="255"/>
@@ -36,6 +36,6 @@
         </unique>
         <id-method-parameter value="id_availability_notification_subscription_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

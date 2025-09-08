@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Oms\Persistence" package="src.Orm.Zed.Oms.Persistence">
     <table name="spy_oms_transition_log" identifierQuoting="true" idMethod="native">
         <column name="id_oms_transition_log" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_oms_order_process" type="INTEGER" required="false"/>
         <column name="fk_sales_order" type="INTEGER" required="true"/>
         <column name="fk_sales_order_item" type="INTEGER" required="true"/>
@@ -40,22 +40,22 @@
         <behavior name="timestampable">
             <parameter name="disable_updated_at" value="true"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_oms_order_process" identifierQuoting="true" idMethod="native">
         <column name="id_oms_order_process" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
         <unique name="spy_oms_order_process-name">
             <unique-column name="name"/>
         </unique>
         <id-method-parameter value="spy_oms_order_process_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_oms_state_machine_lock" identifierQuoting="true" idMethod="native">
         <column name="id_oms_state_machine_lock" required="true" type="BIGINT" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="details" type="LONGVARCHAR"/>
         <column name="expires" type="TIMESTAMP" required="true"/>
         <column name="identifier" type="VARCHAR" size="255" required="true"/>
@@ -64,22 +64,22 @@
         </unique>
         <id-method-parameter value="spy_oms_state_machine_lock_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_oms_order_item_state" identifierQuoting="true" idMethod="native">
         <column name="id_oms_order_item_state" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="description" type="VARCHAR" size="255" required="false" default="NULL"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
         <unique name="spy_oms_order_item_state-name">
             <unique-column name="name"/>
         </unique>
         <id-method-parameter value="spy_oms_order_item_state_pk_seq"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_oms_order_item_state_history" identifierQuoting="true" idMethod="native">
         <column name="id_oms_order_item_state_history" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_oms_order_item_state" type="INTEGER" required="true"/>
         <column name="fk_sales_order_item" type="INTEGER" required="true"/>
         <foreign-key name="spy_oms_order_item_state_history-fk_sales_order_item" foreignTable="spy_sales_order_item" phpName="OrderItem" refPhpName="StateHistory">
@@ -96,11 +96,11 @@
         <behavior name="timestampable">
             <parameter name="disable_updated_at" value="true"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_oms_event_timeout" identifierQuoting="true" idMethod="native">
         <column name="id_oms_event_timeout" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_oms_order_item_state" type="INTEGER" required="true"/>
         <column name="fk_sales_order_item" type="INTEGER" required="true"/>
         <column name="event" type="VARCHAR" size="255" required="true"/>
@@ -123,11 +123,11 @@
         </unique>
         <id-method-parameter value="spy_oms_event_timeout_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_oms_product_reservation" identifierQuoting="true" idMethod="native">
         <column name="id_oms_product_reservation" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_store" required="false" type="INTEGER"/>
         <column name="reservation_quantity" type="DECIMAL" size="20" scale="10" required="true" default="0"/>
         <column name="sku" type="VARCHAR" size="255" required="true"/>
@@ -145,11 +145,11 @@
         <behavior name="event">
             <parameter name="spy_oms_product_reservation_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_oms_product_reservation_store" identifierQuoting="true" idMethod="native">
         <column name="id_oms_product_reservation_store" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="reservation_quantity" type="DECIMAL" size="20" scale="10" required="true"/>
         <column name="sku" type="VARCHAR" size="255" required="true"/>
         <column name="store" type="VARCHAR" size="255" required="true"/>
@@ -169,20 +169,20 @@
         </unique>
         <id-method-parameter value="spy_oms_product_reservation_store_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_oms_product_reservation_change_version" identifierQuoting="true" idMethod="native">
         <column name="id_oms_product_reservation_id" required="true" type="INTEGER"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="version" required="true" type="BIGINT" autoIncrement="true" primaryKey="true"/>
         <id-method-parameter value="spy_oms_product_reservation_change_version_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_oms_product_reservation_last_exported_version" identifierQuoting="true" idMethod="native">
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="version" type="BIGINT" required="true"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

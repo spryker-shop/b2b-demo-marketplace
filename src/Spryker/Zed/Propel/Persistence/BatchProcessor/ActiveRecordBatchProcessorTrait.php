@@ -180,8 +180,8 @@ trait ActiveRecordBatchProcessorTrait
     {
         foreach ($entities as $entity) {
             $entity->preSave($connection);
-            if (method_exists($entity, 'setTenantIdFromContainer')) {
-                $entity->setTenantIdFromContainer();
+            if (method_exists($entity, 'setTenantReferenceFromContainer')) {
+                $entity->setTenantReferenceFromContainer();
             }
             if ($entity instanceof BatchEntityHooksInterface) {
                 $entity->batchPreSaveHook();
@@ -226,8 +226,8 @@ trait ActiveRecordBatchProcessorTrait
     protected function executePreInsert(array $entities, ConnectionInterface $connection): array
     {
         array_filter($entities, function (ActiveRecordInterface $entity) use ($connection) {
-            if (method_exists($entity, 'setTenantIdFromContainer')) {
-                $entity->setTenantIdFromContainer();
+            if (method_exists($entity, 'setTenantReferenceFromContainer')) {
+                $entity->setTenantReferenceFromContainer();
             }
             return $entity->preInsert($connection);
         });

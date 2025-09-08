@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\ShoppingListProductOptionConnector\Persistence" package="src.Orm.Zed.ShoppingListProductOptionConnector.Persistence">
     <table name="spy_shopping_list_product_option" idMethod="native">
         <column name="id_shopping_list_item_product_option" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_product_option_value" required="true" type="INTEGER"/>
         <column name="fk_shopping_list_item" required="true" type="INTEGER"/>
         <foreign-key name="shopping_list_product_option-fk_shopping_list_item" foreignTable="spy_shopping_list_item">
@@ -19,6 +19,6 @@
             <unique-column name="fk_product_option_value"/>
         </unique>
         <id-method-parameter value="spy_shopping_list_product_option_pk_seq"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\SalesPaymentMerchant\Persistence" package="src.Orm.Zed.SalesPaymentMerchant.Persistence">
     <table name="spy_sales_payment_merchant_payout" idMethod="native">
         <column name="id_sales_payment_merchant_payout" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="amount" type="VARCHAR" size="128" description="In case of a failure this may be empty."/>
         <column name="failure_message" type="LONGVARCHAR"/>
         <column name="is_successful" type="BOOLEAN" required="true"/>
@@ -18,11 +18,11 @@
         </index>
         <id-method-parameter value="spy_sales_payment_merchant_payout_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_sales_payment_merchant_payout_reversal" idMethod="native">
         <column name="id_sales_payment_merchant_payout_reversal" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="amount" type="VARCHAR" size="128" description="In case of a failure this may be empty."/>
         <column name="failure_message" type="LONGVARCHAR"/>
         <column name="is_successful" type="BOOLEAN" required="true"/>
@@ -38,6 +38,6 @@
         </index>
         <id-method-parameter value="spy_sales_payment_merchant_refund_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

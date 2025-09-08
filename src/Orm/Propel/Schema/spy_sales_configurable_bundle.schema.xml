@@ -2,18 +2,18 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\SalesConfigurableBundle\Persistence" package="src.Orm.Zed.SalesConfigurableBundle.Persistence">
     <table name="spy_sales_order_configured_bundle" idMethod="native">
         <column name="id_sales_order_configured_bundle" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="configurable_bundle_template_uuid" required="true" type="VARCHAR" size="255"/>
         <column name="name" required="true" type="VARCHAR" size="255"/>
         <column name="note" required="false" size="255" type="VARCHAR"/>
         <column name="quantity" required="true" type="INTEGER" default="1"/>
         <id-method-parameter value="spy_sales_order_configured_bundle_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_sales_order_configured_bundle_item" idMethod="native">
         <column name="id_sales_order_configured_bundle_item" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_sales_order_configured_bundle" type="INTEGER" required="true"/>
         <column name="fk_sales_order_item" type="INTEGER" required="true"/>
         <column name="configurable_bundle_template_slot_uuid" required="true" type="VARCHAR" size="255"/>
@@ -34,6 +34,6 @@
         </unique>
         <id-method-parameter value="spy_sales_order_configured_bundle_item_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

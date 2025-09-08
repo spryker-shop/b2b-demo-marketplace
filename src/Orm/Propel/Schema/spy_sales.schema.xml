@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Sales\Persistence" package="src.Orm.Zed.Sales.Persistence">
     <table name="spy_sales_order" idMethod="native">
         <column name="id_sales_order" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_locale" type="INTEGER"/>
         <column name="fk_sales_order_address_billing" type="INTEGER" required="true"/>
         <column name="fk_sales_order_address_shipping" type="INTEGER" required="false"/>
@@ -63,11 +63,11 @@
         </unique>
         <id-method-parameter value="spy_sales_order_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_sales_order_item" idMethod="native" allowPkInsert="true">
         <column name="id_sales_order_item" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_oms_order_item_state" type="INTEGER" required="true"/>
         <column name="fk_oms_order_process" type="INTEGER" required="false"/>
         <column name="fk_sales_order" type="INTEGER" required="true"/>
@@ -163,11 +163,11 @@
             <parameter name="key_columns" value="id_sales_order_item"/>
         </behavior>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_sales_discount" idMethod="native">
         <column name="id_sales_discount" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_sales_expense" type="INTEGER" required="false"/>
         <column name="fk_sales_order" type="INTEGER" required="false"/>
         <column name="fk_sales_order_item" type="INTEGER" required="false"/>
@@ -202,11 +202,11 @@
         </index>
         <id-method-parameter value="spy_sales_discount_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_sales_discount_code" idMethod="native">
         <column name="id_sales_discount_code" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_sales_discount" type="INTEGER" required="true"/>
         <column name="code" type="VARCHAR" size="255" required="true"/>
         <column name="codepool_name" type="VARCHAR" size="255" required="true"/>
@@ -221,11 +221,11 @@
         </index>
         <id-method-parameter value="spy_sales_discount_code_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_sales_expense" idMethod="native">
         <column name="id_sales_expense" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_sales_order" type="INTEGER" required="false" default="NULL"/>
         <column name="canceled_amount" type="INTEGER" required="false" default="0"/>
         <column name="discount_amount_aggregation" type="INTEGER" required="false" default="0" description="/Total discount amount for item/"/>
@@ -252,11 +252,11 @@
             <parameter name="key_columns" value="id_sales_expense.fk_sales_order"/>
         </behavior>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_sales_shipment" idMethod="native">
         <column name="id_sales_shipment" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_sales_expense" type="INTEGER" required="false"/>
         <column name="fk_sales_order" type="INTEGER" required="true"/>
         <column name="fk_sales_order_address" type="INTEGER" required="false"/>
@@ -289,11 +289,11 @@
         </index>
         <id-method-parameter value="spy_sales_shipment_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_sales_order_item_option" idMethod="native">
         <column name="id_sales_order_item_option" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_sales_order_item" type="INTEGER" required="true"/>
         <column name="canceled_amount" type="INTEGER" required="false" default="0"/>
         <column name="discount_amount_aggregation" type="INTEGER" default="0" required="false" description="/Total discount amount for item/"/>
@@ -313,11 +313,11 @@
         </index>
         <id-method-parameter value="spy_sales_order_item_option_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_sales_order_totals" idMethod="native">
         <column name="id_sales_order_totals" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_sales_order" type="INTEGER" required="true" default="0"/>
         <column name="canceled_total" type="INTEGER" required="false" default="0"/>
         <column name="discount_total" type="INTEGER" required="false" default="0"/>
@@ -336,11 +336,11 @@
         </index>
         <id-method-parameter value="spy_sales_order_totals_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_sales_order_address" idMethod="native">
         <column name="id_sales_order_address" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_country" type="INTEGER" required="true"/>
         <column name="fk_region" type="INTEGER"/>
         <column name="address1" size="255" type="VARCHAR"/>
@@ -373,11 +373,11 @@
         </index>
         <id-method-parameter value="spy_sales_order_address_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_sales_order_address_history" idMethod="native">
         <column name="id_sales_order_address_history" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_country" type="INTEGER" required="true"/>
         <column name="fk_region" type="INTEGER"/>
         <column name="fk_sales_order_address" type="INTEGER" required="true"/>
@@ -418,11 +418,11 @@
         </index>
         <id-method-parameter value="spy_sales_order_address_history_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_sales_order_note" idMethod="native">
         <column name="id_sales_order_note" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_sales_order" type="INTEGER" required="true"/>
         <column name="command" type="VARCHAR" size="255" required="true"/>
         <column name="message" type="VARCHAR" size="255" required="true"/>
@@ -435,11 +435,11 @@
         </index>
         <id-method-parameter value="spy_sales_order_note_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_sales_order_comment" idMethod="native">
         <column name="id_sales_order_comment" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_sales_order" type="INTEGER" required="true"/>
         <column name="message" type="LONGVARCHAR" required="true"/>
         <column name="username" type="VARCHAR" size="255" required="false" default="NULL"/>
@@ -451,11 +451,11 @@
         </index>
         <id-method-parameter value="spy_sales_order_comment_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_sales_order_item_metadata" idMethod="native">
         <column name="id_sales_order_item_metadata" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_sales_order_item" type="INTEGER" required="true"/>
         <column name="image" type="LONGVARCHAR"/>
         <column name="super_attributes" type="LONGVARCHAR" required="true"/>
@@ -467,6 +467,6 @@
         </index>
         <id-method-parameter value="spy_sales_order_item_metadata_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

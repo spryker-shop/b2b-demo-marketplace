@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\CategoryStorage\Persistence" package="src.Orm.Zed.CategoryStorage.Persistence">
     <table name="spy_category_tree_storage" identifierQuoting="true" idMethod="native">
         <column name="id_category_tree_storage" type="BIGINT" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <id-method-parameter value="spy_category_tree_storage_pk_seq"/>
         <behavior name="synchronization">
             <parameter name="resource" value="category_tree"/>
@@ -11,11 +11,11 @@
             <parameter name="queue_group" value="sync.storage.category"/>
         </behavior>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_category_node_storage" identifierQuoting="true" idMethod="native">
         <column name="id_category_node_storage" type="BIGINT" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_category_node" type="INTEGER" required="true"/>
         <index name="spy_category_node_storage-fk_category_node">
             <index-column name="fk_category_node"/>
@@ -29,6 +29,6 @@
             <parameter name="queue_group" value="sync.storage.category"/>
         </behavior>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

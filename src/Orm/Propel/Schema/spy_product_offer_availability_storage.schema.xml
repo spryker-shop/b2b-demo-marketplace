@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\ProductOfferAvailabilityStorage\Persistence" package="src.Orm.Zed.ProductOfferAvailabilityStorage.Persistence">
     <table name="spy_product_offer_availability_storage" identifierQuoting="true" idMethod="native">
         <column name="id_product_offer_availability_storage" type="integer" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="data" type="LONGVARCHAR" required="false"/>
         <column name="key" type="VARCHAR" size="1024" required="true"/>
         <column name="product_offer_reference" type="VARCHAR" size="255" required="true"/>
@@ -18,6 +18,6 @@
             <parameter name="queue_group" value="sync.storage.product_offer_availability"/>
         </behavior>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

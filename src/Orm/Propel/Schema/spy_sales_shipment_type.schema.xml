@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\SalesShipmentType\Persistence" package="src.Orm.Zed.SalesShipmentType.Persistence">
     <table name="spy_sales_shipment_type" idMethod="native" identifierQuoting="true">
         <column name="id_sales_shipment_type" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="key" type="VARCHAR" size="255" required="true"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
         <index name="spy_sales_shipment_type-key">
@@ -13,6 +13,6 @@
             <unique-column name="name"/>
         </unique>
         <id-method-parameter value="spy_sales_shipment_type_pk_seq"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

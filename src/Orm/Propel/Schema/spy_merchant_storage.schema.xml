@@ -3,7 +3,7 @@
     <table name="spy_merchant_storage" identifierQuoting="true" idMethod="native">
         <column name="id_merchant" required="true" type="INTEGER"/>
         <column name="id_merchant_storage" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <index name="spy_merchant_storage-id_merchant">
             <index-column name="id_merchant"/>
         </index>
@@ -15,6 +15,6 @@
             <parameter name="store" required="true"/>
         </behavior>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

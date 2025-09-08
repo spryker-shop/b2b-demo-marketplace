@@ -9,7 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\Mail;
 
-use Pyz\Zed\TenantOnboarding\Communication\Plugin\Mail\TenantOnboardingMailTypeBuilderPlugin;
+use Go\Zed\TenantOnboarding\Communication\Plugin\Mail\TenantOnboardingMailTypeBuilderPlugin;
 use Spryker\Zed\AvailabilityNotification\Communication\Plugin\Mail\AvailabilityNotificationMailTypeBuilderPlugin;
 use Spryker\Zed\AvailabilityNotification\Communication\Plugin\Mail\AvailabilityNotificationSubscriptionMailTypeBuilderPlugin;
 use Spryker\Zed\AvailabilityNotification\Communication\Plugin\Mail\AvailabilityNotificationUnsubscribedMailTypeBuilderPlugin;

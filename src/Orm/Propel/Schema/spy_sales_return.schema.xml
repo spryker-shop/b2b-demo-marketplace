@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\SalesReturn\Persistence" package="src.Orm.Zed.SalesReturn.Persistence">
     <table name="spy_sales_return" idMethod="native" allowPkInsert="true">
         <column name="id_sales_return" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="customer_reference" type="VARCHAR" size="255" required="false"/>
         <column name="merchant_reference" required="false" type="VARCHAR" size="255"/>
         <column name="return_reference" type="VARCHAR" size="255" required="true"/>
@@ -21,11 +21,11 @@
         </unique>
         <id-method-parameter value="spy_sales_return_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_sales_return_reason" identifierQuoting="true" idMethod="native" allowPkInsert="true">
         <column name="id_sales_return_reason" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="glossary_key_reason" required="true" type="VARCHAR" size="255"/>
         <column name="key" type="VARCHAR" size="255" description="Key is an identifier for existing entities. This should never be changed."/>
         <unique name="spy_sales_return_reason-glossary_key_reason">
@@ -35,11 +35,11 @@
         <behavior name="event">
             <parameter name="spy_sales_return_reason_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_sales_return_item" idMethod="native" allowPkInsert="true">
         <column name="id_sales_return_item" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_sales_order_item" type="INTEGER" required="true"/>
         <column name="fk_sales_return" type="INTEGER" required="true"/>
         <column name="reason" type="LONGVARCHAR" required="false"/>
@@ -64,6 +64,6 @@
         <behavior name="uuid">
             <parameter name="key_columns" value="id_sales_return_item"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

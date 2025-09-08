@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\PriceProduct\Persistence" package="src.Orm.Zed.PriceProduct.Persistence">
     <table name="spy_price_product" idMethod="native">
         <column name="id_price_product" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_price_type" type="INTEGER" required="true"/>
         <column name="fk_product" type="INTEGER" required="false"/>
         <column name="fk_product_abstract" type="INTEGER" required="false"/>
@@ -41,7 +41,7 @@
         <behavior name="event">
             <parameter name="spy_price_product_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_price_type">
         <column name="id_price_type" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
@@ -57,7 +57,7 @@
     </table>
     <table name="spy_price_product_store" idMethod="native">
         <column name="id_price_product_store" type="BIGINT" required="true" primaryKey="true" autoIncrement="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_currency" type="INTEGER" required="true"/>
         <column name="fk_price_product" type="INTEGER" required="true"/>
         <column name="fk_store" type="INTEGER"/>
@@ -90,11 +90,11 @@
         <behavior name="event">
             <parameter name="spy_price_product_store_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_price_product_default" idMethod="native">
         <column name="id_price_product_default" type="BIGINT" required="true" primaryKey="true" autoIncrement="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_price_product_store" type="BIGINT" required="true"/>
         <foreign-key name="spy_price_product_default-fk_price_product_store" foreignTable="spy_price_product_store" onDelete="CASCADE" phpName="PriceProductStore" refPhpName="PriceProductDefault">
             <reference local="fk_price_product_store" foreign="id_price_product_store"/>
@@ -106,6 +106,6 @@
         <behavior name="event">
             <parameter name="spy_price_product_default_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

@@ -16,7 +16,7 @@
     </table>
     <table name="spy_product_measurement_base_unit" idMethod="native" allowPkInsert="true">
         <column name="id_product_measurement_base_unit" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_product_abstract" type="INTEGER" required="true"/>
         <column name="fk_product_measurement_unit" type="INTEGER" required="true"/>
         <foreign-key name="spy_product_measurement_base_unit-fk_product_abstract" foreignTable="spy_product_abstract" phpName="ProductAbstract">
@@ -36,11 +36,11 @@
         <behavior name="event">
             <parameter name="spy_product_measurement_base_unit_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_product_measurement_sales_unit" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_product_measurement_sales_unit" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_product" type="INTEGER" required="true"/>
         <column name="fk_product_measurement_base_unit" type="INTEGER" required="true"/>
         <column name="fk_product_measurement_unit" type="INTEGER" required="true"/>
@@ -72,11 +72,11 @@
         <behavior name="event">
             <parameter name="spy_product_measurement_sales_unit_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_product_measurement_sales_unit_store" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_product_measurement_sales_unit_store" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_product_measurement_sales_unit" required="true" type="INTEGER"/>
         <column name="fk_store" required="true" type="INTEGER"/>
         <foreign-key name="spy_product_measurement_sales_unit_store-fk_store" foreignTable="spy_store">
@@ -99,6 +99,6 @@
         <behavior name="event">
             <parameter name="spy_product_measurement_sales_unit_store_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

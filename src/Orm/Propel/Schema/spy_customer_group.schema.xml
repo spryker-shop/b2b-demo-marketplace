@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\CustomerGroup\Persistence" package="src.Orm.Zed.CustomerGroup.Persistence">
     <table name="spy_customer_group" idMethod="native">
         <column name="id_customer_group" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="description" required="false" type="VARCHAR" size="255"/>
         <column name="name" required="true" type="VARCHAR" size="70"/>
         <unique name="spy_customer-name">
@@ -10,11 +10,11 @@
         </unique>
         <id-method-parameter value="spy_customer_group_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_customer_group_to_customer" idMethod="native">
         <column name="id_customer_group_to_customer" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_customer" required="true" type="INTEGER"/>
         <column name="fk_customer_group" type="INTEGER" required="true"/>
         <foreign-key name="spy_customer_group_to_customer-fk_customer_group" foreignTable="spy_customer_group" phpName="CustomerGroup" onDelete="CASCADE">
@@ -32,6 +32,6 @@
         </unique>
         <id-method-parameter value="spy_customer_group_to_customer_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\MerchantRelationship\Persistence" package="src.Orm.Zed.MerchantRelationship.Persistence">
     <table name="spy_merchant_relationship" idMethod="native">
         <column name="id_merchant_relationship" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_company_business_unit" required="true" type="INTEGER"/>
         <column name="fk_merchant" required="true" type="INTEGER"/>
         <column name="merchant_relation_request_uuid" required="false" type="VARCHAR" size="36"/>
@@ -27,11 +27,11 @@
         </unique>
         <id-method-parameter value="spy_merchant_relationship_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_merchant_relationship_to_company_business_unit" idMethod="native">
         <column name="id_merchant_relationship_to_company_business_unit" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_company_business_unit" required="true" type="INTEGER"/>
         <column name="fk_merchant_relationship" required="true" type="INTEGER"/>
         <foreign-key name="spy_merchant_rel_to_company_bu-fk_merchant_rel" foreignTable="spy_merchant_relationship" onDelete="CASCADE" phpName="MerchantRelationship">
@@ -54,6 +54,6 @@
         <behavior name="event">
             <parameter name="spy_merchant_relationship_to_company_business_unit_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

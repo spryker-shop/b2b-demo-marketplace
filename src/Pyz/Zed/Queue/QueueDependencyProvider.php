@@ -9,59 +9,27 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\Queue;
 
-use Pyz\Zed\TenantOnboarding\Communication\Plugin\Queue\TenantOnboardingEventQueueMessageProcessorPlugin;
-use Pyz\Zed\TenantOnboarding\TenantOnboardingConfig;
-use Spryker\Shared\AssetStorage\AssetStorageConfig;
+use Go\Zed\TenantOnboarding\Communication\Plugin\Queue\TenantOnboardingEventQueueMessageProcessorPlugin;
+use Go\Zed\TenantOnboarding\TenantOnboardingConfig;
 use Spryker\Shared\AvailabilityStorage\AvailabilityStorageConfig;
-use Spryker\Shared\AvailabilityStorage\AvailabilityStorageConstants;
-use Spryker\Shared\CategoryPageSearch\CategoryPageSearchConstants;
-use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
-use Spryker\Shared\CmsPageSearch\CmsPageSearchConstants;
-use Spryker\Shared\CmsStorage\CmsStorageConstants;
-use Spryker\Shared\CompanyUserStorage\CompanyUserStorageConfig;
 use Spryker\Shared\Config\Config;
-use Spryker\Shared\ConfigurableBundlePageSearch\ConfigurableBundlePageSearchConfig;
-use Spryker\Shared\ConfigurableBundleStorage\ConfigurableBundleStorageConfig;
-use Spryker\Shared\ContentStorage\ContentStorageConfig;
-use Spryker\Shared\CustomerAccessStorage\CustomerAccessStorageConstants;
 use Spryker\Shared\CustomerStorage\CustomerStorageConfig;
 use Spryker\Shared\Event\EventConstants;
-use Spryker\Shared\FileManagerStorage\FileManagerStorageConstants;
 use Spryker\Shared\GlossaryStorage\GlossaryStorageConfig;
 use Spryker\Shared\Log\LogConstants;
-use Spryker\Shared\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageConfig;
-use Spryker\Shared\MerchantSearch\MerchantSearchConfig;
-use Spryker\Shared\MerchantStorage\MerchantStorageConfig;
-use Spryker\Shared\PriceProductOfferStorage\PriceProductOfferStorageConfig;
 use Spryker\Shared\PriceProductStorage\PriceProductStorageConfig;
-use Spryker\Shared\PriceProductStorage\PriceProductStorageConstants;
-use Spryker\Shared\ProductConfigurationStorage\ProductConfigurationStorageConfig;
 use Spryker\Shared\ProductImageStorage\ProductImageStorageConfig;
-use Spryker\Shared\ProductOfferAvailabilityStorage\ProductOfferAvailabilityStorageConfig;
-use Spryker\Shared\ProductOfferStorage\ProductOfferStorageConfig;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConfig;
-use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
 use Spryker\Shared\ProductStorage\ProductStorageConfig;
-use Spryker\Shared\ProductStorage\ProductStorageConstants;
 use Spryker\Shared\PublishAndSynchronizeHealthCheck\PublishAndSynchronizeHealthCheckConfig;
-use Spryker\Shared\PublishAndSynchronizeHealthCheckSearch\PublishAndSynchronizeHealthCheckSearchConfig;
-use Spryker\Shared\PublishAndSynchronizeHealthCheckStorage\PublishAndSynchronizeHealthCheckStorageConfig;
 use Spryker\Shared\Publisher\PublisherConfig;
-use Spryker\Shared\SalesReturnSearch\SalesReturnSearchConfig;
-use Spryker\Shared\SearchHttp\SearchHttpConfig;
-use Spryker\Shared\ShoppingListStorage\ShoppingListStorageConfig;
-use Spryker\Shared\StoreStorage\StoreStorageConfig;
-use Spryker\Shared\TaxProductStorage\TaxProductStorageConfig;
-use Spryker\Shared\TaxStorage\TaxStorageConfig;
 use Spryker\Shared\UrlStorage\UrlStorageConfig;
-use Spryker\Shared\UrlStorage\UrlStorageConstants;
 use Spryker\Zed\Event\Communication\Plugin\Queue\EventQueueMessageProcessorPlugin;
 use Spryker\Zed\Event\Communication\Plugin\Queue\EventRetryQueueMessageProcessorPlugin;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Queue\QueueDependencyProvider as SprykerDependencyProvider;
 use Spryker\Zed\RabbitMq\Communication\Plugin\Queue\RabbitMqQueueMessageCheckerPlugin;
 use Spryker\Zed\Synchronization\Communication\Plugin\Queue\SynchronizationSearchQueueMessageProcessorPlugin;
-use Spryker\Zed\Synchronization\Communication\Plugin\Queue\SynchronizationStorageQueueMessageProcessorPlugin;
 use SprykerEco\Zed\Loggly\Communication\Plugin\LogglyLoggerQueueMessageProcessorPlugin;
 
 class QueueDependencyProvider extends SprykerDependencyProvider
@@ -127,6 +95,7 @@ class QueueDependencyProvider extends SprykerDependencyProvider
 //            SearchHttpConfig::SEARCH_HTTP_CONFIG_SYNC_QUEUE => new SynchronizationStorageQueueMessageProcessorPlugin(),
             UrlStorageConfig::PUBLISH_URL_RETRY => new EventRetryQueueMessageProcessorPlugin(),
             'publish.product_offer' => new EventQueueMessageProcessorPlugin(),
+            'sync.search' => new SynchronizationSearchQueueMessageProcessorPlugin(),
             TenantOnboardingConfig::QUEUE_NAME_TENANT_ONBOARDING => new TenantOnboardingEventQueueMessageProcessorPlugin(),
             TenantOnboardingConfig::QUEUE_NAME_TENANT_ONBOARDING_RETRY => new EventRetryQueueMessageProcessorPlugin(),
         ];

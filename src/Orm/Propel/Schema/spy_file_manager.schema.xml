@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\FileManager\Persistence" package="src.Orm.Zed.FileManager.Persistence">
     <table name="spy_file" idMethod="native">
         <column name="id_file" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_file_directory" type="INTEGER" required="false"/>
         <column name="file_name" type="VARCHAR" size="500" required="true"/>
         <foreign-key name="spy_file-fk_file_directory" foreignTable="spy_file_directory" phpName="FileDirectory">
@@ -15,11 +15,11 @@
         <behavior name="event">
             <parameter name="spy_file_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_file_info" idMethod="native">
         <column name="id_file_info" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_file" type="INTEGER" required="true"/>
         <column name="extension" type="VARCHAR" size="255" required="true"/>
         <column name="size" type="INTEGER" required="true"/>
@@ -39,11 +39,11 @@
         <behavior name="event">
             <parameter name="spy_file_info_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_file_localized_attributes" idMethod="native" allowPkInsert="true">
         <column name="id_file_localized_attributes" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_file" required="true" type="INTEGER"/>
         <column name="fk_locale" required="true" type="INTEGER"/>
         <column name="alt" required="false" type="LONGVARCHAR" default="NULL"/>
@@ -65,11 +65,11 @@
         <behavior name="event">
             <parameter name="spy_file_localized_attributes_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_file_directory" idMethod="native">
         <column name="id_file_directory" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_parent_file_directory" required="false" type="INTEGER" default="NULL"/>
         <column name="is_active" type="BOOLEAN" default="true" required="true"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
@@ -84,11 +84,11 @@
             <index-column name="fk_parent_file_directory"/>
         </index>
         <id-method-parameter value="spy_file_directory_pk_seq"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_file_directory_localized_attributes" idMethod="native">
         <column name="id_file_directory_localized_attributes" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_file_directory" required="true" type="INTEGER"/>
         <column name="fk_locale" required="true" type="INTEGER"/>
         <column name="title" type="VARCHAR" size="255" required="true"/>
@@ -110,7 +110,7 @@
         <behavior name="event">
             <parameter name="spy_file_directory_localized_attributes_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_mime_type">
         <column name="id_mime_type" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>

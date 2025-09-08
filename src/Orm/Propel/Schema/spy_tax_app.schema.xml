@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\TaxApp\Persistence" package="src.Orm.Zed.TaxApp.Persistence">
     <table name="spy_tax_app_config" identifierQuoting="true" idMethod="native">
         <column name="id_tax_app_config" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_store" required="false" type="INTEGER"/>
         <column name="api_urls" description="API URLs JSON-encoded object" required="true" type="LONGVARCHAR"/>
         <column name="application_id" required="true" type="VARCHAR" size="255"/>
@@ -10,11 +10,11 @@
         <column name="vendor_code" required="true" type="VARCHAR" size="255"/>
         <id-method-parameter value="spy_tax_app_config_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_tax_id_validation_history" identifierQuoting="true" idMethod="native">
         <column name="id_tax_id_validation_history" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="country_code" type="VARCHAR" size="3" required="false"/>
         <column name="is_valid" required="true" type="BOOLEAN" default="TRUE"/>
         <column name="response_data" required="false" type="LONGVARCHAR"/>
@@ -23,6 +23,6 @@
         <behavior name="timestampable">
             <parameter name="disable_updated_at" value="true"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

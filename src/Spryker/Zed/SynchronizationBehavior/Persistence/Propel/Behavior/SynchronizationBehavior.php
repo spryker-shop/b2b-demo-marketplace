@@ -391,8 +391,8 @@ protected function setGeneratedKey()
 {
     \$syncTransferData = new \\Generated\\Shared\\Transfer\\SynchronizationDataTransfer();
 
-    if (method_exists(\$this, 'setTenantIdFromContainer')) {
-        \$this->setTenantIdFromContainer();
+    if (method_exists(\$this, 'setTenantReferenceFromContainer')) {
+        \$this->setTenantReferenceFromContainer();
     }
 
     $referenceSetStatement
@@ -1025,8 +1025,8 @@ protected function generateMappingKey(\$source, \$sourceIdentifier)
      */
     protected function getTenantStatement(array $parameters): string
     {
-        if ($this->table->hasBehavior('\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior')) {
-            return '$syncTransferData->setIdTenant($this->id_tenant);';
+        if ($this->table->hasBehavior('\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior')) {
+            return '$syncTransferData->setTenantReference($this->tenant_reference);';
         }
 
         return '';

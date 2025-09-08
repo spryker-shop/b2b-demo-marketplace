@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Asset\Persistence" package="src.Orm.Zed.Asset.Persistence">
     <table name="spy_asset" identifierQuoting="true" idMethod="native">
         <column name="id_asset" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="asset_content" required="true" type="LONGVARCHAR"/>
         <column name="asset_name" required="true" type="VARCHAR" size="255"/>
         <column name="asset_slot" required="true" type="VARCHAR" size="255"/>
@@ -16,11 +16,11 @@
         <behavior name="event">
             <parameter name="spy_asset_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_asset_store" identifierQuoting="true" idMethod="native">
         <column name="id_asset_store" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_asset" required="true" type="INTEGER"/>
         <column name="fk_store" required="true" type="INTEGER"/>
         <foreign-key name="spy_asset_store-fk_asset" foreignTable="spy_asset">
@@ -37,6 +37,6 @@
         <behavior name="event">
             <parameter name="spy_asset_store_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

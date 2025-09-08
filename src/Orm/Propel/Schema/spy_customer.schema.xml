@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Customer\Persistence" package="src.Orm.Zed.Customer.Persistence">
     <table name="spy_customer" idMethod="native">
         <column name="id_customer" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_locale" type="INTEGER"/>
         <column name="fk_user" type="INTEGER"/>
         <column name="anonymized_at" required="false" type="TIMESTAMP" default="NULL"/>
@@ -67,11 +67,11 @@
             <parameter name="spy_customer_anonymized_at" column="anonymized_at"/>
             <parameter name="spy_customer_password" column="password"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_customer_address" idMethod="native" allowPkInsert="true">
         <column name="id_customer_address" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_country" type="INTEGER" required="true"/>
         <column name="fk_customer" required="true" type="INTEGER"/>
         <column name="fk_region" type="INTEGER"/>
@@ -116,6 +116,6 @@
             <parameter name="key_prefix" value="customer_address"/>
             <parameter name="key_columns" value="id_customer_address.fk_customer"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

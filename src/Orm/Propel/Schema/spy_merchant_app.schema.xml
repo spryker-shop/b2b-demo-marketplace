@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\MerchantApp\Persistence" package="src.Orm.Zed.MerchantApp.Persistence">
     <table name="spy_merchant_app_onboarding" idMethod="native">
         <column name="id_merchant_app_onboarding" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="additional_content" type="LONGVARCHAR" description="Additional content (text, links) to display for merchants."/>
         <column name="app_identifier" required="true" type="VARCHAR" size="36"/>
         <column name="app_name" required="true" type="VARCHAR" size="255"/>
@@ -18,11 +18,11 @@
         </unique>
         <id-method-parameter value="spy_merchant_app_onboarding_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_merchant_app_onboarding_status" idMethod="native">
         <column name="id_merchant_app_onboarding_status" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_merchant_app_onboarding" type="INTEGER" required="true"/>
         <column name="additional_info" type="LONGVARCHAR" description="JSON string containing additional info to be displayed"/>
         <column name="merchant_reference" required="true" size="128" type="VARCHAR"/>
@@ -36,6 +36,6 @@
         </unique>
         <id-method-parameter value="spy_merchant_app_onboarding_status_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

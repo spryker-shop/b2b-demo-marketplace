@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\ProductRelation\Persistence" package="src.Orm.Zed.ProductRelation.Persistence">
     <table name="spy_product_relation" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_product_relation" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_product_abstract" required="true" type="INTEGER"/>
         <column name="fk_product_relation_type" required="true" type="INTEGER"/>
         <column name="is_active" required="true" defaultValue="true" type="BOOLEAN"/>
@@ -29,19 +29,19 @@
         <behavior name="event">
             <parameter name="spy_product_relation_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_product_relation_type" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_product_relation_type" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="key" required="true" type="VARCHAR" size="255"/>
         <id-method-parameter value="spy_product_relation_type_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_product_relation_product_abstract" idMethod="native" allowPkInsert="true" identifierQuoting="true" isCrossRef="true">
         <column name="id_product_relation_product_abstract" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_product_abstract" required="true" type="INTEGER"/>
         <column name="fk_product_relation" required="true" type="INTEGER"/>
         <column name="order" required="true" type="INTEGER"/>
@@ -62,11 +62,11 @@
         <behavior name="event">
             <parameter name="spy_product_relation_product_abstract_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_product_relation_store" phpName="SpyProductRelationStore" idMethod="native">
         <column name="id_product_relation_store" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_product_relation" type="INTEGER" required="true"/>
         <column name="fk_store" type="INTEGER" required="true"/>
         <foreign-key name="spy_product_relation_store-fk_product_relation" foreignTable="spy_product_relation" phpName="ProductRelation" refPhpName="ProductRelationStore">
@@ -86,6 +86,6 @@
         <behavior name="event">
             <parameter name="spy_product_relation_store_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

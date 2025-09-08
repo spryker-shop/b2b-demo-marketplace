@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Availability\Persistence" package="src.Orm.Zed.Availability.Persistence">
     <table name="spy_availability_abstract" idMethod="native">
         <column name="id_availability_abstract" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_store" required="false" type="INTEGER"/>
         <column name="abstract_sku" type="VARCHAR" size="255" required="true"/>
         <column name="quantity" type="DECIMAL" size="20" scale="10" required="true" defaultValue="0"/>
@@ -20,11 +20,11 @@
         <behavior name="event">
             <parameter name="spy_availability_abstract_quantity" column="quantity" value="0" operator="==="/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_availability" idMethod="native">
         <column name="id_availability" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_availability_abstract" required="true" type="INTEGER"/>
         <column name="fk_store" required="false" type="INTEGER"/>
         <column name="is_never_out_of_stock" type="BOOLEAN" defaultValue="false"/>
@@ -52,6 +52,6 @@
             <parameter name="spy_availability_quantity" column="quantity"/>
             <parameter name="spy_availability_sku" column="sku" keep-additional="true"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

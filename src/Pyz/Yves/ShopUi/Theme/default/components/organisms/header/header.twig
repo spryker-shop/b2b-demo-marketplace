@@ -58,11 +58,6 @@
                 {% include molecule('logo') with {
                     class: 'col ' ~  config.name ~ '__logo',
                     modifiers: ['main'],
-                    attributes: {
-                        'src': getConfig('logo', null),
-                        'alt': getConfig('shop_name', 'logo'),
-                        'title': getConfig('shop_name', 'logo'),
-                    },
                 } only %}
 
                 <div class="col {{ config.name }}__search">

@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\StockAddress\Persistence" package="src.Orm.Zed.StockAddress.Persistence">
     <table name="spy_stock_address" idMethod="native">
         <column name="id_stock_address" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_country" type="INTEGER" required="true"/>
         <column name="fk_region" type="INTEGER"/>
         <column name="fk_stock" type="INTEGER" required="true"/>
@@ -32,6 +32,6 @@
             <index-column name="fk_region"/>
         </index>
         <id-method-parameter value="spy_stock_address_pk_seq"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

@@ -9,7 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\Event;
 
-use Pyz\Zed\TenantOnboarding\Communication\Plugin\Event\Subscriber\TenantOnboardingEventSubscriber;
+use Go\Zed\TenantOnboarding\Communication\Plugin\Event\Subscriber\TenantOnboardingEventSubscriber;
 use Spryker\Zed\AvailabilityNotification\Communication\Plugin\Event\Subscriber\AvailabilityNotificationSubscriber;
 use Spryker\Zed\AvailabilityStorage\Communication\Plugin\Event\Subscriber\AvailabilityStorageEventSubscriber;
 use Spryker\Zed\CategoryImageStorage\Communication\Plugin\Event\Subscriber\CategoryImageStorageEventSubscriber;

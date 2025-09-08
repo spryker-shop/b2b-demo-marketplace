@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\MerchantSalesOrder\Persistence" package="src.Orm.Zed.MerchantSalesOrder.Persistence">
     <table name="spy_merchant_sales_order_item" identifierQuoting="true" idMethod="native">
         <column name="id_merchant_sales_order_item" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_merchant_sales_order" type="INTEGER" required="true"/>
         <column name="fk_sales_order_item" type="INTEGER" required="true"/>
         <column name="fk_state_machine_item_state" type="INTEGER" required="false"/>
@@ -24,11 +24,11 @@
         </unique>
         <id-method-parameter value="spy_merchant_sales_order_item_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_merchant_sales_order_totals" idMethod="native">
         <column name="id_merchant_sales_order_totals" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_merchant_sales_order" type="INTEGER" required="true"/>
         <column name="canceled_total" type="INTEGER" required="false" default="0"/>
         <column name="discount_total" type="INTEGER" required="false" default="0"/>
@@ -47,11 +47,11 @@
         </index>
         <id-method-parameter value="spy_merchant_sales_order_totals_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_merchant_sales_order" idMethod="native">
         <column name="id_merchant_sales_order" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_sales_order" type="INTEGER" required="true"/>
         <column name="merchant_reference" type="VARCHAR" required="true" size="255"/>
         <column name="merchant_sales_order_reference" required="true" type="VARCHAR" size="255"/>
@@ -66,6 +66,6 @@
         </unique>
         <id-method-parameter value="spy_merchant_sales_order_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

@@ -9,7 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Client\RabbitMq;
 
-use Pyz\Zed\TenantOnboarding\TenantOnboardingConfig;
+use Go\Zed\TenantOnboarding\TenantOnboardingConfig;
 use Spryker\Client\RabbitMq\RabbitMqConfig as SprykerRabbitMqConfig;
 use Spryker\Shared\AssetStorage\AssetStorageConfig;
 use Spryker\Shared\AvailabilityStorage\AvailabilityStorageConfig;
@@ -102,7 +102,7 @@ class RabbitMqConfig extends SprykerRabbitMqConfig
                 $this->get(LogConstants::LOG_QUEUE_NAME),
             ],
             $this->getPublishQueueConfiguration(),
-            //$this->getSynchronizationQueueConfiguration(),
+            ['sync.search'],
             [
                 TenantOnboardingConfig::QUEUE_NAME_TENANT_ONBOARDING => [
                     EventConfig::EVENT_ROUTING_KEY_RETRY => TenantOnboardingConfig::QUEUE_NAME_TENANT_ONBOARDING_RETRY,

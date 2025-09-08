@@ -9,7 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Client\ZedRequest;
 
-use Pyz\Client\TenantBehavior\Plugin\ZedRequest\TenantMetaDataProviderPlugin;
+use Go\Client\TenantBehavior\Plugin\ZedRequest\TenantMetaDataProviderPlugin;
 use Spryker\Client\Currency\Plugin\ZedRequestMetaDataProviderPlugin;
 use Spryker\Client\Locale\Plugin\ZedRequest\LocaleMetaDataProviderPlugin;
 use Spryker\Client\Store\Plugin\ZedRequest\StoreMetaDataProviderPlugin;

@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\ShoppingList\Persistence" package="src.Orm.Zed.ShoppingList.Persistence">
     <table name="spy_shopping_list_item" identifierQuoting="true" idMethod="native">
         <column name="id_shopping_list_item" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_shopping_list" required="true" type="INTEGER"/>
         <column name="key" required="false" type="VARCHAR" size="255"/>
         <column name="product_configuration_instance_data" required="false" type="CLOB"/>
@@ -30,11 +30,11 @@
         <behavior name="event">
             <parameter name="spy_shopping_list_item_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_shopping_list" identifierQuoting="true" idMethod="native">
         <column name="id_shopping_list" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="customer_reference" required="true" type="VARCHAR" size="255"/>
         <column name="description" type="VARCHAR" size="255"/>
         <column name="key" type="VARCHAR" size="255" description="Key is an identifier for existing entities. This should never be changed."/>
@@ -55,11 +55,11 @@
         <behavior name="event">
             <parameter name="spy_shopping_list_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_shopping_list_company_user" idMethod="native">
         <column name="id_shopping_list_company_user" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_company_user" required="true" type="INTEGER"/>
         <column name="fk_shopping_list" requird="true" type="INTEGER"/>
         <column name="fk_shopping_list_permission_group" required="true" type="INTEGER"/>
@@ -85,11 +85,11 @@
         <behavior name="event">
             <parameter name="spy_shopping_list_company_user_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_shopping_list_company_business_unit" idMethod="native">
         <column name="id_shopping_list_company_business_unit" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_company_business_unit" required="true" type="INTEGER"/>
         <column name="fk_shopping_list" required="true" type="INTEGER"/>
         <column name="fk_shopping_list_permission_group" required="true" type="INTEGER"/>
@@ -115,11 +115,11 @@
         <behavior name="event">
             <parameter name="spy_shopping_list_company_business_unit_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_shopping_list_company_business_unit_blacklist" idMethod="native">
         <column name="id_shopping_list_company_business_unit_blacklist" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_company_user" required="true" type="INTEGER"/>
         <column name="fk_shopping_list_company_business_unit" required="true" type="INTEGER"/>
         <foreign-key name="spy_shopping_list_business_unit_blacklist-fk_shopping_list_unit" foreignTable="spy_shopping_list_company_business_unit">
@@ -135,7 +135,7 @@
             <index-column name="fk_company_user"/>
         </index>
         <id-method-parameter value="spy_shopping_list_company_business_unit_blacklist_pk_seq"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_shopping_list_permission_group">
         <column name="id_shopping_list_permission_group" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>

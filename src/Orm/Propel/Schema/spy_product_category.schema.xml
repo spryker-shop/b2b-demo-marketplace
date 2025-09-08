@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\ProductCategory\Persistence" package="src.Orm.Zed.ProductCategory.Persistence">
     <table name="spy_product_category" idMethod="native">
         <column name="id_product_category" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_category" required="true" type="INTEGER"/>
         <column name="fk_product_abstract" required="true" type="INTEGER"/>
         <column name="product_order" required="false" default="0" type="INTEGER"/>
@@ -23,6 +23,6 @@
         <behavior name="event">
             <parameter name="spy_product_category_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

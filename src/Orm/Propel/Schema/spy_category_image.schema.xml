@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\CategoryImage\Persistence" package="src.Orm.Zed.CategoryImage.Persistence">
     <table name="spy_category_image_set" idMethod="native" allowPkInsert="true">
         <column name="id_category_image_set" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_category" type="INTEGER" required="false"/>
         <column name="fk_locale" type="INTEGER" required="false"/>
         <column name="name" type="VARCHAR" size="255"/>
@@ -23,11 +23,11 @@
         <behavior name="event">
             <parameter name="spy_category_image_set_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_category_image" idMethod="native" allowPkInsert="true">
         <column name="id_category_image" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="external_url_large" type="VARCHAR" size="2048"/>
         <column name="external_url_small" type="VARCHAR" size="2048"/>
         <id-method-parameter value="spy_category_image_pk_seq"/>
@@ -35,11 +35,11 @@
         <behavior name="event">
             <parameter name="spy_category_image_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_category_image_set_to_category_image" idMethod="native" allowPkInsert="true">
         <column name="id_category_image_set_to_category_image" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_category_image" type="INTEGER" required="true"/>
         <column name="fk_category_image_set" type="INTEGER" required="true"/>
         <column name="sort_order" type="INTEGER" required="true"/>
@@ -63,6 +63,6 @@
         <behavior name="event">
             <parameter name="spy_category_image_set_to_category_image_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

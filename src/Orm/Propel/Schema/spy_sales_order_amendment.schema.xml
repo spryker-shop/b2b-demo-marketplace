@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\SalesOrderAmendment\Persistence" package="src.Orm.Zed.SalesOrderAmendment.Persistence">
     <table name="spy_sales_order_amendment" idMethod="native">
         <column name="id_sales_order_amendment" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="amended_order_reference" type="VARCHAR" required="true" size="255"/>
         <column name="original_order_reference" type="VARCHAR" required="true" size="255"/>
         <column name="uuid" type="VARCHAR" required="false" size="36"/>
@@ -20,11 +20,11 @@
             <parameter name="key_columns" value="id_sales_order_amendment"/>
         </behavior>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_sales_order_amendment_quote" idMethod="native">
         <column name="id_sales_order_amendment_quote" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="amendment_order_reference" type="VARCHAR" required="true" size="255"/>
         <column name="customer_reference" type="VARCHAR" required="true" size="255"/>
         <column name="quote_data" required="true" type="CLOB"/>
@@ -47,6 +47,6 @@
             <parameter name="key_columns" value="id_sales_order_amendment_quote"/>
         </behavior>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

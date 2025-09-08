@@ -36,6 +36,7 @@ use Generated\Shared\Transfer\SearchEndpointAvailableTransfer;
 use Generated\Shared\Transfer\SearchEndpointRemovedTransfer;
 use Generated\Shared\Transfer\SubmitPaymentTaxInvoiceTransfer;
 use Generated\Shared\Transfer\UpdatePaymentMethodTransfer;
+use Go\Zed\TenantOnboarding\TenantOnboardingConfig;
 use Monolog\Logger;
 use Pyz\Shared\Console\ConsoleConstants;
 use Pyz\Shared\Scheduler\SchedulerConfig;
@@ -58,7 +59,6 @@ use Spryker\Shared\CartsRestApi\CartsRestApiConstants;
 use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Shared\CmsGui\CmsGuiConstants;
 use Spryker\Shared\Customer\CustomerConstants;
-use Spryker\Shared\StorageDatabase\StorageDatabaseConfig;
 use Spryker\Shared\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConstants;
 use Spryker\Shared\DummyMarketplacePayment\DummyMarketplacePaymentConfig;
 use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
@@ -122,6 +122,7 @@ use Spryker\Shared\SessionRedis\SessionRedisConfig;
 use Spryker\Shared\SessionRedis\SessionRedisConstants;
 use Spryker\Shared\Sitemap\SitemapConstants;
 use Spryker\Shared\Storage\StorageConstants;
+use Spryker\Shared\StorageDatabase\StorageDatabaseConfig;
 use Spryker\Shared\StorageDatabase\StorageDatabaseConstants;
 use Spryker\Shared\StorageRedis\StorageRedisConstants;
 use Spryker\Shared\SymfonyMailer\SymfonyMailerConstants;
@@ -172,6 +173,7 @@ $config[KernelConstants::RESOLVED_INSTANCE_CACHE_ENABLED] = true;
 
 $config[KernelConstants::PROJECT_NAMESPACE] = 'Pyz';
 $config[KernelConstants::PROJECT_NAMESPACES] = [
+    'Go',
     'Pyz',
 ];
 $config[KernelConstants::CORE_NAMESPACES] = [
@@ -590,7 +592,7 @@ $config[QueueConstants::QUEUE_ADAPTER_CONFIGURATION] = [
         QueueConfig::CONFIG_QUEUE_ADAPTER => RabbitMqAdapter::class,
         QueueConfig::CONFIG_MAX_WORKER_NUMBER => 5,
     ],
-    \Pyz\Zed\TenantOnboarding\TenantOnboardingConfig::QUEUE_NAME_TENANT_ONBOARDING => [
+    TenantOnboardingConfig::QUEUE_NAME_TENANT_ONBOARDING => [
         QueueConfig::CONFIG_QUEUE_ADAPTER => RabbitMqAdapter::class,
         QueueConfig::CONFIG_MAX_WORKER_NUMBER => 1,
     ],
@@ -696,6 +698,11 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
         'root' => APPLICATION_ROOT_DIR . '/data/DE/media/',
         'path' => 'files/',
+    ],
+    'configuration' => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => APPLICATION_ROOT_DIR . '/public/Yves/assets/static/',
+        'path' => 'images/',
     ],
 ];
 $config[FileManagerConstants::STORAGE_NAME] = 'files';
@@ -1149,7 +1156,7 @@ $config[\Pyz\Shared\Queue\QueueConstants::QUEUE_WORKER_MAX_PROCESSES] = (int)get
 
 $fileStorageBucket = getenv('BUCKETEER_BUCKET_NAME') ?: '';
 if ($fileStorageBucket) {
-    $config[\Pyz\Zed\ShopConfiguration\ShopConfigurationConfig::AWS_FILE_STORAGE_BUCKET] = $fileStorageBucket;
+    $config[\Go\Zed\ShopConfiguration\ShopConfigurationConfig::AWS_FILE_STORAGE_BUCKET] = $fileStorageBucket;
     $config[FileSystemConstants::FILESYSTEM_SERVICE]['configuration'] = [
         'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
         'path' => 'config/',

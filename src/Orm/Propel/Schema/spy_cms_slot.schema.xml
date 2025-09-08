@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\CmsSlot\Persistence" package="src.Orm.Zed.CmsSlot.Persistence">
     <table name="spy_cms_slot_template" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_cms_slot_template" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="description" required="true" type="LONGVARCHAR"/>
         <column name="name" required="true" type="VARCHAR" size="255"/>
         <column name="path" required="true" type="LONGVARCHAR" description="Identifier for existing entities. It should never be changed."/>
@@ -11,11 +11,11 @@
             <unique-column name="path_hash"/>
         </unique>
         <id-method-parameter value="spy_cms_slot_template_pk_seq"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_cms_slot" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_cms_slot" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="content_provider_type" required="true" type="VARCHAR" size="64"/>
         <column name="description" required="true" type="LONGVARCHAR"/>
         <column name="is_active" type="BOOLEAN" required="true" default="false"/>
@@ -28,11 +28,11 @@
         <behavior name="event">
             <parameter name="spy_cms_slot_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_cms_slot_to_cms_slot_template" idMethod="native" allowPkInsert="true">
         <column name="id_cms_slot_to_cms_slot_template" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_cms_slot" required="true" type="INTEGER"/>
         <column name="fk_cms_slot_template" required="true" type="INTEGER"/>
         <foreign-key name="spy_cms_slot_to_cms_slot_template-fk_cms_slot_template" foreignTable="spy_cms_slot_template" phpName="CmsSlotTemplate">
@@ -49,6 +49,6 @@
             <unique-column name="fk_cms_slot"/>
         </unique>
         <id-method-parameter value="spy_cms_slot_to_cms_slot_template_pk_seq"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

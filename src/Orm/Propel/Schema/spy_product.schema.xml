@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Product\Persistence" package="src.Orm.Zed.Product.Persistence">
     <table name="spy_product_abstract" idMethod="native" allowPkInsert="true" phpName="SpyProductAbstract">
         <column name="id_product_abstract" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_tax_set" type="INTEGER" required="false"/>
         <column name="approval_status" type="VARCHAR" size="64" required="false"/>
         <column name="attributes" required="true" type="LONGVARCHAR"/>
@@ -24,11 +24,11 @@
         <behavior name="event">
             <parameter name="spy_product_abstract_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_product_abstract_localized_attributes" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_abstract_attributes" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_locale" required="true" type="INTEGER"/>
         <column name="fk_product_abstract" required="true" type="INTEGER"/>
         <column name="attributes" required="true" type="LONGVARCHAR"/>
@@ -58,11 +58,11 @@
         <behavior name="event">
             <parameter name="spy_product_abstract_localized_attributes_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_product_abstract_store" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_product_abstract_store" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_product_abstract" required="true" type="INTEGER"/>
         <column name="fk_store" required="true" type="INTEGER"/>
         <foreign-key name="spy_product_abstract_store-fk_product" foreignTable="spy_product_abstract">
@@ -82,11 +82,11 @@
         <behavior name="event">
             <parameter name="spy_product_abstract_store_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_product" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_product" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_product_abstract" required="true" type="INTEGER"/>
         <column name="attributes" required="true" type="LONGVARCHAR"/>
         <column name="is_active" required="true" defaultValue="true" type="BOOLEAN"/>
@@ -106,11 +106,11 @@
         <behavior name="event">
             <parameter name="spy_product_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_product_localized_attributes" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_product_attributes" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_locale" required="true" type="INTEGER"/>
         <column name="fk_product" required="true" type="INTEGER"/>
         <column name="attributes" required="true" type="LONGVARCHAR"/>
@@ -135,11 +135,11 @@
         <behavior name="event">
             <parameter name="spy_product_localized_attributes_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_product_attribute_key" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_product_attribute_key" primaryKey="true" type="INTEGER" autoIncrement="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="is_super" type="BOOLEAN" required="true" defaultValue="false"/>
         <column name="key" required="true" type="VARCHAR" size="255"/>
         <unique name="spy_product_attribute_key-unique-key">
@@ -149,6 +149,6 @@
         <behavior name="event">
             <parameter name="spy_product_attribute_key_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

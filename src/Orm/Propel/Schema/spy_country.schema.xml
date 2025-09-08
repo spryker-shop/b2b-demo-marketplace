@@ -17,7 +17,7 @@
     </table>
     <table name="spy_region" idMethod="native">
         <column name="id_region" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_country" type="INTEGER"/>
         <column name="iso2_code" type="VARCHAR" size="6" required="true"/>
         <column name="name" type="VARCHAR" size="100" required="true"/>
@@ -31,11 +31,11 @@
             <unique-column name="iso2_code"/>
         </unique>
         <id-method-parameter value="spy_region_pk_seq"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_country_store" idMethod="native">
         <column name="id_country_store" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_country" type="INTEGER" required="true"/>
         <column name="fk_store" type="INTEGER" required="true"/>
         <foreign-key name="spy_country_store-fk_country" foreignTable="spy_country" phpName="Country" refPhpName="CountryStore">
@@ -55,6 +55,6 @@
         <behavior name="event">
             <parameter name="spy_country_store_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

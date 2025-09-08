@@ -7,7 +7,7 @@
     </table>
     <table name="spy_company_user_invitation" idMethod="native">
         <column name="id_company_user_invitation" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_company_business_unit" type="INTEGER" required="true"/>
         <column name="fk_company_user" type="INTEGER" required="true"/>
         <column name="fk_company_user_invitation_status" type="INTEGER" required="true"/>
@@ -41,6 +41,6 @@
         </unique>
         <id-method-parameter value="spy_company_user_invitation_pk_seq"/>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

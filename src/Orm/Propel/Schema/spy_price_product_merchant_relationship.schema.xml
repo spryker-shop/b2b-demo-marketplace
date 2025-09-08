@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\PriceProductMerchantRelationship\Persistence" package="src.Orm.Zed.PriceProductMerchantRelationship.Persistence">
     <table name="spy_price_product_merchant_relationship" idMethod="native">
         <column name="id_price_product_merchant_relationship" type="BIGINT" required="true" primaryKey="true" autoIncrement="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_merchant_relationship" type="INTEGER" required="true"/>
         <column name="fk_price_product_store" type="BIGINT" required="true"/>
         <column name="fk_product" type="INTEGER"/>
@@ -36,6 +36,6 @@
         <behavior name="event">
             <parameter name="spy_price_product_merchant_relationship_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\ProductLabel\Persistence" package="src.Orm.Zed.ProductLabel.Persistence">
     <table name="spy_product_label_localized_attributes" idMethod="native" identifierQuoting="true" phpName="SpyProductLabelLocalizedAttributes">
         <column name="id_product_label_localized_attributes" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_locale" type="INTEGER" required="true"/>
         <column name="fk_product_label" type="INTEGER" required="true"/>
         <column name="name" type="VARCHAR" size="255" required="false"/>
@@ -23,6 +23,6 @@
         <behavior name="event">
             <parameter name="spy_product_label_localized_attributes_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

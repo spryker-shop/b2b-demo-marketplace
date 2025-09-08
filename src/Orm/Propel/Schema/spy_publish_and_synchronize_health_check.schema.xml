@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\PublishAndSynchronizeHealthCheck\Persistence" package="src.Orm.Zed.PublishAndSynchronizeHealthCheck.Persistence">
     <table name="spy_publish_and_synchronize_health_check" idMethod="native" class="SpyPublishAndSynchronizeHealthCheck">
         <column name="id_publish_and_synchronize_health_check" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="health_check_data" required="true" type="VARCHAR" size="255"/>
         <column name="health_check_key" required="true" type="VARCHAR" size="255"/>
         <unique name="spy_publish_and_synchronize_health_check-health_check_key">
@@ -13,6 +13,6 @@
             <parameter name="spy_publish_and_synchronize_health_check_all" column="*"/>
         </behavior>
         <behavior name="timestampable"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

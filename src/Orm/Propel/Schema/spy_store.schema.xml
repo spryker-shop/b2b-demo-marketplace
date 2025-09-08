@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Store\Persistence" package="src.Orm.Zed.Store.Persistence">
     <table name="spy_store" idMethod="native">
         <column name="id_store" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_currency" type="INTEGER" description="Default currency for the store."/>
         <column name="fk_locale" type="INTEGER" description="Default locale of the store."/>
         <column name="name" size="255" type="VARCHAR"/>
@@ -23,6 +23,6 @@
         <behavior name="event">
             <parameter name="spy_store_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

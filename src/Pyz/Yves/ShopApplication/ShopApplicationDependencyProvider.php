@@ -9,11 +9,12 @@ declare(strict_types = 1);
 
 namespace Pyz\Yves\ShopApplication;
 
+use Go\Yves\ShopConfiguration\Plugin\ShopApplication\TenantStoreResolverApplicationPlugin;
+use Go\Yves\StoreWidget\Widget\StoreSwitcherWidget;
 use Pyz\Yves\CompanyPage\Plugin\ShopApplication\CompanyUserRestrictionHandlerPlugin;
 use Pyz\Yves\CompanyWidget\Widget\MenuItemCompanyWidget;
 use Pyz\Yves\CustomerFullNameWidget\Widget\CustomerFullNameWidget;
 use Pyz\Yves\ProductSetWidget\Widget\ProductSetIdsWidget;
-use Spryker\Service\Container\ContainerInterface;
 use Spryker\Yves\CustomerDataChangeRequest\Widget\CustomerEmailChangeRequestWidget;
 use Spryker\Yves\ErrorHandler\Plugin\Application\ErrorHandlerApplicationPlugin;
 use Spryker\Yves\EventDispatcher\Plugin\Application\EventDispatcherApplicationPlugin;
@@ -181,13 +182,9 @@ use SprykerShop\Yves\ShoppingListWidget\Widget\CreateShoppingListFromCartWidget;
 use SprykerShop\Yves\ShoppingListWidget\Widget\ShoppingListMenuItemWidget;
 use SprykerShop\Yves\ShoppingListWidget\Widget\ShoppingListNavigationMenuWidget;
 use SprykerShop\Yves\ShoppingListWidget\Widget\ShoppingListSubtotalWidget;
-use SprykerShop\Yves\StoreWidget\Plugin\ShopApplication\StoreApplicationPlugin;
-use Pyz\Yves\StoreWidget\Widget\StoreSwitcherWidget;
 use SprykerShop\Yves\TabsWidget\Widget\FullTextSearchTabsWidget;
 use SprykerShop\Yves\TraceableEventWidget\Widget\TraceableEventWidget;
 use SprykerShop\Yves\WebProfilerWidget\Plugin\Application\WebProfilerApplicationPlugin;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
@@ -400,87 +397,7 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             new ValidatorApplicationPlugin(),
             new YvesSecurityApplicationPlugin(),
             new CustomerConfirmationUserCheckerApplicationPlugin(),
-            new class implements \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface
-            {
-                public const SERVICE_TENANT_ID = 'SERVICE_TENANT_ID';
-                protected const STORE = 'store';
-
-                /**
-                 * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
-                 *
-                 * @var string
-                 */
-                public const SERVICE_REQUEST_STACK = 'request_stack';
-
-                public function provide(ContainerInterface $container): ContainerInterface
-                {
-                    $container->set(static::STORE, function (ContainerInterface $container) {
-                        return $this->resolve($container, 'store');
-                    });
-                    $container->set(static::SERVICE_TENANT_ID, function (ContainerInterface $container) {
-                        return $this->resolve($container, 'tenant');
-                    });
-
-                    return $container;
-                }
-
-                protected function resolve(ContainerInterface $container, string $parameter): string
-                {
-                    /** @var \Pyz\Client\ShopConfiguration\ShopConfigurationClient $shopConfigurationClient */
-                    $shopConfigurationClient = \Spryker\Client\Kernel\Locator::getInstance()
-                        ->shopConfiguration()
-                        ->client();
-                    $request = $this->getRequest($container);
-                    $host = $request->getHttpHost();
-                    $storeDomainData = $shopConfigurationClient->resolveDomainByHost($host);
-                    if ($storeDomainData) {
-                        if (isset($storeDomainData[$parameter])) {
-                            return $storeDomainData[$parameter];
-                        }
-                        echo 'Parameter not found: ' . $parameter;
-                        die;
-                    }
-
-                    /** @var \Pyz\Client\TenantOnboarding\TenantOnboardingClientInterface $tenantOnboardingClient */
-                    $tenantOnboardingClient = \Spryker\Client\Kernel\Locator::getInstance()
-                        ->tenantOnboarding()
-                        ->client();
-                    $tenantTransfer = $tenantOnboardingClient->findTenantByID($host);
-
-                    if ($tenantTransfer) {
-                        if ($parameter === 'tenant') {
-                            return (string)$tenantTransfer->getIdentifier();
-                        }
-                        if ($parameter === 'store') {
-                            $storeDomainData = $shopConfigurationClient->resolveDomainByHost($tenantTransfer->getIdentifier());
-
-                            if ($storeDomainData) {
-                                $defaultDomain = reset($storeDomainData);
-                                header(
-                                    sprintf('Location: %s://%s', $request->getScheme(), $defaultDomain),
-                                );
-                                die;
-                            }
-                        }
-                    }
-
-                    echo 'Domain not found';
-                    die;
-                }
-
-                protected function getRequest(ContainerInterface $container): \Symfony\Component\HttpFoundation\Request
-                {
-                    $requestStack = $container->get(static::SERVICE_REQUEST_STACK);
-
-                    if ($requestStack->getCurrentRequest() === null) {
-                        $requestStack = new RequestStack();
-                        $requestStack->push(Request::createFromGlobals());
-                    }
-
-                    /** @var \Symfony\Component\HttpFoundation\Request $currentRequest */
-                    return $requestStack->getCurrentRequest();
-                }
-            },
+            new TenantStoreResolverApplicationPlugin(),
         ];
 
         if (class_exists(WebProfilerApplicationPlugin::class)) {

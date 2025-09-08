@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\FileManagerStorage\Persistence" package="src.Orm.Zed.FileManagerStorage.Persistence">
     <table name="spy_file_storage" identifierQuoting="true" idMethod="native">
         <column name="id_file_storage" type="integer" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_file" type="integer"/>
         <column name="file_name" type="varchar" size="500"/>
         <index name="spy_file_storage-fk_file">
@@ -16,6 +16,6 @@
             <parameter name="key_suffix_column" value="fk_file"/>
             <parameter name="queue_pool" value="synchronizationPool"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

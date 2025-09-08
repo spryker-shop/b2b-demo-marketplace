@@ -327,8 +327,8 @@ public function enableEvent()
         $dataEventName = static::EVENT_CHANGE_NAME;
 
         $tenantBehavior = '';
-        if ($this->table->hasBehavior('\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior')) {
-            $tenantBehavior = '$data[\'id_tenant\'] = $this->id_tenant;';
+        if ($this->table->hasBehavior('\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior')) {
+            $tenantBehavior = '$data[\'tenant_reference\'] = $this->tenant_reference;';
         }
 
         return "
@@ -385,10 +385,10 @@ protected function addSaveEventToMemory()
         $dataEventName = static::EVENT_CHANGE_NAME;
         $dataEventEntityAdditionalValues = static::EVENT_CHANGE_ENTITY_ADDITIONAL_VALUES;
 
-        // If the TenantBehavior is applied, we need to set the tenant ID in the transfer data
+        // If the TenantBehavior is applied, we need to set the tenant_reference in the transfer data
         $tenantBehavior = '';
-        if ($this->table->hasBehavior('\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior')) {
-            $tenantBehavior = '$data[\'id_tenant\'] = $this->id_tenant;';
+        if ($this->table->hasBehavior('\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior')) {
+            $tenantBehavior = '$data[\'tenant_reference\'] = $this->tenant_reference;';
         }
 
         return "

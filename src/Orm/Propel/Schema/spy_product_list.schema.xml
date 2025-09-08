@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\ProductList\Persistence" package="src.Orm.Zed.ProductList.Persistence">
     <table name="spy_product_list" identifierQuoting="true" idMethod="native">
         <column name="id_product_list" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_merchant_relationship" type="INTEGER"/>
         <column name="key" type="VARCHAR" size="255"/>
         <column name="title" type="VARCHAR" size="255"/>
@@ -24,10 +24,10 @@
         <behavior name="event">
             <parameter name="spy_product_list_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_product_list_product_concrete" isCrossRef="true" idMethod="native">
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_product" type="integer" primaryKey="true"/>
         <column name="fk_product_list" type="integer" primaryKey="true"/>
         <foreign-key name="spy_product_list_product_concrete-fk_product_list" foreignTable="spy_product_list" onDelete="CASCADE">
@@ -45,10 +45,10 @@
         <behavior name="event">
             <parameter name="spy_product_list_product_concrete_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_product_list_category" isCrossRef="true" idMethod="native">
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_category" type="integer" primaryKey="true"/>
         <column name="fk_product_list" type="integer" primaryKey="true"/>
         <foreign-key name="spy_product_list_category-fk_product_list" foreignTable="spy_product_list" onDelete="CASCADE">
@@ -66,6 +66,6 @@
         <behavior name="event">
             <parameter name="spy_product_list_category_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

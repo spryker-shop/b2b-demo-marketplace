@@ -2,7 +2,7 @@ version: '0.1'
 
 namespace: spryker_b2b_marketplace_dev
 tag: 'dev'
-pipeline: docker.deployment.go.yml
+
 environment: docker.dev
 image:
     tag: spryker/php:8.3
@@ -60,6 +60,23 @@ regions:
             search:
                 namespace: eu_search
 
+    US:
+        services:
+            mail:
+                sender:
+                    name: Spryker No-Reply
+                    email: no-reply@spryker.local
+            database:
+                database: us-docker
+                username: spryker
+                password: secret
+            broker:
+                namespace: us-docker
+            key_value_store:
+                namespace: 2
+            search:
+                namespace: us_search
+
 groups:
     EU:
         region: EU
@@ -77,22 +94,8 @@ groups:
             yves_eu:
                 application: yves
                 endpoints:
-                    test.yves.eu.spryker.local:
-                        region: EU
-                    default-test.yves.eu.spryker.local:
-                        region: EU
-                    de-test.yves.eu.spryker.local:
-                        region: EU
-                    at-test.yves.eu.spryker.local:
-                        region: EU
-                    spryker.yves.eu.spryker.local:
-                        region: EU
-                    default-spryker.yves.eu.spryker.local:
-                        region: EU
-                    de-spryker.yves.eu.spryker.local:
-                        region: EU
-                    at-spryker.yves.eu.spryker.local:
-                        region: EU
+                    date-time-configurator-example.spryker.local:
+                        entry-point: Configurator
                     yves.eu.spryker.local:
                         region: EU
                         services:
@@ -128,15 +131,79 @@ groups:
                     backend-gateway.eu.spryker.local:
                         region: EU
                         primal: true
+            backend_api_eu:
+                application: zed
+                endpoints:
+                    backend-api.eu.spryker.local:
+                        region: EU
+                        entry-point: BackendApi
 
+    US:
+        region: US
+        applications:
+            mportal_us:
+                application: merchant-portal
+                endpoints:
+                    mp.us.spryker.local:
+                        region: US
+                        entry-point: MerchantPortal
+                        primal: true
+                        services:
+                            session:
+                                namespace: 4
+            yves_us:
+                application: yves
+                endpoints:
+                    yves.us.spryker.local:
+                        region: US
+                        services:
+                            session:
+                                namespace: 5
+            glue_us:
+                application: glue
+                endpoints:
+                    glue.us.spryker.local:
+                        region: US
+            glue_storefront_us:
+                application: glue-storefront
+                endpoints:
+                    glue-storefront.us.spryker.local:
+                        region: US
+            glue_backend_us:
+                application: glue-backend
+                endpoints:
+                    glue-backend.us.spryker.local:
+                        region: US
+            backoffice_us:
+                application: backoffice
+                endpoints:
+                    backoffice.us.spryker.local:
+                        region: US
+                        primal: true
+                        services:
+                            session:
+                                namespace: 6
+            backend_gateway_us:
+                application: backend-gateway
+                endpoints:
+                    backend-gateway.us.spryker.local:
+                        region: US
+                        primal: true
+            backend_api_us:
+                application: zed
+                endpoints:
+                    backend-api.us.spryker.local:
+                        region: US
+                        entry-point: BackendApi
 services:
     database:
-        engine: postgres
+        engine: mysql
+        version: mariadb-10.4
         root:
             username: 'root'
             password: 'secret'
         endpoints:
-            localhost:5432:
+            localhost:3306:
                 protocol: tcp
     broker:
         engine: rabbitmq

@@ -10,7 +10,6 @@ declare(strict_types = 1);
 namespace Pyz\Zed\Event;
 
 use Monolog\Logger;
-use Spryker\Shared\Event\EventConstants;
 use Spryker\Zed\Event\EventConfig as SprykerEventConfig;
 
 class EventConfig extends SprykerEventConfig

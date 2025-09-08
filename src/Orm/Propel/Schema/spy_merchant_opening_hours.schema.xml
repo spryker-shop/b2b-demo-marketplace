@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\MerchantOpeningHours\Persistence" package="src.Orm.Zed.MerchantOpeningHours.Persistence">
     <table name="spy_merchant_opening_hours_weekday_schedule" identifierQuoting="true" phpName="SpyMerchantOpeningHoursWeekdaySchedule" idMethod="native">
         <column name="id_merchant_opening_hours_weekday_schedule" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_merchant" type="INTEGER" required="true"/>
         <column name="fk_weekday_schedule" type="INTEGER" required="true"/>
         <foreign-key name="spy_merchant_opening_hours_weekday_schedule-fk_weekday_schedule" foreignTable="spy_weekday_schedule" onDelete="CASCADE">
@@ -21,11 +21,11 @@
         <behavior name="event">
             <parameter name="spy_merchant_opening_hours_weekday_schedule_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_merchant_opening_hours_date_schedule" identifierQuoting="true" phpName="SpyMerchantOpeningHoursDateSchedule" idMethod="native">
         <column name="id_merchant_opening_hours_date_schedule" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_date_schedule" type="INTEGER" required="true"/>
         <column name="fk_merchant" type="INTEGER" required="true"/>
         <foreign-key name="spy_merchant_opening_hours_date_schedule-fk_w_s_e_d" foreignTable="spy_date_schedule" onDelete="CASCADE">
@@ -44,6 +44,6 @@
         <behavior name="event">
             <parameter name="spy_merchant_opening_hours_date_schedule_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>

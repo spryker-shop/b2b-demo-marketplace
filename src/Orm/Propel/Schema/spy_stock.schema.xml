@@ -2,7 +2,7 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Stock\Persistence" package="src.Orm.Zed.Stock.Persistence">
     <table name="spy_stock" idMethod="native">
         <column name="id_stock" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="is_active" type="BOOLEAN" defaultValue="true"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
         <unique name="spy_stock-name">
@@ -12,11 +12,11 @@
         <behavior name="event">
             <parameter name="spy_stock_is_active" column="is_active"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_stock_product" idMethod="native">
         <column name="id_stock_product" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_product" type="INTEGER" required="true"/>
         <column name="fk_stock" type="INTEGER" required="true"/>
         <column name="is_never_out_of_stock" type="BOOLEAN" defaultValue="false"/>
@@ -35,11 +35,11 @@
             <unique-column name="fk_product"/>
         </unique>
         <id-method-parameter value="spy_stock_product_pk_seq"/>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
     <table name="spy_stock_store" idMethod="native">
         <column name="id_stock_store" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
-        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
         <column name="fk_stock" type="INTEGER" required="true"/>
         <column name="fk_store" type="INTEGER" required="true"/>
         <foreign-key name="spy_stock_store-fk_stock" foreignTable="spy_stock" phpName="Stock" refPhpName="StockStore">
@@ -59,6 +59,6 @@
         <behavior name="event">
             <parameter name="spy_stock_store_all" column="*"/>
         </behavior>
-        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
     </table>
 </database>
