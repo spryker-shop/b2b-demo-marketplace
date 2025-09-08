@@ -36,9 +36,6 @@ sections:
         generate-scope-collection-file:
             command: 'vendor/bin/console oauth:scope-collection-file:generate'
 
-        propel-copy-schema:
-            command: 'vendor/bin/console propel:schema:copy'
-
         propel-build:
             command: 'vendor/bin/console propel:model:build'
 
@@ -96,9 +93,6 @@ sections:
             command: 'vendor/bin/console propel:tables:drop -vvv --no-ansi'
 
     database-migrate:
-        propel-copy-schema:
-            command: 'vendor/bin/console propel:schema:copy -vvv --no-ansi'
-
         propel-postgres-compatibility:
             command: 'vendor/bin/console propel:pg-sql-compat -vvv --no-ansi'
 
@@ -142,8 +136,6 @@ sections:
 
         yves-build-frontend:
             command: "vendor/bin/console frontend:yves:build -e production -vvv"
-            groups:
-                - yves
 
     reload:
         delete-elastic-search-index:
@@ -156,9 +148,6 @@ sections:
 
         clean-db:
             command: 'vendor/bin/console propel:tables:drop -vvv --no-ansi'
-
-        propel-copy-schema:
-            command: 'vendor/bin/console propel:schema:copy -vvv --no-ansi'
 
         propel-postgres-compatibility:
             command: 'vendor/bin/console propel:pg-sql-compat -vvv --no-ansi'

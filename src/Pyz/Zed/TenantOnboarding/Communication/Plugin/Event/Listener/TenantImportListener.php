@@ -4,7 +4,8 @@ namespace Pyz\Zed\TenantOnboarding\Communication\Plugin\Event\Listener;
 
 use Generated\Shared\Transfer\TenantOnboardingMessageTransfer;
 use Generated\Shared\Transfer\TenantRegistrationTransfer;
-use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
+use Spryker\Zed\Event\Dependency\Plugin\EventHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\Process\Process;
 
@@ -13,26 +14,19 @@ use Symfony\Component\Process\Process;
  * @method \Pyz\Zed\TenantOnboarding\TenantOnboardingConfig getConfig()
  * @method \Pyz\Zed\TenantOnboarding\Communication\TenantOnboardingCommunicationFactory getFactory()
  */
-class TenantImportListener extends AbstractPlugin implements EventBulkHandlerInterface
+class TenantImportListener extends AbstractPlugin implements EventHandlerInterface
 {
     protected const DATA_IMPORT_CONFIG_PATH = 'data/import/tenant/tenant_import_config_EU.yml';
     protected const DATA_IMPORT_FULL_CONFIG_PATH = 'data/import/local/full_EU.yml';
-    protected const COMMAND_TIMEOUT = 300; // 5 minutes
+    protected const COMMAND_TIMEOUT = 540;
 
-    /**
-     * @param array<\Generated\Shared\Transfer\QueueSendMessageTransfer> $eventEntityTransfers
-     * @param string $eventName
-     *
-     * @return void
-     */
-    public function handleBulk(array $eventEntityTransfers, $eventName)
+    public function handle(TransferInterface $transfer, $eventName)
     {
-        foreach ($eventEntityTransfers as $eventEntityTransfer) {
-            $tenantOnboardingMessageTransfer = new TenantOnboardingMessageTransfer();
-            $tenantOnboardingMessageTransfer->fromArray(json_decode($eventEntityTransfer->getBody(), true), true);
+        /** @var \Generated\Shared\Transfer\QueueSendMessageTransfer $transfer */
+        $tenantOnboardingMessageTransfer = new TenantOnboardingMessageTransfer();
+        $tenantOnboardingMessageTransfer->fromArray(json_decode($transfer->getBody(), true), true);
 
-            $this->execute($tenantOnboardingMessageTransfer->getTenantRegistration());
-        }
+        $this->execute($tenantOnboardingMessageTransfer->getTenantRegistration());
     }
 
     public function execute(TenantRegistrationTransfer $tenantRegistrationTransfer): void

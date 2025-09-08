@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Vault\Persistence" package="src.Orm.Zed.Vault.Persistence">
+    <table name="spy_vault_deposit" idMethod="native" allowPkInsert="true">
+        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="id_vault_deposit" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+        <column name="cipher_text" required="true" type="LONGVARCHAR"/>
+        <column name="data_key" required="true" type="VARCHAR" size="255"/>
+        <column name="data_type" required="true" type="VARCHAR" size="255"/>
+        <column name="initial_vector" required="true" type="VARCHAR" size="255"/>
+        <index name="spy_vault_deposit-data_type-data_key">
+            <index-column name="data_type"/>
+            <index-column name="data_key"/>
+        </index>
+        <unique name="spy_vault_deposit-unique-data_type-data_key">
+            <unique-column name="data_type"/>
+            <unique-column name="data_key"/>
+        </unique>
+        <id-method-parameter value="id_vault_deposit_pk_seq"/>
+        <behavior name="timestampable"/>
+        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+    </table>
+</database>

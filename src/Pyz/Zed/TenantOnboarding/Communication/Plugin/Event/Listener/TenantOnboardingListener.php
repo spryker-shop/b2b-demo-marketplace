@@ -3,7 +3,8 @@
 namespace Pyz\Zed\TenantOnboarding\Communication\Plugin\Event\Listener;
 
 use Generated\Shared\Transfer\TenantOnboardingMessageTransfer;
-use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
+use Spryker\Zed\Event\Dependency\Plugin\EventHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -11,21 +12,14 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Pyz\Zed\TenantOnboarding\TenantOnboardingConfig getConfig()
  * @method \Pyz\Zed\TenantOnboarding\Communication\TenantOnboardingCommunicationFactory getFactory()
  */
-class TenantOnboardingListener extends AbstractPlugin implements EventBulkHandlerInterface
+class TenantOnboardingListener extends AbstractPlugin implements EventHandlerInterface
 {
-    /**
-     * @param array<\Generated\Shared\Transfer\QueueSendMessageTransfer> $eventEntityTransfers
-     * @param string $eventName
-     *
-     * @return void
-     */
-    public function handleBulk(array $eventEntityTransfers, $eventName)
+    public function handle(TransferInterface $transfer, $eventName)
     {
-        foreach ($eventEntityTransfers as $eventEntityTransfer) {
-            $tenantOnboardingMessageTransfer = new TenantOnboardingMessageTransfer();
-            $tenantOnboardingMessageTransfer->fromArray(json_decode($eventEntityTransfer->getBody(), true), true);
+        /** @var \Generated\Shared\Transfer\QueueSendMessageTransfer $transfer */
+        $tenantOnboardingMessageTransfer = new TenantOnboardingMessageTransfer();
+        $tenantOnboardingMessageTransfer->fromArray(json_decode($transfer->getBody(), true), true);
 
-            $this->getFacade()->processOnboardingStep($tenantOnboardingMessageTransfer);
-        }
+        $this->getFacade()->processOnboardingStep($tenantOnboardingMessageTransfer);
     }
 }

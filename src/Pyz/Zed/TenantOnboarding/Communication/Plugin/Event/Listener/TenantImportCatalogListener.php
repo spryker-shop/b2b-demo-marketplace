@@ -9,7 +9,7 @@ use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
  * @method \Pyz\Zed\TenantOnboarding\TenantOnboardingConfig getConfig()
  * @method \Pyz\Zed\TenantOnboarding\Communication\TenantOnboardingCommunicationFactory getFactory()
  */
-class TenantImportCatalogListener extends AbstractTenantPartialImportListener implements EventBulkHandlerInterface
+class TenantImportCatalogListener extends AbstractTenantPartialImportListener
 {
     protected const DATA_IMPORT_FULL_CONFIG_PATH = 'data/import/tenant/partial/catalog.yml';
 }

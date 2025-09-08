@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Asset\Persistence" package="src.Orm.Zed.Asset.Persistence">
+    <table name="spy_asset" identifierQuoting="true" idMethod="native">
+        <column name="id_asset" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="asset_content" required="true" type="LONGVARCHAR"/>
+        <column name="asset_name" required="true" type="VARCHAR" size="255"/>
+        <column name="asset_slot" required="true" type="VARCHAR" size="255"/>
+        <column name="asset_uuid" required="true" type="VARCHAR" size="36"/>
+        <column name="is_active" required="false" type="BOOLEAN" default="true"/>
+        <column name="last_message_timestamp" required="false" type="TIMESTAMP" size="6"/>
+        <unique name="spy_asset-unique-asset_uuid">
+            <unique-column name="asset_uuid"/>
+        </unique>
+        <id-method-parameter value="spy_asset_pk_seq"/>
+        <behavior name="event">
+            <parameter name="spy_asset_all" column="*"/>
+        </behavior>
+        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+    </table>
+    <table name="spy_asset_store" identifierQuoting="true" idMethod="native">
+        <column name="id_asset_store" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="fk_asset" required="true" type="INTEGER"/>
+        <column name="fk_store" required="true" type="INTEGER"/>
+        <foreign-key name="spy_asset_store-fk_asset" foreignTable="spy_asset">
+            <reference local="fk_asset" foreign="id_asset"/>
+        </foreign-key>
+        <foreign-key name="spy_asset_store-fk_store" foreignTable="spy_store">
+            <reference local="fk_store" foreign="id_store"/>
+        </foreign-key>
+        <unique name="spy_asset_store-unique-fk_block-fk_store">
+            <unique-column name="fk_asset"/>
+            <unique-column name="fk_store"/>
+        </unique>
+        <id-method-parameter value="spy_asset_store_pk_seq"/>
+        <behavior name="event">
+            <parameter name="spy_asset_store_all" column="*"/>
+        </behavior>
+        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+    </table>
+</database>

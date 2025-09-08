@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\ShopConfiguration\Persistence" package="src.Orm.Zed.ShopConfiguration.Persistence">
+    <table name="spy_shop_configuration" phpName="SpyShopConfiguration" idMethod="native">
+        <column name="id_shop_configuration" type="BIGINT" primaryKey="true" autoIncrement="true"/>
+        <column name="id_tenant" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="config_key" type="VARCHAR" size="255" required="true"/>
+        <column name="created_at" type="TIMESTAMP"/>
+        <column name="data_type" type="VARCHAR" size="32" required="true"/>
+        <column name="is_overridden" type="BOOLEAN" required="true" default="false"/>
+        <column name="module" type="VARCHAR" size="128" required="true"/>
+        <column name="scope_locale" type="VARCHAR" size="8" required="false"/>
+        <column name="scope_store" type="VARCHAR" size="64" required="false"/>
+        <column name="section" type="VARCHAR" size="128" required="false"/>
+        <column name="updated_at" type="TIMESTAMP"/>
+        <column name="value_json" type="LONGVARCHAR" required="true"/>
+        <index name="spy_shop_configuration_scope_store">
+            <index-column name="scope_store"/>
+        </index>
+        <index name="spy_shop_configuration_scope_locale">
+            <index-column name="scope_locale"/>
+        </index>
+        <index name="spy_shop_configuration_module_section">
+            <index-column name="module"/>
+            <index-column name="section"/>
+        </index>
+        <unique name="spy_shop_configuration_unique_scope_key">
+            <unique-column name="scope_store"/>
+            <unique-column name="scope_locale"/>
+            <unique-column name="config_key"/>
+        </unique>
+        <behavior name="timestampable"/>
+        <behavior name="\Pyz\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+    </table>
+</database>

@@ -10,7 +10,6 @@ declare(strict_types = 1);
 namespace Pyz\Zed\Queue;
 
 use Pyz\Zed\TenantOnboarding\Communication\Plugin\Queue\TenantOnboardingEventQueueMessageProcessorPlugin;
-use Pyz\Zed\TenantOnboarding\Communication\Plugin\Queue\TenantOnboardingQueueMessageProcessorPlugin;
 use Pyz\Zed\TenantOnboarding\TenantOnboardingConfig;
 use Spryker\Shared\AssetStorage\AssetStorageConfig;
 use Spryker\Shared\AvailabilityStorage\AvailabilityStorageConfig;
