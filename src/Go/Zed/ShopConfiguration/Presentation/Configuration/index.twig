@@ -14,9 +14,6 @@
                     {# @var \Generated\Shared\Transfer\StoreTransfer storeTransfer #}
                     <option value="{{ storeTransfer.name }}" {% if storeTransfer.name == currentStore %}selected{% endif %}>
                         {{ storeTransfer.name }}
-                        {% if currentTenant is null %}
-                        ({{ storeTransfer.idTenant }})
-                        {% endif %}
                     </option>
                 {% endfor %}
                 </select>
