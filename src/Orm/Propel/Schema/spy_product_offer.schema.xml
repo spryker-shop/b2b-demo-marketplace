@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\ProductOffer\Persistence" package="src.Orm.Zed.ProductOffer.Persistence">
+    <table name="spy_product_offer" phpName="SpyProductOffer" idMethod="native">
+        <column name="id_product_offer" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="approval_status" type="VARCHAR" size="64" required="true"/>
+        <column name="concrete_sku" required="true" type="VARCHAR" size="255"/>
+        <column name="is_active" default="true" type="BOOLEAN"/>
+        <column name="merchant_reference" type="VARCHAR" size="255"/>
+        <column name="merchant_sku" type="VARCHAR" size="255"/>
+        <column name="product_offer_reference" required="true" type="VARCHAR" size="255"/>
+        <index name="spy_product_offer-merchant_sku">
+            <index-column name="merchant_sku"/>
+        </index>
+        <index name="index-spy_product_offer-merchant_reference">
+            <index-column name="merchant_reference"/>
+        </index>
+        <index name="spy_product_offer-concrete_sku">
+            <index-column name="concrete_sku"/>
+        </index>
+        <unique name="spy_product_offer-product_offer_reference">
+            <unique-column name="product_offer_reference"/>
+        </unique>
+        <id-method-parameter value="spy_product_offer_pk_seq"/>
+        <behavior name="timestampable"/>
+        <behavior name="event">
+            <parameter name="spy_product_offer_all" column="*"/>
+            <parameter name="spy_product_offer_product_offer_reference" column="product_offer_reference" keep-additional="true"/>
+            <parameter name="spy_product_offer_concrete_sku" column="concrete_sku" keep-additional="true"/>
+        </behavior>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+    </table>
+    <table name="spy_product_offer_store" isCrossRef="true" phpName="SpyProductOfferStore" idMethod="native">
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="fk_product_offer" required="true" type="INTEGER" primaryKey="true"/>
+        <column name="fk_store" required="true" type="INTEGER" primaryKey="true"/>
+        <foreign-key name="spy_product_offer_store-fk_product_offer" foreignTable="spy_product_offer">
+            <reference local="fk_product_offer" foreign="id_product_offer"/>
+        </foreign-key>
+        <foreign-key name="spy_product_offer_store_store-fk_store" foreignTable="spy_store">
+            <reference local="fk_store" foreign="id_store"/>
+        </foreign-key>
+        <behavior name="event">
+            <parameter name="spy_product_offer_store_all" column="*"/>
+        </behavior>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+    </table>
+</database>

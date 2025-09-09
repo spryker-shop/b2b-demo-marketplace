@@ -1,0 +1,88 @@
+{% set fieldId = 'config-' ~ option.module ~ '-' ~ option.key | replace({'.': '-'}) %}
+{% set fieldName = option.module ~ '.' ~ option.key %}
+{% set currentValue = option.currentValue ?: option.default %}
+
+<div class="form-group configuration-option" data-option-key="{{ fieldName }}" 
+     data-section="{{ sectionKey }}" data-required="{{ option.required ? 'true' : 'false' }}"
+     data-overridable="{{ option.overridable ? 'true' : 'false' }}">
+    
+    <label for="{{ fieldId }}" class="control-label">
+        {{ option.label | trans }}
+        {% if option.required %}
+            <span class="text-danger" aria-label="{{ 'Required field' | trans }}">*</span>
+        {% endif %}
+        {% if option.isOverridden %}
+            <span class="label label-info" title="{{ 'This value has been overridden' | trans }}">
+                {{ 'Overridden' | trans }}
+            </span>
+        {% endif %}
+    </label>
+
+    {% if option.description %}
+        <p class="help-block">{{ option.description | trans }}</p>
+    {% endif %}
+
+    {% if option.dataType == 'bool' %}
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" id="{{ fieldId }}" name="{{ fieldName }}" 
+                       value="1" {% if currentValue == '1' or currentValue == 'true' or currentValue == true %}checked{% endif %}
+                       {% if not option.overridable %}disabled{% endif %}>
+                {{ 'Enable' | trans }}
+            </label>
+        </div>
+
+    {% elseif option.dataType == 'enum' and option.enumValues %}
+        <select id="{{ fieldId }}" name="{{ fieldName }}" class="form-control"
+                {% if not option.overridable %}disabled{% endif %}>
+            {% for enumValue in option.enumValues %}
+                <option value="{{ enumValue }}" {% if enumValue == currentValue %}selected{% endif %}>
+                    {{ enumValue | trans }}
+                </option>
+            {% endfor %}
+        </select>
+
+    {% elseif option.dataType == 'json' %}
+        <textarea id="{{ fieldId }}" name="{{ fieldName }}" class="form-control json-editor" 
+                  rows="4" {% if not option.overridable %}readonly{% endif %}
+                  data-json-validate="true"
+                  aria-describedby="{{ fieldId }}-help">{{ currentValue }}</textarea>
+        <small id="{{ fieldId }}-help" class="form-text text-muted">
+            {{ 'Enter valid JSON format' | trans }}
+        </small>
+
+    {% elseif option.dataType == 'int' %}
+        <input type="number" id="{{ fieldId }}" name="{{ fieldName }}" class="form-control"
+               value="{{ currentValue }}" 
+               {% if option.validation.min is defined %}min="{{ option.validation.min }}"{% endif %}
+               {% if option.validation.max is defined %}max="{{ option.validation.max }}"{% endif %}
+               {% if not option.overridable %}readonly{% endif %}>
+
+    {% elseif option.dataType == 'float' %}
+        <input type="number" step="0.01" id="{{ fieldId }}" name="{{ fieldName }}" class="form-control"
+               value="{{ currentValue }}" 
+               {% if option.validation.min is defined %}min="{{ option.validation.min }}"{% endif %}
+               {% if option.validation.max is defined %}max="{{ option.validation.max }}"{% endif %}
+               {% if not option.overridable %}readonly{% endif %}>
+
+    {% else %}
+        {% set inputClasses = 'form-control' %}
+        {% if option.cssClass %}
+            {% set inputClasses = inputClasses ~ ' ' ~ option.cssClass %}
+        {% endif %}
+        <input type="text" id="{{ fieldId }}" name="{{ fieldName }}" class="{{ inputClasses }}"
+               value="{{ currentValue }}" 
+               {% if option.validation.minLength is defined %}minlength="{{ option.validation.minLength }}"{% endif %}
+               {% if option.validation.maxLength is defined %}maxlength="{{ option.validation.maxLength }}"{% endif %}
+               {% if option.validation.pattern is defined %}pattern="{{ option.validation.pattern }}"{% endif %}
+               {% if not option.overridable %}readonly{% endif %}>
+    {% endif %}
+
+    {% if option.default and option.default != currentValue %}
+        <small class="text-muted">
+            {{ 'Default' | trans }}: {{ option.default }}
+        </small>
+    {% endif %}
+
+    <div class="field-validation-error" style="display: none;"></div>
+</div>

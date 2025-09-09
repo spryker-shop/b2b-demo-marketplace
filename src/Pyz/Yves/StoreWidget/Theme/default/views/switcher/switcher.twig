@@ -1,28 +1,27 @@
 {% extends view('switcher', '@SprykerShop:StoreWidget') %}
 
 {% block body %}
-    <form method="GET" action="/">
+    {% if (data.storeNames | length) > 1 %}
+    <form method="GET" action="{{ data.storeUrls ? '' : '/' }}">
         {% set options = [] %}
 
         {% for storeName in data.storeNames %}
             {% set options = options | merge([{
                 label: 'store_widget.switcher.store' | trans ~ ' ' ~ storeName,
-                value: storeName,
+                value: data.storeUrls ? data.storeUrls[storeName] : storeName,
                 selected: storeName == data.currentStoreName,
             }]) %}
         {% endfor %}
 
         {% include molecule('custom-select') with {
-            modifiers: ['alternative'],
+            modifiers: ['naked', 'alternative'],
             data: {
                 options: options,
             },
-            attributes: {
-                name: '_store',
-                'data-form-submitter': true,
-                'config-theme': 'alternative',
-                'aria-label': 'aria_label.store.switcher' | trans,
-            },
+            attributes: attributes | merge({
+                'config-theme': 'alternative'
+            }),
         } only %}
     </form>
+    {% endif %}
 {% endblock %}

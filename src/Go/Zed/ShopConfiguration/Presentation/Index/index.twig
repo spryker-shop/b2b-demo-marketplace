@@ -1,0 +1,1067 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Shop Configuration' | trans %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block content %}
+
+    <style>
+        .configuration-section .panel-collapse[data-collapsed="true"] {
+            display: none !important;
+        }
+        .configuration-section .panel-heading[role="button"] {
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .configuration-section .panel-heading[role="button"]:hover {
+            background-color: #f5f5f5;
+        }
+        .configuration-section .panel-heading .fa {
+            transition: transform 0.2s;
+            margin-right: 5px;
+        }
+        
+        /* Color Picker Styles */
+        .color-picker-container {
+            position: relative;
+        }
+        
+        .color-preview {
+            border: 2px solid #ddd !important;
+            border-radius: 4px !important;
+            cursor: pointer !important;
+            transition: border-color 0.2s, box-shadow 0.2s !important;
+        }
+        
+        .color-preview:hover {
+            border-color: #337ab7 !important;
+            box-shadow: 0 0 0 2px rgba(51, 122, 183, 0.2) !important;
+        }
+        
+        .color-preview:focus {
+            outline: none !important;
+            border-color: #337ab7 !important;
+            box-shadow: 0 0 0 2px rgba(51, 122, 183, 0.3) !important;
+        }
+        
+        /* Ensure color picker inputs are styled properly */
+        input.color-picker {
+            padding-right: 5px !important;
+        }
+        
+        /* Override Pickr positioning if needed */
+        .pcr-app {
+            z-index: 9999 !important;
+        }
+    </style>
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+            <div id="shop-configuration-app">
+                <!-- Vue.js app will be mounted here -->
+            </div>
+
+            <div class="shop-configuration-container" style="display: none;" data-configuration-app>
+                <!-- Store and Locale Selection -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="store-selector">{{ 'Store' | trans }}</label>
+                            <select id="store-selector" class="form-control">
+                                {% for store in availableStores %}
+                                    <option value="{{ store }}" {% if store == currentStore %}selected{% endif %}>
+                                        {{ store }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="locale-selector">{{ 'Locale' | trans }}</label>
+                            <select id="locale-selector" class="form-control">
+                                <option value="">{{ 'All Locales' | trans }}</option>
+                                {% for locale in availableLocales %}
+                                    <option value="{{ locale }}" {% if locale == currentLocale %}selected{% endif %}>
+                                        {{ locale }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="search-input">{{ 'Search Configuration' | trans }}</label>
+                            <input type="text" id="search-input" class="form-control"
+                                   placeholder="{{ 'Type to search options...' | trans }}"
+                                   aria-label="{{ 'Search configuration options' | trans }}">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="btn-toolbar" role="toolbar" aria-label="{{ 'Configuration actions' | trans }}">
+                            <div class="btn-group mr-2" role="group">
+                                <button type="button" id="save-btn" class="btn btn-primary">
+                                    <i class="fa fa-save"></i> {{ 'Save Configuration' | trans }}
+                                </button>
+                                <button type="button" id="publish-btn" class="btn btn-success">
+                                    <i class="fa fa-cloud-upload"></i> {{ 'Publish to Storage' | trans }}
+                                </button>
+                            </div>
+                            <div class="btn-group" role="group">
+                                <button type="button" id="rebuild-btn" class="btn btn-warning">
+                                    <i class="fa fa-refresh"></i> {{ 'Rebuild from Files' | trans }}
+                                </button>
+                                <button type="button" id="reset-section-btn" class="btn btn-secondary" disabled>
+                                    <i class="fa fa-undo"></i> {{ 'Reset Section' | trans }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+
+                <!-- Configuration Sections -->
+                <div id="configuration-sections">
+                    {% for section in effectiveConfiguration.sections %}
+                        <div class="configuration-section" data-section="{{ section.key }}">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="button" data-toggle="collapse"
+                                     data-target="#section-{{ section.key }}" aria-expanded="true"
+                                     aria-controls="section-{{ section.key }}">
+                                    <h4 class="panel-title">
+                                        <i class="fa fa-chevron-down"></i>
+                                        {{ section.label | trans }}
+                                        {% if section.description %}
+                                            <small class="text-muted">{{ section.description | trans }}</small>
+                                        {% endif %}
+                                    </h4>
+                                </div>
+                                <div id="section-{{ section.key }}" class="panel-collapse collapse in"
+                                     role="tabpanel" aria-labelledby="heading-{{ section.key }}">
+                                    <div class="panel-body">
+                                        {% for option in section.options %}
+                                            {% include '@ShopConfiguration/Index/_option-field.twig' with {
+                                                option: option,
+                                                sectionKey: section.key
+                                            } %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Loading Indicator -->
+            <div id="loading-indicator" style="display: none;">
+                <div class="text-center">
+                    <i class="fa fa-spinner fa-spin fa-2x"></i>
+                    <p>{{ 'Loading...' | trans }}</p>
+                </div>
+            </div>
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <!-- Color Picker CSS and JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
+    
+    <script>
+        window.shopConfigurationData = {
+            defaultConfiguration: {{ defaultConfiguration | json_encode | raw }},
+            effectiveConfiguration: {{ effectiveConfiguration | json_encode | raw }},
+            currentStore: '{{ currentStore }}',
+            currentLocale: '{{ currentLocale }}',
+            availableStores: {{ availableStores | json_encode | raw }},
+            availableLocales: {{ availableLocales | json_encode | raw }},
+            saveUrl: '{{ url('/shop-configuration/index/save') }}',
+            publishUrl: '{{ url('/shop-configuration/index/publish') }}',
+            rebuildUrl: '{{ url('/shop-configuration/index/rebuild') }}'
+        };
+    </script>
+    <script>
+        class ShopConfigurationManager {
+        constructor(data) {
+            this.data = data;
+            this.currentValues = {};
+            this.searchQuery = '';
+            this.currentSection = null;
+
+            this.init();
+        }
+
+        init() {
+            this.bindEvents();
+            this.loadCurrentValues();
+            this.setupAccessibility();
+            this.initializeColorPickers();
+            this.showContent();
+        }
+
+        bindEvents() {
+            // Store/Locale selection
+            document.getElementById('store-selector')?.addEventListener('change', (e) => {
+                this.handleStoreChange(e.target.value);
+            });
+
+            document.getElementById('locale-selector')?.addEventListener('change', (e) => {
+                this.handleLocaleChange(e.target.value);
+            });
+
+            // Search functionality
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    this.handleSearch(e.target.value);
+                });
+
+                // Keyboard navigation for search
+                searchInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        e.target.value = '';
+                        this.handleSearch('');
+                    }
+                });
+            }
+
+            // Action buttons
+            document.getElementById('save-btn')?.addEventListener('click', () => {
+                this.saveConfiguration();
+            });
+
+            document.getElementById('publish-btn')?.addEventListener('click', () => {
+                this.publishConfiguration();
+            });
+
+            document.getElementById('rebuild-btn')?.addEventListener('click', () => {
+                this.rebuildConfiguration();
+            });
+
+            document.getElementById('reset-section-btn')?.addEventListener('click', () => {
+                this.resetSection();
+            });
+
+            // Form field changes
+            document.addEventListener('change', (e) => {
+                if (e.target.closest('.configuration-option')) {
+                    this.handleFieldChange(e.target);
+                }
+            });
+
+            // Section toggle - improved event handling
+            document.addEventListener('click', (e) => {
+                const toggleElement = e.target.closest('.panel-heading[data-toggle="collapse"]');
+                if (toggleElement) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.handleSectionToggle(toggleElement);
+                }
+            });
+
+            // JSON validation
+            document.addEventListener('input', (e) => {
+                if (e.target.classList.contains('json-editor')) {
+                    this.validateJsonField(e.target);
+                }
+            });
+        }
+
+        setupAccessibility() {
+            // Add ARIA labels and keyboard navigation
+            document.querySelectorAll('.panel-heading[role="button"]').forEach(header => {
+                header.setAttribute('tabindex', '0');
+                header.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        header.click();
+                    }
+                });
+            });
+
+            // Add focus management for form fields
+            document.querySelectorAll('input, select, textarea').forEach(field => {
+                field.addEventListener('focus', () => {
+                    const option = field.closest('.configuration-option');
+                    if (option) {
+                        this.currentSection = option.dataset.section;
+                        this.updateResetSectionButton();
+                    }
+                });
+            });
+
+            // High contrast support
+            if (window.matchMedia && window.matchMedia('(prefers-contrast: high)').matches) {
+                document.body.classList.add('high-contrast');
+            }
+        }
+
+        initializeColorPickers() {
+            // Initialize color pickers for all inputs with 'color-picker' class
+            document.querySelectorAll('input.color-picker').forEach((input) => {
+                this.setupColorPicker(input);
+            });
+
+            // Also initialize for dynamically added color picker inputs
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    mutation.addedNodes.forEach((node) => {
+                        if (node.nodeType === Node.ELEMENT_NODE) {
+                            const colorInputs = node.querySelectorAll ? node.querySelectorAll('input.color-picker') : [];
+                            colorInputs.forEach((input) => {
+                                if (!input.dataset.colorPickerInitialized) {
+                                    this.setupColorPicker(input);
+                                }
+                            });
+                        }
+                    });
+                });
+            });
+
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
+        }
+
+        setupColorPicker(input) {
+            if (input.dataset.colorPickerInitialized || !window.Pickr) {
+                return;
+            }
+
+            // Mark as initialized to prevent duplicate initialization
+            input.dataset.colorPickerInitialized = 'true';
+
+            // Create a container for the color picker
+            const pickerContainer = document.createElement('div');
+            pickerContainer.className = 'color-picker-container';
+            pickerContainer.style.position = 'relative';
+            pickerContainer.style.display = 'inline-block';
+            pickerContainer.style.width = '100%';
+
+            // Create the color picker trigger button
+            const colorPreview = document.createElement('div');
+            colorPreview.className = 'color-preview';
+            colorPreview.style.cssText = `
+                width: 40px;
+                height: 38px;
+                border: 2px solid #ddd;
+                border-radius: 4px;
+                display: inline-block;
+                cursor: pointer;
+                vertical-align: top;
+                margin-left: 5px;
+                background-color: ${input.value || '#ffffff'};
+                position: relative;
+                box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
+            `;
+
+            // Add a small icon to indicate it's clickable
+            const icon = document.createElement('span');
+            icon.innerHTML = '🎨';
+            icon.style.cssText = `
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-size: 16px;
+                opacity: 0.7;
+                pointer-events: none;
+            `;
+            colorPreview.appendChild(icon);
+
+            // Wrap the input and add the color preview
+            input.parentNode.insertBefore(pickerContainer, input);
+            pickerContainer.appendChild(input);
+            pickerContainer.appendChild(colorPreview);
+
+            // Adjust input styling
+            input.style.width = 'calc(100% - 50px)';
+            input.style.display = 'inline-block';
+
+            // Initialize Pickr color picker
+            const pickr = Pickr.create({
+                el: colorPreview,
+                theme: 'classic',
+                default: input.value || '#ffffff',
+                
+                swatches: [
+                    '#f44336', '#e91e63', '#9c27b0', '#673ab7',
+                    '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4',
+                    '#009688', '#4caf50', '#8bc34a', '#cddc39',
+                    '#ffeb3b', '#ffc107', '#ff9800', '#ff5722',
+                    '#795548', '#9e9e9e', '#607d8b', '#000000',
+                    '#ffffff'
+                ],
+
+                components: {
+                    preview: true,
+                    opacity: true,
+                    hue: true,
+
+                    interaction: {
+                        hex: true,
+                        rgba: true,
+                        hsla: true,
+                        hsva: true,
+                        cmyk: true,
+                        input: true,
+                        clear: true,
+                        save: true
+                    }
+                },
+
+                strings: {
+                    save: 'Save',
+                    clear: 'Clear',
+                    cancel: 'Cancel'
+                }
+            });
+
+            // Handle color changes
+            pickr.on('change', (color) => {
+                const hexColor = color.toHEXA().toString();
+                input.value = hexColor;
+                colorPreview.style.backgroundColor = hexColor;
+                
+                // Trigger change event for the form field
+                const changeEvent = new Event('change', { bubbles: true });
+                input.dispatchEvent(changeEvent);
+            });
+
+            pickr.on('save', (color) => {
+                if (color) {
+                    const hexColor = color.toHEXA().toString();
+                    input.value = hexColor;
+                    colorPreview.style.backgroundColor = hexColor;
+                    
+                    // Trigger change event for the form field
+                    const changeEvent = new Event('change', { bubbles: true });
+                    input.dispatchEvent(changeEvent);
+                }
+                pickr.hide();
+            });
+
+            pickr.on('clear', () => {
+                input.value = '';
+                colorPreview.style.backgroundColor = '#ffffff';
+                
+                // Trigger change event for the form field
+                const changeEvent = new Event('change', { bubbles: true });
+                input.dispatchEvent(changeEvent);
+                pickr.hide();
+            });
+
+            // Handle manual input changes
+            input.addEventListener('input', (e) => {
+                const value = e.target.value;
+                if (this.isValidColor(value)) {
+                    colorPreview.style.backgroundColor = value;
+                    if (pickr) {
+                        pickr.setColor(value);
+                    }
+                }
+            });
+
+            // Handle input blur to validate color
+            input.addEventListener('blur', (e) => {
+                const value = e.target.value;
+                if (value && !this.isValidColor(value)) {
+                    // Invalid color, reset to previous valid color or default
+                    const currentBgColor = colorPreview.style.backgroundColor;
+                    if (currentBgColor && currentBgColor !== 'rgb(255, 255, 255)') {
+                        input.value = this.rgbToHex(currentBgColor);
+                    } else {
+                        input.value = '#ffffff';
+                        colorPreview.style.backgroundColor = '#ffffff';
+                    }
+                }
+            });
+
+            // Store the pickr instance for cleanup if needed
+            input.colorPickrInstance = pickr;
+        }
+
+        isValidColor(color) {
+            if (!color) return false;
+            
+            // Check hex format
+            if (/^#[0-9A-F]{6}$/i.test(color) || /^#[0-9A-F]{3}$/i.test(color)) {
+                return true;
+            }
+            
+            // Check rgb/rgba format
+            if (/^rgba?\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*(,\s*[\d.]+)?\s*\)$/i.test(color)) {
+                return true;
+            }
+            
+            // Check color names (basic validation)
+            const colorNames = [
+                'red', 'green', 'blue', 'yellow', 'orange', 'purple', 'pink', 'brown',
+                'black', 'white', 'gray', 'grey', 'cyan', 'magenta', 'lime', 'navy',
+                'maroon', 'olive', 'aqua', 'silver', 'fuchsia', 'teal'
+            ];
+            
+            return colorNames.includes(color.toLowerCase());
+        }
+
+        rgbToHex(rgb) {
+            // Convert rgb(r, g, b) or rgba(r, g, b, a) to hex
+            const match = rgb.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
+            if (match) {
+                const r = parseInt(match[1]);
+                const g = parseInt(match[2]);
+                const b = parseInt(match[3]);
+                return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+            }
+            return rgb;
+        }
+
+        loadCurrentValues() {
+            if (!this.data.effectiveConfiguration?.sections) return;
+
+            this.data.effectiveConfiguration.sections.forEach(section => {
+                section.options?.forEach(option => {
+                    const key = `${option.module}.${option.key}`;
+                    this.currentValues[key] = option.currentValue || option.default;
+                });
+            });
+        }
+
+        handleStoreChange(store) {
+            this.reloadPage({ store });
+        }
+
+        handleLocaleChange(locale) {
+            this.reloadPage({ locale });
+        }
+
+        handleSearch(query) {
+            this.searchQuery = query.toLowerCase();
+            this.filterSections();
+
+            // Announce search results to screen readers
+            const visibleSections = document.querySelectorAll('.configuration-section:not([style*="display: none"])');
+            this.announceToScreenReader(
+                `${visibleSections.length} sections found for "${query}"`
+            );
+        }
+
+        filterSections() {
+            const sections = document.querySelectorAll('.configuration-section');
+
+            sections.forEach(section => {
+                const sectionElement = section;
+                const options = section.querySelectorAll('.configuration-option');
+                let hasVisibleOptions = false;
+
+                if (!this.searchQuery) {
+                    // Show all if no search query
+                    sectionElement.style.display = '';
+                    options.forEach(option => {
+                        option.style.display = '';
+                    });
+                    return;
+                }
+
+                options.forEach(option => {
+                    const label = option.querySelector('label')?.textContent?.toLowerCase() || '';
+                    const description = option.querySelector('.help-block')?.textContent?.toLowerCase() || '';
+                    const fieldName = option.dataset.optionKey?.toLowerCase() || '';
+
+                    const matches = label.includes(this.searchQuery) ||
+                                description.includes(this.searchQuery) ||
+                                fieldName.includes(this.searchQuery);
+
+                    if (matches) {
+                        option.style.display = '';
+                        hasVisibleOptions = true;
+                        // Only expand section if it contains matches and user hasn't manually collapsed it
+                        const collapseElement = section.querySelector('.panel-collapse');
+                        const isManuallyCollapsed = collapseElement?.hasAttribute('data-collapsed');
+                        
+                        if (collapseElement && !isManuallyCollapsed) {
+                            collapseElement.style.display = 'block';
+                            collapseElement.classList.add('in');
+                            collapseElement.removeAttribute('data-collapsed');
+                            
+                            const toggleIcon = section.querySelector('[data-toggle="collapse"] i');
+                            if (toggleIcon) {
+                                toggleIcon.classList.add('fa-chevron-down');
+                                toggleIcon.classList.remove('fa-chevron-right');
+                            }
+                        }
+                    } else {
+                        option.style.display = 'none';
+                    }
+                });
+
+                sectionElement.style.display = hasVisibleOptions ? '' : 'none';
+            });
+        }
+
+        handleSectionToggle(toggleElement) {
+            const targetId = toggleElement.dataset.target;
+            const collapseElement = document.querySelector(targetId);
+            const icon = toggleElement.querySelector('i');
+
+            if (!collapseElement) {
+                console.log('Collapse element not found:', targetId);
+                return;
+            }
+
+            // Simple toggle logic
+            const isCurrentlyVisible = collapseElement.style.display !== 'none' && 
+                                     !collapseElement.hasAttribute('data-collapsed');
+
+            if (isCurrentlyVisible) {
+                // Collapse the section
+                collapseElement.style.display = 'none';
+                collapseElement.setAttribute('data-collapsed', 'true');
+                collapseElement.classList.remove('in');
+                
+                // Update icon
+                if (icon) {
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-right');
+                }
+                
+                toggleElement.setAttribute('aria-expanded', 'false');
+                console.log('Collapsed section:', targetId);
+            } else {
+                // Expand the section
+                collapseElement.style.display = 'block';
+                collapseElement.removeAttribute('data-collapsed');
+                collapseElement.classList.add('in');
+                
+                // Update icon
+                if (icon) {
+                    icon.classList.remove('fa-chevron-right');
+                    icon.classList.add('fa-chevron-down');
+                }
+                
+                toggleElement.setAttribute('aria-expanded', 'true');
+                console.log('Expanded section:', targetId);
+            }
+        }
+
+        handleFieldChange(field) {
+            const option = field.closest('.configuration-option');
+            if (!option) return;
+
+            const key = option.dataset.optionKey;
+            let value = field.type === 'checkbox' ? field.checked : field.value;
+
+            // Validate field
+            const isValid = this.validateField(field, value);
+            if (!isValid) return;
+
+            // Convert boolean to string for storage consistency
+            if (field.type === 'checkbox') {
+                value = value ? 'true' : 'false';
+            }
+
+            this.currentValues[key] = value;
+            this.markFieldAsChanged(option);
+            this.updateResetSectionButton();
+        }
+
+        validateField(field, value) {
+            const option = field.closest('.configuration-option');
+            const errorElement = option.querySelector('.field-validation-error');
+            const isRequired = option.dataset.required === 'true';
+
+            let errors = [];
+
+            // Required validation - handle boolean fields properly
+            if (isRequired) {
+                if (field.type === 'checkbox') {
+                    // For checkboxes, both true and false are valid values
+                    // No validation needed as boolean is always defined
+                } else if (!value || value === '') {
+                    errors.push('This field is required');
+                }
+            }
+
+            // Type-specific validation
+            if (field.type === 'number') {
+                const min = field.getAttribute('min');
+                const max = field.getAttribute('max');
+                const numValue = parseFloat(value);
+
+                if (min && numValue < parseFloat(min)) {
+                    errors.push(`Value must be at least ${min}`);
+                }
+                if (max && numValue > parseFloat(max)) {
+                    errors.push(`Value must not exceed ${max}`);
+                }
+            }
+
+            // Pattern validation
+            const pattern = field.getAttribute('pattern');
+            if (pattern && value && !new RegExp(pattern).test(value)) {
+                errors.push('Value does not match the required format');
+            }
+
+            // JSON validation for JSON editors
+            if (field.classList.contains('json-editor')) {
+                try {
+                    JSON.parse(value);
+                } catch (e) {
+                    errors.push('Invalid JSON format');
+                }
+            }
+
+            // Display errors
+            if (errors.length > 0) {
+                errorElement.textContent = errors[0];
+                errorElement.style.display = 'block';
+                field.classList.add('has-error');
+                field.setAttribute('aria-invalid', 'true');
+                field.setAttribute('aria-describedby', errorElement.id || 'error-' + field.id);
+                return false;
+            } else {
+                errorElement.style.display = 'none';
+                field.classList.remove('has-error');
+                field.removeAttribute('aria-invalid');
+                return true;
+            }
+        }
+
+        validateJsonField(field) {
+            const value = field.value;
+            if (!value) return true;
+
+            try {
+                JSON.parse(value);
+                return this.validateField(field, value);
+            } catch (e) {
+                return this.validateField(field, value);
+            }
+        }
+
+        markFieldAsChanged(option) {
+            if (!option.classList.contains('field-changed')) {
+                option.classList.add('field-changed');
+
+                // Add visual indicator
+                const label = option.querySelector('label');
+                if (label && !label.querySelector('.changed-indicator')) {
+                    const indicator = document.createElement('span');
+                    indicator.className = 'changed-indicator text-warning';
+                    indicator.innerHTML = ' <i class="fa fa-pencil" title="Modified"></i>';
+                    indicator.setAttribute('aria-label', 'This field has been modified');
+                    label.appendChild(indicator);
+                }
+            }
+        }
+
+        updateResetSectionButton() {
+            const resetBtn = document.getElementById('reset-section-btn');
+            if (!resetBtn) return;
+
+            const hasChanges = this.currentSection &&
+                document.querySelector(`[data-section="${this.currentSection}"] .field-changed`);
+
+            resetBtn.disabled = !hasChanges;
+            resetBtn.setAttribute('aria-disabled', hasChanges ? 'false' : 'true');
+        }
+
+        async saveConfiguration() {
+            if (!this.validateAllFields()) {
+                this.showNotification('Please fix validation errors before saving', 'error');
+                return;
+            }
+
+            this.showLoading(true);
+
+            try {
+                // Prepare form data with proper array structure
+                const formData = new URLSearchParams();
+                formData.append('store', this.data.currentStore);
+                formData.append('locale', this.data.currentLocale || '');
+                
+                // Add each value as a separate parameter in array format
+                Object.keys(this.currentValues).forEach(key => {
+                    formData.append(`values[${key}]`, this.currentValues[key]);
+                });
+
+                console.log('Sending configuration data:', Object.fromEntries(formData));
+
+                const response = await fetch(this.data.saveUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    this.showNotification('Configuration saved and published successfully', 'success');
+                    this.clearChangeIndicators();
+                } else {
+                    this.showNotification(result.message || 'Failed to save configuration', 'error');
+                }
+            } catch (error) {
+                this.showNotification('Network error: ' + error.message, 'error');
+            } finally {
+                this.showLoading(false);
+            }
+        }
+
+        async publishConfiguration() {
+            this.showLoading(true);
+
+            try {
+                const response = await fetch(this.data.publishUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        store: this.data.currentStore,
+                        locale: this.data.currentLocale || ''
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    this.showNotification('Configuration published successfully', 'success');
+                } else {
+                    this.showNotification(result.message || 'Failed to publish configuration', 'error');
+                }
+            } catch (error) {
+                this.showNotification('Network error: ' + error.message, 'error');
+            } finally {
+                this.showLoading(false);
+            }
+        }
+
+        async rebuildConfiguration() {
+            if (!confirm('This will reload configuration from files. Continue?')) {
+                return;
+            }
+
+            this.showLoading(true);
+
+            try {
+                const response = await fetch(this.data.rebuildUrl, {
+                    method: 'POST'
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    this.showNotification('Configuration rebuilt from files', 'success');
+                    // Reload page to show updated configuration
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1500);
+                } else {
+                    this.showNotification(result.message || 'Failed to rebuild configuration', 'error');
+                }
+            } catch (error) {
+                this.showNotification('Network error: ' + error.message, 'error');
+            } finally {
+                this.showLoading(false);
+            }
+        }
+
+        resetSection() {
+            if (!this.currentSection) return;
+
+            const sectionElement = document.querySelector(`[data-section="${this.currentSection}"]`);
+            if (!sectionElement) return;
+
+            const changedFields = sectionElement.querySelectorAll('.field-changed');
+
+            changedFields.forEach(option => {
+                const key = option.dataset.optionKey;
+                const field = option.querySelector('input, select, textarea');
+
+                if (field && this.data.effectiveConfiguration?.sections) {
+                    // Find default value
+                    for (const section of this.data.effectiveConfiguration.sections) {
+                        const configOption = section.options?.find(opt =>
+                            `${opt.module}.${opt.key}` === key
+                        );
+
+                        if (configOption) {
+                            const defaultValue = configOption.default;
+
+                            if (field.type === 'checkbox') {
+                                field.checked = defaultValue === 'true' || defaultValue === '1' || defaultValue === true;
+                            } else {
+                                field.value = defaultValue;
+                            }
+
+                            this.currentValues[key] = defaultValue;
+                            break;
+                        }
+                    }
+                }
+
+                option.classList.remove('field-changed');
+                const indicator = option.querySelector('.changed-indicator');
+                if (indicator) {
+                    indicator.remove();
+                }
+            });
+
+            this.updateResetSectionButton();
+            this.showNotification(`Section "${this.currentSection}" reset to defaults`, 'info');
+        }
+
+        validateAllFields() {
+            let isValid = true;
+            const fields = document.querySelectorAll('.configuration-option input, .configuration-option select, .configuration-option textarea');
+
+            fields.forEach(field => {
+                const fieldValid = this.validateField(field, field.type === 'checkbox' ? field.checked : field.value);
+                if (!fieldValid) {
+                    isValid = false;
+                }
+            });
+
+            return isValid;
+        }
+
+        clearChangeIndicators() {
+            document.querySelectorAll('.field-changed').forEach(option => {
+                option.classList.remove('field-changed');
+                const indicator = option.querySelector('.changed-indicator');
+                if (indicator) {
+                    indicator.remove();
+                }
+            });
+            this.updateResetSectionButton();
+        }
+
+        showNotification(message, type = 'info') {
+            // Create or update notification element
+            let notification = document.getElementById('notification');
+            if (!notification) {
+                notification = document.createElement('div');
+                notification.id = 'notification';
+                notification.className = 'alert';
+                notification.setAttribute('role', 'alert');
+                notification.setAttribute('aria-live', 'polite');
+                document.querySelector('.shop-configuration-container').prepend(notification);
+            }
+
+            notification.className = `alert alert-${type === 'error' ? 'danger' : type}`;
+            notification.textContent = message;
+            notification.style.display = 'block';
+
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 5000);
+
+            // Announce to screen readers
+            this.announceToScreenReader(message);
+        }
+
+        showLoading(show) {
+            const indicator = document.getElementById('loading-indicator');
+            const container = document.querySelector('[data-configuration-app]');
+
+            if (show) {
+                indicator.style.display = 'block';
+                container.style.opacity = '0.5';
+                container.style.pointerEvents = 'none';
+            } else {
+                indicator.style.display = 'none';
+                container.style.opacity = '1';
+                container.style.pointerEvents = 'auto';
+            }
+        }
+
+        showContent() {
+            const container = document.querySelector('[data-configuration-app]');
+            container.style.display = 'block';
+            
+            // Initialize all sections as expanded by default
+            document.querySelectorAll('.panel-collapse').forEach(element => {
+                element.style.display = 'block';
+                element.classList.add('in');
+                element.removeAttribute('data-collapsed');
+            });
+            
+            // Initialize all toggle icons
+            document.querySelectorAll('.panel-heading[data-toggle="collapse"] i').forEach(icon => {
+                icon.classList.remove('fa-chevron-right');
+                icon.classList.add('fa-chevron-down');
+            });
+        }
+
+        announceToScreenReader(message) {
+            const announcement = document.createElement('div');
+            announcement.setAttribute('aria-live', 'polite');
+            announcement.setAttribute('aria-atomic', 'true');
+            announcement.style.position = 'absolute';
+            announcement.style.left = '-10000px';
+            announcement.style.width = '1px';
+            announcement.style.height = '1px';
+            announcement.style.overflow = 'hidden';
+
+            document.body.appendChild(announcement);
+            announcement.textContent = message;
+
+            setTimeout(() => {
+                document.body.removeChild(announcement);
+            }, 1000);
+        }
+
+        reloadPage(params) {
+            const url = new URL(window.location);
+            Object.keys(params).forEach(key => {
+                if (params[key]) {
+                    url.searchParams.set(key, params[key]);
+                } else {
+                    url.searchParams.delete(key);
+                }
+            });
+            window.location.href = url.toString();
+        }
+
+        // Cleanup method for color pickers
+        destroy() {
+            document.querySelectorAll('input.color-picker').forEach((input) => {
+                if (input.colorPickrInstance) {
+                    input.colorPickrInstance.destroyAndRemove();
+                }
+            });
+        }
+    }
+
+    // Initialize when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        if (window.shopConfigurationData) {
+            new ShopConfigurationManager(window.shopConfigurationData);
+        }
+    });
+
+    </script>
+{% endblock %}

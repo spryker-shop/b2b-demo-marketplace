@@ -1,0 +1,15 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block section_title %}{{ 'Tenant Management' | trans }}{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Tenants' | trans } %}
+
+        {% block widget_content %}
+            {{ tenantsTable | raw }}
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

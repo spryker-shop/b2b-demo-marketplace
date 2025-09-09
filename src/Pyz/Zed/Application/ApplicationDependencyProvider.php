@@ -9,6 +9,8 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\Application;
 
+use Go\Zed\TenantBehavior\Communication\Plugin\Application\TenantProviderBackendGatewayApplicationPlugin;
+use Go\Zed\TenantBehavior\Communication\Plugin\Application\TenantProviderBackofficeApplicationPlugin;
 use Spryker\Zed\Application\ApplicationDependencyProvider as SprykerApplicationDependencyProvider;
 use Spryker\Zed\Currency\Communication\Plugin\Application\CurrencyBackendGatewayApplicationPlugin;
 use Spryker\Zed\ErrorHandler\Communication\Plugin\Application\ErrorHandlerApplicationPlugin;
@@ -94,6 +96,7 @@ class ApplicationDependencyProvider extends SprykerApplicationDependencyProvider
             new GuiTableApplicationPlugin(),
             new NumberFormatterApplicationPlugin(),
             new BackofficeStoreApplicationPlugin(),
+            new TenantProviderBackofficeApplicationPlugin(),
         ];
 
         if (class_exists(WebProfilerApplicationPlugin::class)) {
@@ -122,6 +125,7 @@ class ApplicationDependencyProvider extends SprykerApplicationDependencyProvider
             new PropelApplicationPlugin(),
             new BackendGatewayRouterApplicationPlugin(),
             new HttpApplicationPlugin(),
+            new TenantProviderBackendGatewayApplicationPlugin(),
         ];
     }
 

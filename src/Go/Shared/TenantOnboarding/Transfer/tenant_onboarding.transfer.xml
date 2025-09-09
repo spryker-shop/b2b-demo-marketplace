@@ -1,0 +1,179 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="TenantRegistration" strict="true">
+        <property name="idTenantRegistration" type="int"/>
+        <property name="companyName" type="string"/>
+        <property name="tenantName" type="string"/>
+        <property name="email" type="string"/>
+        <property name="password" type="string"/>
+        <property name="passwordHash" type="string"/>
+        <property name="dataSet" type="string"/>
+        <property name="tenant" type="Tenant"/>
+        <property name="status" type="string"/>
+        <property name="declineReason" type="string"/>
+        <property name="createdAt" type="string"/>
+        <property name="updatedAt" type="string"/>
+        <property name="errors" type="string"/>
+        <property name="backofficeHost" type="string"/>
+    </transfer>
+
+    <transfer name="TenantRegistrationResponse" strict="true">
+        <property name="isSuccessful" type="bool"/>
+        <property name="errors" type="TenantRegistrationError[]" singular="error"/>
+        <property name="idTenantRegistration" type="int"/>
+    </transfer>
+
+    <transfer name="TenantRegistrationError" strict="true">
+        <property name="field" type="string"/>
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="TenantRegistrationCriteria" strict="true">
+        <property name="status" type="string"/>
+        <property name="email" type="string"/>
+        <property name="tenantName" type="string"/>
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+    </transfer>
+
+    <transfer name="TenantRegistrationCollection" strict="true">
+        <property name="tenantRegistrations" type="TenantRegistration[]" singular="tenantRegistration"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="TenantOnboardingStepResult" strict="true">
+        <property name="isSuccessful" type="bool"/>
+        <property name="tenantRegistration" type="TenantRegistration"/>
+        <property name="errors" type="string[]" singular="error"/>
+        <property name="context" type="array" singular="contextItem"/>
+    </transfer>
+
+    <transfer name="PasswordPolicy" strict="true">
+        <property name="minLength" type="int"/>
+        <property name="requireUpper" type="bool"/>
+        <property name="requireLower" type="bool"/>
+        <property name="requireNumber" type="bool"/>
+        <property name="requireSpecial" type="bool"/>
+    </transfer>
+
+    <transfer name="TenantOnboardingMessage" strict="true">
+        <property name="idTenantRegistration" type="int"/>
+        <property name="tenantRegistration" type="TenantRegistration"/>
+        <property name="attempt" type="int"/>
+        <property name="maxAttempts" type="int"/>
+    </transfer>
+
+    <transfer name="TenantRegistrationForm" strict="true">
+        <property name="companyName" type="string"/>
+        <property name="tenantName" type="string"/>
+        <property name="email" type="string"/>
+        <property name="password" type="string"/>
+        <property name="confirmPassword" type="string"/>
+    </transfer>
+
+    <transfer name="Tenant" strict="true">
+        <property name="idTenant" type="int"/>
+        <property name="identifier" type="string"/>
+        <property name="tenantHost" type="string"/>
+        <property name="data" type="string"/>
+        <property name="createdAt" type="string"/>
+        <property name="updatedAt" type="string"/>
+    </transfer>
+
+    <transfer name="TenantResponse" strict="true">
+        <property name="isSuccessful" type="bool"/>
+        <property name="errors" type="TenantError[]" singular="error"/>
+        <property name="tenant" type="Tenant"/>
+    </transfer>
+
+    <transfer name="TenantError" strict="true">
+        <property name="field" type="string"/>
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="TenantCriteria" strict="true">
+        <property name="identifier" type="string"/>
+        <property name="tenantHost" type="string"/>
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+    </transfer>
+
+    <transfer name="TenantCollection" strict="true">
+        <property name="tenants" type="Tenant[]" singular="tenant"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="TenantStorage" strict="true">
+        <property name="idTenant" type="string"/>
+        <property name="identifier" type="string"/>
+        <property name="companyName" type="string"/>
+        <property name="email" type="string"/>
+        <property name="registrationDate" type="string"/>
+    </transfer>
+
+    <transfer name="Mail">
+        <property name="tenantRegistration" type="TenantRegistration"/>
+    </transfer>
+
+    <transfer name="SynchronizationData">
+        <property name="tenantReference" type="string"/>
+    </transfer>
+
+    <transfer name="User">
+        <property name="tenantReference" type="string"/>
+    </transfer>
+
+    <transfer name="Translation">
+        <property name="tenantReference" type="string"/>
+    </transfer>
+
+    <transfer name="Node">
+        <property name="tenantReference" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="tenantReference" type="string"/>
+    </transfer>
+
+    <transfer name="StoreStorage">
+        <property name="tenantReference" type="string"/>
+    </transfer>
+
+    <transfer name="TaxSet">
+        <property name="tenantReference" type="string"/>
+    </transfer>
+
+    <transfer name="Url">
+        <property name="tenantReference" type="string"/>
+    </transfer>
+
+    <transfer name="UrlStorage">
+        <property name="tenantReference" type="string"/>
+    </transfer>
+
+    <transfer name="Glossary">
+        <property name="tenantReference" type="string"/>
+    </transfer>
+
+    <transfer name="GlossaryStorage">
+        <property name="tenantReference" type="string"/>
+    </transfer>
+
+    <transfer name="ProductOffer">
+        <property name="tenantReference" type="string"/>
+    </transfer>
+
+    <transfer name="ProductOfferStorage">
+        <property name="tenantReference" type="string"/>
+    </transfer>
+
+    <transfer name="EventEntity">
+        <property name="tenantReference" type="string"/>
+    </transfer>
+
+    <transfer name="AclEntitySegment">
+        <property name="tenantReference" type="string"/>
+    </transfer>
+
+</transfers>

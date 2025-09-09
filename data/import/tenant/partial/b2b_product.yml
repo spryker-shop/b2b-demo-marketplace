@@ -1,0 +1,21 @@
+# Example of B2B Marketplace Demo Shop 'full' data import (all categories).
+version: 0
+
+actions:
+#6. B2B Setup import
+    - data_entity: merchant
+      source : data/import/common/common/merchant.csv
+    - data_entity: merchant-user
+      source: data/import/common/common/marketplace/merchant_user.csv
+    - data_entity: merchant-product
+      source: data/import/common/common/marketplace/merchant_product.csv
+    - data_entity: merchant-store
+      source: data/import/common/DE/merchant_store.csv
+    - data_entity: merchant-product-offer
+      source: data/import/common/common/marketplace/merchant_product_offer.csv
+    - data_entity: merchant-product-offer-store
+      source: data/import/common/DE/merchant_product_offer_store.csv
+    - data_entity: product-offer-validity
+      source: data/import/common/common/marketplace/product_offer_validity.csv
+    - data_entity: price-product-offer
+      source: data/import/common/DE/price_product_offer.csv

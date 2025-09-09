@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tenant Registration - B2B Marketplace</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .registration-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .registration-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .registration-form {
+            padding: 40px;
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        .form-control {
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 12px 15px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 8px;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            transition: transform 0.2s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+        }
+        .availability-indicator {
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .available { color: #28a745; }
+        .taken { color: #dc3545; }
+        .password-requirements {
+            font-size: 12px;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+        .help-block{ color: RED; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <div class="registration-container">
+        <div class="registration-header">
+            <h1 class="mb-0">Join Our B2B Marketplace</h1>
+            <p class="mb-0 mt-2">Register your tenant to get started</p>
+        </div>
+
+        <div class="registration-form">
+            {% if successMessage is defined and successMessage %}
+                <div class="alert alert-success" role="alert">
+                    {{ successMessage }}
+                </div>
+            {% endif %}
+
+            {% if errorMessage is defined and errorMessage %}
+                <div class="alert alert-danger" role="alert">
+                    {{ errorMessage }}
+                </div>
+            {% endif %}
+
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                <div class="form-group">
+                    {{ form_label(form.companyName, null, {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                    {{ form_widget(form.companyName, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.companyName) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.tenantName, null, {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                    {{ form_widget(form.tenantName, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.tenantName) }}
+                    <div id="tenant-name-availability" class="availability-indicator"></div>
+                    <small class="text-muted">This will be your unique identifier in the system</small>
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.dataSetType, null, {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                    {{ form_widget(form.dataSetType, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.dataSetType) }}
+                    <small class="text-muted">Minimal data set contains only Content for pages, navigation and translations.</small><br>
+                    <small class="text-muted">Full data set has all data to has fully functional demo store including products and customer.</small>
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.email, null, {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                    {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.email) }}
+                    <div id="email-availability" class="availability-indicator"></div>
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.password.first, null, {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                    {{ form_widget(form.password.first, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.password.first) }}
+                    <div class="password-requirements">
+                        Password must be at least 12 characters long and contain uppercase, lowercase, numbers, and special characters.
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.password.second, null, {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                    {{ form_widget(form.password.second, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.password.second) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary'}}) }}
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Real-time availability checking
+        document.addEventListener('DOMContentLoaded', function() {
+            const tenantNameField = document.querySelector('input[name="tenantRegistrationForm[tenantName]"]');
+            const emailField = document.querySelector('input[name="tenantRegistrationForm[email]"]');
+
+            if (tenantNameField) {
+                tenantNameField.addEventListener('blur', function() {
+                    checkAvailability('tenant-name', this.value, '/tenant-onboarding/registration/check-tenant-name');
+                });
+            }
+
+            if (emailField) {
+                emailField.addEventListener('blur', function() {
+                    checkAvailability('email', this.value, '/tenant-onboarding/registration/check-email');
+                });
+            }
+        });
+
+        function checkAvailability(type, value, url) {
+            if (!value) return;
+
+            const indicator = document.getElementById(type + '-availability');
+            indicator.innerHTML = 'Checking...';
+
+            fetch(url + '?' + type.replace('-', '') + '=' + encodeURIComponent(value))
+                .then(response => response.json())
+                .then(data => {
+                    if (data.available) {
+                        indicator.innerHTML = '<span class="available">✓ Available</span>';
+                    } else {
+                        indicator.innerHTML = '<span class="taken">✗ Already taken</span>';
+                    }
+                })
+                .catch(error => {
+                    indicator.innerHTML = '<span class="text-warning">Error checking availability</span>';
+                });
+        }
+    </script>
+</body>
+</html>

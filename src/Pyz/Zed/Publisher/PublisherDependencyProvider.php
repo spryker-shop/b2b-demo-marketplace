@@ -252,6 +252,7 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
             new AssetPublisherTriggerPlugin(),
             new PriceProductOfferPublisherTriggerPlugin(),
             new CustomerAccessPublisherTriggerPlugin(),
+            new \Spryker\Zed\StoreStorage\Communication\Plugin\Publisher\StorePublisherTriggerPlugin(),
         ];
     }
 
@@ -485,14 +486,16 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
     protected function getProductOfferStoragePlugins(): array
     {
         return [
-            new ProductConcreteProductOffersDeletePublisherPlugin(),
-            new ProductConcreteProductOffersWritePublisherPlugin(),
-            new ProductOfferDeletePublisherPlugin(),
-            new ProductOfferWritePublisherPlugin(),
-            new ProductOfferStoreWritePublisherPlugin(),
-            new ProductOfferStoreDeletePublisherPlugin(),
-            new ProductConcreteProductOffersStoreWritePublisherPlugin(),
-            new ProductConcreteProductOffersStoreDeletePublisherPlugin(),
+            'publish.product_offer' => [
+                new ProductConcreteProductOffersDeletePublisherPlugin(),
+                new ProductConcreteProductOffersWritePublisherPlugin(),
+                new ProductOfferDeletePublisherPlugin(),
+                new ProductOfferWritePublisherPlugin(),
+                new ProductOfferStoreWritePublisherPlugin(),
+                new ProductOfferStoreDeletePublisherPlugin(),
+                new ProductConcreteProductOffersStoreWritePublisherPlugin(),
+                new ProductConcreteProductOffersStoreDeletePublisherPlugin(),
+            ]
         ];
     }
 

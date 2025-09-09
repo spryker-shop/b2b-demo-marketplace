@@ -36,6 +36,7 @@ use Generated\Shared\Transfer\SearchEndpointAvailableTransfer;
 use Generated\Shared\Transfer\SearchEndpointRemovedTransfer;
 use Generated\Shared\Transfer\SubmitPaymentTaxInvoiceTransfer;
 use Generated\Shared\Transfer\UpdatePaymentMethodTransfer;
+use Go\Zed\TenantOnboarding\TenantOnboardingConfig;
 use Monolog\Logger;
 use Pyz\Shared\Console\ConsoleConstants;
 use Pyz\Shared\Scheduler\SchedulerConfig;
@@ -121,6 +122,8 @@ use Spryker\Shared\SessionRedis\SessionRedisConfig;
 use Spryker\Shared\SessionRedis\SessionRedisConstants;
 use Spryker\Shared\Sitemap\SitemapConstants;
 use Spryker\Shared\Storage\StorageConstants;
+use Spryker\Shared\StorageDatabase\StorageDatabaseConfig;
+use Spryker\Shared\StorageDatabase\StorageDatabaseConstants;
 use Spryker\Shared\StorageRedis\StorageRedisConstants;
 use Spryker\Shared\SymfonyMailer\SymfonyMailerConstants;
 use Spryker\Shared\Synchronization\SynchronizationConstants;
@@ -170,6 +173,7 @@ $config[KernelConstants::RESOLVED_INSTANCE_CACHE_ENABLED] = true;
 
 $config[KernelConstants::PROJECT_NAMESPACE] = 'Pyz';
 $config[KernelConstants::PROJECT_NAMESPACES] = [
+    'Go',
     'Pyz',
 ];
 $config[KernelConstants::CORE_NAMESPACES] = [
@@ -194,7 +198,9 @@ $config[RouterConstants::IS_STORE_ROUTING_ENABLED]
     = $config[ShopUiConstants::IS_STORE_ROUTING_ENABLED]
     = $config[CustomerPageConstants::IS_STORE_ROUTING_ENABLED]
     = $config[AgentPageConstants::IS_STORE_ROUTING_ENABLED]
-    = $config[LocaleConstants::IS_STORE_ROUTING_ENABLED] = (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
+    = $config[LocaleConstants::IS_STORE_ROUTING_ENABLED] = false;
+
+$config[StoreWidgetConstants::IS_STORE_ROUTING_ENABLED] = (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
 
 // >>> DEV TOOLS
 
@@ -338,6 +344,12 @@ $config[AclConstants::ACL_DEFAULT_RULES] = [
         'type' => 'allow',
     ],
     [
+        'bundle' => 'tenant-onboarding',
+        'controller' => 'registration',
+        'action' => '*',
+        'type' => 'allow',
+    ],
+    [
         'bundle' => 'multi-factor-auth',
         'controller' => '*',
         'action' => '*',
@@ -420,7 +432,7 @@ $config[SearchElasticsearchConstants::INDEX_PREFIX] = getenv('SPRYKER_SEARCH_IND
 
 $config[SearchElasticsearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE] = 3;
 
-// >>> STORAGE
+// >>> Redis STORAGE
 
 $keyValueRegionNamespaces = json_decode(getenv('SPRYKER_KEY_VALUE_REGION_NAMESPACES') ?: '[]', true);
 $config[StorageConstants::STORAGE_KV_SOURCE] = getenv('SPRYKER_KEY_VALUE_STORE_ENGINE') ? strtolower(getenv('SPRYKER_KEY_VALUE_STORE_ENGINE')) : 'redis';
@@ -432,6 +444,16 @@ $config[StorageRedisConstants::STORAGE_REDIS_PASSWORD] = getenv('SPRYKER_KEY_VAL
 $config[StorageRedisConstants::STORAGE_REDIS_DATABASE] = getenv('SPRYKER_KEY_VALUE_STORE_NAMESPACE') ?: $keyValueRegionNamespaces[APPLICATION_CODE_BUCKET] ?? 1;
 $config[StorageRedisConstants::STORAGE_REDIS_DATA_SOURCE_NAMES] = json_decode(getenv('SPRYKER_KEY_VALUE_STORE_SOURCE_NAMES') ?: '[]', true) ?: [];
 $config[StorageRedisConstants::STORAGE_REDIS_CONNECTION_OPTIONS] = json_decode(getenv('SPRYKER_KEY_VALUE_STORE_CONNECTION_OPTIONS') ?: '[]', true) ?: [];
+
+// ---------- Database storage
+$config[StorageConstants::STORAGE_KV_SOURCE] = 'database';
+$config[StorageDatabaseConstants::DB_DEBUG] = false;
+$config[StorageDatabaseConstants::DB_ENGINE] = strtolower(getenv('SPRYKER_DB_ENGINE') ?: '') ?: PropelConfig::DB_ENGINE_MYSQL;
+$config[StorageDatabaseConstants::DB_HOST] = getenv('SPRYKER_DB_HOST');
+$config[StorageDatabaseConstants::DB_PORT] = getenv('SPRYKER_DB_PORT');
+$config[StorageDatabaseConstants::DB_USERNAME] = getenv('SPRYKER_DB_USERNAME');
+$config[StorageDatabaseConstants::DB_PASSWORD] = getenv('SPRYKER_DB_PASSWORD');
+$config[StorageDatabaseConstants::DB_DATABASE] = getenv('SPRYKER_DB_DATABASE');
 
 // >>> SESSION
 
@@ -570,11 +592,15 @@ $config[QueueConstants::QUEUE_ADAPTER_CONFIGURATION] = [
         QueueConfig::CONFIG_QUEUE_ADAPTER => RabbitMqAdapter::class,
         QueueConfig::CONFIG_MAX_WORKER_NUMBER => 5,
     ],
+    TenantOnboardingConfig::QUEUE_NAME_TENANT_ONBOARDING => [
+        QueueConfig::CONFIG_QUEUE_ADAPTER => RabbitMqAdapter::class,
+        QueueConfig::CONFIG_MAX_WORKER_NUMBER => 1,
+    ],
 ];
 
 $config[QueueConstants::QUEUE_ADAPTER_CONFIGURATION_DEFAULT] = [
     QueueConfig::CONFIG_QUEUE_ADAPTER => RabbitMqAdapter::class,
-    QueueConfig::CONFIG_MAX_WORKER_NUMBER => 1,
+    QueueConfig::CONFIG_MAX_WORKER_NUMBER => 5,
 ];
 
 $config[RabbitMqEnv::RABBITMQ_API_HOST] = getenv('SPRYKER_BROKER_API_HOST');
@@ -672,6 +698,11 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
         'root' => APPLICATION_ROOT_DIR . '/data/DE/media/',
         'path' => 'files/',
+    ],
+    'configuration' => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => APPLICATION_ROOT_DIR . '/public/Yves/assets/static/',
+        'path' => 'images/',
     ],
 ];
 $config[FileManagerConstants::STORAGE_NAME] = 'files';
@@ -1017,11 +1048,22 @@ $config[RedisConstants::REDIS_COMPRESSION_ENABLED] = getenv('SPRYKER_KEY_VALUE_C
 $databaseUrl = getenv('DATABASE_URL');
 if ($databaseUrl) {
     $url = parse_url($databaseUrl);
+    $config[PropelConstants::ZED_DB_ENGINE]
+        = $config[PropelQueryBuilderConstants::ZED_DB_ENGINE]
+        = PropelConfig::DB_ENGINE_PGSQL;
     $config[PropelConstants::ZED_DB_HOST] = $url['host'];
     $config[PropelConstants::ZED_DB_PORT] = $url['port'];
     $config[PropelConstants::ZED_DB_USERNAME] = $url['user'];
     $config[PropelConstants::ZED_DB_PASSWORD] = $url['pass'];
     $config[PropelConstants::ZED_DB_DATABASE] = ltrim($url['path'] ?? '', '/');
+
+    $config[StorageDatabaseConstants::DB_DEBUG] = false;
+    $config[StorageDatabaseConstants::DB_ENGINE] = StorageDatabaseConfig::DB_ENGINE_PGSQL;
+    $config[StorageDatabaseConstants::DB_HOST] = $url['host'];
+    $config[StorageDatabaseConstants::DB_PORT] = $url['port'];
+    $config[StorageDatabaseConstants::DB_USERNAME] = $url['user'];
+    $config[StorageDatabaseConstants::DB_PASSWORD] = $url['pass'];
+    $config[StorageDatabaseConstants::DB_DATABASE] = ltrim($url['path'] ?? '', '/');
 }
 
 // Heroku Redis configuration
@@ -1050,8 +1092,6 @@ if ($redisUrl) {
     $config[SessionRedisConstants::YVES_SESSION_REDIS_DATABASE] = false;
     $config[SessionRedisConstants::YVES_SESSION_REDIS_CLIENT_OPTIONS] = $options;
 
-
-    $config[StorageConstants::STORAGE_KV_SOURCE] = 'redis';
     $config[StorageRedisConstants::STORAGE_REDIS_PERSISTENT_CONNECTION] = true;
     $config[StorageRedisConstants::STORAGE_REDIS_SCHEME] = $url['scheme'];
     $config[StorageRedisConstants::STORAGE_REDIS_HOST] = $url['host'];
@@ -1095,4 +1135,34 @@ if ($rmqUrl) {
 
     $config[RabbitMqEnv::RABBITMQ_CONNECTIONS] = [];
     $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$defaultKey] = $defaultConnection;
+
+    $config[QueueConstants::QUEUE_WORKER_MAX_THRESHOLD_SECONDS] = (int)getenv('QUEUE_WORKER_MAX_THRESHOLD_SECONDS') ?: 600;
+    $config[EventConstants::EVENT_CHUNK] = 300;
+    $config[QueueConstants::QUEUE_MESSAGE_CHUNK_SIZE_MAP] = [
+        EventConstants::EVENT_QUEUE => 100,
+        'publish.page_product_abstract'	=>  30,
+        'publish.page_product_concrete'	=>  50,
+        'publish.product_image_abstract'	=>  500,
+        'publish.product_image_concrete'	=>  500,
+        'publish.price_product_abstract'	=>  500,
+        'publish.price_product_concrete'	=>  500,
+        'publish.product_abstract'	=>  100,
+        'publish.product_concrete'	=>  100,
+        'publish'	=>  100,
+    ];
+}
+
+$config[\Pyz\Shared\Queue\QueueConstants::QUEUE_WORKER_MAX_PROCESSES] = (int)getenv('MAX_NUMBER_OF_WORKER_PROCESSES') ?: 5;
+
+$fileStorageBucket = getenv('BUCKETEER_BUCKET_NAME') ?: '';
+if ($fileStorageBucket) {
+    $config[\Go\Zed\ShopConfiguration\ShopConfigurationConfig::AWS_FILE_STORAGE_BUCKET] = $fileStorageBucket;
+    $config[FileSystemConstants::FILESYSTEM_SERVICE]['configuration'] = [
+        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
+        'path' => 'config/',
+        'key' => getenv('BUCKETEER_AWS_ACCESS_KEY_ID'),
+        'secret' => getenv('BUCKETEER_AWS_SECRET_ACCESS_KEY'),
+        'bucket' => $fileStorageBucket,
+        'region' => getenv('BUCKETEER_AWS_REGION'),
+    ];
 }

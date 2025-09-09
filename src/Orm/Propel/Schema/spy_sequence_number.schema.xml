@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\SequenceNumber\Persistence" package="src.Orm.Zed.SequenceNumber.Persistence">
+    <table name="spy_sequence_number" idMethod="native">
+        <column name="id_sequence_number" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="tenant_reference" type="varchar" size="255" required="true" description="Tenant identifier for multi-tenant isolation"/>
+        <column name="current_id" type="INTEGER" required="true"/>
+        <column name="name" type="VARCHAR" size="255" required="true"/>
+        <unique name="spy_sequence_number-name">
+            <unique-column name="name"/>
+        </unique>
+        <id-method-parameter value="spy_sequence_number_pk_seq"/>
+        <behavior name="\Go\Zed\TenantBehavior\Persistence\Propel\Behavior\TenantBehavior"/>
+    </table>
+</database>

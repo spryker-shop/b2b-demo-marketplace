@@ -1,0 +1,48 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Tenant Registrations' %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_content %}
+            {{ tenantRegistrationTable | raw }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <style>
+        .badge {
+            font-size: 12px;
+            padding: 4px 8px;
+        }
+        .badge-warning { background-color: #ffc107; color: #212529; }
+        .badge-info { background-color: #17a2b8; color: white; }
+        .badge-primary { background-color: #007bff; color: white; }
+        .badge-success { background-color: #28a745; color: white; }
+        .badge-danger { background-color: #dc3545; color: white; }
+        .badge-secondary { background-color: #6c757d; color: white; }
+    </style>
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script>
+        function declineRegistration(id) {
+            var reason = prompt('Please provide a reason for declining:');
+            if (reason !== null && reason.trim() !== '') {
+                var confirmed = confirm('Are you sure you want to decline this registration?');
+                if (confirmed) {
+                    window.location.href = '/tenant-onboarding/index/decline?id=' + id + '&reason=' + encodeURIComponent(reason);
+                }
+            } else if (reason !== null) {
+                alert('Please provide a reason for declining.');
+            }
+            return false;
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,45 @@
+# Example of B2B Marketplace Demo Shop 'full' data import (all categories).
+version: 0
+
+actions:
+#6. B2B Setup import
+  - data_entity: company
+    source : data/import/common/common/company.csv
+  - data_entity: company-business-unit
+    source : data/import/common/common/company_business_unit.csv
+  - data_entity: company-unit-address
+    source : data/import/common/common/company_unit_address.csv
+  - data_entity: company-unit-address-label
+    source : data/import/common/common/company_unit_address_label.csv
+  - data_entity: company-unit-address-label-relation
+    source : data/import/common/common/company_unit_address_label_relation.csv
+  - data_entity: company-user
+    source: data/import/common/common/company_user.csv
+  - data_entity: company-business-unit-user
+    source: data/import/common/common/company_business_unit_user.csv
+  - data_entity: company-business-unit-address
+    source: data/import/common/common/company_business_unit_address.csv
+  - data_entity: company-role
+    source : data/import/common/common/company_role.csv
+  - data_entity: company-role-permission
+    source : data/import/common/common/company_role_permission.csv
+  - data_entity: company-user-role
+    source : data/import/common/common/company_user_role.csv
+  - data_entity: company-user-on-behalf
+    source: data/import/common/common/company_user_on_behalf.csv
+  - data_entity: shopping-list
+    source: data/import/common/common/shopping_list.csv
+  - data_entity: shopping-list-item
+    source: data/import/common/common/shopping_list_item.csv
+  - data_entity: shopping-list-company-user
+    source: data/import/common/common/shopping_list_company_user.csv
+  - data_entity: shopping-list-company-business-unit
+    source: data/import/common/common/shopping_list_company_business_unit.csv
+  - data_entity: multi-cart
+    source: data/import/common/DE/multi_cart.csv
+  - data_entity: shared-cart
+    source: data/import/common/DE/shared_cart.csv
+  - data_entity: quote-request
+    source: data/import/common/common/quote_request.csv
+  - data_entity: quote-request-version
+    source: data/import/common/common/quote_request_version.csv
