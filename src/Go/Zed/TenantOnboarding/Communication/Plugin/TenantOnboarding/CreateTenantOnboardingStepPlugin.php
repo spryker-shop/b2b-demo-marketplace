@@ -60,10 +60,12 @@ class CreateTenantOnboardingStepPlugin extends AbstractPlugin implements Onboard
         ];
 
         $tenantHost = $this->generateTenantHost($tenantRegistrationTransfer->getTenantName());
+        $merchantPortalHost = $this->generateMerchantPortalHost($tenantRegistrationTransfer->getTenantName());
 
         $tenantTransfer = new TenantTransfer();
         $tenantTransfer->setIdentifier($tenantRegistrationTransfer->getTenantName());
         $tenantTransfer->setTenantHost($tenantHost);
+        $tenantTransfer->setMerchantPortalHost($merchantPortalHost);
         $tenantTransfer->setData(json_encode($tenantData));
 
         $createdTenant = $this->getFacade()->createTenant($tenantTransfer);
@@ -88,5 +90,12 @@ class CreateTenantOnboardingStepPlugin extends AbstractPlugin implements Onboard
     protected function generateTenantHost(string $tenantName): string
     {
         return $tenantName . '.' . $this->getConfig()->getStoreFrontHost();
+    }
+
+    protected function generateMerchantPortalHost(string $tenantName): string
+    {
+        $tenantMPortalHostPattern = $this->getConfig()->getMerchantPortalHostPattern();
+
+        return str_replace('%tenant%', $tenantName, $tenantMPortalHostPattern);
     }
 }

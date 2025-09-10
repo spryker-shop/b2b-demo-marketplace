@@ -108,6 +108,9 @@
         .backoffice-link {
             background: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%);
         }
+        .merchant-link {
+            background: linear-gradient(135deg, #17a2b8 0%, #6610f2 100%);
+        }
         .note-section {
             background-color: #fff3cd;
             border: 1px solid #ffeaa7;
@@ -177,11 +180,15 @@
                     <a href="{{ tenantRegistration.backofficeHost }}" class="link-button backoffice-link">
                         ⚙️ Backoffice Admin
                     </a>
+                    <a href="https://{{ tenantRegistration.tenant.merchantPortalHost }}" class="link-button merchant-link">
+                        ⚙️ Merchant Portal
+                    </a>
                 </div>
 
                 <div style="margin-top: 15px;">
                     <p><strong>Storefront URL:</strong> <code>https://{{ tenantRegistration.tenant.tenantHost }}</code></p>
                     <p><strong>Backoffice URL:</strong> <code>{{ tenantRegistration.backofficeHost }}</code></p>
+                    <p><strong>Merchant Portal URL:</strong> <code>https://{{ tenantRegistration.tenant.merchantPortalHost }}</code></p>
                 </div>
             </div>
 

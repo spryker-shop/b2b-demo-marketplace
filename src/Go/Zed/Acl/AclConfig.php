@@ -87,6 +87,7 @@ class AclConfig extends SprykerAclConfig
         $installerRules = parent::getInstallerRules();
         $installerRules = $this->addMerchantPortalInstallerRules($installerRules);
         $installerRules = $this->addTenantManagerInstallerRules($installerRules);
+        $installerRules = $this->addAdminInstallerRules($installerRules);
 
         return $installerRules;
     }
@@ -145,6 +146,25 @@ class AclConfig extends SprykerAclConfig
                 'type' => AclConstants::ALLOW,
                 'role' => TenantOnboardingConfig::ROLE_TENANT_MANAGER,
         ];
+
+        return $installerRules;
+    }
+
+    protected function addAdminInstallerRules(array $installerRules): array
+    {
+        $bundleNames = [
+            'shop-configuration',
+        ];
+
+        foreach ($bundleNames as $bundleName) {
+            $installerRules[] = [
+                'bundle' => $bundleName,
+                'controller' => AclConstants::VALIDATOR_WILDCARD,
+                'action' => AclConstants::VALIDATOR_WILDCARD,
+                'type' => static::RULE_TYPE_DENY,
+                'role' => AclConstants::ROOT_ROLE,
+            ];
+        }
 
         return $installerRules;
     }

@@ -5,6 +5,19 @@
         <column name="id_tenant" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="identifier" type="VARCHAR" size="255" required="true"/>
         <column name="tenant_host" type="VARCHAR" size="255" required="true"/>
+        <column name="merchant_portal_host" type="VARCHAR" size="255" required="true"/>
+
+        <index name="pyz_tenant-identifier">
+            <index-column name="identifier"/>
+        </index>
+
+        <index name="pyz_tenant-tenant_host">
+            <index-column name="tenant_host"/>
+        </index>
+
+        <index name="pyz_tenant-merchant_portal_host">
+            <index-column name="merchant_portal_host"/>
+        </index>
 
         <behavior name="synchronization">
             <parameter name="resource" value="tenant"/>
