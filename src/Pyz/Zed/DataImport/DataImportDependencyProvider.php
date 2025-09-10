@@ -62,6 +62,7 @@ use Spryker\Zed\MerchantOmsDataImport\Communication\Plugin\DataImport\MerchantOm
 use Spryker\Zed\MerchantOpeningHoursDataImport\Communication\Plugin\MerchantOpeningHoursDateScheduleDataImportPlugin;
 use Spryker\Zed\MerchantOpeningHoursDataImport\Communication\Plugin\MerchantOpeningHoursWeekdayScheduleDataImportPlugin;
 use Spryker\Zed\MerchantProductApprovalDataImport\Communication\Plugin\DataImport\MerchantProductApprovalStatusDefaultDataImportPlugin;
+use Spryker\Zed\MerchantProductDataImport\Communication\Plugin\DataImport\MerchantCombinedProductDataImportPlugin;
 use Spryker\Zed\MerchantProductDataImport\Communication\Plugin\MerchantProductDataImportPlugin;
 use Spryker\Zed\MerchantProductOfferDataImport\Communication\Plugin\DataImport\MerchantProductOfferDataImportPlugin;
 use Spryker\Zed\MerchantProductOfferDataImport\Communication\Plugin\DataImport\MerchantProductOfferStoreDataImportPlugin;
@@ -449,6 +450,7 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
             new MerchantCommissionAmountDataImportPlugin(),
             new MerchantCommissionStoreDataImportPlugin(),
             new MerchantCommissionMerchantDataImportPlugin(),
+            new MerchantCombinedProductDataImportPlugin(),
         ];
     }
 
