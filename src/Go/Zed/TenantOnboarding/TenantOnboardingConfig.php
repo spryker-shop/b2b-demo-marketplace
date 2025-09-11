@@ -9,6 +9,7 @@ namespace Go\Zed\TenantOnboarding;
 
 use Generated\Shared\Transfer\PasswordPolicyTransfer;
 use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\MerchantPortalApplication\MerchantPortalConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class TenantOnboardingConfig extends AbstractBundleConfig
@@ -57,5 +58,10 @@ class TenantOnboardingConfig extends AbstractBundleConfig
     public function getBackofficeHost(): string
     {
         return $this->get(ApplicationConstants::BASE_URL_ZED);
+    }
+
+    public function getMerchantPortalHostPattern(): string
+    {
+        return getenv('TENANT_MERCHANT_PORTAL_HOST_PATTERN') ?: '';
     }
 }

@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\MerchantPortalApplication;
 
+use Go\Zed\TenantOnboarding\Communication\Plugin\MerchantPortalApplication\TenantProviderMerchantPortalApplicationPlugin;
 use Spryker\Zed\AclEntity\Communication\Plugin\Application\AclEntityApplicationPlugin;
 use Spryker\Zed\ErrorHandler\Communication\Plugin\Application\ErrorHandlerApplicationPlugin;
 use Spryker\Zed\EventDispatcher\Communication\Plugin\Application\EventDispatcherApplicationPlugin;
@@ -53,6 +54,7 @@ class MerchantPortalApplicationDependencyProvider extends SprykerMerchantPortalA
             new ZedSecurityApplicationPlugin(),
             new ZedUiApplicationPlugin(),
             new AclEntityApplicationPlugin(),
+            new TenantProviderMerchantPortalApplicationPlugin(),
             new MerchantPortalEventDispatcherApplicationPlugin(),
         ];
 

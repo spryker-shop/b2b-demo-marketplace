@@ -13,7 +13,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Go\Zed\TenantOnboarding\TenantOnboardingConfig getConfig()
- * @method \Pyz\Zed\TenantOnboarding\Persistence\TenantOnboardingQueryContainerInterface getQueryContainer()
  */
 class TenantOnboardingPersistenceFactory extends AbstractPersistenceFactory
 {

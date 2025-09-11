@@ -141,6 +141,10 @@ class TenantOnboardingRepository extends AbstractRepository implements TenantOnb
             $query->filterByTenantHost($criteriaTransfer->getTenantHost());
         }
 
+        if ($criteriaTransfer->getMerchantPortalHost()) {
+            $query->filterByMerchantPortalHost($criteriaTransfer->getMerchantPortalHostOrFail());
+        }
+
         $total = $query->count();
 
         if ($criteriaTransfer->getLimit()) {

@@ -76,8 +76,6 @@ class TenantBehavior extends Behavior
         }
 
         $indexNamesToSkip = [
-            'spy_price_product_concrete_m_r_storage-price_key',
-            'spy_price_product_abstract_m_r_storage-price_key'
         ];
 
         // Get the tenant column object
@@ -93,7 +91,7 @@ class TenantBehavior extends Behavior
             }
             if (!$this->indexContainsTenantColumn($index, $tenantReferenceColumnName)) {
                 // Add column object to the index
-                $index->addColumn($tenantColumn);
+                $index->addColumn(['name' => $tenantReferenceColumnName]);
             }
         }
 
@@ -106,14 +104,14 @@ class TenantBehavior extends Behavior
             }
             if (!$this->indexContainsTenantColumn($uniqueIndex, $tenantReferenceColumnName)) {
                 // Add column object to the unique index
-                $uniqueIndex->addColumn($tenantColumn);
+                $uniqueIndex->addColumn(['name' => $tenantReferenceColumnName]);
             }
         }
 
         if ($hasSkippedIndex) {
             $index = new Index();
             $index->setName($table->getName() . '_tenant_behavior_index');
-            $index->addColumn($tenantColumn);
+            $index->addColumn(['name' => $tenantReferenceColumnName]);
             $table->addIndex(
                 $index
             );

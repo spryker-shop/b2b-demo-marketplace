@@ -10,6 +10,7 @@ image:
         enabled-extensions:
             - blackfire
     environment:
+        TENANT_MERCHANT_PORTAL_HOST_PATTERN: '%tenant%.mp.eu.spryker.local'
         SPRYKER_PRODUCT_CONFIGURATOR_HOST: date-time-configurator-example.spryker.local
         SPRYKER_PRODUCT_CONFIGURATOR_PORT: 80
         SPRYKER_DYNAMIC_STORE_MODE: true
@@ -67,7 +68,14 @@ groups:
             merchant_portal_eu:
                 application: merchant-portal
                 endpoints:
-                    mp.eu.spryker.local:
+                    test.mp.eu.spryker.local:
+                        region: EU
+                        entry-point: MerchantPortal
+                        primal: true
+                        services:
+                            session:
+                                namespace: 1
+                    spryker.mp.eu.spryker.local:
                         region: EU
                         entry-point: MerchantPortal
                         primal: true

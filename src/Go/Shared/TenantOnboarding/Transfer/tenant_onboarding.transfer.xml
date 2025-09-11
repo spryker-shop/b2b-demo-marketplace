@@ -76,6 +76,7 @@
         <property name="idTenant" type="int"/>
         <property name="identifier" type="string"/>
         <property name="tenantHost" type="string"/>
+        <property name="merchantPortalHost" type="string"/>
         <property name="data" type="string"/>
         <property name="createdAt" type="string"/>
         <property name="updatedAt" type="string"/>
@@ -95,6 +96,7 @@
     <transfer name="TenantCriteria" strict="true">
         <property name="identifier" type="string"/>
         <property name="tenantHost" type="string"/>
+        <property name="merchantPortalHost" type="string"/>
         <property name="limit" type="int"/>
         <property name="offset" type="int"/>
     </transfer>

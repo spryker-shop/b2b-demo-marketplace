@@ -9,9 +9,6 @@
         <column name="onboarding_strategy" required="true" type="ENUM" valueSet="iframe, redirect, api"/>
         <column name="onboarding_url" required="true" type="VARCHAR" size="255"/>
         <column name="type" required="true" type="VARCHAR" size="128" description="Type can be e.g. 'payment' or 'legal' which is used to identify if a specific entity can be displayed and what. F.e. if onboarding of Payment Apps should be displayed in the Merchant Portal."/>
-        <foreign-key name="spy_merchant_app_onboarding-app_identifier" foreignTable="spy_app_config" onDelete="CASCADE">
-            <reference local="app_identifier" foreign="app_identifier"/>
-        </foreign-key>
         <unique name="spy_merchant_app_onboarding-unique-type-app_identifier">
             <unique-column name="app_identifier"/>
             <unique-column name="type"/>

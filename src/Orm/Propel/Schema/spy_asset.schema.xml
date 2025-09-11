@@ -8,7 +8,7 @@
         <column name="asset_slot" required="true" type="VARCHAR" size="255"/>
         <column name="asset_uuid" required="true" type="VARCHAR" size="36"/>
         <column name="is_active" required="false" type="BOOLEAN" default="true"/>
-        <column name="last_message_timestamp" required="false" type="TIMESTAMP" size="6"/>
+        <column name="last_message_timestamp" required="false" type="TIMESTAMP" default="NULL"/>
         <unique name="spy_asset-unique-asset_uuid">
             <unique-column name="asset_uuid"/>
         </unique>

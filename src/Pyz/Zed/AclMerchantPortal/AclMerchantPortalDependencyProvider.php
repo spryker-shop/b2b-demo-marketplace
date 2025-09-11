@@ -9,6 +9,8 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\AclMerchantPortal;
 
+use Go\Zed\TenantOnboarding\Communication\Plugin\AclMerchantPortal\TenantAclEntityConfigurationExpanderPlugin;
+use Go\Zed\TenantOnboarding\Communication\Plugin\AclMerchantPortal\TenantMerchantAclEntityRuleExpanderPlugin;
 use Spryker\Zed\Acl\Communication\Plugin\AclMerchantPortal\AclEntityConfigurationExpanderPlugin;
 use Spryker\Zed\AclEntity\Communication\Plugin\AclMerchantPortal\AclEntityAclEntityConfigurationExpanderPlugin;
 use Spryker\Zed\AclMerchantPortal\AclMerchantPortalDependencyProvider as SprykerAclMerchantPortalDependencyProvider;
@@ -158,6 +160,7 @@ class AclMerchantPortalDependencyProvider extends SprykerAclMerchantPortalDepend
             new CompanyUnitAddressMerchantAclEntityRuleExpanderPlugin(),
             new CompanyBusinessUnitMerchantAclEntityRuleExpanderPlugin(),
             new SalesMerchantCommissionMerchantAclEntityRuleExpanderPlugin(),
+            new TenantMerchantAclEntityRuleExpanderPlugin(),
         ];
     }
 
@@ -247,6 +250,7 @@ class AclMerchantPortalDependencyProvider extends SprykerAclMerchantPortalDepend
             new MerchantAppAclEntityConfigurationExpanderPlugin(),
             new SalesMerchantCommissionAclEntityConfigurationExpanderPlugin(),
             new UserMultiFactorAuthAclEntityConfigurationExpanderPlugin(),
+            new TenantAclEntityConfigurationExpanderPlugin(),
         ];
     }
 }
