@@ -134,6 +134,9 @@ sections:
         zed-build-frontend:
             command: 'vendor/bin/console frontend:zed:build -e production'
 
+        merchant-portal-build-frontend:
+            command: 'vendor/bin/console frontend:mp:build -e production'
+
         yves-build-frontend:
             command: "vendor/bin/console frontend:yves:build -e production -vvv"
 
