@@ -48,7 +48,7 @@ paths:
 
     /product-abstracts/{abstractSku}:
         get:
-            summary: Get a product abstract
+            summary: Get the details of a product abstract
             parameters:
                 - $ref: '#/components/parameters/abstractSku'
                 - name: include
@@ -64,7 +64,7 @@ paths:
                                 $ref: '#/components/schemas/ProductAbstractListResponse'
                 '404': { description: "Not found" }
         patch:
-            summary: Partially update a product abstract (concretes cannot be modified)
+            summary: Partially update a product abstract (concretes cannot be modified) - only send properties that you want to change.
             parameters:
                 -   $ref: '#/components/parameters/abstractSku'
             requestBody:
@@ -116,6 +116,36 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/ProductConcrete'
                 '404': { description: Not found }
+
+    /stores:
+        get:
+            summary: List of available stores with their available currency list and available locale list
+            responses:
+                '200':
+                    description: List of available stores with their available currency list and available locale list
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    stores:
+                                        type: array
+                                        items:
+                                            type: object
+                                            properties:
+                                                storeName:
+                                                    type: string
+                                                    example: DE
+                                    availableCurrencyCodes:
+                                        type: array
+                                        items:
+                                            type: string
+                                        example: ["EUR"]
+                                    availableLocaleNames:
+                                        type: array
+                                        items:
+                                            type: string
+                                        example: ["en_US"]
 
 components:
     parameters:
@@ -309,7 +339,7 @@ components:
                     example: "2025-09-30T23:59:59+00:00"
                 stores:
                     type: array
-                    description: List of store identifiers where the product is available
+                    description: List of store identifiers where the product is available (list can be retrieved from /stores endpoint)
                     minItems: 0
                     items:
                         type: string
@@ -339,7 +369,7 @@ components:
             properties:
                 attributes:
                     type: object
-                    description: One-level associative array. Keys are attribute names, values are attribute values
+                    description: One-level associative array. Keys are attribute names, values are attribute values. At least 1 is required.
                     additionalProperties: { type: string }
                     example: { "color": "red", "size": "M" }
                     propertyNames:
@@ -361,15 +391,15 @@ components:
             properties:
                 storeName:
                     type: string
-                    description: Store identifier
+                    description: Store identifier (list can be retrieved from /stores endpoint)
                     example: "DE"
                 currencyCode:
                     type: string
-                    description: Currency code
+                    description: Currency code (list can be retrieved from /stores endpoint)
                     example: "EUR"
                 priceTypeName:
                     type: string
-                    description: Price type name
+                    description: Price type name (stick to "DEFAULT")
                     example: "DEFAULT"
                 grossAmount:
                     type: integer
@@ -386,7 +416,7 @@ components:
             properties:
                 localeName:
                     type: string
-                    description: Locale identifier
+                    description: Locale identifier (list can be retrieved from /stores endpoint)
                     example: "de_DE"
                 name:
                     type: string
@@ -421,7 +451,7 @@ components:
                     example: "2025-09-30T23:59:59+00:00"
                 stores:
                     type: array
-                    description: List of store identifiers where the product is available
+                    description: List of store identifiers where the product is available (list can be retrieved from /stores endpoint)
                     items:
                         type: string
                     example: [ "DE","AT" ]

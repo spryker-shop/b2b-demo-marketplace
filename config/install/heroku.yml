@@ -127,6 +127,10 @@ sections:
         acl-entity-synchronize:
             command: 'vendor/bin/console acl-entity:synchronize -vvv --no-ansi'
 
+    open-ai:
+        open-ai-backoffice-chat:
+            command: 'vendor/bin/console open-ai:backoffice-rest-api-schema-upload'
+
     frontend:
         project-install-dependencies:
             command: 'vendor/bin/console frontend:project:install-dependencies | tail -100 && echo "Output trimmed, only last 100 lines shown."'

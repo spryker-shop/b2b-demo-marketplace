@@ -10,21 +10,63 @@ const input = document.getElementById('gui-assistant-input');
 const submit = document.getElementById('gui-assistant-submit');
 const history = document.getElementById('gui-assistant-history');
 const status = document.getElementById('gui-assistant-status');
+const countdown = document.getElementById('gui-assistant-countdown');
 
 let enabled = true;
 let username = icon.getAttribute('data-username');
 let assistantName = icon.getAttribute('data-assistantname');
 let conversation = [];
+let countdownInterval = null;
+let countdownSeconds = 0;
+let timeout = 60; // seconds
+let responseTimeoutId = null;
 
 function renderHistory() {
     history.innerHTML = '';
     conversation.forEach(msg => {
         const div = document.createElement('div');
-        div.className = 'gui-assistant-message ' + (msg.type === 'user' ? 'gui-assistant-message-user' : 'gui-assistant-message-assistant');
-        div.innerHTML = `<div class=\"gui-assistant-message-content\">${msg.type === 'user' ? `<strong>${username}:</strong> ` : `<strong>${assistantName}:</strong> `}<pre>${msg.text}</pre></div>`;
+        let label;
+        div.type = msg.meta !== 'default' ? msg.meta : msg.type;
+        div.className = 'gui-assistant-message';
+        switch (div.type) {
+            case 'tool-info':
+                div.className += ' gui-assistant-message-tool-info';
+                label = 'Tool Info';
+                break;
+            case 'user':
+                div.className += ' gui-assistant-message-user';
+                label = username;
+                break;
+            default:
+            case 'assistant':
+                div.className += ' gui-assistant-message-assistant';
+                label = assistantName;
+                break;
+        }
+        div.innerHTML = `<div class=\"gui-assistant-message-content\"><strong>${label}:</strong><pre>${msg.text}</pre></div>`;
         history.appendChild(div);
     });
     history.scrollTop = history.scrollHeight;
+}
+
+function startCountdown(seconds) {
+    countdownSeconds = seconds;
+    countdown.textContent = `Time left: ${countdownSeconds}s`;
+    if (countdownInterval) clearInterval(countdownInterval);
+    countdownInterval = setInterval(() => {
+        countdownSeconds--;
+        if (countdownSeconds <= 0) {
+            clearInterval(countdownInterval);
+            countdown.textContent = '';
+        } else {
+            countdown.textContent = `Time left: ${countdownSeconds}s`;
+        }
+    }, 1000);
+}
+
+function stopCountdown() {
+    if (countdownInterval) clearInterval(countdownInterval);
+    countdown.textContent = '';
 }
 
 function setStatus(text, isEnabled) {
@@ -32,6 +74,15 @@ function setStatus(text, isEnabled) {
     enabled = isEnabled;
     input.disabled = !enabled;
     submit.disabled = !enabled;
+    if (!isEnabled) {
+        startCountdown(timeout);
+    } else {
+        stopCountdown();
+        if (responseTimeoutId) {
+            clearTimeout(responseTimeoutId);
+            responseTimeoutId = null;
+        }
+    }
 }
 
 icon.addEventListener('click', () => {
@@ -57,7 +108,7 @@ function submitMessage() {
     const text = input.value.trim();
     if (!text) return;
 
-    conversation.push({type: 'user', text});
+    conversation.push({type: 'user', text, 'meta': 'default'});
 
     const messages = conversation
         .map(msg => ({
@@ -78,7 +129,8 @@ function submitMessage() {
             const answer = data.answer || '[No answer]';
             const answers = Array.isArray(answer) ? answer : [answer];
             answers.forEach(item => {
-                conversation.push({type: 'assistant', text: item});
+                let meta = (typeof item === 'string' && (item.startsWith('Calling Endpoint:') || item.startsWith('Endpoint answered:'))) ? 'tool-info' : 'default'
+                conversation.push({type: 'assistant', text: item, meta: meta});
             });
             renderHistory();
             setStatus('Enabled', true);
@@ -88,13 +140,16 @@ function submitMessage() {
             renderHistory();
             setStatus('Enabled', true);
         });
-    setTimeout(() => {
+    if (responseTimeoutId) {
+        clearTimeout(responseTimeoutId);
+    }
+    responseTimeoutId = setTimeout(() => {
         if (!enabled) {
             conversation.push({type: 'assistant', text: '[Timeout: No response from ' + assistantName + ']'});
             renderHistory();
             setStatus('Enabled', true);
         }
-    }, 125000);
+    }, (timeout + 5) * 1000);
 }
 
 window.guiAssistantSetUsername = function(name) { username = name; };

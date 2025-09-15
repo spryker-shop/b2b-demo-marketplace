@@ -1,6 +1,6 @@
 <?php
 
-namespace Go\Zed\GuiAssistant\Communication\Builder;
+namespace Go\Zed\GuiAssistant\Business\Builder;
 
 use Generated\Shared\Transfer\CurrencyCriteriaTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
@@ -59,6 +59,7 @@ class ProductTransferBuilder
 
         public function updateProductAbstractTransferFromArray(array $data, ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
         {
+            // Facade wrongly returns the Attributes parameter
             $value = (new UtilEncodingService())->decodeJson($productAbstractTransfer->getAttributes(), true);
             $productAbstractTransfer->setAttributes(!is_array($value) ? [] : $value);
 

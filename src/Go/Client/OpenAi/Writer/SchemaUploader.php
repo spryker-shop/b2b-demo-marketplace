@@ -101,6 +101,7 @@ class SchemaUploader
             'name'     => self::VECTOR_STORE_NAME,
             'metadata' => ['key' => self::VECTOR_STORE_KEY],
         ]);
+
         return $resp['id'] ?? throw new RuntimeException('Failed to create vector store');
     }
 
@@ -113,6 +114,7 @@ class SchemaUploader
                 return $file['id'];
             }
         }
+
         return null;
     }
 

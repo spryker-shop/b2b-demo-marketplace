@@ -16,5 +16,11 @@ interface OpenAiClientInterface
     public function createResponse(array $messages, string $instructions = null, array $tools = []): array;
 
     public function createResponseForAgent(array $messages): array;
-}
 
+    /**
+     * Uploads the OpenAPI schema to the vector store and returns vector store/file IDs.
+     *
+     * @api
+     */
+    public function uploadSchema(): array;
+}

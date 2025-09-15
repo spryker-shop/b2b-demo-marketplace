@@ -19,7 +19,7 @@ class OpenAiConfig extends AbstractBundleConfig
      */
     public function getDefaultModel(): string
     {
-        return $this->getSharedConfig()->get(OpenAiConstants::OPEN_AI_DEFAULT_MODEL, 'gpt-5');
+        return $this->getSharedConfig()->get(OpenAiConstants::OPEN_AI_DEFAULT_MODEL, 'gpt-4.1');
     }
 
     /**
@@ -27,7 +27,7 @@ class OpenAiConfig extends AbstractBundleConfig
      */
     public function getDefaultTimeout(): int
     {
-        return $this->getSharedConfig()->get(OpenAiConstants::OPEN_AI_DEFAULT_TIMEOUT, 120);
+        return $this->getSharedConfig()->get(OpenAiConstants::OPEN_AI_DEFAULT_TIMEOUT, 60);
     }
 }
 

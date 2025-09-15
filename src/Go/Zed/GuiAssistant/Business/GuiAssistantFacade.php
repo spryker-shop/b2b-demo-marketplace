@@ -15,6 +15,30 @@ class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInt
 {
     protected const OPENAPI_LOCATION = __DIR__ . '/../chat_openapi.txt';
 
+    public function routeEndpoint(string $httpMethod, string $schemaPath, array $queryParams, array $pathParams, array $payload)
+    {
+        switch($httpMethod.$schemaPath) {
+            case 'GET/product-abstracts':
+                return $this->getProductAbstracts($httpMethod, $schemaPath, $queryParams, $pathParams, $payload);
+            case 'PUT/product-abstracts':
+            case 'POST/product-abstracts':
+                return $this->putProductAbstract($httpMethod, $schemaPath, $queryParams, $pathParams, $payload);
+            case 'GET/product-abstracts/{abstractSku}':
+                return $this->getProductAbstracts($httpMethod, $schemaPath, $queryParams, $pathParams, $payload);
+            case 'PATCH/product-abstracts/{abstractSku}':
+                return $this->patchProductAbstract($httpMethod, $schemaPath, $queryParams, $pathParams, $payload);
+            case 'GET/product-abstracts/{abstractSku}/concretes':
+                return $this->getProductConcretes($httpMethod, $schemaPath, $queryParams, $pathParams, $payload);
+            case 'GET/product-abstracts/{abstractSku}/concretes/{concreteSku}':
+                return $this->getProductConcretes($httpMethod, $schemaPath, $queryParams, $pathParams, $payload);
+            case 'GET/stores':
+                return $this->getStores($httpMethod, $schemaPath, $queryParams, $pathParams, $payload);
+
+            default:
+                return ['error' => sprintf('Unknown endpoint: %s %s ', $httpMethod, $schemaPath)];
+        }
+    }
+
     /**
      * @inheritDoc
      */
@@ -71,8 +95,7 @@ class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInt
 
             $productAbstractTransfer = $this->getProductAbstractBySku($pathParams['abstractSku'])->getProductAbstracts()->getIterator()->current();
 
-            $k = (new \Go\Zed\GuiAssistant\Communication\GuiAssistantCommunicationFactory())->createProductTransferBuilder();
-            $productAbstractTransfer = $k->updateProductAbstractTransferFromArray($payload, $productAbstractTransfer);
+            $productAbstractTransfer = $this->getFactory()->createProductTransferBuilder()->updateProductAbstractTransferFromArray($payload, $productAbstractTransfer);
 
             $idProductAbstract = (new \Spryker\Zed\Product\Business\ProductFacade())->saveProductAbstract($productAbstractTransfer);
 
@@ -92,9 +115,8 @@ class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInt
         try {
             $this->validateResourceRequest($httpMethod, $resourcePath, $queryParams, $pathParams, $payload);
 
-            $k = (new \Go\Zed\GuiAssistant\Communication\GuiAssistantCommunicationFactory())->createProductTransferBuilder();
-            $productAbstractTransfer = $k->createProductAbstractTransferFromArray($payload);
-            $concreteProductCollection = $k->createProductConcreteTransfersFromArray($payload);
+            $productAbstractTransfer = $this->getFactory()->createProductTransferBuilder()->createProductAbstractTransferFromArray($payload);
+            $concreteProductCollection = $this->getFactory()->createProductTransferBuilder()->createProductConcreteTransfersFromArray($payload);
 
             // CREATE
             $idProductAbstract = (new \Spryker\Zed\Product\Business\ProductFacade())->addProduct($productAbstractTransfer, $concreteProductCollection->getProducts()->getArrayCopy());
@@ -127,6 +149,24 @@ class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInt
             }
 
             return ['status' => 'ok', 'result' => $productConcreteTransfers];
+        } catch (\Exception $e) {
+            return $this->errorArray($httpMethod, $resourcePath, $queryParams, $pathParams, $payload, $e);
+        }
+    }
+
+    public function getStores(string $httpMethod, string $resourcePath, array $queryParams, array $pathParams, array $payload)
+    {
+        try {
+            $this->validateResourceRequest($httpMethod, $resourcePath, $queryParams, $pathParams, $payload);
+
+            $stores = (new \Spryker\Zed\Store\Business\StoreFacade())->getAllStores();
+            $stores = array_map(fn($storeTransfer) => [
+                'storeName' => $storeTransfer->getName(),
+                'availableCurrencyCodes' => $storeTransfer->getAvailableCurrencyIsoCodes(),
+                'availableLocaleNames' => array_values($storeTransfer->getAvailableLocaleIsoCodes()),
+            ], $stores);
+
+            return ['status' => 'ok', 'result' => $stores];
         } catch (\Exception $e) {
             return $this->errorArray($httpMethod, $resourcePath, $queryParams, $pathParams, $payload, $e);
         }

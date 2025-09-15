@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Go\Zed\GuiAssistant;
+namespace Go\Zed\OpenAi;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
-class GuiAssistantDependencyProvider extends AbstractBundleDependencyProvider
+class OpenAiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_OPEN_AI = 'CLIENT_OPEN_AI';
 
@@ -28,3 +28,4 @@ class GuiAssistantDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 }
+

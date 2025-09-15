@@ -9,11 +9,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class OpenAiClient extends AbstractClient implements OpenAiClientInterface
 {
-    /**
-     * @api
-     *
-     * {@inheritDoc}
-     */
     public function createResponse(array $messages, string $instructions = null, array $tools = []): array
     {
         return $this->getFactory()
@@ -27,5 +22,9 @@ class OpenAiClient extends AbstractClient implements OpenAiClientInterface
             ->createModelResponse()
             ->createForAgent($messages);
     }
-}
 
+    public function uploadSchema(): array
+    {
+        return $this->getFactory()->createSchemaUploader()->upload();
+    }
+}

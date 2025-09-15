@@ -13,7 +13,7 @@ class ChatController extends AbstractController
 {
     protected const MAX_MESSAGES = 50;
 
-    protected const MAX_CONTENT_LENGTH = 500;
+    protected const MAX_CONTENT_LENGTH = 5000;
 
     /**
      * Expects a JSON payload with the following structure:
@@ -28,71 +28,7 @@ class ChatController extends AbstractController
      */
     public function sendAction(Request $request): Response
     {
-//        // Hack to get kernel instance
-//        $kernel = null;
-//
-//        // Try global kernel first
-//        if (isset($GLOBALS['kernel'])) {
-//            $kernel = $GLOBALS['kernel'];
-//        }
-//
-//        // Try to get from application container
-//        if (!$kernel && class_exists('\Spryker\Shared\Kernel\Container\GlobalContainer')) {
-//            try {
-//                $container = new \Spryker\Shared\Kernel\Container\GlobalContainer();
-//                if ($container->has('kernel')) {
-//                    $kernel = $container->get('kernel');
-//                }
-//            } catch (\Exception $e) {
-//                // Ignore
-//            }
-//        }
-//
-//        // Try to get from request attributes (sometimes set by framework)
-//        if (!$kernel && $request->attributes->has('kernel')) {
-//            $kernel = $request->attributes->get('kernel');
-//        }
-//
-//        // Last resort: try to get from $_SERVER
-//        if (!$kernel && isset($_SERVER['KERNEL'])) {
-//            $kernel = $_SERVER['KERNEL'];
-//        }
-//
-//        if (!$kernel) {
-//            return $this->jsonResponse(['error' => 'Kernel instance not available']);
-//        }
-
-        $tools = [
-           // [ "type" => "web_search_2025_08_26" ],
-//            [
-//                "type"=> "function",
-//                "name"=> "create_product",
-//                "description"=> "Assist and execute on a new Product creation in the Spryker Catalog",
-//                "parameters"=> [
-//                        "type"=> "object",
-//                        "properties"=> [
-//                            "location"=> [
-//                                "type"=> "string",
-//                                "description"=> "The city and state, e.g. San Francisco, CA",
-//                            ],
-//                            "unit"=> [
-//                                "type"=> "string",
-//                                "enum" => ["celsius", "fahrenheit"]
-//                            ],
-//                        ],
-//                        "required"=> ["location", "unit"],
-//                ]
-//            ],
-        ];
-
        $messages = $this->mapMessagesToAi($request);
-//
-//        $agent = new OpenApiAgent(new SymfonyKernelToolExecutor($kernel));
-//
-//        [$answer] = $agent->converse(end($messages)['content'] ?? '');
-//
-//        return $this->jsonResponse(['answer' => $answer]);
-//
 
         $aiResponse = $this->getFactory()->getOpenAiClient()->createResponseForAgent($messages);
         $response = [
