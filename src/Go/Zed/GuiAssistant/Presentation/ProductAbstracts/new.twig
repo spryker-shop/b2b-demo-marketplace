@@ -1,0 +1,74 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block content %}
+     <script>
+         fetch('/gui-assistant/product-abstracts/put', {
+             method: 'POST',
+             headers: {
+                 'Content-Type': 'application/json'
+             },
+             body: JSON.stringify({
+                     "sku": "camera-1500",
+                     "newFrom": "2025-09-11T00:00:00+00:00",
+                     "prices": [
+                         {
+                             "storeName": "DEFAULT",
+                             "currencyCode": "EUR",
+                             "priceTypeName": "DEFAULT",
+                             "grossAmount": 19999,
+                             "netAmount": 16806
+                         }
+                     ],
+                     "localizations": [
+                         {
+                             "localeName": "en_US",
+                             "name": "Mirrorless Camera 1500",
+                             "description": "<p>High-quality mirrorless camera 1500 with interchangeable lenses, perfect for photography enthusiasts and professionals.</p>",
+                             "metaTitle": "Mirrorless Camera 1500 - Buy Now",
+                             "metaDescription": "Discover the latest mirrorless camera 1500 with advanced features and superior image quality",
+                             "metaKeywords": "mirrorless camera 1500, photography, interchangeable lenses, high quality"
+                         },
+                         {
+                             "localeName": "de_DE",
+                             "name": "Spiegellose Camera 1500",
+                             "description": "<p>Hochwertige spiegellose Kamera 1500 mit Wechselobjektiven, perfekt für Fotografie-Enthusiasten und Profis.</p>",
+                             "metaTitle": "Spiegellose Kamera 1500 - Jetzt kaufen",
+                             "metaDescription": "Entdecken Sie die neueste spiegellose Kamera 1500 mit fortschrittlichen Funktionen und überlegener Bildqualität",
+                             "metaKeywords": "spiegellose Kamera 1500, Fotografie, Wechselobjektive, hohe Qualität"
+                         }
+                     ],
+                   //  "stores": ["DEFAULT"],
+                     "concretes": [
+                         {
+                             "attributes": {
+                                 "color": "red",
+                                 "size": "M"
+                             },
+                             "localizations": [
+                                 {
+                                     "localeName": "en_US",
+                                     "name": "Mirrorless Camera 1500 - Red",
+                                     "description": "<p>Red variant of our high-quality mirrorless camera 1500, featuring interchangeable lenses and advanced photography capabilities.</p>",
+                                     "metaTitle": "Red Mirrorless Camera 1500 - Buy Now",
+                                     "metaDescription": "Get the red version of our latest mirrorless camera 1500 with superior image quality and advanced features.",
+                                     "metaKeywords": "red mirrorless camera 1500, photography, interchangeable lenses, high quality"
+                                 },
+                                 {
+                                     "localeName": "en_US",
+                                     "name": "Spiegellose Kamera 1500 - Rot",
+                                     "description": "<p>Rote Variante unserer hochwertigen spiegellosen Kamera 1500 mit Wechselobjektiven und fortschrittlichen Fotografie-Funktionen.</p>",
+                                     "metaTitle": "Rote spiegellose Kamera 1500 - Jetzt kaufen",
+                                     "metaDescription": "Holen Sie sich die rote Version unserer neuesten spiegellosen Kamera 1500 mit überlegener Bildqualität und fortschrittlichen Funktionen.",
+                                     "metaKeywords": "rote spiegellose Kamera 1500, Fotografie, Wechselobjektive, hohe Qualität"
+                                 }
+                             ]
+                         }
+                     ]
+                 }
+             )
+         })
+             .then(response => response.json())
+             .then(data => console.log(data))
+             .catch(error => console.error('Error:', error));
+     </script>
+{% endblock %}
