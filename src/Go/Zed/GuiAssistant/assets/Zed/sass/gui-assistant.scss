@@ -1,0 +1,142 @@
+/* GuiAssistant styles */
+.gui-assistant-icon {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 48px;
+    height: 48px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    cursor: pointer;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.gui-assistant-chat {
+    position: fixed;
+    bottom: 80px;
+    right: 24px;
+    width: 1024px;
+    max-height: 900px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+}
+.gui-assistant-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+    background: #f5f5f5;
+    border-bottom: 1px solid #eee;
+}
+.gui-assistant-title {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+.gui-assistant-status {
+    font-size: 0.95em;
+    color: #888;
+    margin-left: 12px;
+}
+.gui-assistant-minimize {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #888;
+}
+.gui-assistant-history {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px;
+    background: #fafafa;
+}
+.gui-assistant-message {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+}
+.gui-assistant-message-user {
+    align-items: flex-end;
+}
+.gui-assistant-message-assistant {
+    align-items: flex-start;
+}
+.gui-assistant-message-content {
+    padding: 8px 12px;
+    border-radius: 8px;
+    max-width: 80%;
+    word-break: break-word;
+}
+.gui-assistant-message-user .gui-assistant-message-content {
+    background: #e0f7fa;
+    color: #00796b;
+    align-self: flex-end;
+}
+.gui-assistant-message-assistant .gui-assistant-message-content {
+    background: #fce4ec;
+    color: #ad1457;
+    align-self: flex-start;
+}
+
+.gui-assistant-message-tool-info .gui-assistant-message-content {
+    background: #cacaca;
+    color: #1c1c1c;
+    align-self: flex-start;
+}
+
+.gui-assistant-input-area {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-top: 1px solid #eee;
+    background: #f5f5f5;
+}
+.gui-assistant-input {
+    flex: 1;
+    resize: none;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    padding: 8px;
+    font-size: 1em;
+    margin-right: 8px;
+    min-height: 36px;
+    max-height: 80px;
+}
+.gui-assistant-submit {
+    background: #00796b;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.gui-assistant-submit img {
+    width: 20px;
+    height: 20px;
+}
+
+.gui-assistant-header label {
+    margin-left: auto;
+    margin-right: 25px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+#gui-assistant-toolinfo-toggle {
+    margin-right: 4px;
+}
+#gui-assistant-countdown {
+    font-size: 12px;
+    color: #888;
+    margin: 4px 0px 4px 12px;
+}

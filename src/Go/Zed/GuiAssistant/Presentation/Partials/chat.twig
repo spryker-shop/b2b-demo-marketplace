@@ -1,0 +1,30 @@
+<script src="{{ assetsPath('js/gui-assistant.js') }}"></script>
+<link rel="stylesheet" href="{{ assetsPath('css/gui-assistant.css') }}">
+
+<div id="gui-assistant-icon" class="gui-assistant-icon" title="Chat with Assistant"
+     data-username="{{ username|default('User') }}"
+     data-assistantname="{{ assistantname|default('Assistant') }}">
+    <img src="{{ assetsPath('img/gui-assistant-icon.svg') }}" alt="Assistant Icon" />
+</div>
+
+<div id="gui-assistant-chat" class="gui-assistant-chat" style="display:none;">
+    <div class="gui-assistant-header">
+        <span class="gui-assistant-title">Assistant</span>
+        <span id="gui-assistant-status" class="gui-assistant-status">Enabled</span>
+        <label class="gui-assistant-toolinfo-label">
+            <input type="checkbox" id="gui-assistant-toolinfo-toggle" class="gui-assistant-toolinfo-toggle">
+            Tool Info
+        </label>
+        <button id="gui-assistant-minimize" class="gui-assistant-minimize">×</button>
+    </div>
+    <div id="gui-assistant-history" class="gui-assistant-history">
+        {# Messages will be rendered here by JS #}
+    </div>
+    <div id="gui-assistant-countdown"></div>
+    <div class="gui-assistant-input-area">
+        <textarea id="gui-assistant-input" class="gui-assistant-input" placeholder="Type your message..."></textarea>
+        <button id="gui-assistant-submit" class="gui-assistant-submit">
+            <img src="{{ assetsPath('img/gui-assistant-submit.svg') }}" alt="Send" />
+        </button>
+    </div>
+</div>

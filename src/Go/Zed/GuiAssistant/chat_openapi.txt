@@ -1,0 +1,471 @@
+openapi: 3.1.0
+info:
+    title: Spryker Products API (Abstract + Nested Concretes)
+    version: 1.0.0
+
+paths:
+    /product-abstracts:
+        get:
+            summary: List product abstracts (with optional embedded concretes)
+            parameters:
+                - $ref: '#/components/parameters/page'
+                - $ref: '#/components/parameters/limit'
+                - $ref: '#/components/parameters/offset'
+                - name: include
+                  in: query
+                  description: "Include nested resources. Supported: concretes"
+                  schema: { type: string, example: "concretes" }
+                - name: q
+                  description: "The q query parameter, allows text search on sku and name"
+                  in: query
+                  required: true
+                  schema: { type: string }
+            responses:
+                '200':
+                    description: Paginated abstracts (optionally with embedded concretes)
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ProductAbstractListResponse'
+        post:
+            summary: Create a new product abstract with concrete variants
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CreateProductAbstractRequest'
+            responses:
+                '201':
+                    description: The successfully created Product abstract in a list response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ProductAbstractListResponse'
+                '400':
+                    description: Bad request - validation errors
+                '422':
+                    description: Unprocessable entity
+
+    /product-abstracts/{abstractSku}:
+        get:
+            summary: Get the details of a product abstract
+            parameters:
+                - $ref: '#/components/parameters/abstractSku'
+                - name: include
+                  in: query
+                  description: "Include nested resources. Supported: concretes"
+                  schema: { type: string, example: "concretes" }
+            responses:
+                '200':
+                    description: "The Product abstract in a list response (optionally with embedded concretes)"
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ProductAbstractListResponse'
+                '404': { description: "Not found" }
+        patch:
+            summary: Partially update a product abstract (concretes cannot be modified) - only send properties that you want to change.
+            parameters:
+                -   $ref: '#/components/parameters/abstractSku'
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/UpdateProductAbstractRequest'
+            responses:
+                '200':
+                    description: The updated Product abstract in a list response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ProductAbstractListResponse'
+                '400':
+                    description: Bad request - validation errors
+                '404':
+                    description: Not found
+
+    /product-abstracts/{abstractSku}/concretes:
+        get:
+            summary: List concrete variants for an abstract
+            parameters:
+                - $ref: '#/components/parameters/abstractSku'
+                - name: q
+                  description: "The q query parameter, allows text search on sku and name"
+                  in: query
+                  required: true
+                  schema: { type: string }
+            responses:
+                '200':
+                    description: List of variants for the given abstract
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ProductConcreteListResponse'
+
+    /product-abstracts/{abstractSku}/concretes/{concreteSku}:
+        get:
+            summary: Get a single concrete variant under an abstract
+            parameters:
+                - $ref: '#/components/parameters/abstractSku'
+                - $ref: '#/components/parameters/concreteSku'
+            responses:
+                '200':
+                    description: "Product concrete (scoped to its abstract)"
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ProductConcrete'
+                '404': { description: Not found }
+
+    /stores:
+        get:
+            summary: List of available stores with their available currency list and available locale list
+            responses:
+                '200':
+                    description: List of available stores with their available currency list and available locale list
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    stores:
+                                        type: array
+                                        items:
+                                            type: object
+                                            properties:
+                                                storeName:
+                                                    type: string
+                                                    example: DE
+                                    availableCurrencyCodes:
+                                        type: array
+                                        items:
+                                            type: string
+                                        example: ["EUR"]
+                                    availableLocaleNames:
+                                        type: array
+                                        items:
+                                            type: string
+                                        example: ["en_US"]
+
+components:
+    parameters:
+        page: { name: page, in: query, schema: { type: integer, minimum: 1, default: 1 } }
+        limit: { name: limit, in: query, schema: { type: integer, minimum: 1, maximum: 15, default: 5 } }
+        store: { name: store, in: query, description: Spryker store (e.g., DE), schema: { type: string } }
+        locale: { name: locale, in: query, description: e.g., en_US, de_DE, schema: { type: string } }
+        abstractSku: { name: abstractSku, in: path, required: true, schema: { type: string } }
+        concreteSku: { name: concreteSku, in: path, required: true, schema: { type: string } }
+        offset: { name: offset, in: query, schema: { type: integer, minimum: 0, default: 0 }, description: Number of items to skip (for pagination) }
+
+    schemas:
+        Pagination:
+            type: object
+            properties:
+                page:
+                    type: integer
+                    example: 1
+                limit:
+                    type: integer
+                    example: 20
+                total:
+                    type: integer
+                    description: Total number of items
+                    example: 100
+                pages:
+                    type: integer
+                    description: Total number of pages
+                    example: 5
+
+        ProductAbstract:
+            type: object
+            required: [sku, isActive, name]
+            properties:
+                id: { type: integer, example: 123 }
+                uuid: { type: string, format: uuid, nullable: true }
+                sku: { type: string, example: "CAMERA-1000" }
+                isActive: { type: boolean }
+                name: { $ref: '#/components/schemas/LocalizedStringMap' }
+                description: { $ref: '#/components/schemas/LocalizedStringMap' }
+                attributes: { $ref: '#/components/schemas/AttributeMap' }
+                superAttributes:
+                    type: array
+                    description: Keys that define variant differentiation
+                    items: { type: string }
+                    example: ["color","size"]
+                concreteSkus:
+                    type: array
+                    description: Convenience list of child SKUs
+                    items: { type: string }
+                categories: { type: array, items: { $ref: '#/components/schemas/CategoryRef' } }
+                taxSet: { $ref: '#/components/schemas/TaxSetRef' }
+                stores: { type: array, items: { type: string }, example: ["DE","AT"] }
+                concretes:
+                    type: array
+                    items: { $ref: '#/components/schemas/ProductConcrete' }
+            example:
+                sku: "CAMERA-1000"
+                isActive: true
+                name: { "en_US": "Mirrorless Camera" }
+                superAttributes: ["color","kit"]
+                concreteSkus: ["CAMERA-1000-BLK","CAMERA-1000-SLV"]
+
+        ProductConcrete:
+            type: object
+            description: Variant entity scoped to its parent abstract; not addressable at top level.
+            required: [sku, isActive, name]
+            properties:
+                id: { type: integer, example: 456 }
+                uuid: { type: string, format: uuid, nullable: true }
+                sku: { type: string, example: "CAMERA-1000-BLK" }
+                abstractSku:
+                    type: string
+                    readOnly: true
+                    description: Derived from the request path; not an independent identity.
+                    example: "CAMERA-1000"
+                isActive: { type: boolean }
+                name: { $ref: '#/components/schemas/LocalizedStringMap' }
+                description: { $ref: '#/components/schemas/LocalizedStringMap' }
+                attributes: { $ref: '#/components/schemas/AttributeMap' }
+                superAttributeValues:
+                    type: object
+                    additionalProperties: { type: string }
+                    example: { color: "black", kit: "body-only" }
+                gtin: { type: string, nullable: true, example: "4006381333931" }
+                merchantReference: { type: string, nullable: true }
+                prices:
+                    type: array
+                    items: { $ref: '#/components/schemas/Price' }
+                stocks:
+                    type: array
+                    items: { $ref: '#/components/schemas/Stock' }
+                createdAt: { type: string, format: date-time }
+                updatedAt: { type: string, format: date-time }
+
+        ProductAbstractListResponse:
+            type: object
+            properties:
+                pagination: { $ref: '#/components/schemas/Pagination' }
+                productAbstracts:
+                    type: array
+                    items: { $ref: '#/components/schemas/ProductAbstract' }
+                productConcretes:
+                    type: array
+                    items: { $ref: '#/components/schemas/ProductAbstractConcreteCollection' }
+
+        ProductAbstractConcreteCollection:
+            type: object
+            properties:
+                productAbstractSku:
+                    type: string
+                    description: The SKU of the product abstract
+                    example: "M1000786"
+                productConcretes:
+                    type: array
+                    description: Array of concrete products for this abstract
+                    items: { $ref: '#/components/schemas/ProductConcrete' }
+
+        ProductConcreteListResponse:
+            type: object
+            properties:
+                pagination: { $ref: '#/components/schemas/Pagination' }
+                data:
+                    type: array
+                    items: { $ref: '#/components/schemas/ProductConcrete' }
+
+        # Value objects (unchanged)
+        LocalizedStringMap:
+            type: object
+            additionalProperties: { type: string }
+        AttributeMap:
+            type: object
+            additionalProperties:
+                oneOf:
+                    - type: string
+                    - type: number
+                    - type: integer
+                    - type: boolean
+                    - type: array
+                      items:
+                          oneOf: [{type: string},{type: number},{type: integer},{type: boolean}]
+        CategoryRef:
+            type: object
+            required: [id]
+            properties:
+                id: { type: string }
+                key: { type: string }
+        TaxSetRef:
+            type: object
+            properties:
+                id: { type: integer }
+                name: { type: string }
+
+        Price:
+            type: object
+            required: [store, currency, priceMode, priceType]
+            properties:
+                store: { type: string, example: "DE" }
+                currency: { type: string, example: "EUR" }
+                priceMode: { type: string, enum: [GROSS, NET] }
+                priceType: { type: string, enum: [DEFAULT, ORIGINAL, SPECIAL, CUSTOM] }
+                grossAmount: { type: integer, description: Minor units }
+                netAmount: { type: integer, description: Minor units }
+        Stock:
+            type: object
+            required: [warehouse, quantity, isNeverOutOfStock]
+            properties:
+                warehouse: { type: string }
+                quantity: { type: integer }
+                isNeverOutOfStock: { type: boolean }
+
+        CreateProductAbstractRequest:
+            type: object
+            required: [sku, prices, localizations, concretes]
+            properties:
+                sku:
+                    type: string
+                    description: Product abstract SKU
+                    example: "camera-1000"
+                    pattern: '^[a-z0-9_-]+$'
+                    minLength: 1
+                newFrom:
+                    type: string
+                    format: date-time
+                    description: Product available from date
+                    example: "2025-09-11T00:00:00+00:00"
+                newTo:
+                    type: string
+                    format: date-time
+                    description: Product available until date
+                    example: "2025-09-30T23:59:59+00:00"
+                stores:
+                    type: array
+                    description: List of store identifiers where the product is available (list can be retrieved from /stores endpoint)
+                    minItems: 0
+                    items:
+                        type: string
+                    example: ["DE","AT"]
+                prices:
+                    type: array
+                    description: Pricing information for different stores/currencies
+                    minItems: 1
+                    items:
+                        $ref: '#/components/schemas/CreatePriceRequest'
+                localizations:
+                    type: array
+                    description: Localized content for different locales
+                    minItems: 1
+                    items:
+                        $ref: '#/components/schemas/CreateLocalizationRequest'
+                concretes:
+                    type: array
+                    description: Concrete product variants (at least 1 required)
+                    minItems: 1
+                    items:
+                        $ref: '#/components/schemas/CreateProductConcreteRequest'
+
+        CreateProductConcreteRequest:
+            type: object
+            required: [attributes, localizations]
+            properties:
+                attributes:
+                    type: object
+                    description: One-level associative array. Keys are attribute names, values are attribute values. At least 1 is required.
+                    additionalProperties: { type: string }
+                    example: { "color": "red", "size": "M" }
+                    propertyNames:
+                        pattern: '^[a-zA-Z0-9_-]+$'
+                    patternProperties:
+                        '^[a-zA-Z0-9_-]+$':
+                            type: string
+                            pattern: '^[a-zA-Z0-9_-]+$'
+                localizations:
+                    type: array
+                    description: Localized content for this concrete variant
+                    minItems: 1
+                    items:
+                        $ref: '#/components/schemas/CreateLocalizationRequest'
+
+        CreatePriceRequest:
+            type: object
+            required: [storeName, currencyCode, priceTypeName]
+            properties:
+                storeName:
+                    type: string
+                    description: Store identifier (list can be retrieved from /stores endpoint)
+                    example: "DE"
+                currencyCode:
+                    type: string
+                    description: Currency code (list can be retrieved from /stores endpoint)
+                    example: "EUR"
+                priceTypeName:
+                    type: string
+                    description: Price type name (stick to "DEFAULT")
+                    example: "DEFAULT"
+                grossAmount:
+                    type: integer
+                    description: Gross amount in minor units (cents)
+                    example: 19999
+                netAmount:
+                    type: integer
+                    description: Net amount in minor units (cents)
+                    example: 16806
+
+        CreateLocalizationRequest:
+            type: object
+            required: [localeName, name]
+            properties:
+                localeName:
+                    type: string
+                    description: Locale identifier (list can be retrieved from /stores endpoint)
+                    example: "de_DE"
+                name:
+                    type: string
+                    description: Localized product name
+                    example: "Spiegellose Kamera"
+                description:
+                    type: string
+                    description: Localized product description
+                    example: "Hochwertige spiegellose Kamera für Profis"
+                metaTitle:
+                    type: string
+                    description: SEO meta title
+                metaDescription:
+                    type: string
+                    description: SEO meta description
+                metaKeywords:
+                    type: string
+                    description: SEO meta keywords
+
+        UpdateProductAbstractRequest:
+            type: object
+            properties:
+                newFrom:
+                    type: string
+                    format: date-time
+                    description: Product available from date
+                    example: "2025-09-11T00:00:00+00:00"
+                newTo:
+                    type: string
+                    format: date-time
+                    description: Product available until date
+                    example: "2025-09-30T23:59:59+00:00"
+                stores:
+                    type: array
+                    description: List of store identifiers where the product is available (list can be retrieved from /stores endpoint)
+                    items:
+                        type: string
+                    example: [ "DE","AT" ]
+                prices:
+                    type: array
+                    description: Pricing information for different stores/currencies
+                    items:
+                        $ref: '#/components/schemas/CreatePriceRequest'
+                localizations:
+                    type: array
+                    description: Localized content for different locales
+                    items:
+                        $ref: '#/components/schemas/CreateLocalizationRequest'
+            additionalProperties: false
+
