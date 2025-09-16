@@ -116,7 +116,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/ProductConcrete'
+                                $ref: '#/components/schemas/ProductConcreteListResponse'
                 '404': { description: Not found }
 
     /stores:
@@ -160,119 +160,352 @@ components:
         offset: { name: offset, in: query, schema: { type: integer, minimum: 0, default: 0 }, description: Number of items to skip (for pagination) }
 
     schemas:
-        Pagination:
-            type: object
-            properties:
-                page:
-                    type: integer
-                    example: 1
-                limit:
-                    type: integer
-                    example: 20
-                total:
-                    type: integer
-                    description: Total number of items
-                    example: 100
-                pages:
-                    type: integer
-                    description: Total number of pages
-                    example: 5
-
-        ProductAbstract:
-            type: object
-            required: [sku, isActive, name]
-            properties:
-                id: { type: integer, example: 123 }
-                uuid: { type: string, format: uuid, nullable: true }
-                sku: { type: string, example: "CAMERA-1000" }
-                isActive: { type: boolean }
-                name: { $ref: '#/components/schemas/LocalizedStringMap' }
-                description: { $ref: '#/components/schemas/LocalizedStringMap' }
-                attributes: { $ref: '#/components/schemas/AttributeMap' }
-                superAttributes:
-                    type: array
-                    description: Keys that define variant differentiation
-                    items: { type: string }
-                    example: ["color","size"]
-                concreteSkus:
-                    type: array
-                    description: Convenience list of child SKUs
-                    items: { type: string }
-                categories: { type: array, items: { $ref: '#/components/schemas/CategoryRef' } }
-                taxSet: { $ref: '#/components/schemas/TaxSetRef' }
-                stores: { type: array, items: { type: string }, example: ["DE","AT"] }
-                concretes:
-                    type: array
-                    items: { $ref: '#/components/schemas/ProductConcrete' }
-            example:
-                sku: "CAMERA-1000"
-                isActive: true
-                name: { "en_US": "Mirrorless Camera" }
-                superAttributes: ["color","kit"]
-                concreteSkus: ["CAMERA-1000-BLK","CAMERA-1000-SLV"]
-
-        ProductConcrete:
-            type: object
-            description: Variant entity scoped to its parent abstract; not addressable at top level.
-            required: [sku, isActive, name]
-            properties:
-                id: { type: integer, example: 456 }
-                uuid: { type: string, format: uuid, nullable: true }
-                sku: { type: string, example: "CAMERA-1000-BLK" }
-                abstractSku:
-                    type: string
-                    readOnly: true
-                    description: Derived from the request path; not an independent identity.
-                    example: "CAMERA-1000"
-                isActive: { type: boolean }
-                name: { $ref: '#/components/schemas/LocalizedStringMap' }
-                description: { $ref: '#/components/schemas/LocalizedStringMap' }
-                attributes: { $ref: '#/components/schemas/AttributeMap' }
-                superAttributeValues:
-                    type: object
-                    additionalProperties: { type: string }
-                    example: { color: "black", kit: "body-only" }
-                gtin: { type: string, nullable: true, example: "4006381333931" }
-                merchantReference: { type: string, nullable: true }
-                prices:
-                    type: array
-                    items: { $ref: '#/components/schemas/Price' }
-                stocks:
-                    type: array
-                    items: { $ref: '#/components/schemas/Stock' }
-                createdAt: { type: string, format: date-time }
-                updatedAt: { type: string, format: date-time }
-
         ProductAbstractListResponse:
             type: object
+            description: "Response structure for listing product abstracts and their concrete variants (no stock, price or category info). Includes status, result (with pagination, product_abstracts, and product_concretes)."
             properties:
-                pagination: { $ref: '#/components/schemas/Pagination' }
-                productAbstracts:
-                    type: array
-                    items: { $ref: '#/components/schemas/ProductAbstract' }
-                productConcretes:
-                    type: array
-                    items: { $ref: '#/components/schemas/ProductAbstractConcreteCollection' }
-
-        ProductAbstractConcreteCollection:
-            type: object
-            properties:
-                productAbstractSku:
+                status:
                     type: string
-                    description: The SKU of the product abstract
-                    example: "M1000786"
-                productConcretes:
-                    type: array
-                    description: Array of concrete products for this abstract
-                    items: { $ref: '#/components/schemas/ProductConcrete' }
+                    description: "Status of the response (e.g. 'ok')."
+                    example: "ok"
+                result:
+                    type: object
+                    description: "Main result object containing pagination, product abstracts, and product concretes."
+                    properties:
+                        pagination:
+                            type: object
+                            description: "Pagination information for the result set."
+                            properties:
+                                page:
+                                    type: integer
+                                    example: 1
+                                max_per_page:
+                                    type: integer
+                                    example: 5
+                                nb_results:
+                                    type: integer
+                                    example: 2
+                                limit:
+                                    type: integer
+                                    example: 5
+                                offset:
+                                    type: integer
+                                    example: 0
+                        product_abstracts:
+                            type: array
+                            description: "List of product abstract objects."
+                            items:
+                                type: object
+                                properties:
+                                    id_product_abstract:
+                                        type: integer
+                                        example: 417
+                                    sku:
+                                        type: string
+                                        example: "CAMERA-1000"
+                                    name:
+                                        type: string
+                                        example: "Camera 1000"
+                                    approval_status:
+                                        type: string
+                                        example: "approved"
+                                    new_from:
+                                        type: [string, "null"]
+                                        nullable: true
+                                        example: "2025-09-11T00:00:00+00:00"
+                                    new_to:
+                                        type: [string, "null"]
+                                        nullable: true
+                                        example: "2025-09-11T00:00:00+00:00"
+                                    store_relation:
+                                        type: object
+                                        properties:
+                                            stores:
+                                                type: array
+                                                items:
+                                                    type: object
+                                                    properties:
+                                                        name:
+                                                            type: string
+                                                            example: "DE"
+                                                        id_store:
+                                                            type: integer
+                                                            example: 1
+                                    localized_attributes:
+                                        type: array
+                                        items:
+                                            type: object
+                                            properties:
+                                                name:
+                                                    type: [string, "null"]
+                                                    example: "Camera 1000"
+                                                attributes:
+                                                    type: array
+                                                    items: {}
+                                                    example: []
+                                                description:
+                                                    type: [string, "null"]
+                                                    example: "Spiegellose Kamera"
+                                                meta_title:
+                                                    type: [string, "null"]
+                                                    example: "Best Camera"
+                                                meta_keywords:
+                                                    type: [string, "null"]
+                                                    example: "camera, best camera"
+                                                meta_description:
+                                                    type: [string, "null"]
+                                                    example: "This is the best camera."
+                                                locale:
+                                                    type: object
+                                                    properties:
+                                                        locale_name:
+                                                            type: string
+                                                            example: "de_DE"
+                                                        id_locale:
+                                                            type: integer
+                                                            example: 46
+                        product_concretes:
+                            type: array
+                            description: "List of product concrete collections grouped by abstract SKU."
+                            items:
+                                type: object
+                                properties:
+                                    product_abstract_sku:
+                                        type: string
+                                        example: "CAMERA-1000"
+                                    product_concretes:
+                                        type: array
+                                        items:
+                                            type: object
+                                            properties:
+                                                sku:
+                                                    type: string
+                                                    example: "CAMERA-1000-variant-base"
+                                                attributes:
+                                                    type: object
+                                                    additionalProperties: true
+                                                    example: {"variant": "base"}
+                                                abstract_sku:
+                                                    type: string
+                                                    example: "CAMERA-1000"
+                                                is_active:
+                                                    type: boolean
+                                                    example: true
+                                                stores:
+                                                    type: array
+                                                    items:
+                                                        type: object
+                                                        properties:
+                                                            name:
+                                                                type: string
+                                                                example: "DEFAULT"
+                                                            id_store:
+                                                                type: integer
+                                                                example: 1
+                                                localized_attributes:
+                                                    type: array
+                                                    items:
+                                                        type: object
+                                                        properties:
+                                                            name:
+                                                                type: [string, "null"]
+                                                                example: "CAMERA 1000"
+                                                            attributes:
+                                                                type: array
+                                                                items: {}
+                                                                example: []
+                                                            description:
+                                                                type: [string, "null"]
+                                                                example: "Best quality camera on market."
+                                                            meta_title:
+                                                                type: [string, "null"]
+                                                                example: "Best Camera"
+                                                            meta_keywords:
+                                                                type: [string, "null"]
+                                                                example: "camera, best camera"
+                                                            meta_description:
+                                                                type: [string, "null"]
+                                                                example: "This is the best camera."
+                                                            locale:
+                                                                type: object
+                                                                properties:
+                                                                    locale_name:
+                                                                        type: string
+                                                                        example: "de_DE"
+                                                                    id_locale:
+                                                                        type: integer
+                                                                        example: 46
+            example:
+                status: "ok"
+                result:
+                    pagination:
+                        page: 1
+                        max_per_page: 5
+                        nb_results: 2
+                        limit: 5
+                        offset: 0
+                    product_abstracts:
+                        - id_product_abstract: 101
+                          sku: "CAMERA-1000"
+                          name: "Mirrorless Camera"
+                          approval_status: "approved"
+                          new_from: "2025-09-11T00:00:00+00:00"
+                          new_to: "2025-09-12T00:00:00+00:00"
+                          store_relation:
+                              stores:
+                                  - name: "DE"
+                                    id_store: 1
+                          localized_attributes:
+                              - name: "Mirrorless Camera"
+                                attributes: []
+                                description: "High-quality camera for professional photography."
+                                meta_title: "Best Camera"
+                                meta_keywords: "camera, best camera"
+                                meta_description: "This is the best camera."
+                                locale:
+                                    locale_name: "en_US"
+                                    id_locale: 66
+                              - name: "Spiegellose Kamera"
+                                attributes: []
+                                description: "Hochwertige Kamera für professionelle Fotografie."
+                                meta_title: "Best Camera"
+                                meta_keywords: "camera, best camera"
+                                meta_description: "This is the best camera."
+                                locale:
+                                    locale_name: "de_DE"
+                                    id_locale: 46
+                    product_concretes:
+                        - product_abstract_sku: "CAMERA-1000"
+                          product_concretes:
+                              - sku: "CAMERA-1000-BLK"
+                                attributes:
+                                    color: "black"
+                                abstract_sku: "CAMERA-1000"
+                                is_active: true
+                                stores:
+                                    - name: "DE"
+                                      id_store: 1
+                                localized_attributes:
+                                    - name: "Mirrorless Camera Black"
+                                      attributes: []
+                                      description: "Black variant of the mirrorless camera."
+                                      meta_title: "Best Camera"
+                                      meta_keywords: "camera, best camera"
+                                      meta_description: "This is the best camera."
+                                      locale:
+                                          locale_name: "en_US"
+                                          id_locale: 66
+                                    - name: "Spiegellose Kamera Schwarz"
+                                      attributes: []
+                                      description: "Schwarze Variante der spiegellosen Kamera."
+                                      meta_title: "Best Camera"
+                                      meta_keywords: "camera, best camera"
+                                      meta_description: "This is the best camera."
+                                      locale:
+                                          locale_name: "de_DE"
+                                          id_locale: 46
 
         ProductConcreteListResponse:
             type: object
+            description: "Response structure for listing product concrete variants for a given abstract product  (no stock, price or category info). Includes status and result (array of concrete products)."
             properties:
-                pagination: { $ref: '#/components/schemas/Pagination' }
-                data:
+                status:
+                    type: string
+                    description: "Status of the response (e.g. 'ok')."
+                    example: "ok"
+                result:
                     type: array
-                    items: { $ref: '#/components/schemas/ProductConcrete' }
+                    description: "Array of concrete product objects."
+                    items:
+                        type: object
+                        properties:
+                            sku:
+                                type: string
+                                description: "Concrete product SKU."
+                                example: "CAMERA-1000-BLK"
+                            attributes:
+                                type: object
+                                description: "Key-value attributes for the concrete product."
+                                example: { color: "black" }
+                            abstract_sku:
+                                type: string
+                                description: "SKU of the parent abstract product."
+                                example: "CAMERA-1000"
+                            is_active:
+                                type: boolean
+                                description: "Whether the concrete product is active."
+                                example: true
+                            localized_attributes:
+                                type: array
+                                description: "Localized attributes for the concrete product."
+                                items:
+                                    type: object
+                                    properties:
+                                        name:
+                                            type: string
+                                            description: "Localized name of the concrete product."
+                                            example: "Mirrorless Camera Black"
+                                        attributes:
+                                            type: array
+                                            description: "Additional attributes."
+                                            items: {}
+                                            example: []
+                                        description:
+                                            type: string
+                                            description: "Localized description."
+                                            example: "Black variant of the mirrorless camera."
+                                        meta_title:
+                                            type: [string, "null"]
+                                            nullable: true
+                                            description: "SEO meta title."
+                                            example: null
+                                        meta_keywords:
+                                            type: [string, "null"]
+                                            nullable: true
+                                            description: "SEO meta keywords."
+                                            example: null
+                                        meta_description:
+                                            type: [string, "null"]
+                                            nullable: true
+                                            description: "SEO meta description."
+                                            example: null
+                                        locale:
+                                            type: object
+                                            description: "Locale information."
+                                            properties:
+                                                locale_name:
+                                                    type: string
+                                                    example: "de_DE"
+                                                id_locale:
+                                                    type: integer
+                                                    example: 46
+            example:
+                status: "ok"
+                result:
+                    - sku: "CAMERA-1000-BLK"
+                      attributes:
+                        color: "black"
+                      abstract_sku: "CAMERA-1000"
+                      is_active: true
+                      localized_attributes:
+                        - name: "Mirrorless Camera Black"
+                          attributes: []
+                          description: "Black variant of the mirrorless camera."
+                          meta_title: null
+                          meta_keywords: null
+                          meta_description: null
+                          locale:
+                            locale_name: "en_US"
+                            id_locale: 66
+                        - name: "Spiegellose Kamera Schwarz"
+                          attributes: []
+                          description: "Schwarze Variante der spiegellosen Kamera."
+                          meta_title: null
+                          meta_keywords: null
+                          meta_description: null
+                          locale:
+                            locale_name: "de_DE"
+                            id_locale: 46
 
         # Value objects (unchanged)
         LocalizedStringMap:
@@ -289,28 +522,6 @@ components:
                     - type: array
                       items:
                           oneOf: [{type: string},{type: number},{type: integer},{type: boolean}]
-        CategoryRef:
-            type: object
-            required: [id]
-            properties:
-                id: { type: string }
-                key: { type: string }
-        TaxSetRef:
-            type: object
-            properties:
-                id: { type: integer }
-                name: { type: string }
-
-        Price:
-            type: object
-            required: [store, currency, priceMode, priceType]
-            properties:
-                store: { type: string, example: "DE" }
-                currency: { type: string, example: "EUR" }
-                priceMode: { type: string, enum: [GROSS, NET] }
-                priceType: { type: string, enum: [DEFAULT, ORIGINAL, SPECIAL, CUSTOM] }
-                grossAmount: { type: integer, description: Minor units }
-                netAmount: { type: integer, description: Minor units }
         Stock:
             type: object
             required: [warehouse, quantity, isNeverOutOfStock]
@@ -468,4 +679,3 @@ components:
                     items:
                         $ref: '#/components/schemas/CreateLocalizationRequest'
             additionalProperties: false
-

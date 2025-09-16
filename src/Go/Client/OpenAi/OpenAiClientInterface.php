@@ -23,4 +23,6 @@ interface OpenAiClientInterface
      * @api
      */
     public function uploadSchema(): array;
+
+    public function listVectorStoreFiles(): array;
 }

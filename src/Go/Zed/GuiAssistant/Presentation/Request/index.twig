@@ -1,0 +1,68 @@
+{% set endpoints = [
+    '/product-abstracts',
+    '/product-abstracts/{abstractSku}',
+    '/product-abstracts/{abstractSku}/concretes',
+    '/product-abstracts/{abstractSku}/concretes/{concreteSku}',
+    '/stores'
+] %}
+{% set httpMethods = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'] %}
+
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Backoffice Chat - Request Creator' %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+
+            {% if result is not null %}
+                <div style="margin-bottom:24px;">
+                    <label style="font-weight:bold;">Result:</label>
+                    <pre style="width:800px;height:300px;overflow:auto;background:#f8f8f8;border:1px solid #ccc;padding:12px;">{{ result|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
+                </div>
+            {% endif %}
+
+            <form method="post" style="display:flex;flex-direction:column;gap:12px;max-width:700px;">
+                <div style="display:flex;align-items:center;gap:12px;">
+                    <label for="httpMethod" style="min-width:160px;">HTTP Method:</label>
+                    <select name="httpMethod" id="httpMethod" style="flex:1;max-width:200px;">
+                        {% for method in httpMethods %}
+                            <option value="{{ method }}"{% if formData.httpMethod == method %} selected{% endif %}>{{ method }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div style="display:flex;align-items:center;gap:12px;">
+                    <label for="schemaPath" style="min-width:160px;">Endpoint:</label>
+                    <select name="schemaPath" id="schemaPath" style="flex:1;max-width:400px;">
+                        {% for ep in endpoints %}
+                            <option value="{{ ep }}"{% if formData.schemaPath == ep %} selected{% endif %}>{{ ep }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div style="display:flex;align-items:center;gap:12px;">
+                    <label for="queryParams" style="min-width:160px;">Query Params (JSON):</label>
+                    <textarea name="queryParams" id="queryParams" rows="12" cols="120" style="flex:1;max-width:800px;">{{ formData.queryParams|e }}</textarea>
+                </div>
+                <div style="display:flex;align-items:center;gap:12px;">
+                    <label for="pathParams" style="min-width:160px;">Path Params (JSON):</label>
+                    <textarea name="pathParams" id="pathParams" rows="12" cols="120" style="flex:1;max-width:800px;">{{ formData.pathParams|e }}</textarea>
+                </div>
+                <div style="display:flex;align-items:center;gap:12px;">
+                    <label for="payload" style="min-width:160px;">Payload (JSON):</label>
+                    <textarea name="payload" id="payload" rows="12" cols="120" style="flex:1;max-width:800px;">{{ formData.payload|e }}</textarea>
+                </div>
+                <div style="display:flex;justify-content:flex-end;">
+                    <button type="submit" style="padding:8px 24px;">Send Request</button>
+                </div>
+            </form>
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

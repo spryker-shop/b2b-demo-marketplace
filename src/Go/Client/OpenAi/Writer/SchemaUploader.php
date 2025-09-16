@@ -62,7 +62,7 @@ class SchemaUploader
         return ['vector_store_id' => $vectorStoreId, 'file_id' => $existingFileId];
     }
 
-    public function listFilesInVectorStore(): array
+    public function listVectorStoreFiles(): array
     {
         $vectorStoreId = $this->findVectorStore();
 
