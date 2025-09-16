@@ -11,6 +11,7 @@ const submit = document.getElementById('gui-assistant-submit');
 const history = document.getElementById('gui-assistant-history');
 const status = document.getElementById('gui-assistant-status');
 const countdown = document.getElementById('gui-assistant-countdown');
+const toolInfoToggle = document.getElementById('gui-assistant-toolinfo-toggle');
 
 let enabled = true;
 let username = icon.getAttribute('data-username');
@@ -20,10 +21,14 @@ let countdownInterval = null;
 let countdownSeconds = 0;
 let timeout = 60; // seconds
 let responseTimeoutId = null;
+let showToolInfo = false;
 
 function renderHistory() {
     history.innerHTML = '';
     conversation.forEach(msg => {
+        const isToolInfo = msg.meta === 'tool-info';
+        if (isToolInfo && !showToolInfo) return;
+
         const div = document.createElement('div');
         let label;
         div.type = msg.meta !== 'default' ? msg.meta : msg.type;
@@ -102,6 +107,11 @@ input.addEventListener('keydown', function(e) {
 });
 submit.addEventListener('click', function() {
     if (enabled) submitMessage();
+});
+
+toolInfoToggle.addEventListener('change', function() {
+    showToolInfo = this.checked;
+    renderHistory();
 });
 
 function submitMessage() {
