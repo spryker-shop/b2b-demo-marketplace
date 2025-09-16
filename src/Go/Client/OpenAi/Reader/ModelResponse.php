@@ -360,7 +360,7 @@ PROMPT
 
     private function callEndpoint(string $httpMethod, string $schemaPath, array $pathParams, array $queryParams, array $payload): array
     {
-        return (new GuiAssistantFacade())->routeEndpoint($httpMethod, $schemaPath, $pathParams, $queryParams, $payload);
+        return (new GuiAssistantFacade())->routeEndpoint($httpMethod, $schemaPath, $queryParams, $pathParams, $payload);
     }
 
 }
