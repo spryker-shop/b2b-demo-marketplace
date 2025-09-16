@@ -13,7 +13,7 @@ use Spryker\Zed\Product\Business\ProductFacade;
  */
 class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInterface
 {
-    protected const OPENAPI_LOCATION = __DIR__ . '/../chat_openapi.txt';
+    protected const OPENAPI_LOCATION = APPLICATION_ROOT_DIR . '/src/Go/Zed/GuiAssistant/chat_openapi.txt';
 
     public function routeEndpoint(string $httpMethod, string $schemaPath, array $queryParams, array $pathParams, array $payload)
     {

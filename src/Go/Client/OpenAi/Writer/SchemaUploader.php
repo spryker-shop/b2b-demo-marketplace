@@ -10,7 +10,7 @@ use RuntimeException;
 
 class SchemaUploader
 {
-    public const SCHEMA_PATH       = __DIR__ . '/../../../Zed/GuiAssistant/chat_openapi.txt';
+    public const SCHEMA_PATH       = APPLICATION_ROOT_DIR . '/src/Go/Zed/GuiAssistant/chat_openapi.txt';
     public const VECTOR_STORE_KEY  = 'chat-app-openapi-schema';
     public const VECTOR_STORE_NAME = 'Chat OpenAPI Schema Store';
 
