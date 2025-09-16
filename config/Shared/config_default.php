@@ -157,7 +157,7 @@ use Symfony\Component\HttpFoundation\Cookie;
 // ----------------------------------------------------------------------------
 // ------------------------------ ENVIRONMENT ---------------------------------
 $config['ID_TENANT'] = getenv('SPRYKER_TENANT_IDENTIFIER') ?: '';
-
+$config[\Go\Shared\OpenAi\OpenAiConstants::OPEN_AI_DEFAULT_API_KEY] = getenv('OPEN_AI_DEFAULT_API_KEY') ?: '';
 
 // ----------------------------------------------------------------------------
 // ------------------------------ CODEBASE: TO REMOVE -------------------------
