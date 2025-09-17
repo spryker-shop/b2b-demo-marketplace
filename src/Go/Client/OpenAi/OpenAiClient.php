@@ -27,4 +27,9 @@ class OpenAiClient extends AbstractClient implements OpenAiClientInterface
     {
         return $this->getFactory()->createSchemaUploader()->upload();
     }
+
+    public function listVectorStoreFiles(): array
+    {
+        return $this->getFactory()->createSchemaUploader()->listVectorStoreFiles();
+    }
 }

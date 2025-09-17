@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\Console;
 
+use Go\Zed\OpenAi\Communication\Console\OpenAiListVectorStoreFilesConsole;
 use Go\Zed\OpenAi\Communication\Console\OpenAiRestApiSchemaUploadConsole;
 use Go\Zed\TenantBehavior\Communication\Plugin\Console\TenantProviderConsoleApplicationPlugin;
 use Go\Zed\TenantOnboarding\Communication\Console\TenantOnboardingTestRunConsole;
@@ -317,6 +318,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new SitemapGenerateConsole(),
             new TenantOnboardingTestRunConsole(),
             new OpenAiRestApiSchemaUploadConsole(),
+            new OpenAiListVectorStoreFilesConsole(),
 
             // Shop Configuration commands
             new ShopConfigurationSetupConsole(),

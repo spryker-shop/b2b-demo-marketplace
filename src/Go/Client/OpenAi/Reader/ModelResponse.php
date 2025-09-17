@@ -83,7 +83,7 @@ class ModelResponse implements ModelResponseInterface
                             ],
                             'schemaPath' => [
                                 'type' => 'string',
-                                'description' => 'Relative URL starts with /, it must match the schema path exactly.',
+                                'description' => 'Relative URL starts with /, it must match the schema path exactly, do not replace placeholders but include them in pathParams.',
                             ],
                             'pathParams' => [
                                 'type' => 'object',
@@ -141,7 +141,8 @@ It defines all available operations and entities that you can call via the `call
    - Never invent endpoints, params, or fields but stick to REST API Reference.
 
 4. **Perform REST API Reference calls with `callEndpoint`**
-   - Use `pathParams` for placeholders.
+   - Use `schemaPath` unchanged as in REST API Reference - do not replace placeholders.
+   - Use `pathParams` for schemaPath placeholders.
    - Use `queryParams` for filters/pagination.
    - Include a body only when required.
 

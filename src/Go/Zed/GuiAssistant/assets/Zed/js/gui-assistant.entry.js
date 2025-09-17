@@ -12,6 +12,8 @@ const history = document.getElementById('gui-assistant-history');
 const status = document.getElementById('gui-assistant-status');
 const countdown = document.getElementById('gui-assistant-countdown');
 const toolInfoToggle = document.getElementById('gui-assistant-toolinfo-toggle');
+const dragHandle = document.getElementById('gui-assistant-drag');
+const chatBox = document.getElementById('gui-assistant-chat');
 
 let enabled = true;
 let username = icon.getAttribute('data-username');
@@ -22,6 +24,11 @@ let countdownSeconds = 0;
 let timeout = 60; // seconds
 let responseTimeoutId = null;
 let showToolInfo = false;
+let isDragging = false;
+let dragStartX = 0;
+let dragStartY = 0;
+let startWidth = 0;
+let startHeight = 0;
 
 function renderHistory() {
     history.innerHTML = '';
@@ -112,6 +119,28 @@ submit.addEventListener('click', function() {
 toolInfoToggle.addEventListener('change', function() {
     showToolInfo = this.checked;
     renderHistory();
+});
+
+dragHandle.addEventListener('mousedown', function(e) {
+    isDragging = true;
+    dragStartX = e.clientX;
+    dragStartY = e.clientY;
+    startWidth = chatBox.offsetWidth;
+    startHeight = chatBox.offsetHeight;
+    document.body.style.userSelect = 'none';
+});
+document.addEventListener('mousemove', function(e) {
+    if (!isDragging) return;
+    let newWidth = Math.min(Math.max(startWidth + (dragStartX - e.clientX), 500), 1200);
+    let newHeight = Math.min(Math.max(startHeight + (dragStartY - e.clientY), 250), 1000);
+    chatBox.style.width = newWidth + 'px';
+    chatBox.style.height = newHeight + 'px';
+});
+document.addEventListener('mouseup', function() {
+    if (isDragging) {
+        isDragging = false;
+        document.body.style.userSelect = '';
+    }
 });
 
 function submitMessage() {

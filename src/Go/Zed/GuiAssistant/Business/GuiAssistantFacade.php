@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Go\Zed\GuiAssistant\Business;
 
+use Generated\Shared\Transfer\PaginationTransfer;
 use Go\Zed\GuiAssistant\Business\Request\Request;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Product\Business\ProductFacade;
@@ -78,8 +79,9 @@ class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInt
                 );
 
             $productAbstractCollectionTransfer = (new \Spryker\Zed\Product\Business\ProductFacade())->getProductAbstractCollection($productAbstractCriteriaTransfer);
+            $productAbstractCollection = $this->filterProductAbstractCollectionArray($productAbstractCollectionTransfer->toArray());
 
-            return ['status' => 'ok', 'result' => $productAbstractCollectionTransfer->toArray()];
+            return ['status' => 'ok', 'result' => $productAbstractCollection];
         } catch (\Exception $e) {
             return $this->errorArray($httpMethod, $resourcePath, $queryParams, $pathParams, $payload, $e);
         }
@@ -100,8 +102,9 @@ class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInt
             $idProductAbstract = (new \Spryker\Zed\Product\Business\ProductFacade())->saveProductAbstract($productAbstractTransfer);
 
             $productAbstractCollectionTransfer = $this->getProductAbstractById($idProductAbstract);
+            $productAbstractCollection = $this->filterProductAbstractCollectionArray($productAbstractCollectionTransfer->toArray());
 
-            return ['status' => 'ok', 'result' => $productAbstractCollectionTransfer->toArray()];
+            return ['status' => 'ok', 'result' => $productAbstractCollection];
         } catch (\Exception $e) {
             return $this->errorArray($httpMethod, $resourcePath, $queryParams, $pathParams, $payload, $e);
         }
@@ -122,8 +125,9 @@ class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInt
             $idProductAbstract = (new \Spryker\Zed\Product\Business\ProductFacade())->addProduct($productAbstractTransfer, $concreteProductCollection->getProducts()->getArrayCopy());
 
             $productAbstractCollectionTransfer = $this->getProductAbstractById($idProductAbstract);
+            $productAbstractCollection = $this->filterProductAbstractCollectionArray($productAbstractCollectionTransfer->toArray());
 
-            return ['status' => 'ok', 'result' => $productAbstractCollectionTransfer->toArray()];
+            return ['status' => 'ok', 'result' => $productAbstractCollection];
         } catch (\Exception $e) {
             return $this->errorArray($httpMethod, $resourcePath, $queryParams, $pathParams, $payload, $e);
         }
@@ -145,7 +149,7 @@ class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInt
                     continue;
                 }
 
-                $productConcreteTransfers[] = $productTransfer->toArray();
+                $productConcreteTransfers[] = $this->filterProductConcreteArray($productTransfer->toArray());
             }
 
             return ['status' => 'ok', 'result' => $productConcreteTransfers];
@@ -264,5 +268,47 @@ class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInt
 
         $validator = (new \League\OpenAPIValidation\PSR7\ValidatorBuilder)->fromYamlFile(static::OPENAPI_LOCATION)->getRequestValidator();
         $validator->validate(new Request($httpMethod, $resourcePath, $queryParams, $pathParams, $payload, $endpoint));
+    }
+
+    protected function filterProductAbstractCollectionArray(array $productAbstractCollection): array
+    {
+        $productAbstractAllowList = ['id_product_abstract', 'sku', 'name', 'approval_status', 'new_from', 'new_to', 'localized_attributes'];
+        $productConcreteAllowList = ['sku', 'attributes', 'abstract_sku', 'is_active', 'localized_attributes'];
+
+        $productAbstractCollection['pagination'] = array_filter($productAbstractCollection['pagination'] ?? [], fn($v) => $v !== null);
+        unset($productAbstractCollection['product_tax_sets']);
+
+        foreach($productAbstractCollection['product_abstracts'] as $key => $productAbstract) {
+            $newProductAbstract = array_intersect_key($productAbstract, array_flip($productAbstractAllowList));
+            $newProductAbstract['store_relation']['stores'] = [];
+            foreach($productAbstract['store_relation']['stores'] ?? [] as $store) {
+                $newProductAbstract['store_relation']['stores'][] = array_filter($store , fn($v) => !empty($v));
+            }
+
+            $productAbstractCollection['product_abstracts'][$key] = $newProductAbstract;
+        }
+
+        foreach($productAbstractCollection['product_concretes'] as $concretesKey => $productConcretes) {
+            foreach($productConcretes['product_concretes'] as $key => $productConcrete) {
+                $newProductConcrete = array_intersect_key($productConcrete, array_flip($productConcreteAllowList));
+                $newProductConcrete['stores'] = [];
+                foreach($productConcrete['stores'] ?? [] as $store) {
+                    $newProductConcrete['stores'][] = array_filter($store , fn($v) => !empty($v));
+                }
+
+                $productAbstractCollection['product_concretes'][$concretesKey]['product_concretes'][$key] = $newProductConcrete;
+            }
+        }
+
+        return $productAbstractCollection;
+    }
+
+    protected function filterProductConcreteArray(array $productConcrete): array
+    {
+        $productConcreteAllowList = ['sku', 'attributes', 'abstract_sku', 'is_active', 'localized_attributes'];
+
+        $newProductConcrete = array_intersect_key($productConcrete, array_flip($productConcreteAllowList));
+
+        return $newProductConcrete;
     }
 }
