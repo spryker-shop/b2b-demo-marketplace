@@ -28,7 +28,7 @@ image:
 
 composer:
     mode: '--dev --quiet -o -a'
-    autoload: ''
+    autoload: '-o -a --apcu'
 
 regions:
     EU:
@@ -135,8 +135,6 @@ services:
     search:
         engine: elastic
         version: '7.10'
-    mail_catcher:
-        engine: mailpit
 
 docker:
     ssl:
