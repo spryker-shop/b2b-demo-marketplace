@@ -19,7 +19,7 @@ class OpenAiConfig extends AbstractBundleConfig
      */
     public function getDefaultModel(): string
     {
-        return $this->getSharedConfig()->get(OpenAiConstants::OPEN_AI_DEFAULT_MODEL, 'gpt-4.1');
+        return $this->getSharedConfig()->get(OpenAiConstants::OPEN_AI_DEFAULT_MODEL, 'o3');
     }
 
     /**

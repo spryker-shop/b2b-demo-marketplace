@@ -10,9 +10,9 @@ use RuntimeException;
 
 class SchemaUploader
 {
-    public const SCHEMA_PATH       = APPLICATION_ROOT_DIR . '/src/Go/Zed/GuiAssistant/chat_openapi.txt';
-    public const VECTOR_STORE_KEY  = 'chat-app-openapi-schema';
-    public const VECTOR_STORE_NAME = 'Chat OpenAPI Schema Store';
+    protected const SCHEMA_PATH       = APPLICATION_ROOT_DIR . '/src/Go/Zed/GuiAssistant/chat_openapi.yaml';
+    protected const VECTOR_STORE_KEY  = 'chat-app-openapi-schema';
+    protected const VECTOR_STORE_NAME = 'Chat OpenAPI Schema Store';
 
     public function __construct(
         protected string $apiKey,
@@ -33,10 +33,10 @@ class SchemaUploader
             ?? $this->createVectorStore();
 
         // 2. Check if file with same filename exists
-        $existingFileId = $this->findFileInVectorStore($vectorStoreId, $filename);
+        $existingFileId = $this->findFileInVectorStore($vectorStoreId, $this->castToVectorStoreFileName($filename));
 
         // 3. Upload fresh file
-        $newFileId = $this->uploadFile(self::SCHEMA_PATH);
+        $newFileId = $this->uploadFile(self::SCHEMA_PATH, $this->castToVectorStoreFileName($filename));
 
         // 4. Attach to vector store
         $this->attachFile($vectorStoreId, $newFileId);
@@ -57,7 +57,7 @@ class SchemaUploader
         $filename = basename(self::SCHEMA_PATH);
 
         $vectorStoreId = $this->findVectorStore();
-        $existingFileId = $this->findFileInVectorStore($vectorStoreId, $filename);
+        $existingFileId = $this->findFileInVectorStore($vectorStoreId, $this->castToVectorStoreFileName($filename));
 
         return ['vector_store_id' => $vectorStoreId, 'file_id' => $existingFileId];
     }
@@ -118,7 +118,7 @@ class SchemaUploader
         return null;
     }
 
-    private function uploadFile(string $path): string
+    private function uploadFile(string $uploadPath, string $destinationFileName): string
     {
         $response = $this->httpClient->post('https://api.openai.com/v1/files', [
             'headers' => [
@@ -126,7 +126,7 @@ class SchemaUploader
             ],
             'multipart' => [
                 ['name' => 'purpose', 'contents' => 'assistants'],
-                ['name' => 'file', 'contents' => fopen($path, 'r'), 'filename' => basename($path)],
+                ['name' => 'file', 'contents' => fopen($uploadPath, 'r'), 'filename' => $destinationFileName],
             ],
             'timeout' => $this->timeout,
         ]);
@@ -194,5 +194,10 @@ class SchemaUploader
             ],
             'timeout' => $this->timeout,
         ]);
+    }
+
+    private function castToVectorStoreFileName(string $filename): string
+    {
+        return str_replace(['.yml', '.yaml'], '.txt', $filename);
     }
 }
