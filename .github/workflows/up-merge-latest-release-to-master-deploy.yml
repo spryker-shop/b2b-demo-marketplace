@@ -52,6 +52,7 @@ jobs:
         if: env.up_merge_is_required == 'true'
         run: |
           git merge ${{ env.latest_tag }} -m "Merge tag ${{ env.latest_tag }} into master-deploy"
+        continue-on-error: true
 
       - name: Push changes
         if: success() && env.up_merge_is_required == 'true'
