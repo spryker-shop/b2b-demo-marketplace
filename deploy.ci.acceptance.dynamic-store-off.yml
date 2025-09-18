@@ -19,7 +19,7 @@ image:
 
 composer:
     mode: '--no-dev --quiet -o -a'
-    autoload: '--classmap-authoritative'
+    autoload: '-a -o'
 
 regions:
     EU:
@@ -163,10 +163,10 @@ services:
     search:
         engine: elastic
         version: '7.10'
-    webdriver:
-        engine: chromedriver
     mail_catcher:
         engine: mailpit
+    webdriver:
+        engine: chromedriver
 
 docker:
 
