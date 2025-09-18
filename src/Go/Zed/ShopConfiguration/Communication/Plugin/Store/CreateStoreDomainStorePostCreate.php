@@ -8,6 +8,11 @@ use Orm\Zed\TenantOnboarding\Persistence\SpyStoreDomainQuery;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\StoreExtension\Dependency\Plugin\StorePostCreatePluginInterface;
 
+/**
+ * @method \Go\Zed\ShopConfiguration\Business\ShopConfigurationFacadeInterface getFacade()
+ * @method \Go\Zed\ShopConfiguration\ShopConfigurationConfig getConfig()
+ * @method \Go\Zed\ShopConfiguration\Communication\ShopConfigurationCommunicationFactory getFactory()
+ */
 class CreateStoreDomainStorePostCreate extends AbstractPlugin implements StorePostCreatePluginInterface
 {
     /**
@@ -22,7 +27,8 @@ class CreateStoreDomainStorePostCreate extends AbstractPlugin implements StorePo
             return $storeResponseTransfer;
         }
 
-        $tenantTransfer = (new \Go\Zed\TenantOnboarding\Business\TenantOnboardingFacade())
+        $tenantOnboardingFacade = $this->getFactory()->getLocator()->tenantBehavior()->facade();
+        $tenantTransfer = $tenantOnboardingFacade
             ->findTenantByIdentifier($storeTransfer->getTenantReference());
 
         $storeDomainEntity = SpyStoreDomainQuery::create()

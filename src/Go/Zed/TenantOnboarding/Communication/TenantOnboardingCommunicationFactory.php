@@ -74,4 +74,12 @@ class TenantOnboardingCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(TenantOnboardingDependencyProvider::FACADE_MAIL);
     }
+
+    /**
+     * @return \Generated\Zed\Ide\AutoCompletion&\Spryker\Shared\Kernel\LocatorLocatorInterface
+     */
+    public function getLocator()
+    {
+        return parent::getContainer()->getLocator();
+    }
 }

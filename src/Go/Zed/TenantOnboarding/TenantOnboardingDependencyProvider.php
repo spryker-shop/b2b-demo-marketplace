@@ -11,6 +11,7 @@ use Go\Zed\ShopConfiguration\Communication\Plugin\TenantOnboarding\CreateStoreDo
 use Go\Zed\TenantOnboarding\Communication\Plugin\TenantOnboarding\CreateBackofficeUserOnboardingStepPlugin;
 use Go\Zed\TenantOnboarding\Communication\Plugin\TenantOnboarding\CreateTenantOnboardingStepPlugin;
 use Go\Zed\TenantOnboarding\Communication\Plugin\TenantOnboarding\EmailNotificationUserOnboardingStepPlugin;
+use Go\Zed\TenantOnboarding\Communication\Plugin\TenantOnboarding\MerchantCreateOnboardingStepPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -153,6 +154,7 @@ class TenantOnboardingDependencyProvider extends AbstractBundleDependencyProvide
             new CreateBackofficeUserOnboardingStepPlugin(),
             new CreateStoreDomainsOnboardingStepPlugin(),
             new EmailNotificationUserOnboardingStepPlugin(),
+            new MerchantCreateOnboardingStepPlugin(),
         ];
     }
 }
