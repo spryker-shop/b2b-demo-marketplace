@@ -19,7 +19,7 @@ image:
 
 composer:
     mode: '--no-dev --quiet -o -a'
-    autoload: '-o -a --apcu'
+    autoload: '--classmap-authoritative'
 
 regions:
     EU:
@@ -165,6 +165,8 @@ services:
         version: '7.10'
     webdriver:
         engine: chromedriver
+    mail_catcher:
+        engine: mailpit
 
 docker:
 
