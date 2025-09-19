@@ -29,7 +29,28 @@
         {# Messages will be rendered here by JS #}
     </div>
     <div id="gui-assistant-countdown"></div>
+    <div id="gui-assistant-file-preview" class="gui-assistant-file-preview" style="display: none">
+        <div class="gui-assistant-file-item">
+            <span class="gui-assistant-file-name"></span>
+            <button class="gui-assistant-file-remove" type="button">×</button>
+        </div>
+    </div>
+    <div id="gui-assistant-drop-overlay" class="gui-assistant-drop-overlay" style="display: none">
+        <div class="gui-assistant-drop-zone">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <p>Drop file here to attach</p>
+        </div>
+    </div>
     <div class="gui-assistant-input-area">
+        <input type="file" id="gui-assistant-file-input" class="gui-assistant-file-input" style="display: none" accept=".image/png,.image/jpeg,.image/jpg,.image/gif">
+        <button id="gui-assistant-file-button" class="gui-assistant-file-button" type="button" title="Attach file">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66L9.64 16.2a2 2 0 0 1-2.83-2.83l8.49-8.49" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
         <textarea id="gui-assistant-input" class="gui-assistant-input" placeholder="Type your message..."></textarea>
         <button id="gui-assistant-submit" class="gui-assistant-submit">
             <img src="{{ assetsPath('img/gui-assistant-submit.svg') }}" alt="Send" />

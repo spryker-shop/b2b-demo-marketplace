@@ -1,6 +1,7 @@
 openapi: 3.1.0
 info:
-    title: Spryker Products API (Abstract + Nested Concretes)
+    title: Spryker Products API
+    description: API for managing product abstracts and their concrete variants and retrieving store and product attribute configurations.
     version: 1.0.0
 
 paths:
@@ -11,15 +12,8 @@ paths:
                 - $ref: '#/components/parameters/page'
                 - $ref: '#/components/parameters/limit'
                 - $ref: '#/components/parameters/offset'
-                - name: include
-                  in: query
-                  description: "Include nested resources. Supported: concretes"
-                  schema: { type: string, example: "concretes" }
-                - name: q
-                  description: "The q query parameter, allows text search on sku and name - pass empty string to list all abstracts"
-                  in: query
-                  required: true
-                  schema: { type: string }
+                - $ref: '#/components/parameters/include'
+                - $ref: '#/components/parameters/q'
             responses:
                 '200':
                     description: Paginated abstracts (optionally with embedded concretes)
@@ -52,10 +46,7 @@ paths:
             summary: Get specific product abstract details - Returns single product abstract with basic info (SKU, name, store relations, product abstract pricing, localized attributes). Optionally includes concrete variants with 'include=concretes'. NO stock, product concrete pricing, or category data available. Input requires valid abstractSku from previous searches.
             parameters:
                 - $ref: '#/components/parameters/abstractSku'
-                - name: include
-                  in: query
-                  description: "Include nested resources. Supported: concretes"
-                  schema: { type: string, example: "concretes" }
+                - $ref: '#/components/parameters/include'
             responses:
                 '200':
                     description: "The Product abstract in a list response (optionally with embedded concretes)"
@@ -63,7 +54,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ProductAbstractListResponse'
-                '404': { description: "Not found" }
+                '404':
+                    description: "Not found"
         patch:
             summary: Update product abstract properties (only changed properties need to be included) - Returns updated product abstract data with basic info (SKU, name, store relations, product abstract pricing, localized attributes). Only abstract properties can be modified (NOT concrete variants). NO stock, product concrete pricing, or category modifications possible. Input requires abstractSku and any properties to update (stores, currencies, locales from /stores endpoint).
             parameters:
@@ -91,11 +83,7 @@ paths:
             summary: List concrete variants for abstract - Returns array of concrete product variants with product attributes, product concrete pricing, stock and localized data. NO category available. Input requires valid abstractSku and 'q' search term for variant filtering.
             parameters:
                 - $ref: '#/components/parameters/abstractSku'
-                - name: q
-                  description: "The q query parameter, allows text search on sku and name - pass empty string to list all concretes for the abstract"
-                  in: query
-                  required: true
-                  schema: { type: string }
+                - $ref: '#/components/parameters/q'
             responses:
                 '200':
                     description: List of variants for the given abstract
@@ -112,89 +100,8 @@ paths:
                 content:
                     application/json:
                         schema:
-                            type: object
-                            required: [sku, attributes, localizations, prices]
-                            properties:
-                                sku:
-                                    type: string
-                                    description: "Concrete product SKU"
-                                    example: "CAMERA-1000-RED"
-                                attributes:
-                                    type: object
-                                    description: "Product attributes as key-value pairs. Minimum 1 attribute is mandatory.  Possible attributes options are defined in /product-attributes?concreteSku= endpoint ."
-                                    additionalProperties:
-                                        type: string
-                                    example: { "color": "red", "size": "medium" }
-                                localizations:
-                                    type: array
-                                    description: "Localized content for different locales (use locale names from /stores)"
-                                    minItems: 1
-                                    items:
-                                        type: object
-                                        required: [localeName, name]
-                                        properties:
-                                            localeName:
-                                                type: string
-                                                description: "Locale identifier from /stores endpoint"
-                                                example: "de_DE"
-                                            name:
-                                                type: string
-                                                description: "Localized product name"
-                                                example: "Rote Kamera"
-                                            description:
-                                                type: string
-                                                description: "Localized product description"
-                                                example: "Hochwertige rote Kamera"
-                                            metaTitle:
-                                                type: string
-                                                description: "SEO meta title"
-                                            metaDescription:
-                                                type: string
-                                                description: "SEO meta description"
-                                            metaKeywords:
-                                                type: string
-                                                description: "SEO meta keywords"
-                                prices:
-                                    type: array
-                                    description: "Optional pricing information (use store names and currencies from /stores)"
-                                    items:
-                                        type: object
-                                        required: [storeName, currencyCode, priceTypeName]
-                                        properties:
-                                            storeName:
-                                                type: string
-                                                description: "Store identifier from /stores endpoint"
-                                                example: "DE"
-                                            currencyCode:
-                                                type: string
-                                                description: "Currency code from /stores endpoint"
-                                                example: "EUR"
-                                            priceTypeName:
-                                                type: string
-                                                description: "Price type name"
-                                                example: "DEFAULT"
-                                            grossAmount:
-                                                type: integer
-                                                description: "Gross amount in minor units (cents)"
-                                                example: 19999
-                                            netAmount:
-                                                type: integer
-                                                description: "Net amount in minor units (cents)"
-                                                example: 16806
-                                stocks:
-                                    type: array
-                                    description: "Optional stock/inventory information"
-                                    items:
-                                        type: object
-                                        properties:
-                                            quantity:
-                                                type: integer
-                                                description: "Stock quantity"
-                                                example: 100
-                                            isNeverOutOfStock:
-                                                type: boolean
-                                                description: "Whether product is never out of stock"
-                                                example: false
+                            $ref: '#/components/schemas/CreateProductConcreteRequest'
+
             responses:
                 '201':
                     description: The successfully created concrete product
@@ -220,7 +127,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ProductConcreteListResponse'
-                '404': { description: Not found }
+                '404':
+                    description: Not found
         patch:
             summary: Update concrete variant properties (only changed properties need to be included) - Returns updated concrete product data. Input requires valid abstractSku and concreteSku, plus any properties to update (attributes, localizations, product concrete prices, stocks). Possible attribute options are defined in /product-attributes?concreteSku= endpoint.
             parameters:
@@ -231,84 +139,8 @@ paths:
                 content:
                     application/json:
                         schema:
-                            type: object
-                            required: []
-                            properties:
-                                attributes:
-                                    type: object
-                                    description: "Product attributes as key-value pairs. Minimum 1 attribute is mandatory. Possible attributes options are defined in /product-attributes?concreteSku= endpoint ."
-                                    additionalProperties:
-                                        type: string
-                                    example: { "color": "blue", "size": "large" }
-                                localizations:
-                                    type: array
-                                    description: "Localized content for different locales (use locale names from /stores)"
-                                    items:
-                                        type: object
-                                        required: [localeName, name]
-                                        properties:
-                                            localeName:
-                                                type: string
-                                                description: "Locale identifier from /stores endpoint"
-                                                example: "de_DE"
-                                            name:
-                                                type: string
-                                                description: "Localized product name"
-                                                example: "Blaue Kamera"
-                                            description:
-                                                type: string
-                                                description: "Localized product description"
-                                                example: "Hochwertige blaue Kamera"
-                                            metaTitle:
-                                                type: string
-                                                description: "SEO meta title"
-                                            metaDescription:
-                                                type: string
-                                                description: "SEO meta description"
-                                            metaKeywords:
-                                                type: string
-                                                description: "SEO meta keywords"
-                                prices:
-                                    type: array
-                                    description: "Pricing information (use store names and currencies from /stores)"
-                                    items:
-                                        type: object
-                                        required: [storeName, currencyCode, priceTypeName]
-                                        properties:
-                                            storeName:
-                                                type: string
-                                                description: "Store identifier from /stores endpoint"
-                                                example: "DE"
-                                            currencyCode:
-                                                type: string
-                                                description: "Currency code from /stores endpoint"
-                                                example: "EUR"
-                                            priceTypeName:
-                                                type: string
-                                                description: "Price type name"
-                                                example: "DEFAULT"
-                                            grossAmount:
-                                                type: integer
-                                                description: "Gross amount in minor units (cents)"
-                                                example: 19999
-                                            netAmount:
-                                                type: integer
-                                                description: "Net amount in minor units (cents)"
-                                                example: 16806
-                                stocks:
-                                    type: array
-                                    description: "Stock/inventory information"
-                                    items:
-                                        type: object
-                                        properties:
-                                            quantity:
-                                                type: integer
-                                                description: "Stock quantity"
-                                                example: 50
-                                            isNeverOutOfStock:
-                                                type: boolean
-                                                description: "Whether product is never out of stock"
-                                                example: false
+                            $ref: '#/components/schemas/UpdateProductConcreteRequest'
+
             responses:
                 '200':
                     description: The updated concrete product
@@ -330,26 +162,8 @@ paths:
                     content:
                         application/json:
                             schema:
-                                type: object
-                                properties:
-                                    stores:
-                                        type: array
-                                        items:
-                                            type: object
-                                            properties:
-                                                storeName:
-                                                    type: string
-                                                    example: DE
-                                    availableCurrencyCodes:
-                                        type: array
-                                        items:
-                                            type: string
-                                        example: ["EUR"]
-                                    availableLocaleNames:
-                                        type: array
-                                        items:
-                                            type: string
-                                        example: ["en_US"]
+                                $ref: '#/components/schemas/StoresListResponse'
+
 
     /product-attributes:
         get:
@@ -368,55 +182,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                type: object
-                                properties:
-                                    status:
-                                        type: string
-                                        description: "Status of the response"
-                                        example: "ok"
-                                    result:
-                                        type: array
-                                        description: "Array of available attribute definitions"
-                                        items:
-                                            type: object
-                                            properties:
-                                                attribute_key:
-                                                    type: string
-                                                    description: "Attribute key name (never null)"
-                                                    example: "color"
-                                                choices:
-                                                    type: array
-                                                    description: "Available predefined choices for this attribute (can be empty but never null)"
-                                                    items:
-                                                        type: string
-                                                    example: ["red", "blue", "black", "white"]
-                                                is_mandatory:
-                                                    type: boolean
-                                                    description: "Whether this attribute is mandatory for concretes or optional (always true or false)"
-                                                    example: true
-                                                free_text:
-                                                    type: boolean
-                                                    description: "Whether this attribute accepts free text values (always true or false) or only the predefined choices"
-                                                    example: false
-                                example:
-                                    status: "ok"
-                                    result:
-                                        - attribute_key: "color"
-                                          choices: ["red", "blue", "black", "white"]
-                                          is_mandatory: true
-                                          free_text: false
-                                        - attribute_key: "size"
-                                          choices: ["small", "medium", "large"]
-                                          is_mandatory: false
-                                          free_text: false
-                                        - attribute_key: "material"
-                                          choices: []
-                                          is_mandatory: true
-                                          free_text: true
-                                        - attribute_key: "warranty_period"
-                                          choices: ["1_year", "2_years", "3_years"]
-                                          is_mandatory: false
-                                          free_text: false
+                                $ref: '#/components/schemas/ProductAttributesListResponse'
 
 components:
     parameters:
@@ -427,8 +193,135 @@ components:
         abstractSku: { name: abstractSku, in: path, required: true, schema: { type: string } }
         concreteSku: { name: concreteSku, in: path, required: true, schema: { type: string } }
         offset: { name: offset, in: query, schema: { type: integer, minimum: 0, default: 0 }, description: Number of items to skip (for pagination) }
+        q: { name: q, in: query, required: true, description: "The q query parameter, allows text search on sku and name - pass empty string to list all items", schema: { type: string } }
+        include: { name: include, in: query, description: "Include nested resources. Supported: concretes", schema: { type: string, example: "concretes" } }
 
     schemas:
+
+        CreateProductConcreteRequest:
+            type: object
+            description: "Request structure for creating a new concrete product variant under a specific existing abstract product."
+            required: [sku, attributes, localizations, prices]
+            properties:
+                sku:
+                    type: string
+                    description: "Concrete product SKU"
+                    example: "CAMERA-1000-RED"
+                attributes:
+                    type: object
+                    description: "Product attributes as key-value pairs. Minimum 1 attribute is mandatory. Possible attributes options are defined in /product-attributes?concreteSku= endpoint ."
+                    additionalProperties:
+                        type: string
+                    example: { "color": "red", "size": "medium" }
+                localizations:
+                    type: array
+                    description: "Localized content for different locales (use locale names from /stores)"
+                    minItems: 1
+                    items:
+                        $ref: '#/components/schemas/CreateLocalizationRequest'
+                prices:
+                    type: array
+                    description: "Optional pricing information (use store names and currencies from /stores)"
+                    items:
+                        $ref: '#/components/schemas/CreatePriceRequest'
+                stocks:
+                    type: array
+                    description: "Optional stock/inventory information"
+                    items:
+                        $ref: '#/components/schemas/StockInformation'
+
+        StockInformation:
+            type: object
+            properties:
+                quantity:
+                    type: integer
+                    description: "Stock quantity"
+                    example: 100
+                isNeverOutOfStock:
+                    type: boolean
+                    description: "Whether product is never out of stock"
+                    example: false
+
+        UpdateProductConcreteRequest:
+            type: object
+            required: []
+            properties:
+                attributes:
+                    type: object
+                    description: "Product attributes as key-value pairs. Minimum 1 attribute is mandatory. Possible attributes options are defined in /product-attributes?concreteSku= endpoint ."
+                    additionalProperties:
+                        type: string
+                    example: { "color": "blue", "size": "large" }
+                localizations:
+                    type: array
+                    description: "Localized content for different locales (use locale names from /stores)"
+                    items:
+                        $ref: '#/components/schemas/CreateLocalizationRequest'
+                prices:
+                    type: array
+                    description: "Pricing information (use store names and currencies from /stores)"
+                    items:
+                        $ref: '#/components/schemas/CreatePriceRequest'
+                stocks:
+                    type: array
+                    description: "Stock/inventory information"
+                    items:
+                        $ref: '#/components/schemas/StockInformation'
+
+        StoresListResponse:
+            type: object
+            properties:
+                stores:
+                    type: array
+                    items:
+                        type: object
+                        properties:
+                            storeName:
+                                type: string
+                                example: DE
+                availableCurrencyCodes:
+                    type: array
+                    items:
+                        type: string
+                    example: ["EUR"]
+                availableLocaleNames:
+                    type: array
+                    items:
+                        type: string
+                    example: ["en_US"]
+
+        ProductAttributesListResponse:
+            type: object
+            properties:
+                status:
+                    type: string
+                    description: "Status of the response"
+                    example: "ok"
+                result:
+                    type: array
+                    description: "Array of available attribute definitions"
+                    items:
+                        type: object
+                        properties:
+                            attribute_key:
+                                type: string
+                                description: "Attribute key name (never null)"
+                                example: "color"
+                            choices:
+                                type: array
+                                description: "Available predefined choices for this attribute (can be empty but never null)"
+                                items:
+                                    type: string
+                                example: ["red", "blue", "black", "white"]
+                            is_mandatory:
+                                type: boolean
+                                description: "Whether this attribute is mandatory for concretes or optional (always true or false)"
+                                example: true
+                            free_text:
+                                type: boolean
+                                description: "Whether this attribute accepts free text values (always true or false) or only the predefined choices"
+                                example: false
+
         ProductAbstractListResponse:
             type: object
             description: "Response structure for listing product abstracts and their concrete variants (no stock, product concrete price or category info). Includes status, result (with pagination, product_abstracts, and product_concretes)."
@@ -441,25 +334,6 @@ components:
                     type: object
                     description: "Main result object containing pagination, product abstracts, and product concretes."
                     properties:
-                        pagination:
-                            type: object
-                            description: "Pagination information for the result set."
-                            properties:
-                                page:
-                                    type: integer
-                                    example: 1
-                                max_per_page:
-                                    type: integer
-                                    example: 5
-                                nb_results:
-                                    type: integer
-                                    example: 2
-                                limit:
-                                    type: integer
-                                    example: 5
-                                offset:
-                                    type: integer
-                                    example: 0
                         product_abstracts:
                             type: array
                             description: "List of product abstract objects."
@@ -490,29 +364,8 @@ components:
                                         type: array
                                         description: "Price information for the product abstract."
                                         items:
-                                            type: object
-                                            properties:
-                                                currencyCode:
-                                                    type: string
-                                                    description: "Currency code"
-                                                    example: "EUR"
-                                                storeName:
-                                                    type: string
-                                                    description: "Store name"
-                                                    example: "DEFAULT"
-                                                priceTypeName:
-                                                    type: string
-                                                    description: "Price type name"
-                                                    example: "DEFAULT"
-                                                gross:
-                                                    type: integer
-                                                    description: "Gross price in minor units (cents)"
-                                                    example: 11100
-                                                net:
-                                                    type: [integer, "null"]
-                                                    nullable: true
-                                                    description: "Net price in minor units (cents)"
-                                                    example: null
+                                            $ref: '#/components/schemas/CreatePriceRequest'
+
                                     store_relation:
                                         type: object
                                         properties:
@@ -530,36 +383,8 @@ components:
                                     localized_attributes:
                                         type: array
                                         items:
-                                            type: object
-                                            properties:
-                                                name:
-                                                    type: [string, "null"]
-                                                    example: "Camera 1000"
-                                                attributes:
-                                                    type: array
-                                                    items: {}
-                                                    example: []
-                                                description:
-                                                    type: [string, "null"]
-                                                    example: "Spiegellose Kamera"
-                                                meta_title:
-                                                    type: [string, "null"]
-                                                    example: "Best Camera"
-                                                meta_keywords:
-                                                    type: [string, "null"]
-                                                    example: "camera, best camera"
-                                                meta_description:
-                                                    type: [string, "null"]
-                                                    example: "This is the best camera."
-                                                locale:
-                                                    type: object
-                                                    properties:
-                                                        locale_name:
-                                                            type: string
-                                                            example: "de_DE"
-                                                        id_locale:
-                                                            type: integer
-                                                            example: 46
+                                            $ref: '#/components/schemas/LocalizationResponse'
+
                         product_concretes:
                             type: array
                             description: "List of product concrete collections grouped by abstract SKU."
@@ -601,111 +426,8 @@ components:
                                                 localized_attributes:
                                                     type: array
                                                     items:
-                                                        type: object
-                                                        properties:
-                                                            name:
-                                                                type: [string, "null"]
-                                                                example: "CAMERA 1000"
-                                                            attributes:
-                                                                type: array
-                                                                items: {}
-                                                                example: []
-                                                            description:
-                                                                type: [string, "null"]
-                                                                example: "Best quality camera on market."
-                                                            meta_title:
-                                                                type: [string, "null"]
-                                                                example: "Best Camera"
-                                                            meta_keywords:
-                                                                type: [string, "null"]
-                                                                example: "camera, best camera"
-                                                            meta_description:
-                                                                type: [string, "null"]
-                                                                example: "This is the best camera."
-                                                            locale:
-                                                                type: object
-                                                                properties:
-                                                                    locale_name:
-                                                                        type: string
-                                                                        example: "de_DE"
-                                                                    id_locale:
-                                                                        type: integer
-                                                                        example: 46
-            example:
-                status: "ok"
-                result:
-                    pagination:
-                        page: 1
-                        max_per_page: 5
-                        nb_results: 2
-                        limit: 5
-                        offset: 0
-                    product_abstracts:
-                        - id_product_abstract: 101
-                          sku: "CAMERA-1000"
-                          name: "Mirrorless Camera"
-                          approval_status: "approved"
-                          new_from: "2025-09-11T00:00:00+00:00"
-                          new_to: "2025-09-12T00:00:00+00:00"
-                          store_relation:
-                              stores:
-                                  - name: "DE"
-                                    id_store: 1
-                          prices:
-                            - currencyCode: "EUR"
-                              storeName: "DEFAULT"
-                              priceTypeName: "DEFAULT"
-                              gross: 11100
-                              net: null
-                          localized_attributes:
-                              - name: "Mirrorless Camera"
-                                attributes: []
-                                description: "High-quality camera for professional photography."
-                                meta_title: "Best Camera"
-                                meta_keywords: "camera, best camera"
-                                meta_description: "This is the best camera."
-                                locale:
-                                    locale_name: "en_US"
-                                    id_locale: 66
-                              - name: "Spiegellose Kamera"
-                                attributes: []
-                                description: "Hochwertige Kamera für professionelle Fotografie."
-                                meta_title: "Best Camera"
-                                meta_keywords: "camera, best camera"
-                                meta_description: "This is the best camera."
-                                locale:
-                                    locale_name: "de_DE"
-                                    id_locale: 46
-                    product_concretes:
-                        - product_abstract_sku: "CAMERA-1000"
-                          product_concretes:
-                              - sku: "CAMERA-1000-BLK"
-                                attributes:
-                                    color: "black"
-                                abstract_sku: "CAMERA-1000"
-                                is_active: true
-                                stores:
-                                    - name: "DE"
-                                      id_store: 1
-                                localized_attributes:
-                                    - name: "Mirrorless Camera Black"
-                                      attributes: []
-                                      description: "Black variant of the mirrorless camera."
-                                      meta_title: "Best Camera"
-                                      meta_keywords: "camera, best camera"
-                                      meta_description: "This is the best camera."
-                                      locale:
-                                          locale_name: "en_US"
-                                          id_locale: 66
-                                    - name: "Spiegellose Kamera Schwarz"
-                                      attributes: []
-                                      description: "Schwarze Variante der spiegellosen Kamera."
-                                      meta_title: "Best Camera"
-                                      meta_keywords: "camera, best camera"
-                                      meta_description: "This is the best camera."
-                                      locale:
-                                          locale_name: "de_DE"
-                                          id_locale: 46
+                                                        $ref: '#/components/schemas/LocalizationResponse'
+
 
         ProductConcreteListResponse:
             type: object
@@ -741,126 +463,20 @@ components:
                                 type: array
                                 description: "Price information for the concrete product."
                                 items:
-                                    type: object
-                                    properties:
-                                        currencyCode:
-                                            type: string
-                                            description: "Currency code"
-                                            example: "EUR"
-                                        storeName:
-                                            type: string
-                                            description: "Store name"
-                                            example: "DE"
-                                        priceTypeName:
-                                            type: string
-                                            description: "Price type name"
-                                            example: "DEFAULT"
-                                        gross:
-                                            type: [integer, "null"]
-                                            nullable: true
-                                            description: "Gross price in minor units (cents)"
-                                            example: 11100
-                                        net:
-                                            type: [integer, "null"]
-                                            nullable: true
-                                            description: "Net price in minor units (cents)"
-                                            example: 55000
+                                    $ref: '#/components/schemas/CreatePriceRequest'
+
                             stocks:
                                 type: array
                                 description: "Stock/inventory information for the concrete product."
                                 items:
-                                    type: object
-                                    properties:
-                                        is_never_out_of_stock:
-                                            type: boolean
-                                            description: "Whether the product is never out of stock"
-                                            example: true
-                                        quantity:
-                                            type: integer
-                                            description: "Stock quantity"
-                                            example: 5
+                                    $ref: '#/components/schemas/StockInformation'
+
                             localized_attributes:
                                 type: array
                                 description: "Localized attributes for the concrete product."
                                 items:
-                                    type: object
-                                    properties:
-                                        name:
-                                            type: string
-                                            description: "Localized name of the concrete product."
-                                            example: "Mirrorless Camera Black"
-                                        attributes:
-                                            type: array
-                                            description: "Additional attributes."
-                                            items: {}
-                                            example: []
-                                        description:
-                                            type: string
-                                            description: "Localized description."
-                                            example: "Black variant of the mirrorless camera."
-                                        meta_title:
-                                            type: [string, "null"]
-                                            nullable: true
-                                            description: "SEO meta title."
-                                            example: null
-                                        meta_keywords:
-                                            type: [string, "null"]
-                                            nullable: true
-                                            description: "SEO meta keywords."
-                                            example: null
-                                        meta_description:
-                                            type: [string, "null"]
-                                            nullable: true
-                                            description: "SEO meta description."
-                                            example: null
-                                        locale:
-                                            type: object
-                                            description: "Locale information."
-                                            properties:
-                                                locale_name:
-                                                    type: string
-                                                    example: "de_DE"
-                                                id_locale:
-                                                    type: integer
-                                                    example: 46
-            example:
-                status: "ok"
-                result:
-                    - sku: "CAMERA-1000-BLK"
-                      attributes:
-                        color: "black"
-                      abstract_sku: "CAMERA-1000"
-                      is_active: true
-                      prices:
-                        - currencyCode: "EUR"
-                          storeName: "DEFAULT"
-                          priceTypeName: "DEFAULT"
-                          gross: 11100
-                          net: null
-                      stocks:
-                        - is_never_out_of_stock: true
-                          quantity: "5.0000000000"
-                      localized_attributes:
-                        - name: "Mirrorless Camera Black"
-                          attributes: []
-                          description: "Black variant of the mirrorless camera."
-                          meta_title: null
-                          meta_keywords: null
-                          meta_description: null
-                          locale:
-                            locale_name: "en_US"
-                            id_locale: 66
-                        - name: "Spiegellose Kamera Schwarz"
-                          attributes: []
-                          description: "Schwarze Variante der spiegellosen Kamera."
-                          meta_title: null
-                          meta_keywords: null
-                          meta_description: null
-                          locale:
-                            locale_name: "de_DE"
-                            id_locale: 46
+                                    $ref: '#/components/schemas/LocalizationResponse'
 
-        # Value objects (unchanged)
         LocalizedStringMap:
             type: object
             additionalProperties: { type: string }
@@ -927,23 +543,20 @@ components:
                     description: Concrete product variants (at least 1 required)
                     minItems: 1
                     items:
-                        $ref: '#/components/schemas/CreateProductConcreteRequest'
-
-        CreateProductConcreteRequest:
-            type: object
-            required: [attributes, localizations]
-            properties:
-                attributes:
-                    type: object
-                    description: "Product attributes as key-value pairs. Minimum 1 attribute is mandatory. Possible attributes options are defined in /product-attributes endpoint ."
-                    additionalProperties: { type: string }
-                    example: { "color": "red", "size": "M" }
-                localizations:
-                    type: array
-                    description: Localized content for this concrete variant
-                    minItems: 1
-                    items:
-                        $ref: '#/components/schemas/CreateLocalizationRequest'
+                        type: object
+                        required: [attributes, localizations]
+                        properties:
+                            attributes:
+                                type: object
+                                description: "Product attributes as key-value pairs. Minimum 1 attribute is mandatory. Possible attributes options are defined in /product-attributes endpoint ."
+                                additionalProperties: { type: string }
+                                example: { "color": "red", "size": "M" }
+                            localizations:
+                                type: array
+                                description: Localized content for this concrete variant
+                                minItems: 1
+                                items:
+                                    $ref: '#/components/schemas/CreateLocalizationRequest'
 
         CreatePriceRequest:
             type: object
@@ -971,6 +584,8 @@ components:
                     nullable: true
                     description: Net amount in minor units (cents)
                     example: 16806
+
+
 
         CreateLocalizationRequest:
             type: object
@@ -1006,12 +621,14 @@ components:
             type: object
             properties:
                 newFrom:
-                    type: [string,null]
+                    type: [string,"null"]
+                    nullable: true
                     format: date-time
                     description: Product available from date
                     example: "2025-09-11T00:00:00+00:00"
                 newTo:
-                    type: [string,null]
+                    type: [string,"null"]
+                    nullable: true
                     format: date-time
                     description: Product available until date
                     example: "2025-09-30T23:59:59+00:00"
@@ -1032,3 +649,28 @@ components:
                     items:
                         $ref: '#/components/schemas/CreateLocalizationRequest'
             additionalProperties: false
+
+        LocalizationResponse:
+            type: object
+            properties:
+                locale:
+                    type: object
+                    properties:
+                        locale_name:
+                            type: string
+                            example: "de_DE"
+                name:
+                    type: string
+                    example: "Spiegellose Kamera"
+                description:
+                    type: [string, "null"]
+                    example: "Hochwertige spiegellose Kamera für Profis"
+                meta_title:
+                    type: [string, "null"]
+                    example: "Beste Kamera"
+                meta_description:
+                    type: [string, "null"]
+                    example: "Dies ist die beste Kamera."
+                meta_keywords:
+                    type: [string, "null"]
+                    example: "Kamera, beste Kamera"

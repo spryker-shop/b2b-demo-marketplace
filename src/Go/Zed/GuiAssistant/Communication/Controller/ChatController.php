@@ -28,12 +28,14 @@ class ChatController extends AbstractController
      */
     public function sendAction(Request $request): Response
     {
-       $messages = $this->mapMessagesToAi($request);
+        $messages = $this->mapMessagesToAi($request);
 
         $aiResponse = $this->getFactory()->getOpenAiClient()->createResponseForAgent($messages);
+
         $response = [
             'answer' => $aiResponse[ModelResponse::OPEN_AI_RESULT_SIMPLE_TEXT] ?? 'No answer',
         ];
+
         return $this->jsonResponse($response);
     }
 
@@ -45,14 +47,25 @@ class ChatController extends AbstractController
         }
 
         $messages = [];
-        $allowedRoles = ['user', 'assistant'];
         $inputMessages = array_slice($data['messages'] ?? [], -static::MAX_MESSAGES);
 
         foreach ($inputMessages as $message) {
-            $role = $message['role'] ?? 'user';
-            $role = in_array($role, $allowedRoles) ? $role : 'user';
-            $content = mb_substr($message['content'] ?? '', 0, static::MAX_CONTENT_LENGTH);
-            $messages[] = ['role' => $role, 'content' => $content];
+
+            switch($message['role'] ?? '') {
+                case 'image':
+                    $messages[] = ['role' => 'user', 'content' => [['type' => 'input_image', 'image_url' => trim($message['content']) ?? '']]];
+                    break;
+                case 'assistant':
+                    $content = mb_substr($message['content'] ?? '', 0, static::MAX_CONTENT_LENGTH);
+
+                    $messages[] = ['role' => 'assistant', 'content' => $content, 'type' => 'message'];
+                    break;
+                case 'user':
+                    $content = mb_substr($message['content'] ?? '', 0, static::MAX_CONTENT_LENGTH);
+                    $messages[] = ['role' => 'user', 'content' => $content, 'type' => 'message'];
+                    break;
+                default:
+            }
         }
 
         return $messages;

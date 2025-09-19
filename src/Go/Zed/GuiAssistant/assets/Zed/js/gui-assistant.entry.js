@@ -15,6 +15,14 @@ const toolInfoToggle = document.getElementById('gui-assistant-toolinfo-toggle');
 const dragHandle = document.getElementById('gui-assistant-drag');
 const chatBox = document.getElementById('gui-assistant-chat');
 
+// File upload elements
+const fileInput = document.getElementById('gui-assistant-file-input');
+const fileButton = document.getElementById('gui-assistant-file-button');
+const filePreview = document.getElementById('gui-assistant-file-preview');
+const fileName = filePreview.querySelector('.gui-assistant-file-name');
+const fileRemove = filePreview.querySelector('.gui-assistant-file-remove');
+const dropOverlay = document.getElementById('gui-assistant-drop-overlay');
+
 let enabled = true;
 let username = icon.getAttribute('data-username');
 let assistantName = icon.getAttribute('data-assistantname');
@@ -29,6 +37,9 @@ let dragStartX = 0;
 let dragStartY = 0;
 let startWidth = 0;
 let startHeight = 0;
+
+// File upload variables
+let attachedFile = null;
 
 function renderHistory() {
     history.innerHTML = '';
@@ -143,11 +154,97 @@ document.addEventListener('mouseup', function() {
     }
 });
 
+// File upload event handlers
+fileButton.addEventListener('click', () => {
+    fileInput.click();
+});
+
+fileInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) {
+        attachFile(file);
+    }
+});
+
+fileRemove.addEventListener('click', () => {
+    detachFile();
+});
+
+// Drag and drop handlers
+chat.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    chat.classList.add('drag-active');
+    dropOverlay.style.display = 'flex';
+});
+
+chat.addEventListener('dragleave', (e) => {
+    if (!chat.contains(e.relatedTarget)) {
+        chat.classList.remove('drag-active');
+        dropOverlay.style.display = 'none';
+    }
+});
+
+chat.addEventListener('drop', (e) => {
+    e.preventDefault();
+    chat.classList.remove('drag-active');
+    dropOverlay.style.display = 'none';
+
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+        attachFile(files[0]);
+    }
+});
+
+function attachFile(file) {
+    // Validate file type
+    const allowedTypes = ['.gif', '.jpeg', '.jpg', '.png'];
+    const fileExt = '.' + file.name.split('.').pop().toLowerCase();
+
+    if (!allowedTypes.includes(fileExt)) {
+        alert('File type not supported. Allowed types: ' + allowedTypes.join(', '));
+        return;
+    }
+
+    // Validate file size (5MB limit)
+    if (file.size > 5 * 1024 * 1024) {
+        alert('File too large. Maximum size is 5MB.');
+        return;
+    }
+
+    attachedFile = file;
+    fileName.textContent = file.name;
+    filePreview.style.display = 'block';
+    fileInput.value = ''; // Clear input
+}
+
+function detachFile() {
+    attachedFile = null;
+    filePreview.style.display = 'none';
+    fileInput.value = ''; // Clear input
+}
+
 function submitMessage() {
     const text = input.value.trim();
     if (!text) return;
 
-    conversation.push({type: 'user', text, 'meta': 'default'});
+    if (attachedFile) {
+        // Read file as base64 for images
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const base64Content = e.target.result; // This includes data:image/jpeg;base64,
+//            const attachedFileContent = `[Attached file: ${attachedFile.name}]\n${base64Content}`;
+            sendMessageWithContent(text, base64Content);
+            detachFile();
+        };
+        reader.readAsDataURL(attachedFile);
+    } else {
+        sendMessageWithContent(text);
+    }
+
+}
+
+function sendMessageWithContent(messageText, fileContent = null) {
+    conversation.push({type: 'user', text: messageText, 'meta': 'default'});
 
     const messages = conversation
         .map(msg => ({
@@ -155,9 +252,14 @@ function submitMessage() {
             content: msg.text
         }));
 
+    if (fileContent) {
+        messages.push({role: 'image', content: fileContent});
+    }
+
     renderHistory();
     input.value = '';
     setStatus('In progress...', false);
+
     fetch('/gui-assistant/chat/send', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -179,6 +281,7 @@ function submitMessage() {
             renderHistory();
             setStatus('Enabled', true);
         });
+
     if (responseTimeoutId) {
         clearTimeout(responseTimeoutId);
     }
