@@ -25,9 +25,9 @@ class RequestController extends AbstractController
         if ($request->getMethod() === 'POST') {
             $httpMethod = $formData['httpMethod'];
             $schemaPath = $formData['schemaPath'];
-            $queryParams = json_decode($formData['queryParams'] ?: '{}', true) ?: [];
-            $pathParams = json_decode($formData['pathParams'] ?: '{}', true) ?: [];
-            $payload = json_decode($formData['payload'] ?: '{}', true) ?: [];
+            $queryParams = json_decode($formData['queryParams'] ?: '{}', true);
+            $pathParams = json_decode($formData['pathParams'] ?: '{}', true);
+            $payload = json_decode($formData['payload'] ?: '{}', true);
             $result = $this->getFacade()->routeEndpoint(
                 $httpMethod,
                 $schemaPath,
