@@ -22,7 +22,7 @@ image:
 
 composer:
     mode: '--no-dev --quiet -o -a'
-    autoload: '-o -a'
+    autoload: '-a -o'
 
 regions:
     EU:
@@ -56,6 +56,7 @@ groups:
                 endpoints:
                     backoffice.eu.spryker.local:
                         region: EU
+                        primal: true
                         services:
                             session:
                                 namespace: 3
