@@ -184,6 +184,154 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/ProductAttributesListResponse'
 
+    /customers:
+        get:
+            summary: Get registered customers
+            parameters:
+                - name: q
+                  in: query
+                  description: "Find customers according provided query."
+                  required: false
+                  schema:
+                      type: string
+                      example: "customer@email.find"
+            responses:
+                '200':
+                    description: List of registered customers
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    customers:
+                                        type: array
+                                        items:
+                                            type: object
+                                            properties:
+                                                email:
+                                                    type: string
+                                                    format: email
+
+    /orders:
+        post:
+            summary: Create a new order by providing cart details, items, and customer information. Returns ONLY the created order ID and status. Store information is available via /stores endpoint.
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            required: [cart, items, customer]
+                            properties:
+                                cart:
+                                    type: object
+                                    description: Cart details for the order.
+                                    required: [name, priceMode, localeName, currencyCode, storeName]
+                                    properties:
+                                        name:
+                                            type: string
+                                            description: "Name of the cart for easy recognition"
+                                            minLength: 1
+                                        priceMode:
+                                            type: string
+                                            enum: ["GROSS_MODE", "NET_MODE"]
+                                        storeName:
+                                            type: string
+                                            description: Store identifier (list can be retrieved from /stores endpoint)
+                                            example: "DE"
+                                        localeName:
+                                            type: string
+                                            description: Locale identifier (list can be retrieved from /stores endpoint)
+                                            example: "de_DE"
+                                        currencyCode:
+                                            type: string
+                                            description: Currency code (list can be retrieved from /stores endpoint)
+                                            example: "EUR"
+                                        orderReference:
+                                            type: string
+                                            description: "Optional order reference for the order"
+                                            example: "ORDER-10001"
+                                        discountTotal:
+                                            type: integer
+                                            description: "Optional discount total in minor units (cents)."
+                                            minimum: 0
+                                            example: 4999
+                                        grandTotal:
+                                            type: integer
+                                            description: "(Recommended) Optional grand total in minor units (cents)."
+                                            minimum: 1
+                                            example: 14999
+                                items:
+                                    type: array
+                                    minItems: 1
+                                    items:
+                                        type: object
+                                        description: List of items to add to the cart (sku and quantity).
+                                        required: [concreteSku, quantity, unitPrice]
+                                        properties:
+                                            concreteSku:
+                                                type: string
+                                                description: "Concrete product SKU. Access list of SKUs via /product-abstracts and /product-abstracts/{abstractSku}/concretes endpoints."
+                                                example: "CAMERA-1000-RED"
+                                            quantity:
+                                                type: integer
+                                                minimum: 1
+                                                description: "Quantity of the item to add to the cart"
+                                            unitPrice:
+                                                type: integer
+                                                minimum: 1
+                                                description: "Unit price in minor units (cents)."
+                                                example: 19999
+                                customer:
+                                    description: Registered customer information for checkout. Check existing customers in /customers endpoint
+                                    type: object
+                                    required: [email, billingAddress, shippingAddress]
+                                    properties:
+                                        email:
+                                            type: string
+                                            format: email
+                                        billingAddress:
+                                            type: object
+                                            required: [firstName, lastName, address1, city, zipCode, countryCode]
+                                            properties:
+                                                firstName: { type: string }
+                                                lastName: { type: string }
+                                                address1: { type: string }
+                                                address2: { type: string }
+                                                city: { type: string }
+                                                zipCode: { type: string }
+                                                countryCode:
+                                                    type: string
+                                                    example: "DE"
+                                                phone: { type: string }
+                                        shippingAddress:
+                                            type: object
+                                            required: [firstName, lastName, address1, city, zipCode, countryCode]
+                                            properties:
+                                                firstName: { type: string }
+                                                lastName: { type: string }
+                                                address1: { type: string }
+                                                address2: { type: string }
+                                                city: { type: string }
+                                                zipCode: { type: string }
+                                                countryCode:
+                                                    type: string
+                                                    example: "DE"
+                                                phone: { type: string }
+
+            responses:
+                '201':
+                    description: Order created successfully. Returns the order ID and status.
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    orderReference: { type: string, description: "Unique identifier for the created order." }
+                                    status: { type: string, example: "ok" }
+                '400':
+                    description: Bad request. The input data is invalid or incomplete.
+
 components:
     parameters:
         page: { name: page, in: query, schema: { type: integer, minimum: 1, default: 1 } }

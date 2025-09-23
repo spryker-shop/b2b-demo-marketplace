@@ -4,37 +4,43 @@ declare(strict_types = 1);
 
 namespace Go\Zed\GuiAssistant\Business;
 
-use Generated\Shared\Transfer\LocalizedAttributesTransfer;
-use Generated\Shared\Transfer\PaginationTransfer;
-use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
-use Generated\Shared\Transfer\PriceProductDimensionTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
-use Generated\Shared\Transfer\PriceTypeTransfer;
+use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ProductConcreteConditionsTransfer;
-use Generated\Shared\Transfer\ProductConcreteCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\StockProductTransfer;
-use Generated\Shared\Transfer\StockTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
 use Go\Zed\GuiAssistant\Business\Request\Request;
-use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Orm\Zed\Customer\Persistence\SpyCustomer;
+use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\Product\Persistence\SpyProductAttributeKey;
 use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery;
 use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Service\UtilEncoding\UtilEncodingService;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\PriceProduct\Business\PriceProductFacade;
-use Spryker\Shared\PriceProduct\PriceProductConfig;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Product\Business\ProductFacade;
+use Spryker\Zed\Sales\Business\SalesFacade;
+use Spryker\Zed\Shipment\Communication\Plugin\Checkout\SalesOrderShipmentSavePlugin;
 
 /**
  * @method \Go\Zed\GuiAssistant\Business\GuiAssistantBusinessFactory getFactory()
  */
 class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInterface
 {
+    use TransactionTrait;
+
     protected const OPENAPI_LOCATION = APPLICATION_ROOT_DIR . '/src/Go/Zed/GuiAssistant/chat_openapi.yaml';
 
     public function routeEndpoint(string $httpMethod, string $schemaPath, array $queryParams, array $pathParams, array $payload)
@@ -44,7 +50,7 @@ class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInt
                 return $this->getProductAbstracts($httpMethod, $schemaPath, $queryParams, $pathParams, $payload);
             case 'PUT/product-abstracts':
             case 'POST/product-abstracts':
-                return $this->putProductAbstract($httpMethod, $schemaPath, $queryParams, $pathParams, $payload);
+                return $this->putProductAbstract('POST', $schemaPath, $queryParams, $pathParams, $payload);
             case 'GET/product-abstracts/{abstractSku}':
                 return $this->getProductAbstracts($httpMethod, $schemaPath, $queryParams, $pathParams, $payload);
             case 'PATCH/product-abstracts/{abstractSku}':
@@ -52,18 +58,76 @@ class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInt
             case 'GET/product-abstracts/{abstractSku}/concretes':
                 return $this->getProductConcretes($httpMethod, $schemaPath, $queryParams, $pathParams, $payload);
             case 'PATCH/product-abstracts/{abstractSku}/concretes/{concreteSku}':
+                return $this->putPatchProductConcrete($httpMethod, $schemaPath, $queryParams, $pathParams, $payload);
             case 'PUT/product-abstracts/{abstractSku}/concretes':
             case 'POST/product-abstracts/{abstractSku}/concretes':
-                return $this->putPatchProductConcrete($httpMethod, $schemaPath, $queryParams, $pathParams, $payload);
+                return $this->putPatchProductConcrete('POST', $schemaPath, $queryParams, $pathParams, $payload);
             case 'GET/product-abstracts/{abstractSku}/concretes/{concreteSku}':
                 return $this->getProductConcretes($httpMethod, $schemaPath, $queryParams, $pathParams, $payload);
             case 'GET/stores':
                 return $this->getStores($httpMethod, $schemaPath, $queryParams, $pathParams, $payload);
             case 'GET/product-attributes':
                 return $this->getProductAttributes($httpMethod, $schemaPath, $queryParams, $pathParams, $payload);
+            case 'GET/customers':
+                return $this->getCustomers($httpMethod, $schemaPath, $queryParams, $pathParams, $payload);
+            case 'PUT/orders':
+            case 'POST/orders':
+                return $this->putOrders('POST', $schemaPath, $queryParams, $pathParams, $payload);
 
             default:
                 return ['error' => sprintf('Unknown endpoint: %s %s ', $httpMethod, $schemaPath)];
+        }
+    }
+
+    public function putOrders(string $httpMethod, string $resourcePath, array $queryParams, array $pathParams, array $payload)
+    {
+        try {
+            $this->validateResourceRequest($httpMethod, $resourcePath, $queryParams, $pathParams, $payload);
+
+            $quoteTransfer = $this->getFactory()->createOrderTransferBuilder()->createQuoteTransferFromArray($payload);
+            $saveOrderTransfer = new SaveOrderTransfer();
+
+            $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer, $saveOrderTransfer) {
+                (new SalesFacade())->saveOrderRaw($quoteTransfer, $saveOrderTransfer);
+                (new SalesFacade())->saveSalesOrderTotals($quoteTransfer, $saveOrderTransfer);
+                (new SalesOrderShipmentSavePlugin())->saveOrder($quoteTransfer, $saveOrderTransfer);
+                (new SalesFacade())->saveSalesOrderItems($quoteTransfer, $saveOrderTransfer);
+            });
+
+
+            return ['status' => 'ok', 'result' => ['orderReference' => $saveOrderTransfer->getOrderReference()]];
+        } catch (\Exception $e) {
+            return $this->errorArray($httpMethod, $resourcePath, $queryParams, $pathParams, $payload, $e);
+        }
+    }
+
+    public function getCustomers(string $httpMethod, string $resourcePath, array $queryParams, array $pathParams, array $payload)
+    {
+        try {
+            $this->validateResourceRequest($httpMethod, $resourcePath, $queryParams, $pathParams, $payload);
+
+            $customerQuery = SpyCustomerQuery::create()->setLimit(5);
+            if (!empty(trim($queryParams['q'] ?? ''))) {
+                $search = '%' . trim($queryParams['q']) . '%';
+
+                $customerQuery
+                    ->filterByEmail($search, Criteria::LIKE)
+                    ->_or()
+                    ->filterByLastName($search, Criteria::LIKE)
+                    ->_or()
+                    ->filterByFirstName($search, Criteria::LIKE);
+            }
+            $customers = $customerQuery->find();
+            $result = [];
+            foreach($customers as $customer) {
+                $result[] = [
+                    'email' => $customer->getEmail(),
+                ];
+            }
+
+            return ['status' => 'ok', 'result' => $result];
+        } catch (\Exception $e) {
+            return $this->errorArray($httpMethod, $resourcePath, $queryParams, $pathParams, $payload, $e);
         }
     }
 
