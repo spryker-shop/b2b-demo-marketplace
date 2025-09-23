@@ -100,7 +100,7 @@ groups:
             yves:
                 application: yves
                 endpoints:
-                    '*.yves.multi.cloud.spryker.toys':
+                    yves.multi.cloud.spryker.toys:
                         region: EU
             glue:
                 application: glue
@@ -125,7 +125,7 @@ groups:
             mportal:
                 application: merchant-portal
                 endpoints:
-                    '*.mp.multi.cloud.spryker.toys':
+                    mp.multi.cloud.spryker.toys:
                         region: EU
                         entry-point: MerchantPortal
                         primal: true
