@@ -619,7 +619,7 @@ jobs:
 
     docker-debian-php-82-postgresql-robot-dynamic-store-off:
         if: >
-            contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci')
+            contains(github.event.pull_request.labels.*.name, 'run-latest-ci')
             || github.ref == 'refs/heads/master'
         name: "Docker / Debian / PHP 8.2 / PostgreSql / Robot / API / Dynamic Store OFF"
         runs-on: ubuntu-latest
