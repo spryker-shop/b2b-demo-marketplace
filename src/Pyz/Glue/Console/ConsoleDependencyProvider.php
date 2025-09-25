@@ -10,7 +10,7 @@ declare(strict_types = 1);
 namespace Pyz\Glue\Console;
 
 use Spryker\Glue\Console\ConsoleDependencyProvider as SprykerConsoleDependencyProvider;
-use Spryker\Glue\DocumentationGeneratorApi\Plugin\Console\ApiGenerateDocumentationConsole;
+use Go\Glue\DocumentationGeneratorApi\Plugin\Console\ApiGenerateDocumentationConsole;
 use Spryker\Glue\GlueApplication\Plugin\Console\ControllerCacheCollectorConsole;
 use Spryker\Glue\GlueApplication\Plugin\Console\RouterCacheWarmUpConsole;
 use Spryker\Glue\GlueApplication\Plugin\Console\RouterDebugGlueApplicationConsole;

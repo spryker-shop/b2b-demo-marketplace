@@ -1,0 +1,61 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'navigation-top',
+    tag: 'div'
+} %}
+
+{% block body %}
+
+    {% block headerCTA %}{% endblock %}
+
+    <ul class="col grid grid--nowrap grid--stretch navigation-top__actions">
+        <li class="col {{ config.name }}__action-item {{ config.name }}__action-item--tel">
+            {% include atom('icon') with {
+                modifiers: ['phone'],
+                data: {
+                    name: 'phone'
+                }
+            } only %}
+            {{ getConfig('contact_phone', 'global.phone.number' | trans) }}
+        </li>
+
+        {% if can('SeePricePermissionPlugin') %}
+            <li class="col {{ config.name }}__action-item">
+                {% widget 'PriceModeSwitcherWidget' only %}{% endwidget %}
+            </li>
+            <li class="col {{ config.name }}__action-item">
+                {% widget 'CurrencyWidget' only %}{% endwidget %}
+            </li>
+        {% endif %}
+
+        <li class="col {{ config.name }}__action-item">
+            {% widget 'LanguageSwitcherWidget' args [app.request.pathInfo, app.request.queryString, app.request.requestUri] only %}{% endwidget %}
+        </li>
+
+        {% widget 'StoreSwitcher' with {
+            embed: {
+                configName: config.name,
+            },
+        } only %}
+            {% block body %}
+                <li class="col {{ embed.configName }}__action-item">
+                    {{ parent() }}
+                </li>
+            {% endblock %}
+        {% endwidget %}
+
+        {% set menuItemCompanyWidget = findWidget('MenuItemCompanyWidget') %}
+        {% set hasCompanyAccess = menuItemCompanyWidget.hasCompanyAccess %}
+
+        {% if is_granted('ROLE_USER') and hasCompanyAccess %}
+            {% widget menuItemCompanyWidget %}
+                {% block template %}
+                    <li class="col {{ config.name }}__action-item">
+                        {% apply spaceless %}{{ parent() }}{% endapply %}
+                    </li>
+                {% endblock %}
+            {% endwidget %}
+        {% endif %}
+    </ul>
+{% endblock %}

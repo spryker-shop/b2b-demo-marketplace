@@ -9,6 +9,8 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\Product;
 
+use Go\Zed\ProductOffer\Communication\Plugin\Product\AutoUpdateProductOfferStockProductConcreteCreatePlugin;
+use Go\Zed\TenantBehavior\Communication\Plugin\Product\SetTenantAsDefaultMerchantProductAbstractPostCreatePlugin;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantProduct\Communication\Plugin\Product\MerchantProductProductAbstractPostCreatePlugin;
 use Spryker\Zed\MerchantProductApproval\Communication\Plugin\Product\MerchantProductApprovalProductAbstractPreCreatePlugin;
@@ -53,6 +55,7 @@ use Spryker\Zed\Stock\Communication\Plugin\ProductConcreteReadPlugin as StockPro
 use Spryker\Zed\TaxProductConnector\Communication\Plugin\Product\TaxSetProductAbstractExpanderPlugin;
 use Spryker\Zed\TaxProductConnector\Communication\Plugin\Product\TaxSetProductAbstractPostCreatePlugin;
 use Spryker\Zed\TaxProductConnector\Communication\Plugin\TaxSetProductAbstractAfterUpdatePlugin;
+use Go\Zed\ProductOffer\Communication\Plugin\Product\AutoCreateProductOfferProductConcreteCreatePlugin;
 
 class ProductDependencyProvider extends SprykerProductDependencyProvider
 {
@@ -62,6 +65,7 @@ class ProductDependencyProvider extends SprykerProductDependencyProvider
     protected function getProductAbstractPostCreatePlugins(): array
     {
         return [
+            new SetTenantAsDefaultMerchantProductAbstractPostCreatePlugin(),
             new MerchantProductProductAbstractPostCreatePlugin(),
             new ImageSetProductAbstractPostCreatePlugin(),
             new TaxSetProductAbstractPostCreatePlugin(),
@@ -118,6 +122,7 @@ class ProductDependencyProvider extends SprykerProductDependencyProvider
             new ProductBundleProductConcreteAfterCreatePlugin(),
             new ProductValidityCreatePlugin(),
             new DiscontinuedProductConcreteAfterCreatePlugin(),
+            new AutoCreateProductOfferProductConcreteCreatePlugin(),
         ];
     }
 
@@ -167,6 +172,7 @@ class ProductDependencyProvider extends SprykerProductDependencyProvider
             new SaveDiscontinuedNotesProductConcretePluginUpdate(),
             new DiscontinuedProductConcreteAfterUpdatePlugin(),
             new ProductBundleDeactivatorProductConcreteAfterUpdatePlugin(),
+            new AutoUpdateProductOfferStockProductConcreteCreatePlugin(),
         ];
     }
 
