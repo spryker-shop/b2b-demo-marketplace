@@ -156,7 +156,7 @@ use Symfony\Component\HttpFoundation\Cookie;
 
 // ----------------------------------------------------------------------------
 // ------------------------------ ENVIRONMENT ---------------------------------
-$config['ID_TENANT'] = getenv('SPRYKER_TENANT_IDENTIFIER') ?: '';
+$config['TENANT_REFERENCE'] = getenv('SPRYKER_TENANT_IDENTIFIER') ?: '';
 
 
 // ----------------------------------------------------------------------------

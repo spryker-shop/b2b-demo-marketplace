@@ -10,11 +10,22 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class TenantBehaviorClient extends AbstractClient implements TenantBehaviorClientInterface
 {
+    static protected ?string $TENANT_REFERENCE = null;
+
     /**
      * @return string|null
      */
     public function getCurrentTenantReference(): ?string
     {
-        return $this->getFactory()->getTenantReference();
+        if (static::$TENANT_REFERENCE === null) {
+            static::$TENANT_REFERENCE = $this->getFactory()->getTenantReference();
+        }
+
+        return static::$TENANT_REFERENCE;
+    }
+
+    public function setCurrentTenantReference(?string $tenantReference): void
+    {
+        static::$TENANT_REFERENCE = $tenantReference;
     }
 }

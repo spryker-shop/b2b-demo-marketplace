@@ -2,7 +2,6 @@
 
 namespace Go\Zed\ProductLabel\Communication\Console;
 
-use Generated\Shared\Transfer\TenantCriteriaTransfer;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -13,16 +12,15 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ProductLabelRelationUpdaterConsole extends \Spryker\Zed\ProductLabel\Communication\Console\ProductLabelRelationUpdaterConsole
 {
+    use \Go\Zed\TenantBehavior\Communication\Console\TenantIterationTrait;
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $locator = (new \Spryker\Zed\Kernel\Container())->getLocator();
-        $tenantBehaviorFacade = $locator->tenantBehavior()->facade();
-        $tenantOnboardingFacade = $locator->tenantOnboarding()->facade();
+        $messenger = $this->getMessenger();
+        $touchEnabled = $this->isTouchEnabled($input);
 
-        foreach ($tenantOnboardingFacade->getTenants((new TenantCriteriaTransfer()))->getTenants() as $tenant) {
-            $tenantBehaviorFacade->setCurrentTenantReference($tenant->getIdentifier());
-            $this->getFacade()->updateDynamicProductLabelRelations($this->getMessenger(), $this->isTouchEnabled($input));
-        }
+        $this->forEachTenant(function () use ($messenger, $touchEnabled): void {
+            $this->getFacade()->updateDynamicProductLabelRelations($messenger, $touchEnabled);
+        });
 
         return static::CODE_SUCCESS;
     }
