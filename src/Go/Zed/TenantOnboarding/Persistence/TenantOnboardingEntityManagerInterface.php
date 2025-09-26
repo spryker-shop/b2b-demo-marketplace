@@ -27,6 +27,13 @@ interface TenantOnboardingEntityManagerInterface
     public function updateTenantRegistration(TenantRegistrationTransfer $tenantRegistrationTransfer): TenantRegistrationTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\TenantRegistrationTransfer $tenantRegistrationTransfer
+     *
+     * @return \Generated\Shared\Transfer\TenantRegistrationTransfer
+     */
+    public function updateTenantRegistrationStatus(TenantRegistrationTransfer $tenantRegistrationTransfer): TenantRegistrationTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\TenantTransfer $tenantTransfer
      *
      * @return \Generated\Shared\Transfer\TenantTransfer
