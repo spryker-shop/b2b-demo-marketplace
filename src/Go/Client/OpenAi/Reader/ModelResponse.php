@@ -6,11 +6,18 @@ use cebe\openapi\spec\Schema;
 use Go\Client\OpenAi\Writer\SchemaUploader;
 use Go\Zed\GuiAssistant\Business\GuiAssistantFacade;
 use \GuzzleHttp\Client as GuzzleHttpClient;
+use Respect\Validation\Exceptions\Exception;
+use Spryker\Shared\Log\LoggerTrait;
+
 class ModelResponse implements ModelResponseInterface
 {
+    use LoggerTrait;
+
     public const OPEN_AI_RESULT_SIMPLE_TEXT = 'simple-text';
 
     protected const TEMPERATURE = 0.8;
+
+    protected int $runToken = 0;
 
     public function __construct(
         protected string $apiKey,
@@ -30,17 +37,7 @@ class ModelResponse implements ModelResponseInterface
             'tool_choice' => count($tools) ? 'auto' : 'none',
         ];
 
-        // @doc https://platform.openai.com/docs/api-reference/responses/create
-        $response = $this->httpClient->post('https://api.openai.com/v1/responses', [
-            'headers' => [
-                'Authorization' => 'Bearer ' . $this->apiKey,
-                'Content-Type' => 'application/json',
-            ],
-            'json' => $body,
-            'timeout' => $this->timeout,
-        ]);
-
-        $result = json_decode($response->getBody()->getContents(), true);
+        $result = $this->callResponses($body);
 
         $result[static::OPEN_AI_RESULT_SIMPLE_TEXT] = null;
         if (isset($result['output'][0]['content'][0]['text']) && is_string($result['output'][0]['content'][0]['text'])) {
@@ -182,16 +179,7 @@ PROMPT
         ];
 
         // 2) Kick off the response
-        $resp = $this->httpClient->post('https://api.openai.com/v1/responses', [
-            'headers' => [
-                'Authorization' => 'Bearer ' . $this->apiKey,
-                'Content-Type'  => 'application/json',
-            ],
-            'json'    => $body,
-            'timeout' => $this->timeout,
-        ]);
-
-        $result = json_decode($resp->getBody()->getContents(), true);
+        $result = $this->callResponses($body);
 
         $storeResult = $result;
         // Helper to stay within time budget
@@ -311,21 +299,7 @@ PROMPT
                 $body['previous_response_id'] = $result['id'];
                 $body['input'] = $newMessages;
 
-                try {
-                $submit = $this->httpClient->post('https://api.openai.com/v1/responses', [
-                    'headers' => [
-                        'Authorization' => 'Bearer ' . $this->apiKey,
-                        'Content-Type'  => 'application/json',
-                    ],
-                    'json'    => $body,
-                    'timeout' => $this->timeout,
-                ]);
-                } catch (\Exception $e) {
-                    dd($messages, $body, $e->getMessage(), $storeResult);
-                }
-
-
-                $result = json_decode($submit->getBody()->getContents(), true);
+                $result = $this->callResponses($body);
                 // loop again: model may produce more tool calls or finalize
                 continue;
             }
@@ -348,15 +322,93 @@ PROMPT
             $ensureTimeLeft();
 
             // GET the latest state
-            $poll = $this->httpClient->get('https://api.openai.com/v1/responses/' . $result['id'], [
-                'headers' => [
-                    'Authorization' => 'Bearer ' . $this->apiKey,
-                    'Content-Type'  => 'application/json',
-                ],
-                'timeout' => $this->timeout,
-            ]);
-            $result = json_decode($poll->getBody()->getContents(), true);
+            $result = $this->callResponsesResult($result['id']);
         }
+    }
+
+    /**
+     * @documentation https://platform.openai.com/docs/api-reference/responses/create
+     */
+    protected function callResponses(array $body): array
+    {
+        $payload = serialize($body);
+        $id = substr(md5($payload), -5);
+        $token = strlen($payload) / 4;
+        $this->runToken += $token;
+
+        $this->getLogger()->info('OpenAI Request - start', ['id' => $id, 'token' => $token, 'runToken' => $this->runToken, 'body' => $body]);
+
+        $maxTry = 2;
+        $delay = 60;
+        $response = null;
+
+        for($i = 0; $i < $maxTry; $i++) {
+            if ($i > 0) {
+                $this->getLogger()->info('OpenAI Request - retry', ['id' => $id, 'try' => $i + 1]);
+            }
+
+            try {
+                $response = $this->httpClient->post('https://api.openai.com/v1/responses', [
+                    'headers' => [
+                        'Authorization' => 'Bearer ' . $this->apiKey,
+                        'Content-Type' => 'application/json',
+                    ],
+                    'json' => $body,
+                    'timeout' => $this->timeout,
+                ]);
+
+                break; // break retry loop on success
+            } catch (Exception $e) {
+                $this->getLogger()->error('OpenAI Request - fail', ['id' => $id, 'try' => $i + 1, 'error' => $e->getMessage()]);
+                if ($i >= $maxTry - 1) {
+                    throw $e;
+                }
+                $this->getLogger()->info('OpenAI Request - retry delay', ['id' => $id, 'try' => $i + 2, 'delay' => $delay]);
+                sleep($delay);
+            }
+        }
+
+        $content = $response->getBody()->getContents();
+
+        $token = strlen(serialize($content)) / 4;
+        $this->runToken += $token;
+        $this->getLogger()->info('OpenAI Request - response', ['id' => $id, 'token' => $token, 'runToken' => $this->runToken, 'response' => $content]);
+
+        $result = json_decode($content, true);
+        if ($result === null) {
+            $this->getLogger()->error('OpenAI Request - malformed response', ['id' => $id, 'response' => $content]);
+
+            throw new \RuntimeException('Malformed OpenAI response.');
+        }
+
+        return $result;
+    }
+
+    protected function callResponsesResult($id): array {
+        $this->getLogger()->info('OpenAI Request Response', ['id' => $id]);
+
+        $responseResult = $this->httpClient->get('https://api.openai.com/v1/responses/' . $id, [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $this->apiKey,
+                'Content-Type'  => 'application/json',
+            ],
+            'timeout' => $this->timeout,
+        ]);
+
+        $content = $responseResult->getBody()->getContents();
+
+        $token = strlen(serialize($content)) / 4;
+        $this->runToken += $token;
+        $this->getLogger()->info('OpenAI Request Response', ['id' => $id, 'token' => $token, 'runToken' => $this->runToken, 'response' => $content]);
+
+        $result = json_decode($content, true);
+        if ($result === null) {
+            $this->getLogger()->error('OpenAI Request - malformed response', ['id' => $id, 'response' => $content]);
+
+            throw new \RuntimeException('Malformed OpenAI request response.');
+        }
+
+        return $result;
     }
 
     private function callEndpoint(string $httpMethod, string $schemaPath, array $pathParams, array $queryParams, array $payload): array
