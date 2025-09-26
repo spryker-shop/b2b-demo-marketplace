@@ -41,6 +41,8 @@ image:
         SPRYKER_HOOK_DESTRUCTIVE_INSTALL: "vendor/bin/install -r destructive.go --no-ansi -vvv"
         SPRYKER_YVES_HOST_DE: yves.spryker-multi.cloud.spryker.toys
         SPRYKER_DYNAMIC_STORE_MODE: true
+        SPRYKER_MAIL_SENDER_EMAIL: no-reply@chip.cloud.spryker.toys
+        SPRYKER_MAIL_SENDER_NAME: Spryker No-Reply
 
         #AOP
         SPRYKER_MESSAGE_BROKER_HTTP_CHANNEL_SENDER_BASE_URL: "https://publish.mb-staging.acp.demo-spryker.com/"
