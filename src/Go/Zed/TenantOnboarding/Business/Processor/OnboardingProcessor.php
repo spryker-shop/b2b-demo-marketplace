@@ -7,6 +7,7 @@
 
 namespace Go\Zed\TenantOnboarding\Business\Processor;
 
+use _Spryk_53e22a6c\Symfony\Component\Config\Definition\Exception\Exception;
 use Generated\Shared\Transfer\TenantOnboardingMessageTransfer;
 use Generated\Shared\Transfer\TenantOnboardingStepResultTransfer;
 use Go\Zed\TenantBehavior\Business\TenantBehaviorFacadeInterface;
@@ -45,14 +46,14 @@ class OnboardingProcessor implements OnboardingProcessorInterface
         $this->tenantBehaviorFacade->setCurrentTenantReference($registrationTransfer->getTenantName());
         if (count($this->storeFacade->getAllStores()) === 0) {
             $registrationTransfer->setStatus(TenantOnboardingConfig::REGISTRATION_STATUS_FAILED);
-            $this->entityManager->updateTenantRegistration($registrationTransfer);
+            $this->entityManager->updateTenantRegistrationStatus($registrationTransfer);
             $this->tenantBehaviorFacade->setCurrentTenantReference($currentTenantReference);
 
             throw new InvalidCompanyCreationException('No stores found. Tenant Data Import was not processed correctly.');
         }
 
         $registrationTransfer->setStatus(TenantOnboardingConfig::REGISTRATION_STATUS_PROCESSING);
-        $this->entityManager->updateTenantRegistration($registrationTransfer);
+        $this->entityManager->updateTenantRegistrationStatus($registrationTransfer);
 
         try {
             $result = $this->getTransactionHandler()->handleTransaction(function () use ($registrationTransfer): TenantOnboardingStepResultTransfer {
@@ -80,11 +81,12 @@ class OnboardingProcessor implements OnboardingProcessorInterface
 
         if ($result->getIsSuccessful()) {
             $registrationTransfer->setStatus(TenantOnboardingConfig::REGISTRATION_STATUS_COMPLETED);
+            $this->entityManager->updateTenantRegistration($registrationTransfer);
         } else {
             $registrationTransfer->setStatus(TenantOnboardingConfig::REGISTRATION_STATUS_FAILED);
+            $this->entityManager->updateTenantRegistrationStatus($registrationTransfer);
         }
 
-        $this->entityManager->updateTenantRegistration($registrationTransfer);
         $this->tenantBehaviorFacade->setCurrentTenantReference($currentTenantReference);
 
         if (!$result->getIsSuccessful()) {
