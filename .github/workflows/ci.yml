@@ -199,6 +199,7 @@ jobs:
         if: >
             contains(github.event.pull_request.labels.*.name, 'run-ui-ci')
             || contains(github.event.pull_request.labels.*.name, 'run-latest-ci')
+            || contains(github.event.pull_request.labels.*.name, 'run-api-ci')
             || github.ref == 'refs/heads/master'
         runs-on: ubuntu-latest
         env:
@@ -223,9 +224,18 @@ jobs:
                     docker/sdk cli composer dump-autoload -o -a --apcu
                     docker/sdk console queue:worker:start --stop-when-empty
 
-            -   name: Run Tests
+            -   name: Run Acceptance Tests
+                if: >
+                    contains(github.event.pull_request.labels.*.name, 'run-ui-ci')
+                    || github.ref == 'refs/heads/master'
                 run: |
                     docker/sdk testing codecept run -c codeception.acceptance.yml
+
+            -   name: Run API Tests
+                if: >
+                    contains(github.event.pull_request.labels.*.name, 'run-api-ci')
+                    || github.ref == 'refs/heads/master'
+                run: |
                     docker/sdk testing codecept run -c codeception.api.yml
 
             -   name: Slack Notification for failed job
@@ -258,9 +268,12 @@ jobs:
                     docker/sdk cli composer dump-autoload -o -a --apcu
                     docker/sdk console queue:worker:start --stop-when-empty
 
-            -   name: Run Tests
+            -   name: Run Acceptance Tests
                 run: |
                     docker/sdk testing codecept run -c codeception.acceptance.yml
+
+            -   name: Run API Tests
+                run: |
                     docker/sdk testing codecept run -c codeception.api.yml
 
             -   name: Slack Notification for failed job
