@@ -227,6 +227,7 @@ jobs:
             -   name: Run Acceptance Tests
                 if: >
                     contains(github.event.pull_request.labels.*.name, 'run-ui-ci')
+                    || contains(github.event.pull_request.labels.*.name, 'run-latest-ci')
                     || github.ref == 'refs/heads/master'
                 run: |
                     docker/sdk testing codecept run -c codeception.acceptance.yml
@@ -234,6 +235,7 @@ jobs:
             -   name: Run API Tests
                 if: >
                     contains(github.event.pull_request.labels.*.name, 'run-api-ci')
+                    || contains(github.event.pull_request.labels.*.name, 'run-latest-ci')
                     || github.ref == 'refs/heads/master'
                 run: |
                     docker/sdk testing codecept run -c codeception.api.yml
