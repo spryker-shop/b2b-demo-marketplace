@@ -4,22 +4,11 @@ declare(strict_types = 1);
 
 namespace Go\Zed\GuiAssistant\Business;
 
-use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\CurrencyTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
-use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
-use Generated\Shared\Transfer\TotalsTransfer;
 use Go\Zed\GuiAssistant\Business\Request\Request;
-use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\Product\Persistence\SpyProductAttributeKey;
 use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
@@ -41,7 +30,7 @@ class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInt
 {
     use TransactionTrait;
 
-    protected const OPENAPI_LOCATION = APPLICATION_ROOT_DIR . '/src/Go/Zed/GuiAssistant/chat_openapi.yaml';
+    public const OPENAPI_LOCATION = APPLICATION_ROOT_DIR . '/src/Go/Zed/GuiAssistant/chat_openapi.yaml';
 
     public function routeEndpoint(string $httpMethod, string $schemaPath, array $queryParams, array $pathParams, array $payload)
     {
@@ -257,6 +246,8 @@ class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInt
             $this->validateResourceRequest($httpMethod, $resourcePath, $queryParams, $pathParams, $payload);
 
             $concreteSku = $pathParams['concreteSku'] ?? $payload['sku'];
+            $concreteSku = preg_replace('/[^a-zA-Z0-9]/', '_', trim($concreteSku));
+
             $productAbstractTransfer = $this->getProductAbstractBySku($pathParams['abstractSku']);
 
             $this->validateConcreteAttributeKeys($productAbstractTransfer->getIdProductAbstract(), array_keys($payload['attributes'] ?? []));

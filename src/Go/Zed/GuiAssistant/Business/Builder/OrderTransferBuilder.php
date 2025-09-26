@@ -90,8 +90,10 @@ class OrderTransferBuilder
             throw new \InvalidArgumentException('Locale with name ' . $data['cart']['localeName'] . ' not found.');
         }
 
+        $isSubTotalProvided = isset($data['cart']['subTotal']) && (int)$data['cart']['subTotal'] > 0;
         $isGrandTotalProvided = isset($data['cart']['grandTotal']) && (int)$data['cart']['grandTotal'] > 0;
         $grandTotal = $isGrandTotalProvided ? (int)$data['cart']['grandTotal'] : 0;
+        $subTotal = $isSubTotalProvided ? (int)$data['cart']['subTotal'] : 0;
         $discountTotal = isset($data['cart']['discountTotal']) ? (int)$data['cart']['discountTotal'] : 0;
         $orderReference = !empty(trim($data['cart']['orderReference'] ?? '')) ? trim($data['cart']['orderReference']) : null;
 
@@ -122,7 +124,7 @@ class OrderTransferBuilder
             ->setOrderReference($orderReference)
             ->setExpenses(new \ArrayObject())
             ->setItems(new \ArrayObject(
-                    array_map(function ($item) use ($shipmentTransfer, &$grandTotal, $isGrandTotalProvided, $data) { // name!
+                    array_map(function ($item) use ($shipmentTransfer, &$grandTotal, &$subTotal, $isGrandTotalProvided, $isSubTotalProvided, $data) {
                             $product = SpyProductQuery::create()->findOneBySku($item['concreteSku']);
                             if (empty($product)) {
                                 throw new \InvalidArgumentException('Product with SKU ' . $item['concreteSku'] . ' not found.');
@@ -152,7 +154,10 @@ class OrderTransferBuilder
                                 ->setSumGrossPrice($item['unitPrice']);
 
                             if (!$isGrandTotalProvided) {
-                                $grandTotal += $itemTransfer->getUnitPrice();
+                                $grandTotal += $itemTransfer->getUnitPrice() * $itemTransfer->getQuantity();
+                            }
+                            if (!$isSubTotalProvided) {
+                                $subTotal += $itemTransfer->getUnitPrice() * $itemTransfer->getQuantity();
                             }
 
                             return $itemTransfer;
@@ -161,13 +166,12 @@ class OrderTransferBuilder
             )
             ->setTotals((new TotalsTransfer())
                 ->setGrandTotal($grandTotal)
-                ->setSubtotal($grandTotal)
                 ->setPriceToPay($grandTotal)
+                ->setSubtotal($subTotal)
                 ->setRemunerationTotal(0)
                 ->setCanceledTotal(0)
                 ->setRefundTotal(0)
                 ->setExpenseTotal(0)
-
                 ->setDiscountTotal($discountTotal)
 //                ->setNetTotal($grandTotal)
 //                ->setShipmentTotal(0)

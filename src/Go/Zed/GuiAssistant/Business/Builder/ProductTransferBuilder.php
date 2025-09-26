@@ -243,10 +243,12 @@ class ProductTransferBuilder
             $productConcreteCollectionTransfer = new ProductConcreteCollectionTransfer();
 
             foreach($data['concretes'] ?? [] as $concreteData) {
+                $concreteSku = $data['sku'] . (empty($concreteData['attributes']) ? '-default' : implode('', array_map(fn($k, $v) => '-' . strtolower($k) . '-' . strtolower($v), array_keys($concreteData['attributes']), $concreteData['attributes'])));
+                $concreteSku = preg_replace('/[^a-zA-Z0-9]/', '_', trim($concreteSku));
                 $productConcreteTransfer = (new ProductConcreteTransfer())
                     ->setIsActive(static::PRODUCT_CONCRETE_DEFAULT_IS_ACTIVE)
-                    ->setAbstractSku($data['sku'] ?? null)
-                    ->setSku($data['sku'] . (empty($concreteData['attributes']) ? '-default' : implode('', array_map(fn($k, $v) => '-' . strtolower($k) . '-' . strtolower($v), array_keys($concreteData['attributes']), $concreteData['attributes']))))
+                    ->setAbstractSku($data['sku'])
+                    ->setSku($concreteSku)
                     ->setAttributes($concreteData['attributes'] ?? [])
                     ->setLocalizedAttributes($this->localizationArrayToLocalizedAttributesTransfers($concreteData['localizations'] ?? []));
 

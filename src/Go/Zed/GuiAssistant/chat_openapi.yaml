@@ -214,7 +214,7 @@ paths:
 
     /orders:
         post:
-            summary: Create a new order by providing cart details, items, and customer information. Returns ONLY the created order ID and status. Store information is available via /stores endpoint.
+            summary: Create a new order by providing cart details (incl. order/invoice reference, subtotal and grandtotal), items, and customer information. Returns ONLY the created order ID and status. Store information is available via /stores endpoint.
             requestBody:
                 required: true
                 content:
@@ -226,7 +226,7 @@ paths:
                                 cart:
                                     type: object
                                     description: Cart details for the order.
-                                    required: [name, priceMode, localeName, currencyCode, storeName]
+                                    required: [name, priceMode, localeName, currencyCode, orderReference, storeName, subtotal, grandTotal]
                                     properties:
                                         name:
                                             type: string
@@ -249,16 +249,21 @@ paths:
                                             example: "EUR"
                                         orderReference:
                                             type: string
-                                            description: "Optional order reference for the order"
+                                            description: "Order/invoice reference for the order"
                                             example: "ORDER-10001"
                                         discountTotal:
                                             type: integer
                                             description: "Optional discount total in minor units (cents)."
                                             minimum: 0
                                             example: 4999
+                                        subTotal:
+                                            type: integer
+                                            description: "Subtotal in minor units (cents)."
+                                            minimum: 1
+                                            example: 9998
                                         grandTotal:
                                             type: integer
-                                            description: "(Recommended) Optional grand total in minor units (cents)."
+                                            description: "Grand total in minor units (cents)."
                                             minimum: 1
                                             example: 14999
                                 items:

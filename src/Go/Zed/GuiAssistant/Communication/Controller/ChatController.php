@@ -2,15 +2,22 @@
 namespace Go\Zed\GuiAssistant\Communication\Controller;
 
 use Go\Client\OpenAi\Reader\ModelResponse;
+use Go\Zed\GuiAssistant\Business\GuiAssistantFacade;
+use GuzzleHttp\Exception\TransferException;
+use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * @method \Go\Zed\GuiAssistant\Communication\GuiAssistantCommunicationFactory getFactory()
+ * @method \Go\Zed\GuiAssistant\Business\GuiAssistantFacade getFacade()
  */
 class ChatController extends AbstractController
 {
+    use LoggerTrait;
+
     protected const MAX_MESSAGES = 50;
 
     protected const MAX_CONTENT_LENGTH = 5000;
@@ -29,14 +36,37 @@ class ChatController extends AbstractController
     public function sendAction(Request $request): Response
     {
         $messages = $this->mapMessagesToAi($request);
+        $messages = $this->rag($messages, $this->ragAddStoreInfo());
+        $messages = $this->rag($messages, $this->ragAddOrderSchema($messages));
 
-        $aiResponse = $this->getFactory()->getOpenAiClient()->createResponseForAgent($messages);
+        try {
+            $aiResponse = $this->getFactory()->getOpenAiClient()->createResponseForAgent($messages);
 
-        $response = [
-            'answer' => $aiResponse[ModelResponse::OPEN_AI_RESULT_SIMPLE_TEXT] ?? 'No answer',
-        ];
+            $response = [
+                'answer' => $aiResponse[ModelResponse::OPEN_AI_RESULT_SIMPLE_TEXT] ?? 'No answer',
+            ];
+        } catch(TransferException $e) {
+            $response = ['error' => 'Connection error'];
+        } catch (\Exception $e) {
+            $response = ['error' => 'Unexpected error'];
+        }
 
         return $this->jsonResponse($response);
+    }
+
+    protected function rag(array $messages, array $insert): array
+    {
+        if (count($insert) < 1) {
+            return $messages;
+        }
+
+        $rolesOnMessages = array_map(fn($m) => $m['role'] ?? '', $messages);
+        $lastAssistantMessageIndex = array_search('assistant', array_reverse($rolesOnMessages), true);
+        $lastAssistantMessageIndex = $lastAssistantMessageIndex === false ? 0 : (count($rolesOnMessages) - $lastAssistantMessageIndex);
+
+        array_splice($messages, $lastAssistantMessageIndex, 0, $insert);
+
+        return $messages;
     }
 
     protected function mapMessagesToAi(Request $request): array {
@@ -55,6 +85,12 @@ class ChatController extends AbstractController
                 case 'image':
                     $messages[] = ['role' => 'user', 'content' => [['type' => 'input_image', 'image_url' => trim($message['content']) ?? '']]];
                     break;
+                case 'pdf':
+                    $messages[] = ['role' => 'user', 'content' => [['type' => 'input_file', 'filename' => 'uploaded.pdf', 'file_data' => trim($message['content']) ?? '']]];
+                    break;
+                case 'txt':
+                    $messages[] = ['role' => 'user', 'content' => "UPLOADED FILE:\n\n" . (trim($message['content']) ?? ''), 'type' => 'message'];
+                    break;
                 case 'assistant':
                     $content = mb_substr($message['content'] ?? '', 0, static::MAX_CONTENT_LENGTH);
 
@@ -69,6 +105,54 @@ class ChatController extends AbstractController
         }
 
         return $messages;
+    }
+
+
+    protected function ragAddStoreInfo(): array
+    {
+        $storeInfo = $this->getFacade()->getStores('GET', '/stores', [], [], []);
+
+        $content = "RAG - Store Information retrieve from GET /stores):\n\n";
+        foreach($storeInfo['result'] ?? [] as $num => $store) {
+            $content .= "$num. Store:\n";
+            foreach($store as $key => $value) {
+                $content .= "- " . $key . ": " . (is_array($value) ? join(", ", $value) : $value) . "\n";
+            }
+        }
+
+        $message = [
+            'role' => 'assistant',
+            'type' => 'message',
+            'content' => $content
+        ];
+
+        return [$message];
+    }
+
+    protected function ragAddOrderSchema(array $messages): array
+    {
+        $hasFileUpload = false;
+        foreach($messages as $message) {
+            if (is_array($message['content'] ?? null) || str_starts_with($message['content'] ?? '', 'UPLOADED FILE:')) {
+                $hasFileUpload = true;
+            }
+        }
+        if (!$hasFileUpload) {
+            return [];
+        }
+
+        $content = "RAG - POST /orders endpoint OpenAPI Schema:\n\n";
+
+        $yaml = Yaml::parseFile(GuiAssistantFacade::OPENAPI_LOCATION);
+        $ordersNode = $yaml['paths']['/orders'] ?? null;
+
+        $message = [
+            'role' => 'assistant',
+            'type' => 'message',
+            'content' => $content . Yaml::dump($ordersNode, 12, 2)
+        ];
+
+        return [$message];
     }
 
 }

@@ -2,6 +2,7 @@
 namespace Go\Zed\GuiAssistant\Communication\Controller;
 
 use Go\Zed\GuiAssistant\Business\GuiAssistantFacade;
+use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 

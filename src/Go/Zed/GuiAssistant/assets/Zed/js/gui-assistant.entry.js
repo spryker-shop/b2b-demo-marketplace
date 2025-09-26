@@ -49,9 +49,18 @@ function renderHistory() {
 
         const div = document.createElement('div');
         let label;
+        let msgText = msg.text;
         div.type = msg.meta !== 'default' ? msg.meta : msg.type;
         div.className = 'gui-assistant-message';
         switch (div.type) {
+            case 'image':
+            case 'pdf':
+            case 'txt':
+                div.className += ' gui-assistant-message-user';
+                label = username;
+                msgText = 'File Upload (' + div.type + ')';
+
+                break;
             case 'tool-info':
                 div.className += ' gui-assistant-message-tool-info';
                 label = 'Tool Info';
@@ -60,13 +69,21 @@ function renderHistory() {
                 div.className += ' gui-assistant-message-user';
                 label = username;
                 break;
+            case 'error':
+                div.className += ' gui-assistant-message-assistant';
+                label = 'ERROR';
+                break;
             default:
             case 'assistant':
                 div.className += ' gui-assistant-message-assistant';
                 label = assistantName;
                 break;
         }
-        div.innerHTML = `<div class=\"gui-assistant-message-content\"><strong>${label}:</strong><pre>${msg.text}</pre></div>`;
+        let responseTimeHtml = '';
+        if (showToolInfo && msg.responseTime !== undefined) {
+            responseTimeHtml = `<span style="color:gray;font-size:10px;float:right;">${msg.responseTime}s</span>`;
+        }
+        div.innerHTML = `<div class=\"gui-assistant-message-content\"><strong>${label}:</strong><pre>${msgText}</pre>${responseTimeHtml}</div>`;
         history.appendChild(div);
     });
     history.scrollTop = history.scrollHeight;
@@ -197,7 +214,7 @@ chat.addEventListener('drop', (e) => {
 
 function attachFile(file) {
     // Validate file type
-    const allowedTypes = ['.gif', '.jpeg', '.jpg', '.png'];
+    const allowedTypes = ['.txt'];
     const fileExt = '.' + file.name.split('.').pop().toLowerCase();
 
     if (!allowedTypes.includes(fileExt)) {
@@ -205,9 +222,9 @@ function attachFile(file) {
         return;
     }
 
-    // Validate file size (5MB limit)
-    if (file.size > 5 * 1024 * 1024) {
-        alert('File too large. Maximum size is 5MB.');
+    // Validate file size (0.5MB limit ~ 100k tokens)
+    if (file.size > 0.5 * 1024 * 1024) {
+        alert('File too large. Maximum size is 0.5MB .');
         return;
     }
 
@@ -228,38 +245,48 @@ function submitMessage() {
     if (!text) return;
 
     if (attachedFile) {
+        const fileExt = '.' + attachedFile.name.split('.').pop().toLowerCase();
+        const fileType = ['.jpg', '.jpeg', '.png', '.gif'].includes(fileExt) ? 'image' : (fileExt === '.pdf' ? 'pdf' : 'txt');
         // Read file as base64 for images
         const reader = new FileReader();
         reader.onload = function(e) {
-            const base64Content = e.target.result; // This includes data:image/jpeg;base64,
-//            const attachedFileContent = `[Attached file: ${attachedFile.name}]\n${base64Content}`;
-            sendMessageWithContent(text, base64Content);
+            // base64encoded already (includes "data:image/jpeg;base64,") or simple text
+            const fileContent = e.target.result;
+
+            sendMessageWithContent(text, fileType, fileContent);
             detachFile();
         };
-        reader.readAsDataURL(attachedFile);
+
+        if (fileType === 'txt') {
+            reader.readAsText(attachedFile, 'utf-8');
+        } else {
+            reader.readAsDataURL(attachedFile);
+        }
     } else {
         sendMessageWithContent(text);
     }
 
 }
 
-function sendMessageWithContent(messageText, fileContent = null) {
+function sendMessageWithContent(messageText, fileType = null, fileContent = null) {
     conversation.push({type: 'user', text: messageText, 'meta': 'default'});
 
+    if (fileContent) {
+        conversation.push({type: fileType, content: fileContent, meta: fileType});
+    }
+
     const messages = conversation
+        .filter(item => item.type !== 'error')
         .map(msg => ({
             role: msg.type,
-            content: msg.text
+            content: msg.text || msg.content
         }));
-
-    if (fileContent) {
-        messages.push({role: 'image', content: fileContent});
-    }
 
     renderHistory();
     input.value = '';
     setStatus('In progress...', false);
 
+    const fetchStart = Date.now(); // Start timing
     fetch('/gui-assistant/chat/send', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -267,21 +294,31 @@ function sendMessageWithContent(messageText, fileContent = null) {
     })
         .then(resp => resp.json())
         .then(data => {
+            if (data.error) {
+                conversation.push({type: 'error', text: data.error, 'meta': 'default'});
+                renderHistory();
+                setStatus('Enabled', true);
+
+                return;
+            }
+
             const answer = data.answer || '[No answer]';
             const answers = Array.isArray(answer) ? answer : [answer];
+
+            const responseTime = Math.round((Date.now() - fetchStart) / 1000);
             answers.forEach(item => {
-                let meta = (typeof item === 'string' && (item.startsWith('Calling Endpoint:') || item.startsWith('Endpoint answered:'))) ? 'tool-info' : 'default'
-                conversation.push({type: 'assistant', text: item, meta: meta});
+                let meta = (typeof item === 'string' && (item.startsWith('Calling Endpoint:') || item.startsWith('Endpoint answered:'))) ? 'tool-info' : 'default';
+                conversation.push({type: 'assistant', text: item, meta: meta, responseTime: responseTime});
             });
+
             renderHistory();
             setStatus('Enabled', true);
         })
         .catch(() => {
-            conversation.push({type: 'assistant', text: '[Error: No response from ' + assistantName + ']'});
+            conversation.push({type: 'error', text: 'Unexpected error', 'meta': 'default'});
             renderHistory();
             setStatus('Enabled', true);
         });
-
     if (responseTimeoutId) {
         clearTimeout(responseTimeoutId);
     }
