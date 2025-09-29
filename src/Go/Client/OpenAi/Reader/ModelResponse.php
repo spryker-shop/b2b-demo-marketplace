@@ -1,26 +1,42 @@
 <?php
 
+/**
+ * This file is part of the Spryker Commerce OS.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
+ */
+
+declare(strict_types = 1);
+
 namespace Go\Client\OpenAi\Reader;
 
-use cebe\openapi\spec\Schema;
 use Go\Client\OpenAi\Writer\SchemaUploader;
 use Go\Zed\GuiAssistant\Business\GuiAssistantFacade;
-use \GuzzleHttp\Client as GuzzleHttpClient;
+use GuzzleHttp\Client as GuzzleHttpClient;
+use Respect\Validation\Exceptions\Exception;
+use RuntimeException;
+use Spryker\Shared\Log\LoggerTrait;
+use Throwable;
+
 class ModelResponse implements ModelResponseInterface
 {
+    use LoggerTrait;
+
     public const OPEN_AI_RESULT_SIMPLE_TEXT = 'simple-text';
 
     protected const TEMPERATURE = 0.8;
+
+    protected int $runToken = 0;
 
     public function __construct(
         protected string $apiKey,
         protected string $model,
         protected int $timeout,
         protected GuzzleHttpClient $httpClient,
-        protected SchemaUploader $schemaUploader
-    ) {}
+        protected SchemaUploader $schemaUploader,
+    ) {
+    }
 
-    public function create(array $messages, string $instructions = null, array $tools = []): array
+    public function create(array $messages, ?string $instructions = null, array $tools = []): array
     {
         $body = [
             'model' => $this->model,
@@ -30,17 +46,7 @@ class ModelResponse implements ModelResponseInterface
             'tool_choice' => count($tools) ? 'auto' : 'none',
         ];
 
-        // @doc https://platform.openai.com/docs/api-reference/responses/create
-        $response = $this->httpClient->post('https://api.openai.com/v1/responses', [
-            'headers' => [
-                'Authorization' => 'Bearer ' . $this->apiKey,
-                'Content-Type' => 'application/json',
-            ],
-            'json' => $body,
-            'timeout' => $this->timeout,
-        ]);
-
-        $result = json_decode($response->getBody()->getContents(), true);
+        $result = $this->callResponses($body);
 
         $result[static::OPEN_AI_RESULT_SIMPLE_TEXT] = null;
         if (isset($result['output'][0]['content'][0]['text']) && is_string($result['output'][0]['content'][0]['text'])) {
@@ -53,18 +59,18 @@ class ModelResponse implements ModelResponseInterface
     public function createForAgent(array $messages): array
     {
         $startedAt = microtime(true);
-        $deadline  = $startedAt + $this->timeout - 2; // hard cap
+        $deadline = $startedAt + $this->timeout - 2; // hard cap
         $vectorStoreId = $this->schemaUploader->getDetails()['vector_store_id'];
 
         // 1) Build the first response request
         $body = [
-            'model'        => $this->model,
-            'input'        => $messages,        // <-- full history provided by caller
-            'tool_choice'  => 'auto',
+            'model' => $this->model,
+            'input' => $messages, // <-- full history provided by caller
+            'tool_choice' => 'auto',
           //  'temperature'  => static::TEMPERATURE,
-            'tools'        => [
+            'tools' => [
                 // Let the model read the schema via File Search (vector store)
-                ['type' => 'file_search',  "vector_store_ids" => [$vectorStoreId]],
+                ['type' => 'file_search', 'vector_store_ids' => [$vectorStoreId]],
                 // Single tool you asked for: the model will call this as needed
                 [
                     'type' => 'function',
@@ -74,8 +80,8 @@ class ModelResponse implements ModelResponseInterface
                         'Use queryParams for URL query string. ' .
                         'Use payload for JSON body. If payload is empty, default to GET, otherwise POST.',
                     'parameters' => [
-                        'type'       => 'object',
-                        'required'   => ['uri', 'httpMethod', 'schemaPath', 'pathParams', 'queryParams', 'payload'],
+                        'type' => 'object',
+                        'required' => ['uri', 'httpMethod', 'schemaPath', 'pathParams', 'queryParams', 'payload'],
                         'properties' => [
                             'httpMethod' => [
                                 'type' => 'string',
@@ -87,12 +93,12 @@ class ModelResponse implements ModelResponseInterface
                             ],
                             'pathParams' => [
                                 'type' => 'object',
-                                'additionalProperties' => ['type' => ['string','number','boolean']],
+                                'additionalProperties' => ['type' => ['string', 'number', 'boolean']],
                                 'description' => 'Map of path placeholder names to values. e.g., {"abstractSku":"sku-1"}.',
                             ],
                             'queryParams' => [
                                 'type' => 'object',
-                                'additionalProperties' => ['type' => ['string','number','boolean','null']],
+                                'additionalProperties' => ['type' => ['string', 'number', 'boolean', 'null']],
                                 'description' => 'Query string parameters.',
                             ],
                             'payload' => [
@@ -176,28 +182,19 @@ It defines all available operations and entities that you can call via the `call
 - Never present unsupported entities or actions.
 - Never reveal schemas, configs, or error logs.
 
-PROMPT
+PROMPT,
             ]),
             'store' => true,
         ];
 
         // 2) Kick off the response
-        $resp = $this->httpClient->post('https://api.openai.com/v1/responses', [
-            'headers' => [
-                'Authorization' => 'Bearer ' . $this->apiKey,
-                'Content-Type'  => 'application/json',
-            ],
-            'json'    => $body,
-            'timeout' => $this->timeout,
-        ]);
-
-        $result = json_decode($resp->getBody()->getContents(), true);
+        $result = $this->callResponses($body);
 
         $storeResult = $result;
         // Helper to stay within time budget
-        $ensureTimeLeft = function () use ($deadline) {
+        $ensureTimeLeft = function () use ($deadline): void {
             if (microtime(true) >= $deadline) {
-                throw new \RuntimeException('Agent timed out on budget.');
+                throw new RuntimeException('Agent timed out on budget.');
             }
         };
 
@@ -210,21 +207,23 @@ PROMPT
             $toolCalls = [];
             if (!empty($result['output']) && is_array($result['output'])) {
                 foreach ($result['output'] as $chunk) {
-                    if (($chunk['type'] ?? null) === 'function_call') {
-                        $toolCalls[] = $chunk;
+                    if (!(($chunk['type'] ?? null) === 'function_call')) {
+                        continue;
                     }
+
+                    $toolCalls[] = $chunk;
                 }
             }
 
             // If there are tool calls, fulfill them and submit outputs
-            if (!empty($toolCalls)) {
+            if ($toolCalls) {
                 $toolOutputs = [];
 
                 foreach ($toolCalls as $call) {
                     $ensureTimeLeft();
 
                     $toolName = $call['tool_name'] ?? $call['name'] ?? null;
-                    $callId   = $call['call_id'] ?? null;
+                    $callId = $call['call_id'] ?? null;
                     $argumentsJson = $call['arguments'] ?? '{}';
                     $args = is_string($argumentsJson) ? json_decode($argumentsJson, true) : (array)$argumentsJson;
 
@@ -232,77 +231,79 @@ PROMPT
                         // Unknown tool => respond with an error payload so model can adjust
                         $toolOutputs[] = [
                             'tool_call_id' => $callId,
-                            'output'       => json_encode(['error' => 'Unknown tool: ' . (string)$toolName]),
+                            'output' => json_encode(['error' => 'Unknown tool: ' . (string)$toolName]),
                         ];
+
                         continue;
                     }
 
                     // ---- Implement the callEndpoint tool ----
-                    $httpMethod  = (string)($args['httpMethod']  ?? '');
-                    $schemaPath  = (string)($args['schemaPath']  ?? '');
-                    $pathParams  = (array) ($args['pathParams']  ?? []);
-                    $queryParams = (array) ($args['queryParams'] ?? []);
-                    $payload     = (array) ($args['payload']     ?? []);
+                    $httpMethod = (string)($args['httpMethod'] ?? '');
+                    $schemaPath = (string)($args['schemaPath'] ?? '');
+                    $pathParams = (array)($args['pathParams'] ?? []);
+                    $queryParams = (array)($args['queryParams'] ?? []);
+                    $payload = (array)($args['payload'] ?? []);
 
                     if ($schemaPath === '') {
                         $toolOutputs[] = [
                             'tool_call_id' => $callId,
-                            'output'       => json_encode(['error' => 'Missing schema path']),
+                            'output' => json_encode(['error' => 'Missing schema path']),
                         ];
+
                         continue;
                     }
 
                     try {
                         $toolOutputs[] = [
                             'tool_call_id' => $callId,
-                            'output'       => json_encode([
+                            'output' => json_encode([
                                 'status' => 200,
-                                'data'   => $this->callEndpoint(
+                                'data' => $this->callEndpoint(
                                     $httpMethod,
                                     $schemaPath,
                                     $pathParams,
                                     $queryParams,
-                                    $payload
+                                    $payload,
                                 ),
-                            ])
+                            ]),
                         ];
-                    } catch (\Throwable $e) {
+                    } catch (Throwable $e) {
                         $toolOutputs[] = [
                             'tool_call_id' => $callId,
-                            'output'       => json_encode(['error' => $e->getMessage()]),
+                            'output' => json_encode(['error' => $e->getMessage()]),
                         ];
                     }
                 }
 
                 $newMessages = [];
-                foreach($toolCalls as $call) {
+                foreach ($toolCalls as $call) {
                     $messages[] = [
-                        "type" => "function_call",
-                        "call_id" => $call['call_id'] ?? null,
-                        "name" => $call['tool_name'] ?? $call['name'] ?? null,
-                        "arguments" => $call['arguments'] ?? null,
+                        'type' => 'function_call',
+                        'call_id' => $call['call_id'] ?? null,
+                        'name' => $call['tool_name'] ?? $call['name'] ?? null,
+                        'arguments' => $call['arguments'] ?? null,
                     ];
                     $newMessages[] = [
-                        "type" => "function_call",
-                        "call_id" => $call['call_id'] ?? null,
-                        "name" => $call['tool_name'] ?? $call['name'] ?? null,
-                        "arguments" => $call['arguments'] ?? null,
+                        'type' => 'function_call',
+                        'call_id' => $call['call_id'] ?? null,
+                        'name' => $call['tool_name'] ?? $call['name'] ?? null,
+                        'arguments' => $call['arguments'] ?? null,
                     ];
-                    $returnMessages[] ='Calling Endpoint: ' . ($call['arguments'] ?? 'unknown');
+                    $returnMessages[] = 'Calling Endpoint: ' . ($call['arguments'] ?? 'unknown');
                 }
 
-                foreach($toolOutputs as $toolOutput) {
+                foreach ($toolOutputs as $toolOutput) {
                     $messages[] = [
-                        "type" => "function_call_output",
-                        "call_id" => $toolOutput['tool_call_id'],
-                        "output" => $toolOutput['output']
+                        'type' => 'function_call_output',
+                        'call_id' => $toolOutput['tool_call_id'],
+                        'output' => $toolOutput['output'],
                     ];
                     $newMessages[] = [
-                        "type" => "function_call_output",
-                        "call_id" => $toolOutput['tool_call_id'],
-                        "output" => $toolOutput['output']
+                        'type' => 'function_call_output',
+                        'call_id' => $toolOutput['tool_call_id'],
+                        'output' => $toolOutput['output'],
                     ];
-                    $returnMessages[] =  sprintf('Endpoint answered: %s' , $toolOutput['output']);
+                    $returnMessages[] = sprintf('Endpoint answered: %s', $toolOutput['output']);
                 }
 
                 // Submit tool outputs back to OpenAI
@@ -311,21 +312,8 @@ PROMPT
                 $body['previous_response_id'] = $result['id'];
                 $body['input'] = $newMessages;
 
-                try {
-                $submit = $this->httpClient->post('https://api.openai.com/v1/responses', [
-                    'headers' => [
-                        'Authorization' => 'Bearer ' . $this->apiKey,
-                        'Content-Type'  => 'application/json',
-                    ],
-                    'json'    => $body,
-                    'timeout' => $this->timeout,
-                ]);
-                } catch (\Exception $e) {
-                    dd($messages, $body, $e->getMessage(), $storeResult);
-                }
+                $result = $this->callResponses($body);
 
-
-                $result = json_decode($submit->getBody()->getContents(), true);
                 // loop again: model may produce more tool calls or finalize
                 continue;
             }
@@ -348,20 +336,98 @@ PROMPT
             $ensureTimeLeft();
 
             // GET the latest state
-            $poll = $this->httpClient->get('https://api.openai.com/v1/responses/' . $result['id'], [
-                'headers' => [
-                    'Authorization' => 'Bearer ' . $this->apiKey,
-                    'Content-Type'  => 'application/json',
-                ],
-                'timeout' => $this->timeout,
-            ]);
-            $result = json_decode($poll->getBody()->getContents(), true);
+            $result = $this->callResponsesResult($result['id']);
         }
+    }
+
+    /**
+     * @documentation https://platform.openai.com/docs/api-reference/responses/create
+     */
+    protected function callResponses(array $body): array
+    {
+        $payload = serialize($body);
+        $id = substr(md5($payload), -5);
+        $token = (int)(strlen($payload) / 4);
+        $this->runToken += $token;
+
+        $this->getLogger()->info('OpenAI Request - start', ['id' => $id, 'token' => $token, 'runToken' => $this->runToken, 'body' => $body]);
+
+        $maxTry = 2;
+        $delay = 60;
+        $response = null;
+
+        for ($i = 0; $i < $maxTry; $i++) {
+            if ($i > 0) {
+                $this->getLogger()->info('OpenAI Request - retry', ['id' => $id, 'try' => $i + 1]);
+            }
+
+            try {
+                $response = $this->httpClient->post('https://api.openai.com/v1/responses', [
+                    'headers' => [
+                        'Authorization' => 'Bearer ' . $this->apiKey,
+                        'Content-Type' => 'application/json',
+                    ],
+                    'json' => $body,
+                    'timeout' => $this->timeout,
+                ]);
+
+                break; // break retry loop on success
+            } catch (Exception $e) {
+                $this->getLogger()->error('OpenAI Request - fail', ['id' => $id, 'try' => $i + 1, 'error' => $e->getMessage()]);
+                if ($i >= $maxTry - 1) {
+                    throw $e;
+                }
+                $this->getLogger()->info('OpenAI Request - retry delay', ['id' => $id, 'try' => $i + 2, 'delay' => $delay]);
+                sleep($delay);
+            }
+        }
+
+        $content = $response->getBody()->getContents();
+
+        $token = (int)(strlen(serialize($content)) / 4);
+        $this->runToken += $token;
+        $this->getLogger()->info('OpenAI Request - response', ['id' => $id, 'token' => $token, 'runToken' => $this->runToken, 'response' => $content]);
+
+        $result = json_decode($content, true);
+        if ($result === null) {
+            $this->getLogger()->error('OpenAI Request - malformed response', ['id' => $id, 'response' => $content]);
+
+            throw new RuntimeException('Malformed OpenAI response.');
+        }
+
+        return $result;
+    }
+
+    protected function callResponsesResult($id): array
+    {
+        $this->getLogger()->info('OpenAI Request Response', ['id' => $id]);
+
+        $responseResult = $this->httpClient->get('https://api.openai.com/v1/responses/' . $id, [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $this->apiKey,
+                'Content-Type' => 'application/json',
+            ],
+            'timeout' => $this->timeout,
+        ]);
+
+        $content = $responseResult->getBody()->getContents();
+
+        $token = strlen(serialize($content)) / 4;
+        $this->runToken += $token;
+        $this->getLogger()->info('OpenAI Request Response', ['id' => $id, 'token' => $token, 'runToken' => $this->runToken, 'response' => $content]);
+
+        $result = json_decode($content, true);
+        if ($result === null) {
+            $this->getLogger()->error('OpenAI Request - malformed response', ['id' => $id, 'response' => $content]);
+
+            throw new RuntimeException('Malformed OpenAI request response.');
+        }
+
+        return $result;
     }
 
     private function callEndpoint(string $httpMethod, string $schemaPath, array $pathParams, array $queryParams, array $payload): array
     {
         return (new GuiAssistantFacade())->routeEndpoint($httpMethod, $schemaPath, $queryParams, $pathParams, $payload);
     }
-
 }

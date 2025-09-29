@@ -4,16 +4,17 @@ const path = require('path');
 
 const mergeWithStrategy = mergeWithCustomize({
     customizeObject: customizeObject({
-        plugins: 'prepend'
-    })
+        plugins: 'prepend',
+    }),
 });
 
 const goZedSettings = mergeWithStrategy(oryxForZed.settings, {
     entry: {
-        dirs: [path.resolve('./src/Go/Zed/')]
-    }
+        dirs: [path.resolve('./src/Go/Zed/')],
+    },
 });
 
-oryxForZed.getConfiguration(goZedSettings)
-    .then(configuration => oryxForZed.build(configuration, oryxForZed.copyAssets))
-    .catch(error => console.error('An error occurred while creating configuration', error));
+oryxForZed
+    .getConfiguration(goZedSettings)
+    .then((configuration) => oryxForZed.build(configuration, oryxForZed.copyAssets))
+    .catch((error) => console.error('An error occurred while creating configuration', error));

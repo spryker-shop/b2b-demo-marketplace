@@ -1,9 +1,17 @@
 <?php
+
+/**
+ * This file is part of the Spryker Commerce OS.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
+ */
+
+declare(strict_types = 1);
+
 namespace Go\Client\OpenAi;
 
+use GuzzleHttp\Client as GuzzleHttpClient;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use GuzzleHttp\Client as GuzzleHttpClient;
 
 class OpenAiDependencyProvider extends AbstractDependencyProvider
 {

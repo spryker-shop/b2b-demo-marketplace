@@ -3,13 +3,13 @@
 .gui-assistant-chat pre {
     border: 0;
     background-color: transparent;
-    white-space: pre-wrap;       /* Preserves formatting but allows wrapping */
-    word-wrap: break-word;       /* Breaks long words if needed */
-    overflow-wrap: break-word;   /* Modern equivalent for word-wrap */
+    white-space: pre-wrap; /* Preserves formatting but allows wrapping */
+    word-wrap: break-word; /* Breaks long words if needed */
+    overflow-wrap: break-word; /* Modern equivalent for word-wrap */
 }
 
 .gui-assistant-chat pre > code {
-    white-space: inherit;           /* don’t “lock” to pre */
+    white-space: inherit; /* don’t “lock” to pre */
 }
 
 .gui-assistant-icon {
@@ -20,7 +20,7 @@
     height: 48px;
     background: #fff;
     border-radius: 50%;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     cursor: pointer;
     z-index: 9999;
     display: flex;
@@ -40,7 +40,7 @@
     max-height: 1000px;
     background: #fff;
     border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
     z-index: 10000;
     display: flex;
     flex-direction: column;
@@ -52,7 +52,8 @@
 .gui-assistant-drag {
     width: 18px;
     height: 18px;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><rect x="2" y="2" width="14" height="14" rx="3" fill="%23ccc" stroke="%23888" stroke-width="1.5"/><path d="M5 13L13 5" stroke="%23888" stroke-width="1.5" stroke-linecap="round"/><circle cx="5" cy="5" r="1.2" fill="%23888"/><circle cx="13" cy="13" r="1.2" fill="%23888"/></svg>') center center no-repeat;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><rect x="2" y="2" width="14" height="14" rx="3" fill="%23ccc" stroke="%23888" stroke-width="1.5"/><path d="M5 13L13 5" stroke="%23888" stroke-width="1.5" stroke-linecap="round"/><circle cx="5" cy="5" r="1.2" fill="%23888"/><circle cx="13" cy="13" r="1.2" fill="%23888"/></svg>')
+        center center no-repeat;
     background-size: contain;
     cursor: nwse-resize;
     display: inline-block;
@@ -106,6 +107,8 @@
     border-radius: 8px;
     max-width: 80%;
     word-break: break-word;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08), 0 8px 12px rgba(0, 0, 0, 0.1);
+    min-width: 250px;
 }
 .gui-assistant-message-user .gui-assistant-message-content {
     background: #e0f7fa;
@@ -172,4 +175,114 @@
     font-size: 12px;
     color: #888;
     margin: 4px 0px 4px 12px;
+}
+
+/* File upload styles */
+.gui-assistant-file-button {
+    background: none;
+    border: none;
+    border-radius: 4px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #666;
+    margin-right: 8px;
+    transition: background-color 0.2s;
+}
+
+.gui-assistant-file-button:hover {
+    background-color: #f0f0f0;
+}
+
+.gui-assistant-file-preview {
+    padding: 8px 12px;
+    border-top: 1px solid #eee;
+    background: #f9f9f9;
+}
+
+.gui-assistant-file-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #e3f2fd;
+    border: 1px solid #bbdefb;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 0.9em;
+}
+
+.gui-assistant-file-name {
+    color: #1976d2;
+    font-weight: 500;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.gui-assistant-file-remove {
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    font-size: 1.2em;
+    padding: 0 4px;
+    margin-left: 8px;
+    border-radius: 2px;
+    line-height: 1;
+}
+
+.gui-assistant-file-remove:hover {
+    background-color: #ffcdd2;
+    color: #d32f2f;
+}
+
+/* Drag and drop overlay */
+.gui-assistant-drop-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 121, 107, 0.1);
+    backdrop-filter: blur(2px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    border-radius: 12px;
+}
+
+.gui-assistant-drop-zone {
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px dashed #00796b;
+    border-radius: 12px;
+    padding: 40px;
+    text-align: center;
+    color: #00796b;
+    min-width: 200px;
+}
+
+.gui-assistant-drop-zone svg {
+    margin-bottom: 12px;
+    opacity: 0.8;
+}
+
+.gui-assistant-drop-zone p {
+    margin: 0;
+    font-size: 1.1em;
+    font-weight: 500;
+}
+
+/* Drag active state */
+.gui-assistant-chat.drag-active {
+    border: 2px solid #00796b;
+    box-shadow: 0 4px 16px rgba(0, 121, 107, 0.3);
+}
+
+.gui-assistant-chat.drag-active .gui-assistant-drop-overlay {
+    display: flex;
 }

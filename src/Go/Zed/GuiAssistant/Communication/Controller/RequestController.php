@@ -1,16 +1,23 @@
 <?php
+
+/**
+ * This file is part of the Spryker Commerce OS.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
+ */
+
+declare(strict_types = 1);
+
 namespace Go\Zed\GuiAssistant\Communication\Controller;
 
-use Go\Zed\GuiAssistant\Business\GuiAssistantFacade;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method GuiAssistantFacade getFacade()
+ * @method \Go\Zed\GuiAssistant\Business\GuiAssistantFacade getFacade()
  */
 class RequestController extends AbstractController
 {
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): array
     {
         $result = null;
 
@@ -33,7 +40,7 @@ class RequestController extends AbstractController
                 $schemaPath,
                 $queryParams,
                 $pathParams,
-                $payload
+                $payload,
             );
         }
 

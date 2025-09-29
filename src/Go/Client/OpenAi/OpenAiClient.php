@@ -1,7 +1,14 @@
 <?php
+
+/**
+ * This file is part of the Spryker Commerce OS.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
+ */
+
+declare(strict_types = 1);
+
 namespace Go\Client\OpenAi;
 
-use GuzzleHttp\Client;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -9,7 +16,7 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class OpenAiClient extends AbstractClient implements OpenAiClientInterface
 {
-    public function createResponse(array $messages, string $instructions = null, array $tools = []): array
+    public function createResponse(array $messages, ?string $instructions = null, array $tools = []): array
     {
         return $this->getFactory()
             ->createModelResponse()
