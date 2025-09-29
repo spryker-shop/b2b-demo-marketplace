@@ -468,7 +468,7 @@ $config[SessionRedisConstants::LOCKING_LOCK_TTL_MILLISECONDS] = 0;
 
 $config[SessionConstants::YVES_SESSION_COOKIE_NAME]
     = $config[SessionConstants::YVES_SESSION_COOKIE_DOMAIN]
-    = $sprykerFrontendHost;
+    = str_replace('*.', '', $sprykerFrontendHost);
 $config[SessionConstants::YVES_SESSION_SAVE_HANDLER] = SessionRedisConfig::SESSION_HANDLER_CONFIGURABLE_REDIS_LOCKING;
 $config[SessionRedisConstants::YVES_SESSION_REDIS_SCHEME] = getenv('SPRYKER_SESSION_FE_PROTOCOL') ?: 'tcp';
 $config[SessionRedisConstants::YVES_SESSION_REDIS_HOST] = getenv('SPRYKER_SESSION_FE_HOST');
@@ -489,7 +489,7 @@ $config[SessionConstants::YVES_SESSION_COOKIE_SAMESITE] = getenv('SPRYKER_YVES_S
 
 $config[SessionConstants::ZED_SESSION_COOKIE_NAME]
     = $config[SessionConstants::ZED_SESSION_COOKIE_DOMAIN]
-    = $sprykerBackendHost;
+    = str_replace('*.', '', $sprykerBackendHost);
 $config[SessionConstants::ZED_SESSION_SAVE_HANDLER] = SessionRedisConfig::SESSION_HANDLER_REDIS;
 $config[SessionRedisConstants::ZED_SESSION_REDIS_SCHEME] = getenv('SPRYKER_SESSION_BE_PROTOCOL') ?: 'tcp';
 $config[SessionRedisConstants::ZED_SESSION_REDIS_HOST] = getenv('SPRYKER_SESSION_BE_HOST');
