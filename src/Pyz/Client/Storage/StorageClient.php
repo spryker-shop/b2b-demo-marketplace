@@ -54,40 +54,4 @@ class StorageClient extends SprykerStorageClient implements StorageClientInterfa
             }
         }
     }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param string $key
-     *
-     * @return mixed
-     */
-    public function get($key)
-    {
-        $this->loadCacheKeysAndValues();
-
-        if (!array_key_exists($key, static::$bufferedValues)) {
-            static::$cachedKeys[$key] = static::KEY_NEW;
-
-            $value = $this->getService()->get($key);
-
-            static::$bufferedValues[$key] = $value;
-
-            return $value;
-        }
-
-        static::$cachedKeys[$key] = static::KEY_USED;
-
-        if (!array_key_exists($key, static::$bufferedDecodedValues)) {
-            if (is_string(static::$bufferedValues[$key])) {
-                static::$bufferedDecodedValues[$key] = $this->jsonDecode(static::$bufferedValues[$key]);
-            } else {
-                static::$bufferedDecodedValues[$key] = static::$bufferedValues[$key];
-            }
-        }
-
-        return static::$bufferedDecodedValues[$key];
-    }
 }
