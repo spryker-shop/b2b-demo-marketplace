@@ -165,7 +165,7 @@ $config[\Go\Shared\OpenAi\OpenAiConstants::OPEN_AI_DEFAULT_API_KEY] = getenv('OP
 // ----------------------------------------------------------------------------
 
 $sprykerBackendHost = getenv('SPRYKER_BE_HOST') ?: 'not-configured-host';
-$sprykerFrontendHost = getenv('SPRYKER_FE_HOST') ?: 'not-configured-host';
+$sprykerFrontendHost = str_replace('*.', '', getenv('SPRYKER_FE_HOST') ?: 'not-configured-host');
 
 $config[KernelConstants::SPRYKER_ROOT] = APPLICATION_ROOT_DIR . '/vendor/spryker';
 
