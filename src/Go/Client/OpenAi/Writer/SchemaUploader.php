@@ -1,31 +1,38 @@
 <?php
 
-declare(strict_types=1);
+/**
+ * This file is part of the Spryker Commerce OS.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
+ */
+
+declare(strict_types = 1);
 
 namespace Go\Client\OpenAi\Writer;
-
 
 use GuzzleHttp\Client as GuzzleHttpClient;
 use RuntimeException;
 
 class SchemaUploader
 {
-    protected const SCHEMA_PATH       = APPLICATION_ROOT_DIR . '/src/Go/Zed/GuiAssistant/chat_openapi.yaml';
-    protected const VECTOR_STORE_KEY  = 'chat-app-openapi-schema';
+    protected const SCHEMA_PATH = APPLICATION_ROOT_DIR . '/src/Go/Zed/GuiAssistant/chat_openapi.yaml';
+
+    protected const VECTOR_STORE_KEY = 'chat-app-openapi-schema';
+
     protected const VECTOR_STORE_NAME = 'Chat OpenAPI Schema Store';
 
     public function __construct(
         protected string $apiKey,
         protected string $model,
-        protected string $timeout,
-        protected GuzzleHttpClient $httpClient
-    ) {}
+        protected int $timeout,
+        protected GuzzleHttpClient $httpClient,
+    ) {
+    }
 
     public function upload(): array
     {
         $filename = basename(self::SCHEMA_PATH);
         if (!is_file(self::SCHEMA_PATH)) {
-            throw new RuntimeException("Schema file not found: " . self::SCHEMA_PATH);
+            throw new RuntimeException('Schema file not found: ' . self::SCHEMA_PATH);
         }
 
         // 1. Find or create vector store
@@ -92,13 +99,14 @@ class SchemaUploader
                 return $vs['id'];
             }
         }
+
         return null;
     }
 
     private function createVectorStore(): string
     {
         $resp = $this->post('vector_stores', [
-            'name'     => self::VECTOR_STORE_NAME,
+            'name' => self::VECTOR_STORE_NAME,
             'metadata' => ['key' => self::VECTOR_STORE_KEY],
         ]);
 
@@ -131,7 +139,8 @@ class SchemaUploader
             'timeout' => $this->timeout,
         ]);
 
-        $json = json_decode((string) $response->getBody(), true);
+        $json = json_decode((string)$response->getBody(), true);
+
         return $json['id'] ?? throw new RuntimeException('File upload failed');
     }
 
@@ -151,8 +160,12 @@ class SchemaUploader
         do {
             $resp = $this->get("vector_stores/{$vectorStoreId}/files/{$fileId}");
             $status = $resp['status'] ?? null;
-            if ($status === 'completed') return;
-            if ($status === 'failed') throw new RuntimeException('Vectorization failed');
+            if ($status === 'completed') {
+                return;
+            }
+            if ($status === 'failed') {
+                throw new RuntimeException('Vectorization failed');
+            }
             sleep(2);
         } while (time() < $deadline);
 
@@ -166,11 +179,12 @@ class SchemaUploader
         $response = $this->httpClient->get("https://api.openai.com/v1/{$uri}", [
             'headers' => [
                 'Authorization' => 'Bearer ' . $this->apiKey,
-                'Content-Type'  => 'application/json',
+                'Content-Type' => 'application/json',
             ],
             'timeout' => $this->timeout,
         ]);
-        return json_decode((string) $response->getBody(), true);
+
+        return json_decode((string)$response->getBody(), true);
     }
 
     private function post(string $uri, array $body): array
@@ -178,12 +192,13 @@ class SchemaUploader
         $response = $this->httpClient->post("https://api.openai.com/v1/{$uri}", [
             'headers' => [
                 'Authorization' => 'Bearer ' . $this->apiKey,
-                'Content-Type'  => 'application/json',
+                'Content-Type' => 'application/json',
             ],
-            'json'    => $body,
+            'json' => $body,
             'timeout' => $this->timeout,
         ]);
-        return json_decode((string) $response->getBody(), true);
+
+        return json_decode((string)$response->getBody(), true);
     }
 
     private function delete(string $uri): void

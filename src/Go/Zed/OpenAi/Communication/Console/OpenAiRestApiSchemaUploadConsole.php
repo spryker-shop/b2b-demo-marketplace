@@ -1,20 +1,26 @@
 <?php
 
-declare(strict_types=1);
+/**
+ * This file is part of the Spryker Commerce OS.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
+ */
+
+declare(strict_types = 1);
 
 namespace Go\Zed\OpenAi\Communication\Console;
 
-use Go\Zed\OpenAi\Communication\OpenAiCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Throwable;
 
 /**
- * @method OpenAiCommunicationFactory getFactory()
+ * @method \Go\Zed\OpenAi\Communication\OpenAiCommunicationFactory getFactory()
  */
 class OpenAiRestApiSchemaUploadConsole extends Console
 {
     public const COMMAND_NAME = 'open-ai:backoffice-rest-api-schema-upload';
+
     public const DESCRIPTION = 'Uploads the Backoffice OpenAPI schema to the OpenAI vector store.';
 
     protected function configure(): void
@@ -33,7 +39,7 @@ class OpenAiRestApiSchemaUploadConsole extends Console
             $output->writeln('<info>File ID:</info> ' . $result['file_id']);
 
             return static::CODE_SUCCESS;
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $output->writeln('<error>' . $e->getMessage() . '</error>');
 
             return static::CODE_ERROR;

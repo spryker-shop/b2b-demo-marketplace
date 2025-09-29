@@ -1,4 +1,12 @@
 <?php
+
+/**
+ * This file is part of the Spryker Commerce OS.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
+ */
+
+declare(strict_types = 1);
+
 namespace Go\Client\OpenAi;
 
 use Go\Shared\OpenAi\OpenAiConstants;
@@ -30,4 +38,3 @@ class OpenAiConfig extends AbstractBundleConfig
         return $this->getSharedConfig()->get(OpenAiConstants::OPEN_AI_DEFAULT_TIMEOUT, 60);
     }
 }
-

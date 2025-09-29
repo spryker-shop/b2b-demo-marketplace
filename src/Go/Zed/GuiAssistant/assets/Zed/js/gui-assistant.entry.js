@@ -1,7 +1,7 @@
 // GuiAssistant JS
-require('../sass/gui-assistant.scss')
-require('../img/gui-assistant-submit.svg')
-require('../img/gui-assistant-icon.svg')
+require('../sass/gui-assistant.scss');
+require('../img/gui-assistant-submit.svg');
+require('../img/gui-assistant-icon.svg');
 
 const icon = document.getElementById('gui-assistant-icon');
 const chat = document.getElementById('gui-assistant-chat');
@@ -43,7 +43,7 @@ let attachedFile = null;
 
 function renderHistory() {
     history.innerHTML = '';
-    conversation.forEach(msg => {
+    conversation.forEach((msg) => {
         const isToolInfo = msg.meta === 'tool-info';
         if (isToolInfo && !showToolInfo) return;
 
@@ -134,22 +134,22 @@ minimize.addEventListener('click', () => {
     icon.style.display = 'flex';
 });
 
-input.addEventListener('keydown', function(e) {
+input.addEventListener('keydown', function (e) {
     if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault();
         if (enabled) submitMessage();
     }
 });
-submit.addEventListener('click', function() {
+submit.addEventListener('click', function () {
     if (enabled) submitMessage();
 });
 
-toolInfoToggle.addEventListener('change', function() {
+toolInfoToggle.addEventListener('change', function () {
     showToolInfo = this.checked;
     renderHistory();
 });
 
-dragHandle.addEventListener('mousedown', function(e) {
+dragHandle.addEventListener('mousedown', function (e) {
     isDragging = true;
     dragStartX = e.clientX;
     dragStartY = e.clientY;
@@ -157,14 +157,14 @@ dragHandle.addEventListener('mousedown', function(e) {
     startHeight = chatBox.offsetHeight;
     document.body.style.userSelect = 'none';
 });
-document.addEventListener('mousemove', function(e) {
+document.addEventListener('mousemove', function (e) {
     if (!isDragging) return;
     let newWidth = Math.min(Math.max(startWidth + (dragStartX - e.clientX), 500), 1200);
     let newHeight = Math.min(Math.max(startHeight + (dragStartY - e.clientY), 250), 1000);
     chatBox.style.width = newWidth + 'px';
     chatBox.style.height = newHeight + 'px';
 });
-document.addEventListener('mouseup', function() {
+document.addEventListener('mouseup', function () {
     if (isDragging) {
         isDragging = false;
         document.body.style.userSelect = '';
@@ -246,10 +246,14 @@ function submitMessage() {
 
     if (attachedFile) {
         const fileExt = '.' + attachedFile.name.split('.').pop().toLowerCase();
-        const fileType = ['.jpg', '.jpeg', '.png', '.gif'].includes(fileExt) ? 'image' : (fileExt === '.pdf' ? 'pdf' : 'txt');
+        const fileType = ['.jpg', '.jpeg', '.png', '.gif'].includes(fileExt)
+            ? 'image'
+            : fileExt === '.pdf'
+            ? 'pdf'
+            : 'txt';
         // Read file as base64 for images
         const reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = function (e) {
             // base64encoded already (includes "data:image/jpeg;base64,") or simple text
             const fileContent = e.target.result;
 
@@ -265,21 +269,20 @@ function submitMessage() {
     } else {
         sendMessageWithContent(text);
     }
-
 }
 
 function sendMessageWithContent(messageText, fileType = null, fileContent = null) {
-    conversation.push({type: 'user', text: messageText, 'meta': 'default'});
+    conversation.push({ type: 'user', text: messageText, meta: 'default' });
 
     if (fileContent) {
-        conversation.push({type: fileType, content: fileContent, meta: fileType});
+        conversation.push({ type: fileType, content: fileContent, meta: fileType });
     }
 
     const messages = conversation
-        .filter(item => item.type !== 'error')
-        .map(msg => ({
+        .filter((item) => item.type !== 'error')
+        .map((msg) => ({
             role: msg.type,
-            content: msg.text || msg.content
+            content: msg.text || msg.content,
         }));
 
     renderHistory();
@@ -289,13 +292,13 @@ function sendMessageWithContent(messageText, fileType = null, fileContent = null
     const fetchStart = Date.now(); // Start timing
     fetch('/gui-assistant/chat/send', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({messages, username})
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages, username }),
     })
-        .then(resp => resp.json())
-        .then(data => {
+        .then((resp) => resp.json())
+        .then((data) => {
             if (data.error) {
-                conversation.push({type: 'error', text: data.error, 'meta': 'default'});
+                conversation.push({ type: 'error', text: data.error, meta: 'default' });
                 renderHistory();
                 setStatus('Enabled', true);
 
@@ -306,16 +309,20 @@ function sendMessageWithContent(messageText, fileType = null, fileContent = null
             const answers = Array.isArray(answer) ? answer : [answer];
 
             const responseTime = Math.round((Date.now() - fetchStart) / 1000);
-            answers.forEach(item => {
-                let meta = (typeof item === 'string' && (item.startsWith('Calling Endpoint:') || item.startsWith('Endpoint answered:'))) ? 'tool-info' : 'default';
-                conversation.push({type: 'assistant', text: item, meta: meta, responseTime: responseTime});
+            answers.forEach((item) => {
+                let meta =
+                    typeof item === 'string' &&
+                    (item.startsWith('Calling Endpoint:') || item.startsWith('Endpoint answered:'))
+                        ? 'tool-info'
+                        : 'default';
+                conversation.push({ type: 'assistant', text: item, meta: meta, responseTime: responseTime });
             });
 
             renderHistory();
             setStatus('Enabled', true);
         })
         .catch(() => {
-            conversation.push({type: 'error', text: 'Unexpected error', 'meta': 'default'});
+            conversation.push({ type: 'error', text: 'Unexpected error', meta: 'default' });
             renderHistory();
             setStatus('Enabled', true);
         });
@@ -324,12 +331,16 @@ function sendMessageWithContent(messageText, fileType = null, fileContent = null
     }
     responseTimeoutId = setTimeout(() => {
         if (!enabled) {
-            conversation.push({type: 'assistant', text: '[Timeout: No response from ' + assistantName + ']'});
+            conversation.push({ type: 'assistant', text: '[Timeout: No response from ' + assistantName + ']' });
             renderHistory();
             setStatus('Enabled', true);
         }
     }, (timeout + 5) * 1000);
 }
 
-window.guiAssistantSetUsername = function(name) { username = name; };
-window.guiAssistantSetAssistantName = function(name) { assistantName = name; };
+window.guiAssistantSetUsername = function (name) {
+    username = name;
+};
+window.guiAssistantSetAssistantName = function (name) {
+    assistantName = name;
+};

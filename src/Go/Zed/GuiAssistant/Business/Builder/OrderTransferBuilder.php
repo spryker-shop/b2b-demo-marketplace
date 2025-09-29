@@ -1,7 +1,15 @@
 <?php
 
+/**
+ * This file is part of the Spryker Commerce OS.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
+ */
+
+declare(strict_types = 1);
+
 namespace Go\Zed\GuiAssistant\Business\Builder;
 
+use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CountryCriteriaTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
@@ -18,6 +26,7 @@ use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\StoreCriteriaTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use InvalidArgumentException;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery;
@@ -31,16 +40,24 @@ use Spryker\Zed\Store\Business\StoreFacade;
 
 class OrderTransferBuilder
 {
-    /** @var LocaleTransfer[] */
+    /**
+     * @var array<LocaleTransfer>
+     */
     protected array $locales;
 
-    /** @var CurrencyTransfer[] */
+    /**
+     * @var array<CurrencyTransfer>
+     */
     protected array $currencies;
 
-    /** @var StoreTransfer[] */
+    /**
+     * @var array<StoreTransfer>
+     */
     protected array $stores;
 
-    /** @var CountryTransfer[]  */
+    /**
+     * @var array<CountryTransfer>
+     */
     protected array $countries;
 
     public function __construct()
@@ -51,14 +68,14 @@ class OrderTransferBuilder
         $this->countries = [];
         $countries = (new CountryFacade())->getCountryCollection(new CountryCriteriaTransfer())->getCountries()->getArrayCopy();
         /** @var CountryTransfer $country */
-        foreach($countries as $country) {
+        foreach ($countries as $country) {
             $this->countries[$country->getIso2Code()] = $country;
         }
 
         $stores = (new StoreFacade())->getStoreCollection(new StoreCriteriaTransfer());
         $this->stores = [];
         /** @var StoreTransfer $storeTransfer */
-        foreach($stores->getStores() as $storeTransfer) {
+        foreach ($stores->getStores() as $storeTransfer) {
             $this->stores[$storeTransfer->getName()] = $storeTransfer;
         }
     }
@@ -67,27 +84,26 @@ class OrderTransferBuilder
     {
         /** @var SpyCustomer $customer */
         $customer = SpyCustomerQuery::create()->filterByEmail($data['customer']['email'], Criteria::LIKE)->findOne();
-        if (empty($customer)) {
-            throw new \InvalidArgumentException('Customer with email ' . $data['customer']['email'] . ' not found.');
+        if (!$customer) {
+            throw new InvalidArgumentException('Customer with email ' . $data['customer']['email'] . ' not found.');
         }
         if (!array_key_exists($data['customer']['billingAddress']['countryCode'] ?? '', $this->countries)) {
-
-            throw new \InvalidArgumentException('Billing country with code ' . $data['customer']['billingAddress']['countryCode'] . ' not found.');
+            throw new InvalidArgumentException('Billing country with code ' . $data['customer']['billingAddress']['countryCode'] . ' not found.');
         }
         if (!array_key_exists($data['customer']['shippingAddress']['countryCode'] ?? '', $this->countries)) {
-            throw new \InvalidArgumentException('Shipping country with code ' . $data['customer']['billingAddress']['countryCode'] . ' not found.');
+            throw new InvalidArgumentException('Shipping country with code ' . $data['customer']['billingAddress']['countryCode'] . ' not found.');
         }
         if (!array_key_exists($data['cart']['currencyCode'] ?? '', $this->currencies)) {
-            throw new \InvalidArgumentException('Currency with code ' . $data['cart']['currencyCode'] . ' not found.');
+            throw new InvalidArgumentException('Currency with code ' . $data['cart']['currencyCode'] . ' not found.');
         }
         if (!array_key_exists($data['cart']['storeName'] ?? '', $this->stores)) {
-            throw new \InvalidArgumentException('Store with name ' . $data['cart']['storeName'] . ' not found.');
+            throw new InvalidArgumentException('Store with name ' . $data['cart']['storeName'] . ' not found.');
         }
-        if (!in_array($data['cart']['priceMode'] ?? '', ["GROSS_MODE", "NET_MODE"], true)) {
-            throw new \InvalidArgumentException('Price mode must be either GROSS_MODE or NET_MODE');
+        if (!in_array($data['cart']['priceMode'] ?? '', ['GROSS_MODE', 'NET_MODE'], true)) {
+            throw new InvalidArgumentException('Price mode must be either GROSS_MODE or NET_MODE');
         }
         if (!array_key_exists($data['cart']['localeName'] ?? '', $this->locales)) {
-            throw new \InvalidArgumentException('Locale with name ' . $data['cart']['localeName'] . ' not found.');
+            throw new InvalidArgumentException('Locale with name ' . $data['cart']['localeName'] . ' not found.');
         }
 
         $isSubTotalProvided = isset($data['cart']['subTotal']) && (int)$data['cart']['subTotal'] > 0;
@@ -100,7 +116,7 @@ class OrderTransferBuilder
         if ($orderReference) {
             $order = SpySalesOrderQuery::create()->findOneByOrderReference($orderReference);
             if ($order) {
-                throw new \InvalidArgumentException('Order with reference ' . $orderReference . ' already exists.');
+                throw new InvalidArgumentException('Order with reference ' . $orderReference . ' already exists.');
             }
         }
 
@@ -116,33 +132,31 @@ class OrderTransferBuilder
                 ->setAddress2($data['customer']['billingAddress']['address2'] ?? '')
                 ->setCity($data['customer']['billingAddress']['city'])
                 ->setZipCode($data['customer']['billingAddress']['zipCode'])
-                ->setPhone($data['customer']['billingAddress']['phone'] ?? '')
-            )
-        ;
+                ->setPhone($data['customer']['billingAddress']['phone'] ?? ''));
 
-        $quoteTransfer = (new QuoteTransfer())
+        return (new QuoteTransfer())
             ->setOrderReference($orderReference)
-            ->setExpenses(new \ArrayObject())
-            ->setItems(new \ArrayObject(
-                    array_map(function ($item) use ($shipmentTransfer, &$grandTotal, &$subTotal, $isGrandTotalProvided, $isSubTotalProvided, $data) {
+            ->setExpenses(new ArrayObject())
+            ->setItems(new ArrayObject(
+                array_map(function ($item) use ($shipmentTransfer, &$grandTotal, &$subTotal, $isGrandTotalProvided, $isSubTotalProvided, $data) {
                             $product = SpyProductQuery::create()->findOneBySku($item['concreteSku']);
-                            if (empty($product)) {
-                                throw new \InvalidArgumentException('Product with SKU ' . $item['concreteSku'] . ' not found.');
-                            }
+                    if (!$product) {
+                        throw new InvalidArgumentException('Product with SKU ' . $item['concreteSku'] . ' not found.');
+                    }
                             $localisedProduct = SpyProductLocalizedAttributesQuery::create()
                                 ->filterByFkLocale($this->locales[$data['cart']['localeName']]->getIdLocale())
                                 ->findOneByFkProduct($product->getIdProduct());
 
-                            if (empty($localisedProduct)) {
-                                throw new \InvalidArgumentException('Localization for ' . $data['cart']['localeName'] . ' for product with SKU ' . $item['concreteSku'] . ' not found.');
-                            }
+                    if (!$localisedProduct) {
+                        throw new InvalidArgumentException('Localization for ' . $data['cart']['localeName'] . ' for product with SKU ' . $item['concreteSku'] . ' not found.');
+                    }
 
-                            if ($item['quantity'] < 1) {
-                                throw new \InvalidArgumentException('Quantity must be at least 1 for SKU ' . $item['concreteSku']);
-                            }
-                            if ($item['unitPrice'] < 1) {
-                                throw new \InvalidArgumentException('Unit price must be at least 1 (cent) for SKU ' . $item['concreteSku']);
-                            }
+                    if ($item['quantity'] < 1) {
+                        throw new InvalidArgumentException('Quantity must be at least 1 for SKU ' . $item['concreteSku']);
+                    }
+                    if ($item['unitPrice'] < 1) {
+                        throw new InvalidArgumentException('Unit price must be at least 1 (cent) for SKU ' . $item['concreteSku']);
+                    }
 
                             $itemTransfer = (new ItemTransfer())
                                 ->setName($localisedProduct->getName())
@@ -153,17 +167,17 @@ class OrderTransferBuilder
                                 ->setGroupKey('GROUP-' . $item['concreteSku'])
                                 ->setSumGrossPrice($item['unitPrice']);
 
-                            if (!$isGrandTotalProvided) {
-                                $grandTotal += $itemTransfer->getUnitPrice() * $itemTransfer->getQuantity();
-                            }
-                            if (!$isSubTotalProvided) {
-                                $subTotal += $itemTransfer->getUnitPrice() * $itemTransfer->getQuantity();
-                            }
+                    if (!$isGrandTotalProvided) {
+                        $grandTotal += $itemTransfer->getUnitPrice() * $itemTransfer->getQuantity();
+                    }
+                    if (!$isSubTotalProvided) {
+                        $subTotal += $itemTransfer->getUnitPrice() * $itemTransfer->getQuantity();
+                    }
 
                             return $itemTransfer;
-                        },
-                        $data['items'] ?? []))
-            )
+                },
+                $data['items'] ?? []),
+            ))
             ->setTotals((new TotalsTransfer())
                 ->setGrandTotal($grandTotal)
                 ->setPriceToPay($grandTotal)
@@ -172,10 +186,10 @@ class OrderTransferBuilder
                 ->setCanceledTotal(0)
                 ->setRefundTotal(0)
                 ->setExpenseTotal(0)
-                ->setDiscountTotal($discountTotal)
+                ->setDiscountTotal($discountTotal))
 //                ->setNetTotal($grandTotal)
 //                ->setShipmentTotal(0)
-            )
+
             ->setBillingAddress((new AddressTransfer())
                 ->setIso2Code($data['customer']['billingAddress']['countryCode'])
                 ->setFirstName($data['customer']['billingAddress']['firstName'])
@@ -184,16 +198,12 @@ class OrderTransferBuilder
                 ->setAddress2($data['customer']['billingAddress']['address2'] ?? '')
                 ->setCity($data['customer']['billingAddress']['city'])
                 ->setZipCode($data['customer']['billingAddress']['zipCode'])
-                ->setPhone($data['customer']['billingAddress']['phone'] ?? '')
-            )
+                ->setPhone($data['customer']['billingAddress']['phone'] ?? ''))
             ->setCustomer((new CustomerTransfer())->fromArray($customer->toArray(), true))
            // ->setShippingAddress($shipmentTransfer->getShippingAddress())
             ->setPriceMode($data['cart']['priceMode'])
             ->setStore((new StoreTransfer())->setName($data['cart']['storeName']))
             ->setCurrency((new CurrencyTransfer())->setCode($data['cart']['currencyCode']))
             ->setPayment((new PaymentTransfer())->setPaymentSelection('dummyMarketplacePaymentInvoice'));
-        ;
-
-        return $quoteTransfer;
     }
 }

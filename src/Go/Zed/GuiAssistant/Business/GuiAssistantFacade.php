@@ -1,14 +1,28 @@
 <?php
 
+/**
+ * This file is part of the Spryker Commerce OS.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
+ */
+
 declare(strict_types = 1);
 
 namespace Go\Zed\GuiAssistant\Business;
 
+use ArrayObject;
+use Exception;
+use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\ProductAbstractCollectionTransfer;
+use Generated\Shared\Transfer\ProductAbstractConditionsTransfer;
+use Generated\Shared\Transfer\ProductAbstractCriteriaTransfer;
+use Generated\Shared\Transfer\ProductAbstractRelationsTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Go\Zed\GuiAssistant\Business\Request\Request;
+use InvalidArgumentException;
+use League\OpenAPIValidation\PSR7\ValidatorBuilder;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\Product\Persistence\SpyProductAttributeKey;
 use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
@@ -22,6 +36,7 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Sales\Business\SalesFacade;
 use Spryker\Zed\Shipment\Communication\Plugin\Checkout\SalesOrderShipmentSavePlugin;
+use Spryker\Zed\Store\Business\StoreFacade;
 
 /**
  * @method \Go\Zed\GuiAssistant\Business\GuiAssistantBusinessFactory getFactory()
@@ -32,9 +47,9 @@ class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInt
 
     public const OPENAPI_LOCATION = APPLICATION_ROOT_DIR . '/src/Go/Zed/GuiAssistant/chat_openapi.yaml';
 
-    public function routeEndpoint(string $httpMethod, string $schemaPath, array $queryParams, array $pathParams, array $payload)
+    public function routeEndpoint(string $httpMethod, string $schemaPath, array $queryParams, array $pathParams, array $payload): array
     {
-        switch($httpMethod.$schemaPath) {
+        switch ($httpMethod . $schemaPath) {
             case 'GET/product-abstracts':
                 return $this->getProductAbstracts($httpMethod, $schemaPath, $queryParams, $pathParams, $payload);
             case 'PUT/product-abstracts':
@@ -62,13 +77,12 @@ class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInt
             case 'PUT/orders':
             case 'POST/orders':
                 return $this->putOrders('POST', $schemaPath, $queryParams, $pathParams, $payload);
-
             default:
                 return ['error' => sprintf('Unknown endpoint: %s %s ', $httpMethod, $schemaPath)];
         }
     }
 
-    public function putOrders(string $httpMethod, string $resourcePath, array $queryParams, array $pathParams, array $payload)
+    public function putOrders(string $httpMethod, string $resourcePath, array $queryParams, array $pathParams, array $payload): array
     {
         try {
             $this->validateResourceRequest($httpMethod, $resourcePath, $queryParams, $pathParams, $payload);
@@ -76,21 +90,20 @@ class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInt
             $quoteTransfer = $this->getFactory()->createOrderTransferBuilder()->createQuoteTransferFromArray($payload);
             $saveOrderTransfer = new SaveOrderTransfer();
 
-            $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer, $saveOrderTransfer) {
+            $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer, $saveOrderTransfer): void {
                 (new SalesFacade())->saveOrderRaw($quoteTransfer, $saveOrderTransfer);
                 (new SalesFacade())->saveSalesOrderTotals($quoteTransfer, $saveOrderTransfer);
                 (new SalesOrderShipmentSavePlugin())->saveOrder($quoteTransfer, $saveOrderTransfer);
                 (new SalesFacade())->saveSalesOrderItems($quoteTransfer, $saveOrderTransfer);
             });
 
-
             return ['status' => 'ok', 'result' => ['orderReference' => $saveOrderTransfer->getOrderReference()]];
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->errorArray($httpMethod, $resourcePath, $queryParams, $pathParams, $payload, $e);
         }
     }
 
-    public function getCustomers(string $httpMethod, string $resourcePath, array $queryParams, array $pathParams, array $payload)
+    public function getCustomers(string $httpMethod, string $resourcePath, array $queryParams, array $pathParams, array $payload): array
     {
         try {
             $this->validateResourceRequest($httpMethod, $resourcePath, $queryParams, $pathParams, $payload);
@@ -108,14 +121,14 @@ class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInt
             }
             $customers = $customerQuery->find();
             $result = [];
-            foreach($customers as $customer) {
+            foreach ($customers as $customer) {
                 $result[] = [
                     'email' => $customer->getEmail(),
                 ];
             }
 
             return ['status' => 'ok', 'result' => $result];
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->errorArray($httpMethod, $resourcePath, $queryParams, $pathParams, $payload, $e);
         }
     }
@@ -128,42 +141,42 @@ class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInt
         try {
             $this->validateResourceRequest($httpMethod, $resourcePath, $queryParams, $pathParams, $payload);
 
-            $productAbstractCollectionTransfer = (new \Spryker\Zed\Product\Business\ProductFacade())->getPaginatedProductAbstractSuggestions(
+            $productAbstractCollectionTransfer = (new ProductFacade())->getPaginatedProductAbstractSuggestions(
                 $queryParams['q'] ?? $pathParams['abstractSku'],
-                (new \Generated\Shared\Transfer\PaginationTransfer())
+                (new PaginationTransfer())
                     ->setPage($queryParams['page'] ?? 1)
                     ->setMaxPerPage(5)
                     ->setLimit($queryParams['limit'] ?? 5)
-                    ->setOffset($queryParams['offset'] ?? 0)
+                    ->setOffset($queryParams['offset'] ?? 0),
             );
 
-            $foundSkus = array_map(fn($e) => $e->getSku(), $productAbstractCollectionTransfer->getProductAbstracts()->getArrayCopy());
+            $foundSkus = array_map(fn ($e) => $e->getSku(), $productAbstractCollectionTransfer->getProductAbstracts()->getArrayCopy());
             $includeConcretes = ($queryParams['include'] ?? '') === 'concretes';
-            $productAbstractCriteriaTransfer = (new \Generated\Shared\Transfer\ProductAbstractCriteriaTransfer())
+            $productAbstractCriteriaTransfer = (new ProductAbstractCriteriaTransfer())
                 ->setPagination(
-                    (new \Generated\Shared\Transfer\PaginationTransfer())
+                    (new PaginationTransfer())
                         ->setPage($queryParams['page'] ?? 1)
                         ->setMaxPerPage(5)
                         ->setLimit($queryParams['limit'] ?? 5)
-                        ->setOffset($queryParams['offset'] ?? 0)
+                        ->setOffset($queryParams['offset'] ?? 0),
                 )
                 ->setProductAbstractConditions(
-                    (new \Generated\Shared\Transfer\ProductAbstractConditionsTransfer())
-                        ->setSkus(empty($foundSkus) ? ['no-matching-skus-found'] : $foundSkus)
+                    (new ProductAbstractConditionsTransfer())
+                        ->setSkus($foundSkus ?: ['no-matching-skus-found']),
                 )
                 ->setProductAbstractRelations(
-                    (new \Generated\Shared\Transfer\ProductAbstractRelationsTransfer())
+                    (new ProductAbstractRelationsTransfer())
                         ->setWithStoreRelations(true)
                         ->setWithLocalizedAttributes(true)
-                        ->setWithVariants($includeConcretes)
+                        ->setWithVariants($includeConcretes),
                 );
 
-            $productAbstractCollectionTransfer = (new \Spryker\Zed\Product\Business\ProductFacade())->getProductAbstractCollection($productAbstractCriteriaTransfer);
+            $productAbstractCollectionTransfer = (new ProductFacade())->getProductAbstractCollection($productAbstractCriteriaTransfer);
             $productAbstractCollection = $this->filterProductAbstractCollectionArray($productAbstractCollectionTransfer->toArray());
             $productAbstractCollection = $this->addAbstractPrices($productAbstractCollection);
 
             return ['status' => 'ok', 'result' => $productAbstractCollection];
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->errorArray($httpMethod, $resourcePath, $queryParams, $pathParams, $payload, $e);
         }
     }
@@ -178,39 +191,41 @@ class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInt
 
             $productAbstractTransfer = $this->getProductAbstractBySku($pathParams['abstractSku']);
             $productAbstractTransfer = $this->getFactory()->createProductTransferBuilder()->updateProductAbstractTransferFromArray($payload, $productAbstractTransfer);
-            $idProductAbstract = (new \Spryker\Zed\Product\Business\ProductFacade())->saveProductAbstract($productAbstractTransfer);
+            $idProductAbstract = (new ProductFacade())->saveProductAbstract($productAbstractTransfer);
 
             $productAbstractCollectionTransfer = $this->getProductAbstractById($idProductAbstract);
             $productAbstractCollection = $this->filterProductAbstractCollectionArray($productAbstractCollectionTransfer->toArray());
             $productAbstractCollection = $this->addAbstractPrices($productAbstractCollection);
 
             return ['status' => 'ok', 'result' => $productAbstractCollection];
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->errorArray($httpMethod, $resourcePath, $queryParams, $pathParams, $payload, $e);
         }
     }
 
     /**
      * @inheritDoc
+     *
+     * @throws \InvalidArgumentException
      */
     public function putProductAbstract(string $httpMethod, string $resourcePath, array $queryParams, array $pathParams, array $payload): array
     {
         try {
             $this->validateResourceRequest($httpMethod, $resourcePath, $queryParams, $pathParams, $payload);
             if (count($payload['concretes']) < 1) {
-                throw new \InvalidArgumentException('At least one concrete product must be provided during abstract creation.');
+                throw new InvalidArgumentException('At least one concrete product must be provided during abstract creation.');
             }
 
             $concreteAttributeKeys = null;
-            foreach($payload['concretes'] as $concrete) {
+            foreach ($payload['concretes'] as $concrete) {
                 if (count($concrete['attributes']) < 1) {
-                    throw new \InvalidArgumentException('At least one attribute must be provided for each concrete product during abstract creation.');
+                    throw new InvalidArgumentException('At least one attribute must be provided for each concrete product during abstract creation.');
                 }
 
                 if ($concreteAttributeKeys === null) {
                     $concreteAttributeKeys = array_keys($concrete['attributes']);
                 } elseif (array_diff($concreteAttributeKeys, array_keys($concrete['attributes']))) {
-                    throw new \InvalidArgumentException('All concrete products must have the same set of attributes during abstract creation.');
+                    throw new InvalidArgumentException('All concrete products must have the same set of attributes during abstract creation.');
                 }
             }
 
@@ -218,21 +233,21 @@ class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInt
             $concreteProductCollection = $this->getFactory()->createProductTransferBuilder()->createProductConcreteTransfersFromArray($payload);
 
             // CREATE
-            $idProductAbstract = (new \Spryker\Zed\Product\Business\ProductFacade())->addProduct($productAbstractTransfer, $concreteProductCollection->getProducts()->getArrayCopy());
+            $idProductAbstract = (new ProductFacade())->addProduct($productAbstractTransfer, $concreteProductCollection->getProducts()->getArrayCopy());
 
             $productAbstractCollectionTransfer = $this->getProductAbstractById($idProductAbstract);
             $productAbstractCollection = $this->filterProductAbstractCollectionArray($productAbstractCollectionTransfer->toArray());
             $productAbstractCollection = $this->addAbstractPrices($productAbstractCollection);
 
             return ['status' => 'ok', 'result' => $productAbstractCollection];
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->errorArray($httpMethod, $resourcePath, $queryParams, $pathParams, $payload, $e);
         }
     }
 
     protected function addAbstractPrices(array $productAbstractCollection): array
     {
-        foreach($productAbstractCollection['product_abstracts'] as $key => $productAbstractArray) {
+        foreach ($productAbstractCollection['product_abstracts'] as $key => $productAbstractArray) {
             $prices = $this->getFactory()->createProductTransferBuilder()->getAbstractDefaultPrices($productAbstractArray['id_product_abstract'], true, false);
             $productAbstractCollection['product_abstracts'][$key]['prices'] = $prices;
         }
@@ -257,7 +272,7 @@ class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInt
             $productAbstractTransfer->setAttributes(!is_array($value) ? [] : $value);
 
             $productConcreteTransfer = (new ProductConcreteTransfer())
-                ->setImageSets(new \ArrayObject())
+                ->setImageSets(new ArrayObject())
                 ->setIsActive(true)
                 ->setSku($concreteSku)
                 ->setFkProductAbstract($productAbstractTransfer->getIdProductAbstract());
@@ -265,20 +280,20 @@ class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInt
             if ($httpMethod === 'PATCH') {
                 $productTransfer = (new ProductFacade())->getProductConcrete($concreteSku);
                 if (empty($productTransfer->getIdProductConcrete())) {
-                    throw new \InvalidArgumentException("Product concrete with SKU {$concreteSku} not found.");
+                    throw new InvalidArgumentException("Product concrete with SKU {$concreteSku} not found.");
                 }
 
                 $productConcreteTransfer->setIdProductConcrete($productTransfer->getIdProductConcrete());
 
-                $productConcreteTransfer->setAttributes($productTransfer->getAttributes() ?? new \ArrayObject());
-                $productConcreteTransfer->setLocalizedAttributes($productTransfer->getLocalizedAttributes() ?? new \ArrayObject());
-                $productConcreteTransfer->setPrices($productTransfer->getPrices() ?? new \ArrayObject());
-                $productConcreteTransfer->setStocks($productTransfer->getStocks() ?? new \ArrayObject());
+                $productConcreteTransfer->setAttributes($productTransfer->getAttributes() ?? new ArrayObject());
+                $productConcreteTransfer->setLocalizedAttributes($productTransfer->getLocalizedAttributes() ?? new ArrayObject());
+                $productConcreteTransfer->setPrices($productTransfer->getPrices() ?? new ArrayObject());
+                $productConcreteTransfer->setStocks($productTransfer->getStocks() ?? new ArrayObject());
             }
 
             $productConcreteTransfer = $this->getFactory()->createProductTransferBuilder()->updateProductConcreteTransferFromArray($payload, $productConcreteTransfer);
 
-            $idProductAbstract = (new \Spryker\Zed\Product\Business\ProductFacade())->saveProduct($productAbstractTransfer,  [$productConcreteTransfer]);
+            (new ProductFacade())->saveProduct($productAbstractTransfer, [$productConcreteTransfer]);
 
             $productTransfer = (new ProductFacade())->getProductConcrete($concreteSku);
 
@@ -287,12 +302,12 @@ class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInt
             $productArray['prices'] = $prices;
 
             return ['status' => 'ok', 'result' => [$productArray]];
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->errorArray($httpMethod, $resourcePath, $queryParams, $pathParams, $payload, $e);
         }
     }
 
-    public function getProductConcretes(string $httpMethod, string $resourcePath, array $queryParams, array $pathParams, array $payload)
+    public function getProductConcretes(string $httpMethod, string $resourcePath, array $queryParams, array $pathParams, array $payload): array
     {
         try {
             $this->validateResourceRequest($httpMethod, $resourcePath, $queryParams, $pathParams, $payload);
@@ -301,7 +316,7 @@ class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInt
                 $queryParams['q'] ?? $pathParams['concreteSku'],
             ));
             $productConcreteTransfers = [];
-            foreach($productConcreteSkus as $sku) {
+            foreach ($productConcreteSkus as $sku) {
                 $productTransfer = (new ProductFacade())->getProductConcrete($sku);
                 if ($productTransfer->getAbstractSku() !== $pathParams['abstractSku']) {
                     continue;
@@ -315,98 +330,94 @@ class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInt
             }
 
             return ['status' => 'ok', 'result' => $productConcreteTransfers];
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->errorArray($httpMethod, $resourcePath, $queryParams, $pathParams, $payload, $e);
         }
     }
 
-    public function getStores(string $httpMethod, string $resourcePath, array $queryParams, array $pathParams, array $payload)
+    public function getStores(string $httpMethod, string $resourcePath, array $queryParams, array $pathParams, array $payload): array
     {
         try {
             $this->validateResourceRequest($httpMethod, $resourcePath, $queryParams, $pathParams, $payload);
 
-            $stores = (new \Spryker\Zed\Store\Business\StoreFacade())->getAllStores();
-            $stores = array_map(fn($storeTransfer) => [
+            $stores = (new StoreFacade())->getAllStores();
+            $stores = array_map(fn ($storeTransfer) => [
                 'storeName' => $storeTransfer->getName(),
                 'availableCurrencyCodes' => $storeTransfer->getAvailableCurrencyIsoCodes(),
                 'availableLocaleNames' => array_values($storeTransfer->getAvailableLocaleIsoCodes()),
             ], $stores);
 
             return ['status' => 'ok', 'result' => $stores];
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->errorArray($httpMethod, $resourcePath, $queryParams, $pathParams, $payload, $e);
         }
     }
 
-    /**
-     * Helper method to get product abstract by ID
-     */
-    protected function getProductAbstractById(int $idProductAbstract): \Generated\Shared\Transfer\ProductAbstractCollectionTransfer
+    protected function getProductAbstractById(int $idProductAbstract): ProductAbstractCollectionTransfer
     {
-        $productAbstractCriteriaTransfer = (new \Generated\Shared\Transfer\ProductAbstractCriteriaTransfer())
+        $productAbstractCriteriaTransfer = (new ProductAbstractCriteriaTransfer())
             ->setPagination(
-                (new \Generated\Shared\Transfer\PaginationTransfer())
+                (new PaginationTransfer())
                     ->setPage(1)
                     ->setMaxPerPage(5)
                     ->setLimit(5)
-                    ->setOffset(0)
+                    ->setOffset(0),
             )
             ->setProductAbstractConditions(
-                (new \Generated\Shared\Transfer\ProductAbstractConditionsTransfer())
-                    ->setIds([$idProductAbstract])
+                (new ProductAbstractConditionsTransfer())
+                    ->setIds([$idProductAbstract]),
             )
             ->setProductAbstractRelations(
-                (new \Generated\Shared\Transfer\ProductAbstractRelationsTransfer())
+                (new ProductAbstractRelationsTransfer())
                     ->setWithStoreRelations(true)
                     ->setWithLocalizedAttributes(true)
-                    ->setWithVariants(true)
+                    ->setWithVariants(true),
             );
 
-        return (new \Spryker\Zed\Product\Business\ProductFacade())->getProductAbstractCollection($productAbstractCriteriaTransfer);
+        return (new ProductFacade())->getProductAbstractCollection($productAbstractCriteriaTransfer);
     }
 
-    /**
-     * Helper method to get product abstract by SKU
-     */
     protected function getProductAbstractBySku(string $sku): ProductAbstractTransfer
     {
-        $productAbstractCriteriaTransfer = (new \Generated\Shared\Transfer\ProductAbstractCriteriaTransfer())
+        $productAbstractCriteriaTransfer = (new ProductAbstractCriteriaTransfer())
             ->setPagination(
-                (new \Generated\Shared\Transfer\PaginationTransfer())
+                (new PaginationTransfer())
                     ->setPage(1)
                     ->setMaxPerPage(5)
                     ->setLimit(5)
-                    ->setOffset(0)
+                    ->setOffset(0),
             )
             ->setProductAbstractConditions(
-                (new \Generated\Shared\Transfer\ProductAbstractConditionsTransfer())
-                    ->setSkus([$sku])
+                (new ProductAbstractConditionsTransfer())
+                    ->setSkus([$sku]),
             )
             ->setProductAbstractRelations(
-                (new \Generated\Shared\Transfer\ProductAbstractRelationsTransfer())
+                (new ProductAbstractRelationsTransfer())
                     ->setWithStoreRelations(true)
                     ->setWithLocalizedAttributes(true)
                     ->setWithVariants(true)
-                    ->setWithTaxSet(true)
+                    ->setWithTaxSet(true),
             );
 
-        $productAbstractCollectionTransfer = (new \Spryker\Zed\Product\Business\ProductFacade())->getProductAbstractCollection($productAbstractCriteriaTransfer);
+        $productAbstractCollectionTransfer = (new ProductFacade())->getProductAbstractCollection($productAbstractCriteriaTransfer);
         if ($productAbstractCollectionTransfer->getProductAbstracts()->count() === 0) {
-            throw new \InvalidArgumentException("Product abstract with SKU {$sku} not found.");
+            throw new InvalidArgumentException("Product abstract with SKU {$sku} not found.");
         }
 
-        foreach($productAbstractCollectionTransfer->getProductAbstracts() as $productAbstract) {
-            foreach($productAbstractCollectionTransfer->getProductTaxSets() as $productTaxSet) {
-                if ($productAbstract->getSku() === $productTaxSet->getProductAbstractSku()) {
-                    $productAbstract->setIdTaxSet($productTaxSet->getTaxSet()->getIdTaxSet());
+        foreach ($productAbstractCollectionTransfer->getProductAbstracts() as $productAbstract) {
+            foreach ($productAbstractCollectionTransfer->getProductTaxSets() as $productTaxSet) {
+                if ($productAbstract->getSku() !== $productTaxSet->getProductAbstractSku()) {
+                    continue;
                 }
+
+                $productAbstract->setIdTaxSet($productTaxSet->getTaxSet()->getIdTaxSet());
             }
         }
 
-        foreach($productAbstractCollectionTransfer->getProductAbstracts() as $productAbstract) {
+        foreach ($productAbstractCollectionTransfer->getProductAbstracts() as $productAbstract) {
             $storeIds = [];
             $productAbstract->setStoreRelation($productAbstract->getStoreRelation() ?? new StoreRelationTransfer());
-            foreach($productAbstract->getStoreRelation()->getStores() ?? [] as $store) {
+            foreach ($productAbstract->getStoreRelation()->getStores() ?? [] as $store) {
                 $storeIds[] = $store->getIdStore();
             }
             $productAbstract->getStoreRelation()->setIdStores($storeIds);
@@ -415,10 +426,7 @@ class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInt
         return $productAbstractCollectionTransfer->getProductAbstracts()->getIterator()->current();
     }
 
-    /**
-     * Helper method to create error response array
-     */
-    protected function errorArray(string $httpMethod, string $resourcePath, array $queryParams, array $pathParams, array $payload, \Exception $error): array
+    protected function errorArray(string $httpMethod, string $resourcePath, array $queryParams, array $pathParams, array $payload, Exception $error): array
     {
         return [
             'status' => 'error',
@@ -441,19 +449,18 @@ class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInt
         // Check if all required path parameters are provided
         foreach ($requiredPathParams as $requiredParam) {
             if (!array_key_exists($requiredParam, $pathParams)) {
-                throw new \InvalidArgumentException("Missing required path parameter: {$requiredParam}");
+                throw new InvalidArgumentException("Missing required path parameter: {$requiredParam}");
             }
         }
 
         $endpoint = $resourcePath;
 
-        foreach($pathParams as $pathParamKey => $pathParamValue) {
+        foreach ($pathParams as $pathParamKey => $pathParamValue) {
             $endpoint = preg_replace('/\{' . preg_quote($pathParamKey, '/') . '\}/', (string)$pathParamValue, $endpoint);
         }
 
-        $validator = (new \League\OpenAPIValidation\PSR7\ValidatorBuilder)->fromYamlFile(static::OPENAPI_LOCATION)->getRequestValidator();
+        $validator = (new ValidatorBuilder())->fromYamlFile(static::OPENAPI_LOCATION)->getRequestValidator();
         $validator->validate(new Request($httpMethod, $resourcePath, $queryParams, $pathParams, $payload, $endpoint));
-
     }
 
     protected function filterProductAbstractCollectionArray(array $productAbstractCollection): array
@@ -461,25 +468,25 @@ class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInt
         $productAbstractAllowList = ['id_product_abstract', 'sku', 'name', 'approval_status', 'new_from', 'new_to', 'localized_attributes'];
         $productConcreteAllowList = ['sku', 'attributes', 'abstract_sku', 'is_active', 'localized_attributes'];
 
-        $productAbstractCollection['pagination'] = array_filter($productAbstractCollection['pagination'] ?? [], fn($v) => $v !== null);
+        $productAbstractCollection['pagination'] = array_filter($productAbstractCollection['pagination'] ?? [], fn ($v) => $v !== null);
         unset($productAbstractCollection['product_tax_sets']);
 
-        foreach($productAbstractCollection['product_abstracts'] as $key => $productAbstract) {
+        foreach ($productAbstractCollection['product_abstracts'] as $key => $productAbstract) {
             $newProductAbstract = array_intersect_key($productAbstract, array_flip($productAbstractAllowList));
             $newProductAbstract['store_relation']['stores'] = [];
-            foreach($productAbstract['store_relation']['stores'] ?? [] as $store) {
-                $newProductAbstract['store_relation']['stores'][] = array_filter($store , fn($v) => !empty($v));
+            foreach ($productAbstract['store_relation']['stores'] ?? [] as $store) {
+                $newProductAbstract['store_relation']['stores'][] = array_filter($store, fn ($v) => (bool)$v);
             }
 
             $productAbstractCollection['product_abstracts'][$key] = $newProductAbstract;
         }
 
-        foreach($productAbstractCollection['product_concretes'] as $concretesKey => $productConcretes) {
-            foreach($productConcretes['product_concretes'] as $key => $productConcrete) {
+        foreach ($productAbstractCollection['product_concretes'] as $concretesKey => $productConcretes) {
+            foreach ($productConcretes['product_concretes'] as $key => $productConcrete) {
                 $newProductConcrete = array_intersect_key($productConcrete, array_flip($productConcreteAllowList));
                 $newProductConcrete['stores'] = [];
-                foreach($productConcrete['stores'] ?? [] as $store) {
-                    $newProductConcrete['stores'][] = array_filter($store , fn($v) => !empty($v));
+                foreach ($productConcrete['stores'] ?? [] as $store) {
+                    $newProductConcrete['stores'][] = array_filter($store, fn ($v) => (bool)$v);
                 }
 
                 $productAbstractCollection['product_concretes'][$concretesKey]['product_concretes'][$key] = $newProductConcrete;
@@ -495,7 +502,7 @@ class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInt
         $productConcreteStockAllowList = ['quantity', 'is_never_out_of_stock'];
 
         $newProductConcrete = array_intersect_key($productConcrete, array_flip($productConcreteAllowList));
-        foreach($newProductConcrete['stocks'] ?? [] as $key => $stock) {
+        foreach ($newProductConcrete['stocks'] ?? [] as $key => $stock) {
             $newProductConcrete['stocks'][$key] = array_intersect_key($stock, array_flip($productConcreteStockAllowList));
         }
 
@@ -514,18 +521,18 @@ class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInt
             $concreteSuperAttributes = [];
             if ($isConcrete) {
                 $concrete = SpyProductQuery::create()->findOneBySku($queryParams['concreteSku']);
-                if (empty($concrete)) {
-                    throw new \InvalidArgumentException("Product concrete with SKU {$queryParams['concreteSku']} not found.");
+                if (!$concrete) {
+                    throw new InvalidArgumentException("Product concrete with SKU {$queryParams['concreteSku']} not found.");
                 }
                 $attributes = array_keys(json_decode($concrete->getAttributes() ?? '{}', true));
-                /** @var SpyProductAttributeKey[] $concreteSuperAttributes */
+                /** @var array<SpyProductAttributeKey> $concreteSuperAttributes */
                 $concreteSuperAttributes = SpyProductAttributeKeyQuery::create()
                     ->filterByIsSuper(true)
-                    ->filterByKey($attributes, \Propel\Runtime\ActiveQuery\Criteria::IN)
+                    ->filterByKey($attributes, Criteria::IN)
                     ->find()
                     ->toArray();
 
-                foreach($concreteSuperAttributes as $attribute) {
+                foreach ($concreteSuperAttributes as $attribute) {
                     $result[$attribute['IdProductAttributeKey']] = [
                         'is_mandatory' => true,
                         'attribute_key' => $attribute['Key'],
@@ -535,10 +542,10 @@ class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInt
                 }
             }
 
-            /** @var SpyProductAttributeKey[] $attributes Super attributes during abstract creation, optional attributes during concrete addition */
+            /** @var array<SpyProductAttributeKey> $attributes Super attributes during abstract creation, optional attributes during concrete addition */
             $attributes = SpyProductAttributeKeyQuery::create()->filterByIsSuper(!$isConcrete)->find()->toArray();
 
-            foreach($attributes as $attribute) {
+            foreach ($attributes as $attribute) {
                 $result[$attribute['IdProductAttributeKey']] = [
                     'is_mandatory' => $result[$attribute['IdProductAttributeKey']] ?? false,
                     'attribute_key' => $attribute['Key'],
@@ -547,14 +554,15 @@ class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInt
                 ];
             }
 
-            foreach($result as $attributeKeyId => $attributeKey) {
+            foreach ($result as $attributeKeyId => $attributeKey) {
                 $productManagementAttribute = SpyProductManagementAttributeQuery::create()->findOneByFkProductAttributeKey($attributeKeyId);
                 if ($productManagementAttribute === null) {
                     unset($result[$attributeKeyId]);
+
                     continue;
                 }
                 $choices = SpyProductManagementAttributeValueQuery::create()->filterByFkProductManagementAttribute($productManagementAttribute->getIdProductManagementAttribute())->find()->toArray();
-                foreach($choices as $key => $choice) {
+                foreach ($choices as $key => $choice) {
                     $choices[$key] = $choice['Value'];
                 }
 
@@ -563,12 +571,13 @@ class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInt
 
                 if ($result[$attributeKeyId]['free_text'] === false && empty($result[$attributeKeyId]['choices'])) {
                     unset($result[$attributeKeyId]);
+
                     continue;
                 }
             }
 
             return ['status' => 'ok', 'result' => array_values($result)];
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->errorArray($httpMethod, $resourcePath, $queryParams, $pathParams, $payload, $e);
         }
     }
@@ -578,26 +587,25 @@ class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInt
         $existingProduct = SpyProductQuery::create()->findOneByFkProductAbstract($idProductAbstract);
         $existingProductAttributes = $this->getProductAttributes('GET', '/product-attributes', ['concreteSku' => $existingProduct->getSku()], [], [])['result'];
 
-        foreach($actualProductAttributeKeys as $actualProductAttributeKey) {
+        foreach ($actualProductAttributeKeys as $actualProductAttributeKey) {
             $found = false;
-            foreach($existingProductAttributes as $existingProductAttribute) {
+            foreach ($existingProductAttributes as $existingProductAttribute) {
                 if ($existingProductAttribute['attribute_key'] === $actualProductAttributeKey) {
                     $found = true;
+
                     break;
                 }
             }
 
             if (!$found) {
-                throw new \InvalidArgumentException("Attribute key: {$actualProductAttributeKey} is not a valid attribute key.");
+                throw new InvalidArgumentException("Attribute key: {$actualProductAttributeKey} is not a valid attribute key.");
             }
         }
 
-        foreach($existingProductAttributes as $existingProductAttribute) {
+        foreach ($existingProductAttributes as $existingProductAttribute) {
             if ($existingProductAttribute['is_mandatory'] && !in_array($existingProductAttribute['attribute_key'], $actualProductAttributeKeys)) {
-                throw new \InvalidArgumentException("Mandatory attribute key: {$existingProductAttribute['attribute_key']} is missing.");
+                throw new InvalidArgumentException("Mandatory attribute key: {$existingProductAttribute['attribute_key']} is missing.");
             }
         }
-
     }
-
 }
