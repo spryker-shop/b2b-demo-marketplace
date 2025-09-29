@@ -13,8 +13,8 @@ require_once APPLICATION_ROOT_DIR . '/vendor/autoload.php';
 
 Environment::initialize();
 
-$errorHandlerEnvironment = new ErrorHandlerEnvironment();
-$errorHandlerEnvironment->initialize();
+//$errorHandlerEnvironment = new ErrorHandlerEnvironment();
+//$errorHandlerEnvironment->initialize();
 
 $bootstrap = new YvesBootstrap();
 $bootstrap
