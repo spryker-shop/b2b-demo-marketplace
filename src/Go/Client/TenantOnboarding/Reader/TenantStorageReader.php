@@ -20,7 +20,27 @@ class TenantStorageReader
     ) {
     }
 
-    public function findTenantByID(string $id): ?TenantStorageTransfer
+    public function findTenantByHost(string $id): ?TenantStorageTransfer
+    {
+        if (isset(static::$_instanceCache[$id])) {
+            return static::$_instanceCache[$id];
+        }
+
+        $storeKey = $this->generateKey('tenant_host:' . $id);
+        $storeData = $this->storageClient->getService()->get($storeKey);
+
+        if (!$storeData || !isset($storeData['id'])) {
+            static::$_instanceCache[$id] = null;
+
+            return null;
+        }
+
+        static::$_instanceCache[$id] = $this->findTenantByIdentifier($storeData['id']);
+
+        return static::$_instanceCache[$id];
+    }
+
+    public function findTenantByIdentifier(string $id): ?TenantStorageTransfer
     {
         if (isset(static::$_instanceCache[$id])) {
             return static::$_instanceCache[$id];

@@ -31,7 +31,10 @@ class EmailNotificationUserOnboardingStepPlugin extends AbstractPlugin implement
             ->setType(TenantOnboardingMailTypeBuilderPlugin::MAIL_TYPE)
             ->setTenantRegistration($tenantRegistrationTransfer);
 
-        $this->getFactory()->getMailFacade()->handleMail($mailTransfer);
+        try {
+            $this->getFactory()->getMailFacade()->handleMail($mailTransfer);
+        } catch (\Exception $e) {
+        }
 
         return $result;
     }

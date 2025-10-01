@@ -9,6 +9,7 @@ namespace Go\Zed\TenantOnboarding\Business\Service;
 
 use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\TenantRegistrationResponseTransfer;
+use Go\Zed\TenantOnboarding\Communication\Plugin\Mail\TenantDeclinedMailTypeBuilderPlugin;
 use Go\Zed\TenantOnboarding\Persistence\TenantOnboardingEntityManagerInterface;
 use Go\Zed\TenantOnboarding\Persistence\TenantOnboardingRepositoryInterface;
 use Go\Zed\TenantOnboarding\TenantOnboardingConfig;
@@ -45,8 +46,9 @@ class RegistrationDecliner implements RegistrationDeclinerInterface
         $this->entityManager->updateTenantRegistration($registrationTransfer);
 
         // Send decline notification email
-        $mailTransfer = new MailTransfer();
-        $mailTransfer->setType('tenant-registration-declined');
+        $mailTransfer = (new MailTransfer())
+            ->setType(TenantDeclinedMailTypeBuilderPlugin::MAIL_TYPE)
+            ->setTenantRegistration($registrationTransfer);
 
         $this->mailFacade->handleMail($mailTransfer);
 

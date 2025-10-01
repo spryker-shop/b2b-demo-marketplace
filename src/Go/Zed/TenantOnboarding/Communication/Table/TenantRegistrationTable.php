@@ -158,6 +158,13 @@ class TenantRegistrationTable extends AbstractTable
                 $idTenantRegistration
             );
         }
+        if ($status === TenantOnboardingConfig::REGISTRATION_STATUS_COMPLETED) {
+            $viewUrl = Url::generate('/tenant-onboarding/index/send-email', ['id' => $idTenantRegistration]);
+            $buttons[] = sprintf(
+                '<a href="%s" class="btn btn-sm btn-primary">Send Email</a>',
+                $viewUrl
+            );
+        }
 
         return implode(' ', $buttons);
     }
