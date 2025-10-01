@@ -41,7 +41,10 @@ class MySqlStorageReader extends SprykerMySqlStorageReader
         if (isset($result['alias_keys_column']) && $result['alias_keys_column'] === $resourceKey) {
             $explode = explode(':', $result['key_column']);
             $id = end($explode);
-            return json_encode(['id' => (int)$id]);
+            if ((int)$id == $id) {
+                $id = (int)$id;
+            }
+            return json_encode(['id' => $id]);
         }
 
         return $result['resource_data'] ?? '';
@@ -73,7 +76,10 @@ class MySqlStorageReader extends SprykerMySqlStorageReader
             if (isset($result['alias_keys_column']) && $result['alias_keys_column'] === $result['resource_key']) {
                 $explode = explode(':', trim($result['key_column']));
                 $id = end($explode);
-                $formattedResults[$resourceKey] = json_encode(['id' => (int)$id]);
+                if ((int)$id == $id) {
+                    $id = (int)$id;
+                }
+                $formattedResults[$resourceKey] = json_encode(['id' => $id]);
                 continue;
             }
 

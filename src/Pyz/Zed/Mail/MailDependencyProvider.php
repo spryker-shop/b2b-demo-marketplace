@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\Mail;
 
+use Go\Zed\TenantOnboarding\Communication\Plugin\Mail\TenantDeclinedMailTypeBuilderPlugin;
 use Go\Zed\TenantOnboarding\Communication\Plugin\Mail\TenantOnboardingMailTypeBuilderPlugin;
 use Spryker\Zed\AvailabilityNotification\Communication\Plugin\Mail\AvailabilityNotificationMailTypeBuilderPlugin;
 use Spryker\Zed\AvailabilityNotification\Communication\Plugin\Mail\AvailabilityNotificationSubscriptionMailTypeBuilderPlugin;
@@ -77,6 +78,7 @@ class MailDependencyProvider extends SprykerMailDependencyProvider
     protected function getMailTypeBuilderPlugins(): array
     {
         return [
+            new TenantDeclinedMailTypeBuilderPlugin(),
             new TenantOnboardingMailTypeBuilderPlugin(),
             new CustomerRegistrationMailTypeBuilderPlugin(),
             new CustomerRegistrationConfirmationMailTypeBuilderPlugin(),

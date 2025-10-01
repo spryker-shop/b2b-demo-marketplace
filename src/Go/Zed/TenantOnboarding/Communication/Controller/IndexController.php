@@ -7,6 +7,10 @@
 
 namespace Go\Zed\TenantOnboarding\Communication\Controller;
 
+use Generated\Shared\Transfer\MailTransfer;
+use Generated\Shared\Transfer\TenantRegistrationCriteriaTransfer;
+use Go\Zed\TenantOnboarding\Communication\Plugin\Mail\TenantOnboardingMailTypeBuilderPlugin;
+use Spryker\Shared\ErrorHandler\ErrorLogger;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -103,6 +107,65 @@ class IndexController extends AbstractController
             $this->addSuccessMessage('Tenant registration declined successfully');
         } else {
             $this->addErrorMessage('Failed to decline tenant registration');
+        }
+
+        return $this->redirectResponse('/tenant-onboarding');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function sendEmailAction(Request $request)
+    {
+        $idTenantRegistration = (int)$request->get('id');
+
+        $tenantRegistrationTransfer = $this->getFacade()->findTenantRegistrationById(
+            $idTenantRegistration
+        );
+
+        if (!$tenantRegistrationTransfer) {
+            if ($request->isXmlHttpRequest()) {
+                return $this->jsonResponse([
+                    'success' => false,
+                    'message' => 'Tenant registration not found',
+                    'redirect' => null
+                ]);
+            }
+
+            $this->addErrorMessage('Tenant registration not found');
+
+            return $this->redirectResponse('/tenant-onboarding');
+        }
+
+
+        $mailTransfer = (new MailTransfer())
+            ->setType(TenantOnboardingMailTypeBuilderPlugin::MAIL_TYPE)
+            ->setTenantRegistration($tenantRegistrationTransfer);
+
+        $isSuccessful = false;
+        try {
+            $this->getFactory()->getMailFacade()->handleMail($mailTransfer);
+            $isSuccessful = true;
+        } catch (\Exception $e) {
+            ErrorLogger::getInstance()->log($e);
+        }
+
+        if ($request->isXmlHttpRequest()) {
+            // AJAX request - return JSON
+            return $this->jsonResponse([
+                'success' => $isSuccessful,
+                'message' => 'Tenant registration email was sent successfully',
+                'redirect' => '/tenant-onboarding',
+            ]);
+        }
+
+        // Regular browser request - redirect with flash message
+        if ($isSuccessful) {
+            $this->addSuccessMessage('Tenant registration email was sent successfully.');
+        } else {
+            $this->addSuccessMessage('Tenant registration email was not sent.');
         }
 
         return $this->redirectResponse('/tenant-onboarding');

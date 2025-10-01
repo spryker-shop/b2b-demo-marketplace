@@ -28,7 +28,8 @@ class TenantOnboardingRepository extends AbstractRepository implements TenantOnb
      */
     public function getTenantRegistrations(TenantRegistrationCriteriaTransfer $criteriaTransfer): TenantRegistrationCollectionTransfer
     {
-        $query = $this->getFactory()->createTenantRegistrationQuery();
+        $query = $this->getFactory()->createTenantRegistrationQuery()
+            ->leftJoinPyzTenant();
 
         if ($criteriaTransfer->getStatus()) {
             $query->filterByStatus($criteriaTransfer->getStatus());
@@ -59,6 +60,13 @@ class TenantOnboardingRepository extends AbstractRepository implements TenantOnb
         foreach ($entities as $entity) {
             $tenantRegistrationTransfer = new TenantRegistrationTransfer();
             $tenantRegistrationTransfer->fromArray($entity->toArray(), true);
+
+            if ($entity->getFkTenant() && $entity->getPyzTenant()) {
+                $tenantTransfer = new TenantTransfer();
+                $tenantTransfer->fromArray($entity->getPyzTenant()->toArray(), true);
+                $tenantRegistrationTransfer->setTenant($tenantTransfer);
+            }
+
             $collectionTransfer->addTenantRegistration($tenantRegistrationTransfer);
         }
 
@@ -82,6 +90,7 @@ class TenantOnboardingRepository extends AbstractRepository implements TenantOnb
         $entity = $this->getFactory()
             ->createTenantRegistrationQuery()
             ->filterByIdTenantRegistration($idTenantRegistration)
+            ->leftJoinPyzTenant()
             ->findOne();
 
         if (!$entity) {
@@ -90,6 +99,12 @@ class TenantOnboardingRepository extends AbstractRepository implements TenantOnb
 
         $tenantRegistrationTransfer = new TenantRegistrationTransfer();
         $tenantRegistrationTransfer->fromArray($entity->toArray(), true);
+
+        if ($entity->getFkTenant() && $entity->getPyzTenant()) {
+            $tenantTransfer = new TenantTransfer();
+            $tenantTransfer->fromArray($entity->getPyzTenant()->toArray(), true);
+            $tenantRegistrationTransfer->setTenant($tenantTransfer);
+        }
 
         return $tenantRegistrationTransfer;
     }

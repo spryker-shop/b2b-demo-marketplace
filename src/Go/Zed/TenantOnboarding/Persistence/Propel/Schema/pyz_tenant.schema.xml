@@ -21,7 +21,8 @@
 
         <behavior name="synchronization">
             <parameter name="resource" value="tenant"/>
-            <parameter name="key_suffix_column" value="tenant_host"/>
+            <parameter name="key_suffix_column" value="identifier"/>
+            <parameter name="mappings" value="tenant_host:identifier"/>
             <parameter name="queue_group" value="sync.storage.tenant"/>
             <parameter name="queue_pool" value="synchronizationPool"/>
         </behavior>

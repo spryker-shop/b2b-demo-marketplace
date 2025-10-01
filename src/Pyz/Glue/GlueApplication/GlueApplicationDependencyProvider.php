@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Glue\GlueApplication;
 
+use Go\Glue\TenantBehavior\Plugin\GlueApplication\TenantApplicationPlugin;
 use Spryker\Glue\AgentAuthRestApi\Plugin\GlueApplication\AgentAccessTokenRestRequestValidatorPlugin;
 use Spryker\Glue\AgentAuthRestApi\Plugin\GlueApplication\AgentAccessTokenRestUserFinderPlugin;
 use Spryker\Glue\AgentAuthRestApi\Plugin\GlueApplication\AgentAccessTokensResourceRoutePlugin;
@@ -857,6 +858,7 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
             new EventDispatcherApplicationPlugin(),
             new GlueApplicationApplicationPlugin(),
             new RouterApplicationPlugin(),
+            new TenantApplicationPlugin(),
             new StoreApplicationPlugin(),
             new LocaleApplicationPlugin(),
         ];

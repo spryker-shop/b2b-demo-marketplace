@@ -6,5 +6,6 @@ use Generated\Shared\Transfer\TenantStorageTransfer;
 
 interface TenantOnboardingClientInterface
 {
-    public function findTenantByID(string $id): ?TenantStorageTransfer;
+    public function findTenantByHost(string $id): ?TenantStorageTransfer;
+    public function findTenantByIdentifier(string $id): ?TenantStorageTransfer;
 }
