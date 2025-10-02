@@ -22,6 +22,7 @@ use Spryker\Zed\CompanyBusinessUnitDataImport\CompanyBusinessUnitDataImportConfi
 use Spryker\Zed\CompanyDataImport\CompanyDataImportConfig;
 use Spryker\Zed\CompanyUnitAddressDataImport\CompanyUnitAddressDataImportConfig;
 use Spryker\Zed\CompanyUnitAddressLabelDataImport\CompanyUnitAddressLabelDataImportConfig;
+use Spryker\Zed\Console\Communication\Plugin\Console\MultiProcessRunConsole;
 use Spryker\Zed\Console\ConsoleDependencyProvider as SprykerConsoleDependencyProvider;
 use Spryker\Zed\ContentNavigationDataImport\ContentNavigationDataImportConfig;
 use Spryker\Zed\CountryDataImport\CountryDataImportConfig;
@@ -32,6 +33,7 @@ use Spryker\Zed\CustomerStorage\Communication\Console\DeleteExpiredCustomerInval
 use Spryker\Zed\DataExport\Communication\Console\DataExportConsole;
 use Spryker\Zed\DataImport\Communication\Console\DataImportConsole;
 use Spryker\Zed\DataImport\Communication\Console\DataImportDumpConsole;
+use Spryker\Zed\DataImportMerchant\Communication\Console\DataImportMerchantImportConsole;
 use Spryker\Zed\Development\Communication\Console\CodeArchitectureSnifferConsole;
 use Spryker\Zed\Development\Communication\Console\CodeFixturesConsole;
 use Spryker\Zed\Development\Communication\Console\CodePhpstanConsole;
@@ -53,6 +55,7 @@ use Spryker\Zed\Development\Communication\Console\RemoveServiceIdeAutoCompletion
 use Spryker\Zed\Development\Communication\Console\RemoveYvesIdeAutoCompletionConsole;
 use Spryker\Zed\Development\Communication\Console\RemoveZedIdeAutoCompletionConsole;
 use Spryker\Zed\DocumentationGeneratorRestApi\Communication\Console\GenerateRestApiDocumentationConsole;
+use Spryker\Zed\Event\Communication\Plugin\Console\EventListenerDumpConsole;
 use Spryker\Zed\EventBehavior\Communication\Console\EventBehaviorTriggerTimeoutConsole;
 use Spryker\Zed\EventBehavior\Communication\Console\EventTriggerListenerConsole;
 use Spryker\Zed\EventBehavior\Communication\Plugin\Console\EventBehaviorPostHookPlugin;
@@ -83,6 +86,7 @@ use Spryker\Zed\Oms\Communication\Console\CheckConditionConsole as OmsCheckCondi
 use Spryker\Zed\Oms\Communication\Console\CheckTimeoutConsole as OmsCheckTimeoutConsole;
 use Spryker\Zed\Oms\Communication\Console\ClearLocksConsole as OmsClearLocksConsole;
 use Spryker\Zed\Oms\Communication\Console\ProcessCacheWarmUpConsole as OmsProcessCacheWarmUpConsole;
+use Spryker\Zed\Opentelemetry\Communication\Plugin\Console\OpentelemetryGeneratorConsole;
 use Spryker\Zed\OrderMatrix\Communication\Console\OrderMatrixConsole;
 use Spryker\Zed\PaymentDataImport\PaymentDataImportConfig;
 use Spryker\Zed\PriceProduct\Communication\Console\PriceProductStoreOptimizeConsole;
@@ -212,6 +216,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
     protected function getConsoleCommands(Container $container): array
     {
         $commands = [
+            new OpentelemetryGeneratorConsole(),
             new CacheWarmerConsole(),
             new TwigTemplateWarmerConsole(),
             new BuildNavigationConsole(),
@@ -419,12 +424,14 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new AclEntitySynchronizeConsole(),
             new StorageRedisDataReSaveConsole(),
             new SitemapGenerateConsole(),
+            new DataImportMerchantImportConsole(),
         ];
 
         $propelCommands = $container->getLocator()->propel()->facade()->getConsoleCommands();
         $commands = array_merge($commands, $propelCommands);
 
         if ($this->getConfig()->isDevelopmentConsoleCommandsEnabled()) {
+            $commands[] = new EventListenerDumpConsole();
             $commands[] = new CodeTestConsole();
             $commands[] = new CodeStyleSnifferConsole();
             $commands[] = new CodeArchitectureSnifferConsole();
@@ -463,6 +470,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             $commands[] = new CustomerPasswordResetConsole();
             $commands[] = new CustomerPasswordSetConsole();
             $commands[] = new TriggerEventFromCsvFileConsole();
+            $commands[] = new MultiProcessRunConsole();
 
             if (class_exists(SecurityCheckerCommand::class)) {
                 $commands[] = new SecurityCheckerCommand();

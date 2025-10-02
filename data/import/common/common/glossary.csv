@@ -377,6 +377,8 @@ global.search,Suche,de_DE
 global.search,Search,en_US
 global.search.results,Ergebnisse für,de_DE
 global.search.results,Results for,en_US
+global.search.results.no_query,Ergebnisse,de_DE
+global.search.results.no_query,Search Results,en_US
 global.search.spellingSuggestion,Meinten Sie,de_DE
 global.search.spellingSuggestion,Did you mean,en_US
 global.search.suggestions,Suchvorschläge,de_DE
@@ -453,15 +455,15 @@ global.thank_certeo,"Ein großes Dankeschön an unsere Freunde von Certeo.",de_D
 global.thank_certeo,"A big thank you to our friends from Certeo.",en_US
 global.privacy_nav.imprint,Impressum,de_DE
 global.privacy_nav.imprint,Imprint,en_US
-global.privacy_nav.imprint_url,"https://spryker.com/imprint/?lang=de",de_DE
+global.privacy_nav.imprint_url,"https://spryker.com/imprint/",de_DE
 global.privacy_nav.imprint_url,"https://spryker.com/imprint/",en_US
 global.privacy_nav.data_privacy,Datenschutz,de_DE
 global.privacy_nav.data_privacy,Data privacy,en_US
-global.privacy_nav.data_privacy_url,"https://spryker.com/privacy-policy/?lang=de",de_DE
+global.privacy_nav.data_privacy_url,"https://spryker.com/privacy-policy/",de_DE
 global.privacy_nav.data_privacy_url,"https://spryker.com/privacy-policy/",en_US
 global.build_with,Erstellt mit,de_DE
 global.build_with,Build with,en_US
-global.build_with.link,https://spryker.com/?lang=de,de_DE
+global.build_with.link,https://spryker.com/,de_DE
 global.build_with.link,https://spryker.com/,en_US
 global.phone.number,+49 (0) 30 208 498 350,en_US
 global.phone.number,+49 (0) 30 208 498 350,de_DE
@@ -715,7 +717,7 @@ customer.profile.address.edit,Edit,en_US
 customer.profile.address.edit,Ändern,de_DE
 customer.profile.address.delete,Delete,en_US
 customer.profile.address.delete,Löschen,de_DE
-customer.profile.order_details,Bestellungs Details,de_DE
+customer.profile.order_details,Bestelldetails,de_DE
 customer.profile.order_details,Order Details,en_US
 customer.password.update,Change Password,en_US
 customer.password.update,Passwort ändern,de_DE
@@ -3911,6 +3913,8 @@ merchant_profile.privacy,Data Privacy,en_US
 merchant_profile.privacy,Datenschutz,de_DE
 merchant_profile.delivery_time,Delivery Time,en_US
 merchant_profile.delivery_time,Lieferzeit,de_DE
+merchant_profile.shop_merchant_products,Shop Merchant Products,en_US
+merchant_profile.shop_merchant_products,Händlerartikel kaufen,de_DE
 merchant_product.message.invalid,Product "%sku%" with Merchant "%merchant_reference%" not found.,en_US
 merchant_product.message.invalid,Der Produkt "%sku%" mit dem Händler "%merchant_reference%" ist nicht gefunden.,de_DE
 merchant_product.sold_by,Sold by,en_US
@@ -4343,6 +4347,12 @@ multi_factor_auth.error.attempts_exceeded,"You have exceeded the number of allow
 multi_factor_auth.error.attempts_exceeded,"Sie haben die Anzahl der zulässigen Versuche überschritten. Bitte versuchen Sie es erneut, nachdem die Seite aktualisiert wurde.",de_DE
 multi_factor_auth.error.expired_code,"The multi-factor authentication code has expired. Please try again.",en_US
 multi_factor_auth.error.expired_code,"Der Multi-Faktor-Authentifizierungscode ist abgelaufen. Bitte versuchen Sie es erneut.",de_DE
+multi_factor_auth.enter_your_code_input,"Enter your code here",en_US
+multi_factor_auth.enter_your_code_input,"Geben Sie Ihren Code hier ein",de_DE
+multi_factor_auth.activate,"Activate",en_US
+multi_factor_auth.activate,"Aktivieren",de_DE
+multi_factor_auth.deactivate,"Deactivate",en_US
+multi_factor_auth.deactivate,"Deaktivieren",de_DE
 multi_factor_auth.error.authentication_method_not_selected,"Unable to proceed. A multi-factor authentication method must be selected. Please refresh the page and try again or contact support if the problem persists.",en_US
 multi_factor_auth.error.authentication_method_not_selected,"Kann nicht fortgesetzt werden. Es muss eine Multi-Faktor-Authentifizierungsmethode ausgewählt werden. Bitte aktualisieren Sie die Seite und versuchen Sie es erneut oder wenden Sie sich an den Support, wenn das Problem weiterhin besteht.",de_DE
 multi_factor_auth.error.corrupted_code,"The provided code is empty or invalid. Please try again.",en_US
@@ -4477,3 +4487,13 @@ sales_order_amendment_widget.summary_step.update.order,Update order,en_US
 sales_order_amendment_widget.summary_step.update.order,Bestellung aktualisieren,de_DE
 sales_order_amendment_widget.success_step.update.success.title,Your order has been updated successfully!,en_US
 sales_order_amendment_widget.success_step.update.success.title,Ihre Bestellung wurde erfolgreich aktualisiert!,de_DE
+data_import_merchant.validation.importer_type_not_supported,Importer type is not supported.,en_US
+data_import_merchant.validation.importer_type_not_supported,Der Importertyp wird nicht unterstützt.,de_DE
+data_import_merchant.validation.merchant_not_found,Merchant not found.,en_US
+data_import_merchant.validation.merchant_not_found,Handelspartner nicht gefunden.,de_DE
+data_import_merchant.validation.user_not_found,User not found.,en_US
+data_import_merchant.validation.user_not_found,Benutzer nicht gefunden.,de_DE
+data_import_merchant.validation.invalid_file_content_type,Invalid file content type.,en_US
+data_import_merchant.validation.invalid_file_content_type,Ungültiger Dateityp.,de_DE
+merchant_product_data_import.validation.missing_required_header,The required field %header% is missing.,en_US
+merchant_product_data_import.validation.missing_required_header,Das erforderliche Feld %header% fehlt.,de_DE

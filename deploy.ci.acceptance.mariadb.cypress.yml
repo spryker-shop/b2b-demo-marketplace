@@ -4,10 +4,12 @@ namespace: spryker_ci
 tag: '1.0'
 
 environment: docker.ci.cypress
-pipeline: docker.ci.acceptance.cypress
+pipeline: docker.ci.acceptance
 image:
     tag: spryker/php:8.3
     php:
+        enabled-extensions:
+            - otel
         ini:
             max_execution_time: 300
             request_terminate_timeout: 300
@@ -26,7 +28,7 @@ image:
 
 composer:
     mode: '--dev --quiet -o -a'
-    autoload: ''
+    autoload: '-o'
 
 regions:
     EU:
@@ -127,9 +129,9 @@ services:
             username: 'spryker'
             password: 'secret'
     session:
-        engine: redis
+        engine: valkey
     key_value_store:
-        engine: redis
+        engine: valkey
     search:
         engine: elastic
         version: '7.10'
@@ -155,4 +157,4 @@ docker:
 
     compose:
         yamls:
-            - vendor/spryker/cypress-tests/docker-compose.cypress.yml
+            - tests/cypress-tests/docker-compose.cypress.yml

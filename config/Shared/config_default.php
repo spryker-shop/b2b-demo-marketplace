@@ -10,9 +10,12 @@ use Generated\Shared\Transfer\AssetDeletedTransfer;
 use Generated\Shared\Transfer\AssetUpdatedTransfer;
 use Generated\Shared\Transfer\CancelPaymentTransfer;
 use Generated\Shared\Transfer\CapturePaymentTransfer;
+use Generated\Shared\Transfer\CmsPagePublishedTransfer;
+use Generated\Shared\Transfer\CmsPageUnpublishedTransfer;
 use Generated\Shared\Transfer\ConfigureTaxAppTransfer;
 use Generated\Shared\Transfer\DeletePaymentMethodTransfer;
 use Generated\Shared\Transfer\DeleteTaxAppTransfer;
+use Generated\Shared\Transfer\InitializeCmsPageExportTransfer;
 use Generated\Shared\Transfer\InitializeProductExportTransfer;
 use Generated\Shared\Transfer\MerchantAppOnboardingStatusChangedTransfer;
 use Generated\Shared\Transfer\OrderStatusChangedTransfer;
@@ -56,6 +59,7 @@ use Spryker\Shared\Application\Log\Config\SprykerLoggerConfig;
 use Spryker\Shared\AvailabilityNotification\AvailabilityNotificationConstants;
 use Spryker\Shared\CartsRestApi\CartsRestApiConstants;
 use Spryker\Shared\Category\CategoryConstants;
+use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Shared\CmsGui\CmsGuiConstants;
 use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Shared\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConstants;
@@ -78,6 +82,7 @@ use Spryker\Shared\Locale\LocaleConstants;
 use Spryker\Shared\Log\LogConstants;
 use Spryker\Shared\Mail\MailConstants;
 use Spryker\Shared\MerchantPortalApplication\MerchantPortalConstants;
+use Spryker\Shared\MerchantProductDataImport\MerchantProductDataImportConstants;
 use Spryker\Shared\MerchantRelationRequest\MerchantRelationRequestConstants;
 use Spryker\Shared\MerchantRelationship\MerchantRelationshipConstants;
 use Spryker\Shared\MessageBroker\MessageBrokerConstants;
@@ -140,6 +145,7 @@ use Spryker\Zed\OauthAuth0\OauthAuth0Config;
 use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Payment\PaymentConfig;
 use Spryker\Zed\Propel\PropelConfig;
+use SprykerShop\Shared\AgentPage\AgentPageConstants;
 use SprykerShop\Shared\CustomerPage\CustomerPageConstants;
 use SprykerShop\Shared\ShopUi\ShopUiConstants;
 use SprykerShop\Shared\StorageRouter\StorageRouterConstants;
@@ -186,6 +192,8 @@ $config[RouterConstants::IS_STORE_ROUTING_ENABLED]
     = $config[StoreWidgetConstants::IS_STORE_ROUTING_ENABLED]
     = $config[StorageRouterConstants::IS_STORE_ROUTING_ENABLED]
     = $config[ShopUiConstants::IS_STORE_ROUTING_ENABLED]
+    = $config[CustomerPageConstants::IS_STORE_ROUTING_ENABLED]
+    = $config[AgentPageConstants::IS_STORE_ROUTING_ENABLED]
     = $config[LocaleConstants::IS_STORE_ROUTING_ENABLED] = (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
 
 // >>> DEV TOOLS
@@ -257,7 +265,7 @@ $config[HttpConstants::ZED_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG]
     'preload' => true,
 ];
 
-$config[CustomerConstants::CUSTOMER_SECURED_PATTERN] = '(^/login_check$|^(/[A-Z]{2})?(/en|/de)?/customer($|/)|^(/[A-Z]{2})?(/en|/de)?/wishlist($|/)|^(/[A-Z]{2})?(/en|/de)?/shopping-list($|/)|^(/[A-Z]{2})?(/en|/de)?/quote-request($|/)|^(/[A-Z]{2})?(/en|/de)?/comment($|/)|^(/[A-Z]{2})?(/en|/de)?/company(?!/register)($|/)|^(/[A-Z]{2})?(/en|/de)?/multi-cart($|/)|^(/[A-Z]{2})?(/en|/de)?/shared-cart($|/)|^(/en|/de)?/cart(?!/add)($|/)|^(/en|/de)?/checkout($|/))|^(/en|/de)?/cart-reorder($|/)|^(/en|/de)?/order-amendment($|/)';
+$config[CustomerConstants::CUSTOMER_SECURED_PATTERN] = '(^/login_check$|^[/]*([A-Z]{2})?[/]*(en|de)?[/]*customer($|/)|^[/]*([A-Z]{2})?[/]*(en|de)?[/]*wishlist($|/)|^[/]*([A-Z]{2})?[/]*(en|de)?[/]*shopping-list($|/)|^[/]*([A-Z]{2})?[/]*(en|de)?[/]*quote-request($|/)|^(/[A-Z]{2})?(/en|/de)?/comment($|/)|^(/[A-Z]{2})?(/en|/de)?/company(?!/register)($|/)|^[/]*([A-Z]{2})?[/]*(en|de)?[/]*multi-cart($|/)|^(/[A-Z]{2})?(/en|/de)?/shared-cart($|/)|^(/en|/de)?/cart(?!/add)($|/)|^(/en|/de)?/checkout($|/))|^(/en|/de)?/cart-reorder($|/)|^(/en|/de)?/order-amendment($|/)';
 $config[CustomerConstants::CUSTOMER_ANONYMOUS_PATTERN] = '^/.*';
 $config[CustomerPageConstants::CUSTOMER_REMEMBER_ME_SECRET] = getenv('SPRYKER_CUSTOMER_REMEMBER_ME_SECRET');
 $config[CustomerPageConstants::CUSTOMER_REMEMBER_ME_LIFETIME] = 31536000;
@@ -331,6 +339,12 @@ $config[AclConstants::ACL_DEFAULT_RULES] = [
     ],
     [
         'bundle' => 'multi-factor-auth',
+        'controller' => '*',
+        'action' => '*',
+        'type' => 'allow',
+    ],
+    [
+        'bundle' => 'multi-factor-auth-merchant-portal',
         'controller' => '*',
         'action' => '*',
         'type' => 'allow',
@@ -665,8 +679,19 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'root' => APPLICATION_ROOT_DIR . '/data/DE/media/',
         'path' => 'files/',
     ],
+    'merchant-product-data-import-files' => [
+        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
+        'key' => getenv('SPRYKER_S3_MERCHANT_PRODUCT_DATA_IMPORT_FILES_KEY') ?: '',
+        'bucket' => getenv('SPRYKER_S3_MERCHANT_PRODUCT_DATA_IMPORT_FILES_BUCKET') ?: '',
+        'secret' => getenv('SPRYKER_S3_MERCHANT_PRODUCT_DATA_IMPORT_FILES_SECRET') ?: '',
+        'root' => '/',
+        'path' => '/',
+        'version' => 'latest',
+        'region' => getenv('AWS_REGION') ?: 'eu-central-1',
+    ],
 ];
 $config[FileManagerConstants::STORAGE_NAME] = 'files';
+$config[MerchantProductDataImportConstants::FILE_SYSTEM_NAME] = 'merchant-product-data-import-files';
 $config[FileManagerGuiConstants::DEFAULT_FILE_MAX_SIZE] = '10M';
 
 // ----------------------------------------------------------------------------
@@ -846,6 +871,7 @@ $config[SearchHttpConstants::TENANT_IDENTIFIER]
     = $config[PaymentConstants::TENANT_IDENTIFIER]
     = $config[AppCatalogGuiConstants::TENANT_IDENTIFIER]
     = $config[TaxAppConstants::TENANT_IDENTIFIER]
+    = $config[CmsConstants::TENANT_IDENTIFIER]
     = getenv('SPRYKER_TENANT_IDENTIFIER') ?: '';
 
 $config[MessageBrokerConstants::MESSAGE_TO_CHANNEL_MAP] =
@@ -884,6 +910,9 @@ $config[MessageBrokerAwsConstants::MESSAGE_TO_CHANNEL_MAP] = [
     SubmitPaymentTaxInvoiceTransfer::class => 'payment-tax-invoice-commands',
     ReadyForMerchantAppOnboardingTransfer::class => 'merchant-app-events',
     MerchantAppOnboardingStatusChangedTransfer::class => 'merchant-app-events',
+    CmsPagePublishedTransfer::class => 'cms-page-events',
+    CmsPageUnpublishedTransfer::class => 'cms-page-events',
+    InitializeCmsPageExportTransfer::class => 'search-commands',
 ];
 
 $config[MessageBrokerConstants::CHANNEL_TO_RECEIVER_TRANSPORT_MAP] = [
@@ -900,10 +929,12 @@ $config[MessageBrokerConstants::CHANNEL_TO_RECEIVER_TRANSPORT_MAP] = [
 ];
 
 $config[MessageBrokerConstants::CHANNEL_TO_SENDER_TRANSPORT_MAP] = [
+    'cms-page-events' => MessageBrokerAwsConfig::HTTP_CHANNEL_TRANSPORT,
     'payment-commands' => MessageBrokerAwsConfig::HTTP_CHANNEL_TRANSPORT,
     'product-events' => MessageBrokerAwsConfig::HTTP_CHANNEL_TRANSPORT,
     'order-events' => MessageBrokerAwsConfig::HTTP_CHANNEL_TRANSPORT,
     'payment-tax-invoice-commands' => MessageBrokerAwsConfig::HTTP_CHANNEL_TRANSPORT,
+    'search-entity-events' => MessageBrokerAwsConfig::HTTP_CHANNEL_TRANSPORT,
 ];
 
 // -------------------------------- ACP AWS --------------------------------------
