@@ -651,6 +651,8 @@ $config[SymfonyMailerConstants::SMTP_USERNAME] = getenv('SPRYKER_SMTP_USERNAME')
 $config[SymfonyMailerConstants::SMTP_PASSWORD] = getenv('SPRYKER_SMTP_PASSWORD') ?: null;
 
 // >>> FILESYSTEM
+$awsRegion = getenv('AWS_REGION') ?: 'eu-central-1';
+
 $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
     SitemapConstants::FILESYSTEM_NAME => [
         'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
@@ -687,7 +689,7 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'secret' => getenv('SPRYKER_S3_MERCHANT_PRODUCT_DATA_IMPORT_FILES_SECRET') ?: '',
         'path' => '/merchant-product-data-import-files',
         'version' => 'latest',
-        'region' => getenv('AWS_REGION') ?: 'eu-central-1',
+        'region' => $awsRegion,
     ],
     'merchant-product-offer-data-import-files' => [
         'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
@@ -696,7 +698,7 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'secret' => getenv('SPRYKER_S3_MERCHANT_PRODUCT_DATA_IMPORT_FILES_SECRET') ?: '',
         'path' => '/merchant-product-offer-data-import-files',
         'version' => 'latest',
-        'region' => getenv('AWS_REGION') ?: 'eu-central-1',
+        'region' => $awsRegion,
     ],
 ];
 $config[FileManagerConstants::STORAGE_NAME] = 'files';
