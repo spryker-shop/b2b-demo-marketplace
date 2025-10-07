@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0c11bf487807c87716d5dd4d83e43f05",
+    "content-hash": "ab1a6c0b618a77e99b631bb3b5f0b1d2",
     "packages": [
         {
             "name": "async-aws/core",
@@ -7018,7 +7018,7 @@
         },
         {
             "name": "spryker-feature/marketplace-inventory-management",
-            "version": "202507.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/marketplace-inventory-management.git",
@@ -7052,6 +7052,7 @@
                 "spryker-feature/inventory-management": "Recommended feature dependency.",
                 "spryker-feature/marketplace-product-offer": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -82298,16 +82299,10 @@
             "time": "2022-06-03T18:03:27+00:00"
         }
     ],
-    "aliases": [
-        {
-            "package": "spryker-feature/marketplace-product-offer",
-            "version": "9999999-dev",
-            "alias": "202510.0",
-            "alias_normalized": "202510.0"
-        }
-    ],
+    "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "spryker-feature/marketplace-inventory-management": 20,
         "spryker-feature/marketplace-product": 20,
         "spryker-feature/marketplace-product-offer": 20,
         "spryker-feature/merchant-portal-data-import": 20,
