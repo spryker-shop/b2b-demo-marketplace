@@ -4,20 +4,22 @@ namespace: spryker_ci
 tag: '1.0'
 
 environment: docker.ci
-pipeline: docker.ci.functional.dynamic-store-off
+pipeline: docker.ci.api.full
 image:
-    tag: spryker/php:8.2
+    tag: spryker/php:8.3
+    php:
+        enabled-extensions:
+            - otel
     environment:
-        SPRYKER_PRODUCT_CONFIGURATOR_HOST: date-time-configurator-example.spryker.local
-        SPRYKER_PRODUCT_CONFIGURATOR_PORT: 80
         SPRYKER_YVES_HOST_DE: yves.de.spryker.local
         SPRYKER_YVES_HOST_AT: yves.at.spryker.local
     node:
         version: 18
         npm: 9
+
 composer:
-    mode: --no-dev
-    autoload: --classmap-authoritative
+    mode: '--no-dev --quiet -o -a'
+    autoload: '-o -a'
 
 regions:
     EU:
@@ -55,8 +57,6 @@ groups:
             yves_eu:
                 application: yves
                 endpoints:
-                    date-time-configurator-example.spryker.local:
-                        entry-point: Configurator
                     yves.de.spryker.local:
                         store: DE
                         services:
@@ -114,14 +114,14 @@ services:
             password: "secret"
     broker:
         engine: rabbitmq
-        version: '3.9'
+        version: '3.13'
         api:
             username: "spryker"
             password: "secret"
     session:
-        engine: redis
+        engine: valkey
     key_value_store:
-        engine: redis
+        engine: valkey
     search:
         engine: elastic
         version: '7.10'
