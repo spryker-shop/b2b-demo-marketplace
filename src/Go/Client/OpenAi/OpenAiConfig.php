@@ -37,4 +37,15 @@ class OpenAiConfig extends AbstractBundleConfig
     {
         return $this->getSharedConfig()->get(OpenAiConstants::OPEN_AI_DEFAULT_TIMEOUT, 60);
     }
+
+    /**
+     * Specification:
+     * - `console open-ai:vector-store:*` functions manage the vector store related operations.
+     *
+     * @return string
+     */
+    public function getDefaultVectorStoreId(): string
+    {
+        return $this->getSharedConfig()->get(OpenAiConstants::OPEN_AI_DEFAULT_VECTOR_STORE_ID);
+    }
 }

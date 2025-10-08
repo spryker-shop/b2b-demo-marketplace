@@ -91,6 +91,16 @@ class SchemaUploader
         return $files;
     }
 
+    public function deleteVectorStoreFiles(): void
+    {
+        $vectorStoreId = $this->findVectorStore();
+
+        $resp = $this->get("vector_stores/{$vectorStoreId}/files");
+        foreach ($resp['data'] ?? [] as $fileRef) {
+            $this->detachFile($vectorStoreId, $fileRef['id']);
+        }
+    }
+
     private function findVectorStore(): ?string
     {
         $response = $this->get('vector_stores');

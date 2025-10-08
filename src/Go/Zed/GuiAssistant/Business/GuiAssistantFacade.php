@@ -442,6 +442,21 @@ class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInt
 
     protected function validateResourceRequest(string $httpMethod, string $resourcePath, array $queryParams, array $pathParams, array $payload): void
     {
+        // Validate URI structure: every 2nd part must be a placeholder
+        $pathParts = array_filter(explode('/', $resourcePath), fn($part) => $part !== '');
+        if (count($pathParts) > 1) {
+            for ($i = 1; $i < count($pathParts); $i += 2) {
+                $part = $pathParts[$i];
+                if (!preg_match('/^\{[^}]+\}$/', $part)) {
+                    throw new InvalidArgumentException(
+                        "Invalid URI structure: '{$resourcePath}'. Every 2nd path segment must be a placeholder (e.g., {id}, {sku}). " .
+                        "Valid patterns: '/resource', '/resource/{id}', '/resource/{id}/subresource', '/resource/{id}/subresource/{subId}'. " .
+                        "Found non-placeholder '{$part}' at position " . ($i + 1) . "."
+                    );
+                }
+            }
+        }
+
         // Extract all path parameters from resourcePath (e.g., {abstractSku}, {concreteSku})
         preg_match_all('/\{([^}]+)\}/', $resourcePath, $matches);
         $requiredPathParams = $matches[1] ?? [];
@@ -459,6 +474,7 @@ class GuiAssistantFacade extends AbstractFacade implements GuiAssistantFacadeInt
             $endpoint = preg_replace('/\{' . preg_quote($pathParamKey, '/') . '\}/', (string)$pathParamValue, $endpoint);
         }
 
+        // TBD: Add a quick AI diff with a cheap & fast model that compares the payload with the schema and highlights the differences
         $validator = (new ValidatorBuilder())->fromYamlFile(static::OPENAPI_LOCATION)->getRequestValidator();
         $validator->validate(new Request($httpMethod, $resourcePath, $queryParams, $pathParams, $payload, $endpoint));
     }

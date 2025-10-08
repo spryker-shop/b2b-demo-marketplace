@@ -26,6 +26,7 @@ class OpenAiFactory extends AbstractFactory
             $this->getConfig()->getDefaultApiKey(),
             $this->getConfig()->getDefaultModel(),
             $this->getConfig()->getDefaultTimeout(),
+            $this->getConfig()->getDefaultVectorStoreId(),
             $this->getHttpClient(),
             $this->createSchemaUploader(),
         );

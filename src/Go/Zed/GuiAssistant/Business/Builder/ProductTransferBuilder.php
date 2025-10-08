@@ -149,16 +149,20 @@ class ProductTransferBuilder
         }
 
         if (array_key_exists('stocks', $data)) {
-            // TODO: For simplicity, we only support currently the first available stock type
-            $stockTypeName = SpyStockQuery::create()->findOneByIsActive(true)->getName();
-
             $stocks = [];
-            foreach ($data['stocks'] as $stock) {
-                $stocks[] = (new StockProductTransfer())
-                    ->setSku($productConcreteTransfer->getSkuOrFail())
-                    ->setStockType($stockTypeName)
-                    ->setQuantity($stock['quantity'] ?? 0)
-                    ->setIsNeverOutOfStock($stock['isNeverOutOfStock'] ?? false);
+
+            // TODO: For simplicity, we only support currently the first available stock type if any
+            $availableStock = SpyStockQuery::create()->findOneByIsActive(true);
+            if ($availableStock) {
+                $stockTypeName = $availableStock->getName();
+
+                foreach ($data['stocks'] as $stock) {
+                    $stocks[] = (new StockProductTransfer())
+                        ->setSku($productConcreteTransfer->getSkuOrFail())
+                        ->setStockType($stockTypeName)
+                        ->setQuantity($stock['quantity'] ?? 0)
+                        ->setIsNeverOutOfStock($stock['isNeverOutOfStock'] ?? false);
+                }
             }
 
             $productConcreteTransfer->setStocks(new ArrayObject($stocks));
