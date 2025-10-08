@@ -52,7 +52,7 @@ class ChatController extends AbstractController
             $aiResponse = $this->getFactory()->getOpenAiClient()->createResponseForAgent($messages);
 
             $response = [
-                'answer' => $aiResponse[ModelResponse::OPEN_AI_RESULT_SIMPLE_TEXT] ?? 'No answer',
+                'answer' => !empty($aiResponse) ? $aiResponse : 'No answer',
             ];
         } catch (TransferException $e) {
             $this->getLogger()->error('OpenAI API connection error: ' . $e->getMessage());

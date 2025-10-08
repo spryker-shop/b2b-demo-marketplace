@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\Console;
 
+use Go\Zed\OpenAi\Communication\Console\OpenAiDeleteVectorStoreFilesConsole;
 use Go\Zed\OpenAi\Communication\Console\OpenAiListVectorStoreFilesConsole;
 use Go\Zed\OpenAi\Communication\Console\OpenAiRestApiSchemaUploadConsole;
 use Go\Zed\TenantBehavior\Communication\Plugin\Console\TenantProviderConsoleApplicationPlugin;
@@ -319,6 +320,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new TenantOnboardingTestRunConsole(),
             new OpenAiRestApiSchemaUploadConsole(),
             new OpenAiListVectorStoreFilesConsole(),
+            new OpenAiDeleteVectorStoreFilesConsole(),
 
             // Shop Configuration commands
             new ShopConfigurationSetupConsole(),

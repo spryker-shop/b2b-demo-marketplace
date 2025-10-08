@@ -23,6 +23,8 @@ interface OpenAiClientInterface
 
     public function createResponseForAgent(array $messages): array;
 
+    public function deleteVectorStoreFiles(): void;
+
     /**
      * Uploads the OpenAPI schema to the vector store and returns vector store/file IDs.
      *

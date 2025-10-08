@@ -17,26 +17,28 @@ use Throwable;
 /**
  * @method \Go\Zed\OpenAi\Communication\OpenAiCommunicationFactory getFactory()
  */
-class OpenAiRestApiSchemaUploadConsole extends Console
+class OpenAiDeleteVectorStoreFilesConsole extends Console
 {
-    public const COMMAND_NAME = 'open-ai:vector-store:backoffice-rest-api-schema-upload';
+    public const COMMAND_NAME = 'open-ai:vector-store:delete-files';
 
-    public const DESCRIPTION = 'Uploads the Backoffice OpenAPI schema to the OpenAI vector store (inits vector store if missing).';
+    public const DESCRIPTION = 'Delete files in the OpenAI vector store.';
 
     protected function configure(): void
     {
         $this->setName(static::COMMAND_NAME);
         $this->setDescription(static::DESCRIPTION);
+
         parent::configure();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $client = $this->getFactory()->getOpenAiClient();
+
         try {
-            $result = $client->uploadSchema();
-            $output->writeln('<info>Vector Store ID:</info> ' . $result['vector_store_id']);
-            $output->writeln('<info>File ID:</info> ' . $result['file_id']);
+            $result = $client->deleteVectorStoreFiles() ?? [];
+
+            $output->writeln('<info>Files deleted.</info>');
 
             return static::CODE_SUCCESS;
         } catch (Throwable $e) {
