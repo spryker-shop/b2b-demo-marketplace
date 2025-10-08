@@ -174,6 +174,13 @@ $jobs[] = [
     'global' => true,
 ];
 
+$jobs[] = [
+    'name' => 'generate-sitemap-files',
+    'command' => '$PHP_BIN vendor/bin/console sitemap:generate',
+    'schedule' => '0 0 * * *',
+    'enable' => true,
+];
+
 /* Message broker */
 if (Config::get(MessageBrokerConstants::IS_ENABLED)) {
     $jobs[] = [
@@ -183,6 +190,13 @@ if (Config::get(MessageBrokerConstants::IS_ENABLED)) {
         'enable' => true,
     ];
 }
+
+$jobs[] = [
+    'name' => 'data-import-merchant-import',
+    'command' => '$PHP_BIN vendor/bin/console data-import-merchant:import',
+    'schedule' => '* * * * *',
+    'enable' => true,
+];
 
 if (getenv('SPRYKER_CURRENT_REGION')) {
     foreach ($jobs as $job) {

@@ -7,7 +7,9 @@ declare(strict_types = 1);
 // ############################################################################
 
 use Monolog\Logger;
+use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
 use Spryker\Shared\Event\EventConstants;
+use Spryker\Shared\FileSystem\FileSystemConstants;
 use Spryker\Shared\GlueBackendApiApplication\GlueBackendApiApplicationConstants;
 use Spryker\Shared\GlueJsonApiConvention\GlueJsonApiConventionConstants;
 use Spryker\Shared\GlueStorefrontApiApplication\GlueStorefrontApiApplicationConstants;
@@ -15,6 +17,7 @@ use Spryker\Shared\Log\LogConstants;
 use Spryker\Shared\Product\ProductConstants;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Shared\Queue\QueueConstants;
+use Spryker\Shared\Redis\RedisConstants;
 
 require 'config_default-docker.dev.php';
 
@@ -46,3 +49,20 @@ $config[GlueJsonApiConventionConstants::GLUE_DOMAIN] = sprintf(
     'http://%s',
     $sprykerGlueStorefrontHost ?: $sprykerGlueBackendHost ?: 'localhost',
 );
+
+// ----------------------------------------------------------------------------
+// ------------------------------ SERVICES ------------------------------------
+// ----------------------------------------------------------------------------
+
+// >>> STORAGE
+
+$config[RedisConstants::REDIS_IS_DEV_MODE] = false;
+
+// >>> FILESYSTEM
+$config[FileSystemConstants::FILESYSTEM_SERVICE] = [
+    'merchant-product-data-import-files' => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/data',
+        'path' => '/data/merchant-product-data-import-files',
+    ],
+];

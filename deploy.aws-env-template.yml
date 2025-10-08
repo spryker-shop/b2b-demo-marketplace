@@ -42,7 +42,10 @@ tag: '1.0'
 
 environment: docker
 image:
-    tag: spryker/php:8.3
+    tag: spryker/php:8.4
+    php:
+        enabled-extensions:
+            - otel
     environment:
         SPRYKER_DEFAULT_STORE: "DE"
         SPRYKER_ACTIVE_STORES: "DE,AT"
@@ -194,7 +197,7 @@ services:
                 protocol: tcp
     broker:
         engine: rabbitmq
-        version: '3.9'
+        version: '3.13'
         api:
             username: "spryker"
             password: "secret"
@@ -217,10 +220,11 @@ services:
                 protocol: tcp
     scheduler:
         engine: jenkins
+        version: '2.492.3'
         endpoints:
             scheduler.example.cloud.spryker.toys:
     mail_catcher:
-        engine: mailhog
+        engine: mailpit
         endpoints:
             mail.example.cloud.spryker.toys:
 

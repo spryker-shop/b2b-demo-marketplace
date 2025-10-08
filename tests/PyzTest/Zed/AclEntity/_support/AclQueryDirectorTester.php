@@ -40,7 +40,9 @@ use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOffer;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use PyzTest\Zed\AclEntity\Plugin\AclEntityMetadataConfigExpanderPluginMock;
+use ReflectionClass;
 use Spryker\Shared\AclEntity\AclEntityConstants;
+use Spryker\Zed\AclEntity\Business\Reader\AclEntityMetadataConfigReader;
 use Spryker\Zed\AclEntity\Dependency\Facade\AclEntityToAclFacadeBridge;
 use Spryker\Zed\AclEntity\Dependency\Facade\AclEntityToAclFacadeBridgeInterface;
 use Spryker\Zed\AclEntity\Dependency\Facade\AclEntityToUserFacadeBridge;
@@ -142,6 +144,24 @@ class AclQueryDirectorTester extends Actor
                 ->addReference(static::ACL_ENTITY_SEGMENT_1_REFERENCE)
                 ->addReference(static::ACL_ENTITY_SEGMENT_2_REFERENCE),
         );
+
+        $this->cleanCache();
+    }
+
+    /**
+     * @return void
+     */
+    public function cleanCache(): void
+    {
+        $reflectionResolver = new ReflectionClass(AclEntityMetadataConfigReader::class);
+        $reflectionProperty = $reflectionResolver->getProperty('cache');
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue([]);
+
+        $reflectionResolver = new ReflectionClass(AclEntityRuleProvider::class);
+        $reflectionProperty = $reflectionResolver->getProperty('aclEntityRuleCollectionTransfer');
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue(null);
     }
 
     /**

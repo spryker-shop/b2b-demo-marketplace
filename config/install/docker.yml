@@ -45,10 +45,19 @@ sections:
         translator-generate-cache:
             command: 'vendor/bin/console translator:generate-cache'
 
+        generate-open-telemetry:
+            command: 'vendor/bin/console open-telemetry:generate'
+
     build-production:
         excluded: true
         cache-class-resolver-build:
             command: 'vendor/bin/console cache:class-resolver:build'
+
+        twig-template-warmup-zed:
+            command: 'vendor/bin/console twig:template:warmer'
+
+        twig-template-warmup-yves:
+            command: 'vendor/bin/yves twig:template:warmer'
 
     build-development:
         generate-transfers:
