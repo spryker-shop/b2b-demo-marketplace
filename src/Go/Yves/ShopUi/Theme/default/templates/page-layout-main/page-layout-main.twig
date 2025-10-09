@@ -1,0 +1,255 @@
+{% extends template('page-layout-main', '@SprykerShop:ShopUi') %}
+
+{% block meta %}
+    {{ parent() }}
+    <meta name="format-detection" content="telephone=no">
+{% endblock %}
+
+{% set pageLayoutMainJsClassName = 'js-page-layout-main' %}
+
+{%- block class -%}{{ pageLayoutMainJsClassName }}__side-drawer-container{%- endblock -%}
+
+{% block viewport %}
+    <div class="page-layout page-layout--preload">
+        {% widget 'AgentControlBarWidget' only %}{% endwidget %}
+
+        {% block sidebar %}
+            {% embed organism('side-drawer') with {
+                attributes: {
+                    'trigger-selector': pageLayoutMainJsClassName ~ '__side-drawer-trigger',
+                    'container-selector': pageLayoutMainJsClassName ~ '__side-drawer-container',
+                    'locked-body-class-name': 'is-locked-tablet',
+                },
+            } only %}
+                {% block navigation %}
+                    {% cms_slot 'slt-mobile-header' %}
+                {% endblock %}
+            {% endembed %}
+
+            {% if is_granted('ROLE_USER') %}
+                {% set customerFullNameWidget = findWidget('CustomerFullNameWidget') %}
+                {% set customerFullName = customerFullNameWidget.customerFullName %}
+
+                {% include organism('account-navigation') with {
+                    attributes: {
+                        'trigger-selector': pageLayoutMainJsClassName ~ '__user-account-navigation-trigger',
+                        'container-selector': pageLayoutMainJsClassName ~ '__side-drawer-container',
+                        'locked-body-class-name': 'is-locked-mobile',
+                        'overlay-breakpoint': 768,
+                    },
+                    data: {
+                        title: customerFullName,
+                        items: [
+                            {
+                                name: 'overview',
+                                url: path('customer/overview'),
+                                label: 'customer.account.overview' | trans,
+                                icon: 'page'
+                            },
+                            {
+                                name: 'profile',
+                                url: path('customer/profile'),
+                                label: 'customer.account.profile_data' | trans,
+                                icon: 'user'
+                            },
+                            {
+                                name: 'address',
+                                url: path('customer/address'),
+                                label: 'customer.account.address' | trans,
+                                icon: 'marker'
+                            },
+                            {
+                                name: 'order',
+                                url: path('customer/order'),
+                                label: 'customer.account.order_history' | trans,
+                                icon: 'history'
+                            },
+                            {
+                                name: 'returns',
+                                url: path('return/list'),
+                                label: 'return_page.default_title' | trans,
+                                icon: 'return-arrow'
+                            },
+                            {
+                                name: 'newsletter',
+                                url: path('customer/newsletter'),
+                                label: 'customer.account.newsletter' | trans,
+                                icon: 'envelopes'
+                            },
+                            {
+                                name: 'shopping-list',
+                                url: path('shopping-list'),
+                                label: 'customer.account.shopping_list' | trans,
+                                icon: 'shopping-list'
+                            },
+                            {
+                                name: 'shopping-cart',
+                                url: path('multi-cart'),
+                                label: 'page.multi_cart.shopping_cart.list.title' | trans,
+                                icon: 'cart'
+                            },
+                            {
+                                name: 'quote-request',
+                                url: path('quote-request'),
+                                label: 'quote_request_widget.request_for_quote.list.title' | trans,
+                                icon: 'message',
+                            },
+                        ],
+                    }
+                } only %}
+
+                {% if can('SeeCompanyMenuPermissionPlugin') %}
+                    {% set menuItemCompanyWidget = findWidget('MenuItemCompanyWidget') %}
+                    {% set companyName = menuItemCompanyWidget.companyName %}
+
+                    {% include organism('account-navigation') with {
+                        modifiers: ['company'],
+                        attributes: {
+                            'trigger-selector': pageLayoutMainJsClassName ~ '__company-account-navigation-trigger',
+                            'container-selector': pageLayoutMainJsClassName ~ '__side-drawer-container',
+                            'locked-body-class-name': 'is-locked-mobile',
+                            'overlay-breakpoint': 768,
+                        },
+                        data: {
+                            introIcon: 'office',
+                            title: companyName,
+                            items: [
+                                {
+                                    name: 'overview',
+                                    url: path('company/overview'),
+                                    label: 'company.account.overview' | trans,
+                                    icon: 'shopping-list'
+                                },
+                                {
+                                    name: 'users',
+                                    url: path('company/user'),
+                                    label: 'company.account.company_user' | trans,
+                                    icon: 'users'
+                                },
+                                {
+                                    name: 'business-unit',
+                                    url: path('company/business-unit'),
+                                    label: 'company.account.business_unit' | trans,
+                                    icon: 'office'
+                                },
+                                {
+                                    name: 'role',
+                                    url: path('company/company-role'),
+                                    label: 'company.account.company_role' | trans,
+                                    icon: 'role'
+                                },
+                                {
+                                    url: path('company/merchant-relation'),
+                                    icon: 'handshake',
+                                    label: 'company.account.merchant_relations' | trans,
+                                    name: 'merchant-relation'
+                                },
+                                {
+                                    url: path('company/merchant-relation-request'),
+                                    icon: 'add-business',
+                                    label: 'merchant_relation_request_widget.merchant_relation_request.list.title' | trans,
+                                    name: 'merchant-relation-request'
+                                }
+                            ]
+                        }
+                    } only %}
+                {% endif %}
+            {% endif %}
+        {% endblock %}
+
+        {% block outside %}{% endblock %}
+
+        {% block header %}
+            {% embed organism('header') with {
+                data: {
+                    isAjaxMode: data.isAjaxHeader,
+                    ajaxCartUrl: data.ajaxCartUrl,
+                },
+                attributes: {
+                    navigationId: navigationId,
+                },
+            } only %}
+                {% block topNavigation %}
+                    {% embed organism('navigation-top') with {
+                        class: 'grid grid--justify grid--stretch container',
+                    } only %}
+                        {% block headerCTA %}
+                            {% cms_slot 'slt-header-cta' %}
+                        {% endblock %}
+                    {% endembed %}
+                {% endblock %}
+
+
+                {% block navigation %}
+                    <nav aria-label="{{ 'shop_ui.aria_label.main.navigation' | trans }}">
+                        {% cms_slot 'slt-desktop-header' %}
+                    </nav>
+                {% endblock %}
+
+                {% block mobile %}
+                    <a href="#" class="link link--alt {{ pageLayoutMainJsClassName }}__side-drawer-trigger">
+                        {% include atom('icon') with {
+                            modifiers: ['big'],
+                            data: {
+                                name: 'bars',
+                            },
+                        } only %}
+                    </a>
+                {% endblock %}
+            {% endembed %}
+        {% endblock %}
+
+        <div itemscope itemtype="https://schema.org/Product" class="content-wrap">
+            {% block pageInfo %}
+                <div class="page-info">
+                    <div class="container">
+                        {% block breadcrumbs %}
+                            {% include molecule('breadcrumb') only %}
+                        {% endblock %}
+
+                        {% block title %}
+                            <h1 class="page-info__title title title--h3 ">{{ data.title }}</h1>
+                        {% endblock %}
+                    </div>
+                </div>
+            {% endblock %}
+
+            <main id="{{ mainContentId }}" class="{% block contentClass %}{% endblock %}">
+                {% block contentTop %}{% endblock %}
+
+                {% block contentWrap %}
+                    <div class="container">
+                        {% block content %}{% endblock %}
+                    </div>
+                {% endblock %}
+
+                {% block contentBottom %}{% endblock %}
+            </main>
+        </div>
+
+        {% block footer %}
+            {% cms_slot 'slt-1' %}
+
+            {% embed organism('footer') only %}
+                {% block content %}
+                    {% cms_slot 'slt-footer' %}
+                {% endblock %}
+            {% endembed %}
+        {% endblock %}
+    </div>
+
+    {% include atom('touch-checker') only %}
+{% endblock %}
+
+{% block globalComponents %}
+    {{ parent() }}
+
+    {% include molecule('node-animator') only %}
+
+    {% include molecule('window-load-class-remover') with {
+        attributes: {
+            'target-class-name': 'page-layout',
+            'trigger-class-name': 'page-layout--preload',
+        },
+    } only %}
+{% endblock %}

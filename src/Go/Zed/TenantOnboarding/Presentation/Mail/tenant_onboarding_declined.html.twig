@@ -1,0 +1,258 @@
+{# @var tenantRegistration \Generated\Shared\Transfer\TenantRegistrationTransfer #}
+
+{% set tenantRegistration = mail.tenantRegistration %}
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tenant Registration Update</title>
+
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .content {
+            padding: 30px 20px;
+        }
+        .message-section {
+            margin-bottom: 30px;
+        }
+        .message-section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+        .info-card {
+            background-color: #f8f9ff;
+            border: 1px solid #e1e5f2;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .info-card h3 {
+            margin-top: 0;
+            color: #333;
+            font-size: 18px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        .credential-item {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 12px 15px;
+            margin: 8px 0;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        .credential-label {
+            font-weight: bold;
+            color: #555;
+            display: inline-block;
+            width: 120px;
+        }
+        .credential-value {
+            color: #333;
+        }
+        .reason-section {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+        .reason-section h3 {
+            color: #856404;
+            margin-top: 0;
+            font-size: 18px;
+        }
+        .reason-text {
+            color: #333;
+            padding: 10px;
+            background-color: #ffffff;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .note-section {
+            background-color: #f8f9ff;
+            border: 1px solid #e1e5f2;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .note-section h4 {
+            color: #667eea;
+            margin-top: 0;
+        }
+        .action-section {
+            background-color: #f8f9ff;
+            border: 2px solid #667eea;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+        .action-section h3 {
+            color: #667eea;
+            margin-top: 0;
+        }
+        .link-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            margin: 8px 5px;
+            font-weight: bold;
+            transition: opacity 0.3s;
+        }
+        .link-button:hover {
+            opacity: 0.9;
+        }
+        .footer {
+            background-color: #f8f9fa;
+            color: #6c757d;
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            border-top: 1px solid #e9ecef;
+        }
+        .text-center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <!-- Header -->
+        <div class="header">
+            <h1>📋 Tenant Registration Update</h1>
+            <p>Your tenant registration request has been reviewed</p>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Message Section -->
+            <div class="message-section">
+                <h2>Dear {{ tenantRegistration.companyName }},</h2>
+                <p>Thank you for your interest in our B2B Marketplace platform. After careful review of your tenant registration request, we are unable to approve your application at this time.</p>
+                <p>We appreciate your interest and encourage you to review the information below to understand the next steps.</p>
+            </div>
+
+            <!-- Application Information -->
+            <div class="info-card">
+                <h3>📋 Application Information</h3>
+                <div class="credential-item">
+                    <span class="credential-label">Company Name:</span>
+                    <span class="credential-value">{{ tenantRegistration.companyName }}</span>
+                </div>
+                <div class="credential-item">
+                    <span class="credential-label">Requested Tenant ID:</span>
+                    <span class="credential-value">{{ tenantRegistration.tenantName }}</span>
+                </div>
+                <div class="credential-item">
+                    <span class="credential-label">Email:</span>
+                    <span class="credential-value">{{ tenantRegistration.email }}</span>
+                </div>
+                <div class="credential-item">
+                    <span class="credential-label">Submitted Date:</span>
+                    <span class="credential-value">{{ tenantRegistration.createdAt|date('F j, Y') }}</span>
+                </div>
+            </div>
+
+            <!-- Reason Section -->
+            {% if tenantRegistration.declineReason %}
+            <div class="reason-section">
+                <h3>📄 Reason for Decline</h3>
+                <div class="reason-text">
+                    {{ tenantRegistration.declineReason }}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Important Notes -->
+            <div class="note-section">
+                <h4>ℹ️ What This Means</h4>
+                <ul>
+                    <li>Your tenant registration request has not been approved</li>
+                    <li>No marketplace environment has been created for your company</li>
+                    <li>The information provided in your application has been retained for review purposes</li>
+                    <li>You may submit a new application if you can address the concerns mentioned</li>
+                </ul>
+            </div>
+
+            <!-- Next Steps -->
+            <div class="action-section">
+                <h3>🔄 What You Can Do Next</h3>
+                <ol>
+                    <li><strong>Review the decline reason</strong> carefully to understand what needs to be addressed</li>
+                    <li><strong>Gather additional documentation</strong> or information if required</li>
+                    <li><strong>Contact our support team</strong> if you have questions or need clarification</li>
+                    <li><strong>Submit a new application</strong> once you've addressed the concerns</li>
+                </ol>
+
+                <div class="text-center" style="margin-top: 20px;">
+                    <a href="mailto:support@marketplace.com" class="link-button">
+                        📧 Contact Support
+                    </a>
+                </div>
+            </div>
+
+            <!-- Support -->
+            <div class="info-card">
+                <h3>📞 Need Assistance?</h3>
+                <p>If you believe this decision was made in error, or if you have questions about the decline reason, please don't hesitate to contact our support team. We're here to help clarify any concerns and guide you through the application process.</p>
+                <p><strong>Support Email:</strong> support@marketplace.com</p>
+                <p><strong>Response Time:</strong> Within 24-48 business hours</p>
+            </div>
+
+            <!-- Additional Information -->
+            <div class="info-card">
+                <h3>🔍 Application Requirements</h3>
+                <p>To ensure a successful application in the future, please make sure you provide:</p>
+                <ul>
+                    <li>Valid business registration documents</li>
+                    <li>Complete and accurate company information</li>
+                    <li>A valid business email address</li>
+                    <li>Detailed information about your business operations</li>
+                    <li>Any additional documentation requested during the application process</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>This email was sent automatically. Please do not reply to this email.</p>
+            <p>For inquiries, please contact our support team at support@marketplace.com</p>
+            <p>&copy; {{ "now"|date("Y") }} Spryker B2B Marketplace. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\Development;
 
+use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Development\DevelopmentConfig as SprykerDevelopmentConfig;
 
 class DevelopmentConfig extends SprykerDevelopmentConfig
@@ -19,5 +20,18 @@ class DevelopmentConfig extends SprykerDevelopmentConfig
     public function getCodingStandard(): string
     {
         return APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'phpcs.xml';
+    }
+
+    /**
+     * @api
+     *
+     * @return array<string, string>
+     */
+    public function getIdeAutoCompletionSourceDirectoryGlobPatterns()
+    {
+        return [
+            APPLICATION_VENDOR_DIR . '/*/*/src/' => '*/*/',
+            APPLICATION_SOURCE_DIR . '/' => '*/*/',
+        ];
     }
 }

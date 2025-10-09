@@ -52,7 +52,7 @@ class TenantStoreResolverApplicationPlugin extends AbstractPlugin implements \Sp
         $tenantOnboardingClient = \Spryker\Client\Kernel\Locator::getInstance()
             ->tenantOnboarding()
             ->client();
-        $tenantTransfer = $tenantOnboardingClient->findTenantByID($host);
+        $tenantTransfer = $tenantOnboardingClient->findTenantByHost($host);
 
         if ($tenantTransfer) {
             if ($parameter === 'tenant') {

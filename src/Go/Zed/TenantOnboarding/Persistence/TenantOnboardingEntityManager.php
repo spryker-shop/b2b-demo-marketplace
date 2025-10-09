@@ -66,6 +66,31 @@ class TenantOnboardingEntityManager extends AbstractEntityManager implements Ten
     }
 
     /**
+     * @param \Generated\Shared\Transfer\TenantRegistrationTransfer $tenantRegistrationTransfer
+     *
+     * @return \Generated\Shared\Transfer\TenantRegistrationTransfer
+     */
+    public function updateTenantRegistrationStatus(TenantRegistrationTransfer $tenantRegistrationTransfer): TenantRegistrationTransfer
+    {
+        $entity = $this->getFactory()
+            ->createTenantRegistrationQuery()
+            ->filterByIdTenantRegistration($tenantRegistrationTransfer->getIdTenantRegistration())
+            ->findOne();
+
+        if (!$entity) {
+            return $tenantRegistrationTransfer;
+        }
+
+        $entity->setStatus($tenantRegistrationTransfer->getStatus());
+
+        $entity->save();
+
+        $tenantRegistrationTransfer->setUpdatedAt($entity->getUpdatedAt('Y-m-d H:i:s'));
+
+        return $tenantRegistrationTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\TenantTransfer $tenantTransfer
      *
      * @return \Generated\Shared\Transfer\TenantTransfer

@@ -33,6 +33,7 @@
         <property name="status" type="string"/>
         <property name="email" type="string"/>
         <property name="tenantName" type="string"/>
+        <property name="tenantRegistrationIds" type="array" singular="tenantRegistrationId"/>
         <property name="limit" type="int"/>
         <property name="offset" type="int"/>
     </transfer>
@@ -175,6 +176,10 @@
     </transfer>
 
     <transfer name="AclEntitySegment">
+        <property name="tenantReference" type="string"/>
+    </transfer>
+
+    <transfer name="ProductManagementAttributeValue">
         <property name="tenantReference" type="string"/>
     </transfer>
 

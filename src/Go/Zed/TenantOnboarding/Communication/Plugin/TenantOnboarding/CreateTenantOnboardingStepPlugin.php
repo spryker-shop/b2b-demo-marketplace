@@ -51,16 +51,18 @@ class CreateTenantOnboardingStepPlugin extends AbstractPlugin implements Onboard
             return $result;
         }
 
+        $tenantHost = $this->generateTenantHost($tenantRegistrationTransfer->getTenantName());
+        $merchantPortalHost = $this->generateMerchantPortalHost($tenantRegistrationTransfer->getTenantName());
+
         $tenantData = [
             'identifier' => $tenantRegistrationTransfer->getTenantName(),
             'companyName' => $tenantRegistrationTransfer->getCompanyName(),
             'email' => $tenantRegistrationTransfer->getEmail(),
             'registrationDate' => $tenantRegistrationTransfer->getCreatedAt(),
             'status' => $tenantRegistrationTransfer->getStatus(),
+            'tenant_host' => $tenantHost,
+            'merchant_portal_host' => $merchantPortalHost,
         ];
-
-        $tenantHost = $this->generateTenantHost($tenantRegistrationTransfer->getTenantName());
-        $merchantPortalHost = $this->generateMerchantPortalHost($tenantRegistrationTransfer->getTenantName());
 
         $tenantTransfer = new TenantTransfer();
         $tenantTransfer->setIdentifier($tenantRegistrationTransfer->getTenantName());

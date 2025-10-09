@@ -76,6 +76,8 @@ class TenantBehavior extends Behavior
         }
 
         $indexNamesToSkip = [
+            'spy_price_product_concrete_m_r_storage-price_key',
+            'spy_price_product_abstract_m_r_storage-price_key'
         ];
 
         // Get the tenant column object

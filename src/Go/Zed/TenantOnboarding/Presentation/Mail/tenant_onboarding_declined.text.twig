@@ -1,0 +1,77 @@
+{# @var tenantRegistration \Generated\Shared\Transfer\TenantRegistrationTransfer #}
+{% set tenantRegistration = mail.tenantRegistration %}
+================================================================================
+TENANT REGISTRATION UPDATE
+================================================================================
+
+Your tenant registration request has been reviewed
+
+================================================================================
+
+Dear {{ tenantRegistration.companyName }},
+
+Thank you for your interest in our B2B Marketplace platform. After careful
+review of your tenant registration request, we regret to inform you that we
+are UNABLE TO APPROVE your application at this time.
+
+{% if tenantRegistration.declineReason %}
+================================================================================
+REASON FOR DECLINE
+================================================================================
+
+{{ tenantRegistration.declineReason }}
+
+{% endif %}
+================================================================================
+WHAT THIS MEANS
+================================================================================
+
+- Your tenant registration request has not been approved
+- No marketplace environment has been created for your company
+- The information provided in your application has been retained for review
+  purposes
+- You may submit a new application if you can address the concerns mentioned
+
+================================================================================
+WHAT YOU CAN DO NEXT
+================================================================================
+
+1. Review the decline reason carefully to understand what needs to be addressed
+
+2. Gather additional documentation or information if required
+
+3. Contact our support team if you have questions or need clarification
+
+4. Submit a new application once you've addressed the concerns
+
+================================================================================
+NEED ASSISTANCE?
+================================================================================
+
+If you believe this decision was made in error, or if you have questions about
+the decline reason, please don't hesitate to contact our support team. We're
+here to help clarify any concerns and guide you through the application process.
+
+Support Email:          support@marketplace.com
+Response Time:          Within 24-48 business hours
+
+================================================================================
+APPLICATION REQUIREMENTS
+================================================================================
+
+To ensure a successful application in the future, please make sure you provide:
+
+- Valid business registration documents
+- Complete and accurate company information
+- A valid business email address
+- Detailed information about your business operations
+- Any additional documentation requested during the application process
+
+================================================================================
+
+This email was sent automatically. Please do not reply to this email.
+For inquiries, please contact our support team at support@marketplace.com
+
+© {{ "now"|date("Y") }} Spryker B2B Marketplace. All rights reserved.
+
+================================================================================
