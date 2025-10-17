@@ -13,8 +13,10 @@ use Pyz\Zed\CompanyUser\Communication\Plugin\Permission\SeeCompanyMenuPermission
 use Spryker\Client\CompanyUser\Plugin\CompanyUserStatusChangePermissionPlugin;
 use Spryker\Shared\Checkout\Plugin\Permission\PlaceOrderWithAmountUpToPermissionPlugin;
 use Spryker\Shared\CompanyUser\Plugin\AddCompanyUserPermissionPlugin;
+use Spryker\Zed\CompanyBusinessUnitSalesConnector\Communication\Plugin\Permission\EditBusinessUnitOrdersPermissionPlugin;
 use Spryker\Zed\CompanyBusinessUnitSalesConnector\Communication\Plugin\Permission\SeeBusinessUnitOrdersPermissionPlugin;
 use Spryker\Zed\CompanyRole\Communication\Plugin\PermissionStoragePlugin;
+use Spryker\Zed\CompanySalesConnector\Communication\Plugin\Permission\EditCompanyOrdersPermissionPlugin;
 use Spryker\Zed\CompanySalesConnector\Communication\Plugin\Permission\SeeCompanyOrdersPermissionPlugin;
 use Spryker\Zed\CompanyUserInvitation\Communication\Plugin\Permission\ManageCompanyUserInvitationPermissionPlugin;
 use Spryker\Zed\Permission\PermissionDependencyProvider as SprykerPermissionDependencyProvider;
@@ -66,6 +68,8 @@ class PermissionDependencyProvider extends SprykerPermissionDependencyProvider
             new ApproveQuotePermissionPlugin(), #QuoteApprovalFeature
             new SeeBusinessUnitOrdersPermissionPlugin(),
             new SeeCompanyOrdersPermissionPlugin(),
+            new EditCompanyOrdersPermissionPlugin(),
+            new EditBusinessUnitOrdersPermissionPlugin(),
         ];
     }
 }

@@ -10,12 +10,14 @@ declare(strict_types = 1);
 namespace Pyz\Client\Permission;
 
 use Pyz\Zed\CompanyUser\Communication\Plugin\Permission\SeeCompanyMenuPermissionPlugin;
+use Spryker\Client\CompanyBusinessUnitSalesConnector\Plugin\Permission\EditBusinessUnitOrdersPermissionPlugin;
 use Spryker\Client\CompanyBusinessUnitSalesConnector\Plugin\Permission\SeeBusinessUnitOrdersPermissionPlugin;
 use Spryker\Client\CompanyRole\Plugin\Permission\CreateCompanyRolesPermissionPlugin;
 use Spryker\Client\CompanyRole\Plugin\Permission\DeleteCompanyRolesPermissionPlugin;
 use Spryker\Client\CompanyRole\Plugin\Permission\EditCompanyRolesPermissionPlugin;
 use Spryker\Client\CompanyRole\Plugin\Permission\SeeCompanyRolesPermissionPlugin;
 use Spryker\Client\CompanyRole\Plugin\PermissionStoragePlugin;
+use Spryker\Client\CompanySalesConnector\Plugin\Permission\EditCompanyOrdersPermissionPlugin;
 use Spryker\Client\CompanySalesConnector\Plugin\Permission\SeeCompanyOrdersPermissionPlugin;
 use Spryker\Client\CompanyUser\Plugin\CompanyUserStatusChangePermissionPlugin;
 use Spryker\Client\CompanyUser\Plugin\Permission\DeleteCompanyUsersPermissionPlugin;
@@ -28,7 +30,7 @@ use Spryker\Client\CustomerAccessPermission\Plugin\SeePricePermissionPlugin;
 use Spryker\Client\CustomerAccessPermission\Plugin\SeeShoppingListPermissionPlugin;
 use Spryker\Client\CustomerAccessPermission\Plugin\SeeWishlistPermissionPlugin;
 use Spryker\Client\MerchantRelationRequest\Plugin\Permission\CreateMerchantRelationRequestPermissionPlugin;
-use Spryker\Client\OauthPermission\Plugin\Permission\OauthPermissionStoragePlugin;
+use Spryker\Client\OauthPermission\Plugin\Permission\StoredOauthPermissionStoragePlugin;
 use Spryker\Client\Permission\PermissionDependencyProvider as SprykerPermissionDependencyProvider;
 use Spryker\Client\QuoteApproval\Plugin\Permission\ApproveQuotePermissionPlugin;
 use Spryker\Client\QuoteApproval\Plugin\Permission\PlaceOrderPermissionPlugin;
@@ -53,8 +55,7 @@ class PermissionDependencyProvider extends SprykerPermissionDependencyProvider
     {
         return [
             new PermissionStoragePlugin(), #SharedCartFeature #ShoppingListFeature
-            new CustomerAccessPermissionStoragePlugin(), #CustomerAccessFeature
-            new OauthPermissionStoragePlugin(),
+            new CustomerAccessPermissionStoragePlugin(), new StoredOauthPermissionStoragePlugin(),
         ];
     }
 
@@ -97,6 +98,8 @@ class PermissionDependencyProvider extends SprykerPermissionDependencyProvider
             new EditCompanyUsersPermissionPlugin(),
             new AddCompanyUserPermissionPlugin(),
             new ManageCompanyUserInvitationPermissionPlugin(),
+            new EditCompanyOrdersPermissionPlugin(),
+            new EditBusinessUnitOrdersPermissionPlugin(),
         ];
     }
 }
