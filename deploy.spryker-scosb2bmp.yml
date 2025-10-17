@@ -141,7 +141,7 @@ groups:
                     glue-backend.at.scos-b2bmp.sh01.demo-spryker.com:
                         store: AT
                         cors-allow-origin: '*'
-            merchant_portal_eu:
+            mportal:
                 application: merchant-portal
                 endpoints:
                     mp.de.scos-b2bmp.sh01.demo-spryker.com:
@@ -170,7 +170,7 @@ services:
                 protocol: tcp
     broker:
         engine: rabbitmq
-        version: '3.9'
+        version: '4.1'
         api:
             username: "spryker"
             password: "secret"
