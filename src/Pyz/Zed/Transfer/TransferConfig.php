@@ -49,4 +49,9 @@ class TransferConfig extends SprykerTransferConfig
     {
         return true;
     }
+
+    public function isArrayRequireValidationEnabled(): bool
+    {
+        return true;
+    }
 }
