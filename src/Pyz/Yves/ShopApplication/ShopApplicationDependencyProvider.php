@@ -78,6 +78,7 @@ use SprykerShop\Yves\MerchantSalesOrderWidget\Widget\MerchantOrderReferenceForIt
 use SprykerShop\Yves\MerchantSalesReturnWidget\Plugin\MerchantSalesReturnCreateFormWidgetCacheKeyGeneratorStrategyPlugin;
 use SprykerShop\Yves\MerchantSalesReturnWidget\Widget\MerchantSalesReturnCreateFormWidget;
 use SprykerShop\Yves\MerchantSearchWidget\Widget\MerchantSearchWidget;
+use SprykerShop\Yves\MerchantWidget\Plugin\ShopApplication\SoldByMerchantWidgetCacheKeyGeneratorStrategyPlugin;
 use SprykerShop\Yves\MerchantWidget\Widget\ShoppingListMerchantWidget;
 use SprykerShop\Yves\MerchantWidget\Widget\SoldByMerchantWidget;
 use SprykerShop\Yves\MoneyWidget\Widget\CurrencyIsoCodeWidget;
@@ -361,6 +362,7 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             new CartDiscountPromotionProductListWidgetCacheKeyGeneratorStrategyPlugin(),
             new CartItemNoteFormWidgetCacheKeyGeneratorStrategyPlugin(),
             new MerchantSalesReturnCreateFormWidgetCacheKeyGeneratorStrategyPlugin(),
+            new SoldByMerchantWidgetCacheKeyGeneratorStrategyPlugin(),
         ];
     }
 
