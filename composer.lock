@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d9f2704377224025a45fd0da4056dc0d",
+    "content-hash": "7f401fb72652069742b50601ba5a1ed0",
     "packages": [
         {
             "name": "async-aws/core",
@@ -23501,20 +23501,20 @@
         },
         {
             "name": "spryker/category",
-            "version": "5.21.0",
+            "version": "5.21.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/category.git",
-                "reference": "4beea61c481e050aae95d16ea042e2dc45c885a3"
+                "reference": "323565c83c3dec5442e38adc79764d336818a025"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/category/zipball/4beea61c481e050aae95d16ea042e2dc45c885a3",
-                "reference": "4beea61c481e050aae95d16ea042e2dc45c885a3",
+                "url": "https://api.github.com/repos/spryker/category/zipball/323565c83c3dec5442e38adc79764d336818a025",
+                "reference": "323565c83c3dec5442e38adc79764d336818a025",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/acl-merchant-portal-extension": "^1.0.0",
                 "spryker/category-extension": "^1.2.0",
                 "spryker/event": "^2.3.0",
@@ -23552,9 +23552,9 @@
             ],
             "description": "Category module",
             "support": {
-                "source": "https://github.com/spryker/category/tree/5.21.0"
+                "source": "https://github.com/spryker/category/tree/5.21.1"
             },
-            "time": "2025-09-16T09:04:55+00:00"
+            "time": "2025-10-20T10:20:39+00:00"
         },
         {
             "name": "spryker/category-data-feed",
@@ -49846,16 +49846,16 @@
         },
         {
             "name": "spryker/product-bundle",
-            "version": "7.27.0",
+            "version": "7.27.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-bundle.git",
-                "reference": "f777c77bc1bcb21373719c6c0429afcf4047db5a"
+                "reference": "02f5ce2827f0bad61013c706e59e725e9734ca97"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-bundle/zipball/f777c77bc1bcb21373719c6c0429afcf4047db5a",
-                "reference": "f777c77bc1bcb21373719c6c0429afcf4047db5a",
+                "url": "https://api.github.com/repos/spryker/product-bundle/zipball/02f5ce2827f0bad61013c706e59e725e9734ca97",
+                "reference": "02f5ce2827f0bad61013c706e59e725e9734ca97",
                 "shasum": ""
             },
             "require": {
@@ -49923,9 +49923,9 @@
             ],
             "description": "ProductBundle module",
             "support": {
-                "source": "https://github.com/spryker/product-bundle/tree/7.27.0"
+                "source": "https://github.com/spryker/product-bundle/tree/7.27.1"
             },
-            "time": "2025-10-15T10:34:36+00:00"
+            "time": "2025-10-20T10:20:39+00:00"
         },
         {
             "name": "spryker/product-bundle-carts-rest-api",
@@ -81314,7 +81314,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/cypress-tests.git",
-                "reference": "ee5af4c8ed54a014bcc286341d1edfd8d6ae9e59"
+                "reference": "0435c103d93380360aaa81dc575f0c50c287b35e"
             },
             "default-branch": true,
             "type": "spryker-test",
@@ -81322,7 +81322,7 @@
                 "MIT"
             ],
             "description": "This repository is dedicated to housing an extensive collection of UI end-to-end tests, meticulously crafted using Cypress for Spryker applications. These tests are designed to thoroughly evaluate the user interface, ensuring that all interactions and visual elements function as intended in real-world scenarios. By leveraging Cypress's advanced browser automation capabilities, this suite provides an efficient and effective means of validating the user experience, confirming the seamless operation and aesthetic integrity of Spryker's front-end components. Our commitment to rigorous UI testing helps maintain the high standard of quality and reliability that Spryker users expect.",
-            "time": "2025-10-21T08:12:18+00:00"
+            "time": "2025-10-09T10:08:50+00:00"
         },
         {
             "name": "spryker/development",
@@ -82331,28 +82331,28 @@
         },
         {
             "name": "webmozart/assert",
-            "version": "1.11.0",
+            "version": "1.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webmozarts/assert.git",
-                "reference": "11cb2199493b2f8a3b53e7f19068fc6aac760991"
+                "reference": "541057574806f942c94662b817a50f63f7345360"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozarts/assert/zipball/11cb2199493b2f8a3b53e7f19068fc6aac760991",
-                "reference": "11cb2199493b2f8a3b53e7f19068fc6aac760991",
+                "url": "https://api.github.com/repos/webmozarts/assert/zipball/541057574806f942c94662b817a50f63f7345360",
+                "reference": "541057574806f942c94662b817a50f63f7345360",
                 "shasum": ""
             },
             "require": {
                 "ext-ctype": "*",
+                "ext-date": "*",
+                "ext-filter": "*",
                 "php": "^7.2 || ^8.0"
             },
-            "conflict": {
-                "phpstan/phpstan": "<0.12.20",
-                "vimeo/psalm": "<4.6.1 || 4.6.2"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^8.5.13"
+            "suggest": {
+                "ext-intl": "",
+                "ext-simplexml": "",
+                "ext-spl": ""
             },
             "type": "library",
             "extra": {
@@ -82383,9 +82383,9 @@
             ],
             "support": {
                 "issues": "https://github.com/webmozarts/assert/issues",
-                "source": "https://github.com/webmozarts/assert/tree/1.11.0"
+                "source": "https://github.com/webmozarts/assert/tree/1.12.0"
             },
-            "time": "2022-06-03T18:03:27+00:00"
+            "time": "2025-10-20T12:43:39+00:00"
         }
     ],
     "aliases": [],
