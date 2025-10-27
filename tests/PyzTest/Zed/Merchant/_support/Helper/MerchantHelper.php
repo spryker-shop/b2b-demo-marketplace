@@ -109,8 +109,7 @@ class MerchantHelper extends Module
         $idStores = $seedData[StoreRelationTransfer::ID_STORES] ?? [];
 
         if (!$idStores) {
-            $storeTransfer = $this->getStoreDataHelper()->haveStore([StoreTransfer::NAME => 'DE'])->getIdStore();
-            $idStores = [$storeTransfer->getIdStoreOrFail()];
+            $idStores[] = $this->getStoreDataHelper()->haveStore([StoreTransfer::NAME => 'DE'])->getIdStoreOrFail();
         }
 
         return (new StoreRelationBuilder())->seed([
