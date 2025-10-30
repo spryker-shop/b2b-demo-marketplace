@@ -37,40 +37,28 @@ tag: "1.0"
 
 environment: docker.dev
 image:
-  tag: spryker/php:8.3-alpine3.20-otel
+  tag: spryker/php:8.2
   php:
-    ini:
-      "opentelemetry.allow_stack_extension": 1
-      "grpc.allow_stack_extension": 1
-      "protobuf.allow_stack_extension": 1
-      "opentelemetry.validate_hook_functions": "Off"
     enabled-extensions:
-      - opentelemetry
-      - grpc
-      - protobuf
-      # - newrelic
+      - otel
 
   environment:
-    SPRYKER_DEFAULT_STORE: "DE"
-    SPRYKER_ACTIVE_STORES: "DE,AT"
+    SPRYKER_DYNAMIC_STORE_MODE: true
+    SPRYKER_YVES_HOST_EU: yves.eu.dev-drablove.cloud.spryker.toys
     SPRYKER_PRODUCT_CONFIGURATOR_HOST: date-time-configurator-example.dev-drablove.cloud.spryker.toys
-    SPRYKER_PRODUCT_CONFIGURATOR_PORT: 80
+    SPRYKER_PRODUCT_CONFIGURATOR_PORT: 443
     SPRYKER_PRODUCT_CONFIGURATOR_ENCRYPTION_KEY: "change123"
     SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR: "0c1ffefeebdab4a3d839d0e52590c9a2"
-    SPRYKER_HOOK_BEFORE_DEPLOY: " php -d OTEL_SDK_DISABLED=true vendor/bin/install -r pre-deploy.dynamic-store-off -vvv"
     SPRYKER_HOOK_AFTER_DEPLOY: "true"
-    SPRYKER_HOOK_INSTALL: " php -d OTEL_SDK_DISABLED=true vendor/bin/install -r production.dynamic-store-off --no-ansi -vvv"
-    SPRYKER_HOOK_DESTRUCTIVE_INSTALL: " php -d OTEL_SDK_DISABLED=true vendor/bin/install -r destructive.dynamic-store-off --no-ansi -vvv"
+    SPRYKER_HOOK_BEFORE_DEPLOY: "vendor/bin/install -r pre-deploy -vvv"
+    SPRYKER_HOOK_INSTALL: "vendor/bin/install -r production --no-ansi -vvv"
+    SPRYKER_HOOK_DESTRUCTIVE_INSTALL: "vendor/bin/install -r destructive --no-ansi -vvv"
+    AWS_REGION: "eu-west-1"
     SPRYKER_CUSTOMER_REMEMBER_ME_SECRET: "remember_me"
-    # OTEL
-    OTEL_SDK_DISABLED: "false"
-    OTEL_PHP_DISABLED_INSTRUMENTATIONS: null
-    OTEL_TRACES_SAMPLER_ARG: 0.1
-    OTEL_BSP_MIN_SPAN_DURATION_THRESHOLD: 20
-    OTEL_BSP_MIN_CRITICAL_SPAN_DURATION_THRESHOLD: 10
-    OTEL_TRACES_CRITICAL_SAMPLER_ARG: 0.5
-    NEW_RELIC_ENABLED: 0
-    #
+
+    SPRYKER_PUSH_NOTIFICATION_WEB_PUSH_PHP_VAPID_PUBLIC_KEY: "BGqNWbv0hWM5CQ1-KwAfSQBMC6TMVFyrnh3vQp37oGCNvQ6eG_HyMjxBFJRWeCPTbzDoxcjhxLJS8Ck8r1G2oFw"
+    SPRYKER_PUSH_NOTIFICATION_WEB_PUSH_PHP_VAPID_PRIVATE_KEY: "UK6DywwjKITPpRHBSY9TLPIXm6BPrHX40sseIoXT9c8"
+    SPRYKER_PUSH_NOTIFICATION_WEB_PUSH_PHP_VAPID_SUBJECT: "https://spryker.com"
 
   node:
     version: 18
@@ -101,44 +89,13 @@ regions:
         database: spryker_frw
         username: spryker
         password: secret
+      broker:
+        namespace: eu_queue
+      key_value_store:
+        namespace: 1
+      search:
+        namespace: eu_search
 
-    stores:
-      DE:
-        services:
-          broker:
-            namespace: de_queue
-          key_value_store:
-            namespace: 1
-          search:
-            namespace: de_search
-          session:
-            namespace: 2
-          database:
-            name: de
-      AT:
-        services:
-          broker:
-            namespace: at_queue
-          key_value_store:
-            namespace: 3
-          search:
-            namespace: at_search
-          session:
-            namespace: 4
-          database:
-            name: at
-      US:
-        services:
-          broker:
-            namespace: us_queue
-          key_value_store:
-            namespace: 5
-          search:
-            namespace: us_search
-          session:
-            namespace: 6
-          database:
-            name: us
 groups:
   EU:
     region: EU
@@ -146,105 +103,53 @@ groups:
       mportal:
         application: merchant-portal
         endpoints:
-          mp.de.dev-drablove.cloud.spryker.toys:
+          mp.eu.dev-drablove.cloud.spryker.toys:
             entry-point: MerchantPortal
-            store: DE
-            <<: *real-ip
-          mp.at.dev-drablove.cloud.spryker.toys:
-            entry-point: MerchantPortal
-            store: AT
-            <<: *real-ip
-          mp.us.dev-drablove.cloud.spryker.toys:
-            entry-point: MerchantPortal
-            store: US
+            region: DE
             <<: *real-ip
       yves:
         application: yves
         endpoints:
           date-time-configurator-example.dev-drablove.cloud.spryker.toys:
             entry-point: Configurator
-          yves.de.dev-drablove.cloud.spryker.toys:
-            store: DE
-            <<: *frontend-auth
-          yves.at.dev-drablove.cloud.spryker.toys:
-            store: AT
-            <<: *frontend-auth
-          yves.us.dev-drablove.cloud.spryker.toys:
-            store: US
+          yves.eu.dev-drablove.cloud.spryker.toys:
+            region: DE
             <<: *frontend-auth
       glue:
         application: glue
         endpoints:
-          glue.de.dev-drablove.cloud.spryker.toys:
-            store: DE
-            <<: *real-ip
-          glue.at.dev-drablove.cloud.spryker.toys:
-            store: AT
-            <<: *real-ip
-          glue.us.dev-drablove.cloud.spryker.toys:
-            store: US
+          glue.eu.dev-drablove.cloud.spryker.toys:
+            region: DE
             <<: *real-ip
       gluestorefront:
         application: glue-storefront
         endpoints:
           glue-storefront.de.dev-drablove.cloud.spryker.toys:
-            store: DE
-            <<: *real-ip
-          glue-storefront.at.dev-drablove.cloud.spryker.toys:
-            store: AT
-            <<: *real-ip
-          glue-storefront.us.dev-drablove.cloud.spryker.toys:
-            store: US
+            region: EU
             <<: *real-ip
       gluebackend:
         application: glue-backend
         endpoints:
           glue-backend.de.dev-drablove.cloud.spryker.toys:
-            store: DE
-            <<: *real-ip
-          glue-backend.at.dev-drablove.cloud.spryker.toys:
-            store: AT
-            <<: *real-ip
-          glue-backend.us.dev-drablove.cloud.spryker.toys:
-            store: US
+            region: EU
             <<: *real-ip
       boffice:
         application: backoffice
         endpoints:
           backoffice.de.dev-drablove.cloud.spryker.toys:
-            store: DE
-            <<: *frontend-auth
-          backoffice.at.dev-drablove.cloud.spryker.toys:
-            store: AT
-            <<: *frontend-auth
-          backoffice.us.dev-drablove.cloud.spryker.toys:
-            store: US
+            region: EU
             <<: *frontend-auth
       backgw:
         application: backend-gateway
         endpoints:
           backend-gateway.de.dev-drablove.cloud.spryker.toys:
-            store: DE
-            <<: *real-ip
-          backend-gateway.at.dev-drablove.cloud.spryker.toys:
-            store: AT
-            <<: *real-ip
-          backend-gateway.us.dev-drablove.cloud.spryker.toys:
-            store: US
+            region: EU
             <<: *real-ip
       backapi:
         application: zed
         endpoints:
           backend-api.de.dev-drablove.cloud.spryker.toys:
-            store: DE
-            entry-point: BackendApi
-            <<: *real-ip
-          backend-api.at.dev-drablove.cloud.spryker.toys:
-            store: AT
-            entry-point: BackendApi
-            <<: *real-ip
-          backend-api.us.dev-drablove.cloud.spryker.toys:
-            store: US
+            region: EU
             entry-point: BackendApi
             <<: *real-ip
 
@@ -310,13 +215,13 @@ docker:
     redirect: true
 
   testing:
-    store: DE
+    region: EU
 
   newrelic:
-    enabled: true
-    appname: dev-drablove-newrelic-app
+    enabled: false
+    appname: dev-nightci-newrelic-app
     distributed-tracing:
-      enabled: true
+      enabled: false
 
   debug:
     enabled: false
