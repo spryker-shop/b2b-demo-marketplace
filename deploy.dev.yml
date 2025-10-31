@@ -15,21 +15,6 @@ image:
         SPRYKER_DYNAMIC_STORE_MODE: true
         SPRYKER_YVES_HOST_EU: yves.eu.spryker.local
         SPRYKER_YVES_HOST_US: yves.us.spryker.local
-        #AOP
-        SPRYKER_AOP_INFRASTRUCTURE: '{
-            "SPRYKER_MESSAGE_BROKER_HTTP_SENDER_CONFIG": {},
-            "SPRYKER_MESSAGE_BROKER_SQS_RECEIVER_CONFIG": {}
-        }'
-        SPRYKER_AOP_APPLICATION: '{
-            "APP_DOMAINS": [],
-            "STORE_NAME_REFERENCE_MAP": {},
-            "APP_CATALOG_SCRIPT_URL": ""
-        }'
-        SPRYKER_AOP_AUTHENTICATION: '{
-            "AUTH0_CUSTOM_DOMAIN": "",
-            "AUTH0_CLIENT_ID": "",
-            "AUTH0_CLIENT_SECRET": ""
-        }'
     node:
         version: 18
         npm: 9
@@ -60,22 +45,22 @@ regions:
             search:
                 namespace: eu_search
 
-    US:
-        services:
-            mail:
-                sender:
-                    name: Spryker No-Reply
-                    email: no-reply@spryker.local
-            database:
-                database: us-docker
-                username: spryker
-                password: secret
-            broker:
-                namespace: us-docker
-            key_value_store:
-                namespace: 2
-            search:
-                namespace: us_search
+#    US:
+#        services:
+#            mail:
+#                sender:
+#                    name: Spryker No-Reply
+#                    email: no-reply@spryker.local
+#            database:
+#                database: us-docker
+#                username: spryker
+#                password: secret
+#            broker:
+#                namespace: us-docker
+#            key_value_store:
+#                namespace: 2
+#            search:
+#                namespace: us_search
 
 groups:
     EU:
@@ -106,16 +91,16 @@ groups:
                 endpoints:
                     glue.eu.spryker.local:
                         region: EU
-            gluestorefront_eu: # custom name to differentiate between two applications, incorrect for the cloud usage
-                application: glue-storefront
-                endpoints:
-                    glue-storefront.eu.spryker.local:
-                        region: EU
-            gluebackend_eu: # custom name to differentiate between two applications, incorrect for the cloud usage
-                application: glue-backend
-                endpoints:
-                    glue-backend.eu.spryker.local:
-                        region: EU
+#            gluestorefront_eu: # custom name to differentiate between two applications, incorrect for the cloud usage
+#                application: glue-storefront
+#                endpoints:
+#                    glue-storefront.eu.spryker.local:
+#                        region: EU
+#            gluebackend_eu: # custom name to differentiate between two applications, incorrect for the cloud usage
+#                application: glue-backend
+#                endpoints:
+#                    glue-backend.eu.spryker.local:
+#                        region: EU
             boffice_eu: # custom name to differentiate between two applications, incorrect for the cloud usage
                 application: backoffice
                 endpoints:
@@ -131,70 +116,70 @@ groups:
                     backend-gateway.eu.spryker.local:
                         region: EU
                         primal: true
-            backapi_eu: # custom name to differentiate between two applications, incorrect for the cloud usage
-                application: zed
-                endpoints:
-                    backend-api.eu.spryker.local:
-                        region: EU
-                        entry-point: BackendApi
+#            backapi_eu: # custom name to differentiate between two applications, incorrect for the cloud usage
+#                application: zed
+#                endpoints:
+#                    backend-api.eu.spryker.local:
+#                        region: EU
+#                        entry-point: BackendApi
 
-    US:
-        region: US
-        applications:
-            mportal_us: # custom name to differentiate between two applications, incorrect for the cloud usage
-                application: merchant-portal
-                endpoints:
-                    mp.us.spryker.local:
-                        region: US
-                        entry-point: MerchantPortal
-                        primal: true
-                        services:
-                            session:
-                                namespace: 4
-            yves_us: # custom name to differentiate between two applications, incorrect for the cloud usage
-                application: yves
-                endpoints:
-                    yves.us.spryker.local:
-                        region: US
-                        services:
-                            session:
-                                namespace: 5
-            glue_us: # custom name to differentiate between two applications, incorrect for the cloud usage
-                application: glue
-                endpoints:
-                    glue.us.spryker.local:
-                        region: US
-            gluestorefront_us: # custom name to differentiate between two applications, incorrect for the cloud usage
-                application: glue-storefront
-                endpoints:
-                    glue-storefront.us.spryker.local:
-                        region: US
-            gluebackend_us: # custom name to differentiate between two applications, incorrect for the cloud usage
-                application: glue-backend
-                endpoints:
-                    glue-backend.us.spryker.local:
-                        region: US
-            boffice_us: # custom name to differentiate between two applications, incorrect for the cloud usage
-                application: backoffice
-                endpoints:
-                    backoffice.us.spryker.local:
-                        region: US
-                        primal: true
-                        services:
-                            session:
-                                namespace: 6
-            backgw_us: # custom name to differentiate between two applications, incorrect for the cloud usage
-                application: backend-gateway
-                endpoints:
-                    backend-gateway.us.spryker.local:
-                        region: US
-                        primal: true
-            backapi_us: # custom name to differentiate between two applications, incorrect for the cloud usage
-                application: zed
-                endpoints:
-                    backend-api.us.spryker.local:
-                        region: US
-                        entry-point: BackendApi
+#    US:
+#        region: US
+#        applications:
+#            mportal_us: # custom name to differentiate between two applications, incorrect for the cloud usage
+#                application: merchant-portal
+#                endpoints:
+#                    mp.us.spryker.local:
+#                        region: US
+#                        entry-point: MerchantPortal
+#                        primal: true
+#                        services:
+#                            session:
+#                                namespace: 4
+#            yves_us: # custom name to differentiate between two applications, incorrect for the cloud usage
+#                application: yves
+#                endpoints:
+#                    yves.us.spryker.local:
+#                        region: US
+#                        services:
+#                            session:
+#                                namespace: 5
+#            glue_us: # custom name to differentiate between two applications, incorrect for the cloud usage
+#                application: glue
+#                endpoints:
+#                    glue.us.spryker.local:
+#                        region: US
+#            gluestorefront_us: # custom name to differentiate between two applications, incorrect for the cloud usage
+#                application: glue-storefront
+#                endpoints:
+#                    glue-storefront.us.spryker.local:
+#                        region: US
+#            gluebackend_us: # custom name to differentiate between two applications, incorrect for the cloud usage
+#                application: glue-backend
+#                endpoints:
+#                    glue-backend.us.spryker.local:
+#                        region: US
+#            boffice_us: # custom name to differentiate between two applications, incorrect for the cloud usage
+#                application: backoffice
+#                endpoints:
+#                    backoffice.us.spryker.local:
+#                        region: US
+#                        primal: true
+#                        services:
+#                            session:
+#                                namespace: 6
+#            backgw_us: # custom name to differentiate between two applications, incorrect for the cloud usage
+#                application: backend-gateway
+#                endpoints:
+#                    backend-gateway.us.spryker.local:
+#                        region: US
+#                        primal: true
+#            backapi_us: # custom name to differentiate between two applications, incorrect for the cloud usage
+#                application: zed
+#                endpoints:
+#                    backend-api.us.spryker.local:
+#                        region: US
+#                        entry-point: BackendApi
 services:
     database:
         engine: mysql
