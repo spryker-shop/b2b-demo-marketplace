@@ -89,6 +89,10 @@ use SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProvide
 use SprykerShop\Yves\ShoppingListWidget\Plugin\Router\ShoppingListWidgetAsyncRouteProviderPlugin;
 use SprykerShop\Yves\ShoppingListWidget\Plugin\Router\ShoppingListWidgetRouteProviderPlugin;
 use SprykerShop\Yves\StorageRouter\Plugin\Router\StorageRouterPlugin;
+use SprykerFeature\Yves\SelfServicePortal\Plugin\Router\SelfServicePortalPageRouteProviderPlugin;
+use SprykerShop\Yves\ServicePointWidget\Plugin\Router\ServicePointWidgetRouteProviderPlugin;
+
+
 
 class RouterDependencyProvider extends SprykerRouterDependencyProvider
 {
@@ -182,6 +186,8 @@ class RouterDependencyProvider extends SprykerRouterDependencyProvider
             new SitemapRouteProviderPlugin(),
             new CartReorderPageRouteProviderPlugin(),
             new SalesOrderAmendmentWidgetRouteProviderPlugin(),
+            new ServicePointWidgetRouteProviderPlugin(),
+            new SelfServicePortalPageRouteProviderPlugin(),
         ];
     }
 

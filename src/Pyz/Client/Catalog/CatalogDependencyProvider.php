@@ -70,6 +70,7 @@ use Spryker\Client\SearchHttp\Plugin\Catalog\ResultFormatter\SpellingSuggestionS
 use Spryker\Client\SearchHttp\Plugin\Search\ProductConcreteCatalogSearchHttpResultFormatterPlugin;
 use Spryker\Client\SearchHttp\Plugin\Search\SearchHttpSearchResultCountPlugin;
 use Spryker\Shared\SearchHttp\SearchHttpConfig;
+use SprykerFeature\Client\SelfServicePortal\Plugin\Catalog\ProductClassFacetConfigTransferBuilderPlugin;
 
 class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
 {
@@ -82,6 +83,7 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
             new CategoryFacetConfigTransferBuilderPlugin(),
             new RatingFacetConfigTransferBuilderPlugin(),
             new ProductLabelFacetConfigTransferBuilderPlugin(),
+            new ProductClassFacetConfigTransferBuilderPlugin(),
         ];
     }
 
@@ -125,7 +127,7 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
             new IsActiveQueryExpanderPlugin(),
             new IsActiveInDateRangeQueryExpanderPlugin(),
             new CustomerCatalogProductListQueryExpanderPlugin(),
-            new MerchantReferenceQueryExpanderPlugin(),
+            new MerchantReferenceQueryExpanderPlugin()
 
             /*
              * FacetQueryExpanderPlugin needs to be after other query expanders which filters down the results.
@@ -240,6 +242,7 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
                 new PriceFacetConfigTransferBuilderPlugin(),
                 new RatingFacetConfigTransferBuilderPlugin(),
                 new ProductLabelSearchHttpFacetConfigTransferBuilderPlugin(),
+                new ProductClassFacetConfigTransferBuilderPlugin(),
             ],
         ];
     }
