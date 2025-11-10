@@ -56,6 +56,12 @@ use Spryker\Shared\TaxProductStorage\TaxProductStorageConfig;
 use Spryker\Shared\TaxStorage\TaxStorageConfig;
 use Spryker\Shared\UrlStorage\UrlStorageConfig;
 use Spryker\Shared\UrlStorage\UrlStorageConstants;
+use Spryker\Shared\ProductOfferServicePointStorage\ProductOfferServicePointStorageConfig;
+use Spryker\Shared\ProductOfferShipmentTypeStorage\ProductOfferShipmentTypeStorageConfig;
+use Spryker\Shared\ServicePointSearch\ServicePointSearchConfig;
+use Spryker\Shared\ServicePointStorage\ServicePointStorageConfig;
+use Spryker\Shared\ShipmentTypeStorage\ShipmentTypeStorageConfig;
+use Pyz\Shared\SelfServicePortal\SelfServicePortalConfig;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
@@ -173,6 +179,17 @@ class RabbitMqConfig extends SprykerRabbitMqConfig
             AssetStorageConfig::ASSET_SYNC_STORAGE_QUEUE,
             ProductConfigurationStorageConfig::PRODUCT_CONFIGURATION_SYNC_STORAGE_QUEUE,
             SearchHttpConfig::SEARCH_HTTP_CONFIG_SYNC_QUEUE,
+            ShipmentTypeStorageConfig::QUEUE_NAME_SYNC_STORAGE_SHIPMENT_TYPE,
+            ServicePointSearchConfig::QUEUE_NAME_SYNC_SEARCH_SERVICE_POINT,
+            ServicePointStorageConfig::QUEUE_NAME_SYNC_STORAGE_SERVICE_POINT,
+            ProductOfferServicePointStorageConfig::QUEUE_NAME_SYNC_STORAGE_PRODUCT_OFFER_SERVICE,
+            ProductOfferShipmentTypeStorageConfig::PRODUCT_OFFER_SHIPMENT_TYPE_SYNC_STORAGE_QUEUE,
+            ProductOfferStorageConfig::PRODUCT_OFFER_SYNC_STORAGE_QUEUE,
+            PriceProductOfferStorageConfig::PRICE_PRODUCT_OFFER_OFFER_SYNC_STORAGE_QUEUE,
+            ProductOfferAvailabilityStorageConfig::PRODUCT_OFFER_AVAILABILITY_SYNC_STORAGE_QUEUE,
+            SelfServicePortalConfig::QUEUE_NAME_SYNC_STORAGE_SSP_MODEL,
+            SelfServicePortalConfig::QUEUE_NAME_SYNC_STORAGE_SSP_ASSET,
+            SelfServicePortalConfig::QUEUE_NAME_SYNC_SEARCH_SSP_ASSET,
         ];
     }
 
