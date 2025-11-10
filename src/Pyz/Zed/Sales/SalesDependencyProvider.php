@@ -98,6 +98,7 @@ use Spryker\Zed\SalesReturn\Communication\Plugin\Sales\RemunerationTotalOrderExp
 use Spryker\Zed\SalesReturn\Communication\Plugin\Sales\UpdateOrderItemIsReturnableByGlobalReturnableNumberOfDaysPlugin;
 use Spryker\Zed\SalesReturn\Communication\Plugin\Sales\UpdateOrderItemIsReturnableByItemStatePlugin;
 use Spryker\Zed\Shipment\Communication\Plugin\ShipmentOrderHydratePlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Sales\SspAssetOrderItemExpanderPlugin;
 
 class SalesDependencyProvider extends SprykerSalesDependencyProvider
 {
@@ -136,6 +137,7 @@ class SalesDependencyProvider extends SprykerSalesDependencyProvider
             new MerchantDataOrderHydratePlugin(),
             new SalesOrderAmendmentOrderExpanderPlugin(),
             new IsAmendableOrderExpanderPlugin(),
+            new SspAssetOrderExpanderPlugin(),
         ];
     }
 
@@ -245,6 +247,10 @@ class SalesDependencyProvider extends SprykerSalesDependencyProvider
             new AmountSalesUnitOrderItemExpanderPlugin(),
             new ItemStateOrderItemExpanderPlugin(),
             new ProductConfigurationOrderItemExpanderPlugin(),
+            new ServicePointOrderItemExpanderPlugin(),
+            new ShipmentOrderItemExpanderPlugin(),
+            new SspServiceCancellableOrderItemExpanderPlugin(),
+            new SspAssetOrderItemExpanderPlugin(),
         ];
     }
 
@@ -307,6 +313,9 @@ class SalesDependencyProvider extends SprykerSalesDependencyProvider
             new ItemMetadataOrderItemsPostSavePlugin(),
             new ProductConfigurationOrderItemsPostSavePlugin(),
             new ProductOptionOrderItemsPostSavePlugin(),
+            new ServicePointOrderItemsPostSavePlugin(),
+            new ProductClassOrderItemsPostSavePlugin(),
+            new SspAssetOrderItemsPostSavePlugin(),
         ];
     }
 
@@ -340,10 +349,12 @@ class SalesDependencyProvider extends SprykerSalesDependencyProvider
             new ItemMetadataSalesOrderItemCollectionPreDeletePlugin(),
             new OmsItemHistorySalesOrderItemCollectionPreDeletePlugin(),
             new ProductOptionSalesOrderItemCollectionPreDeletePlugin(),
+            new ServicePointSalesOrderItemCollectionPreDeletePlugin(),
             new SalesConfigurableBundleSalesOrderItemCollectionPreDeletePlugin(),
             new SalesProductConfigurationSalesOrderItemCollectionPreDeletePlugin(),
             new NopaymentSalesOrderItemCollectionPreDeletePlugin(),
             new SalesReclamationSalesOrderItemCollectionPreDeletePlugin(),
+            new SspProductClassSalesOrderItemCollectionPreDeletePlugin(),
         ];
     }
 

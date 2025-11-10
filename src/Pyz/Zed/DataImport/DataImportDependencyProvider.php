@@ -119,7 +119,13 @@ use Spryker\Zed\StockDataImport\Communication\Plugin\StockDataImportPlugin;
 use Spryker\Zed\StockDataImport\Communication\Plugin\StockStoreDataImportPlugin;
 use Spryker\Zed\StoreContextDataImport\Communication\Plugin\DataImport\StoreContextDataImportPlugin;
 use Spryker\Zed\StoreDataImport\Communication\Plugin\DataImport\StoreDataImportPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\DataImport\SspAssetDataImportPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\DataImport\SspInquiryDataImportPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\DataImport\SspModelAssetDataImportPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\DataImport\SspModelDataImportPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\DataImport\SspModelProductListDataImportPlugin;
 
+/** @package Pyz\Zed\DataImport */
 class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
 {
     /**
@@ -453,6 +459,13 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
             new MerchantCommissionMerchantDataImportPlugin(),
             new MerchantCombinedProductDataImportPlugin(),
             new MerchantCombinedProductOfferDataImportPlugin(),
+
+          
+            new SspInquiryDataImportPlugin(),
+            new SspAssetDataImportPlugin(),
+            new SspModelDataImportPlugin(),
+            new SspModelAssetDataImportPlugin(),
+            new SspModelProductListDataImportPlugin(),
         ];
     }
 
