@@ -2,12 +2,24 @@
     "extends": "./tsconfig.base.json",
     "compilerOptions": {
         "paths": {
-            "*": ["*"],
-            "src/ShopUi/*": ["./src/Pyz/Yves/ShopUi/Theme/default/*"],
-            "src/CompanyWidget/*": ["./src/Pyz/Yves/CompanyWidget/Theme/default/*"],
-            "src/ConfigurableBundleWidget/*": ["./src/Pyz/Yves/ConfigurableBundleWidget/Theme/default/*"],
-            "src/ProductImageWidget/*": ["./src/Pyz/Yves/ProductImageWidget/Theme/default/*"],
-            "ShopUi/*": ["./vendor/spryker-shop/shop-ui/src/SprykerShop/Yves/ShopUi/Theme/default/*"],
+            "*": [
+                "*"
+            ],
+            "src/ShopUi/*": [
+                "./src/Pyz/Yves/ShopUi/Theme/default/*"
+            ],
+            "src/CompanyWidget/*": [
+                "./src/Pyz/Yves/CompanyWidget/Theme/default/*"
+            ],
+            "src/ConfigurableBundleWidget/*": [
+                "./src/Pyz/Yves/ConfigurableBundleWidget/Theme/default/*"
+            ],
+            "src/ProductImageWidget/*": [
+                "./src/Pyz/Yves/ProductImageWidget/Theme/default/*"
+            ],
+            "ShopUi/*": [
+                "./vendor/spryker-shop/shop-ui/src/SprykerShop/Yves/ShopUi/Theme/default/*"
+            ],
             "CommentWidget/*": [
                 "./vendor/spryker-shop/comment-widget/src/SprykerShop/Yves/CommentWidget/Theme/default/*"
             ],
@@ -17,8 +29,12 @@
             "QuoteRequestAgentPage/*": [
                 "./vendor/spryker-shop/quote-request-agent-page/src/SprykerShop/Yves/QuoteRequestAgentPage/Theme/default/*"
             ],
-            "CustomerPage/*": ["./vendor/spryker-shop/customer-page/src/SprykerShop/Yves/CustomerPage/Theme/default/*"],
-            "CatalogPage/*": ["./vendor/spryker-shop/catalog-page/src/SprykerShop/Yves/CatalogPage/Theme/default/*"],
+            "CustomerPage/*": [
+                "./vendor/spryker-shop/customer-page/src/SprykerShop/Yves/CustomerPage/Theme/default/*"
+            ],
+            "CatalogPage/*": [
+                "./vendor/spryker-shop/catalog-page/src/SprykerShop/Yves/CatalogPage/Theme/default/*"
+            ],
             "MerchantProductOfferWidget/*": [
                 "./vendor/spryker-shop/merchant-product-offer-widget/src/SprykerShop/Yves/MerchantProductOfferWidget/Theme/default/*"
             ],
@@ -46,10 +62,35 @@
             "QuickOrderPage/*": [
                 "./vendor/spryker-shop/quick-order-page/src/SprykerShop/Yves/QuickOrderPage/Theme/default/*"
             ],
-            "SprykerShop/*": ["./vendor/spryker-shop/*"]
+            "ServicePointWidget/*": [
+                "./vendor/spryker-shop/service-point-widget/src/SprykerShop/Yves/ServicePointWidget/Theme/default/*"
+            ],
+            "CheckoutPage/*": [
+                "./vendor/spryker-shop/checkout-page/src/SprykerShop/Yves/CheckoutPage/Theme/default/*"
+            ],
+            "MainPopup/*": [
+                "./vendor/spryker-shop/main-popup/src/SprykerShop/Yves/MainPopup/Theme/default/*"
+            ],
+            "SprykerShop/*": [
+                "./vendor/spryker-shop/*"
+            ],
+            "SelfServicePortal/*": [
+                "./vendor/spryker-feature/self-service-portal/src/SprykerFeature/Yves/SelfServicePortal/Theme/default/*"
+            ]
         }
     },
-    "files": ["./src/Pyz/Yves/ShopUi/Theme/default/app.ts", "./src/Pyz/Yves/ShopUi/Theme/default/vendor.ts"],
-    "include": ["./vendor/spryker-shop/**/*", "./vendor/spryker-eco/**/*", "./src/Pyz/Yves/**/*"],
-    "exclude": ["node_modules", "public"]
+    "files": [
+        "./src/Pyz/Yves/ShopUi/Theme/default/app.ts",
+        "./src/Pyz/Yves/ShopUi/Theme/default/vendor.ts"
+    ],
+    "include": [
+        "./vendor/spryker-shop/**/*",
+        "./vendor/spryker-eco/**/*",
+        "./vendor/spryker-feature/**/*",
+        "./src/Pyz/Yves/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "public"
+    ]
 }

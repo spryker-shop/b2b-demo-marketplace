@@ -4,11 +4,11 @@
     <div class="grid grid--middle grid--justify">
         <div class="{{ config.name }}__col {{ config.name }}__col--counter col">
             {% widget 'SspAssetFilterNameWidget' args [_view.pagination.numFound] with {
-                defaultCount: _view.pagination.numFound,
+                defaultCount: data.pagination.numFound,
             } only %}
             {% nowidget %}
                 {{ data.pagination.numFound | default(0) | executeFilterIfExists('formatInt', app.locale) }} {{ 'catalog.itemsFound' | trans }}
-             {% endwidget %}
+            {% endwidget %}
         </div>
 
         <div class="col {{ config.name }}__col {{ config.name }}__col--filters is-hidden-sm-md">

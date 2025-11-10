@@ -181,21 +181,21 @@ const getAppSettingsByTheme = (namespaceConfig, theme, pathToConfig) => {
         return isFallbackPatternAndDefaultTheme(isFallbackPattern)
             ? []
             : [
-                  ...entryPointsCollection(`**/Theme/${getThemeName(isFallbackPattern)}`),
-                  ...entryPointsCollection(
-                      `**/*${namespaceConfig.codeBucket}/Theme/${getThemeName(isFallbackPattern)}`,
-                  ),
-                  ...ignoreFiles,
-              ];
+                ...entryPointsCollection(`**/Theme/${getThemeName(isFallbackPattern)}`),
+                ...entryPointsCollection(
+                    `**/*${namespaceConfig.codeBucket}/Theme/${getThemeName(isFallbackPattern)}`,
+                ),
+                ...ignoreFiles,
+            ];
     };
 
     const shopUiEntryPointsPattern = (isFallbackPattern = false) =>
         isFallbackPatternAndDefaultTheme(isFallbackPattern)
             ? []
             : [
-                  `./ShopUi/Theme/${getThemeName(isFallbackPattern)}`,
-                  `./ShopUi${namespaceConfig.codeBucket}/Theme/${getThemeName(isFallbackPattern)}`,
-              ];
+                `./ShopUi/Theme/${getThemeName(isFallbackPattern)}`,
+                `./ShopUi${namespaceConfig.codeBucket}/Theme/${getThemeName(isFallbackPattern)}`,
+            ];
 
     // define if current mode is production
     const isProductionMode = () => {
@@ -242,7 +242,11 @@ const getAppSettingsByTheme = (namespaceConfig, theme, pathToConfig) => {
             // do not change unless necessary
             componentStyles: {
                 // absolute dirs in which look for
-                dirs: [join(globalSettings.context, paths.core), join(globalSettings.context, paths.features), join(globalSettings.context, paths.sprykerCore)],
+                dirs: [
+                    join(globalSettings.context, paths.core),
+                    join(globalSettings.context, paths.features),
+                    join(globalSettings.context, paths.sprykerCore),
+                ],
                 // files/dirs patterns
                 patterns: [
                     `**/Theme/${namespaceConfig.defaultTheme}/components/atoms/*/*.scss`,
