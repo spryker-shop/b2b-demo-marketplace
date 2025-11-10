@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Yves\CartPage;
 
+use SprykerFeature\Yves\SelfServicePortal\Plugin\CartPage\SspAssetPreAddToCartPlugin;
 use SprykerShop\Yves\CartPage\CartPageDependencyProvider as SprykerCartPageDependencyProvider;
 use SprykerShop\Yves\DiscountPromotionWidget\Plugin\CartPage\DiscountPromotionAddToCartFormWidgetParameterExpanderPlugin;
 use SprykerShop\Yves\MerchantProductOfferWidget\Plugin\CartPage\MerchantProductOfferPreAddToCartPlugin;
@@ -48,6 +49,7 @@ class CartPageDependencyProvider extends SprykerCartPageDependencyProvider
         return [
             new MerchantProductPreAddToCartPlugin(),
             new MerchantProductOfferPreAddToCartPlugin(),
+            new SspAssetPreAddToCartPlugin(),
         ];
     }
 
