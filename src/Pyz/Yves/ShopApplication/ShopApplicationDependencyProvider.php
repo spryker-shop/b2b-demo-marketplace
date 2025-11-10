@@ -29,6 +29,7 @@ use Spryker\Yves\Sitemap\Widget\SitemapWidget;
 use Spryker\Yves\Translator\Plugin\Application\TranslatorApplicationPlugin;
 use Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin;
 use Spryker\Yves\Validator\Plugin\Application\ValidatorApplicationPlugin;
+use SprykerFeature\Yves\SelfServicePortal\Widget\CreateOrderSspInquiryWidget;
 use SprykerShop\Yves\AgentWidget\Widget\AgentControlBarWidget;
 use SprykerShop\Yves\AssetWidget\Widget\AssetWidget;
 use SprykerShop\Yves\AvailabilityNotificationWidget\Widget\AvailabilityNotificationSubscriptionWidget;
@@ -347,6 +348,7 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             CancelOrderAmendmentWidget::class,
             UpdateOrderCheckoutSubmitButtonTextWidget::class,
             UpdateOrderCheckoutSuccessTitleWidget::class,
+            CreateOrderSspInquiryWidget::class,
         ];
     }
 
