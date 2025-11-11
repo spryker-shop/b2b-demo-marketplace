@@ -8,6 +8,7 @@ use Spryker\Shared\Nopayment\NopaymentConfig;
 use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Shared\Sales\SalesConstants;
 use Spryker\Shared\DummyPayment\DummyPaymentConfig;
+use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConstants;
 
 // ----------------------------------------------------------------------------
 // ------------------------------ OMS -----------------------------------------
@@ -46,3 +47,5 @@ $config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = array_replace(
         NopaymentConfig::PAYMENT_PROVIDER_NAME => 'Nopayment01',
     ],
 );
+
+$config[SelfServicePortalConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = $config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING];
