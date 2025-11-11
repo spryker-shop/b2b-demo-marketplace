@@ -99,6 +99,7 @@ use Spryker\Zed\SalesReturn\Communication\Plugin\Sales\UpdateOrderItemIsReturnab
 use Spryker\Zed\SalesReturn\Communication\Plugin\Sales\UpdateOrderItemIsReturnableByItemStatePlugin;
 use Spryker\Zed\Shipment\Communication\Plugin\ShipmentOrderHydratePlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Sales\SspAssetOrderItemExpanderPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Sales\SspAssetOrderItemsPostSavePlugin;
 
 class SalesDependencyProvider extends SprykerSalesDependencyProvider
 {
@@ -313,8 +314,6 @@ class SalesDependencyProvider extends SprykerSalesDependencyProvider
             new ItemMetadataOrderItemsPostSavePlugin(),
             new ProductConfigurationOrderItemsPostSavePlugin(),
             new ProductOptionOrderItemsPostSavePlugin(),
-            new ServicePointOrderItemsPostSavePlugin(),
-            new ProductClassOrderItemsPostSavePlugin(),
             new SspAssetOrderItemsPostSavePlugin(),
         ];
     }
