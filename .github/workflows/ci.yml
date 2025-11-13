@@ -2,7 +2,6 @@ name: B2B-MP-CI
 
 on:
     pull_request:
-        types: [ labeled, unlabeled, synchronize, opened ]
     push:
         branches:
             - master
@@ -49,38 +48,14 @@ jobs:
             APPLICATION_STORE: DE
             PROJECT: suite
             SPRYKER_CURRENT_REGION: EU
+            COMPOSER_IGNORE_CHROMEDRIVER: 1
 
         steps:
             -   uses: actions/checkout@v4
 
-            -   name: Setup PHP
-                uses: shivammathur/setup-php@v2
+            -   uses: ramsey/composer-install@v3
                 with:
-                    php-version: ${{ matrix.php-version }}
-                    extensions: mbstring, intl, pdo_mysql, redis, grpc
-                    tools: composer:v2
-
-            -   name: Composer get cache directory
-                id: composer-cache
-                run: |
-                    echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
-
-            -   name: Composer cache
-                uses: actions/cache@v4
-                with:
-                    path: ${{ steps.composer-cache.outputs.dir }}
-                    key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-                    restore-keys: |
-                        ${{ runner.os }}-composer-
-
-            -   name: Composer validate
-                run: composer validate
-
-            -   name: Composer version
-                run: composer --version
-
-            -   name: Composer install
-                run: composer install
+                    composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
 
             -   name: Generate transfer objects
                 run: vendor/bin/console transfer:generate
@@ -95,7 +70,7 @@ jobs:
                     vendor/bin/console transfer:entity:generate
 
             -   name: Codecept build
-                run: vendor/bin/codecept build --ansi
+                run: vendor/bin/codecept build -q
 
             -   name: Generate autocompletion files
                 run: vendor/bin/console dev:ide-auto-completion:generate
@@ -149,17 +124,14 @@ jobs:
         name: "NPM validation"
         if: ${{ !(github.event_name == 'push' && github.ref == 'refs/heads/master') }}
         runs-on: ubuntu-latest
-        strategy:
-            fail-fast: false
-            matrix:
-                node-version: [ '18' ]
-
-        env:
-            APPLICATION_ENV: ci.mysql
-            PROJECT: suite
-
         steps:
             -   uses: actions/checkout@v4
+
+            -   name: Setup Node.js
+                uses: actions/setup-node@v5
+                with:
+                    node-version: '18'
+                    cache: 'npm'
 
             -   name: Install NPM packages
                 run: npm ci
@@ -188,7 +160,7 @@ jobs:
 
     php-84-mariadb-acceptance-alpine:
         needs: [js-validation, validation]
-        name: "[run-ui-ci] PHP 8.4 / MariaDB / Acceptance & API / Alpine"
+        name: "Codeception / Acceptance & API"
         if: >
             contains(github.event.pull_request.labels.*.name, 'run-ui-ci')
             || contains(github.event.pull_request.labels.*.name, 'run-latest-ci')
@@ -205,14 +177,29 @@ jobs:
         steps:
             -   uses: actions/checkout@v4
 
+            -   uses: ramsey/composer-install@v3
+                with:
+                    composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
+
+            -   name: Configure sysctl limits
+                run: |
+                    sudo sysctl -w vm.swappiness=10
+                    sudo sysctl -w fs.file-max=262144
+                    sudo sysctl -w vm.max_map_count=262144
+                    ulimit -n 65536
+
             -   name: Run docker
                 run: |
                     git clone --depth 1 https://github.com/spryker/docker-sdk.git ./docker
                     docker/sdk boot deploy.ci.acceptance.mariadb.yml
                     docker/sdk up -t
-                    docker/sdk cli composer dump-autoload -o -a --apcu
+
+            -   name: Run Fixtures
+                run: |
                     docker/sdk testing codecept fixtures
-                    docker/sdk console queue:worker:start --stop-when-empty
+                    docker/sdk testing composer dump-autoload -o -a --apcu
+                    echo "console queue:worker:start --stop-when-empty"
+                    docker/sdk testing console queue:worker:start --stop-when-empty
 
             -   name: Run Acceptance Tests
                 if: >
@@ -240,7 +227,7 @@ jobs:
             contains(github.event.pull_request.labels.*.name, 'run-functional-ci')
             || contains(github.event.pull_request.labels.*.name, 'run-latest-ci')
             || github.ref == 'refs/heads/master'
-        name: "[run-functional-ci] PHP 8.4 / MariaDB / Functional / Alpine"
+        name: "Codeception / Functional Tests"
         runs-on: ubuntu-latest
         env:
             PROGRESS_TYPE: plain
@@ -248,9 +235,14 @@ jobs:
             TRAVIS: 1
             SPRYKER_CURRENT_REGION: EU
             DYNAMIC_STORE_MODE: true
+            COMPOSER_IGNORE_CHROMEDRIVER: 1
 
         steps:
             -   uses: actions/checkout@v4
+
+            -   uses: ramsey/composer-install@v3
+                with:
+                    composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
 
             -   name: Run docker
                 run: |
@@ -272,7 +264,7 @@ jobs:
             contains(github.event.pull_request.labels.*.name, 'run-functional-ci')
             || contains(github.event.pull_request.labels.*.name, 'run-latest-ci')
             || github.ref == 'refs/heads/master'
-        name: "[run-functional-ci] PHP 8.3 / Frontend & Assets"
+        name: "Frontend & Assets"
         runs-on: ubuntu-latest
         env:
             PROGRESS_TYPE: plain
@@ -294,13 +286,13 @@ jobs:
                 uses: ./.github/actions/job-slack-notifications
                 if: always()
 
-    docker-alpine-php-84-mariadb-robot:
+    docker-alpine-php-84-mariadb-robot-api:
         needs: [validation]
         if: >
             contains(github.event.pull_request.labels.*.name, 'run-api-ci')
             || contains(github.event.pull_request.labels.*.name, 'run-latest-ci')
             || github.ref == 'refs/heads/master'
-        name: "[run-api-ci] PHP 8.4 / MariaDB / Robot / API"
+        name: "Robot / API"
         runs-on: ubuntu-latest
         env:
             PROGRESS_TYPE: plain
@@ -312,6 +304,10 @@ jobs:
         steps:
             -   uses: actions/checkout@v4
 
+            #-   uses: ramsey/composer-install@v3
+            #    with:
+            #        composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
+
             #  needed for mount:baked
             -   name: Install robotframework-suite-tests folder
                 run: |
@@ -320,11 +316,18 @@ jobs:
                     composer require "spryker/robotframework-suite-tests:$VERSION" --dev --no-interaction --ignore-platform-reqs
                     mv vendor ../
 
+            -   name: Configure sysctl limits
+                run: |
+                    sudo sysctl -w vm.swappiness=10
+                    sudo sysctl -w fs.file-max=262144
+                    sudo sysctl -w vm.max_map_count=262144
+                    ulimit -n 65536
+
             -   name: Install Project
                 run: |
                     git clone --depth 1 https://github.com/spryker/docker-sdk.git ./docker
                     docker/sdk boot deploy.ci.api.mariadb.robot.yml
-                    sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local' >> /etc/hosts"
+                    #sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local' >> /etc/hosts"
                     docker/sdk up -t
                     docker/sdk cli composer dump-autoload -o -a --apcu
             -   name: Run Tests
@@ -345,7 +348,7 @@ jobs:
             contains(github.event.pull_request.labels.*.name, 'run-ui-ci')
             || contains(github.event.pull_request.labels.*.name, 'run-latest-ci')
             || github.ref == 'refs/heads/master'
-        name: "[run-ui-ci] PHP 8.4 / MariaDB / Cypress / UI"
+        name: "Cypress / UI"
         runs-on: ubuntu-latest
         env:
             PROGRESS_TYPE: plain
@@ -357,10 +360,21 @@ jobs:
         steps:
             -   uses: actions/checkout@v4
 
-            -   name: Install cypress-tests folder
+            -   uses: ramsey/composer-install@v3
+                with:
+                    composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
+
+            #-   name: Install cypress-tests folder
+            #    run: |
+            #        cd ./data && composer require "spryker/cypress-tests:dev-master" --dev --no-interaction
+            #        cp -r vendor/spryker/cypress-tests ../tests/cypress-tests
+
+            -   name: Configure sysctl limits
                 run: |
-                    cd ./data && composer require "spryker/cypress-tests:dev-master" --dev --no-interaction
-                    cp -r vendor/spryker/cypress-tests ../tests/cypress-tests
+                    sudo sysctl -w vm.swappiness=10
+                    sudo sysctl -w fs.file-max=262144
+                    sudo sysctl -w vm.max_map_count=262144
+                    ulimit -n 65536
 
             -   name: Install Project
                 run: |
@@ -391,7 +405,7 @@ jobs:
                 && (contains(github.event.pull_request.labels.*.name, 'run-ui-ci')
                     || contains(github.event.pull_request.labels.*.name, 'run-latest-ci'))
             ) || github.ref == 'refs/heads/master'
-        name: "[run-ui-ci] PHP 8.4 / MariaDB / Robot / UI"
+        name: "Robot / UI"
         runs-on: ubuntu-latest
         env:
             PROGRESS_TYPE: plain
@@ -403,20 +417,30 @@ jobs:
         steps:
             -   uses: actions/checkout@v4
 
+            -   uses: ramsey/composer-install@v3
+                with:
+                    composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
+
             #  needed for mount:baked
-            -   name: Install robotframework-suite-tests folder
+            #-   name: Install robotframework-suite-tests folder
+            #    run: |
+            #        cd data
+            #        VERSION=$(php -r "echo json_decode(file_get_contents('../composer.json'), true)['require-dev']['spryker/robotframework-suite-tests'] ?? 'dev-master';")
+            #        composer require "spryker/robotframework-suite-tests:$VERSION" --dev --no-interaction --ignore-platform-reqs
+            #        mv vendor ../
+
+            -   name: Configure sysctl limits
                 run: |
-                    cd data
-                    VERSION=$(php -r "echo json_decode(file_get_contents('../composer.json'), true)['require-dev']['spryker/robotframework-suite-tests'] ?? 'dev-master';")
-                    composer require "spryker/robotframework-suite-tests:$VERSION" --dev --no-interaction --ignore-platform-reqs
-                    mv vendor ../
+                    sudo sysctl -w vm.swappiness=10
+                    sudo sysctl -w fs.file-max=262144
+                    sudo sysctl -w vm.max_map_count=262144
+                    ulimit -n 65536
 
             -   name: Install Project
-                continue-on-error: false
                 run: |
                     git clone --depth 1 https://github.com/spryker/docker-sdk.git ./docker
                     docker/sdk boot deploy.ci.acceptance.mariadb.robot.yml
-                    sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local scheduler.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local date-time-configurator-example.spryker.local' >> /etc/hosts"
+                    #sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local scheduler.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local date-time-configurator-example.spryker.local' >> /etc/hosts"
                     docker/sdk up -t
                     docker/sdk cli composer dump-autoload -o -a --apcu
 

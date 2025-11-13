@@ -76,7 +76,7 @@ groups:
                 endpoints:
                     glue.eu.spryker.local:
                         region: EU
-            boffice:
+            backoffice:
                 application: backoffice
                 endpoints:
                     backoffice.eu.spryker.local:
@@ -146,7 +146,7 @@ docker:
         region: EU
 
     mount:
-        baked:
+        native:
 
     compose:
         yamls:
