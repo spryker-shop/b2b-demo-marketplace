@@ -100,6 +100,9 @@ jobs:
             -   name: Generate autocompletion files
                 run: vendor/bin/console dev:ide-auto-completion:generate
 
+            -   name: Setup search map files
+                run: vendor/bin/console search:setup:source-map
+
             -   name: Validate propel files
                 run: |
                     vendor/bin/console propel:schema:validate
