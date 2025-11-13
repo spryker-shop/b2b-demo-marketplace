@@ -311,17 +311,14 @@ jobs:
             DYNAMIC_STORE_MODE: true
         steps:
             -   uses: actions/checkout@v4
-            -   name: Install packages
-                run: |
-                    sudo apt-get update
-                    sudo apt-get install -y python3-pip
-                    pip3 install --upgrade pip
-                    pip3 install awscli
 
+            #  needed for mount:baked
             -   name: Install robotframework-suite-tests folder
                 run: |
-                    cd ./data && composer require "spryker/robotframework-suite-tests:dev-master" --dev --no-interaction
-                    cp -r vendor ../vendor
+                    cd data
+                    VERSION=$(php -r "echo json_decode(file_get_contents('../composer.json'), true)['require-dev']['spryker/robotframework-suite-tests'] ?? 'dev-master';")
+                    composer require "spryker/robotframework-suite-tests:$VERSION" --dev --no-interaction --ignore-platform-reqs
+                    mv vendor ../
 
             -   name: Install Project
                 run: |
@@ -359,12 +356,6 @@ jobs:
             DYNAMIC_STORE_MODE: true
         steps:
             -   uses: actions/checkout@v4
-            -   name: Install packages
-                run: |
-                    sudo apt-get update
-                    sudo apt-get install -y python3-pip
-                    pip3 install --upgrade pip
-                    pip3 install awscli
 
             -   name: Install cypress-tests folder
                 run: |
@@ -412,17 +403,13 @@ jobs:
         steps:
             -   uses: actions/checkout@v4
 
-            -   name: Install packages
-                run: |
-                    sudo apt-get update
-                    sudo apt-get install -y python3-pip
-                    pip3 install --upgrade pip
-                    pip3 install awscli
-
+            #  needed for mount:baked
             -   name: Install robotframework-suite-tests folder
                 run: |
-                    cd ./data && composer require "spryker/robotframework-suite-tests:dev-master" --dev --no-interaction
-                    cp -r vendor ../vendor
+                    cd data
+                    VERSION=$(php -r "echo json_decode(file_get_contents('../composer.json'), true)['require-dev']['spryker/robotframework-suite-tests'] ?? 'dev-master';")
+                    composer require "spryker/robotframework-suite-tests:$VERSION" --dev --no-interaction --ignore-platform-reqs
+                    mv vendor ../
 
             -   name: Install Project
                 continue-on-error: false

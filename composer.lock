@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7f401fb72652069742b50601ba5a1ed0",
+    "content-hash": "4346496d63005f2d434ce455eb0e771d",
     "packages": [
         {
             "name": "async-aws/core",
@@ -81318,19 +81318,18 @@
         },
         {
             "name": "spryker/cypress-tests",
-            "version": "dev-master",
+            "version": "dev-bugfix/fixtures-mp-import-b2b-mp",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/cypress-tests.git",
-                "reference": "05ea4820b99e0b0febe773dd6672c1ee39169910"
+                "reference": "4d46cf645fac447d61ccacebae5031ce90e41754"
             },
-            "default-branch": true,
             "type": "spryker-test",
             "license": [
                 "MIT"
             ],
             "description": "This repository is dedicated to housing an extensive collection of UI end-to-end tests, meticulously crafted using Cypress for Spryker applications. These tests are designed to thoroughly evaluate the user interface, ensuring that all interactions and visual elements function as intended in real-world scenarios. By leveraging Cypress's advanced browser automation capabilities, this suite provides an efficient and effective means of validating the user experience, confirming the seamless operation and aesthetic integrity of Spryker's front-end components. Our commitment to rigorous UI testing helps maintain the high standard of quality and reliability that Spryker users expect.",
-            "time": "2025-11-10T13:57:48+00:00"
+            "time": "2025-11-13T16:32:19+00:00"
         },
         {
             "name": "spryker/development",
@@ -81536,15 +81535,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/robotframework-suite-tests.git",
-                "reference": "d9d7dd789776f256a9614ca28aa4fd8760021caa"
+                "reference": "97f698566feda2b12c29ea8afffaf53402f28572"
             },
             "default-branch": true,
+            "bin": [
+                "bin/run-robot-suite-tests.sh"
+            ],
             "type": "library",
             "license": [
                 "MIT"
             ],
             "description": "Automated tests for the Robot Framework",
-            "time": "2025-09-15T12:35:42+00:00"
+            "time": "2025-11-07T15:20:01+00:00"
         },
         {
             "name": "spryker/testify",
