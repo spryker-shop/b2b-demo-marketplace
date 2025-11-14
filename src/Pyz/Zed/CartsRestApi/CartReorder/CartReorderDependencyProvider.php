@@ -7,7 +7,7 @@
 
 declare(strict_types = 1);
 
-namespace Pyz\Zed\CartReorder;
+namespace Pyz\Zed\CartsRestApi\CartReorder;
 
 use Spryker\Zed\AvailabilityCartConnector\Communication\Plugin\CartReorder\RemoveUnavailableItemsCartReorderPreAddToCartPlugin;
 use Spryker\Zed\CartNote\Communication\Plugin\CartReorder\CartNoteCartPreReorderPlugin;

@@ -5,7 +5,7 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Pyz\Zed\SelfServicePortal;
 
@@ -25,11 +25,11 @@ class SelfServicePortalConfig extends SprykerSelfServicePortalConfig
     public function getInquiryStatusClassMap(): array
     {
         return [
-        'approved' => 'label-success',
-        'rejected' => 'label-danger',
-        'pending' => 'label-warning',
-        'canceled' => 'label-default',
-        'in_review' => 'label-primary',
+            'approved' => 'label-success',
+            'rejected' => 'label-danger',
+            'pending' => 'label-warning',
+            'canceled' => 'label-default',
+            'in_review' => 'label-primary',
         ];
     }
 
@@ -44,10 +44,10 @@ class SelfServicePortalConfig extends SprykerSelfServicePortalConfig
     public function getAssetStatusClassMap(): array
     {
         return [
-        'pending' => 'label-warning',
-        'in_review' => 'label-primary',
-        'approved' => 'label-success',
-        'deactivated' => 'label-danger',
+            'pending' => 'label-warning',
+            'in_review' => 'label-primary',
+            'approved' => 'label-success',
+            'deactivated' => 'label-danger',
         ];
     }
 

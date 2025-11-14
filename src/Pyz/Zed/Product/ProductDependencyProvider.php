@@ -53,6 +53,12 @@ use Spryker\Zed\Stock\Communication\Plugin\ProductConcreteReadPlugin as StockPro
 use Spryker\Zed\TaxProductConnector\Communication\Plugin\Product\TaxSetProductAbstractExpanderPlugin;
 use Spryker\Zed\TaxProductConnector\Communication\Plugin\Product\TaxSetProductAbstractPostCreatePlugin;
 use Spryker\Zed\TaxProductConnector\Communication\Plugin\TaxSetProductAbstractAfterUpdatePlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Product\ProductClassesProductConcreteExpanderPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Product\ProductClassProductConcreteAfterUpdatePlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Product\ProductClassProductConcretePostCreatePlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Product\ShipmentTypeProductConcreteExpanderPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Product\ShipmentTypeProductConcretePostCreatePlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Product\ShipmentTypeProductConcretePostUpdatePlugin;
 
 class ProductDependencyProvider extends SprykerProductDependencyProvider
 {
@@ -118,6 +124,8 @@ class ProductDependencyProvider extends SprykerProductDependencyProvider
             new ProductBundleProductConcreteAfterCreatePlugin(),
             new ProductValidityCreatePlugin(),
             new DiscontinuedProductConcreteAfterCreatePlugin(),
+            new ShipmentTypeProductConcretePostCreatePlugin(),
+            new ProductClassProductConcretePostCreatePlugin(),
         ];
     }
 
@@ -167,6 +175,8 @@ class ProductDependencyProvider extends SprykerProductDependencyProvider
             new SaveDiscontinuedNotesProductConcretePluginUpdate(),
             new DiscontinuedProductConcreteAfterUpdatePlugin(),
             new ProductBundleDeactivatorProductConcreteAfterUpdatePlugin(),
+            new ShipmentTypeProductConcretePostUpdatePlugin(),
+            new ProductClassProductConcreteAfterUpdatePlugin(),
         ];
     }
 
@@ -207,6 +217,8 @@ class ProductDependencyProvider extends SprykerProductDependencyProvider
             new ProductConcreteCategoriesExpanderPlugin(),
             new MerchantProductOfferProductConcreteExpanderPlugin(),
             new ProductLabelProductConcreteExpanderPlugin(),
+            new ShipmentTypeProductConcreteExpanderPlugin(),
+            new ProductClassesProductConcreteExpanderPlugin(),
         ];
     }
 
