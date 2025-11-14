@@ -119,6 +119,7 @@ use Spryker\Zed\StockDataImport\Communication\Plugin\StockDataImportPlugin;
 use Spryker\Zed\StockDataImport\Communication\Plugin\StockStoreDataImportPlugin;
 use Spryker\Zed\StoreContextDataImport\Communication\Plugin\DataImport\StoreContextDataImportPlugin;
 use Spryker\Zed\StoreDataImport\Communication\Plugin\DataImport\StoreDataImportPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\DataImport\ProductClassDataImportPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\DataImport\SspAssetDataImportPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\DataImport\SspInquiryDataImportPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\DataImport\SspModelAssetDataImportPlugin;
@@ -460,7 +461,7 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
             new MerchantCombinedProductDataImportPlugin(),
             new MerchantCombinedProductOfferDataImportPlugin(),
 
-          
+            new ProductClassDataImportPlugin(),
             new SspInquiryDataImportPlugin(),
             new SspAssetDataImportPlugin(),
             new SspModelDataImportPlugin(),

@@ -361,3 +361,17 @@ actions:
     source: data/import/common/AT/comment.csv
   - data_entity: mime-type
     source: data/import/common/common/mime_type.csv
+
+#8. SelfServicePortal
+  - data_entity: ssp-inquiry
+    source: data/import/common/EU/ssp_inquiry.csv
+  - data_entity: product-class
+    source: data/import/common/common/product_class.csv
+  - data_entity: ssp-asset
+    source: data/import/common/common/ssp_asset.csv
+  - data_entity: ssp-model
+    source: data/import/common/common/ssp_model.csv
+  - data_entity: ssp-model-asset
+    source: data/import/common/common/ssp_model_asset.csv
+  - data_entity: ssp-model-product-list
+    source: data/import/common/common/ssp_model_product_list.csv

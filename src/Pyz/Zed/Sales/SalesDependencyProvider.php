@@ -97,10 +97,18 @@ use Spryker\Zed\SalesReclamationGui\Communication\Plugin\Sales\ReclamationSalesT
 use Spryker\Zed\SalesReturn\Communication\Plugin\Sales\RemunerationTotalOrderExpanderPlugin;
 use Spryker\Zed\SalesReturn\Communication\Plugin\Sales\UpdateOrderItemIsReturnableByGlobalReturnableNumberOfDaysPlugin;
 use Spryker\Zed\SalesReturn\Communication\Plugin\Sales\UpdateOrderItemIsReturnableByItemStatePlugin;
+use Spryker\Zed\SalesServicePoint\Communication\Plugin\Sales\ServicePointOrderItemExpanderPlugin;
+use Spryker\Zed\Shipment\Communication\Plugin\Sales\ShipmentOrderItemExpanderPlugin;
 use Spryker\Zed\Shipment\Communication\Plugin\ShipmentOrderHydratePlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Sales\ProductClassOrderExpanderPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Sales\ProductClassOrderItemsPostSavePlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Sales\SspAssetOrderExpanderPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Sales\SspAssetOrderItemExpanderPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Sales\SspAssetOrderItemsPostSavePlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Sales\SspProductClassSalesOrderItemCollectionPreDeletePlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Sales\SspServiceCancellableOrderItemExpanderPlugin;
 
+/** @package Pyz\Zed\Sales */
 class SalesDependencyProvider extends SprykerSalesDependencyProvider
 {
     /**
@@ -139,6 +147,7 @@ class SalesDependencyProvider extends SprykerSalesDependencyProvider
             new SalesOrderAmendmentOrderExpanderPlugin(),
             new IsAmendableOrderExpanderPlugin(),
             new SspAssetOrderExpanderPlugin(),
+            new ProductClassOrderExpanderPlugin(),
         ];
     }
 
@@ -315,6 +324,7 @@ class SalesDependencyProvider extends SprykerSalesDependencyProvider
             new ProductConfigurationOrderItemsPostSavePlugin(),
             new ProductOptionOrderItemsPostSavePlugin(),
             new SspAssetOrderItemsPostSavePlugin(),
+            new ProductClassOrderItemsPostSavePlugin(),
         ];
     }
 
@@ -348,7 +358,6 @@ class SalesDependencyProvider extends SprykerSalesDependencyProvider
             new ItemMetadataSalesOrderItemCollectionPreDeletePlugin(),
             new OmsItemHistorySalesOrderItemCollectionPreDeletePlugin(),
             new ProductOptionSalesOrderItemCollectionPreDeletePlugin(),
-            new ServicePointSalesOrderItemCollectionPreDeletePlugin(),
             new SalesConfigurableBundleSalesOrderItemCollectionPreDeletePlugin(),
             new SalesProductConfigurationSalesOrderItemCollectionPreDeletePlugin(),
             new NopaymentSalesOrderItemCollectionPreDeletePlugin(),
