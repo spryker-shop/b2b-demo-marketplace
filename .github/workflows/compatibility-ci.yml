@@ -93,12 +93,6 @@ jobs:
             ROBOT_TESTS_ARTIFACTS_BUCKET_REGION: eu-west-1
         steps:
             -   uses: actions/checkout@v4
-            -   name: Install packages
-                run: |
-                    sudo apt-get update
-                    sudo apt-get install -y python3-pip
-                    pip3 install --upgrade pip
-                    pip3 install awscli
 
             -   name: Install robotframework-suite-tests folder
                 run: |
@@ -138,12 +132,6 @@ jobs:
             ROBOT_TESTS_ARTIFACTS_BUCKET_REGION: eu-west-1
         steps:
             -   uses: actions/checkout@v4
-            -   name: Install packages
-                run: |
-                    sudo apt-get update
-                    sudo apt-get install -y python3-pip
-                    pip3 install --upgrade pip
-                    pip3 install awscli
 
             -   name: Install cypress-tests folder
                 run: |
@@ -188,13 +176,6 @@ jobs:
 #            ROBOT_TESTS_ARTIFACTS_BUCKET_REGION: eu-west-1
 #        steps:
 #            -   uses: actions/checkout@v4
-#
-#            -   name: Install packages
-#                run: |
-#                    sudo apt-get update
-#                    sudo apt-get install -y python3-pip
-#                    pip3 install --upgrade pip
-#                    pip3 install awscli
 #
 #            -   name: Install cypress-tests folder
 #                run: |
@@ -242,13 +223,6 @@ jobs:
             ROBOT_TESTS_ARTIFACTS_BUCKET_REGION: eu-west-1
         steps:
             -   uses: actions/checkout@v4
-
-            -   name: Install packages
-                run: |
-                    sudo apt-get update
-                    sudo apt-get install -y python3-pip
-                    pip3 install --upgrade pip
-                    pip3 install awscli
 
             -   name: Install robotframework-suite-tests folder
                 run: |
