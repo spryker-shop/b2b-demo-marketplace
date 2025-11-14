@@ -98,7 +98,7 @@ groups:
                         store: DE
                     glue-backend.at.spryker.local:
                         store: AT
-            boffice:
+            backoffice:
                 application: backoffice
                 endpoints:
                     backoffice.de.spryker.local:
@@ -190,4 +190,4 @@ docker:
 
     compose:
         yamls:
-            - .robot/docker-compose.robot.yml
+            - vendor/spryker/robotframework-suite-tests/docker-compose.yml
