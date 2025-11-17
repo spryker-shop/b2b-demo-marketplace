@@ -111,6 +111,7 @@ use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Sales\SspAssetOrde
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Sales\SspProductClassSalesOrderItemCollectionPreDeletePlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Sales\SspServiceCancellableOrderItemExpanderPlugin;
 
+/** @package Pyz\Zed\Sales */
 class SalesDependencyProvider extends SprykerSalesDependencyProvider
 {
     /**
