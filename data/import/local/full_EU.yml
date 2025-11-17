@@ -35,10 +35,18 @@ actions:
     source: data/import/common/common/tax.csv
   - data_entity: shipment
     source: data/import/common/common/shipment.csv
+  - data_entity: shipment-type
+    source: data/import/common/common/shipment_type.csv
+  - data_entity: shipment-method-shipment-type
+    source: data/import/common/common/shipment_method_shipment_type.csv
   - data_entity: shipment-price
     source: data/import/common/DE/shipment_price.csv
   - data_entity: shipment-price
     source: data/import/common/AT/shipment_price.csv
+  - data_entity: shipment-type-store
+    source: data/import/common/DE/shipment_type_store.csv
+  - data_entity: shipment-type-store
+    source: data/import/common/AT/shipment_type_store.csv
   - data_entity: sales-order-threshold
     source: data/import/common/DE/sales_order_threshold.csv
   - data_entity: sales-order-threshold
@@ -278,6 +286,8 @@ actions:
     source: data/import/common/common/marketplace/product_stock.csv
   - data_entity: product-offer-stock
     source: data/import/common/common/marketplace/product_offer_stock.csv
+  - data_entity: product-offer-shipment-type
+    source: data/import/common/common/product_offer_shipment_type.csv
   - data_entity: merchant-profile
     source: data/import/common/common/marketplace/merchant_profile.csv
   - data_entity: merchant-profile-address
@@ -362,11 +372,36 @@ actions:
   - data_entity: mime-type
     source: data/import/common/common/mime_type.csv
 
-#8. SelfServicePortal
+    #8. Click&Collect import
+  - data_entity: service-point
+    source: data/import/common/common/service_point.csv
+  - data_entity: service-point-address
+    source: data/import/common/common/service_point_address.csv
+  - data_entity: service-type
+    source: data/import/common/common/service_type.csv
+  - data_entity: service
+    source: data/import/common/common/service.csv
+  - data_entity: shipment-type-service-type
+    source: data/import/common/common/shipment_type_service_type.csv
+  - data_entity: product-offer-service
+    source: data/import/common/common/product_offer_service.csv
+    # Store relation
+  - data_entity: service-point-store
+    source: data/import/common/DE/service_point_store.csv
+  - data_entity: service-point-store
+    source: data/import/common/AT/service_point_store.csv
+
+    # Product Shipment Type import
+  - data_entity: product-shipment-type
+    source: data/import/common/common/product_shipment_type.csv
+
+    # SelfServicePortal
   - data_entity: ssp-inquiry
     source: data/import/common/EU/ssp_inquiry.csv
   - data_entity: product-class
     source: data/import/common/common/product_class.csv
+  - data_entity: product-to-product-class
+    source: data/import/common/common/product_to_product_class.csv
   - data_entity: ssp-asset
     source: data/import/common/common/ssp_asset.csv
   - data_entity: ssp-model

@@ -9,6 +9,9 @@ declare(strict_types = 1);
 
 namespace Pyz\Yves\CartPage;
 
+use SprykerFeature\Yves\SelfServicePortal\Plugin\CartPage\ServiceDateTimePreAddToCartPlugin;
+use SprykerFeature\Yves\SelfServicePortal\Plugin\CartPage\ServicePointPreAddToCartPlugin;
+use SprykerFeature\Yves\SelfServicePortal\Plugin\CartPage\ShipmentTypePreAddToCartPlugin;
 use SprykerFeature\Yves\SelfServicePortal\Plugin\CartPage\SspAssetPreAddToCartPlugin;
 use SprykerShop\Yves\CartPage\CartPageDependencyProvider as SprykerCartPageDependencyProvider;
 use SprykerShop\Yves\DiscountPromotionWidget\Plugin\CartPage\DiscountPromotionAddToCartFormWidgetParameterExpanderPlugin;
@@ -50,6 +53,9 @@ class CartPageDependencyProvider extends SprykerCartPageDependencyProvider
             new MerchantProductPreAddToCartPlugin(),
             new MerchantProductOfferPreAddToCartPlugin(),
             new SspAssetPreAddToCartPlugin(),
+            new ServicePointPreAddToCartPlugin(),
+            new ShipmentTypePreAddToCartPlugin(),
+            new ServiceDateTimePreAddToCartPlugin(),
         ];
     }
 
