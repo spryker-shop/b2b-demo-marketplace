@@ -5,9 +5,7 @@
 } %}
 
 {% block body %}
-    {% block title %}
-        <h5 class="title title--second title--underline">{{ 'page.checkout.address.multi_shipment.title' | trans }}</h5>
-    {% endblock %}
+    {% block title %}{% endblock %}
 
     {% set items = (data.form.vars.data | default([])) | filter(item => not item.relatedBundleItemIdentifier) %}
 
