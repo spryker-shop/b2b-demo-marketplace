@@ -28,9 +28,6 @@ use Spryker\Zed\SharedCart\Communication\Plugin\WriteSharedCartPermissionPlugin;
 use Spryker\Zed\ShoppingList\Communication\Plugin\ReadShoppingListPermissionPlugin;
 use Spryker\Zed\ShoppingList\Communication\Plugin\ShoppingListPermissionStoragePlugin;
 use Spryker\Zed\ShoppingList\Communication\Plugin\WriteShoppingListPermissionPlugin;
-use SprykerShop\Shared\CartPage\Plugin\AddCartItemPermissionPlugin;
-use SprykerShop\Shared\CartPage\Plugin\ChangeCartItemPermissionPlugin;
-use SprykerShop\Shared\CartPage\Plugin\RemoveCartItemPermissionPlugin;
 use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\CreateSspAssetPermissionPlugin;
 use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\CreateSspInquiryPermissionPlugin;
 use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\UnassignSspAssetPermissionPlugin;
@@ -42,6 +39,9 @@ use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\ViewCompanyFilesPe
 use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\ViewCompanySspAssetPermissionPlugin;
 use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\ViewCompanySspInquiryPermissionPlugin;
 use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\ViewCompanyUserFilesPermissionPlugin;
+use SprykerShop\Shared\CartPage\Plugin\AddCartItemPermissionPlugin;
+use SprykerShop\Shared\CartPage\Plugin\ChangeCartItemPermissionPlugin;
+use SprykerShop\Shared\CartPage\Plugin\RemoveCartItemPermissionPlugin;
 
 class PermissionDependencyProvider extends SprykerPermissionDependencyProvider
 {

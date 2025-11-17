@@ -15,6 +15,7 @@ use Spryker\Zed\ProductApproval\Communication\Plugin\ProductStorage\ProductAppro
 use Spryker\Zed\ProductApproval\Communication\Plugin\ProductStorage\ProductApprovalProductConcreteStorageCollectionFilterPlugin;
 use Spryker\Zed\ProductStorage\ProductStorageDependencyProvider as SprykerProductStorageDependencyProvider;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductStorage\ProductClassProductConcreteStorageCollectionExpanderPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductStorage\ShipmentTypeProductConcreteStorageCollectionExpanderPlugin;
 
 class ProductStorageDependencyProvider extends SprykerProductStorageDependencyProvider
 {
@@ -55,6 +56,7 @@ class ProductStorageDependencyProvider extends SprykerProductStorageDependencyPr
     {
         return [
             new MerchantProductConcreteStorageCollectionExpanderPlugin(),
+            new ShipmentTypeProductConcreteStorageCollectionExpanderPlugin(),
             new ProductClassProductConcreteStorageCollectionExpanderPlugin(),
         ];
     }

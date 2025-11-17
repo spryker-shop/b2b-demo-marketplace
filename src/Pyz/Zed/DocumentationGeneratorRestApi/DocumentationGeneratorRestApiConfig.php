@@ -13,7 +13,7 @@ use Spryker\Zed\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConfi
 
 class DocumentationGeneratorRestApiConfig extends SprykerDocumentationGeneratorRestApiConfig
 {
-     public function getPathVersionPrefix(): string
+    public function getPathVersionPrefix(): string
     {
         return 'v';
     }

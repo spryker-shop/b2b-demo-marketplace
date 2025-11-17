@@ -42,9 +42,6 @@ use Spryker\Client\ShoppingList\Plugin\WriteShoppingListPermissionPlugin;
 use Spryker\Shared\Checkout\Plugin\Permission\PlaceOrderWithAmountUpToPermissionPlugin;
 use Spryker\Shared\CompanyUser\Plugin\AddCompanyUserPermissionPlugin;
 use Spryker\Shared\CompanyUserInvitation\Plugin\ManageCompanyUserInvitationPermissionPlugin;
-use SprykerShop\Shared\CartPage\Plugin\AddCartItemPermissionPlugin;
-use SprykerShop\Shared\CartPage\Plugin\ChangeCartItemPermissionPlugin;
-use SprykerShop\Shared\CartPage\Plugin\RemoveCartItemPermissionPlugin;
 use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\CreateSspAssetPermissionPlugin;
 use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\CreateSspInquiryPermissionPlugin;
 use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\UnassignSspAssetPermissionPlugin;
@@ -60,6 +57,9 @@ use SprykerFeature\Yves\SelfServicePortal\Plugin\Permission\DownloadCompanyFiles
 use SprykerFeature\Yves\SelfServicePortal\Plugin\Permission\ViewBusinessUnitSspServicePermissionPlugin;
 use SprykerFeature\Yves\SelfServicePortal\Plugin\Permission\ViewCompanySspServicePermissionPlugin;
 use SprykerFeature\Yves\SelfServicePortal\Plugin\Permission\ViewDashboardPermissionPlugin;
+use SprykerShop\Shared\CartPage\Plugin\AddCartItemPermissionPlugin;
+use SprykerShop\Shared\CartPage\Plugin\ChangeCartItemPermissionPlugin;
+use SprykerShop\Shared\CartPage\Plugin\RemoveCartItemPermissionPlugin;
 
 class PermissionDependencyProvider extends SprykerPermissionDependencyProvider
 {

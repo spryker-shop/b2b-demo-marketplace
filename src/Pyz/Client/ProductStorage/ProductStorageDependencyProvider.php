@@ -24,6 +24,7 @@ use Spryker\Client\ProductListStorage\Plugin\ProductStorageExtension\ProductConc
 use Spryker\Client\ProductOfferStorage\Plugin\ProductStorage\ProductViewProductOfferExpanderPlugin;
 use Spryker\Client\ProductStorage\Plugin\ProductVariantProductViewExpanderPlugin;
 use Spryker\Client\ProductStorage\ProductStorageDependencyProvider as SprykerProductStorageDependencyProvider;
+use SprykerFeature\Client\SelfServicePortal\Plugin\ProductStorage\ShipmentTypeProductViewExpanderPlugin;
 
 class ProductStorageDependencyProvider extends SprykerProductStorageDependencyProvider
 {
@@ -32,21 +33,28 @@ class ProductStorageDependencyProvider extends SprykerProductStorageDependencyPr
      */
     protected function getProductViewExpanderPlugins(): array
     {
-        /** @var array<\Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface> $plugins */
-        $plugins = [
+        /**
+         * Returns a list of `ProductView` expander plugins ordered by execution priority.
+         *
+         * Important: `ShipmentTypeProductViewExpanderPlugin` MUST come before
+         * `ProductViewAvailabilityStorageExpanderPlugin` so that shipment type data
+         * is available when availability is expanded/calculated.
+         *
+         * @return array<\Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface>
+         */
+        return [
             new ProductViewDiscontinuedOptionsExpanderPlugin(), #ProductDiscontinuedFeature
             new ProductVariantProductViewExpanderPlugin(),
             new ProductViewProductOfferExpanderPlugin(),
             new ProductViewProductConfigurationExpanderPlugin(),
             new ProductViewPriceExpanderPlugin(),
+            new ShipmentTypeProductViewExpanderPlugin(),
             new ProductViewAvailabilityStorageExpanderPlugin(),
             new ProductDiscontinuedProductAvailabilityExpanderPlugin(), #ProductDiscontinuedFeature
             new ProductViewImageExpanderPlugin(),
             new ProductViewMerchantProductExpanderPlugin(),
             new ProductBundleProductViewExpanderPlugin(),
         ];
-
-        return $plugins;
     }
 
     /**
