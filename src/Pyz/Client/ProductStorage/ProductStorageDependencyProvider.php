@@ -42,7 +42,7 @@ class ProductStorageDependencyProvider extends SprykerProductStorageDependencyPr
          *
          * @return array<\Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface>
          */
-        $plugins = [
+        return [
             new ProductViewDiscontinuedOptionsExpanderPlugin(), #ProductDiscontinuedFeature
             new ProductVariantProductViewExpanderPlugin(),
             new ProductViewProductOfferExpanderPlugin(),
@@ -55,8 +55,6 @@ class ProductStorageDependencyProvider extends SprykerProductStorageDependencyPr
             new ProductViewMerchantProductExpanderPlugin(),
             new ProductBundleProductViewExpanderPlugin(),
         ];
-
-        return $plugins;
     }
 
     /**

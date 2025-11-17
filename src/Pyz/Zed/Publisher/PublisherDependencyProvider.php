@@ -744,8 +744,8 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
     }
 
      /**
-     * @return list<\Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface>
-     */
+      * @return list<\Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface>
+      */
     protected function getSspModelStoragePlugins(): array
     {
         return [

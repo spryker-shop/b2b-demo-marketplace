@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Client\RabbitMq;
 
+use Pyz\Shared\SelfServicePortal\SelfServicePortalConfig;
 use Spryker\Client\RabbitMq\RabbitMqConfig as SprykerRabbitMqConfig;
 use Spryker\Shared\AssetStorage\AssetStorageConfig;
 use Spryker\Shared\AvailabilityStorage\AvailabilityStorageConfig;
@@ -37,6 +38,8 @@ use Spryker\Shared\PriceProductStorage\PriceProductStorageConstants;
 use Spryker\Shared\ProductConfigurationStorage\ProductConfigurationStorageConfig;
 use Spryker\Shared\ProductImageStorage\ProductImageStorageConfig;
 use Spryker\Shared\ProductOfferAvailabilityStorage\ProductOfferAvailabilityStorageConfig;
+use Spryker\Shared\ProductOfferServicePointStorage\ProductOfferServicePointStorageConfig;
+use Spryker\Shared\ProductOfferShipmentTypeStorage\ProductOfferShipmentTypeStorageConfig;
 use Spryker\Shared\ProductOfferStorage\ProductOfferStorageConfig;
 use Spryker\Shared\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConfig;
@@ -50,18 +53,15 @@ use Spryker\Shared\Publisher\PublisherConfig;
 use Spryker\Shared\RabbitMq\RabbitMqEnv;
 use Spryker\Shared\SalesReturnSearch\SalesReturnSearchConfig;
 use Spryker\Shared\SearchHttp\SearchHttpConfig;
+use Spryker\Shared\ServicePointSearch\ServicePointSearchConfig;
+use Spryker\Shared\ServicePointStorage\ServicePointStorageConfig;
+use Spryker\Shared\ShipmentTypeStorage\ShipmentTypeStorageConfig;
 use Spryker\Shared\ShoppingListStorage\ShoppingListStorageConfig;
 use Spryker\Shared\StoreStorage\StoreStorageConfig;
 use Spryker\Shared\TaxProductStorage\TaxProductStorageConfig;
 use Spryker\Shared\TaxStorage\TaxStorageConfig;
 use Spryker\Shared\UrlStorage\UrlStorageConfig;
 use Spryker\Shared\UrlStorage\UrlStorageConstants;
-use Spryker\Shared\ProductOfferServicePointStorage\ProductOfferServicePointStorageConfig;
-use Spryker\Shared\ProductOfferShipmentTypeStorage\ProductOfferShipmentTypeStorageConfig;
-use Spryker\Shared\ServicePointSearch\ServicePointSearchConfig;
-use Spryker\Shared\ServicePointStorage\ServicePointStorageConfig;
-use Spryker\Shared\ShipmentTypeStorage\ShipmentTypeStorageConfig;
-use Pyz\Shared\SelfServicePortal\SelfServicePortalConfig;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)

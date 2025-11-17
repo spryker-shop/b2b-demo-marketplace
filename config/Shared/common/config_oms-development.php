@@ -3,11 +3,11 @@
 declare(strict_types = 1);
 
 use Spryker\Shared\DummyMarketplacePayment\DummyMarketplacePaymentConfig;
+use Spryker\Shared\DummyPayment\DummyPaymentConfig;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Nopayment\NopaymentConfig;
 use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Shared\Sales\SalesConstants;
-use Spryker\Shared\DummyPayment\DummyPaymentConfig;
 use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConstants;
 
 // ----------------------------------------------------------------------------

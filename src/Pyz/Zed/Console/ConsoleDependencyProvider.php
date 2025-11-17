@@ -102,9 +102,9 @@ use Spryker\Zed\ProductDiscontinuedDataImport\ProductDiscontinuedDataImportConfi
 use Spryker\Zed\ProductLabel\Communication\Console\ProductLabelRelationUpdaterConsole;
 use Spryker\Zed\ProductLabel\Communication\Console\ProductLabelValidityConsole;
 use Spryker\Zed\ProductLabelDataImport\ProductLabelDataImportConfig;
-use Spryker\Zed\ProductOfferShoppingListDataImport\ProductOfferShoppingListDataImportConfig;
 use Spryker\Zed\ProductOfferServicePointDataImport\ProductOfferServicePointDataImportConfig;
 use Spryker\Zed\ProductOfferShipmentTypeDataImport\ProductOfferShipmentTypeDataImportConfig;
+use Spryker\Zed\ProductOfferShoppingListDataImport\ProductOfferShoppingListDataImportConfig;
 use Spryker\Zed\ProductOfferValidity\Communication\Console\ProductOfferValidityConsole;
 use Spryker\Zed\ProductPackagingUnitDataImport\ProductPackagingUnitDataImportConfig;
 use Spryker\Zed\ProductQuantityDataImport\ProductQuantityDataImportConfig;
@@ -200,9 +200,8 @@ use Spryker\Zed\Uuid\Communication\Console\UuidGeneratorConsole;
 use Spryker\Zed\ZedNavigation\Communication\Console\BuildNavigationConsole;
 use Spryker\Zed\ZedNavigation\Communication\Console\RemoveNavigationCacheConsole;
 use SprykerEco\Zed\NewRelic\Communication\Console\RecordDeploymentConsole;
-use SprykerShop\Zed\DateTimeConfiguratorPageExample\Communication\Console\DateTimeProductConfiguratorBuildFrontendConsole;
 use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
-
+use SprykerShop\Zed\DateTimeConfiguratorPageExample\Communication\Console\DateTimeProductConfiguratorBuildFrontendConsole;
 
 /**
  * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
