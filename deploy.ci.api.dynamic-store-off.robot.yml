@@ -58,28 +58,28 @@ groups:
     EU:
         region: EU
         applications:
-            glue:
+            glue_eu:
                 application: glue
                 endpoints:
                     glue.de.spryker.local:
                         store: DE
                     glue.at.spryker.local:
                         store: AT
-            gluestorefront:
+            glue_storefront_eu:
                 application: glue-storefront
                 endpoints:
                     glue-storefront.de.spryker.local:
                         store: DE
                     glue-storefront.at.spryker.local:
                         store: AT
-            gluebackend:
+            glue_backend_eu:
                 application: glue-backend
                 endpoints:
                     glue-backend.de.spryker.local:
                         store: DE
                     glue-backend.at.spryker.local:
                         store: AT
-            backoffice:
+            backoffice_eu:
                 application: backoffice
                 endpoints:
                     backoffice.de.spryker.local:
@@ -92,7 +92,7 @@ groups:
                         services:
                             session:
                                 namespace: 4
-            backgw:
+            backend_gateway_eu:
                 application: backend-gateway
                 endpoints:
                     backend-gateway.de.spryker.local:
@@ -101,7 +101,7 @@ groups:
                     backend-gateway.at.spryker.local:
                         store: AT
                         primal: true
-            backapi:
+            backend_api_eu:
                 application: zed
                 endpoints:
                     backend-api.de.spryker.local:
