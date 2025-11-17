@@ -3,8 +3,7 @@ import ValidateNextCheckoutStepCore from 'CheckoutPage/components/molecules/vali
 export default class ValidateNextCheckoutStep extends ValidateNextCheckoutStepCore {
     protected mapEvents(): void {
         super.mapEvents();
-
-        document.querySelector('.js-address__billing-same-as-shipping input[type="checkbox"]')?.addEventListener('change', (event) => this.toggleDisablingNextStepButton(event, true));
+        document.querySelector(`.${this.getAttribute('same-billing-class-name')} input[type="checkbox"]`)?.addEventListener('change', (event) => this.toggleDisablingNextStepButton(event, true));
     }
 
     protected get isDropdownTriggerPreSelected(): boolean {
