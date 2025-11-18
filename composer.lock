@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7f401fb72652069742b50601ba5a1ed0",
+    "content-hash": "ebdfccc2c79c95da07dc7ceeed5d6eec",
     "packages": [
         {
             "name": "async-aws/core",
@@ -29903,6 +29903,42 @@
                 "source": "https://github.com/spryker/company-users-rest-api/tree/2.7.1"
             },
             "time": "2025-07-31T11:52:19+00:00"
+        },
+        {
+            "name": "spryker/composer-autoload-plugin",
+            "version": "dev-first-commit",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/composer-autoload-plugin.git",
+                "reference": "4226143a5b37d93f2b40de7ab1f263cd4c993f00"
+            },
+            "require": {
+                "composer-plugin-api": "^2.0",
+                "php": ">=8.3"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                },
+                "class": "Spryker\\Composer\\Plugin\\AutoloadPlugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\Composer\\": "src/Spryker/Composer"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Spryker",
+                    "homepage": "https://spryker.com"
+                }
+            ],
+            "description": "Composer plugin to optimize autoload generation for Spryker projects",
+            "time": "2025-11-17T15:29:30+00:00"
         },
         {
             "name": "spryker/config",
@@ -82425,9 +82461,9 @@
         "ext-readline": "*",
         "ext-redis": "*"
     },
-    "platform-dev": {},
+    "platform-dev": [],
     "platform-overrides": {
         "php": "8.3.13"
     },
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.6.0"
 }
