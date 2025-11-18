@@ -2,7 +2,7 @@ name: B2B-MP-COMPATIBILITY-CI
 
 on:
     pull_request:
-        types: [ labeled, unlabeled, synchronize, opened ]
+        types: [ labeled, synchronize ]
     schedule:
         - cron: '0 2 * * 6'
     workflow_dispatch:
@@ -269,6 +269,31 @@ jobs:
                 if: failure()
                 run: |
                     AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp .robot/results/log.html s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/b2b-mp/dms-off/robot-ui/${GITHUB_RUN_ID}/PHP8.3PostgreSQL/log.html
+
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
+
+    frontend-assets-via-docker-php-83:
+        if: >
+            github.event_name == 'schedule'
+        name: "Frontend & Assets"
+        runs-on: ubuntu-latest
+        env:
+            PROGRESS_TYPE: plain
+            SPRYKER_PLATFORM_IMAGE: spryker/php:8.3
+            SPRYKER_CURRENT_REGION: EU
+            DYNAMIC_STORE_MODE: true
+        steps:
+            -   uses: actions/checkout@v4
+            -   run: echo eyAiZXhwZXJpbWVudGFsIiA6IHRydWUsICJmZWF0dXJlcyIgOiB7ICJidWlsZGtpdCI6IHRydWUgfSB9Cg==|base64 -d|sudo tee /etc/docker/daemon.json
+            -   run: git clone --depth 1 https://github.com/spryker/docker-sdk.git --single-branch --branch master ./docker
+            -   run: docker/sdk boot deploy.yml
+            -   run: SPRYKER_BUILD_HASH=myhash docker/sdk export images
+            -   run: docker run -t --rm -e SPRYKER_NGINX_CGI_HOST_YVES_EU=localhost -e SPRYKER_NGINX_CGI_HOST_ZED_EU=localhost -e SPRYKER_NGINX_CGI_HOST_GLUE_EU=localhost -e SPRYKER_NGINX_CGI_HOST_YVES_US=localhost -e SPRYKER_NGINX_CGI_HOST_GLUE_US=localhost -e SPRYKER_NGINX_CGI_HOST_ZED_US=localhost -e ALLOWED_IP=127.0.0.1 spryker_b2b_marketplace_frontend:1.0-frontend nginx -t
+            -   run: docker run -t --rm --entrypoint='' spryker_b2b_marketplace_frontend:1.0-frontend ls -al /data/public/Yves/assets/myhash
+            -   run: docker run -t --rm --entrypoint='' spryker_b2b_marketplace_frontend:1.0-frontend ls -al /data/public/Zed/assets/
+            -   run: docker run -t --rm --entrypoint='' spryker_b2b_marketplace_frontend:1.0-frontend ls -al /data/public/MerchantPortal/assets/
 
             -   name: Slack Notification for failed job
                 uses: ./.github/actions/job-slack-notifications
