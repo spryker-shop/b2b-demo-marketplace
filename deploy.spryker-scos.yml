@@ -45,12 +45,10 @@ environment: docker.ssp.b2bmp
 image:
     tag: spryker/php:8.4
     environment:
-        SPRYKER_DNS_RESOLVER_IP: "10.105.0.2"
-        SPRYKER_HOOK_BEFORE_DEPLOY: "vendor/bin/install -r pre-deploy -vvv"
+        SPRYKER_HOOK_BEFORE_DEPLOY: "vendor/bin/install -r EU/pre-deploy.dynamic-store-off -vvv"
         SPRYKER_HOOK_AFTER_DEPLOY: "true"
-        SPRYKER_HOOK_INSTALL: "vendor/bin/install -r dynamic-store --no-ansi -vvv"
-        SPRYKER_HOOK_DESTRUCTIVE_INSTALL: "vendor/bin/install -r destructive --no-ansi -vvv"
-        SPRYKER_DYNAMIC_STORE_MODE: true
+        SPRYKER_HOOK_INSTALL: "vendor/bin/install -r EU/production.dynamic-store-off --no-ansi -vvv"
+        SPRYKER_HOOK_DESTRUCTIVE_INSTALL: "vendor/bin/install -r EU/destructive.dynamic-store-off --no-ansi -vvv"
         SPRYKER_PRODUCT_CONFIGURATOR_HOST: demo-date-time-configurator.scos.sh01.demo-spryker.com
         SPRYKER_PRODUCT_CONFIGURATOR_PORT: 443
         SPRYKER_PRODUCT_CONFIGURATOR_ENCRYPTION_KEY: 'change123'
