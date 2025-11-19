@@ -28890,6 +28890,47 @@
             "time": "2023-03-31T19:36:11+00:00"
         },
         {
+            "name": "spryker/company-role-extension",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/company-role-extension.git",
+                "reference": "5273fa5785e35f4479eb8eb2f03d56b66d62fe9c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/company-role-extension/zipball/5273fa5785e35f4479eb8eb2f03d56b66d62fe9c",
+                "reference": "5273fa5785e35f4479eb8eb2f03d56b66d62fe9c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.3"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "CompanyRoleExtension module",
+            "support": {
+                "source": "https://github.com/spryker/company-role-extension/tree/1.0.0"
+            },
+            "time": "2025-11-18T11:48:23+00:00"
+        },
+        {
             "name": "spryker/company-role-gui",
             "version": "1.9.0",
             "source": {
@@ -29707,24 +29748,23 @@
         },
         {
             "name": "spryker/company-user-extension",
-            "version": "1.2.0",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/company-user-extension.git",
-                "reference": "44fc4eea5c1cb31d381bfabae585d0c03ce84e58"
+                "reference": "164a45dcfd98b0686a9be46513132dea57956d89"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/company-user-extension/zipball/44fc4eea5c1cb31d381bfabae585d0c03ce84e58",
-                "reference": "44fc4eea5c1cb31d381bfabae585d0c03ce84e58",
+                "url": "https://api.github.com/repos/spryker/company-user-extension/zipball/164a45dcfd98b0686a9be46513132dea57956d89",
+                "reference": "164a45dcfd98b0686a9be46513132dea57956d89",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.1"
+                "php": ">=8.3"
             },
             "require-dev": {
-                "spryker/code-sniffer": "*",
-                "spryker/testify": "*"
+                "spryker/code-sniffer": "*"
             },
             "type": "library",
             "extra": {
@@ -29743,9 +29783,9 @@
             ],
             "description": "CompanyUserExtension module",
             "support": {
-                "source": "https://github.com/spryker/company-user-extension/tree/master"
+                "source": "https://github.com/spryker/company-user-extension/tree/1.3.0"
             },
-            "time": "2019-02-26T13:05:25+00:00"
+            "time": "2025-11-18T11:48:23+00:00"
         },
         {
             "name": "spryker/company-user-gui",
@@ -32330,23 +32370,26 @@
         },
         {
             "name": "spryker/customer",
-            "version": "7.72.0",
+            "version": "7.73.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/customer.git",
-                "reference": "6c5722f4fec671b7478a8f2bc9be8bc1595e1ab6"
+                "reference": "3eb7e44d6c7997f172b0e1f773ae5ba6682e983a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/customer/zipball/6c5722f4fec671b7478a8f2bc9be8bc1595e1ab6",
-                "reference": "6c5722f4fec671b7478a8f2bc9be8bc1595e1ab6",
+                "url": "https://api.github.com/repos/spryker/customer/zipball/3eb7e44d6c7997f172b0e1f773ae5ba6682e983a",
+                "reference": "3eb7e44d6c7997f172b0e1f773ae5ba6682e983a",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.3",
+                "spryker-shop/session-customer-validation-page-extension": "^1.0.0",
                 "spryker/acl-merchant-portal-extension": "^1.0.0",
                 "spryker/authorization-extension": "^1.0.0",
                 "spryker/checkout-extension": "^1.2.0",
+                "spryker/company-role-extension": "^1.0.0",
+                "spryker/company-user-extension": "^1.3.0",
                 "spryker/country": "^3.1.0 || ^4.0.0",
                 "spryker/customer-extension": "^1.5.0",
                 "spryker/event-dispatcher-extension": "^1.0.0",
@@ -32360,6 +32403,7 @@
                 "spryker/router": "^1.12.0",
                 "spryker/sequence-number": "^3.0.0",
                 "spryker/session": "^3.0.0 || ^4.0.0",
+                "spryker/storage-redis": "^1.0.0",
                 "spryker/store": "^1.19.0",
                 "spryker/symfony": "^3.0.0",
                 "spryker/tax-product-connector-extension": "^1.0.0",
@@ -32411,9 +32455,9 @@
             ],
             "description": "Customer module",
             "support": {
-                "source": "https://github.com/spryker/customer/tree/7.72.0"
+                "source": "https://github.com/spryker/customer/tree/7.73.0"
             },
-            "time": "2025-11-15T10:58:02+00:00"
+            "time": "2025-11-18T11:48:23+00:00"
         },
         {
             "name": "spryker/customer-access",
@@ -36996,16 +37040,16 @@
         },
         {
             "name": "spryker/gui",
-            "version": "4.0.0",
+            "version": "4.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/gui.git",
-                "reference": "a426babd1d9a5b4e7c11a5610fdc633dd0650900"
+                "reference": "23e0385ff1268f9c15db3fa08528cd417da50b32"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/gui/zipball/a426babd1d9a5b4e7c11a5610fdc633dd0650900",
-                "reference": "a426babd1d9a5b4e7c11a5610fdc633dd0650900",
+                "url": "https://api.github.com/repos/spryker/gui/zipball/23e0385ff1268f9c15db3fa08528cd417da50b32",
+                "reference": "23e0385ff1268f9c15db3fa08528cd417da50b32",
                 "shasum": ""
             },
             "require": {
@@ -37055,9 +37099,9 @@
             ],
             "description": "Gui module",
             "support": {
-                "source": "https://github.com/spryker/gui/tree/4.0.0"
+                "source": "https://github.com/spryker/gui/tree/4.0.1"
             },
-            "time": "2025-11-15T10:58:02+00:00"
+            "time": "2025-11-19T09:46:27+00:00"
         },
         {
             "name": "spryker/gui-extension",
@@ -62721,21 +62765,21 @@
         },
         {
             "name": "spryker/search-elasticsearch-gui",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/search-elasticsearch-gui.git",
-                "reference": "393f48a37f2bd7d5c7579dad8347fbdfd9d2970c"
+                "reference": "bd173e497d8d09b429a3a42fd0148c37883f98d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/search-elasticsearch-gui/zipball/393f48a37f2bd7d5c7579dad8347fbdfd9d2970c",
-                "reference": "393f48a37f2bd7d5c7579dad8347fbdfd9d2970c",
+                "url": "https://api.github.com/repos/spryker/search-elasticsearch-gui/zipball/bd173e497d8d09b429a3a42fd0148c37883f98d4",
+                "reference": "bd173e497d8d09b429a3a42fd0148c37883f98d4",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.3",
-                "spryker/gui": "^4.0.0",
+                "spryker/gui": "^4.0.1",
                 "spryker/kernel": "^3.30.0",
                 "spryker/search-elasticsearch": "^1.2.0",
                 "spryker/search-extension": "^1.0.0",
@@ -62765,9 +62809,9 @@
             ],
             "description": "SearchElasticsearchGui module",
             "support": {
-                "source": "https://github.com/spryker/search-elasticsearch-gui/tree/2.0.0"
+                "source": "https://github.com/spryker/search-elasticsearch-gui/tree/2.0.1"
             },
-            "time": "2025-11-15T10:58:02+00:00"
+            "time": "2025-11-19T09:46:27+00:00"
         },
         {
             "name": "spryker/search-extension",
@@ -66709,21 +66753,21 @@
         },
         {
             "name": "spryker/storage-gui",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/storage-gui.git",
-                "reference": "fe1e2256771c996c2e0500c3c7dd4fe696565441"
+                "reference": "b582c8255ee7fd8d8265f5c6974444089422beea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/storage-gui/zipball/fe1e2256771c996c2e0500c3c7dd4fe696565441",
-                "reference": "fe1e2256771c996c2e0500c3c7dd4fe696565441",
+                "url": "https://api.github.com/repos/spryker/storage-gui/zipball/b582c8255ee7fd8d8265f5c6974444089422beea",
+                "reference": "b582c8255ee7fd8d8265f5c6974444089422beea",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.3",
-                "spryker/gui": "^4.0.0",
+                "spryker/gui": "^4.0.1",
                 "spryker/kernel": "^3.30.0",
                 "spryker/storage": "^3.9.0",
                 "spryker/symfony": "^3.5.0",
@@ -66751,9 +66795,9 @@
             ],
             "description": "StorageGui module",
             "support": {
-                "source": "https://github.com/spryker/storage-gui/tree/2.0.0"
+                "source": "https://github.com/spryker/storage-gui/tree/2.0.1"
             },
-            "time": "2025-11-15T10:58:02+00:00"
+            "time": "2025-11-19T09:46:27+00:00"
         },
         {
             "name": "spryker/storage-redis",
@@ -79111,16 +79155,16 @@
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "5.6.3",
+            "version": "5.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "94f8051919d1b0369a6bcc7931d679a511c03fe9"
+                "reference": "90a04bcbf03784066f16038e87e23a0a83cee3c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/94f8051919d1b0369a6bcc7931d679a511c03fe9",
-                "reference": "94f8051919d1b0369a6bcc7931d679a511c03fe9",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/90a04bcbf03784066f16038e87e23a0a83cee3c2",
+                "reference": "90a04bcbf03784066f16038e87e23a0a83cee3c2",
                 "shasum": ""
             },
             "require": {
@@ -79169,22 +79213,22 @@
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
             "support": {
                 "issues": "https://github.com/phpDocumentor/ReflectionDocBlock/issues",
-                "source": "https://github.com/phpDocumentor/ReflectionDocBlock/tree/5.6.3"
+                "source": "https://github.com/phpDocumentor/ReflectionDocBlock/tree/5.6.4"
             },
-            "time": "2025-08-01T19:43:32+00:00"
+            "time": "2025-11-17T21:13:10+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
-            "version": "1.10.0",
+            "version": "1.10.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/TypeResolver.git",
-                "reference": "679e3ce485b99e84c775d28e2e96fade9a7fb50a"
+                "reference": "431c02da15e566adb0ad9c5030fa6f6204d9de9e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/679e3ce485b99e84c775d28e2e96fade9a7fb50a",
-                "reference": "679e3ce485b99e84c775d28e2e96fade9a7fb50a",
+                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/431c02da15e566adb0ad9c5030fa6f6204d9de9e",
+                "reference": "431c02da15e566adb0ad9c5030fa6f6204d9de9e",
                 "shasum": ""
             },
             "require": {
@@ -79227,9 +79271,9 @@
             "description": "A PSR-5 based resolver of Class names, Types and Structural Element Names",
             "support": {
                 "issues": "https://github.com/phpDocumentor/TypeResolver/issues",
-                "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.10.0"
+                "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.10.1"
             },
-            "time": "2024-11-09T15:12:26+00:00"
+            "time": "2025-11-18T07:51:16+00:00"
         },
         {
             "name": "phpmd/phpmd",
