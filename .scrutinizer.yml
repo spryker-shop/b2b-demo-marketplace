@@ -2,11 +2,12 @@ build:
     environment:
         php:
             version: 8.2
-            pecl_extensions:
 
         node: 'v18.20'
 
     dependencies:
+        override:
+            - true
         before:
             - 'npm cache clean --force'
             - 'rm -rf node_modules'
