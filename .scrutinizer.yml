@@ -7,7 +7,8 @@ build:
 
     dependencies:
         override:
-            - true
+            - true # disable PHP dependency (pecl modules) installation
+
         before:
             - 'npm cache clean --force'
             - 'rm -rf node_modules'
