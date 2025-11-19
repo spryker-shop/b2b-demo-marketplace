@@ -1,6 +1,9 @@
 build:
     environment:
-        php: '8.2'
+        php:
+            version: 8.2
+            pecl_extensions:
+
         node: 'v18.20'
 
     dependencies:
