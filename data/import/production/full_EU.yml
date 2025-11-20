@@ -372,10 +372,6 @@ actions:
   - data_entity: mime-type
     source: data/import/common/common/mime_type.csv
 
-    # SelfServicePortal
-  - data_entity: ssp-inquiry
-    source: data/import/common/EU/ssp_inquiry.csv
-
     #9. Click&Collect import
   - data_entity: service-point
     source: data/import/common/common/service_point.csv
@@ -387,9 +383,31 @@ actions:
     source: data/import/common/common/service.csv
   - data_entity: shipment-type-service-type
     source: data/import/common/common/shipment_type_service_type.csv
+  - data_entity: product-offer-service
+    source: data/import/common/common/product_offer_service.csv
+
+  # Product Shipment Type import
+  - data_entity: product-shipment-type
+    source: data/import/common/common/product_shipment_type.csv
 
     # Store relation
   - data_entity: service-point-store
     source: data/import/common/DE/service_point_store.csv
   - data_entity: service-point-store
     source: data/import/common/AT/service_point_store.csv
+
+    # SelfServicePortal
+  - data_entity: ssp-inquiry
+    source: data/import/common/EU/ssp_inquiry.csv
+  - data_entity: product-class
+    source: data/import/common/common/product_class.csv
+  - data_entity: ssp-asset
+    source: data/import/common/common/ssp_asset.csv
+  - data_entity: product-to-product-class
+    source: data/import/common/common/product_to_product_class.csv
+  - data_entity: ssp-model
+    source: data/import/common/common/ssp_model.csv
+  - data_entity: ssp-model-asset
+    source: data/import/common/common/ssp_model_asset.csv
+  - data_entity: ssp-model-product-list
+    source: data/import/common/common/ssp_model_product_list.csv
