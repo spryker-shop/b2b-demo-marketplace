@@ -94,10 +94,13 @@ jobs:
         steps:
             -   uses: actions/checkout@v4
 
+            #  needed for mount:baked
             -   name: Install robotframework-suite-tests folder
                 run: |
-                    cd ./data && composer require "spryker/robotframework-suite-tests:dev-master" --dev --no-interaction
-                    cp -r vendor ../vendor
+                    cd data
+                    VERSION=$(php -r "echo json_decode(file_get_contents('../composer.json'), true)['require-dev']['spryker/robotframework-suite-tests'] ?? 'dev-master';")
+                    composer require "spryker/robotframework-suite-tests:$VERSION" --dev --no-interaction --ignore-platform-reqs
+                    mv vendor ../
 
             -   name: Install Project
                 run: |
@@ -224,10 +227,13 @@ jobs:
         steps:
             -   uses: actions/checkout@v4
 
+            #  needed for mount:baked
             -   name: Install robotframework-suite-tests folder
                 run: |
-                    cd ./data && composer require "spryker/robotframework-suite-tests:dev-master" --dev --no-interaction
-                    cp -r vendor ../vendor
+                    cd data
+                    VERSION=$(php -r "echo json_decode(file_get_contents('../composer.json'), true)['require-dev']['spryker/robotframework-suite-tests'] ?? 'dev-master';")
+                    composer require "spryker/robotframework-suite-tests:$VERSION" --dev --no-interaction --ignore-platform-reqs
+                    mv vendor ../
 
             -   name: Install Project
                 continue-on-error: false
