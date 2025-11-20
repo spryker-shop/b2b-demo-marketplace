@@ -20,7 +20,7 @@ jobs:
     php-83-postgresql-acceptance-debian-dynamic-store-off:
         if: >
             (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci'))
-            || github.event_name == 'schedule'
+            || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         name: "PHP 8.3 / PostgreSQL / Acceptance & API / Debian / Dynamic Store OFF"
         runs-on: ubuntu-latest
         env:
@@ -55,7 +55,7 @@ jobs:
     php-83-postgres-functional-debian-dynamic-store-off:
         if: >
             (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci'))
-            || github.event_name == 'schedule'
+            || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         name: "PHP 8.3 / PostgreSQL / Functional / Debian / Dynamic Store OFF"
         runs-on: ubuntu-latest
         env:
@@ -83,7 +83,7 @@ jobs:
     docker-debian-php-83-postgresql-robot-dynamic-store-off:
         if: >
             (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci'))
-            || github.event_name == 'schedule'
+            || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         name: "Docker / Debian / PHP 8.3 / PostgreSql / Robot / API / Dynamic Store OFF"
         runs-on: ubuntu-latest
         env:
@@ -125,7 +125,7 @@ jobs:
     docker-alpine-php-84-mariadb-cypress-dynamic-store-off:
         if: >
             (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci'))
-            || github.event_name == 'schedule'
+            || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         name: "Docker / Alpine / PHP 8.4 / MariaDB / Cypress / UI / Dynamic Store OFF"
         runs-on: ubuntu-latest
         env:
@@ -169,7 +169,7 @@ jobs:
 #    docker-debian-php-83-postgresql-cypress-dynamic-store-off:
 #        if: >
 #            (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci'))
-#            || github.event_name == 'schedule'
+#            || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
 #        name: "Docker / Debian / PHP 8.3 / PostgreSql / Cypress / UI / Dynamic Store OFF"
 #        runs-on: ubuntu-latest
 #        env:
@@ -216,7 +216,7 @@ jobs:
     docker-alpine-php-83-postgresql-dynamic-store-off-robot-ui:
         if: >
             (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci'))
-            || github.event_name == 'schedule'
+            || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         name: "Docker / Alpine / PHP 8.3 / PostgreSQL / Dynamic Store OFF / Robot / UI"
         runs-on: ubuntu-latest
         env:
@@ -282,7 +282,7 @@ jobs:
 
     frontend-assets-via-docker-php-83:
         if: >
-            github.event_name == 'schedule'
+            github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         name: "Frontend & Assets"
         runs-on: ubuntu-latest
         env:
