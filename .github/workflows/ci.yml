@@ -122,7 +122,6 @@ jobs:
 
     js-validation:
         name: "NPM validation"
-        if: ${{ !(github.event_name == 'push' && github.ref == 'refs/heads/master') }}
         runs-on: ubuntu-latest
         steps:
             -   uses: actions/checkout@v4
@@ -161,11 +160,6 @@ jobs:
     php-84-mariadb-acceptance-alpine:
         needs: [js-validation, validation]
         name: "Codeception / Acceptance & API"
-        if: >
-            contains(github.event.pull_request.labels.*.name, 'run-ui-ci')
-            || contains(github.event.pull_request.labels.*.name, 'run-latest-ci')
-            || contains(github.event.pull_request.labels.*.name, 'run-api-ci')
-            || github.ref == 'refs/heads/master'
         runs-on: ubuntu-latest
         env:
             PROGRESS_TYPE: plain
@@ -202,18 +196,10 @@ jobs:
                     docker/sdk testing console queue:worker:start --stop-when-empty
 
             -   name: Run Acceptance Tests
-                if: >
-                    contains(github.event.pull_request.labels.*.name, 'run-ui-ci')
-                    || contains(github.event.pull_request.labels.*.name, 'run-latest-ci')
-                    || github.ref == 'refs/heads/master'
                 run: |
                     docker/sdk testing codecept run -c codeception.acceptance.yml
 
             -   name: Run API Tests
-                if: >
-                    contains(github.event.pull_request.labels.*.name, 'run-api-ci')
-                    || contains(github.event.pull_request.labels.*.name, 'run-latest-ci')
-                    || github.ref == 'refs/heads/master'
                 run: |
                     docker/sdk testing codecept run -c codeception.api.yml
 
@@ -223,10 +209,6 @@ jobs:
 
     php-84-mariadb-functional-alpine:
         needs: [validation]
-        if: >
-            contains(github.event.pull_request.labels.*.name, 'run-functional-ci')
-            || contains(github.event.pull_request.labels.*.name, 'run-latest-ci')
-            || github.ref == 'refs/heads/master'
         name: "Codeception / Functional Tests"
         runs-on: ubuntu-latest
         env:
@@ -258,40 +240,8 @@ jobs:
                 uses: ./.github/actions/job-slack-notifications
                 if: always()
 
-    frontend-assets-via-docker-php-83:
-        needs: [js-validation]
-        if: >
-            contains(github.event.pull_request.labels.*.name, 'run-functional-ci')
-            || contains(github.event.pull_request.labels.*.name, 'run-latest-ci')
-            || github.ref == 'refs/heads/master'
-        name: "Frontend & Assets"
-        runs-on: ubuntu-latest
-        env:
-            PROGRESS_TYPE: plain
-            SPRYKER_PLATFORM_IMAGE: spryker/php:8.3
-            SPRYKER_CURRENT_REGION: EU
-            DYNAMIC_STORE_MODE: true
-        steps:
-            -   uses: actions/checkout@v4
-            -   run: echo eyAiZXhwZXJpbWVudGFsIiA6IHRydWUsICJmZWF0dXJlcyIgOiB7ICJidWlsZGtpdCI6IHRydWUgfSB9Cg==|base64 -d|sudo tee /etc/docker/daemon.json
-            -   run: git clone --depth 1 https://github.com/spryker/docker-sdk.git --single-branch --branch master ./docker
-            -   run: docker/sdk boot deploy.yml
-            -   run: SPRYKER_BUILD_HASH=myhash docker/sdk export images
-            -   run: docker run -t --rm -e SPRYKER_NGINX_CGI_HOST_YVES_EU=localhost -e SPRYKER_NGINX_CGI_HOST_ZED_EU=localhost -e SPRYKER_NGINX_CGI_HOST_GLUE_EU=localhost -e SPRYKER_NGINX_CGI_HOST_YVES_US=localhost -e SPRYKER_NGINX_CGI_HOST_GLUE_US=localhost -e SPRYKER_NGINX_CGI_HOST_ZED_US=localhost -e ALLOWED_IP=127.0.0.1 spryker_b2b_marketplace_frontend:1.0-frontend nginx -t
-            -   run: docker run -t --rm --entrypoint='' spryker_b2b_marketplace_frontend:1.0-frontend ls -al /data/public/Yves/assets/myhash
-            -   run: docker run -t --rm --entrypoint='' spryker_b2b_marketplace_frontend:1.0-frontend ls -al /data/public/Zed/assets/
-            -   run: docker run -t --rm --entrypoint='' spryker_b2b_marketplace_frontend:1.0-frontend ls -al /data/public/MerchantPortal/assets/
-
-            -   name: Slack Notification for failed job
-                uses: ./.github/actions/job-slack-notifications
-                if: always()
-
     docker-alpine-php-84-mariadb-robot-api:
         needs: [validation]
-        if: >
-            contains(github.event.pull_request.labels.*.name, 'run-api-ci')
-            || contains(github.event.pull_request.labels.*.name, 'run-latest-ci')
-            || github.ref == 'refs/heads/master'
         name: "Robot / API"
         runs-on: ubuntu-latest
         env:
@@ -344,10 +294,6 @@ jobs:
 
     docker-alpine-php-84-mariadb-cypress:
         needs: [js-validation, validation]
-        if: >
-            contains(github.event.pull_request.labels.*.name, 'run-ui-ci')
-            || contains(github.event.pull_request.labels.*.name, 'run-latest-ci')
-            || github.ref == 'refs/heads/master'
         name: "Cypress / UI"
         runs-on: ubuntu-latest
         env:
@@ -400,11 +346,6 @@ jobs:
 
     docker-alpine-php-84-mariadb-robot-ui:
         needs: [js-validation, validation]
-        if: >
-            (github.event_name == 'pull_request'
-                && (contains(github.event.pull_request.labels.*.name, 'run-ui-ci')
-                    || contains(github.event.pull_request.labels.*.name, 'run-latest-ci'))
-            ) || github.ref == 'refs/heads/master'
         name: "Robot / UI"
         runs-on: ubuntu-latest
         env:
