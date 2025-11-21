@@ -191,7 +191,7 @@ jobs:
             -   name: Run Fixtures
                 run: |
                     docker/sdk testing codecept fixtures
-                    docker/sdk testing composer dump-autoload -o
+                    docker/sdk testing composer dump-autoload -o -a --apcu
                     echo "console queue:worker:start --stop-when-empty"
                     docker/sdk testing console queue:worker:start --stop-when-empty
 
@@ -231,7 +231,7 @@ jobs:
                     git clone --depth 1 https://github.com/spryker/docker-sdk.git ./docker
                     docker/sdk boot deploy.ci.functional.mariadb.yml -a --apcu
                     docker/sdk up -t
-                    docker/sdk cli composer dump-autoload -o
+                    docker/sdk cli composer dump-autoload -o -a --apcu
 
             -   name: Run Tests
                 run: docker/sdk testing codecept run -c codeception.ci.functional.yml
