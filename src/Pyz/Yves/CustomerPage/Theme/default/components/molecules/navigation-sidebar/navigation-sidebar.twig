@@ -75,14 +75,25 @@
     {% endif %}
 {% endblock %}
 {% block body %}
-    <div class="title--h5 spacing-bottom">
-        <strong>{{ 'self_service_portal.customer_navigation.title' | trans }}</strong>
-    </div>
+    {% if
+            can('ViewDashboardPermissionPlugin') or
+            can('ViewCompanyBusinessUnitFilesPermissionPlugin') or
+            can('ViewCompanyFilesPermissionPlugin') or
+            can('ViewBusinessUnitSspAssetPermissionPlugin') or
+            can('ViewCompanySspAssetPermissionPlugin') or
+            can('ViewBusinessUnitSspServicePermissionPlugin') or
+            can('ViewCompanySspServicePermissionPlugin') or
+            can('ViewBusinessUnitSspInquiryPermissionPlugin') or
+            can('ViewCompanySspInquiryPermissionPlugin')
+        %}
+        <div class="title--h5 spacing-bottom">
+            <strong>{{ 'self_service_portal.customer_navigation.title' | trans }}</strong>
+        </div>
+        <ul class="{{ _self.renderClass(config.name ~ '__list', modifiers) }} spacing-bottom--biggest">
+            {% widget 'SspListMenuItemWidget' args [data.activePage] only %}{% endwidget %}
+        </ul>
+    {% endif %}
 
-    <ul class="{{ _self.renderClass(config.name ~ '__list', modifiers) }}">
-        {% widget 'SspListMenuItemWidget' args [data.activePage] only %}{% endwidget %}
-    </ul>
-
-    <div class="title--h5 spacing-top--biggest spacing-bottom"><strong>{{ 'customer.customer_navigation.title' | trans }}</strong></div>
+    <div class="title--h5 spacing-bottom"><strong>{{ 'customer.customer_navigation.title' | trans }}</strong></div>
     {{ parent() }}
 {% endblock %}

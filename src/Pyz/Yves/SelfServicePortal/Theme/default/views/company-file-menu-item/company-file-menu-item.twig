@@ -4,10 +4,12 @@
     url: url('customer/ssp-file/list-file'),
     label: 'self_service_portal.company_file' | trans,
     name: 'ssp-file-management',
+    isVisible: can('ViewCompanyBusinessUnitFilesPermissionPlugin') or can('ViewCompanyFilesPermissionPlugin'),
 } %}
 
 {% block body %}
-    {% set modifiers = data.modifiers | default([]) %}
+    {% if data.isVisible %}
+        {% set modifiers = data.modifiers | default([]) %}
 
         {% block content %}
             {% include molecule('navigation-sidebar-item') with {
@@ -15,10 +17,11 @@
                     url: data.url,
                     icon: 'files',
                     label: data.label,
-                    name: data.name
+                    name: data.name,
                 },
                 qa: 'my-files',
                 modifiers: data.isActivePage ? ['active'] | merge(modifiers) : modifiers,
             } only %}
         {% endblock %}
+    {% endif %}
 {% endblock %}

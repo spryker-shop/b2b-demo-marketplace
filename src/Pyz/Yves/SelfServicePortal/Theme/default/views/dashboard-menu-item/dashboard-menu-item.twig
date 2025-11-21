@@ -3,22 +3,24 @@
 {% define data = {
     url: url('customer/ssp-dashboard'),
     label: 'ssp_dashboard.index.widget.title' | trans,
-    name: 'ssp-dashboard'
+    name: 'ssp-dashboard',
 } %}
 
 {% block body %}
-    {% set modifiers = data.modifiers | default([]) %}
+    {% if data.canViewFiles %}
+        {% set modifiers = data.modifiers | default([]) %}
 
-    {% block content %}
-        {% include molecule('navigation-sidebar-item') with {
-            data: {
-                url: data.url,
-                icon: 'dashboard',
-                label: data.label,
-                name: data.name
-            },
-            qa: 'dashboard',
-            modifiers: data.isActivePage ? ['active'] | merge(modifiers) : modifiers,
-        } only %}
-    {% endblock %}
+        {% block content %}
+            {% include molecule('navigation-sidebar-item') with {
+                data: {
+                    url: data.url,
+                    icon: 'dashboard',
+                    label: data.label,
+                    name: data.name,
+                },
+                qa: 'dashboard',
+                modifiers: data.isActivePage ? ['active'] | merge(modifiers) : modifiers,
+            } only %}
+        {% endblock %}
+    {% endif %}
 {% endblock %}
