@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "caedcb4a8254edcbaa98acd1b1d5c104",
+    "content-hash": "bc1d1909920404edb10c9f64253c6477",
     "packages": [
         {
             "name": "async-aws/core",
@@ -30123,6 +30123,53 @@
                 "source": "https://github.com/spryker/company-users-rest-api/tree/2.7.1"
             },
             "time": "2025-07-31T11:52:19+00:00"
+        },
+        {
+            "name": "spryker/composer-autoload-plugin",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/composer-autoload-plugin.git",
+                "reference": "b4a3dc22cf706eb09d33605d7f2190d92a9987e5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/composer-autoload-plugin/zipball/b4a3dc22cf706eb09d33605d7f2190d92a9987e5",
+                "reference": "b4a3dc22cf706eb09d33605d7f2190d92a9987e5",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^2.0",
+                "php": ">=8.3"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Spryker\\Composer\\Plugin\\AutoloadPlugin",
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\Composer\\": "src/Spryker/Composer"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Spryker",
+                    "homepage": "https://spryker.com"
+                }
+            ],
+            "description": "Composer plugin to optimize autoload generation for Spryker projects",
+            "support": {
+                "issues": "https://github.com/spryker/composer-autoload-plugin/issues",
+                "source": "https://github.com/spryker/composer-autoload-plugin/tree/0.1.0"
+            },
+            "time": "2025-11-21T12:35:13+00:00"
         },
         {
             "name": "spryker/config",
@@ -82901,9 +82948,9 @@
         "ext-readline": "*",
         "ext-redis": "*"
     },
-    "platform-dev": {},
+    "platform-dev": [],
     "platform-overrides": {
         "php": "8.3.13"
     },
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.6.0"
 }
