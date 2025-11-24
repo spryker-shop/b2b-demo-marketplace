@@ -158,7 +158,7 @@ groups:
 services:
     database:
         engine: mysql
-        version: mariadb-11.8
+        version: mariadb-10.4
         root:
             username: 'root'
             password: 'secret'
@@ -190,7 +190,7 @@ services:
                 protocol: tcp
     scheduler:
         engine: jenkins
-        version: '2.516.3'
+        version: '2.492.3'
         endpoints:
             scheduler.biba.cloud.spryker.toys:
     mail_catcher:
