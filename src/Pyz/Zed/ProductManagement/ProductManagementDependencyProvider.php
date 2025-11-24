@@ -243,8 +243,8 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
     }
 
      /**
-     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractReadinessProviderPluginInterface>
-     */
+      * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractReadinessProviderPluginInterface>
+      */
     protected function getProductAbstractReadinessProviderPlugins(): array
     {
         return [
