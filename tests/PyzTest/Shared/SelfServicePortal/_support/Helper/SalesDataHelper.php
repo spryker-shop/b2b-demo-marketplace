@@ -1,9 +1,11 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * This file is part of the Spryker Commerce OS.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
+
+declare(strict_types = 1);
 
 namespace PyzTest\Shared\SelfServicePortal\Helper;
 
@@ -82,7 +84,7 @@ class SalesDataHelper extends SprykerSalesDataHelper
      */
     public function haveFullOrder(
         array $override = [],
-        ?string $stateMachineProcessName = null
+        ?string $stateMachineProcessName = null,
     ): SaveOrderTransfer {
         $saveOrderTransfer = $this->haveOrder(
             $override,
@@ -213,9 +215,11 @@ class SalesDataHelper extends SprykerSalesDataHelper
         $paymentMethodStatemachineMapping = (new SalesConfig())->getPaymentMethodStatemachineMapping();
         $paymentMethod = array_flip($paymentMethodStatemachineMapping)[$stateMachineProcessName] ?? null;
 
-        if ($paymentMethod) {
-            $this->saveSalesPayment($saveOrderTransfer->getIdSalesOrder(), $paymentMethod);
+        if (!$paymentMethod) {
+            return;
         }
+
+        $this->saveSalesPayment($saveOrderTransfer->getIdSalesOrder(), $paymentMethod);
     }
 
     protected function updateOrderItems(SaveOrderTransfer $saveOrderTransfer): void
