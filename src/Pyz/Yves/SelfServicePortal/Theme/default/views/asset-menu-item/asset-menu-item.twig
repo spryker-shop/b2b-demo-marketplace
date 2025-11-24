@@ -3,22 +3,25 @@
 {% define data = {
     url: url('customer/ssp-asset'),
     label: 'self_service_portal.asset.list.widget.title' | trans,
-    name: 'ssp-asset-management'
+    name: 'ssp-asset-management',
+    isVisible: can('ViewBusinessUnitSspAssetPermissionPlugin') or can('ViewCompanySspAssetPermissionPlugin'),
 } %}
 
 {% block body %}
-    {% set modifiers = data.modifiers | default([]) %}
+    {% if data.isVisible %}
+        {% set modifiers = data.modifiers | default([]) %}
 
-    {% block content %}
-        {% include molecule('navigation-sidebar-item') with {
-            data: {
-                url: data.url,
-                icon: 'assets',
-                label: data.label,
-                name: data.name
-            },
-            qa: 'ssp-asset-customer-menu-item',
-            modifiers: data.isActivePage ? ['active'] | merge(modifiers) : modifiers,
-        } only %}
-    {% endblock %}
+        {% block content %}
+            {% include molecule('navigation-sidebar-item') with {
+                data: {
+                    url: data.url,
+                    icon: 'assets',
+                    label: data.label,
+                    name: data.name,
+                },
+                qa: 'ssp-asset-customer-menu-item',
+                modifiers: data.isActivePage ? ['active'] | merge(modifiers) : modifiers,
+            } only %}
+        {% endblock %}
+    {% endif %}
 {% endblock %}
