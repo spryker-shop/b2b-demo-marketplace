@@ -9,7 +9,7 @@ declare(strict_types = 1);
 
 namespace Orm\Zed\MerchantRegistrationRequest\Persistence;
 
-use Orm\Zed\MerchantRegistrationRequest\Persistence\Base\SpyMerchantRegistrationRequestQuery as BaseSpyMerchantRegistrationRequestQuery;
+use Spryker\Zed\MerchantRegistrationRequest\Persistence\Propel\AbstractSpyMerchantRegistrationRequestQuery as BaseSpyMerchantRegistrationRequestQuery;
 
 /**
  * Skeleton subclass for performing query and update operations on the 'spy_merchant_registration_request' table.

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "81072ad22bc3af77afc1e1c327dfa002",
+    "content-hash": "8ca8c7c5d2d5f7cde832305ef0dd7151",
     "packages": [
         {
             "name": "async-aws/core",
@@ -7283,22 +7283,23 @@
         },
         {
             "name": "spryker-feature/marketplace-merchant",
-            "version": "202507.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/marketplace-merchant.git",
-                "reference": "008e8508734675793c5ffc83fe129fc52403c36c"
+                "reference": "15c423a723cc147fba4765574251829537263aa9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/marketplace-merchant/zipball/008e8508734675793c5ffc83fe129fc52403c36c",
-                "reference": "008e8508734675793c5ffc83fe129fc52403c36c",
+                "url": "https://api.github.com/repos/spryker-feature/marketplace-merchant/zipball/15c423a723cc147fba4765574251829537263aa9",
+                "reference": "15c423a723cc147fba4765574251829537263aa9",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.2",
                 "spryker-shop/merchant-page": "^1.1.0",
                 "spryker-shop/merchant-profile-widget": "^1.2.0",
+                "spryker-shop/merchant-registration-request-page": "^1.0.0",
                 "spryker-shop/merchant-search-widget": "^1.0.0",
                 "spryker-shop/merchant-widget": "^1.4.0",
                 "spryker/merchant": "^3.15.0",
@@ -7306,6 +7307,7 @@
                 "spryker/merchant-profile": "^1.7.0",
                 "spryker/merchant-profile-data-import": "^0.6.0",
                 "spryker/merchant-profile-gui": "^1.3.0",
+                "spryker/merchant-registration-request": "^1.0.0",
                 "spryker/merchant-user": "^1.7.0",
                 "spryker/merchant-user-gui": "^1.6.0",
                 "spryker/oauth-merchant-user": "^1.0.0",
@@ -7314,10 +7316,11 @@
             "suggest": {
                 "spryker-feature/merchant": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "202507.x-dev"
+                    "dev-master": "202510.x-dev"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -7326,9 +7329,9 @@
             ],
             "description": "Marketplace Merchant [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/marketplace-merchant/tree/202507.0"
+                "source": "https://github.com/spryker-feature/marketplace-merchant/tree/master"
             },
-            "time": "2025-07-25T12:24:15+00:00"
+            "time": "2025-10-03T17:23:39+00:00"
         },
         {
             "name": "spryker-feature/marketplace-merchant-commission",
@@ -81776,19 +81779,18 @@
         },
         {
             "name": "spryker/cypress-tests",
-            "version": "dev-master",
+            "version": "dev-feature/cc-35709-merchant-self-registration",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/cypress-tests.git",
-                "reference": "d3d6ad3b84f3e4a9169c98bfd8af377d9ecb90ea"
+                "reference": "b4af9872835c85365fc17859fec79b8f55022d0b"
             },
-            "default-branch": true,
             "type": "spryker-test",
             "license": [
                 "MIT"
             ],
             "description": "This repository is dedicated to housing an extensive collection of UI end-to-end tests, meticulously crafted using Cypress for Spryker applications. These tests are designed to thoroughly evaluate the user interface, ensuring that all interactions and visual elements function as intended in real-world scenarios. By leveraging Cypress's advanced browser automation capabilities, this suite provides an efficient and effective means of validating the user experience, confirming the seamless operation and aesthetic integrity of Spryker's front-end components. Our commitment to rigorous UI testing helps maintain the high standard of quality and reliability that Spryker users expect.",
-            "time": "2025-11-18T11:41:48+00:00"
+            "time": "2025-11-24T15:21:49+00:00"
         },
         {
             "name": "spryker/development",
@@ -82869,6 +82871,12 @@
             "alias_normalized": "202507.0"
         },
         {
+            "package": "spryker-feature/marketplace-merchant",
+            "version": "9999999-dev",
+            "alias": "202507.0",
+            "alias_normalized": "202507.0"
+        },
+        {
             "package": "spryker-feature/marketplace-merchant-commission",
             "version": "9999999-dev",
             "alias": "202507.0",
@@ -83018,6 +83026,7 @@
         "spryker-feature/inventory-management": 20,
         "spryker-feature/marketplace-agent-assist": 20,
         "spryker-feature/marketplace-inventory-management": 20,
+        "spryker-feature/marketplace-merchant": 20,
         "spryker-feature/marketplace-merchant-commission": 20,
         "spryker-feature/marketplace-order-management": 20,
         "spryker-feature/marketplace-product": 20,
