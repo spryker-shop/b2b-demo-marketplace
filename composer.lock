@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "caedcb4a8254edcbaa98acd1b1d5c104",
+    "content-hash": "bc1d1909920404edb10c9f64253c6477",
     "packages": [
         {
             "name": "async-aws/core",
@@ -30127,6 +30127,53 @@
             "time": "2025-07-31T11:52:19+00:00"
         },
         {
+            "name": "spryker/composer-autoload-plugin",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/composer-autoload-plugin.git",
+                "reference": "b4a3dc22cf706eb09d33605d7f2190d92a9987e5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/composer-autoload-plugin/zipball/b4a3dc22cf706eb09d33605d7f2190d92a9987e5",
+                "reference": "b4a3dc22cf706eb09d33605d7f2190d92a9987e5",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^2.0",
+                "php": ">=8.3"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Spryker\\Composer\\Plugin\\AutoloadPlugin",
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\Composer\\": "src/Spryker/Composer"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Spryker",
+                    "homepage": "https://spryker.com"
+                }
+            ],
+            "description": "Composer plugin to optimize autoload generation for Spryker projects",
+            "support": {
+                "issues": "https://github.com/spryker/composer-autoload-plugin/issues",
+                "source": "https://github.com/spryker/composer-autoload-plugin/tree/0.1.0"
+            },
+            "time": "2025-11-21T12:35:13+00:00"
+        },
+        {
             "name": "spryker/config",
             "version": "3.7.0",
             "source": {
@@ -30832,22 +30879,22 @@
         },
         {
             "name": "spryker/console",
-            "version": "4.17.0",
+            "version": "4.17.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/console.git",
-                "reference": "e475d8aaa943c8b1918665552dea9316005e4f98"
+                "reference": "5ea9ae39dba7083431e2d9f3959dac63f21839c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/console/zipball/e475d8aaa943c8b1918665552dea9316005e4f98",
-                "reference": "e475d8aaa943c8b1918665552dea9316005e4f98",
+                "url": "https://api.github.com/repos/spryker/console/zipball/5ea9ae39dba7083431e2d9f3959dac63f21839c4",
+                "reference": "5ea9ae39dba7083431e2d9f3959dac63f21839c4",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.3",
                 "spryker/acl-entity-extension": "^0.1.0 || ^0.2.0 || ^1.0.0",
-                "spryker/application": "^3.23.0",
+                "spryker/application": "^3.37.0",
                 "spryker/application-extension": "^1.0.0",
                 "spryker/config": "^3.0.0",
                 "spryker/container": "^1.4.0",
@@ -30887,9 +30934,9 @@
             ],
             "description": "Console module",
             "support": {
-                "source": "https://github.com/spryker/console/tree/4.17.0"
+                "source": "https://github.com/spryker/console/tree/4.17.1"
             },
-            "time": "2025-11-11T16:30:09+00:00"
+            "time": "2025-11-21T10:37:00+00:00"
         },
         {
             "name": "spryker/container",
@@ -43680,16 +43727,16 @@
         },
         {
             "name": "spryker/module-finder",
-            "version": "1.4.0",
+            "version": "1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/module-finder.git",
-                "reference": "5efc334c401e5a623d3361c6aba37e15a65388c4"
+                "reference": "c516001719112cc49af76db26f5cc33743495161"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/module-finder/zipball/5efc334c401e5a623d3361c6aba37e15a65388c4",
-                "reference": "5efc334c401e5a623d3361c6aba37e15a65388c4",
+                "url": "https://api.github.com/repos/spryker/module-finder/zipball/c516001719112cc49af76db26f5cc33743495161",
+                "reference": "c516001719112cc49af76db26f5cc33743495161",
                 "shasum": ""
             },
             "require": {
@@ -43720,9 +43767,9 @@
             ],
             "description": "ModuleFinder module",
             "support": {
-                "source": "https://github.com/spryker/module-finder/tree/1.4.0"
+                "source": "https://github.com/spryker/module-finder/tree/1.4.1"
             },
-            "time": "2025-11-11T16:30:09+00:00"
+            "time": "2025-11-21T12:40:53+00:00"
         },
         {
             "name": "spryker/money",
@@ -81623,7 +81670,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/cypress-tests.git",
-                "reference": "e7eeead37ac4a67b56f1d0f91b77ad59e4964636"
+                "reference": "d3d6ad3b84f3e4a9169c98bfd8af377d9ecb90ea"
             },
             "default-branch": true,
             "type": "spryker-test",
@@ -81631,7 +81678,7 @@
                 "MIT"
             ],
             "description": "This repository is dedicated to housing an extensive collection of UI end-to-end tests, meticulously crafted using Cypress for Spryker applications. These tests are designed to thoroughly evaluate the user interface, ensuring that all interactions and visual elements function as intended in real-world scenarios. By leveraging Cypress's advanced browser automation capabilities, this suite provides an efficient and effective means of validating the user experience, confirming the seamless operation and aesthetic integrity of Spryker's front-end components. Our commitment to rigorous UI testing helps maintain the high standard of quality and reliability that Spryker users expect.",
-            "time": "2025-11-14T09:30:55+00:00"
+            "time": "2025-11-18T11:41:48+00:00"
         },
         {
             "name": "spryker/development",
@@ -81793,7 +81840,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/robotframework-suite-tests.git",
-                "reference": "f34d3cbeedb6908d4551d868c2401d4f2ee0af21"
+                "reference": "1fe8b94b5ab7d873c212f7bb35c2ac469c48601c"
             },
             "default-branch": true,
             "bin": [
@@ -81804,7 +81851,7 @@
                 "MIT"
             ],
             "description": "Automated tests for the Robot Framework",
-            "time": "2025-11-15T10:50:36+00:00"
+            "time": "2025-11-20T16:52:47+00:00"
         },
         {
             "name": "spryker/testify",
@@ -82905,7 +82952,7 @@
         "ext-readline": "*",
         "ext-redis": "*"
     },
-    "platform-dev": {},
+    "platform-dev": [],
     "platform-overrides": {
         "php": "8.3.13"
     },

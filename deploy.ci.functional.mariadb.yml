@@ -20,7 +20,7 @@ image:
 
 composer:
     mode: '--no-dev --quiet -o -a'
-    autoload: '-a -o'
+    autoload: '-a -a'
 
 regions:
     EU:
@@ -89,7 +89,7 @@ groups:
 services:
     database:
         engine: mysql
-        version: mariadb-10.4
+        version: mariadb-11.8
         root:
             username: 'root'
             password: 'secret'
@@ -104,8 +104,8 @@ services:
     key_value_store:
         engine: valkey
     search:
-        engine: elastic
-        version: '7.10'
+        engine: opensearch
+        version: '1.3'
 
 docker:
     ssl:
