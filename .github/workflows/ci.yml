@@ -30,7 +30,7 @@ jobs:
             - name: Run TruffleHog OSS
               uses: trufflesecurity/trufflehog@v3.90.8
               with:
-                  extra_args: --log-level=2 --results=verified,unknown
+                  extra_args: --log-level=2 --results=verified
     validation:
         name: "Static analysis"
         if: ${{ !(github.event_name == 'push' && github.ref == 'refs/heads/master') }}
@@ -229,7 +229,7 @@ jobs:
             -   name: Run docker
                 run: |
                     git clone --depth 1 https://github.com/spryker/docker-sdk.git ./docker
-                    docker/sdk boot deploy.ci.functional.mariadb.yml
+                    docker/sdk boot deploy.ci.functional.mariadb.yml -a --apcu
                     docker/sdk up -t
                     docker/sdk cli composer dump-autoload -o -a --apcu
 
