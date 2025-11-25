@@ -3,7 +3,9 @@ import ValidateNextCheckoutStepCore from 'CheckoutPage/components/molecules/vali
 export default class ValidateNextCheckoutStep extends ValidateNextCheckoutStepCore {
     protected mapEvents(): void {
         super.mapEvents();
-        document.querySelector(`.${this.getAttribute('same-billing-class-name')} input[type="checkbox"]`)?.addEventListener('change', (event) => this.toggleDisablingNextStepButton(event, true));
+        document
+            .querySelector(`.${this.getAttribute('same-billing-class-name')} input[type="checkbox"]`)
+            ?.addEventListener('change', (event) => this.toggleDisablingNextStepButton(event, true));
     }
 
     protected get isDropdownTriggerPreSelected(): boolean {
@@ -22,7 +24,7 @@ export default class ValidateNextCheckoutStep extends ValidateNextCheckoutStepCo
         }
 
         if (checkbox) {
-            this.disableNextStepButton(!(event.target as HTMLInputElement).checked)
+            this.disableNextStepButton(!(event.target as HTMLInputElement).checked);
 
             return;
         }
@@ -31,5 +33,4 @@ export default class ValidateNextCheckoutStep extends ValidateNextCheckoutStepCo
             this.isFormFieldsEmpty || this.isDropdownTriggerPreSelected || this.isExtraTriggersUnchecked;
         this.disableNextStepButton(isFormInvalid);
     }
-
 }

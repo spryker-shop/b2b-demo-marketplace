@@ -11,6 +11,7 @@ namespace Pyz\Glue\Console;
 
 use Spryker\Glue\Console\ConsoleDependencyProvider as SprykerConsoleDependencyProvider;
 use Spryker\Glue\DocumentationGeneratorApi\Plugin\Console\ApiGenerateDocumentationConsole;
+use Spryker\Glue\EventDispatcher\Plugin\Console\EventDispatcherApplicationPlugin;
 use Spryker\Glue\GlueApplication\Plugin\Console\ControllerCacheCollectorConsole;
 use Spryker\Glue\GlueApplication\Plugin\Console\RouterCacheWarmUpConsole;
 use Spryker\Glue\GlueApplication\Plugin\Console\RouterDebugGlueApplicationConsole;
@@ -44,6 +45,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
         $applicationPlugins = parent::getApplicationPlugins($container);
 
         $applicationPlugins[] = new PropelApplicationPlugin();
+        $applicationPlugins[] = new EventDispatcherApplicationPlugin();
 
         return $applicationPlugins;
     }
