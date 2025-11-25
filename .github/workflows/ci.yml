@@ -333,7 +333,7 @@ jobs:
                     docker/sdk exec cypress-tests cp .env.dynamic-store.example .env
                     docker/sdk exec cypress-tests git log -3
                     docker/sdk exec cypress-tests npx cypress install
-                    docker/sdk exec --env "ENV_REPOSITORY_ID=b2b-mp" cypress-tests npm run cy:ci
+                    docker/sdk exec --env "ENV_REPOSITORY_ID=b2b-mp" --env "ENV_IS_SSP_ENABLED=true" cypress-tests npm run cy:ci
             -   name: Upload artifacts
                 if: failure()
                 run: |
