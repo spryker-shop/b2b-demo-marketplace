@@ -293,6 +293,7 @@ jobs:
                 if: always()
 
     docker-alpine-php-84-mariadb-cypress:
+        needs: [js-validation, validation]
         name: "Cypress / UI"
         runs-on: ubuntu-latest
         env:
