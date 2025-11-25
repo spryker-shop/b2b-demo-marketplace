@@ -1,16 +1,9 @@
 name: Generate and Publish API Specs
 
 on:
-  workflow_run:
-    # The name of the workflow to watch
-    workflows: ["B2B-MP-CI"]
-    # The event type that triggers this workflow
-    types:
-      - completed
-    # Optional but recommended: only run for the main/master branch
-    branches:
-      - main
-      - master
+  push:
+    branches: [main, master]
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
