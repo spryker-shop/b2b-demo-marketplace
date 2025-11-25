@@ -23,10 +23,17 @@ use Spryker\Zed\PriceProductScheduleGui\Communication\Plugin\ProductManagement\S
 use Spryker\Zed\PriceProductScheduleGui\Communication\Plugin\ProductManagement\ScheduledPriceProductAbstractFormEditTabsExpanderPlugin;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Plugin\ProductManagement\ScheduledPriceProductConcreteEditViewExpanderPlugin;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Plugin\ProductManagement\ScheduledPriceProductConcreteFormEditTabsExpanderPlugin;
+use Spryker\Zed\PriceProductStorage\Communication\Plugin\ProductManagement\StoragePriceProductAbstractReadinessProviderPlugin;
+use Spryker\Zed\PriceProductStorage\Communication\Plugin\ProductManagement\StorageTablePriceProductAbstractReadinessProviderPlugin;
+use Spryker\Zed\PriceProductStorage\Communication\Plugin\ProductManagement\StorageTablePriceProductConcreteReadinessProviderPlugin;
+use Spryker\Zed\Product\Communication\Plugin\ProductManagement\IsActiveAbstractProductReadinessProviderPlugin;
+use Spryker\Zed\Product\Communication\Plugin\ProductManagement\IsActiveConcreteProductReadinessProviderPlugin;
+use Spryker\Zed\Product\Communication\Plugin\ProductManagement\StoreRelationAbstractProductReadinessProviderPlugin;
 use Spryker\Zed\ProductAlternativeGui\Communication\Plugin\ProductManagement\ProductConcreteEditFormExpanderPlugin;
 use Spryker\Zed\ProductAlternativeGui\Communication\Plugin\ProductManagement\ProductConcreteFormEditDataProviderExpanderPlugin;
 use Spryker\Zed\ProductAlternativeGui\Communication\Plugin\ProductManagement\ProductConcreteFormEditTabsExpanderPlugin;
 use Spryker\Zed\ProductAlternativeGui\Communication\Plugin\ProductManagement\ProductFormTransferMapperExpanderPlugin;
+use Spryker\Zed\ProductApproval\Communication\Plugin\ProductManagement\ApprovalStatusAbstractProductReadinessProviderPlugin;
 use Spryker\Zed\ProductApprovalGui\Communication\Plugin\ProductManagement\ProductApprovalProductAbstractEditViewExpanderPlugin;
 use Spryker\Zed\ProductApprovalGui\Communication\Plugin\ProductManagement\ProductApprovalProductTableActionExpanderPlugin;
 use Spryker\Zed\ProductApprovalGui\Communication\Plugin\ProductManagement\ProductApprovalProductTableConfigurationExpanderPlugin;
@@ -38,6 +45,12 @@ use Spryker\Zed\ProductDiscontinuedGui\Communication\Plugin\DiscontinuedProductC
 use Spryker\Zed\ProductDiscontinuedGui\Communication\Plugin\DiscontinueProductConcreteFormEditDataProviderExpanderPlugin;
 use Spryker\Zed\ProductDiscontinuedGui\Communication\Plugin\DiscontinueProductConcreteFormEditTabsExpanderPlugin;
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider as SprykerProductManagementDependencyProvider;
+use Spryker\Zed\ProductPageSearch\Communication\Plugin\ProductManagement\PageSearchProductAbstractReadinessProviderPlugin;
+use Spryker\Zed\ProductSearch\Communication\Plugin\ProductManagement\IsSearchableForLocaleAbstractProductReadinessProviderPlugin;
+use Spryker\Zed\ProductSearch\Communication\Plugin\ProductManagement\IsSearchableForLocaleConcreteProductReadinessProviderPlugin;
+use Spryker\Zed\ProductStorage\Communication\Plugin\ProductManagement\StorageProductAbstractReadinessProviderPlugin;
+use Spryker\Zed\ProductStorage\Communication\Plugin\ProductManagement\StorageTableProductAbstractReadinessProviderPlugin;
+use Spryker\Zed\ProductStorage\Communication\Plugin\ProductManagement\StorageTableProductConcreteReadinessProviderPlugin;
 use Spryker\Zed\Store\Communication\Plugin\Form\StoreRelationToggleFormTypePlugin;
 
 class ProductManagementDependencyProvider extends SprykerProductManagementDependencyProvider
@@ -226,6 +239,37 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
     {
         return [
             new ProductApprovalProductTableActionExpanderPlugin(),
+        ];
+    }
+
+     /**
+      * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractReadinessProviderPluginInterface>
+      */
+    protected function getProductAbstractReadinessProviderPlugins(): array
+    {
+        return [
+            new ApprovalStatusAbstractProductReadinessProviderPlugin(),
+            new IsActiveAbstractProductReadinessProviderPlugin(),
+            new IsSearchableForLocaleAbstractProductReadinessProviderPlugin(),
+            new StoreRelationAbstractProductReadinessProviderPlugin(),
+            new StorageTableProductAbstractReadinessProviderPlugin(),
+            new StorageProductAbstractReadinessProviderPlugin(),
+            new PageSearchProductAbstractReadinessProviderPlugin(),
+            new StorageTablePriceProductAbstractReadinessProviderPlugin(),
+            new StoragePriceProductAbstractReadinessProviderPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteReadinessProviderPluginInterface>
+     */
+    protected function getProductConcreteReadinessProviderPlugins(): array
+    {
+        return [
+            new IsActiveConcreteProductReadinessProviderPlugin(),
+            new IsSearchableForLocaleConcreteProductReadinessProviderPlugin(),
+            new StorageTablePriceProductConcreteReadinessProviderPlugin(),
+            new StorageTableProductConcreteReadinessProviderPlugin(),
         ];
     }
 }
