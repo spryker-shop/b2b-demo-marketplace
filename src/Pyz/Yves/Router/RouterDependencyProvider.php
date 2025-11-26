@@ -58,6 +58,7 @@ use SprykerShop\Yves\ErrorPage\Plugin\Router\ErrorPageRouteProviderPlugin;
 use SprykerShop\Yves\FileManagerWidget\Plugin\Router\FileManagerWidgetRouteProviderPlugin;
 use SprykerShop\Yves\HomePage\Plugin\Router\HomePageRouteProviderPlugin;
 use SprykerShop\Yves\MerchantProductOfferWidget\Plugin\Router\MerchantProductOfferWidgetRouteProviderPlugin;
+use SprykerShop\Yves\MerchantRegistrationRequestPage\Plugin\Router\MerchantRegistrationRequestPageRouteProviderPlugin;
 use SprykerShop\Yves\MerchantRelationRequestPage\Plugin\Router\MerchantRelationRequestPageRouteProviderPlugin;
 use SprykerShop\Yves\MerchantRelationshipPage\Plugin\Router\MerchantRelationshipPageRouteProviderPlugin;
 use SprykerShop\Yves\MultiCartPage\Plugin\Router\MultiCartPageAsyncRouteProviderPlugin;
@@ -186,6 +187,7 @@ class RouterDependencyProvider extends SprykerRouterDependencyProvider
             new SalesOrderAmendmentWidgetRouteProviderPlugin(),
             new ServicePointWidgetRouteProviderPlugin(),
             new SelfServicePortalPageRouteProviderPlugin(),
+            new MerchantRegistrationRequestPageRouteProviderPlugin(),
         ];
     }
 

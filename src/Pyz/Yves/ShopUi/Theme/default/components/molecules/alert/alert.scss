@@ -1,0 +1,18 @@
+@include shop-ui-alert() {
+    $name: '.alert';
+
+    &--alt {
+        @include helper-font-size(small);
+        padding: rem(10) rem(17);
+        background: none;
+        border: rem(1) solid $setting-color-gray-1;
+        border-radius: $setting-border-radius;
+        margin: rem(12) 0;
+
+        #{$name}__icon {
+            margin: 0 rem(8) 0 0;
+            width: rem(16);
+            aspect-ratio: 1;
+        }
+    }
+}

@@ -44,15 +44,13 @@
                 {% endif %}
             {% endblock %}
 
-            <div class="{{ config.name }}__rating">
-                {{ block('rating') }}
-            </div>
+            {{ block('rating') }}
 
             {% block priceContainer %}
                 {% block price %}
                     {% if can('SeePricePermissionPlugin') %}
                         <div class="{{ component.renderClass(config.name ~ '__price', modifiers) }}">
-                            {% embed molecule('money-price') with {
+                            {% include molecule('money-price') with {
                                 data: {
                                     amount: data.product.prices.DEFAULT | default(null),
                                     originalAmount: data.product.prices.ORIGINAL | default(null),
@@ -60,10 +58,6 @@
                                     parentJsName: config.jsName,
                                 },
                             } only %}
-                                {% block originalPrice %}
-                                    {{ block('originalPriceInner') }}
-                                {% endblock %}
-                            {% endembed %}
                         </div>
                     {% endif %}
                 {% endblock %}

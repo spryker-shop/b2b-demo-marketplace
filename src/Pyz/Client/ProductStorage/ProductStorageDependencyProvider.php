@@ -40,9 +40,9 @@ class ProductStorageDependencyProvider extends SprykerProductStorageDependencyPr
          * `ProductViewAvailabilityStorageExpanderPlugin` so that shipment type data
          * is available when availability is expanded/calculated.
          *
-         * @return array<\Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface>
+         * @var array<\Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface> $plugins
          */
-        return [
+        $plugins = [
             new ProductViewDiscontinuedOptionsExpanderPlugin(), #ProductDiscontinuedFeature
             new ProductVariantProductViewExpanderPlugin(),
             new ProductViewProductOfferExpanderPlugin(),
@@ -55,6 +55,8 @@ class ProductStorageDependencyProvider extends SprykerProductStorageDependencyPr
             new ProductViewMerchantProductExpanderPlugin(),
             new ProductBundleProductViewExpanderPlugin(),
         ];
+
+        return $plugins;
     }
 
     /**

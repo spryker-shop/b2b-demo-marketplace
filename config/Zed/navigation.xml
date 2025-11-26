@@ -426,6 +426,13 @@
                 <controller>list</controller>
                 <action>index</action>
             </merchant-relation-request-gui>
+            <merchant-registration-request>
+                <label>Merchant Registrations</label>
+                <title>Merchant Registrations</title>
+                <bundle>merchant-registration-request</bundle>
+                <controller>list</controller>
+                <action>index</action>
+            </merchant-registration-request>
             <merchant-commission-gui>
                 <label>Merchant Commissions</label>
                 <title>Merchant Commissions</title>
@@ -624,27 +631,6 @@
         <title>Maintenance</title>
         <icon>fa-wrench</icon>
         <pages>
-            <module-overview>
-                <label>Module Overview</label>
-                <title>Module Overview</title>
-                <bundle>development</bundle>
-                <controller>module-overview</controller>
-                <action>index</action>
-            </module-overview>
-            <dependencies>
-                <label>Dependencies</label>
-                <title>Bundle dependencies</title>
-                <bundle>development</bundle>
-                <controller>dependency</controller>
-                <action>index</action>
-            </dependencies>
-            <stability>
-                <label>Stability</label>
-                <title>Bundles stability</title>
-                <bundle>development</bundle>
-                <controller>dependency</controller>
-                <action>stability</action>
-            </stability>
             <phpinfo>
                 <label>PHP Info</label>
                 <title>PHP Info</title>
@@ -652,13 +638,6 @@
                 <controller>php-info</controller>
                 <action>index</action>
             </phpinfo>
-            <integration>
-                <label>Used Plugins</label>
-                <title>Used Plugins</title>
-                <bundle>development</bundle>
-                <controller>dependency-provider-plugin-usage</controller>
-                <action>index</action>
-            </integration>
             <permission>
                 <label>Sync Permissions</label>
                 <title>Sync Permissions</title>
@@ -673,13 +652,6 @@
                 <controller>index</controller>
                 <action>index</action>
             </index>
-            <architecture-sniffer>
-                <label>Architecture Sniffers</label>
-                <title>Architecture Sniffers</title>
-                <bundle>development</bundle>
-                <controller>architecture</controller>
-                <action>index</action>
-            </architecture-sniffer>
             <elasticsearch>
                 <label>Elastic Search</label>
                 <title>Elastic Search</title>
@@ -695,13 +667,6 @@
                 <action>index</action>
                 <visible>1</visible>
             </queue>
-            <spryk-gui>
-                <label>SprykGui</label>
-                <title>SprykGui</title>
-                <bundle>spryk-gui</bundle>
-                <controller>list</controller>
-                <action>index</action>
-            </spryk-gui>
             <storage-gui>
                 <label>Storage</label>
                 <title>Storage index</title>
