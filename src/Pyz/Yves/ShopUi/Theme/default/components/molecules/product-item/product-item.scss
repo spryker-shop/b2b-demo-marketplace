@@ -156,10 +156,12 @@
             font-weight: fw(medium);
             flex-grow: 1;
             overflow: hidden;
+            /* stylelint-disable */
             display: -webkit-box;
             -webkit-line-clamp: 2;
             line-clamp: 2;
             -webkit-box-orient: vertical;
+            /* stylelint-enable */
 
             &::before {
                 content: '';
@@ -179,8 +181,10 @@
 
             @include helper-breakpoint-media-min($lg) {
                 @include helper-font-size(big);
+                /* stylelint-disable */
                 -webkit-line-clamp: 3;
                 line-clamp: 3;
+                /* stylelint-enable */
 
                 &::before {
                     @include helper-effect-transition(background-color box-shadow);
