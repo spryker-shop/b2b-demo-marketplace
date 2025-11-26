@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b1f3deb35d5191bfd73b0bbd08ebd8b6",
+    "content-hash": "08135e16a4b4e7f9241ef4a734ab3ea3",
     "packages": [
         {
             "name": "async-aws/core",
@@ -7283,22 +7283,23 @@
         },
         {
             "name": "spryker-feature/marketplace-merchant",
-            "version": "202507.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/marketplace-merchant.git",
-                "reference": "008e8508734675793c5ffc83fe129fc52403c36c"
+                "reference": "15c423a723cc147fba4765574251829537263aa9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/marketplace-merchant/zipball/008e8508734675793c5ffc83fe129fc52403c36c",
-                "reference": "008e8508734675793c5ffc83fe129fc52403c36c",
+                "url": "https://api.github.com/repos/spryker-feature/marketplace-merchant/zipball/15c423a723cc147fba4765574251829537263aa9",
+                "reference": "15c423a723cc147fba4765574251829537263aa9",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.2",
                 "spryker-shop/merchant-page": "^1.1.0",
                 "spryker-shop/merchant-profile-widget": "^1.2.0",
+                "spryker-shop/merchant-registration-request-page": "^1.0.0",
                 "spryker-shop/merchant-search-widget": "^1.0.0",
                 "spryker-shop/merchant-widget": "^1.4.0",
                 "spryker/merchant": "^3.15.0",
@@ -7306,6 +7307,7 @@
                 "spryker/merchant-profile": "^1.7.0",
                 "spryker/merchant-profile-data-import": "^0.6.0",
                 "spryker/merchant-profile-gui": "^1.3.0",
+                "spryker/merchant-registration-request": "^1.0.0",
                 "spryker/merchant-user": "^1.7.0",
                 "spryker/merchant-user-gui": "^1.6.0",
                 "spryker/oauth-merchant-user": "^1.0.0",
@@ -7314,10 +7316,11 @@
             "suggest": {
                 "spryker-feature/merchant": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "202507.x-dev"
+                    "dev-master": "202510.x-dev"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -7326,9 +7329,9 @@
             ],
             "description": "Marketplace Merchant [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/marketplace-merchant/tree/202507.0"
+                "source": "https://github.com/spryker-feature/marketplace-merchant/tree/master"
             },
-            "time": "2025-07-25T12:24:15+00:00"
+            "time": "2025-10-03T17:23:39+00:00"
         },
         {
             "name": "spryker-feature/marketplace-merchant-commission",
@@ -13771,6 +13774,58 @@
                 "source": "https://github.com/spryker-shop/merchant-profile-widget/tree/1.2.0"
             },
             "time": "2024-03-27T10:11:31+00:00"
+        },
+        {
+            "name": "spryker-shop/merchant-registration-request-page",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-shop/merchant-registration-request-page.git",
+                "reference": "0da61f061fe31543b1dc1ade848776ee4bc77862"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-shop/merchant-registration-request-page/zipball/0da61f061fe31543b1dc1ade848776ee4bc77862",
+                "reference": "0da61f061fe31543b1dc1ade848776ee4bc77862",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.3",
+                "spryker-shop/shop-ui": "^1.73.0",
+                "spryker/kernel": "^3.52.0",
+                "spryker/merchant-registration-request": "^1.0.0",
+                "spryker/store": "^1.24.0",
+                "spryker/symfony": "^3.1.0",
+                "spryker/transfer": "^3.27.0",
+                "spryker/twig": "^3.24.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/router": "*"
+            },
+            "suggest": {
+                "spryker/router": "Use this module if you want use the RouterProviderPlugin."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SprykerShop\\": "src/SprykerShop/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "MerchantRegistrationRequestPage module",
+            "support": {
+                "source": "https://github.com/spryker-shop/merchant-registration-request-page/tree/1.0.0"
+            },
+            "time": "2025-10-03T15:46:36+00:00"
         },
         {
             "name": "spryker-shop/merchant-relation-request-page",
@@ -27470,20 +27525,20 @@
         },
         {
             "name": "spryker/comment",
-            "version": "1.7.0",
+            "version": "1.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/comment.git",
-                "reference": "7f0170af5da0bd6d24ab5d508a7e64210393668e"
+                "reference": "a89f9ce8dc7be6765701138439424928469a55a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/comment/zipball/7f0170af5da0bd6d24ab5d508a7e64210393668e",
-                "reference": "7f0170af5da0bd6d24ab5d508a7e64210393668e",
+                "url": "https://api.github.com/repos/spryker/comment/zipball/a89f9ce8dc7be6765701138439424928469a55a5",
+                "reference": "a89f9ce8dc7be6765701138439424928469a55a5",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/acl-merchant-portal-extension": "^1.0.0",
                 "spryker/cart-reorder-extension": "^1.0.0",
                 "spryker/comment-extension": "^1.1.0",
@@ -27521,9 +27576,9 @@
             ],
             "description": "Comment module",
             "support": {
-                "source": "https://github.com/spryker/comment/tree/1.7.0"
+                "source": "https://github.com/spryker/comment/tree/1.9.0"
             },
-            "time": "2025-02-27T08:01:24+00:00"
+            "time": "2025-10-03T15:46:32+00:00"
         },
         {
             "name": "spryker/comment-data-import",
@@ -41253,6 +41308,68 @@
                 "source": "https://github.com/spryker/merchant-profile-merchant-portal-gui-extension/tree/1.0.0"
             },
             "time": "2024-03-27T10:11:29+00:00"
+        },
+        {
+            "name": "spryker/merchant-registration-request",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/merchant-registration-request.git",
+                "reference": "a8b383b07e9ee919363340202539ecb9924c148e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/merchant-registration-request/zipball/a8b383b07e9ee919363340202539ecb9924c148e",
+                "reference": "a8b383b07e9ee919363340202539ecb9924c148e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.3",
+                "spryker/comment": "^1.9.0",
+                "spryker/country": "^4.0.0",
+                "spryker/gui": "^3.45.0 || ^4.0.0",
+                "spryker/kernel": "^3.76.0",
+                "spryker/locale": "^4.0.0",
+                "spryker/merchant": "^3.18.0",
+                "spryker/merchant-user": "^1.6.0",
+                "spryker/propel-orm": "^1.0.0",
+                "spryker/store": "^1.24.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/transfer": "^3.27.0",
+                "spryker/util-date-time": "^1.0.0",
+                "spryker/util-text": "^1.6.0",
+                "spryker/util-uuid-generator": "^1.1.0",
+                "spryker/zed-request": "^3.0.0"
+            },
+            "require-dev": {
+                "spryker/application": "*",
+                "spryker/code-sniffer": "*",
+                "spryker/comment-user-connector": "*",
+                "spryker/container": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*",
+                "spryker/user": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "MerchantRegistrationRequest module",
+            "support": {
+                "source": "https://github.com/spryker/merchant-registration-request/tree/1.1.0"
+            },
+            "time": "2025-11-15T10:58:02+00:00"
         },
         {
             "name": "spryker/merchant-relation-request",
@@ -81670,7 +81787,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/cypress-tests.git",
-                "reference": "d3d6ad3b84f3e4a9169c98bfd8af377d9ecb90ea"
+                "reference": "26fddff046974afe610bbfe59c83c745b1cd482c"
             },
             "default-branch": true,
             "type": "spryker-test",
@@ -81678,7 +81795,7 @@
                 "MIT"
             ],
             "description": "This repository is dedicated to housing an extensive collection of UI end-to-end tests, meticulously crafted using Cypress for Spryker applications. These tests are designed to thoroughly evaluate the user interface, ensuring that all interactions and visual elements function as intended in real-world scenarios. By leveraging Cypress's advanced browser automation capabilities, this suite provides an efficient and effective means of validating the user experience, confirming the seamless operation and aesthetic integrity of Spryker's front-end components. Our commitment to rigorous UI testing helps maintain the high standard of quality and reliability that Spryker users expect.",
-            "time": "2025-11-18T11:41:48+00:00"
+            "time": "2025-11-25T08:21:31+00:00"
         },
         {
             "name": "spryker/development",
@@ -82759,6 +82876,12 @@
             "alias_normalized": "202507.0"
         },
         {
+            "package": "spryker-feature/marketplace-merchant",
+            "version": "9999999-dev",
+            "alias": "202507.0",
+            "alias_normalized": "202507.0"
+        },
+        {
             "package": "spryker-feature/marketplace-merchant-commission",
             "version": "9999999-dev",
             "alias": "202507.0",
@@ -82914,6 +83037,7 @@
         "spryker-feature/inventory-management": 20,
         "spryker-feature/marketplace-agent-assist": 20,
         "spryker-feature/marketplace-inventory-management": 20,
+        "spryker-feature/marketplace-merchant": 20,
         "spryker-feature/marketplace-merchant-commission": 20,
         "spryker-feature/marketplace-order-management": 20,
         "spryker-feature/marketplace-product": 20,
