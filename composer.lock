@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9b4ab86c7f3afd1c26c2ca40b9f52ce5",
+    "content-hash": "54152223419f5d7facd807ca6deb192d",
     "packages": [
         {
             "name": "async-aws/core",
@@ -31030,16 +31030,16 @@
         },
         {
             "name": "spryker/composer-autoload-plugin",
-            "version": "0.2.0",
+            "version": "dev-alias-pckage-adjustment",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/composer-autoload-plugin.git",
-                "reference": "29209efea40fbcab163add4bdd74267c0da95d62"
+                "reference": "7cfbe6119fd9debe08422886c2a9dc7d4e8144d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/composer-autoload-plugin/zipball/29209efea40fbcab163add4bdd74267c0da95d62",
-                "reference": "29209efea40fbcab163add4bdd74267c0da95d62",
+                "url": "https://api.github.com/repos/spryker/composer-autoload-plugin/zipball/7cfbe6119fd9debe08422886c2a9dc7d4e8144d2",
+                "reference": "7cfbe6119fd9debe08422886c2a9dc7d4e8144d2",
                 "shasum": ""
             },
             "require": {
@@ -31071,9 +31071,9 @@
             "description": "Composer plugin to optimize autoload generation for Spryker projects",
             "support": {
                 "issues": "https://github.com/spryker/composer-autoload-plugin/issues",
-                "source": "https://github.com/spryker/composer-autoload-plugin/tree/0.2.0"
+                "source": "https://github.com/spryker/composer-autoload-plugin/tree/alias-pckage-adjustment"
             },
-            "time": "2025-11-26T11:44:45+00:00"
+            "time": "2025-11-26T13:51:05+00:00"
         },
         {
             "name": "spryker/config",
@@ -85639,6 +85639,12 @@
             "version": "9999999-dev",
             "alias": "202507.0",
             "alias_normalized": "202507.0"
+        },
+        {
+            "package": "spryker/composer-autoload-plugin",
+            "version": "dev-alias-pckage-adjustment",
+            "alias": "0.2.0",
+            "alias_normalized": "0.2.0.0"
         }
     ],
     "minimum-stability": "dev",
@@ -85674,21 +85680,22 @@
         "spryker-feature/product-relations": 20,
         "spryker-feature/product-sets": 20,
         "spryker-feature/reclamations": 20,
+        "spryker-feature/self-service-portal": 20,
+        "spryker-feature/shipment-service-points": 20,
         "spryker-feature/return-management": 20,
         "spryker-feature/scheduled-prices": 20,
         "spryker-feature/search": 20,
-        "spryker-feature/self-service-portal": 20,
         "spryker-feature/shipment": 20,
-        "spryker-feature/shipment-service-points": 20,
         "spryker-feature/spryker-core": 20,
         "spryker-feature/spryker-core-back-office": 20,
-        "spryker/cypress-tests": 20,
-        "spryker/docker-chromedriver": 20,
+        "spryker/composer-autoload-plugin": 20,
         "spryker/merchant-shipments-rest-api": 20,
-        "spryker/robotframework-suite-tests": 20,
         "spryker/service-point-carts-rest-api": 20,
         "spryker/service-points-rest-api": 20,
-        "spryker/shipment-type-service-points-rest-api": 20
+        "spryker/shipment-type-service-points-rest-api": 20,
+        "spryker/cypress-tests": 20,
+        "spryker/docker-chromedriver": 20,
+        "spryker/robotframework-suite-tests": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
@@ -85705,7 +85712,7 @@
         "ext-readline": "*",
         "ext-redis": "*"
     },
-    "platform-dev": {},
+    "platform-dev": [],
     "platform-overrides": {
         "php": "8.3.13"
     },
