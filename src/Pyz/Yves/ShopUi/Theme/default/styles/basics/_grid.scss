@@ -191,6 +191,17 @@
             padding-bottom: $setting-grid-space;
         }
 
+        &--gap-small {
+            margin-left: rem(-10);
+            margin-right: rem(-10);
+            width: calc(100% + #{rem(20)});
+
+            & > .col {
+                padding-left: rem(10);
+                padding-right: rem(10);
+            }
+        }
+
         &--gap-smaller {
             margin-left: rem(-5);
             margin-right: rem(-5);

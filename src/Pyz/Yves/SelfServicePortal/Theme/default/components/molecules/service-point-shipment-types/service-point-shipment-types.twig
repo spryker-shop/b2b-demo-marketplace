@@ -98,7 +98,7 @@
 {% block body %}
     {% set shipmentTypeLength = data.shipmentTypes | length %}
 
-    {% if shipmentTypeLength %}
+    {% if not shipmentTypeLength %}
         {{ block('types') }}
 
         {% if requiredServicePoint %}
@@ -115,6 +115,16 @@
 		    <input type="hidden" name="{{ data.formFieldShipmentTypeUuid }}" value="{{ shipmentType.value }}">
         {% endif %}
     {% else %}
-        {{ block('empty') }}
+        {% block empty%}
+            {% if data.isConcreteProduct %}
+                {% include molecule('alert') with {
+                    modifiers: ['alt'],
+                    data: {
+                        content: 'self_service_portal.service.product.no_shipment_types_available' | trans,
+                        icon: 'action-warning-triangle',
+                    },
+                } only %}
+            {% endif %}
+        {% endblock %}
     {% endif %}
 {% endblock %}
