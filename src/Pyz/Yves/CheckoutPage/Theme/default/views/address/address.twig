@@ -84,7 +84,7 @@
             {% set multipleShipmentHiddenClassName = not isMultipleShipmentSelected ? ' ' ~ hiddenClassName %}
             {% set billingSameAsShippingHiddenClassName = isMultipleShipmentSelected ? hiddenClassName %}
 
-            {% set deliveryContainerClassName = embed.jsAddressClass ~ '__delivery' %}
+            {% set deliveryContainerClassName = embed.jsAddressClass ~ '__delivery col col--sm-12' %}
             {% set singleDeliveryContainerClassName = embed.jsAddressClass ~ '__single-delivery' %}
             {% set validatorTriggerClassName = embed.jsAddressClass ~ '__validator-trigger' %}
             {% set billingSameAsShippingContainerClassName = embed.jsAddressClass ~ '__billing-same-as-shipping-container' %}
