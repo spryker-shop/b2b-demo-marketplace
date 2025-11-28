@@ -14,7 +14,7 @@ use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig as SprykerSelfS
 
 class SelfServicePortalConfig extends SprykerSelfServicePortalConfig
 {
-    protected const DEFAULT_COMPANY_FILE_MAX_FILE_SIZE = '7M';
+    protected const DEFAULT_COMPANY_FILE_MAX_FILE_SIZE = '10M';
 
     public function getDefaultMerchantReference(): string
     {

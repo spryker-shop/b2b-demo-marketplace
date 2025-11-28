@@ -161,6 +161,8 @@ groups:
                     www.at.scos.sh01.demo-spryker.com:
                         store: AT
                         <<: *frontend-auth
+                http:
+                    max-request-body-size: 100M
             boffice:
                 application: backoffice
                 endpoints:
@@ -169,6 +171,8 @@ groups:
                         primal: true
                     backoffice.at.scos.sh01.demo-spryker.com:
                         store: AT
+                http:
+                    max-request-body-size: 100M
             backgw:
                 application: backend-gateway
                 endpoints:

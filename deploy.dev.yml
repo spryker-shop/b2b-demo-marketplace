@@ -89,6 +89,8 @@ groups:
                         services:
                             session:
                                 namespace: 2
+                http:
+                    max-request-body-size: 100M
             glue_eu: # custom name to differentiate between two applications, incorrect for the cloud usage
                 application: glue
                 endpoints:
@@ -113,6 +115,8 @@ groups:
                         services:
                             session:
                                 namespace: 3
+                http:
+                    max-request-body-size: 100M
             backgw_eu: # custom name to differentiate between two applications, incorrect for the cloud usage
                 application: backend-gateway
                 endpoints:
