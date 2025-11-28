@@ -2,8 +2,8 @@ import Component from 'ShopUi/models/component';
 
 export default class FlashMessage extends Component {
     readonly defaultDuration: number = 5000;
-    protected static queue: FlashMessage[] = [];
-    protected static activeMessages: Set<FlashMessage> = new Set();
+    protected static queue = [];
+    protected static activeMessages = new Set();
     durationTimeoutId: number;
     protected isVisible = false;
 
