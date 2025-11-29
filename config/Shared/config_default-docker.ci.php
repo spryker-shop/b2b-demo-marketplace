@@ -86,5 +86,10 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'root' => '/data',
         'path' => '/data/ssp-model-image',
     ],
+    'files' => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => APPLICATION_ROOT_DIR . '/data/DE/media/',
+        'path' => 'files/', 
+    ],
 ];
 $config[SelfServicePortalConstants::STORAGE_NAME] = 'files';
