@@ -3,15 +3,14 @@
         position: relative;
 
         &__container {
-            padding: 0 rem(9);
-            margin-bottom: rem(30);
+            padding: 0 rem(9) rem(15);
+            margin-bottom: rem(20);
             border-radius: $setting-border-radius;
+            border: rem(1) solid $setting-color-alpha-2;
             position: relative;
 
             @include helper-breakpoint-media-min($md) {
                 padding: 0;
-                margin-bottom: rem(20);
-                border: rem(1) solid $setting-color-alpha-2;
             }
 
             @include helper-breakpoint-media-min($xl) {
