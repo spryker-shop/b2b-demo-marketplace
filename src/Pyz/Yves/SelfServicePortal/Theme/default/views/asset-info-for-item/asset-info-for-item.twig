@@ -16,7 +16,7 @@
     {% if data.isCompatibilityVisible %}
         <div class="title--h6 grid grid--gap-smaller grid--middle">
              <strong class="col">{{ 'self_service_portal.asset.compatibility' | trans }}:</strong>
-             <span>{% widget 'AssetCompatibilityLabelWidget' args [data.asset.reference, data.idProduct] %}{% endwidget %}</span>
+             <span>{% widget 'AssetCompatibilityLabelWidget' args [data.asset.reference, data.skuProduct] %}{% endwidget %}</span>
         </div>
     {% endif %}
 {% endblock %}
