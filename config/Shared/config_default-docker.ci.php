@@ -89,7 +89,7 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
     'files' => [
         'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
         'root' => APPLICATION_ROOT_DIR . '/data/DE/media/',
-        'path' => 'files/', 
+        'path' => 'files/',
     ],
 ];
 $config[SelfServicePortalConstants::STORAGE_NAME] = 'files';
