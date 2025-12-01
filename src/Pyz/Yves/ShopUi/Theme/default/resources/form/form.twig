@@ -108,7 +108,7 @@
                         </optgroup>
                     {%- else -%}
                         <option value="{{ choice.value }}"{% if choice.attr %}{% with { attr: choice.attr } %}{{ block('attributes') }}{% endwith %}{% endif %}{% if choice is selectedchoice(embed.value) %} selected="selected"{% endif %}>
-                            {{ embed.choice_translation_domain is same as(false) ? choice.label : choice.label|trans({}, embed.choice_translation_domain) }}
+                            {{- embed.choice_translation_domain is same as(false) ? choice.label : choice.label|trans({}, embed.choice_translation_domain) -}}
                         </option>
                     {%- endif -%}
                 {% endfor %}
