@@ -66,6 +66,7 @@
                                         field: embed.field,
                                     },
                                     attributes: {
+                                        'formatted-date-time': embed.field.vars.value | date('Y-m-d H:i'),
                                         language: data.currentLanguage,
                                         config: {
                                             dateFormat: 'Y-m-d H:i',
