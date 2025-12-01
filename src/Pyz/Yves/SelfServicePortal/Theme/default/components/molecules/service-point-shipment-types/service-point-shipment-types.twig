@@ -98,7 +98,7 @@
 {% block body %}
     {% set shipmentTypeLength = data.shipmentTypes | length %}
 
-    {% if not shipmentTypeLength %}
+    {% if shipmentTypeLength %}
         {{ block('types') }}
 
         {% if requiredServicePoint %}

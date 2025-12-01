@@ -115,24 +115,27 @@
             ]) %}
             {% set hasMerchantProduct = merchantProductWidget.merchantProductView is defined %}
 
-            <div class="spacing-bottom spacing-bottom--bigger">
-                {% widget merchantProductWidget %}{% endwidget %}
-                {% widget merchantProductOfferWidget with {
-                    data: {
-                        isTitleVisible: not hasMerchantProduct,
-                    },
-                    embed: {
-                        hasMerchantProduct: hasMerchantProduct,
-                        productOffersCount: merchantProductOfferWidget.productOffers | length,
-                    },
-                } %}
-                    {% block content %}
-                        {% set isRadioButtonVisible = embed.productOffersCount > 1 or embed.hasMerchantProduct %}
 
-                        {{ parent() }}
-                    {% endblock %}
-                {% endwidget %}
-            </div>
+            {% if not shipmentTypeServicePointSelectorWidget or not shipmentTypeServicePointSelectorWidget.hasShipmentTypeWithRequiredLocation %}
+                <div class="spacing-bottom spacing-bottom--bigger">
+                    {% widget merchantProductWidget %}{% endwidget %}
+                    {% widget merchantProductOfferWidget with {
+                        data: {
+                            isTitleVisible: not hasMerchantProduct,
+                        },
+                        embed: {
+                            hasMerchantProduct: hasMerchantProduct,
+                            productOffersCount: merchantProductOfferWidget.productOffers | length,
+                        },
+                    } %}
+                        {% block content %}
+                            {% set isRadioButtonVisible = embed.productOffersCount > 1 or embed.hasMerchantProduct %}
+
+                            {{ parent() }}
+                        {% endblock %}
+                    {% endwidget %}
+                </div>
+            {% endif %}
 
             {% if not data.product.available %}
                 <p class="text-alert">{{ 'product.detail.out_of_stock' | trans }}</p>
