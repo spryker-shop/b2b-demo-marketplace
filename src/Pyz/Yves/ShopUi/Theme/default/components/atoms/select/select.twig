@@ -18,7 +18,7 @@
     {% set isDisabled = option.disabled | default(false) %}
 
     <option value="{{option.value}}" {% if isSelected %}selected{% endif %} {% if isDisabled %}disabled{% endif %}>
-        {{option.label}}
+        {{- option.label -}}
     </option>
 {% endblock %}
 
