@@ -104,19 +104,19 @@
                 {% widget 'CartAddProductAsSeparateItemWidget' only %}{% endwidget %}
             {% endif %}
 
-            {% set merchantProductOfferWidget = findWidget('MerchantProductOfferWidget', [data.product]) %}
-            {% set productOffersCount = merchantProductOfferWidget ? merchantProductOfferWidget.productOffers | length : 0 %}
-            {% set isRadioButtonVisible = productOffersCount > 0  %}
-            {% set isChecked = merchantProductOfferWidget ? not merchantProductOfferWidget.productView.productOfferReference : true %}
-            {% set merchantProductWidget = findWidget('MerchantProductWidget', [
-                data.product,
-                isRadioButtonVisible,
-                isChecked,
-            ]) %}
-            {% set hasMerchantProduct = merchantProductWidget.merchantProductView is defined %}
-
 
             {% if not shipmentTypeServicePointSelectorWidget or not shipmentTypeServicePointSelectorWidget.hasShipmentTypeWithRequiredLocation %}
+                {% set merchantProductOfferWidget = findWidget('MerchantProductOfferWidget', [data.product]) %}
+                {% set productOffersCount = merchantProductOfferWidget ? merchantProductOfferWidget.productOffers | length : 0 %}
+                {% set isRadioButtonVisible = productOffersCount > 0  %}
+                {% set isChecked = merchantProductOfferWidget ? not merchantProductOfferWidget.productView.productOfferReference : true %}
+                {% set merchantProductWidget = findWidget('MerchantProductWidget', [
+                    data.product,
+                    isRadioButtonVisible,
+                    isChecked,
+                ]) %}
+                {% set hasMerchantProduct = merchantProductWidget.merchantProductView is defined %}
+
                 <div class="spacing-bottom spacing-bottom--bigger">
                     {% widget merchantProductWidget %}{% endwidget %}
                     {% widget merchantProductOfferWidget with {
