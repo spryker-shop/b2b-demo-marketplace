@@ -13,6 +13,8 @@ use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Plugin\ShipmentsRestApi\Com
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Plugin\ShipmentsRestApi\CompanyBusinessUnitUuidRestAddressResponseMapperPlugin;
 use Spryker\Glue\CustomersRestApi\Plugin\ShipmentsRestApi\CustomerAddressSourceCheckerPlugin;
 use Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiDependencyProvider as SprykerShipmentsRestApiDependencyProvider;
+use Spryker\Glue\ShipmentTypeServicePointsRestApi\Plugin\ShipmentsRestApi\MultiShipmentTypeServicePointShippingAddressValidationStrategyPlugin;
+use Spryker\Glue\ShipmentTypeServicePointsRestApi\Plugin\ShipmentsRestApi\SingleShipmentTypeServicePointShippingAddressValidationStrategyPlugin;
 
 class ShipmentsRestApiDependencyProvider extends SprykerShipmentsRestApiDependencyProvider
 {
@@ -24,6 +26,17 @@ class ShipmentsRestApiDependencyProvider extends SprykerShipmentsRestApiDependen
         return [
             new CompanyBusinessUnitAddressSourceCheckerPlugin(),
             new CustomerAddressSourceCheckerPlugin(),
+        ];
+    }
+
+    /**
+     * @return list<\Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\ShippingAddressValidationStrategyPluginInterface>
+     */
+    protected function getShippingAddressValidationStrategyPlugins(): array
+    {
+        return [
+            new MultiShipmentTypeServicePointShippingAddressValidationStrategyPlugin(),
+            new SingleShipmentTypeServicePointShippingAddressValidationStrategyPlugin(),
         ];
     }
 

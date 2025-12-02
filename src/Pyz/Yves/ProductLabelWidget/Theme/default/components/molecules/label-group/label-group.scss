@@ -1,20 +1,40 @@
 @include product-label-widget-label-group {
     line-height: 0;
     padding: rem(20) 0;
+    display: flex;
+    gap: rem(4);
+    vertical-align: top;
+    justify-content: flex-end;
+    pointer-events: auto;
+    left: auto;
+    margin-bottom: rem(8);
+
+    &:hover {
+        .label-group__all-labels-wrapper {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    }
 
     &--reduced-spaces {
-        padding: rem(6) 0 rem(6) rem(6);
+        padding: rem(6);
+    }
+
+    &__label-flag {
+        &--pdp {
+            display: inline;
+            vertical-align: top;
+        }
     }
 
     &__text {
-        display: inline-block;
-        font-size: rem(10);
-        line-height: rem(24);
-        font-weight: fw(bold);
-        letter-spacing: rem(0.4);
+        display: block;
+        font-size: rem(12);
+        line-height: rem(20);
         background-color: $setting-color-alt;
         color: $setting-color-white;
-        padding: 0 rem(11);
+        padding: 0 rem(6);
+        border-radius: $setting-border-radius-2;
 
         &--top {
             background-color: $setting-color-blue-1;
@@ -41,8 +61,30 @@
         }
 
         &--pdp {
-            padding: 0 14px;
-            margin: -5px 5px 0 0;
+            display: inline-block;
+            vertical-align: top;
+            margin: 0 rem(4) rem(4) 0;
+        }
+
+        &--spare-parts {
+            background: lighten($setting-color-main, 75%);
+            color: darken($setting-color-main, 5%);
+        }
+
+        &-regected,
+        &--not-compatible {
+            background: lighten($setting-color-alt, 50%);
+            color: darken($setting-color-alt, 27%);
+        }
+
+        &--service {
+            background: lighten($setting-color-blue-1, 63%);
+            color: $setting-color-blue-1;
+        }
+
+        &--scheduled {
+            background: lighten($setting-color-yellow-1, 47%);
+            color: $setting-color-gray-5;
         }
     }
 
@@ -58,10 +100,10 @@
         order: 2;
         position: static;
         padding: rem(10) 0 0;
-        display: inline-block;
+        display: block;
+        flex-wrap: wrap;
         font-size: 0;
         line-height: 0;
-        vertical-align: middle;
 
         @include helper-breakpoint-media-min($lg) {
             padding: 0;
@@ -72,5 +114,37 @@
         top: auto;
         left: auto;
         bottom: 0;
+    }
+
+    &__counter {
+        display: inline-block;
+        font-size: rem(12);
+        line-height: rem(20);
+        background-color: $setting-color-gray-1;
+        color: $setting-color-gray-8;
+        padding: 0 rem(6);
+        border-radius: $setting-border-radius-2;
+
+        &--pdp {
+            display: none;
+        }
+    }
+
+    &__all-labels-wrapper {
+        @include helper-effect-transition(opacity);
+        display: flex;
+        flex-direction: column;
+        gap: rem(4);
+        position: absolute;
+        right: rem(4);
+        top: 100%;
+        opacity: 0;
+        pointer-events: none;
+
+        &--pdp {
+            display: inline;
+            position: static;
+            opacity: 1;
+        }
     }
 }
