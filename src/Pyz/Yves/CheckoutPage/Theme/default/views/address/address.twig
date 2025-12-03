@@ -100,24 +100,26 @@
                 {% if hasShippingAddressesAndApplicable %}
                     {% set singleDeliveryContainerHiddenClassName = hasShipmentTypes and isMultipleShipmentSelected ? hiddenClassName %}
 
-                    <div class="is-hidden">
-                        {% widget 'ShipmentTypeAddressFormWidget' args [data.form] with {
-                            data: {
-                                deliveryContainerClassName: deliveryContainerClassName,
-                                billingSameAsShippingContainerClassName: billingSameAsShippingContainerClassName,
-                                shipmentTypesClassName: validatorTriggerClassName,
-                                servicePointClassName: addressFormClassName,
-                                deliverySelectClassName: '.' ~ shippingSelectClassName,
-                                hideChoices: true,
-                            },
-                        } only %}
-                            {% block body %}
-                                <div class="spacing-y">
-                                    {{ parent() }}
-                                </div>
-                            {% endblock %}
-                        {% endwidget %}
-                    </div>
+                    {% if not embed.isMultipleShipmentEnabled%}
+                        <div class="is-hidden">
+                            {% widget 'ShipmentTypeAddressFormWidget' args [data.form] with {
+                                data: {
+                                    deliveryContainerClassName: deliveryContainerClassName,
+                                    billingSameAsShippingContainerClassName: billingSameAsShippingContainerClassName,
+                                    shipmentTypesClassName: validatorTriggerClassName,
+                                    servicePointClassName: addressFormClassName,
+                                    deliverySelectClassName: '.' ~ shippingSelectClassName,
+                                    hideChoices: true,
+                                },
+                            } only %}
+                                {% block body %}
+                                    <div class="spacing-y">
+                                        {{ parent() }}
+                                    </div>
+                                {% endblock %}
+                            {% endwidget %}
+                        </div>
+                    {% endif %}
 
                     <div class="address-wrapper is-hidden">
                         <div class="address-wrapper__header col col--sm-12">
@@ -178,7 +180,7 @@
                 </div>
 
                 {% if embed.isMultipleShipmentEnabled %}
-                    <div class="{{ deliveryContainerClassName }} {{ shipmentTypeHiddenClassName }}">
+                    <div class="{{ deliveryContainerClassName }}">
                         {% include molecule('address-item-form', 'CheckoutPage') with {
                             class: multishipmentTargetClassName ~ multipleShipmentHiddenClassName ~ ' address-wrapper__content col col--sm-12',
                             data: {
