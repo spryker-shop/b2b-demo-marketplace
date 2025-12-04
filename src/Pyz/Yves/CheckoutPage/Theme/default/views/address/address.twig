@@ -90,7 +90,7 @@
             {% set billingSameAsShippingContainerClassName = embed.jsAddressClass ~ '__billing-same-as-shipping-container' %}
 
             {% set hasShipmentTypes = data.form.shipmentType is defined %}
-            {% set defaultShipmentTypes = ['delivery', 'in-center-service'] %}
+            {% set defaultShipmentTypes = ['delivery'] %}
             {% set currentShipmentType = data.form.shipmentType.key.vars.value | default(defaultShipmentTypes[0]) %}
             {% set isDefaultShipmentType = currentShipmentType in defaultShipmentTypes %}
             {% set shipmentTypeHiddenClassName = hasShipmentTypes and not isDefaultShipmentType ? hiddenClassName %}
@@ -99,27 +99,24 @@
             <div class="{{ shippingFormHandlerClassName }} grid grid--bottom spacing-bottom spacing-bottom--big col col--sm-12">
                 {% if hasShippingAddressesAndApplicable %}
                     {% set singleDeliveryContainerHiddenClassName = hasShipmentTypes and isMultipleShipmentSelected ? hiddenClassName %}
-
-                    {% if not embed.isMultipleShipmentEnabled%}
-                        <div class="is-hidden">
-                            {% widget 'ShipmentTypeAddressFormWidget' args [data.form] with {
-                                data: {
-                                    deliveryContainerClassName: deliveryContainerClassName,
-                                    billingSameAsShippingContainerClassName: billingSameAsShippingContainerClassName,
-                                    shipmentTypesClassName: validatorTriggerClassName,
-                                    servicePointClassName: addressFormClassName,
-                                    deliverySelectClassName: '.' ~ shippingSelectClassName,
-                                    hideChoices: true,
-                                },
-                            } only %}
-                                {% block body %}
-                                    <div class="spacing-y">
-                                        {{ parent() }}
-                                    </div>
-                                {% endblock %}
-                            {% endwidget %}
-                        </div>
-                    {% endif %}
+                    <div class="is-hidden">
+                        {% widget 'ShipmentTypeAddressFormWidget' args [data.form] with {
+                            data: {
+                                deliveryContainerClassName: singleDeliveryContainerClassName,
+                                billingSameAsShippingContainerClassName: billingSameAsShippingContainerClassName,
+                                shipmentTypesClassName: validatorTriggerClassName,
+                                servicePointClassName: addressFormClassName,
+                                deliverySelectClassName: '.' ~ shippingSelectClassName,
+                                hideChoices: true,
+                            },
+                        } only %}
+                            {% block body %}
+                                <div class="spacing-y">
+                                    {{ parent() }}
+                                </div>
+                            {% endblock %}
+                        {% endwidget %}
+                    </div>
 
                     <div class="address-wrapper is-hidden">
                         <div class="address-wrapper__header col col--sm-12">

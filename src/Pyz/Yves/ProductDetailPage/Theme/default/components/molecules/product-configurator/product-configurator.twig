@@ -62,7 +62,9 @@
             {% endif %}
 
             {% if can('SeeAddToCartPermissionPlugin') %}
-                {% if shipmentTypeServicePointSelectorWidget %}
+                {% set sspServiceDetectorWidget = findWidget('SspServiceDetectorWidget', [data.product]) %}
+
+                {% if shipmentTypeServicePointSelectorWidget and (sspServiceDetectorWidget and sspServiceDetectorWidget.isService)%}
                     {% widget shipmentTypeServicePointSelectorWidget only %}{% endwidget %}
                 {% endif %}
 
