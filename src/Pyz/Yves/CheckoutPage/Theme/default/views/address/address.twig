@@ -90,7 +90,7 @@
             {% set billingSameAsShippingContainerClassName = embed.jsAddressClass ~ '__billing-same-as-shipping-container' %}
 
             {% set hasShipmentTypes = data.form.shipmentType is defined %}
-            {% set defaultShipmentTypes = ['delivery'] %}
+            {% set defaultShipmentTypes = ['delivery','in-center-service'] %}
             {% set currentShipmentType = data.form.shipmentType.key.vars.value | default(defaultShipmentTypes[0]) %}
             {% set isDefaultShipmentType = currentShipmentType in defaultShipmentTypes %}
             {% set shipmentTypeHiddenClassName = hasShipmentTypes and not isDefaultShipmentType ? hiddenClassName %}
@@ -177,7 +177,7 @@
                 </div>
 
                 {% if embed.isMultipleShipmentEnabled %}
-                    <div class="{{ deliveryContainerClassName }}">
+                    <div class="{{ deliveryContainerClassName }} {{ shipmentTypeHiddenClassName }}">
                         {% include molecule('address-item-form', 'CheckoutPage') with {
                             class: multishipmentTargetClassName ~ multipleShipmentHiddenClassName ~ ' address-wrapper__content col col--sm-12',
                             data: {
