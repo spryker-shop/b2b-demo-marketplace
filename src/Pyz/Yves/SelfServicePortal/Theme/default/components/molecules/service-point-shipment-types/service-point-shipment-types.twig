@@ -108,7 +108,7 @@
 
         {{ block('datepicker') }}
 
-         <input data-product-offer-reference-input type="hidden" name="{{ data.formFieldProductOfferReference }}">
+         <input data-product-offer-reference-input type="hidden" name="{{ data.formFieldProductOfferReference }}" value="{{ data.product.productOfferReference }}">
 
         {% if data.hasOnlyDeliveryLikeShipmentType %}
             {% set shipmentType = data.shipmentTypes | first %}
