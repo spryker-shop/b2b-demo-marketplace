@@ -52,7 +52,11 @@
     {% widget 'ProductConfigurationProductViewDisplayWidget' args [data.product] only %}{% endwidget %}
     {% widget 'ProductConfigurationProductDetailPageButtonWidget' args [data.product] only %}{% endwidget %}
 
-    {% widget 'AddToCartFormWidget' args [config, data.product, isDisabled, options] only %}
+    {% widget 'AddToCartFormWidget' args [config, data.product, isDisabled, options] with {
+        data: {
+            isService: sspServiceDetectorWidget and sspServiceDetectorWidget.isService,
+        },
+    } only %}
         {% block embeddedData %}
             {% widget 'ProductOptionConfiguratorWidget' args [data.product] only %}{% endwidget %}
             {% set shipmentTypeServicePointSelectorWidget = findWidget('SspShipmentTypeServicePointSelectorWidget', [data.product, data.isDisabled]) %}
@@ -62,9 +66,7 @@
             {% endif %}
 
             {% if can('SeeAddToCartPermissionPlugin') %}
-                {% set sspServiceDetectorWidget = findWidget('SspServiceDetectorWidget', [data.product]) %}
-
-                {% if shipmentTypeServicePointSelectorWidget and (sspServiceDetectorWidget and sspServiceDetectorWidget.isService)%}
+                {% if data.isService %}
                     {% widget shipmentTypeServicePointSelectorWidget only %}{% endwidget %}
                 {% endif %}
 
