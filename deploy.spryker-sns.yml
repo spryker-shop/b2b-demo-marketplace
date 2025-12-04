@@ -109,7 +109,7 @@ groups:
             mportal:
                 application: merchant-portal
                 endpoints:
-                    mp.eu.scos.sh01.demo-spryker.com:
+                    mp.eu.sns.sh01.demo-spryker.com:
                         entry-point: MerchantPortal
                         region: EU
                         primal: true
@@ -119,9 +119,9 @@ groups:
             yves:
                 application: yves
                 endpoints:
-                    demo-date-time-configurator.scos.sh01.demo-spryker.com:
+                    demo-date-time-configurator.sns.sh01.demo-spryker.com:
                         entry-point: Configurator
-                    yves.eu.scos.sh01.demo-spryker.com:
+                    yves.eu.sns.sh01.demo-spryker.com:
                         region: EU
                         services:
                             session:
@@ -131,7 +131,7 @@ groups:
             boffice:
                 application: backoffice
                 endpoints:
-                    backoffice.eu.scos.sh01.demo-spryker.com:
+                    backoffice.eu.sns.sh01.demo-spryker.com:
                         region: EU
                         primal: true
                         services:
@@ -142,13 +142,13 @@ groups:
             backgw:
                 application: backend-gateway
                 endpoints:
-                    backend-gateway.eu.scos.sh01.demo-spryker.com:
+                    backend-gateway.eu.sns.sh01.demo-spryker.com:
                         region: EU
                         primal: true
             glue:
                 application: glue
                 endpoints:
-                    glue.eu.scos.sh01.demo-spryker.com:
+                    glue.eu.sns.sh01.demo-spryker.com:
                         cors-allow-origin: '*'
                         region: EU
             gluebackend:
@@ -158,7 +158,7 @@ groups:
                 http:
                     timeout: 5m
                 endpoints:
-                    glue-backend.eu.scos.sh01.demo-spryker.com:
+                    glue-backend.eu.sns.sh01.demo-spryker.com:
                         region: EU
                         cors-allow-origin: '*'
 services:
