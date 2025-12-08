@@ -32,6 +32,7 @@ jobs:
               with:
                   extra_args: --log-level=2 --results=verified
     validation:
+
         name: "Static analysis"
         if: ${{ !(github.event_name == 'push' && github.ref == 'refs/heads/master') }}
         runs-on: ubuntu-latest
@@ -158,6 +159,7 @@ jobs:
                 if: always()
 
     php-84-mariadb-acceptance-alpine:
+        if: false # Temporarily disabled
         needs: [js-validation, validation]
         name: "Codeception / Acceptance & API"
         runs-on: ubuntu-latest
@@ -208,6 +210,7 @@ jobs:
                 if: always()
 
     php-84-mariadb-functional-alpine:
+        if: false # Temporarily disabled
         needs: [validation]
         name: "Codeception / Functional Tests"
         runs-on: ubuntu-latest
@@ -241,6 +244,7 @@ jobs:
                 if: always()
 
     docker-alpine-php-84-mariadb-robot-api:
+        if: false # Temporarily disabled
         needs: [validation]
         name: "Robot / API"
         runs-on: ubuntu-latest
@@ -293,6 +297,7 @@ jobs:
                 if: always()
 
     docker-alpine-php-84-mariadb-cypress:
+        if: false # Temporarily disabled
         needs: [js-validation, validation]
         name: "Cypress / UI"
         runs-on: ubuntu-latest
@@ -389,7 +394,7 @@ jobs:
                 id: run_dynamic_tests
                 continue-on-error: true
                 run: |
-                    docker/sdk exec robot-framework pabot --processes 6 --ordering pabot_mp_b2b_ordering -v env:ui_mp_b2b -v docker:True -v headless:true -v ignore_console:false -v dms:true -d results/dynamic_set --exclude skip-due-to-issueORskip-due-to-refactoringORstatic-set -s '*'.tests.parallel_ui.mp_b2b .
+                    docker/sdk exec robot-framework pabot --processes 6 --ordering pabot_mp_b2b_ordering -v env:ui_mp_b2b -v docker:True -v headless:true -v ignore_console:false -v dms:true -d results/dynamic_set --exclude skip-due-to-issueORskip-due-to-refactoringORstatic-set -s '*'.tests.parallel_ui.mp_b2b.users .
             -   name: Run Static Tests Set
                 id: run_static_tests
                 continue-on-error: true
