@@ -185,8 +185,6 @@ class SspInquiriesRestApiCest
                     'subject' => 'New Test Inquiry from Glue',
                     'description' => 'This is a test inquiry description',
                     'type' => 'general',
-                    'sspAssetReference' => $this->fixtures->getAssetTransfer()->getReference(),
-                    'orderReference' => $this->fixtures->getSaveOrderTransfer()->getOrderReference(),
                 ],
             ],
         ];
