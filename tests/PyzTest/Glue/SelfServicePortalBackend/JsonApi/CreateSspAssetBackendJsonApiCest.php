@@ -20,7 +20,6 @@ use PyzTest\Glue\SelfServicePortalBackend\JsonApi\Fixtures\SspAssetsBackendJsonA
  * @group SelfServicePortalBackend
  * @group CreateSspAssetBackendJsonApiCest
  * Add your own group annotations below this line
- * @group EndToEnd
  */
 class CreateSspAssetBackendJsonApiCest
 {
@@ -118,5 +117,30 @@ class CreateSspAssetBackendJsonApiCest
         // Assert
         $I->seeJsonApiResponseCodeIs(HttpCode::BAD_REQUEST);
         $I->seeJsonApiResponseErrorsHaveMessage('Asset name must be provided');
+    }
+
+    public function requestCreateSspAssetWithInvalidStatus(SelfServicePortalBackendApiTester $I): void
+    {
+        // Arrange
+        $oauthResponseTransfer = $I->havePasswordAuthorizationToBackendApi($this->fixtures->getUserTransfer());
+        $I->amBearerAuthenticated($oauthResponseTransfer->getAccessToken());
+        $companyBusinessUnitUUID = $this->fixtures->getCompanyBusinessUnitTransfer()->getUuid();
+
+        $requestData = $I->buildAssetCreateRequestData(
+            'Test',
+            'NEW001_serialNumber_BAPI_TEST',
+            'notValid',
+            'This is a test asset created via API',
+            'https://example.com/image.png',
+            $companyBusinessUnitUUID,
+        );
+        $I->haveHttpHeader('Accept-Language', 'en_US');
+
+        // Act
+        $I->sendJsonApiPost($I->getCreateSspAssetUrl(), $requestData);
+
+        // Assert
+        $I->seeJsonApiResponseCodeIs(HttpCode::BAD_REQUEST);
+        $I->seeJsonApiResponseErrorsHaveMessage('Status is not valid.');
     }
 }

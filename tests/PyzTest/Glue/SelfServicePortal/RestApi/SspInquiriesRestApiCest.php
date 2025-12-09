@@ -173,7 +173,7 @@ class SspInquiriesRestApiCest
         $I->assertEquals($errors[RestErrorMessageTransfer::DETAIL], static::RESPONSE_DETAIL_INQUIRY_NOT_FOUND);
     }
 
-    public function requestCreateInquiryWithValidData(SelfServicePortalApiTester $I): void
+    public function requestCreateGeneralInquiryWithValidData(SelfServicePortalApiTester $I): void
     {
         // Arrange
         $I->authorizeCustomerToGlue($this->fixtures->getCustomerTransfer());
@@ -185,8 +185,6 @@ class SspInquiriesRestApiCest
                     'subject' => 'New Test Inquiry from Glue',
                     'description' => 'This is a test inquiry description',
                     'type' => 'general',
-                    'sspAssetReference' => $this->fixtures->getAssetTransfer()->getReference(),
-                    'orderReference' => $this->fixtures->getSaveOrderTransfer()->getOrderReference(),
                 ],
             ],
         ];
@@ -206,8 +204,8 @@ class SspInquiriesRestApiCest
         $I->assertEquals('New Test Inquiry from Glue', $I->getDataFromResponseByJsonPath('$.data.attributes.subject'));
         $I->assertEquals('This is a test inquiry description', $I->getDataFromResponseByJsonPath('$.data.attributes.description'));
         $I->assertEquals('general', $I->getDataFromResponseByJsonPath('$.data.attributes.type'));
-        $I->assertEquals($this->fixtures->getAssetTransfer()->getReference(), $I->getDataFromResponseByJsonPath('$.data.attributes.sspAssetReference'));
-        $I->assertEquals($this->fixtures->getSaveOrderTransfer()->getOrderReference(), $I->getDataFromResponseByJsonPath('$.data.attributes.orderReference'));
+        $I->assertEquals(null, $I->getDataFromResponseByJsonPath('$.data.attributes.sspAssetReference'));
+        $I->assertEquals(null, $I->getDataFromResponseByJsonPath('$.data.attributes.orderReference'));
     }
 
     public function requestCreateInquiryWithMissingRequiredFields(SelfServicePortalApiTester $I): void
@@ -219,7 +217,6 @@ class SspInquiriesRestApiCest
             'data' => [
                 'type' => static::RESOURCE_SSP_INQUIRIES,
                 'attributes' => [
-                    // Missing required fields: subject
                     'description' => 'This is a test inquiry description',
                     'subject' => 'subject',
                 ],
@@ -230,11 +227,75 @@ class SspInquiriesRestApiCest
         $I->sendPost($I->getSspInquiriesUrl(), $requestPayload);
 
         // Assert
-        $I->seeResponseCodeIs(HttpCode::UNPROCESSABLE_ENTITY);
+        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
         $I->seeResponseMatchesOpenApiSchema();
 
         $errors = $I->getDataFromResponseByJsonPath('$.errors[0]');
-        $I->assertEquals(HttpCode::UNPROCESSABLE_ENTITY, $errors[RestErrorMessageTransfer::STATUS]);
-        $I->assertEquals('Inquiry type is missing.', $errors[RestErrorMessageTransfer::DETAIL]);
+        $I->assertEquals(HttpCode::BAD_REQUEST, $errors[RestErrorMessageTransfer::STATUS]);
+        $I->assertEquals('Type is required.', $errors[RestErrorMessageTransfer::DETAIL]);
+    }
+
+    public function requestCreateOrderInquiryWithValidData(SelfServicePortalApiTester $I): void
+    {
+        // Arrange
+        $I->authorizeCustomerToGlue($this->fixtures->getCustomerTransfer());
+
+        $requestPayload = [
+            'data' => [
+                'type' => static::RESOURCE_SSP_INQUIRIES,
+                'attributes' => [
+                    'subject' => 'New Test Inquiry from Glue',
+                    'description' => 'This is a test inquiry description',
+                    'type' => 'order',
+                    'orderReference' => $this->fixtures->getSaveOrderTransfer()->getOrderReference(),
+                ],
+            ],
+        ];
+
+        // Act
+        $I->sendPost($I->getSspInquiriesUrl(), $requestPayload);
+
+        // Assert
+        $I->seeResponseCodeIs(HttpCode::CREATED);
+        $I->seeResponseIsJson();
+        $I->seeResponseMatchesOpenApiSchema();
+
+        $I->amSure('The returned resource is of correct type')
+            ->whenI()
+            ->seeResponseDataContainsSingleResourceOfType(static::RESOURCE_SSP_INQUIRIES);
+
+        $I->assertEquals('New Test Inquiry from Glue', $I->getDataFromResponseByJsonPath('$.data.attributes.subject'));
+        $I->assertEquals('This is a test inquiry description', $I->getDataFromResponseByJsonPath('$.data.attributes.description'));
+        $I->assertEquals('order', $I->getDataFromResponseByJsonPath('$.data.attributes.type'));
+        $I->assertEquals(null, $I->getDataFromResponseByJsonPath('$.data.attributes.sspAssetReference'));
+        $I->assertEquals($this->fixtures->getSaveOrderTransfer()->getOrderReference(), $I->getDataFromResponseByJsonPath('$.data.attributes.orderReference'));
+    }
+
+    public function requestCreateOrderInquiryWithoutOrderReference(SelfServicePortalApiTester $I): void
+    {
+        // Arrange
+        $I->authorizeCustomerToGlue($this->fixtures->getCustomerTransfer());
+
+        $requestPayload = [
+            'data' => [
+                'type' => static::RESOURCE_SSP_INQUIRIES,
+                'attributes' => [
+                    'subject' => 'New Test Inquiry from Glue',
+                    'description' => 'This is a test inquiry description',
+                    'type' => 'order',
+                ],
+            ],
+        ];
+
+        // Act
+        $I->sendPost($I->getSspInquiriesUrl(), $requestPayload);
+
+        // Assert
+        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+        $I->seeResponseMatchesOpenApiSchema();
+
+        $errors = $I->getDataFromResponseByJsonPath('$.errors[0]');
+        $I->assertEquals(HttpCode::BAD_REQUEST, $errors[RestErrorMessageTransfer::STATUS]);
+        $I->assertEquals('Order reference is required.', $errors[RestErrorMessageTransfer::DETAIL]);
     }
 }

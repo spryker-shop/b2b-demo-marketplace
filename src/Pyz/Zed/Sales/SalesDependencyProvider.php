@@ -110,6 +110,7 @@ use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Sales\SspAssetOrde
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Sales\SspAssetOrderItemsPostSavePlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Sales\SspProductClassSalesOrderItemCollectionPreDeletePlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Sales\SspServiceCancellableOrderItemExpanderPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Sales\SspServiceReschedulableOrderExpanderPlugin;
 
 /**
  * @package Pyz\Zed\Sales
@@ -153,6 +154,7 @@ class SalesDependencyProvider extends SprykerSalesDependencyProvider
             new IsAmendableOrderExpanderPlugin(),
             new SspAssetOrderExpanderPlugin(),
             new ProductClassOrderExpanderPlugin(),
+            new SspServiceReschedulableOrderExpanderPlugin(),
         ];
     }
 
