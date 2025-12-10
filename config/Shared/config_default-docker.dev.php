@@ -238,3 +238,29 @@ if (!getenv('SPRYKER_S3_MERCHANT_PRODUCT_DATA_IMPORT_FILES_BUCKET')) {
         'path' => '/data/merchant-product-offer-data-import-files',
     ];
 }
+
+if(!getenv('SPRYKER_S3_SSP_ASSETS_BUCKET')) {
+    $config[FileSystemConstants::FILESYSTEM_SERVICE]['ssp-inquiry'] = [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/data',
+        'path' => '/data/ssp-inquiry',
+    ];
+
+    $config[FileSystemConstants::FILESYSTEM_SERVICE]['ssp-files'] = [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/data',
+        'path' => '/data/ssp-files',
+    ];
+
+    $config[FileSystemConstants::FILESYSTEM_SERVICE]['ssp-asset-image'] = [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/data',
+        'path' => '/data/ssp-asset-image',
+    ];
+
+    $config[FileSystemConstants::FILESYSTEM_SERVICE]['ssp-model-image'] = [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/data',
+        'path' => '/data/ssp-model-image',
+    ];
+}
