@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "817cf377c98fccf1add5fb5c5170ba3e",
+    "content-hash": "c71ab1c43332b60807cd7362393fb51b",
     "packages": [
         {
             "name": "async-aws/core",
@@ -344,16 +344,16 @@
         },
         {
             "name": "brick/math",
-            "version": "0.14.0",
+            "version": "0.14.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/brick/math.git",
-                "reference": "113a8ee2656b882d4c3164fa31aa6e12cbb7aaa2"
+                "reference": "f05858549e5f9d7bb45875a75583240a38a281d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/brick/math/zipball/113a8ee2656b882d4c3164fa31aa6e12cbb7aaa2",
-                "reference": "113a8ee2656b882d4c3164fa31aa6e12cbb7aaa2",
+                "url": "https://api.github.com/repos/brick/math/zipball/f05858549e5f9d7bb45875a75583240a38a281d0",
+                "reference": "f05858549e5f9d7bb45875a75583240a38a281d0",
                 "shasum": ""
             },
             "require": {
@@ -392,7 +392,7 @@
             ],
             "support": {
                 "issues": "https://github.com/brick/math/issues",
-                "source": "https://github.com/brick/math/tree/0.14.0"
+                "source": "https://github.com/brick/math/tree/0.14.1"
             },
             "funding": [
                 {
@@ -400,7 +400,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-08-29T12:40:03+00:00"
+            "time": "2025-11-24T14:40:29+00:00"
         },
         {
             "name": "cebe/php-openapi",
@@ -7606,6 +7606,82 @@
             "time": "2025-07-25T12:24:30+00:00"
         },
         {
+            "name": "spryker-feature/marketplace-merchant-portal-product-offer-service-points",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-feature/marketplace-merchant-portal-product-offer-service-points.git",
+                "reference": "435915cdac3d8c8badd4b45ae55615b0f2eaa93d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-feature/marketplace-merchant-portal-product-offer-service-points/zipball/435915cdac3d8c8badd4b45ae55615b0f2eaa93d",
+                "reference": "435915cdac3d8c8badd4b45ae55615b0f2eaa93d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "spryker/product-offer-service-point-merchant-portal-gui": "^2.0.0"
+            },
+            "suggest": {
+                "spryker-feature/product-offer-service-points": "Recommended feature dependency."
+            },
+            "default-branch": true,
+            "type": "metapackage",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "202507.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Marketplace Merchant Portal Product Offer Service Points [feature]",
+            "support": {
+                "source": "https://github.com/spryker-feature/marketplace-merchant-portal-product-offer-service-points/tree/202507.0"
+            },
+            "time": "2025-07-16T09:58:46+00:00"
+        },
+        {
+            "name": "spryker-feature/marketplace-merchant-portal-product-offer-shipment",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-feature/marketplace-merchant-portal-product-offer-shipment.git",
+                "reference": "d3f03201b2785715b4ce90d0330274450776d4ab"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-feature/marketplace-merchant-portal-product-offer-shipment/zipball/d3f03201b2785715b4ce90d0330274450776d4ab",
+                "reference": "d3f03201b2785715b4ce90d0330274450776d4ab",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "spryker/product-offer-shipment-type-merchant-portal-gui": "^2.0.0"
+            },
+            "suggest": {
+                "spryker-feature/product-offer-shipment": "Recommended feature dependency."
+            },
+            "default-branch": true,
+            "type": "metapackage",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "202507.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Marketplace Merchant Portal Product Offer Shipment [feature]",
+            "support": {
+                "source": "https://github.com/spryker-feature/marketplace-merchant-portal-product-offer-shipment/tree/202507.0"
+            },
+            "time": "2025-07-16T09:58:34+00:00"
+        },
+        {
             "name": "spryker-feature/marketplace-merchantportal-core",
             "version": "202507.0",
             "source": {
@@ -9264,6 +9340,164 @@
             "time": "2025-11-16T10:53:59+00:00"
         },
         {
+            "name": "spryker-feature/product-offer-service-points",
+            "version": "202507.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-feature/product-offer-service-points.git",
+                "reference": "e3759fa7964498365b6b7728aeb22d753b7b43b0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-feature/product-offer-service-points/zipball/e3759fa7964498365b6b7728aeb22d753b7b43b0",
+                "reference": "e3759fa7964498365b6b7728aeb22d753b7b43b0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "spryker/product-offer-service-point": "^1.2.0",
+                "spryker/product-offer-service-point-data-import": "^0.4.0",
+                "spryker/product-offer-service-point-gui": "^1.0.0",
+                "spryker/product-offer-service-point-storage": "^1.1.0"
+            },
+            "suggest": {
+                "spryker-feature/service-points": "Recommended feature dependency."
+            },
+            "type": "metapackage",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "202507.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Product Offer Service Points [feature]",
+            "support": {
+                "source": "https://github.com/spryker-feature/product-offer-service-points/tree/202507.0"
+            },
+            "time": "2025-07-25T12:24:31+00:00"
+        },
+        {
+            "name": "spryker-feature/product-offer-service-points-availability",
+            "version": "202507.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-feature/product-offer-service-points-availability.git",
+                "reference": "cea6392ce859dbc239b190a62fadff6cdb8e5dcd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-feature/product-offer-service-points-availability/zipball/cea6392ce859dbc239b190a62fadff6cdb8e5dcd",
+                "reference": "cea6392ce859dbc239b190a62fadff6cdb8e5dcd",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "spryker-shop/product-offer-service-point-availability-widget": "^1.2.0",
+                "spryker/product-offer-service-point-availability": "^1.0.0",
+                "spryker/product-offer-service-point-availability-calculator-storage": "^1.0.0",
+                "spryker/product-offer-service-point-availability-storage": "^1.1.0"
+            },
+            "suggest": {
+                "spryker-feature/product-offer-service-points": "Recommended feature dependency."
+            },
+            "type": "metapackage",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "202507.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Product Offer Service Points Availability [feature]",
+            "support": {
+                "source": "https://github.com/spryker-feature/product-offer-service-points-availability/tree/202507.0"
+            },
+            "time": "2025-07-25T12:24:26+00:00"
+        },
+        {
+            "name": "spryker-feature/product-offer-shipment",
+            "version": "202507.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-feature/product-offer-shipment.git",
+                "reference": "c0dbe27f5b3e1fa62f407d674d8464dd6e7d387e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-feature/product-offer-shipment/zipball/c0dbe27f5b3e1fa62f407d674d8464dd6e7d387e",
+                "reference": "c0dbe27f5b3e1fa62f407d674d8464dd6e7d387e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "spryker/product-offer-shipment-type": "^1.3.0",
+                "spryker/product-offer-shipment-type-data-import": "^0.4.0",
+                "spryker/product-offer-shipment-type-gui": "^1.0.0",
+                "spryker/product-offer-shipment-type-storage": "^1.1.0"
+            },
+            "suggest": {
+                "spryker-feature/shipment": "Recommended feature dependency."
+            },
+            "type": "metapackage",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "202507.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Product Offer Shipment [feature]",
+            "support": {
+                "source": "https://github.com/spryker-feature/product-offer-shipment/tree/202507.0"
+            },
+            "time": "2025-07-25T12:24:33+00:00"
+        },
+        {
+            "name": "spryker-feature/product-offer-shipment-availability",
+            "version": "202507.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-feature/product-offer-shipment-availability.git",
+                "reference": "f85a369aac1f2433980d69bd87b434fed78b4616"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-feature/product-offer-shipment-availability/zipball/f85a369aac1f2433980d69bd87b434fed78b4616",
+                "reference": "f85a369aac1f2433980d69bd87b434fed78b4616",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "spryker/product-offer-shipment-type-availability": "^1.0.0",
+                "spryker/product-offer-shipment-type-availability-storage": "^1.0.0"
+            },
+            "suggest": {
+                "spryker-feature/product-offer-shipment": "Recommended feature dependency."
+            },
+            "type": "metapackage",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "202507.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Product Offer Shipment Availability [feature]",
+            "support": {
+                "source": "https://github.com/spryker-feature/product-offer-shipment-availability/tree/202507.0"
+            },
+            "time": "2025-07-16T09:59:24+00:00"
+        },
+        {
             "name": "spryker-feature/product-options",
             "version": "202507.0",
             "source": {
@@ -9816,6 +10050,242 @@
             "time": "2025-11-16T10:54:25+00:00"
         },
         {
+            "name": "spryker-feature/self-service-portal",
+            "version": "18.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-feature/self-service-portal.git",
+                "reference": "f24d057c31f574028cea5d742c9d89edaee78d7e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-feature/self-service-portal/zipball/f24d057c31f574028cea5d742c9d89edaee78d7e",
+                "reference": "f24d057c31f574028cea5d742c9d89edaee78d7e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.3",
+                "spryker-shop/cart-page-extension": "^1.0.0",
+                "spryker-shop/customer-page": "^2.60.0",
+                "spryker-shop/customer-page-extension": "^1.6.0",
+                "spryker-shop/shop-application": "^1.0.0",
+                "spryker-shop/shop-application-extension": "^1.2.0",
+                "spryker-shop/shop-ui": "^1.100.1",
+                "spryker/availability-storage-extension": "^1.0.0",
+                "spryker/cart-extension": "^4.2.0",
+                "spryker/cms-block-storage-extension": "^1.0.0",
+                "spryker/comment": "^1.6.0",
+                "spryker/company": "^1.0.0",
+                "spryker/company-business-unit": "^2.0.0",
+                "spryker/company-user": "^2.20.0",
+                "spryker/customer": "^7.0.0",
+                "spryker/data-import": "^1.0.0",
+                "spryker/event": "^2.6.0",
+                "spryker/event-behavior": "^1.30.0",
+                "spryker/file-manager": "^2.6.0",
+                "spryker/file-system-extension": "^1.0.0",
+                "spryker/glossary-storage": "^1.0.0",
+                "spryker/glue-application": "^1.47.0",
+                "spryker/glue-application-extension": "^1.0.0",
+                "spryker/glue-json-api-convention-extension": "^1.0.0",
+                "spryker/gui": "^4.3.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/locale": "^4.0.0",
+                "spryker/log": "^3.16.0",
+                "spryker/mail": "^4.9.0",
+                "spryker/mail-extension": "^1.0.0",
+                "spryker/merchant": "^3.0.0",
+                "spryker/merchant-stock": "^1.0.0",
+                "spryker/messenger": "^3.5.0",
+                "spryker/permission": "^1.5.0",
+                "spryker/permission-extension": "^1.0.0",
+                "spryker/price-product-offer-storage": "^1.5.0",
+                "spryker/product": "^6.0.0",
+                "spryker/product-extension": "^1.3.0",
+                "spryker/product-image": "^3.0.0",
+                "spryker/product-list": "^1.8.0",
+                "spryker/product-list-gui-extension": "^1.2.0",
+                "spryker/product-list-storage": "^1.17.0",
+                "spryker/product-management-extension": "^1.2.0",
+                "spryker/product-offer": "^1.0.0",
+                "spryker/product-offer-availability-storage": "^1.2.0",
+                "spryker/product-offer-gui-extension": "^1.0.0",
+                "spryker/product-offer-sales": "^1.0.0",
+                "spryker/product-offer-shipment-type": "^1.0.0",
+                "spryker/product-offer-storage": "^1.0.0",
+                "spryker/product-page-search": "^3.30.0",
+                "spryker/product-page-search-extension": "^1.6.0",
+                "spryker/product-storage": "^1.37.0",
+                "spryker/product-storage-extension": "^1.6.0",
+                "spryker/product-validity": "^1.0.0",
+                "spryker/propel-orm": "^1.5.0",
+                "spryker/publisher-extension": "^1.0.0",
+                "spryker/quote": "^2.26.0",
+                "spryker/quote-extension": "^1.2.0",
+                "spryker/router": "^1.0.0",
+                "spryker/sales": "^11.0.0",
+                "spryker/sales-extension": "^1.1.0",
+                "spryker/search-extension": "^1.0.0",
+                "spryker/sequence-number": "^3.0.0",
+                "spryker/service-point": "^1.1.0",
+                "spryker/service-point-search": "^1.2.0",
+                "spryker/service-point-search-extension": "^1.0.0",
+                "spryker/shipment-type": "^1.0.0",
+                "spryker/shipment-type-cart": "^1.1.0",
+                "spryker/shipment-type-storage": "^1.0.0",
+                "spryker/state-machine": "^2.21.0",
+                "spryker/storage": "^3.4.0",
+                "spryker/store": "^1.19.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/synchronization": "^1.0.0",
+                "spryker/synchronization-behavior": "^1.10.0",
+                "spryker/synchronization-extension": "^1.1.0",
+                "spryker/transfer": "^3.27.0",
+                "spryker/translator": "^1.1.0",
+                "spryker/twig": "^3.18.0",
+                "spryker/twig-extension": "^1.0.0",
+                "spryker/user": "^3.27.0",
+                "spryker/util-csv": "^1.1.0",
+                "spryker/util-date-time": "^1.6.0",
+                "spryker/util-encoding": "^2.1.1",
+                "spryker/util-text": "^1.0.0",
+                "spryker/uuid-behavior": "^1.0.0",
+                "spryker/validator": "^1.5.0",
+                "spryker/zed-request": "^3.0.0"
+            },
+            "require-dev": {
+                "spryker-shop/service-point-widget": "*",
+                "spryker/catalog": "*",
+                "spryker/cms-block": "*",
+                "spryker/code-sniffer": "*",
+                "spryker/company-business-unit-sales-connector": "*",
+                "spryker/company-role": "*",
+                "spryker/company-sales-connector": "*",
+                "spryker/container": "*",
+                "spryker/country": "*",
+                "spryker/elastica": "*",
+                "spryker/file-system": "*",
+                "spryker/flysystem": "*",
+                "spryker/flysystem-local-file-system": "*",
+                "spryker/oms": "*",
+                "spryker/payment": "*",
+                "spryker/price": "*",
+                "spryker/propel": "*",
+                "spryker/queue": "*",
+                "spryker/rabbit-mq": "*",
+                "spryker/ramsey-uuid": "*",
+                "spryker/sales-payment": "*",
+                "spryker/search": "*",
+                "spryker/shipment": "*",
+                "spryker/testify": "*"
+            },
+            "suggest": {
+                "spryker-shop/service-point-widget": "If you want to use the service point geo coordinates functionality, you need to install this module.",
+                "spryker/catalog": "If you want to use the product class catalog feature, you need to install this module.",
+                "spryker/container": "Add this module when you want to use the Container."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "18.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SprykerFeature\\": "src/SprykerFeature/",
+                    "SprykerFeatureTest\\Shared\\SelfServicePortal\\Helper\\": "tests/SprykerFeatureTest/Shared/SelfServicePortal/_support/Helper/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "SelfServicePortal module",
+            "support": {
+                "source": "https://github.com/spryker-feature/self-service-portal/tree/18.0.0"
+            },
+            "time": "2025-12-09T08:00:34+00:00"
+        },
+        {
+            "name": "spryker-feature/service-points",
+            "version": "202507.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-feature/service-points.git",
+                "reference": "668b5f258152b6c96ffb767cdee8e984fe83c272"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-feature/service-points/zipball/668b5f258152b6c96ffb767cdee8e984fe83c272",
+                "reference": "668b5f258152b6c96ffb767cdee8e984fe83c272",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "spryker-shop/sales-service-point-widget": "^1.2.0",
+                "spryker-shop/service-point-widget": "^1.7.0",
+                "spryker/sales-service-point": "^1.2.0",
+                "spryker/sales-service-point-gui": "^1.0.0",
+                "spryker/service-point": "^1.1.0",
+                "spryker/service-point-data-import": "^0.6.0",
+                "spryker/service-point-search": "^1.2.0",
+                "spryker/service-point-storage": "^1.1.0"
+            },
+            "type": "metapackage",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "202507.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Service Points [feature]",
+            "support": {
+                "source": "https://github.com/spryker-feature/service-points/tree/202507.0"
+            },
+            "time": "2025-07-25T12:24:26+00:00"
+        },
+        {
+            "name": "spryker-feature/service-points-cart",
+            "version": "202507.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-feature/service-points-cart.git",
+                "reference": "02e0cf655ad8d2e1025b73dc96e94bd0e05d2250"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-feature/service-points-cart/zipball/02e0cf655ad8d2e1025b73dc96e94bd0e05d2250",
+                "reference": "02e0cf655ad8d2e1025b73dc96e94bd0e05d2250",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "spryker-shop/service-point-cart-page": "^1.0.0",
+                "spryker/service-point-cart": "^1.0.0"
+            },
+            "suggest": {
+                "spryker-feature/cart": "Recommended feature dependency."
+            },
+            "type": "metapackage",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "202507.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Service Points Cart [feature]",
+            "support": {
+                "source": "https://github.com/spryker-feature/service-points-cart/tree/202507.0"
+            },
+            "time": "2025-07-16T09:59:46+00:00"
+        },
+        {
             "name": "spryker-feature/shared-carts",
             "version": "202507.0",
             "source": {
@@ -9897,6 +10367,46 @@
                 "source": "https://github.com/spryker-feature/shipment/tree/master"
             },
             "time": "2025-11-16T10:54:02+00:00"
+        },
+        {
+            "name": "spryker-feature/shipment-service-points",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-feature/shipment-service-points.git",
+                "reference": "9c6daab8519c27b4234d7a07b9113eec1cd4bdac"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-feature/shipment-service-points/zipball/9c6daab8519c27b4234d7a07b9113eec1cd4bdac",
+                "reference": "9c6daab8519c27b4234d7a07b9113eec1cd4bdac",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "spryker/shipment-type-service-point": "^1.0.0",
+                "spryker/shipment-type-service-point-data-import": "^0.6.0",
+                "spryker/shipment-type-service-point-storage": "^1.0.0"
+            },
+            "suggest": {
+                "spryker-feature/service-points": "Recommended feature dependency."
+            },
+            "default-branch": true,
+            "type": "metapackage",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "202507.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Shipment Service Points [feature]",
+            "support": {
+                "source": "https://github.com/spryker-feature/shipment-service-points/tree/202507.0"
+            },
+            "time": "2025-07-16T10:00:09+00:00"
         },
         {
             "name": "spryker-feature/shopping-lists",
@@ -11589,6 +12099,60 @@
                 "source": "https://github.com/spryker-shop/checkout-widget/tree/1.4.0"
             },
             "time": "2021-08-16T08:44:35+00:00"
+        },
+        {
+            "name": "spryker-shop/click-and-collect-page-example",
+            "version": "0.3.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-shop/click-and-collect-page-example.git",
+                "reference": "6cb4c6b2f293b20651f2f0d2d9977d31b053d51c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-shop/click-and-collect-page-example/zipball/6cb4c6b2f293b20651f2f0d2d9977d31b053d51c",
+                "reference": "6cb4c6b2f293b20651f2f0d2d9977d31b053d51c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "spryker-shop/customer-page-extension": "^1.6.0",
+                "spryker-shop/service-point-widget": "^1.0.0",
+                "spryker-shop/shop-application-extension": "^1.2.0",
+                "spryker-shop/shop-ui": "^1.73.0",
+                "spryker/kernel": "^3.52.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SprykerShop\\": "src/SprykerShop/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Spryker Systems GmbH",
+                    "homepage": "https://spryker.com"
+                }
+            ],
+            "description": "ClickAndCollectPageExample module",
+            "support": {
+                "source": "https://github.com/spryker-shop/click-and-collect-page-example/tree/0.3.3"
+            },
+            "time": "2025-05-14T11:04:40+00:00"
         },
         {
             "name": "spryker-shop/cms-block-widget",
@@ -16098,6 +16662,56 @@
             "time": "2023-03-31T19:36:14+00:00"
         },
         {
+            "name": "spryker-shop/product-offer-service-point-availability-widget",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-shop/product-offer-service-point-availability-widget.git",
+                "reference": "e8acf31d7af2478679f20cd03ccff8b483a41073"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-shop/product-offer-service-point-availability-widget/zipball/e8acf31d7af2478679f20cd03ccff8b483a41073",
+                "reference": "e8acf31d7af2478679f20cd03ccff8b483a41073",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "spryker-shop/shop-ui": "^1.45.1",
+                "spryker/cart": "^7.0.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/product-offer-service-point-availability": "^1.0.0",
+                "spryker/product-offer-service-point-availability-calculator-storage": "^1.0.0",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/application": "*",
+                "spryker/code-sniffer": "*",
+                "spryker/container": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SprykerShop\\": "src/SprykerShop/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ProductOfferServicePointAvailabilityWidget module",
+            "support": {
+                "source": "https://github.com/spryker-shop/product-offer-service-point-availability-widget/tree/1.2.0"
+            },
+            "time": "2025-05-14T11:04:40+00:00"
+        },
+        {
             "name": "spryker-shop/product-offer-shopping-list-widget",
             "version": "1.0.0",
             "source": {
@@ -17878,6 +18492,57 @@
             "time": "2020-05-29T15:35:39+00:00"
         },
         {
+            "name": "spryker-shop/sales-service-point-widget",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-shop/sales-service-point-widget.git",
+                "reference": "36c0d354cbe32745ff0fbf8a3cc3e8681778ade1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-shop/sales-service-point-widget/zipball/36c0d354cbe32745ff0fbf8a3cc3e8681778ade1",
+                "reference": "36c0d354cbe32745ff0fbf8a3cc3e8681778ade1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "spryker-shop/customer-reorder-widget-extension": "^1.2.0",
+                "spryker-shop/shop-ui": "^1.72.0",
+                "spryker/kernel": "^3.52.0",
+                "spryker/sales-service-point": "^1.0.0",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/testify": "*"
+            },
+            "suggest": {
+                "spryker/router": "Use this module if you need use the RouterProviderPlugin.",
+                "spryker/silex": "Use this module when using plugins that need Silex dependencies."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SprykerShop\\": "src/SprykerShop/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "SalesServicePointWidget module",
+            "support": {
+                "source": "https://github.com/spryker-shop/sales-service-point-widget/tree/1.2.0"
+            },
+            "time": "2024-11-15T17:27:31+00:00"
+        },
+        {
             "name": "spryker-shop/security-blocker-page",
             "version": "1.3.1",
             "source": {
@@ -17931,6 +18596,113 @@
                 "source": "https://github.com/spryker-shop/security-blocker-page/tree/1.3.1"
             },
             "time": "2025-10-20T08:45:49+00:00"
+        },
+        {
+            "name": "spryker-shop/service-point-cart-page",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-shop/service-point-cart-page.git",
+                "reference": "cf0dd4bfd7102235a7ed26d116111ae006dd10d9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-shop/service-point-cart-page/zipball/cf0dd4bfd7102235a7ed26d116111ae006dd10d9",
+                "reference": "cf0dd4bfd7102235a7ed26d116111ae006dd10d9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0",
+                "spryker-shop/checkout-page-extension": "^1.5.0",
+                "spryker/glossary-storage": "^1.5.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/locale": "^3.0.0 || ^4.0.0",
+                "spryker/messenger": "^3.1.0",
+                "spryker/quote": "^2.0.0",
+                "spryker/service-point-cart": "^1.0.0",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/container": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SprykerShop\\": "src/SprykerShop/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ServicePointCartPage module",
+            "support": {
+                "source": "https://github.com/spryker-shop/service-point-cart-page/tree/1.0.0"
+            },
+            "time": "2023-11-01T17:06:49+00:00"
+        },
+        {
+            "name": "spryker-shop/service-point-widget",
+            "version": "1.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-shop/service-point-widget.git",
+                "reference": "5fb5eb0d72e6bb7c775fa00b754de14b58462f5f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-shop/service-point-widget/zipball/5fb5eb0d72e6bb7c775fa00b754de14b58462f5f",
+                "reference": "5fb5eb0d72e6bb7c775fa00b754de14b58462f5f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "spryker-shop/customer-page-extension": "^1.6.0",
+                "spryker-shop/shop-ui": "^1.73.0",
+                "spryker/kernel": "^3.52.0",
+                "spryker/service-point": "^1.0.0",
+                "spryker/service-point-search": "^1.0.0",
+                "spryker/service-point-storage": "^1.0.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/transfer": "^3.27.0",
+                "spryker/twig": "^3.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/router": "*"
+            },
+            "suggest": {
+                "spryker-shop/product-offer-service-point-availability-widget": "Use this module if you need use product offer service point availability widgets.",
+                "spryker/router": "Use this module if you need use the RouterProviderPlugin.",
+                "spryker/silex": "Use this module when using plugins that need Silex dependencies."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SprykerShop\\": "src/SprykerShop/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ServicePointWidget module",
+            "support": {
+                "source": "https://github.com/spryker-shop/service-point-widget/tree/1.7.0"
+            },
+            "time": "2025-07-08T10:27:46+00:00"
         },
         {
             "name": "spryker-shop/session-agent-validation",
@@ -18743,16 +19515,16 @@
         },
         {
             "name": "spryker-shop/shop-ui",
-            "version": "1.100.0",
+            "version": "1.100.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-shop/shop-ui.git",
-                "reference": "fddf342794e8e4e9b2ff54d7e01b370328286b68"
+                "reference": "58b4e413e31d500c2b4f8069414fa1e8c09d4e5e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-shop/shop-ui/zipball/fddf342794e8e4e9b2ff54d7e01b370328286b68",
-                "reference": "fddf342794e8e4e9b2ff54d7e01b370328286b68",
+                "url": "https://api.github.com/repos/spryker-shop/shop-ui/zipball/58b4e413e31d500c2b4f8069414fa1e8c09d4e5e",
+                "reference": "58b4e413e31d500c2b4f8069414fa1e8c09d4e5e",
                 "shasum": ""
             },
             "require": {
@@ -18800,9 +19572,9 @@
             ],
             "description": "ShopUi module",
             "support": {
-                "source": "https://github.com/spryker-shop/shop-ui/tree/1.100.0"
+                "source": "https://github.com/spryker-shop/shop-ui/tree/1.100.1"
             },
-            "time": "2025-10-15T10:34:39+00:00"
+            "time": "2025-11-28T15:43:05+00:00"
         },
         {
             "name": "spryker-shop/shopping-list-note-widget",
@@ -24954,6 +25726,80 @@
             "time": "2025-06-27T08:17:03+00:00"
         },
         {
+            "name": "spryker/click-and-collect-example",
+            "version": "0.9.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/click-and-collect-example.git",
+                "reference": "542c2c8167c00a17bf4fc61acea894b1a36fcd48"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/click-and-collect-example/zipball/542c2c8167c00a17bf4fc61acea894b1a36fcd48",
+                "reference": "542c2c8167c00a17bf4fc61acea894b1a36fcd48",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "spryker/availability": "^9.20.0",
+                "spryker/checkout-rest-api-extension": "^1.5.0",
+                "spryker/currency": "^3.0.0 || ^4.0.0",
+                "spryker/glue-application-extension": "^1.10.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/merchant-user": "^1.0.0",
+                "spryker/price-product-offer": "^1.0.0",
+                "spryker/product-offer": "^1.0.0",
+                "spryker/product-offer-service-point": "^1.0.0",
+                "spryker/product-offer-service-point-availability-calculator-storage-extension": "^1.0.0",
+                "spryker/product-offer-shipment-type": "^1.0.0",
+                "spryker/product-offer-stock": "^1.0.0",
+                "spryker/product-offer-storage": "^1.0.0",
+                "spryker/propel-orm": "^1.18.0",
+                "spryker/sales-order-amendment-extension": "^1.1.0",
+                "spryker/service-point": "^1.0.0",
+                "spryker/service-point-cart-extension": "^1.0.0",
+                "spryker/shipment": "^8.18.0",
+                "spryker/shipment-type": "^1.0.0",
+                "spryker/shipment-type-service-point": "^1.0.0",
+                "spryker/shipment-type-storage-extension": "^1.0.0",
+                "spryker/store": "^1.19.0",
+                "spryker/symfony": "^3.7.0",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/container": "*",
+                "spryker/decimal-object": "*",
+                "spryker/merchant": "*",
+                "spryker/price-product": "*",
+                "spryker/product": "*",
+                "spryker/propel": "*",
+                "spryker/stock": "*",
+                "spryker/testify": "*",
+                "spryker/user": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ClickAndCollectExample module",
+            "support": {
+                "source": "https://github.com/spryker/click-and-collect-example/tree/0.9.4"
+            },
+            "time": "2025-07-03T14:22:10+00:00"
+        },
+        {
             "name": "spryker/cms",
             "version": "7.19.0",
             "source": {
@@ -30996,16 +31842,16 @@
         },
         {
             "name": "spryker/container",
-            "version": "1.5.1",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/container.git",
-                "reference": "ffd68da4a298053d34c2195bd8a87bac2b48b18d"
+                "reference": "0694293aa51b009d6447ec478fe05c511ba17fd0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/container/zipball/ffd68da4a298053d34c2195bd8a87bac2b48b18d",
-                "reference": "ffd68da4a298053d34c2195bd8a87bac2b48b18d",
+                "url": "https://api.github.com/repos/spryker/container/zipball/0694293aa51b009d6447ec478fe05c511ba17fd0",
+                "reference": "0694293aa51b009d6447ec478fe05c511ba17fd0",
                 "shasum": ""
             },
             "require": {
@@ -31047,9 +31893,9 @@
             ],
             "description": "Container module",
             "support": {
-                "source": "https://github.com/spryker/container/tree/1.5.1"
+                "source": "https://github.com/spryker/container/tree/1.6.0"
             },
-            "time": "2025-11-13T15:59:27+00:00"
+            "time": "2025-11-20T14:58:03+00:00"
         },
         {
             "name": "spryker/content",
@@ -37145,16 +37991,16 @@
         },
         {
             "name": "spryker/gui",
-            "version": "4.3.1",
+            "version": "4.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/gui.git",
-                "reference": "3b360bb1d64baad490013da3861170eb6d8da721"
+                "reference": "92ec1e706d4ac5b0d5c59d04da5ebbb46b8522fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/gui/zipball/3b360bb1d64baad490013da3861170eb6d8da721",
-                "reference": "3b360bb1d64baad490013da3861170eb6d8da721",
+                "url": "https://api.github.com/repos/spryker/gui/zipball/92ec1e706d4ac5b0d5c59d04da5ebbb46b8522fc",
+                "reference": "92ec1e706d4ac5b0d5c59d04da5ebbb46b8522fc",
                 "shasum": ""
             },
             "require": {
@@ -37204,9 +38050,9 @@
             ],
             "description": "Gui module",
             "support": {
-                "source": "https://github.com/spryker/gui/tree/4.3.1"
+                "source": "https://github.com/spryker/gui/tree/4.3.2"
             },
-            "time": "2025-11-28T15:43:05+00:00"
+            "time": "2025-12-09T08:00:34+00:00"
         },
         {
             "name": "spryker/gui-extension",
@@ -43027,6 +43873,55 @@
                 "source": "https://github.com/spryker/merchant-shipment-gui/tree/1.1.0"
             },
             "time": "2024-02-06T10:56:40+00:00"
+        },
+        {
+            "name": "spryker/merchant-shipments-rest-api",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/merchant-shipments-rest-api.git",
+                "reference": "0520b2a4baa3ce969fa9585fc7c72da4cbf52cc4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/merchant-shipments-rest-api/zipball/0520b2a4baa3ce969fa9585fc7c72da4cbf52cc4",
+                "reference": "0520b2a4baa3ce969fa9585fc7c72da4cbf52cc4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.3",
+                "spryker/kernel": "^3.33.0",
+                "spryker/shipments-rest-api-extension": "^1.2.0",
+                "spryker/transfer": "^3.42.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/propel": "*",
+                "spryker/sales": "*",
+                "spryker/shipment": "*",
+                "spryker/testify": "*"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "MerchantShipmentsRestApi module",
+            "support": {
+                "source": "https://github.com/spryker/merchant-shipments-rest-api/tree/master"
+            },
+            "time": "2025-08-13T09:12:20+00:00"
         },
         {
             "name": "spryker/merchant-stock",
@@ -55134,6 +56029,499 @@
             "time": "2022-04-26T16:30:57+00:00"
         },
         {
+            "name": "spryker/product-offer-service-point",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/product-offer-service-point.git",
+                "reference": "a6bc93421ad7006dd802d4bf13ab85c3b8c81acb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/product-offer-service-point/zipball/a6bc93421ad7006dd802d4bf13ab85c3b8c81acb",
+                "reference": "a6bc93421ad7006dd802d4bf13ab85c3b8c81acb",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "spryker/acl-merchant-portal-extension": "^1.0.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/product-offer": "^1.10.0",
+                "spryker/product-offer-extension": "^1.0.0",
+                "spryker/propel-orm": "^1.0.0",
+                "spryker/service-point": "^1.0.0",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/product": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/",
+                    "SprykerTest\\Shared\\ProductOfferServicePoint\\Helper\\": "tests/SprykerTest/Shared/ProductOfferServicePoint/Helper/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ProductOfferServicePoint module",
+            "support": {
+                "source": "https://github.com/spryker/product-offer-service-point/tree/1.2.0"
+            },
+            "time": "2024-11-04T14:07:47+00:00"
+        },
+        {
+            "name": "spryker/product-offer-service-point-availability",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/product-offer-service-point-availability.git",
+                "reference": "056e6a205b239ee0a0fb5323e4e7244ed3e3bd9d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/product-offer-service-point-availability/zipball/056e6a205b239ee0a0fb5323e4e7244ed3e3bd9d",
+                "reference": "056e6a205b239ee0a0fb5323e4e7244ed3e3bd9d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0",
+                "spryker/availability": "^9.0.0",
+                "spryker/availability-extension": "^1.2.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/product-offer": "^1.8.0",
+                "spryker/product-offer-availability": "^1.0.0",
+                "spryker/product-offer-service-point": "^1.0.0",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ProductOfferServicePointAvailability module",
+            "support": {
+                "source": "https://github.com/spryker/product-offer-service-point-availability/tree/1.0.0"
+            },
+            "time": "2023-11-01T17:06:46+00:00"
+        },
+        {
+            "name": "spryker/product-offer-service-point-availability-calculator-storage",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/product-offer-service-point-availability-calculator-storage.git",
+                "reference": "f722dc42f99d951d613c45c3dacf1b7bc3cfb8a6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/product-offer-service-point-availability-calculator-storage/zipball/f722dc42f99d951d613c45c3dacf1b7bc3cfb8a6",
+                "reference": "f722dc42f99d951d613c45c3dacf1b7bc3cfb8a6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/product-offer-service-point-availability-calculator-storage-extension": "^1.0.0",
+                "spryker/product-offer-service-point-availability-storage": "^1.0.0",
+                "spryker/store": "^1.19.0",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ProductOfferServicePointAvailabilityCalculatorStorage module",
+            "support": {
+                "source": "https://github.com/spryker/product-offer-service-point-availability-calculator-storage/tree/1.0.0"
+            },
+            "time": "2023-11-01T17:06:46+00:00"
+        },
+        {
+            "name": "spryker/product-offer-service-point-availability-calculator-storage-extension",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/product-offer-service-point-availability-calculator-storage-extension.git",
+                "reference": "752c97e9f0d6f56f8be479d1443591a0c7b43060"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/product-offer-service-point-availability-calculator-storage-extension/zipball/752c97e9f0d6f56f8be479d1443591a0c7b43060",
+                "reference": "752c97e9f0d6f56f8be479d1443591a0c7b43060",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ProductOfferServicePointAvailabilityCalculatorStorageExtension module",
+            "support": {
+                "source": "https://github.com/spryker/product-offer-service-point-availability-calculator-storage-extension/tree/1.0.0"
+            },
+            "time": "2023-10-27T14:50:55+00:00"
+        },
+        {
+            "name": "spryker/product-offer-service-point-availability-storage",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/product-offer-service-point-availability-storage.git",
+                "reference": "cb97d0688e42bd72d8cf2da7e1ed7ef1f923b6c1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/product-offer-service-point-availability-storage/zipball/cb97d0688e42bd72d8cf2da7e1ed7ef1f923b6c1",
+                "reference": "cb97d0688e42bd72d8cf2da7e1ed7ef1f923b6c1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "spryker/kernel": "^3.30.0",
+                "spryker/product-offer-availability-storage": "^1.0.0",
+                "spryker/product-offer-service-point-availability": "^1.0.0",
+                "spryker/product-offer-service-point-availability-storage-extension": "^1.0.0",
+                "spryker/product-offer-storage": "^1.0.0",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/decimal-object": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ProductOfferServicePointAvailabilityStorage module",
+            "support": {
+                "source": "https://github.com/spryker/product-offer-service-point-availability-storage/tree/1.1.0"
+            },
+            "time": "2024-11-04T14:07:47+00:00"
+        },
+        {
+            "name": "spryker/product-offer-service-point-availability-storage-extension",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/product-offer-service-point-availability-storage-extension.git",
+                "reference": "0fc1546df33ee4edb30dc24a66a250c172e06ffe"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/product-offer-service-point-availability-storage-extension/zipball/0fc1546df33ee4edb30dc24a66a250c172e06ffe",
+                "reference": "0fc1546df33ee4edb30dc24a66a250c172e06ffe",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ProductOfferServicePointAvailabilityStorageExtension module",
+            "support": {
+                "source": "https://github.com/spryker/product-offer-service-point-availability-storage-extension/tree/1.0.0"
+            },
+            "time": "2023-10-27T14:50:55+00:00"
+        },
+        {
+            "name": "spryker/product-offer-service-point-data-import",
+            "version": "0.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/product-offer-service-point-data-import.git",
+                "reference": "f0d9058ccfdb66dc93aa93bba8ff4bf8e0bfd0e9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/product-offer-service-point-data-import/zipball/f0d9058ccfdb66dc93aa93bba8ff4bf8e0bfd0e9",
+                "reference": "f0d9058ccfdb66dc93aa93bba8ff4bf8e0bfd0e9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0",
+                "spryker/data-import": "^1.3.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/product-offer": "^1.0.0",
+                "spryker/product-offer-service-point": "^1.0.0",
+                "spryker/service-point": "^1.0.0",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/product": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "ProductOfferServicePointDataImport module",
+            "support": {
+                "source": "https://github.com/spryker/product-offer-service-point-data-import/tree/0.4.0"
+            },
+            "time": "2023-11-01T17:06:46+00:00"
+        },
+        {
+            "name": "spryker/product-offer-service-point-gui",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/product-offer-service-point-gui.git",
+                "reference": "54fe40de83a3fa3e087c6cd1e40a4cf715612846"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/product-offer-service-point-gui/zipball/54fe40de83a3fa3e087c6cd1e40a4cf715612846",
+                "reference": "54fe40de83a3fa3e087c6cd1e40a4cf715612846",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.3",
+                "spryker/gui": "^4.0.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/product-offer-gui-extension": "^1.0.0",
+                "spryker/product-offer-service-point": "^1.0.0",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ProductOfferServicePointGui module",
+            "support": {
+                "source": "https://github.com/spryker/product-offer-service-point-gui/tree/master"
+            },
+            "time": "2025-11-15T10:58:02+00:00"
+        },
+        {
+            "name": "spryker/product-offer-service-point-merchant-portal-gui",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/product-offer-service-point-merchant-portal-gui.git",
+                "reference": "a74c0bce11f334efe6ca38d7f75179c6be1810b9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/product-offer-service-point-merchant-portal-gui/zipball/a74c0bce11f334efe6ca38d7f75179c6be1810b9",
+                "reference": "a74c0bce11f334efe6ca38d7f75179c6be1810b9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "spryker/acl-merchant-portal-extension": "^1.0.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/product-offer-merchant-portal-gui-extension": "^1.1.0",
+                "spryker/product-offer-service-point": "^1.0.0",
+                "spryker/service-point": "^1.0.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/transfer": "^3.27.0",
+                "spryker/twig": "^3.0.0",
+                "spryker/util-encoding": "^2.0.0",
+                "spryker/zed-ui": "^3.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ProductOfferServicePointMerchantPortalGui module",
+            "support": {
+                "source": "https://github.com/spryker/product-offer-service-point-merchant-portal-gui/tree/2.0.0"
+            },
+            "time": "2024-04-03T13:26:42+00:00"
+        },
+        {
+            "name": "spryker/product-offer-service-point-storage",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/product-offer-service-point-storage.git",
+                "reference": "5014d2f79bc659bce21f8600755a7ecaccc2a7de"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/product-offer-service-point-storage/zipball/5014d2f79bc659bce21f8600755a7ecaccc2a7de",
+                "reference": "5014d2f79bc659bce21f8600755a7ecaccc2a7de",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "spryker/event-behavior": "^1.0.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/product-offer": "^1.9.0",
+                "spryker/product-offer-service-point": "^1.0.0",
+                "spryker/product-offer-service-point-storage-extension": "^1.1.0",
+                "spryker/product-offer-storage-extension": "^1.0.0",
+                "spryker/publisher-extension": "^1.0.0",
+                "spryker/service-point": "^1.0.0",
+                "spryker/service-point-storage": "^1.0.0",
+                "spryker/storage": "^3.0.0",
+                "spryker/store": "^1.1.0",
+                "spryker/synchronization": "^1.9.0",
+                "spryker/synchronization-behavior": "^1.0.0",
+                "spryker/synchronization-extension": "^1.1.0",
+                "spryker/transfer": "^3.27.0",
+                "spryker/util-encoding": "^2.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/container": "*",
+                "spryker/product": "*",
+                "spryker/propel": "*",
+                "spryker/queue": "*",
+                "spryker/rabbit-mq": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ProductOfferServicePointStorage module",
+            "support": {
+                "source": "https://github.com/spryker/product-offer-service-point-storage/tree/1.2.0"
+            },
+            "time": "2025-08-04T11:49:53+00:00"
+        },
+        {
             "name": "spryker/product-offer-service-point-storage-extension",
             "version": "1.1.0",
             "source": {
@@ -55173,6 +56561,363 @@
                 "source": "https://github.com/spryker/product-offer-service-point-storage-extension/tree/1.1.0"
             },
             "time": "2023-10-27T14:50:55+00:00"
+        },
+        {
+            "name": "spryker/product-offer-shipment-type",
+            "version": "1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/product-offer-shipment-type.git",
+                "reference": "df1e721d076b166bdf88119ffcfc613c6b16e05a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/product-offer-shipment-type/zipball/df1e721d076b166bdf88119ffcfc613c6b16e05a",
+                "reference": "df1e721d076b166bdf88119ffcfc613c6b16e05a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "spryker/acl-merchant-portal-extension": "^1.0.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/product-offer": "^1.10.0",
+                "spryker/product-offer-extension": "^1.0.0",
+                "spryker/propel-orm": "^1.0.0",
+                "spryker/shipment-type": "^1.0.0",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/product": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/",
+                    "SprykerTest\\Shared\\ProductOfferShipmentType\\Helper\\": "tests/SprykerTest/Shared/ProductOfferShipmentType/Helper/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ProductOfferShipmentType module",
+            "support": {
+                "source": "https://github.com/spryker/product-offer-shipment-type/tree/1.3.0"
+            },
+            "time": "2025-05-14T11:04:37+00:00"
+        },
+        {
+            "name": "spryker/product-offer-shipment-type-availability",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/product-offer-shipment-type-availability.git",
+                "reference": "a33b71da40193ed6d5488741baa1a27b3d278bce"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/product-offer-shipment-type-availability/zipball/a33b71da40193ed6d5488741baa1a27b3d278bce",
+                "reference": "a33b71da40193ed6d5488741baa1a27b3d278bce",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0",
+                "spryker/availability": "^9.0.0",
+                "spryker/availability-extension": "^1.2.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/product-offer": "^1.8.0",
+                "spryker/product-offer-availability": "^1.0.0",
+                "spryker/product-offer-shipment-type": "^1.0.0",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ProductOfferShipmentTypeAvailability module",
+            "support": {
+                "source": "https://github.com/spryker/product-offer-shipment-type-availability/tree/1.0.0"
+            },
+            "time": "2023-11-01T17:06:46+00:00"
+        },
+        {
+            "name": "spryker/product-offer-shipment-type-availability-storage",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/product-offer-shipment-type-availability-storage.git",
+                "reference": "06f5a09c4d20a55b728adb4076ad7d358fb9e9b6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/product-offer-shipment-type-availability-storage/zipball/06f5a09c4d20a55b728adb4076ad7d358fb9e9b6",
+                "reference": "06f5a09c4d20a55b728adb4076ad7d358fb9e9b6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/product-offer-service-point-availability-storage-extension": "^1.0.0",
+                "spryker/product-offer-shipment-type-availability": "^1.0.0",
+                "spryker/shipment-type-storage": "^1.0.0",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ProductOfferShipmentTypeAvailabilityStorage module",
+            "support": {
+                "source": "https://github.com/spryker/product-offer-shipment-type-availability-storage/tree/1.0.0"
+            },
+            "time": "2023-11-01T17:06:46+00:00"
+        },
+        {
+            "name": "spryker/product-offer-shipment-type-data-import",
+            "version": "0.4.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/product-offer-shipment-type-data-import.git",
+                "reference": "1b7dae62c562e34d14dc97c1ba1e793413ef9a35"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/product-offer-shipment-type-data-import/zipball/1b7dae62c562e34d14dc97c1ba1e793413ef9a35",
+                "reference": "1b7dae62c562e34d14dc97c1ba1e793413ef9a35",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.3",
+                "spryker/data-import": "^1.3.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/product-offer": "^1.0.0",
+                "spryker/product-offer-shipment-type": "^1.0.0",
+                "spryker/shipment-type": "^1.0.0",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/product": "*",
+                "spryker/propel": "*",
+                "spryker/propel-orm": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ProductOfferShipmentTypeDataImport module",
+            "support": {
+                "source": "https://github.com/spryker/product-offer-shipment-type-data-import/tree/0.4.2"
+            },
+            "time": "2025-10-14T13:32:53+00:00"
+        },
+        {
+            "name": "spryker/product-offer-shipment-type-gui",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/product-offer-shipment-type-gui.git",
+                "reference": "73b02576d7332d9614da3b6c355f58d6bd7e06c3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/product-offer-shipment-type-gui/zipball/73b02576d7332d9614da3b6c355f58d6bd7e06c3",
+                "reference": "73b02576d7332d9614da3b6c355f58d6bd7e06c3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.3",
+                "spryker/gui": "^4.0.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/product-offer-gui-extension": "^1.0.0",
+                "spryker/product-offer-shipment-type": "^1.0.0",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ProductOfferShipmentTypeGui module",
+            "support": {
+                "source": "https://github.com/spryker/product-offer-shipment-type-gui/tree/master"
+            },
+            "time": "2025-11-15T10:58:02+00:00"
+        },
+        {
+            "name": "spryker/product-offer-shipment-type-merchant-portal-gui",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/product-offer-shipment-type-merchant-portal-gui.git",
+                "reference": "862a2f57bd54eef795091cad6159fbf7d72c7fb0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/product-offer-shipment-type-merchant-portal-gui/zipball/862a2f57bd54eef795091cad6159fbf7d72c7fb0",
+                "reference": "862a2f57bd54eef795091cad6159fbf7d72c7fb0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "spryker/kernel": "^3.30.0",
+                "spryker/product-offer-merchant-portal-gui-extension": "^1.1.0",
+                "spryker/product-offer-shipment-type": "^1.0.0",
+                "spryker/shipment-type": "^1.0.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/transfer": "^3.27.0",
+                "spryker/twig": "^3.0.0",
+                "spryker/zed-ui": "^3.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ProductOfferShipmentTypeMerchantPortalGui module",
+            "support": {
+                "source": "https://github.com/spryker/product-offer-shipment-type-merchant-portal-gui/tree/2.0.0"
+            },
+            "time": "2024-04-03T13:26:42+00:00"
+        },
+        {
+            "name": "spryker/product-offer-shipment-type-storage",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/product-offer-shipment-type-storage.git",
+                "reference": "6e53b7e00f2286a4ee5588dad4925c249f2a3b71"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/product-offer-shipment-type-storage/zipball/6e53b7e00f2286a4ee5588dad4925c249f2a3b71",
+                "reference": "6e53b7e00f2286a4ee5588dad4925c249f2a3b71",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "spryker/event-behavior": "^1.0.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/product-offer": "^1.9.0",
+                "spryker/product-offer-shipment-type": "^1.0.0",
+                "spryker/product-offer-shipment-type-storage-extension": "^1.0.0",
+                "spryker/product-offer-storage-extension": "^1.0.0",
+                "spryker/publisher-extension": "^1.0.0",
+                "spryker/shipment-type-storage": "^1.0.0",
+                "spryker/storage": "^3.0.0",
+                "spryker/store": "^1.19.0",
+                "spryker/synchronization": "^1.9.0",
+                "spryker/synchronization-behavior": "^1.0.0",
+                "spryker/synchronization-extension": "^1.1.0",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/container": "*",
+                "spryker/product": "*",
+                "spryker/propel": "*",
+                "spryker/queue": "*",
+                "spryker/shipment-type": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ProductOfferShipmentTypeStorage module",
+            "support": {
+                "source": "https://github.com/spryker/product-offer-shipment-type-storage/tree/1.2.0"
+            },
+            "time": "2025-08-04T11:49:53+00:00"
         },
         {
             "name": "spryker/product-offer-shipment-type-storage-extension",
@@ -60151,16 +61896,16 @@
         },
         {
             "name": "spryker/sales",
-            "version": "11.76.0",
+            "version": "11.77.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/sales.git",
-                "reference": "56f4fc0b1d6e9bbcb9eaee65eb95c40f481c7336"
+                "reference": "b2c938522b19625899e3c93e7871f84afd76ad5e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/sales/zipball/56f4fc0b1d6e9bbcb9eaee65eb95c40f481c7336",
-                "reference": "56f4fc0b1d6e9bbcb9eaee65eb95c40f481c7336",
+                "url": "https://api.github.com/repos/spryker/sales/zipball/b2c938522b19625899e3c93e7871f84afd76ad5e",
+                "reference": "b2c938522b19625899e3c93e7871f84afd76ad5e",
                 "shasum": ""
             },
             "require": {
@@ -60232,9 +61977,9 @@
             ],
             "description": "Sales module",
             "support": {
-                "source": "https://github.com/spryker/sales/tree/11.76.0"
+                "source": "https://github.com/spryker/sales/tree/11.77.0"
             },
-            "time": "2025-11-15T10:58:02+00:00"
+            "time": "2025-12-09T08:00:34+00:00"
         },
         {
             "name": "spryker/sales-configurable-bundle",
@@ -61827,20 +63572,20 @@
         },
         {
             "name": "spryker/sales-product-connector",
-            "version": "1.11.1",
+            "version": "1.11.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/sales-product-connector.git",
-                "reference": "d2a80f4fd80816776f2b2b09932547623d310a56"
+                "reference": "1b333c621fa33226871457e0b536008d7e58b686"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/sales-product-connector/zipball/d2a80f4fd80816776f2b2b09932547623d310a56",
-                "reference": "d2a80f4fd80816776f2b2b09932547623d310a56",
+                "url": "https://api.github.com/repos/spryker/sales-product-connector/zipball/1b333c621fa33226871457e0b536008d7e58b686",
+                "reference": "1b333c621fa33226871457e0b536008d7e58b686",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/kernel": "^3.76.0",
                 "spryker/product": "^5.0.0 || ^6.0.0",
                 "spryker/product-page-search-extension": "^1.5.0",
@@ -61886,9 +63631,9 @@
             ],
             "description": "SalesProductConnector module",
             "support": {
-                "source": "https://github.com/spryker/sales-product-connector/tree/1.11.1"
+                "source": "https://github.com/spryker/sales-product-connector/tree/1.11.2"
             },
-            "time": "2025-05-15T15:52:41+00:00"
+            "time": "2025-12-09T08:00:34+00:00"
         },
         {
             "name": "spryker/sales-quantity",
@@ -62503,6 +64248,103 @@
                 "source": "https://github.com/spryker/sales-returns-rest-api/tree/1.1.0"
             },
             "time": "2021-04-02T09:54:31+00:00"
+        },
+        {
+            "name": "spryker/sales-service-point",
+            "version": "1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/sales-service-point.git",
+                "reference": "278c8fbfb14123c5d596d64649a2f2fc1b62f5f9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/sales-service-point/zipball/278c8fbfb14123c5d596d64649a2f2fc1b62f5f9",
+                "reference": "278c8fbfb14123c5d596d64649a2f2fc1b62f5f9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "spryker/kernel": "^3.76.0",
+                "spryker/propel-orm": "^1.0.0",
+                "spryker/sales": "^11.0.0",
+                "spryker/sales-extension": "^1.12.0",
+                "spryker/sales-order-amendment-extension": "^1.1.0",
+                "spryker/service-point": "^1.0.0",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/container": "*",
+                "spryker/oms": "*",
+                "spryker/propel": "*",
+                "spryker/store": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "SalesServicePoint module",
+            "support": {
+                "source": "https://github.com/spryker/sales-service-point/tree/1.3.0"
+            },
+            "time": "2025-08-15T12:11:43+00:00"
+        },
+        {
+            "name": "spryker/sales-service-point-gui",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/sales-service-point-gui.git",
+                "reference": "2df5564a1af0531d8e07ba98ae313f9e5fc93334"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/sales-service-point-gui/zipball/2df5564a1af0531d8e07ba98ae313f9e5fc93334",
+                "reference": "2df5564a1af0531d8e07ba98ae313f9e5fc93334",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.3",
+                "spryker/gui": "^3.49.0 || ^4.0.0",
+                "spryker/sales-service-point": "^1.0.0",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "SalesServicePointGui module",
+            "support": {
+                "source": "https://github.com/spryker/sales-service-point-gui/tree/1.1.0"
+            },
+            "time": "2025-11-15T10:58:02+00:00"
         },
         {
             "name": "spryker/sales-shipment-type",
@@ -64185,6 +66027,469 @@
             "time": "2025-08-15T12:11:43+00:00"
         },
         {
+            "name": "spryker/service-point",
+            "version": "1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/service-point.git",
+                "reference": "8b093de50d94229b6f0d14a24727ffaafce8c488"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/service-point/zipball/8b093de50d94229b6f0d14a24727ffaafce8c488",
+                "reference": "8b093de50d94229b6f0d14a24727ffaafce8c488",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "spryker/acl-merchant-portal-extension": "^1.0.0",
+                "spryker/country": "^4.1.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/propel-orm": "^1.0.0",
+                "spryker/store": "^1.12.0",
+                "spryker/transfer": "^3.27.0",
+                "spryker/uuid-behavior": "^1.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/",
+                    "SprykerTest\\Shared\\ServicePoint\\Helper\\": "tests/SprykerTest/Shared/ServicePoint/Helper/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ServicePoint module",
+            "support": {
+                "source": "https://github.com/spryker/service-point/tree/1.2.1"
+            },
+            "time": "2025-08-15T13:19:34+00:00"
+        },
+        {
+            "name": "spryker/service-point-cart",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/service-point-cart.git",
+                "reference": "8c2bcfda34a67e7199f71befb6fc62f71549aeb8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/service-point-cart/zipball/8c2bcfda34a67e7199f71befb6fc62f71549aeb8",
+                "reference": "8c2bcfda34a67e7199f71befb6fc62f71549aeb8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0",
+                "spryker/cart": "^7.5.0",
+                "spryker/checkout-extension": "^1.2.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/service-point": "^1.0.0",
+                "spryker/service-point-cart-extension": "^1.0.0",
+                "spryker/transfer": "^3.27.0",
+                "spryker/zed-request": "^3.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/container": "*",
+                "spryker/propel": "*",
+                "spryker/store": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ServicePointCart module",
+            "support": {
+                "source": "https://github.com/spryker/service-point-cart/tree/1.0.0"
+            },
+            "time": "2023-11-01T17:06:46+00:00"
+        },
+        {
+            "name": "spryker/service-point-cart-extension",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/service-point-cart-extension.git",
+                "reference": "1863a3d7ad341c3062d08117b6cc5b2c9277d4ad"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/service-point-cart-extension/zipball/1863a3d7ad341c3062d08117b6cc5b2c9277d4ad",
+                "reference": "1863a3d7ad341c3062d08117b6cc5b2c9277d4ad",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ServicePointCartExtension module",
+            "support": {
+                "source": "https://github.com/spryker/service-point-cart-extension/tree/1.0.0"
+            },
+            "time": "2023-11-01T10:06:20+00:00"
+        },
+        {
+            "name": "spryker/service-point-carts-rest-api",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/service-point-carts-rest-api.git",
+                "reference": "bac59b63aca8a561082c76dfb7d6c8a98eb24647"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/service-point-carts-rest-api/zipball/bac59b63aca8a561082c76dfb7d6c8a98eb24647",
+                "reference": "bac59b63aca8a561082c76dfb7d6c8a98eb24647",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.3",
+                "spryker/checkout-rest-api-extension": "^1.0.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/service-point-cart": "^1.0.0",
+                "spryker/transfer": "^3.42.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/testify": "*"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ServicePointCartsRestApi module",
+            "support": {
+                "source": "https://github.com/spryker/service-point-carts-rest-api/tree/master"
+            },
+            "time": "2025-08-20T14:11:51+00:00"
+        },
+        {
+            "name": "spryker/service-point-data-import",
+            "version": "0.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/service-point-data-import.git",
+                "reference": "cda59707e7701624a8d6d8adfc7def5f7d69b92d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/service-point-data-import/zipball/cda59707e7701624a8d6d8adfc7def5f7d69b92d",
+                "reference": "cda59707e7701624a8d6d8adfc7def5f7d69b92d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0",
+                "spryker/country": "^4.0.0",
+                "spryker/data-import": "^1.3.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/service-point": "^1.0.0",
+                "spryker/store": "^1.0.0",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "ServicePointDataImport module",
+            "support": {
+                "source": "https://github.com/spryker/service-point-data-import/tree/0.6.0"
+            },
+            "time": "2023-11-01T17:06:46+00:00"
+        },
+        {
+            "name": "spryker/service-point-search",
+            "version": "1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/service-point-search.git",
+                "reference": "1a763ebcec4f8955433cafeccba8200a78087ceb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/service-point-search/zipball/1a763ebcec4f8955433cafeccba8200a78087ceb",
+                "reference": "1a763ebcec4f8955433cafeccba8200a78087ceb",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "spryker/event-behavior": "^1.0.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/propel-orm": "^1.5.0",
+                "spryker/publisher-extension": "^1.0.0",
+                "spryker/search": "^8.0.0",
+                "spryker/search-extension": "^1.0.0",
+                "spryker/service-point": "^1.0.0",
+                "spryker/service-point-search-extension": "^1.0.0",
+                "spryker/store": "^1.19.0",
+                "spryker/synchronization-behavior": "^1.0.0",
+                "spryker/synchronization-extension": "^1.0.0",
+                "spryker/transfer": "^3.27.0",
+                "spryker/util-encoding": "^2.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/container": "*",
+                "spryker/country": "*",
+                "spryker/elastica": "*",
+                "spryker/event": "*",
+                "spryker/propel": "*",
+                "spryker/publisher": "*",
+                "spryker/queue": "*",
+                "spryker/search-elasticsearch": "*",
+                "spryker/testify": "*"
+            },
+            "suggest": {
+                "spryker/elastica": "If you want to use search functionality from ServicePointSearchClient.",
+                "spryker/search-elasticsearch": "If you want to use search plugins."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ServicePointSearch module",
+            "support": {
+                "source": "https://github.com/spryker/service-point-search/tree/1.3.0"
+            },
+            "time": "2025-08-15T12:11:43+00:00"
+        },
+        {
+            "name": "spryker/service-point-search-extension",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/service-point-search-extension.git",
+                "reference": "c5e01acfebeb7081836c803ecc74b9351bbf6931"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/service-point-search-extension/zipball/c5e01acfebeb7081836c803ecc74b9351bbf6931",
+                "reference": "c5e01acfebeb7081836c803ecc74b9351bbf6931",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ServicePointSearchExtension module",
+            "support": {
+                "source": "https://github.com/spryker/service-point-search-extension/tree/1.0.0"
+            },
+            "time": "2025-06-24T15:41:03+00:00"
+        },
+        {
+            "name": "spryker/service-point-storage",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/service-point-storage.git",
+                "reference": "eabde48d8a7a2357f5a9653a1f81ffd396c705b5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/service-point-storage/zipball/eabde48d8a7a2357f5a9653a1f81ffd396c705b5",
+                "reference": "eabde48d8a7a2357f5a9653a1f81ffd396c705b5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "spryker/event-behavior": "^1.0.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/publisher-extension": "^1.0.0",
+                "spryker/service-point": "^1.0.0",
+                "spryker/storage": "^3.0.0",
+                "spryker/store": "^1.19.0",
+                "spryker/synchronization": "^1.9.0",
+                "spryker/synchronization-behavior": "^1.0.0",
+                "spryker/synchronization-extension": "^1.1.0",
+                "spryker/transfer": "^3.27.0",
+                "spryker/util-encoding": "^2.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/container": "*",
+                "spryker/country": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ServicePointStorage module",
+            "support": {
+                "source": "https://github.com/spryker/service-point-storage/tree/1.1.1"
+            },
+            "time": "2024-10-10T08:50:33+00:00"
+        },
+        {
+            "name": "spryker/service-points-rest-api",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/service-points-rest-api.git",
+                "reference": "6e3dc48e3866b8e4e0b7eab379b1935589929c44"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/service-points-rest-api/zipball/6e3dc48e3866b8e4e0b7eab379b1935589929c44",
+                "reference": "6e3dc48e3866b8e4e0b7eab379b1935589929c44",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.3",
+                "spryker/checkout-rest-api-extension": "^1.5.0",
+                "spryker/glossary-storage": "^1.5.0",
+                "spryker/glue-application": "^1.8.0",
+                "spryker/glue-application-extension": "^1.0.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/service-point": "^1.0.0",
+                "spryker/service-point-search": "^1.0.0",
+                "spryker/service-point-storage": "^1.0.0",
+                "spryker/store": "^1.19.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/transfer": "^3.42.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/container": "*",
+                "spryker/propel": "*",
+                "spryker/quote": "*",
+                "spryker/testify": "*"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ServicePointsRestApi module",
+            "support": {
+                "source": "https://github.com/spryker/service-points-rest-api/tree/master"
+            },
+            "time": "2025-08-20T14:11:51+00:00"
+        },
+        {
             "name": "spryker/session",
             "version": "4.19.2",
             "source": {
@@ -65374,6 +67679,57 @@
             "time": "2025-08-15T12:11:43+00:00"
         },
         {
+            "name": "spryker/shipment-type-cart",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/shipment-type-cart.git",
+                "reference": "a10afb4c7e17f9833d7d5f3c571d5d8364babef5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/shipment-type-cart/zipball/a10afb4c7e17f9833d7d5f3c571d5d8364babef5",
+                "reference": "a10afb4c7e17f9833d7d5f3c571d5d8364babef5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "spryker/cart": "^7.0.0",
+                "spryker/cart-extension": "^4.2.0",
+                "spryker/checkout-extension": "^1.2.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/quote-extension": "^1.2.0",
+                "spryker/shipment-type": "^1.0.0",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/propel": "*",
+                "spryker/store": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ShipmentTypeCart module",
+            "support": {
+                "source": "https://github.com/spryker/shipment-type-cart/tree/1.1.0"
+            },
+            "time": "2024-02-15T15:23:45+00:00"
+        },
+        {
             "name": "spryker/shipment-type-data-import",
             "version": "0.2.0",
             "source": {
@@ -65422,6 +67778,215 @@
                 "source": "https://github.com/spryker/shipment-type-data-import/tree/0.2.0"
             },
             "time": "2023-11-01T17:06:46+00:00"
+        },
+        {
+            "name": "spryker/shipment-type-service-point",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/shipment-type-service-point.git",
+                "reference": "4da754ec33c6eb1e491c90db0c1d635570971789"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/shipment-type-service-point/zipball/4da754ec33c6eb1e491c90db0c1d635570971789",
+                "reference": "4da754ec33c6eb1e491c90db0c1d635570971789",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/propel-orm": "^1.0.0",
+                "spryker/service-point": "^1.0.0",
+                "spryker/shipment-type": "^1.0.0",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/",
+                    "SprykerTest\\Shared\\ShipmentTypeServicePoint\\Helper\\": "tests/SprykerTest/Shared/ShipmentTypeServicePoint/Helper/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ShipmentTypeServicePoint module",
+            "support": {
+                "source": "https://github.com/spryker/shipment-type-service-point/tree/1.0.0"
+            },
+            "time": "2023-11-01T17:06:46+00:00"
+        },
+        {
+            "name": "spryker/shipment-type-service-point-data-import",
+            "version": "0.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/shipment-type-service-point-data-import.git",
+                "reference": "42af40023302fb80575365ddad61f198ab9ba67f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/shipment-type-service-point-data-import/zipball/42af40023302fb80575365ddad61f198ab9ba67f",
+                "reference": "42af40023302fb80575365ddad61f198ab9ba67f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0",
+                "spryker/data-import": "^1.3.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/service-point": "^1.0.0",
+                "spryker/shipment-type": "^1.0.0",
+                "spryker/shipment-type-service-point": "^1.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "ShipmentTypeServicePointDataImport module",
+            "support": {
+                "source": "https://github.com/spryker/shipment-type-service-point-data-import/tree/0.6.0"
+            },
+            "time": "2023-11-01T17:06:46+00:00"
+        },
+        {
+            "name": "spryker/shipment-type-service-point-storage",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/shipment-type-service-point-storage.git",
+                "reference": "969ea45418ee1635a8a43b4f3c409d24d5637364"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/shipment-type-service-point-storage/zipball/969ea45418ee1635a8a43b4f3c409d24d5637364",
+                "reference": "969ea45418ee1635a8a43b4f3c409d24d5637364",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/service-point-storage": "^1.0.0",
+                "spryker/shipment-type-service-point": "^1.0.0",
+                "spryker/shipment-type-storage": "^1.0.0",
+                "spryker/shipment-type-storage-extension": "^1.0.0",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/propel": "*",
+                "spryker/service-point": "*",
+                "spryker/shipment-type": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ShipmentTypeServicePointStorage module",
+            "support": {
+                "source": "https://github.com/spryker/shipment-type-service-point-storage/tree/1.0.0"
+            },
+            "time": "2023-11-01T17:06:46+00:00"
+        },
+        {
+            "name": "spryker/shipment-type-service-points-rest-api",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/shipment-type-service-points-rest-api.git",
+                "reference": "6124adec71ccaa8e9c1f1cbd55fae9b60e06bf47"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/shipment-type-service-points-rest-api/zipball/6124adec71ccaa8e9c1f1cbd55fae9b60e06bf47",
+                "reference": "6124adec71ccaa8e9c1f1cbd55fae9b60e06bf47",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.3",
+                "spryker/checkout-rest-api-extension": "^1.4.0",
+                "spryker/customer": "^7.33.0",
+                "spryker/glue-application": "^1.8.0",
+                "spryker/glue-application-extension": "^1.0.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/service-point-storage": "^1.0.0",
+                "spryker/service-points-rest-api": "^1.0.0",
+                "spryker/shipment": "^8.16.0",
+                "spryker/shipment-type-storage": "^1.0.0",
+                "spryker/shipment-types-rest-api": "^1.0.0",
+                "spryker/shipments-rest-api-extension": "^1.1.0",
+                "spryker/store": "^1.19.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/transfer": "^3.42.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/container": "*",
+                "spryker/propel": "*",
+                "spryker/shipment-type": "*",
+                "spryker/storage": "*",
+                "spryker/testify": "*"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ShipmentTypeServicePointsRestApi module",
+            "support": {
+                "source": "https://github.com/spryker/shipment-type-service-points-rest-api/tree/master"
+            },
+            "time": "2025-08-20T14:11:51+00:00"
         },
         {
             "name": "spryker/shipment-type-storage",
@@ -65522,6 +68087,62 @@
                 "source": "https://github.com/spryker/shipment-type-storage-extension/tree/1.0.0"
             },
             "time": "2023-09-05T15:42:15+00:00"
+        },
+        {
+            "name": "spryker/shipment-types-rest-api",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/shipment-types-rest-api.git",
+                "reference": "9255d9a0c9af2eaccfb1e446bf074fcf728897bd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/shipment-types-rest-api/zipball/9255d9a0c9af2eaccfb1e446bf074fcf728897bd",
+                "reference": "9255d9a0c9af2eaccfb1e446bf074fcf728897bd",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "spryker/checkout-rest-api-extension": "^1.3.0",
+                "spryker/glossary-storage": "^1.5.0",
+                "spryker/glue-application": "^1.8.0",
+                "spryker/glue-application-extension": "^1.0.0",
+                "spryker/kernel": "^3.66.0",
+                "spryker/shipment": "^8.16.0",
+                "spryker/shipment-type-storage": "^1.0.0",
+                "spryker/shipments-rest-api-extension": "^1.2.0",
+                "spryker/store": "^1.19.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/transfer": "^3.42.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/container": "*",
+                "spryker/propel": "*",
+                "spryker/shipment-type": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ShipmentTypesRestApi module",
+            "support": {
+                "source": "https://github.com/spryker/shipment-types-rest-api/tree/1.1.0"
+            },
+            "time": "2025-08-15T12:11:43+00:00"
         },
         {
             "name": "spryker/shipments-rest-api",
@@ -71406,16 +74027,16 @@
         },
         {
             "name": "symfony/clock",
-            "version": "v7.3.0",
+            "version": "v7.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/clock.git",
-                "reference": "b81435fbd6648ea425d1ee96a2d8e68f4ceacd24"
+                "reference": "9169f24776edde469914c1e7a1442a50f7a4e110"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/clock/zipball/b81435fbd6648ea425d1ee96a2d8e68f4ceacd24",
-                "reference": "b81435fbd6648ea425d1ee96a2d8e68f4ceacd24",
+                "url": "https://api.github.com/repos/symfony/clock/zipball/9169f24776edde469914c1e7a1442a50f7a4e110",
+                "reference": "9169f24776edde469914c1e7a1442a50f7a4e110",
                 "shasum": ""
             },
             "require": {
@@ -71460,7 +74081,7 @@
                 "time"
             ],
             "support": {
-                "source": "https://github.com/symfony/clock/tree/v7.3.0"
+                "source": "https://github.com/symfony/clock/tree/v7.4.0"
             },
             "funding": [
                 {
@@ -71472,11 +74093,15 @@
                     "type": "github"
                 },
                 {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
                     "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-09-25T14:21:43+00:00"
+            "time": "2025-11-12T15:39:26+00:00"
         },
         {
             "name": "symfony/config",
@@ -73670,16 +76295,16 @@
         },
         {
             "name": "symfony/password-hasher",
-            "version": "v7.3.0",
+            "version": "v7.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/password-hasher.git",
-                "reference": "31fbe66af859582a20b803f38be96be8accdf2c3"
+                "reference": "aa075ce6f54fe931f03c1e382597912f4fd94e1e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/password-hasher/zipball/31fbe66af859582a20b803f38be96be8accdf2c3",
-                "reference": "31fbe66af859582a20b803f38be96be8accdf2c3",
+                "url": "https://api.github.com/repos/symfony/password-hasher/zipball/aa075ce6f54fe931f03c1e382597912f4fd94e1e",
+                "reference": "aa075ce6f54fe931f03c1e382597912f4fd94e1e",
                 "shasum": ""
             },
             "require": {
@@ -73689,8 +76314,8 @@
                 "symfony/security-core": "<6.4"
             },
             "require-dev": {
-                "symfony/console": "^6.4|^7.0",
-                "symfony/security-core": "^6.4|^7.0"
+                "symfony/console": "^6.4|^7.0|^8.0",
+                "symfony/security-core": "^6.4|^7.0|^8.0"
             },
             "type": "library",
             "autoload": {
@@ -73722,7 +76347,7 @@
                 "password"
             ],
             "support": {
-                "source": "https://github.com/symfony/password-hasher/tree/v7.3.0"
+                "source": "https://github.com/symfony/password-hasher/tree/v7.4.0"
             },
             "funding": [
                 {
@@ -73734,11 +76359,15 @@
                     "type": "github"
                 },
                 {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
                     "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-02-04T08:22:58+00:00"
+            "time": "2025-08-13T16:46:49+00:00"
         },
         {
             "name": "symfony/polyfill-intl-grapheme",
@@ -74714,23 +77343,23 @@
         },
         {
             "name": "symfony/property-info",
-            "version": "v7.3.5",
+            "version": "v7.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/property-info.git",
-                "reference": "0b346ed259dc5da43535caf243005fe7d4b0f051"
+                "reference": "c3c686e3d3a33a99f6967e69d6d5832acb7c25a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/property-info/zipball/0b346ed259dc5da43535caf243005fe7d4b0f051",
-                "reference": "0b346ed259dc5da43535caf243005fe7d4b0f051",
+                "url": "https://api.github.com/repos/symfony/property-info/zipball/c3c686e3d3a33a99f6967e69d6d5832acb7c25a1",
+                "reference": "c3c686e3d3a33a99f6967e69d6d5832acb7c25a1",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.2",
                 "symfony/deprecation-contracts": "^2.5|^3",
-                "symfony/string": "^6.4|^7.0",
-                "symfony/type-info": "^7.3.5"
+                "symfony/string": "^6.4|^7.0|^8.0",
+                "symfony/type-info": "^7.3.5|^8.0"
             },
             "conflict": {
                 "phpdocumentor/reflection-docblock": "<5.2",
@@ -74742,9 +77371,9 @@
             "require-dev": {
                 "phpdocumentor/reflection-docblock": "^5.2",
                 "phpstan/phpdoc-parser": "^1.0|^2.0",
-                "symfony/cache": "^6.4|^7.0",
-                "symfony/dependency-injection": "^6.4|^7.0",
-                "symfony/serializer": "^6.4|^7.0"
+                "symfony/cache": "^6.4|^7.0|^8.0",
+                "symfony/dependency-injection": "^6.4|^7.0|^8.0",
+                "symfony/serializer": "^6.4|^7.0|^8.0"
             },
             "type": "library",
             "autoload": {
@@ -74780,7 +77409,7 @@
                 "validator"
             ],
             "support": {
-                "source": "https://github.com/symfony/property-info/tree/v7.3.5"
+                "source": "https://github.com/symfony/property-info/tree/v7.4.0"
             },
             "funding": [
                 {
@@ -74800,7 +77429,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-10-05T22:12:41+00:00"
+            "time": "2025-11-13T08:38:49+00:00"
         },
         {
             "name": "symfony/routing",
@@ -75546,22 +78175,23 @@
         },
         {
             "name": "symfony/string",
-            "version": "v7.3.4",
+            "version": "v7.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/string.git",
-                "reference": "f96476035142921000338bad71e5247fbc138872"
+                "reference": "d50e862cb0a0e0886f73ca1f31b865efbb795003"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/string/zipball/f96476035142921000338bad71e5247fbc138872",
-                "reference": "f96476035142921000338bad71e5247fbc138872",
+                "url": "https://api.github.com/repos/symfony/string/zipball/d50e862cb0a0e0886f73ca1f31b865efbb795003",
+                "reference": "d50e862cb0a0e0886f73ca1f31b865efbb795003",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.2",
+                "symfony/deprecation-contracts": "^2.5|^3.0",
                 "symfony/polyfill-ctype": "~1.8",
-                "symfony/polyfill-intl-grapheme": "~1.0",
+                "symfony/polyfill-intl-grapheme": "~1.33",
                 "symfony/polyfill-intl-normalizer": "~1.0",
                 "symfony/polyfill-mbstring": "~1.0"
             },
@@ -75569,11 +78199,11 @@
                 "symfony/translation-contracts": "<2.5"
             },
             "require-dev": {
-                "symfony/emoji": "^7.1",
-                "symfony/http-client": "^6.4|^7.0",
-                "symfony/intl": "^6.4|^7.0",
+                "symfony/emoji": "^7.1|^8.0",
+                "symfony/http-client": "^6.4|^7.0|^8.0",
+                "symfony/intl": "^6.4|^7.0|^8.0",
                 "symfony/translation-contracts": "^2.5|^3.0",
-                "symfony/var-exporter": "^6.4|^7.0"
+                "symfony/var-exporter": "^6.4|^7.0|^8.0"
             },
             "type": "library",
             "autoload": {
@@ -75612,7 +78242,7 @@
                 "utf8"
             ],
             "support": {
-                "source": "https://github.com/symfony/string/tree/v7.3.4"
+                "source": "https://github.com/symfony/string/tree/v7.4.0"
             },
             "funding": [
                 {
@@ -75632,7 +78262,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-09-11T14:36:48+00:00"
+            "time": "2025-11-27T13:27:24+00:00"
         },
         {
             "name": "symfony/translation",
@@ -75930,16 +78560,16 @@
         },
         {
             "name": "symfony/type-info",
-            "version": "v7.3.5",
+            "version": "v7.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/type-info.git",
-                "reference": "8b36f41421160db56914f897b57eaa6a830758b3"
+                "reference": "7f9743e921abcce92a03fc693530209c59e73076"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/type-info/zipball/8b36f41421160db56914f897b57eaa6a830758b3",
-                "reference": "8b36f41421160db56914f897b57eaa6a830758b3",
+                "url": "https://api.github.com/repos/symfony/type-info/zipball/7f9743e921abcce92a03fc693530209c59e73076",
+                "reference": "7f9743e921abcce92a03fc693530209c59e73076",
                 "shasum": ""
             },
             "require": {
@@ -75989,7 +78619,7 @@
                 "type"
             ],
             "support": {
-                "source": "https://github.com/symfony/type-info/tree/v7.3.5"
+                "source": "https://github.com/symfony/type-info/tree/v7.4.0"
             },
             "funding": [
                 {
@@ -76009,7 +78639,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-10-16T12:30:12+00:00"
+            "time": "2025-11-07T09:36:46+00:00"
         },
         {
             "name": "symfony/uid",
@@ -76188,16 +78818,16 @@
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v7.3.5",
+            "version": "v7.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "476c4ae17f43a9a36650c69879dcf5b1e6ae724d"
+                "reference": "41fd6c4ae28c38b294b42af6db61446594a0dece"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/476c4ae17f43a9a36650c69879dcf5b1e6ae724d",
-                "reference": "476c4ae17f43a9a36650c69879dcf5b1e6ae724d",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/41fd6c4ae28c38b294b42af6db61446594a0dece",
+                "reference": "41fd6c4ae28c38b294b42af6db61446594a0dece",
                 "shasum": ""
             },
             "require": {
@@ -76209,10 +78839,10 @@
                 "symfony/console": "<6.4"
             },
             "require-dev": {
-                "symfony/console": "^6.4|^7.0",
-                "symfony/http-kernel": "^6.4|^7.0",
-                "symfony/process": "^6.4|^7.0",
-                "symfony/uid": "^6.4|^7.0",
+                "symfony/console": "^6.4|^7.0|^8.0",
+                "symfony/http-kernel": "^6.4|^7.0|^8.0",
+                "symfony/process": "^6.4|^7.0|^8.0",
+                "symfony/uid": "^6.4|^7.0|^8.0",
                 "twig/twig": "^3.12"
             },
             "bin": [
@@ -76251,7 +78881,7 @@
                 "dump"
             ],
             "support": {
-                "source": "https://github.com/symfony/var-dumper/tree/v7.3.5"
+                "source": "https://github.com/symfony/var-dumper/tree/v7.4.0"
             },
             "funding": [
                 {
@@ -76271,7 +78901,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-09-27T09:00:46+00:00"
+            "time": "2025-10-27T20:36:44+00:00"
         },
         {
             "name": "symfony/var-exporter",
@@ -79326,16 +81956,16 @@
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "5.6.4",
+            "version": "5.6.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "90a04bcbf03784066f16038e87e23a0a83cee3c2"
+                "reference": "90614c73d3800e187615e2dd236ad0e2a01bf761"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/90a04bcbf03784066f16038e87e23a0a83cee3c2",
-                "reference": "90a04bcbf03784066f16038e87e23a0a83cee3c2",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/90614c73d3800e187615e2dd236ad0e2a01bf761",
+                "reference": "90614c73d3800e187615e2dd236ad0e2a01bf761",
                 "shasum": ""
             },
             "require": {
@@ -79384,22 +82014,22 @@
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
             "support": {
                 "issues": "https://github.com/phpDocumentor/ReflectionDocBlock/issues",
-                "source": "https://github.com/phpDocumentor/ReflectionDocBlock/tree/5.6.4"
+                "source": "https://github.com/phpDocumentor/ReflectionDocBlock/tree/5.6.5"
             },
-            "time": "2025-11-17T21:13:10+00:00"
+            "time": "2025-11-27T19:50:05+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
-            "version": "1.10.1",
+            "version": "1.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/TypeResolver.git",
-                "reference": "431c02da15e566adb0ad9c5030fa6f6204d9de9e"
+                "reference": "92a98ada2b93d9b201a613cb5a33584dde25f195"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/431c02da15e566adb0ad9c5030fa6f6204d9de9e",
-                "reference": "431c02da15e566adb0ad9c5030fa6f6204d9de9e",
+                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/92a98ada2b93d9b201a613cb5a33584dde25f195",
+                "reference": "92a98ada2b93d9b201a613cb5a33584dde25f195",
                 "shasum": ""
             },
             "require": {
@@ -79442,9 +82072,9 @@
             "description": "A PSR-5 based resolver of Class names, Types and Structural Element Names",
             "support": {
                 "issues": "https://github.com/phpDocumentor/TypeResolver/issues",
-                "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.10.1"
+                "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.12.0"
             },
-            "time": "2025-11-18T07:51:16+00:00"
+            "time": "2025-11-21T15:09:14+00:00"
         },
         {
             "name": "phpmd/phpmd",
@@ -81786,19 +84416,18 @@
         },
         {
             "name": "spryker/cypress-tests",
-            "version": "dev-master",
+            "version": "dev-feature/cc-36592/master-migrate-tests",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/cypress-tests.git",
-                "reference": "26fddff046974afe610bbfe59c83c745b1cd482c"
+                "reference": "44b2bf84e5a4f081fc2f737fdbb32e07dde472f9"
             },
-            "default-branch": true,
             "type": "spryker-test",
             "license": [
                 "MIT"
             ],
             "description": "This repository is dedicated to housing an extensive collection of UI end-to-end tests, meticulously crafted using Cypress for Spryker applications. These tests are designed to thoroughly evaluate the user interface, ensuring that all interactions and visual elements function as intended in real-world scenarios. By leveraging Cypress's advanced browser automation capabilities, this suite provides an efficient and effective means of validating the user experience, confirming the seamless operation and aesthetic integrity of Spryker's front-end components. Our commitment to rigorous UI testing helps maintain the high standard of quality and reliability that Spryker users expect.",
-            "time": "2025-11-25T08:21:31+00:00"
+            "time": "2025-12-01T09:45:32+00:00"
         },
         {
             "name": "spryker/development",
@@ -81956,13 +84585,12 @@
         },
         {
             "name": "spryker/robotframework-suite-tests",
-            "version": "dev-master",
+            "version": "dev-feature/ssp-integration-enabler",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/robotframework-suite-tests.git",
-                "reference": "f07f528864e3ef5a6d39540faa471fa3430d5fef"
+                "reference": "576bdbb768642fb71d4a023355e97b9f67e592e1"
             },
-            "default-branch": true,
             "bin": [
                 "bin/run-robot-suite-tests.sh"
             ],
@@ -81971,7 +84599,7 @@
                 "MIT"
             ],
             "description": "Automated tests for the Robot Framework",
-            "time": "2025-12-09T07:56:57+00:00"
+            "time": "2025-12-09T14:05:58+00:00"
         },
         {
             "name": "spryker/testify",
@@ -83036,6 +85664,8 @@
         "spryker-feature/marketplace-inventory-management": 20,
         "spryker-feature/marketplace-merchant": 20,
         "spryker-feature/marketplace-merchant-commission": 20,
+        "spryker-feature/marketplace-merchant-portal-product-offer-service-points": 20,
+        "spryker-feature/marketplace-merchant-portal-product-offer-shipment": 20,
         "spryker-feature/marketplace-order-management": 20,
         "spryker-feature/marketplace-product": 20,
         "spryker-feature/marketplace-product-offer": 20,
@@ -83058,8 +85688,13 @@
         "spryker-feature/scheduled-prices": 20,
         "spryker-feature/search": 20,
         "spryker-feature/shipment": 20,
+        "spryker-feature/shipment-service-points": 20,
         "spryker-feature/spryker-core": 20,
         "spryker-feature/spryker-core-back-office": 20,
+        "spryker/merchant-shipments-rest-api": 20,
+        "spryker/service-point-carts-rest-api": 20,
+        "spryker/service-points-rest-api": 20,
+        "spryker/shipment-type-service-points-rest-api": 20,
         "spryker/cypress-tests": 20,
         "spryker/docker-chromedriver": 20,
         "spryker/robotframework-suite-tests": 20
