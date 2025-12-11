@@ -14,7 +14,9 @@ declare(strict_types = 1);
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\MessageBroker\MessageBrokerConstants;
 
-$logger = ''; //'config/Zed/cronjobs/bin/loggable.sh '; // script for jenkins logging
+//$logger = 'config/Zed/cronjobs/bin/loggable.sh '; // script for jenkins logging
+$logger = '';
+
 $jobs[] = [
     'name' => 'check-product-validity',
     'command' => $logger . '$PHP_BIN vendor/bin/console product:check-validity',
