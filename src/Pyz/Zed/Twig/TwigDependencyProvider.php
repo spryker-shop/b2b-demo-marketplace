@@ -57,6 +57,7 @@ use Spryker\Zed\WebProfiler\Communication\Plugin\Twig\WebProfilerTwigLoaderPlugi
 use Spryker\Zed\ZedNavigation\Communication\Plugin\Twig\ZedNavigationTwigPlugin;
 use Spryker\Zed\ZedUi\Communication\Plugin\Twig\BooleanToStringTwigPlugin;
 use Spryker\Zed\ZedUi\Communication\Plugin\ZedUiNavigationTwigPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Twig\SelfServicePortalTwigPlugin;
 
 class TwigDependencyProvider extends SprykerTwigDependencyProvider
 {
@@ -114,6 +115,7 @@ class TwigDependencyProvider extends SprykerTwigDependencyProvider
             new NumberFormatterTwigPlugin(),
             new MerchantUserTwigPlugin(),
             new MerchantNavigationTypeTwigPlugin(),
+            new SelfServicePortalTwigPlugin(),
         ];
     }
 

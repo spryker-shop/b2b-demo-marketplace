@@ -52,6 +52,12 @@ use Spryker\Zed\ProductStorage\Communication\Plugin\ProductManagement\StoragePro
 use Spryker\Zed\ProductStorage\Communication\Plugin\ProductManagement\StorageTableProductAbstractReadinessProviderPlugin;
 use Spryker\Zed\ProductStorage\Communication\Plugin\ProductManagement\StorageTableProductConcreteReadinessProviderPlugin;
 use Spryker\Zed\Store\Communication\Plugin\Form\StoreRelationToggleFormTypePlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductManagement\ProductClassFormExpanderPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductManagement\ProductClassProductConcreteFormEditDataProviderExpanderPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductManagement\ProductClassProductConcreteTransferMapperPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductManagement\ShipmentTypeProductConcreteFormEditDataProviderExpanderPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductManagement\ShipmentTypeProductConcreteFormExpanderPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductManagement\ShipmentTypeProductFormTransferMapperExpanderPlugin;
 
 class ProductManagementDependencyProvider extends SprykerProductManagementDependencyProvider
 {
@@ -114,6 +120,8 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
         return [
             new DiscontinueProductConcreteFormEditDataProviderExpanderPlugin(), #ProductDiscontinuedFeature
             new ProductConcreteFormEditDataProviderExpanderPlugin(), #ProductAlternativeFeature
+            new ShipmentTypeProductConcreteFormEditDataProviderExpanderPlugin(),
+            new ProductClassProductConcreteFormEditDataProviderExpanderPlugin(),
         ];
     }
 
@@ -125,6 +133,8 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
         return [
             new ProductFormTransferMapperExpanderPlugin(), #ProductAlternativeFeature
             new DiscontinuedNotesProductFormTransferMapperExpanderPlugin(), #ProductDiscontinuedFeature
+            new ShipmentTypeProductFormTransferMapperExpanderPlugin(),
+            new ProductClassProductConcreteTransferMapperPlugin(),
         ];
     }
 
@@ -145,6 +155,8 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
     {
         return [
             new MerchantRelationshipProductConcreteFormExpanderPlugin(),
+            new ShipmentTypeProductConcreteFormExpanderPlugin(),
+            new ProductClassFormExpanderPlugin(),
         ];
     }
 

@@ -13,6 +13,8 @@ use Spryker\Client\MerchantProductStorage\Plugin\ProductOfferStorage\MerchantPro
 use Spryker\Client\MerchantStorage\Plugin\ProductOfferStorage\MerchantProductOfferStorageExpanderPlugin;
 use Spryker\Client\PriceProductOfferStorage\Plugin\ProductOfferStorage\LowestPriceProductOfferStorageCollectionSorterPlugin;
 use Spryker\Client\PriceProductOfferStorage\Plugin\ProductOfferStorage\PriceProductOfferStorageExpanderPlugin;
+use Spryker\Client\ProductOfferServicePointStorage\Plugin\ProductOfferStorage\ServiceProductOfferStorageExpanderPlugin;
+use Spryker\Client\ProductOfferShipmentTypeStorage\Plugin\ProductOfferStorage\ShipmentTypeProductOfferStorageExpanderPlugin;
 use Spryker\Client\ProductOfferStorage\Plugin\ProductOfferStorage\DefaultProductOfferReferenceStrategyPlugin;
 use Spryker\Client\ProductOfferStorage\Plugin\ProductOfferStorage\ProductOfferReferenceStrategyPlugin;
 use Spryker\Client\ProductOfferStorage\ProductOfferStorageDependencyProvider as SprykerProductOfferStorageDependencyProvider;
@@ -40,6 +42,8 @@ class ProductOfferStorageDependencyProvider extends SprykerProductOfferStorageDe
         return [
             new PriceProductOfferStorageExpanderPlugin(),
             new MerchantProductOfferStorageExpanderPlugin(),
+            new ServiceProductOfferStorageExpanderPlugin(),
+            new ShipmentTypeProductOfferStorageExpanderPlugin(),
         ];
     }
 

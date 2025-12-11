@@ -52,12 +52,12 @@ groups:
                         services:
                             session:
                                 namespace: 1
-            glue:
+            glue_eu:
                 application: glue
                 endpoints:
                     glue.eu.spryker.local:
                         region: EU
-            boffice:
+            backoffice_eu:
                 application: backoffice
                 endpoints:
                     backoffice.eu.spryker.local:
@@ -65,24 +65,18 @@ groups:
                         services:
                             session:
                                 namespace: 3
-            backgw:
+            backend_gateway_eu:
                 application: backend-gateway
                 endpoints:
                     backend-gateway.eu.spryker.local:
                         region: EU
                         primal: true
-            backapi:
-                application: zed
-                endpoints:
-                    backend-api.eu.spryker.local:
-                        region: EU
-                        entry-point: BackendApi
-            gluestorefront:
+            glue_storefront_eu:
                 application: glue-storefront
                 endpoints:
                     glue-storefront.eu.spryker.local:
                         region: EU
-            gluebackend:
+            glue_backend_eu:
                 application: glue-backend
                 endpoints:
                     glue-backend.eu.spryker.local:
