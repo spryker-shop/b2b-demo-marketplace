@@ -1,6 +1,7 @@
 {% extends molecule('product-configurator', '@SprykerShop:ProductDetailPage') %}
 
 {% set isProductConcrete = data.product.idProductConcrete is not empty %}
+{% set sspServiceDetectorWidget = findWidget('SspServiceDetectorWidget', [data.product]) %}
 
 {% block body %}
     <div class="{{ config.name }}__top-block">
@@ -14,8 +15,6 @@
     </div>
 
     {% if can('SeePricePermissionPlugin') %}
-        {% set sspServiceDetectorWidget = findWidget('SspServiceDetectorWidget', [data.product]) %}
-
         {% if (sspServiceDetectorWidget and sspServiceDetectorWidget.isService) %}
             {% widget 'SspProductOfferPriceWidget' args [data.product] only %}{% endwidget %}
         {% else %}

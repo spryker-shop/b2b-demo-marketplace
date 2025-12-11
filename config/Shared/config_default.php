@@ -571,12 +571,18 @@ $config[LogConstants::EXCEPTION_LOG_FILE_PATH_YVES]
 
 // >>> QUEUE
 
+$config[QueueConstants::RESOURCE_AWARE_QUEUE_WORKER_ENABLED] = (bool)getenv('RESOURCE_AWARE_QUEUE_WORKER_ENABLED') ?? false;
+$config[QueueConstants::QUEUE_WORKER_FREE_MEMORY_BUFFER] = (int)getenv('QUEUE_WORKER_FREE_MEMORY_BUFFER') ?: 750;
+$config[QueueConstants::QUEUE_WORKER_MEMORY_READ_PROCESS_TIMEOUT] = (int)getenv('QUEUE_WORKER_MEMORY_READ_PROCESS_TIMEOUT') ?: 5;
+
 $config[EventBehaviorConstants::EVENT_BEHAVIOR_TRIGGERING_ACTIVE] = true;
 
 $config[EventConstants::MAX_RETRY_ON_FAIL] = 5;
 $config[QueueConstants::QUEUE_PROCESS_TRIGGER_INTERVAL_MICROSECONDS] = 1001;
 $config[QueueConstants::QUEUE_MESSAGE_CHUNK_SIZE_MAP] = json_decode(getenv('QUEUE_MESSAGE_CHUNK_SIZE_MAP') ?: '[]', true);
-
+$config[QueueConstants::RESOURCE_AWARE_QUEUE_WORKER_ENABLED] = (bool)getenv('RESOURCE_AWARE_QUEUE_WORKER_ENABLED') ?? false;
+$config[QueueConstants::QUEUE_WORKER_FREE_MEMORY_BUFFER] = (int)getenv('QUEUE_WORKER_FREE_MEMORY_BUFFER') ?: 750;
+$config[QueueConstants::QUEUE_WORKER_MEMORY_READ_PROCESS_TIMEOUT] = (int)getenv('QUEUE_WORKER_MEMORY_READ_PROCESS_TIMEOUT') ?: 5;
 $config[QueueConstants::QUEUE_ADAPTER_CONFIGURATION] = [
     EventConstants::EVENT_QUEUE => [
         QueueConfig::CONFIG_QUEUE_ADAPTER => RabbitMqAdapter::class,
@@ -706,24 +712,44 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'region' => $awsRegion,
     ],
     'ssp-inquiry' => [
-        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
-        'root' => '/data',
-        'path' => '/data/ssp-inquiry',
+        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
+        'key' => getenv('SPRYKER_S3_SSP_CLAIM_KEY') ?: '',
+        'secret' => getenv('SPRYKER_S3_SSP_CLAIM_SECRET') ?: '',
+        'bucket' => getenv('SPRYKER_S3_SSP_CLAIM_BUCKET') ?: '',
+        'region' => getenv('AWS_REGION') ?: 'eu-central-1',
+        'version' => 'latest',
+        'root' => '/ssp-inquiry',
+        'path' => '',
     ],
     'ssp-files' => [
-        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
-        'root' => '/data',
-        'path' => '/data/ssp-files',
+        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
+        'key' => getenv('SPRYKER_S3_SSP_FILES_KEY') ?: '',
+        'secret' => getenv('SPRYKER_S3_SSP_FILES_SECRET') ?: '',
+        'bucket' => getenv('SPRYKER_S3_SSP_FILES_BUCKET') ?: '',
+        'region' => getenv('AWS_REGION') ?: 'eu-central-1',
+        'version' => 'latest',
+        'root' => '/files',
+        'path' => '',
     ],
     'ssp-asset-image' => [
-        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
-        'root' => '/data',
-        'path' => '/data/ssp-asset-image',
+        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
+        'key' => getenv('SPRYKER_S3_SSP_ASSETS_KEY') ?: '',
+        'secret' => getenv('SPRYKER_S3_SSP_ASSETS_SECRET') ?: '',
+        'bucket' => getenv('SPRYKER_S3_SSP_ASSETS_BUCKET') ?: '',
+        'region' => getenv('AWS_REGION') ?: 'eu-central-1',
+        'version' => 'latest',
+        'root' => '/ssp-asset-image',
+        'path' => '',
     ],
     'ssp-model-image' => [
-        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
-        'root' => '/data',
-        'path' => '/data/ssp-model-image',
+        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
+        'key' => getenv('SPRYKER_S3_SSP_MODELS_KEY') ?: '',
+        'secret' => getenv('SPRYKER_S3_SSP_MODELS_SECRET') ?: '',
+        'bucket' => getenv('SPRYKER_S3_SSP_MODELS_BUCKET') ?: '',
+        'region' => getenv('AWS_REGION') ?: 'eu-central-1',
+        'version' => 'latest',
+        'root' => '/ssp-model-image',
+        'path' => '',
     ],
 ];
 $config[FileManagerConstants::STORAGE_NAME] = 'files';
@@ -1076,7 +1102,6 @@ if ($isTestifyConstantsClassExists) {
     $config[TestifyConstants::GLUE_STOREFRONT_API_OPEN_API_SCHEMA] = APPLICATION_SOURCE_DIR . '/Generated/GlueStorefront/Specification/spryker_storefront_api.schema.yml';
 }
 
-$config[RedisConstants::REDIS_COMPRESSION_ENABLED] = getenv('SPRYKER_KEY_VALUE_COMPRESSING_ENABLED') ?: false;
 $config[RedisConstants::REDIS_COMPRESSION_ENABLED] = getenv('SPRYKER_KEY_VALUE_COMPRESSING_ENABLED') ?: true;
 
 // Self-Service Portal
