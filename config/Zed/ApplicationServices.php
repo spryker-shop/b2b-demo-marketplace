@@ -80,7 +80,7 @@ return static function (ContainerConfigurator $configurator): void {
                 '../../src/%1$s/%2$s/%3$s/',
                 $organization,
                 $applicationTransfer->getName(),
-                $moduleTransfer->getName()
+                $moduleTransfer->getName(),
             );
 
             /**
