@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "76f7df3a5046bd8461269fb1f25ca72e",
+    "content-hash": "eca867706bc743222d0afd12183d802d",
     "packages": [
         {
             "name": "async-aws/core",
@@ -10051,7 +10051,7 @@
         },
         {
             "name": "spryker-feature/self-service-portal",
-            "version": "19.0.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/self-service-portal.git",
@@ -10186,6 +10186,7 @@
                 "spryker/catalog": "If you want to use the product class catalog feature, you need to install this module.",
                 "spryker/container": "Add this module when you want to use the Container."
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -10204,7 +10205,7 @@
             ],
             "description": "SelfServicePortal module",
             "support": {
-                "source": "https://github.com/spryker-feature/self-service-portal/tree/19.0.0"
+                "source": "https://github.com/spryker-feature/self-service-portal/tree/master"
             },
             "time": "2025-12-11T14:00:18+00:00"
         },
@@ -85636,6 +85637,12 @@
             "alias_normalized": "202507.0"
         },
         {
+            "package": "spryker-feature/self-service-portal",
+            "version": "9999999-dev",
+            "alias": "202507.0",
+            "alias_normalized": "202507.0"
+        },
+        {
             "package": "spryker-feature/shipment",
             "version": "9999999-dev",
             "alias": "202507.0",
@@ -85690,6 +85697,7 @@
         "spryker-feature/return-management": 20,
         "spryker-feature/scheduled-prices": 20,
         "spryker-feature/search": 20,
+        "spryker-feature/self-service-portal": 20,
         "spryker-feature/shipment": 20,
         "spryker-feature/shipment-service-points": 20,
         "spryker-feature/spryker-core": 20,
