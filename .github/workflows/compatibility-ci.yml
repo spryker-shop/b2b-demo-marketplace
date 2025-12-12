@@ -136,10 +136,9 @@ jobs:
         steps:
             -   uses: actions/checkout@v4
 
-            -   name: Install cypress-tests folder
-                run: |
-                    cd ./data && composer require "spryker/cypress-tests:dev-master" --dev --no-interaction
-                    cp -r vendor/spryker/cypress-tests ../tests/cypress-tests
+            -   uses: ramsey/composer-install@v3
+                with:
+                    composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
 
             -   name: Install Project
                 run: |
@@ -157,7 +156,7 @@ jobs:
                       sleep 1
                     done
                     (exit $s)
-                    
+
             -   name: Run Tests (SSP)
                 id: run_ssp_tests
                 if: always()
