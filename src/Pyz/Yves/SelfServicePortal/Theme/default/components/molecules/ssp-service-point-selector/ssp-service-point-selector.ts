@@ -12,4 +12,14 @@ export default class SspServicePointSelector extends CoreSspServicePointSelector
         super.onServicePointSelected(detail);
         this.location.innerHTML = `${detail.productOfferAvailability[0].name} <br> ${detail.address}`;
     }
+
+    protected changePriceVisibility(offer: string): void {
+        super.changePriceVisibility();
+
+        const offerElement = document.querySelector(`[${this.productDataOfferAttribute}="${offer}"]`);
+
+        if (!offerElement) {
+            document.querySelector(`[${this.productDataOfferAttribute}=""]`).classList.remove(this.toggleClassName);
+        }
+    }
 }
