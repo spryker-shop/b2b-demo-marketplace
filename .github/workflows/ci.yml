@@ -369,7 +369,7 @@ jobs:
                     docker/sdk boot deploy.ci.acceptance.mariadb.cypress.yml
                     sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local' >> /etc/hosts"
                     docker/sdk up -t
-                    docker/sdk cli composer dump-autoloader -o -a --apcu -q
+                    docker/sdk cli composer dump-autoload -o -a --apcu -q
 
             -   name: Run Tests
                 id: run_tests
@@ -482,7 +482,7 @@ jobs:
                 id: run_dynamic_tests
                 continue-on-error: true
                 run: |
-                    docker/sdk exec robot-framework pabot --processes $(nproc) --ordering pabot_mp_b2b -v env:ui_mp_b2b -v docker:True -v headless:true -v ignore_console:false -v dms:true -v is_ssp:true -d results/dynamic_set --exclude skip-due-to-issueORskip-due-to-refactoringORstatic-set -s '*'.tests.parallel_ui.mp_b2b .
+                    docker/sdk exec robot-framework pabot --processes $(nproc) --ordering pabot_mp_b2b_ordering -v env:ui_mp_b2b -v docker:True -v headless:true -v ignore_console:false -v dms:true -v is_ssp:true -d results/dynamic_set --exclude skip-due-to-issueORskip-due-to-refactoringORstatic-set -s '*'.tests.parallel_ui.mp_b2b .
             -   name: Run Static Tests Set
                 id: run_static_tests
                 continue-on-error: true
