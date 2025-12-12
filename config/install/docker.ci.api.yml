@@ -25,6 +25,9 @@ sections:
         propel-build:
             command: 'vendor/bin/console propel:model:build'
 
+        acl-entity-metadata-validate:
+            command: 'vendor/bin/console acl-entity:metadata:validate'
+
         generate-entity-transfer:
             command: 'vendor/bin/console transfer:entity:generate'
 
