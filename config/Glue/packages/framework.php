@@ -12,12 +12,12 @@ declare(strict_types = 1);
  */
 use Symfony\Config\FrameworkConfig;
 
-return static function (FrameworkConfig $framework): void {
+return static function (FrameworkConfig $framework, string $env): void {
     $framework->secret('spryker-glue-secret');
 
     $framework->assets([
         'base_path' => '/assets',
     ]);
 
-    $framework->test('%kernel.environment%' === 'dockerdev');
+    $framework->test($env === 'dockerdev');
 };

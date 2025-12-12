@@ -12,16 +12,20 @@ declare(strict_types = 1);
  */
 use Symfony\Config\ApiPlatformConfig;
 
-return static function (ApiPlatformConfig $apiPlatform): void {
+return static function (ApiPlatformConfig $apiPlatform, string $env): void {
     $apiPlatform->doctrine()->enabled(false);
     $apiPlatform->doctrineMongodbOdm()->enabled(false);
     $apiPlatform->mapping()->paths(['%kernel.project_dir%/src/Generated/Api/Storefront']);
-    $apiPlatform->enableSwagger(true);
-    $apiPlatform->enableSwaggerUi(true);
-    $apiPlatform->enableReDoc(true);
-    $apiPlatform->enableEntrypoint(true);
-    $apiPlatform->enableDocs(true);
-    $apiPlatform->enableProfiler('%kernel.environment%' === 'dockerdev');
+
+    if ($env === 'dockerdev') {
+        $apiPlatform->enableSwagger(true);
+        $apiPlatform->enableSwaggerUi(true);
+        $apiPlatform->enableReDoc(true);
+        $apiPlatform->enableEntrypoint(true);
+        $apiPlatform->enableDocs(true);
+        $apiPlatform->enableProfiler(true);
+    }
+
     $apiPlatform->defaults()->paginationItemsPerPage(10);
     $apiPlatform->collection()
         ->existsParameterName('exists')
