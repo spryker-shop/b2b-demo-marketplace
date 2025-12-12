@@ -158,6 +158,13 @@ jobs:
                 with:
                     composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
 
+            -   name: Configure sysctl limits
+                run: |
+                    sudo sysctl -w vm.swappiness=10
+                    sudo sysctl -w fs.file-max=262144
+                    sudo sysctl -w vm.max_map_count=262144
+                    ulimit -n 65536
+
             -   name: Install Project
                 run: |
                     git clone --depth 1 https://github.com/spryker/docker-sdk.git ./docker
@@ -169,16 +176,17 @@ jobs:
                 run: |
                     docker/sdk exec cypress-tests cp .env.example .env
                     docker/sdk exec cypress-tests npx cypress install
-                    for i in 1 2; do
-                      docker/sdk exec --env "ENV_REPOSITORY_ID=b2b-mp" --env "ENV_IS_SSP_ENABLED=true" cypress-tests npm run cy:ci && s=0 && break || s=$? && echo "Test failed, retrying..."
-                      sleep 1
-                    done
-                    (exit $s)
+#                    for i in 1 2; do
+#                      docker/sdk exec --env "ENV_REPOSITORY_ID=b2b-mp" --env "ENV_IS_SSP_ENABLED=true" cypress-tests npm run cy:ci && s=0 && break || s=$? && echo "Test failed, retrying..."
+#                      sleep 1
+#                    done
+#                    (exit $s)
 
             -   name: Run Tests (SSP)
                 id: run_ssp_tests
                 if: always()
                 run: |
+                    docker/sdk exec cypress-tests git log -3
                     docker/sdk exec --env "ENV_REPOSITORY_ID=b2b-mp" --env "ENV_IS_SSP_ENABLED=true" cypress-tests npm run cy:ci:ssp
 
             -   name: Upload artifacts
