@@ -25,7 +25,7 @@ class PaymentAppWidgetConfig extends SprykerPaymentAppWidgetConfig
     ];
 
     /**
-     * @var list<string>
+     * @return list<string>
      */
     public function getQuoteFieldsToCleanInExpressCheckoutWorkflow(): array
     {

@@ -22,7 +22,7 @@ class PaymentAppShipmentConfig extends SprykerPaymentAppShipmentConfig
     ];
 
     /**
-     * @var list<string>
+     * @return list<string>
      */
     public function getShipmentItemCollectionFieldNames(): array
     {

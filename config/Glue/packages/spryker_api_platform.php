@@ -20,6 +20,7 @@ return static function (SprykerApiPlatformConfig $sprykerApiPlatform): void {
         'src/Pyz',
         'vendor/spryker',
         'vendor/spryker-shop',
+        'vendor/spryker-feature',
     ]);
 
     //    $sprykerApiPlatform->generatedDir('src/Generated/Api');
