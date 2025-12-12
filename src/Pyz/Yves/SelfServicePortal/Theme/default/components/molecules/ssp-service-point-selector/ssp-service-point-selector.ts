@@ -34,7 +34,7 @@ export default class SspServicePointSelector extends CoreSspServicePointSelector
                 } else {
                     this.changePriceVisibility('');
                 }
-            })
+            });
         });
     }
 }
