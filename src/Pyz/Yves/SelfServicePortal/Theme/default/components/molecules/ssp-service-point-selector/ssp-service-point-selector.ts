@@ -1,5 +1,6 @@
 import CoreSspServicePointSelector from 'SelfServicePortal/components/molecules/ssp-service-point-selector/ssp-service-point-selector';
 import { ServicePointEventDetail } from 'ServicePointWidget/components/molecules/service-point-finder/service-point-finder';
+import { EVENT_SHIPMENT_TYPE_CHANGE } from 'SelfServicePortal/components/molecules/service-point-shipment-types/service-point-shipment-types';
 
 declare module 'ServicePointWidget/components/molecules/service-point-finder/service-point-finder' {
     interface ProductOfferAvailability {
@@ -14,12 +15,26 @@ export default class SspServicePointSelector extends CoreSspServicePointSelector
     }
 
     protected changePriceVisibility(offer: string): void {
-        super.changePriceVisibility();
+        super.changePriceVisibility(offer);
 
-        const offerElement = document.querySelector(`[${this.productDataOfferAttribute}="${offer}"]`);
+        const offerPrice = document.querySelector(`[${this.productDataOfferAttribute}="${offer}"]`);
 
-        if (!offerElement) {
+        if (!offerPrice) {
             document.querySelector(`[${this.productDataOfferAttribute}=""]`).classList.remove(this.toggleClassName);
         }
+    }
+
+    protected onShipmentTypeChange(): void {
+        document.addEventListener(EVENT_SHIPMENT_TYPE_CHANGE, () => {
+            queueMicrotask(() => {
+                const offerElement = document.querySelector<HTMLInputElement>(`${this.offerReferenceSelector}:checked`);
+
+                if (offerElement) {
+                    offerElement.dispatchEvent(new Event('change', { bubbles: true }));
+                } else {
+                    this.changePriceVisibility('');
+                }
+            })
+        });
     }
 }
