@@ -32,6 +32,8 @@ use Spryker\Yves\Validator\Plugin\Application\ValidatorApplicationPlugin;
 use SprykerFeature\Yves\SelfServicePortal\Plugin\ShopApplication\AddressFormItemsByShipmentTypeWidgetCacheKeyGeneratorStrategyPlugin;
 use SprykerFeature\Yves\SelfServicePortal\Plugin\ShopApplication\SingleAddressPerShipmentTypeWidgetCacheKeyGeneratorStrategyPlugin;
 use SprykerFeature\Yves\SelfServicePortal\Plugin\ShopApplication\SspDashboardFilterControllerEventHandlerPlugin;
+use SprykerFeature\Yves\SelfServicePortal\Plugin\ShopApplication\SspServiceCancelWidgetCacheKeyGeneratorStrategyPlugin;
+use SprykerFeature\Yves\SelfServicePortal\Plugin\ShopApplication\SspServiceChangeScheduledTimeLinkWidgetCacheKeyGeneratorStrategyPlugin;
 use SprykerFeature\Yves\SelfServicePortal\Widget\AssetCompatibilityLabelWidget;
 use SprykerFeature\Yves\SelfServicePortal\Widget\CreateOrderSspInquiryWidget;
 use SprykerFeature\Yves\SelfServicePortal\Widget\DashboardMenuItemWidget;
@@ -444,6 +446,8 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             new ShipmentTypeAddressFormWidgetCacheKeyGeneratorStrategyPlugin(),
             new SingleAddressPerShipmentTypeWidgetCacheKeyGeneratorStrategyPlugin(),
             new AddressFormItemsByShipmentTypeWidgetCacheKeyGeneratorStrategyPlugin(),
+            new SspServiceCancelWidgetCacheKeyGeneratorStrategyPlugin(),
+            new SspServiceChangeScheduledTimeLinkWidgetCacheKeyGeneratorStrategyPlugin(),
         ];
     }
 
