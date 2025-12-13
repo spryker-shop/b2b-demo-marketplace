@@ -49,4 +49,14 @@ class SelfServicePortalConfig extends SprykerSelfServicePortalConfig
             static::SHIPMENT_TYPE_ON_SITE_SERVICE,
         ];
     }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getDefaultSelectedShipmentTypeKey(): string
+    {
+        return static::SHIPMENT_TYPE_DELIVERY;
+    }
 }
