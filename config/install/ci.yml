@@ -71,6 +71,9 @@ sections:
         propel-build:
             command: 'vendor/bin/console propel:model:build'
 
+        acl-entity-metadata-validate:
+            command: 'vendor/bin/console acl-entity:metadata:validate'
+
         propel-diff:
             command: 'vendor/bin/console propel:diff'
 
