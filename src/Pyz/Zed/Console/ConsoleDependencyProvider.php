@@ -25,6 +25,7 @@ use Spryker\Zed\CompanyUnitAddressDataImport\CompanyUnitAddressDataImportConfig;
 use Spryker\Zed\CompanyUnitAddressLabelDataImport\CompanyUnitAddressLabelDataImportConfig;
 use Spryker\Zed\Console\Communication\Plugin\Console\MultiProcessRunConsole;
 use Spryker\Zed\Console\ConsoleDependencyProvider as SprykerConsoleDependencyProvider;
+use Spryker\Zed\Container\Communication\Console\ContainerBuilderConsole;
 use Spryker\Zed\ContentNavigationDataImport\ContentNavigationDataImportConfig;
 use Spryker\Zed\CountryDataImport\CountryDataImportConfig;
 use Spryker\Zed\CurrencyDataImport\CurrencyDataImportConfig;
@@ -455,6 +456,9 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new StorageRedisDataReSaveConsole(),
             new SitemapGenerateConsole(),
             new DataImportMerchantImportConsole(),
+
+            // Container commands
+            new ContainerBuilderConsole(),
         ];
 
         $propelCommands = $container->getLocator()->propel()->facade()->getConsoleCommands();

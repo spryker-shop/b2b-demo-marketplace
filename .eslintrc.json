@@ -5,7 +5,7 @@
     "parserOptions": {
         "ecmaVersion": 2020,
         "sourceType": "module",
-        "project": "./tsconfig.yves.json"
+        "project": ["./tsconfig.yves.json"]
     },
     "plugins": ["deprecation"],
     "ignorePatterns": [
@@ -17,8 +17,19 @@
         "src/Pyz/Zed/*/Presentation/Components/"
     ],
     "rules": {
-        "accessor-pairs": ["error", { "setWithoutGet": true, "enforceForClassMembers": false }],
-        "@typescript-eslint/no-empty-function": ["error", { "allow": ["methods"] }],
+        "accessor-pairs": [
+            "error",
+            {
+                "setWithoutGet": true,
+                "enforceForClassMembers": false
+            }
+        ],
+        "@typescript-eslint/no-empty-function": [
+            "error",
+            {
+                "allow": ["methods"]
+            }
+        ],
         "@typescript-eslint/no-magic-numbers": [
             "error",
             {
