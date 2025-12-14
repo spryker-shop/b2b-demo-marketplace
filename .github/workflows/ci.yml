@@ -216,7 +216,7 @@ jobs:
 
             -   name: Upload logs, failed screenshots and HTML
                 if: steps.api-tests.outcome == 'failure' || steps.acceptance-tests.outcome == 'failure'
-                uses: actions/upload-artifact@v4
+                uses: actions/upload-artifact@v5
                 with:
                     name: codeception-failed-artifacts
                     retention-days: 5 # save for 5 days
@@ -270,7 +270,6 @@ jobs:
             PROGRESS_TYPE: plain
             SPRYKER_PLATFORM_IMAGE: spryker/php:8.4
             TRAVIS: 1
-            ROBOT_TESTS_ARTIFACTS_BUCKET_REGION: eu-west-1
             SPRYKER_CURRENT_REGION: EU
             DYNAMIC_STORE_MODE: true
         steps:
@@ -316,17 +315,19 @@ jobs:
                     docker logs spryker_ci_glue_eu_1 > logs/glue_app.log 2>&1 || true
                     docker logs spryker_ci_glue_backend_eu_1 > logs/glue_backend_eu.log 2>&1 || true
                     docker logs spryker_ci_glue_storefront_eu_1 > logs/glue_storefront_eu.log 2>&1 || true
+                    mkdir -p robot-results
+                    cp -r .robot/results/* robot-results/ 2>/dev/null || true
 
             -   name: Upload PHP logs & report
                 if: steps.tests.outcome == 'failure'
-                uses: actions/upload-artifact@v4
+                uses: actions/upload-artifact@v5
                 with:
                     name: robot-api-failed-artifacts
                     retention-days: 5 # save for 5 days
                     path: |
                         logs/*.log
-                        .robot/results/report.html
-                        .robot/results/log.html
+                        robot-results/report.html
+                        robot-results/log.html
 
             -   name: Slack Notification for failed job
                 uses: ./.github/actions/job-slack-notifications
@@ -401,7 +402,6 @@ jobs:
             PROGRESS_TYPE: plain
             SPRYKER_PLATFORM_IMAGE: spryker/php:8.4
             TRAVIS: 1
-            ROBOT_TESTS_ARTIFACTS_BUCKET_REGION: eu-west-1
             SPRYKER_CURRENT_REGION: EU
             DYNAMIC_STORE_MODE: true
         steps:
@@ -460,7 +460,7 @@ jobs:
                     docker/sdk exec robot-framework rebot -d results --merge results/output.xml results/rerun/rerun.xml
 
             -   name: Save PHP logs
-                if: always() && steps.merge_initial_results.outcome != 'success'
+                if: steps.merge_initial_results.outcome != 'success' || steps.rerun_failed_tests.outcome != 'success'
                 run: |
                     mkdir -p logs
                     docker logs spryker_ci_backoffice_eu_1 > logs/backoffice_app.log 2>&1
@@ -468,17 +468,19 @@ jobs:
                     docker logs spryker_ci_yves_eu_1 > logs/yves_app.log 2>&1
                     docker logs spryker_ci_merchant_portal_eu_1 > logs/merchant_portal_app.log 2>&1
                     docker logs spryker_ci_glue_backend_eu_1 > logs/glue_backend_eu.log 2>&1 || true
+                    mkdir -p robot-results
+                    cp -r .robot/results/* robot-results/ 2>/dev/null || true
 
             -   name: Upload PHP logs & report
-                if: always() && steps.merge_initial_results.outcome != 'success'
-                uses: actions/upload-artifact@v4
+                if: steps.merge_initial_results.outcome != 'success' || steps.rerun_failed_tests.outcome != 'success'
+                uses: actions/upload-artifact@v5
                 with:
                     name: robot-ui-failed-artifacts
                     retention-days: 5 # save for 5 days
                     path: |
                         logs/*.log
-                        .robot/results/report.html
-                        .robot/results/log.html
+                        robot-results/report.html
+                        robot-results/log.html
 
             -   name: Slack Notification for failed job
                 uses: ./.github/actions/job-slack-notifications
