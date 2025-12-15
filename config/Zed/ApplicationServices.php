@@ -40,6 +40,7 @@ return static function (ContainerConfigurator $configurator): void {
         'PriceProductStorage' => true,
         'UrlStorage' => true,
         'DocumentationGeneratorRestApi' => true,
+        'WebProfiler' => true,
     ];
 
     /**
