@@ -212,7 +212,7 @@ jobs:
                     docker/sdk testing codecept run -c codeception.api.yml
 
             -   name: Save PHP logs
-                if: always() &&  steps.api-tests.outcome == 'failure' || steps.acceptance-tests.outcome == 'failure'
+                if: always() && steps.api-tests.outcome == 'failure' || steps.acceptance-tests.outcome == 'failure'
                 run: |
                     mkdir -p logs
                     docker logs spryker_ci_backoffice_eu_1 > logs/backoffice_app.log 2>&1
