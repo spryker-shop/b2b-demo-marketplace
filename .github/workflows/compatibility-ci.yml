@@ -115,7 +115,7 @@ jobs:
                     docker/sdk exec robot-framework robot -v env:api_mp_b2b -v db_engine:psycopg2 -v docker:True --exclude skip-due-to-issueORskip-due-to-refactoring -d results -s robotframework.tests.api.mp_b2b .
 
             -   name: Save PHP logs
-                if: steps.tests.outcome == 'failure'
+                if: always() && steps.tests.outcome == 'failure'
                 run: |
                     mkdir -p logs
                     docker logs spryker_ci_backoffice_eu_1 > logs/backoffice_app.log 2>&1 || true
@@ -126,7 +126,7 @@ jobs:
                     cp -r .robot/results/* robot-results/ 2>/dev/null || true
 
             -   name: Upload PHP logs & report
-                if: steps.tests.outcome == 'failure'
+                if: always() && steps.tests.outcome == 'failure'
                 uses: actions/upload-artifact@v5
                 with:
                     name: robot-api-failed-artifacts
@@ -180,7 +180,7 @@ jobs:
                     docker/sdk exec --env "ENV_REPOSITORY_ID=b2b-mp" --env "ENV_IS_SSP_ENABLED=true" cypress-tests npm run cy:ci
 
             -   name: Upload artifacts
-                if: steps.run_tests.outcome == 'failure'
+                if: always() && steps.run_tests.outcome == 'failure'
                 run: |
                     AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp .cypress s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/b2b-mp/dms-off/cypress/${GITHUB_RUN_ID}/PHP8.4MariaDB/ --recursive
 
@@ -229,7 +229,7 @@ jobs:
                     docker/sdk exec --env "ENV_REPOSITORY_ID=b2b-mp" --env "ENV_IS_SSP_ENABLED=true" cypress-tests npm run cy:ci:ssp
 
             -   name: Upload artifacts
-                if: steps.run_ssp_tests.outcome == 'failure'
+                if: always() && steps.run_ssp_tests.outcome == 'failure'
                 run: |
                     AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp .cypress s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/b2b-mp/dms-off/cypress-ssp/${GITHUB_RUN_ID}/PHP8.4MariaDB/ --recursive
 
@@ -297,7 +297,7 @@ jobs:
                     docker/sdk exec robot-framework rebot -d results --merge results/output.xml results/rerun/rerun.xml
 
             -   name: Save PHP logs
-                if: steps.merge_initial_results.outcome != 'success' || steps.rerun_failed_tests.outcome != 'success'
+                if: always() && steps.merge_initial_results.outcome != 'success' || steps.rerun_failed_tests.outcome != 'success'
                 run: |
                     mkdir -p logs
                     docker logs spryker_ci_backoffice_eu_1 > logs/backoffice_app.log 2>&1
@@ -309,7 +309,7 @@ jobs:
                     cp -r .robot/results/* robot-results/ 2>/dev/null || true
 
             -   name: Upload PHP logs & report
-                if: steps.merge_initial_results.outcome != 'success' || steps.rerun_failed_tests.outcome != 'success'
+                if: always() && steps.merge_initial_results.outcome != 'success' || steps.rerun_failed_tests.outcome != 'success'
                 uses: actions/upload-artifact@v5
                 with:
                     name: robot-ui-failed-artifacts
