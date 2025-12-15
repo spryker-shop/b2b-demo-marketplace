@@ -7,6 +7,9 @@ environment: docker.dev
 image:
     tag: spryker/php:8.4
     php:
+        ini:
+            max_execution_time: 300
+            request_terminate_timeout: 300
         enabled-extensions:
             - otel
     environment:
@@ -93,6 +96,10 @@ groups:
                         region: EU
             gluestorefront_eu: # custom name to differentiate between two applications, incorrect for the cloud usage
                 application: glue-storefront
+                limits:
+                    request-terminate-timeout: 5m
+                    http:
+                        timeout: 5m
                 endpoints:
                     glue-storefront.eu.spryker.local:
                         region: EU
