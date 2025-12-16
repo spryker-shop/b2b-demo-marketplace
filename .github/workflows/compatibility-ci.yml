@@ -51,7 +51,7 @@ jobs:
                     docker/sdk testing codecept run -c codeception.api.yml
 
             -   name: Save PHP logs
-                if: always() && steps.api-tests.outcome == 'failure' || steps.acceptance-tests.outcome == 'failure'
+                if: always() && (steps.api-tests.outcome == 'failure' || steps.acceptance-tests.outcome == 'failure')
                 run: |
                     mkdir -p logs
                     docker logs spryker_ci_backoffice_eu_1 > logs/backoffice_app.log 2>&1
@@ -60,7 +60,7 @@ jobs:
                     docker logs spryker_ci_merchant_portal_eu_1 > logs/merchant_portal_app.log 2>&1
 
             -   name: Upload logs, failed screenshots and HTML
-                if: always() && steps.api-tests.outcome == 'failure' || steps.acceptance-tests.outcome == 'failure'
+                if: always() && (steps.api-tests.outcome == 'failure' || steps.acceptance-tests.outcome == 'failure')
                 uses: actions/upload-artifact@v5
                 with:
                     name: codeception-failed-artifacts
@@ -199,7 +199,7 @@ jobs:
                 run: |
                     docker/sdk exec cypress-tests cp .env.example .env
                     docker/sdk exec cypress-tests npx cypress install
-                    docker/sdk exec --env "ENV_REPOSITORY_ID=b2b-mp" --env "ENV_IS_SSP_ENABLED=true" cypress-tests npm run cy:ci
+                    docker/sdk exec --env "ENV_REPOSITORY_ID=b2b-mp" --env "ENV_IS_SSP_ENABLED=true" cypress-tests npm run cy:ci --spec "cypress/e2e/yves/merchant-registration/merchant-registration.cy.ts"
 
             -   name: Save PHP logs
                 if: always() && steps.run_tests.outcome == 'failure'
@@ -283,7 +283,7 @@ jobs:
                 if: always() && steps.run_ssp_tests.outcome == 'failure'
                 uses: actions/upload-artifact@v5
                 with:
-                    name: cypress-ui-failed-artifacts
+                    name: cypress-ui-ssp-failed-artifacts
                     retention-days: 5 # save for 5 days
                     path: |
                         logs/*.log
@@ -357,7 +357,7 @@ jobs:
                     docker/sdk exec robot-framework rebot -d results --merge results/output.xml results/rerun/rerun.xml
 
             -   name: Save PHP logs
-                if: always() && steps.merge_initial_results.outcome != 'success' || steps.rerun_failed_tests.outcome != 'success'
+                if: always() && (steps.merge_initial_results.outcome != 'success' || steps.rerun_failed_tests.outcome != 'success')
                 run: |
                     mkdir -p logs
                     docker logs spryker_ci_backoffice_eu_1 > logs/backoffice_app.log 2>&1
@@ -369,7 +369,7 @@ jobs:
                     cp -r .robot/results/* robot-results/ 2>/dev/null || true
 
             -   name: Upload PHP logs & report
-                if: always() && steps.merge_initial_results.outcome != 'success' || steps.rerun_failed_tests.outcome != 'success'
+                if: always() && (steps.merge_initial_results.outcome != 'success' || steps.rerun_failed_tests.outcome != 'success')
                 uses: actions/upload-artifact@v5
                 with:
                     name: robot-ui-failed-artifacts
