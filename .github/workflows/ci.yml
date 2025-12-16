@@ -164,7 +164,7 @@ jobs:
                 if: always()
 
     php-84-mariadb-acceptance-alpine:
-        # needs: [js-validation, validation]
+        needs: [js-validation, validation]
         name: "Codeception / Acceptance & API"
         runs-on: ubuntu-latest
         env:
@@ -236,7 +236,7 @@ jobs:
                 if: always()
 
     php-84-mariadb-functional-alpine:
-        # needs: [validation]
+        needs: [validation]
         name: "Codeception / Functional Tests"
         runs-on: ubuntu-latest
         env:
@@ -269,7 +269,7 @@ jobs:
                 if: always()
 
     docker-alpine-php-84-mariadb-robot-api:
-        # needs: [validation]
+        needs: [validation]
         name: "Robot / API"
         runs-on: ubuntu-latest
         env:
@@ -340,7 +340,7 @@ jobs:
                 if: always()
 
     docker-alpine-php-84-mariadb-cypress:
-        # needs: [js-validation, validation]
+        needs: [js-validation, validation]
         name: "Cypress / UI"
         runs-on: ubuntu-latest
         env:
@@ -401,7 +401,7 @@ jobs:
                 if: always()
 
     docker-alpine-php-84-mariadb-robot-ui:
-        # needs: [js-validation, validation]
+        needs: [js-validation, validation]
         name: "Robot / UI"
         runs-on: ubuntu-latest
         env:
