@@ -37,7 +37,7 @@ jobs:
                     git clone --depth 1 https://github.com/spryker/docker-sdk.git ./docker
                     docker/sdk boot deploy.ci.acceptance.dynamic-store-off.yml
                     docker/sdk up -t
-                    docker/sdk cli composer dump-autoload -o -a --apcu
+                    docker/sdk cli composer dump-autoload -o -a --apcu -q
                     docker/sdk testing codecept fixtures
                     docker/sdk console queue:worker:start --stop-when-empty
 
@@ -95,7 +95,7 @@ jobs:
                     git clone --depth 1 https://github.com/spryker/docker-sdk.git ./docker
                     docker/sdk boot deploy.ci.functional.dynamic-store-off.yml
                     docker/sdk up -t
-                    docker/sdk cli composer dump-autoload -o -a --apcu
+                    docker/sdk cli composer dump-autoload -o -a --apcu -q
 
             -   name: Run Tests
                 run: docker/sdk testing codecept run -c codeception.ci.functional.yml
@@ -132,7 +132,7 @@ jobs:
                     docker/sdk boot deploy.ci.api.dynamic-store-off.robot.yml
                     sudo bash -c "echo '127.0.0.1 backend-api.at.spryker.local backend-api.de.spryker.local glue-backend.de.spryker.local glue-backend.at.spryker.local glue-storefront.de.spryker.local glue-storefront.at.spryker.local backend-gateway.at.spryker.local backend-gateway.de.spryker.local backoffice.at.spryker.local backoffice.de.spryker.local date-time-configurator-example.spryker.local glue.at.spryker.local glue.de.spryker.local yves.at.spryker.local yves.de.spryker.local mp.de.spryker.local mp.at.spryker.local' >> /etc/hosts"
                     docker/sdk up -t
-                    docker/sdk cli composer dump-autoload -o -a --apcu
+                    docker/sdk cli composer dump-autoload -o -a --apcu -q
                     APPLICATION_STORE=AT docker/sdk console queue:worker:start --stop-when-empty
             -   name: Run Tests
                 id: tests
@@ -179,6 +179,12 @@ jobs:
         steps:
             -   uses: actions/checkout@v4
 
+            - name: Remove unnecessary files to release disk space
+              run: |
+                  df -h /
+                  rm -rf /opt/hostedtoolcache
+                  df -h /
+
             -   uses: ramsey/composer-install@v3
                 with:
                     composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
@@ -196,13 +202,13 @@ jobs:
                     docker/sdk boot deploy.ci.acceptance.mariadb.dynamic-store-off.cypress.yml
                     sudo bash -c "echo '127.0.0.1 backend-api.at.spryker.local backend-api.de.spryker.local glue-backend.de.spryker.local glue-backend.at.spryker.local glue-storefront.de.spryker.local glue-storefront.at.spryker.local backend-gateway.at.spryker.local backend-gateway.de.spryker.local backoffice.at.spryker.local backoffice.de.spryker.local date-time-configurator-example.spryker.local glue.at.spryker.local glue.de.spryker.local yves.at.spryker.local yves.de.spryker.local mp.de.spryker.local mp.at.spryker.local' >> /etc/hosts"
                     docker/sdk up -t
-                    docker/sdk cli composer dump-autoload -o -a --apcu
+                    docker/sdk cli composer dump-autoload -o -a --apcu -q
             -   name: Run Tests
                 id: run_tests
                 run: |
                     docker/sdk exec cypress-tests cp .env.example .env
                     docker/sdk exec cypress-tests npx cypress install
-                    docker/sdk exec --env "ENV_REPOSITORY_ID=b2b-mp" --env "ENV_IS_SSP_ENABLED=true" cypress-tests npm run cy:ci:yves
+                    docker/sdk exec --env "ENV_REPOSITORY_ID=b2b-mp" --env "ENV_IS_SSP_ENABLED=true" cypress-tests npm run cy:ci
 
             -   name: Save PHP logs
                 if: always() && steps.run_tests.outcome == 'failure'
@@ -264,7 +270,7 @@ jobs:
                     docker/sdk boot deploy.ci.acceptance.mariadb.dynamic-store-off.cypress.yml
                     sudo bash -c "echo '127.0.0.1 backend-api.at.spryker.local backend-api.de.spryker.local glue-backend.de.spryker.local glue-backend.at.spryker.local glue-storefront.de.spryker.local glue-storefront.at.spryker.local backend-gateway.at.spryker.local backend-gateway.de.spryker.local backoffice.at.spryker.local backoffice.de.spryker.local date-time-configurator-example.spryker.local glue.at.spryker.local glue.de.spryker.local yves.at.spryker.local yves.de.spryker.local mp.de.spryker.local mp.at.spryker.local' >> /etc/hosts"
                     docker/sdk up -t
-                    docker/sdk cli composer dump-autoload -o -a --apcu
+                    docker/sdk cli composer dump-autoload -o -a --apcu -q
 
             -   name: Run Tests (SSP)
                 id: run_ssp_tests
@@ -331,7 +337,7 @@ jobs:
                     docker/sdk boot deploy.ci.acceptance.dynamic-store-off.robot.yml
                     sudo bash -c "echo '127.0.0.1 backend-api.at.spryker.local backend-api.de.spryker.local glue-backend.de.spryker.local glue-backend.at.spryker.local glue-storefront.de.spryker.local glue-storefront.at.spryker.local backend-gateway.at.spryker.local backend-gateway.de.spryker.local backoffice.at.spryker.local backoffice.de.spryker.local date-time-configurator-example.spryker.local glue.at.spryker.local glue.de.spryker.local yves.at.spryker.local yves.de.spryker.local mp.de.spryker.local mail.spryker.local mp.at.spryker.local' >> /etc/hosts"
                     docker/sdk up -t
-                    docker/sdk cli composer dump-autoload -o -a --apcu
+                    docker/sdk cli composer dump-autoload -o -a --apcu -q
             -   name: Custom commands
                 continue-on-error: false
                 run: |
