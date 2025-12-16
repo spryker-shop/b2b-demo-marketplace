@@ -41,12 +41,34 @@ jobs:
                     docker/sdk console queue:worker:start --stop-when-empty
 
             -   name: Run Acceptance Tests
+                id: acceptance-tests
                 run: |
                     docker/sdk testing codecept run -c codeception.acceptance.yml
 
             -   name: Run API Tests
+                id: api-tests
                 run: |
                     docker/sdk testing codecept run -c codeception.api.yml
+
+            -   name: Save PHP logs
+                if: always() && steps.api-tests.outcome == 'failure' || steps.acceptance-tests.outcome == 'failure'
+                run: |
+                    mkdir -p logs
+                    docker logs spryker_ci_backoffice_eu_1 > logs/backoffice_app.log 2>&1
+                    docker logs spryker_ci_glue_eu_1 > logs/glue_app.log 2>&1
+                    docker logs spryker_ci_yves_eu_1 > logs/yves_app.log 2>&1
+                    docker logs spryker_ci_merchant_portal_eu_1 > logs/merchant_portal_app.log 2>&1
+
+            -   name: Upload logs, failed screenshots and HTML
+                if: always() && steps.api-tests.outcome == 'failure' || steps.acceptance-tests.outcome == 'failure'
+                uses: actions/upload-artifact@v5
+                with:
+                    name: codeception-failed-artifacts
+                    retention-days: 5 # save for 5 days
+                    path: |
+                        logs/*.log
+                        tests/**/_output/**/*
+                        src/Spryker/**/tests/_output/*
 
             -   name: Slack Notification for failed job
                 uses: ./.github/actions/job-slack-notifications
@@ -179,6 +201,25 @@ jobs:
                     docker/sdk exec cypress-tests npx cypress install
                     docker/sdk exec --env "ENV_REPOSITORY_ID=b2b-mp" --env "ENV_IS_SSP_ENABLED=true" cypress-tests npm run cy:ci
 
+            -   name: Save PHP logs
+                if: always() && steps.run_tests.outcome == 'failure'
+                run: |
+                    mkdir -p logs
+                    docker logs spryker_ci_backoffice_eu_1 > logs/backoffice_app.log 2>&1
+                    docker logs spryker_ci_glue_eu_1 > logs/glue_app.log 2>&1
+                    docker logs spryker_ci_yves_eu_1 > logs/yves_app.log 2>&1
+                    docker logs spryker_ci_merchant_portal_eu_1 > logs/merchant_portal_app.log 2>&1
+                    docker logs spryker_ci_glue_backend_eu_1 > logs/glue_backend_eu.log 2>&1 || true
+
+            -   name: Upload PHP logs
+                if: always() && steps.run_tests.outcome == 'failure'
+                uses: actions/upload-artifact@v5
+                with:
+                    name: cypress-ui-failed-artifacts
+                    retention-days: 5 # save for 5 days
+                    path: |
+                        logs/*.log
+
             -   name: Upload artifacts
                 if: always() && steps.run_tests.outcome == 'failure'
                 run: |
@@ -227,6 +268,25 @@ jobs:
                     docker/sdk exec cypress-tests cp .env.example .env
                     docker/sdk exec cypress-tests npx cypress install
                     docker/sdk exec --env "ENV_REPOSITORY_ID=b2b-mp" --env "ENV_IS_SSP_ENABLED=true" cypress-tests npm run cy:ci:ssp
+
+            -   name: Save PHP logs
+                if: always() && steps.run_ssp_tests.outcome == 'failure'
+                run: |
+                    mkdir -p logs
+                    docker logs spryker_ci_backoffice_eu_1 > logs/backoffice_app.log 2>&1
+                    docker logs spryker_ci_glue_eu_1 > logs/glue_app.log 2>&1
+                    docker logs spryker_ci_yves_eu_1 > logs/yves_app.log 2>&1
+                    docker logs spryker_ci_merchant_portal_eu_1 > logs/merchant_portal_app.log 2>&1
+                    docker logs spryker_ci_glue_backend_eu_1 > logs/glue_backend_eu.log 2>&1 || true
+
+            -   name: Upload PHP logs
+                if: always() && steps.run_ssp_tests.outcome == 'failure'
+                uses: actions/upload-artifact@v5
+                with:
+                    name: cypress-ui-failed-artifacts
+                    retention-days: 5 # save for 5 days
+                    path: |
+                        logs/*.log
 
             -   name: Upload artifacts
                 if: always() && steps.run_ssp_tests.outcome == 'failure'

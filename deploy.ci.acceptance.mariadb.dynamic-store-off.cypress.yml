@@ -67,7 +67,7 @@ groups:
     EU:
         region: EU
         applications:
-            mportal:
+            merchant_portal_eu:
                 application: merchant-portal
                 endpoints:
                     mp.de.spryker.local:
@@ -83,7 +83,7 @@ groups:
                         services:
                             session:
                                 namespace: 8
-            yves:
+            yves_eu:
                 application: yves
                 endpoints:
                     date-time-configurator-example.spryker.local:
@@ -98,14 +98,14 @@ groups:
                         services:
                             session:
                                 namespace: 2
-            glue:
+            glue_eu:
                 application: glue
                 endpoints:
                     glue.de.spryker.local:
                         store: DE
                     glue.at.spryker.local:
                         store: AT
-            boffice:
+            backoffice_eu:
                 application: backoffice
                 endpoints:
                     backoffice.de.spryker.local:
@@ -127,7 +127,7 @@ groups:
                     backend-gateway.at.spryker.local:
                         store: AT
                         primal: true
-            backapi:
+            backend_gateway_eu:
                 application: zed
                 endpoints:
                     backend-api.de.spryker.local:
@@ -136,14 +136,14 @@ groups:
                     backend-api.at.spryker.local:
                         store: AT
                         entry-point: BackendApi
-            gluestorefront:
+            glue_storefront_eu:
                 application: glue-storefront
                 endpoints:
                     glue-storefront.de.spryker.local:
                         store: DE
                     glue-storefront.at.spryker.local:
                         store: AT
-            gluebackend:
+            glue_backend_eu:
                 application: glue-backend
                 limits:
                     request-terminate-timeout: 5m
@@ -175,6 +175,13 @@ services:
         engine: valkey
     key_value_store:
         engine: valkey
+        endpoints:
+            localhost:16379:
+                protocol: tcp
+    redis-gui:
+        engine: redis-commander
+        endpoints:
+            redis-commander.spryker.local:
     search:
         engine: opensearch
         version: '1.3'
@@ -188,7 +195,7 @@ docker:
     debug:
         enabled: false
         xdebug:
-            enabled: false
+            enabled: true
 
     testing:
         store: DE
@@ -198,6 +205,6 @@ docker:
             platforms:
                 - linux
 
-    compose:
-        yamls:
-            - tests/cypress-tests/docker-compose.cypress.yml
+#    compose:
+#        yamls:
+#            - tests/cypress-tests/docker-compose.cypress.yml
