@@ -73,6 +73,21 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
      */
     protected static array $stockEntitiesIndexedByName = [];
 
+    /**
+     * @var array<int>|null
+     */
+    protected static ?array $storeIds = null;
+
+    /**
+     * @var array<\Generated\Shared\Transfer\StoreTransfer>|null
+     */
+    protected static ?array $stores = null;
+
+    /**
+     * @var array<string, array<string>>|null
+     */
+    protected static ?array $storeToWarehouseMapping = null;
+
     protected ProductRepositoryInterface $productRepository;
 
     protected ProductBundleFacadeInterface $productBundleFacade;
@@ -97,7 +112,7 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
     {
         $stockEntity = $this->createOrUpdateStock($dataSet);
         $this->createOrUpdateProductStock($dataSet, $stockEntity);
-        $this->collectProductAbstractSku($dataSet);
+        $this->collectProductConcreteSku($dataSet);
         $this->updateAvailability($dataSet);
 
         if ($dataSet[static::COLUMN_IS_BUNDLE]) {
@@ -141,11 +156,16 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
             ->filterByFkProduct($idProductConcrete)
             ->filterByFkStock($stockEntity->getIdStock())
             ->findOneOrCreate();
+
         $stockProductEntity->fromArray($stockProductEntityTransfer->modifiedToArray());
+        if (!$stockProductEntity->isNew() && !$stockProductEntity->isModified()) {
+            return;
+        }
+
         $stockProductEntity->save();
     }
 
-    protected function collectProductAbstractSku(DataSetInterface $dataSet): void
+    protected function collectProductConcreteSku(DataSetInterface $dataSet): void
     {
         static::$productConcreteSkus[] = $dataSet[static::COLUMN_CONCRETE_SKU];
     }
@@ -186,18 +206,32 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
      */
     protected function getStoreIds(): array
     {
-        $storeIds = [];
-
-        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
-            $storeIds[] = $storeTransfer->getIdStoreOrFail();
+        if (static::$storeIds === null) {
+            foreach ($this->getAllStores() as $storeTransfer) {
+                static::$storeIds[] = $storeTransfer->getIdStoreOrFail();
+            }
         }
 
-        return $storeIds;
+        return static::$storeIds;
+    }
+
+    /**
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
+     */
+    protected function getAllStores(): array
+    {
+        if (static::$stores === null) {
+            foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
+                static::$stores[] = $storeTransfer;
+            }
+        }
+
+        return static::$stores;
     }
 
     protected function updateAvailability(DataSetInterface $dataSet): void
     {
-        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
+        foreach ($this->getAllStores() as $storeTransfer) {
             $this->updateAvailabilityForStore($dataSet, $storeTransfer);
         }
     }
@@ -245,7 +279,11 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
      */
     protected function getStoreWarehouses(string $storeName): array
     {
-        return $this->stockFacade->getStoreToWarehouseMapping()[$storeName] ?? [];
+        if (static::$storeToWarehouseMapping === null) {
+            static::$storeToWarehouseMapping = $this->stockFacade->getStoreToWarehouseMapping();
+        }
+
+        return static::$storeToWarehouseMapping[$storeName] ?? [];
     }
 
     /**
@@ -343,6 +381,10 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
         $spyAvailabilityEntity->setQuantity($availabilityData[static::KEY_AVAILABILITY_QUANTITY]);
         $spyAvailabilityEntity->setIsNeverOutOfStock($availabilityData[static::KEY_AVAILABILITY_IS_NEVER_OUT_OF_STOCK]);
 
+        if (!$spyAvailabilityEntity->isNew() && !$spyAvailabilityEntity->isModified()) {
+            return;
+        }
+
         $spyAvailabilityEntity->save();
     }
 
@@ -390,7 +432,10 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
 
         $availabilityAbstractEntity->setFkStore($idStore);
         $availabilityAbstractEntity->setQuantity((string)$sumQuantity);
-        $availabilityAbstractEntity->save();
+
+        if ($availabilityAbstractEntity->isNew() || $availabilityAbstractEntity->isModified()) {
+            $availabilityAbstractEntity->save();
+        }
 
         return $availabilityAbstractEntity;
     }
@@ -403,5 +448,6 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
 
         $this->flush();
         static::$productConcreteSkus = [];
+        static::$availabilityAbstractEntitiesIndexedByAbstractSkuAndIdStore = [];
     }
 }
