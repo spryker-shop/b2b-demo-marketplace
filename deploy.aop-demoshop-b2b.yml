@@ -43,7 +43,7 @@ tag: '1.0'
 environment: docker.demo
 
 image:
-    tag: spryker/php:8.2
+    tag: spryker/php:8.4
     environment:
         SPRYKER_DEFAULT_STORE: "DE"
         SPRYKER_ACTIVE_STORES: ""
@@ -74,6 +74,7 @@ image:
         enabled-extensions:
             - blackfire
             - newrelic
+            - otel
     node:
         version: 18
         npm: 9
@@ -155,7 +156,7 @@ groups:
 services:
     database:
         engine: mysql
-        version: mariadb-10.5
+        version: mariadb-11.8
         root:
             username: "root"
             password: "secret"
@@ -164,7 +165,7 @@ services:
                 protocol: tcp
     broker:
         engine: rabbitmq
-        version: '3.9'
+        version: '4.1'
         api:
             username: "spryker"
             password: "secret"
@@ -180,14 +181,14 @@ services:
             localhost:16379:
                 protocol: tcp
     search:
-        engine: elastic
-        version: '7.10'
+        engine: opensearch
+        version: '1.3'
         endpoints:
             localhost:9200:
                 protocol: tcp
     scheduler:
         engine: jenkins
-        version: '2.492.3'
+        version: '2.516.3'
         csrf-protection-enabled: true
         endpoints:
             scheduler.aop-b2b.demo-spryker.com:

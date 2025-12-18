@@ -18,6 +18,7 @@ use Spryker\Shared\Product\ProductConstants;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Shared\Queue\QueueConstants;
 use Spryker\Shared\Redis\RedisConstants;
+use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConstants;
 
 require 'config_default-docker.dev.php';
 
@@ -65,4 +66,30 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'root' => '/data',
         'path' => '/data/merchant-product-data-import-files',
     ],
+    'merchant-product-offer-data-import-files' => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/data',
+        'path' => '/data/merchant-product-offer-data-import-files',
+    ],
+    'ssp-inquiry' => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/',
+        'path' => '/data/files/',
+    ],
+    'ssp-asset-image' => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/',
+        'path' => '/data/ssp-asset-image',
+    ],
+    'ssp-model-image' => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/data',
+        'path' => '/data/ssp-model-image',
+    ],
+    'files' => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => APPLICATION_ROOT_DIR . '/data/DE/media/',
+        'path' => 'files/',
+    ],
 ];
+$config[SelfServicePortalConstants::STORAGE_NAME] = 'files';

@@ -37,6 +37,7 @@ use Spryker\Shared\Testify\TestifyConstants;
 use Spryker\Shared\WebProfiler\WebProfilerConstants;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
 use Spryker\Zed\OauthDummy\OauthDummyConfig;
+use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConstants;
 use SprykerShop\Shared\CalculationPage\CalculationPageConstants;
 use SprykerShop\Shared\ErrorPage\ErrorPageConstants;
 use SprykerShop\Shared\ShopApplication\ShopApplicationConstants;
@@ -86,6 +87,7 @@ $config[ErrorHandlerConstants::ERROR_LEVEL] = getenv('SPRYKER_DEBUG_DEPRECATIONS
 // >>> STORAGE
 
 $config[RedisConstants::REDIS_IS_DEV_MODE] = getenv('SPRYKER_REDIS_IS_DEV_MODE') !== false ? getenv('SPRYKER_REDIS_IS_DEV_MODE') : true;
+$config[RedisConstants::REDIS_COMPRESSION_ENABLED] = getenv('SPRYKER_KEY_VALUE_COMPRESSING_ENABLED') ?: false;
 
 // >>> QUEUE
 
@@ -151,6 +153,7 @@ if (!getenv('SPRYKER_SSL_ENABLE')) {
         = $config[NewsletterConstants::BASE_URL_YVES]
         = $config[MerchantRelationshipConstants::BASE_URL_YVES]
         = $config[MerchantRelationRequestConstants::BASE_URL_YVES]
+        = $config[SelfServicePortalConstants::BASE_URL_YVES]
         = sprintf(
             'http://%s%s',
             $yvesHost,
@@ -227,5 +230,37 @@ if (!getenv('SPRYKER_S3_MERCHANT_PRODUCT_DATA_IMPORT_FILES_BUCKET')) {
         'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
         'root' => '/data',
         'path' => '/data/merchant-product-data-import-files',
+    ];
+
+    $config[FileSystemConstants::FILESYSTEM_SERVICE]['merchant-product-offer-data-import-files'] = [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/data',
+        'path' => '/data/merchant-product-offer-data-import-files',
+    ];
+}
+
+if (!getenv('SPRYKER_S3_SSP_ASSETS_BUCKET')) {
+    $config[FileSystemConstants::FILESYSTEM_SERVICE]['ssp-inquiry'] = [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/data',
+        'path' => '/data/ssp-inquiry',
+    ];
+
+    $config[FileSystemConstants::FILESYSTEM_SERVICE]['ssp-files'] = [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/data',
+        'path' => '/data/ssp-files',
+    ];
+
+    $config[FileSystemConstants::FILESYSTEM_SERVICE]['ssp-asset-image'] = [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/data',
+        'path' => '/data/ssp-asset-image',
+    ];
+
+    $config[FileSystemConstants::FILESYSTEM_SERVICE]['ssp-model-image'] = [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/data',
+        'path' => '/data/ssp-model-image',
     ];
 }

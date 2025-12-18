@@ -82,6 +82,9 @@ use Spryker\Zed\ProductMerchantPortalGui\Communication\Plugin\AclMerchantPortal\
 use Spryker\Zed\ProductOffer\Communication\Plugin\AclMerchantPortal\ProductOfferAclEntityConfigurationExpanderPlugin;
 use Spryker\Zed\ProductOffer\Communication\Plugin\AclMerchantPortal\ProductOfferMerchantAclEntityRuleExpanderPlugin;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Plugin\AclMerchantPortal\ProductOfferMerchantPortalGuiMerchantAclRuleExpanderPlugin;
+use Spryker\Zed\ProductOfferServicePoint\Communication\Plugin\AclMerchantPortal\ProductOfferServicePointAclEntityConfigurationExpanderPlugin;
+use Spryker\Zed\ProductOfferServicePointMerchantPortalGui\Communication\Plugin\AclMerchantPortal\ProductOfferServicePointMerchantPortalGuiMerchantAclRuleExpanderPlugin;
+use Spryker\Zed\ProductOfferShipmentType\Communication\Plugin\AclMerchantPortal\ProductOfferShipmentTypeAclEntityConfigurationExpanderPlugin;
 use Spryker\Zed\ProductOfferStock\Communication\Plugin\AclMerchantPortal\ProductOfferStockAclEntityConfigurationExpanderPlugin;
 use Spryker\Zed\ProductOfferValidity\Communication\Plugin\AclMerchantPortal\ProductOfferValidityAclEntityConfigurationExpanderPlugin;
 use Spryker\Zed\ProductOption\Communication\Plugin\AclMerchantPortal\ProductOptionAclEntityConfigurationExpanderPlugin;
@@ -98,7 +101,9 @@ use Spryker\Zed\SalesMerchantPortalGui\Communication\Plugin\AclMerchantPortal\Sa
 use Spryker\Zed\SalesOrderThreshold\Communication\Plugin\AclMerchantPortal\SalesOrderThresholdAclEntityConfigurationExpanderPlugin;
 use Spryker\Zed\SalesPaymentMerchant\Communication\Plugin\AclMerchantPortal\SalesPaymentMerchantAclEntityConfigurationExpanderPlugin;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Plugin\AclMerchantPortal\SecurityMerchantPortalGuiMerchantUserAclRuleExpanderPlugin;
+use Spryker\Zed\ServicePoint\Communication\Plugin\AclMerchantPortal\ServiceAclEntityConfigurationExpanderPlugin;
 use Spryker\Zed\Shipment\Communication\Plugin\AclMerchantPortal\ShipmentAclEntityConfigurationExpanderPlugin;
+use Spryker\Zed\ShipmentType\Communication\Plugin\AclMerchantPortal\ShipmentTypeAclEntityConfigurationExpanderPlugin;
 use Spryker\Zed\StateMachine\Communication\Plugin\AclMerchantPortal\StateMachineAclEntityConfigurationExpanderPlugin;
 use Spryker\Zed\Stock\Communication\Plugin\AclMerchantPortal\StockAclEntityConfigurationExpanderPlugin;
 use Spryker\Zed\Store\Communication\Plugin\AclMerchantPortal\StoreAclEntityConfigurationExpanderPlugin;
@@ -128,6 +133,7 @@ class AclMerchantPortalDependencyProvider extends SprykerAclMerchantPortalDepend
             new MerchantRelationshipMerchantPortalGuiMerchantAclRuleExpanderPlugin(),
             new MerchantAppMerchantPortalGuiMerchantAclRuleExpanderPlugin(),
             new DataImportMerchantPortalGuiMerchantAclRuleExpanderPlugin(),
+            new ProductOfferServicePointMerchantPortalGuiMerchantAclRuleExpanderPlugin(),
         ];
     }
 
@@ -251,6 +257,11 @@ class AclMerchantPortalDependencyProvider extends SprykerAclMerchantPortalDepend
             new SalesMerchantCommissionAclEntityConfigurationExpanderPlugin(),
             new UserMultiFactorAuthAclEntityConfigurationExpanderPlugin(),
             new DataImportMerchantFileAclEntityConfigurationExpanderPlugin(),
+            new ServiceAclEntityConfigurationExpanderPlugin(),
+            new ProductOfferServicePointAclEntityConfigurationExpanderPlugin(),
+            new ServiceAclEntityConfigurationExpanderPlugin(),
+            new ProductOfferShipmentTypeAclEntityConfigurationExpanderPlugin(),
+            new ShipmentTypeAclEntityConfigurationExpanderPlugin(),
         ];
     }
 }

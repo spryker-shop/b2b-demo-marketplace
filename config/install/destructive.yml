@@ -45,6 +45,16 @@ sections:
         queue-setup:
             command: 'vendor/bin/console queue:setup'
 
+    setup-minimal-data:
+        import-demodata:
+            command: 'vendor/bin/console data:import --config=data/import/local/store_${SPRYKER_CURRENT_REGION}.yml'
+
+    clear-and-init-search:
+        clean-search:
+            command: 'vendor/bin/console elasticsearch:index:delete -vvv --no-ansi'
+        setup-search-create-sources:
+            command: 'vendor/bin/console search:setup:sources -vvv --no-ansi'
+
     demodata:
         import-demodata:
             command: 'vendor/bin/console data:import --config=data/import/local/full_${SPRYKER_CURRENT_REGION}.yml'
@@ -55,26 +65,8 @@ sections:
         check-product-validity:
             command: 'vendor/bin/console product:check-validity'
 
-    init-storage:
-        clean-search:
-            command: 'vendor/bin/console elasticsearch:index:delete -vvv --no-ansi'
-
-        setup-search-create-sources:
-            command: 'vendor/bin/console search:setup:sources -vvv --no-ansi'
-
+    scheduler-start:
         trigger-events:
             command: 'vendor/bin/console publish:trigger-events'
-
-    scheduler-start:
-        queue-setup:
-            command: 'vendor/bin/console queue:setup'
-
-        apply-scheduled-prices:
-            command: 'vendor/bin/console price-product-schedule:apply'
-
-        run-queue-worker:
-            command: 'vendor/bin/console queue:worker:start --stop-when-empty'
-            timeout: 2000
-
         scheduler-setup:
             command: 'vendor/bin/console scheduler:setup -vvv --no-ansi || true'

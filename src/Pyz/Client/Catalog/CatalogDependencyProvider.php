@@ -28,6 +28,7 @@ use Spryker\Client\CatalogPriceProductConnector\Plugin\ProductPriceQueryExpander
 use Spryker\Client\CategoryStorage\Plugin\Catalog\ResultFormatter\CategorySuggestionsSearchHttpResultFormatterPlugin;
 use Spryker\Client\CategoryStorage\Plugin\Catalog\ResultFormatter\CategoryTreeFilterSearchHttpResultFormatterPlugin;
 use Spryker\Client\CategoryStorage\Plugin\Elasticsearch\ResultFormatter\CategoryTreeFilterPageSearchResultFormatterPlugin;
+use Spryker\Client\CmsPageSearch\Plugin\Search\SearchHttp\ResultFormatter\CmsPageSuggestionsSearchHttpResultFormatterPlugin;
 use Spryker\Client\CustomerCatalog\Plugin\Search\ProductListQueryExpanderPlugin as CustomerCatalogProductListQueryExpanderPlugin;
 use Spryker\Client\MerchantProductOfferSearch\Plugin\Search\MerchantReferenceQueryExpanderPlugin;
 use Spryker\Client\MerchantProductSearch\Plugin\Search\MerchantReferenceQueryExpanderPlugin as MerchantProductReferenceQueryExpanderPlugin;
@@ -69,6 +70,8 @@ use Spryker\Client\SearchHttp\Plugin\Catalog\ResultFormatter\SpellingSuggestionS
 use Spryker\Client\SearchHttp\Plugin\Search\ProductConcreteCatalogSearchHttpResultFormatterPlugin;
 use Spryker\Client\SearchHttp\Plugin\Search\SearchHttpSearchResultCountPlugin;
 use Spryker\Shared\SearchHttp\SearchHttpConfig;
+use SprykerFeature\Client\SelfServicePortal\Plugin\Catalog\ProductClassFacetConfigTransferBuilderPlugin;
+use SprykerFeature\Client\SelfServicePortal\Plugin\Catalog\SspAssetQueryExpanderPlugin;
 
 class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
 {
@@ -81,6 +84,7 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
             new CategoryFacetConfigTransferBuilderPlugin(),
             new RatingFacetConfigTransferBuilderPlugin(),
             new ProductLabelFacetConfigTransferBuilderPlugin(),
+            new ProductClassFacetConfigTransferBuilderPlugin(),
         ];
     }
 
@@ -125,6 +129,7 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
             new IsActiveInDateRangeQueryExpanderPlugin(),
             new CustomerCatalogProductListQueryExpanderPlugin(),
             new MerchantReferenceQueryExpanderPlugin(),
+            new SspAssetQueryExpanderPlugin(),
 
             /*
              * FacetQueryExpanderPlugin needs to be after other query expanders which filters down the results.
@@ -239,6 +244,7 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
                 new PriceFacetConfigTransferBuilderPlugin(),
                 new RatingFacetConfigTransferBuilderPlugin(),
                 new ProductLabelSearchHttpFacetConfigTransferBuilderPlugin(),
+                new ProductClassFacetConfigTransferBuilderPlugin(),
             ],
         ];
     }
@@ -291,6 +297,19 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
                     new ProductSuggestionSearchHttpResultFormatterPlugin(),
                 ),
                 new CategorySuggestionsSearchHttpResultFormatterPlugin(),
+                new CmsPageSuggestionsSearchHttpResultFormatterPlugin(),
+            ],
+        ];
+    }
+
+    /**
+     * @return array<string, array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface>>
+     */
+    protected function createCatalogSearchCountQueryExpanderPluginVariants(): array
+    {
+        return [
+            SearchHttpConfig::TYPE_SEARCH_HTTP => [
+                new ProductPriceSearchHttpQueryExpanderPlugin(),
             ],
         ];
     }

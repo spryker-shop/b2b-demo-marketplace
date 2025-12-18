@@ -5,7 +5,7 @@ tag: '1.0'
 
 environment: docker.production
 image:
-    tag: spryker/php:8.3
+    tag: spryker/php:8.4
     environment:
         SPRYKER_PRODUCT_CONFIGURATOR_HOST: dtc.spryker-b2bmp.cloud.spryker.toys
         SPRYKER_PRODUCT_CONFIGURATOR_PORT: 443
@@ -113,7 +113,7 @@ groups:
 services:
     database:
         engine: mysql
-        version: mariadb-10.4
+        version: mariadb-11.8
         root:
             username: 'root'
             password: 'secret'
@@ -122,7 +122,7 @@ services:
                 protocol: tcp
     broker:
         engine: rabbitmq
-        version: '3.9'
+        version: '4.1'
         api:
             username: 'spryker'
             password: 'secret'
@@ -138,14 +138,14 @@ services:
             localhost:16379:
                 protocol: tcp
     search:
-        engine: elastic
-        version: '7.10'
+        engine: opensearch
+        version: '1.3'
         endpoints:
             localhost:9200:
                 protocol: tcp
     scheduler:
         engine: jenkins
-        version: '2.492.3'
+        version: '2.516.3'
         endpoints:
             scheduler.spryker-b2bmp.cloud.spryker.toys:
     mail_catcher:
