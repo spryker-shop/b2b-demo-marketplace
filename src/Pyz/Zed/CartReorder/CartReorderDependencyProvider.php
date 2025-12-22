@@ -59,16 +59,6 @@ use Spryker\Zed\Store\Communication\Plugin\CartReorder\CurrentStoreCartReorderVa
 class CartReorderDependencyProvider extends SprykerCartReorderDependencyProvider
 {
     /**
-     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderValidatorPluginInterface>
-     */
-    protected function getCartReorderValidatorPlugins(): array
-    {
-        return [
-            new CurrentStoreCartReorderValidatorPlugin(),
-        ];
-    }
-
-    /**
      * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderRequestValidatorPluginInterface>
      */
     protected function getCartReorderRequestValidatorPlugins(): array
@@ -86,6 +76,16 @@ class CartReorderDependencyProvider extends SprykerCartReorderDependencyProvider
         return [
             new ReplacePersistentCartReorderQuoteProviderStrategyPlugin(),
             new NewPersistentCartReorderQuoteProviderStrategyPlugin(),
+        ];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderValidatorPluginInterface>
+     */
+    protected function getCartReorderValidatorPlugins(): array
+    {
+        return [
+            new CurrentStoreCartReorderValidatorPlugin(),
         ];
     }
 

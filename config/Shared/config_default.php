@@ -146,6 +146,7 @@ use Spryker\Zed\OauthAuth0\OauthAuth0Config;
 use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Payment\PaymentConfig;
 use Spryker\Zed\Propel\PropelConfig;
+use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConstants;
 use SprykerShop\Shared\AgentPage\AgentPageConstants;
 use SprykerShop\Shared\CustomerPage\CustomerPageConstants;
 use SprykerShop\Shared\SecurityBlockerPage\SecurityBlockerPageConstants;
@@ -179,6 +180,7 @@ $config[KernelConstants::CORE_NAMESPACES] = [
     'SprykerEco',
     'Spryker',
     'SprykerSdk',
+    'SprykerFeature',
 ];
 
 // >>> ROUTER
@@ -569,12 +571,18 @@ $config[LogConstants::EXCEPTION_LOG_FILE_PATH_YVES]
 
 // >>> QUEUE
 
+$config[QueueConstants::RESOURCE_AWARE_QUEUE_WORKER_ENABLED] = (bool)getenv('RESOURCE_AWARE_QUEUE_WORKER_ENABLED') ?? false;
+$config[QueueConstants::QUEUE_WORKER_FREE_MEMORY_BUFFER] = (int)getenv('QUEUE_WORKER_FREE_MEMORY_BUFFER') ?: 750;
+$config[QueueConstants::QUEUE_WORKER_MEMORY_READ_PROCESS_TIMEOUT] = (int)getenv('QUEUE_WORKER_MEMORY_READ_PROCESS_TIMEOUT') ?: 5;
+
 $config[EventBehaviorConstants::EVENT_BEHAVIOR_TRIGGERING_ACTIVE] = true;
 
 $config[EventConstants::MAX_RETRY_ON_FAIL] = 5;
 $config[QueueConstants::QUEUE_PROCESS_TRIGGER_INTERVAL_MICROSECONDS] = 1001;
 $config[QueueConstants::QUEUE_MESSAGE_CHUNK_SIZE_MAP] = json_decode(getenv('QUEUE_MESSAGE_CHUNK_SIZE_MAP') ?: '[]', true);
-
+$config[QueueConstants::RESOURCE_AWARE_QUEUE_WORKER_ENABLED] = (bool)getenv('RESOURCE_AWARE_QUEUE_WORKER_ENABLED') ?? false;
+$config[QueueConstants::QUEUE_WORKER_FREE_MEMORY_BUFFER] = (int)getenv('QUEUE_WORKER_FREE_MEMORY_BUFFER') ?: 750;
+$config[QueueConstants::QUEUE_WORKER_MEMORY_READ_PROCESS_TIMEOUT] = (int)getenv('QUEUE_WORKER_MEMORY_READ_PROCESS_TIMEOUT') ?: 5;
 $config[QueueConstants::QUEUE_ADAPTER_CONFIGURATION] = [
     EventConstants::EVENT_QUEUE => [
         QueueConfig::CONFIG_QUEUE_ADAPTER => RabbitMqAdapter::class,
@@ -703,8 +711,52 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'version' => 'latest',
         'region' => $awsRegion,
     ],
+    'ssp-inquiry' => [
+        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
+        'key' => getenv('SPRYKER_S3_SSP_CLAIM_KEY') ?: '',
+        'secret' => getenv('SPRYKER_S3_SSP_CLAIM_SECRET') ?: '',
+        'bucket' => getenv('SPRYKER_S3_SSP_CLAIM_BUCKET') ?: '',
+        'region' => getenv('AWS_REGION') ?: 'eu-central-1',
+        'version' => 'latest',
+        'root' => '/ssp-inquiry',
+        'path' => '',
+    ],
+    'ssp-files' => [
+        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
+        'key' => getenv('SPRYKER_S3_SSP_FILES_KEY') ?: '',
+        'secret' => getenv('SPRYKER_S3_SSP_FILES_SECRET') ?: '',
+        'bucket' => getenv('SPRYKER_S3_SSP_FILES_BUCKET') ?: '',
+        'region' => getenv('AWS_REGION') ?: 'eu-central-1',
+        'version' => 'latest',
+        'root' => '/files',
+        'path' => '',
+    ],
+    'ssp-asset-image' => [
+        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
+        'key' => getenv('SPRYKER_S3_SSP_ASSETS_KEY') ?: '',
+        'secret' => getenv('SPRYKER_S3_SSP_ASSETS_SECRET') ?: '',
+        'bucket' => getenv('SPRYKER_S3_SSP_ASSETS_BUCKET') ?: '',
+        'region' => getenv('AWS_REGION') ?: 'eu-central-1',
+        'version' => 'latest',
+        'root' => '/ssp-asset-image',
+        'path' => '',
+    ],
+    'ssp-model-image' => [
+        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
+        'key' => getenv('SPRYKER_S3_SSP_MODELS_KEY') ?: '',
+        'secret' => getenv('SPRYKER_S3_SSP_MODELS_SECRET') ?: '',
+        'bucket' => getenv('SPRYKER_S3_SSP_MODELS_BUCKET') ?: '',
+        'region' => getenv('AWS_REGION') ?: 'eu-central-1',
+        'version' => 'latest',
+        'root' => '/ssp-model-image',
+        'path' => '',
+    ],
 ];
 $config[FileManagerConstants::STORAGE_NAME] = 'files';
+$config[SelfServicePortalConstants::STORAGE_NAME] = 'ssp-files';
+$config[SelfServicePortalConstants::INQUIRY_STORAGE_NAME] = 'ssp-inquiry';
+$config[SelfServicePortalConstants::ASSET_STORAGE_NAME] = 'ssp-asset-image';
+$config[SelfServicePortalConstants::SSP_MODEL_IMAGE_STORAGE_NAME] = 'ssp-model-image';
 $config[MerchantProductDataImportConstants::FILE_SYSTEM_NAME] = 'merchant-product-data-import-files';
 $config[MerchantProductOfferDataImportConstants::FILE_SYSTEM_NAME] = 'merchant-product-offer-data-import-files';
 $config[FileManagerGuiConstants::DEFAULT_FILE_MAX_SIZE] = '10M';
@@ -765,6 +817,7 @@ $config[ApplicationConstants::BASE_URL_YVES]
     = $config[NewsletterConstants::BASE_URL_YVES]
     = $config[MerchantRelationshipConstants::BASE_URL_YVES]
     = $config[MerchantRelationRequestConstants::BASE_URL_YVES]
+    = $config[SelfServicePortalConstants::BASE_URL_YVES]
     = sprintf(
         'https://%s%s',
         $yvesHost,
@@ -1050,3 +1103,8 @@ if ($isTestifyConstantsClassExists) {
 }
 
 $config[RedisConstants::REDIS_COMPRESSION_ENABLED] = getenv('SPRYKER_KEY_VALUE_COMPRESSING_ENABLED') ?: true;
+
+// Self-Service Portal
+$config[SelfServicePortalConstants::DEFAULT_TOTAL_FILE_MAX_SIZE] = getenv('SPRYKER_SSP_DEFAULT_TOTAL_FILE_MAX_SIZE') ?: '100M';
+$config[SelfServicePortalConstants::DEFAULT_FILE_MAX_SIZE] = getenv('SPRYKER_SSP_DEFAULT_FILE_MAX_SIZE') ?: '10M';
+$config[SelfServicePortalConstants::GOOGLE_MAPS_API_KEY] = getenv('SPRYKER_GOOGLE_MAPS_API_KEY') ?: '';

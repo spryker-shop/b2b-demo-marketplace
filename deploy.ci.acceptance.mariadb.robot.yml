@@ -26,7 +26,7 @@ image:
         npm: 9
 
 composer:
-    mode: '--no-dev --quiet -o -a'
+    mode: '--quiet -o -a'
     autoload: '--classmap-authoritative -o'
 
 regions:
@@ -90,12 +90,6 @@ groups:
                     backend-gateway.eu.spryker.local:
                         region: EU
                         primal: true
-            backend_api_eu:
-                application: zed
-                endpoints:
-                    backend-api.eu.spryker.local:
-                        region: EU
-                        entry-point: BackendApi
             glue_storefront_eu:
                 application: glue-storefront
                 endpoints:

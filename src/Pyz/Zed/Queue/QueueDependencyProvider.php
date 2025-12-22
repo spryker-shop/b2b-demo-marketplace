@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\Queue;
 
+use Pyz\Shared\SelfServicePortal\SelfServicePortalConfig;
 use Spryker\Shared\AssetStorage\AssetStorageConfig;
 use Spryker\Shared\AvailabilityStorage\AvailabilityStorageConfig;
 use Spryker\Shared\AvailabilityStorage\AvailabilityStorageConstants;
@@ -36,6 +37,8 @@ use Spryker\Shared\PriceProductStorage\PriceProductStorageConstants;
 use Spryker\Shared\ProductConfigurationStorage\ProductConfigurationStorageConfig;
 use Spryker\Shared\ProductImageStorage\ProductImageStorageConfig;
 use Spryker\Shared\ProductOfferAvailabilityStorage\ProductOfferAvailabilityStorageConfig;
+use Spryker\Shared\ProductOfferServicePointStorage\ProductOfferServicePointStorageConfig;
+use Spryker\Shared\ProductOfferShipmentTypeStorage\ProductOfferShipmentTypeStorageConfig;
 use Spryker\Shared\ProductOfferStorage\ProductOfferStorageConfig;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConfig;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
@@ -47,6 +50,9 @@ use Spryker\Shared\PublishAndSynchronizeHealthCheckStorage\PublishAndSynchronize
 use Spryker\Shared\Publisher\PublisherConfig;
 use Spryker\Shared\SalesReturnSearch\SalesReturnSearchConfig;
 use Spryker\Shared\SearchHttp\SearchHttpConfig;
+use Spryker\Shared\ServicePointSearch\ServicePointSearchConfig;
+use Spryker\Shared\ServicePointStorage\ServicePointStorageConfig;
+use Spryker\Shared\ShipmentTypeStorage\ShipmentTypeStorageConfig;
 use Spryker\Shared\ShoppingListStorage\ShoppingListStorageConfig;
 use Spryker\Shared\StoreStorage\StoreStorageConfig;
 use Spryker\Shared\TaxProductStorage\TaxProductStorageConfig;
@@ -58,6 +64,7 @@ use Spryker\Zed\Event\Communication\Plugin\Queue\EventRetryQueueMessageProcessor
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Queue\QueueDependencyProvider as SprykerDependencyProvider;
 use Spryker\Zed\RabbitMq\Communication\Plugin\Queue\RabbitMqQueueMessageCheckerPlugin;
+use Spryker\Zed\RabbitMq\Communication\Plugin\Queue\RabbitMqQueueMetricsReaderPlugin;
 use Spryker\Zed\Synchronization\Communication\Plugin\Queue\SynchronizationSearchQueueMessageProcessorPlugin;
 use Spryker\Zed\Synchronization\Communication\Plugin\Queue\SynchronizationStorageQueueMessageProcessorPlugin;
 use SprykerEco\Zed\Loggly\Communication\Plugin\LogglyLoggerQueueMessageProcessorPlugin;
@@ -124,6 +131,14 @@ class QueueDependencyProvider extends SprykerDependencyProvider
             ProductConfigurationStorageConfig::PRODUCT_CONFIGURATION_SYNC_STORAGE_QUEUE => new SynchronizationStorageQueueMessageProcessorPlugin(),
             SearchHttpConfig::SEARCH_HTTP_CONFIG_SYNC_QUEUE => new SynchronizationStorageQueueMessageProcessorPlugin(),
             UrlStorageConfig::PUBLISH_URL_RETRY => new EventRetryQueueMessageProcessorPlugin(),
+            SelfServicePortalConfig::QUEUE_NAME_SYNC_STORAGE_SSP_MODEL => new SynchronizationStorageQueueMessageProcessorPlugin(),
+            SelfServicePortalConfig::QUEUE_NAME_SYNC_STORAGE_SSP_ASSET => new SynchronizationStorageQueueMessageProcessorPlugin(),
+            SelfServicePortalConfig::QUEUE_NAME_SYNC_SEARCH_SSP_ASSET => new SynchronizationSearchQueueMessageProcessorPlugin(),
+            ServicePointSearchConfig::QUEUE_NAME_SYNC_SEARCH_SERVICE_POINT => new SynchronizationSearchQueueMessageProcessorPlugin(),
+            ServicePointStorageConfig::QUEUE_NAME_SYNC_STORAGE_SERVICE_POINT => new SynchronizationStorageQueueMessageProcessorPlugin(),
+            ShipmentTypeStorageConfig::QUEUE_NAME_SYNC_STORAGE_SHIPMENT_TYPE => new SynchronizationStorageQueueMessageProcessorPlugin(),
+            ProductOfferServicePointStorageConfig::QUEUE_NAME_SYNC_STORAGE_PRODUCT_OFFER_SERVICE => new SynchronizationStorageQueueMessageProcessorPlugin(),
+            ProductOfferShipmentTypeStorageConfig::PRODUCT_OFFER_SHIPMENT_TYPE_SYNC_STORAGE_QUEUE => new SynchronizationStorageQueueMessageProcessorPlugin(),
         ];
     }
 
@@ -138,5 +153,15 @@ class QueueDependencyProvider extends SprykerDependencyProvider
                 new RabbitMqQueueMessageCheckerPlugin(),
             ],
         );
+    }
+
+    /**
+     * @return array<\Spryker\Zed\RabbitMq\Communication\Plugin\Queue\RabbitMqQueueMetricsReaderPlugin>
+     */
+    protected function getQueueMetricsExpanderPlugins(): array
+    {
+        return [
+            new RabbitMqQueueMetricsReaderPlugin(),
+        ];
     }
 }

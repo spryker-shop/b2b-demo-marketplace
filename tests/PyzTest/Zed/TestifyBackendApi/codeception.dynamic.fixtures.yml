@@ -70,6 +70,19 @@ suites:
                 - \SprykerTest\Zed\ProductLabel\Helper\ProductLabelDataHelper
                 - \SprykerTest\Zed\Cms\Helper\CmsPageDataHelper
                 - \SprykerTest\Shared\CmsPagesRestApi\Helper\CmsPagesRestApiDataHelper
+                - \SprykerFeatureTest\Shared\SelfServicePortal\Helper\SelfServicePortalHelper
+                - \PyzTest\Shared\SelfServicePortal\Helper\SalesDataHelper
+                - \SprykerTest\Zed\Oms\Helper\OmsHelper
+                - \SprykerTest\Shared\ShipmentType\Helper\ShipmentTypeHelper
+                - \SprykerTest\Shared\Shipment\Helper\ShipmentMethodDataHelper
+                - \SprykerTest\Shared\FileManager\Helper\FileManagerHelper
+                - \SprykerFeatureTest\Shared\SelfServicePortal\Helper\SspModelHelper
+                - \SprykerTest\Shared\ServicePoint\Helper\ServicePointHelper
+                - \SprykerTest\Zed\ProductList\Helper\ProductListHelper
+                - \SprykerTest\Shared\ProductOfferShipmentType\Helper\ProductOfferShipmentTypeHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
+                - \SprykerTest\Shared\ProductOfferServicePoint\Helper\ProductOfferServiceHelper
+                - \SprykerTest\Shared\ShipmentTypeServicePoint\Helper\ShipmentTypeServicePointHelper
                 - \SprykerTest\Zed\Twig\Helper\TwigHelper:
                       twigPlugins:
                           - \Spryker\Zed\Application\Communication\Plugin\Twig\ApplicationTwigPlugin
@@ -84,3 +97,4 @@ suites:
                     cleanup: false
                 \SprykerTest\Shared\Customer\Helper\CustomerDataHelper:
                     isMailFacadeMockEnabled: false
+                    

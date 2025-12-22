@@ -36,17 +36,40 @@ jobs:
                     git clone --depth 1 https://github.com/spryker/docker-sdk.git ./docker
                     docker/sdk boot deploy.ci.acceptance.dynamic-store-off.yml
                     docker/sdk up -t
-                    docker/sdk cli composer dump-autoload -o -a --apcu
+                    docker/sdk cli composer dump-autoload -o -a --apcu -q
                     docker/sdk testing codecept fixtures
                     docker/sdk console queue:worker:start --stop-when-empty
 
             -   name: Run Acceptance Tests
+                id: acceptance-tests
                 run: |
                     docker/sdk testing codecept run -c codeception.acceptance.yml
 
             -   name: Run API Tests
+                id: api-tests
                 run: |
                     docker/sdk testing codecept run -c codeception.api.yml
+
+            -   name: Save PHP logs
+                if: always() && (steps.api-tests.outcome == 'failure' || steps.acceptance-tests.outcome == 'failure')
+                run: |
+                    mkdir -p logs
+                    docker logs spryker_ci_backoffice_eu_1 > logs/backoffice_app.log 2>&1
+                    docker logs spryker_ci_glue_eu_1 > logs/glue_app.log 2>&1
+                    docker logs spryker_ci_yves_eu_1 > logs/yves_app.log 2>&1
+                    docker logs spryker_ci_merchant_portal_eu_1 > logs/merchant_portal_app.log 2>&1
+                    echo "PHP logs saved. After upload, they will be available in GitHub Actions Artifacts as 'codeception-failed-artifacts'"
+
+            -   name: Upload logs, failed screenshots and HTML
+                if: always() && (steps.api-tests.outcome == 'failure' || steps.acceptance-tests.outcome == 'failure')
+                uses: actions/upload-artifact@v5
+                with:
+                    name: codeception-failed-artifacts
+                    retention-days: 5 # save for 5 days
+                    path: |
+                        logs/*.log
+                        tests/**/_output/**/*
+                        src/Spryker/**/tests/_output/*
 
             -   name: Slack Notification for failed job
                 uses: ./.github/actions/job-slack-notifications
@@ -71,7 +94,7 @@ jobs:
                     git clone --depth 1 https://github.com/spryker/docker-sdk.git ./docker
                     docker/sdk boot deploy.ci.functional.dynamic-store-off.yml
                     docker/sdk up -t
-                    docker/sdk cli composer dump-autoload -o -a --apcu
+                    docker/sdk cli composer dump-autoload -o -a --apcu -q
 
             -   name: Run Tests
                 run: docker/sdk testing codecept run -c codeception.ci.functional.yml
@@ -80,7 +103,7 @@ jobs:
                 uses: ./.github/actions/job-slack-notifications
                 if: always()
 
-    docker-debian-php-83-postgresql-robot-dynamic-store-off:
+    docker-debian-php-83-postgresql-robot-api-dms-off:
         if: >
             (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci'))
             || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
@@ -90,7 +113,6 @@ jobs:
             PROGRESS_TYPE: plain
             SPRYKER_PLATFORM_IMAGE: spryker/php:8.3-debian
             TRAVIS: 1
-            ROBOT_TESTS_ARTIFACTS_BUCKET_REGION: eu-west-1
         steps:
             -   uses: actions/checkout@v4
 
@@ -108,15 +130,35 @@ jobs:
                     docker/sdk boot deploy.ci.api.dynamic-store-off.robot.yml
                     sudo bash -c "echo '127.0.0.1 backend-api.at.spryker.local backend-api.de.spryker.local glue-backend.de.spryker.local glue-backend.at.spryker.local glue-storefront.de.spryker.local glue-storefront.at.spryker.local backend-gateway.at.spryker.local backend-gateway.de.spryker.local backoffice.at.spryker.local backoffice.de.spryker.local date-time-configurator-example.spryker.local glue.at.spryker.local glue.de.spryker.local yves.at.spryker.local yves.de.spryker.local mp.de.spryker.local mp.at.spryker.local' >> /etc/hosts"
                     docker/sdk up -t
-                    docker/sdk cli composer dump-autoload -o -a --apcu
+                    docker/sdk cli composer dump-autoload -o -a --apcu -q
                     APPLICATION_STORE=AT docker/sdk console queue:worker:start --stop-when-empty
             -   name: Run Tests
+                id: tests
                 run: |
                     docker/sdk exec robot-framework robot -v env:api_mp_b2b -v db_engine:psycopg2 -v docker:True --exclude skip-due-to-issueORskip-due-to-refactoring -d results -s robotframework.tests.api.mp_b2b .
-            -   name: Upload artifacts
-                if: failure()
+
+            -   name: Save PHP logs
+                if: always() && steps.tests.outcome == 'failure'
                 run: |
-                    AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp .robot/results/log.html s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/b2b-mp/dms-off/robot-api/${GITHUB_RUN_ID}/PHP8.3PostgresSQL/log.html
+                    mkdir -p logs
+                    docker logs spryker_ci_backoffice_eu_1 > logs/backoffice_app.log 2>&1 || true
+                    docker logs spryker_ci_glue_eu_1 > logs/glue_app.log 2>&1 || true
+                    docker logs spryker_ci_glue_backend_eu_1 > logs/glue_backend_eu.log 2>&1 || true
+                    docker logs spryker_ci_glue_storefront_eu_1 > logs/glue_storefront_eu.log 2>&1 || true
+                    mkdir -p robot-results
+                    cp -r .robot/results/* robot-results/ 2>/dev/null || true
+                    echo "PHP logs saved. After upload, they will be available in GitHub Actions Artifacts as 'robot-api-failed-artifacts'"
+
+            -   name: Upload PHP logs & report
+                if: always() && steps.tests.outcome == 'failure'
+                uses: actions/upload-artifact@v5
+                with:
+                    name: robot-api-failed-artifacts
+                    retention-days: 5 # save for 5 days
+                    path: |
+                        logs/*.log
+                        robot-results/report.html
+                        robot-results/log.html
 
             -   name: Slack Notification for failed job
                 uses: ./.github/actions/job-slack-notifications
@@ -136,10 +178,22 @@ jobs:
         steps:
             -   uses: actions/checkout@v4
 
-            -   name: Install cypress-tests folder
+            - name: Remove unnecessary files to release disk space
+              run: |
+                  df -h /
+                  rm -rf /opt/hostedtoolcache
+                  df -h /
+
+            -   uses: ramsey/composer-install@v3
+                with:
+                    composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
+
+            -   name: Configure sysctl limits
                 run: |
-                    cd ./data && composer require "spryker/cypress-tests:dev-master" --dev --no-interaction
-                    cp -r vendor/spryker/cypress-tests ../tests/cypress-tests
+                    sudo sysctl -w vm.swappiness=10
+                    sudo sysctl -w fs.file-max=262144
+                    sudo sysctl -w vm.max_map_count=262144
+                    ulimit -n 65536
 
             -   name: Install Project
                 run: |
@@ -147,18 +201,41 @@ jobs:
                     docker/sdk boot deploy.ci.acceptance.mariadb.dynamic-store-off.cypress.yml
                     sudo bash -c "echo '127.0.0.1 backend-api.at.spryker.local backend-api.de.spryker.local glue-backend.de.spryker.local glue-backend.at.spryker.local glue-storefront.de.spryker.local glue-storefront.at.spryker.local backend-gateway.at.spryker.local backend-gateway.de.spryker.local backoffice.at.spryker.local backoffice.de.spryker.local date-time-configurator-example.spryker.local glue.at.spryker.local glue.de.spryker.local yves.at.spryker.local yves.de.spryker.local mp.de.spryker.local mp.at.spryker.local' >> /etc/hosts"
                     docker/sdk up -t
-                    docker/sdk cli composer dump-autoload -o -a --apcu
+                    docker/sdk cli composer dump-autoload -o -a --apcu -q
             -   name: Run Tests
+                id: run_tests
                 run: |
                     docker/sdk exec cypress-tests cp .env.example .env
                     docker/sdk exec cypress-tests npx cypress install
-                    for i in 1 2; do
-                      docker/sdk exec --env "ENV_REPOSITORY_ID=b2b-mp" cypress-tests npm run cy:ci && s=0 && break || s=$? && echo "Test failed, retrying..."
-                      sleep 1
-                    done
-                    (exit $s)
-            -   name: Upload artifacts
+                    docker/sdk exec --env "ENV_REPOSITORY_ID=b2b-mp" --env "ENV_IS_SSP_ENABLED=true" cypress-tests npm run cy:ci
+
+            -   name: Upload Screenshots
                 if: failure()
+                run: |
+                    AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp .cypress s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/b2b-mp/dms-on/cypress/${GITHUB_RUN_ID}/PHP8.4MariaDB/ --recursive
+
+            -   name: Save PHP logs
+                if: always() && steps.run_tests.outcome == 'failure'
+                run: |
+                    mkdir -p logs
+                    docker logs spryker_ci_backoffice_eu_1 > logs/backoffice_app.log 2>&1
+                    docker logs spryker_ci_glue_eu_1 > logs/glue_app.log 2>&1
+                    docker logs spryker_ci_yves_eu_1 > logs/yves_app.log 2>&1
+                    docker logs spryker_ci_merchant_portal_eu_1 > logs/merchant_portal_app.log 2>&1
+                    docker logs spryker_ci_glue_backend_eu_1 > logs/glue_backend_eu.log 2>&1 || true
+                    echo "PHP logs saved. After upload, they will be available in GitHub Actions Artifacts as 'cypress-ui-failed-artifacts'"
+
+            -   name: Upload PHP logs
+                if: always() && steps.run_tests.outcome == 'failure'
+                uses: actions/upload-artifact@v5
+                with:
+                    name: cypress-ui-failed-artifacts
+                    retention-days: 5 # save for 5 days
+                    path: |
+                        logs/*.log
+
+            -   name: Upload artifacts
+                if: always() && steps.run_tests.outcome == 'failure'
                 run: |
                     AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp .cypress s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/b2b-mp/dms-off/cypress/${GITHUB_RUN_ID}/PHP8.4MariaDB/ --recursive
 
@@ -166,52 +243,74 @@ jobs:
                 uses: ./.github/actions/job-slack-notifications
                 if: always()
 
-#    docker-debian-php-83-postgresql-cypress-dynamic-store-off:
-#        if: >
-#            (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci'))
-#            || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-#        name: "Docker / Debian / PHP 8.3 / PostgreSql / Cypress / UI / Dynamic Store OFF"
-#        runs-on: ubuntu-latest
-#        env:
-#            PROGRESS_TYPE: plain
-#            SPRYKER_PLATFORM_IMAGE: spryker/php:8.3-debian
-#            TRAVIS: 1
-#            ROBOT_TESTS_ARTIFACTS_BUCKET_REGION: eu-west-1
-#        steps:
-#            -   uses: actions/checkout@v4
-#
-#            -   name: Install cypress-tests folder
-#                run: |
-#                    cd ./data && composer require "spryker/cypress-tests:dev-master" --dev --no-interaction
-#                    cp -r vendor/spryker/cypress-tests ../tests/cypress-tests
-#
-#            -   name: Install Project
-#                continue-on-error: true
-#                run: |
-#                    git clone --depth 1 https://github.com/spryker/docker-sdk.git ./docker
-#                    docker/sdk boot deploy.ci.acceptance.postgres.dynamic-store-off.cypress.yml
-#                    sudo bash -c "echo '127.0.0.1 backend-api.at.spryker.local backend-api.de.spryker.local glue-backend.de.spryker.local glue-backend.at.spryker.local glue-storefront.de.spryker.local glue-storefront.at.spryker.local backend-gateway.at.spryker.local backend-gateway.de.spryker.local backoffice.at.spryker.local backoffice.de.spryker.local date-time-configurator-example.spryker.local glue.at.spryker.local glue.de.spryker.local yves.at.spryker.local yves.de.spryker.local mp.de.spryker.local mp.at.spryker.local' >> /etc/hosts"
-#                    docker/sdk up -t
-#                    docker/sdk cli composer dump-autoload -o -a --apcu
-#
-#            -   name: Run Tests
-#                run: |
-#                    docker/sdk exec cypress-tests cp .env.example .env
-#                    docker/sdk exec cypress-tests npx cypress install
-#                    for i in 1 2; do
-#                      docker/sdk exec --env "ENV_REPOSITORY_ID=b2b-mp" cypress-tests npm run cy:ci && s=0 && break || s=$? && echo "Test failed, retrying..."
-#                      sleep 1
-#                    done
-#                    (exit $s)
-#
-#            -   name: Upload artifacts
-#                if: failure()
-#                run: |
-#                    AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp .cypress s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/b2b-mp/dms-off/cypress/${GITHUB_RUN_ID}/PHP8.4MariaDB/ --recursive
-#
-#            -   name: Slack Notification for failed job
-#                uses: ./.github/actions/job-slack-notifications
-#                if: always()
+    docker-alpine-php-84-mariadb-cypress-ssp-dynamic-store-off:
+        if: >
+            (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci'))
+            || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        name: "Docker / Alpine / PHP 8.4 / MariaDB / Cypress / SSP / Dynamic Store OFF"
+        runs-on: ubuntu-latest
+        env:
+            PROGRESS_TYPE: plain
+            SPRYKER_PLATFORM_IMAGE: spryker/php:8.4
+            TRAVIS: 1
+            ROBOT_TESTS_ARTIFACTS_BUCKET_REGION: eu-west-1
+        steps:
+            -   uses: actions/checkout@v4
+
+            -   uses: ramsey/composer-install@v3
+                with:
+                    composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
+
+            -   name: Configure sysctl limits
+                run: |
+                    sudo sysctl -w vm.swappiness=10
+                    sudo sysctl -w fs.file-max=262144
+                    sudo sysctl -w vm.max_map_count=262144
+                    ulimit -n 65536
+
+            -   name: Install Project
+                run: |
+                    git clone --depth 1 https://github.com/spryker/docker-sdk.git ./docker
+                    docker/sdk boot deploy.ci.acceptance.mariadb.dynamic-store-off.cypress.yml
+                    sudo bash -c "echo '127.0.0.1 backend-api.at.spryker.local backend-api.de.spryker.local glue-backend.de.spryker.local glue-backend.at.spryker.local glue-storefront.de.spryker.local glue-storefront.at.spryker.local backend-gateway.at.spryker.local backend-gateway.de.spryker.local backoffice.at.spryker.local backoffice.de.spryker.local date-time-configurator-example.spryker.local glue.at.spryker.local glue.de.spryker.local yves.at.spryker.local yves.de.spryker.local mp.de.spryker.local mp.at.spryker.local' >> /etc/hosts"
+                    docker/sdk up -t
+                    docker/sdk cli composer dump-autoload -o -a --apcu -q
+
+            -   name: Run Tests (SSP)
+                id: run_ssp_tests
+                run: |
+                    docker/sdk exec cypress-tests cp .env.example .env
+                    docker/sdk exec cypress-tests npx cypress install
+                    docker/sdk exec --env "ENV_REPOSITORY_ID=b2b-mp" --env "ENV_IS_SSP_ENABLED=true" cypress-tests npm run cy:ci:ssp
+
+            -   name: Upload Screenshots (SSP)
+                if: failure()
+                run: |
+                    AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp .cypress s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/b2b-mp/dms-on/cypress/${GITHUB_RUN_ID}/PHP8.4MariaDB/ --recursive
+
+            -   name: Save PHP logs
+                if: always() && steps.run_ssp_tests.outcome == 'failure'
+                run: |
+                    mkdir -p logs
+                    docker logs spryker_ci_backoffice_eu_1 > logs/backoffice_app.log 2>&1
+                    docker logs spryker_ci_glue_eu_1 > logs/glue_app.log 2>&1
+                    docker logs spryker_ci_yves_eu_1 > logs/yves_app.log 2>&1
+                    docker logs spryker_ci_merchant_portal_eu_1 > logs/merchant_portal_app.log 2>&1
+                    docker logs spryker_ci_glue_backend_eu_1 > logs/glue_backend_eu.log 2>&1 || true
+                    echo "PHP logs saved. After upload, they will be available in GitHub Actions Artifacts as 'cypress-ui-ssp-failed-artifacts'"
+
+            -   name: Upload PHP logs
+                if: always() && steps.run_ssp_tests.outcome == 'failure'
+                uses: actions/upload-artifact@v5
+                with:
+                    name: cypress-ui-ssp-failed-artifacts
+                    retention-days: 5 # save for 5 days
+                    path: |
+                        logs/*.log
+
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
 
     docker-alpine-php-83-postgresql-dynamic-store-off-robot-ui:
         if: >
@@ -242,7 +341,7 @@ jobs:
                     docker/sdk boot deploy.ci.acceptance.dynamic-store-off.robot.yml
                     sudo bash -c "echo '127.0.0.1 backend-api.at.spryker.local backend-api.de.spryker.local glue-backend.de.spryker.local glue-backend.at.spryker.local glue-storefront.de.spryker.local glue-storefront.at.spryker.local backend-gateway.at.spryker.local backend-gateway.de.spryker.local backoffice.at.spryker.local backoffice.de.spryker.local date-time-configurator-example.spryker.local glue.at.spryker.local glue.de.spryker.local yves.at.spryker.local yves.de.spryker.local mp.de.spryker.local mail.spryker.local mp.at.spryker.local' >> /etc/hosts"
                     docker/sdk up -t
-                    docker/sdk cli composer dump-autoload -o -a --apcu
+                    docker/sdk cli composer dump-autoload -o -a --apcu -q
             -   name: Custom commands
                 continue-on-error: false
                 run: |
@@ -251,12 +350,12 @@ jobs:
                 id: run_dynamic_tests
                 continue-on-error: true
                 run: |
-                    docker/sdk exec robot-framework pabot --processes 6 --ordering pabot_mp_b2b_ordering -v env:ui_mp_b2b -v docker:True -v headless:true -v ignore_console:false -v dms:false -v db_engine:psycopg2 -d results/dynamic_set --exclude skip-due-to-issueORskip-due-to-refactoringORstatic-set -s '*'.tests.parallel_ui.mp_b2b .
+                    docker/sdk exec robot-framework pabot --processes $(nproc) --ordering pabot_mp_b2b_ordering -v env:ui_mp_b2b -v docker:True -v headless:true -v ignore_console:false -v dms:false -v db_engine:psycopg2 -d results/dynamic_set -v is_ssp:true --exclude skip-due-to-issueORskip-due-to-refactoringORstatic-set -s '*'.tests.parallel_ui.mp_b2b .
             -   name: Run Static Tests Set
                 id: run_static_tests
                 continue-on-error: true
                 run: |
-                    docker/sdk exec robot-framework robot -v env:ui_mp_b2b -v docker:True -v headless:true -v ignore_console:false -v dms:false -v db_engine:psycopg2 -d results/static_set --exclude skip-due-to-issueORskip-due-to-refactoring --include static-set -s '*'.tests.parallel_ui.mp_b2b .
+                    docker/sdk exec robot-framework robot -v env:ui_mp_b2b -v docker:True -v headless:true -v ignore_console:false -v dms:false -v db_engine:psycopg2 -d results/static_set -v is_ssp:true --exclude skip-due-to-issueORskip-due-to-refactoring --include static-set -s '*'.tests.parallel_ui.mp_b2b .
             -   name: Merge Initial Test Results
                 id: merge_initial_results
                 continue-on-error: true
@@ -264,17 +363,38 @@ jobs:
                     docker/sdk exec robot-framework rebot -d results --output output.xml --merge results/dynamic_set/output.xml results/static_set/output.xml
             -   name: Rerun Failed Tests
                 id: rerun_failed_tests
-                if: always() && steps.merge_initial_results.outcome != 'success'
+                if: always() && (steps.run_dynamic_tests.outcome == 'failure' || steps.run_static_tests.outcome == 'failure')
+                continue-on-error: true
                 run: |
-                    docker/sdk exec robot-framework robot -v env:ui_mp_b2b -v docker:True -v dms:false -v db_engine:psycopg2 -v headless:true -v ignore_console:false -d results/rerun --runemptysuite --rerunfailed results/output.xml --output rerun.xml -s '*'.tests.parallel_ui.mp_b2b .
+                    docker/sdk exec robot-framework robot -v env:ui_mp_b2b -v docker:True -v dms:false -v db_engine:psycopg2 -v headless:true -v ignore_console:false -d results/rerun -v is_ssp:true --runemptysuite --rerunfailed results/output.xml --output rerun.xml -s '*'.tests.parallel_ui.mp_b2b .
             -   name: Merge Final Test Results
-                if: always() && steps.merge_initial_results.outcome != 'success'
+                if: always() && steps.rerun_failed_tests.outcome != 'skipped'
                 run: |
                     docker/sdk exec robot-framework rebot -d results --merge results/output.xml results/rerun/rerun.xml
-            -   name: Upload artifacts
-                if: failure()
+
+            -   name: Save PHP logs
+                if: always() && (steps.rerun_failed_tests.outcome == 'skipped' || steps.rerun_failed_tests.outcome == 'failure')
                 run: |
-                    AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp .robot/results/log.html s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/b2b-mp/dms-off/robot-ui/${GITHUB_RUN_ID}/PHP8.3PostgreSQL/log.html
+                    mkdir -p logs
+                    docker logs spryker_ci_backoffice_eu_1 > logs/backoffice_app.log 2>&1
+                    docker logs spryker_ci_glue_eu_1 > logs/glue_app.log 2>&1
+                    docker logs spryker_ci_yves_eu_1 > logs/yves_app.log 2>&1
+                    docker logs spryker_ci_merchant_portal_eu_1 > logs/merchant_portal_app.log 2>&1
+                    docker logs spryker_ci_glue_backend_eu_1 > logs/glue_backend_eu.log 2>&1 || true
+                    mkdir -p robot-results
+                    cp -r .robot/results/* robot-results/ 2>/dev/null || true
+                    echo "PHP logs saved. After upload, they will be available in GitHub Actions Artifacts as 'robot-ui-failed-artifacts'"
+
+            -   name: Upload PHP logs & report
+                if: always() && (steps.rerun_failed_tests.outcome == 'skipped' || steps.rerun_failed_tests.outcome == 'failure')
+                uses: actions/upload-artifact@v5
+                with:
+                    name: robot-ui-failed-artifacts
+                    retention-days: 5 # save for 5 days
+                    path: |
+                        logs/*.log
+                        robot-results/report.html
+                        robot-results/log.html
 
             -   name: Slack Notification for failed job
                 uses: ./.github/actions/job-slack-notifications

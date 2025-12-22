@@ -15,6 +15,15 @@ sections:
         generate-scope-collection-file:
             command: 'vendor/bin/console oauth:scope-collection-file:generate'
 
+        provider-processor-glue:
+            command: 'vendor/bin/glue api:generate'
+
+        provider-processor-glue-backend:
+            command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue api:generate'
+
+        provider-processor-glue-storefront:
+            command: 'GLUE_APPLICATION=GLUE_STOREFRONT vendor/bin/glue api:generate'
+
     cache:
         router-cache-warmup-yves:
             command: 'vendor/bin/yves router:cache:warm-up'
@@ -61,6 +70,9 @@ sections:
 
         propel-build:
             command: 'vendor/bin/console propel:model:build'
+
+        acl-entity-metadata-validate:
+            command: 'vendor/bin/console acl-entity:metadata:validate'
 
         propel-diff:
             command: 'vendor/bin/console propel:diff'

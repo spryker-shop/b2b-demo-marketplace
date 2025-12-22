@@ -35,7 +35,8 @@ use Spryker\Zed\SalesInvoice\Communication\Plugin\Mail\OrderInvoiceMailTypeBuild
 use Spryker\Zed\UserPasswordResetMail\Communication\Plugin\Mail\UserPasswordResetMailTypeBuilderPlugin;
 use Spryker\Zed\MailExtension\Dependency\Plugin\MailProviderPluginInterface;
 use Generated\Shared\Transfer\MailTransfer;
-
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Mail\SspInquiryApprovedMailTypeBuilderPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Mail\SspInquiryRejectedMailTypeBuilderPlugin;
 
 class MailDependencyProvider extends SprykerMailDependencyProvider
 {
@@ -100,6 +101,8 @@ class MailDependencyProvider extends SprykerMailDependencyProvider
             new CustomerEmailChangeNotificationMailTypePlugin(),
             new CustomerEmailMultiFactorAuthMailTypeBuilderPlugin(),
             new UserEmailMultiFactorAuthMailTypeBuilderPlugin(),
+            new SspInquiryApprovedMailTypeBuilderPlugin(),
+            new SspInquiryRejectedMailTypeBuilderPlugin(),
         ];
     }
 }

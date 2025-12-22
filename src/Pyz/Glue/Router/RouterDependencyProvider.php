@@ -10,6 +10,7 @@ declare(strict_types = 1);
 namespace Pyz\Glue\Router;
 
 use Spryker\Glue\GlueApplication\Plugin\Rest\GlueRouterPlugin;
+use Spryker\Glue\Router\Plugin\Router\SymfonyFrameworkRouterPlugin;
 use Spryker\Glue\Router\RouterDependencyProvider as SprykerRouterDependencyProvider;
 
 class RouterDependencyProvider extends SprykerRouterDependencyProvider
@@ -21,6 +22,7 @@ class RouterDependencyProvider extends SprykerRouterDependencyProvider
     {
         return [
             new GlueRouterPlugin(),
+            new SymfonyFrameworkRouterPlugin(),
         ];
     }
 }
