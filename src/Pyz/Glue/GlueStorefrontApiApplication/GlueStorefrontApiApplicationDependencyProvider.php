@@ -34,6 +34,7 @@ use Spryker\Glue\Router\Plugin\Application\RouterApplicationPlugin;
 use Spryker\Glue\StoresApi\Plugin\GlueApplication\StoreValidatorPlugin;
 use Spryker\Glue\StoresApi\Plugin\GlueStorefrontApiApplication\StoreApplicationPlugin;
 use Spryker\Glue\StoresApi\Plugin\GlueStorefrontApiApplication\StoresResource;
+use Spryker\Glue\WebProfiler\Plugin\Application\WebProfilerApplicationPlugin;
 
 class GlueStorefrontApiApplicationDependencyProvider extends SprykerGlueStorefrontApiApplicationDependencyProvider
 {
@@ -114,12 +115,18 @@ class GlueStorefrontApiApplicationDependencyProvider extends SprykerGlueStorefro
      */
     protected function getApplicationPlugins(): array
     {
-        return [
+        $plugins = [
             new HttpApplicationPlugin(),
             new StoreApplicationPlugin(),
             new LocaleApplicationPlugin(),
             new RouterApplicationPlugin(),
             new EventDispatcherApplicationPlugin(),
         ];
+
+        if (class_exists(WebProfilerApplicationPlugin::class)) {
+            $plugins[] = new WebProfilerApplicationPlugin();
+        }
+
+        return $plugins;
     }
 }
