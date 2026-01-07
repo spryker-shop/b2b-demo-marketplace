@@ -121,13 +121,14 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
             $this->productBundleFacade->updateAffectedBundlesAvailability($dataSet[static::COLUMN_CONCRETE_SKU]);
             $this->productBundleFacade->updateAffectedBundlesStock($dataSet[static::COLUMN_CONCRETE_SKU]);
         }
-        $this->runtimeFlush();
     }
 
     public function flush(): void
     {
         $this->triggerAvailabilityPublishEvents();
         $this->productRepository->flush();
+        static::$productConcreteSkus = [];
+        static::$availabilityAbstractEntitiesIndexedByAbstractSkuAndIdStore = [];
     }
 
     protected function createOrUpdateStock(DataSetInterface $dataSet): SpyStock
@@ -438,16 +439,5 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
         }
 
         return $availabilityAbstractEntity;
-    }
-
-    public function runtimeFlush(): void
-    {
-        if (count(static::$productConcreteSkus) < self::FLUSH_SIZE) {
-            return;
-        }
-
-        $this->flush();
-        static::$productConcreteSkus = [];
-        static::$availabilityAbstractEntitiesIndexedByAbstractSkuAndIdStore = [];
     }
 }
