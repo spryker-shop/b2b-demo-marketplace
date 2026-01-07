@@ -59,6 +59,8 @@ sections:
 
         provider-processor-glue-storefront:
             command: 'GLUE_APPLICATION=GLUE_STOREFRONT vendor/bin/glue api:generate'
+        generate-transfer-databuilders:
+            command: 'vendor/bin/console transfer:databuilder:generate'
 
     build-production:
         excluded: true
