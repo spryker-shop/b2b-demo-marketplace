@@ -121,6 +121,12 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
             $this->productBundleFacade->updateAffectedBundlesAvailability($dataSet[static::COLUMN_CONCRETE_SKU]);
             $this->productBundleFacade->updateAffectedBundlesStock($dataSet[static::COLUMN_CONCRETE_SKU]);
         }
+
+        if (count(static::$productConcreteSkus) < self::FLUSH_SIZE) {
+            return;
+        }
+
+        $this->flush();
     }
 
     public function flush(): void
@@ -159,9 +165,6 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
             ->findOneOrCreate();
 
         $stockProductEntity->fromArray($stockProductEntityTransfer->modifiedToArray());
-        if (!$stockProductEntity->isNew() && !$stockProductEntity->isModified()) {
-            return;
-        }
 
         $stockProductEntity->save();
     }
@@ -382,10 +385,6 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
         $spyAvailabilityEntity->setQuantity($availabilityData[static::KEY_AVAILABILITY_QUANTITY]);
         $spyAvailabilityEntity->setIsNeverOutOfStock($availabilityData[static::KEY_AVAILABILITY_IS_NEVER_OUT_OF_STOCK]);
 
-        if (!$spyAvailabilityEntity->isNew() && !$spyAvailabilityEntity->isModified()) {
-            return;
-        }
-
         $spyAvailabilityEntity->save();
     }
 
@@ -434,9 +433,7 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
         $availabilityAbstractEntity->setFkStore($idStore);
         $availabilityAbstractEntity->setQuantity((string)$sumQuantity);
 
-        if ($availabilityAbstractEntity->isNew() || $availabilityAbstractEntity->isModified()) {
-            $availabilityAbstractEntity->save();
-        }
+        $availabilityAbstractEntity->save();
 
         return $availabilityAbstractEntity;
     }
