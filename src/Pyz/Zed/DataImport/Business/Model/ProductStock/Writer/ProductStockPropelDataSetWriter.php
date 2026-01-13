@@ -36,27 +36,27 @@ use Spryker\Zed\Store\Business\StoreFacadeInterface;
 
 class ProductStockPropelDataSetWriter implements DataSetWriterInterface
 {
-    protected const FLUSH_SIZE = 200;
+    protected const int FLUSH_SIZE = 200;
 
-    protected const COLUMN_CONCRETE_SKU = ProductStockHydratorStep::COLUMN_CONCRETE_SKU;
+    protected const string COLUMN_CONCRETE_SKU = ProductStockHydratorStep::COLUMN_CONCRETE_SKU;
 
-    protected const COLUMN_IS_BUNDLE = ProductStockHydratorStep::COLUMN_IS_BUNDLE;
+    protected const string COLUMN_IS_BUNDLE = ProductStockHydratorStep::COLUMN_IS_BUNDLE;
 
-    protected const COLUMN_IS_NEVER_OUT_OF_STOCK = ProductStockHydratorStep::COLUMN_IS_NEVER_OUT_OF_STOCK;
+    protected const string COLUMN_IS_NEVER_OUT_OF_STOCK = ProductStockHydratorStep::COLUMN_IS_NEVER_OUT_OF_STOCK;
 
-    protected const KEY_AVAILABILITY_SKU = 'KEY_AVAILABILITY_SKU';
+    protected const string KEY_AVAILABILITY_SKU = 'KEY_AVAILABILITY_SKU';
 
-    protected const KEY_AVAILABILITY_QUANTITY = 'KEY_AVAILABILITY_QUANTITY';
+    protected const string KEY_AVAILABILITY_QUANTITY = 'KEY_AVAILABILITY_QUANTITY';
 
-    protected const KEY_AVAILABILITY_ID_STORE = 'KEY_AVAILABILITY_ID_STORE';
+    protected const string KEY_AVAILABILITY_ID_STORE = 'KEY_AVAILABILITY_ID_STORE';
 
-    protected const KEY_AVAILABILITY_IS_NEVER_OUT_OF_STOCK = 'KEY_AVAILABILITY_IS_NEVER_OUT_OF_STOCK';
+    protected const string KEY_AVAILABILITY_IS_NEVER_OUT_OF_STOCK = 'KEY_AVAILABILITY_IS_NEVER_OUT_OF_STOCK';
 
-    protected const KEY_AVAILABILITY_ID_AVAILABILITY_ABSTRACT = 'KEY_AVAILABILITY_ID_AVAILABILITY_ABSTRACT';
+    protected const string KEY_AVAILABILITY_ID_AVAILABILITY_ABSTRACT = 'KEY_AVAILABILITY_ID_AVAILABILITY_ABSTRACT';
 
-    protected const COL_AVAILABILITY_TOTAL_QUANTITY = 'availabilityTotalQuantity';
+    protected const string COL_AVAILABILITY_TOTAL_QUANTITY = 'availabilityTotalQuantity';
 
-    protected const COL_STOCK_PRODUCT_TOTAL_QUANTITY = 'stockProductTotalQuantity';
+    protected const string COL_STOCK_PRODUCT_TOTAL_QUANTITY = 'stockProductTotalQuantity';
 
     /**
      * @var array<string, array<int, \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract>>
