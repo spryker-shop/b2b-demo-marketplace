@@ -166,6 +166,10 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
 
         $stockProductEntity->fromArray($stockProductEntityTransfer->modifiedToArray());
 
+        if (!$stockProductEntity->isNew() && !$stockProductEntity->isModified()) {
+            return;
+        }
+
         $stockProductEntity->save();
     }
 
@@ -283,11 +287,7 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
      */
     protected function getStoreWarehouses(string $storeName): array
     {
-        if (static::$storeToWarehouseMapping === null) {
-            static::$storeToWarehouseMapping = $this->stockFacade->getStoreToWarehouseMapping();
-        }
-
-        return static::$storeToWarehouseMapping[$storeName] ?? [];
+        return $this->stockFacade->getStoreToWarehouseMapping()[$storeName] ?? [];
     }
 
     /**
@@ -385,6 +385,10 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
         $spyAvailabilityEntity->setQuantity($availabilityData[static::KEY_AVAILABILITY_QUANTITY]);
         $spyAvailabilityEntity->setIsNeverOutOfStock($availabilityData[static::KEY_AVAILABILITY_IS_NEVER_OUT_OF_STOCK]);
 
+        if (!$spyAvailabilityEntity->isNew() && !$spyAvailabilityEntity->isModified()) {
+            return;
+        }
+
         $spyAvailabilityEntity->save();
     }
 
@@ -433,7 +437,9 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
         $availabilityAbstractEntity->setFkStore($idStore);
         $availabilityAbstractEntity->setQuantity((string)$sumQuantity);
 
-        $availabilityAbstractEntity->save();
+        if ($availabilityAbstractEntity->isNew() || $availabilityAbstractEntity->isModified()) {
+            $availabilityAbstractEntity->save();
+        }
 
         return $availabilityAbstractEntity;
     }
