@@ -305,7 +305,7 @@ class CartDependencyProvider extends SprykerCartDependencyProvider
             new ConfiguredBundleQuantityPerSlotPreReloadItemsPlugin(),
             new FilterInactiveProductOfferPreReloadItemsPlugin(),
             new ProductApprovalPreReloadItemsPlugin(),
-            new SspServiceShipmentTypePreReloadItemsPlugin(),
+//            new SspServiceShipmentTypePreReloadItemsPlugin(),
             new SanitizeMerchantCommissionPreReloadPlugin(),
             new ResetAmendmentOrderReferencePreReloadItemsPlugin(),
             new ResetOriginalSalesOrderItemUnitPricesPreReloadItemsPlugin(),

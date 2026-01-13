@@ -87,7 +87,7 @@ class ShipmentDependencyProvider extends SprykerShipmentDependencyProvider
     protected function getMethodFilterPlugins(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
         return [
-            new ShipmentTypeShipmentMethodFilterPlugin(),
+//            new ShipmentTypeShipmentMethodFilterPlugin(),
         ];
     }
 }

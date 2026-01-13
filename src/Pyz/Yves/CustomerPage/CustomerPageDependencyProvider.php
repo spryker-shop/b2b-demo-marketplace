@@ -134,7 +134,7 @@ class CustomerPageDependencyProvider extends SprykerShopCustomerPageDependencyPr
     protected function getCheckoutAddressCollectionFormExpanderPlugins(): array
     {
         return [
-            new ShipmentTypeCheckoutAddressCollectionFormExpanderPlugin(),
+//            new ShipmentTypeCheckoutAddressCollectionFormExpanderPlugin(),
             new ServicePointCheckoutAddressCollectionFormExpanderPlugin(),
             new ServicePointAddressCheckoutAddressCollectionFormExpanderPlugin(),
             new ClickAndCollectServiceTypeCheckoutAddressCollectionFormExpanderPlugin(),
@@ -147,7 +147,7 @@ class CustomerPageDependencyProvider extends SprykerShopCustomerPageDependencyPr
     protected function getCheckoutMultiShippingAddressesFormExpanderPlugins(): array
     {
         return [
-            new ShipmentTypeCheckoutMultiShippingAddressesFormExpanderPlugin(),
+//            new ShipmentTypeCheckoutMultiShippingAddressesFormExpanderPlugin(),
             new ServicePointCheckoutMultiShippingAddressesFormExpanderPlugin(),
             new ClickAndCollectServiceTypeCheckoutMultiShippingAddressesFormExpanderPlugin(),
             new SingleAddressPerShipmentTypeCheckoutMultiShippingAddressesFormExpanderPlugin(),
@@ -161,7 +161,7 @@ class CustomerPageDependencyProvider extends SprykerShopCustomerPageDependencyPr
     {
         return [
             new MerchantShipmentCheckoutAddressStepPreGroupItemsByShipmentPlugin(),
-            new ShipmentTypeCheckoutAddressStepPreGroupItemsByShipmentPlugin(),
+//            new ShipmentTypeCheckoutAddressStepPreGroupItemsByShipmentPlugin(),
         ];
     }
 
