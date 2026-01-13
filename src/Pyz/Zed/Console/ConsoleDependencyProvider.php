@@ -204,6 +204,8 @@ use Spryker\Zed\ZedNavigation\Communication\Console\BuildNavigationConsole;
 use Spryker\Zed\ZedNavigation\Communication\Console\RemoveNavigationCacheConsole;
 use SprykerEco\Zed\NewRelic\Communication\Console\RecordDeploymentConsole;
 use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
+use SprykerSdk\Zed\AiDev\Communication\Console\GeneratePromptsConsole;
+use SprykerSdk\Zed\AiDev\Communication\Console\McpServerConsole;
 use SprykerShop\Zed\DateTimeConfiguratorPageExample\Communication\Console\DateTimeProductConfiguratorBuildFrontendConsole;
 
 /**
@@ -505,6 +507,8 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             $commands[] = new CustomerPasswordSetConsole();
             $commands[] = new TriggerEventFromCsvFileConsole();
             $commands[] = new MultiProcessRunConsole();
+            $commands[] = new McpServerConsole();
+            $commands[] = new GeneratePromptsConsole();
 
             if (class_exists(SecurityCheckerCommand::class)) {
                 $commands[] = new SecurityCheckerCommand();
