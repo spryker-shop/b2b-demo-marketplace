@@ -15,7 +15,6 @@ export default [
             '**/dist/',
             '**/node_modules/',
             'vendor/',
-            'src/Pyz/Zed/*/Presentation/Components/',
             '**/.angular/',
         ],
     },
@@ -97,7 +96,7 @@ export default [
     },
     // Configuration for Merchant Portal TypeScript files
     {
-        files: ['src/Pyz/*/src/Pyz/Zed/*/Presentation/Components/**/*.ts'],
+        files: ['src/Pyz/Zed/*/Presentation/Components/**/*.ts'],
         languageOptions: {
             parser: typescriptParser,
             parserOptions: {
@@ -165,7 +164,7 @@ export default [
     },
     // Configuration for Merchant Portal HTML templates
     {
-        files: ['src/Pyz/*/src/Pyz/Zed/*/Presentation/Components/**/*.html'],
+        files: ['src/Pyz/Zed/*/Presentation/Components/**/*.html'],
         languageOptions: {
             parser: angularEslint.templateParser,
         },
