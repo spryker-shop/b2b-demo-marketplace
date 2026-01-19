@@ -83,6 +83,6 @@ class SingleAddressPerShipmentTypePreSubmitHandler extends SprykerFeatureSingleA
 
     protected function isSameShipmentType(ItemTransfer $itemTransfer, string $currentShipmentTypeKey): bool
     {
-        return $itemTransfer->getShipmentType()?->getKey() ?? $currentShipmentTypeKey === SelfServicePortalConfig::SHIPMENT_TYPE_DELIVERY;
+        return ($itemTransfer->getShipmentType()?->getKey() ?? SelfServicePortalConfig::SHIPMENT_TYPE_DELIVERY) === $currentShipmentTypeKey;
     }
 }
