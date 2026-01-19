@@ -507,8 +507,11 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             $commands[] = new CustomerPasswordSetConsole();
             $commands[] = new TriggerEventFromCsvFileConsole();
             $commands[] = new MultiProcessRunConsole();
-            $commands[] = new McpServerConsole();
-            $commands[] = new GeneratePromptsConsole();
+
+            if (class_exists(McpServerConsole::class)) {
+                $commands[] = new McpServerConsole();
+                $commands[] = new GeneratePromptsConsole();
+            }
 
             if (class_exists(SecurityCheckerCommand::class)) {
                 $commands[] = new SecurityCheckerCommand();
