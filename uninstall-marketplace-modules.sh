@@ -1508,7 +1508,23 @@ for dir_entry in "${DIRECTORIES_TO_REMOVE[@]}"; do
 done
 echo ""
 
-echo "Step 69: Removing merchant-portal applications from deploy files..."
+echo "Step 69: Removing merchant-portal commands from docker.yml..."
+DOCKER_YML_FILE="config/install/docker.yml"
+if [ -f "$DOCKER_YML_FILE" ]; then
+    # Remove router-cache-warmup-merchant-portal section
+    sed -i.bak '/router-cache-warmup-merchant-portal:/,/command:/d' "$DOCKER_YML_FILE"
+    # Remove merchant-portal-build-frontend sections (both production and development)
+    sed -i.bak '/merchant-portal-build-frontend:/,/timeout:/d' "$DOCKER_YML_FILE"
+    # Clean up any leftover empty lines (more than 2 consecutive)
+    sed -i.bak '/^$/N;/^\n$/D' "$DOCKER_YML_FILE"
+    rm -f "${DOCKER_YML_FILE}.bak"
+    echo "✓ Removed merchant portal commands from docker.yml"
+else
+    echo "⚠ docker.yml file not found at $DOCKER_YML_FILE"
+fi
+echo ""
+
+echo "Step 70: Removing merchant-portal applications from deploy files..."
 DEPLOY_FILES=(
     "deploy.dev.yml"
     "deploy.yml"
@@ -1576,7 +1592,199 @@ for deploy_file in "${DEPLOY_FILES[@]}"; do
 done
 echo ""
 
-echo "Step 70: Running composer update to apply all changes..."
+# Create reusable Python config cleanup script
+create_config_cleanup_script() {
+    cat > /tmp/config_cleanup.py << 'PYTHON_SCRIPT'
+import re
+import sys
+import json
+
+def read_file(file_path):
+    """Read file content."""
+    with open(file_path, 'r') as f:
+        return f.read()
+
+def write_file(file_path, content):
+    """Write content to file."""
+    with open(file_path, 'w') as f:
+        f.write(content)
+
+def remove_use_statement(content, class_name):
+    """Remove use statement for a specific class."""
+    pattern = rf'use\s+[^;]*\\{re.escape(class_name)};\s*'
+    content = re.sub(pattern, '', content)
+    return content
+
+def remove_config_assignment(content, constant_pattern):
+    """Remove config assignment line."""
+    pattern = rf'^\s*\$config\[{re.escape(constant_pattern)}[^\]]*\]\s*=.*?;\s*$'
+    content = re.sub(pattern, '', content, flags=re.MULTILINE)
+    return content
+
+def remove_array_value(content, array_value):
+    """Remove array value from arrays (like dependency injector arrays)."""
+    # Match: 'value',
+    pattern = rf"\s*'{re.escape(array_value)}',\s*"
+    content = re.sub(pattern, '', content)
+    return content
+
+def remove_filesystem_config(content, filesystem_name):
+    """Remove filesystem configuration block."""
+    # Match: 'filesystem-name' => [ ... ],
+    pattern = rf"\s*'{re.escape(filesystem_name)}'\s*=>\s*\[[^\]]*\],\s*"
+    content = re.sub(pattern, '', content, flags=re.DOTALL)
+    return content
+
+def remove_section_comment(content, comment_pattern):
+    """Remove section comments."""
+    pattern = rf'^.*{re.escape(comment_pattern)}.*$'
+    content = re.sub(pattern, '', content, flags=re.MULTILINE)
+    return content
+
+def cleanup_content(content):
+    """Clean up multiple empty lines and ensure single newline at end."""
+    content = re.sub(r'\n{3,}', '\n\n', content)
+    content = content.rstrip() + '\n'
+    return content
+
+def process_config_file(config):
+    """Process configuration file based on configuration."""
+    file_path = config['file_path']
+    
+    content = read_file(file_path)
+    
+    # Apply all removal operations
+    for operation in config.get('operations', []):
+        op_type = operation['type']
+        
+        if op_type == 'remove_use':
+            content = remove_use_statement(content, operation['class_name'])
+        elif op_type == 'remove_config_assignment':
+            content = remove_config_assignment(content, operation['constant_pattern'])
+        elif op_type == 'remove_array_value':
+            content = remove_array_value(content, operation['array_value'])
+        elif op_type == 'remove_filesystem_config':
+            content = remove_filesystem_config(content, operation['filesystem_name'])
+        elif op_type == 'remove_section_comment':
+            content = remove_section_comment(content, operation['comment_pattern'])
+    
+    # Cleanup
+    content = cleanup_content(content)
+    
+    # Write back
+    write_file(file_path, content)
+    
+    # Print success messages
+    for message in config.get('success_messages', []):
+        print(message)
+
+if __name__ == '__main__':
+    config_json = sys.argv[1]
+    config = json.loads(config_json)
+    process_config_file(config)
+PYTHON_SCRIPT
+}
+
+# Function to clean config file
+clean_config_file() {
+    local file_path=$1
+    local config_json=$2
+    
+    if [ -f "$file_path" ]; then
+        python3 /tmp/config_cleanup.py "$config_json"
+    else
+        echo "⚠ File not found at $file_path"
+    fi
+}
+
+# Create the Python config cleanup script
+create_config_cleanup_script
+
+echo "Step 71: Removing merchant portal configuration from config_default.php..."
+CONFIG_DEFAULT_FILE="config/Shared/config_default.php"
+CONFIG_JSON='{
+    "file_path": "config/Shared/config_default.php",
+    "operations": [
+        {"type": "remove_use", "class_name": "SecurityBlockerMerchantPortalConstants"},
+        {"type": "remove_use", "class_name": "MerchantPortalConstants"},
+        {"type": "remove_use", "class_name": "MerchantProductDataImportConstants"},
+        {"type": "remove_use", "class_name": "MerchantProductOfferDataImportConstants"},
+        {"type": "remove_use", "class_name": "DummyMarketplacePaymentConfig"},
+        {"type": "remove_use", "class_name": "AgentSecurityBlockerMerchantPortalConstants"},
+        {"type": "remove_config_assignment", "constant_pattern": "SecurityBlockerMerchantPortalConstants::"},
+        {"type": "remove_config_assignment", "constant_pattern": "MerchantPortalConstants::BASE_URL_MP"},
+        {"type": "remove_config_assignment", "constant_pattern": "MerchantPortalConstants::"},
+        {"type": "remove_config_assignment", "constant_pattern": "MerchantProductDataImportConstants::"},
+        {"type": "remove_config_assignment", "constant_pattern": "MerchantProductOfferDataImportConstants::"},
+        {"type": "remove_config_assignment", "constant_pattern": "AgentSecurityBlockerMerchantPortalConstants::"},
+        {"type": "remove_config_assignment", "constant_pattern": "DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE"},
+        {"type": "remove_filesystem_config", "filesystem_name": "merchant-product-data-import-files"},
+        {"type": "remove_filesystem_config", "filesystem_name": "merchant-product-offer-data-import-files"},
+        {"type": "remove_section_comment", "comment_pattern": "MERCHANT PORTAL"}
+    ],
+    "success_messages": [
+        "✓ Removed merchant portal configuration from config_default.php"
+    ]
+}'
+clean_config_file "$CONFIG_DEFAULT_FILE" "$CONFIG_JSON"
+echo ""
+
+echo "Step 72: Removing merchant portal configuration from config_default-docker.dev.php..."
+CONFIG_DOCKER_DEV_FILE="config/Shared/config_default-docker.dev.php"
+CONFIG_JSON='{
+    "file_path": "config/Shared/config_default-docker.dev.php",
+    "operations": [
+        {"type": "remove_use", "class_name": "MerchantPortalConstants"},
+        {"type": "remove_config_assignment", "constant_pattern": "MerchantPortalConstants::BASE_URL_MP"},
+        {"type": "remove_config_assignment", "constant_pattern": "MerchantPortalConstants::"},
+        {"type": "remove_filesystem_config", "filesystem_name": "merchant-product-data-import-files"},
+        {"type": "remove_filesystem_config", "filesystem_name": "merchant-product-offer-data-import-files"},
+        {"type": "remove_section_comment", "comment_pattern": "MERCHANT PORTAL"}
+    ],
+    "success_messages": [
+        "✓ Removed merchant portal configuration from config_default-docker.dev.php"
+    ]
+}'
+clean_config_file "$CONFIG_DOCKER_DEV_FILE" "$CONFIG_JSON"
+echo ""
+
+echo "Step 73: Removing merchant portal configuration from config_default-ci.php..."
+CONFIG_CI_FILE="config/Shared/config_default-ci.php"
+CONFIG_JSON='{
+    "file_path": "config/Shared/config_default-ci.php",
+    "operations": [
+        {"type": "remove_use", "class_name": "MerchantPortalConstants"},
+        {"type": "remove_config_assignment", "constant_pattern": "MerchantPortalConstants::BASE_URL_MP"},
+        {"type": "remove_config_assignment", "constant_pattern": "MerchantPortalConstants::"},
+        {"type": "remove_filesystem_config", "filesystem_name": "merchant-product-data-import-files"},
+        {"type": "remove_filesystem_config", "filesystem_name": "merchant-product-offer-data-import-files"},
+        {"type": "remove_section_comment", "comment_pattern": "MERCHANT PORTAL"}
+    ],
+    "success_messages": [
+        "✓ Removed merchant portal configuration from config_default-ci.php"
+    ]
+}'
+clean_config_file "$CONFIG_CI_FILE" "$CONFIG_JSON"
+echo ""
+
+echo "Step 74: Removing marketplace payment configuration from config_oms-development.php..."
+CONFIG_OMS_DEV_FILE="config/Shared/common/config_oms-development.php"
+CONFIG_JSON='{
+    "file_path": "config/Shared/common/config_oms-development.php",
+    "operations": [
+        {"type": "remove_use", "class_name": "DummyMarketplacePaymentConfig"},
+        {"type": "remove_array_value", "array_value": "DummyMarketplacePayment"},
+        {"type": "remove_array_value", "array_value": "MarketplacePayment01"},
+        {"type": "remove_config_assignment", "constant_pattern": "DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE"}
+    ],
+    "success_messages": [
+        "✓ Removed marketplace payment configuration from config_oms-development.php"
+    ]
+}'
+clean_config_file "$CONFIG_OMS_DEV_FILE" "$CONFIG_JSON"
+echo ""
+
+echo "Step 75: Running composer update to apply all changes..."
 composer update --ignore-platform-req=ext-grpc
 echo "✓ Composer update completed"
 echo ""
