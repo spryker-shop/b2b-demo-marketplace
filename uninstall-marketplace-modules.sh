@@ -1508,7 +1508,75 @@ for dir_entry in "${DIRECTORIES_TO_REMOVE[@]}"; do
 done
 echo ""
 
-echo "Step 69: Running composer update to apply all changes..."
+echo "Step 69: Removing merchant-portal applications from deploy files..."
+DEPLOY_FILES=(
+    "deploy.dev.yml"
+    "deploy.yml"
+)
+
+cat > /tmp/remove_merchant_portal_apps.py << 'PYTHON_SCRIPT'
+import sys
+import re
+
+def remove_merchant_portal_applications(content):
+    """Remove merchant-portal application blocks from YAML."""
+    # Pattern to match merchant portal application blocks
+    # Matches from application key with mportal_* or any application: merchant-portal
+    # until the next application or end of applications section
+    
+    # Remove named mportal_ applications (like mportal_eu, mportal_us)
+    pattern1 = r'\n\s+mportal_\w+:.*?(?=\n\s{12}[a-z_]+:|applications:|region:|\ngroups:|\nservices:|\Z)'
+    content = re.sub(pattern1, '', content, flags=re.DOTALL)
+    
+    # Remove any remaining application: merchant-portal blocks
+    pattern2 = r'\n\s+[a-z_]+:\s*#[^\n]*\n\s+application:\s*merchant-portal.*?(?=\n\s{12}[a-z_]+:|applications:|region:|\ngroups:|\nservices:|\Z)'
+    content = re.sub(pattern2, '', content, flags=re.DOTALL)
+    
+    return content
+
+def process_deploy_file(file_path):
+    """Process a deploy YAML file to remove merchant portal applications."""
+    try:
+        with open(file_path, 'r') as f:
+            content = f.read()
+        
+        # Check if file contains merchant-portal
+        if 'merchant-portal' not in content and 'mportal_' not in content:
+            return False
+        
+        # Remove merchant portal applications
+        new_content = remove_merchant_portal_applications(content)
+        
+        # Write back if changed
+        if new_content != content:
+            with open(file_path, 'w') as f:
+                f.write(new_content)
+            return True
+        return False
+    except FileNotFoundError:
+        return None
+
+if __name__ == '__main__':
+    file_path = sys.argv[1]
+    result = process_deploy_file(file_path)
+    if result is True:
+        print(f"✓ Removed merchant-portal applications from {file_path}")
+    elif result is False:
+        print(f"⚠ No merchant-portal applications found in {file_path}")
+    else:
+        print(f"⚠ File not found: {file_path}")
+PYTHON_SCRIPT
+
+for deploy_file in "${DEPLOY_FILES[@]}"; do
+    if [ -f "$deploy_file" ]; then
+        python3 /tmp/remove_merchant_portal_apps.py "$deploy_file"
+    else
+        echo "⚠ Deploy file not found: $deploy_file"
+    fi
+done
+echo ""
+
+echo "Step 70: Running composer update to apply all changes..."
 composer update --ignore-platform-req=ext-grpc
 echo "✓ Composer update completed"
 echo ""
