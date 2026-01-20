@@ -1630,20 +1630,70 @@ import sys
 import re
 
 def remove_merchant_portal_applications(content):
-    """Remove merchant-portal application blocks from YAML."""
-    # Pattern to match merchant portal application blocks
-    # Matches from application key with mportal_* or any application: merchant-portal
-    # until the next application or end of applications section
+    """Remove merchant-portal application blocks from YAML using indentation-aware parsing."""
+    lines = content.split('\n')
+    result = []
+    skip_until_indent = None
     
-    # Remove named mportal_ applications (like mportal_eu, mportal_us)
-    pattern1 = r'\n\s+mportal_\w+:.*?(?=\n\s{12}[a-z_]+:|applications:|region:|\ngroups:|\nservices:|\Z)'
-    content = re.sub(pattern1, '', content, flags=re.DOTALL)
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        stripped = line.lstrip()
+        
+        # Check if we should stop skipping
+        if skip_until_indent is not None:
+            if stripped:  # Non-empty line
+                line_indent = len(line) - len(stripped)
+                # Stop skipping when we reach same or less indentation
+                if line_indent <= skip_until_indent:
+                    skip_until_indent = None
+                else:
+                    i += 1
+                    continue
+            else:
+                # Empty line while skipping
+                i += 1
+                continue
+        
+        # Check if this line starts a merchant portal application block
+        should_remove = False
+        
+        # Match mportal_* applications (like mportal_eu, mportal_us)
+        if re.match(r'mportal_\w+:', stripped):
+            should_remove = True
+            current_indent = len(line) - len(stripped)
+            skip_until_indent = current_indent
+        # Check if this is an application definition with "application: merchant-portal" on next lines
+        elif re.match(r'[a-z_]+:\s*(?:#.*)?$', stripped):
+            # Look ahead to see if next non-empty line is "application: merchant-portal"
+            j = i + 1
+            while j < len(lines):
+                next_line = lines[j]
+                next_stripped = next_line.lstrip()
+                if next_stripped:
+                    if 'application:' in next_stripped and 'merchant-portal' in next_stripped:
+                        should_remove = True
+                        current_indent = len(line) - len(stripped)
+                        skip_until_indent = current_indent
+                    break
+                j += 1
+        
+        if not should_remove:
+            result.append(line)
+        
+        i += 1
     
-    # Remove any remaining application: merchant-portal blocks
-    pattern2 = r'\n\s+[a-z_]+:\s*#[^\n]*\n\s+application:\s*merchant-portal.*?(?=\n\s{12}[a-z_]+:|applications:|region:|\ngroups:|\nservices:|\Z)'
-    content = re.sub(pattern2, '', content, flags=re.DOTALL)
+    # Clean up multiple consecutive empty lines
+    cleaned = []
+    prev_empty = False
+    for line in result:
+        is_empty = line.strip() == ''
+        if is_empty and prev_empty:
+            continue
+        cleaned.append(line)
+        prev_empty = is_empty
     
-    return content
+    return '\n'.join(cleaned)
 
 def process_deploy_file(file_path):
     """Process a deploy YAML file to remove merchant portal applications."""
@@ -1711,9 +1761,9 @@ def remove_use_statement(content, class_name):
     return content
 
 def remove_config_assignment(content, constant_pattern):
-    """Remove config assignment line."""
+    """Remove config assignment line (including multi-line assignments)."""
     pattern = rf'^\s*\$config\[{re.escape(constant_pattern)}[^\]]*\]\s*=.*?;\s*$'
-    content = re.sub(pattern, '', content, flags=re.MULTILINE)
+    content = re.sub(pattern, '', content, flags=re.MULTILINE | re.DOTALL)
     return content
 
 def remove_array_value(content, array_value):
@@ -1734,6 +1784,13 @@ def remove_section_comment(content, comment_pattern):
     """Remove section comments."""
     pattern = rf'^.*{re.escape(comment_pattern)}.*$'
     content = re.sub(pattern, '', content, flags=re.MULTILINE)
+    return content
+
+def remove_array_key_value(content, key_pattern):
+    """Remove array key-value pair (including multi-line values)."""
+    # Match: KeyPattern => 'value', or KeyPattern => 'MarketplacePayment01',
+    pattern = rf'\s*{re.escape(key_pattern)}\s*=>\s*[^,]+,\s*'
+    content = re.sub(pattern, '', content, flags=re.MULTILINE | re.DOTALL)
     return content
 
 def cleanup_content(content):
@@ -1762,6 +1819,8 @@ def process_config_file(config):
             content = remove_filesystem_config(content, operation['filesystem_name'])
         elif op_type == 'remove_section_comment':
             content = remove_section_comment(content, operation['comment_pattern'])
+        elif op_type == 'remove_array_key_value':
+            content = remove_array_key_value(content, operation['key_pattern'])
     
     # Cleanup
     content = cleanup_content(content)
@@ -1812,7 +1871,7 @@ CONFIG_JSON='{
         {"type": "remove_config_assignment", "constant_pattern": "MerchantProductDataImportConstants::"},
         {"type": "remove_config_assignment", "constant_pattern": "MerchantProductOfferDataImportConstants::"},
         {"type": "remove_config_assignment", "constant_pattern": "AgentSecurityBlockerMerchantPortalConstants::"},
-        {"type": "remove_config_assignment", "constant_pattern": "DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE"},
+        {"type": "remove_array_key_value", "key_pattern": "DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE"},
         {"type": "remove_filesystem_config", "filesystem_name": "merchant-product-data-import-files"},
         {"type": "remove_filesystem_config", "filesystem_name": "merchant-product-offer-data-import-files"},
         {"type": "remove_section_comment", "comment_pattern": "MERCHANT PORTAL"}
@@ -1870,7 +1929,7 @@ CONFIG_JSON='{
         {"type": "remove_use", "class_name": "DummyMarketplacePaymentConfig"},
         {"type": "remove_array_value", "array_value": "DummyMarketplacePayment"},
         {"type": "remove_array_value", "array_value": "MarketplacePayment01"},
-        {"type": "remove_config_assignment", "constant_pattern": "DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE"}
+        {"type": "remove_array_key_value", "key_pattern": "DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE"}
     ],
     "success_messages": [
         "✓ Removed marketplace payment configuration from config_oms-development.php"
