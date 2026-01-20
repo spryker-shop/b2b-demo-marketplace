@@ -1510,15 +1510,110 @@ echo ""
 
 echo "Step 69: Removing merchant-portal commands from docker.yml..."
 DOCKER_YML_FILE="config/install/docker.yml"
+
+cat > /tmp/remove_docker_commands.py << 'PYTHON_SCRIPT'
+import sys
+import re
+
+def remove_docker_commands(content, commands_to_remove):
+    """Remove specific command blocks from docker.yml."""
+    lines = content.split('\n')
+    result = []
+    skip_until_indent = None
+    current_indent = None
+    
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        
+        # Check if we should stop skipping
+        if skip_until_indent is not None:
+            # Calculate current line's indentation
+            stripped = line.lstrip()
+            if stripped:  # Non-empty line
+                line_indent = len(line) - len(stripped)
+                # Stop skipping when we reach same or less indentation
+                if line_indent <= skip_until_indent:
+                    skip_until_indent = None
+                else:
+                    i += 1
+                    continue
+            else:
+                # Empty line while skipping
+                i += 1
+                continue
+        
+        # Check if this line starts a command block we want to remove
+        stripped = line.lstrip()
+        should_remove = False
+        
+        for cmd in commands_to_remove:
+            if stripped.startswith(f'{cmd}:'):
+                should_remove = True
+                # Calculate indentation level to know when to stop skipping
+                current_indent = len(line) - len(stripped)
+                skip_until_indent = current_indent
+                break
+        
+        if not should_remove:
+            result.append(line)
+        
+        i += 1
+    
+    # Clean up multiple consecutive empty lines
+    cleaned = []
+    prev_empty = False
+    for line in result:
+        is_empty = line.strip() == ''
+        if is_empty and prev_empty:
+            continue
+        cleaned.append(line)
+        prev_empty = is_empty
+    
+    return '\n'.join(cleaned)
+
+def process_docker_yml(file_path, commands):
+    """Process docker.yml to remove specified commands."""
+    try:
+        with open(file_path, 'r') as f:
+            content = f.read()
+        
+        # Check if any commands exist
+        found = False
+        for cmd in commands:
+            if f'{cmd}:' in content:
+                found = True
+                break
+        
+        if not found:
+            return False
+        
+        # Remove commands
+        new_content = remove_docker_commands(content, commands)
+        
+        # Write back if changed
+        if new_content != content:
+            with open(file_path, 'w') as f:
+                f.write(new_content)
+            return True
+        return False
+    except FileNotFoundError:
+        return None
+
+if __name__ == '__main__':
+    file_path = sys.argv[1]
+    commands = sys.argv[2].split(',')
+    result = process_docker_yml(file_path, commands)
+    if result is True:
+        print(f"✓ Removed merchant portal commands from {file_path}")
+    elif result is False:
+        print(f"⚠ No merchant portal commands found in {file_path}")
+    else:
+        print(f"⚠ File not found: {file_path}")
+PYTHON_SCRIPT
+
 if [ -f "$DOCKER_YML_FILE" ]; then
-    # Remove router-cache-warmup-merchant-portal section
-    sed -i.bak '/router-cache-warmup-merchant-portal:/,/command:/d' "$DOCKER_YML_FILE"
-    # Remove merchant-portal-build-frontend sections (both production and development)
-    sed -i.bak '/merchant-portal-build-frontend:/,/timeout:/d' "$DOCKER_YML_FILE"
-    # Clean up any leftover empty lines (more than 2 consecutive)
-    sed -i.bak '/^$/N;/^\n$/D' "$DOCKER_YML_FILE"
-    rm -f "${DOCKER_YML_FILE}.bak"
-    echo "✓ Removed merchant portal commands from docker.yml"
+    python3 /tmp/remove_docker_commands.py "$DOCKER_YML_FILE" "router-cache-warmup-merchant-portal,merchant-portal-build-frontend"
 else
     echo "⚠ docker.yml file not found at $DOCKER_YML_FILE"
 fi
