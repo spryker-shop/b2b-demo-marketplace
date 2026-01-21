@@ -180,6 +180,13 @@ def remove_array_constant_entry(content, constant_reference):
     content = re.sub(pattern, '', content)
     return content
 
+def remove_data_import_console(content, config_constant):
+    """Remove DataImportConsole instantiation with specific config constant."""
+    # Match: new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ConfigClass::CONSTANT),
+    pattern = rf'\s*new\s+DataImportConsole\(DataImportConsole::DEFAULT_NAME\s*\.\s*static::COMMAND_SEPARATOR\s*\.\s*{re.escape(config_constant)}\),?\s*'
+    content = re.sub(pattern, '', content, flags=re.MULTILINE)
+    return content
+
 def cleanup_content(content):
     """Clean up multiple empty lines and ensure single newline at end."""
     # Clean up multiple consecutive empty lines (more than 2)
@@ -218,6 +225,8 @@ def process_file(config):
             content = remove_queue_entry(content, operation['queue_config_key'])
         elif op_type == 'remove_array_constant_entry':
             content = remove_array_constant_entry(content, operation['constant_reference'])
+        elif op_type == 'remove_data_import_console':
+            content = remove_data_import_console(content, operation['config_constant'])
     
     # Cleanup
     content = cleanup_content(content)
@@ -480,13 +489,38 @@ CONFIG_JSON='{
     "operations": [
         {"type": "remove_use", "class_name": "AclEntitySynchronizeConsole"},
         {"type": "remove_use", "class_name": "AclEntityMetadataConfigValidateConsole"},
+        {"type": "remove_use", "class_name": "DataImportMerchantImportConsole"},
+        {"type": "remove_use", "class_name": "TriggerEventFromCsvFileConsole"},
+        {"type": "remove_use", "class_name": "MerchantProductApprovalDataImportConfig"},
+        {"type": "remove_use", "class_name": "ProductOfferShoppingListDataImportConfig"},
+        {"type": "remove_use", "class_name": "MerchantCommissionDataImportConfig"},
+        {"type": "remove_use", "class_name": "ProductOfferServicePointDataImportConfig"},
+        {"type": "remove_use", "class_name": "ProductOfferShipmentTypeDataImportConfig"},
         {"type": "remove_plugin", "plugin_class": "AclEntitySynchronizeConsole"},
-        {"type": "remove_plugin", "plugin_class": "AclEntityMetadataConfigValidateConsole"}
+        {"type": "remove_plugin", "plugin_class": "AclEntityMetadataConfigValidateConsole"},
+        {"type": "remove_plugin", "plugin_class": "DataImportMerchantImportConsole"},
+        {"type": "remove_plugin", "plugin_class": "TriggerEventFromCsvFileConsole"},
+        {"type": "remove_data_import_console", "config_constant": "MerchantProductApprovalDataImportConfig::IMPORT_TYPE_MERCHANT_PRODUCT_APPROVAL_STATUS_DEFAULT"},
+        {"type": "remove_data_import_console", "config_constant": "ProductOfferShoppingListDataImportConfig::IMPORT_TYPE_PRODUCT_OFFER_SHOPPING_LIST_ITEM"},
+        {"type": "remove_data_import_console", "config_constant": "MerchantCommissionDataImportConfig::IMPORT_TYPE_MERCHANT_COMMISSION_GROUP"},
+        {"type": "remove_data_import_console", "config_constant": "MerchantCommissionDataImportConfig::IMPORT_TYPE_MERCHANT_COMMISSION"},
+        {"type": "remove_data_import_console", "config_constant": "MerchantCommissionDataImportConfig::IMPORT_TYPE_MERCHANT_COMMISSION_AMOUNT"},
+        {"type": "remove_data_import_console", "config_constant": "MerchantCommissionDataImportConfig::IMPORT_TYPE_MERCHANT_COMMISSION_STORE"},
+        {"type": "remove_data_import_console", "config_constant": "MerchantCommissionDataImportConfig::IMPORT_TYPE_MERCHANT_COMMISSION_MERCHANT"},
+        {"type": "remove_data_import_console", "config_constant": "ProductOfferServicePointDataImportConfig::IMPORT_TYPE_PRODUCT_OFFER_SERVICE"},
+        {"type": "remove_data_import_console", "config_constant": "ProductOfferShipmentTypeDataImportConfig::IMPORT_TYPE_PRODUCT_OFFER_SHIPMENT_TYPE"}
     ],
     "success_messages": [
         "✓ ConsoleDependencyProvider cleaned from marketplace-specific console commands",
         "✓ Removed AclEntitySynchronizeConsole",
-        "✓ Removed AclEntityMetadataConfigValidateConsole"
+        "✓ Removed AclEntityMetadataConfigValidateConsole",
+        "✓ Removed DataImportMerchantImportConsole",
+        "✓ Removed TriggerEventFromCsvFileConsole",
+        "✓ Removed merchant product approval data import console",
+        "✓ Removed product offer shopping list data import console",
+        "✓ Removed merchant commission data import consoles",
+        "✓ Removed product offer service point data import console",
+        "✓ Removed product offer shipment type data import console"
     ]
 }'
 clean_php_file "$CONSOLE_DEP_FILE" "$CONFIG_JSON" "ConsoleDependencyProvider"
@@ -747,6 +781,9 @@ CONFIG_JSON='{
         {"type": "remove_use", "class_name": "MerchantUpdatePublisherPlugin"},
         {"type": "remove_use", "class_name": "MerchantProductWritePublisherPlugin"},
         {"type": "remove_use", "class_name": "MerchantCategoryWritePublisherPlugin"},
+        {"type": "remove_use", "class_name": "MerchantProductOptionGroupPublisherTriggerPlugin"},
+        {"type": "remove_use", "class_name": "MerchantProductSearchPublisherTriggerPlugin"},
+        {"type": "remove_use", "class_name": "MerchantProductPublisherTriggerPlugin"},
         {"type": "remove_plugin", "plugin_class": "CategoryWritePublisherPlugin"},
         {"type": "remove_plugin", "plugin_class": "MerchantOpeningHoursWritePublisherPlugin"},
         {"type": "remove_plugin", "plugin_class": "MerchantOpeningHoursWeekdayScheduleWritePublisherPlugin"},
@@ -756,7 +793,10 @@ CONFIG_JSON='{
         {"type": "remove_plugin", "plugin_class": "MerchantMerchantProductSearchWritePublisherPlugin"},
         {"type": "remove_plugin", "plugin_class": "MerchantProductSearchWritePublisherPlugin"},
         {"type": "remove_plugin", "plugin_class": "MerchantCategoryWritePublisherPlugin"},
-        {"type": "remove_plugin", "plugin_class": "MerchantProductOptionGroupWritePublisherPlugin"}
+        {"type": "remove_plugin", "plugin_class": "MerchantProductOptionGroupWritePublisherPlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantProductOptionGroupPublisherTriggerPlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantProductSearchPublisherTriggerPlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantProductPublisherTriggerPlugin"}
     ],
     "success_messages": [
         "✓ PublisherDependencyProvider cleaned from marketplace-specific plugins",
@@ -769,7 +809,10 @@ CONFIG_JSON='{
         "✓ Removed MerchantMerchantProductSearchWritePublisherPlugin",
         "✓ Removed MerchantProductSearchWritePublisherPlugin",
         "✓ Removed MerchantCategoryWritePublisherPlugin",
-        "✓ Removed MerchantProductOptionGroupWritePublisherPlugin"
+        "✓ Removed MerchantProductOptionGroupWritePublisherPlugin",
+        "✓ Removed MerchantProductOptionGroupPublisherTriggerPlugin",
+        "✓ Removed MerchantProductSearchPublisherTriggerPlugin",
+        "✓ Removed MerchantProductPublisherTriggerPlugin"
     ]
 }'
 clean_php_file "$PUBLISHER_DEP_FILE" "$CONFIG_JSON" "PublisherDependencyProvider"
