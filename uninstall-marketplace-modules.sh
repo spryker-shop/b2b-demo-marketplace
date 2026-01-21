@@ -308,6 +308,7 @@ DIRECTORIES_TO_REMOVE=(
     "src/Pyz/Zed/SecurityMerchantPortalGui:SecurityMerchantPortalGui"
     "src/Pyz/Zed/UserMerchantPortalGui:UserMerchantPortalGui"
     "src/Pyz/Glue/MerchantsRestApi:MerchantsRestApi"
+    "src/Pyz/Yves/MerchantSalesReturnWidget:MerchantSalesReturnWidget"
 )
 
 echo "Step 4: Removing marketplace-specific code from AclConfig..."
@@ -326,6 +327,25 @@ CONFIG_JSON='{
     ]
 }'
 clean_php_file "$ACLCONFIG_FILE" "$CONFIG_JSON" "AclConfig"
+echo ""
+
+echo "Step 4.5: Removing marketplace-specific plugins from AclDependencyProvider..."
+ACL_DEP_FILE="src/Pyz/Zed/Acl/AclDependencyProvider.php"
+CONFIG_JSON='{
+    "file_path": "src/Pyz/Zed/Acl/AclDependencyProvider.php",
+    "operations": [
+        {"type": "remove_use", "class_name": "MerchantAgentAclAccessCheckerStrategyPlugin"},
+        {"type": "remove_use", "class_name": "ProductViewerForOfferCreationAclInstallerPlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantAgentAclAccessCheckerStrategyPlugin"},
+        {"type": "remove_plugin", "plugin_class": "ProductViewerForOfferCreationAclInstallerPlugin"}
+    ],
+    "success_messages": [
+        "✓ AclDependencyProvider cleaned from marketplace-specific plugins",
+        "✓ Removed MerchantAgentAclAccessCheckerStrategyPlugin",
+        "✓ Removed ProductViewerForOfferCreationAclInstallerPlugin"
+    ]
+}'
+clean_php_file "$ACL_DEP_FILE" "$CONFIG_JSON" "AclDependencyProvider"
 echo ""
 
 echo "Step 5: Removing marketplace-specific code from AclEntityDependencyProvider..."
