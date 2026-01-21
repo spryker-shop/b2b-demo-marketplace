@@ -502,6 +502,61 @@ CONFIG_JSON='{
 clean_php_file "$CHECKOUT_DEP_FILE" "$CONFIG_JSON" "CheckoutDependencyProvider"
 echo ""
 
+echo "Step 12: Removing marketplace-specific plugins from DataImportDependencyProvider..."
+DATA_IMPORT_DEP_FILE="src/Pyz/Zed/DataImport/DataImportDependencyProvider.php"
+CONFIG_JSON='{
+    "file_path": "src/Pyz/Zed/DataImport/DataImportDependencyProvider.php",
+    "operations": [
+        {"type": "remove_use", "class_name": "MerchantProductDataImportPlugin"},
+        {"type": "remove_use", "class_name": "ProductOfferShoppingListItemDataImportPlugin"},
+        {"type": "remove_use", "class_name": "MerchantOmsProcessDataImportPlugin"},
+        {"type": "remove_use", "class_name": "MerchantProductOptionGroupDataImportPlugin"},
+        {"type": "remove_use", "class_name": "MerchantOpeningHoursDateScheduleDataImportPlugin"},
+        {"type": "remove_use", "class_name": "MerchantOpeningHoursWeekdayScheduleDataImportPlugin"},
+        {"type": "remove_use", "class_name": "MerchantCategoryDataImportPlugin"},
+        {"type": "remove_use", "class_name": "MerchantProductApprovalStatusDefaultDataImportPlugin"},
+        {"type": "remove_use", "class_name": "MerchantCommissionGroupDataImportPlugin"},
+        {"type": "remove_use", "class_name": "MerchantCommissionDataImportPlugin"},
+        {"type": "remove_use", "class_name": "MerchantCommissionAmountDataImportPlugin"},
+        {"type": "remove_use", "class_name": "MerchantCommissionStoreDataImportPlugin"},
+        {"type": "remove_use", "class_name": "MerchantCommissionMerchantDataImportPlugin"},
+        {"type": "remove_use", "class_name": "MerchantCombinedProductDataImportPlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantProductDataImportPlugin"},
+        {"type": "remove_plugin", "plugin_class": "ProductOfferShoppingListItemDataImportPlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantOmsProcessDataImportPlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantProductOptionGroupDataImportPlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantOpeningHoursDateScheduleDataImportPlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantOpeningHoursWeekdayScheduleDataImportPlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantCategoryDataImportPlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantProductApprovalStatusDefaultDataImportPlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantCommissionGroupDataImportPlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantCommissionDataImportPlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantCommissionAmountDataImportPlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantCommissionStoreDataImportPlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantCommissionMerchantDataImportPlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantCombinedProductDataImportPlugin"}
+    ],
+    "success_messages": [
+        "✓ DataImportDependencyProvider cleaned from marketplace-specific plugins",
+        "✓ Removed MerchantProductDataImportPlugin",
+        "✓ Removed ProductOfferShoppingListItemDataImportPlugin",
+        "✓ Removed MerchantOmsProcessDataImportPlugin",
+        "✓ Removed MerchantProductOptionGroupDataImportPlugin",
+        "✓ Removed MerchantOpeningHoursDateScheduleDataImportPlugin",
+        "✓ Removed MerchantOpeningHoursWeekdayScheduleDataImportPlugin",
+        "✓ Removed MerchantCategoryDataImportPlugin",
+        "✓ Removed MerchantProductApprovalStatusDefaultDataImportPlugin",
+        "✓ Removed MerchantCommissionGroupDataImportPlugin",
+        "✓ Removed MerchantCommissionDataImportPlugin",
+        "✓ Removed MerchantCommissionAmountDataImportPlugin",
+        "✓ Removed MerchantCommissionStoreDataImportPlugin",
+        "✓ Removed MerchantCommissionMerchantDataImportPlugin",
+        "✓ Removed MerchantCombinedProductDataImportPlugin"
+    ]
+}'
+clean_php_file "$DATA_IMPORT_DEP_FILE" "$CONFIG_JSON" "DataImportDependencyProvider"
+echo ""
+
 echo "Step 14: Removing marketplace-specific plugins from ConsoleDependencyProvider..."
 CONSOLE_DEP_FILE="src/Pyz/Zed/Console/ConsoleDependencyProvider.php"
 CONFIG_JSON='{
@@ -804,6 +859,7 @@ CONFIG_JSON='{
         {"type": "remove_use", "class_name": "MerchantProductOptionGroupPublisherTriggerPlugin"},
         {"type": "remove_use", "class_name": "MerchantProductSearchPublisherTriggerPlugin"},
         {"type": "remove_use", "class_name": "MerchantProductPublisherTriggerPlugin"},
+        {"type": "remove_use", "class_name": "MerchantCategoryStoragePublisherPlugin"},
         {"type": "remove_plugin", "plugin_class": "CategoryWritePublisherPlugin"},
         {"type": "remove_plugin", "plugin_class": "MerchantOpeningHoursWritePublisherPlugin"},
         {"type": "remove_plugin", "plugin_class": "MerchantOpeningHoursWeekdayScheduleWritePublisherPlugin"},
@@ -816,7 +872,8 @@ CONFIG_JSON='{
         {"type": "remove_plugin", "plugin_class": "MerchantProductOptionGroupWritePublisherPlugin"},
         {"type": "remove_plugin", "plugin_class": "MerchantProductOptionGroupPublisherTriggerPlugin"},
         {"type": "remove_plugin", "plugin_class": "MerchantProductSearchPublisherTriggerPlugin"},
-        {"type": "remove_plugin", "plugin_class": "MerchantProductPublisherTriggerPlugin"}
+        {"type": "remove_plugin", "plugin_class": "MerchantProductPublisherTriggerPlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantCategoryStoragePublisherPlugin"}
     ],
     "success_messages": [
         "✓ PublisherDependencyProvider cleaned from marketplace-specific plugins",
@@ -832,7 +889,8 @@ CONFIG_JSON='{
         "✓ Removed MerchantProductOptionGroupWritePublisherPlugin",
         "✓ Removed MerchantProductOptionGroupPublisherTriggerPlugin",
         "✓ Removed MerchantProductSearchPublisherTriggerPlugin",
-        "✓ Removed MerchantProductPublisherTriggerPlugin"
+        "✓ Removed MerchantProductPublisherTriggerPlugin",
+        "✓ Removed MerchantCategoryStoragePublisherPlugin"
     ]
 }'
 clean_php_file "$PUBLISHER_DEP_FILE" "$CONFIG_JSON" "PublisherDependencyProvider"
