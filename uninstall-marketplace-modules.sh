@@ -557,6 +557,123 @@ CONFIG_JSON='{
 clean_php_file "$DATA_IMPORT_DEP_FILE" "$CONFIG_JSON" "DataImportDependencyProvider"
 echo ""
 
+echo "Step 13: Removing merchant data import entities from import configuration files..."
+IMPORT_YAML_FILES=(
+    "data/import/local/full_EU.yml"
+    "data/import/local/full_US.yml"
+    "data/import/production/full_EU.yml"
+    "data/import/production/full_US.yml"
+)
+
+cat > /tmp/remove_import_entities.py << 'PYTHON_SCRIPT'
+import sys
+import re
+
+def remove_data_import_entities(content, entities):
+    """Remove specific data_entity blocks from import YAML files."""
+    lines = content.split('\n')
+    result = []
+    skip_until_indent = None
+    
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        stripped = line.lstrip()
+        
+        # Check if we should stop skipping
+        if skip_until_indent is not None:
+            if stripped:  # Non-empty line
+                line_indent = len(line) - len(stripped)
+                # Stop skipping when we reach same or less indentation
+                if line_indent <= skip_until_indent:
+                    skip_until_indent = None
+                else:
+                    i += 1
+                    continue
+            else:
+                # Empty line while skipping
+                i += 1
+                continue
+        
+        # Check if this line starts a data_entity block we want to remove
+        should_remove = False
+        
+        for entity in entities:
+            # Match: - data_entity: entity-name
+            if re.match(rf'-\s+data_entity:\s+{re.escape(entity)}\s*$', stripped):
+                should_remove = True
+                current_indent = len(line) - len(stripped)
+                skip_until_indent = current_indent
+                break
+        
+        if not should_remove:
+            result.append(line)
+        
+        i += 1
+    
+    # Clean up multiple consecutive empty lines
+    cleaned = []
+    prev_empty = False
+    for line in result:
+        is_empty = line.strip() == ''
+        if is_empty and prev_empty:
+            continue
+        cleaned.append(line)
+        prev_empty = is_empty
+    
+    return '\n'.join(cleaned)
+
+def process_import_yaml(file_path, entities):
+    """Process import YAML file to remove specified data entities."""
+    try:
+        with open(file_path, 'r') as f:
+            content = f.read()
+        
+        # Check if any entities exist
+        found = False
+        for entity in entities:
+            if f'data_entity: {entity}' in content:
+                found = True
+                break
+        
+        if not found:
+            return False
+        
+        # Remove entities
+        new_content = remove_data_import_entities(content, entities)
+        
+        # Write back if changed
+        if new_content != content:
+            with open(file_path, 'w') as f:
+                f.write(new_content)
+            return True
+        return False
+    except FileNotFoundError:
+        return None
+
+if __name__ == '__main__':
+    file_path = sys.argv[1]
+    entities = sys.argv[2].split(',')
+    result = process_import_yaml(file_path, entities)
+    if result is True:
+        print(f"✓ Removed merchant data import entities from {file_path}")
+    elif result is False:
+        print(f"⚠ No merchant data import entities found in {file_path}")
+    else:
+        print(f"⚠ File not found: {file_path}")
+PYTHON_SCRIPT
+
+ENTITIES_TO_REMOVE="merchant-opening-hours-date-schedule,merchant-opening-hours-weekday-schedule,merchant-category,merchant-oms-process,merchant-product-option-group,merchant-product,merchant-product-approval-status-default,merchant-commission-group,merchant-commission,merchant-commission-merchant,merchant-commission-amount,merchant-commission-store,product-offer-shopping-list-item"
+
+for import_file in "${IMPORT_YAML_FILES[@]}"; do
+    if [ -f "$import_file" ]; then
+        python3 /tmp/remove_import_entities.py "$import_file" "$ENTITIES_TO_REMOVE"
+    else
+        echo "⚠ Import file not found: $import_file"
+    fi
+done
+echo ""
+
 echo "Step 14: Removing marketplace-specific plugins from ConsoleDependencyProvider..."
 CONSOLE_DEP_FILE="src/Pyz/Zed/Console/ConsoleDependencyProvider.php"
 CONFIG_JSON='{
@@ -733,6 +850,24 @@ CONFIG_JSON='{
 clean_php_file "$PAYMENT_DEP_FILE" "$CONFIG_JSON" "PaymentDependencyProvider"
 echo ""
 
+echo "Step 22: Removing marketplace-specific plugins from MerchantDependencyProvider..."
+MERCHANT_DEP_FILE="src/Pyz/Zed/Merchant/MerchantDependencyProvider.php"
+CONFIG_JSON='{
+    "file_path": "src/Pyz/Zed/Merchant/MerchantDependencyProvider.php",
+    "operations": [
+        {"type": "remove_use", "class_name": "MerchantAclEntitiesMerchantPostCreatePlugin"},
+        {"type": "remove_use", "class_name": "MerchantCategoryMerchantBulkExpanderPlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantAclEntitiesMerchantPostCreatePlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantCategoryMerchantBulkExpanderPlugin"}
+    ],
+    "success_messages": [
+        "✓ MerchantDependencyProvider cleaned from marketplace-specific plugins",
+        "✓ Removed MerchantAclEntitiesMerchantPostCreatePlugin",
+        "✓ Removed MerchantCategoryMerchantBulkExpanderPlugin"
+    ]
+}'
+clean_php_file "$MERCHANT_DEP_FILE" "$CONFIG_JSON" "MerchantDependencyProvider"
+echo ""
 
 echo "Step 23: Removing marketplace-specific plugins from ProductDependencyProvider..."
 PRODUCT_DEP_FILE="src/Pyz/Zed/Product/ProductDependencyProvider.php"
@@ -1200,13 +1335,22 @@ CONFIG_JSON='{
     "operations": [
         {"type": "remove_use", "class_name": "MerchantNavigationTypeTwigPlugin"},
         {"type": "remove_use", "class_name": "MerchantUserTwigPlugin"},
+        {"type": "remove_use", "class_name": "ZedUiNavigationTwigPlugin"},
+        {"type": "remove_use", "class_name": "BooleanToStringTwigPlugin"},
+        {"type": "remove_use", "class_name": "GuiTableConfigurationTwigPlugin"},
         {"type": "remove_plugin", "plugin_class": "MerchantUserTwigPlugin"},
-        {"type": "remove_plugin", "plugin_class": "MerchantNavigationTypeTwigPlugin"}
+        {"type": "remove_plugin", "plugin_class": "MerchantNavigationTypeTwigPlugin"},
+        {"type": "remove_plugin", "plugin_class": "ZedUiNavigationTwigPlugin"},
+        {"type": "remove_plugin", "plugin_class": "BooleanToStringTwigPlugin"},
+        {"type": "remove_plugin", "plugin_class": "GuiTableConfigurationTwigPlugin"}
     ],
     "success_messages": [
         "✓ TwigDependencyProvider cleaned from marketplace-specific plugins",
         "✓ Removed MerchantUserTwigPlugin",
-        "✓ Removed MerchantNavigationTypeTwigPlugin"
+        "✓ Removed MerchantNavigationTypeTwigPlugin",
+        "✓ Removed ZedUiNavigationTwigPlugin",
+        "✓ Removed BooleanToStringTwigPlugin",
+        "✓ Removed GuiTableConfigurationTwigPlugin"
     ]
 }'
 clean_php_file "$TWIG_DEP_FILE" "$CONFIG_JSON" "TwigDependencyProvider"
