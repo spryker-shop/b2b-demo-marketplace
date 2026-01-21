@@ -134,7 +134,7 @@ class EventDispatcherDependencyProvider extends SprykerEventDispatcherDependency
      */
     protected function getBackendGatewayEventDispatcherPlugins(): array
     {
-        return [
+        $plugins = [
             new GatewayMonitoringRequestTransactionEventDispatcherPlugin(),
             new GatewayControllerEventDispatcherPlugin(),
             new RouterListenerEventDispatcherPlugin(),
@@ -142,6 +142,12 @@ class EventDispatcherDependencyProvider extends SprykerEventDispatcherDependency
             new AutoloaderCacheEventDispatcherPlugin(),
             new EventBehaviorEventDispatcherPlugin(),
         ];
+
+        if (class_exists(ProfilerRequestEventDispatcherPlugin::class)) {
+            $plugins[] = new ProfilerRequestEventDispatcherPlugin();
+        }
+
+        return $plugins;
     }
 
     /**
