@@ -12,7 +12,7 @@ echo ""
 
 # Marketplace Features
 MARKETPLACE_FEATURES=(
-    "spryker-feature/acl"
+    # "spryker-feature/acl"
     "spryker-feature/marketplace-agent-assist"
     "spryker-feature/marketplace-cart"
     "spryker-feature/marketplace-comments"
@@ -1656,7 +1656,7 @@ if __name__ == '__main__':
 PYTHON_SCRIPT
 
 if [ -f "$DOCKER_YML_FILE" ]; then
-    python3 /tmp/remove_docker_commands.py "$DOCKER_YML_FILE" "router-cache-warmup-merchant-portal,merchant-portal-build-frontend"
+    python3 /tmp/remove_docker_commands.py "$DOCKER_YML_FILE" "router-cache-warmup-merchant-portal,merchant-portal-build-frontend,acl-entity-metadata-validate"
 else
     echo "⚠ docker.yml file not found at $DOCKER_YML_FILE"
 fi
