@@ -111,10 +111,15 @@ def remove_plugin_from_array(content, plugin_class_name):
     """Remove plugin instantiation from array."""
     # Match: new PluginClassName(), or new PluginClassName()
     # Also match: $array[] = new PluginClassName(); (array push syntax)
+    # Also match: PluginClassName::class, (widget class syntax)
     
     # First try to match array push syntax: $var[] = new Plugin();
     array_push_pattern = rf'\s*\$\w+\[\]\s*=\s*new\s+{re.escape(plugin_class_name)}\s*\([^)]*\);\s*'
     content = re.sub(array_push_pattern, '', content)
+    
+    # Match widget class syntax: PluginClassName::class,
+    class_pattern = rf'\s*{re.escape(plugin_class_name)}::class,?\s*'
+    content = re.sub(class_pattern, '', content)
     
     # Then match regular array syntax: new PluginClassName(),
     pattern = rf'\s*new\s+{re.escape(plugin_class_name)}\s*\([^)]*\),?\s*'
@@ -1766,7 +1771,60 @@ CONFIG_JSON='{
 clean_php_file "$CLIENT_URL_STORAGE_DEP_FILE" "$CONFIG_JSON" "Client UrlStorageDependencyProvider"
 echo ""
 
-echo "Step 68: Removing marketplace directories..."
+echo "Step 68: Removing marketplace-specific widgets from Yves ShopApplicationDependencyProvider..."
+YVES_SHOP_APPLICATION_DEP_FILE="src/Pyz/Yves/ShopApplication/ShopApplicationDependencyProvider.php"
+CONFIG_JSON='{
+    "file_path": "src/Pyz/Yves/ShopApplication/ShopApplicationDependencyProvider.php",
+    "operations": [
+        {"type": "remove_use", "class_name": "MerchantOpeningHoursWidget"},
+        {"type": "remove_use", "class_name": "MerchantOrderReferenceForItemsWidget"},
+        {"type": "remove_use", "class_name": "MerchantSalesReturnCreateFormWidget"},
+        {"type": "remove_use", "class_name": "MerchantProductWidget"},
+        {"type": "remove_use", "class_name": "ProductOfferShoppingListWidget"},
+        {"type": "remove_use", "class_name": "MerchantSalesReturnCreateFormWidgetCacheKeyGeneratorStrategyPlugin"},
+        {"type": "remove_use", "class_name": "MerchantProductOfferWidget"},
+        {"type": "remove_use", "class_name": "SoldByMerchantWidget"},
+        {"type": "remove_use", "class_name": "ShoppingListMerchantWidget"},
+        {"type": "remove_use", "class_name": "MerchantProductOffersSelectWidget"},
+        {"type": "remove_use", "class_name": "MerchantSearchWidget"},
+        {"type": "remove_plugin", "plugin_class": "MerchantOpeningHoursWidget"},
+        {"type": "remove_plugin", "plugin_class": "MerchantOrderReferenceForItemsWidget"},
+        {"type": "remove_plugin", "plugin_class": "MerchantSalesReturnCreateFormWidget"},
+        {"type": "remove_plugin", "plugin_class": "MerchantProductWidget"},
+        {"type": "remove_plugin", "plugin_class": "ProductOfferShoppingListWidget"},
+        {"type": "remove_plugin", "plugin_class": "MerchantProductOfferWidget"},
+        {"type": "remove_plugin", "plugin_class": "SoldByMerchantWidget"},
+        {"type": "remove_plugin", "plugin_class": "ShoppingListMerchantWidget"},
+        {"type": "remove_plugin", "plugin_class": "MerchantProductOffersSelectWidget"},
+        {"type": "remove_plugin", "plugin_class": "MerchantSearchWidget"},
+        {"type": "remove_plugin", "plugin_class": "MerchantSalesReturnCreateFormWidgetCacheKeyGeneratorStrategyPlugin"}
+    ],
+    "success_messages": [
+        "✓ Yves ShopApplicationDependencyProvider cleaned from marketplace-specific widgets",
+        "✓ Removed MerchantOpeningHoursWidget",
+        "✓ Removed MerchantOrderReferenceForItemsWidget",
+        "✓ Removed MerchantSalesReturnCreateFormWidget",
+        "✓ Removed MerchantProductWidget",
+        "✓ Removed ProductOfferShoppingListWidget",
+        "✓ Removed MerchantProductOfferWidget",
+        "✓ Removed SoldByMerchantWidget",
+        "✓ Removed ShoppingListMerchantWidget",
+        "✓ Removed MerchantProductOffersSelectWidget",
+        "✓ Removed MerchantSearchWidget",
+        "✓ Removed MerchantSalesReturnCreateFormWidgetCacheKeyGeneratorStrategyPlugin"
+    ]
+}'
+clean_php_file "$YVES_SHOP_APPLICATION_DEP_FILE" "$CONFIG_JSON" "Yves ShopApplicationDependencyProvider"
+echo ""
+
+echo "Step 69: Removing marketplace directories..."
+for dir_entry in "${DIRECTORIES_TO_REMOVE[@]}"; do
+    IFS=':' read -r dir_path dir_name <<< "$dir_entry"
+    remove_directory "$dir_path" "$dir_name"
+done
+echo ""
+
+echo "Step 70: Running composer update to apply all changes..."
 for dir_entry in "${DIRECTORIES_TO_REMOVE[@]}"; do
     IFS=':' read -r dir_path dir_name <<< "$dir_entry"
     remove_directory "$dir_path" "$dir_name"
