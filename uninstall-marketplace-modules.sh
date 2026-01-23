@@ -461,11 +461,11 @@ CONFIG_JSON='{
     "file_path": "src/Pyz/Zed/CartReorder/CartReorderDependencyProvider.php",
     "operations": [
         {"type": "remove_use", "class_name": "MerchantProductCartReorderItemHydratorPlugin"},
-        {"type": "remove_plugin", "plugin_class": "MerchantProductCartReorderItemHydratorPlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantProductCartReorderItemHydratorPlugin"}
     ],
     "success_messages": [
         "✓ CartReorderDependencyProvider cleaned from marketplace-specific plugins",
-        "✓ Removed MerchantProductCartReorderItemHydratorPlugin",
+        "✓ Removed MerchantProductCartReorderItemHydratorPlugin"
     ]
 }'
 clean_php_file "$CART_REORDER_DEP_FILE" "$CONFIG_JSON" "CartReorderDependencyProvider"
@@ -706,7 +706,7 @@ CONFIG_JSON='{
         {"type": "remove_data_import_console", "config_constant": "MerchantCommissionDataImportConfig::IMPORT_TYPE_MERCHANT_COMMISSION"},
         {"type": "remove_data_import_console", "config_constant": "MerchantCommissionDataImportConfig::IMPORT_TYPE_MERCHANT_COMMISSION_AMOUNT"},
         {"type": "remove_data_import_console", "config_constant": "MerchantCommissionDataImportConfig::IMPORT_TYPE_MERCHANT_COMMISSION_STORE"},
-        {"type": "remove_data_import_console", "config_constant": "MerchantCommissionDataImportConfig::IMPORT_TYPE_MERCHANT_COMMISSION_MERCHANT"},
+        {"type": "remove_data_import_console", "config_constant": "MerchantCommissionDataImportConfig::IMPORT_TYPE_MERCHANT_COMMISSION_MERCHANT"}
     ],
     "success_messages": [
         "✓ ConsoleDependencyProvider cleaned from marketplace-specific console commands",
@@ -1475,8 +1475,7 @@ CONFIG_JSON='{
     ],
     "success_messages": [
         "✓ Yves CartPageDependencyProvider cleaned from marketplace-specific plugins",
-        "✓ Removed MerchantProductPreAddToCartPlugin",
-        "✓ Removed MerchantProductOfferPreAddToCartPlugin"
+        "✓ Removed MerchantProductPreAddToCartPlugin"
     ]
 }'
 clean_php_file "$YVES_CART_PAGE_DEP_FILE" "$CONFIG_JSON" "Yves CartPageDependencyProvider"
@@ -1596,42 +1595,24 @@ CONFIG_JSON='{
         {"type": "remove_use", "class_name": "MerchantOpeningHoursRestApiConfig"},
         {"type": "remove_use", "class_name": "MerchantOpeningHoursByMerchantReferenceResourceRelationshipPlugin"},
         {"type": "remove_use", "class_name": "MerchantOpeningHoursResourceRoutePlugin"},
-        {"type": "remove_use", "class_name": "MerchantProductOffersRestApiConfig"},
-        {"type": "remove_use", "class_name": "ConcreteProductsProductOffersResourceRoutePlugin"},
-        {"type": "remove_use", "class_name": "ProductOffersByProductConcreteSkuResourceRelationshipPlugin"},
-        {"type": "remove_use", "class_name": "ProductOffersResourceRoutePlugin"},
         {"type": "remove_use", "class_name": "MerchantsRestApiConfig"},
         {"type": "remove_use", "class_name": "MerchantAddressByMerchantReferenceResourceRelationshipPlugin"},
         {"type": "remove_use", "class_name": "MerchantAddressesResourceRoutePlugin"},
         {"type": "remove_use", "class_name": "MerchantByMerchantReferenceResourceRelationshipPlugin"},
         {"type": "remove_use", "class_name": "MerchantsByOrderResourceRelationshipPlugin"},
         {"type": "remove_use", "class_name": "MerchantsResourceRoutePlugin"},
-        {"type": "remove_use", "class_name": "ProductOfferAvailabilitiesRestApiConfig"},
-        {"type": "remove_use", "class_name": "ProductOfferAvailabilitiesByProductOfferReferenceResourceRelationshipPlugin"},
-        {"type": "remove_use", "class_name": "ProductOfferAvailabilitiesResourceRoutePlugin"},
-        {"type": "remove_use", "class_name": "ProductOfferPricesRestApiConfig"},
-        {"type": "remove_use", "class_name": "ProductOfferPriceByProductOfferReferenceResourceRelationshipPlugin"},
-        {"type": "remove_use", "class_name": "ProductOfferPricesResourceRoutePlugin"},
-        {"type": "remove_use", "class_name": "ProductOffersByProductOfferReferenceResourceRelationshipPlugin"},
         {"type": "remove_plugin", "plugin_class": "MerchantsResourceRoutePlugin"},
         {"type": "remove_plugin", "plugin_class": "MerchantAddressesResourceRoutePlugin"},
-        {"type": "remove_plugin", "plugin_class": "ProductOffersResourceRoutePlugin"},
-        {"type": "remove_plugin", "plugin_class": "ConcreteProductsProductOffersResourceRoutePlugin"},
-        {"type": "remove_plugin", "plugin_class": "ProductOfferAvailabilitiesResourceRoutePlugin"},
-        {"type": "remove_plugin", "plugin_class": "ProductOfferPricesResourceRoutePlugin"},
         {"type": "remove_plugin", "plugin_class": "MerchantOpeningHoursResourceRoutePlugin"},
         {"type": "remove_resource_relationship", "resource_type": "MerchantsRestApiConfig::RESOURCE_MERCHANTS", "plugin_class": "MerchantAddressByMerchantReferenceResourceRelationshipPlugin"},
         {"type": "remove_resource_relationship", "resource_type": "OrdersRestApiConfig::RESOURCE_ORDERS", "plugin_class": "MerchantsByOrderResourceRelationshipPlugin"},
         {"type": "remove_resource_relationship", "resource_type": "ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS", "plugin_class": "MerchantByMerchantReferenceResourceRelationshipPlugin"},
         {"type": "remove_resource_relationship", "resource_type": "CartsRestApiConfig::RESOURCE_CART_ITEMS", "plugin_class": "MerchantByMerchantReferenceResourceRelationshipPlugin"},
         {"type": "remove_resource_relationship", "resource_type": "CartsRestApiConfig::RESOURCE_GUEST_CARTS_ITEMS", "plugin_class": "MerchantByMerchantReferenceResourceRelationshipPlugin"},
-        {"type": "remove_resource_relationship", "resource_type": "ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS", "plugin_class": "ProductOffersByProductConcreteSkuResourceRelationshipPlugin"},
-        {"type": "remove_resource_relationship", "resource_type": "MerchantProductOffersRestApiConfig::RESOURCE_PRODUCT_OFFERS", "plugin_class": "MerchantByMerchantReferenceResourceRelationshipPlugin"},
-        {"type": "remove_resource_relationship", "resource_type": "MerchantProductOffersRestApiConfig::RESOURCE_PRODUCT_OFFERS", "plugin_class": "ProductOfferPriceByProductOfferReferenceResourceRelationshipPlugin"},
         {"type": "remove_resource_relationship", "resource_type": "MerchantsRestApiConfig::RESOURCE_MERCHANTS", "plugin_class": "MerchantOpeningHoursByMerchantReferenceResourceRelationshipPlugin"},
         {"type": "remove_resource_relationship", "resource_type": "SalesReturnsRestApiConfig::RESOURCE_RETURNS", "plugin_class": "MerchantByMerchantReferenceResourceRelationshipPlugin"},
+        {"type": "remove_resource_relationship", "resource_type": "MerchantProductOffersRestApiConfig::RESOURCE_PRODUCT_OFFERS", "plugin_class": "MerchantByMerchantReferenceResourceRelationshipPlugin"},
         {"type": "remove_resource_relationship", "resource_type": "ShoppingListsRestApiConfig::RESOURCE_SHOPPING_LIST_ITEMS", "plugin_class": "MerchantByMerchantReferenceResourceRelationshipPlugin"},
-        {"type": "remove_resource_relationship", "resource_type": "MerchantProductOffersRestApiConfig::RESOURCE_PRODUCT_OFFERS", "plugin_class": "ProductOfferAvailabilitiesByProductOfferReferenceResourceRelationshipPlugin"},
         {"type": "remove_resource_relationship", "resource_type": "ShoppingListsRestApiConfig::RESOURCE_SHOPPING_LIST_ITEMS", "plugin_class": "ProductOfferAvailabilitiesByProductOfferReferenceResourceRelationshipPlugin"},
         {"type": "remove_resource_relationship", "resource_type": "ShoppingListsRestApiConfig::RESOURCE_SHOPPING_LIST_ITEMS", "plugin_class": "ProductOffersByProductOfferReferenceResourceRelationshipPlugin"},
         {"type": "remove_resource_relationship", "resource_type": "ShoppingListsRestApiConfig::RESOURCE_SHOPPING_LIST_ITEMS", "plugin_class": "ProductOfferPriceByProductOfferReferenceResourceRelationshipPlugin"}
@@ -1691,11 +1672,11 @@ CONFIG_JSON='{
     "file_path": "src/Pyz/Client/ProductStorage/ProductStorageDependencyProvider.php",
     "operations": [
         {"type": "remove_use", "class_name": "ProductViewMerchantProductExpanderPlugin"},
-        {"type": "remove_plugin", "plugin_class": "ProductViewMerchantProductExpanderPlugin"},
+        {"type": "remove_plugin", "plugin_class": "ProductViewMerchantProductExpanderPlugin"}
     ],
     "success_messages": [
         "✓ Client ProductStorageDependencyProvider cleaned from marketplace-specific plugins",
-        "✓ Removed ProductViewMerchantProductExpanderPlugin",
+        "✓ Removed ProductViewMerchantProductExpanderPlugin"
     ]
 }'
 clean_php_file "$CLIENT_PRODUCT_STORAGE_DEP_FILE" "$CONFIG_JSON" "Client ProductStorageDependencyProvider"
