@@ -324,6 +324,22 @@ DIRECTORIES_TO_REMOVE=(
     "src/Pyz/Zed/GuiTable:GuiTable"
 )
 
+echo "Step 3: Removing marketplace-specific plugins from ApplicationDependencyProvider..."
+APPLICATION_DEP_FILE="src/Pyz/Zed/Application/ApplicationDependencyProvider.php"
+CONFIG_JSON='{
+    "file_path": "src/Pyz/Zed/Application/ApplicationDependencyProvider.php",
+    "operations": [
+        {"type": "remove_use", "class_name": "GuiTableApplicationPlugin"},
+        {"type": "remove_plugin", "plugin_class": "GuiTableApplicationPlugin"}
+    ],
+    "success_messages": [
+        "✓ ApplicationDependencyProvider cleaned from marketplace-specific plugins",
+        "✓ Removed GuiTableApplicationPlugin"
+    ]
+}'
+clean_php_file "$APPLICATION_DEP_FILE" "$CONFIG_JSON" "ApplicationDependencyProvider"
+echo ""
+
 echo "Step 4: Removing marketplace-specific code from AclConfig..."
 ACLCONFIG_FILE="src/Pyz/Zed/Acl/AclConfig.php"
 CONFIG_JSON='{
@@ -1787,7 +1803,26 @@ CONFIG_JSON='{
 clean_php_file "$CLIENT_URL_STORAGE_DEP_FILE" "$CONFIG_JSON" "Client UrlStorageDependencyProvider"
 echo ""
 
-echo "Step 69: Removing marketplace-specific widgets from Yves ShopApplicationDependencyProvider..."
+echo "Step 69: Removing marketplace-specific plugins from Client ProductOfferStorageDependencyProvider..."
+CLIENT_PRODUCT_OFFER_STORAGE_DEP_FILE="src/Pyz/Client/ProductOfferStorage/ProductOfferStorageDependencyProvider.php"
+CONFIG_JSON='{
+    "file_path": "src/Pyz/Client/ProductOfferStorage/ProductOfferStorageDependencyProvider.php",
+    "operations": [
+        {"type": "remove_use", "class_name": "MerchantProductProductOfferReferenceStrategyPlugin"},
+        {"type": "remove_use", "class_name": "MerchantProductOfferStorageExpanderPlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantProductProductOfferReferenceStrategyPlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantProductOfferStorageExpanderPlugin"}
+    ],
+    "success_messages": [
+        "✓ Client ProductOfferStorageDependencyProvider cleaned from marketplace-specific plugins",
+        "✓ Removed MerchantProductProductOfferReferenceStrategyPlugin",
+        "✓ Removed MerchantProductOfferStorageExpanderPlugin"
+    ]
+}'
+clean_php_file "$CLIENT_PRODUCT_OFFER_STORAGE_DEP_FILE" "$CONFIG_JSON" "Client ProductOfferStorageDependencyProvider"
+echo ""
+
+echo "Step 70: Removing marketplace-specific widgets from Yves ShopApplicationDependencyProvider..."
 YVES_SHOP_APPLICATION_DEP_FILE="src/Pyz/Yves/ShopApplication/ShopApplicationDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Yves/ShopApplication/ShopApplicationDependencyProvider.php",
@@ -1833,7 +1868,7 @@ CONFIG_JSON='{
 clean_php_file "$YVES_SHOP_APPLICATION_DEP_FILE" "$CONFIG_JSON" "Yves ShopApplicationDependencyProvider"
 echo ""
 
-echo "Step 70: Removing marketplace directories..."
+echo "Step 71: Removing marketplace directories..."
 for dir_entry in "${DIRECTORIES_TO_REMOVE[@]}"; do
     IFS=':' read -r dir_path dir_name <<< "$dir_entry"
     remove_directory "$dir_path" "$dir_name"
@@ -1847,7 +1882,7 @@ for dir_entry in "${DIRECTORIES_TO_REMOVE[@]}"; do
 done
 echo ""
 
-echo "Step 69: Removing merchant-portal commands from docker.yml..."
+echo "Step 72: Removing merchant-portal commands from docker.yml..."
 DOCKER_YML_FILE="config/install/docker.yml"
 
 cat > /tmp/remove_docker_commands.py << 'PYTHON_SCRIPT'
@@ -1958,7 +1993,7 @@ else
 fi
 echo ""
 
-echo "Step 70: Removing merchant-portal applications from deploy files..."
+echo "Step 73: Removing merchant-portal applications from deploy files..."
 DEPLOY_FILES=(
     "deploy.dev.yml"
     "deploy.yml"
@@ -2193,7 +2228,7 @@ clean_config_file() {
 # Create the Python config cleanup script
 create_config_cleanup_script
 
-echo "Step 71: Removing merchant portal configuration from config_default.php..."
+echo "Step 74: Removing merchant portal configuration from config_default.php..."
 CONFIG_DEFAULT_FILE="config/Shared/config_default.php"
 CONFIG_JSON='{
     "file_path": "config/Shared/config_default.php",
@@ -2222,7 +2257,7 @@ CONFIG_JSON='{
 clean_config_file "$CONFIG_DEFAULT_FILE" "$CONFIG_JSON"
 echo ""
 
-echo "Step 72: Removing merchant portal configuration from config_default-docker.dev.php..."
+echo "Step 75: Removing merchant portal configuration from config_default-docker.dev.php..."
 CONFIG_DOCKER_DEV_FILE="config/Shared/config_default-docker.dev.php"
 CONFIG_JSON='{
     "file_path": "config/Shared/config_default-docker.dev.php",
@@ -2241,7 +2276,7 @@ CONFIG_JSON='{
 clean_config_file "$CONFIG_DOCKER_DEV_FILE" "$CONFIG_JSON"
 echo ""
 
-echo "Step 73: Removing merchant portal configuration from config_default-ci.php..."
+echo "Step 76: Removing merchant portal configuration from config_default-ci.php..."
 CONFIG_CI_FILE="config/Shared/config_default-ci.php"
 CONFIG_JSON='{
     "file_path": "config/Shared/config_default-ci.php",
@@ -2260,7 +2295,7 @@ CONFIG_JSON='{
 clean_config_file "$CONFIG_CI_FILE" "$CONFIG_JSON"
 echo ""
 
-echo "Step 74: Removing marketplace payment configuration from config_oms-development.php..."
+echo "Step 77: Removing marketplace payment configuration from config_oms-development.php..."
 CONFIG_OMS_DEV_FILE="config/Shared/common/config_oms-development.php"
 CONFIG_JSON='{
     "file_path": "config/Shared/common/config_oms-development.php",
@@ -2277,7 +2312,7 @@ CONFIG_JSON='{
 clean_config_file "$CONFIG_OMS_DEV_FILE" "$CONFIG_JSON"
 echo ""
 
-echo "Step 75: Running composer update to apply all changes..."
+echo "Step 78: Running composer update to apply all changes..."
 composer update --ignore-platform-req=ext-grpc
 echo "✓ Composer update completed"
 echo ""
