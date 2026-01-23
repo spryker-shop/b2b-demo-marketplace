@@ -112,8 +112,13 @@ def remove_plugin_from_array(content, plugin_class_name):
     # Match: new PluginClassName(), or new PluginClassName()
     # Also match: $array[] = new PluginClassName(); (array push syntax)
     # Also match: PluginClassName::class, (widget class syntax)
+    # Also match: $array[Config::KEY] = new PluginClassName(); (keyed array syntax)
     
-    # First try to match array push syntax: $var[] = new Plugin();
+    # First try to match keyed array syntax: $var[Key::CONSTANT] = new Plugin();
+    keyed_array_pattern = rf'\s*\$\w+\[[^\]]+\]\s*=\s*new\s+{re.escape(plugin_class_name)}\s*\([^)]*\);\s*'
+    content = re.sub(keyed_array_pattern, '', content)
+    
+    # Match array push syntax: $var[] = new Plugin();
     array_push_pattern = rf'\s*\$\w+\[\]\s*=\s*new\s+{re.escape(plugin_class_name)}\s*\([^)]*\);\s*'
     content = re.sub(array_push_pattern, '', content)
     
@@ -456,14 +461,11 @@ CONFIG_JSON='{
     "file_path": "src/Pyz/Zed/CartReorder/CartReorderDependencyProvider.php",
     "operations": [
         {"type": "remove_use", "class_name": "MerchantProductCartReorderItemHydratorPlugin"},
-        {"type": "remove_use", "class_name": "MerchantProductOfferCartReorderItemHydratorPlugin"},
         {"type": "remove_plugin", "plugin_class": "MerchantProductCartReorderItemHydratorPlugin"},
-        {"type": "remove_plugin", "plugin_class": "MerchantProductOfferCartReorderItemHydratorPlugin"}
     ],
     "success_messages": [
         "✓ CartReorderDependencyProvider cleaned from marketplace-specific plugins",
         "✓ Removed MerchantProductCartReorderItemHydratorPlugin",
-        "✓ Removed MerchantProductOfferCartReorderItemHydratorPlugin"
     ]
 }'
 clean_php_file "$CART_REORDER_DEP_FILE" "$CONFIG_JSON" "CartReorderDependencyProvider"
@@ -694,8 +696,6 @@ CONFIG_JSON='{
         {"type": "remove_use", "class_name": "MerchantProductApprovalDataImportConfig"},
         {"type": "remove_use", "class_name": "ProductOfferShoppingListDataImportConfig"},
         {"type": "remove_use", "class_name": "MerchantCommissionDataImportConfig"},
-        {"type": "remove_use", "class_name": "ProductOfferServicePointDataImportConfig"},
-        {"type": "remove_use", "class_name": "ProductOfferShipmentTypeDataImportConfig"},
         {"type": "remove_plugin", "plugin_class": "AclEntitySynchronizeConsole"},
         {"type": "remove_plugin", "plugin_class": "AclEntityMetadataConfigValidateConsole"},
         {"type": "remove_plugin", "plugin_class": "DataImportMerchantImportConsole"},
@@ -707,8 +707,6 @@ CONFIG_JSON='{
         {"type": "remove_data_import_console", "config_constant": "MerchantCommissionDataImportConfig::IMPORT_TYPE_MERCHANT_COMMISSION_AMOUNT"},
         {"type": "remove_data_import_console", "config_constant": "MerchantCommissionDataImportConfig::IMPORT_TYPE_MERCHANT_COMMISSION_STORE"},
         {"type": "remove_data_import_console", "config_constant": "MerchantCommissionDataImportConfig::IMPORT_TYPE_MERCHANT_COMMISSION_MERCHANT"},
-        {"type": "remove_data_import_console", "config_constant": "ProductOfferServicePointDataImportConfig::IMPORT_TYPE_PRODUCT_OFFER_SERVICE"},
-        {"type": "remove_data_import_console", "config_constant": "ProductOfferShipmentTypeDataImportConfig::IMPORT_TYPE_PRODUCT_OFFER_SHIPMENT_TYPE"}
     ],
     "success_messages": [
         "✓ ConsoleDependencyProvider cleaned from marketplace-specific console commands",
@@ -718,9 +716,7 @@ CONFIG_JSON='{
         "✓ Removed TriggerEventFromCsvFileConsole",
         "✓ Removed merchant product approval data import console",
         "✓ Removed product offer shopping list data import console",
-        "✓ Removed merchant commission data import consoles",
-        "✓ Removed product offer service point data import console",
-        "✓ Removed product offer shipment type data import console"
+        "✓ Removed merchant commission data import consoles"
     ]
 }'
 clean_php_file "$CONSOLE_DEP_FILE" "$CONFIG_JSON" "ConsoleDependencyProvider"
@@ -897,6 +893,45 @@ CONFIG_JSON='{
 clean_php_file "$PRODUCT_DEP_FILE" "$CONFIG_JSON" "ProductDependencyProvider"
 echo ""
 
+echo "Step 24: Removing marketplace-specific plugins from ProductPageSearchDependencyProvider..."
+PRODUCT_PAGE_SEARCH_DEP_FILE="src/Pyz/Zed/ProductPageSearch/ProductPageSearchDependencyProvider.php"
+CONFIG_JSON='{
+    "file_path": "src/Pyz/Zed/ProductPageSearch/ProductPageSearchDependencyProvider.php",
+    "operations": [
+        {"type": "remove_use", "class_name": "MerchantProductOfferSearchConfig"},
+        {"type": "remove_use", "class_name": "MerchantProductSearchConfig"},
+        {"type": "remove_use", "class_name": "MerchantNamesProductAbstractMapExpanderPlugin"},
+        {"type": "remove_use", "class_name": "MerchantProductPageDataExpanderPlugin"},
+        {"type": "remove_use", "class_name": "MerchantProductPageDataLoaderPlugin"},
+        {"type": "remove_use", "class_name": "MerchantReferencesProductAbstractsMapExpanderPlugin"},
+        {"type": "remove_use", "class_name": "MerchantProductAbstractMapExpanderPlugin"},
+        {"type": "remove_use", "class_name": "MerchantMerchantProductPageDataExpanderPlugin"},
+        {"type": "remove_use", "class_name": "MerchantMerchantProductPageDataLoaderPlugin"},
+        {"type": "remove_use", "class_name": "MerchantProductProductConcretePageMapExpanderPlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantMerchantProductPageDataExpanderPlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantProductPageDataExpanderPlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantMerchantProductPageDataLoaderPlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantProductPageDataLoaderPlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantProductProductConcretePageMapExpanderPlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantProductAbstractMapExpanderPlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantNamesProductAbstractMapExpanderPlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantReferencesProductAbstractsMapExpanderPlugin"}
+    ],
+    "success_messages": [
+        "✓ ProductPageSearchDependencyProvider cleaned from marketplace-specific plugins",
+        "✓ Removed MerchantMerchantProductPageDataExpanderPlugin",
+        "✓ Removed MerchantProductPageDataExpanderPlugin",
+        "✓ Removed MerchantMerchantProductPageDataLoaderPlugin",
+        "✓ Removed MerchantProductPageDataLoaderPlugin",
+        "✓ Removed MerchantProductProductConcretePageMapExpanderPlugin",
+        "✓ Removed MerchantProductAbstractMapExpanderPlugin",
+        "✓ Removed MerchantNamesProductAbstractMapExpanderPlugin",
+        "✓ Removed MerchantReferencesProductAbstractsMapExpanderPlugin"
+    ]
+}'
+clean_php_file "$PRODUCT_PAGE_SEARCH_DEP_FILE" "$CONFIG_JSON" "ProductPageSearchDependencyProvider"
+echo ""
+
 echo "Step 26: Removing marketplace-specific plugins from ProductManagementDependencyProvider..."
 PRODUCT_MANAGEMENT_DEP_FILE="src/Pyz/Zed/ProductManagement/ProductManagementDependencyProvider.php"
 CONFIG_JSON='{
@@ -922,7 +957,7 @@ CONFIG_JSON='{
 clean_php_file "$PRODUCT_MANAGEMENT_DEP_FILE" "$CONFIG_JSON" "ProductManagementDependencyProvider"
 echo ""
 
-echo "Step 27: Removing marketplace-specific plugins from ProductOptionDependencyProvider..."
+echo "Step 28: Removing marketplace-specific plugins from ProductOptionDependencyProvider..."
 PRODUCT_OPTION_DEP_FILE="src/Pyz/Zed/ProductOption/ProductOptionDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Zed/ProductOption/ProductOptionDependencyProvider.php",
@@ -944,7 +979,7 @@ CONFIG_JSON='{
 clean_php_file "$PRODUCT_OPTION_DEP_FILE" "$CONFIG_JSON" "ProductOptionDependencyProvider"
 echo ""
 
-echo "Step 28: Removing marketplace-specific plugins from ProductOptionStorageDependencyProvider..."
+echo "Step 29: Removing marketplace-specific plugins from ProductOptionStorageDependencyProvider..."
 PRODUCT_OPTION_STORAGE_DEP_FILE="src/Pyz/Zed/ProductOptionStorage/ProductOptionStorageDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Zed/ProductOptionStorage/ProductOptionStorageDependencyProvider.php",
@@ -960,7 +995,7 @@ CONFIG_JSON='{
 clean_php_file "$PRODUCT_OPTION_STORAGE_DEP_FILE" "$CONFIG_JSON" "ProductOptionStorageDependencyProvider"
 echo ""
 
-echo "Step 29: Removing marketplace-specific plugins from ProductStorageDependencyProvider..."
+echo "Step 30: Removing marketplace-specific plugins from ProductStorageDependencyProvider..."
 PRODUCT_STORAGE_DEP_FILE="src/Pyz/Zed/ProductStorage/ProductStorageDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Zed/ProductStorage/ProductStorageDependencyProvider.php",
@@ -985,7 +1020,7 @@ CONFIG_JSON='{
 clean_php_file "$PRODUCT_STORAGE_DEP_FILE" "$CONFIG_JSON" "ProductStorageDependencyProvider"
 echo ""
 
-echo "Step 30: Removing marketplace-specific plugins from PublisherDependencyProvider..."
+echo "Step 31: Removing marketplace-specific plugins from PublisherDependencyProvider..."
 PUBLISHER_DEP_FILE="src/Pyz/Zed/Publisher/PublisherDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Zed/Publisher/PublisherDependencyProvider.php",
@@ -1039,7 +1074,7 @@ CONFIG_JSON='{
 clean_php_file "$PUBLISHER_DEP_FILE" "$CONFIG_JSON" "PublisherDependencyProvider"
 echo ""
 
-echo "Step 31: Removing marketplace-specific queue entries from QueueDependencyProvider..."
+echo "Step 32: Removing marketplace-specific queue entries from QueueDependencyProvider..."
 QUEUE_DEP_FILE="src/Pyz/Zed/Queue/QueueDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Zed/Queue/QueueDependencyProvider.php",
@@ -1054,7 +1089,7 @@ CONFIG_JSON='{
 clean_php_file "$QUEUE_DEP_FILE" "$CONFIG_JSON" "QueueDependencyProvider"
 echo ""
 
-echo "Step 32: Removing marketplace-specific plugins from QuoteDependencyProvider..."
+echo "Step 33: Removing marketplace-specific plugins from QuoteDependencyProvider..."
 QUOTE_DEP_FILE="src/Pyz/Zed/Quote/QuoteDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Zed/Quote/QuoteDependencyProvider.php",
@@ -1070,7 +1105,7 @@ CONFIG_JSON='{
 clean_php_file "$QUOTE_DEP_FILE" "$CONFIG_JSON" "QuoteDependencyProvider"
 echo ""
 
-echo "Step 33: Removing marketplace-specific plugins from RefundDependencyProvider..."
+echo "Step 34: Removing marketplace-specific plugins from RefundDependencyProvider..."
 REFUND_DEP_FILE="src/Pyz/Zed/Refund/RefundDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Zed/Refund/RefundDependencyProvider.php",
@@ -1089,7 +1124,7 @@ CONFIG_JSON='{
 clean_php_file "$REFUND_DEP_FILE" "$CONFIG_JSON" "RefundDependencyProvider"
 echo ""
 
-echo "Step 34: Removing marketplace-specific plugins from RouterDependencyProvider..."
+echo "Step 35: Removing marketplace-specific plugins from RouterDependencyProvider..."
 ROUTER_DEP_FILE="src/Pyz/Zed/Router/RouterDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Zed/Router/RouterDependencyProvider.php",
@@ -1105,7 +1140,7 @@ CONFIG_JSON='{
 clean_php_file "$ROUTER_DEP_FILE" "$CONFIG_JSON" "RouterDependencyProvider"
 echo ""
 
-echo "Step 35: Removing marketplace-specific plugins from RuleEngineDependencyProvider..."
+echo "Step 36: Removing marketplace-specific plugins from RuleEngineDependencyProvider..."
 RULE_ENGINE_DEP_FILE="src/Pyz/Zed/RuleEngine/RuleEngineDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Zed/RuleEngine/RuleEngineDependencyProvider.php",
@@ -1124,7 +1159,7 @@ CONFIG_JSON='{
 clean_php_file "$RULE_ENGINE_DEP_FILE" "$CONFIG_JSON" "RuleEngineDependencyProvider"
 echo ""
 
-echo "Step 36: Removing marketplace-specific plugins from SalesDependencyProvider..."
+echo "Step 37: Removing marketplace-specific plugins from SalesDependencyProvider..."
 SALES_DEP_FILE="src/Pyz/Zed/Sales/SalesDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Zed/Sales/SalesDependencyProvider.php",
@@ -1155,7 +1190,7 @@ CONFIG_JSON='{
 clean_php_file "$SALES_DEP_FILE" "$CONFIG_JSON" "SalesDependencyProvider"
 echo ""
 
-echo "Step 37: Removing marketplace-specific plugins from SalesReturnDependencyProvider..."
+echo "Step 38: Removing marketplace-specific plugins from SalesReturnDependencyProvider..."
 SALES_RETURN_DEP_FILE="src/Pyz/Zed/SalesReturn/SalesReturnDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Zed/SalesReturn/SalesReturnDependencyProvider.php",
@@ -1177,7 +1212,7 @@ CONFIG_JSON='{
 clean_php_file "$SALES_RETURN_DEP_FILE" "$CONFIG_JSON" "SalesReturnDependencyProvider"
 echo ""
 
-echo "Step 38: Removing marketplace-specific plugins from SalesReturnGuiDependencyProvider..."
+echo "Step 39: Removing marketplace-specific plugins from SalesReturnGuiDependencyProvider..."
 SALES_RETURN_GUI_DEP_FILE="src/Pyz/Zed/SalesReturnGui/SalesReturnGuiDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Zed/SalesReturnGui/SalesReturnGuiDependencyProvider.php",
@@ -1193,7 +1228,7 @@ CONFIG_JSON='{
 clean_php_file "$SALES_RETURN_GUI_DEP_FILE" "$CONFIG_JSON" "SalesReturnGuiDependencyProvider"
 echo ""
 
-echo "Step 39: Removing marketplace-specific plugins from SecurityDependencyProvider..."
+echo "Step 40: Removing marketplace-specific plugins from SecurityDependencyProvider..."
 SECURITY_DEP_FILE="src/Pyz/Zed/Security/SecurityDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Zed/Security/SecurityDependencyProvider.php",
@@ -1218,7 +1253,7 @@ CONFIG_JSON='{
 clean_php_file "$SECURITY_DEP_FILE" "$CONFIG_JSON" "SecurityDependencyProvider"
 echo ""
 
-echo "Step 40: Removing marketplace-specific plugins from SecurityGuiDependencyProvider..."
+echo "Step 41: Removing marketplace-specific plugins from SecurityGuiDependencyProvider..."
 SECURITY_GUI_DEP_FILE="src/Pyz/Zed/SecurityGui/SecurityGuiDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Zed/SecurityGui/SecurityGuiDependencyProvider.php",
@@ -1234,7 +1269,7 @@ CONFIG_JSON='{
 clean_php_file "$SECURITY_GUI_DEP_FILE" "$CONFIG_JSON" "SecurityGuiDependencyProvider"
 echo ""
 
-echo "Step 41: Removing marketplace-specific plugins from ShipmentDependencyProvider..."
+echo "Step 42: Removing marketplace-specific plugins from ShipmentDependencyProvider..."
 SHIPMENT_DEP_FILE="src/Pyz/Zed/Shipment/ShipmentDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Zed/Shipment/ShipmentDependencyProvider.php",
@@ -1250,7 +1285,7 @@ CONFIG_JSON='{
 clean_php_file "$SHIPMENT_DEP_FILE" "$CONFIG_JSON" "ShipmentDependencyProvider"
 echo ""
 
-echo "Step 42: Removing marketplace-specific plugins from ShipmentsRestApiDependencyProvider..."
+echo "Step 43: Removing marketplace-specific plugins from ShipmentsRestApiDependencyProvider..."
 SHIPMENTS_REST_API_DEP_FILE="src/Pyz/Zed/ShipmentsRestApi/ShipmentsRestApiDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Zed/ShipmentsRestApi/ShipmentsRestApiDependencyProvider.php",
@@ -1266,7 +1301,7 @@ CONFIG_JSON='{
 clean_php_file "$SHIPMENTS_REST_API_DEP_FILE" "$CONFIG_JSON" "ShipmentsRestApiDependencyProvider"
 echo ""
 
-echo "Step 43: Removing marketplace-specific plugins from ShipmentGuiDependencyProvider..."
+echo "Step 44: Removing marketplace-specific plugins from ShipmentGuiDependencyProvider..."
 SHIPMENT_GUI_DEP_FILE="src/Pyz/Zed/ShipmentGui/ShipmentGuiDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Zed/ShipmentGui/ShipmentGuiDependencyProvider.php",
@@ -1282,7 +1317,7 @@ CONFIG_JSON='{
 clean_php_file "$SHIPMENT_GUI_DEP_FILE" "$CONFIG_JSON" "ShipmentGuiDependencyProvider"
 echo ""
 
-echo "Step 44: Removing marketplace-specific plugins from ShoppingListDependencyProvider..."
+echo "Step 45: Removing marketplace-specific plugins from ShoppingListDependencyProvider..."
 SHOPPING_LIST_DEP_FILE="src/Pyz/Zed/ShoppingList/ShoppingListDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Zed/ShoppingList/ShoppingListDependencyProvider.php",
@@ -1304,7 +1339,7 @@ CONFIG_JSON='{
 clean_php_file "$SHOPPING_LIST_DEP_FILE" "$CONFIG_JSON" "ShoppingListDependencyProvider"
 echo ""
 
-echo "Step 45: Removing marketplace-specific plugins from StateMachineDependencyProvider..."
+echo "Step 46: Removing marketplace-specific plugins from StateMachineDependencyProvider..."
 STATE_MACHINE_DEP_FILE="src/Pyz/Zed/StateMachine/StateMachineDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Zed/StateMachine/StateMachineDependencyProvider.php",
@@ -1320,7 +1355,7 @@ CONFIG_JSON='{
 clean_php_file "$STATE_MACHINE_DEP_FILE" "$CONFIG_JSON" "StateMachineDependencyProvider"
 echo ""
 
-echo "Step 46: Removing marketplace-specific plugins from SynchronizationDependencyProvider..."
+echo "Step 47: Removing marketplace-specific plugins from SynchronizationDependencyProvider..."
 SYNCHRONIZATION_DEP_FILE="src/Pyz/Zed/Synchronization/SynchronizationDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Zed/Synchronization/SynchronizationDependencyProvider.php",
@@ -1336,7 +1371,7 @@ CONFIG_JSON='{
 clean_php_file "$SYNCHRONIZATION_DEP_FILE" "$CONFIG_JSON" "SynchronizationDependencyProvider"
 echo ""
 
-echo "Step 47: Removing marketplace-specific plugins from TwigDependencyProvider..."
+echo "Step 48: Removing marketplace-specific plugins from TwigDependencyProvider..."
 TWIG_DEP_FILE="src/Pyz/Zed/Twig/TwigDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Zed/Twig/TwigDependencyProvider.php",
@@ -1364,7 +1399,7 @@ CONFIG_JSON='{
 clean_php_file "$TWIG_DEP_FILE" "$CONFIG_JSON" "TwigDependencyProvider"
 echo ""
 
-echo "Step 48: Removing marketplace-specific plugins from UserDependencyProvider..."
+echo "Step 49: Removing marketplace-specific plugins from UserDependencyProvider..."
 USER_DEP_FILE="src/Pyz/Zed/User/UserDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Zed/User/UserDependencyProvider.php",
@@ -1389,7 +1424,7 @@ CONFIG_JSON='{
 clean_php_file "$USER_DEP_FILE" "$CONFIG_JSON" "UserDependencyProvider"
 echo ""
 
-echo "Step 49: Removing marketplace-specific plugins from ZedNavigationDependencyProvider..."
+echo "Step 50: Removing marketplace-specific plugins from ZedNavigationDependencyProvider..."
 ZED_NAVIGATION_DEP_FILE="src/Pyz/Zed/ZedNavigation/ZedNavigationDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Zed/ZedNavigation/ZedNavigationDependencyProvider.php",
@@ -1408,7 +1443,7 @@ CONFIG_JSON='{
 clean_php_file "$ZED_NAVIGATION_DEP_FILE" "$CONFIG_JSON" "ZedNavigationDependencyProvider"
 echo ""
 
-echo "Step 50: Removing marketplace-specific configuration from ZedNavigationConfig..."
+echo "Step 51: Removing marketplace-specific configuration from ZedNavigationConfig..."
 ZED_NAVIGATION_CONFIG_FILE="src/Pyz/Zed/ZedNavigation/ZedNavigationConfig.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Zed/ZedNavigation/ZedNavigationConfig.php",
@@ -1430,7 +1465,7 @@ CONFIG_JSON='{
 clean_php_file "$ZED_NAVIGATION_CONFIG_FILE" "$CONFIG_JSON" "ZedNavigationConfig"
 echo ""
 
-echo "Step 51: Removing marketplace-specific plugins from Yves CartPageDependencyProvider..."
+echo "Step 52: Removing marketplace-specific plugins from Yves CartPageDependencyProvider..."
 YVES_CART_PAGE_DEP_FILE="src/Pyz/Yves/CartPage/CartPageDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Yves/CartPage/CartPageDependencyProvider.php",
@@ -1447,7 +1482,7 @@ CONFIG_JSON='{
 clean_php_file "$YVES_CART_PAGE_DEP_FILE" "$CONFIG_JSON" "Yves CartPageDependencyProvider"
 echo ""
 
-echo "Step 52: Removing marketplace-specific plugins from Yves CheckoutPageDependencyProvider..."
+echo "Step 53: Removing marketplace-specific plugins from Yves CheckoutPageDependencyProvider..."
 YVES_CHECKOUT_PAGE_DEP_FILE="src/Pyz/Yves/CheckoutPage/CheckoutPageDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Yves/CheckoutPage/CheckoutPageDependencyProvider.php",
@@ -1470,7 +1505,7 @@ CONFIG_JSON='{
 clean_php_file "$YVES_CHECKOUT_PAGE_DEP_FILE" "$CONFIG_JSON" "Yves CheckoutPageDependencyProvider"
 echo ""
 
-echo "Step 53: Removing marketplace-specific plugins from Yves CustomerPageDependencyProvider..."
+echo "Step 54: Removing marketplace-specific plugins from Yves CustomerPageDependencyProvider..."
 YVES_CUSTOMER_PAGE_DEP_FILE="src/Pyz/Yves/CustomerPage/CustomerPageDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Yves/CustomerPage/CustomerPageDependencyProvider.php",
@@ -1486,7 +1521,7 @@ CONFIG_JSON='{
 clean_php_file "$YVES_CUSTOMER_PAGE_DEP_FILE" "$CONFIG_JSON" "Yves CustomerPageDependencyProvider"
 echo ""
 
-echo "Step 54: Removing marketplace-specific plugins from Yves QuickOrderPageDependencyProvider..."
+echo "Step 55: Removing marketplace-specific plugins from Yves QuickOrderPageDependencyProvider..."
 YVES_QUICK_ORDER_PAGE_DEP_FILE="src/Pyz/Yves/QuickOrderPage/QuickOrderPageDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Yves/QuickOrderPage/QuickOrderPageDependencyProvider.php",
@@ -1505,7 +1540,7 @@ CONFIG_JSON='{
 clean_php_file "$YVES_QUICK_ORDER_PAGE_DEP_FILE" "$CONFIG_JSON" "Yves QuickOrderPageDependencyProvider"
 echo ""
 
-echo "Step 55: Removing marketplace-specific plugins from Yves RouterDependencyProvider..."
+echo "Step 56: Removing marketplace-specific plugins from Yves RouterDependencyProvider..."
 YVES_ROUTER_DEP_FILE="src/Pyz/Yves/Router/RouterDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Yves/Router/RouterDependencyProvider.php",
@@ -1521,7 +1556,7 @@ CONFIG_JSON='{
 clean_php_file "$YVES_ROUTER_DEP_FILE" "$CONFIG_JSON" "Yves RouterDependencyProvider"
 echo ""
 
-echo "Step 56: Removing marketplace-specific plugins from Yves StorageRouterDependencyProvider..."
+echo "Step 57: Removing marketplace-specific plugins from Yves StorageRouterDependencyProvider..."
 YVES_STORAGE_ROUTER_DEP_FILE="src/Pyz/Yves/StorageRouter/StorageRouterDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Yves/StorageRouter/StorageRouterDependencyProvider.php",
@@ -1537,7 +1572,7 @@ CONFIG_JSON='{
 clean_php_file "$YVES_STORAGE_ROUTER_DEP_FILE" "$CONFIG_JSON" "Yves StorageRouterDependencyProvider"
 echo ""
 
-echo "Step 57: Removing marketplace-specific plugins from Glue CartsRestApiDependencyProvider..."
+echo "Step 58: Removing marketplace-specific plugins from Glue CartsRestApiDependencyProvider..."
 GLUE_CARTS_REST_API_DEP_FILE="src/Pyz/Glue/CartsRestApi/CartsRestApiDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Glue/CartsRestApi/CartsRestApiDependencyProvider.php",
@@ -1553,7 +1588,7 @@ CONFIG_JSON='{
 clean_php_file "$GLUE_CARTS_REST_API_DEP_FILE" "$CONFIG_JSON" "Glue CartsRestApiDependencyProvider"
 echo ""
 
-echo "Step 58: Removing marketplace-specific plugins from Glue GlueApplicationDependencyProvider..."
+echo "Step 59: Removing marketplace-specific plugins from Glue GlueApplicationDependencyProvider..."
 GLUE_APPLICATION_DEP_FILE="src/Pyz/Glue/GlueApplication/GlueApplicationDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Glue/GlueApplication/GlueApplicationDependencyProvider.php",
@@ -1615,7 +1650,7 @@ CONFIG_JSON='{
 clean_php_file "$GLUE_APPLICATION_DEP_FILE" "$CONFIG_JSON" "Glue GlueApplicationDependencyProvider"
 echo ""
 
-echo "Step 59: Removing marketplace-specific plugins from Glue UrlsRestApiDependencyProvider..."
+echo "Step 60: Removing marketplace-specific plugins from Glue UrlsRestApiDependencyProvider..."
 GLUE_URLS_REST_API_DEP_FILE="src/Pyz/Glue/UrlsRestApi/UrlsRestApiDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Glue/UrlsRestApi/UrlsRestApiDependencyProvider.php",
@@ -1631,7 +1666,7 @@ CONFIG_JSON='{
 clean_php_file "$GLUE_URLS_REST_API_DEP_FILE" "$CONFIG_JSON" "Glue UrlsRestApiDependencyProvider"
 echo ""
 
-echo "Step 60: Removing marketplace-specific plugins from Client CatalogDependencyProvider..."
+echo "Step 61: Removing marketplace-specific plugins from Client CatalogDependencyProvider..."
 CLIENT_CATALOG_DEP_FILE="src/Pyz/Client/Catalog/CatalogDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Client/Catalog/CatalogDependencyProvider.php",
@@ -1650,26 +1685,23 @@ CONFIG_JSON='{
 clean_php_file "$CLIENT_CATALOG_DEP_FILE" "$CONFIG_JSON" "Client CatalogDependencyProvider"
 echo ""
 
-echo "Step 61: Removing marketplace-specific plugins from Client ProductStorageDependencyProvider..."
+echo "Step 62: Removing marketplace-specific plugins from Client ProductStorageDependencyProvider..."
 CLIENT_PRODUCT_STORAGE_DEP_FILE="src/Pyz/Client/ProductStorage/ProductStorageDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Client/ProductStorage/ProductStorageDependencyProvider.php",
     "operations": [
         {"type": "remove_use", "class_name": "ProductViewMerchantProductExpanderPlugin"},
-        {"type": "remove_use", "class_name": "ProductViewProductOfferExpanderPlugin"},
         {"type": "remove_plugin", "plugin_class": "ProductViewMerchantProductExpanderPlugin"},
-        {"type": "remove_plugin", "plugin_class": "ProductViewProductOfferExpanderPlugin"}
     ],
     "success_messages": [
         "✓ Client ProductStorageDependencyProvider cleaned from marketplace-specific plugins",
         "✓ Removed ProductViewMerchantProductExpanderPlugin",
-        "✓ Removed ProductViewProductOfferExpanderPlugin"
     ]
 }'
 clean_php_file "$CLIENT_PRODUCT_STORAGE_DEP_FILE" "$CONFIG_JSON" "Client ProductStorageDependencyProvider"
 echo ""
 
-echo "Step 62: Removing marketplace-specific queue configurations from Client RabbitMqConfig..."
+echo "Step 63: Removing marketplace-specific queue configurations from Client RabbitMqConfig..."
 CLIENT_RABBITMQ_CONFIG_FILE="src/Pyz/Client/RabbitMq/RabbitMqConfig.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Client/RabbitMq/RabbitMqConfig.php",
@@ -1685,7 +1717,7 @@ CONFIG_JSON='{
 clean_php_file "$CLIENT_RABBITMQ_CONFIG_FILE" "$CONFIG_JSON" "Client RabbitMqConfig"
 echo ""
 
-echo "Step 63: Removing marketplace-specific plugins from Client SearchDependencyProvider..."
+echo "Step 64: Removing marketplace-specific plugins from Client SearchDependencyProvider..."
 CLIENT_SEARCH_DEP_FILE="src/Pyz/Client/Search/SearchDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Client/Search/SearchDependencyProvider.php",
@@ -1704,7 +1736,7 @@ CONFIG_JSON='{
 clean_php_file "$CLIENT_SEARCH_DEP_FILE" "$CONFIG_JSON" "Client SearchDependencyProvider"
 echo ""
 
-echo "Step 64: Removing marketplace-specific plugins from Client SearchElasticsearchDependencyProvider..."
+echo "Step 65: Removing marketplace-specific plugins from Client SearchElasticsearchDependencyProvider..."
 CLIENT_SEARCH_ELASTICSEARCH_DEP_FILE="src/Pyz/Client/SearchElasticsearch/SearchElasticsearchDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Client/SearchElasticsearch/SearchElasticsearchDependencyProvider.php",
@@ -1723,7 +1755,7 @@ CONFIG_JSON='{
 clean_php_file "$CLIENT_SEARCH_ELASTICSEARCH_DEP_FILE" "$CONFIG_JSON" "Client SearchElasticsearchDependencyProvider"
 echo ""
 
-echo "Step 65: Removing marketplace-specific plugins from Client SecurityBlockerDependencyProvider..."
+echo "Step 66: Removing marketplace-specific plugins from Client SecurityBlockerDependencyProvider..."
 CLIENT_SECURITY_BLOCKER_DEP_FILE="src/Pyz/Client/SecurityBlocker/SecurityBlockerDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Client/SecurityBlocker/SecurityBlockerDependencyProvider.php",
@@ -1742,7 +1774,7 @@ CONFIG_JSON='{
 clean_php_file "$CLIENT_SECURITY_BLOCKER_DEP_FILE" "$CONFIG_JSON" "Client SecurityBlockerDependencyProvider"
 echo ""
 
-echo "Step 66: Removing marketplace-specific plugins from Client ShoppingListDependencyProvider..."
+echo "Step 67: Removing marketplace-specific plugins from Client ShoppingListDependencyProvider..."
 CLIENT_SHOPPING_LIST_DEP_FILE="src/Pyz/Client/ShoppingList/ShoppingListDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Client/ShoppingList/ShoppingListDependencyProvider.php",
@@ -1758,7 +1790,7 @@ CONFIG_JSON='{
 clean_php_file "$CLIENT_SHOPPING_LIST_DEP_FILE" "$CONFIG_JSON" "Client ShoppingListDependencyProvider"
 echo ""
 
-echo "Step 67: Removing marketplace-specific plugins from Client UrlStorageDependencyProvider..."
+echo "Step 68: Removing marketplace-specific plugins from Client UrlStorageDependencyProvider..."
 CLIENT_URL_STORAGE_DEP_FILE="src/Pyz/Client/UrlStorage/UrlStorageDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Client/UrlStorage/UrlStorageDependencyProvider.php",
@@ -1774,7 +1806,7 @@ CONFIG_JSON='{
 clean_php_file "$CLIENT_URL_STORAGE_DEP_FILE" "$CONFIG_JSON" "Client UrlStorageDependencyProvider"
 echo ""
 
-echo "Step 68: Removing marketplace-specific widgets from Yves ShopApplicationDependencyProvider..."
+echo "Step 69: Removing marketplace-specific widgets from Yves ShopApplicationDependencyProvider..."
 YVES_SHOP_APPLICATION_DEP_FILE="src/Pyz/Yves/ShopApplication/ShopApplicationDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Yves/ShopApplication/ShopApplicationDependencyProvider.php",
@@ -1820,14 +1852,14 @@ CONFIG_JSON='{
 clean_php_file "$YVES_SHOP_APPLICATION_DEP_FILE" "$CONFIG_JSON" "Yves ShopApplicationDependencyProvider"
 echo ""
 
-echo "Step 69: Removing marketplace directories..."
+echo "Step 70: Removing marketplace directories..."
 for dir_entry in "${DIRECTORIES_TO_REMOVE[@]}"; do
     IFS=':' read -r dir_path dir_name <<< "$dir_entry"
     remove_directory "$dir_path" "$dir_name"
 done
 echo ""
 
-echo "Step 70: Running composer update to apply all changes..."
+echo "Step 71: Running composer update to apply all changes..."
 for dir_entry in "${DIRECTORIES_TO_REMOVE[@]}"; do
     IFS=':' read -r dir_path dir_name <<< "$dir_entry"
     remove_directory "$dir_path" "$dir_name"
