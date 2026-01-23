@@ -1838,7 +1838,23 @@ CONFIG_JSON='{
 clean_php_file "$CLIENT_MERCHANT_SEARCH_DEP_FILE" "$CONFIG_JSON" "Client MerchantSearchDependencyProvider"
 echo ""
 
-echo "Step 71: Removing marketplace-specific widgets from Yves ShopApplicationDependencyProvider..."
+echo "Step 71: Removing marketplace-specific plugins from Zed MerchantSearchDependencyProvider..."
+ZED_MERCHANT_SEARCH_DEP_FILE="src/Pyz/Zed/MerchantSearch/MerchantSearchDependencyProvider.php"
+CONFIG_JSON='{
+    "file_path": "src/Pyz/Zed/MerchantSearch/MerchantSearchDependencyProvider.php",
+    "operations": [
+        {"type": "remove_use", "class_name": "MerchantCategoryMerchantSearchDataExpanderPlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantCategoryMerchantSearchDataExpanderPlugin"}
+    ],
+    "success_messages": [
+        "✓ Zed MerchantSearchDependencyProvider cleaned from marketplace-specific plugins",
+        "✓ Removed MerchantCategoryMerchantSearchDataExpanderPlugin"
+    ]
+}'
+clean_php_file "$ZED_MERCHANT_SEARCH_DEP_FILE" "$CONFIG_JSON" "Zed MerchantSearchDependencyProvider"
+echo ""
+
+echo "Step 72: Removing marketplace-specific widgets from Yves ShopApplicationDependencyProvider..."
 YVES_SHOP_APPLICATION_DEP_FILE="src/Pyz/Yves/ShopApplication/ShopApplicationDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Yves/ShopApplication/ShopApplicationDependencyProvider.php",
