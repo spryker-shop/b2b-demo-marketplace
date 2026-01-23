@@ -314,6 +314,9 @@ DIRECTORIES_TO_REMOVE=(
     "src/Pyz/Zed/UserMerchantPortalGui:UserMerchantPortalGui"
     "src/Pyz/Glue/MerchantsRestApi:MerchantsRestApi"
     "src/Pyz/Yves/MerchantSalesReturnWidget:MerchantSalesReturnWidget"
+    "src/Pyz/Zed/AclMerchantPortal:AclMerchantPortal"
+    "src/Pyz/Zed/DataImportMerchant:DataImportMerchant"
+    "src/Pyz/Zed/GuiTable:GuiTable"
 )
 
 echo "Step 4: Removing marketplace-specific code from AclConfig..."
