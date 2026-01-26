@@ -795,6 +795,30 @@ CONFIG_JSON='{
 clean_php_file "$EVENT_DEP_FILE" "$CONFIG_JSON" "EventDependencyProvider"
 echo ""
 
+echo "Step 18: Removing marketplace-specific plugins from EventDispatcherDependencyProvider..."
+EVENT_DISPATCHER_DEP_FILE="src/Pyz/Zed/EventDispatcher/EventDispatcherDependencyProvider.php"
+CONFIG_JSON='{
+    "file_path": "src/Pyz/Zed/EventDispatcher/EventDispatcherDependencyProvider.php",
+    "operations": [
+        {"type": "remove_use", "class_name": "SecurityBlockerMerchantPortalUserEventDispatcherPlugin"},
+        {"type": "remove_use", "class_name": "SecurityBlockerAgentMerchantPortalEventDispatcherPlugin"},
+        {"type": "remove_use", "class_name": "MerchantPortalHeadersSecurityEventDispatcherPlugin"},
+        {"type": "remove_plugin", "plugin_class": "SecurityBlockerMerchantPortalUserEventDispatcherPlugin"},
+        {"type": "remove_plugin", "plugin_class": "SecurityBlockerAgentMerchantPortalEventDispatcherPlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantPortalHeadersSecurityEventDispatcherPlugin"},
+        {"type": "remove_method", "method_name": "getMerchantPortalEventDispatcherPlugins"}
+    ],
+    "success_messages": [
+        "✓ EventDispatcherDependencyProvider cleaned from marketplace-specific plugins",
+        "✓ Removed SecurityBlockerMerchantPortalUserEventDispatcherPlugin",
+        "✓ Removed SecurityBlockerAgentMerchantPortalEventDispatcherPlugin",
+        "✓ Removed MerchantPortalHeadersSecurityEventDispatcherPlugin",
+        "✓ Removed getMerchantPortalEventDispatcherPlugins method"
+    ]
+}'
+clean_php_file "$EVENT_DISPATCHER_DEP_FILE" "$CONFIG_JSON" "EventDispatcherDependencyProvider"
+echo ""
+
 echo "Step 19: Removing marketplace-specific plugins from OauthUserConnectorDependencyProvider..."
 OAUTH_USER_CONNECTOR_DEP_FILE="src/Pyz/Zed/OauthUserConnector/OauthUserConnectorDependencyProvider.php"
 CONFIG_JSON='{
