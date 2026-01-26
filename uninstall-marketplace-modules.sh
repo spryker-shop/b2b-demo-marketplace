@@ -28,7 +28,7 @@ MARKETPLACE_FEATURES=(
     "spryker-feature/marketplace-merchantportal-core"
     "spryker-feature/marketplace-order-management"
     "spryker-feature/marketplace-packaging-units"
-    "spryker-feature/marketplace-product"
+    # "spryker-feature/marketplace-product"
     "spryker-feature/marketplace-product-approval-process"
     "spryker-feature/marketplace-product-options"
     "spryker-feature/marketplace-promotions-discounts"
@@ -817,6 +817,40 @@ CONFIG_JSON='{
     ]
 }'
 clean_php_file "$EVENT_DISPATCHER_DEP_FILE" "$CONFIG_JSON" "EventDispatcherDependencyProvider"
+echo ""
+
+echo "Step 18.5: Removing marketplace-specific plugins from MailDependencyProvider..."
+MAIL_DEP_FILE="src/Pyz/Zed/Mail/MailDependencyProvider.php"
+CONFIG_JSON='{
+    "file_path": "src/Pyz/Zed/Mail/MailDependencyProvider.php",
+    "operations": [
+        {"type": "remove_use", "class_name": "MerchantUserPasswordResetMailTypeBuilderPlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantUserPasswordResetMailTypeBuilderPlugin"}
+    ],
+    "success_messages": [
+        "✓ MailDependencyProvider cleaned from marketplace-specific plugins",
+        "✓ Removed MerchantUserPasswordResetMailTypeBuilderPlugin"
+    ]
+}'
+clean_php_file "$MAIL_DEP_FILE" "$CONFIG_JSON" "MailDependencyProvider"
+echo ""
+
+echo "Step 18.6: Removing marketplace-specific plugins from MultiFactorAuthDependencyProvider..."
+MULTI_FACTOR_AUTH_DEP_FILE="src/Pyz/Zed/MultiFactorAuth/MultiFactorAuthDependencyProvider.php"
+CONFIG_JSON='{
+    "file_path": "src/Pyz/Zed/MultiFactorAuth/MultiFactorAuthDependencyProvider.php",
+    "operations": [
+        {"type": "remove_use", "class_name": "MerchantPortalMultiFactorAuthPluginExpanderPlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantPortalMultiFactorAuthPluginExpanderPlugin"},
+        {"type": "remove_method", "method_name": "getMultiFactorAuthPluginExpanderPlugins"}
+    ],
+    "success_messages": [
+        "✓ MultiFactorAuthDependencyProvider cleaned from marketplace-specific plugins",
+        "✓ Removed MerchantPortalMultiFactorAuthPluginExpanderPlugin",
+        "✓ Removed getMultiFactorAuthPluginExpanderPlugins method"
+    ]
+}'
+clean_php_file "$MULTI_FACTOR_AUTH_DEP_FILE" "$CONFIG_JSON" "MultiFactorAuthDependencyProvider"
 echo ""
 
 echo "Step 19: Removing marketplace-specific plugins from OauthUserConnectorDependencyProvider..."
@@ -2369,6 +2403,25 @@ CONFIG_JSON='{
     ]
 }'
 clean_config_file "$CONFIG_OMS_DEV_FILE" "$CONFIG_JSON"
+echo ""
+
+echo "Step 78.5: Removing marketplace-specific OMS subprocesses from DummyPayment01.xml..."
+OMS_XML_FILE="config/Zed/oms/DummyPayment01.xml"
+
+if [ -f "$OMS_XML_FILE" ]; then
+    # Remove DummyMerchantCommission subprocess reference
+    sed -i.bak '/<process>DummyMerchantCommission<\/process>/d' "$OMS_XML_FILE"
+    
+    # Remove DummyMerchantCommission process definition
+    sed -i.bak '/<process name="DummyMerchantCommission" file="DummySubprocess\/DummyMerchantCommission01.xml"\/>/d' "$OMS_XML_FILE"
+    
+    # Remove backup file
+    rm -f "${OMS_XML_FILE}.bak"
+    
+    echo "✓ Removed DummyMerchantCommission subprocess from DummyPayment01.xml"
+else
+    echo "⚠ OMS file not found at $OMS_XML_FILE"
+fi
 echo ""
 
 echo "Step 79: Running composer update to apply all changes..."
