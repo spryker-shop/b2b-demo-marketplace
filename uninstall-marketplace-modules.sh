@@ -828,6 +828,7 @@ CONFIG_JSON='{
         {"type": "remove_use", "class_name": "SalesMerchantCommissionCalculationCommandByOrderPlugin"},
         {"type": "remove_use", "class_name": "MerchantPayoutCommandByOrderPlugin"},
         {"type": "remove_use", "class_name": "MerchantPayoutReverseCommandByOrderPlugin"},
+        {"type": "remove_use", "class_name": "ProductOfferPackagingUnitOmsReservationAggregationPlugin"},
         {"type": "remove_collection_add", "plugin_class": "IsOrderPaidConditionPlugin"},
         {"type": "remove_collection_add", "plugin_class": "IsMerchantPaidOutConditionPlugin"},
         {"type": "remove_collection_add", "plugin_class": "IsMerchantPayoutReversedConditionPlugin"},
@@ -836,7 +837,8 @@ CONFIG_JSON='{
         {"type": "remove_collection_add", "plugin_class": "ReturnMerchantOrderItemCommandPlugin"},
         {"type": "remove_collection_add", "plugin_class": "SalesMerchantCommissionCalculationCommandByOrderPlugin"},
         {"type": "remove_collection_add", "plugin_class": "MerchantPayoutCommandByOrderPlugin"},
-        {"type": "remove_collection_add", "plugin_class": "MerchantPayoutReverseCommandByOrderPlugin"}
+        {"type": "remove_collection_add", "plugin_class": "MerchantPayoutReverseCommandByOrderPlugin"},
+        {"type": "remove_plugin", "plugin_class": "ProductOfferPackagingUnitOmsReservationAggregationPlugin"}
     ],
     "success_messages": [
         "✓ OmsDependencyProvider cleaned from marketplace-specific plugins",
@@ -848,7 +850,8 @@ CONFIG_JSON='{
         "✓ Removed ReturnMerchantOrderItemCommandPlugin",
         "✓ Removed SalesMerchantCommissionCalculationCommandByOrderPlugin",
         "✓ Removed MerchantPayoutCommandByOrderPlugin",
-        "✓ Removed MerchantPayoutReverseCommandByOrderPlugin"
+        "✓ Removed MerchantPayoutReverseCommandByOrderPlugin",
+        "✓ Removed ProductOfferPackagingUnitOmsReservationAggregationPlugin"
     ]
 }'
 clean_php_file "$OMS_DEP_FILE" "$CONFIG_JSON" "OmsDependencyProvider"
