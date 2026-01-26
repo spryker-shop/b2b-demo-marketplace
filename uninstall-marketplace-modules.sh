@@ -197,6 +197,13 @@ def remove_data_import_console(content, config_constant):
     content = re.sub(pattern, '', content, flags=re.MULTILINE)
     return content
 
+def remove_array_value_entry(content, array_value):
+    """Remove array value entry from arrays."""
+    # Match: ArrayClass::VALUE, or ArrayClass::VALUE,
+    pattern = rf'\s*{re.escape(array_value)},?\s*\n'
+    content = re.sub(pattern, '', content)
+    return content
+
 def cleanup_content(content):
     """Clean up multiple empty lines and ensure single newline at end."""
     # Clean up multiple consecutive empty lines (more than 2)
@@ -237,6 +244,8 @@ def process_file(config):
             content = remove_array_constant_entry(content, operation['constant_reference'])
         elif op_type == 'remove_data_import_console':
             content = remove_data_import_console(content, operation['config_constant'])
+        elif op_type == 'remove_array_value_entry':
+            content = remove_array_value_entry(content, operation['array_value'])
     
     # Cleanup
     content = cleanup_content(content)
@@ -2223,6 +2232,7 @@ def write_file(file_path, content):
 
 def remove_use_statement(content, class_name):
     """Remove use statement for a specific class."""
+    # Match use statement with the class name
     pattern = rf'use\s+[^;]*\\{re.escape(class_name)};\s*'
     content = re.sub(pattern, '', content)
     return content
@@ -2262,7 +2272,9 @@ def remove_array_key_value(content, key_pattern):
 
 def cleanup_content(content):
     """Clean up multiple empty lines and ensure single newline at end."""
+    # Clean up multiple consecutive empty lines (more than 2)
     content = re.sub(r'\n{3,}', '\n\n', content)
+    # Ensure file ends with single newline
     content = content.rstrip() + '\n'
     return content
 
@@ -2422,6 +2434,39 @@ if [ -f "$OMS_XML_FILE" ]; then
 else
     echo "⚠ OMS file not found at $OMS_XML_FILE"
 fi
+echo ""
+
+echo "Step 78.6: Adding transition from paid to tax pending in DummyPayment01.xml..."
+if [ -f "$OMS_XML_FILE" ]; then
+    # Add transition from paid to tax pending after the IsPayed condition transition
+    sed -i '' '/condition="DummyPayment\/IsPayed"/,/<\/transition>/{
+        /<\/transition>/a\
+\
+            <transition happy="true">\
+                <source>paid</source>\
+                <target>tax pending</target>\
+            </transition>
+    }' "$OMS_XML_FILE"
+    
+    echo "✓ Added transition from paid to tax pending in DummyPayment01.xml"
+else
+    echo "⚠ OMS file not found at $OMS_XML_FILE"
+fi
+echo ""
+
+echo "Step 78.7: Removing MERCHANT_REFERENCE from SalesOrderAmendmentConfig..."
+SALES_ORDER_AMENDMENT_CONFIG_FILE="src/Pyz/Zed/SalesOrderAmendment/SalesOrderAmendmentConfig.php"
+CONFIG_JSON='{
+    "file_path": "src/Pyz/Zed/SalesOrderAmendment/SalesOrderAmendmentConfig.php",
+    "operations": [
+        {"type": "remove_array_value_entry", "array_value": "QuoteTransfer::MERCHANT_REFERENCE"}
+    ],
+    "success_messages": [
+        "✓ SalesOrderAmendmentConfig cleaned from marketplace-specific configuration",
+        "✓ Removed QuoteTransfer::MERCHANT_REFERENCE"
+    ]
+}'
+clean_php_file "$SALES_ORDER_AMENDMENT_CONFIG_FILE" "$CONFIG_JSON" "SalesOrderAmendmentConfig"
 echo ""
 
 echo "Step 79: Running composer update to apply all changes..."
