@@ -966,14 +966,19 @@ CONFIG_JSON='{
     "operations": [
         {"type": "remove_use", "class_name": "MerchantProductProductAbstractPostCreatePlugin"},
         {"type": "remove_use", "class_name": "MerchantProductApprovalProductAbstractPreCreatePlugin"},
+        {"type": "remove_use", "class_name": "ProductApprovalProductAbstractPreCreatePlugin"},
+        {"type": "remove_use", "class_name": "ApprovalStatusProductConcreteMergerPlugin"},
         {"type": "remove_plugin", "plugin_class": "MerchantProductProductAbstractPostCreatePlugin"},
-        {"type": "remove_plugin", "plugin_class": "MerchantProductApprovalProductAbstractPreCreatePlugin"}
+        {"type": "remove_plugin", "plugin_class": "MerchantProductApprovalProductAbstractPreCreatePlugin"},
+        {"type": "remove_plugin", "plugin_class": "ProductApprovalProductAbstractPreCreatePlugin"},
+        {"type": "remove_plugin", "plugin_class": "ApprovalStatusProductConcreteMergerPlugin"}
     ],
     "success_messages": [
         "✓ ProductDependencyProvider cleaned from marketplace-specific plugins",
         "✓ Removed MerchantProductProductAbstractPostCreatePlugin",
         "✓ Removed MerchantProductApprovalProductAbstractPreCreatePlugin",
-        "✓ Removed MerchantProductOfferProductConcreteExpanderPlugin"
+        "✓ Removed ProductApprovalProductAbstractPreCreatePlugin",
+        "✓ Removed ApprovalStatusProductConcreteMergerPlugin"
     ]
 }'
 clean_php_file "$PRODUCT_DEP_FILE" "$CONFIG_JSON" "ProductDependencyProvider"
@@ -994,6 +999,8 @@ CONFIG_JSON='{
         {"type": "remove_use", "class_name": "MerchantMerchantProductPageDataExpanderPlugin"},
         {"type": "remove_use", "class_name": "MerchantMerchantProductPageDataLoaderPlugin"},
         {"type": "remove_use", "class_name": "MerchantProductProductConcretePageMapExpanderPlugin"},
+        {"type": "remove_use", "class_name": "ProductApprovalProductPageSearchCollectionFilterPlugin"},
+        {"type": "remove_use", "class_name": "ProductApprovalProductConcreteCollectionFilterPlugin"},
         {"type": "remove_plugin", "plugin_class": "MerchantMerchantProductPageDataExpanderPlugin"},
         {"type": "remove_plugin", "plugin_class": "MerchantProductPageDataExpanderPlugin"},
         {"type": "remove_plugin", "plugin_class": "MerchantMerchantProductPageDataLoaderPlugin"},
@@ -1001,7 +1008,9 @@ CONFIG_JSON='{
         {"type": "remove_plugin", "plugin_class": "MerchantProductProductConcretePageMapExpanderPlugin"},
         {"type": "remove_plugin", "plugin_class": "MerchantProductAbstractMapExpanderPlugin"},
         {"type": "remove_plugin", "plugin_class": "MerchantNamesProductAbstractMapExpanderPlugin"},
-        {"type": "remove_plugin", "plugin_class": "MerchantReferencesProductAbstractsMapExpanderPlugin"}
+        {"type": "remove_plugin", "plugin_class": "MerchantReferencesProductAbstractsMapExpanderPlugin"},
+        {"type": "remove_plugin", "plugin_class": "ProductApprovalProductPageSearchCollectionFilterPlugin"},
+        {"type": "remove_plugin", "plugin_class": "ProductApprovalProductConcreteCollectionFilterPlugin"}
     ],
     "success_messages": [
         "✓ ProductPageSearchDependencyProvider cleaned from marketplace-specific plugins",
@@ -1012,7 +1021,9 @@ CONFIG_JSON='{
         "✓ Removed MerchantProductProductConcretePageMapExpanderPlugin",
         "✓ Removed MerchantProductAbstractMapExpanderPlugin",
         "✓ Removed MerchantNamesProductAbstractMapExpanderPlugin",
-        "✓ Removed MerchantReferencesProductAbstractsMapExpanderPlugin"
+        "✓ Removed MerchantReferencesProductAbstractsMapExpanderPlugin",
+        "✓ Removed ProductApprovalProductPageSearchCollectionFilterPlugin",
+        "✓ Removed ProductApprovalProductConcreteCollectionFilterPlugin"
     ]
 }'
 clean_php_file "$PRODUCT_PAGE_SEARCH_DEP_FILE" "$CONFIG_JSON" "ProductPageSearchDependencyProvider"
@@ -1027,17 +1038,35 @@ CONFIG_JSON='{
         {"type": "remove_use", "class_name": "MerchantProductProductAbstractEditViewExpanderPlugin"},
         {"type": "remove_use", "class_name": "MerchantProductProductAbstractViewActionViewDataExpanderPlugin"},
         {"type": "remove_use", "class_name": "MerchantProductProductTableQueryCriteriaExpanderPlugin"},
+        {"type": "remove_use", "class_name": "ApprovalStatusAbstractProductReadinessProviderPlugin"},
+        {"type": "remove_use", "class_name": "ProductApprovalProductAbstractEditViewExpanderPlugin"},
+        {"type": "remove_use", "class_name": "ProductApprovalProductTableActionExpanderPlugin"},
+        {"type": "remove_use", "class_name": "ProductApprovalProductTableConfigurationExpanderPlugin"},
+        {"type": "remove_use", "class_name": "ProductApprovalProductTableDataBulkExpanderPlugin"},
+        {"type": "remove_use", "class_name": "ProductApprovalProductTableQueryCriteriaExpanderPlugin"},
         {"type": "remove_plugin", "plugin_class": "MerchantProductAbstractListActionViewDataExpanderPlugin"},
         {"type": "remove_plugin", "plugin_class": "MerchantProductProductAbstractEditViewExpanderPlugin"},
         {"type": "remove_plugin", "plugin_class": "MerchantProductProductAbstractViewActionViewDataExpanderPlugin"},
-        {"type": "remove_plugin", "plugin_class": "MerchantProductProductTableQueryCriteriaExpanderPlugin"}
+        {"type": "remove_plugin", "plugin_class": "MerchantProductProductTableQueryCriteriaExpanderPlugin"},
+        {"type": "remove_plugin", "plugin_class": "ApprovalStatusAbstractProductReadinessProviderPlugin"},
+        {"type": "remove_plugin", "plugin_class": "ProductApprovalProductAbstractEditViewExpanderPlugin"},
+        {"type": "remove_plugin", "plugin_class": "ProductApprovalProductTableActionExpanderPlugin"},
+        {"type": "remove_plugin", "plugin_class": "ProductApprovalProductTableConfigurationExpanderPlugin"},
+        {"type": "remove_plugin", "plugin_class": "ProductApprovalProductTableDataBulkExpanderPlugin"},
+        {"type": "remove_plugin", "plugin_class": "ProductApprovalProductTableQueryCriteriaExpanderPlugin"}
     ],
     "success_messages": [
         "✓ ProductManagementDependencyProvider cleaned from marketplace-specific plugins",
         "✓ Removed MerchantProductProductAbstractEditViewExpanderPlugin",
         "✓ Removed MerchantProductProductAbstractViewActionViewDataExpanderPlugin",
         "✓ Removed MerchantProductProductTableQueryCriteriaExpanderPlugin",
-        "✓ Removed MerchantProductAbstractListActionViewDataExpanderPlugin"
+        "✓ Removed MerchantProductAbstractListActionViewDataExpanderPlugin",
+        "✓ Removed ApprovalStatusAbstractProductReadinessProviderPlugin",
+        "✓ Removed ProductApprovalProductAbstractEditViewExpanderPlugin",
+        "✓ Removed ProductApprovalProductTableActionExpanderPlugin",
+        "✓ Removed ProductApprovalProductTableConfigurationExpanderPlugin",
+        "✓ Removed ProductApprovalProductTableDataBulkExpanderPlugin",
+        "✓ Removed ProductApprovalProductTableQueryCriteriaExpanderPlugin"
     ]
 }'
 clean_php_file "$PRODUCT_MANAGEMENT_DEP_FILE" "$CONFIG_JSON" "ProductManagementDependencyProvider"
@@ -1411,15 +1440,18 @@ CONFIG_JSON='{
         {"type": "remove_use", "class_name": "MerchantProductAddItemPreCheckPlugin"},
         {"type": "remove_use", "class_name": "MerchantProductShoppingListItemBulkPostSavePlugin"},
         {"type": "remove_use", "class_name": "MerchantProductShoppingListItemCollectionExpanderPlugin"},
+        {"type": "remove_use", "class_name": "ProductApprovalAddItemPreCheckPlugin"},
         {"type": "remove_plugin", "plugin_class": "MerchantProductAddItemPreCheckPlugin"},
         {"type": "remove_plugin", "plugin_class": "MerchantProductShoppingListItemBulkPostSavePlugin"},
-        {"type": "remove_plugin", "plugin_class": "MerchantProductShoppingListItemCollectionExpanderPlugin"}
+        {"type": "remove_plugin", "plugin_class": "MerchantProductShoppingListItemCollectionExpanderPlugin"},
+        {"type": "remove_plugin", "plugin_class": "ProductApprovalAddItemPreCheckPlugin"}
     ],
     "success_messages": [
         "✓ ShoppingListDependencyProvider cleaned from marketplace-specific plugins",
         "✓ Removed MerchantProductAddItemPreCheckPlugin",
         "✓ Removed MerchantProductShoppingListItemBulkPostSavePlugin",
-        "✓ Removed MerchantProductShoppingListItemCollectionExpanderPlugin"
+        "✓ Removed MerchantProductShoppingListItemCollectionExpanderPlugin",
+        "✓ Removed ProductApprovalAddItemPreCheckPlugin"
     ]
 }'
 clean_php_file "$SHOPPING_LIST_DEP_FILE" "$CONFIG_JSON" "ShoppingListDependencyProvider"
