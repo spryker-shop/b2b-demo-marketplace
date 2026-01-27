@@ -13,8 +13,5 @@ use Spryker\Zed\Gui\GuiConfig as SprykerGuiConfig;
 
 class GuiConfig extends SprykerGuiConfig
 {
-    /**
-     * @var string
-     */
     protected const string NAVIGATION_ICONS_TYPE_DEFAULT = 'google-material';
 }
