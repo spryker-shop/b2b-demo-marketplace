@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2f531ba3b0efdf2c4607284ddccc9c8c",
+    "content-hash": "d9169b9190d1fdb59c4191fc3a90d7b7",
     "packages": [
         {
             "name": "api-platform/api-pack",
@@ -23952,26 +23952,39 @@
         },
         {
             "name": "spryker/api-platform",
-            "version": "0.1.0",
+            "version": "0.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/api-platform.git",
-                "reference": "77ed8d1c5cdc2428b50d7fd0d1bc55f69d59a3d3"
+                "reference": "6b8e5fa9d6888a4172cf8dfb899ecb758045f12d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/api-platform/zipball/77ed8d1c5cdc2428b50d7fd0d1bc55f69d59a3d3",
-                "reference": "77ed8d1c5cdc2428b50d7fd0d1bc55f69d59a3d3",
+                "url": "https://api.github.com/repos/spryker/api-platform/zipball/6b8e5fa9d6888a4172cf8dfb899ecb758045f12d",
+                "reference": "6b8e5fa9d6888a4172cf8dfb899ecb758045f12d",
                 "shasum": ""
             },
             "require": {
                 "api-platform/api-pack": "^1.4.0",
+                "api-platform/doctrine-common": "^4.2.0",
+                "api-platform/doctrine-orm": "^4.2.0",
+                "api-platform/documentation": "^4.2.0",
                 "api-platform/hal": "^4.2.0",
+                "api-platform/http-cache": "^4.2.0",
+                "api-platform/hydra": "^4.2.0",
                 "api-platform/json-api": "^4.2.0",
+                "api-platform/json-schema": "^4.2.0",
+                "api-platform/jsonld": "^4.2.0",
                 "api-platform/metadata": "^4.2.0",
+                "api-platform/openapi": "^4.2.0",
+                "api-platform/serializer": "^4.2.0",
                 "api-platform/state": "^4.2.0",
+                "api-platform/symfony": "^4.2.0",
+                "api-platform/validator": "^4.2.0",
                 "php": ">=8.3",
+                "spryker/kernel": "^3.48.0",
                 "spryker/log": "^3.0.0",
+                "spryker/transfer": "^3.27.0",
                 "symfony/config": "^6.0.0 || ^7.0.0",
                 "symfony/console": "^6.0.0 || ^7.0.0",
                 "symfony/finder": "^6.0.0 || ^7.0.0",
@@ -23981,8 +23994,10 @@
             "require-dev": {
                 "spryker/code-sniffer": "*",
                 "spryker/console": "*",
+                "spryker/container": "*",
                 "spryker/symfony": "*",
-                "spryker/testify": "*"
+                "spryker/testify": "*",
+                "symfony/framework-bundle": "*"
             },
             "type": "library",
             "extra": {
@@ -24008,9 +24023,9 @@
                 "spryker"
             ],
             "support": {
-                "source": "https://github.com/spryker/api-platform/tree/0.1.0"
+                "source": "https://github.com/spryker/api-platform/tree/0.5.0"
             },
-            "time": "2025-12-04T11:50:23+00:00"
+            "time": "2026-01-23T11:12:58+00:00"
         },
         {
             "name": "spryker/app-catalog-gui",
