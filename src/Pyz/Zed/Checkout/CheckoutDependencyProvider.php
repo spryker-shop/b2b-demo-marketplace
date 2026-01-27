@@ -46,7 +46,7 @@ use Spryker\Zed\ProductDiscontinued\Communication\Plugin\Checkout\ProductDiscont
 use Spryker\Zed\ProductOffer\Communication\Plugin\Checkout\OrderAmendmentProductOfferCheckoutPreConditionPlugin;
 use Spryker\Zed\ProductOffer\Communication\Plugin\Checkout\ProductOfferCheckoutPreConditionPlugin;
 use Spryker\Zed\ProductPackagingUnit\Communication\Plugin\Checkout\AmountAvailabilityCheckoutPreConditionPlugin;
-use Spryker\Zed\ProductQuantity\Communication\Plugin\Checkout\ProductQuantityRestrictionCheckoutPreConditionPlugin;
+use Spryker\Zed\ProductQuantity\Communication\Plugin\Checkout\ProductQuantityBySkuRestrictionCheckoutPreConditionPlugin;
 use Spryker\Zed\QuoteApproval\Communication\Plugin\Checkout\QuoteApprovalCheckoutPreConditionPlugin;
 use Spryker\Zed\QuoteCheckoutConnector\Communication\Plugin\Checkout\DisallowedQuoteCheckoutPreConditionPlugin;
 use Spryker\Zed\QuoteCheckoutConnector\Communication\Plugin\Checkout\DisallowQuoteCheckoutPreSavePlugin;
@@ -102,7 +102,7 @@ class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
             new MerchantProductOptionCheckoutPreConditionPlugin(),
             new ProductApprovalCheckoutPreConditionPlugin(),
             new ProductConfigurationCheckoutPreConditionPlugin(),
-            new ProductQuantityRestrictionCheckoutPreConditionPlugin(),
+            new ProductQuantityBySkuRestrictionCheckoutPreConditionPlugin(),
             new ServicePointCheckoutPreConditionPlugin(),
             new ShipmentTypeCheckoutPreConditionPlugin(),
         ];
@@ -134,7 +134,7 @@ class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
             new ProductConfigurationCheckoutPreConditionPlugin(),
             new DuplicateOrderCheckoutPreConditionPlugin(),
             new MerchantProductOptionCheckoutPreConditionPlugin(),
-            new ProductQuantityRestrictionCheckoutPreConditionPlugin(),
+            new ProductQuantityBySkuRestrictionCheckoutPreConditionPlugin(),
             new OrderAmendmentProductBundleAvailabilityCheckoutPreConditionPlugin(), #Order Amendment Feature
             new OrderAmendmentProductDiscontinuedCheckoutPreConditionPlugin(), #ProductDiscontinuedFeature
             new OrderAmendmentProductOfferCheckoutPreConditionPlugin(),
