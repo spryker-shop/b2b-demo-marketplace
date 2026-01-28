@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e61c563897361d8f2796a868e31c1dbe",
+    "content-hash": "d9169b9190d1fdb59c4191fc3a90d7b7",
     "packages": [
         {
             "name": "api-platform/api-pack",
@@ -14249,16 +14249,16 @@
         },
         {
             "name": "spryker-shop/catalog-page",
-            "version": "1.32.1",
+            "version": "1.33.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-shop/catalog-page.git",
-                "reference": "89756bc476619aacfe2fe288cb0a95023bb97cb3"
+                "reference": "40c2433ff2da3d55dc27660eb1723ac95a141416"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-shop/catalog-page/zipball/89756bc476619aacfe2fe288cb0a95023bb97cb3",
-                "reference": "89756bc476619aacfe2fe288cb0a95023bb97cb3",
+                "url": "https://api.github.com/repos/spryker-shop/catalog-page/zipball/40c2433ff2da3d55dc27660eb1723ac95a141416",
+                "reference": "40c2433ff2da3d55dc27660eb1723ac95a141416",
                 "shasum": ""
             },
             "require": {
@@ -14315,9 +14315,9 @@
             ],
             "description": "CatalogPage module",
             "support": {
-                "source": "https://github.com/spryker-shop/catalog-page/tree/1.32.1"
+                "source": "https://github.com/spryker-shop/catalog-page/tree/1.33.0"
             },
-            "time": "2025-10-20T08:45:49+00:00"
+            "time": "2026-01-21T09:16:51+00:00"
         },
         {
             "name": "spryker-shop/category-image-storage-widget",
@@ -23952,26 +23952,39 @@
         },
         {
             "name": "spryker/api-platform",
-            "version": "0.1.0",
+            "version": "0.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/api-platform.git",
-                "reference": "77ed8d1c5cdc2428b50d7fd0d1bc55f69d59a3d3"
+                "reference": "6b8e5fa9d6888a4172cf8dfb899ecb758045f12d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/api-platform/zipball/77ed8d1c5cdc2428b50d7fd0d1bc55f69d59a3d3",
-                "reference": "77ed8d1c5cdc2428b50d7fd0d1bc55f69d59a3d3",
+                "url": "https://api.github.com/repos/spryker/api-platform/zipball/6b8e5fa9d6888a4172cf8dfb899ecb758045f12d",
+                "reference": "6b8e5fa9d6888a4172cf8dfb899ecb758045f12d",
                 "shasum": ""
             },
             "require": {
                 "api-platform/api-pack": "^1.4.0",
+                "api-platform/doctrine-common": "^4.2.0",
+                "api-platform/doctrine-orm": "^4.2.0",
+                "api-platform/documentation": "^4.2.0",
                 "api-platform/hal": "^4.2.0",
+                "api-platform/http-cache": "^4.2.0",
+                "api-platform/hydra": "^4.2.0",
                 "api-platform/json-api": "^4.2.0",
+                "api-platform/json-schema": "^4.2.0",
+                "api-platform/jsonld": "^4.2.0",
                 "api-platform/metadata": "^4.2.0",
+                "api-platform/openapi": "^4.2.0",
+                "api-platform/serializer": "^4.2.0",
                 "api-platform/state": "^4.2.0",
+                "api-platform/symfony": "^4.2.0",
+                "api-platform/validator": "^4.2.0",
                 "php": ">=8.3",
+                "spryker/kernel": "^3.48.0",
                 "spryker/log": "^3.0.0",
+                "spryker/transfer": "^3.27.0",
                 "symfony/config": "^6.0.0 || ^7.0.0",
                 "symfony/console": "^6.0.0 || ^7.0.0",
                 "symfony/finder": "^6.0.0 || ^7.0.0",
@@ -23981,8 +23994,10 @@
             "require-dev": {
                 "spryker/code-sniffer": "*",
                 "spryker/console": "*",
+                "spryker/container": "*",
                 "spryker/symfony": "*",
-                "spryker/testify": "*"
+                "spryker/testify": "*",
+                "symfony/framework-bundle": "*"
             },
             "type": "library",
             "extra": {
@@ -24008,9 +24023,9 @@
                 "spryker"
             ],
             "support": {
-                "source": "https://github.com/spryker/api-platform/tree/0.1.0"
+                "source": "https://github.com/spryker/api-platform/tree/0.5.0"
             },
-            "time": "2025-12-04T11:50:23+00:00"
+            "time": "2026-01-23T11:12:58+00:00"
         },
         {
             "name": "spryker/app-catalog-gui",
@@ -26717,23 +26732,23 @@
         },
         {
             "name": "spryker/carts-rest-api",
-            "version": "5.23.0",
+            "version": "5.24.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/carts-rest-api.git",
-                "reference": "534191f841c4aebafe19b054d8b3f4c0f19eab3a"
+                "reference": "26ffdb055d443df9331c97a7fca9e3e523002165"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/carts-rest-api/zipball/534191f841c4aebafe19b054d8b3f4c0f19eab3a",
-                "reference": "534191f841c4aebafe19b054d8b3f4c0f19eab3a",
+                "url": "https://api.github.com/repos/spryker/carts-rest-api/zipball/26ffdb055d443df9331c97a7fca9e3e523002165",
+                "reference": "26ffdb055d443df9331c97a7fca9e3e523002165",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/auth-rest-api-extension": "^1.1.0",
                 "spryker/cart": "^7.0.0",
-                "spryker/carts-rest-api-extension": "^1.7.0",
+                "spryker/carts-rest-api-extension": "^1.8.0",
                 "spryker/customers-rest-api-extension": "^1.2.0",
                 "spryker/glue-application": "^1.18.0",
                 "spryker/glue-application-authorization-connector-extension": "^1.0.0",
@@ -26756,6 +26771,7 @@
                 "spryker/price-cart-connector": "*",
                 "spryker/price-product": "*",
                 "spryker/product": "*",
+                "spryker/product-bundle-carts-rest-api": "*",
                 "spryker/propel": "*",
                 "spryker/quote-extension": "*",
                 "spryker/testify": "*"
@@ -26783,26 +26799,26 @@
             ],
             "description": "CartsRestApi module",
             "support": {
-                "source": "https://github.com/spryker/carts-rest-api/tree/5.23.0"
+                "source": "https://github.com/spryker/carts-rest-api/tree/5.24.0"
             },
-            "time": "2025-08-04T08:52:14+00:00"
+            "time": "2026-01-20T08:43:52+00:00"
         },
         {
             "name": "spryker/carts-rest-api-extension",
-            "version": "1.7.0",
+            "version": "1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/carts-rest-api-extension.git",
-                "reference": "1b2d780ff6a6337eb172f7f1b78b2a6030cede97"
+                "reference": "e067f06c3b6db4efa34c49f51812e16607a66dd9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/carts-rest-api-extension/zipball/1b2d780ff6a6337eb172f7f1b78b2a6030cede97",
-                "reference": "1b2d780ff6a6337eb172f7f1b78b2a6030cede97",
+                "url": "https://api.github.com/repos/spryker/carts-rest-api-extension/zipball/e067f06c3b6db4efa34c49f51812e16607a66dd9",
+                "reference": "e067f06c3b6db4efa34c49f51812e16607a66dd9",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.4"
+                "php": ">=8.3"
             },
             "require-dev": {
                 "spryker/code-sniffer": "*",
@@ -26828,9 +26844,9 @@
             ],
             "description": "CartsRestApiExtension module",
             "support": {
-                "source": "https://github.com/spryker/carts-rest-api-extension/tree/1.7.0"
+                "source": "https://github.com/spryker/carts-rest-api-extension/tree/1.8.0"
             },
-            "time": "2021-12-23T07:29:07+00:00"
+            "time": "2026-01-20T08:43:52+00:00"
         },
         {
             "name": "spryker/catalog",
@@ -40622,16 +40638,16 @@
         },
         {
             "name": "spryker/gui",
-            "version": "4.5.2",
+            "version": "4.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/gui.git",
-                "reference": "28ae6560823e383d167f606ec4232f038cb45ccf"
+                "reference": "944268c6417abcbbe4b36406d9dc57e0a938aa24"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/gui/zipball/28ae6560823e383d167f606ec4232f038cb45ccf",
-                "reference": "28ae6560823e383d167f606ec4232f038cb45ccf",
+                "url": "https://api.github.com/repos/spryker/gui/zipball/944268c6417abcbbe4b36406d9dc57e0a938aa24",
+                "reference": "944268c6417abcbbe4b36406d9dc57e0a938aa24",
                 "shasum": ""
             },
             "require": {
@@ -40681,9 +40697,9 @@
             ],
             "description": "Gui module",
             "support": {
-                "source": "https://github.com/spryker/gui/tree/4.5.2"
+                "source": "https://github.com/spryker/gui/tree/4.8.0"
             },
-            "time": "2025-12-19T12:51:44+00:00"
+            "time": "2026-01-26T09:23:26+00:00"
         },
         {
             "name": "spryker/gui-extension",
@@ -53974,22 +53990,22 @@
         },
         {
             "name": "spryker/product-bundle-carts-rest-api",
-            "version": "1.2.0",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-bundle-carts-rest-api.git",
-                "reference": "649712646702713d1ae454e241a49bcc665c0823"
+                "reference": "c8b230f8531dad0ef0a713b137862c080cddd659"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-bundle-carts-rest-api/zipball/649712646702713d1ae454e241a49bcc665c0823",
-                "reference": "649712646702713d1ae454e241a49bcc665c0823",
+                "url": "https://api.github.com/repos/spryker/product-bundle-carts-rest-api/zipball/c8b230f8531dad0ef0a713b137862c080cddd659",
+                "reference": "c8b230f8531dad0ef0a713b137862c080cddd659",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/carts-rest-api": "^5.13.0",
-                "spryker/carts-rest-api-extension": "^1.6.0",
+                "spryker/carts-rest-api-extension": "^1.8.0",
                 "spryker/glue-application": "^1.8.0",
                 "spryker/glue-application-extension": "^1.0.0",
                 "spryker/kernel": "^3.30.0",
@@ -54019,9 +54035,9 @@
             ],
             "description": "ProductBundleCartsRestApi module",
             "support": {
-                "source": "https://github.com/spryker/product-bundle-carts-rest-api/tree/1.2.0"
+                "source": "https://github.com/spryker/product-bundle-carts-rest-api/tree/1.3.0"
             },
-            "time": "2025-08-04T11:20:12+00:00"
+            "time": "2026-01-20T08:43:52+00:00"
         },
         {
             "name": "spryker/product-bundle-discount-connector",
@@ -60957,16 +60973,16 @@
         },
         {
             "name": "spryker/product-page-search",
-            "version": "3.44.0",
+            "version": "3.44.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-page-search.git",
-                "reference": "b1a8ec175f464a56b4f24033a9729edfd9f74d2a"
+                "reference": "8bf5318fc22dad27a65d118eb4ac769405608d49"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-page-search/zipball/b1a8ec175f464a56b4f24033a9729edfd9f74d2a",
-                "reference": "b1a8ec175f464a56b4f24033a9729edfd9f74d2a",
+                "url": "https://api.github.com/repos/spryker/product-page-search/zipball/8bf5318fc22dad27a65d118eb4ac769405608d49",
+                "reference": "8bf5318fc22dad27a65d118eb4ac769405608d49",
                 "shasum": ""
             },
             "require": {
@@ -61031,9 +61047,9 @@
             ],
             "description": "ProductPageSearch module",
             "support": {
-                "source": "https://github.com/spryker/product-page-search/tree/3.44.0"
+                "source": "https://github.com/spryker/product-page-search/tree/3.44.1"
             },
-            "time": "2025-11-24T12:49:16+00:00"
+            "time": "2026-01-20T07:58:38+00:00"
         },
         {
             "name": "spryker/product-page-search-extension",
@@ -61177,20 +61193,20 @@
         },
         {
             "name": "spryker/product-quantity",
-            "version": "3.6.0",
+            "version": "3.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-quantity.git",
-                "reference": "a4207a912d3663f2c8b21c384ed3a90be2534520"
+                "reference": "bbd23d0736c9732037dd910166b11bf9dcc5577f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-quantity/zipball/a4207a912d3663f2c8b21c384ed3a90be2534520",
-                "reference": "a4207a912d3663f2c8b21c384ed3a90be2534520",
+                "url": "https://api.github.com/repos/spryker/product-quantity/zipball/bbd23d0736c9732037dd910166b11bf9dcc5577f",
+                "reference": "bbd23d0736c9732037dd910166b11bf9dcc5577f",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/cart-extension": "^1.7.0 || ^2.3.0 || ^4.0.0",
                 "spryker/cart-reorder-extension": "^1.0.0",
                 "spryker/checkout-extension": "^1.1.0",
@@ -61225,9 +61241,9 @@
             ],
             "description": "ProductQuantity module",
             "support": {
-                "source": "https://github.com/spryker/product-quantity/tree/3.6.0"
+                "source": "https://github.com/spryker/product-quantity/tree/3.7.0"
             },
-            "time": "2025-08-04T11:49:53+00:00"
+            "time": "2026-01-21T10:48:23+00:00"
         },
         {
             "name": "spryker/product-quantity-data-import",
@@ -61946,16 +61962,16 @@
         },
         {
             "name": "spryker/product-search",
-            "version": "5.26.0",
+            "version": "5.27.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-search.git",
-                "reference": "c565e37c5eac02e4b1df2b30425b8416be06caa3"
+                "reference": "59df2bf96bb16634f92e1d14390d54bb8beaba02"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-search/zipball/c565e37c5eac02e4b1df2b30425b8416be06caa3",
-                "reference": "c565e37c5eac02e4b1df2b30425b8416be06caa3",
+                "url": "https://api.github.com/repos/spryker/product-search/zipball/59df2bf96bb16634f92e1d14390d54bb8beaba02",
+                "reference": "59df2bf96bb16634f92e1d14390d54bb8beaba02",
                 "shasum": ""
             },
             "require": {
@@ -61973,6 +61989,7 @@
                 "spryker/product-management-extension": "^1.9.0",
                 "spryker/product-page-search-extension": "^1.1.0",
                 "spryker/propel-orm": "^1.16.0",
+                "spryker/publisher-extension": "^1.0.0",
                 "spryker/search": "^6.0.0 || ^7.0.0 || ^8.0.0",
                 "spryker/storage": "^3.0.0",
                 "spryker/store": "^1.4.0",
@@ -62008,9 +62025,9 @@
             ],
             "description": "ProductSearch module",
             "support": {
-                "source": "https://github.com/spryker/product-search/tree/5.26.0"
+                "source": "https://github.com/spryker/product-search/tree/5.27.0"
             },
-            "time": "2025-11-17T13:32:34+00:00"
+            "time": "2026-01-20T07:58:38+00:00"
         },
         {
             "name": "spryker/product-search-config-storage",
@@ -64400,16 +64417,16 @@
         },
         {
             "name": "spryker/router",
-            "version": "1.25.0",
+            "version": "1.25.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/router.git",
-                "reference": "da877fdda984a967d9d6020759ad0227c3aeb3f8"
+                "reference": "d5d460b53961c1990154e6b8c488221f828b5793"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/router/zipball/da877fdda984a967d9d6020759ad0227c3aeb3f8",
-                "reference": "da877fdda984a967d9d6020759ad0227c3aeb3f8",
+                "url": "https://api.github.com/repos/spryker/router/zipball/d5d460b53961c1990154e6b8c488221f828b5793",
+                "reference": "d5d460b53961c1990154e6b8c488221f828b5793",
                 "shasum": ""
             },
             "require": {
@@ -64417,7 +64434,7 @@
                 "spryker/application-extension": "^1.0.0",
                 "spryker/container": "^1.1.0",
                 "spryker/event-dispatcher-extension": "^1.0.0",
-                "spryker/kernel": "^3.48.0",
+                "spryker/kernel": "^3.80.0",
                 "spryker/laminas": "^1.0.0",
                 "spryker/log": "^3.0.0",
                 "spryker/router-extension": "^1.0.0",
@@ -64456,9 +64473,9 @@
             ],
             "description": "Router module",
             "support": {
-                "source": "https://github.com/spryker/router/tree/1.25.0"
+                "source": "https://github.com/spryker/router/tree/1.25.2"
             },
-            "time": "2025-12-04T11:50:23+00:00"
+            "time": "2026-01-22T08:51:32+00:00"
         },
         {
             "name": "spryker/router-extension",
@@ -84422,6 +84439,53 @@
             "time": "2024-09-05T10:17:24+00:00"
         },
         {
+            "name": "evenement/evenement",
+            "version": "v3.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/igorw/evenement.git",
+                "reference": "0a16b0d71ab13284339abb99d9d2bd813640efbc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/igorw/evenement/zipball/0a16b0d71ab13284339abb99d9d2bd813640efbc",
+                "reference": "0a16b0d71ab13284339abb99d9d2bd813640efbc",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9 || ^6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Evenement\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Igor Wiedler",
+                    "email": "igor@wiedler.ch"
+                }
+            ],
+            "description": "Événement is a very simple event dispatching library for PHP",
+            "keywords": [
+                "event-dispatcher",
+                "event-emitter"
+            ],
+            "support": {
+                "issues": "https://github.com/igorw/evenement/issues",
+                "source": "https://github.com/igorw/evenement/tree/v3.0.2"
+            },
+            "time": "2023-08-08T05:53:35+00:00"
+        },
+        {
             "name": "fakerphp/faker",
             "version": "v1.24.1",
             "source": {
@@ -84483,6 +84547,62 @@
                 "source": "https://github.com/FakerPHP/Faker/tree/v1.24.1"
             },
             "time": "2024-11-21T13:46:39+00:00"
+        },
+        {
+            "name": "fig/http-message-util",
+            "version": "1.1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/http-message-util.git",
+                "reference": "9d94dc0154230ac39e5bf89398b324a86f63f765"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/http-message-util/zipball/9d94dc0154230ac39e5bf89398b324a86f63f765",
+                "reference": "9d94dc0154230ac39e5bf89398b324a86f63f765",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.3 || ^7.0 || ^8.0"
+            },
+            "suggest": {
+                "psr/http-message": "The package containing the PSR-7 interfaces"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Fig\\Http\\Message\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "https://www.php-fig.org/"
+                }
+            ],
+            "description": "Utility classes and constants for use with PSR-7 (psr/http-message)",
+            "keywords": [
+                "http",
+                "http-message",
+                "psr",
+                "psr-7",
+                "request",
+                "response"
+            ],
+            "support": {
+                "issues": "https://github.com/php-fig/http-message-util/issues",
+                "source": "https://github.com/php-fig/http-message-util/tree/1.1.5"
+            },
+            "time": "2020-11-24T22:02:12+00:00"
         },
         {
             "name": "filp/whoops",
@@ -85281,6 +85401,196 @@
             "time": "2021-12-15T12:32:42+00:00"
         },
         {
+            "name": "opis/json-schema",
+            "version": "2.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/opis/json-schema.git",
+                "reference": "8458763e0dd0b6baa310e04f1829fc73da4e8c8a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/opis/json-schema/zipball/8458763e0dd0b6baa310e04f1829fc73da4e8c8a",
+                "reference": "8458763e0dd0b6baa310e04f1829fc73da4e8c8a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "opis/string": "^2.1",
+                "opis/uri": "^1.0",
+                "php": "^7.4 || ^8.0"
+            },
+            "require-dev": {
+                "ext-bcmath": "*",
+                "ext-intl": "*",
+                "phpunit/phpunit": "^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Opis\\JsonSchema\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Sorin Sarca",
+                    "email": "sarca_sorin@hotmail.com"
+                },
+                {
+                    "name": "Marius Sarca",
+                    "email": "marius.sarca@gmail.com"
+                }
+            ],
+            "description": "Json Schema Validator for PHP",
+            "homepage": "https://opis.io/json-schema",
+            "keywords": [
+                "json",
+                "json-schema",
+                "schema",
+                "validation",
+                "validator"
+            ],
+            "support": {
+                "issues": "https://github.com/opis/json-schema/issues",
+                "source": "https://github.com/opis/json-schema/tree/2.6.0"
+            },
+            "time": "2025-10-17T12:46:48+00:00"
+        },
+        {
+            "name": "opis/string",
+            "version": "2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/opis/string.git",
+                "reference": "3e4d2aaff518ac518530b89bb26ed40f4503635e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/opis/string/zipball/3e4d2aaff518ac518530b89bb26ed40f4503635e",
+                "reference": "3e4d2aaff518ac518530b89bb26ed40f4503635e",
+                "shasum": ""
+            },
+            "require": {
+                "ext-iconv": "*",
+                "ext-json": "*",
+                "php": "^7.4 || ^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Opis\\String\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Marius Sarca",
+                    "email": "marius.sarca@gmail.com"
+                },
+                {
+                    "name": "Sorin Sarca",
+                    "email": "sarca_sorin@hotmail.com"
+                }
+            ],
+            "description": "Multibyte strings as objects",
+            "homepage": "https://opis.io/string",
+            "keywords": [
+                "multi-byte",
+                "opis",
+                "string",
+                "string manipulation",
+                "utf-8"
+            ],
+            "support": {
+                "issues": "https://github.com/opis/string/issues",
+                "source": "https://github.com/opis/string/tree/2.1.0"
+            },
+            "time": "2025-10-17T12:38:41+00:00"
+        },
+        {
+            "name": "opis/uri",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/opis/uri.git",
+                "reference": "0f3ca49ab1a5e4a6681c286e0b2cc081b93a7d5a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/opis/uri/zipball/0f3ca49ab1a5e4a6681c286e0b2cc081b93a7d5a",
+                "reference": "0f3ca49ab1a5e4a6681c286e0b2cc081b93a7d5a",
+                "shasum": ""
+            },
+            "require": {
+                "opis/string": "^2.0",
+                "php": "^7.4 || ^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Opis\\Uri\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Marius Sarca",
+                    "email": "marius.sarca@gmail.com"
+                },
+                {
+                    "name": "Sorin Sarca",
+                    "email": "sarca_sorin@hotmail.com"
+                }
+            ],
+            "description": "Build, parse and validate URIs and URI-templates",
+            "homepage": "https://opis.io",
+            "keywords": [
+                "URI Template",
+                "parse url",
+                "punycode",
+                "uri",
+                "uri components",
+                "url",
+                "validate uri"
+            ],
+            "support": {
+                "issues": "https://github.com/opis/uri/issues",
+                "source": "https://github.com/opis/uri/tree/1.1.0"
+            },
+            "time": "2021-05-22T15:57:08+00:00"
+        },
+        {
             "name": "pdepend/pdepend",
             "version": "2.16.2",
             "source": {
@@ -85460,6 +85770,122 @@
                 "source": "https://github.com/phar-io/version/tree/3.2.1"
             },
             "time": "2022-02-21T01:04:05+00:00"
+        },
+        {
+            "name": "php-mcp/schema",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-mcp/schema.git",
+                "reference": "18f9f09b1564dd222f59674249eb4aa43615afe7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-mcp/schema/zipball/18f9f09b1564dd222f59674249eb4aa43615afe7",
+                "reference": "18f9f09b1564dd222f59674249eb4aa43615afe7",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PhpMcp\\Schema\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kyrian Obikwelu",
+                    "email": "koshnawaza@gmail.com"
+                }
+            ],
+            "description": "PHP Data Transfer Objects (DTOs) and Enums for the Model Context Protocol (MCP) schema.",
+            "support": {
+                "issues": "https://github.com/php-mcp/schema/issues",
+                "source": "https://github.com/php-mcp/schema/tree/1.0.2"
+            },
+            "time": "2025-07-25T12:45:32+00:00"
+        },
+        {
+            "name": "php-mcp/server",
+            "version": "3.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-mcp/server.git",
+                "reference": "37b40d5e91f0600442677ddd226e5a22d5661ee1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-mcp/server/zipball/37b40d5e91f0600442677ddd226e5a22d5661ee1",
+                "reference": "37b40d5e91f0600442677ddd226e5a22d5661ee1",
+                "shasum": ""
+            },
+            "require": {
+                "opis/json-schema": "^2.4",
+                "php": ">=8.1",
+                "php-mcp/schema": "^1.0",
+                "phpdocumentor/reflection-docblock": "^5.6",
+                "psr/clock": "^1.0",
+                "psr/container": "^1.0 || ^2.0",
+                "psr/log": "^1.0 || ^2.0 || ^3.0",
+                "psr/simple-cache": "^1.0 || ^2.0 || ^3.0",
+                "react/event-loop": "^1.5",
+                "react/http": "^1.11",
+                "react/promise": "^3.0",
+                "react/stream": "^1.4",
+                "symfony/finder": "^6.4 || ^7.2"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.75",
+                "mockery/mockery": "^1.6",
+                "pestphp/pest": "^2.36.0|^3.5.0",
+                "react/async": "^4.0",
+                "react/child-process": "^0.6.6",
+                "symfony/var-dumper": "^6.4.11|^7.1.5"
+            },
+            "suggest": {
+                "ext-pcntl": "For signal handling support when using StdioServerTransport with StreamSelectLoop"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PhpMcp\\Server\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kyrian Obikwelu",
+                    "email": "koshnawaza@gmail.com"
+                }
+            ],
+            "description": "PHP SDK for building Model Context Protocol (MCP) servers - Create MCP tools, resources, and prompts",
+            "keywords": [
+                "Model Context Protocol",
+                "mcp",
+                "php",
+                "php mcp",
+                "php mcp prompts",
+                "php mcp resources",
+                "php mcp sdk",
+                "php mcp server",
+                "php mcp tools",
+                "php model context protocol",
+                "server"
+            ],
+            "support": {
+                "issues": "https://github.com/php-mcp/server/issues",
+                "source": "https://github.com/php-mcp/server/tree/3.3.0"
+            },
+            "time": "2025-07-12T22:19:39+00:00"
         },
         {
             "name": "php-webdriver/webdriver",
@@ -86262,6 +86688,57 @@
             "time": "2025-12-06T08:01:15+00:00"
         },
         {
+            "name": "psr/simple-cache",
+            "version": "3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/simple-cache.git",
+                "reference": "764e0b3939f5ca87cb904f570ef9be2d78a07865"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/simple-cache/zipball/764e0b3939f5ca87cb904f570ef9be2d78a07865",
+                "reference": "764e0b3939f5ca87cb904f570ef9be2d78a07865",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\SimpleCache\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "https://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interfaces for simple caching",
+            "keywords": [
+                "cache",
+                "caching",
+                "psr",
+                "psr-16",
+                "simple-cache"
+            ],
+            "support": {
+                "source": "https://github.com/php-fig/simple-cache/tree/3.0.0"
+            },
+            "time": "2021-10-29T13:26:27+00:00"
+        },
+        {
             "name": "psy/psysh",
             "version": "v0.12.17",
             "source": {
@@ -86339,6 +86816,475 @@
                 "source": "https://github.com/bobthecow/psysh/tree/v0.12.17"
             },
             "time": "2025-12-15T04:55:34+00:00"
+        },
+        {
+            "name": "react/cache",
+            "version": "v1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/reactphp/cache.git",
+                "reference": "d47c472b64aa5608225f47965a484b75c7817d5b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/reactphp/cache/zipball/d47c472b64aa5608225f47965a484b75c7817d5b",
+                "reference": "d47c472b64aa5608225f47965a484b75c7817d5b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "react/promise": "^3.0 || ^2.0 || ^1.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.5 || ^5.7 || ^4.8.35"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "React\\Cache\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christian Lück",
+                    "email": "christian@clue.engineering",
+                    "homepage": "https://clue.engineering/"
+                },
+                {
+                    "name": "Cees-Jan Kiewiet",
+                    "email": "reactphp@ceesjankiewiet.nl",
+                    "homepage": "https://wyrihaximus.net/"
+                },
+                {
+                    "name": "Jan Sorgalla",
+                    "email": "jsorgalla@gmail.com",
+                    "homepage": "https://sorgalla.com/"
+                },
+                {
+                    "name": "Chris Boden",
+                    "email": "cboden@gmail.com",
+                    "homepage": "https://cboden.dev/"
+                }
+            ],
+            "description": "Async, Promise-based cache interface for ReactPHP",
+            "keywords": [
+                "cache",
+                "caching",
+                "promise",
+                "reactphp"
+            ],
+            "support": {
+                "issues": "https://github.com/reactphp/cache/issues",
+                "source": "https://github.com/reactphp/cache/tree/v1.2.0"
+            },
+            "funding": [
+                {
+                    "url": "https://opencollective.com/reactphp",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2022-11-30T15:59:55+00:00"
+        },
+        {
+            "name": "react/dns",
+            "version": "v1.14.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/reactphp/dns.git",
+                "reference": "7562c05391f42701c1fccf189c8225fece1cd7c3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/reactphp/dns/zipball/7562c05391f42701c1fccf189c8225fece1cd7c3",
+                "reference": "7562c05391f42701c1fccf189c8225fece1cd7c3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "react/cache": "^1.0 || ^0.6 || ^0.5",
+                "react/event-loop": "^1.2",
+                "react/promise": "^3.2 || ^2.7 || ^1.2.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.6 || ^5.7 || ^4.8.36",
+                "react/async": "^4.3 || ^3 || ^2",
+                "react/promise-timer": "^1.11"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "React\\Dns\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christian Lück",
+                    "email": "christian@clue.engineering",
+                    "homepage": "https://clue.engineering/"
+                },
+                {
+                    "name": "Cees-Jan Kiewiet",
+                    "email": "reactphp@ceesjankiewiet.nl",
+                    "homepage": "https://wyrihaximus.net/"
+                },
+                {
+                    "name": "Jan Sorgalla",
+                    "email": "jsorgalla@gmail.com",
+                    "homepage": "https://sorgalla.com/"
+                },
+                {
+                    "name": "Chris Boden",
+                    "email": "cboden@gmail.com",
+                    "homepage": "https://cboden.dev/"
+                }
+            ],
+            "description": "Async DNS resolver for ReactPHP",
+            "keywords": [
+                "async",
+                "dns",
+                "dns-resolver",
+                "reactphp"
+            ],
+            "support": {
+                "issues": "https://github.com/reactphp/dns/issues",
+                "source": "https://github.com/reactphp/dns/tree/v1.14.0"
+            },
+            "funding": [
+                {
+                    "url": "https://opencollective.com/reactphp",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2025-11-18T19:34:28+00:00"
+        },
+        {
+            "name": "react/event-loop",
+            "version": "v1.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/reactphp/event-loop.git",
+                "reference": "ba276bda6083df7e0050fd9b33f66ad7a4ac747a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/reactphp/event-loop/zipball/ba276bda6083df7e0050fd9b33f66ad7a4ac747a",
+                "reference": "ba276bda6083df7e0050fd9b33f66ad7a4ac747a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.6 || ^5.7 || ^4.8.36"
+            },
+            "suggest": {
+                "ext-pcntl": "For signal handling support when using the StreamSelectLoop"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "React\\EventLoop\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christian Lück",
+                    "email": "christian@clue.engineering",
+                    "homepage": "https://clue.engineering/"
+                },
+                {
+                    "name": "Cees-Jan Kiewiet",
+                    "email": "reactphp@ceesjankiewiet.nl",
+                    "homepage": "https://wyrihaximus.net/"
+                },
+                {
+                    "name": "Jan Sorgalla",
+                    "email": "jsorgalla@gmail.com",
+                    "homepage": "https://sorgalla.com/"
+                },
+                {
+                    "name": "Chris Boden",
+                    "email": "cboden@gmail.com",
+                    "homepage": "https://cboden.dev/"
+                }
+            ],
+            "description": "ReactPHP's core reactor event loop that libraries can use for evented I/O.",
+            "keywords": [
+                "asynchronous",
+                "event-loop"
+            ],
+            "support": {
+                "issues": "https://github.com/reactphp/event-loop/issues",
+                "source": "https://github.com/reactphp/event-loop/tree/v1.6.0"
+            },
+            "funding": [
+                {
+                    "url": "https://opencollective.com/reactphp",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2025-11-17T20:46:25+00:00"
+        },
+        {
+            "name": "react/http",
+            "version": "v1.11.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/reactphp/http.git",
+                "reference": "8db02de41dcca82037367f67a2d4be365b1c4db9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/reactphp/http/zipball/8db02de41dcca82037367f67a2d4be365b1c4db9",
+                "reference": "8db02de41dcca82037367f67a2d4be365b1c4db9",
+                "shasum": ""
+            },
+            "require": {
+                "evenement/evenement": "^3.0 || ^2.0 || ^1.0",
+                "fig/http-message-util": "^1.1",
+                "php": ">=5.3.0",
+                "psr/http-message": "^1.0",
+                "react/event-loop": "^1.2",
+                "react/promise": "^3.2 || ^2.3 || ^1.2.1",
+                "react/socket": "^1.16",
+                "react/stream": "^1.4"
+            },
+            "require-dev": {
+                "clue/http-proxy-react": "^1.8",
+                "clue/reactphp-ssh-proxy": "^1.4",
+                "clue/socks-react": "^1.4",
+                "phpunit/phpunit": "^9.6 || ^5.7 || ^4.8.36",
+                "react/async": "^4.2 || ^3 || ^2",
+                "react/promise-stream": "^1.4",
+                "react/promise-timer": "^1.11"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "React\\Http\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christian Lück",
+                    "email": "christian@clue.engineering",
+                    "homepage": "https://clue.engineering/"
+                },
+                {
+                    "name": "Cees-Jan Kiewiet",
+                    "email": "reactphp@ceesjankiewiet.nl",
+                    "homepage": "https://wyrihaximus.net/"
+                },
+                {
+                    "name": "Jan Sorgalla",
+                    "email": "jsorgalla@gmail.com",
+                    "homepage": "https://sorgalla.com/"
+                },
+                {
+                    "name": "Chris Boden",
+                    "email": "cboden@gmail.com",
+                    "homepage": "https://cboden.dev/"
+                }
+            ],
+            "description": "Event-driven, streaming HTTP client and server implementation for ReactPHP",
+            "keywords": [
+                "async",
+                "client",
+                "event-driven",
+                "http",
+                "http client",
+                "http server",
+                "https",
+                "psr-7",
+                "reactphp",
+                "server",
+                "streaming"
+            ],
+            "support": {
+                "issues": "https://github.com/reactphp/http/issues",
+                "source": "https://github.com/reactphp/http/tree/v1.11.0"
+            },
+            "funding": [
+                {
+                    "url": "https://opencollective.com/reactphp",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2024-11-20T15:24:08+00:00"
+        },
+        {
+            "name": "react/socket",
+            "version": "v1.17.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/reactphp/socket.git",
+                "reference": "ef5b17b81f6f60504c539313f94f2d826c5faa08"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/reactphp/socket/zipball/ef5b17b81f6f60504c539313f94f2d826c5faa08",
+                "reference": "ef5b17b81f6f60504c539313f94f2d826c5faa08",
+                "shasum": ""
+            },
+            "require": {
+                "evenement/evenement": "^3.0 || ^2.0 || ^1.0",
+                "php": ">=5.3.0",
+                "react/dns": "^1.13",
+                "react/event-loop": "^1.2",
+                "react/promise": "^3.2 || ^2.6 || ^1.2.1",
+                "react/stream": "^1.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.6 || ^5.7 || ^4.8.36",
+                "react/async": "^4.3 || ^3.3 || ^2",
+                "react/promise-stream": "^1.4",
+                "react/promise-timer": "^1.11"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "React\\Socket\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christian Lück",
+                    "email": "christian@clue.engineering",
+                    "homepage": "https://clue.engineering/"
+                },
+                {
+                    "name": "Cees-Jan Kiewiet",
+                    "email": "reactphp@ceesjankiewiet.nl",
+                    "homepage": "https://wyrihaximus.net/"
+                },
+                {
+                    "name": "Jan Sorgalla",
+                    "email": "jsorgalla@gmail.com",
+                    "homepage": "https://sorgalla.com/"
+                },
+                {
+                    "name": "Chris Boden",
+                    "email": "cboden@gmail.com",
+                    "homepage": "https://cboden.dev/"
+                }
+            ],
+            "description": "Async, streaming plaintext TCP/IP and secure TLS socket server and client connections for ReactPHP",
+            "keywords": [
+                "Connection",
+                "Socket",
+                "async",
+                "reactphp",
+                "stream"
+            ],
+            "support": {
+                "issues": "https://github.com/reactphp/socket/issues",
+                "source": "https://github.com/reactphp/socket/tree/v1.17.0"
+            },
+            "funding": [
+                {
+                    "url": "https://opencollective.com/reactphp",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2025-11-19T20:47:34+00:00"
+        },
+        {
+            "name": "react/stream",
+            "version": "v1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/reactphp/stream.git",
+                "reference": "1e5b0acb8fe55143b5b426817155190eb6f5b18d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/reactphp/stream/zipball/1e5b0acb8fe55143b5b426817155190eb6f5b18d",
+                "reference": "1e5b0acb8fe55143b5b426817155190eb6f5b18d",
+                "shasum": ""
+            },
+            "require": {
+                "evenement/evenement": "^3.0 || ^2.0 || ^1.0",
+                "php": ">=5.3.8",
+                "react/event-loop": "^1.2"
+            },
+            "require-dev": {
+                "clue/stream-filter": "~1.2",
+                "phpunit/phpunit": "^9.6 || ^5.7 || ^4.8.36"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "React\\Stream\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christian Lück",
+                    "email": "christian@clue.engineering",
+                    "homepage": "https://clue.engineering/"
+                },
+                {
+                    "name": "Cees-Jan Kiewiet",
+                    "email": "reactphp@ceesjankiewiet.nl",
+                    "homepage": "https://wyrihaximus.net/"
+                },
+                {
+                    "name": "Jan Sorgalla",
+                    "email": "jsorgalla@gmail.com",
+                    "homepage": "https://sorgalla.com/"
+                },
+                {
+                    "name": "Chris Boden",
+                    "email": "cboden@gmail.com",
+                    "homepage": "https://cboden.dev/"
+                }
+            ],
+            "description": "Event-driven readable and writable streams for non-blocking I/O in ReactPHP",
+            "keywords": [
+                "event-driven",
+                "io",
+                "non-blocking",
+                "pipe",
+                "reactphp",
+                "readable",
+                "stream",
+                "writable"
+            ],
+            "support": {
+                "issues": "https://github.com/reactphp/stream/issues",
+                "source": "https://github.com/reactphp/stream/tree/v1.4.0"
+            },
+            "funding": [
+                {
+                    "url": "https://opencollective.com/reactphp",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2024-06-11T12:45:25+00:00"
         },
         {
             "name": "roave/better-reflection",
@@ -87633,6 +88579,61 @@
             "time": "2025-12-16T12:31:18+00:00"
         },
         {
+            "name": "spryker-sdk/ai-dev",
+            "version": "0.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-sdk/ai-dev.git",
+                "reference": "6460a86836e29eb8f67aeaaf46b4120578f627ad"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-sdk/ai-dev/zipball/6460a86836e29eb8f67aeaaf46b4120578f627ad",
+                "reference": "6460a86836e29eb8f67aeaaf46b4120578f627ad",
+                "shasum": ""
+            },
+            "require": {
+                "nikic/php-parser": ">=5.0",
+                "php": ">=8.3",
+                "php-mcp/server": "^3.3",
+                "spryker/guzzle": ">=2.0.0",
+                "spryker/kernel": ">=3.30.0",
+                "spryker/module-finder": ">=1.0.0",
+                "spryker/oms": ">=8.0.0",
+                "spryker/propel-orm": ">=1.8.0",
+                "spryker/sales": ">=11.0.0",
+                "spryker/symfony": ">=3.0.0",
+                "spryker/transfer": ">=3.27.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": ">=1.12.29",
+                "spryker-sdk/phpstan-spryker": ">=0.4.3",
+                "spryker/code-sniffer": ">=0.17.30",
+                "spryker/development": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SprykerSdk\\": "src/SprykerSdk/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "AiDev module",
+            "support": {
+                "issues": "https://github.com/spryker-sdk/ai-dev/issues",
+                "source": "https://github.com/spryker-sdk/ai-dev/tree/0.2.2"
+            },
+            "time": "2026-01-19T15:37:25+00:00"
+        },
+        {
             "name": "spryker-sdk/benchmark",
             "version": "0.2.2",
             "source": {
@@ -88191,7 +89192,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/robotframework-suite-tests.git",
-                "reference": "cc03acb453cc32368cd55123818008596c28d907"
+                "reference": "f36601dab395696462c800bee539f6be243bb8cc"
             },
             "default-branch": true,
             "bin": [
@@ -88202,7 +89203,7 @@
                 "MIT"
             ],
             "description": "Automated tests for the Robot Framework",
-            "time": "2026-01-06T14:01:24+00:00"
+            "time": "2026-01-20T13:59:49+00:00"
         },
         {
             "name": "spryker/testify",
@@ -88951,5 +89952,5 @@
     "platform-overrides": {
         "php": "8.3.13"
     },
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.6.0"
 }
