@@ -63,6 +63,9 @@ sections:
         generate-open-telemetry:
             command: 'vendor/bin/console open-telemetry:generate'
 
+        install-glue-api-assets:
+            command: 'vendor/bin/glue assets:install public/Glue/assets/'
+
         install-storefront-api-assets:
             command: 'GLUE_APPLICATION=GLUE_STOREFRONT vendor/bin/glue assets:install public/GlueStorefront/assets/'
 
