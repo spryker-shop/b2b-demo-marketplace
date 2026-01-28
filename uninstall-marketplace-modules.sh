@@ -331,6 +331,7 @@ DIRECTORIES_TO_REMOVE=(
     "src/Pyz/Zed/AclMerchantPortal:AclMerchantPortal"
     "src/Pyz/Zed/DataImportMerchant:DataImportMerchant"
     "src/Pyz/Zed/GuiTable:GuiTable"
+    "tests/PyzTest/Zed/AclEntity:AclEntity"
 )
 
 echo "Step 3: Removing marketplace-specific plugins from ApplicationDependencyProvider..."
@@ -1765,6 +1766,25 @@ CONFIG_JSON='{
 clean_php_file "$GLUE_URLS_REST_API_DEP_FILE" "$CONFIG_JSON" "Glue UrlsRestApiDependencyProvider"
 echo ""
 
+echo "Step 60.5: Removing marketplace-specific configuration from Glue PaymentsRestApiConfig..."
+GLUE_PAYMENTS_REST_API_CONFIG_FILE="src/Pyz/Glue/PaymentsRestApi/PaymentsRestApiConfig.php"
+CONFIG_JSON='{
+    "file_path": "src/Pyz/Glue/PaymentsRestApi/PaymentsRestApiConfig.php",
+    "operations": [
+        {"type": "remove_use", "class_name": "DummyMarketplacePaymentConfig"},
+        {"type": "remove_constant", "constant_name": "PAYMENT_METHOD_PRIORITY"},
+        {"type": "remove_constant", "constant_name": "PAYMENT_METHOD_REQUIRED_FIELDS"}
+    ],
+    "success_messages": [
+        "✓ Glue PaymentsRestApiConfig cleaned from marketplace-specific configuration",
+        "✓ Removed DummyMarketplacePaymentConfig",
+        "✓ Removed PAYMENT_METHOD_PRIORITY constant",
+        "✓ Removed PAYMENT_METHOD_REQUIRED_FIELDS constant"
+    ]
+}'
+clean_php_file "$GLUE_PAYMENTS_REST_API_CONFIG_FILE" "$CONFIG_JSON" "Glue PaymentsRestApiConfig"
+echo ""
+
 echo "Step 61: Removing marketplace-specific plugins from Client CatalogDependencyProvider..."
 CLIENT_CATALOG_DEP_FILE="src/Pyz/Client/Catalog/CatalogDependencyProvider.php"
 CONFIG_JSON='{
@@ -2502,7 +2522,7 @@ clean_php_file "$SALES_ORDER_AMENDMENT_CONFIG_FILE" "$CONFIG_JSON" "SalesOrderAm
 echo ""
 
 echo "Step 79: Running composer update to apply all changes..."
-composer update --ignore-platform-req=ext-grpc
+composer update --ignore-platform-req=ext-grpc --ignore-platform-req=ext-redis
 echo "✓ Composer update completed"
 echo ""
 
