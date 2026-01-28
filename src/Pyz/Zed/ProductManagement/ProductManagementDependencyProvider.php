@@ -52,10 +52,6 @@ use Spryker\Zed\ProductStorage\Communication\Plugin\ProductManagement\StoragePro
 use Spryker\Zed\ProductStorage\Communication\Plugin\ProductManagement\StorageTableProductAbstractReadinessProviderPlugin;
 use Spryker\Zed\ProductStorage\Communication\Plugin\ProductManagement\StorageTableProductConcreteReadinessProviderPlugin;
 use Spryker\Zed\Store\Communication\Plugin\Form\StoreRelationToggleFormTypePlugin;
-use SprykerEco\Zed\ProductManagementAi\Communication\Plugin\ProductManagement\ImageAltTextProductAbstractFormExpanderPlugin;
-use SprykerEco\Zed\ProductManagementAi\Communication\Plugin\ProductManagement\ImageAltTextProductConcreteEditFormExpanderPlugin;
-use SprykerEco\Zed\ProductManagementAi\Communication\Plugin\ProductManagement\ImageAltTextProductConcreteFormExpanderPlugin;
-use SprykerEco\Zed\ProductManagementAi\Communication\Plugin\ProductManagement\ProductCategoryAbstractFormExpanderPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductManagement\ProductClassFormExpanderPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductManagement\ProductClassProductConcreteFormEditDataProviderExpanderPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductManagement\ProductClassProductConcreteTransferMapperPlugin;
@@ -113,7 +109,6 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
         return [
             new DiscontinuedProductConcreteEditFormExpanderPlugin(), #ProductDiscontinuedFeature
             new ProductConcreteEditFormExpanderPlugin(), #ProductAlternativeFeature
-            new ImageAltTextProductConcreteEditFormExpanderPlugin(),
         ];
     }
 
@@ -150,8 +145,6 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
     {
         return [
             new MerchantRelationshipProductAbstractFormExpanderPlugin(),
-            new ProductCategoryAbstractFormExpanderPlugin(),
-            new ImageAltTextProductAbstractFormExpanderPlugin(),
         ];
     }
 
@@ -164,7 +157,6 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
             new MerchantRelationshipProductConcreteFormExpanderPlugin(),
             new ShipmentTypeProductConcreteFormExpanderPlugin(),
             new ProductClassFormExpanderPlugin(),
-            new ImageAltTextProductConcreteFormExpanderPlugin(),
         ];
     }
 
