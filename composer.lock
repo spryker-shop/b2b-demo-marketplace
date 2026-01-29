@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "98bd51104ab42e7f828c1e1204ce2a63",
+    "content-hash": "5c5b09f161072496dc98557a34c46840",
     "packages": [
         {
             "name": "api-platform/api-pack",
@@ -8817,16 +8817,16 @@
         },
         {
             "name": "spryker-eco/product-management-ai",
-            "version": "dev-feature/update-dependencies",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-eco/product-management-ai.git",
-                "reference": "3ad85cf2d1a4c809dbf3f0d7646a8d443b407dc3"
+                "reference": "65599d535a3d7d9cb0fb295322c1152db47f3675"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-eco/product-management-ai/zipball/3ad85cf2d1a4c809dbf3f0d7646a8d443b407dc3",
-                "reference": "3ad85cf2d1a4c809dbf3f0d7646a8d443b407dc3",
+                "url": "https://api.github.com/repos/spryker-eco/product-management-ai/zipball/65599d535a3d7d9cb0fb295322c1152db47f3675",
+                "reference": "65599d535a3d7d9cb0fb295322c1152db47f3675",
                 "shasum": ""
             },
             "require": {
@@ -8852,6 +8852,7 @@
             "suggest": {
                 "spryker/propel-orm": "Used for Propel schema generation."
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -8870,9 +8871,9 @@
             "description": "ProductManagementAi module",
             "support": {
                 "issues": "https://github.com/spryker-eco/product-management-ai/issues",
-                "source": "https://github.com/spryker-eco/product-management-ai/tree/feature/update-dependencies"
+                "source": "https://github.com/spryker-eco/product-management-ai/tree/0.4.0"
             },
-            "time": "2026-01-28T11:50:43+00:00"
+            "time": "2026-01-28T15:19:29+00:00"
         },
         {
             "name": "spryker-feature/acl",
@@ -23859,7 +23860,7 @@
         },
         {
             "name": "spryker/ai-foundation",
-            "version": "0.3.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/ai-foundation.git",
@@ -23882,6 +23883,7 @@
                 "spryker/code-sniffer": "*",
                 "spryker/testify": "*"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -23899,7 +23901,7 @@
             ],
             "description": "AiFoundation module",
             "support": {
-                "source": "https://github.com/spryker/ai-foundation/tree/0.3.0"
+                "source": "https://github.com/spryker/ai-foundation/tree/master"
             },
             "time": "2026-01-16T13:09:26+00:00"
         },
@@ -90157,6 +90159,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "spryker-eco/product-management-ai": 20,
+        "spryker/ai-foundation": 20,
         "spryker/cypress-tests": 20,
         "spryker/docker-chromedriver": 20,
         "spryker/robotframework-suite-tests": 20
