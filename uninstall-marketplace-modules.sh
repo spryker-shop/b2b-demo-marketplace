@@ -599,6 +599,7 @@ IMPORT_YAML_FILES=(
     "data/import/local/full_US.yml"
     "data/import/production/full_EU.yml"
     "data/import/production/full_US.yml"
+    "data/import/local/full_ROBOT.yml"
 )
 
 cat > /tmp/remove_import_entities.py << 'PYTHON_SCRIPT'
