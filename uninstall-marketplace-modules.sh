@@ -37,8 +37,7 @@ MARKETPLACE_FEATURES=(
     "spryker-feature/merchant-category"
     "spryker-feature/merchant-opening-hours"
     "spryker-feature/merchant-portal-data-import"
-
-
+    "spryker-feature/product-approval-process"
 )
 
 # Marketplace Core Modules
@@ -2030,23 +2029,17 @@ CONFIG_JSON='{
         {"type": "remove_use", "class_name": "MerchantOpeningHoursWidget"},
         {"type": "remove_use", "class_name": "MerchantOrderReferenceForItemsWidget"},
         {"type": "remove_use", "class_name": "MerchantSalesReturnCreateFormWidget"},
-        {"type": "remove_use", "class_name": "MerchantProductWidget"},
         {"type": "remove_use", "class_name": "ProductOfferShoppingListWidget"},
         {"type": "remove_use", "class_name": "MerchantSalesReturnCreateFormWidgetCacheKeyGeneratorStrategyPlugin"},
-        {"type": "remove_use", "class_name": "MerchantProductOfferWidget"},
         {"type": "remove_use", "class_name": "SoldByMerchantWidget"},
         {"type": "remove_use", "class_name": "ShoppingListMerchantWidget"},
-        {"type": "remove_use", "class_name": "MerchantProductOffersSelectWidget"},
         {"type": "remove_use", "class_name": "MerchantSearchWidget"},
         {"type": "remove_plugin", "plugin_class": "MerchantOpeningHoursWidget"},
         {"type": "remove_plugin", "plugin_class": "MerchantOrderReferenceForItemsWidget"},
         {"type": "remove_plugin", "plugin_class": "MerchantSalesReturnCreateFormWidget"},
-        {"type": "remove_plugin", "plugin_class": "MerchantProductWidget"},
         {"type": "remove_plugin", "plugin_class": "ProductOfferShoppingListWidget"},
-        {"type": "remove_plugin", "plugin_class": "MerchantProductOfferWidget"},
         {"type": "remove_plugin", "plugin_class": "SoldByMerchantWidget"},
         {"type": "remove_plugin", "plugin_class": "ShoppingListMerchantWidget"},
-        {"type": "remove_plugin", "plugin_class": "MerchantProductOffersSelectWidget"},
         {"type": "remove_plugin", "plugin_class": "MerchantSearchWidget"},
         {"type": "remove_plugin", "plugin_class": "MerchantSalesReturnCreateFormWidgetCacheKeyGeneratorStrategyPlugin"}
     ],
@@ -2055,12 +2048,9 @@ CONFIG_JSON='{
         "✓ Removed MerchantOpeningHoursWidget",
         "✓ Removed MerchantOrderReferenceForItemsWidget",
         "✓ Removed MerchantSalesReturnCreateFormWidget",
-        "✓ Removed MerchantProductWidget",
         "✓ Removed ProductOfferShoppingListWidget",
-        "✓ Removed MerchantProductOfferWidget",
         "✓ Removed SoldByMerchantWidget",
         "✓ Removed ShoppingListMerchantWidget",
-        "✓ Removed MerchantProductOffersSelectWidget",
         "✓ Removed MerchantSearchWidget",
         "✓ Removed MerchantSalesReturnCreateFormWidgetCacheKeyGeneratorStrategyPlugin"
     ]
