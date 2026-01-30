@@ -761,7 +761,7 @@ CONFIG_JSON='{
         {"type": "remove_data_import_console", "config_constant": "MerchantCommissionDataImportConfig::IMPORT_TYPE_MERCHANT_COMMISSION"},
         {"type": "remove_data_import_console", "config_constant": "MerchantCommissionDataImportConfig::IMPORT_TYPE_MERCHANT_COMMISSION_AMOUNT"},
         {"type": "remove_data_import_console", "config_constant": "MerchantCommissionDataImportConfig::IMPORT_TYPE_MERCHANT_COMMISSION_STORE"},
-        {"type": "remove_data_import_console", "config_constant": "MerchantCommissionDataImportConfig::IMPORT_TYPE_MERCHANT_COMMISSION_MERCHANT"}
+        {"type": "remove_data_import_console", "config_constant": "MerchantCommissionDataImportConfig::IMPORT_TYPE_MERCHANT_COMMISSION_MERCHANT"},
         {"type": "remove_data_import_console", "config_constant": "ProductApprovalDataImportConfig::IMPORT_TYPE_PRODUCT_APPROVAL_STATUS"}
     ],
     "success_messages": [
