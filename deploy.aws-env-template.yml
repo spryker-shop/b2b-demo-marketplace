@@ -49,7 +49,7 @@ image:
     environment:
         SPRYKER_PRODUCT_CONFIGURATOR_HOST: date-time-configurator-example.cloud.spryker.toys
         SPRYKER_PRODUCT_CONFIGURATOR_PORT: 443
-        SPRYKER_YVES_HOST_EU: yves.eu.example.cloud.spryker.toys
+        SPRYKER_YVES_HOST_EU: eu.example.cloud.spryker.toys
         SPRYKER_HOOK_BEFORE_DEPLOY: 'vendor/bin/install -r pre-deploy -vvv'
         SPRYKER_HOOK_AFTER_DEPLOY: 'true'
         SPRYKER_HOOK_INSTALL: 'vendor/bin/install -r dynamic-store --no-ansi -vvv'
