@@ -605,14 +605,16 @@ CONFIG_JSON='{
         {"type": "remove_use", "class_name": "MerchantProductApprovalDataImportConfig"},
         {"type": "remove_use", "class_name": "ProductOfferShoppingListDataImportConfig"},
         {"type": "remove_array_value_entry", "array_value": "MerchantProductApprovalDataImportConfig::IMPORT_TYPE_MERCHANT_PRODUCT_APPROVAL_STATUS_DEFAULT"},
-        {"type": "remove_array_value_entry", "array_value": "ProductOfferShoppingListDataImportConfig::IMPORT_TYPE_PRODUCT_OFFER_SHOPPING_LIST_ITEM"}
+        {"type": "remove_array_value_entry", "array_value": "ProductOfferShoppingListDataImportConfig::IMPORT_TYPE_PRODUCT_OFFER_SHOPPING_LIST_ITEM"},
+        {"type": "remove_array_value_entry", "array_value": "ProductApprovalDataImportConfig::IMPORT_TYPE_PRODUCT_APPROVAL_STATUS"}
     ],
     "success_messages": [
         "✓ DataImportConfig cleaned from marketplace-specific import types",
         "✓ Removed MerchantProductApprovalDataImportConfig",
         "✓ Removed ProductOfferShoppingListDataImportConfig",
         "✓ Removed IMPORT_TYPE_MERCHANT_PRODUCT_APPROVAL_STATUS_DEFAULT",
-        "✓ Removed IMPORT_TYPE_PRODUCT_OFFER_SHOPPING_LIST_ITEM"
+        "✓ Removed IMPORT_TYPE_PRODUCT_OFFER_SHOPPING_LIST_ITEM",
+        "✓ Removed IMPORT_TYPE_PRODUCT_APPROVAL_STATUS"
     ]
 }'
 clean_php_file "$DATA_IMPORT_CONFIG_FILE" "$CONFIG_JSON" "DataImportConfig"
@@ -747,6 +749,7 @@ CONFIG_JSON='{
         {"type": "remove_use", "class_name": "TriggerEventFromCsvFileConsole"},
         {"type": "remove_use", "class_name": "MerchantProductApprovalDataImportConfig"},
         {"type": "remove_use", "class_name": "ProductOfferShoppingListDataImportConfig"},
+        {"type": "remove_use", "class_name": "ProductApprovalDataImportConfig"},
         {"type": "remove_use", "class_name": "MerchantCommissionDataImportConfig"},
         {"type": "remove_plugin", "plugin_class": "AclEntitySynchronizeConsole"},
         {"type": "remove_plugin", "plugin_class": "AclEntityMetadataConfigValidateConsole"},
@@ -759,6 +762,7 @@ CONFIG_JSON='{
         {"type": "remove_data_import_console", "config_constant": "MerchantCommissionDataImportConfig::IMPORT_TYPE_MERCHANT_COMMISSION_AMOUNT"},
         {"type": "remove_data_import_console", "config_constant": "MerchantCommissionDataImportConfig::IMPORT_TYPE_MERCHANT_COMMISSION_STORE"},
         {"type": "remove_data_import_console", "config_constant": "MerchantCommissionDataImportConfig::IMPORT_TYPE_MERCHANT_COMMISSION_MERCHANT"}
+        {"type": "remove_data_import_console", "config_constant": "ProductApprovalDataImportConfig::IMPORT_TYPE_PRODUCT_APPROVAL_STATUS"}
     ],
     "success_messages": [
         "✓ ConsoleDependencyProvider cleaned from marketplace-specific console commands",
