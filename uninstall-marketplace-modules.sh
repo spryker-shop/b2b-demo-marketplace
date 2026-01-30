@@ -559,6 +559,7 @@ CONFIG_JSON='{
         {"type": "remove_use", "class_name": "MerchantCommissionStoreDataImportPlugin"},
         {"type": "remove_use", "class_name": "MerchantCommissionMerchantDataImportPlugin"},
         {"type": "remove_use", "class_name": "MerchantCombinedProductDataImportPlugin"},
+        {"type": "remove_use", "class_name": "ProductAbstractApprovalStatusDataImportPlugin"},
         {"type": "remove_plugin", "plugin_class": "MerchantProductDataImportPlugin"},
         {"type": "remove_plugin", "plugin_class": "ProductOfferShoppingListItemDataImportPlugin"},
         {"type": "remove_plugin", "plugin_class": "MerchantOmsProcessDataImportPlugin"},
@@ -572,7 +573,8 @@ CONFIG_JSON='{
         {"type": "remove_plugin", "plugin_class": "MerchantCommissionAmountDataImportPlugin"},
         {"type": "remove_plugin", "plugin_class": "MerchantCommissionStoreDataImportPlugin"},
         {"type": "remove_plugin", "plugin_class": "MerchantCommissionMerchantDataImportPlugin"},
-        {"type": "remove_plugin", "plugin_class": "MerchantCombinedProductDataImportPlugin"}
+        {"type": "remove_plugin", "plugin_class": "MerchantCombinedProductDataImportPlugin"},
+        {"type": "remove_plugin", "plugin_class": "ProductAbstractApprovalStatusDataImportPlugin"}
     ],
     "success_messages": [
         "✓ DataImportDependencyProvider cleaned from marketplace-specific plugins",
@@ -589,10 +591,32 @@ CONFIG_JSON='{
         "✓ Removed MerchantCommissionAmountDataImportPlugin",
         "✓ Removed MerchantCommissionStoreDataImportPlugin",
         "✓ Removed MerchantCommissionMerchantDataImportPlugin",
-        "✓ Removed MerchantCombinedProductDataImportPlugin"
+        "✓ Removed MerchantCombinedProductDataImportPlugin",
+        "✓ Removed ProductAbstractApprovalStatusDataImportPlugin"
     ]
 }'
 clean_php_file "$DATA_IMPORT_DEP_FILE" "$CONFIG_JSON" "DataImportDependencyProvider"
+echo ""
+
+echo "Step 12.5: Removing marketplace-specific import types from DataImportConfig..."
+DATA_IMPORT_CONFIG_FILE="src/Pyz/Zed/DataImport/DataImportConfig.php"
+CONFIG_JSON='{
+    "file_path": "src/Pyz/Zed/DataImport/DataImportConfig.php",
+    "operations": [
+        {"type": "remove_use", "class_name": "MerchantProductApprovalDataImportConfig"},
+        {"type": "remove_use", "class_name": "ProductOfferShoppingListDataImportConfig"},
+        {"type": "remove_array_value_entry", "array_value": "MerchantProductApprovalDataImportConfig::IMPORT_TYPE_MERCHANT_PRODUCT_APPROVAL_STATUS_DEFAULT"},
+        {"type": "remove_array_value_entry", "array_value": "ProductOfferShoppingListDataImportConfig::IMPORT_TYPE_PRODUCT_OFFER_SHOPPING_LIST_ITEM"}
+    ],
+    "success_messages": [
+        "✓ DataImportConfig cleaned from marketplace-specific import types",
+        "✓ Removed MerchantProductApprovalDataImportConfig",
+        "✓ Removed ProductOfferShoppingListDataImportConfig",
+        "✓ Removed IMPORT_TYPE_MERCHANT_PRODUCT_APPROVAL_STATUS_DEFAULT",
+        "✓ Removed IMPORT_TYPE_PRODUCT_OFFER_SHOPPING_LIST_ITEM"
+    ]
+}'
+clean_php_file "$DATA_IMPORT_CONFIG_FILE" "$CONFIG_JSON" "DataImportConfig"
 echo ""
 
 echo "Step 13: Removing merchant data import entities from import configuration files..."
@@ -951,16 +975,41 @@ CONFIG_JSON='{
     "operations": [
         {"type": "remove_use", "class_name": "MerchantAclEntitiesMerchantPostCreatePlugin"},
         {"type": "remove_use", "class_name": "MerchantCategoryMerchantBulkExpanderPlugin"},
+        {"type": "remove_use", "class_name": "MerchantProfileMerchantPostCreatePlugin"},
+        {"type": "remove_use", "class_name": "MerchantProfileMerchantPostUpdatePlugin"},
+        {"type": "remove_use", "class_name": "MerchantProfileMerchantBulkExpanderPlugin"},
         {"type": "remove_plugin", "plugin_class": "MerchantAclEntitiesMerchantPostCreatePlugin"},
-        {"type": "remove_plugin", "plugin_class": "MerchantCategoryMerchantBulkExpanderPlugin"}
+        {"type": "remove_plugin", "plugin_class": "MerchantCategoryMerchantBulkExpanderPlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantProfileMerchantPostCreatePlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantProfileMerchantPostUpdatePlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantProfileMerchantBulkExpanderPlugin"}
     ],
     "success_messages": [
         "✓ MerchantDependencyProvider cleaned from marketplace-specific plugins",
         "✓ Removed MerchantAclEntitiesMerchantPostCreatePlugin",
-        "✓ Removed MerchantCategoryMerchantBulkExpanderPlugin"
+        "✓ Removed MerchantCategoryMerchantBulkExpanderPlugin",
+        "✓ Removed MerchantProfileMerchantPostCreatePlugin",
+        "✓ Removed MerchantProfileMerchantPostUpdatePlugin",
+        "✓ Removed MerchantProfileMerchantBulkExpanderPlugin"
     ]
 }'
 clean_php_file "$MERCHANT_DEP_FILE" "$CONFIG_JSON" "MerchantDependencyProvider"
+echo ""
+
+echo "Step 22.5: Removing marketplace-specific plugins from PriceProductDependencyProvider..."
+PRICE_PRODUCT_DEP_FILE="src/Pyz/Zed/PriceProduct/PriceProductDependencyProvider.php"
+CONFIG_JSON='{
+    "file_path": "src/Pyz/Zed/PriceProduct/PriceProductDependencyProvider.php",
+    "operations": [
+        {"type": "remove_use", "class_name": "MerchantRelationshipVolumePriceProductValidatorPlugin"},
+        {"type": "remove_plugin", "plugin_class": "MerchantRelationshipVolumePriceProductValidatorPlugin"}
+    ],
+    "success_messages": [
+        "✓ PriceProductDependencyProvider cleaned from marketplace-specific plugins",
+        "✓ Removed MerchantRelationshipVolumePriceProductValidatorPlugin"
+    ]
+}'
+clean_php_file "$PRICE_PRODUCT_DEP_FILE" "$CONFIG_JSON" "PriceProductDependencyProvider"
 echo ""
 
 echo "Step 23: Removing marketplace-specific plugins from ProductDependencyProvider..."
