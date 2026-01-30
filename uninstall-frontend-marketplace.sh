@@ -220,9 +220,9 @@ npm install
 echo "✓ Dependencies updated"
 echo ""
 
-echo "Step 6: Installing @babel/core..."
-npm install --save-dev @babel/core
-echo "✓ @babel/core installed"
+echo "Step 6: Installing required Babel packages..."
+npm install --save-dev @babel/core @babel/runtime
+echo "✓ Babel packages installed"
 echo ""
 
 echo "Step 7: Cleaning npm cache..."
@@ -240,7 +240,7 @@ echo "  - Removed ${#FRONTEND_DIRECTORIES[@]} directories"
 echo "  - Cleaned Merchant Portal blocks from eslint.config.mjs"
 echo "  - Cleaned Merchant Portal scripts and dependencies from package.json"
 echo "  - Updated npm dependencies"
-echo "  - Installed @babel/core"
+echo "  - Installed @babel/core and @babel/runtime"
 echo "  - Cleaned npm cache"
 echo ""
 echo "Next steps:"
