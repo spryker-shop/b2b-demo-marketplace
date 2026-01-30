@@ -239,6 +239,7 @@ use Spryker\Glue\StoresRestApi\Plugin\StoresResourceRoutePlugin;
 use Spryker\Glue\TaxAppRestApi\Plugin\TaxValidateIdResourceRoutePlugin;
 use Spryker\Glue\UpSellingProductsRestApi\Plugin\GlueApplication\CartUpSellingProductsResourceRoutePlugin;
 use Spryker\Glue\UrlsRestApi\Plugin\GlueApplication\UrlResolverResourceRoutePlugin;
+use Spryker\Glue\WebProfiler\Plugin\Application\WebProfilerApplicationPlugin;
 use SprykerFeature\Glue\SelfServicePortal\Plugin\GlueApplication\SspAssetsResourceRoutePlugin;
 use SprykerFeature\Glue\SelfServicePortal\Plugin\GlueApplication\SspInquiriesResourceRoutePlugin;
 use SprykerFeature\Glue\SelfServicePortal\Plugin\GlueApplication\SspServicesResourceRoutePlugin;
@@ -850,7 +851,7 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
      */
     protected function getApplicationPlugins(): array
     {
-        return [
+        $plugins = [
             new HttpApplicationPlugin(),
             new SessionApplicationPlugin(),
             new EventDispatcherApplicationPlugin(),
@@ -859,6 +860,12 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
             new StoreApplicationPlugin(),
             new LocaleApplicationPlugin(),
         ];
+
+        if (class_exists(WebProfilerApplicationPlugin::class)) {
+            $plugins[] = new WebProfilerApplicationPlugin();
+        }
+
+        return $plugins;
     }
 
     /**

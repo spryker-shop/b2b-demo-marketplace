@@ -21,11 +21,11 @@ image:
         SPRYKER_YVES_HOST_DE: yves.de.spryker.local
         SPRYKER_YVES_HOST_AT: yves.at.spryker.local
     node:
-        version: 18
-        npm: 9
+        version: 20
+        npm: 10
 
 composer:
-    mode: '--no-dev --quiet -o -a'
+    mode: '--quiet -o -a'
     autoload: '--classmap-authoritative -o'
 
 regions:

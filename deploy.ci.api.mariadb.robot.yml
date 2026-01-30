@@ -4,7 +4,7 @@ namespace: spryker_ci
 tag: '1.0'
 
 environment: docker.ci
-pipeline: docker.ci.api.full
+pipeline: docker.robot.ci.api.full
 image:
     tag: spryker/php:8.4
     php:
@@ -17,12 +17,12 @@ image:
         SPRYKER_PUSH_NOTIFICATION_WEB_PUSH_PHP_VAPID_PRIVATE_KEY: 'UK6DywwjKITPpRHBSY9TLPIXm6BPrHX40sseIoXT9c8'
         SPRYKER_PUSH_NOTIFICATION_WEB_PUSH_PHP_VAPID_SUBJECT: 'https://spryker.com'
     node:
-        version: 18
-        npm: 9
+        version: 20
+        npm: 10
 
 composer:
-    mode: '--no-dev --quiet -o -a'
-    autoload: '-o -a'
+    mode: '--quiet'
+    autoload: '-a --apcu'
 
 regions:
     EU:

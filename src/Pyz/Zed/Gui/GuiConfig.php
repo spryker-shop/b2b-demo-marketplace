@@ -7,10 +7,11 @@
 
 declare(strict_types = 1);
 
-namespace Pyz\Zed\DataImport\Business\Exception;
+namespace Pyz\Zed\Gui;
 
-use Spryker\Zed\DataImport\Business\Exception\DataImportException;
+use Spryker\Zed\Gui\GuiConfig as SprykerGuiConfig;
 
-class InvalidSkuProductException extends DataImportException
+class GuiConfig extends SprykerGuiConfig
 {
+    protected const string NAVIGATION_ICONS_TYPE_DEFAULT = 'google-material';
 }

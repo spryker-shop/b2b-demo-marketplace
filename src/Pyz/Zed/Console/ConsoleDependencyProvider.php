@@ -14,6 +14,7 @@ use Pyz\Zed\Development\Communication\Console\AcceptanceCodeTestConsole;
 use Pyz\Zed\Development\Communication\Console\ApiCodeTestConsole;
 use Pyz\Zed\Development\Communication\Console\FunctionalCodeTestConsole;
 use SecurityChecker\Command\SecurityCheckerCommand;
+use Spryker\Zed\AclEntity\Communication\Console\AclEntityMetadataConfigValidateConsole;
 use Spryker\Zed\AclMerchantPortal\Communication\Console\AclEntitySynchronizeConsole;
 use Spryker\Zed\BusinessOnBehalfDataImport\BusinessOnBehalfDataImportConfig;
 use Spryker\Zed\Cache\Communication\Console\EmptyAllCachesConsole;
@@ -24,6 +25,7 @@ use Spryker\Zed\CompanyUnitAddressDataImport\CompanyUnitAddressDataImportConfig;
 use Spryker\Zed\CompanyUnitAddressLabelDataImport\CompanyUnitAddressLabelDataImportConfig;
 use Spryker\Zed\Console\Communication\Plugin\Console\MultiProcessRunConsole;
 use Spryker\Zed\Console\ConsoleDependencyProvider as SprykerConsoleDependencyProvider;
+use Spryker\Zed\Container\Communication\Console\ContainerBuilderConsole;
 use Spryker\Zed\ContentNavigationDataImport\ContentNavigationDataImportConfig;
 use Spryker\Zed\CountryDataImport\CountryDataImportConfig;
 use Spryker\Zed\CurrencyDataImport\CurrencyDataImportConfig;
@@ -202,6 +204,8 @@ use Spryker\Zed\ZedNavigation\Communication\Console\BuildNavigationConsole;
 use Spryker\Zed\ZedNavigation\Communication\Console\RemoveNavigationCacheConsole;
 use SprykerEco\Zed\NewRelic\Communication\Console\RecordDeploymentConsole;
 use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
+use SprykerSdk\Zed\AiDev\Communication\Console\GeneratePromptsConsole;
+use SprykerSdk\Zed\AiDev\Communication\Console\McpServerConsole;
 use SprykerShop\Zed\DateTimeConfiguratorPageExample\Communication\Console\DateTimeProductConfiguratorBuildFrontendConsole;
 
 /**
@@ -450,9 +454,13 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new DateTimeProductConfiguratorBuildFrontendConsole(),
             new OrderMatrixConsole(),
             new AclEntitySynchronizeConsole(),
+            new AclEntityMetadataConfigValidateConsole(),
             new StorageRedisDataReSaveConsole(),
             new SitemapGenerateConsole(),
             new DataImportMerchantImportConsole(),
+
+            // Container commands
+            new ContainerBuilderConsole(),
         ];
 
         $propelCommands = $container->getLocator()->propel()->facade()->getConsoleCommands();
@@ -499,6 +507,11 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             $commands[] = new CustomerPasswordSetConsole();
             $commands[] = new TriggerEventFromCsvFileConsole();
             $commands[] = new MultiProcessRunConsole();
+
+            if (class_exists(McpServerConsole::class)) {
+                $commands[] = new McpServerConsole();
+                $commands[] = new GeneratePromptsConsole();
+            }
 
             if (class_exists(SecurityCheckerCommand::class)) {
                 $commands[] = new SecurityCheckerCommand();

@@ -19,6 +19,7 @@ use Spryker\Client\ProductOfferStorage\Plugin\ProductOfferStorage\DefaultProduct
 use Spryker\Client\ProductOfferStorage\Plugin\ProductOfferStorage\ProductOfferReferenceStrategyPlugin;
 use Spryker\Client\ProductOfferStorage\ProductOfferStorageDependencyProvider as SprykerProductOfferStorageDependencyProvider;
 use Spryker\Client\ProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageCollectionSorterPluginInterface;
+use SprykerFeature\Client\SelfServicePortal\Plugin\ProductOfferStorage\ShipmentTypeServicePointProductOfferStorageFilterPlugin;
 
 class ProductOfferStorageDependencyProvider extends SprykerProductOfferStorageDependencyProvider
 {
@@ -53,5 +54,15 @@ class ProductOfferStorageDependencyProvider extends SprykerProductOfferStorageDe
     protected function createProductOfferStorageCollectionSorterPlugin(): ProductOfferStorageCollectionSorterPluginInterface
     {
         return new LowestPriceProductOfferStorageCollectionSorterPlugin();
+    }
+
+    /**
+     * @return list<\Spryker\Client\ProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageFilterPluginInterface>
+     */
+    protected function getProductOfferStorageFilterPlugins(): array
+    {
+        return [
+            new ShipmentTypeServicePointProductOfferStorageFilterPlugin(),
+        ];
     }
 }

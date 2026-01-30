@@ -14,12 +14,16 @@
             selector: ".#{config.name}__radio input:checked",
             attribute: 'data-service-type-uuid',
         },
-        sku: {
-            selector: ".#{config.name}",
-            attribute: 'data-service-point-product-sku',
-        },
         quantity: {
-            selector: '.js-formatted-number-input__hidden-input',
+            selector: 'packaging-unit-quantity-selector select[name="quantity"]',
+            attribute: 'value',
+        },
+        'id-product-concrete': {
+            selector: "[data-service-point-product-concrete-id-input]",
+            attribute: 'value',
+        },
+        'service-point-uuid': {
+            selector: '[data-service-point-uuid-input]',
             attribute: 'value',
         },
     } %}
@@ -101,14 +105,14 @@
     {% if shipmentTypeLength %}
         {{ block('types') }}
 
+        {{ block('datepicker') }}
+
         {% if requiredServicePoint %}
             {{ block('servicePointSelector') }}
             <input data-service-point-uuid-input type="hidden" name="{{ data.formFieldServicePointUuid }}" value="">
         {% endif %}
 
-        {{ block('datepicker') }}
-
-         <input data-product-offer-reference-input type="hidden" name="{{ data.formFieldProductOfferReference }}" value="{{ data.product.productOfferReference }}">
+        <input data-service-point-product-concrete-id-input type="hidden" value="{{ data.product.idProductConcrete }}">
 
         {% if data.hasOnlyDeliveryLikeShipmentType %}
             {% set shipmentType = data.shipmentTypes | first %}

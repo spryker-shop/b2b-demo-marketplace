@@ -5,3 +5,13 @@
         {% widget 'CurrentProductPriceVolumeWidget' args [data.product.currentProductPrice] only %}{% endwidget %}
     </div>
 {% endblock %}
+
+{% block productOfferPriceList %}
+    {% if data.productOffers %}
+        {% for productOffer in data.productOffers  %}
+            <div class="is-hidden" data-product-price-offer="{{ productOffer.productOfferReference }}">
+                {% widget 'CurrentProductPriceVolumeWidget' args [productOffer.price] only %}{% endwidget %}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
