@@ -2144,6 +2144,22 @@ else
 fi
 echo ""
 
+echo "Step 73.5: Updating data import command in docker.yml..."
+DOCKER_YML_FILE="config/install/docker.yml"
+
+if [ -f "$DOCKER_YML_FILE" ]; then
+    # Update the data import command to use b2b_full_EU.yml
+    sed -i.bak "s/data:import --config=data\/import\/local\/full_\${SPRYKER_REGION}\.yml/data:import --config=data\/import\/local\/b2b_full_EU.yml/g" "$DOCKER_YML_FILE"
+    
+    # Remove backup file
+    rm -f "${DOCKER_YML_FILE}.bak"
+    
+    echo "✓ Updated data import command to use b2b_full_EU.yml"
+else
+    echo "⚠ docker.yml file not found at $DOCKER_YML_FILE"
+fi
+echo ""
+
 echo "Step 74: Removing merchant-portal applications from deploy files..."
 DEPLOY_FILES=(
     "deploy.dev.yml"
