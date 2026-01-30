@@ -113,23 +113,23 @@ def remove_plugin_from_array(content, plugin_class_name):
     # Also match: $array[] = new PluginClassName(); (array push syntax)
     # Also match: PluginClassName::class, (widget class syntax)
     # Also match: $array[Config::KEY] = new PluginClassName(); (keyed array syntax)
-    
+
     # First try to match keyed array syntax: $var[Key::CONSTANT] = new Plugin();
     keyed_array_pattern = rf'\s*\$\w+\[[^\]]+\]\s*=\s*new\s+{re.escape(plugin_class_name)}\s*\([^)]*\);\s*'
     content = re.sub(keyed_array_pattern, '', content)
-    
+
     # Match array push syntax: $var[] = new Plugin();
     array_push_pattern = rf'\s*\$\w+\[\]\s*=\s*new\s+{re.escape(plugin_class_name)}\s*\([^)]*\);\s*'
     content = re.sub(array_push_pattern, '', content)
-    
+
     # Match widget class syntax: PluginClassName::class,
     class_pattern = rf'\s*{re.escape(plugin_class_name)}::class,?\s*'
     content = re.sub(class_pattern, '', content)
-    
+
     # Then match regular array syntax: new PluginClassName(),
     pattern = rf'\s*new\s+{re.escape(plugin_class_name)}\s*\([^)]*\),?\s*'
     content = re.sub(pattern, '', content)
-    
+
     return content
 
 def remove_event_subscriber(content, subscriber_class_name):
@@ -215,13 +215,13 @@ def cleanup_content(content):
 def process_file(config):
     """Process file based on configuration."""
     file_path = config['file_path']
-    
+
     content = read_file(file_path)
-    
+
     # Apply all removal operations
     for operation in config.get('operations', []):
         op_type = operation['type']
-        
+
         if op_type == 'remove_use':
             content = remove_use_statement(content, operation['class_name'])
         elif op_type == 'remove_plugin':
@@ -246,13 +246,13 @@ def process_file(config):
             content = remove_data_import_console(content, operation['config_constant'])
         elif op_type == 'remove_array_value_entry':
             content = remove_array_value_entry(content, operation['array_value'])
-    
+
     # Cleanup
     content = cleanup_content(content)
-    
+
     # Write back
     write_file(file_path, content)
-    
+
     # Print success messages
     for message in config.get('success_messages', []):
         print(message)
@@ -269,7 +269,7 @@ clean_php_file() {
     local file_path=$1
     local config_json=$2
     local description=$3
-    
+
     if [ -f "$file_path" ]; then
         # Run Python cleanup
         python3 /tmp/marketplace_cleanup.py "$config_json"
@@ -282,7 +282,7 @@ clean_php_file() {
 remove_directory() {
     local dir_path=$1
     local dir_name=$2
-    
+
     if [ -d "$dir_path" ]; then
         rm -rf "$dir_path"
         echo "✓ Removed $dir_name directory"
@@ -455,6 +455,7 @@ CONFIG_JSON='{
         {"type": "remove_use", "class_name": "MerchantCartPreCheckPlugin"},
         {"type": "remove_use", "class_name": "MerchantProductCartPreCheckPlugin"},
         {"type": "remove_use", "class_name": "MerchantProductOptionCartPreCheckPlugin"},
+        {"type": "remove_use", "class_name": "CartBundleItemsPreReloadPlugin"},
         {"type": "remove_plugin", "plugin_class": "ProductApprovalCartPreCheckPlugin"},
         {"type": "remove_plugin", "plugin_class": "OrderAmendmentProductApprovalCartPreCheckPlugin"},
         {"type": "remove_plugin", "plugin_class": "SanitizeMerchantCommissionPreReloadPlugin"},
@@ -463,7 +464,8 @@ CONFIG_JSON='{
         {"type": "remove_plugin", "plugin_class": "MerchantShipmentItemExpanderPlugin"},
         {"type": "remove_plugin", "plugin_class": "MerchantCartPreCheckPlugin"},
         {"type": "remove_plugin", "plugin_class": "MerchantProductCartPreCheckPlugin"},
-        {"type": "remove_plugin", "plugin_class": "MerchantProductOptionCartPreCheckPlugin"}
+        {"type": "remove_plugin", "plugin_class": "MerchantProductOptionCartPreCheckPlugin"},
+        {"type": "remove_plugin", "plugin_class": "CartBundleItemsPreReloadPlugin"},
     ],
     "success_messages": [
         "✓ CartDependencyProvider cleaned from marketplace-specific plugins",
@@ -611,12 +613,12 @@ def remove_data_import_entities(content, entities):
     lines = content.split('\n')
     result = []
     skip_until_indent = None
-    
+
     i = 0
     while i < len(lines):
         line = lines[i]
         stripped = line.lstrip()
-        
+
         # Check if we should stop skipping
         if skip_until_indent is not None:
             if stripped:  # Non-empty line
@@ -631,10 +633,10 @@ def remove_data_import_entities(content, entities):
                 # Empty line while skipping
                 i += 1
                 continue
-        
+
         # Check if this line starts a data_entity block we want to remove
         should_remove = False
-        
+
         for entity in entities:
             # Match: - data_entity: entity-name
             if re.match(rf'-\s+data_entity:\s+{re.escape(entity)}\s*$', stripped):
@@ -642,12 +644,12 @@ def remove_data_import_entities(content, entities):
                 current_indent = len(line) - len(stripped)
                 skip_until_indent = current_indent
                 break
-        
+
         if not should_remove:
             result.append(line)
-        
+
         i += 1
-    
+
     # Clean up multiple consecutive empty lines
     cleaned = []
     prev_empty = False
@@ -657,7 +659,7 @@ def remove_data_import_entities(content, entities):
             continue
         cleaned.append(line)
         prev_empty = is_empty
-    
+
     return '\n'.join(cleaned)
 
 def process_import_yaml(file_path, entities):
@@ -665,20 +667,20 @@ def process_import_yaml(file_path, entities):
     try:
         with open(file_path, 'r') as f:
             content = f.read()
-        
+
         # Check if any entities exist
         found = False
         for entity in entities:
             if f'data_entity: {entity}' in content:
                 found = True
                 break
-        
+
         if not found:
             return False
-        
+
         # Remove entities
         new_content = remove_data_import_entities(content, entities)
-        
+
         # Write back if changed
         if new_content != content:
             with open(file_path, 'w') as f:
@@ -1791,14 +1793,11 @@ CLIENT_CATALOG_DEP_FILE="src/Pyz/Client/Catalog/CatalogDependencyProvider.php"
 CONFIG_JSON='{
     "file_path": "src/Pyz/Client/Catalog/CatalogDependencyProvider.php",
     "operations": [
-        {"type": "remove_use", "class_name": "MerchantReferenceQueryExpanderPlugin"},
         {"type": "remove_use", "class_name": "MerchantProductReferenceQueryExpanderPlugin"},
-        {"type": "remove_plugin", "plugin_class": "MerchantReferenceQueryExpanderPlugin"},
         {"type": "remove_plugin", "plugin_class": "MerchantProductReferenceQueryExpanderPlugin"}
     ],
     "success_messages": [
         "✓ Client CatalogDependencyProvider cleaned from marketplace-specific plugins",
-        "✓ Removed MerchantReferenceQueryExpanderPlugin",
         "✓ Removed MerchantProductReferenceQueryExpanderPlugin"
     ]
 }'
@@ -1932,14 +1931,11 @@ CONFIG_JSON='{
     "file_path": "src/Pyz/Client/ProductOfferStorage/ProductOfferStorageDependencyProvider.php",
     "operations": [
         {"type": "remove_use", "class_name": "MerchantProductProductOfferReferenceStrategyPlugin"},
-        {"type": "remove_use", "class_name": "MerchantProductOfferStorageExpanderPlugin"},
-        {"type": "remove_plugin", "plugin_class": "MerchantProductProductOfferReferenceStrategyPlugin"},
-        {"type": "remove_plugin", "plugin_class": "MerchantProductOfferStorageExpanderPlugin"}
+        {"type": "remove_plugin", "plugin_class": "MerchantProductProductOfferReferenceStrategyPlugin"}
     ],
     "success_messages": [
         "✓ Client ProductOfferStorageDependencyProvider cleaned from marketplace-specific plugins",
-        "✓ Removed MerchantProductProductOfferReferenceStrategyPlugin",
-        "✓ Removed MerchantProductOfferStorageExpanderPlugin"
+        "✓ Removed MerchantProductProductOfferReferenceStrategyPlugin"
     ]
 }'
 clean_php_file "$CLIENT_PRODUCT_OFFER_STORAGE_DEP_FILE" "$CONFIG_JSON" "Client ProductOfferStorageDependencyProvider"
@@ -2050,11 +2046,11 @@ def remove_docker_commands(content, commands_to_remove):
     result = []
     skip_until_indent = None
     current_indent = None
-    
+
     i = 0
     while i < len(lines):
         line = lines[i]
-        
+
         # Check if we should stop skipping
         if skip_until_indent is not None:
             # Calculate current line's indentation
@@ -2071,11 +2067,11 @@ def remove_docker_commands(content, commands_to_remove):
                 # Empty line while skipping
                 i += 1
                 continue
-        
+
         # Check if this line starts a command block we want to remove
         stripped = line.lstrip()
         should_remove = False
-        
+
         for cmd in commands_to_remove:
             if stripped.startswith(f'{cmd}:'):
                 should_remove = True
@@ -2083,12 +2079,12 @@ def remove_docker_commands(content, commands_to_remove):
                 current_indent = len(line) - len(stripped)
                 skip_until_indent = current_indent
                 break
-        
+
         if not should_remove:
             result.append(line)
-        
+
         i += 1
-    
+
     # Clean up multiple consecutive empty lines
     cleaned = []
     prev_empty = False
@@ -2098,7 +2094,7 @@ def remove_docker_commands(content, commands_to_remove):
             continue
         cleaned.append(line)
         prev_empty = is_empty
-    
+
     return '\n'.join(cleaned)
 
 def process_docker_yml(file_path, commands):
@@ -2106,20 +2102,20 @@ def process_docker_yml(file_path, commands):
     try:
         with open(file_path, 'r') as f:
             content = f.read()
-        
+
         # Check if any commands exist
         found = False
         for cmd in commands:
             if f'{cmd}:' in content:
                 found = True
                 break
-        
+
         if not found:
             return False
-        
+
         # Remove commands
         new_content = remove_docker_commands(content, commands)
-        
+
         # Write back if changed
         if new_content != content:
             with open(file_path, 'w') as f:
@@ -2163,12 +2159,12 @@ def remove_merchant_portal_applications(content):
     lines = content.split('\n')
     result = []
     skip_until_indent = None
-    
+
     i = 0
     while i < len(lines):
         line = lines[i]
         stripped = line.lstrip()
-        
+
         # Check if we should stop skipping
         if skip_until_indent is not None:
             if stripped:  # Non-empty line
@@ -2183,10 +2179,10 @@ def remove_merchant_portal_applications(content):
                 # Empty line while skipping
                 i += 1
                 continue
-        
+
         # Check if this line starts a merchant portal application block
         should_remove = False
-        
+
         # Match mportal_* applications (like mportal_eu, mportal_us)
         if re.match(r'mportal_\w+:', stripped):
             should_remove = True
@@ -2206,12 +2202,12 @@ def remove_merchant_portal_applications(content):
                         skip_until_indent = current_indent
                     break
                 j += 1
-        
+
         if not should_remove:
             result.append(line)
-        
+
         i += 1
-    
+
     # Clean up multiple consecutive empty lines
     cleaned = []
     prev_empty = False
@@ -2221,7 +2217,7 @@ def remove_merchant_portal_applications(content):
             continue
         cleaned.append(line)
         prev_empty = is_empty
-    
+
     return '\n'.join(cleaned)
 
 def process_deploy_file(file_path):
@@ -2229,14 +2225,14 @@ def process_deploy_file(file_path):
     try:
         with open(file_path, 'r') as f:
             content = f.read()
-        
+
         # Check if file contains merchant-portal
         if 'merchant-portal' not in content and 'mportal_' not in content:
             return False
-        
+
         # Remove merchant portal applications
         new_content = remove_merchant_portal_applications(content)
-        
+
         # Write back if changed
         if new_content != content:
             with open(file_path, 'w') as f:
@@ -2334,13 +2330,13 @@ def cleanup_content(content):
 def process_config_file(config):
     """Process configuration file based on configuration."""
     file_path = config['file_path']
-    
+
     content = read_file(file_path)
-    
+
     # Apply all removal operations
     for operation in config.get('operations', []):
         op_type = operation['type']
-        
+
         if op_type == 'remove_use':
             content = remove_use_statement(content, operation['class_name'])
         elif op_type == 'remove_config_assignment':
@@ -2353,13 +2349,13 @@ def process_config_file(config):
             content = remove_section_comment(content, operation['comment_pattern'])
         elif op_type == 'remove_array_key_value':
             content = remove_array_key_value(content, operation['key_pattern'])
-    
+
     # Cleanup
     content = cleanup_content(content)
-    
+
     # Write back
     write_file(file_path, content)
-    
+
     # Print success messages
     for message in config.get('success_messages', []):
         print(message)
@@ -2375,7 +2371,7 @@ PYTHON_SCRIPT
 clean_config_file() {
     local file_path=$1
     local config_json=$2
-    
+
     if [ -f "$file_path" ]; then
         python3 /tmp/config_cleanup.py "$config_json"
     else
@@ -2476,13 +2472,13 @@ OMS_XML_FILE="config/Zed/oms/DummyPayment01.xml"
 if [ -f "$OMS_XML_FILE" ]; then
     # Remove DummyMerchantCommission subprocess reference
     sed -i.bak '/<process>DummyMerchantCommission<\/process>/d' "$OMS_XML_FILE"
-    
+
     # Remove DummyMerchantCommission process definition
     sed -i.bak '/<process name="DummyMerchantCommission" file="DummySubprocess\/DummyMerchantCommission01.xml"\/>/d' "$OMS_XML_FILE"
-    
+
     # Remove backup file
     rm -f "${OMS_XML_FILE}.bak"
-    
+
     echo "✓ Removed DummyMerchantCommission subprocess from DummyPayment01.xml"
 else
     echo "⚠ OMS file not found at $OMS_XML_FILE"
@@ -2500,7 +2496,7 @@ if [ -f "$OMS_XML_FILE" ]; then
                 <target>tax pending</target>\
             </transition>
     }' "$OMS_XML_FILE"
-    
+
     echo "✓ Added transition from paid to tax pending in DummyPayment01.xml"
 else
     echo "⚠ OMS file not found at $OMS_XML_FILE"
