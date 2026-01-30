@@ -465,7 +465,7 @@ CONFIG_JSON='{
         {"type": "remove_plugin", "plugin_class": "MerchantCartPreCheckPlugin"},
         {"type": "remove_plugin", "plugin_class": "MerchantProductCartPreCheckPlugin"},
         {"type": "remove_plugin", "plugin_class": "MerchantProductOptionCartPreCheckPlugin"},
-        {"type": "remove_plugin", "plugin_class": "CartBundleItemsPreReloadPlugin"},
+        {"type": "remove_plugin", "plugin_class": "CartBundleItemsPreReloadPlugin"}
     ],
     "success_messages": [
         "✓ CartDependencyProvider cleaned from marketplace-specific plugins",
