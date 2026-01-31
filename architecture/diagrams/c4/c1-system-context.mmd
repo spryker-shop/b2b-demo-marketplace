@@ -1,0 +1,36 @@
+---
+config:
+  layout: elk
+---
+flowchart LR
+    Customer["👤 Customer"] -- Browse & Purchase --> Spryker["🛒 Spryker B2B Marketplace<br>Platform"]
+    BackofficeUser["👤 Backoffice User"] -- Manage Platform --> Spryker
+    MerchantUser["👤 Merchant User"] -- Manage Products & Orders --> Spryker
+    DevOpsEngineer["👤 DevOps Engineer"] -- Monitor Performance --> APM["📊 Application Performance<br>Monitoring"]
+    BusinessAnalyst["👤 Business Analyst"] -- Analyze Data --> BI["📈 Business Intelligence<br>Platform"]
+    Customer -- Authentication --> CIAM["🔐 CIAM System<br>Identity &amp; Access"]
+    BackofficeUser -- Authentication --> CIAM
+    MerchantUser -- Authentication --> CIAM
+    Spryker -- New Orders --> ERP["💾 ERP System<br>Orders &amp; Inventory"]
+    PIM["📦 PIM System<br>Product Data"] -- Product Data,<br>Base Prices --> Spryker
+    Spryker <-- Payments --> Payment["💳 Payment Gateway<br>Transactions"]
+    CIAM -- Customer data, tokens --> Spryker
+    ERP -- Stock, Order Updates,<br>Customer-Specific Prices --> Spryker
+    Spryker -- Metrics & Traces --> APM
+    Spryker -- Business Data --> BI
+
+    Customer:::userStyle
+    Spryker:::systemStyle
+    BackofficeUser:::userStyle
+    MerchantUser:::userStyle
+    DevOpsEngineer:::userStyle
+    APM:::externalStyle
+    BusinessAnalyst:::userStyle
+    BI:::externalStyle
+    CIAM:::externalStyle
+    ERP:::externalStyle
+    PIM:::externalStyle
+    Payment:::externalStyle
+    classDef userStyle fill:#e1f5ff,stroke:#0366d6,stroke-width:2px
+    classDef systemStyle fill:#E67E22,stroke:#c0392b,stroke-width:3px,color:#fff
+    classDef externalStyle fill:#95A5A6,stroke:#7f8c8d,stroke-width:2px,color:#fff
