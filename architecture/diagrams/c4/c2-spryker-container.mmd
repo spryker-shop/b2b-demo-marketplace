@@ -1,0 +1,96 @@
+---
+config:
+   layout: elk
+---
+flowchart LR
+   subgraph Spryker["Spryker B2B Marketplace Platform"]
+      Yves["🌐 Yves<br><small>Twig + PHP</small><br><small>Storefront - Customer-facing shop interface</small>"]
+      Client["🔗 Client<br><small>PHP</small><br><small>Communication layer between Yves and Zed</small>"]
+      BackOffice["🏢 BackOffice<br><small>Twig + PHP</small><br><small>Admin UI - Platform management interface</small>"]
+      MerchantPortal["🏪 Merchant Portal<br><small>Twig + PHP</small><br><small>Merchant UI - Product &amp; order management</small>"]
+      StoreFrontAPI["🔌 StoreFront API<br><small>PHP</small><br><small>REST API for storefront operations</small>"]
+      BackendAPI["⚙️ Backend API<br><small>PHP</small><br><small>Internal backend business logic</small>"]
+      BackendGateway["🚪 Backend Gateway<br><small>PHP</small><br><small>API Gateway routing to backend services</small>"]
+      MySQL["🗄️ MySQL/MariaDB<br><small>Relational database for persistent data</small>"]
+      Redis["⚡ Redis<br><small>In-memory cache for sessions &amp; KV storage</small>"]
+      OpenSearch["🔍 OpenSearch<br><small>Search engine for product catalog</small>"]
+      RabbitMQ["📬 RabbitMQ<br><small>Message broker for async processing</small>"]
+      Jenkins["⏰ Scheduler<br>Jenkins + PHP<br><small>Job scheduler &amp; processor</small>"]
+      FileStorage["📁 File Storage<br><small>AWS S3</small><br><small>Import/Export files</small>"]
+   end
+   Customer["👤 Customer<br><small>End user browsing and purchasing</small>"] -- Browse &amp; Purchase<br>[HTTPS] --> Yves
+BackofficeUser["👤 Backoffice User<br><small>Admin managing platform</small>"] -- Manage Platform<br>[HTTPS] --> BackOffice
+MerchantUser["👤 Merchant User<br><small>Merchant managing catalog</small>"] -- Manage Catalog &amp; Orders<br>[HTTPS] --> MerchantPortal
+Yves -- Process customer requests<br>[HTTPS] --> BackendGateway
+Yves -- Read/Write Session Data<br>Fetch cached Data<br>[TCP] --> Redis
+Yves -- Search, Catalog<br>[REST] --> OpenSearch
+BackendGateway -- Read/Write Data<br>[SQL] --> MySQL
+MerchantPortal -- Read/Write Data<br>[SQL] --> MySQL
+StoreFrontAPI -- Process customer requests<br>[HTTPS] --> BackendGateway
+StoreFrontAPI -- Read/Write Session Data<br>Fetch cached Data<br>[TCP] --> Redis
+StoreFrontAPI -- Search, Catalog</br>[REST] --> OpenSearch
+BackOffice -- Read/Write Data<br>[SQL] --> MySQL
+BackendAPI -- Read/Write Data<br>[SQL] --> MySQL
+Jenkins -- Process scheduled jobs<br> --> Jenkins
+Jenkins -- Trigger/Publish Events<br>[AMQP] --> RabbitMQ
+Jenkins -- Read/Write Data<br>[SQL] --> MySQL
+Jenkins -- Populate Key Value cache<br>[TCP] --> Redis
+Jenkins -- Populate Search Index<br>[REST] --> OpenSearch
+Jenkins -- Read import files<br>[S3 API] --> FileStorage
+Jenkins -- Write export files<br>[S3 API] --> FileStorage
+Customer -- Authentication<br>[OAuth2/SAML] --> CIAM["🔐 CIAM System<br><small>External</small><br><small>Identity &amp; Access Management</small>"]
+BackofficeUser -- Authentication<br>[OAuth2/SAML] --> CIAM
+MerchantUser -- Authentication<br>[OAuth2/SAML] --> CIAM
+CIAM -- User tokens &amp; profile<br>[REST] --> Yves & BackOffice & StoreFrontAPI & BackendAPI
+PIM["📦 PIM System<br><small>External</small><br><small>Product Data Management</small>"] -- Upload product data<br>with base prices<br>[S3 API / CSV] --> FileStorage
+Jenkins -- Read price data<br>[S3 API] --> FileStorage
+Jenkins -- Store base prices<br>[SQL] --> MySQL
+MySQL -- Trigger events<br>[AMQP] --> RabbitMQ
+RabbitMQ -- Publish & Sync process<br>[AMQP] --> Jenkins
+Jenkins -- Populate price cache<br>[TCP] --> Redis
+Jenkins -- Index prices<br>[REST] --> OpenSearch
+Jenkins -- Create orders<br>[REST] --> ERP["💾 ERP System<br><small>External</small><br><small>Orders &amp; Inventory</small>"]
+ERP -- Stock &amp; order updates<br>[REST] --> BackendAPI
+Yves -- Request customer price<br>[RPC] --> Client
+Client -- Check price cache<br>[TCP] --> Redis
+Client -- Request customer price<br>[REST] --> ERP
+Client -- Cache customer price (2h)<br>[TCP] --> Redis
+Yves -- Process payment<br>[REST] --> Payment["💳 Payment Gateway<br><small>External</small><br><small>Payment Processing</small>"]
+StoreFrontAPI -- Process payment<br>[REST] --> Payment
+Payment -- Payment status<br>[Webhook] --> Yves
+Yves -- Send metrics &amp; traces<br>[OTLP] --> APM["📊 Application Performance Monitoring<br><small>External</small><br><small>Performance &amp; Traces</small>"]
+BackOffice -- Send metrics &amp; traces<br>[OTLP] --> APM
+MerchantPortal -- Send metrics &amp; traces<br>[OTLP] --> APM
+BackendGateway -- Send metrics &amp; traces<br>[OTLP] --> APM
+BackendAPI -- Send metrics &amp; traces<br>[OTLP] --> APM
+BI["📈 Business Intelligence Platform<br><small>External</small><br><small>Analytics &amp; Reporting</small>"] -- Fetch analytics data<br>[S3 API] --> FileStorage
+
+Yves:::webAppStyle
+Client:::communicationStyle
+BackOffice:::webAppStyle
+MerchantPortal:::webAppStyle
+StoreFrontAPI:::apiStyle
+BackendAPI:::apiStyle
+BackendGateway:::infraStyle
+MySQL:::storageStyle
+Redis:::storageStyle
+OpenSearch:::storageStyle
+RabbitMQ:::infraStyle
+Jenkins:::infraStyle
+FileStorage:::storageStyle
+Customer:::userStyle
+BackofficeUser:::userStyle
+MerchantUser:::userStyle
+CIAM:::externalStyle
+PIM:::externalStyle
+ERP:::externalStyle
+Payment:::externalStyle
+APM:::externalStyle
+BI:::externalStyle
+classDef userStyle fill:#e1f5ff,stroke:#0366d6,stroke-width:2px
+classDef webAppStyle fill:#27AE60,stroke:#27ae60,stroke-width:2px,color:#fff
+classDef communicationStyle fill:#E67E22,stroke:#d68910,stroke-width:2px,color:#fff
+classDef apiStyle fill:#2980B9,stroke:#2980b9,stroke-width:2px,color:#fff
+classDef storageStyle fill:#9B59B6,stroke:#8e44ad,stroke-width:2px,color:#fff
+classDef infraStyle fill:#95A5A6,stroke:#95a5a6,stroke-width:2px,color:#fff
+classDef externalStyle fill:#95A5A6,stroke:#7f8c8d,stroke-width:2px,color:#fff

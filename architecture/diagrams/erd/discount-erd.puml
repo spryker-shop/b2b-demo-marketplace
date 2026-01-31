@@ -1,0 +1,131 @@
+@startuml
+!define Table(name,desc) entity name as "desc"
+!define primary_key(x) <b>x</b>
+!define foreign_key(x) <i>x</i>
+!define not_null(x) <u>x</u>
+
+package "Discount Domain" {
+  entity spy_discount {
+    primary_key(id_discount) : INTEGER
+    --
+    foreign_key(fk_discount_voucher_pool) : INTEGER
+    foreign_key(fk_store) : INTEGER
+    not_null(amount) : INTEGER
+    calculator_plugin : VARCHAR(255)
+    collector_query_string : TEXT
+    decision_rule_query_string : TEXT
+    description : VARCHAR(1024)
+    discount_key : VARCHAR(32)
+    discount_type : VARCHAR(255)
+    not_null(display_name) : VARCHAR(255)
+    is_active : BOOLEAN
+    is_exclusive : BOOLEAN
+    not_null(minimum_item_amount) : INTEGER
+    priority : INTEGER
+    valid_from : TIMESTAMP
+    valid_to : TIMESTAMP
+    created_at : TIMESTAMP
+    updated_at : TIMESTAMP
+  }
+
+  entity spy_discount_store {
+    primary_key(id_discount_store) : INTEGER
+    --
+    not_null(foreign_key(fk_discount)) : INTEGER
+    not_null(foreign_key(fk_store)) : INTEGER
+  }
+
+  entity spy_discount_voucher_pool {
+    primary_key(id_discount_voucher_pool) : INTEGER
+    --
+    is_active : BOOLEAN
+    not_null(name) : VARCHAR(255)
+    created_at : TIMESTAMP
+    updated_at : TIMESTAMP
+  }
+
+  entity spy_discount_voucher {
+    primary_key(id_discount_voucher) : INTEGER
+    --
+    foreign_key(fk_discount_voucher_pool) : INTEGER
+    not_null(code) : VARCHAR(255)
+    is_active : BOOLEAN
+    max_number_of_uses : INTEGER
+    number_of_uses : INTEGER
+    voucher_batch : INTEGER
+    created_at : TIMESTAMP
+    updated_at : TIMESTAMP
+  }
+
+  entity spy_discount_amount {
+    primary_key(id_discount_amount) : INTEGER
+    --
+    not_null(foreign_key(fk_currency)) : INTEGER
+    not_null(foreign_key(fk_discount)) : INTEGER
+    gross_amount : INTEGER
+    net_amount : INTEGER
+  }
+}
+
+package "Store Domain" {
+  entity spy_store {
+    primary_key(id_store) : INTEGER
+    --
+    foreign_key(fk_currency) : INTEGER
+    foreign_key(fk_locale) : INTEGER
+    name : VARCHAR(255)
+  }
+
+  entity spy_locale {
+    primary_key(id_locale) : INTEGER
+    --
+    not_null(is_active) : BOOLEAN
+    not_null(locale_name) : VARCHAR(5)
+  }
+
+  entity spy_locale_store {
+    primary_key(id_locale_store) : INTEGER
+    --
+    not_null(foreign_key(fk_locale)) : INTEGER
+    not_null(foreign_key(fk_store)) : INTEGER
+  }
+
+  entity spy_currency {
+    primary_key(id_currency) : INTEGER
+    --
+    code : VARCHAR(5)
+    name : VARCHAR(255)
+    symbol : VARCHAR(255)
+  }
+
+  entity spy_currency_store {
+    primary_key(id_currency_store) : INTEGER
+    --
+    not_null(foreign_key(fk_currency)) : INTEGER
+    not_null(foreign_key(fk_store)) : INTEGER
+  }
+}
+
+' Discount relationships
+spy_discount::fk_discount_voucher_pool ||--o| spy_discount_voucher_pool::id_discount_voucher_pool : "belongs to"
+spy_discount::fk_store }o--|| spy_store::id_store : "belongs to"
+
+spy_discount_store::fk_discount }o--|| spy_discount::id_discount : "belongs to"
+spy_discount_store::fk_store }o--|| spy_store::id_store : "belongs to"
+
+spy_discount_voucher::fk_discount_voucher_pool }o--|| spy_discount_voucher_pool::id_discount_voucher_pool : "belongs to"
+
+spy_discount_amount::fk_discount }o--|| spy_discount::id_discount : "belongs to"
+spy_discount_amount::fk_currency }o--|| spy_currency::id_currency : "belongs to"
+
+' Store relationships
+spy_store::fk_currency }o--o| spy_currency::id_currency : "default currency"
+spy_store::fk_locale }o--o| spy_locale::id_locale : "default locale"
+
+spy_locale_store::fk_locale }o--|| spy_locale::id_locale : "belongs to"
+spy_locale_store::fk_store }o--|| spy_store::id_store : "belongs to"
+
+spy_currency_store::fk_currency }o--|| spy_currency::id_currency : "belongs to"
+spy_currency_store::fk_store }o--|| spy_store::id_store : "belongs to"
+
+@enduml

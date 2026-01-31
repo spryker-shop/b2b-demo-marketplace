@@ -1,0 +1,96 @@
+---
+config:
+  layout: elk
+---
+flowchart TB
+    subgraph YvesPresentation["Presentation Layer"]
+        YvesControllers["Controllers<br><small>Page Controllers</small>"]
+        YvesTemplates["Templates<br><small>Twig Views</small>"]
+        YvesWidgets["Widgets<br><small>Reusable UI Components</small>"]
+    end
+    subgraph Yves["🌐 Yves Application Layer (Storefront)"]
+        direction TB
+        YvesPresentation
+    end
+    subgraph GluePresentation["Presentation Layer"]
+        GlueControllers["Resource Controllers<br><small>REST Endpoints</small>"]
+        GlueProcessors["Processors<br><small>Request/Response Handlers</small>"]
+        GlueFormatters["Formatters<br><small>Data Serialization</small>"]
+    end
+    subgraph GlueAPI["🔌 Glue Application Layer (BackendAPI, StoreFrontAPI)"]
+        direction TB
+        GluePresentation
+    end
+    subgraph ClientCommunication["Communication Layer"]
+        ClientStubs["Stubs<br><small>Remote Service Interfaces</small>"]
+        ClientAdapters["Adapters<br><small>Protocol Handlers</small>"]
+        ClientCache["Cache Handlers<br><small>Redis/Storage Access</small>"]
+    end
+    subgraph Client["🔗 Client Application Layer"]
+        direction TB
+        ClientCommunication
+    end
+    subgraph ZedPresentation["Presentation Layer"]
+        ZedControllers["Controllers<br><small>CRUD Controllers, Forms, API Controllers</small>"]
+        ZedViews["Views &amp; Tables<br><small>Symfony Forms, UI Components</small>"]
+        ZedRouters["Routers<br><small>Request Routing</small>"]
+    end
+    subgraph ZedCommunication["Communication Layer"]
+        ZedFacades["Facades<br><small>Module API</small>"]
+        ZedPlugins["Plugins<br><small>Extension Points</small>"]
+        ZedGateway["Gateway<br><small>RPC Handlers</small>"]
+    end
+    subgraph ZedBusiness["Business Layer"]
+        ZedModels["Business Models<br><small>Business Logic</small>"]
+    end
+    subgraph ZedService["Service Layer"]
+        ZedServices["Services<br><small>Shared Utilities</small>"]
+    end
+    subgraph ZedPersistence["Persistence Layer"]
+        ZedEntities["Entities<br><small>Propel ORM Models</small>"]
+        ZedRepositories["Repositories<br><small>Read Operations</small>"]
+        ZedEntityManagers["Entity Managers<br><small>Write Operations</small>"]
+    end
+    subgraph Zed["🏢 Zed Application Layer (BackOffice, MerchantPortal, BackendGateway)"]
+        direction TB
+        ZedPresentation
+        ZedCommunication
+        ZedBusiness
+        ZedService
+        ZedPersistence
+    end
+    subgraph Database["💾 Database"]
+        MySQL["MySQL/MariaDB<br><small>Relational Database</small>"]
+    end
+    subgraph CacheStorage["⚡ Cache & Search"]
+        Redis["Redis/Valkey<br><small>Key-Value Store</small>"]
+        OpenSearch["OpenSearch<br><small>Search Engine</small>"]
+    end
+    YvesControllers --> YvesTemplates & YvesWidgets & ClientStubs
+    GlueControllers --> GlueProcessors & ClientStubs
+    GlueProcessors --> GlueFormatters
+    ClientStubs --> ClientAdapters & ClientCache
+    ClientAdapters --> ZedGateway
+    ClientCache --> Redis & OpenSearch
+    ZedControllers --> ZedViews & ZedRouters & ZedFacades
+    ZedGateway --> ZedFacades
+    ZedFacades --> ZedModels
+    ZedPlugins --> ZedFacades
+    ZedModels --> ZedServices & ZedRepositories & ZedEntityManagers
+    ZedRepositories --> ZedEntities
+    ZedEntityManagers --> ZedEntities
+    ZedEntities --> MySQL
+
+    YvesPresentation:::presentationStyle
+    GluePresentation:::presentationStyle
+    ClientCommunication:::communicationStyle
+    ZedPresentation:::presentationStyle
+    ZedCommunication:::communicationStyle
+    ZedBusiness:::businessStyle
+    ZedService:::serviceStyle
+    ZedPersistence:::persistenceStyle
+    classDef presentationStyle fill:#27AE60,stroke:#27ae60,stroke-width:2px,color:#fff
+    classDef communicationStyle fill:#E67E22,stroke:#d68910,stroke-width:2px,color:#fff
+    classDef businessStyle fill:#2980B9,stroke:#2980b9,stroke-width:2px,color:#fff
+    classDef serviceStyle fill:#95A5A6,stroke:#95a5a6,stroke-width:2px,color:#fff
+    classDef persistenceStyle fill:#9B59B6,stroke:#8e44ad,stroke-width:2px,color:#fff
