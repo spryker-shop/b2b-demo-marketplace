@@ -1,0 +1,26 @@
+Daemon process terminated and closed the connection
+
+Messages from the log:
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async processFilesAndCreateAndSerializeProjectGraph (/Users/maximfedets/projects/b2b-demo-marketplace/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:142:28)
+    at async getCachedSerializedProjectGraphPromise (/Users/maximfedets/projects/b2b-demo-marketplace/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:43:16)
+    at async handleRequestProjectGraph (/Users/maximfedets/projects/b2b-demo-marketplace/node_modules/nx/src/daemon/server/handle-request-project-graph.js:12:24)
+    at async handleResult (/Users/maximfedets/projects/b2b-demo-marketplace/node_modules/nx/src/daemon/server/server.js:110:16)
+    at async handleMessage (/Users/maximfedets/projects/b2b-demo-marketplace/node_modules/nx/src/daemon/server/server.js:81:9) {
+  [cause]: SyntaxError: Expected double-quoted property name in JSON at position 588775 (line 13342 column 1)
+      at JSON.parse (<anonymous>)
+      at parsePackageLockFile (/Users/maximfedets/projects/b2b-demo-marketplace/node_modules/nx/src/plugins/js/lock-file/npm-parser.js:20:26)
+      at getNpmLockfileNodes (/Users/maximfedets/projects/b2b-demo-marketplace/node_modules/nx/src/plugins/js/lock-file/npm-parser.js:26:18)
+      at getLockFileNodes (/Users/maximfedets/projects/b2b-demo-marketplace/node_modules/nx/src/plugins/js/lock-file/lock-file.js:39:57)
+      at exports.createNodes (/Users/maximfedets/projects/b2b-demo-marketplace/node_modules/nx/src/plugins/js/index.js:42:64)
+      at buildProjectsConfigurationsFromProjectPathsAndPlugins (/Users/maximfedets/projects/b2b-demo-marketplace/node_modules/nx/src/project-graph/utils/project-configuration-utils.js:146:25)
+      at createProjectConfigurations (/Users/maximfedets/projects/b2b-demo-marketplace/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:89:156)
+      at _retrieveProjectConfigurations (/Users/maximfedets/projects/b2b-demo-marketplace/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:61:12)
+      at retrieveProjectConfigurations (/Users/maximfedets/projects/b2b-demo-marketplace/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:46:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+}
+[NX Daemon Server] - 2025-11-19T17:02:18.192Z - Done responding to the client null
+
+
+
+More information: /Users/maximfedets/projects/b2b-demo-marketplace/.nx/cache/d/daemon.log
