@@ -93,10 +93,7 @@ sections:
 
         propel-build:
             command: 'vendor/bin/console propel:model:build'
-
-        acl-entity-metadata-validate:
-            command: 'vendor/bin/console acl-entity:metadata:validate'
-
+            
         propel-diff:
             command: 'vendor/bin/console propel:diff'
 
@@ -127,7 +124,7 @@ sections:
 
     demodata:
         import-eu-region-demodata:
-            command: 'vendor/bin/console data:import --config=data/import/local/full_EU.yml'
+            command: 'vendor/bin/console data:import --config=data/import/local/b2b_full_EU.yml'
 
         update-product-labels:
             command: 'vendor/bin/console product-label:relations:update'

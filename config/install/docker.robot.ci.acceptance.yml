@@ -83,10 +83,6 @@ sections:
         zed-build-frontend:
             command: 'vendor/bin/console frontend:zed:build -e production'
 
-        merchant-portal-build-frontend:
-            command: 'vendor/bin/console frontend:mp:build -e production'
-            timeout: 1600
-
         date-time-product-configurator:
             command: 'vendor/bin/console frontend:date-time-product-configurator:build'
 
@@ -96,10 +92,6 @@ sections:
 
         zed-build-frontend:
             command: 'vendor/bin/console frontend:zed:build'
-
-        merchant-portal-build-frontend:
-            command: 'vendor/bin/console frontend:mp:build'
-            timeout: 1600
 
         date-time-product-configurator:
             command: 'vendor/bin/console frontend:date-time-product-configurator:build'
@@ -143,7 +135,7 @@ sections:
             command: 'vendor/bin/console queue:setup'
 
         import-eu-region-demodata:
-            command: 'vendor/bin/console data:import --config=data/import/local/fb2b_full_EU.yml'
+            command: 'vendor/bin/console data:import --config=data/import/local/b2b_full_EU.yml'
 
         setup-search-create-sources:
             command: 'vendor/bin/console search:setup:sources'
