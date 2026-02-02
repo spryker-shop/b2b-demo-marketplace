@@ -332,6 +332,7 @@ DIRECTORIES_TO_REMOVE=(
     "src/Pyz/Zed/GuiTable:GuiTable"
     "src/Pyz/Zed/ProductApprovalGui:ProductApprovalGui"
     "tests/PyzTest/Zed/AclEntity:AclEntity"
+    "public/MerchantPortal:MerchantPortal"
 )
 
 echo "Step 3: Removing marketplace-specific plugins from ApplicationDependencyProvider..."
@@ -2077,8 +2078,18 @@ for dir_entry in "${DIRECTORIES_TO_REMOVE[@]}"; do
 done
 echo ""
 
-echo "Step 73: Removing merchant-portal commands from docker.yml..."
-DOCKER_YML_FILE="config/install/docker.yml"
+echo "Step 73: Removing merchant-portal commands from docker configuration files..."
+
+# Array of docker configuration files to process
+DOCKER_CONFIG_FILES=(
+    "config/install/docker.yml"
+    "config/install/docker.ci.acceptance-no-mp.yml"
+    "config/install/docker.ci.acceptance.yml"
+    "config/install/docker.ci.api.full.yml"
+    "config/install/docker.ci.api.yml"
+    "config/install/docker.robot.ci.acceptance.yml"
+    "config/install/docker.robot.ci.api.full.yml"
+)
 
 cat > /tmp/remove_docker_commands.py << 'PYTHON_SCRIPT'
 import sys
@@ -2181,11 +2192,14 @@ if __name__ == '__main__':
         print(f"⚠ File not found: {file_path}")
 PYTHON_SCRIPT
 
-if [ -f "$DOCKER_YML_FILE" ]; then
-    python3 /tmp/remove_docker_commands.py "$DOCKER_YML_FILE" "router-cache-warmup-merchant-portal,merchant-portal-build-frontend,acl-entity-metadata-validate"
-else
-    echo "⚠ docker.yml file not found at $DOCKER_YML_FILE"
-fi
+# Process each docker configuration file
+for docker_file in "${DOCKER_CONFIG_FILES[@]}"; do
+    if [ -f "$docker_file" ]; then
+        python3 /tmp/remove_docker_commands.py "$docker_file" "router-cache-warmup-merchant-portal,merchant-portal-build-frontend,acl-entity-metadata-validate"
+    else
+        echo "⚠ Docker config file not found: $docker_file"
+    fi
+done
 echo ""
 
 echo "Step 73.5: Updating data import command in docker.yml..."
@@ -2509,6 +2523,39 @@ CONFIG_JSON='{
 clean_config_file "$CONFIG_CI_FILE" "$CONFIG_JSON"
 echo ""
 
+echo "Step 77.5: Removing merchant portal SecurityBlocker configuration from config_default-docker.ci.cypress.php..."
+CONFIG_CYPRESS_FILE="config/Shared/config_default-docker.ci.cypress.php"
+CONFIG_JSON='{
+    "file_path": "config/Shared/config_default-docker.ci.cypress.php",
+    "operations": [
+        {"type": "remove_use", "class_name": "SecurityBlockerMerchantPortalConstants"},
+        {"type": "remove_use", "class_name": "AgentSecurityBlockerMerchantPortalConstants"},
+        {"type": "remove_config_assignment", "constant_pattern": "SecurityBlockerMerchantPortalConstants::MERCHANT_PORTAL_USER_BLOCKING_NUMBER_OF_ATTEMPTS"},
+        {"type": "remove_config_assignment", "constant_pattern": "AgentSecurityBlockerMerchantPortalConstants::AGENT_MERCHANT_PORTAL_BLOCKING_NUMBER_OF_ATTEMPTS"}
+    ],
+    "success_messages": [
+        "✓ Removed merchant portal SecurityBlocker configuration from config_default-docker.ci.cypress.php"
+    ]
+}'
+clean_config_file "$CONFIG_CYPRESS_FILE" "$CONFIG_JSON"
+echo ""
+
+echo "Step 77.6: Removing marketplace payment configuration from config_default-docker.php..."
+CONFIG_DEFAULT_DOCKER_FILE="config/Shared/config_default-docker.php"
+CONFIG_JSON='{
+    "file_path": "config/Shared/config_default-docker.php",
+    "operations": [
+        {"type": "remove_use", "class_name": "DummyMarketplacePaymentConfig"},
+        {"type": "remove_array_value", "array_value": "MarketplacePayment01"},
+        {"type": "remove_array_key_value", "key_pattern": "DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE"}
+    ],
+    "success_messages": [
+        "✓ Removed marketplace payment configuration from config_default-docker.php"
+    ]
+}'
+clean_config_file "$CONFIG_DEFAULT_DOCKER_FILE" "$CONFIG_JSON"
+echo ""
+
 echo "Step 78: Removing marketplace payment configuration from config_oms-development.php..."
 CONFIG_OMS_DEV_FILE="config/Shared/common/config_oms-development.php"
 CONFIG_JSON='{
@@ -2576,6 +2623,22 @@ CONFIG_JSON='{
     ]
 }'
 clean_php_file "$SALES_ORDER_AMENDMENT_CONFIG_FILE" "$CONFIG_JSON" "SalesOrderAmendmentConfig"
+echo ""
+
+echo "Step 78.8: Removing MerchantCommissionHelper from codeception.dynamic.fixtures.yml..."
+CODECEPTION_DYNAMIC_FIXTURES_FILE="tests/PyzTest/Zed/TestifyBackendApi/codeception.dynamic.fixtures.yml"
+
+if [ -f "$CODECEPTION_DYNAMIC_FIXTURES_FILE" ]; then
+    # Remove the MerchantCommissionHelper line (both commented and uncommented versions)
+    sed -i.bak '/\\SprykerTest\\Shared\\MerchantCommission\\Helper\\MerchantCommissionHelper/d' "$CODECEPTION_DYNAMIC_FIXTURES_FILE"
+    
+    # Remove backup file
+    rm -f "${CODECEPTION_DYNAMIC_FIXTURES_FILE}.bak"
+    
+    echo "✓ Removed MerchantCommissionHelper from codeception.dynamic.fixtures.yml"
+else
+    echo "⚠ Codeception config file not found at $CODECEPTION_DYNAMIC_FIXTURES_FILE"
+fi
 echo ""
 
 echo "Step 79: Running composer update to apply all changes..."
