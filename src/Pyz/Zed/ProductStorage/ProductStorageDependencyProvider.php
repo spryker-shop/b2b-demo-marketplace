@@ -9,10 +9,6 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\ProductStorage;
 
-use Spryker\Zed\MerchantProductStorage\Communication\Plugin\ProductStorage\MerchantProductAbstractStorageExpanderPlugin;
-use Spryker\Zed\MerchantProductStorage\Communication\Plugin\ProductStorage\MerchantProductConcreteStorageCollectionExpanderPlugin;
-use Spryker\Zed\ProductApproval\Communication\Plugin\ProductStorage\ProductApprovalProductAbstractStorageCollectionFilterPlugin;
-use Spryker\Zed\ProductApproval\Communication\Plugin\ProductStorage\ProductApprovalProductConcreteStorageCollectionFilterPlugin;
 use Spryker\Zed\ProductStorage\ProductStorageDependencyProvider as SprykerProductStorageDependencyProvider;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductStorage\ProductClassProductConcreteStorageCollectionExpanderPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductStorage\ShipmentTypeProductConcreteStorageCollectionExpanderPlugin;
@@ -24,9 +20,7 @@ class ProductStorageDependencyProvider extends SprykerProductStorageDependencyPr
      */
     protected function getProductAbstractStorageExpanderPlugins(): array
     {
-        return [
-            new MerchantProductAbstractStorageExpanderPlugin(),
-        ];
+        return [];
     }
 
     /**
@@ -34,9 +28,7 @@ class ProductStorageDependencyProvider extends SprykerProductStorageDependencyPr
      */
     protected function getProductAbstractStorageCollectionFilterPlugins(): array
     {
-        return [
-            new ProductApprovalProductAbstractStorageCollectionFilterPlugin(),
-        ];
+        return [];
     }
 
     /**
@@ -44,9 +36,7 @@ class ProductStorageDependencyProvider extends SprykerProductStorageDependencyPr
      */
     protected function getProductConcreteStorageCollectionFilterPlugins(): array
     {
-        return [
-            new ProductApprovalProductConcreteStorageCollectionFilterPlugin(),
-        ];
+        return [];
     }
 
     /**
@@ -54,9 +44,7 @@ class ProductStorageDependencyProvider extends SprykerProductStorageDependencyPr
      */
     protected function getProductConcreteStorageCollectionExpanderPlugins(): array
     {
-        return [
-            new MerchantProductConcreteStorageCollectionExpanderPlugin(),
-            new ShipmentTypeProductConcreteStorageCollectionExpanderPlugin(),
+        return [new ShipmentTypeProductConcreteStorageCollectionExpanderPlugin(),
             new ProductClassProductConcreteStorageCollectionExpanderPlugin(),
         ];
     }

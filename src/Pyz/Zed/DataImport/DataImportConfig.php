@@ -10,9 +10,7 @@ declare(strict_types = 1);
 namespace Pyz\Zed\DataImport;
 
 use Spryker\Zed\DataImport\DataImportConfig as SprykerDataImportConfig;
-use Spryker\Zed\MerchantProductApprovalDataImport\MerchantProductApprovalDataImportConfig;
 use Spryker\Zed\ProductApprovalDataImport\ProductApprovalDataImportConfig;
-use Spryker\Zed\ProductOfferShoppingListDataImport\ProductOfferShoppingListDataImportConfig;
 use Spryker\Zed\StockAddressDataImport\StockAddressDataImportConfig;
 use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 
@@ -243,13 +241,8 @@ class DataImportConfig extends SprykerDataImportConfig
     {
         $customImportTypes = [
             StockAddressDataImportConfig::IMPORT_TYPE_STOCK_ADDRESS,
-            static::IMPORT_TYPE_MERCHANT_USER,
-            MerchantProductApprovalDataImportConfig::IMPORT_TYPE_MERCHANT_PRODUCT_APPROVAL_STATUS_DEFAULT,
-            ProductApprovalDataImportConfig::IMPORT_TYPE_PRODUCT_APPROVAL_STATUS,
-            SelfServicePortalConfig::IMPORT_TYPE_SSP_INQUIRY,
-            SelfServicePortalConfig::IMPORT_TYPE_PRODUCT_SHIPMENT_TYPE,
-            ProductOfferShoppingListDataImportConfig::IMPORT_TYPE_PRODUCT_OFFER_SHOPPING_LIST_ITEM,
-        ];
+            static::IMPORT_TYPE_MERCHANT_USER,            SelfServicePortalConfig::IMPORT_TYPE_SSP_INQUIRY,
+            SelfServicePortalConfig::IMPORT_TYPE_PRODUCT_SHIPMENT_TYPE,        ];
 
         return array_merge(parent::getFullImportTypes(), $customImportTypes);
     }

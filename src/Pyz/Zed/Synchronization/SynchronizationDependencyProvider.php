@@ -31,7 +31,6 @@ use Spryker\Zed\CustomerAccessStorage\Communication\Plugin\Synchronization\Custo
 use Spryker\Zed\CustomerStorage\Communication\Plugin\Synchronization\CustomerInvalidatedStorageSynchronizationDataPlugin;
 use Spryker\Zed\FileManagerStorage\Communication\Plugin\Synchronization\FileSynchronizationDataBulkPlugin;
 use Spryker\Zed\GlossaryStorage\Communication\Plugin\Synchronization\GlossarySynchronizationDataRepositoryPlugin;
-use Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Synchronization\MerchantOpeningHoursSynchronizationDataBulkPlugin;
 use Spryker\Zed\MerchantSearch\Communication\Plugin\Synchronization\MerchantSynchronizationDataBulkRepositoryPlugin;
 use Spryker\Zed\MerchantStorage\Communication\Plugin\Synchronization\MerchantSynchronizationDataPlugin;
 use Spryker\Zed\NavigationStorage\Communication\Plugin\Synchronization\NavigationSynchronizationDataPlugin;
@@ -166,9 +165,7 @@ class SynchronizationDependencyProvider extends SprykerSynchronizationDependency
             new StoreSynchronizationDataPlugin(),
             new MerchantSynchronizationDataPlugin(),
             new MerchantSynchronizationDataBulkRepositoryPlugin(),
-            new PriceProductOfferSynchronizationDataBulkRepositoryPlugin(),
-            new MerchantOpeningHoursSynchronizationDataBulkPlugin(),
-            new ProductOfferAvailabilitySynchronizationDataBulkPlugin(),
+            new PriceProductOfferSynchronizationDataBulkRepositoryPlugin(),new ProductOfferAvailabilitySynchronizationDataBulkPlugin(),
             new ProductConcreteProductOffersSynchronizationDataBulkRepositoryPlugin(),
             new ProductOfferSynchronizationDataBulkRepositoryPlugin(),
             new AssetStorageSynchronizationDataPlugin(),

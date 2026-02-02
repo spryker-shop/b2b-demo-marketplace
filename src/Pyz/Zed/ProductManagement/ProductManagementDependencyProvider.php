@@ -12,10 +12,6 @@ namespace Pyz\Zed\ProductManagement;
 use Spryker\Zed\CmsBlockProductConnector\Communication\Plugin\CmsBlockProductAbstractBlockListViewPlugin;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\MerchantGui\Communication\Plugin\ProductManagement\MerchantProductAbstractListActionViewDataExpanderPlugin;
-use Spryker\Zed\MerchantProductGui\Communication\Plugin\ProductManagement\MerchantProductProductAbstractEditViewExpanderPlugin;
-use Spryker\Zed\MerchantProductGui\Communication\Plugin\ProductManagement\MerchantProductProductAbstractViewActionViewDataExpanderPlugin;
-use Spryker\Zed\MerchantProductGui\Communication\Plugin\ProductManagement\MerchantProductProductTableQueryCriteriaExpanderPlugin;
 use Spryker\Zed\MoneyGui\Communication\Plugin\Form\MoneyFormTypePlugin;
 use Spryker\Zed\PriceProductMerchantRelationshipGui\Communication\Plugin\ProductManagement\MerchantRelationshipProductAbstractFormExpanderPlugin;
 use Spryker\Zed\PriceProductMerchantRelationshipGui\Communication\Plugin\ProductManagement\MerchantRelationshipProductConcreteFormExpanderPlugin;
@@ -33,12 +29,6 @@ use Spryker\Zed\ProductAlternativeGui\Communication\Plugin\ProductManagement\Pro
 use Spryker\Zed\ProductAlternativeGui\Communication\Plugin\ProductManagement\ProductConcreteFormEditDataProviderExpanderPlugin;
 use Spryker\Zed\ProductAlternativeGui\Communication\Plugin\ProductManagement\ProductConcreteFormEditTabsExpanderPlugin;
 use Spryker\Zed\ProductAlternativeGui\Communication\Plugin\ProductManagement\ProductFormTransferMapperExpanderPlugin;
-use Spryker\Zed\ProductApproval\Communication\Plugin\ProductManagement\ApprovalStatusAbstractProductReadinessProviderPlugin;
-use Spryker\Zed\ProductApprovalGui\Communication\Plugin\ProductManagement\ProductApprovalProductAbstractEditViewExpanderPlugin;
-use Spryker\Zed\ProductApprovalGui\Communication\Plugin\ProductManagement\ProductApprovalProductTableActionExpanderPlugin;
-use Spryker\Zed\ProductApprovalGui\Communication\Plugin\ProductManagement\ProductApprovalProductTableConfigurationExpanderPlugin;
-use Spryker\Zed\ProductApprovalGui\Communication\Plugin\ProductManagement\ProductApprovalProductTableDataBulkExpanderPlugin;
-use Spryker\Zed\ProductApprovalGui\Communication\Plugin\ProductManagement\ProductApprovalProductTableQueryCriteriaExpanderPlugin;
 use Spryker\Zed\ProductConfigurationGui\Communication\Plugin\ProductManagement\ProductConfigurationProductTableDataBulkExpanderPlugin;
 use Spryker\Zed\ProductDiscontinuedGui\Communication\Plugin\DiscontinuedNotesProductFormTransferMapperExpanderPlugin;
 use Spryker\Zed\ProductDiscontinuedGui\Communication\Plugin\DiscontinuedProductConcreteEditFormExpanderPlugin;
@@ -176,10 +166,7 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
     protected function getProductAbstractEditViewExpanderPlugins(): array
     {
         return [
-            new ScheduledPriceProductAbstractEditViewExpanderPlugin(),
-            new ProductApprovalProductAbstractEditViewExpanderPlugin(),
-            new MerchantProductProductAbstractEditViewExpanderPlugin(),
-        ];
+            new ScheduledPriceProductAbstractEditViewExpanderPlugin(),];
     }
 
     /**
@@ -197,9 +184,7 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
      */
     protected function getProductAbstractViewActionViewDataExpanderPlugins(): array
     {
-        return [
-            new MerchantProductProductAbstractViewActionViewDataExpanderPlugin(),
-        ];
+        return [];
     }
 
     /**
@@ -207,10 +192,7 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
      */
     protected function getProductTableQueryCriteriaExpanderPluginInterfaces(): array
     {
-        return [
-            new MerchantProductProductTableQueryCriteriaExpanderPlugin(),
-            new ProductApprovalProductTableQueryCriteriaExpanderPlugin(),
-        ];
+        return [];
     }
 
     /**
@@ -218,9 +200,7 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
      */
     protected function getProductAbstractListActionViewDataExpanderPlugins(): array
     {
-        return [
-            new MerchantProductAbstractListActionViewDataExpanderPlugin(),
-        ];
+        return [];
     }
 
     /**
@@ -228,9 +208,7 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
      */
     protected function getProductTableConfigurationExpanderPlugins(): array
     {
-        return [
-            new ProductApprovalProductTableConfigurationExpanderPlugin(),
-        ];
+        return [];
     }
 
     /**
@@ -238,9 +216,7 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
      */
     protected function getProductTableDataBulkExpanderPlugins(): array
     {
-        return [
-            new ProductApprovalProductTableDataBulkExpanderPlugin(),
-            new ProductConfigurationProductTableDataBulkExpanderPlugin(),
+        return [new ProductConfigurationProductTableDataBulkExpanderPlugin(),
         ];
     }
 
@@ -249,9 +225,7 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
      */
     protected function getProductTableActionExpanderPlugins(): array
     {
-        return [
-            new ProductApprovalProductTableActionExpanderPlugin(),
-        ];
+        return [];
     }
 
      /**
@@ -259,9 +233,7 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
       */
     protected function getProductAbstractReadinessProviderPlugins(): array
     {
-        return [
-            new ApprovalStatusAbstractProductReadinessProviderPlugin(),
-            new IsActiveAbstractProductReadinessProviderPlugin(),
+        return [new IsActiveAbstractProductReadinessProviderPlugin(),
             new IsSearchableForLocaleAbstractProductReadinessProviderPlugin(),
             new StoreRelationAbstractProductReadinessProviderPlugin(),
             new StorageTableProductAbstractReadinessProviderPlugin(),

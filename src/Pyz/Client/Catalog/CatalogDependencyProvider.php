@@ -228,9 +228,7 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
             new PaginatedProductConcreteCatalogSearchQueryExpanderPlugin(),
             new CustomerCatalogProductListQueryExpanderPlugin(),
             new ProductListSearchProductListQueryExpanderPlugin(),
-            new MerchantReferenceQueryExpanderPlugin(),
-            new MerchantProductReferenceQueryExpanderPlugin(),
-        ];
+            new MerchantReferenceQueryExpanderPlugin(),];
     }
 
     /**

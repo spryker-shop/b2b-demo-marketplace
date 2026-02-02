@@ -29,7 +29,6 @@ use Spryker\Zed\CustomerAccessStorage\Communication\Plugin\Event\Subscriber\Cust
 use Spryker\Zed\Event\Dependency\EventSubscriberCollectionInterface;
 use Spryker\Zed\Event\EventDependencyProvider as SprykerEventDependencyProvider;
 use Spryker\Zed\FileManagerStorage\Communication\Plugin\Event\Subscriber\FileManagerStorageSubscriber;
-use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\Event\Subscriber\MerchantProductOfferSearchEventSubscriber;
 use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\Event\Subscriber\MerchantSearchEventSubscriber;
 use Spryker\Zed\NavigationStorage\Communication\Plugin\Event\Subscriber\NavigationStorageEventSubscriber;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plugin\Event\Subscriber\PriceProductMerchantRelationshipStorageEventSubscriber;
@@ -130,10 +129,7 @@ class EventDependencyProvider extends SprykerEventDependencyProvider
         $eventSubscriberCollection->add(new ProductConcretePageSearchProductAbstractEventSubscriber());
         $eventSubscriberCollection->add(new ProductConcretePageSearchProductEventSubscriber());
         $eventSubscriberCollection->add(new ProductConcretePageSearchProductLocalizedAttributesEventSubscriber());
-        $eventSubscriberCollection->add(new MerchantSearchEventSubscriber());
-        $eventSubscriberCollection->add(new MerchantProductOfferSearchEventSubscriber());
-
-        $eventSubscriberCollection->add(new PublisherSubscriber());
+        $eventSubscriberCollection->add(new MerchantSearchEventSubscriber());$eventSubscriberCollection->add(new PublisherSubscriber());
 
         /* Custom Events */
         $eventSubscriberCollection->add(new PostUpdateStockRelationsEventSubscriber());

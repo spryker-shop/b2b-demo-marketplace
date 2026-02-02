@@ -13,7 +13,6 @@ use Spryker\Zed\MultiFactorAuth\Communication\Plugin\Factors\Email\UserEmailMult
 use Spryker\Zed\MultiFactorAuth\Communication\Plugin\Sender\Customer\CustomerEmailCodeSenderStrategyPlugin;
 use Spryker\Zed\MultiFactorAuth\Communication\Plugin\Sender\User\UserEmailCodeSenderStrategyPlugin;
 use Spryker\Zed\MultiFactorAuth\MultiFactorAuthDependencyProvider as SprykerMultiFactorAuthDependencyProvider;
-use Spryker\Zed\MultiFactorAuthMerchantPortal\Communication\Plugin\Expander\MerchantPortalMultiFactorAuthPluginExpanderPlugin;
 use Spryker\Zed\SecurityGui\Communication\Plugin\MultiFactorAuth\PostUserLoginMultiFactorAuthenticationPlugin;
 
 class MultiFactorAuthDependencyProvider extends SprykerMultiFactorAuthDependencyProvider
@@ -55,16 +54,6 @@ class MultiFactorAuthDependencyProvider extends SprykerMultiFactorAuthDependency
     {
         return [
             new PostUserLoginMultiFactorAuthenticationPlugin(),
-        ];
-    }
-
-    /**
-     * @return array<\Spryker\Shared\MultiFactorAuthExtension\Dependency\Plugin\MultiFactorAuthPluginExpanderPluginInterface>
-     */
-    protected function getMultiFactorAuthPluginExpanderPlugins(): array
-    {
-        return [
-            new MerchantPortalMultiFactorAuthPluginExpanderPlugin(),
         ];
     }
 }

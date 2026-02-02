@@ -18,7 +18,6 @@ use Spryker\Zed\CompanyBusinessUnitSalesConnector\Communication\Plugin\CartReord
 use Spryker\Zed\CompanySalesConnector\Communication\Plugin\CartReorder\EditCompanyOrderCartReorderOrderProviderPlugin;
 use Spryker\Zed\ConfigurableBundleNote\Communication\Plugin\CartReorder\ConfigurableBundleNoteCartReorderItemHydratorPlugin;
 use Spryker\Zed\Currency\Communication\Plugin\CartReorder\CopyOrderCurrencyCartPreReorderPlugin;
-use Spryker\Zed\MerchantProduct\Communication\Plugin\CartReorder\MerchantProductCartReorderItemHydratorPlugin;
 use Spryker\Zed\MerchantProductOffer\Communication\Plugin\CartReorder\MerchantProductOfferCartReorderItemHydratorPlugin;
 use Spryker\Zed\MultiCart\Communication\Plugin\CartReorder\DefaultReorderQuoteNameCartPreReorderPlugin;
 use Spryker\Zed\MultiCart\Communication\Plugin\CartReorder\NewPersistentCartReorderQuoteProviderStrategyPlugin;
@@ -137,9 +136,7 @@ class CartReorderDependencyProvider extends SprykerCartReorderDependencyProvider
             new ProductMeasurementUnitCartReorderItemHydratorPlugin(),
             new ProductPackagingUnitCartReorderItemHydratorPlugin(),
             new CartNoteCartReorderItemHydratorPlugin(),
-            new ProductOfferCartReorderItemHydratorPlugin(),
-            new MerchantProductCartReorderItemHydratorPlugin(),
-            new MerchantProductOfferCartReorderItemHydratorPlugin(),
+            new ProductOfferCartReorderItemHydratorPlugin(),new MerchantProductOfferCartReorderItemHydratorPlugin(),
             new ProductConfigurationCartReorderItemHydratorPlugin(),
             new ProductOptionCartReorderItemHydratorPlugin(),
             new ConfigurableBundleCartReorderItemHydratorPlugin(),

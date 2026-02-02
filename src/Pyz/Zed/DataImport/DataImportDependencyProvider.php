@@ -50,24 +50,11 @@ use Spryker\Zed\FileManagerDataImport\Communication\Plugin\FileManagerDataImport
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\LocaleDataImport\Communication\Plugin\DataImport\DefaultLocaleStoreDataImportPlugin;
 use Spryker\Zed\LocaleDataImport\Communication\Plugin\DataImport\LocaleStoreDataImportPlugin;
-use Spryker\Zed\MerchantCategoryDataImport\Communication\Plugin\DataImport\MerchantCategoryDataImportPlugin;
-use Spryker\Zed\MerchantCommissionDataImport\Communication\Plugin\DataImport\MerchantCommissionAmountDataImportPlugin;
-use Spryker\Zed\MerchantCommissionDataImport\Communication\Plugin\DataImport\MerchantCommissionDataImportPlugin;
-use Spryker\Zed\MerchantCommissionDataImport\Communication\Plugin\DataImport\MerchantCommissionGroupDataImportPlugin;
-use Spryker\Zed\MerchantCommissionDataImport\Communication\Plugin\DataImport\MerchantCommissionMerchantDataImportPlugin;
-use Spryker\Zed\MerchantCommissionDataImport\Communication\Plugin\DataImport\MerchantCommissionStoreDataImportPlugin;
 use Spryker\Zed\MerchantDataImport\Communication\Plugin\MerchantDataImportPlugin;
 use Spryker\Zed\MerchantDataImport\Communication\Plugin\MerchantStoreDataImportPlugin;
-use Spryker\Zed\MerchantOmsDataImport\Communication\Plugin\DataImport\MerchantOmsProcessDataImportPlugin;
-use Spryker\Zed\MerchantOpeningHoursDataImport\Communication\Plugin\MerchantOpeningHoursDateScheduleDataImportPlugin;
-use Spryker\Zed\MerchantOpeningHoursDataImport\Communication\Plugin\MerchantOpeningHoursWeekdayScheduleDataImportPlugin;
-use Spryker\Zed\MerchantProductApprovalDataImport\Communication\Plugin\DataImport\MerchantProductApprovalStatusDefaultDataImportPlugin;
-use Spryker\Zed\MerchantProductDataImport\Communication\Plugin\DataImport\MerchantCombinedProductDataImportPlugin;
-use Spryker\Zed\MerchantProductDataImport\Communication\Plugin\MerchantProductDataImportPlugin;
 use Spryker\Zed\MerchantProductOfferDataImport\Communication\Plugin\DataImport\MerchantCombinedProductOfferDataImportPlugin;
 use Spryker\Zed\MerchantProductOfferDataImport\Communication\Plugin\DataImport\MerchantProductOfferDataImportPlugin;
 use Spryker\Zed\MerchantProductOfferDataImport\Communication\Plugin\DataImport\MerchantProductOfferStoreDataImportPlugin;
-use Spryker\Zed\MerchantProductOptionDataImport\Communication\Plugin\DataImport\MerchantProductOptionGroupDataImportPlugin;
 use Spryker\Zed\MerchantProfileDataImport\Communication\Plugin\MerchantProfileAddressDataImportPlugin;
 use Spryker\Zed\MerchantProfileDataImport\Communication\Plugin\MerchantProfileDataImportPlugin;
 use Spryker\Zed\MerchantRelationshipDataImport\Communication\Plugin\MerchantRelationshipDataImportPlugin;
@@ -82,7 +69,6 @@ use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Communication\Plugin\
 use Spryker\Zed\PriceProductOfferDataImport\Communication\Plugin\PriceProductOfferDataImportPlugin;
 use Spryker\Zed\PriceProductScheduleDataImport\Communication\Plugin\PriceProductScheduleDataImportPlugin;
 use Spryker\Zed\ProductAlternativeDataImport\Communication\Plugin\ProductAlternativeDataImportPlugin;
-use Spryker\Zed\ProductApprovalDataImport\Communication\Plugin\DataImport\ProductAbstractApprovalStatusDataImportPlugin;
 use Spryker\Zed\ProductConfigurationDataImport\Communication\Plugin\ProductConfigurationDataImportPlugin;
 use Spryker\Zed\ProductDiscontinuedDataImport\Communication\Plugin\ProductDiscontinuedDataImportPlugin;
 use Spryker\Zed\ProductLabelDataImport\Communication\Plugin\ProductLabelDataImportPlugin;
@@ -96,7 +82,6 @@ use Spryker\Zed\ProductMeasurementUnitDataImport\Communication\Plugin\ProductMea
 use Spryker\Zed\ProductMeasurementUnitDataImport\Communication\Plugin\ProductMeasurementUnitDataImportPlugin;
 use Spryker\Zed\ProductOfferServicePointDataImport\Communication\Plugin\DataImport\ProductOfferServiceDataImportPlugin;
 use Spryker\Zed\ProductOfferShipmentTypeDataImport\Communication\Plugin\DataImport\ProductOfferShipmentTypeDataImportPlugin;
-use Spryker\Zed\ProductOfferShoppingListDataImport\Communication\Plugin\DataImport\ProductOfferShoppingListItemDataImportPlugin;
 use Spryker\Zed\ProductOfferStockDataImport\Communication\Plugin\ProductOfferStockDataImportPlugin;
 use Spryker\Zed\ProductOfferValidityDataImport\Communication\DataImport\ProductOfferValidityDataImportPlugin;
 use Spryker\Zed\ProductPackagingUnitDataImport\Communication\Plugin\DataImport\ProductPackagingUnitDataImportPlugin;
@@ -453,41 +438,19 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
             new ShipmentMethodShipmentTypeDataImportPlugin(),
 
             new MerchantProfileDataImportPlugin(),
-            new MerchantProfileAddressDataImportPlugin(),
-            new MerchantProductDataImportPlugin(),
-            new MerchantProductOfferDataImportPlugin(),
+            new MerchantProfileAddressDataImportPlugin(),new MerchantProductOfferDataImportPlugin(),
             new MerchantProductOfferStoreDataImportPlugin(),
             new ProductOfferValidityDataImportPlugin(),
             new PriceProductOfferDataImportPlugin(),
             new MerchantStockDataImportPlugin(),
             new ProductOfferStockDataImportPlugin(),
             new ProductOfferShipmentTypeDataImportPlugin(),
-            new ProductOfferServiceDataImportPlugin(),
-            new ProductOfferShoppingListItemDataImportPlugin(),
-
-            new MerchantOmsProcessDataImportPlugin(),
-            new MerchantProductOptionGroupDataImportPlugin(),
-
-            new MerchantOpeningHoursDateScheduleDataImportPlugin(),
-            new MerchantOpeningHoursWeekdayScheduleDataImportPlugin(),
-
-            new MerchantCategoryDataImportPlugin(),
-            new MerchantProductApprovalStatusDefaultDataImportPlugin(),
-            new ProductAbstractApprovalStatusDataImportPlugin(),
-
-            new CombinedMerchantProductOfferDataImportPlugin(),
+            new ProductOfferServiceDataImportPlugin(),new CombinedMerchantProductOfferDataImportPlugin(),
             new CombinedMerchantProductOfferStoreDataImportPlugin(),
             new CombinedPriceProductOfferDataImportPlugin(),
             new CombinedProductOfferValidityDataImportPlugin(),
             new CombinedProductOfferStockDataImportPlugin(),
-            new ProductConfigurationDataImportPlugin(),
-            new MerchantCommissionGroupDataImportPlugin(),
-            new MerchantCommissionDataImportPlugin(),
-            new MerchantCommissionAmountDataImportPlugin(),
-            new MerchantCommissionStoreDataImportPlugin(),
-            new MerchantCommissionMerchantDataImportPlugin(),
-            new MerchantCombinedProductDataImportPlugin(),
-            new MerchantCombinedProductOfferDataImportPlugin(),
+            new ProductConfigurationDataImportPlugin(),new MerchantCombinedProductOfferDataImportPlugin(),
             new ProductShipmentTypeDataImportPlugin(),
             new ProductClassDataImportPlugin(),
             new ProductToProductClassDataImportPlugin(),

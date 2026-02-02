@@ -9,8 +9,6 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\RuleEngine;
 
-use Spryker\Zed\MerchantCommission\Communication\Plugin\RuleEngine\MerchantCommissionItemCollectorRuleSpecificationProviderPlugin;
-use Spryker\Zed\MerchantCommission\Communication\Plugin\RuleEngine\MerchantCommissionOrderDecisionRuleSpecificationProviderPlugin;
 use Spryker\Zed\RuleEngine\RuleEngineDependencyProvider as SprykerRuleEngineDependencyProvider;
 
 class RuleEngineDependencyProvider extends SprykerRuleEngineDependencyProvider
@@ -20,9 +18,6 @@ class RuleEngineDependencyProvider extends SprykerRuleEngineDependencyProvider
      */
     protected function getRuleSpecificationProviderPlugins(): array
     {
-        return [
-            new MerchantCommissionItemCollectorRuleSpecificationProviderPlugin(),
-            new MerchantCommissionOrderDecisionRuleSpecificationProviderPlugin(),
-        ];
+        return [];
     }
 }

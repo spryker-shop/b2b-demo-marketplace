@@ -20,7 +20,6 @@ use Spryker\Shared\GlueBackendApiApplication\GlueBackendApiApplicationConstants;
 use Spryker\Shared\GlueStorefrontApiApplication\GlueStorefrontApiApplicationConstants;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Log\LogConstants;
-use Spryker\Shared\MerchantPortalApplication\MerchantPortalConstants;
 use Spryker\Shared\MerchantRelationRequest\MerchantRelationRequestConstants;
 use Spryker\Shared\MerchantRelationship\MerchantRelationshipConstants;
 use Spryker\Shared\Newsletter\NewsletterConstants;
@@ -131,15 +130,10 @@ if (!getenv('SPRYKER_SSL_ENABLE')) {
     );
 
 // ----------------------------------------------------------------------------
-// ------------------------------ MERCHANT PORTAL -----------------------------
+
 // ----------------------------------------------------------------------------
 
     $merchantPortalPort = (int)(getenv('SPRYKER_MP_PORT')) ?: 80;
-    $config[MerchantPortalConstants::BASE_URL_MP] = sprintf(
-        'http://%s%s',
-        getenv('SPRYKER_MP_HOST'),
-        $merchantPortalPort !== 80 ? ':' . $merchantPortalPort : '',
-    );
 
 // ----------------------------------------------------------------------------
 // ------------------------------ FRONTEND ------------------------------------

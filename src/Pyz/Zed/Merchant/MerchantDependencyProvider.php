@@ -9,12 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\Merchant;
 
-use Spryker\Zed\AclMerchantPortal\Communication\Plugin\Merchant\MerchantAclEntitiesMerchantPostCreatePlugin;
 use Spryker\Zed\Merchant\MerchantDependencyProvider as SprykerMerchantDependencyProvider;
-use Spryker\Zed\MerchantCategory\Communication\Plugin\Merchant\MerchantCategoryMerchantBulkExpanderPlugin;
-use Spryker\Zed\MerchantProfile\Communication\Plugin\Merchant\MerchantProfileMerchantBulkExpanderPlugin;
-use Spryker\Zed\MerchantProfile\Communication\Plugin\Merchant\MerchantProfileMerchantPostCreatePlugin;
-use Spryker\Zed\MerchantProfile\Communication\Plugin\Merchant\MerchantProfileMerchantPostUpdatePlugin;
 use Spryker\Zed\MerchantStock\Communication\Plugin\Merchant\MerchantStockMerchantBulkExpanderPlugin;
 use Spryker\Zed\MerchantStock\Communication\Plugin\Merchant\MerchantStockMerchantPostCreatePlugin;
 use Spryker\Zed\MerchantUser\Communication\Plugin\Merchant\SyncMerchantUsersStatusMerchantPostUpdatePlugin;
@@ -26,11 +21,7 @@ class MerchantDependencyProvider extends SprykerMerchantDependencyProvider
      */
     protected function getMerchantPostCreatePlugins(): array
     {
-        return [
-            new MerchantProfileMerchantPostCreatePlugin(),
-            new MerchantStockMerchantPostCreatePlugin(),
-            new MerchantAclEntitiesMerchantPostCreatePlugin(),
-        ];
+        return [new MerchantStockMerchantPostCreatePlugin(),];
     }
 
     /**
@@ -38,9 +29,7 @@ class MerchantDependencyProvider extends SprykerMerchantDependencyProvider
      */
     protected function getMerchantPostUpdatePlugins(): array
     {
-        return [
-            new MerchantProfileMerchantPostUpdatePlugin(),
-            new SyncMerchantUsersStatusMerchantPostUpdatePlugin(),
+        return [new SyncMerchantUsersStatusMerchantPostUpdatePlugin(),
         ];
     }
 
@@ -49,10 +38,6 @@ class MerchantDependencyProvider extends SprykerMerchantDependencyProvider
      */
     protected function getMerchantBulkExpanderPlugins(): array
     {
-        return [
-            new MerchantProfileMerchantBulkExpanderPlugin(),
-            new MerchantStockMerchantBulkExpanderPlugin(),
-            new MerchantCategoryMerchantBulkExpanderPlugin(),
-        ];
+        return [new MerchantStockMerchantBulkExpanderPlugin(),];
     }
 }

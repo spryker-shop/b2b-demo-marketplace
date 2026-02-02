@@ -28,11 +28,6 @@ use Spryker\Zed\Customer\Communication\Plugin\Sales\CustomerOrderHydratePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\Sales\DiscountOrderHydratePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\Sales\DiscountSalesOrderItemCollectionPreDeletePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\Sales\SalesDiscountSalesExpensePreDeletePlugin;
-use Spryker\Zed\MerchantOmsGui\Communication\Plugin\Sales\MerchantOmsStateOrderItemsTableExpanderPlugin;
-use Spryker\Zed\MerchantProfile\Communication\Plugin\Sales\MerchantDataOrderHydratePlugin;
-use Spryker\Zed\MerchantSalesOrder\Communication\Plugin\Sales\MerchantOrderDataOrderExpanderPlugin;
-use Spryker\Zed\MerchantSalesOrder\Communication\Plugin\Sales\MerchantReferenceOrderItemExpanderPreSavePlugin;
-use Spryker\Zed\MerchantSalesOrder\Communication\Plugin\Sales\MerchantReferencesOrderExpanderPlugin;
 use Spryker\Zed\Nopayment\Communication\Plugin\Sales\NopaymentSalesOrderItemCollectionPreDeletePlugin;
 use Spryker\Zed\Oms\Communication\Plugin\Sales\DefaultOrderItemInitialStateProviderPlugin;
 use Spryker\Zed\Oms\Communication\Plugin\Sales\IsCancellableOrderExpanderPlugin;
@@ -71,7 +66,6 @@ use Spryker\Zed\SalesConfigurableBundle\Communication\Plugin\Sales\ConfiguredBun
 use Spryker\Zed\SalesConfigurableBundle\Communication\Plugin\Sales\ConfiguredBundlesOrderItemsPostSavePlugin;
 use Spryker\Zed\SalesConfigurableBundle\Communication\Plugin\Sales\SalesConfigurableBundleSalesOrderItemCollectionPreDeletePlugin;
 use Spryker\Zed\SalesConfigurableBundle\Communication\Plugin\Sales\SalesConfiguredBundlesSalesOrderItemCollectionPostUpdatePlugin;
-use Spryker\Zed\SalesMerchantCommission\Communication\Plugin\Sales\MerchantCommissionOrderPostCancelPlugin;
 use Spryker\Zed\SalesOms\Communication\Plugin\OrderItemReferenceExpanderPreSavePlugin;
 use Spryker\Zed\SalesOrderAmendment\Communication\Plugin\Sales\CreateSalesOrderAmendmentOrderPostSavePlugin;
 use Spryker\Zed\SalesOrderAmendment\Communication\Plugin\Sales\SalesOrderAmendmentOrderExpanderPlugin;
@@ -146,11 +140,7 @@ class SalesDependencyProvider extends SprykerSalesDependencyProvider
             new RemunerationTotalOrderExpanderPlugin(),
             new OmsStatesOrderExpanderPlugin(),
             new IsCancellableOrderExpanderPlugin(),
-            new CurrencyOrderExpanderPlugin(),
-            new MerchantOrderDataOrderExpanderPlugin(),
-            new MerchantReferencesOrderExpanderPlugin(),
-            new MerchantDataOrderHydratePlugin(),
-            new SalesOrderAmendmentOrderExpanderPlugin(),
+            new CurrencyOrderExpanderPlugin(),new SalesOrderAmendmentOrderExpanderPlugin(),
             new IsAmendableOrderExpanderPlugin(),
             new SspAssetOrderExpanderPlugin(),
             new ProductClassOrderExpanderPlugin(),
@@ -168,9 +158,7 @@ class SalesDependencyProvider extends SprykerSalesDependencyProvider
             new ProductPackagingUnitOrderItemExpanderPreSavePlugin(),
             new AmountSalesUnitOrderItemExpanderPreSavePlugin(),
             new IsQuantitySplittableOrderItemExpanderPreSavePlugin(),
-            new OrderItemReferenceExpanderPreSavePlugin(),
-            new MerchantReferenceOrderItemExpanderPreSavePlugin(),
-            new ProductOfferReferenceOrderItemExpanderPreSavePlugin(),
+            new OrderItemReferenceExpanderPreSavePlugin(),new ProductOfferReferenceOrderItemExpanderPreSavePlugin(),
             new ScheduleTimeOrderItemExpanderPreSavePlugin(),
         ];
     }
@@ -316,9 +304,7 @@ class SalesDependencyProvider extends SprykerSalesDependencyProvider
      */
     protected function getOrderItemsTableExpanderPlugins(): array
     {
-        return [
-            new MerchantOmsStateOrderItemsTableExpanderPlugin(),
-        ];
+        return [];
     }
 
     /**
@@ -342,9 +328,7 @@ class SalesDependencyProvider extends SprykerSalesDependencyProvider
      */
     protected function getOrderPostCancelPlugins(): array
     {
-        return [
-            new MerchantCommissionOrderPostCancelPlugin(),
-        ];
+        return [];
     }
 
     /**

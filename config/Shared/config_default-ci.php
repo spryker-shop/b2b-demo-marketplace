@@ -21,7 +21,6 @@ use Spryker\Shared\Http\HttpConstants;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Log\LogConstants;
-use Spryker\Shared\MerchantPortalApplication\MerchantPortalConstants;
 use Spryker\Shared\MerchantRelationRequest\MerchantRelationRequestConstants;
 use Spryker\Shared\MerchantRelationship\MerchantRelationshipConstants;
 use Spryker\Shared\MessageBroker\MessageBrokerConstants;
@@ -241,13 +240,8 @@ $config[ApplicationConstants::BASE_URL_ZED] = sprintf(
 );
 
 // ----------------------------------------------------------------------------
-// ------------------------------ MERCHANT PORTAL -----------------------------
-// ----------------------------------------------------------------------------
 
-$config[MerchantPortalConstants::BASE_URL_MP] = sprintf(
-    'http://%s',
-    $merchantPortalHost,
-);
+// ----------------------------------------------------------------------------
 
 // ----------------------------------------------------------------------------
 // ------------------------------ FRONTEND ------------------------------------
@@ -331,18 +325,7 @@ if ($isTestifyConstantsClassExists) {
 }
 
 // >>> FILESYSTEM
-$config[FileSystemConstants::FILESYSTEM_SERVICE] = [
-    'merchant-product-data-import-files' => [
-        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
-        'root' => '/data',
-        'path' => '/data/merchant-product-data-import-files',
-    ],
-    'merchant-product-offer-data-import-files' => [
-        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
-        'root' => '/data',
-        'path' => '/data/merchant-product-offer-data-import-files',
-    ],
-    'files' => [
+$config[FileSystemConstants::FILESYSTEM_SERVICE] = ['files' => [
         'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
         'root' => APPLICATION_ROOT_DIR . '/data/DE/media/',
         'path' => 'files/',

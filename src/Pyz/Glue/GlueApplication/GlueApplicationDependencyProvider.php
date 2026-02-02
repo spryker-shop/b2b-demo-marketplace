@@ -133,18 +133,10 @@ use Spryker\Glue\GlueStorefrontApiApplicationAuthorizationConnector\Plugin\GlueA
 use Spryker\Glue\HealthCheck\Plugin\HealthCheckResourceRoutePlugin;
 use Spryker\Glue\Http\Plugin\Application\HttpApplicationPlugin;
 use Spryker\Glue\Locale\Plugin\Application\LocaleApplicationPlugin;
-use Spryker\Glue\MerchantOpeningHoursRestApi\Plugin\GlueApplication\MerchantOpeningHoursByMerchantReferenceResourceRelationshipPlugin;
-use Spryker\Glue\MerchantOpeningHoursRestApi\Plugin\GlueApplication\MerchantOpeningHoursResourceRoutePlugin;
 use Spryker\Glue\MerchantProductOffersRestApi\MerchantProductOffersRestApiConfig;
 use Spryker\Glue\MerchantProductOffersRestApi\Plugin\GlueApplication\ConcreteProductsProductOffersResourceRoutePlugin;
 use Spryker\Glue\MerchantProductOffersRestApi\Plugin\GlueApplication\ProductOffersByProductConcreteSkuResourceRelationshipPlugin;
 use Spryker\Glue\MerchantProductOffersRestApi\Plugin\GlueApplication\ProductOffersResourceRoutePlugin;
-use Spryker\Glue\MerchantsRestApi\MerchantsRestApiConfig;
-use Spryker\Glue\MerchantsRestApi\Plugin\GlueApplication\MerchantAddressByMerchantReferenceResourceRelationshipPlugin;
-use Spryker\Glue\MerchantsRestApi\Plugin\GlueApplication\MerchantAddressesResourceRoutePlugin;
-use Spryker\Glue\MerchantsRestApi\Plugin\GlueApplication\MerchantByMerchantReferenceResourceRelationshipPlugin;
-use Spryker\Glue\MerchantsRestApi\Plugin\GlueApplication\MerchantsByOrderResourceRelationshipPlugin;
-use Spryker\Glue\MerchantsRestApi\Plugin\GlueApplication\MerchantsResourceRoutePlugin;
 use Spryker\Glue\MultiFactorAuth\Plugin\GlueApplication\RestApi\MultiFactorAuthActivateResourcePlugin;
 use Spryker\Glue\MultiFactorAuth\Plugin\GlueApplication\RestApi\MultiFactorAuthRestUserValidatorPlugin;
 use Spryker\Glue\MultiFactorAuth\Plugin\GlueApplication\RestApi\MultiFactorAuthTriggerResourcePlugin;
@@ -331,15 +323,10 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
             new MyAvailabilityNotificationsResourceRoutePlugin(),
             new ConfigurableBundleTemplatesResourceRoutePlugin(),
             new ConfiguredBundlesResourceRoutePlugin(),
-            new CartCodesResourceRoutePlugin(),
-            new MerchantsResourceRoutePlugin(),
-            new MerchantAddressesResourceRoutePlugin(),
-            new ProductOffersResourceRoutePlugin(),
+            new CartCodesResourceRoutePlugin(),new ProductOffersResourceRoutePlugin(),
             new ConcreteProductsProductOffersResourceRoutePlugin(),
             new ProductOfferAvailabilitiesResourceRoutePlugin(),
-            new ProductOfferPricesResourceRoutePlugin(),
-            new MerchantOpeningHoursResourceRoutePlugin(),
-            new PaymentsResourceRoutePlugin(),
+            new ProductOfferPricesResourceRoutePlugin(),new PaymentsResourceRoutePlugin(),
             new PaymentCancellationsResourceRoutePlugin(),
             new PaymentCustomersResourceRoutePlugin(),
             new TaxValidateIdResourceRoutePlugin(),
@@ -746,76 +733,16 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
         $resourceRelationshipCollection->addRelationship(
             ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
             new AbstractProductsCategoriesResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            MerchantsRestApiConfig::RESOURCE_MERCHANTS,
-            new MerchantAddressByMerchantReferenceResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            OrdersRestApiConfig::RESOURCE_ORDERS,
-            new MerchantsByOrderResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
-            new MerchantByMerchantReferenceResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            CartsRestApiConfig::RESOURCE_CART_ITEMS,
-            new MerchantByMerchantReferenceResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            CartsRestApiConfig::RESOURCE_GUEST_CARTS_ITEMS,
-            new MerchantByMerchantReferenceResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
+        );$resourceRelationshipCollection->addRelationship(
             ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
             new ProductOffersByProductConcreteSkuResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            MerchantProductOffersRestApiConfig::RESOURCE_PRODUCT_OFFERS,
-            new MerchantByMerchantReferenceResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
+        );$resourceRelationshipCollection->addRelationship(
             MerchantProductOffersRestApiConfig::RESOURCE_PRODUCT_OFFERS,
             new ProductOfferPriceByProductOfferReferenceResourceRelationshipPlugin(),
-        );
-
-        $resourceRelationshipCollection->addRelationship(
-            MerchantsRestApiConfig::RESOURCE_MERCHANTS,
-            new MerchantOpeningHoursByMerchantReferenceResourceRelationshipPlugin(),
-        );
-
-        $resourceRelationshipCollection->addRelationship(
-            SalesReturnsRestApiConfig::RESOURCE_RETURNS,
-            new MerchantByMerchantReferenceResourceRelationshipPlugin(),
-        );
-
-        $resourceRelationshipCollection->addRelationship(
-            ShoppingListsRestApiConfig::RESOURCE_SHOPPING_LIST_ITEMS,
-            new MerchantByMerchantReferenceResourceRelationshipPlugin(),
-        );
-
-        $resourceRelationshipCollection->addRelationship(
+        );$resourceRelationshipCollection->addRelationship(
             MerchantProductOffersRestApiConfig::RESOURCE_PRODUCT_OFFERS,
             new ProductOfferAvailabilitiesByProductOfferReferenceResourceRelationshipPlugin(),
-        );
-
-        $resourceRelationshipCollection->addRelationship(
-            ShoppingListsRestApiConfig::RESOURCE_SHOPPING_LIST_ITEMS,
-            new ProductOfferAvailabilitiesByProductOfferReferenceResourceRelationshipPlugin(),
-        );
-
-        $resourceRelationshipCollection->addRelationship(
-            ShoppingListsRestApiConfig::RESOURCE_SHOPPING_LIST_ITEMS,
-            new ProductOffersByProductOfferReferenceResourceRelationshipPlugin(),
-        );
-
-        $resourceRelationshipCollection->addRelationship(
-            ShoppingListsRestApiConfig::RESOURCE_SHOPPING_LIST_ITEMS,
-            new ProductOfferPriceByProductOfferReferenceResourceRelationshipPlugin(),
-        );
-
-        $resourceRelationshipCollection->addRelationship(
+        );$resourceRelationshipCollection->addRelationship(
             ConfigurableBundlesRestApiConfig::RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATES,
             new ConfigurableBundleTemplateSlotByConfigurableBundleTemplateResourceRelationshipPlugin(),
         );

@@ -11,7 +11,6 @@ namespace Pyz\Yves\StorageRouter;
 
 use SprykerShop\Yves\CatalogPage\Plugin\StorageRouter\CatalogPageResourceCreatorPlugin;
 use SprykerShop\Yves\CmsPage\Plugin\StorageRouter\PageResourceCreatorPlugin;
-use SprykerShop\Yves\MerchantPage\Plugin\MerchantPageResourceCreatorPlugin;
 use SprykerShop\Yves\ProductDetailPage\Plugin\StorageRouter\ProductDetailPageResourceCreatorPlugin;
 use SprykerShop\Yves\ProductSetDetailPage\Plugin\StorageRouter\ProductSetDetailPageResourceCreatorPlugin;
 use SprykerShop\Yves\RedirectPage\Plugin\StorageRouter\RedirectResourceCreatorPlugin;
@@ -30,9 +29,7 @@ class StorageRouterDependencyProvider extends SprykerShopStorageRouterDependency
             new CatalogPageResourceCreatorPlugin(),
             new ProductDetailPageResourceCreatorPlugin(),
             new ProductSetDetailPageResourceCreatorPlugin(),
-            new RedirectResourceCreatorPlugin(),
-            new MerchantPageResourceCreatorPlugin(),
-        ];
+            new RedirectResourceCreatorPlugin(),];
     }
 
     /**

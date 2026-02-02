@@ -28,8 +28,6 @@ use Spryker\Zed\DiscountPromotion\Communication\Plugin\Discount\DiscountPromotio
 use Spryker\Zed\DiscountPromotion\Communication\Plugin\Discount\DiscountPromotionViewBlockProviderPlugin;
 use Spryker\Zed\DiscountPromotion\Communication\Plugin\Discount\PromotionCollectedDiscountGroupingStrategyPlugin;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
-use Spryker\Zed\MerchantDiscountConnector\Communication\Plugin\Discount\MerchantReferenceDecisionRulePlugin;
-use Spryker\Zed\MerchantDiscountConnector\Communication\Plugin\Discount\MerchantReferenceDiscountableItemCollectorPlugin;
 use Spryker\Zed\MoneyGui\Communication\Plugin\Form\MoneyCollectionFormTypePlugin;
 use Spryker\Zed\ProductDiscountConnector\Communication\Plugin\Collector\ProductAttributeCollectorPlugin;
 use Spryker\Zed\ProductDiscountConnector\Communication\Plugin\DecisionRule\ProductAttributeDecisionRulePlugin;
@@ -63,9 +61,7 @@ class DiscountDependencyProvider extends SprykerDiscountDependencyProvider
             new ProductAttributeDecisionRulePlugin(),
             new CategoryDecisionRulePlugin(),
             new CustomerOrderCountDecisionRulePlugin(),
-            new ProductOfferReferenceDecisionRulePlugin(),
-            new MerchantReferenceDecisionRulePlugin(),
-            new CustomerReferenceDecisionRulePlugin(),
+            new ProductOfferReferenceDecisionRulePlugin(),new CustomerReferenceDecisionRulePlugin(),
             new CustomerMaximumOrderAmountDecisionRulePlugin(),
         ]);
     }
@@ -82,9 +78,7 @@ class DiscountDependencyProvider extends SprykerDiscountDependencyProvider
             new ItemByShipmentPricePlugin(),
             new ProductAttributeCollectorPlugin(),
             new CategoryDiscountableItemCollectorPlugin(),
-            new ProductOfferReferenceDiscountableItemCollectorPlugin(),
-            new MerchantReferenceDiscountableItemCollectorPlugin(),
-        ]);
+            new ProductOfferReferenceDiscountableItemCollectorPlugin(),]);
     }
 
     /**

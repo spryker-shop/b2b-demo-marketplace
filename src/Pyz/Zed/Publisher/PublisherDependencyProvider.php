@@ -51,27 +51,14 @@ use Spryker\Zed\GlossaryStorage\Communication\Plugin\Publisher\GlossaryKey\Gloss
 use Spryker\Zed\GlossaryStorage\Communication\Plugin\Publisher\GlossaryKey\GlossaryWritePublisherPlugin as GlossaryKeyWriterPublisherPlugin;
 use Spryker\Zed\GlossaryStorage\Communication\Plugin\Publisher\GlossaryPublisherTriggerPlugin;
 use Spryker\Zed\GlossaryStorage\Communication\Plugin\Publisher\GlossaryTranslation\GlossaryWritePublisherPlugin as GlossaryTranslationWritePublisherPlugin;
-use Spryker\Zed\MerchantCategory\Communication\Plugin\Publisher\Category\CategoryWritePublisherPlugin;
-use Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Publisher\MerchantOpeningHours\MerchantOpeningHoursDateScheduleWritePublisherPlugin;
-use Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Publisher\MerchantOpeningHours\MerchantOpeningHoursWeekdayScheduleWritePublisherPlugin;
-use Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Publisher\MerchantOpeningHours\MerchantOpeningHoursWritePublisherPlugin;
 use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\Publisher\MerchantProductOfferSearchPublisherTriggerPlugin;
 use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\Publisher\ProductOffer\ProductConcreteWritePublisherPlugin as ProductOfferProductConcreteWritePublisherPlugin;
 use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\Publisher\ProductOfferStore\ProductConcreteWritePublisherPlugin as ProductOfferStoreProductConcreteWritePublisherPlugin;
 use Spryker\Zed\MerchantProductOfferStorage\Communication\Plugin\Publisher\Merchant\MerchantProductOfferWritePublisherPlugin;
 use Spryker\Zed\MerchantProductOfferStorage\Communication\Plugin\Publisher\ProductConcreteProductOffer\MerchantProductConcreteProductOfferWritePublisherPlugin;
-use Spryker\Zed\MerchantProductOptionStorage\Communication\Plugin\Publisher\MerchantProductOption\MerchantProductOptionGroupWritePublisherPlugin;
-use Spryker\Zed\MerchantProductOptionStorage\Communication\Plugin\Publisher\MerchantProductOptionGroupPublisherTriggerPlugin;
 use Spryker\Zed\MerchantProductSearch\Communication\Plugin\Publisher\Merchant\MerchantProductSearchWritePublisherPlugin as MerchantMerchantProductSearchWritePublisherPlugin;
-use Spryker\Zed\MerchantProductSearch\Communication\Plugin\Publisher\MerchantProduct\MerchantProductSearchWritePublisherPlugin;
-use Spryker\Zed\MerchantProductSearch\Communication\Plugin\Publisher\MerchantProductSearchPublisherTriggerPlugin;
-use Spryker\Zed\MerchantProductStorage\Communication\Plugin\Publisher\Merchant\MerchantUpdatePublisherPlugin;
-use Spryker\Zed\MerchantProductStorage\Communication\Plugin\Publisher\MerchantProduct\MerchantProductWritePublisherPlugin;
-use Spryker\Zed\MerchantProductStorage\Communication\Plugin\Publisher\MerchantProductPublisherTriggerPlugin;
 use Spryker\Zed\MerchantSearch\Communication\Plugin\Publisher\Merchant\MerchantDeletePublisherPlugin;
 use Spryker\Zed\MerchantSearch\Communication\Plugin\Publisher\Merchant\MerchantWritePublisherPlugin;
-use Spryker\Zed\MerchantSearch\Communication\Plugin\Publisher\MerchantCategory\MerchantCategoryWritePublisherPlugin;
-use Spryker\Zed\MerchantStorage\Communication\Plugin\Publisher\Merchant\MerchantCategoryStoragePublisherPlugin;
 use Spryker\Zed\MerchantStorage\Communication\Plugin\Publisher\Merchant\MerchantStoragePublisherPlugin;
 use Spryker\Zed\MerchantStorage\Communication\Plugin\Publisher\MerchantPublisherTriggerPlugin;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plugin\Publisher\Merchant\MerchantWritePublisherPlugin as PriceProductMerchantWritePublisherPlugin;
@@ -306,11 +293,7 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
             new CategoryImagePublisherTriggerPlugin(),
             new FileManagerPublisherTriggerPlugin(),
             new MerchantPublisherTriggerPlugin(),
-            new MerchantProductOfferSearchPublisherTriggerPlugin(),
-            new MerchantProductOptionGroupPublisherTriggerPlugin(),
-            new MerchantProductSearchPublisherTriggerPlugin(),
-            new MerchantProductPublisherTriggerPlugin(),
-            new AssetPublisherTriggerPlugin(),
+            new MerchantProductOfferSearchPublisherTriggerPlugin(),new AssetPublisherTriggerPlugin(),
             new PriceProductOfferPublisherTriggerPlugin(),
             new CustomerAccessPublisherTriggerPlugin(),
             new SspModelPublisherTriggerPlugin(),
@@ -466,9 +449,7 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
      */
     protected function getMerchantCategoryPlugins(): array
     {
-        return [
-            new CategoryWritePublisherPlugin(),
-        ];
+        return [];
     }
 
     /**
@@ -478,9 +459,7 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
     {
         return [
             MerchantStorageConfig::PUBLISH_MERCHANT => [
-                new MerchantStoragePublisherPlugin(),
-                new MerchantCategoryStoragePublisherPlugin(),
-            ],
+                new MerchantStoragePublisherPlugin(),],
         ];
     }
 
@@ -500,11 +479,7 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
      */
     protected function getMerchantOpeningHoursStoragePlugins(): array
     {
-        return [
-            new MerchantOpeningHoursWritePublisherPlugin(),
-            new MerchantOpeningHoursWeekdayScheduleWritePublisherPlugin(),
-            new MerchantOpeningHoursDateScheduleWritePublisherPlugin(),
-        ];
+        return [];
     }
 
     /**
@@ -512,10 +487,7 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
      */
     protected function getMerchantProductPlugins(): array
     {
-        return [
-            new MerchantProductWritePublisherPlugin(),
-            new MerchantUpdatePublisherPlugin(),
-        ];
+        return [];
     }
 
     /**
@@ -523,10 +495,7 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
      */
     protected function getMerchantProductSearchPlugins(): array
     {
-        return [
-            new MerchantMerchantProductSearchWritePublisherPlugin(),
-            new MerchantProductSearchWritePublisherPlugin(),
-        ];
+        return [];
     }
 
     /**
@@ -534,10 +503,7 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
      */
     protected function getMerchantCategorySearchPlugins(): array
     {
-        return [
-            new CategoryWritePublisherPlugin(),
-            new MerchantCategoryWritePublisherPlugin(),
-        ];
+        return [];
     }
 
     /**
@@ -555,9 +521,7 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
      */
     protected function getMerchantProductOptionStoragePlugins(): array
     {
-        return [
-            new MerchantProductOptionGroupWritePublisherPlugin(),
-        ];
+        return [];
     }
 
     /**
