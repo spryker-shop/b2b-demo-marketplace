@@ -4,6 +4,13 @@
     {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.first), 'localeName': locale.localeName} %}
         {% block content %}
             {% for input in form[formKey] %}
+                <button type="button" class="btn btn-outline"
+                        data-ai-start
+                        data-target-field="[name='{{ input.vars.full_name }}']"
+                        data-source-field="[name='{{ input.vars.full_name }}']"
+                        data-current-locale="{{ locale.localeName }}"
+                        data-target-popover=".all-ai-actions-popover"
+                >AI</button>
                 {% embed '@SprykerEco:ProductManagementAi/_partials/ai-translation-trigger.twig' %}
                     {% block input %}
                         <div class="form-group {% if input.vars.errors | length %}has-error{% endif %}">
@@ -23,4 +30,5 @@
 
     {# AI specific feature template using for integration. It's not stable template for using it in core. #}
     {% include '@SprykerEco:ProductManagementAi/_partials/category-modal-trigger.twig' %}
+    {% include '@SprykerEco:ProductManagementAi/_partials/ai-request-builder-popovers.twig' %}
 {% endblock %}
