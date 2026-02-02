@@ -69,9 +69,9 @@ groups:
             backend_gateway_eu:
                 application: backend-gateway
                 endpoints:
-                    backend-api.eu.spryker.local:
+                    backend-gateway.eu.spryker.local:
                         region: EU
-                        entry-point: BackendApi
+                        primal: true
             backend_api_eu:
                 application: zed
                 endpoints:
