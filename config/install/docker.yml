@@ -3,6 +3,15 @@ env:
 
 sections:
     build:
+        cache-zed-clear:
+            command: 'vendor/bin/console cache:clear'
+
+        cache-glue-api-clear:
+            command: 'vendor/bin/glue cache:clear'
+
+        cache-backend-api-clear:
+            command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue cache:clear'
+
         generate-transfers:
             command: 'vendor/bin/console transfer:generate'
 
@@ -45,14 +54,17 @@ sections:
         generate-open-telemetry:
             command: 'vendor/bin/console open-telemetry:generate'
 
+        install-glue-api-assets:
+            command: 'vendor/bin/glue assets:install public/Glue/assets/'
+
+        install-backend-api-assets:
+            command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue assets:install public/GlueBackend/assets/'
+
         provider-processor-glue:
             command: 'vendor/bin/glue api:generate'
 
         provider-processor-glue-backend:
             command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue api:generate'
-
-        provider-processor-glue-storefront:
-            command: 'GLUE_APPLICATION=GLUE_STOREFRONT vendor/bin/glue api:generate'
 
     build-production:
         excluded: true

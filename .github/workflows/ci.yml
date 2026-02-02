@@ -96,7 +96,6 @@ jobs:
                run: |
                    echo "vendor/bin/glue api:generate" && vendor/bin/glue api:generate
                    echo "GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue api:generate" && GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue api:generate
-                   echo "GLUE_APPLICATION=GLUE_STOREFRONT vendor/bin/glue api:generate" && GLUE_APPLICATION=GLUE_STOREFRONT vendor/bin/glue api:generate
 
             -   name: Run PHPStan
                 run: vendor/bin/phpstan analyze -l 6 -c phpstan.neon src/
