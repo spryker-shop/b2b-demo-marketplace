@@ -166,7 +166,8 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
     protected function getProductAbstractEditViewExpanderPlugins(): array
     {
         return [
-            new ScheduledPriceProductAbstractEditViewExpanderPlugin(),];
+            new ScheduledPriceProductAbstractEditViewExpanderPlugin(),
+        ];
     }
 
     /**
@@ -216,7 +217,8 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
      */
     protected function getProductTableDataBulkExpanderPlugins(): array
     {
-        return [new ProductConfigurationProductTableDataBulkExpanderPlugin(),
+        return [
+            new ProductConfigurationProductTableDataBulkExpanderPlugin(),
         ];
     }
 
@@ -233,7 +235,8 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
       */
     protected function getProductAbstractReadinessProviderPlugins(): array
     {
-        return [new IsActiveAbstractProductReadinessProviderPlugin(),
+        return [
+            new IsActiveAbstractProductReadinessProviderPlugin(),
             new IsSearchableForLocaleAbstractProductReadinessProviderPlugin(),
             new StoreRelationAbstractProductReadinessProviderPlugin(),
             new StorageTableProductAbstractReadinessProviderPlugin(),

@@ -63,7 +63,8 @@ class ProductDependencyProvider extends SprykerProductDependencyProvider
      */
     protected function getProductAbstractPostCreatePlugins(): array
     {
-        return [new ImageSetProductAbstractPostCreatePlugin(),
+        return [
+            new ImageSetProductAbstractPostCreatePlugin(),
             new TaxSetProductAbstractPostCreatePlugin(),
             new PriceProductAbstractPostCreatePlugin(),
         ];
@@ -209,6 +210,7 @@ class ProductDependencyProvider extends SprykerProductDependencyProvider
     {
         return [
             new ImageSetProductConcreteMergerPlugin(),
-            new PriceProductConcreteMergerPlugin(),];
+            new PriceProductConcreteMergerPlugin(),
+        ];
     }
 }

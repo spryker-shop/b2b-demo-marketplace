@@ -165,7 +165,7 @@ class SynchronizationDependencyProvider extends SprykerSynchronizationDependency
             new StoreSynchronizationDataPlugin(),
             new MerchantSynchronizationDataPlugin(),
             new MerchantSynchronizationDataBulkRepositoryPlugin(),
-            new PriceProductOfferSynchronizationDataBulkRepositoryPlugin(),new ProductOfferAvailabilitySynchronizationDataBulkPlugin(),
+            new PriceProductOfferSynchronizationDataBulkRepositoryPlugin(), new ProductOfferAvailabilitySynchronizationDataBulkPlugin(),
             new ProductConcreteProductOffersSynchronizationDataBulkRepositoryPlugin(),
             new ProductOfferSynchronizationDataBulkRepositoryPlugin(),
             new AssetStorageSynchronizationDataPlugin(),

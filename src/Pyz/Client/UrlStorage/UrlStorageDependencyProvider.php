@@ -28,6 +28,6 @@ class UrlStorageDependencyProvider extends SprykerUrlDependencyProvider
             new UrlStorageCategoryNodeMapperPlugin(),
             new UrlStorageProductAbstractMapperPlugin(),
             new UrlStorageProductSetMapperPlugin(),
-            new UrlStorageRedirectMapperPlugin(),];
+            new UrlStorageRedirectMapperPlugin()];
     }
 }

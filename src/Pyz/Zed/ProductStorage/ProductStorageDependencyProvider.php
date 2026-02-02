@@ -44,7 +44,8 @@ class ProductStorageDependencyProvider extends SprykerProductStorageDependencyPr
      */
     protected function getProductConcreteStorageCollectionExpanderPlugins(): array
     {
-        return [new ShipmentTypeProductConcreteStorageCollectionExpanderPlugin(),
+        return [
+            new ShipmentTypeProductConcreteStorageCollectionExpanderPlugin(),
             new ProductClassProductConcreteStorageCollectionExpanderPlugin(),
         ];
     }

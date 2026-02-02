@@ -33,6 +33,6 @@ class MerchantSearchDependencyProvider extends SprykerMerchantSearchDependencyPr
     {
         return [
             new PaginatedMerchantSearchQueryExpanderPlugin(),
-            new StoreQueryExpanderPlugin(),];
+            new StoreQueryExpanderPlugin()];
     }
 }

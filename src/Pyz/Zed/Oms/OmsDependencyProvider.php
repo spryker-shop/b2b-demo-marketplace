@@ -68,7 +68,8 @@ class OmsDependencyProvider extends SprykerOmsDependencyProvider
      */
     protected function extendConditionPlugins(Container $container): Container
     {
-        $container->extend(self::CONDITION_PLUGINS, function (ConditionCollectionInterface $conditionCollection) {return $conditionCollection;
+        $container->extend(self::CONDITION_PLUGINS, function (ConditionCollectionInterface $conditionCollection) {
+            return $conditionCollection;
         });
 
         return $container;
@@ -117,7 +118,8 @@ class OmsDependencyProvider extends SprykerOmsDependencyProvider
      */
     protected function getOmsReservationAggregationPlugins(): array
     {
-        return [new ProductOfferOmsReservationAggregationPlugin(),
+        return [
+            new ProductOfferOmsReservationAggregationPlugin(),
             new ProductPackagingUnitOmsReservationAggregationPlugin(),
         ];
     }
@@ -188,14 +190,17 @@ class OmsDependencyProvider extends SprykerOmsDependencyProvider
     {
         $container->extend(self::COMMAND_PLUGINS, function (CommandCollectionInterface $commandCollection) {
             $commandCollection->add(new SendOrderConfirmationPlugin(), 'Oms/SendOrderConfirmation');
-            $commandCollection->add(new SendOrderShippedPlugin(), 'Oms/SendOrderShipped');$commandCollection->add(new StartReturnCommandPlugin(), 'Return/StartReturn');
-            $commandCollection->add(new GenerateOrderInvoiceCommandPlugin(), 'Invoice/Generate');$commandCollection->add(new RefundPlugin(), 'DummyPayment/Refund');
+            $commandCollection->add(new SendOrderShippedPlugin(), 'Oms/SendOrderShipped');
+            $commandCollection->add(new StartReturnCommandPlugin(), 'Return/StartReturn');
+            $commandCollection->add(new GenerateOrderInvoiceCommandPlugin(), 'Invoice/Generate');
+            $commandCollection->add(new RefundPlugin(), 'DummyPayment/Refund');
             $commandCollection->add(new SendOrderStatusChangedMessagePlugin(), 'Order/RequestProductReviews');
             $commandCollection->add(new SubmitPaymentTaxInvoicePlugin(), 'TaxApp/SubmitPaymentTaxInvoice');
             $commandCollection->add(new SendCapturePaymentMessageCommandPlugin(), 'Payment/Capture');
             $commandCollection->add(new SendRefundPaymentMessageCommandPlugin(), 'Payment/Refund');
             $commandCollection->add(new SendCancelPaymentMessageCommandPlugin(), 'Payment/Cancel');
-            $commandCollection->add(new RefundCommandPlugin(), 'Payment/Refund/Confirm');$commandCollection->add(new UpdateDeletedItemReservationCommandByOrderPlugin(), 'OrderAmendment/UnreserveDeletedItems');
+            $commandCollection->add(new RefundCommandPlugin(), 'Payment/Refund/Confirm');
+            $commandCollection->add(new UpdateDeletedItemReservationCommandByOrderPlugin(), 'OrderAmendment/UnreserveDeletedItems');
             $commandCollection->add(new DeleteOrderAmendmentQuoteCommandByOrderPlugin(), 'OrderAmendment/StartGracePeriod');
 
             return $commandCollection;

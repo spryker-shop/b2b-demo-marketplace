@@ -269,7 +269,7 @@ class CalculationDependencyProvider extends SprykerCalculationDependencyProvider
             new OrderTaxTotalCalculationPlugin(),
 
             new GrandTotalCalculatorPlugin(),
-            new NetTotalCalculatorPlugin(),];
+            new NetTotalCalculatorPlugin()];
     }
 
     /**

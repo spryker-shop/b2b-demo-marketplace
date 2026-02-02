@@ -24,6 +24,6 @@ class DataExportDependencyProvider extends SprykerDataExportDependencyProvider
         return [
             new OrderDataEntityExporterPlugin(),
             new OrderItemDataEntityExporterPlugin(),
-            new OrderExpenseDataEntityExporterPlugin(),];
+            new OrderExpenseDataEntityExporterPlugin()];
     }
 }

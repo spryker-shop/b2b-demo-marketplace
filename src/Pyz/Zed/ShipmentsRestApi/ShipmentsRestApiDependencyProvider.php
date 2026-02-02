@@ -37,7 +37,7 @@ class ShipmentsRestApiDependencyProvider extends SprykerShipmentsRestApiDependen
     protected function getQuoteItemExpanderPlugins(): array
     {
         return [
-            new ShipmentTypeQuoteItemExpanderPlugin(),new CopyShipmentToProductBundleQuoteItemExpanderPlugin(),
+            new ShipmentTypeQuoteItemExpanderPlugin(), new CopyShipmentToProductBundleQuoteItemExpanderPlugin(),
         ];
     }
 }

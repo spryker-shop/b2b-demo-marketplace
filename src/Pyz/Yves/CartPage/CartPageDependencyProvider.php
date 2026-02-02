@@ -48,7 +48,8 @@ class CartPageDependencyProvider extends SprykerCartPageDependencyProvider
      */
     protected function getPreAddToCartPlugins(): array
     {
-        return [new MerchantProductOfferPreAddToCartPlugin(),
+        return [
+            new MerchantProductOfferPreAddToCartPlugin(),
             new SspAssetPreAddToCartPlugin(),
             new ServicePointPreAddToCartPlugin(),
             new ShipmentTypePreAddToCartPlugin(),

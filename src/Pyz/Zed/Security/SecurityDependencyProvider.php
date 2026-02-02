@@ -26,7 +26,7 @@ class SecurityDependencyProvider extends SprykerSecurityDependencyProvider
     {
         return [
             new ZedUserSessionHandlerSecurityPlugin(),
-            new ZedSystemUserSecurityPlugin(),new ZedUserSecurityPlugin(),
+            new ZedSystemUserSecurityPlugin(), new ZedUserSecurityPlugin(),
             new ZedOauthUserSecurityPlugin(),
             new ZedValidateSessionUserSecurityPlugin(),
             new SaveSessionUserSecurityPlugin(),

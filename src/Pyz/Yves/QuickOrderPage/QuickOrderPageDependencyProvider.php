@@ -29,7 +29,7 @@ class QuickOrderPageDependencyProvider extends SprykerQuickOrderPageDependencyPr
     protected function getQuickOrderItemTransferExpanderPlugins(): array
     {
         return [
-            new QuickOrderItemDefaultPackagingUnitExpanderPlugin(),new MerchantProductOfferQuickOrderItemExpanderPlugin(),
+            new QuickOrderItemDefaultPackagingUnitExpanderPlugin(), new MerchantProductOfferQuickOrderItemExpanderPlugin(),
         ];
     }
 

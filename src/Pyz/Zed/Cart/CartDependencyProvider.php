@@ -132,7 +132,7 @@ class CartDependencyProvider extends SprykerCartDependencyProvider
             new ConfiguredBundleGroupKeyItemExpanderPlugin(),
             new ProductUrlItemExpanderPlugin(),
             new SanitizeCartShipmentItemExpanderPlugin(),
-            new ProductOfferGroupKeyItemExpanderPlugin(),new GroupKeyWithCartIdentifierItemExpanderPlugin(),
+            new ProductOfferGroupKeyItemExpanderPlugin(), new GroupKeyWithCartIdentifierItemExpanderPlugin(),
             new ProductConfigurationGroupKeyItemExpanderPlugin(),
             new RemoveQuotePaymentCartItemExpanderPlugin(),
             new SspShipmentTypeItemExpanderPlugin(),
@@ -174,7 +174,7 @@ class CartDependencyProvider extends SprykerCartDependencyProvider
             new ProductOfferGroupKeyItemExpanderPlugin(),
             new ProductUrlItemExpanderPlugin(),
             new SanitizeCartShipmentItemExpanderPlugin(),
-            new ProductConfigurationGroupKeyItemExpanderPlugin(),new GroupKeyWithCartIdentifierItemExpanderPlugin(),
+            new ProductConfigurationGroupKeyItemExpanderPlugin(), new GroupKeyWithCartIdentifierItemExpanderPlugin(),
             new RemoveQuotePaymentCartItemExpanderPlugin(),
         ];
     }
@@ -216,7 +216,7 @@ class CartDependencyProvider extends SprykerCartDependencyProvider
             new AmountRestrictionCartPreCheckPlugin(), #ProductPackagingUnit
             new ConfiguredBundleTemplateSlotCombinationPreCheckPlugin(),
             new ProductMeasurementSalesUnitCartPreCheckPlugin(),
-            new DiscountPromotionCartPreCheckPlugin(),new ProductOfferCartPreCheckPlugin(),];
+            new DiscountPromotionCartPreCheckPlugin(), new ProductOfferCartPreCheckPlugin()];
     }
 
     /**
@@ -235,12 +235,12 @@ class CartDependencyProvider extends SprykerCartDependencyProvider
             new ProductPackagingUnitCartPreCheckPlugin(),
             new AmountAvailabilityCartPreCheckPlugin(), #ProductPackagingUnit
             new AmountRestrictionCartPreCheckPlugin(), #ProductPackagingUnit
-            new ConfiguredBundleTemplateSlotCombinationPreCheckPlugin(),new ProductMeasurementSalesUnitCartPreCheckPlugin(),
-            new DiscountPromotionCartPreCheckPlugin(),new OrderAmendmentProductExistsCartPreCheckPlugin(),
+            new ConfiguredBundleTemplateSlotCombinationPreCheckPlugin(), new ProductMeasurementSalesUnitCartPreCheckPlugin(),
+            new DiscountPromotionCartPreCheckPlugin(), new OrderAmendmentProductExistsCartPreCheckPlugin(),
             new OrderAmendmentProductBundleAvailabilityCartPreCheckPlugin(),
             new OrderAmendmentProductBundleStatusCartPreCheckPlugin(),
             new OrderAmendmentProductDiscontinuedCartPreCheckPlugin(), #ProductDiscontinuedFeature
-            new OrderAmendmentProductOfferCartPreCheckPlugin(),new OrderAmendmentCartPreCheckPlugin(),
+            new OrderAmendmentProductOfferCartPreCheckPlugin(), new OrderAmendmentCartPreCheckPlugin(),
         ];
     }
 
@@ -270,12 +270,12 @@ class CartDependencyProvider extends SprykerCartDependencyProvider
     protected function getPreReloadPlugins(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
         return [
-            new CartConfigurableBundlePreReloadPlugin(),new RemoveInactiveItemsPreReloadPlugin(),
+            new CartConfigurableBundlePreReloadPlugin(), new RemoveInactiveItemsPreReloadPlugin(),
             new RemoveRestrictedItemsPreReloadPlugin(),
             new CleanUpItemsPreReloadPlugin(),
             new FilterItemsWithoutPricePlugin(),
             new ConfiguredBundleQuantityPerSlotPreReloadItemsPlugin(),
-            new FilterInactiveProductOfferPreReloadItemsPlugin(),new SspServiceShipmentTypePreReloadItemsPlugin(),new ResetAmendmentOrderReferencePreReloadItemsPlugin(),
+            new FilterInactiveProductOfferPreReloadItemsPlugin(), new SspServiceShipmentTypePreReloadItemsPlugin(), new ResetAmendmentOrderReferencePreReloadItemsPlugin(),
             new ResetOriginalSalesOrderItemUnitPricesPreReloadItemsPlugin(),
         ];
     }
@@ -288,10 +288,10 @@ class CartDependencyProvider extends SprykerCartDependencyProvider
     protected function getPreReloadPluginsForOrderAmendment(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
         return [
-            new CartConfigurableBundlePreReloadPlugin(),new RemoveRestrictedItemsPreReloadPlugin(),
+            new CartConfigurableBundlePreReloadPlugin(), new RemoveRestrictedItemsPreReloadPlugin(),
             new CleanUpItemsPreReloadPlugin(),
-            new ConfiguredBundleQuantityPerSlotPreReloadItemsPlugin(),new OrderAmendmentRemoveInactiveItemsPreReloadPlugin(),
-            new OrderAmendmentFilterInactiveProductOfferPreReloadItemsPlugin(),];
+            new ConfiguredBundleQuantityPerSlotPreReloadItemsPlugin(), new OrderAmendmentRemoveInactiveItemsPreReloadPlugin(),
+            new OrderAmendmentFilterInactiveProductOfferPreReloadItemsPlugin()];
     }
 
     /**

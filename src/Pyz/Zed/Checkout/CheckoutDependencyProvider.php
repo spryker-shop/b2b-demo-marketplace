@@ -94,7 +94,7 @@ class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
             new PaymentMethodValidityCheckoutPreConditionPlugin(),
             new DuplicateOrderCheckoutPreConditionPlugin(),
             new ProductExistsCheckoutPreConditionPlugin(),
-            new ProductOfferCheckoutPreConditionPlugin(),new ProductConfigurationCheckoutPreConditionPlugin(),
+            new ProductOfferCheckoutPreConditionPlugin(), new ProductConfigurationCheckoutPreConditionPlugin(),
             new ProductQuantityBySkuRestrictionCheckoutPreConditionPlugin(),
             new ServicePointCheckoutPreConditionPlugin(),
             new ShipmentTypeCheckoutPreConditionPlugin(),
@@ -121,13 +121,13 @@ class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
             new SalesOrderThresholdCheckoutPreConditionPlugin(), #SalesOrderThresholdFeature
             new VoucherDiscountMaxUsageCheckoutPreConditionPlugin(),
             new QuoteRequestPreCheckPlugin(),
-            new QuoteApprovalCheckoutPreConditionPlugin(),new PaymentMethodValidityCheckoutPreConditionPlugin(),
+            new QuoteApprovalCheckoutPreConditionPlugin(), new PaymentMethodValidityCheckoutPreConditionPlugin(),
             new ProductConfigurationCheckoutPreConditionPlugin(),
-            new DuplicateOrderCheckoutPreConditionPlugin(),new ProductQuantityBySkuRestrictionCheckoutPreConditionPlugin(),
+            new DuplicateOrderCheckoutPreConditionPlugin(), new ProductQuantityBySkuRestrictionCheckoutPreConditionPlugin(),
             new OrderAmendmentProductBundleAvailabilityCheckoutPreConditionPlugin(), #Order Amendment Feature
             new OrderAmendmentProductDiscontinuedCheckoutPreConditionPlugin(), #ProductDiscontinuedFeature
             new OrderAmendmentProductOfferCheckoutPreConditionPlugin(),
-            new OrderAmendmentProductExistsCheckoutPreConditionPlugin(),new OrderAmendmentCheckoutPreCheckPlugin(),
+            new OrderAmendmentProductExistsCheckoutPreConditionPlugin(), new OrderAmendmentCheckoutPreCheckPlugin(),
         ];
     }
 

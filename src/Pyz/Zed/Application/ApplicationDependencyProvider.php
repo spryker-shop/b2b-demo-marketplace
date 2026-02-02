@@ -89,7 +89,7 @@ class ApplicationDependencyProvider extends SprykerApplicationDependencyProvider
             new ErrorHandlerApplicationPlugin(),
             new FormApplicationPlugin(),
             new ValidatorApplicationPlugin(),
-            new ZedSecurityApplicationPlugin(),new NumberFormatterApplicationPlugin(),
+            new ZedSecurityApplicationPlugin(), new NumberFormatterApplicationPlugin(),
             new BackofficeStoreApplicationPlugin(),
         ];
 

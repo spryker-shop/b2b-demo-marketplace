@@ -53,7 +53,7 @@ class UserDependencyProvider extends SprykerUserDependencyProvider
     {
         return [
             new UserAgentFormExpanderPlugin(),
-            new UserLocaleFormExpanderPlugin(),];
+            new UserLocaleFormExpanderPlugin()];
     }
 
     /**
@@ -71,7 +71,7 @@ class UserDependencyProvider extends SprykerUserDependencyProvider
     protected function getUserTableDataExpanderPlugins(): array
     {
         return [
-            new UserAgentTableDataExpanderPlugin(),];
+            new UserAgentTableDataExpanderPlugin()];
     }
 
     /**

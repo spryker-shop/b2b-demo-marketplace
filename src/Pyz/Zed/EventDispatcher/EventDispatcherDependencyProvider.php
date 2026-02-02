@@ -23,7 +23,6 @@ use Spryker\Zed\Http\Communication\Plugin\EventDispatcher\HstsHeaderEventDispatc
 use Spryker\Zed\Kernel\Communication\Plugin\AutoloaderCacheEventDispatcherPlugin;
 use Spryker\Zed\Kernel\Communication\Plugin\EventDispatcher\RedirectUrlValidationEventDispatcherPlugin;
 use Spryker\Zed\Locale\Communication\Plugin\EventDispatcher\LocaleEventDispatcherPlugin;
-use Spryker\Zed\MerchantPortalApplication\Communication\Plugin\EventDispatcher\HeadersSecurityEventDispatcherPlugin as MerchantPortalHeadersSecurityEventDispatcherPlugin;
 use Spryker\Zed\Monitoring\Communication\Plugin\EventDispatcher\GatewayMonitoringRequestTransactionEventDispatcherPlugin;
 use Spryker\Zed\Monitoring\Communication\Plugin\EventDispatcher\MonitoringRequestTransactionEventDispatcherPlugin;
 use Spryker\Zed\Profiler\Communication\Plugin\EventDispatcher\ProfilerRequestEventDispatcherPlugin;
@@ -66,7 +65,7 @@ class EventDispatcherDependencyProvider extends SprykerEventDispatcherDependency
             new ErrorPageEventDispatcherPlugin(),
             new RedirectUrlValidationEventDispatcherPlugin(),
             new EnvironmentInfoHeaderEventDispatcherPlugin(),
-            new SecurityBlockerBackofficeUserEventDispatcherPlugin(),new GatewayControllerEventDispatcherPlugin(),
+            new SecurityBlockerBackofficeUserEventDispatcherPlugin(), new GatewayControllerEventDispatcherPlugin(),
         ];
 
         if (class_exists(ProfilerRequestEventDispatcherPlugin::class)) {
@@ -102,7 +101,7 @@ class EventDispatcherDependencyProvider extends SprykerEventDispatcherDependency
             new ResponseListenerEventDispatcherPlugin(),
             new ErrorPageEventDispatcherPlugin(),
             new RedirectUrlValidationEventDispatcherPlugin(),
-            new SecurityBlockerBackofficeUserEventDispatcherPlugin(),new EnvironmentInfoHeaderEventDispatcherPlugin(),
+            new SecurityBlockerBackofficeUserEventDispatcherPlugin(), new EnvironmentInfoHeaderEventDispatcherPlugin(),
         ];
 
         if (class_exists(ProfilerRequestEventDispatcherPlugin::class)) {

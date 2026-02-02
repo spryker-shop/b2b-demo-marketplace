@@ -34,7 +34,7 @@ class CategoryDependencyProvider extends SprykerDependencyProvider
          */
         $deletePlugins = [
             new RemoveProductCategoryRelationPlugin(),
-            new RemoveCategoryImageSetRelationPlugin(),];
+            new RemoveCategoryImageSetRelationPlugin()];
 
         return $deletePlugins;
     }

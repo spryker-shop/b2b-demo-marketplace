@@ -21,7 +21,7 @@ class MerchantDependencyProvider extends SprykerMerchantDependencyProvider
      */
     protected function getMerchantPostCreatePlugins(): array
     {
-        return [new MerchantStockMerchantPostCreatePlugin(),];
+        return [new MerchantStockMerchantPostCreatePlugin()];
     }
 
     /**
@@ -38,6 +38,6 @@ class MerchantDependencyProvider extends SprykerMerchantDependencyProvider
      */
     protected function getMerchantBulkExpanderPlugins(): array
     {
-        return [new MerchantStockMerchantBulkExpanderPlugin(),];
+        return [new MerchantStockMerchantBulkExpanderPlugin()];
     }
 }

@@ -36,6 +36,6 @@ class SearchElasticsearchDependencyProvider extends SprykerSearchElasticsearchDe
     protected function getSearchConfigExpanderPlugins(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
         return [
-            new ProductSearchConfigExpanderPlugin(),];
+            new ProductSearchConfigExpanderPlugin()];
     }
 }

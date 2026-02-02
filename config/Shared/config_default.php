@@ -684,7 +684,7 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
         'root' => APPLICATION_ROOT_DIR . '/data/DE/media/',
         'path' => 'files/',
-    ],'ssp-inquiry' => [
+    ], 'ssp-inquiry' => [
         'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
         'key' => getenv('SPRYKER_S3_SSP_CLAIM_KEY') ?: '',
         'secret' => getenv('SPRYKER_S3_SSP_CLAIM_SECRET') ?: '',
@@ -837,7 +837,8 @@ $config[OmsConstants::ACTIVE_PROCESSES] = [
     'ForeignPaymentStateMachine01',
 ];
 
-$config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = [PaymentConfig::PAYMENT_FOREIGN_PROVIDER => 'ForeignPaymentStateMachine01',
+$config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = [
+PaymentConfig::PAYMENT_FOREIGN_PROVIDER => 'ForeignPaymentStateMachine01',
 ];
 
 $config[OmsConstants::PROCESS_LOCATION] = [

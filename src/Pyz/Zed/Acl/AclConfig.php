@@ -13,9 +13,10 @@ use Spryker\Shared\Acl\AclConstants;
 use Spryker\Zed\Acl\AclConfig as SprykerAclConfig;
 
 class AclConfig extends SprykerAclConfig
-{/**
-     * @return array<array<string, mixed>>
-     */
+{
+/**
+ * @return array<array<string, mixed>>
+ */
     public function getInstallerUsers(): array
     {
         return [
@@ -27,6 +28,6 @@ class AclConfig extends SprykerAclConfig
             ],
             'richard@spryker.com' => [
                 'group' => AclConstants::ROOT_GROUP,
-            ],];
+            ]];
     }
 }

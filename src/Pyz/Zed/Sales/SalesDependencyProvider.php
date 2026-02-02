@@ -140,7 +140,7 @@ class SalesDependencyProvider extends SprykerSalesDependencyProvider
             new RemunerationTotalOrderExpanderPlugin(),
             new OmsStatesOrderExpanderPlugin(),
             new IsCancellableOrderExpanderPlugin(),
-            new CurrencyOrderExpanderPlugin(),new SalesOrderAmendmentOrderExpanderPlugin(),
+            new CurrencyOrderExpanderPlugin(), new SalesOrderAmendmentOrderExpanderPlugin(),
             new IsAmendableOrderExpanderPlugin(),
             new SspAssetOrderExpanderPlugin(),
             new ProductClassOrderExpanderPlugin(),
@@ -158,7 +158,7 @@ class SalesDependencyProvider extends SprykerSalesDependencyProvider
             new ProductPackagingUnitOrderItemExpanderPreSavePlugin(),
             new AmountSalesUnitOrderItemExpanderPreSavePlugin(),
             new IsQuantitySplittableOrderItemExpanderPreSavePlugin(),
-            new OrderItemReferenceExpanderPreSavePlugin(),new ProductOfferReferenceOrderItemExpanderPreSavePlugin(),
+            new OrderItemReferenceExpanderPreSavePlugin(), new ProductOfferReferenceOrderItemExpanderPreSavePlugin(),
             new ScheduleTimeOrderItemExpanderPreSavePlugin(),
         ];
     }

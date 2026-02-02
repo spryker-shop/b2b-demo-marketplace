@@ -90,7 +90,7 @@ class MailDependencyProvider extends SprykerMailDependencyProvider
             new UserPasswordResetMailTypeBuilderPlugin(),
             new AvailabilityNotificationUnsubscribedMailTypeBuilderPlugin(),
             new AvailabilityNotificationSubscriptionMailTypeBuilderPlugin(),
-            new AvailabilityNotificationMailTypeBuilderPlugin(),new OrderInvoiceMailTypeBuilderPlugin(),
+            new AvailabilityNotificationMailTypeBuilderPlugin(), new OrderInvoiceMailTypeBuilderPlugin(),
             new CustomerEmailChangeVerificationMailTypePlugin(),
             new CustomerEmailChangeNotificationMailTypePlugin(),
             new CustomerEmailMultiFactorAuthMailTypeBuilderPlugin(),

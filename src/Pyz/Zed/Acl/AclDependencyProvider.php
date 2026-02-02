@@ -12,6 +12,7 @@ namespace Pyz\Zed\Acl;
 use Spryker\Zed\Acl\AclDependencyProvider as SprykerAclDependencyProvider;
 use Spryker\Zed\AclEntity\Communication\Plugin\Acl\AclEntityAclRolePostSavePlugin;
 use Spryker\Zed\AclEntity\Communication\Plugin\Acl\AclRulesAclRolesExpanderPlugin;
+
 class AclDependencyProvider extends SprykerAclDependencyProvider
 {
     /**

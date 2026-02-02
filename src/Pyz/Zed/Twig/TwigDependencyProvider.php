@@ -103,7 +103,7 @@ class TwigDependencyProvider extends SprykerTwigDependencyProvider
             new RemoveTableButtonTwigPlugin(),
             // Form buttons
             new SubmitButtonTwigPlugin(),
-            new GuiFilterTwigPlugin(),new NumberFormatterTwigPlugin(),new SelfServicePortalTwigPlugin(),
+            new GuiFilterTwigPlugin(), new NumberFormatterTwigPlugin(), new SelfServicePortalTwigPlugin(),
             new NavigationIconsTypeTwigPlugin(),
         ];
     }

@@ -28,7 +28,7 @@ class ProductOfferStorageDependencyProvider extends SprykerProductOfferStorageDe
     protected function getProductOfferReferenceStrategyPlugins(): array
     {
         return [
-            new ProductOfferReferenceStrategyPlugin(),new DefaultProductOfferReferenceStrategyPlugin(),
+            new ProductOfferReferenceStrategyPlugin(), new DefaultProductOfferReferenceStrategyPlugin(),
         ];
     }
 

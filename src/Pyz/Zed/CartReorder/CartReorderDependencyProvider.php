@@ -136,7 +136,7 @@ class CartReorderDependencyProvider extends SprykerCartReorderDependencyProvider
             new ProductMeasurementUnitCartReorderItemHydratorPlugin(),
             new ProductPackagingUnitCartReorderItemHydratorPlugin(),
             new CartNoteCartReorderItemHydratorPlugin(),
-            new ProductOfferCartReorderItemHydratorPlugin(),new MerchantProductOfferCartReorderItemHydratorPlugin(),
+            new ProductOfferCartReorderItemHydratorPlugin(), new MerchantProductOfferCartReorderItemHydratorPlugin(),
             new ProductConfigurationCartReorderItemHydratorPlugin(),
             new ProductOptionCartReorderItemHydratorPlugin(),
             new ConfigurableBundleCartReorderItemHydratorPlugin(),

@@ -129,7 +129,8 @@ class EventDependencyProvider extends SprykerEventDependencyProvider
         $eventSubscriberCollection->add(new ProductConcretePageSearchProductAbstractEventSubscriber());
         $eventSubscriberCollection->add(new ProductConcretePageSearchProductEventSubscriber());
         $eventSubscriberCollection->add(new ProductConcretePageSearchProductLocalizedAttributesEventSubscriber());
-        $eventSubscriberCollection->add(new MerchantSearchEventSubscriber());$eventSubscriberCollection->add(new PublisherSubscriber());
+        $eventSubscriberCollection->add(new MerchantSearchEventSubscriber());
+        $eventSubscriberCollection->add(new PublisherSubscriber());
 
         /* Custom Events */
         $eventSubscriberCollection->add(new PostUpdateStockRelationsEventSubscriber());

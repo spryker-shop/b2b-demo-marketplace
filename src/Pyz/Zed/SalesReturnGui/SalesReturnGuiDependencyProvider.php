@@ -20,6 +20,6 @@ class SalesReturnGuiDependencyProvider extends SprykerSalesReturnGuiDependencyPr
     protected function getReturnCreateFormHandlerPlugins(): array
     {
         return [
-            new ProductBundleReturnCreateFormHandlerPlugin(),];
+            new ProductBundleReturnCreateFormHandlerPlugin()];
     }
 }

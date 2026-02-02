@@ -57,7 +57,7 @@ class CartsRestApiDependencyProvider extends SprykerCartsRestApiDependencyProvid
         return [
             new ProductOptionCartItemExpanderPlugin(),
             new DiscountPromotionCartItemExpanderPlugin(),
-            new SalesUnitCartItemExpanderPlugin(),new MerchantProductOfferCartItemExpanderPlugin(),
+            new SalesUnitCartItemExpanderPlugin(), new MerchantProductOfferCartItemExpanderPlugin(),
             new ProductConfigurationCartItemExpanderPlugin(),
         ];
     }

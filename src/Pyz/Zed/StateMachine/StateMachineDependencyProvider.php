@@ -21,7 +21,7 @@ class StateMachineDependencyProvider extends SprykerStateMachineDependencyProvid
     protected function getStateMachineHandlers(): array
     {
         return [
-            new TestStateMachineHandlerPlugin(),new SspInquiryStateMachineHandlerPlugin(),
+            new TestStateMachineHandlerPlugin(), new SspInquiryStateMachineHandlerPlugin(),
         ];
     }
 }

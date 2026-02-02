@@ -10,6 +10,7 @@ declare(strict_types = 1);
 namespace Pyz\Zed\Refund;
 
 use Spryker\Zed\Refund\RefundDependencyProvider as SprykerRefundDependencyProvider;
+
 class RefundDependencyProvider extends SprykerRefundDependencyProvider
 {
     /**

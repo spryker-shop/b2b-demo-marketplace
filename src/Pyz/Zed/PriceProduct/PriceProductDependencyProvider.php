@@ -93,7 +93,7 @@ class PriceProductDependencyProvider extends SprykerPriceProductDependencyProvid
     protected function getPriceProductValidatorPlugins(): array
     {
         return [
-            new PriceProductVolumeValidatorPlugin(),];
+            new PriceProductVolumeValidatorPlugin()];
     }
 
     /**

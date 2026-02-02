@@ -42,7 +42,7 @@ class ShoppingListDependencyProvider extends SprykerShoppingListDependencyProvid
         return [
             new ShoppingListItemNoteToItemCartNoteMapperPlugin(),
             new ShoppingListItemProductOptionToItemProductOptionMapperPlugin(),
-            new ProductOfferShoppingListItemToItemMapperPlugin(),new ProductConfigurationShoppingListItemToItemMapperPlugin(),
+            new ProductOfferShoppingListItemToItemMapperPlugin(), new ProductConfigurationShoppingListItemToItemMapperPlugin(),
         ];
     }
 

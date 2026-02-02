@@ -31,7 +31,6 @@ use Spryker\Client\CategoryStorage\Plugin\Elasticsearch\ResultFormatter\Category
 use Spryker\Client\CmsPageSearch\Plugin\Search\SearchHttp\ResultFormatter\CmsPageSuggestionsSearchHttpResultFormatterPlugin;
 use Spryker\Client\CustomerCatalog\Plugin\Search\ProductListQueryExpanderPlugin as CustomerCatalogProductListQueryExpanderPlugin;
 use Spryker\Client\MerchantProductOfferSearch\Plugin\Search\MerchantReferenceQueryExpanderPlugin;
-use Spryker\Client\MerchantProductSearch\Plugin\Search\MerchantReferenceQueryExpanderPlugin as MerchantProductReferenceQueryExpanderPlugin;
 use Spryker\Client\ProductLabelStorage\Plugin\Catalog\ProductLabelSearchHttpFacetConfigTransferBuilderPlugin;
 use Spryker\Client\ProductLabelStorage\Plugin\ProductLabelFacetConfigTransferBuilderPlugin;
 use Spryker\Client\ProductListSearch\Plugin\Search\ProductListQueryExpanderPlugin as ProductListSearchProductListQueryExpanderPlugin;
@@ -228,7 +227,7 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
             new PaginatedProductConcreteCatalogSearchQueryExpanderPlugin(),
             new CustomerCatalogProductListQueryExpanderPlugin(),
             new ProductListSearchProductListQueryExpanderPlugin(),
-            new MerchantReferenceQueryExpanderPlugin(),];
+            new MerchantReferenceQueryExpanderPlugin()];
     }
 
     /**

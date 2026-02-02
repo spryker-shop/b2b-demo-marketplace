@@ -84,7 +84,7 @@ class QuoteDependencyProvider extends SprykerQuoteDependencyProvider
         return [
             new QuoteApprovalExpanderPlugin(), #QuoteApprovalFeature
             new CommentThreadQuoteExpanderPlugin(),
-            new ShareDetailsQuoteExpanderPlugin(),new SspShipmentTypeQuoteExpanderPlugin(),
+            new ShareDetailsQuoteExpanderPlugin(), new SspShipmentTypeQuoteExpanderPlugin(),
             new ServicePointQuoteExpanderPlugin(),
         ];
     }

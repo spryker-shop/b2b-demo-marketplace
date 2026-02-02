@@ -56,7 +56,6 @@ use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\Publisher\Produc
 use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\Publisher\ProductOfferStore\ProductConcreteWritePublisherPlugin as ProductOfferStoreProductConcreteWritePublisherPlugin;
 use Spryker\Zed\MerchantProductOfferStorage\Communication\Plugin\Publisher\Merchant\MerchantProductOfferWritePublisherPlugin;
 use Spryker\Zed\MerchantProductOfferStorage\Communication\Plugin\Publisher\ProductConcreteProductOffer\MerchantProductConcreteProductOfferWritePublisherPlugin;
-use Spryker\Zed\MerchantProductSearch\Communication\Plugin\Publisher\Merchant\MerchantProductSearchWritePublisherPlugin as MerchantMerchantProductSearchWritePublisherPlugin;
 use Spryker\Zed\MerchantSearch\Communication\Plugin\Publisher\Merchant\MerchantDeletePublisherPlugin;
 use Spryker\Zed\MerchantSearch\Communication\Plugin\Publisher\Merchant\MerchantWritePublisherPlugin;
 use Spryker\Zed\MerchantStorage\Communication\Plugin\Publisher\Merchant\MerchantStoragePublisherPlugin;
@@ -293,7 +292,7 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
             new CategoryImagePublisherTriggerPlugin(),
             new FileManagerPublisherTriggerPlugin(),
             new MerchantPublisherTriggerPlugin(),
-            new MerchantProductOfferSearchPublisherTriggerPlugin(),new AssetPublisherTriggerPlugin(),
+            new MerchantProductOfferSearchPublisherTriggerPlugin(), new AssetPublisherTriggerPlugin(),
             new PriceProductOfferPublisherTriggerPlugin(),
             new CustomerAccessPublisherTriggerPlugin(),
             new SspModelPublisherTriggerPlugin(),
@@ -459,7 +458,7 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
     {
         return [
             MerchantStorageConfig::PUBLISH_MERCHANT => [
-                new MerchantStoragePublisherPlugin(),],
+                new MerchantStoragePublisherPlugin()],
         ];
     }
 

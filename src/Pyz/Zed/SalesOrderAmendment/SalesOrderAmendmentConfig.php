@@ -28,7 +28,7 @@ class SalesOrderAmendmentConfig extends SprykerSalesOrderAmendmentConfig
             QuoteTransfer::PROMOTION_ITEMS,
             QuoteTransfer::IS_LOCKED,
             QuoteTransfer::QUOTE_REQUEST_VERSION_REFERENCE,
-            QuoteTransfer::QUOTE_REQUEST_REFERENCE,            QuoteTransfer::IS_ORDER_PLACED_SUCCESSFULLY,
+            QuoteTransfer::QUOTE_REQUEST_REFERENCE, QuoteTransfer::IS_ORDER_PLACED_SUCCESSFULLY,
         ]);
     }
 }

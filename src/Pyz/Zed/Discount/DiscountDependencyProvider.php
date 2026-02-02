@@ -61,7 +61,7 @@ class DiscountDependencyProvider extends SprykerDiscountDependencyProvider
             new ProductAttributeDecisionRulePlugin(),
             new CategoryDecisionRulePlugin(),
             new CustomerOrderCountDecisionRulePlugin(),
-            new ProductOfferReferenceDecisionRulePlugin(),new CustomerReferenceDecisionRulePlugin(),
+            new ProductOfferReferenceDecisionRulePlugin(), new CustomerReferenceDecisionRulePlugin(),
             new CustomerMaximumOrderAmountDecisionRulePlugin(),
         ]);
     }
@@ -78,7 +78,7 @@ class DiscountDependencyProvider extends SprykerDiscountDependencyProvider
             new ItemByShipmentPricePlugin(),
             new ProductAttributeCollectorPlugin(),
             new CategoryDiscountableItemCollectorPlugin(),
-            new ProductOfferReferenceDiscountableItemCollectorPlugin(),]);
+            new ProductOfferReferenceDiscountableItemCollectorPlugin()]);
     }
 
     /**

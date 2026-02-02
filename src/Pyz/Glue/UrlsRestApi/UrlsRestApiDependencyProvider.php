@@ -24,6 +24,6 @@ class UrlsRestApiDependencyProvider extends SprykerUrlsRestApiDependencyProvider
         return [
             new ProductAbstractRestUrlResolverAttributesTransferProviderPlugin(),
             new CategoryNodeRestUrlResolverAttributesTransferProviderPlugin(),
-            new CmsPageRestUrlResolverAttributesTransferProviderPlugin(),];
+            new CmsPageRestUrlResolverAttributesTransferProviderPlugin()];
     }
 }

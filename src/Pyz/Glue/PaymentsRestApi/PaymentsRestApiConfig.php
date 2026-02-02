@@ -10,5 +10,7 @@ declare(strict_types = 1);
 namespace Pyz\Glue\PaymentsRestApi;
 
 use Spryker\Glue\PaymentsRestApi\PaymentsRestApiConfig as SprykerPaymentsRestApiConfig;
+
 class PaymentsRestApiConfig extends SprykerPaymentsRestApiConfig
-{}
+{
+}

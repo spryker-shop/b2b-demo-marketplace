@@ -41,8 +41,8 @@ class ShoppingListDependencyProvider extends SprykerShoppingListDependencyProvid
     {
         return [
             new ProductDiscontinuedAddItemPreCheckPlugin(), #ProductDiscontinuedFeature
-            new ShoppingListItemProductConcreteActiveAddItemPreCheckPlugin(),new ShoppingListItemProductConcreteHasValidStoreAddItemPreCheckPlugin(),
-            new MerchantProductOfferAddItemPreCheckPlugin(),new ProductOfferShoppingListAddItemPreCheckPlugin(),
+            new ShoppingListItemProductConcreteActiveAddItemPreCheckPlugin(), new ShoppingListItemProductConcreteHasValidStoreAddItemPreCheckPlugin(),
+            new MerchantProductOfferAddItemPreCheckPlugin(), new ProductOfferShoppingListAddItemPreCheckPlugin(),
             new ProductConfigurationShoppingListAddItemPreCheckPlugin(),
         ];
     }
@@ -64,7 +64,7 @@ class ShoppingListDependencyProvider extends SprykerShoppingListDependencyProvid
     {
         return [
             new ShoppingListItemNoteBulkPostSavePlugin(), #ShoppingListNoteFeature
-            new ShoppingListItemProductOptionBulkPostSavePlugin(),new MerchantProductOfferShoppingListItemBulkPostSavePlugin(),
+            new ShoppingListItemProductOptionBulkPostSavePlugin(), new MerchantProductOfferShoppingListItemBulkPostSavePlugin(),
             new ProductConfigurationShoppingListItemBulkPostSavePlugin(),
         ];
     }
@@ -88,7 +88,7 @@ class ShoppingListDependencyProvider extends SprykerShoppingListDependencyProvid
         return [
             new ShoppingListItemCollectionNoteExpanderPlugin(),
             new ShoppingListItemCollectionProductOptionExpanderPlugin(),
-            new MerchantProductOfferShoppingListItemCollectionExpanderPlugin(),new ProductConfigurationShoppingListItemCollectionExpanderPlugin(),
+            new MerchantProductOfferShoppingListItemCollectionExpanderPlugin(), new ProductConfigurationShoppingListItemCollectionExpanderPlugin(),
         ];
     }
 

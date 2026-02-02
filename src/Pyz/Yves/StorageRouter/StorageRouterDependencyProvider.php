@@ -29,7 +29,7 @@ class StorageRouterDependencyProvider extends SprykerShopStorageRouterDependency
             new CatalogPageResourceCreatorPlugin(),
             new ProductDetailPageResourceCreatorPlugin(),
             new ProductSetDetailPageResourceCreatorPlugin(),
-            new RedirectResourceCreatorPlugin(),];
+            new RedirectResourceCreatorPlugin()];
     }
 
     /**

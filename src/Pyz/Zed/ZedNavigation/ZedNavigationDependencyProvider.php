@@ -22,6 +22,6 @@ class ZedNavigationDependencyProvider extends SprykerZedNavigationDependencyProv
     {
         return [
             new AclNavigationItemCollectionFilterPlugin(),
-            new BackofficeNavigationItemCollectionFilterPlugin(),];
+            new BackofficeNavigationItemCollectionFilterPlugin()];
     }
 }

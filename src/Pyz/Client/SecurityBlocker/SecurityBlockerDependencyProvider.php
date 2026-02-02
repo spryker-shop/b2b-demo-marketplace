@@ -25,7 +25,7 @@ class SecurityBlockerDependencyProvider extends SprykerSecurityBlockerDependency
     protected function getSecurityBlockerConfigurationSettingsExpanderPlugins(): array
     {
         return [
-            new BackofficeUserSecurityBlockerConfigurationSettingsExpanderPlugin(),new AgentSecurityBlockerConfigurationSettingsExpanderPlugin(),
-            new CustomerSecurityBlockerConfigurationSettingsExpanderPlugin(),];
+            new BackofficeUserSecurityBlockerConfigurationSettingsExpanderPlugin(), new AgentSecurityBlockerConfigurationSettingsExpanderPlugin(),
+            new CustomerSecurityBlockerConfigurationSettingsExpanderPlugin()];
     }
 }
