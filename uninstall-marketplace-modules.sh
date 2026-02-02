@@ -330,6 +330,7 @@ DIRECTORIES_TO_REMOVE=(
     "src/Pyz/Zed/AclMerchantPortal:AclMerchantPortal"
     "src/Pyz/Zed/DataImportMerchant:DataImportMerchant"
     "src/Pyz/Zed/GuiTable:GuiTable"
+    "src/Pyz/Zed/ProductApprovalGui:ProductApprovalGui"
     "tests/PyzTest/Zed/AclEntity:AclEntity"
 )
 
