@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fbfc76cfe32521075406ace8f84c8dc5",
+    "content-hash": "4fd52646d70106e8966a263734917311",
     "packages": [
         {
             "name": "api-platform/api-pack",
@@ -4320,6 +4320,68 @@
             "time": "2024-11-04T03:00:05+00:00"
         },
         {
+            "name": "inspector-apm/inspector-php",
+            "version": "3.16.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/inspector-apm/inspector-php.git",
+                "reference": "c45f3a5460da04d395f4b124e6237ab7da0ab6a6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/inspector-apm/inspector-php/zipball/c45f3a5460da04d395f4b124e6237ab7da0ab6a6",
+                "reference": "c45f3a5460da04d395f4b124e6237ab7da0ab6a6",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "ext-curl": "*",
+                "friendsofphp/php-cs-fixer": "^3.75",
+                "neuron-core/neuron-ai": "^2.8",
+                "phpstan/phpstan": "^2.1",
+                "phpunit/phpunit": "^9.0",
+                "rector/rector": "^2.2",
+                "tomasvotruba/type-coverage": "^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.16.x-dev",
+                    "dev-develop": "3.16.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Inspector\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Valerio Barbera",
+                    "email": "valerio@inspector.dev"
+                }
+            ],
+            "description": "Inspector monitoring for PHP applications.",
+            "keywords": [
+                "inspector",
+                "monitoring",
+                "observability",
+                "php",
+                "telemetry"
+            ],
+            "support": {
+                "issues": "https://github.com/inspector-apm/inspector-php/issues",
+                "source": "https://github.com/inspector-apm/inspector-php/tree/3.16.6"
+            },
+            "time": "2026-01-21T11:26:33+00:00"
+        },
+        {
             "name": "justinrainbow/json-schema",
             "version": "6.6.3",
             "source": {
@@ -6205,6 +6267,82 @@
                 "source": "https://github.com/nelmio/NelmioCorsBundle/tree/2.6.0"
             },
             "time": "2025-10-23T06:57:22+00:00"
+        },
+        {
+            "name": "neuron-core/neuron-ai",
+            "version": "2.11.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neuron-core/neuron-ai.git",
+                "reference": "31a3b00ea9dc238abf748a89233020ab4c9cc718"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neuron-core/neuron-ai/zipball/31a3b00ea9dc238abf748a89233020ab4c9cc718",
+                "reference": "31a3b00ea9dc238abf748a89233020ab4c9cc718",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.9",
+                "inspector-apm/inspector-php": "^3.15.10",
+                "php": "^8.1",
+                "psr/http-message": "^1.0|^2.0",
+                "psr/log": "^1.0|^2.0|^3.0"
+            },
+            "require-dev": {
+                "aws/aws-sdk-php": "^3.209",
+                "elasticsearch/elasticsearch": "^8.0",
+                "ext-pdo": "*",
+                "friendsofphp/php-cs-fixer": "^3.75",
+                "google/auth": "^1.49",
+                "html2text/html2text": "^4.3",
+                "illuminate/database": "^10.0|^11.0|^12.0",
+                "phpstan/phpstan": "^2.1",
+                "phpunit/phpunit": "^9.0",
+                "rector/rector": "^2.0",
+                "spatie/fork": "^1.2",
+                "tomasvotruba/type-coverage": "^2.0",
+                "typesense/typesense-php": "^5.0"
+            },
+            "suggest": {
+                "aws/aws-sdk-php": "^3.209",
+                "elasticsearch/elasticsearch": "^7.0|^8.0",
+                "php-http/curl-client": "^2.3",
+                "spatie/fork": "^1.2",
+                "symfony/process": "^4.0|^5.0|^6.0|^7.0",
+                "typesense/typesense-php": "^5.0"
+            },
+            "bin": [
+                "bin/neuron"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "NeuronAI\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Valerio Barbera",
+                    "email": "valerio@inspector.dev"
+                }
+            ],
+            "description": "The PHP Agentic Framework.",
+            "support": {
+                "issues": "https://github.com/neuron-core/neuron-ai/issues",
+                "source": "https://github.com/neuron-core/neuron-ai/tree/2.11.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/neuron-core",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-01-15T09:46:43+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -8676,6 +8814,66 @@
                 "source": "https://github.com/spryker-eco/new-relic/tree/master"
             },
             "time": "2020-06-19T09:30:20+00:00"
+        },
+        {
+            "name": "spryker-eco/product-management-ai",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-eco/product-management-ai.git",
+                "reference": "65599d535a3d7d9cb0fb295322c1152db47f3675"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-eco/product-management-ai/zipball/65599d535a3d7d9cb0fb295322c1152db47f3675",
+                "reference": "65599d535a3d7d9cb0fb295322c1152db47f3675",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.3",
+                "spryker/ai-foundation": ">=0.1.0",
+                "spryker/category": "^5.0.0",
+                "spryker/gui": "^4.0.0",
+                "spryker/kernel": "^3.33.0",
+                "spryker/locale": "^4.0.0",
+                "spryker/log": "^3.10.5",
+                "spryker/product": "^6.0.0",
+                "spryker/product-category": "^4.17.0",
+                "spryker/product-extension": "^1.1.0",
+                "spryker/product-management-extension": "^1.2.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/transfer": "^3.27.0",
+                "spryker/util-encoding": "^2.0.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "*",
+                "spryker/code-sniffer": "*"
+            },
+            "suggest": {
+                "spryker/propel-orm": "Used for Propel schema generation."
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SprykerEco\\": "src/SprykerEco/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ProductManagementAi module",
+            "support": {
+                "issues": "https://github.com/spryker-eco/product-management-ai/issues",
+                "source": "https://github.com/spryker-eco/product-management-ai/tree/0.4.0"
+            },
+            "time": "2026-01-28T15:19:29+00:00"
         },
         {
             "name": "spryker-feature/acl",
@@ -23669,6 +23867,53 @@
                 "source": "https://github.com/spryker/agent-security-merchant-portal-gui/tree/2.0.0"
             },
             "time": "2026-01-14T12:55:29+00:00"
+        },
+        {
+            "name": "spryker/ai-foundation",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/ai-foundation.git",
+                "reference": "c2902b5d9206d67f4c79bcf0abae468c05661987"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/ai-foundation/zipball/c2902b5d9206d67f4c79bcf0abae468c05661987",
+                "reference": "c2902b5d9206d67f4c79bcf0abae468c05661987",
+                "shasum": ""
+            },
+            "require": {
+                "aws/aws-sdk-php": "^3.209",
+                "neuron-core/neuron-ai": "^2.9.3",
+                "php": ">=8.3",
+                "spryker/kernel": "^3.30.0",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/testify": "*"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "AiFoundation module",
+            "support": {
+                "source": "https://github.com/spryker/ai-foundation/tree/master"
+            },
+            "time": "2026-01-16T13:09:26+00:00"
         },
         {
             "name": "spryker/alternative-products-rest-api",
@@ -90001,6 +90246,7 @@
     ],
     "minimum-stability": "dev",
     "stability-flags": {
+        "spryker-eco/product-management-ai": 20,
         "spryker-feature/marketplace-comments": 20,
         "spryker-feature/marketplace-merchant-contract-requests": 20,
         "spryker-feature/marketplace-merchant-contracts": 20,
@@ -90011,6 +90257,7 @@
         "spryker-feature/marketplace-merchant-portal-product-offer-shipment": 20,
         "spryker-feature/marketplace-merchantportal-core": 20,
         "spryker-feature/merchant-portal-data-import": 20,
+        "spryker/ai-foundation": 20,
         "spryker/cypress-tests": 20,
         "spryker/docker-chromedriver": 20,
         "spryker/robotframework-suite-tests": 20
