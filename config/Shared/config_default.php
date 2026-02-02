@@ -654,7 +654,6 @@ $config[SymfonyMailerConstants::SMTP_USERNAME] = getenv('SPRYKER_SMTP_USERNAME')
 $config[SymfonyMailerConstants::SMTP_PASSWORD] = getenv('SPRYKER_SMTP_PASSWORD') ?: null;
 
 // >>> FILESYSTEM
-$awsRegion = getenv('AWS_REGION') ?: 'eu-central-1';
 
 $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
     SitemapConstants::FILESYSTEM_NAME => [
@@ -768,8 +767,6 @@ $config[ApplicationConstants::BASE_URL_ZED] = sprintf(
 // ----------------------------------------------------------------------------
 
 // ----------------------------------------------------------------------------
-
-$merchantPortalPort = (int)(getenv('SPRYKER_MP_PORT')) ?: 443;
 
 // ----------------------------------------------------------------------------
 // ------------------------------ FRONTEND ------------------------------------

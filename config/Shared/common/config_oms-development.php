@@ -27,7 +27,8 @@ $config[KernelConstants::DEPENDENCY_INJECTOR_ZED] = [
     ],
 ];
 
-$config[OmsConstants::ACTIVE_PROCESSES] = array_merge(['DummyPayment01',
+$config[OmsConstants::ACTIVE_PROCESSES] = array_merge([
+    'DummyPayment01',
     'Nopayment01',
 ], $config[OmsConstants::ACTIVE_PROCESSES]);
 
