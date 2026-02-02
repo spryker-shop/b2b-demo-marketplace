@@ -44,11 +44,11 @@ environment: docker.dev
 image:
     tag: spryker/php:8.4
     environment:
-        SPRYKER_DNS_RESOLVER_IP: "10.105.0.2"
-        SPRYKER_HOOK_BEFORE_DEPLOY: "vendor/bin/install -r EU/pre-deploy -vvv"
-        SPRYKER_HOOK_AFTER_DEPLOY: "true"
-        SPRYKER_HOOK_INSTALL: "vendor/bin/install -r EU/production --no-ansi -vvv"
-        SPRYKER_HOOK_DESTRUCTIVE_INSTALL: "vendor/bin/install -r destructive --no-ansi -vvv"
+        SPRYKER_DNS_RESOLVER_IP: '10.105.0.2'
+        SPRYKER_HOOK_BEFORE_DEPLOY: 'vendor/bin/install -r EU/pre-deploy -vvv'
+        SPRYKER_HOOK_AFTER_DEPLOY: 'true'
+        SPRYKER_HOOK_INSTALL: 'vendor/bin/install -r EU/production --no-ansi -vvv'
+        SPRYKER_HOOK_DESTRUCTIVE_INSTALL: 'vendor/bin/install -r destructive --no-ansi -vvv'
         SPRYKER_PRODUCT_CONFIGURATOR_HOST: demo-date-time-configurator.sns.sh01.demo-spryker.com
         SPRYKER_PRODUCT_CONFIGURATOR_PORT: 443
         SPRYKER_PRODUCT_CONFIGURATOR_ENCRYPTION_KEY: 'change123'
@@ -69,8 +69,8 @@ image:
             'post_max_size': '100M'
 
     node:
-        version: 18
-        npm: 9
+        version: 20
+        npm: 10
 
 composer:
     mode: --no-dev
@@ -215,7 +215,7 @@ docker:
         enabled: true
 
     testing:
-       store: EU
+        store: EU
 
     debug:
         enabled: false
