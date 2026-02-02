@@ -10,8 +10,8 @@ image:
         enabled-extensions:
             - otel
         ini:
-            "opcache.revalidate_freq": 0
-            "opcache.validate_timestamps": 0
+            'opcache.revalidate_freq': 0
+            'opcache.validate_timestamps': 0
     environment:
         SPRYKER_PRODUCT_CONFIGURATOR_HOST: date-time-configurator-example.spryker.local
         SPRYKER_PRODUCT_CONFIGURATOR_PORT: 80
@@ -21,8 +21,8 @@ image:
         SPRYKER_YVES_HOST_EU: yves.eu.spryker.local
         SPRYKER_YVES_HOST_US: yves.us.spryker.local
     node:
-        version: 18
-        npm: 9
+        version: 20
+        npm: 10
 
 composer:
     mode: --no-dev
