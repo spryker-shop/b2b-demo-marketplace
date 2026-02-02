@@ -17,11 +17,11 @@ concurrency:
     cancel-in-progress: true
 
 jobs:
-    php-83-postgresql-acceptance-debian-dynamic-store-off:
+    php-83-postgresql-acceptance-debian:
         if: >
             (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci'))
             || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-        name: "PHP 8.3 / PostgreSQL / Acceptance & API / Debian / Dynamic Store OFF"
+        name: "PHP 8.3 / PostgreSQL / Acceptance & API / Debian"
         runs-on: ubuntu-latest
         env:
             PROGRESS_TYPE: plain
@@ -34,7 +34,7 @@ jobs:
             -   name: Run docker
                 run: |
                     git clone --depth 1 https://github.com/spryker/docker-sdk.git ./docker
-                    docker/sdk boot deploy.ci.acceptance.dynamic-store-off.yml
+                    docker/sdk boot deploy.ci.acceptance.postgres.yml
                     docker/sdk up -t
                     docker/sdk cli composer dump-autoload -o -a --apcu -q
                     docker/sdk testing codecept fixtures
@@ -75,11 +75,11 @@ jobs:
                 uses: ./.github/actions/job-slack-notifications
                 if: always()
 
-    php-83-postgres-functional-debian-dynamic-store-off:
+    php-83-postgres-functional-debian:
         if: >
             (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci'))
             || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-        name: "PHP 8.3 / PostgreSQL / Functional / Debian / Dynamic Store OFF"
+        name: "PHP 8.3 / PostgreSQL / Functional / Debian"
         runs-on: ubuntu-latest
         env:
             PROGRESS_TYPE: plain
@@ -92,7 +92,7 @@ jobs:
             -   name: Run docker
                 run: |
                     git clone --depth 1 https://github.com/spryker/docker-sdk.git ./docker
-                    docker/sdk boot deploy.ci.functional.dynamic-store-off.yml
+                    docker/sdk boot deploy.ci.functional.postgres.yml
                     docker/sdk up -t
                     docker/sdk cli composer dump-autoload -o -a --apcu -q
 
@@ -103,11 +103,11 @@ jobs:
                 uses: ./.github/actions/job-slack-notifications
                 if: always()
 
-    docker-debian-php-83-postgresql-robot-api-dms-off:
+    docker-debian-php-83-postgresql-robot-api:
         if: >
             (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci'))
             || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-        name: "Docker / Debian / PHP 8.3 / PostgreSql / Robot / API / Dynamic Store OFF"
+        name: "Docker / Debian / PHP 8.3 / PostgreSql / Robot / API"
         runs-on: ubuntu-latest
         env:
             PROGRESS_TYPE: plain
@@ -127,15 +127,15 @@ jobs:
             -   name: Install Project
                 run: |
                     git clone --depth 1 https://github.com/spryker/docker-sdk.git ./docker
-                    docker/sdk boot deploy.ci.api.dynamic-store-off.robot.yml
-                    sudo bash -c "echo '127.0.0.1 backend-api.at.spryker.local backend-api.de.spryker.local glue-backend.de.spryker.local glue-backend.at.spryker.local glue-storefront.de.spryker.local glue-storefront.at.spryker.local backend-gateway.at.spryker.local backend-gateway.de.spryker.local backoffice.at.spryker.local backoffice.de.spryker.local date-time-configurator-example.spryker.local glue.at.spryker.local glue.de.spryker.local yves.at.spryker.local yves.de.spryker.local mp.de.spryker.local mp.at.spryker.local' >> /etc/hosts"
+                    docker/sdk boot deploy.ci.api.postgres.robot.yml
+                    sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local' >> /etc/hosts"
                     docker/sdk up -t
                     docker/sdk cli composer dump-autoload -o -a --apcu -q
                     APPLICATION_STORE=AT docker/sdk console queue:worker:start --stop-when-empty
             -   name: Run Tests
                 id: tests
                 run: |
-                    docker/sdk exec robot-framework robot -v env:api_mp_b2b -v db_engine:psycopg2 -v docker:True --exclude skip-due-to-issueORskip-due-to-refactoring -d results -s robotframework.tests.api.mp_b2b .
+                    docker/sdk exec robot-framework robot -v env:api_mp_b2b -v db_engine:psycopg2 -v docker:True -v dms:true --exclude skip-due-to-issueORskip-due-to-refactoring -d results -s robotframework.tests.api.mp_b2b .
 
             -   name: Save PHP logs
                 if: always() && steps.tests.outcome == 'failure'
@@ -164,11 +164,11 @@ jobs:
                 uses: ./.github/actions/job-slack-notifications
                 if: always()
 
-    docker-alpine-php-84-mariadb-cypress-dynamic-store-off:
+    docker-alpine-php-84-mariadb-cypress:
         if: >
             (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci'))
             || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-        name: "Docker / Alpine / PHP 8.4 / MariaDB / Cypress / UI / Dynamic Store OFF"
+        name: "Docker / Alpine / PHP 8.4 / MariaDB / Cypress / UI"
         runs-on: ubuntu-latest
         env:
             PROGRESS_TYPE: plain
@@ -198,14 +198,14 @@ jobs:
             -   name: Install Project
                 run: |
                     git clone --depth 1 https://github.com/spryker/docker-sdk.git ./docker
-                    docker/sdk boot deploy.ci.acceptance.mariadb.dynamic-store-off.cypress.yml
-                    sudo bash -c "echo '127.0.0.1 backend-api.at.spryker.local backend-api.de.spryker.local glue-backend.de.spryker.local glue-backend.at.spryker.local glue-storefront.de.spryker.local glue-storefront.at.spryker.local backend-gateway.at.spryker.local backend-gateway.de.spryker.local backoffice.at.spryker.local backoffice.de.spryker.local date-time-configurator-example.spryker.local glue.at.spryker.local glue.de.spryker.local yves.at.spryker.local yves.de.spryker.local mp.de.spryker.local mp.at.spryker.local' >> /etc/hosts"
+                    docker/sdk boot deploy.ci.acceptance.postgress.cypress.yml
+                    sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local' >> /etc/hosts"
                     docker/sdk up -t
                     docker/sdk cli composer dump-autoload -o -a --apcu -q
             -   name: Run Tests
                 id: run_tests
                 run: |
-                    docker/sdk exec cypress-tests cp .env.example .env
+                    docker/sdk exec cypress-tests cp .env.dynamic-store.example .env
                     docker/sdk exec cypress-tests npx cypress install
                     docker/sdk exec --env "ENV_REPOSITORY_ID=b2b-mp" --env "ENV_IS_SSP_ENABLED=true" cypress-tests npm run cy:ci
 
@@ -237,17 +237,17 @@ jobs:
             -   name: Upload artifacts
                 if: always() && steps.run_tests.outcome == 'failure'
                 run: |
-                    AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp .cypress s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/b2b-mp/dms-off/cypress/${GITHUB_RUN_ID}/PHP8.4MariaDB/ --recursive
+                    AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp .cypress s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/b2b-mp/dms-on/cypress/${GITHUB_RUN_ID}/PHP8.4MariaDB/ --recursive
 
             -   name: Slack Notification for failed job
                 uses: ./.github/actions/job-slack-notifications
                 if: always()
 
-    docker-alpine-php-84-mariadb-cypress-ssp-dynamic-store-off:
+    docker-alpine-php-84-mariadb-cypress-ssp:
         if: >
             (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci'))
             || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-        name: "Docker / Alpine / PHP 8.4 / MariaDB / Cypress / SSP / Dynamic Store OFF"
+        name: "Docker / Alpine / PHP 8.4 / MariaDB / Cypress / SSP"
         runs-on: ubuntu-latest
         env:
             PROGRESS_TYPE: plain
@@ -271,15 +271,15 @@ jobs:
             -   name: Install Project
                 run: |
                     git clone --depth 1 https://github.com/spryker/docker-sdk.git ./docker
-                    docker/sdk boot deploy.ci.acceptance.mariadb.dynamic-store-off.cypress.yml
-                    sudo bash -c "echo '127.0.0.1 backend-api.at.spryker.local backend-api.de.spryker.local glue-backend.de.spryker.local glue-backend.at.spryker.local glue-storefront.de.spryker.local glue-storefront.at.spryker.local backend-gateway.at.spryker.local backend-gateway.de.spryker.local backoffice.at.spryker.local backoffice.de.spryker.local date-time-configurator-example.spryker.local glue.at.spryker.local glue.de.spryker.local yves.at.spryker.local yves.de.spryker.local mp.de.spryker.local mp.at.spryker.local' >> /etc/hosts"
+                    docker/sdk boot deploy.ci.acceptance.postgress.cypress.yml
+                    sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local' >> /etc/hosts"
                     docker/sdk up -t
                     docker/sdk cli composer dump-autoload -o -a --apcu -q
 
             -   name: Run Tests (SSP)
                 id: run_ssp_tests
                 run: |
-                    docker/sdk exec cypress-tests cp .env.example .env
+                    docker/sdk exec cypress-tests cp .env.dynamic-store.example .env
                     docker/sdk exec cypress-tests npx cypress install
                     docker/sdk exec --env "ENV_REPOSITORY_ID=b2b-mp" --env "ENV_IS_SSP_ENABLED=true" cypress-tests npm run cy:ci:ssp
 
@@ -312,11 +312,11 @@ jobs:
                 uses: ./.github/actions/job-slack-notifications
                 if: always()
 
-    docker-alpine-php-83-postgresql-dynamic-store-off-robot-ui:
+    docker-alpine-php-83-postgresql-robot-ui:
         if: >
             (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci'))
             || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-        name: "Docker / Alpine / PHP 8.3 / PostgreSQL / Dynamic Store OFF / Robot / UI"
+        name: "Docker / Alpine / PHP 8.3 / PostgreSQL / Robot / UI"
         runs-on: ubuntu-latest
         env:
             PROGRESS_TYPE: plain
@@ -338,8 +338,8 @@ jobs:
                 continue-on-error: false
                 run: |
                     git clone --depth 1 https://github.com/spryker/docker-sdk.git ./docker
-                    docker/sdk boot deploy.ci.acceptance.dynamic-store-off.robot.yml
-                    sudo bash -c "echo '127.0.0.1 backend-api.at.spryker.local backend-api.de.spryker.local glue-backend.de.spryker.local glue-backend.at.spryker.local glue-storefront.de.spryker.local glue-storefront.at.spryker.local backend-gateway.at.spryker.local backend-gateway.de.spryker.local backoffice.at.spryker.local backoffice.de.spryker.local date-time-configurator-example.spryker.local glue.at.spryker.local glue.de.spryker.local yves.at.spryker.local yves.de.spryker.local mp.de.spryker.local mail.spryker.local mp.at.spryker.local' >> /etc/hosts"
+                    docker/sdk boot deploy.ci.acceptance.postgres.robot.yml
+                    sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local' >> /etc/hosts"
                     docker/sdk up -t
                     docker/sdk cli composer dump-autoload -o -a --apcu -q
             -   name: Custom commands
@@ -350,12 +350,12 @@ jobs:
                 id: run_dynamic_tests
                 continue-on-error: true
                 run: |
-                    docker/sdk exec robot-framework pabot --processes $(nproc) --ordering pabot_mp_b2b_ordering -v env:ui_mp_b2b -v docker:True -v headless:true -v ignore_console:false -v dms:false -v db_engine:psycopg2 -d results/dynamic_set -v is_ssp:true --exclude skip-due-to-issueORskip-due-to-refactoringORstatic-set -s '*'.tests.parallel_ui.mp_b2b .
+                    docker/sdk exec robot-framework pabot --processes $(nproc) --ordering pabot_mp_b2b_ordering -v env:ui_mp_b2b -v docker:True -v headless:true -v ignore_console:false -v dms:true -v db_engine:psycopg2 -d results/dynamic_set -v is_ssp:true --exclude skip-due-to-issueORskip-due-to-refactoringORstatic-set -s '*'.tests.parallel_ui.mp_b2b .
             -   name: Run Static Tests Set
                 id: run_static_tests
                 continue-on-error: true
                 run: |
-                    docker/sdk exec robot-framework robot -v env:ui_mp_b2b -v docker:True -v headless:true -v ignore_console:false -v dms:false -v db_engine:psycopg2 -d results/static_set -v is_ssp:true --exclude skip-due-to-issueORskip-due-to-refactoring --include static-set -s '*'.tests.parallel_ui.mp_b2b .
+                    docker/sdk exec robot-framework robot -v env:ui_mp_b2b -v docker:True -v headless:true -v ignore_console:false -v dms:true -v db_engine:psycopg2 -d results/static_set -v is_ssp:true --exclude skip-due-to-issueORskip-due-to-refactoring --include static-set -s '*'.tests.parallel_ui.mp_b2b .
             -   name: Merge Initial Test Results
                 id: merge_initial_results
                 continue-on-error: true
@@ -366,7 +366,7 @@ jobs:
                 if: always() && (steps.run_dynamic_tests.outcome == 'failure' || steps.run_static_tests.outcome == 'failure')
                 continue-on-error: true
                 run: |
-                    docker/sdk exec robot-framework robot -v env:ui_mp_b2b -v docker:True -v dms:false -v db_engine:psycopg2 -v headless:true -v ignore_console:false -d results/rerun -v is_ssp:true --runemptysuite --rerunfailed results/output.xml --output rerun.xml -s '*'.tests.parallel_ui.mp_b2b .
+                    docker/sdk exec robot-framework robot -v env:ui_mp_b2b -v docker:True -v dms:true -v db_engine:psycopg2 -v headless:true -v ignore_console:false -d results/rerun -v is_ssp:true --runemptysuite --rerunfailed results/output.xml --output rerun.xml -s '*'.tests.parallel_ui.mp_b2b .
             -   name: Merge Final Test Results
                 if: always() && steps.rerun_failed_tests.outcome != 'skipped'
                 run: |
