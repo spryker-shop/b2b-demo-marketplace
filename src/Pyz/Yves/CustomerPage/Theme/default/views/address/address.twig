@@ -59,20 +59,6 @@
 {% endmacro %}
 
 {% block customerContent %}
-    {% include molecule('action-bar') with {
-        modifiers: ['first'],
-        data: {
-            title: 'customer.account.address' | trans,
-            actions: [
-                {
-                    title: 'customer.account.button.add_new_address' | trans,
-                    url: url('customer/address/new'),
-                    modifiers: ['hollow'],
-                },
-            ],
-        },
-    } only %}
-
     {% set cards = [] %}
 
     {% for address in data.addresses %}
@@ -85,6 +71,24 @@
             {% set label = 'billing_address' %}
         {% endif %}
         {% set cards = cards | merge([{ content: _self.address(label, address, address.idCustomerAddress, data.customerDeleteFormClone.getForm.createView) }]) %}
+    {% else %}
+        {% block emptyState %}
+            {% include molecule('empty-state') with {
+                data: {
+                    title: 'customer.account.address.no-addresses' | trans,
+                    description: 'customer.account.address.no-addresses-description' | trans,
+                    iconName: 'globe-location-pin',
+                    actionButton: {
+                        text: 'customer.account.button.add_new_address' | trans,
+                        link: url('customer/address/new'),
+                        qa: 'customer-add-new-address',
+                        icon: {
+                            name: 'add',
+                        },
+                    },
+                },
+            } only %}
+        {% endblock %}
     {% endfor %}
 
     {% include molecule('action-card-grid') with {
