@@ -42,6 +42,7 @@ regions:
                 database: eu-docker
                 username: spryker
                 password: secret
+
             broker:
                 namespace: eu-docker
                 key_value_store:
@@ -71,7 +72,7 @@ groups:
                         region: EU
                         services:
                             session:
-                                namespace: 1
+                                namespace: 2
             glue_eu:
                 application: glue
                 endpoints:
@@ -85,13 +86,13 @@ groups:
                         services:
                             session:
                                 namespace: 3
-            backgw:
+            backend_gateway_eu:
                 application: backend-gateway
                 endpoints:
                     backend-gateway.eu.spryker.local:
                         region: EU
                         primal: true
-            backend_gateway_eu:
+            backend_api_eu:
                 application: zed
                 endpoints:
                     backend-api.eu.spryker.local:
@@ -104,6 +105,10 @@ groups:
                         region: EU
             glue_backend_eu:
                 application: glue-backend
+                limits:
+                    request-terminate-timeout: 5m
+                http:
+                    timeout: 5m
                 endpoints:
                     glue-backend.eu.spryker.local:
                         region: EU
