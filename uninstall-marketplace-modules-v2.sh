@@ -214,6 +214,130 @@ def remove_array_key_value(content, key_pattern):
     content = re.sub(pattern, '', content, flags=re.MULTILINE | re.DOTALL)
     return content
 
+def remove_xml_element(content, element_pattern):
+    """Remove XML elements matching the pattern."""
+    content = re.sub(rf'\s*{re.escape(element_pattern)}\s*\n?', '', content)
+    return content
+
+def add_xml_transition(content, after_pattern, transition):
+    """Add XML transition after a specific pattern (literal string search)."""
+    # Escape the pattern to treat it as literal string
+    escaped_pattern = re.escape(after_pattern)
+    pattern_match = re.search(escaped_pattern, content)
+    if pattern_match:
+        transition_end = content.find('</transition>', pattern_match.end())
+        if transition_end != -1:
+            insert_pos = transition_end + len('</transition>')
+            content = content[:insert_pos] + '\n\n            ' + transition + content[insert_pos:]
+    return content
+
+def remove_line_containing(content, pattern):
+    """Remove lines containing a specific pattern (literal string search)."""
+    lines = content.split('\n')
+    # Escape the pattern to treat it as literal string, not regex
+    escaped_pattern = re.escape(pattern)
+    filtered_lines = [line for line in lines if not re.search(escaped_pattern, line)]
+    return '\n'.join(filtered_lines)
+
+def add_skip_annotation(content, method_name=None, class_name=None):
+    """Add @skip annotation to a method or class."""
+    if method_name:
+        escaped_method = re.escape(method_name)
+        pattern = rf'(/\*\*.*?)(\s*\*/\s*\n\s*public function {escaped_method})'
+        replacement = r'\1\n     * @skip\n     *\2'
+        content = re.sub(pattern, replacement, content, flags=re.DOTALL)
+    elif class_name:
+        escaped_class = re.escape(class_name)
+        pattern = rf'(/\*\*.*?)(\s*\*/\s*\nclass {escaped_class})'
+        replacement = r'\1\n * @skip\n *\2'
+        content = re.sub(pattern, replacement, content, flags=re.DOTALL)
+    return content
+
+def replace_string(content, old_value, new_value):
+    """Replace a string with another."""
+    content = content.replace(old_value, new_value)
+    return content
+
+def ensure_use_statement(content, class_name, after_pattern=None):
+    """Ensure a use statement exists, optionally place it after a pattern."""
+    use_statement = f'use {class_name};'
+    
+    # Check if use statement already exists
+    if use_statement in content:
+        return content
+    
+    # Add use statement
+    if after_pattern:
+        # Place after specific pattern
+        # Use lambda to avoid backslash escape issues in replacement string
+        content = re.sub(
+            rf'({re.escape(after_pattern)})',
+            lambda m: m.group(1) + '\nuse ' + class_name + ';',
+            content
+        )
+    else:
+        # Place after namespace declaration
+        # Use lambda to avoid backslash escape issues in replacement string
+        content = re.sub(
+            r'(namespace [^;]+;)',
+            lambda m: m.group(1) + '\n\nuse ' + class_name + ';',
+            content
+        )
+    
+    return content
+
+def regex_replace(content, pattern, replacement, flags_str=''):
+    """Generic regex replacement with configurable flags."""
+    flags = 0
+    if 'DOTALL' in flags_str:
+        flags |= re.DOTALL
+    if 'MULTILINE' in flags_str:
+        flags |= re.MULTILINE
+    if 'IGNORECASE' in flags_str:
+        flags |= re.IGNORECASE
+    
+    content = re.sub(pattern, replacement, content, flags=flags)
+    return content
+
+def replace_array_config_content(content, config_key, new_content):
+    """Replace the content of an array configuration."""
+    # Pattern to match array assignment
+    pattern = rf'({re.escape(config_key)}\s*=\s*\[)(.*?)(\];)'
+    # Use lambda to avoid backslash escape issues in replacement string
+    content = re.sub(pattern, lambda m: m.group(1) + new_content + m.group(3), content, flags=re.DOTALL)
+    return content
+
+def replace_or_add_constant(content, constant_pattern, new_constant_definition):
+    """Replace an existing constant or add it if it doesn't exist."""
+    # Check if constant exists
+    if re.search(constant_pattern, content, re.DOTALL):
+        # Replace existing constant
+        # Use lambda to avoid backslash escape issues in replacement string
+        content = re.sub(constant_pattern, lambda m: new_constant_definition, content, flags=re.DOTALL)
+    else:
+        # Constant doesn't exist, add it to the class
+        # Try to find existing constants and add after the last one
+        last_const_pattern = r'(protected\s+const\s+\w+\s*=\s*\[.*?\];)'
+        last_const_match = None
+        for match in re.finditer(last_const_pattern, content, re.DOTALL):
+            last_const_match = match
+        
+        if last_const_match:
+            # Add after the last constant
+            insert_pos = last_const_match.end()
+            content = content[:insert_pos] + '\n\n    ' + new_constant_definition + content[insert_pos:]
+        else:
+            # No constants yet, add after class opening brace
+            class_pattern = r'(class\s+\w+\s+extends\s+\w+\s*\{)\s*'
+            content = re.sub(
+                class_pattern,
+                lambda m: m.group(1) + '\n    ' + new_constant_definition + '\n',
+                content,
+                count=1
+            )
+    
+    return content
+
 def cleanup_content(content):
     """Clean up multiple empty lines and ensure single newline at end."""
     content = re.sub(r'\n{3,}', '\n\n', content)
@@ -268,6 +392,24 @@ def process_file(config):
             content = remove_section_comment(content, operation['comment_pattern'])
         elif op_type == 'remove_array_key_value':
             content = remove_array_key_value(content, operation['key_pattern'])
+        elif op_type == 'remove_xml_element':
+            content = remove_xml_element(content, operation['element_pattern'])
+        elif op_type == 'add_xml_transition':
+            content = add_xml_transition(content, operation['after_pattern'], operation['transition'])
+        elif op_type == 'remove_line_containing':
+            content = remove_line_containing(content, operation['pattern'])
+        elif op_type == 'add_skip_annotation':
+            content = add_skip_annotation(content, operation.get('method_name'), operation.get('class_name'))
+        elif op_type == 'replace_string':
+            content = replace_string(content, operation['old_value'], operation['new_value'])
+        elif op_type == 'ensure_use_statement':
+            content = ensure_use_statement(content, operation['class_name'], operation.get('after_pattern'))
+        elif op_type == 'regex_replace':
+            content = regex_replace(content, operation['pattern'], operation['replacement'], operation.get('flags', ''))
+        elif op_type == 'replace_array_config_content':
+            content = replace_array_config_content(content, operation['config_key'], operation['new_content'])
+        elif op_type == 'replace_or_add_constant':
+            content = replace_or_add_constant(content, operation['constant_pattern'], operation['new_constant_definition'])
 
     # Cleanup
     content = cleanup_content(content)
@@ -766,33 +908,61 @@ PYTHON_PROCESS
 done
 echo ""
 
-echo "Step 10: Removing marketplace-specific OMS subprocesses..."
-OMS_XML_FILE="config/Zed/oms/DummyPayment01.xml"
-if [ -f "$OMS_XML_FILE" ]; then
-    # Remove DummyMerchantCommission subprocess reference and definition
-    sed -i.bak '/<process>DummyMerchantCommission<\/process>/d' "$OMS_XML_FILE"
-    sed -i.bak '/<process name="DummyMerchantCommission" file="DummySubprocess\/DummyMerchantCommission01.xml"\/>/d' "$OMS_XML_FILE"
-    rm -f "${OMS_XML_FILE}.bak"
-    echo "✓ Removed DummyMerchantCommission subprocess from DummyPayment01.xml"
-else
-    echo "⚠ OMS file not found at $OMS_XML_FILE"
-fi
+echo "Step 10: Processing XML configuration files..."
+python3 << 'PYTHON_PROCESS'
+import json
+import subprocess
+
+# Load configuration
+with open('uninstall-marketplace-config.json', 'r') as f:
+    config = json.load(f)
+
+# Process all XML files
+for file_path, file_config in config.get('xml_files', {}).items():
+    file_config['file_path'] = file_path
+    config_json = json.dumps(file_config)
+    subprocess.run(['python3', '/tmp/marketplace_cleanup.py', config_json], check=True)
+
+print(f"✓ Processed {len(config.get('xml_files', {}))} XML files")
+PYTHON_PROCESS
 echo ""
 
-echo "Step 11: Removing MerchantCommissionHelper from codeception config..."
-CODECEPTION_DYNAMIC_FIXTURES_FILE="tests/PyzTest/Zed/TestifyBackendApi/codeception.dynamic.fixtures.yml"
-if [ -f "$CODECEPTION_DYNAMIC_FIXTURES_FILE" ]; then
-    sed -i.bak '/\\SprykerTest\\Shared\\MerchantCommission\\Helper\\MerchantCommissionHelper/d' "$CODECEPTION_DYNAMIC_FIXTURES_FILE"
-    rm -f "${CODECEPTION_DYNAMIC_FIXTURES_FILE}.bak"
-    echo "✓ Removed MerchantCommissionHelper from codeception.dynamic.fixtures.yml"
-else
-    echo "⚠ Codeception config file not found at $CODECEPTION_DYNAMIC_FIXTURES_FILE"
-fi
+echo "Step 11: Processing test files..."
+python3 << 'PYTHON_PROCESS'
+import json
+import subprocess
+
+# Load configuration
+with open('uninstall-marketplace-config.json', 'r') as f:
+    config = json.load(f)
+
+# Process all test files
+for file_path, file_config in config.get('test_files', {}).items():
+    file_config['file_path'] = file_path
+    config_json = json.dumps(file_config)
+    subprocess.run(['python3', '/tmp/marketplace_cleanup.py', config_json], check=True)
+
+print(f"✓ Processed {len(config.get('test_files', {}))} test files")
+PYTHON_PROCESS
 echo ""
 
-echo "Step 12: Running composer update to apply all changes..."
-composer update --ignore-platform-req=ext-grpc --ignore-platform-req=ext-redis
-echo "✓ Composer update completed"
+echo "Step 12: Processing payment configuration updates..."
+python3 << 'PYTHON_PROCESS'
+import json
+import subprocess
+
+# Load configuration
+with open('uninstall-marketplace-config.json', 'r') as f:
+    config = json.load(f)
+
+# Process payment config files
+for file_path, file_config in config.get('payment_config_updates', {}).items():
+    file_config['file_path'] = file_path
+    config_json = json.dumps(file_config)
+    subprocess.run(['python3', '/tmp/marketplace_cleanup.py', config_json], check=True)
+
+print(f"✓ Processed {len(config.get('payment_config_updates', {}))} payment configuration files")
+PYTHON_PROCESS
 echo ""
 
 echo "=========================================="
@@ -802,7 +972,7 @@ echo ""
 echo "Next steps:"
 echo "1. Review and test the changes"
 echo "2. Run 'composer install' to ensure consistency"
-echo "3. Clear caches and rebuild: docker/sdk boot && docker/sdk up --build"
+echo "3. Clear caches and rebuild: docker/sdk clean && docker/sdk boot && docker/sdk up"
 echo "4. Verify the application works without marketplace features"
 echo ""
 echo "Configuration file used: $CONFIG_FILE"

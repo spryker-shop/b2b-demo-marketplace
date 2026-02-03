@@ -1133,5 +1133,76 @@
     "src/Pyz/Zed/ProductApprovalGui:ProductApprovalGui",
     "tests/PyzTest/Zed/AclEntity:AclEntity",
     "public/MerchantPortal:MerchantPortal"
-  ]
+  ],
+  "xml_files": {
+    "config/Zed/oms/DummyPayment01.xml": {
+      "operations": [
+        {"type": "remove_xml_element", "element_pattern": "<process>DummyMerchantCommission</process>"},
+        {"type": "remove_xml_element", "element_pattern": "<process name=\"DummyMerchantCommission\" file=\"DummySubprocess/DummyMerchantCommission01.xml\"/>"},
+        {"type": "add_xml_transition", "after_pattern": "condition=\"DummyPayment/IsPayed\"", "transition": "<transition happy=\"true\">\n                <source>paid</source>\n                <target>tax pending</target>\n            </transition>"}
+      ],
+      "success_messages": [
+        "✓ Removed DummyMerchantCommission subprocess from DummyPayment01.xml",
+        "✓ Added transition from paid to tax pending in DummyPayment01.xml"
+      ]
+    }
+  },
+  "test_files": {
+    "tests/PyzTest/Zed/TestifyBackendApi/codeception.dynamic.fixtures.yml": {
+      "operations": [
+        {"type": "remove_line_containing", "pattern": "\\SprykerTest\\Shared\\MerchantCommission\\Helper\\MerchantCommissionHelper"}
+      ],
+      "success_messages": [
+        "✓ Removed MerchantCommissionHelper from codeception.dynamic.fixtures.yml"
+      ]
+    },
+    "tests/PyzTest/Zed/NavigationGui/Presentation/NavigationTreeCest.php": {
+      "operations": [
+        {"type": "add_skip_annotation", "method_name": "testUpdateNodeToCategoryType"}
+      ],
+      "success_messages": [
+        "✓ Added @skip annotation to testUpdateNodeToCategoryType test"
+      ]
+    },
+    "tests/PyzTest/Glue/CartReorder/RestApi/MerchantProductOfferCartReorderRestApiCest.php": {
+      "operations": [
+        {"type": "add_skip_annotation", "class_name": "MerchantProductOfferCartReorderRestApiCest"}
+      ],
+      "success_messages": [
+        "✓ Added @skip annotation to MerchantProductOfferCartReorderRestApiCest test class"
+      ]
+    },
+    "tests/PyzTest/Glue/Checkout/_support/CheckoutApiTester.php": {
+      "operations": [
+        {"type": "replace_string", "old_value": "'DummyMarketplacePayment'", "new_value": "'DummyPayment'"}
+      ],
+      "success_messages": [
+        "✓ Updated REQUEST_PARAM_PAYMENT_PROVIDER_NAME_DUMMY_PAYMENT constant to 'DummyPayment'"
+      ]
+    }
+  },
+  "payment_config_updates": {
+    "config/Shared/config_default-docker.php": {
+      "operations": [
+        {"type": "regex_replace", "pattern": "use Spryker\\\\Shared\\\\DummyMarketplacePayment\\\\DummyMarketplacePaymentConfig;\\s*\\n", "replacement": "", "flags": ""},
+        {"type": "ensure_use_statement", "class_name": "Spryker\\Shared\\DummyPayment\\DummyPaymentConfig", "after_pattern": "use Spryker\\Shared\\Sales\\SalesConstants;"},
+        {"type": "replace_array_config_content", "config_key": "$config[OmsConstants::ACTIVE_PROCESSES]", "new_content": "\n    'DummyPayment01',\n"},
+        {"type": "replace_array_config_content", "config_key": "$config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING]", "new_content": "\n    DummyPaymentConfig::PAYMENT_METHOD_INVOICE => 'DummyPayment01',\n    DummyPaymentConfig::PAYMENT_METHOD_CREDIT_CARD => 'DummyPayment01',\n"}
+      ],
+      "success_messages": [
+        "✓ Updated payment method statemachine mapping in config_default-docker.php"
+      ]
+    },
+    "src/Pyz/Glue/PaymentsRestApi/PaymentsRestApiConfig.php": {
+      "operations": [
+        {"type": "ensure_use_statement", "class_name": "Spryker\\Shared\\DummyPayment\\DummyPaymentConfig"},
+        {"type": "regex_replace", "pattern": "use Spryker\\\\Shared\\\\DummyMarketplacePayment\\\\DummyMarketplacePaymentConfig;\\s*\\n", "replacement": "", "flags": ""},
+        {"type": "replace_or_add_constant", "constant_pattern": "protected\\s+const\\s+PAYMENT_METHOD_PRIORITY\\s*=\\s*\\[.*?\\];", "new_constant_definition": "protected const PAYMENT_METHOD_PRIORITY = [\n        DummyPaymentConfig::PAYMENT_METHOD_INVOICE => 1,\n    ];"},
+        {"type": "replace_or_add_constant", "constant_pattern": "protected\\s+const\\s+PAYMENT_METHOD_REQUIRED_FIELDS\\s*=\\s*\\[.*?\\];", "new_constant_definition": "protected const PAYMENT_METHOD_REQUIRED_FIELDS = [\n        DummyPaymentConfig::PAYMENT_METHOD_INVOICE => [\n            'dummyPaymentInvoice.dateOfBirth',\n        ],\n    ];"}
+      ],
+      "success_messages": [
+        "✓ Updated PaymentsRestApiConfig with DummyPayment configuration"
+      ]
+    }
+  }
 }
