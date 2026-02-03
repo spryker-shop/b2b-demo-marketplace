@@ -154,7 +154,6 @@ jobs:
                 if: always()
 
     php-84-mariadb-acceptance-alpine:
-        needs: [js-validation]
         name: "Codeception / Acceptance & API"
         runs-on: ubuntu-latest
         env:
