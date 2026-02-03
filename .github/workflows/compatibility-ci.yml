@@ -178,11 +178,11 @@ jobs:
         steps:
             -   uses: actions/checkout@v4
 
-            - name: Remove unnecessary files to release disk space
-              run: |
-                  df -h /
-                  rm -rf /opt/hostedtoolcache
-                  df -h /
+            -   name: Remove unnecessary files to release disk space
+                run: |
+                    df -h /
+                    rm -rf /opt/hostedtoolcache
+                    df -h /
 
             -   uses: ramsey/composer-install@v3
                 with:
