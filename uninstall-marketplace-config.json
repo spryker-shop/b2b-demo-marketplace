@@ -118,10 +118,12 @@
         {"type": "remove_use", "class_name": "ProductApprovalCheckoutPreConditionPlugin"},
         {"type": "remove_use", "class_name": "MerchantCheckoutPreConditionPlugin"},
         {"type": "remove_use", "class_name": "OrderAmendmentProductApprovalCheckoutPreConditionPlugin"},
+        {"type": "remove_use", "class_name": "ProductOfferCheckoutPreConditionPlugin"},
         {"type": "remove_plugin", "plugin_class": "MerchantProductOptionCheckoutPreConditionPlugin"},
         {"type": "remove_plugin", "plugin_class": "ProductApprovalCheckoutPreConditionPlugin"},
         {"type": "remove_plugin", "plugin_class": "MerchantCheckoutPreConditionPlugin"},
-        {"type": "remove_plugin", "plugin_class": "OrderAmendmentProductApprovalCheckoutPreConditionPlugin"}
+        {"type": "remove_plugin", "plugin_class": "OrderAmendmentProductApprovalCheckoutPreConditionPlugin"},
+        {"type": "remove_plugin", "plugin_class": "ProductOfferCheckoutPreConditionPlugin"}
       ],
       "success_messages": [
         "✓ CheckoutDependencyProvider cleaned from marketplace-specific plugins"
