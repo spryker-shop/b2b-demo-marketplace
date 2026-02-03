@@ -164,15 +164,15 @@ jobs:
                 uses: ./.github/actions/job-slack-notifications
                 if: always()
 
-    docker-alpine-php-84-mariadb-cypress:
+    docker-alpine-php-83-postgres-cypress:
         if: >
             (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci'))
             || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-        name: "Docker / Alpine / PHP 8.4 / MariaDB / Cypress / UI"
+        name: "Docker / Alpine / PHP 8.3 / Postgress / Cypress / UI"
         runs-on: ubuntu-latest
         env:
             PROGRESS_TYPE: plain
-            SPRYKER_PLATFORM_IMAGE: spryker/php:8.4
+            SPRYKER_PLATFORM_IMAGE: spryker/php:8.3
             TRAVIS: 1
             ROBOT_TESTS_ARTIFACTS_BUCKET_REGION: eu-west-1
         steps:
@@ -243,15 +243,15 @@ jobs:
                 uses: ./.github/actions/job-slack-notifications
                 if: always()
 
-    docker-alpine-php-84-mariadb-cypress-ssp:
+    docker-alpine-php-83-postgres-cypress-ssp:
         if: >
             (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci'))
             || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-        name: "Docker / Alpine / PHP 8.4 / MariaDB / Cypress / SSP"
+        name: "Docker / Alpine / PHP 8.3 / Postgres / Cypress / SSP"
         runs-on: ubuntu-latest
         env:
             PROGRESS_TYPE: plain
-            SPRYKER_PLATFORM_IMAGE: spryker/php:8.4
+            SPRYKER_PLATFORM_IMAGE: spryker/php:8.3
             TRAVIS: 1
             ROBOT_TESTS_ARTIFACTS_BUCKET_REGION: eu-west-1
         steps:
