@@ -15,6 +15,8 @@ use PyzTest\Glue\CartReorder\RestApi\Fixtures\MerchantProductOfferCartReorderRes
 use Spryker\Glue\CartReorderRestApi\CartReorderRestApiConfig;
 
 /**
+ * @skip
+ *
  * Auto-generated group annotations
  *
  * @group PyzTest

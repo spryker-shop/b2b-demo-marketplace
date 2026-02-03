@@ -6,12 +6,10 @@ declare(strict_types = 1);
 // ########################## CI CYPRESS CONFIGURATION ########################
 // ############################################################################
 
-use Spryker\Shared\AgentSecurityBlockerMerchantPortal\AgentSecurityBlockerMerchantPortalConstants;
 use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\WebExceptionErrorRenderer;
 use Spryker\Shared\SecurityBlocker\SecurityBlockerConstants;
 use Spryker\Shared\SecurityBlockerBackoffice\SecurityBlockerBackofficeConstants;
-use Spryker\Shared\SecurityBlockerMerchantPortal\SecurityBlockerMerchantPortalConstants;
 use Spryker\Shared\SecurityBlockerStorefrontAgent\SecurityBlockerStorefrontAgentConstants;
 use Spryker\Shared\SecurityBlockerStorefrontCustomer\SecurityBlockerStorefrontCustomerConstants;
 

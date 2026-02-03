@@ -82,7 +82,7 @@ class CheckoutApiTester extends ApiEndToEndTester
     /**
      * @var string
      */
-    protected const REQUEST_PARAM_PAYMENT_PROVIDER_NAME_DUMMY_PAYMENT = 'DummyMarketplacePayment';
+    protected const REQUEST_PARAM_PAYMENT_PROVIDER_NAME_DUMMY_PAYMENT = 'DummyPayment';
 
     /**
      * @var string

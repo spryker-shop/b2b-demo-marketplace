@@ -779,7 +779,25 @@ else
 fi
 echo ""
 
-echo "Step 11: Removing MerchantCommissionHelper from codeception config..."
+echo "Step 11: Adding transition from paid to tax pending in DummyPayment01.xml..."
+if [ -f "$OMS_XML_FILE" ]; then
+    # Add transition from paid to tax pending after the IsPayed condition transition
+    sed -i '' '/condition="DummyPayment\/IsPayed"/,/<\/transition>/{
+        /<\/transition>/a\
+\
+            <transition happy="true">\
+                <source>paid</source>\
+                <target>tax pending</target>\
+            </transition>
+    }' "$OMS_XML_FILE"
+
+    echo "✓ Added transition from paid to tax pending in DummyPayment01.xml"
+else
+    echo "⚠ OMS file not found at $OMS_XML_FILE"
+fi
+echo ""
+
+echo "Step 12: Removing MerchantCommissionHelper from codeception config..."
 CODECEPTION_DYNAMIC_FIXTURES_FILE="tests/PyzTest/Zed/TestifyBackendApi/codeception.dynamic.fixtures.yml"
 if [ -f "$CODECEPTION_DYNAMIC_FIXTURES_FILE" ]; then
     sed -i.bak '/\\SprykerTest\\Shared\\MerchantCommission\\Helper\\MerchantCommissionHelper/d' "$CODECEPTION_DYNAMIC_FIXTURES_FILE"
@@ -790,9 +808,178 @@ else
 fi
 echo ""
 
-echo "Step 12: Running composer update to apply all changes..."
-composer update --ignore-platform-req=ext-grpc --ignore-platform-req=ext-redis
-echo "✓ Composer update completed"
+echo "Step 13: Skipping marketplace-related tests..."
+NAVIGATION_TEST_FILE="tests/PyzTest/Zed/NavigationGui/Presentation/NavigationTreeCest.php"
+if [ -f "$NAVIGATION_TEST_FILE" ]; then
+    sed -i.bak '/public function testUpdateNodeToCategoryType/,/\*\// {
+        /\/\*\*/a\
+     * @skip\
+     *
+    }' "$NAVIGATION_TEST_FILE"
+    rm -f "${NAVIGATION_TEST_FILE}.bak"
+    echo "✓ Added @skip annotation to testUpdateNodeToCategoryType test"
+else
+    echo "⚠ Navigation test file not found at $NAVIGATION_TEST_FILE"
+fi
+
+MERCHANT_PRODUCT_OFFER_TEST_FILE="tests/PyzTest/Glue/CartReorder/RestApi/MerchantProductOfferCartReorderRestApiCest.php"
+if [ -f "$MERCHANT_PRODUCT_OFFER_TEST_FILE" ]; then
+    sed -i.bak '/^class MerchantProductOfferCartReorderRestApiCest/,/^{/ {
+        /\/\*\*/,/\*\// {
+            /\*\//i\
+ * @skip\
+ *
+        }
+    }' "$MERCHANT_PRODUCT_OFFER_TEST_FILE"
+    rm -f "${MERCHANT_PRODUCT_OFFER_TEST_FILE}.bak"
+    echo "✓ Added @skip annotation to MerchantProductOfferCartReorderRestApiCest test class"
+else
+    echo "⚠ Merchant product offer test file not found at $MERCHANT_PRODUCT_OFFER_TEST_FILE"
+fi
+echo ""
+
+echo "Step 14: Updating payment provider constant in CheckoutApiTester..."
+CHECKOUT_API_TESTER_FILE="tests/PyzTest/Glue/Checkout/_support/CheckoutApiTester.php"
+if [ -f "$CHECKOUT_API_TESTER_FILE" ]; then
+    sed -i.bak "s/'DummyMarketplacePayment'/'DummyPayment'/g" "$CHECKOUT_API_TESTER_FILE"
+    rm -f "${CHECKOUT_API_TESTER_FILE}.bak"
+    echo "✓ Updated REQUEST_PARAM_PAYMENT_PROVIDER_NAME_DUMMY_PAYMENT constant to 'DummyPayment'"
+else
+    echo "⚠ CheckoutApiTester file not found at $CHECKOUT_API_TESTER_FILE"
+fi
+echo ""
+
+echo "Step 15: Updating payment method configuration in config_default-docker.php..."
+CONFIG_DEFAULT_DOCKER_FILE="config/Shared/config_default-docker.php"
+if [ -f "$CONFIG_DEFAULT_DOCKER_FILE" ]; then
+    # Remove DummyMarketplacePayment import and update PAYMENT_METHOD_STATEMACHINE_MAPPING
+    python3 << 'PYTHON_SCRIPT'
+import re
+
+config_file = "config/Shared/config_default-docker.php"
+
+with open(config_file, 'r') as f:
+    content = f.read()
+
+# Remove DummyMarketplacePayment import
+content = re.sub(
+    r'use\s+Spryker\\Shared\\DummyMarketplacePayment\\DummyMarketplacePaymentConfig;\s*\n',
+    '',
+    content
+)
+
+# Ensure DummyPayment import exists (add if not present)
+if 'use Spryker\\Shared\\DummyPayment\\DummyPaymentConfig;' not in content:
+    # Add after DocumentationGeneratorRestApi import
+    content = re.sub(
+        r'(use\s+Spryker\\Shared\\DocumentationGeneratorRestApi\\DocumentationGeneratorRestApiConstants;\s*\n)',
+        r'\1use Spryker\\Shared\\DummyPayment\\DummyPaymentConfig;\n',
+        content
+    )
+
+# Pattern to find PAYMENT_METHOD_STATEMACHINE_MAPPING configuration
+pattern = r'(\$config\[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING\]\s*=\s*\[)(.*?)(\];)'
+
+def update_payment_config(match):
+    prefix = match.group(1)
+    current_content = match.group(2)
+    suffix = match.group(3)
+    
+    # New configuration
+    new_content = """
+    DummyPaymentConfig::PAYMENT_METHOD_INVOICE => 'DummyPayment01',
+    DummyPaymentConfig::PAYMENT_METHOD_CREDIT_CARD => 'DummyPayment01',
+"""
+    
+    return prefix + new_content + suffix
+
+content = re.sub(pattern, update_payment_config, content, flags=re.DOTALL)
+
+with open(config_file, 'w') as f:
+    f.write(content)
+
+print("Updated PAYMENT_METHOD_STATEMACHINE_MAPPING configuration and removed DummyMarketplacePayment import")
+PYTHON_SCRIPT
+    echo "✓ Updated payment method statemachine mapping and removed marketplace payment imports"
+else
+    echo "⚠ config_default-docker.php file not found at $CONFIG_DEFAULT_DOCKER_FILE"
+fi
+echo ""
+
+echo "Step 16: Updating PaymentsRestApiConfig with DummyPayment configuration..."
+PAYMENTS_REST_API_CONFIG_FILE="src/Pyz/Glue/PaymentsRestApi/PaymentsRestApiConfig.php"
+if [ -f "$PAYMENTS_REST_API_CONFIG_FILE" ]; then
+    # Update PaymentsRestApiConfig to use DummyPayment configuration
+    python3 << 'PYTHON_SCRIPT'
+import re
+
+config_file = "src/Pyz/Glue/PaymentsRestApi/PaymentsRestApiConfig.php"
+
+with open(config_file, 'r') as f:
+    content = f.read()
+
+# Ensure DummyPayment import exists
+if 'use Spryker\\Shared\\DummyPayment\\DummyPaymentConfig;' not in content:
+    # Add after the SprykerPaymentsRestApiConfig import
+    content = re.sub(
+        r'(use Spryker\\Glue\\PaymentsRestApi\\PaymentsRestApiConfig as SprykerPaymentsRestApiConfig;\s*\n)',
+        r'\1use Spryker\\Shared\\DummyPayment\\DummyPaymentConfig;\n',
+        content
+    )
+
+# Remove DummyMarketplacePayment import if exists
+content = re.sub(
+    r'use\s+Spryker\\Shared\\DummyMarketplacePayment\\DummyMarketplacePaymentConfig;\s*\n',
+    '',
+    content
+)
+
+# Update or add PAYMENT_METHOD_PRIORITY constant
+priority_pattern = r'protected\s+const\s+PAYMENT_METHOD_PRIORITY\s*=\s*\[.*?\];'
+priority_replacement = """protected const PAYMENT_METHOD_PRIORITY = [
+        DummyPaymentConfig::PAYMENT_METHOD_INVOICE => 1,
+    ];"""
+
+if re.search(priority_pattern, content, re.DOTALL):
+    content = re.sub(priority_pattern, priority_replacement, content, flags=re.DOTALL)
+else:
+    # Add after class declaration
+    content = re.sub(
+        r'(class\s+PaymentsRestApiConfig\s+extends\s+SprykerPaymentsRestApiConfig\s*\n\s*\{)',
+        r'\1\n    ' + priority_replacement.replace('\n', '\n    '),
+        content
+    )
+
+# Update or add PAYMENT_METHOD_REQUIRED_FIELDS constant
+required_fields_pattern = r'protected\s+const\s+PAYMENT_METHOD_REQUIRED_FIELDS\s*=\s*\[.*?\];'
+required_fields_replacement = """protected const PAYMENT_METHOD_REQUIRED_FIELDS = [
+        DummyPaymentConfig::PROVIDER_NAME => [
+            DummyPaymentConfig::PAYMENT_METHOD_INVOICE => [
+                'dummyPaymentInvoice.dateOfBirth',
+            ],
+        ],
+    ];"""
+
+if re.search(required_fields_pattern, content, re.DOTALL):
+    content = re.sub(required_fields_pattern, required_fields_replacement, content, flags=re.DOTALL)
+else:
+    # Add after PAYMENT_METHOD_PRIORITY
+    content = re.sub(
+        r'(protected\s+const\s+PAYMENT_METHOD_PRIORITY\s*=\s*\[.*?\];)',
+        r'\1\n\n    ' + required_fields_replacement.replace('\n', '\n    '),
+        content,
+        flags=re.DOTALL
+    )
+
+with open(config_file, 'w') as f:
+    f.write(content)
+
+print("Updated PaymentsRestApiConfig with DummyPayment configuration")
+PYTHON_SCRIPT
+    echo "✓ Updated PaymentsRestApiConfig with payment method priority and required fields"
+else
+    echo "⚠ PaymentsRestApiConfig.php file not found at $PAYMENTS_REST_API_CONFIG_FILE"
+fi
 echo ""
 
 echo "=========================================="
@@ -802,7 +989,7 @@ echo ""
 echo "Next steps:"
 echo "1. Review and test the changes"
 echo "2. Run 'composer install' to ensure consistency"
-echo "3. Clear caches and rebuild: docker/sdk boot && docker/sdk up --build"
+echo "3. Clear caches and rebuild: docker/sdk clean && docker/sdk boot && docker/sdk up"
 echo "4. Verify the application works without marketplace features"
 echo ""
 echo "Configuration file used: $CONFIG_FILE"
