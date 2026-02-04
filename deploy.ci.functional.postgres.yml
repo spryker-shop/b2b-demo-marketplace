@@ -4,9 +4,9 @@ namespace: spryker_ci
 tag: '1.0'
 
 environment: docker.ci
-pipeline: docker.ci.api
+pipeline: docker.ci.api.full
 image:
-    tag: spryker/php:8.4
+    tag: spryker/php:8.3
     php:
         enabled-extensions:
             - otel
@@ -19,8 +19,8 @@ image:
         npm: 10
 
 composer:
-    mode: '--quiet -o'
-    autoload: '-o'
+    mode: '--quiet -o -a'
+    autoload: '-o -a'
 
 regions:
     EU:
@@ -32,46 +32,55 @@ regions:
 
             broker:
                 namespace: eu-docker
-            key_value_store:
-                namespace: 1
-            search:
-                namespace: eu_search
+                key_value_store:
+                    namespace: 1
+                search:
+                    namespace: eu_search
 groups:
     EU:
         region: EU
         applications:
-            glue:
+            yves_eu:
+                application: yves
+                endpoints:
+                    yves.eu.spryker.local:
+                        region: EU
+                        services:
+                            session:
+                                namespace: 1
+            glue_eu:
                 application: glue
                 endpoints:
                     glue.eu.spryker.local:
                         region: EU
-            backgw:
+            backoffice_eu:
+                application: backoffice
+                endpoints:
+                    backoffice.eu.spryker.local:
+                        region: EU
+                        services:
+                            session:
+                                namespace: 3
+            backend_gateway_eu:
                 application: backend-gateway
                 endpoints:
                     backend-gateway.eu.spryker.local:
                         region: EU
                         primal: true
-            backapi:
-                application: zed
+            merchant_portal_eu:
+                application: merchant-portal
                 endpoints:
-                    backend-api.eu.spryker.local:
+                    mp.eu.spryker.local:
                         region: EU
-                        entry-point: BackendApi
-            gluestorefront:
-                application: glue-storefront
-                endpoints:
-                    glue-storefront.eu.spryker.local:
-                        region: EU
-            gluebackend:
-                application: glue-backend
-                endpoints:
-                    glue-backend.eu.spryker.local:
-                        region: EU
+                        entry-point: MerchantPortal
+                        primal: true
+                        services:
+                            session:
+                                namespace: 1
 
 services:
     database:
-        engine: mysql
-        version: mariadb-11.8
+        engine: postgres
         root:
             username: 'root'
             password: 'secret'
@@ -102,4 +111,4 @@ docker:
         region: EU
 
     mount:
-        native:
+        baked:
