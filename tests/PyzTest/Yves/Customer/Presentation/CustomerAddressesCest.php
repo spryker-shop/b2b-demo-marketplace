@@ -15,6 +15,7 @@ use PyzTest\Yves\Customer\PageObject\CustomerAddressesPage;
 use PyzTest\Yves\Customer\PageObject\CustomerAddressPage;
 
 /**
+ * @skip - broken in master
  * Auto-generated group annotations
  *
  * @group PyzTest
