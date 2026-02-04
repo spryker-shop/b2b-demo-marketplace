@@ -59,22 +59,12 @@
 {% endmacro %}
 
 {% block customerContent %}
-    {% if data.addresses | length %}
-        {% include molecule('action-bar') with {
-            modifiers: ['first'],
-            data: {
-                title: 'customer.account.address' | trans,
-                actions: [
-                    {
-                        title: 'customer.account.button.add_new_address' | trans,
-                        url: url('customer/address/new'),
-                        modifiers: ['hollow'],
-                        qa: 'customer-add-new-address',
-                    },
-                ],
-            },
-        } only %}
-    {% endif %}
+    {% include molecule('action-bar') with {
+        modifiers: ['first'],
+        data: {
+            title: 'customer.account.address' | trans,
+        },
+    } only %}
 
     {% set cards = [] %}
 
