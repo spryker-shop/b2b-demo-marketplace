@@ -63,6 +63,14 @@
         modifiers: ['first'],
         data: {
             title: 'customer.account.address' | trans,
+            actions: data.addresses | length ? [
+                {
+                    title: 'customer.account.button.add_new_address' | trans,
+                    url: url('customer/address/new'),
+                    modifiers: ['hollow'],
+                    qa: 'customer-add-new-address',
+                },
+            ] : [],
         },
     } only %}
 
