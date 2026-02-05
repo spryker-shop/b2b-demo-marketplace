@@ -106,6 +106,16 @@ groups:
     EU:
         region: EU
         applications:
+            mportal:
+                application: merchant-portal
+                endpoints:
+                    mp.eu.icp.cloud.spryker.toys:
+                        entry-point: MerchantPortal
+                        region: EU
+                        primal: true
+                        services:
+                            session:
+                                namespace: 7
             yves:
                 application: yves
                 endpoints:
