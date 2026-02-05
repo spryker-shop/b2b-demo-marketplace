@@ -73,6 +73,8 @@ image:
         npm: 9
 
 composer:
+    mode: --dev
+    autoload: --classmap-authoritative
 
 assets:
     image: spryker/nginx-brotli:latest
