@@ -2,10 +2,11 @@
 
 ## Overview
 
-The marketplace uninstall system consists of two main components:
+The marketplace uninstall system consists of three main components:
 
 1. **uninstall-marketplace-config.json** - Centralized configuration file containing all cleanup recipes
-2. **uninstall-marketplace-modules-v2.sh** - Shell script that reads the configuration and executes cleanup operations
+2. **uninstall-marketplace-modules.sh** - Shell script that reads the configuration and executes backend cleanup operations
+3. **uninstall-frontend-marketplace.sh** - Shell script that removes marketplace-specific frontend files and dependencies
 
 This architecture separates configuration from execution logic, making it easier to maintain and extend the uninstall process.
 
@@ -13,9 +14,10 @@ This architecture separates configuration from execution logic, making it easier
 
 ```
 project-root/
-├── uninstall-marketplace-config.json    # Configuration file
-├── uninstall-marketplace-modules-v2.sh  # Execution script
-└── UNINSTALL_MAINTENANCE_GUIDE.md       # This guide
+├── uninstall-marketplace-config.json       # Configuration file
+├── uninstall-marketplace-modules.sh        # Backend cleanup script
+├── uninstall-frontend-marketplace.sh       # Frontend cleanup script
+└── uninstall_maintenance_guide.md          # This guide
 ```
 
 ## Configuration File Structure
@@ -26,6 +28,9 @@ The `uninstall-marketplace-config.json` file contains the following top-level se
 {
   "php_dependency_providers": {},
   "config_files": {},
+  "xml_files": {},
+  "test_files": {},
+  "payment_config_updates": {},
   "import_entities_to_remove": [],
   "import_yaml_files": [],
   "docker_commands_to_remove": [],
@@ -42,6 +47,16 @@ The `uninstall-marketplace-config.json` file contains the following top-level se
 Location in JSON: `php_dependency_providers`
 
 Each PHP file can have multiple operations:
+
+#### Operation: `remove_use`
+Removes use statement (import) for a class.
+
+```json
+{
+  "type": "remove_use",
+  "class_name": "ExamplePlugin"
+}
+```
 
 #### Operation: `remove_plugin`
 Removes plugin instantiation from arrays and its use statement.
@@ -163,6 +178,61 @@ Removes array value entries.
 }
 ```
 
+#### Operation: `remove_line_containing`
+Removes lines containing a specific pattern.
+
+```json
+{
+  "type": "remove_line_containing",
+  "pattern": "ExampleText"
+}
+```
+
+#### Operation: `replace_string`
+Replaces one string with another.
+
+```json
+{
+  "type": "replace_string",
+  "old_value": "OldValue",
+  "new_value": "NewValue"
+}
+```
+
+#### Operation: `ensure_use_statement`
+Ensures a use statement exists (adds if missing).
+
+```json
+{
+  "type": "ensure_use_statement",
+  "class_name": "ExampleClass",
+  "after_pattern": "use Spryker\\Zed\\Kernel"
+}
+```
+
+#### Operation: `regex_replace`
+Performs regex-based string replacement.
+
+```json
+{
+  "type": "regex_replace",
+  "pattern": "regex_pattern",
+  "replacement": "replacement_text",
+  "flags": "MULTILINE|DOTALL"
+}
+```
+
+#### Operation: `replace_or_add_constant`
+Replaces an existing constant or adds it if it doesn't exist.
+
+```json
+{
+  "type": "replace_or_add_constant",
+  "constant_pattern": "EXAMPLE_CONSTANT",
+  "new_definition": "public const EXAMPLE_CONSTANT = 'value';"
+}
+```
+
 ### 2. Configuration File Operations
 
 Location in JSON: `config_files`
@@ -228,7 +298,58 @@ Removes array key-value pairs.
 }
 ```
 
-### 3. Simple Array Entries
+#### Operation: `replace_array_config_content`
+Replaces the entire content of a configuration array.
+
+```json
+{
+  "type": "replace_array_config_content",
+  "config_key": "ARRAY_KEY",
+  "new_content": "'new' => 'value'"
+}
+```
+
+### 3. XML File Operations
+
+Location in JSON: `xml_files`
+
+#### Operation: `remove_xml_element`
+Removes XML elements matching a pattern.
+
+```json
+{
+  "type": "remove_xml_element",
+  "element_pattern": "<element.*?</element>"
+}
+```
+
+#### Operation: `add_xml_transition`
+Adds an XML transition after a specific pattern.
+
+```json
+{
+  "type": "add_xml_transition",
+  "after_pattern": "<transition.*?/>",
+  "transition": "<transition>...</transition>"
+}
+```
+
+### 4. Test File Operations
+
+Location in JSON: `test_files`
+
+#### Operation: `add_skip_annotation`
+Adds @skip annotation to test methods or classes.
+
+```json
+{
+  "type": "add_skip_annotation",
+  "method_name": "testExampleMethod",
+  "class_name": "ExampleTest"
+}
+```
+
+### 5. Simple Array Entries
 
 #### Import Entities
 Lists of import entity names to remove from YAML files.
@@ -250,7 +371,7 @@ Lists of docker commands to remove from configuration.
 ]
 ```
 
-### 4. Directory Removal
+### 6. Directory Removal
 
 Format: `"path:DisplayName"`
 
@@ -384,6 +505,85 @@ And ensure the docker config files are listed:
 ]
 ```
 
+### Case 7: Removing XML Elements
+
+**Scenario**: Remove marketplace-specific XML transitions from OMS configuration
+
+```json
+"config/Zed/oms/DummyPayment01.xml": {
+  "operations": [
+    {
+      "type": "remove_xml_element",
+      "element_pattern": "<transition.*?event=\"send merchant order mail\".*?</transition>"
+    }
+  ],
+  "success_messages": [
+    "✓ Removed merchant transitions from OMS"
+  ]
+}
+```
+
+### Case 8: Adding Skip Annotations to Tests
+
+**Scenario**: Skip marketplace-related tests
+
+```json
+"tests/PyzTest/Glue/Checkout/_support/CheckoutApiTester.php": {
+  "operations": [
+    {
+      "type": "add_skip_annotation",
+      "method_name": "testMerchantCheckout"
+    }
+  ],
+  "success_messages": [
+    "✓ Added skip annotation to merchant tests"
+  ]
+}
+```
+
+### Case 9: Replacing Configuration with Regex
+
+**Scenario**: Update payment configuration to remove marketplace payment methods
+
+```json
+"src/Pyz/Glue/PaymentsRestApi/PaymentsRestApiConfig.php": {
+  "operations": [
+    {
+      "type": "regex_replace",
+      "pattern": "DummyMarketplacePaymentInvoice.*?,",
+      "replacement": "",
+      "flags": "MULTILINE"
+    }
+  ],
+  "success_messages": [
+    "✓ Removed marketplace payment methods"
+  ]
+}
+```
+
+### Case 10: Ensuring Use Statements
+
+**Scenario**: After removing a plugin, ensure a replacement plugin's use statement exists
+
+```json
+"src/Pyz/Zed/Example/ExampleDependencyProvider.php": {
+  "operations": [
+    {
+      "type": "remove_plugin",
+      "plugin_class": "MarketplacePlugin"
+    },
+    {
+      "type": "ensure_use_statement",
+      "class_name": "StandardPlugin",
+      "after_pattern": "use Spryker\\\\Zed\\\\Kernel"
+    }
+  ],
+  "success_messages": [
+    "✓ Replaced MarketplacePlugin with StandardPlugin"
+  ]
+}
+```
+
 ## Best Practices
 
 ### 1. Testing Changes
@@ -486,39 +686,62 @@ elif op_type == 'remove_new_pattern':
     content = remove_new_pattern(content, operation['pattern_value'])
 ```
 
-## Version Control
+## Running the Scripts
 
-When modifying the configuration:
-
-1. Create a feature branch
-2. Update the configuration file
-3. Test the changes
-4. Commit with descriptive message:
-   ```bash
-   git commit -m "feat: Add removal of NewMarketplaceFeature"
-   ```
-5. Create a pull request for review
-
-## Running the Script
+### Backend Uninstall
 
 ```bash
 # Make script executable (first time only)
-chmod +x uninstall-marketplace-modules-v2.sh
+chmod +x uninstall-marketplace-modules.sh
 
-# Run the script
-./uninstall-marketplace-modules-v2.sh
+# Run the backend uninstall script
+./uninstall-marketplace-modules.sh
 ```
 
-## Safety Checklist
+This script will:
+- Remove marketplace Composer packages
+- Clean up PHP dependency providers
+- Remove marketplace-specific configuration
+- Remove marketplace directories
+- Clean up data import configurations
+- Update Docker configuration files
 
-Before running in production:
+### Frontend Uninstall
 
-- [ ] Configuration JSON is valid
-- [ ] All file paths are verified
-- [ ] Changes are committed to git
-- [ ] Testing completed on dev environment
-- [ ] Team review completed
-- [ ] Backup created (if applicable)
+```bash
+# Make script executable (first time only)
+chmod +x uninstall-frontend-marketplace.sh
+
+# Run the frontend uninstall script
+./uninstall-frontend-marketplace.sh
+```
+
+This script will:
+- Remove marketplace frontend configuration files (tsconfig.mp.json, .stylelintrc.mp.js, angular.json)
+- Remove frontend/merchant-portal directory
+- Clean up eslint.config.mjs (remove Merchant Portal blocks)
+- Remove mp:* scripts from package.json
+- Remove Angular and related dependencies
+- Update npm dependencies
+- Install required Babel packages
+
+### Recommended Execution Order
+
+1. Run the frontend uninstall script first:
+   ```bash
+   ./uninstall-frontend-marketplace.sh
+   ```
+
+2. Then run the backend uninstall script:
+   ```bash
+   ./uninstall-marketplace-modules.sh
+   ```
+
+3. Review all changes before committing:
+   ```bash
+   git status
+   git diff
+   ```
 
 ## Support
 
@@ -530,15 +753,95 @@ For questions or issues with the uninstall script:
 4. Review recent changes to the configuration file
 5. Consult with the development team
 
+## Frontend Uninstall Script
+
+The `uninstall-frontend-marketplace.sh` script handles removal of all marketplace frontend components:
+
+### Files Removed
+- `tsconfig.mp.json` - Merchant Portal TypeScript configuration
+- `.stylelintrc.mp.js` - Merchant Portal style linting configuration
+- `angular.json` - Angular workspace configuration
+
+### Directories Removed
+- `frontend/merchant-portal` - All Merchant Portal frontend code
+
+### Configuration Cleanup
+
+#### eslint.config.mjs
+Removes Merchant Portal configuration blocks:
+- Angular ESLint import statements
+- TypeScript file configurations for Merchant Portal
+- HTML template configurations for Merchant Portal
+
+#### package.json
+Removes:
+- All `mp:*` scripts
+- `postinstall` script if it references `mp:update:paths`
+- Angular packages (@angular/*, angular-eslint)
+- Merchant Portal specific dependencies (ng-zorro-antd, zone.js, rxjs)
+- Jest packages
+
+### Post-Cleanup Actions
+The script automatically:
+- Runs `npm install` to update dependencies
+- Installs required Babel packages (@babel/core, @babel/runtime)
+- Cleans npm cache
+
 ## Changelog
 
 Document significant changes to the configuration:
 
 ```
+2026-02-05: Updated maintenance guide with all operation types and new sections
+2026-02-05: Added frontend uninstall script documentation
 2026-02-02: Initial configuration file created with all marketplace features
 ```
 
----
+## Complete Operation Type Reference
 
-**Last Updated**: February 2, 2026  
-**Maintained By**: Development Team
+### PHP and Config File Operations
+- `remove_use` - Remove use/import statements
+- `remove_plugin` - Remove plugin instantiation and use statement
+- `remove_event_subscriber` - Remove event subscriber add() calls
+- `remove_collection_add` - Remove collection add() calls
+- `remove_resource_relationship` - Remove REST API resource relationships
+- `remove_method` - Remove entire methods with docblocks
+- `remove_constant` - Remove constants with docblocks
+- `remove_array_entry` - Remove array entries by key
+- `remove_queue_entry` - Remove queue configuration entries
+- `remove_array_constant_entry` - Remove array constant references
+- `remove_data_import_console` - Remove DataImportConsole instantiations
+- `remove_array_value_entry` - Remove array value entries
+- `remove_config_assignment` - Remove config assignment lines
+- `remove_array_value` - Remove array values
+- `remove_filesystem_config` - Remove filesystem configuration blocks
+- `remove_section_comment` - Remove section comments
+- `remove_array_key_value` - Remove array key-value pairs
+- `remove_line_containing` - Remove lines containing specific patterns
+- `replace_string` - Replace one string with another
+- `ensure_use_statement` - Add use statement if missing
+- `regex_replace` - Regex-based string replacement
+- `replace_or_add_constant` - Replace or add constant definitions
+- `replace_array_config_content` - Replace configuration array content
+
+### XML File Operations
+- `remove_xml_element` - Remove XML elements by pattern
+- `add_xml_transition` - Add XML transitions after pattern
+
+### Test File Operations
+- `add_skip_annotation` - Add @skip annotations to tests
+
+### Top-Level Configuration Sections
+- `php_dependency_providers` - PHP dependency provider files
+- `config_files` - Configuration files
+- `xml_files` - XML configuration files
+- `test_files` - Test files
+- `payment_config_updates` - Payment configuration updates
+- `import_entities_to_remove` - Data import entity names
+- `import_yaml_files` - YAML import file paths
+- `docker_commands_to_remove` - Docker command names
+- `docker_config_files` - Docker configuration file paths
+- `deploy_files` - Deploy file paths
+- `directories_to_remove` - Directory paths with display names
+
+---
