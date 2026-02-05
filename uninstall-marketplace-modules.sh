@@ -38,7 +38,6 @@ MARKETPLACE_FEATURES=(
     "spryker-feature/marketplace-merchantportal-core"
     "spryker-feature/marketplace-order-management"
     "spryker-feature/marketplace-packaging-units"
-    # "spryker-feature/marketplace-product"
     "spryker-feature/marketplace-product-approval-process"
     "spryker-feature/marketplace-product-options"
     "spryker-feature/marketplace-promotions-discounts"
