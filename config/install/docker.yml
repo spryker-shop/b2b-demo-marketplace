@@ -3,12 +3,6 @@ env:
 
 sections:
     build:
-        provider-processor-glue-backend-pre:
-            command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue api:generate'
-
-        provider-processor-glue-storefront-pre:
-            command: 'GLUE_APPLICATION=GLUE_STOREFRONT vendor/bin/glue api:generate'
-            
         cache-zed-clear:
             command: 'vendor/bin/console cache:clear'
 
