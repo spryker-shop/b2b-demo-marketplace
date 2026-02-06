@@ -45,10 +45,10 @@ image:
     tag: spryker/php:8.4
     environment:
         SPRYKER_DNS_RESOLVER_IP: "10.105.0.2"
-        SPRYKER_HOOK_BEFORE_DEPLOY: "vendor/bin/install -r EU/pre-deploy -vvv"
+        SPRYKER_HOOK_BEFORE_DEPLOY: "export COMPOSER_NO_SCRIPTS=1 && vendor/bin/install -r EU/pre-deploy -vvv"
         SPRYKER_HOOK_AFTER_DEPLOY: "true"
-        SPRYKER_HOOK_INSTALL: "vendor/bin/install -r EU/production --no-ansi -vvv"
-        SPRYKER_HOOK_DESTRUCTIVE_INSTALL: "vendor/bin/install -r destructive --no-ansi -vvv"
+        SPRYKER_HOOK_INSTALL: "export COMPOSER_NO_SCRIPTS=1 && vendor/bin/install -r EU/production --no-ansi -vvv"
+        SPRYKER_HOOK_DESTRUCTIVE_INSTALL: "export COMPOSER_NO_SCRIPTS=1 && vendor/bin/install -r destructive --no-ansi -vvv"
         SPRYKER_PRODUCT_CONFIGURATOR_HOST: demo-date-time-configurator.icp.cloud.spryker.toys
         SPRYKER_PRODUCT_CONFIGURATOR_PORT: 443
         SPRYKER_PRODUCT_CONFIGURATOR_ENCRYPTION_KEY: 'change123'
