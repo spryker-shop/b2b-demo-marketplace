@@ -3,15 +3,14 @@ env:
 
 sections:
     build:
-        cache-zed-clear:
-            # command: 'vendor/bin/console cache:clear'
+        # cache-zed-clear:
+        #     # command: 'vendor/bin/console cache:clear'
 
-        # cache-glue-api-clear:
-        #     command: 'vendor/bin/glue cache:clear'
+        # # cache-glue-api-clear:
+        # #     command: 'vendor/bin/glue cache:clear'
 
-        # cache-backend-api-clear:
-        #     command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue cache:clear'
-
+        # # cache-backend-api-clear:
+        # #     command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue cache:clear'
         generate-transfers:
             command: 'vendor/bin/console transfer:generate'
 
