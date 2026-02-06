@@ -9,9 +9,6 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\SalesReturn;
 
-use Spryker\Zed\MerchantSalesReturn\Communication\Plugin\MerchantReturnCreateRequestValidatorPlugin;
-use Spryker\Zed\MerchantSalesReturn\Communication\Plugin\SalesReturn\MerchantReturnExpanderPlugin;
-use Spryker\Zed\MerchantSalesReturn\Communication\Plugin\SalesReturn\MerchantReturnPreCreatePlugin;
 use Spryker\Zed\SalesReturn\SalesReturnDependencyProvider as SprykerSalesReturnDependencyProvider;
 
 class SalesReturnDependencyProvider extends SprykerSalesReturnDependencyProvider
@@ -21,9 +18,7 @@ class SalesReturnDependencyProvider extends SprykerSalesReturnDependencyProvider
      */
     protected function getReturnPreCreatePlugins(): array
     {
-        return [
-            new MerchantReturnPreCreatePlugin(),
-        ];
+        return [];
     }
 
     /**
@@ -31,9 +26,7 @@ class SalesReturnDependencyProvider extends SprykerSalesReturnDependencyProvider
      */
     protected function getReturnCreateRequestValidatorPlugins(): array
     {
-        return [
-            new MerchantReturnCreateRequestValidatorPlugin(),
-        ];
+        return [];
     }
 
     /**
@@ -41,8 +34,6 @@ class SalesReturnDependencyProvider extends SprykerSalesReturnDependencyProvider
      */
     protected function getReturnExpanderPlugins(): array
     {
-        return [
-            new MerchantReturnExpanderPlugin(),
-        ];
+        return [];
     }
 }

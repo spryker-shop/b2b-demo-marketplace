@@ -3,15 +3,14 @@ env:
 
 sections:
     build:
-        cache-zed-clear:
-            command: 'vendor/bin/console cache:clear'
+        # cache-zed-clear:
+        #     # command: 'vendor/bin/console cache:clear'
 
-        cache-glue-api-clear:
-            command: 'vendor/bin/glue cache:clear'
+        # # cache-glue-api-clear:
+        # #     command: 'vendor/bin/glue cache:clear'
 
-        cache-backend-api-clear:
-            command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue cache:clear'
-
+        # # cache-backend-api-clear:
+        # #     command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue cache:clear'
         generate-transfers:
             command: 'vendor/bin/console transfer:generate'
 
@@ -27,9 +26,6 @@ sections:
         router-cache-warmup-backend-gateway:
             command: 'vendor/bin/console router:cache:warm-up:backend-gateway'
 
-        router-cache-warmup-merchant-portal:
-            command: 'vendor/bin/console router:cache:warm-up:merchant-portal'
-
         twig-cache-warmup:
             command: 'vendor/bin/console twig:cache:warmer'
 
@@ -44,9 +40,6 @@ sections:
 
         propel-build:
             command: 'vendor/bin/console propel:model:build'
-
-        acl-entity-metadata-validate:
-            command: 'vendor/bin/console acl-entity:metadata:validate'
 
         generate-entity-transfer:
             command: 'vendor/bin/console transfer:entity:generate'
@@ -108,10 +101,6 @@ sections:
         zed-build-frontend:
             command: 'vendor/bin/console frontend:zed:build -e production'
 
-        merchant-portal-build-frontend:
-            command: 'vendor/bin/console frontend:mp:build -e production'
-            timeout: 1600
-
         date-time-product-configurator:
             command: 'vendor/bin/console frontend:date-time-product-configurator:build'
 
@@ -121,10 +110,6 @@ sections:
 
         zed-build-frontend:
             command: 'vendor/bin/console frontend:zed:build'
-
-        merchant-portal-build-frontend:
-            command: 'vendor/bin/console frontend:mp:build'
-            timeout: 1600
 
         date-time-product-configurator:
             command: 'vendor/bin/console frontend:date-time-product-configurator:build'
@@ -179,7 +164,7 @@ sections:
             command: 'vendor/bin/console queue:setup'
 
         import-demodata:
-            command: 'vendor/bin/console data:import --config=data/import/local/full_${SPRYKER_REGION}.yml'
+            command: 'vendor/bin/console data:import --config=data/import/local/full_EU.yml'
 
         setup-search-create-sources:
             command: 'vendor/bin/console search:setup:sources'
@@ -192,3 +177,6 @@ sections:
 
         api-generate-documentation:
             command: 'vendor/bin/glue api:generate:documentation'
+            
+        publish-events:
+            command: 'vendor/bin/console publish:trigger-events -r unauthenticated_customer_access'

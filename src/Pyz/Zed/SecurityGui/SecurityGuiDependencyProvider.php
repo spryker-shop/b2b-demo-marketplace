@@ -9,7 +9,6 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\SecurityGui;
 
-use Spryker\Zed\MerchantUser\Communication\Plugin\SecurityGui\MerchantUserUserRoleFilterPlugin;
 use Spryker\Zed\MultiFactorAuth\Communication\Plugin\AuthenticationHandler\User\UserMultiFactorAuthenticationHandlerPlugin;
 use Spryker\Zed\SecurityGui\SecurityGuiDependencyProvider as SprykerSecurityGuiDependencyProvider;
 
@@ -20,9 +19,7 @@ class SecurityGuiDependencyProvider extends SprykerSecurityGuiDependencyProvider
      */
     protected function getUserRoleFilterPlugins(): array
     {
-        return [
-            new MerchantUserUserRoleFilterPlugin(),
-        ];
+        return [];
     }
 
     /**

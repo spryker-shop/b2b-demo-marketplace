@@ -37,9 +37,6 @@ sections:
         propel-build:
             command: 'vendor/bin/console propel:model:build'
 
-        acl-entity-metadata-validate:
-            command: 'vendor/bin/console acl-entity:metadata:validate'
-
         generate-entity-transfer:
             command: 'vendor/bin/console transfer:entity:generate'
 
@@ -83,10 +80,6 @@ sections:
         zed-build-frontend:
             command: 'vendor/bin/console frontend:zed:build -e production'
 
-        merchant-portal-build-frontend:
-            command: 'vendor/bin/console frontend:mp:build -e production'
-            timeout: 1600
-
         date-time-product-configurator:
             command: 'vendor/bin/console frontend:date-time-product-configurator:build'
 
@@ -96,10 +89,6 @@ sections:
 
         zed-build-frontend:
             command: 'vendor/bin/console frontend:zed:build'
-
-        merchant-portal-build-frontend:
-            command: 'vendor/bin/console frontend:mp:build'
-            timeout: 1600
 
         date-time-product-configurator:
             command: 'vendor/bin/console frontend:date-time-product-configurator:build'
@@ -143,7 +132,7 @@ sections:
             command: 'vendor/bin/console queue:setup'
 
         import-eu-region-demodata:
-            command: 'vendor/bin/console data:import --config=data/import/local/full_ROBOT.yml'
+            command: 'vendor/bin/console data:import --config=data/import/local/full_EU.yml'
 
         setup-search-create-sources:
             command: 'vendor/bin/console search:setup:sources'
@@ -166,3 +155,6 @@ sections:
 
         api-generate-documentation:
             command: 'vendor/bin/glue api:generate:documentation'
+        
+        publish-events:
+            command: 'vendor/bin/console publish:trigger-events -r unauthenticated_customer_access'

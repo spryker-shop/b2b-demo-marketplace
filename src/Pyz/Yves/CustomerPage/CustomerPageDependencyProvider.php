@@ -10,7 +10,6 @@ declare(strict_types = 1);
 namespace Pyz\Yves\CustomerPage;
 
 use Spryker\Yves\Kernel\Container;
-use Spryker\Yves\MerchantShipment\Plugin\CustomerPage\MerchantShipmentCheckoutAddressStepPreGroupItemsByShipmentPlugin;
 use Spryker\Yves\MultiFactorAuth\Plugin\AuthenticationHandler\Customer\CustomerMultiFactorAuthenticationHandlerPlugin;
 use SprykerFeature\Yves\SelfServicePortal\Plugin\CustomerPage\SingleAddressPerShipmentTypeCheckoutMultiShippingAddressesFormExpanderPlugin;
 use SprykerShop\Yves\AgentPage\Plugin\Security\UpdateAgentTokenAfterCustomerAuthenticationSuccessPlugin;
@@ -159,9 +158,7 @@ class CustomerPageDependencyProvider extends SprykerShopCustomerPageDependencyPr
      */
     protected function getCheckoutAddressStepPreGroupItemsByShipmentPlugins(): array
     {
-        return [
-            new MerchantShipmentCheckoutAddressStepPreGroupItemsByShipmentPlugin(),
-            new ShipmentTypeCheckoutAddressStepPreGroupItemsByShipmentPlugin(),
+        return [new ShipmentTypeCheckoutAddressStepPreGroupItemsByShipmentPlugin(),
         ];
     }
 

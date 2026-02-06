@@ -21,7 +21,6 @@ use Spryker\Shared\Http\HttpConstants;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Log\LogConstants;
-use Spryker\Shared\MerchantPortalApplication\MerchantPortalConstants;
 use Spryker\Shared\MerchantRelationRequest\MerchantRelationRequestConstants;
 use Spryker\Shared\MerchantRelationship\MerchantRelationshipConstants;
 use Spryker\Shared\MessageBroker\MessageBrokerConstants;
@@ -58,7 +57,6 @@ $glueHost = $dynamicStoreEnabled ? 'glue.eu.spryker.test' : 'glue.de.spryker.tes
 $glueBackendHost = $dynamicStoreEnabled ? 'gluebackend.eu.spryker.test' : 'gluebackend.de.spryker.test';
 $glueStorefrontHost = $dynamicStoreEnabled ? 'gluestorefront.eu.spryker.test' : 'gluestorefront.de.spryker.test';
 $backofficeHost = $dynamicStoreEnabled ? 'backoffice.eu.spryker.test' : 'backoffice.de.spryker.test';
-$merchantPortalHost = $dynamicStoreEnabled ? 'mp.eu.spryker.test' : 'mp.de.spryker.test';
 $backendGatewayHost = $dynamicStoreEnabled ? 'backend-gateway.eu.spryker.test' : 'backend-gateway.de.spryker.test';
 $backendApiHost = $dynamicStoreEnabled ? 'backend-api.eu.spryker.test' : 'backend-api.de.spryker.test';
 
@@ -241,13 +239,8 @@ $config[ApplicationConstants::BASE_URL_ZED] = sprintf(
 );
 
 // ----------------------------------------------------------------------------
-// ------------------------------ MERCHANT PORTAL -----------------------------
-// ----------------------------------------------------------------------------
 
-$config[MerchantPortalConstants::BASE_URL_MP] = sprintf(
-    'http://%s',
-    $merchantPortalHost,
-);
+// ----------------------------------------------------------------------------
 
 // ----------------------------------------------------------------------------
 // ------------------------------ FRONTEND ------------------------------------
@@ -331,18 +324,7 @@ if ($isTestifyConstantsClassExists) {
 }
 
 // >>> FILESYSTEM
-$config[FileSystemConstants::FILESYSTEM_SERVICE] = [
-    'merchant-product-data-import-files' => [
-        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
-        'root' => '/data',
-        'path' => '/data/merchant-product-data-import-files',
-    ],
-    'merchant-product-offer-data-import-files' => [
-        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
-        'root' => '/data',
-        'path' => '/data/merchant-product-offer-data-import-files',
-    ],
-    'files' => [
+$config[FileSystemConstants::FILESYSTEM_SERVICE] = ['files' => [
         'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
         'root' => APPLICATION_ROOT_DIR . '/data/DE/media/',
         'path' => 'files/',

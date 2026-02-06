@@ -33,7 +33,3 @@ sections:
     data-import:
         glossary:
             command: 'vendor/bin/console data:import:glossary -vvv --no-ansi'
-    acl:
-        acl-entity-synchronize:
-            command: 'vendor/bin/console acl-entity:synchronize -vvv --no-ansi'
-            stores: true

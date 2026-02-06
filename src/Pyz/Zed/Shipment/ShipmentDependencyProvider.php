@@ -11,7 +11,6 @@ namespace Pyz\Zed\Shipment;
 
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\MerchantSalesOrder\Communication\Plugin\Shipment\MerchantReferenceShipmentExpenseExpanderPlugin;
 use Spryker\Zed\Money\Communication\Plugin\Form\MoneyCollectionFormTypePlugin;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider as SprykerShipmentDependencyProvider;
 use Spryker\Zed\ShipmentType\Communication\Plugin\Shipment\ShipmentTypeShipmentMethodCollectionExpanderPlugin;
@@ -64,9 +63,7 @@ class ShipmentDependencyProvider extends SprykerShipmentDependencyProvider
      */
     protected function getShipmentExpenseExpanderPlugins(): array
     {
-        return [
-            new MerchantReferenceShipmentExpenseExpanderPlugin(),
-        ];
+        return [];
     }
 
     /**
