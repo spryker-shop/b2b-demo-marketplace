@@ -3,9 +3,6 @@ env:
 
 sections:
     build:
-        provider-processor-glue-pre:
-            command: 'vendor/bin/glue api:generate'
-
         provider-processor-glue-backend-pre:
             command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue api:generate'
 
