@@ -4,9 +4,6 @@ env:
 
 sections:
     build:
-        install-fe:
-            command: vendor/bin/console frontend:project:install-dependencies -vvv
-
         generate-transfers:
             command: 'vendor/bin/console transfer:generate'
 
