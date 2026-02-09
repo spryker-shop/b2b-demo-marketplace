@@ -510,7 +510,7 @@ And ensure the docker config files are listed:
 **Scenario**: Remove marketplace-specific XML transitions from OMS configuration
 
 ```json
-"config/Zed/oms/DummyPayment01.xml": {
+"config/Zed/oms/MarketplacePayment01.xml": {
   "operations": [
     {
       "type": "remove_xml_element",
