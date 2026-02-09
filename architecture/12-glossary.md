@@ -12,9 +12,9 @@ Important domain and technical terms used in the architecture documentation.
 | **Merchant User** | Seller managing products and orders on the marketplace |
 | **Cart** | Shopping basket for checkout |
 | **Checkout** | Process of finalizing a purchase |
-| **ERP** | Enterprise Resource Planning system (SAP ECC 6.0) |
+| **ERP** | Enterprise Resource Planning system (i.e. SAP ECC 6.0) |
 | **Order** | Finalized purchase transaction sent to ERP |
-| **PIM** | Product Information Management system (Akeneo) |
+| **PIM** | Product Information Management system (i.e. Akeneo) |
 | **Product** | Sellable item with SKU and price from PIM |
 | **SKU** | Stock Keeping Unit (unique product identifier) |
 
