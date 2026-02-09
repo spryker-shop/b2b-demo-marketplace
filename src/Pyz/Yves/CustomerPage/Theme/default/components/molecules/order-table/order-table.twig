@@ -116,7 +116,9 @@
     {% set isCustomerColumnsVisible = data.isOrderSearchEnabled and isCustomerDataColumnsVisible %}
 
     {% if data.orders is empty %}
-        <p>{{ 'customer.account.no_order' | trans }}</p>
+        {% block noOrder %}
+            {{ parent()}}
+        {% endblock %}
     {% else %}
         <table class="table table--expand table--responsive">
             <thead>
