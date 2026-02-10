@@ -774,15 +774,26 @@ PYTHON_PROCESS
 done
 echo ""
 
-echo "Step 8: Updating data import command in docker.yml..."
-DOCKER_YML_FILE="config/install/docker.yml"
-if [ -f "$DOCKER_YML_FILE" ]; then
-    sed -i.bak "s/data:import --config=data\/import\/local\/full_\${SPRYKER_REGION}\.yml/data:import --config=data\/import\/local\/b2b_full_EU.yml/g" "$DOCKER_YML_FILE"
-    rm -f "${DOCKER_YML_FILE}.bak"
-    echo "✓ Updated data import command to use b2b_full_EU.yml"
-else
-    echo "⚠ docker.yml file not found at $DOCKER_YML_FILE"
-fi
+echo "Step 8: Substituting data import paths in docker configuration files..."
+python3 << 'PYTHON_PROCESS' | while IFS='|' read -r docker_file old_path new_path; do
+import json
+
+# Load configuration
+with open('uninstall-marketplace-config.json', 'r') as f:
+    config = json.load(f)
+
+# Process docker config file substitutions
+for docker_file in config['docker_config_files']:
+    for old_path, new_path in config.get('docker_config_substitutions', {}).items():
+        print(f"{docker_file}|{old_path}|{new_path}")
+PYTHON_PROCESS
+    if [ -f "$docker_file" ]; then
+        sed -i.bak "s|$old_path|$new_path|g" "$docker_file" && rm "${docker_file}.bak"
+        echo "✓ Substituted '$old_path' with '$new_path' in $docker_file"
+    else
+        echo "⚠ Docker config file not found: $docker_file"
+    fi
+done
 echo ""
 
 echo "Step 9: Removing merchant-portal applications from deploy files..."
