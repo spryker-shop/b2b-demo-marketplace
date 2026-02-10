@@ -105,6 +105,46 @@ All diagrams use colors optimized for both light and dark modes:
 - Purple `#9B59B6` - Storage (databases, caches)
 - Gray `#95A5A6` - Infrastructure
 
+### Diagram Organization & Best Practices
+
+There are two approaches to managing diagrams. Choose based on your documentation use case.
+
+**Approach 1: Inline Diagrams**
+- Write diagram code directly in markdown using code fences:
+  ```
+  mermaid
+  flowchart LR
+      A --> B
+  ```
+  which will result in:
+
+```mermaid
+  flowchart LR
+      A --> B
+```
+
+**Pros:** Diagrams visible immediately; self-contained
+
+**Cons:** Increases file size; duplicates code if reused
+
+---
+
+**Approach 2: External Diagram Files**
+- Store diagram code in `/diagrams/` folder and reference via links:
+  ```
+  [C1 System Context](diagrams/c4/c1-system-context.mmd)
+  ```
+
+**Pros:** Single source-of-truth; cleaner markdown; scalable
+
+**Cons:** Requires clicking to view (less immediate)
+
+---
+
+**Choosing Your Approach**
+
+This template uses **Approach 2** for scalability and maintainability, but projects can mix both—use external files for core views, inline for one-off diagrams.
+
 ### Templates and Guidelines
 
 **Solution Design Template** (`04-solution-designs/sd-000-template.md`):

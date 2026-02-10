@@ -36,34 +36,7 @@ Examples:
 
 Use `sd-000-template.md` as the starting point for new solution designs.
 
-## Process Flow: SD to ADR
-
-Solution Designs serve as the exploration and proposal phase, which then results in Architecture Decision Records:
-
-```mermaid
-flowchart LR
-    Problem[Problem Identified] --> SD[Solution Design<br/>Status: Research/Draft]
-    SD --> Review{Review &<br/>Discussion}
-    Review -->|Changes Needed| SD
-    Review -->|Approved| Decision[Make Decision]
-    Decision --> ADR1[ADR: Key Decision 1]
-    Decision --> ADR2[ADR: Key Decision 2]
-    Decision --> ADRn[ADR: Key Decision N]
-    ADR1 & ADR2 & ADRn --> UpdateSD[Update SD<br/>Status: Approved]
-    UpdateSD --> Implement[Implementation]
-
-    style SD fill:#fff4e6
-    style ADR1 fill:#e1f5ff
-    style ADR2 fill:#e1f5ff
-    style ADRn fill:#e1f5ff
-```
-
-**Key Points:**
-- One SD (exploration) can result in **multiple ADRs** (decisions)
-- SD status evolves: Research → Draft → Approved → Implemented
-- ADRs extract and document the key architectural decisions made during SD review
-- The SD is updated to reference the ADRs once decisions are made
-
+For diagram organization and best practices, see [PUBLIC-DOC-GUIDELINE.md](../PUBLIC-DOC-GUIDELINE.md#diagram-organization--best-practices).
 
 **Workflow:**
 1. Write SD to explore options and propose solution

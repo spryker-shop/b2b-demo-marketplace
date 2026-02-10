@@ -24,7 +24,7 @@ Top 3-5 quality goals for the architecture, ordered by priority.
 |----------|--------------|----------|
 | 1 | **Performance** | Product listing pages load in < 2 seconds |
 | 2 | **Scalability** | Handle 10x traffic during peak sales periods |
-| 3 | **Maintainability** | New features can be deployed independently |
+| 3 | **Maintainability** | New features can be developed independently |
 
 ## Stakeholders
 
@@ -35,7 +35,7 @@ Overview of key stakeholders and their expectations.
 | Customers | | Fast, intuitive shopping experience |
 | Backoffice Users | | Efficient platform management tools |
 | Merchant Users | | Easy product and order management |
-| DevOps Engineers | | Reliable monitoring and deployment |
+| Development Teams | | Reliable monitoring and deployment |
 | Business Analysts | | Accurate data and reporting |
 
 ---

@@ -5,7 +5,6 @@ config:
 flowchart LR
    subgraph Spryker["Spryker B2B Marketplace Platform"]
       Yves["🌐 Yves<br><small>Twig + PHP</small><br><small>Storefront - Customer-facing shop interface</small>"]
-      Client["🔗 Client<br><small>PHP</small><br><small>Communication layer between Yves and Zed</small>"]
       BackOffice["🏢 BackOffice<br><small>Twig + PHP</small><br><small>Admin UI - Platform management interface</small>"]
       MerchantPortal["🏪 Merchant Portal<br><small>Twig + PHP</small><br><small>Merchant UI - Product &amp; order management</small>"]
       StoreFrontAPI["🔌 StoreFront API<br><small>PHP</small><br><small>REST API for storefront operations</small>"]
@@ -51,10 +50,6 @@ Jenkins -- Populate price cache<br>[TCP] --> Redis
 Jenkins -- Index prices<br>[REST] --> OpenSearch
 Jenkins -- Create orders<br>[REST] --> ERP["💾 ERP System<br><small>External</small><br><small>Orders &amp; Inventory</small>"]
 ERP -- Stock &amp; order updates<br>[REST] --> BackendAPI
-Yves -- Request customer price<br>[RPC] --> Client
-Client -- Check price cache<br>[TCP] --> Redis
-Client -- Request customer price<br>[REST] --> ERP
-Client -- Cache customer price (2h)<br>[TCP] --> Redis
 Yves -- Process payment<br>[REST] --> Payment["💳 Payment Gateway<br><small>External</small><br><small>Payment Processing</small>"]
 StoreFrontAPI -- Process payment<br>[REST] --> Payment
 Payment -- Payment status<br>[Webhook] --> Yves
@@ -66,7 +61,6 @@ BackendAPI -- Send metrics &amp; traces<br>[OTLP] --> APM
 BI["📈 Business Intelligence Platform<br><small>External</small><br><small>Analytics &amp; Reporting</small>"] -- Fetch analytics data<br>[S3 API] --> FileStorage
 
 Yves:::webAppStyle
-Client:::communicationStyle
 BackOffice:::webAppStyle
 MerchantPortal:::webAppStyle
 StoreFrontAPI:::apiStyle

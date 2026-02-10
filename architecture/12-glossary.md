@@ -41,8 +41,8 @@ Important domain and technical terms used in the architecture documentation.
 | **Yves** | Storefront application layer |
 | **Zed** | Backend application layer (BackOffice, MerchantPortal, BackendGateway) |
 | **Glue** | API layer (BackendAPI, StoreFrontAPI) |
-| **Client** | Communication layer between Yves and Zed |
-| **Facade** | Module API interface in Communication layer |
+| **Client** | Communication layer that connects Spryker applications with internal or external applications (e.g., Zed, external ERP) and services (e.g., KV storage) |
+| **Facade** | Business layer facade pattern that provides simplified interface to internal module functionality and hides complexity |
 | **Gateway** | RPC handler for Client-to-Zed communication |
 
 ---

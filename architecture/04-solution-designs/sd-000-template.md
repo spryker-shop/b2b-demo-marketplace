@@ -71,6 +71,14 @@ High-level description of the proposed solution approach.
 - Dependency on other systems/teams
 - Prerequisites that must be completed first
 
+### Rollout Strategy & Cost
+
+- **Approach**: Big bang / Phased / Feature flags
+- **Timeline**: Rollout schedule and milestones
+- **Estimated Effort**: Implementation cost/effort in team-days or story points
+- **Resources**: Team members and skills required
+- **Risk Mitigation**: Rollback plan and contingencies
+
 ## Trade-offs & Considerations
 
 ### Advantages
