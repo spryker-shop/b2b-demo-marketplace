@@ -98,7 +98,7 @@ regions:
             broker:
                 namespace: eu-docker
             key_value_store:
-                namespace: 1
+                namespace: 10
             search:
                 namespace: eu_search
 
@@ -125,7 +125,7 @@ groups:
                         region: EU
                         services:
                             session:
-                                namespace: 1
+                                namespace: 10
                 http:
                     max-request-body-size: 100M
             boffice:
