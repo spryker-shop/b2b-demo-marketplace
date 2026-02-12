@@ -117,6 +117,14 @@
                                             {% widget 'SoldByMerchantWidget' args [listItem] only %}
                                             {% endwidget %}
                                         {% endblock %}
+                                        {% block availability %}
+                                            {% set productAvailabilityWidget = findWidget('ProductAvailabilityWidget', [
+                                                listItem
+                                            ]) %}
+                                            {% if productAvailabilityWidget is defined %}
+                                                {% widget productAvailabilityWidget %} {% endwidget %}
+                                            {% endif %}
+                                        {% endblock %}
                                     {% endblock %}
 
                                     {% block packagingUnitCart %}

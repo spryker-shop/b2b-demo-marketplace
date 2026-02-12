@@ -2,6 +2,7 @@
 
 {% set isProductConcrete = data.product.idProductConcrete is not empty %}
 {% set sspServiceDetectorWidget = findWidget('SspServiceDetectorWidget', [data.product]) %}
+{% set showProductAvailability = isProductConcrete %}
 
 {% block body %}
     <div class="{{ config.name }}__top-block">
@@ -14,6 +15,15 @@
         </div>
     </div>
 
+    {% set productAvailabilityWidget = findWidget('ProductAvailabilityWidget', [
+        data.product
+    ]) %}
+    {% set isDisabled = isDisabled or not data.product.available %}
+    {% if showProductAvailability %}
+        {% if productAvailabilityWidget is defined %}
+            {% widget productAvailabilityWidget only %} {% endwidget %}
+        {% endif %}
+    {% endif %}
     {% if can('SeePricePermissionPlugin') %}
         {% if (sspServiceDetectorWidget and sspServiceDetectorWidget.isService) %}
             {% widget 'SspProductOfferPriceWidget' args [data.product] only %}{% endwidget %}
@@ -51,10 +61,11 @@
     {% widget 'ProductConfigurationProductViewDisplayWidget' args [data.product] only %}{% endwidget %}
     {% widget 'ProductConfigurationProductDetailPageButtonWidget' args [data.product] only %}{% endwidget %}
 
+
     {% widget 'AddToCartFormWidget' args [config, data.product, isDisabled, options] with {
         data: {
             isService: sspServiceDetectorWidget and sspServiceDetectorWidget.isService,
-        },
+        }
     } only %}
         {% block embeddedData %}
             {% widget 'ProductOptionConfiguratorWidget' args [data.product] only %}{% endwidget %}
@@ -139,12 +150,9 @@
                     {% endwidget %}
                 </div>
             {% endif %}
-
-            {% if not data.product.available %}
-                <p class="text-alert">{{ 'product.detail.out_of_stock' | trans }}</p>
-            {% endif %}
         {% endblock %}
     {% endwidget %}
+
 
     {% if not isAvailable and isProductConcrete %}
         {% widget 'AvailabilityNotificationSubscriptionWidget' args [data.product] only %}{% endwidget %}
@@ -155,4 +163,5 @@
     {% endif %}
 
     {% widget 'ProductDiscontinuedNoteWidget' args [sku] only %}{% endwidget %}
+
 {% endblock %}

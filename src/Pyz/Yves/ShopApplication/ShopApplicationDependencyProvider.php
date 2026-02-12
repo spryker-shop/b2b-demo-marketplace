@@ -66,6 +66,7 @@ use SprykerFeature\Yves\SelfServicePortal\Widget\SspShipmentTypeServicePointSele
 use SprykerShop\Yves\AgentWidget\Widget\AgentControlBarWidget;
 use SprykerShop\Yves\AssetWidget\Widget\AssetWidget;
 use SprykerShop\Yves\AvailabilityNotificationWidget\Widget\AvailabilityNotificationSubscriptionWidget;
+use SprykerShop\Yves\AvailabilityWidget\Widget\ProductAvailabilityWidget;
 use SprykerShop\Yves\BarcodeWidget\Widget\BarcodeWidget;
 use SprykerShop\Yves\BusinessOnBehalfWidget\Widget\BusinessOnBehalfStatusWidget;
 use SprykerShop\Yves\CartCodeWidget\Widget\CartCodeFormWidget;
@@ -323,6 +324,7 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             AddItemsToShoppingListWidget::class,
             CategoryImageStorageWidget::class,
             AvailabilityNotificationSubscriptionWidget::class,
+            ProductAvailabilityWidget::class,
             ProductConcreteAddWidget::class,
             QuoteRequestCreateWidget::class,
             QuoteRequestCartWidget::class,
