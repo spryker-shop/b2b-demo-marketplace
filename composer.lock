@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "15deb573792679c1b4b30dd18e2eec2d",
+    "content-hash": "d8521cf23e6a76a9d9d1d661d4243668",
     "packages": [
         {
             "name": "api-platform/api-pack",
@@ -8986,16 +8986,16 @@
         },
         {
             "name": "spryker-feature/category-management",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/category-management.git",
-                "reference": "a97b02139b3ffe27007496cf283bef8f6e8526a5"
+                "reference": "0c2511e8c79258af6dc5be4b71fc8ca118d14c57"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/category-management/zipball/a97b02139b3ffe27007496cf283bef8f6e8526a5",
-                "reference": "a97b02139b3ffe27007496cf283bef8f6e8526a5",
+                "url": "https://api.github.com/repos/spryker-feature/category-management/zipball/0c2511e8c79258af6dc5be4b71fc8ca118d14c57",
+                "reference": "0c2511e8c79258af6dc5be4b71fc8ca118d14c57",
                 "shasum": ""
             },
             "require": {
@@ -9016,6 +9016,7 @@
             "suggest": {
                 "spryker-feature/spryker-core": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -9028,9 +9029,9 @@
             ],
             "description": "Category Management [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/category-management/tree/202512.0"
+                "source": "https://github.com/spryker-feature/category-management/tree/master"
             },
-            "time": "2025-12-16T12:20:33+00:00"
+            "time": "2026-02-02T18:57:40+00:00"
         },
         {
             "name": "spryker-feature/checkout",
@@ -27172,16 +27173,16 @@
         },
         {
             "name": "spryker/category",
-            "version": "5.21.1",
+            "version": "5.22.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/category.git",
-                "reference": "323565c83c3dec5442e38adc79764d336818a025"
+                "reference": "746c68b3585d6f5fd320db8099a9177b9ff02c2d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/category/zipball/323565c83c3dec5442e38adc79764d336818a025",
-                "reference": "323565c83c3dec5442e38adc79764d336818a025",
+                "url": "https://api.github.com/repos/spryker/category/zipball/746c68b3585d6f5fd320db8099a9177b9ff02c2d",
+                "reference": "746c68b3585d6f5fd320db8099a9177b9ff02c2d",
                 "shasum": ""
             },
             "require": {
@@ -27223,9 +27224,9 @@
             ],
             "description": "Category module",
             "support": {
-                "source": "https://github.com/spryker/category/tree/5.21.1"
+                "source": "https://github.com/spryker/category/tree/5.22.0"
             },
-            "time": "2025-10-20T10:20:39+00:00"
+            "time": "2026-02-12T11:08:10+00:00"
         },
         {
             "name": "spryker/category-data-feed",
@@ -27882,21 +27883,22 @@
         },
         {
             "name": "spryker/category-page-search",
-            "version": "2.4.0",
+            "version": "2.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/category-page-search.git",
-                "reference": "8cc3b1e498452767aeb77cfbd36164c26fa845f4"
+                "reference": "ae98438d65ebd996b1d238aa6da108643bd76488"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/category-page-search/zipball/8cc3b1e498452767aeb77cfbd36164c26fa845f4",
-                "reference": "8cc3b1e498452767aeb77cfbd36164c26fa845f4",
+                "url": "https://api.github.com/repos/spryker/category-page-search/zipball/ae98438d65ebd996b1d238aa6da108643bd76488",
+                "reference": "ae98438d65ebd996b1d238aa6da108643bd76488",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/category": "^5.0.0",
+                "spryker/category-page-search-extension": "^1.0.0",
                 "spryker/event-behavior": "^1.1.0",
                 "spryker/kernel": "^3.30.0",
                 "spryker/publisher-extension": "^1.0.0",
@@ -27943,9 +27945,50 @@
             ],
             "description": "CategoryPageSearch module",
             "support": {
-                "source": "https://github.com/spryker/category-page-search/tree/2.4.0"
+                "source": "https://github.com/spryker/category-page-search/tree/2.5.0"
             },
-            "time": "2025-08-04T08:52:14+00:00"
+            "time": "2026-01-26T12:02:37+00:00"
+        },
+        {
+            "name": "spryker/category-page-search-extension",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/category-page-search-extension.git",
+                "reference": "5dc732f8891b58da56f57b7b0ea1671d848b56a3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/category-page-search-extension/zipball/5dc732f8891b58da56f57b7b0ea1671d848b56a3",
+                "reference": "5dc732f8891b58da56f57b7b0ea1671d848b56a3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.3"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "CategoryPageSearchExtension module",
+            "support": {
+                "source": "https://github.com/spryker/category-page-search-extension/tree/1.0.0"
+            },
+            "time": "2026-02-02T18:33:42+00:00"
         },
         {
             "name": "spryker/category-storage",
@@ -57158,20 +57201,22 @@
         },
         {
             "name": "spryker/product-list-search",
-            "version": "2.8.0",
+            "version": "2.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-list-search.git",
-                "reference": "a39fc64292e9a340a45249d5375f2b261ae7ef0d"
+                "reference": "8e547081bc46925da186220e525cdcdbd11a9e5a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-list-search/zipball/a39fc64292e9a340a45249d5375f2b261ae7ef0d",
-                "reference": "a39fc64292e9a340a45249d5375f2b261ae7ef0d",
+                "url": "https://api.github.com/repos/spryker/product-list-search/zipball/8e547081bc46925da186220e525cdcdbd11a9e5a",
+                "reference": "8e547081bc46925da186220e525cdcdbd11a9e5a",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
+                "spryker/category-page-search": "^2.5.0",
+                "spryker/category-page-search-extension": "^1.0.0",
                 "spryker/event-behavior": "^1.32.0",
                 "spryker/kernel": "^3.30.0",
                 "spryker/product": "^5.0.0 || ^6.0.0",
@@ -57183,7 +57228,6 @@
                 "spryker/transfer": "^3.27.0"
             },
             "require-dev": {
-                "spryker/category": "*",
                 "spryker/code-sniffer": "*",
                 "spryker/elastica": "*",
                 "spryker/event": "*",
@@ -57216,9 +57260,9 @@
             ],
             "description": "ProductListSearch module",
             "support": {
-                "source": "https://github.com/spryker/product-list-search/tree/2.8.0"
+                "source": "https://github.com/spryker/product-list-search/tree/2.9.0"
             },
-            "time": "2025-09-16T09:04:55+00:00"
+            "time": "2026-01-26T12:02:37+00:00"
         },
         {
             "name": "spryker/product-list-storage",
@@ -89943,6 +89987,12 @@
     ],
     "aliases": [
         {
+            "package": "spryker-feature/category-management",
+            "version": "9999999-dev",
+            "alias": "202512.0",
+            "alias_normalized": "202512.0"
+        },
+        {
             "package": "spryker-feature/marketplace-comments",
             "version": "9999999-dev",
             "alias": "202512.0",
@@ -90029,6 +90079,7 @@
     ],
     "minimum-stability": "dev",
     "stability-flags": {
+        "spryker-feature/category-management": 20,
         "spryker-feature/marketplace-comments": 20,
         "spryker-feature/marketplace-merchant-contract-requests": 20,
         "spryker-feature/marketplace-merchant-contracts": 20,
