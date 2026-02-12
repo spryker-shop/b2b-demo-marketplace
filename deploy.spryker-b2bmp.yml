@@ -57,7 +57,8 @@ assets:
     mode: production
     compression:
         brotli:
-            static: only
+            static: true
+            level: 5
         gzip:
             static: true
             level: 5
