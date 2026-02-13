@@ -96,11 +96,6 @@ groups:
                 endpoints:
                     glue.eu.spryker.local:
                         region: EU
-            gluestorefront_eu: # custom name to differentiate between two applications, incorrect for the cloud usage
-                application: glue-storefront
-                endpoints:
-                    glue-storefront.eu.spryker.local:
-                        region: EU
             gluebackend_eu: # custom name to differentiate between two applications, incorrect for the cloud usage
                 application: glue-backend
                 endpoints:
@@ -123,12 +118,6 @@ groups:
                     backend-gateway.eu.spryker.local:
                         region: EU
                         primal: true
-            backapi_eu: # custom name to differentiate between two applications, incorrect for the cloud usage
-                application: zed
-                endpoints:
-                    backend-api.eu.spryker.local:
-                        region: EU
-                        entry-point: BackendApi
 
     US:
         region: US
@@ -156,11 +145,6 @@ groups:
                 endpoints:
                     glue.us.spryker.local:
                         region: US
-            gluestorefront_us: # custom name to differentiate between two applications, incorrect for the cloud usage
-                application: glue-storefront
-                endpoints:
-                    glue-storefront.us.spryker.local:
-                        region: US
             gluebackend_us: # custom name to differentiate between two applications, incorrect for the cloud usage
                 application: glue-backend
                 endpoints:
@@ -181,12 +165,6 @@ groups:
                     backend-gateway.us.spryker.local:
                         region: US
                         primal: true
-            backapi_us: # custom name to differentiate between two applications, incorrect for the cloud usage
-                application: zed
-                endpoints:
-                    backend-api.us.spryker.local:
-                        region: US
-                        entry-point: BackendApi
 services:
     database:
         engine: mysql
