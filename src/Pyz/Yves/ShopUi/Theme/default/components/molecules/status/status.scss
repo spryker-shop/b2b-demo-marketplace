@@ -46,7 +46,7 @@
     &--availability {
         background-color: lighten($setting-color-main, 75%);
         font-weight: 500;
-        
+
         &::before {
             background-color: $setting-color-main;
         }
@@ -56,7 +56,7 @@
     &--never-out-of-stock,
     &--available {
         background-color: lighten(map-get($setting-color-actions, 'success'), 75%);
-        
+
         &::before {
             background-color: map-get($setting-color-actions, 'success');
         }
@@ -64,7 +64,7 @@
 
     &--out-of-stock {
         background-color: lighten(map-get($setting-color-actions, 'alert'), 50%);
-        
+
         &::before {
             background-color: map-get($setting-color-actions, 'alert');
         }
