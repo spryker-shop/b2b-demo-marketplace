@@ -27,7 +27,6 @@
                 {% set merchant = product.merchant %}
 
                 {% include molecule('buy-box-item', 'BuyBox') with {
-                    class: 'box box--smaller',
                     data: {
                         isChecked: data.productView.productOfferReference is same as(product.productOfferReference),
                         radioGroupName: 'product_offer_reference',
@@ -39,7 +38,6 @@
                         currencyIsoCode: product.price.currency.code | default(null),
                         isRadioButtonVisible: data.products | length > 1,
                         product: product,
-                        currentProductPrice: product.price,
                     },
                 } only %}
             {% endblock %}
