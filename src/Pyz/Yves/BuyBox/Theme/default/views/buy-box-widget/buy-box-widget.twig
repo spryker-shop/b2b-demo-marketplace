@@ -1,0 +1,48 @@
+{% extends view('buy-box-widget', '@SprykerFeature:BuyBox') %}
+
+{% block template %}
+    {% if data.products %}
+        {% set firstProduct = data.products | first %}
+        {% set priceMode = firstProduct.price.priceMode | default %}
+
+        <div class="title title--product-sold-by grid grid--justify grid--baseline">
+            <div class="col col--expand col--reset-min-width">
+                {{ 'buy_box.sold_by' | trans }}
+            </div>
+            {% if priceMode %}
+                <div class="title title--price-mode col col--reset-min-width is-hidden-lg-xxl">
+                    {% if priceMode == 'GROSS_MODE' %}
+                        {{ 'price.mode.incl_vat' | trans }}
+                    {% endif %}
+
+                    {% if priceMode == 'NET_MODE' %}
+                        {{ 'price.mode.excl_vat' | trans }}
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+
+        {% for product in data.products %}
+            {% block buyBoxProduct %}
+                {% set merchant = product.merchant %}
+
+                {% include molecule('buy-box-item', 'BuyBox') with {
+                    class: 'box box--smaller',
+                    data: {
+                        isChecked: data.productView.productOfferReference is same as(product.productOfferReference),
+                        radioGroupName: 'product_offer_reference',
+                        productOfferReference: product.productOfferReference | default,
+                        merchantName: merchant.name | default,
+                        merchantUrl: merchant.merchantUrl | default,
+                        merchantReference: merchant.merchantReference | default(null),
+                        price: product.price | default(null),
+                        currencyIsoCode: product.price.currency.code | default(null),
+                        isRadioButtonVisible: data.products | length > 1,
+                        product: product,
+                        currentProductPrice: product.price,
+                    },
+                } only %}
+            {% endblock %}
+        {% endfor %}
+    {% endif %}
+{% endblock %}

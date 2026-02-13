@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ce6b849f8e714052bd942c74aa48706e",
+    "content-hash": "2be5f4ba52f31e29e0ca3e4cb0f2e479",
     "packages": [
         {
             "name": "api-platform/api-pack",
@@ -8904,6 +8904,64 @@
                 "source": "https://github.com/spryker-feature/availability-notification/tree/202512.0"
             },
             "time": "2025-12-16T12:20:19+00:00"
+        },
+        {
+            "name": "spryker-feature/buy-box",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-feature/buy-box.git",
+                "reference": "e68b4db4358b0344951bb1d0c8c14ff553ba3096"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-feature/buy-box/zipball/e68b4db4358b0344951bb1d0c8c14ff553ba3096",
+                "reference": "e68b4db4358b0344951bb1d0c8c14ff553ba3096",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.3",
+                "spryker-shop/shop-ui": "^1.102.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/merchant-storage": "^1.0.0",
+                "spryker/price-product": "^4.0.0",
+                "spryker/price-product-storage": "^4.0.0",
+                "spryker/product-offer-storage": "^1.12.0",
+                "spryker/product-storage": "^1.0.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/container": "*",
+                "spryker/testify": "*"
+            },
+            "suggest": {
+                "spryker-shop/availability-widget": "If you want to use components from module AvailabilityWidget",
+                "spryker-shop/merchant-relation-request-widget": "Add the module if you want to use MerchantRelationRequestCreateLinkWidget.",
+                "spryker-shop/price-product-volume-widget": "Add the module if you want to use CurrentProductPriceVolumeWidget."
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SprykerFeature\\": "src/SprykerFeature/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "BuyBox module",
+            "support": {
+                "source": "https://github.com/spryker-feature/buy-box/tree/master"
+            },
+            "time": "2026-02-12T08:48:01+00:00"
         },
         {
             "name": "spryker-feature/cart",
@@ -58146,20 +58204,20 @@
         },
         {
             "name": "spryker/product-offer-availability-storage",
-            "version": "1.3.0",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-offer-availability-storage.git",
-                "reference": "e69bef9a58d4556a7286728c3869a87109bf3127"
+                "reference": "49e4e9f2c78c23d19aa62d634d3a3a12d9f2b85b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-offer-availability-storage/zipball/e69bef9a58d4556a7286728c3869a87109bf3127",
-                "reference": "e69bef9a58d4556a7286728c3869a87109bf3127",
+                "url": "https://api.github.com/repos/spryker/product-offer-availability-storage/zipball/49e4e9f2c78c23d19aa62d634d3a3a12d9f2b85b",
+                "reference": "49e4e9f2c78c23d19aa62d634d3a3a12d9f2b85b",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/availability-storage-extension": "^1.0.0",
                 "spryker/event-behavior": "^1.0.0",
                 "spryker/kernel": "^3.33.0",
@@ -58167,6 +58225,7 @@
                 "spryker/product-offer": "^1.0.0",
                 "spryker/product-offer-availability": "^1.3.0",
                 "spryker/product-offer-stock": "^1.0.0",
+                "spryker/product-offer-storage-extension": "^1.2.0",
                 "spryker/propel-orm": "^1.3.0",
                 "spryker/publisher-extension": "^1.0.0",
                 "spryker/stock": "^8.8.3",
@@ -58180,6 +58239,7 @@
             },
             "require-dev": {
                 "spryker/code-sniffer": "*",
+                "spryker/container": "*",
                 "spryker/decimal-object": "*",
                 "spryker/event": "*",
                 "spryker/oms": "*",
@@ -58208,9 +58268,9 @@
             ],
             "description": "ProductOfferAvailabilityStorage module",
             "support": {
-                "source": "https://github.com/spryker/product-offer-availability-storage/tree/1.3.0"
+                "source": "https://github.com/spryker/product-offer-availability-storage/tree/1.4.0"
             },
-            "time": "2025-08-04T11:49:53+00:00"
+            "time": "2026-02-12T08:48:01+00:00"
         },
         {
             "name": "spryker/product-offer-discount-connector",
@@ -60119,16 +60179,16 @@
         },
         {
             "name": "spryker/product-offer-storage",
-            "version": "1.11.0",
+            "version": "1.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-offer-storage.git",
-                "reference": "0ce97c1bb56d849da866077c2812c74ac2193062"
+                "reference": "301ad6a0dc9f26365cce0e23e684eba19271fc46"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-offer-storage/zipball/0ce97c1bb56d849da866077c2812c74ac2193062",
-                "reference": "0ce97c1bb56d849da866077c2812c74ac2193062",
+                "url": "https://api.github.com/repos/spryker/product-offer-storage/zipball/301ad6a0dc9f26365cce0e23e684eba19271fc46",
+                "reference": "301ad6a0dc9f26365cce0e23e684eba19271fc46",
                 "shasum": ""
             },
             "require": {
@@ -60137,7 +60197,7 @@
                 "spryker/kernel": "^3.33.0",
                 "spryker/product": "^6.0.0",
                 "spryker/product-offer": "^1.9.0",
-                "spryker/product-offer-storage-extension": "^1.1.0",
+                "spryker/product-offer-storage-extension": "^1.2.0",
                 "spryker/product-storage-extension": "^1.4.0",
                 "spryker/propel": "^3.47.0",
                 "spryker/propel-orm": "^1.0.0",
@@ -60177,22 +60237,22 @@
             ],
             "description": "ProductOfferStorage module",
             "support": {
-                "source": "https://github.com/spryker/product-offer-storage/tree/1.11.0"
+                "source": "https://github.com/spryker/product-offer-storage/tree/1.12.0"
             },
-            "time": "2025-12-11T14:00:18+00:00"
+            "time": "2026-02-12T08:48:01+00:00"
         },
         {
             "name": "spryker/product-offer-storage-extension",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-offer-storage-extension.git",
-                "reference": "e42c460bb975f2688ec2750b0da5346f9a666684"
+                "reference": "f6694adceb6e7c899f6b460249db5882bba83e63"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-offer-storage-extension/zipball/e42c460bb975f2688ec2750b0da5346f9a666684",
-                "reference": "e42c460bb975f2688ec2750b0da5346f9a666684",
+                "url": "https://api.github.com/repos/spryker/product-offer-storage-extension/zipball/f6694adceb6e7c899f6b460249db5882bba83e63",
+                "reference": "f6694adceb6e7c899f6b460249db5882bba83e63",
                 "shasum": ""
             },
             "require": {
@@ -60218,9 +60278,9 @@
             ],
             "description": "ProductOfferStorageExtension module",
             "support": {
-                "source": "https://github.com/spryker/product-offer-storage-extension/tree/1.1.0"
+                "source": "https://github.com/spryker/product-offer-storage-extension/tree/1.2.0"
             },
-            "time": "2025-12-11T14:00:18+00:00"
+            "time": "2026-02-12T08:48:01+00:00"
         },
         {
             "name": "spryker/product-offer-validity",
@@ -90000,6 +90060,12 @@
     ],
     "aliases": [
         {
+            "package": "spryker-feature/buy-box",
+            "version": "9999999-dev",
+            "alias": "202512.0",
+            "alias_normalized": "202512.0"
+        },
+        {
             "package": "spryker-feature/cart",
             "version": "9999999-dev",
             "alias": "202512.0",
@@ -90086,6 +90152,7 @@
     ],
     "minimum-stability": "dev",
     "stability-flags": {
+        "spryker-feature/buy-box": 20,
         "spryker-feature/cart": 20,
         "spryker-feature/inventory-management": 20,
         "spryker-feature/marketplace-comments": 20,

@@ -2,7 +2,10 @@
 
 {% set isProductConcrete = data.product.idProductConcrete is not empty %}
 {% set sspServiceDetectorWidget = findWidget('SspServiceDetectorWidget', [data.product]) %}
-{% set showProductAvailability = isProductConcrete %}
+{% set buyBoxWidget = findWidget('BuyBoxWidget', [data.product, app.request]) %}
+{% set productOffersCount = buyBoxWidget.products | length %}
+{% set showProductAvailability = isProductConcrete and productOffersCount == 0 %}
+{% set isAvailable = isProductConcrete and (data.product.available or productOffersCount) %}
 
 {% block body %}
     <div class="{{ config.name }}__top-block">
@@ -65,7 +68,12 @@
     {% widget 'AddToCartFormWidget' args [config, data.product, isDisabled, options] with {
         data: {
             isService: sspServiceDetectorWidget and sspServiceDetectorWidget.isService,
-        }
+            isDisabled: isDisabled,
+        },
+        embed: {
+            showProductAvailability: showProductAvailability,
+            buyBoxWidget: buyBoxWidget,
+        },
     } only %}
         {% block embeddedData %}
             {% widget 'ProductOptionConfiguratorWidget' args [data.product] only %}{% endwidget %}
@@ -120,31 +128,9 @@
 
 
             {% if not shipmentTypeServicePointSelectorWidget or not shipmentTypeServicePointSelectorWidget.hasShipmentTypeWithRequiredLocation %}
-                {% set merchantProductOfferWidget = findWidget('MerchantProductOfferWidget', [data.product]) %}
-                {% set productOffersCount = merchantProductOfferWidget ? merchantProductOfferWidget.productOffers | length : 0 %}
-                {% set isRadioButtonVisible = productOffersCount > 0  %}
-                {% set isChecked = merchantProductOfferWidget ? not merchantProductOfferWidget.productView.productOfferReference : true %}
-                {% set merchantProductWidget = findWidget('MerchantProductWidget', [
-                    data.product,
-                    isRadioButtonVisible,
-                    isChecked,
-                ]) %}
-                {% set hasMerchantProduct = merchantProductWidget.merchantProductView is defined %}
-
                 <div class="spacing-bottom spacing-bottom--bigger">
-                    {% widget merchantProductWidget %}{% endwidget %}
-                    {% widget merchantProductOfferWidget with {
-                        data: {
-                            isTitleVisible: not hasMerchantProduct,
-                        },
-                        embed: {
-                            hasMerchantProduct: hasMerchantProduct,
-                            productOffersCount: merchantProductOfferWidget.productOffers | length,
-                        },
-                    } %}
+                    {% widget embed.buyBoxWidget %}
                         {% block content %}
-                            {% set isRadioButtonVisible = embed.productOffersCount > 1 or embed.hasMerchantProduct %}
-
                             {{ parent() }}
                         {% endblock %}
                     {% endwidget %}

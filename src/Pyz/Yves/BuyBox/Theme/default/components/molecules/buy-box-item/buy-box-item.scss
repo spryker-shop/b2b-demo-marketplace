@@ -1,0 +1,25 @@
+@mixin buy-box-buy-box-item($name: '.buy-box-item') {
+    #{$name} {
+        border-bottom: rem(1) solid $setting-color-gray-1;
+        line-height: rem(20);
+
+        &__name {
+            font-size: rem(16);
+            margin-bottom: rem(7);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: $setting-color-gray-5;
+        }
+
+        .box {
+            padding: 0;
+            margin-top: rem(16);
+            border: none;
+            background: none;
+        }
+
+        @content;
+    }
+}
+
+@include buy-box-buy-box-item();
