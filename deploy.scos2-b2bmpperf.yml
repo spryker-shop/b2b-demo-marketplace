@@ -33,7 +33,10 @@ assets:
     mode: production
     compression:
         brotli:
-            static: on
+            static: true
+            level: 5
+        gzip:
+            static: true
             level: 5
 regions:
     EU:

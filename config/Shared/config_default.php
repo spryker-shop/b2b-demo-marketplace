@@ -554,7 +554,7 @@ $config[LogConstants::AUDIT_LOGGER_CONFIG_PLUGINS_MERCHANT_PORTAL] = [
 $config[LogConstants::LOG_QUEUE_NAME] = 'log-queue';
 $config[LogConstants::LOG_ERROR_QUEUE_NAME] = 'error-log-queue';
 
-$config[LogConstants::LOG_LEVEL] = Logger::INFO;
+$config[LogConstants::LOG_LEVEL] = Logger::ERROR;
 $config[PropelConstants::LOG_FILE_PATH]
     = $config[EventConstants::LOG_FILE_PATH]
     = $config[LogConstants::LOG_FILE_PATH_YVES]
@@ -595,6 +595,7 @@ $config[QueueConstants::QUEUE_ADAPTER_CONFIGURATION_DEFAULT] = [
     QueueConfig::CONFIG_MAX_WORKER_NUMBER => 1,
 ];
 
+$config[RabbitMqEnv::RABBITMQ_ENABLE_RUNTIME_SETTING_UP] = false;
 $config[RabbitMqEnv::RABBITMQ_API_HOST] = getenv('SPRYKER_BROKER_API_HOST');
 $config[RabbitMqEnv::RABBITMQ_API_PORT] = getenv('SPRYKER_BROKER_API_PORT');
 $config[RabbitMqEnv::RABBITMQ_API_USERNAME] = getenv('SPRYKER_BROKER_API_USERNAME');
