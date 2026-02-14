@@ -140,7 +140,7 @@
     {% endwidget %}
 
 
-    {% if not isAvailable and isProductConcrete %}
+    {% if (not isAvailable or not data.product.available) and not isProductAbstract %}
         {% widget 'AvailabilityNotificationSubscriptionWidget' args [data.product] only %}{% endwidget %}
     {% endif %}
 
