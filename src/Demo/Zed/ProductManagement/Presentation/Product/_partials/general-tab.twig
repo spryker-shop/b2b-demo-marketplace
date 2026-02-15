@@ -4,15 +4,23 @@
     {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.first), 'localeName': locale.localeName} %}
         {% block content %}
             {% for input in form[formKey] %}
-                {% embed '@SprykerEco:ProductManagementAi/_partials/ai-translation-trigger.twig' %}
-                    {% block input %}
-                        <div class="form-group {% if input.vars.errors | length %}has-error{% endif %}">
-                            {{ form_label(input) }}
-                            {{ form_widget(input, {'attr': {'class': 'name-translation js-infomational-field'}}) }}
-                            {{ form_errors(input) }}
-                        </div>
-                    {% endblock %}
-                {% endembed %}
+                <div class="form-group {% if input.vars.errors | length %}has-error{% endif %}">
+                    <button type="button" class="ai-query-builder__trigger"
+                            data-ai-start
+                            data-target-field="[name='{{ input.vars.full_name }}']"
+                            data-source-field="[name='{{ input.vars.full_name }}']"
+                            data-current-locale="{{ locale.localeName }}"
+                            data-target-popover=".all-ai-actions-popover"
+                    >
+                        <svg class="ai-query-builder__trigger-icon" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M26.5664 41.5666L32.0673 25.0642H39.1824L44.6832 41.5666L61.1857 47.0675V54.1826L44.6832 59.6834L39.1824 76.1859H32.0673L26.5664 59.6834L10.064 54.1826V47.0675L26.5664 41.5666ZM35.6248 38.1086L33.0886 45.7171L30.7169 48.0888L23.1084 50.625L30.7169 53.1612L33.0886 55.5329L35.6248 63.1415L38.161 55.5329L40.5327 53.1612L48.1413 50.625L40.5327 48.0888L38.161 45.7171L35.6248 38.1086Z" fill="currentColor"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M60.5648 19.315L63.4903 10.5385H67.7594L70.6849 19.315L79.4613 22.2405V26.5096L70.6849 29.4351L67.7594 38.2115H63.4903L60.5648 29.4351L51.7883 26.5096V22.2405L60.5648 19.315Z" fill="currentColor"/>
+                        </svg>
+                    </button>
+                    {{ form_label(input) }}
+                    {{ form_widget(input, {'attr': {'class': 'name-translation js-infomational-field'}}) }}
+                    {{ form_errors(input) }}
+                </div>
             {% endfor %}
         {% endblock %}
     {% endembed %}
@@ -23,4 +31,5 @@
 
     {# AI specific feature template using for integration. It's not stable template for using it in core. #}
     {% include '@SprykerEco:ProductManagementAi/_partials/category-modal-trigger.twig' %}
+    {% include '@SprykerEco:ProductManagementAi/_partials/ai-request-builder-popovers.twig' %}
 {% endblock %}
