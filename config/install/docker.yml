@@ -9,9 +9,6 @@ sections:
         cache-glue-api-clear:
             command: 'vendor/bin/glue cache:clear'
 
-        cache-storefront-api-clear:
-            command: 'GLUE_APPLICATION=GLUE_STOREFRONT vendor/bin/glue cache:clear'
-
         cache-backend-api-clear:
             command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue cache:clear'
 
@@ -66,9 +63,6 @@ sections:
         install-glue-api-assets:
             command: 'vendor/bin/glue assets:install public/Glue/assets/'
 
-        install-storefront-api-assets:
-            command: 'GLUE_APPLICATION=GLUE_STOREFRONT vendor/bin/glue assets:install public/GlueStorefront/assets/'
-
         install-backend-api-assets:
             command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue assets:install public/GlueBackend/assets/'
 
@@ -77,9 +71,6 @@ sections:
 
         provider-processor-glue-backend:
             command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue api:generate'
-
-        provider-processor-glue-storefront:
-            command: 'GLUE_APPLICATION=GLUE_STOREFRONT vendor/bin/glue api:generate'
 
     build-production:
         excluded: true
