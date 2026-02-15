@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4fd52646d70106e8966a263734917311",
+    "content-hash": "04d8ca3d72d7d9b3acb43b8abaf24d22",
     "packages": [
         {
             "name": "api-platform/api-pack",
@@ -8817,21 +8817,21 @@
         },
         {
             "name": "spryker-eco/product-management-ai",
-            "version": "dev-master",
+            "version": "dev-feature/ai-30-implement-ai-foundation-advanced",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-eco/product-management-ai.git",
-                "reference": "65599d535a3d7d9cb0fb295322c1152db47f3675"
+                "reference": "4a12f525b427b5ff8addb71c6657720193dbc5ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-eco/product-management-ai/zipball/65599d535a3d7d9cb0fb295322c1152db47f3675",
-                "reference": "65599d535a3d7d9cb0fb295322c1152db47f3675",
+                "url": "https://api.github.com/repos/spryker-eco/product-management-ai/zipball/4a12f525b427b5ff8addb71c6657720193dbc5ba",
+                "reference": "4a12f525b427b5ff8addb71c6657720193dbc5ba",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.3",
-                "spryker/ai-foundation": ">=0.1.0",
+                "spryker/ai-foundation": ">=0.4.0",
                 "spryker/category": "^5.0.0",
                 "spryker/gui": "^4.0.0",
                 "spryker/kernel": "^3.33.0",
@@ -8852,7 +8852,6 @@
             "suggest": {
                 "spryker/propel-orm": "Used for Propel schema generation."
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -8871,9 +8870,9 @@
             "description": "ProductManagementAi module",
             "support": {
                 "issues": "https://github.com/spryker-eco/product-management-ai/issues",
-                "source": "https://github.com/spryker-eco/product-management-ai/tree/0.4.0"
+                "source": "https://github.com/spryker-eco/product-management-ai/tree/feature/ai-30-implement-ai-foundation-advanced"
             },
-            "time": "2026-01-28T15:19:29+00:00"
+            "time": "2026-02-15T09:44:05+00:00"
         },
         {
             "name": "spryker-feature/acl",
@@ -23874,12 +23873,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/ai-foundation.git",
-                "reference": "c2902b5d9206d67f4c79bcf0abae468c05661987"
+                "reference": "98b1109692f11ebb9284242cb26b2f0b82644a31"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/ai-foundation/zipball/c2902b5d9206d67f4c79bcf0abae468c05661987",
-                "reference": "c2902b5d9206d67f4c79bcf0abae468c05661987",
+                "url": "https://api.github.com/repos/spryker/ai-foundation/zipball/98b1109692f11ebb9284242cb26b2f0b82644a31",
+                "reference": "98b1109692f11ebb9284242cb26b2f0b82644a31",
                 "shasum": ""
             },
             "require": {
@@ -23887,10 +23886,12 @@
                 "neuron-core/neuron-ai": "^2.9.3",
                 "php": ">=8.3",
                 "spryker/kernel": "^3.30.0",
-                "spryker/transfer": "^3.27.0"
+                "spryker/transfer": "^3.27.0",
+                "spryker/zed-request": "^3.20.0"
             },
             "require-dev": {
                 "spryker/code-sniffer": "*",
+                "spryker/propel": "*",
                 "spryker/testify": "*"
             },
             "default-branch": true,
@@ -23913,7 +23914,7 @@
             "support": {
                 "source": "https://github.com/spryker/ai-foundation/tree/master"
             },
-            "time": "2026-01-16T13:09:26+00:00"
+            "time": "2026-02-12T07:23:14+00:00"
         },
         {
             "name": "spryker/alternative-products-rest-api",
