@@ -18,14 +18,9 @@
         </div>
     </div>
 
-    {% set productAvailabilityWidget = findWidget('ProductAvailabilityWidget', [
-        data.product
-    ]) %}
     {% set isDisabled = isDisabled or not data.product.available %}
     {% if showProductAvailability %}
-        {% if productAvailabilityWidget is defined %}
-            {% widget productAvailabilityWidget only %} {% endwidget %}
-        {% endif %}
+        {% widget 'ProductAvailabilityWidget' args [data.product] only %}{% endwidget %}
     {% endif %}
     {% if can('SeePricePermissionPlugin') %}
         {% if (sspServiceDetectorWidget and sspServiceDetectorWidget.isService) %}
@@ -129,11 +124,7 @@
 
             {% if not shipmentTypeServicePointSelectorWidget or not shipmentTypeServicePointSelectorWidget.hasShipmentTypeWithRequiredLocation %}
                 <div class="spacing-bottom spacing-bottom--bigger">
-                    {% widget embed.buyBoxWidget %}
-                        {% block content %}
-                            {{ parent() }}
-                        {% endblock %}
-                    {% endwidget %}
+                    {% widget embed.buyBoxWidget only %}{% endwidget %}
                 </div>
             {% endif %}
         {% endblock %}
