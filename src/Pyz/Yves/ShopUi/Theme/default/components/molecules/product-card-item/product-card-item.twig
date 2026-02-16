@@ -118,12 +118,7 @@
                                             {% endwidget %}
                                         {% endblock %}
                                         {% block availability %}
-                                            {% set productAvailabilityWidget = findWidget('ProductAvailabilityWidget', [
-                                                listItem
-                                            ]) %}
-                                            {% if productAvailabilityWidget is defined %}
-                                                {% widget productAvailabilityWidget only %} {% endwidget %}
-                                            {% endif %}
+                                            {% widget 'ProductAvailabilityWidget' args [listItem] only %} {% endwidget %}
                                         {% endblock %}
                                     {% endblock %}
 

@@ -1,11 +1,5 @@
 {% extends molecule('buy-box-item', '@SprykerFeature:BuyBox') %}
 
-{% block merchantName %}
-    <div class="spacing-bottom">
-        <strong>{{ data.merchantName }}</strong>
-    </div>
-{% endblock %}
-
 {% block price %}
     <div class="spacing-bottom">
         {% widget 'CurrentProductPriceVolumeWidget' args [data.price] only %}
