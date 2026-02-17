@@ -25,12 +25,12 @@ use Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\IsActiveInDateRangeQ
 use Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\IsActiveQueryExpanderPlugin;
 use Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\LocalizedQueryExpanderPlugin;
 use Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\StoreQueryExpanderPlugin;
-use Spryker\Client\SearchHttp\Plugin\Catalog\Query\SearchHttpQueryPlugin;
 use Spryker\Client\SearchHttp\Plugin\Catalog\QueryExpander\BasicSearchHttpQueryExpanderPlugin;
 use Spryker\Client\SearchHttp\Plugin\Catalog\QueryExpander\FacetSearchHttpQueryExpanderPlugin;
 use Spryker\Client\SearchHttp\Plugin\Catalog\ResultFormatter\FacetSearchHttpResultFormatterPlugin;
 use Spryker\Client\SearchHttp\Plugin\Catalog\ResultFormatter\PaginationSearchHttpResultFormatterPlugin;
 use Spryker\Client\SearchHttp\Plugin\Search\SearchHttpSearchResultCountPlugin;
+use SprykerEco\Client\Algolia\Plugin\Search\AlgoliaSearchQueryPlugin;
 
 class CmsPageSearchDependencyProvider extends SprykerCmsPageSearchDependencyProvider
 {
@@ -107,7 +107,7 @@ class CmsPageSearchDependencyProvider extends SprykerCmsPageSearchDependencyProv
     {
         /** @var array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface> $plugins */
         $plugins = [
-            new SearchHttpQueryPlugin(
+            new AlgoliaSearchQueryPlugin(
                 (new SearchContextTransfer())
                     ->setSourceIdentifier(CmsPageSearchConfig::SOURCE_IDENTIFIER_CMS_PAGE),
             ),
