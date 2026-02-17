@@ -117,6 +117,9 @@
                                             {% widget 'SoldByMerchantWidget' args [listItem] only %}
                                             {% endwidget %}
                                         {% endblock %}
+                                        {% block availability %}
+                                            {% widget 'ProductAvailabilityWidget' args [listItem] only %} {% endwidget %}
+                                        {% endblock %}
                                     {% endblock %}
 
                                     {% block packagingUnitCart %}
