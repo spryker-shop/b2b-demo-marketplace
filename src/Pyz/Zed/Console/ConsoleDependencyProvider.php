@@ -165,12 +165,9 @@ use Spryker\Zed\SetupFrontend\Communication\Console\CleanUpDependenciesConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\InstallPackageManagerConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\InstallProjectDependenciesConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\MerchantPortalBuildFrontendConsole;
-use Spryker\Zed\SetupFrontend\Communication\Console\MerchantPortalInstallDependenciesConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\Npm\RunnerConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\YvesBuildFrontendConsole;
-use Spryker\Zed\SetupFrontend\Communication\Console\YvesInstallDependenciesConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\ZedBuildFrontendConsole;
-use Spryker\Zed\SetupFrontend\Communication\Console\ZedInstallDependenciesConsole;
 use Spryker\Zed\SharedCartDataImport\SharedCartDataImportConfig;
 use Spryker\Zed\ShipmentDataImport\ShipmentDataImportConfig;
 use Spryker\Zed\ShipmentTypeDataImport\ShipmentTypeDataImportConfig;
@@ -202,6 +199,7 @@ use Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin;
 use Spryker\Zed\Uuid\Communication\Console\UuidGeneratorConsole;
 use Spryker\Zed\ZedNavigation\Communication\Console\BuildNavigationConsole;
 use Spryker\Zed\ZedNavigation\Communication\Console\RemoveNavigationCacheConsole;
+use SprykerEco\Zed\Algolia\Communication\Console\AlgoliaEntityExportConsole;
 use SprykerEco\Zed\NewRelic\Communication\Console\RecordDeploymentConsole;
 use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 use SprykerSdk\Zed\AiDev\Communication\Console\GeneratePromptsConsole;
@@ -393,12 +391,9 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new InstallPackageManagerConsole(),
             new CleanUpDependenciesConsole(),
             new InstallProjectDependenciesConsole(),
-
-            new YvesInstallDependenciesConsole(),
             new YvesBuildFrontendConsole(),
-
-            new ZedInstallDependenciesConsole(),
             new ZedBuildFrontendConsole(),
+            new MerchantPortalBuildFrontendConsole(),
 
             new DeleteAllQueuesConsole(),
             new PurgeAllQueuesConsole(),
@@ -443,11 +438,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new RecordDeploymentConsole(),
 
             new OrderInvoiceSendConsole(),
-
             new ProductOfferValidityConsole(),
-
-            new MerchantPortalInstallDependenciesConsole(),
-            new MerchantPortalBuildFrontendConsole(),
 
             new MessageBrokerWorkerConsole(),
             new ScopeCacheCollectorConsole(),
@@ -461,6 +452,8 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
 
             // Container commands
             new ContainerBuilderConsole(),
+
+            new AlgoliaEntityExportConsole(),
         ];
 
         $propelCommands = $container->getLocator()->propel()->facade()->getConsoleCommands();
