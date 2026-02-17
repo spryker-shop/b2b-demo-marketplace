@@ -48,5 +48,6 @@ class CustomerAddressesCest
         $i->amOnPage(CustomerAddressesPage::URL);
         $i->click(CustomerAddressesPage::BUTTON_ADD_NEW_ADDRESS);
         $i->seeCurrentUrlEquals(CustomerAddressPage::URL);
+        //tmp
     }
 }
