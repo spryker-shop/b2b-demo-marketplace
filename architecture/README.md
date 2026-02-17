@@ -14,6 +14,8 @@ Out-of-the-box, this folder provides **structure, templates, and examples**. By 
 - **Architecture Decision Records (ADRs)** - Template and examples for documenting decisions
 - **Solution Designs** - Template for RFC-style exploration documents
 
+**Template Usage Note:** Templates provide examples and structural guidance. Replace and adapt all content to match your project's reality—the structure is what matters, not the example content itself. Focus on keeping content relevant to your architecture.
+
 ## Standards Used
 
 - **[arc42](https://arc42.org/)** - Proven template for architecture documentation
@@ -25,20 +27,20 @@ Out-of-the-box, this folder provides **structure, templates, and examples**. By 
 
 All sections follow the arc42 template:
 
-| Section | Description |
-|---------|-------------|
-| [01 - Introduction and Goals](01-introduction-and-goals.md) | Requirements overview, quality goals, stakeholders |
-| [02 - Constraints](02-constraints.md) | Technical, organizational, and convention constraints |
-| [03 - System Scope and Context](03-system-scope-and-context.md) | System boundaries, external interfaces, integrations |
-| [04 - Solution Designs](04-solution-designs/) | RFC-style exploration documents (before decisions) |
-| [05 - Building Block View](05-building-block-view.md) | System decomposition and module structure |
-| [06 - Runtime View](06-runtime-view.md) | Behavior and interactions at runtime |
-| [07 - Deployment View](07-deployment-view.md) | Infrastructure and deployment topology |
-| [08 - Crosscutting Concepts](08-crosscutting-concepts.md) | Overarching patterns and approaches |
-| [09 - Architecture Decisions](09-architecture-decisions/) | ADRs documenting key decisions (after consensus) |
-| [10 - Quality Requirements](10-quality-requirements.md) | Volume planning, testing strategy, quality scenarios |
-| [11 - Risks and Technical Debt](11-risks-and-technical-debt.md) | Known risks and technical debt items |
-| [12 - Glossary](12-glossary.md) | Domain terminology and definitions |
+| Section                                                           | Description |
+|-------------------------------------------------------------------|-------------|
+| [01 - Introduction and Goals](01-introduction-and-goals.md)       | Requirements overview, quality goals, stakeholders |
+| [02 - Constraints](02-constraints.md)                             | Technical, organizational, and convention constraints |
+| [03 - System Scope and Context](03-system-scope-and-context.md)   | System boundaries, external interfaces, integrations |
+| [04 - Solution Designs](04-solution-designs/README.md)                      | RFC-style exploration documents (before decisions) |
+| [05 - Building Block View](05-building-block-view.md)             | System decomposition and module structure |
+| [06 - Runtime View](06-runtime-view.md)                           | Behavior and interactions at runtime |
+| [07 - Deployment View](07-deployment-view.md)                     | Infrastructure and deployment topology |
+| [08 - Crosscutting Concepts](08-crosscutting-concepts.md)         | Overarching patterns and approaches |
+| [09 - Architecture Decisions](09-architecture-decisions/README.md) | ADRs documenting key decisions (after consensus) |
+| [10 - Quality Requirements](10-quality-requirements.md)           | Volume planning, testing strategy, quality scenarios |
+| [11 - Risks and Technical Debt](11-risks-and-technical-debt.md)   | Known risks and technical debt items |
+| [12 - Glossary](12-glossary.md)                                   | Domain terminology and definitions |
 
 ## Diagrams
 
@@ -57,11 +59,17 @@ All diagrams are code-based (Mermaid and PlantUML format) located in `diagrams/`
 3. Create/adapt C4 Level 1 diagram (system context)
 4. Continue with other sections as needed
 
-**For architecture changes:**
-- Create a Solution Design first (exploration), then an ADR after decision (documentation)
+**Handling Unused Sections:** You don't need to implement all 12 arc42 sections immediately. Choose two approaches: (1) remove sections you won't implement now—Git history preserves them if needed later, or (2) keep sections with example content as templates for future adoption. Either approach works depending on your project's preference.
+
+**For Solution Designs:**
+- Create a Solution Design when exploring important functionality, integrations, or architectural changes with significant project impact. Use it for exploration, trade-offs analysis, and proposing solutions before decisions are made.
+
+**For Architecture Decision Records (ADRs):**
+- Create an ADR after consensus is reached on a significant architectural decision. ADRs document the decision context, rationale, and consequences—use them to capture the "why" behind important choices.
 
 **For diagrams:**
-- Edit `.mmd` (Mermaid) and `.puml` (PlantUML) files directly - they render automatically in GitHub and most IDEs
+- **Mermaid** (`.mmd`): Renders automatically in GitHub and most IDEs. Online editor: [mermaid.live](https://mermaid.live/)
+- **PlantUML** (`.puml`): Requires additional plugins or online rendering. Online editor: [plantuml.com](https://www.plantuml.com/plantuml/)
 - Adapt example diagrams to your project's needs
 
 **For reviews:**

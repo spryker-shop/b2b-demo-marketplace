@@ -56,6 +56,8 @@ You control the depth. Start at C1 (context) and continue only as deep as your d
 
 **Design principle:** This structure is optimized for AI assistance. We provide templates with clear structure and minimal context, plus examples of the most common diagram types (C4, data flow, integration, sequence) and documentation patterns (ADRs, Solution Designs). AI tools work most efficiently when they see the methodology (like arc42), understand the structure, and have examples to follow. This approach enables you to generate architecture documentation much faster with AI assistance.
 
+Templates provide examples and structural guidance—adapt content to your project's context. You don't need to implement all sections immediately; remove or keep unused sections based on your documentation strategy (see README.md for details).
+
 ### Folder Structure
 
 ```
