@@ -51,12 +51,16 @@ High-level description of the proposed solution approach.
 
 ### Integration Points
 
-- **System A**: How we integrate, what protocol/API
-- **System B**: How we integrate, what protocol/API
+- **Internal Modules**: Plugin contracts (e.g., PluginInterface), Facade method calls, Client usage
+- **External Systems**: REST API endpoints, webhooks, event streaming protocols (e.g., AMQP with RabbitMQ)
+- **Data Flows**: Message broker patterns (RabbitMQ publishers/subscribers), asynchronous processing
 
 ### Data Model
 
-[If relevant, describe data structures, entities, relationships]
+[If relevant, describe data structures, entities, relationships. In Spryker context, include:
+- **Database Schema**: Define Propel schema (`spy_*.schema.xml`) with table structure, columns, indexes, and behaviors
+- **Transfer Objects**: Document transfer definitions (`.transfer.xml`) that map to database entities
+- **Entity Relationships**: Show relationships between entities and transfer objects]
 
 ## Implementation Plan
 
@@ -68,8 +72,9 @@ High-level description of the proposed solution approach.
 
 ### Dependencies
 
-- Dependency on other systems/teams
-- Prerequisites that must be completed first
+- **Spryker Module Dependencies**: List modules this solution depends on (e.g., Log, Sales, Kernel)
+- **External System Dependencies**: Dependencies on external services/systems
+- **Prerequisites**: Code changes, database migrations, or other prerequisites that must be completed first
 
 ### Rollout Strategy & Cost
 
