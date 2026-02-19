@@ -1,11 +1,9 @@
 version: "0.1"
-
 x-real-ip: &real-ip
     real-ip:
         from:
             - 10.0.0.0/8 # AWS VPC network
             - 103.21.244.0/22 # Cloudflare
-
 x-frontend-auth: &frontend-auth
     <<: *real-ip
     auth:
@@ -16,39 +14,33 @@ x-frontend-auth: &frontend-auth
         exclude:
             - '${ALLOWED_IP}' # AWS gateway
             - 185.60.20.0/24 # PayOne
-
 namespace: spryker-cloud
 tag: '1.0'
-
-environment: docker.production
+environment: docker.dev
 image:
-    tag: spryker/php:8.3
+    tag: spryker/php:8.2
     environment:
         SPRYKER_DNS_RESOLVER_IP: "10.105.0.2"
-        SPRYKER_HOOK_BEFORE_DEPLOY: "vendor/bin/install -r EU/pre-deploy -vvv"
-        SPRYKER_HOOK_AFTER_DEPLOY: ""
-        SPRYKER_HOOK_INSTALL: "vendor/bin/install -r EU/production --no-ansi -vvv"
-        SPRYKER_HOOK_DESTRUCTIVE_INSTALL: "vendor/bin/install -r destructive --no-ansi -vvv"
+        SPRYKER_DEFAULT_STORE: "DE"
+        SPRYKER_ACTIVE_STORES: "DE,AT"
+        SPRYKER_HOOK_BEFORE_DEPLOY: "vendor/bin/install -r EU/pre-deploy.dynamic-store-off -vvv"
+        SPRYKER_HOOK_AFTER_DEPLOY: "true"
+        SPRYKER_HOOK_INSTALL: "vendor/bin/install -r EU/production.dynamic-store-off --no-ansi -vvv"
+        SPRYKER_HOOK_DESTRUCTIVE_INSTALL: "vendor/bin/install -r EU/destructive.dynamic-store-off --no-ansi -vvv"
         SPRYKER_PRODUCT_CONFIGURATOR_HOST: dtc.academy-eu-b2b-mp.prod.demo-spryker.com
         SPRYKER_PRODUCT_CONFIGURATOR_PORT: 443
-        SPRYKER_YVES_HOST_EU: www.academy-eu-b2b-mp.prod.demo-spryker.com
-        SPRYKER_YVES_HOST_US: www.academy-us-b2b-mp.prod.demo-spryker.com
-        SPRYKER_DYNAMIC_STORE_MODE: true
+        SPRYKER_YVES_HOST_DE: de.academy-eu-b2b-mp.prod.demo-spryker.com
+        SPRYKER_YVES_HOST_AT: at.academy-eu-b2b-mp.prod.demo-spryker.com
     php:
-        ini:
-            "opcache.revalidate_freq": 0
         enabled-extensions:
             - blackfire
             - newrelic
-            - otel
     node:
         version: 18
         npm: 9
-
 composer:
-    mode: '--no-dev'
-    autoload: ' --classmap-authoritative --optimize'
-
+    mode: --no-dev
+    autoload: --classmap-authoritative
 assets:
     image: spryker/nginx-brotli:latest
     mode: production
@@ -58,89 +50,132 @@ assets:
         gzip:
             static: true
             level: 5
-
 regions:
-  EU:
-    services:
-      mail:
-        sender:
-          name: Spryker No-Reply
-          email: no-reply@academy-eu-b2b-mp.prod.demo-spryker.com
-      database:
-        database: spryker_acb2bmpeu
-        username: spryker
-        password: secret
-      broker:
-        namespace: eu-docker
-      key_value_store:
-        namespace: 1
-      search:
-        namespace: eu_search
-
-
+    EU:
+        services:
+            mail:
+                sender:
+                    name: acb2bmpeu-No-Reply
+                    email: no-reply@academy-eu-b2b-mp.prod.demo-spryker.com
+            database:
+                database: spryker_acb2bmpeu
+                username: spryker
+                password: secret
+        stores:
+            DE:
+                services:
+                    broker:
+                        namespace: de_queue
+                    key_value_store:
+                        namespace: 1
+                    search:
+                        namespace: de_search
+                    session:
+                        namespace: 2
+            AT:
+                services:
+                    broker:
+                        namespace: at-docker
+                    key_value_store:
+                        namespace: 3
+                    search:
+                        namespace: at_search
+                    session:
+                        namespace: 4
 groups:
     EU:
         region: EU
         applications:
+            Redirects:
+                application: static
+                endpoints:
+                    academy-eu-b2b-mp.prod.demo-spryker.com:
+                        store: DE
+                        redirect:
+                            code: 302
+                            url: www.de.academy-eu-b2b-mp.prod.demo-spryker.com
+                    www.academy-eu-b2b-mp.prod.demo-spryker.com:
+                        store: DE
+                        redirect:
+                            code: 302
+                            url: www.de.academy-eu-b2b-mp.prod.demo-spryker.com
+                    backoffice.academy-eu-b2b-mp.prod.demo-spryker.com:
+                        store: DE
+                        redirect:
+                            code: 302
+                            url:  backoffice.de.academy-eu-b2b-mp.prod.demo-spryker.com
             yves:
                 application: yves
                 endpoints:
-                    www.academy-eu-b2b-mp.prod.demo-spryker.com:
-                        region: EU
-                        services:
-                            session:
-                                namespace: 2
                     dtc.academy-eu-b2b-mp.prod.demo-spryker.com:
                         entry-point: Configurator
+                    www.de.academy-eu-b2b-mp.prod.demo-spryker.com:
+                        store: DE
+                    www.at.academy-eu-b2b-mp.prod.demo-spryker.com:
+                        store: AT
             glue:
                 application: glue
                 endpoints:
-                    glue.academy-eu-b2b-mp.prod.demo-spryker.com:
-                        region: EU
+                    glue.de.academy-eu-b2b-mp.prod.demo-spryker.com:
+                        store: DE
                         cors-allow-origin: '*'
-            gluestorefront:
+                    glue.at.academy-eu-b2b-mp.prod.demo-spryker.com:
+                        store: AT
+                        cors-allow-origin: '*'
+            glue_storefront:
                 application: glue-storefront
                 endpoints:
-                    glue-storefront.academy-eu-b2b-mp.prod.demo-spryker.com:
-                        region: EU
+                    glue-storefront.de.academy-eu-b2b-mp.prod.demo-spryker.com:
+                        store: DE
                         cors-allow-origin: '*'
-            gluebackend:
+                    glue-storefront.at.academy-eu-b2b-mp.prod.demo-spryker.com:
+                        store: AT
+                        cors-allow-origin: '*'
+            glue_backend:
                 application: glue-backend
                 endpoints:
-                    glue-backend.academy-eu-b2b-mp.prod.demo-spryker.com:
-                        region: EU
+                    glue-backend.de.academy-eu-b2b-mp.prod.demo-spryker.com:
+                        store: DE
+                        cors-allow-origin: '*'
+                    glue-backend.at.academy-eu-b2b-mp.prod.demo-spryker.com:
+                        store: AT
                         cors-allow-origin: '*'
             boffice:
                 application: backoffice
                 endpoints:
-                    backoffice.academy-eu-b2b-mp.prod.demo-spryker.com:
-                        region: EU
+                    backoffice.de.academy-eu-b2b-mp.prod.demo-spryker.com:
+                        store: DE
                         primal: true
-                        services:
-                            session:
-                                namespace: 3
+                    backoffice.at.academy-eu-b2b-mp.prod.demo-spryker.com:
+                        store: AT
             backgw:
                 application: backend-gateway
                 endpoints:
-                    backend-gateway.academy-eu-b2b-mp.prod.demo-spryker.com:
-                        region: EU
+                    backend-gateway.de.academy-eu-b2b-mp.prod.demo-spryker.com:
+                        store: DE
+                        primal: true
+                    backend-gateway.at.academy-eu-b2b-mp.prod.demo-spryker.com:
+                        store: AT
                         primal: true
             backapi:
                 application: zed
                 endpoints:
-                    backend-api.academy-eu-b2b-mp.prod.demo-spryker.com:
-                        region: EU
+                    backend-api.de.academy-eu-b2b-mp.prod.demo-spryker.com:
+                        store: DE
+                        entry-point: BackendApi
+                    backend-api.at.academy-eu-b2b-mp.prod.demo-spryker.com:
+                        store: AT
                         entry-point: BackendApi
             mportal:
                 application: merchant-portal
                 endpoints:
-                    mp.academy-eu-b2b-mp.prod.demo-spryker.com:
+                    mp.de.academy-eu-b2b-mp.prod.demo-spryker.com:
                         entry-point: MerchantPortal
-                        region: EU
+                        store: DE
                         primal: true
-                        services:
-                            session:
-                                namespace: 4
+                    mp.at.academy-eu-b2b-mp.prod.demo-spryker.com:
+                        entry-point: MerchantPortal
+                        store: AT
 services:
     database:
         engine: mysql
@@ -153,7 +188,7 @@ services:
                 protocol: tcp
     broker:
         engine: rabbitmq
-        version: 3.13
+        version: 3.9
         api:
             username: "spryker"
             password: "secret"
@@ -162,9 +197,9 @@ services:
             localhost:5672:
                 protocol: tcp
     session:
-        engine: valkey
+        engine: redis
     key_value_store:
-        engine: valkey
+        engine: redis
         endpoints:
             localhost:16379:
                 protocol: tcp
@@ -176,7 +211,7 @@ services:
                 protocol: tcp
     scheduler:
         engine: jenkins
-        version: '2.442'
+        version: 2.324
         csrf-protection-enabled: true
         endpoints:
             scheduler.academy-eu-b2b-mp.prod.demo-spryker.com:
@@ -184,22 +219,17 @@ services:
         engine: mailhog
         endpoints:
             mail.academy-eu-b2b-mp.prod.demo-spryker.com:
-
 docker:
-
     blackfire:
         enabled: true
-
     ssl:
         enabled: true
         redirect: true
-
     debug:
         enabled: false
         xdebug:
             enabled: false
-
     testing:
-
+        store: DE
     mount:
         baked:
