@@ -124,31 +124,31 @@ groups:
       gluestorefront:
         application: glue-storefront
         endpoints:
-          glue-storefront.de.dev-change_me.cloud.spryker.toys:
+          glue-storefront.eu.dev-change_me.cloud.spryker.toys:
             region: EU
             <<: *real-ip
       gluebackend:
         application: glue-backend
         endpoints:
-          glue-backend.de.dev-change_me.cloud.spryker.toys:
+          glue-backend.eu.dev-change_me.cloud.spryker.toys:
             region: EU
             <<: *real-ip
       boffice:
         application: backoffice
         endpoints:
-          backoffice.de.dev-change_me.cloud.spryker.toys:
+          backoffice.eu.dev-change_me.cloud.spryker.toys:
             region: EU
             <<: *frontend-auth
       backgw:
         application: backend-gateway
         endpoints:
-          backend-gateway.de.dev-change_me.cloud.spryker.toys:
+          backend-gateway.eu.dev-change_me.cloud.spryker.toys:
             region: EU
             <<: *real-ip
       backapi:
         application: zed
         endpoints:
-          backend-api.de.dev-change_me.cloud.spryker.toys:
+          backend-api.eu.dev-change_me.cloud.spryker.toys:
             region: EU
             entry-point: BackendApi
             <<: *real-ip
