@@ -70,6 +70,25 @@ class ProductRepository implements ProductRepositoryInterface
     }
 
     /**
+     * @param array<string> $productConcreteSkuList
+     *
+     * @return array<string, string>
+     */
+    public function getAbstractSkusByConcreteSkus(array $productConcreteSkuList): array
+    {
+        $productEntityCollection = SpyProductQuery::create()
+            ->joinWithSpyProductAbstract()
+            ->filterBySku_In($productConcreteSkuList);
+
+        $result = [];
+        foreach ($productEntityCollection as $productEntity) {
+            $result[$productEntity->getSku()] = $productEntity->getSpyProductAbstract()->getSku();
+        }
+
+        return $result;
+    }
+
+    /**
      * @param string $sku
      *
      * @return int

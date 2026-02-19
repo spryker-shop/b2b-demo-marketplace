@@ -35,6 +35,7 @@ use Spryker\Glue\Router\Plugin\Application\RouterApplicationPlugin;
 use Spryker\Glue\StoresApi\Plugin\GlueBackendApiApplication\StoreApplicationPlugin as ClientStoreApplicationPlugin;
 use Spryker\Glue\StoresBackendApi\Plugin\GlueBackendApiApplication\StoreApplicationPlugin;
 use Spryker\Glue\TestifyBackendApi\Plugin\GlueBackendApiApplication\DynamicFixturesBackendResourcePlugin;
+use Spryker\Glue\WebProfiler\Plugin\Application\WebProfilerApplicationPlugin;
 use Spryker\Zed\Propel\Communication\Plugin\Application\PropelApplicationPlugin;
 use Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin;
 use SprykerFeature\Glue\SelfServicePortal\Plugin\GlueBackendApiApplication\SspAssetsBackendResourcePlugin;
@@ -46,7 +47,7 @@ class GlueBackendApiApplicationDependencyProvider extends SprykerGlueBackendApiA
      */
     protected function getApplicationPlugins(): array
     {
-        return [
+        $plugins = [
             new HttpApplicationPlugin(),
             new PropelApplicationPlugin(),
             new ClientStoreApplicationPlugin(),
@@ -56,6 +57,12 @@ class GlueBackendApiApplicationDependencyProvider extends SprykerGlueBackendApiA
             new LocaleApplicationPlugin(),
             new TwigApplicationPlugin(),
         ];
+
+        if (class_exists(WebProfilerApplicationPlugin::class)) {
+            $plugins[] = new WebProfilerApplicationPlugin();
+        }
+
+        return $plugins;
     }
 
     /**

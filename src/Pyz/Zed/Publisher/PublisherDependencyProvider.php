@@ -42,8 +42,6 @@ use Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\CategoryTree\Cate
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\CategoryTree\CategoryTreeWriteForPublishingPublisherPlugin;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\CategoryTreePublisherTriggerPlugin;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\ParentWritePublisherPlugin;
-use Spryker\Zed\Cms\Communication\Plugin\Publisher\CmsPageUpdateMessageBrokerPublisherPlugin;
-use Spryker\Zed\Cms\Communication\Plugin\Publisher\CmsPageVersionPublishedMessageBrokerPublisherPlugin;
 use Spryker\Zed\CustomerAccessStorage\Communication\Plugin\Publisher\CustomerAccessPublisherTriggerPlugin;
 use Spryker\Zed\CustomerStorage\Communication\Plugin\Publisher\Customer\CustomerInvalidatedWritePublisherPlugin;
 use Spryker\Zed\FileManagerStorage\Communication\Plugin\Publisher\FileManagerPublisherTriggerPlugin;
@@ -77,11 +75,6 @@ use Spryker\Zed\MerchantStorage\Communication\Plugin\Publisher\MerchantPublisher
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plugin\Publisher\Merchant\MerchantWritePublisherPlugin as PriceProductMerchantWritePublisherPlugin;
 use Spryker\Zed\PriceProductOfferStorage\Communication\Plugin\Publisher\PriceProductOffer\PriceProductStoreWritePublisherPlugin;
 use Spryker\Zed\PriceProductOfferStorage\Communication\Plugin\Publisher\PriceProductOfferPublisherTriggerPlugin;
-use Spryker\Zed\Product\Communication\Plugin\Publisher\ProductAbstractUpdatedMessageBrokerPublisherPlugin;
-use Spryker\Zed\Product\Communication\Plugin\Publisher\ProductConcreteCreatedMessageBrokerPublisherPlugin;
-use Spryker\Zed\Product\Communication\Plugin\Publisher\ProductConcreteDeletedMessageBrokerPublisherPlugin;
-use Spryker\Zed\Product\Communication\Plugin\Publisher\ProductConcreteExportedMessageBrokerPublisherPlugin;
-use Spryker\Zed\Product\Communication\Plugin\Publisher\ProductConcreteUpdatedMessageBrokerPublisherPlugin;
 use Spryker\Zed\ProductAlternativeStorage\Communication\Plugin\Publisher\ProductAlternativePublisherTriggerPlugin;
 use Spryker\Zed\ProductBundleStorage\Communication\Plugin\Publisher\ProductBundle\ProductBundlePublishWritePublisherPlugin;
 use Spryker\Zed\ProductBundleStorage\Communication\Plugin\Publisher\ProductBundle\ProductBundleWritePublisherPlugin;
@@ -153,6 +146,7 @@ use Spryker\Zed\ProductRelationStorage\Communication\Plugin\Publisher\ProductRel
 use Spryker\Zed\ProductRelationStorage\Communication\Plugin\Publisher\ProductRelationProductAbstract\ProductRelationProductAbstractWritePublisherPlugin;
 use Spryker\Zed\ProductRelationStorage\Communication\Plugin\Publisher\ProductRelationPublisherTriggerPlugin;
 use Spryker\Zed\ProductRelationStorage\Communication\Plugin\Publisher\ProductRelationStore\ProductRelationStoreWritePublisherPlugin;
+use Spryker\Zed\ProductSearch\Communication\Plugin\Publisher\ProductSearchPublisherTriggerPlugin;
 use Spryker\Zed\ProductStorage\Communication\Plugin\Publisher\ProductAbstract\ProductLocalizedAttributesProductAbstractWritePublisherPlugin;
 use Spryker\Zed\PublishAndSynchronizeHealthCheckSearch\Communication\Plugin\Publisher\PublishAndSynchronizeHealthCheckSearchPublisherTriggerPlugin;
 use Spryker\Zed\PublishAndSynchronizeHealthCheckSearch\Communication\Plugin\Publisher\PublishAndSynchronizeHealthCheckSearchWritePublisherPlugin;
@@ -192,6 +186,11 @@ use Spryker\Zed\StoreStorage\Communication\Plugin\Publisher\StorePublisherTrigge
 use Spryker\Zed\TaxApp\Communication\Plugin\Publisher\Store\RefreshTaxAppStoreRelationPublisherPlugin;
 use Spryker\Zed\TaxProductStorage\Communication\Plugin\Publisher\TaxProductPublisherTriggerPlugin;
 use Spryker\Zed\TaxStorage\Communication\Plugin\Publisher\TaxSetPublisherTriggerPlugin;
+use SprykerEco\Zed\Algolia\Communication\Plugin\Publisher\CmsPage\AlgoliaCmsPagePublisherPlugin;
+use SprykerEco\Zed\Algolia\Communication\Plugin\Publisher\CmsPage\AlgoliaCmsPageVersionPublisherPlugin;
+use SprykerEco\Zed\Algolia\Communication\Plugin\Publisher\Product\AlgoliaProductAbstractPublisherPlugin;
+use SprykerEco\Zed\Algolia\Communication\Plugin\Publisher\Product\AlgoliaProductConcreteDeletePublisherPlugin;
+use SprykerEco\Zed\Algolia\Communication\Plugin\Publisher\Product\AlgoliaProductConcretePublisherPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Publisher\SspAsset\Search\SspAssetToCompanyBusinessUnitWritePublisherPlugin as SearchSspAssetToCompanyBusinessUnitWritePublisherPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Publisher\SspAsset\Search\SspAssetToModelWritePublisherPlugin as SearchSspAssetToModelWritePublisherPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Publisher\SspAsset\Search\SspAssetWritePublisherPlugin as SearchSspAssetWritePublisherPlugin;
@@ -241,13 +240,11 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
             $this->getAssetStoragePlugins(),
             $this->getProductConfigurationStoragePlugins(),
             $this->getCustomerStoragePlugins(),
-            $this->getProductMessageBrokerPlugins(),
             $this->getProductPageSearchPlugins(),
             $this->getProductAbstractPageSearchPlugins(),
             $this->getProductOfferAvailabilityStoragePlugins(),
             $this->getTaxAppPlugins(),
             $this->getProductStoragePlugins(),
-            $this->getCmsPageMessageBrokerPlugins(),
             $this->getSspModelStoragePlugins(),
             $this->getSspAssetStoragePlugins(),
             $this->getSspAssetSearchPlugins(),
@@ -257,6 +254,7 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
             $this->getServicePointSearchPlugins(),
             $this->getProductOfferServicePointStoragePlugins(),
             $this->getProductOfferShipmentTypeStoragePlugins(),
+            $this->getAlgoliaPlugins(),
         );
     }
 
@@ -320,6 +318,7 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
             new ShipmentTypePublisherTriggerPlugin(),
             new ProductOfferServicePublisherTriggerPlugin(),
             new ProductOfferShipmentTypePublisherTriggerPlugin(),
+            new ProductSearchPublisherTriggerPlugin(),
         ];
     }
 
@@ -657,22 +656,6 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
     }
 
     /**
-     * @return array<\Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface>
-     */
-    protected function getProductMessageBrokerPlugins(): array
-    {
-        return [
-            new ProductConcreteExportedMessageBrokerPublisherPlugin(),
-            new ProductConcreteCreatedMessageBrokerPublisherPlugin(),
-            new ProductConcreteUpdatedMessageBrokerPublisherPlugin(),
-            new ProductConcreteDeletedMessageBrokerPublisherPlugin(),
-            new ProductAbstractUpdatedMessageBrokerPublisherPlugin(),
-            new ProductCategoryProductUpdatedEventTriggerPlugin(),
-            new ProductLabelProductUpdatedEventTriggerPlugin(),
-        ];
-    }
-
-    /**
      * @return array<int, \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface>
      */
     protected function getCustomerStoragePlugins(): array
@@ -729,17 +712,6 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
     {
         return [
             new ProductLocalizedAttributesProductAbstractWritePublisherPlugin(),
-        ];
-    }
-
-    /**
-     * @return array<\Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface>
-     */
-    protected function getCmsPageMessageBrokerPlugins(): array
-    {
-        return [
-            new CmsPageVersionPublishedMessageBrokerPublisherPlugin(),
-            new CmsPageUpdateMessageBrokerPublisherPlugin(),
         ];
     }
 
@@ -863,6 +835,25 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
             new ProductOfferStoreProductOfferShipmentTypeWritePublisherPlugin(),
             new ShipmentTypeProductOfferShipmentTypeWritePublisherPlugin(),
             new ShipmentTypeStoreProductOfferShipmentTypeWritePublisherPlugin(),
+        ];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface>
+     */
+    protected function getAlgoliaPlugins(): array
+    {
+        return [
+            // CMS pages
+            new AlgoliaCmsPagePublisherPlugin(),
+            new AlgoliaCmsPageVersionPublisherPlugin(),
+
+            // Products
+            new AlgoliaProductAbstractPublisherPlugin(),
+            new AlgoliaProductConcretePublisherPlugin(),
+            new AlgoliaProductConcreteDeletePublisherPlugin(),
+            new ProductCategoryProductUpdatedEventTriggerPlugin(),
+            new ProductLabelProductUpdatedEventTriggerPlugin(),
         ];
     }
 }

@@ -76,8 +76,8 @@ image:
             - newrelic
             - otel
     node:
-        version: 18
-        npm: 9
+        version: 20
+        npm: 10
 
 composer:
     mode: --no-dev
@@ -88,7 +88,10 @@ assets:
     mode: production
     compression:
         brotli:
-            static: on
+            static: true
+            level: 5
+        gzip:
+            static: true
             level: 5
 
 regions:

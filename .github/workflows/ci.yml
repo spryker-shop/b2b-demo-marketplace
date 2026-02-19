@@ -96,7 +96,6 @@ jobs:
                run: |
                    echo "vendor/bin/glue api:generate" && vendor/bin/glue api:generate
                    echo "GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue api:generate" && GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue api:generate
-                   echo "GLUE_APPLICATION=GLUE_STOREFRONT vendor/bin/glue api:generate" && GLUE_APPLICATION=GLUE_STOREFRONT vendor/bin/glue api:generate
 
             -   name: Run PHPStan
                 run: vendor/bin/phpstan analyze -l 6 -c phpstan.neon src/
@@ -113,7 +112,7 @@ jobs:
 
             -   uses: actions/setup-node@v4
                 with:
-                    node-version: '18'
+                    node-version: '20'
 
             -   name: Install NPM packages
                 run: |
@@ -135,7 +134,7 @@ jobs:
             -   name: Setup Node.js
                 uses: actions/setup-node@v5
                 with:
-                    node-version: '18'
+                    node-version: '20'
                     cache: 'npm'
 
             -   name: Install NPM packages
@@ -307,7 +306,6 @@ jobs:
                     docker/sdk boot deploy.ci.api.mariadb.robot.yml
                     #sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local' >> /etc/hosts"
                     docker/sdk up -t
-                    docker/sdk cli composer dump-autoload -o -a --apcu -q
 
             -   name: Run Tests
                 id: tests

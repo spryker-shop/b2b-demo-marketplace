@@ -29,6 +29,7 @@ use Spryker\Yves\Sitemap\Widget\SitemapWidget;
 use Spryker\Yves\Translator\Plugin\Application\TranslatorApplicationPlugin;
 use Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin;
 use Spryker\Yves\Validator\Plugin\Application\ValidatorApplicationPlugin;
+use SprykerFeature\Yves\BuyBox\Widget\BuyBoxWidget;
 use SprykerFeature\Yves\SelfServicePortal\Plugin\ShopApplication\AddressFormItemsByShipmentTypeWidgetCacheKeyGeneratorStrategyPlugin;
 use SprykerFeature\Yves\SelfServicePortal\Plugin\ShopApplication\SingleAddressPerShipmentTypeWidgetCacheKeyGeneratorStrategyPlugin;
 use SprykerFeature\Yves\SelfServicePortal\Plugin\ShopApplication\SspDashboardFilterControllerEventHandlerPlugin;
@@ -66,6 +67,7 @@ use SprykerFeature\Yves\SelfServicePortal\Widget\SspShipmentTypeServicePointSele
 use SprykerShop\Yves\AgentWidget\Widget\AgentControlBarWidget;
 use SprykerShop\Yves\AssetWidget\Widget\AssetWidget;
 use SprykerShop\Yves\AvailabilityNotificationWidget\Widget\AvailabilityNotificationSubscriptionWidget;
+use SprykerShop\Yves\AvailabilityWidget\Widget\ProductAvailabilityWidget;
 use SprykerShop\Yves\BarcodeWidget\Widget\BarcodeWidget;
 use SprykerShop\Yves\BusinessOnBehalfWidget\Widget\BusinessOnBehalfStatusWidget;
 use SprykerShop\Yves\CartCodeWidget\Widget\CartCodeFormWidget;
@@ -323,6 +325,7 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             AddItemsToShoppingListWidget::class,
             CategoryImageStorageWidget::class,
             AvailabilityNotificationSubscriptionWidget::class,
+            ProductAvailabilityWidget::class,
             ProductConcreteAddWidget::class,
             QuoteRequestCreateWidget::class,
             QuoteRequestCartWidget::class,
@@ -336,6 +339,7 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             OrderCustomReferenceWidget::class,
             OrderItemsConfiguredBundleWidget::class,
             BarcodeWidget::class,
+            BuyBoxWidget::class,
             AddToCartFormWidget::class,
             AddItemsFormWidget::class,
             CartChangeQuantityFormWidget::class,
