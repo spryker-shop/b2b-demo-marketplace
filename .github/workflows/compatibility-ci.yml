@@ -36,7 +36,7 @@ jobs:
             -   name: Run docker
                 run: |
                     git clone --depth 1 https://github.com/spryker/docker-sdk.git ./docker
-                    docker/sdk boot deploy.ci.acceptance.postgres.yml
+                    docker/sdk boot .github/deploy/deploy.ci.acceptance.postgres.yml
                     docker/sdk up -t
                     docker/sdk cli composer dump-autoload -o -a --apcu -q
                     docker/sdk testing codecept fixtures
@@ -45,12 +45,12 @@ jobs:
             -   name: Run Acceptance Tests
                 id: acceptance-tests
                 run: |
-                    docker/sdk testing codecept run -c codeception.acceptance.yml
+                    docker/sdk testing codecept run -c tests/codeception.acceptance.yml
 
             -   name: Run API Tests
                 id: api-tests
                 run: |
-                    docker/sdk testing codecept run -c codeception.api.yml
+                    docker/sdk testing codecept run -c tests/codeception.api.yml
 
             -   name: Save PHP logs
                 if: always() && (steps.api-tests.outcome == 'failure' || steps.acceptance-tests.outcome == 'failure')
@@ -96,12 +96,12 @@ jobs:
             -   name: Run docker
                 run: |
                     git clone --depth 1 https://github.com/spryker/docker-sdk.git ./docker
-                    docker/sdk boot deploy.ci.functional.postgres.yml
+                    docker/sdk boot .github/deploy/deploy.ci.functional.postgres.yml
                     docker/sdk up -t
                     docker/sdk cli composer dump-autoload -o -a --apcu -q
 
             -   name: Run Tests
-                run: docker/sdk testing codecept run -c codeception.ci.functional.yml
+                run: docker/sdk testing codecept run -c tests/codeception.ci.functional.yml
 
             -   name: Slack Notification for failed job
                 uses: ./.github/actions/job-slack-notifications
@@ -133,7 +133,7 @@ jobs:
             -   name: Install Project
                 run: |
                     git clone --depth 1 https://github.com/spryker/docker-sdk.git ./docker
-                    docker/sdk boot deploy.ci.api.postgres.robot.yml
+                    docker/sdk boot .github/deploy/deploy.ci.api.postgres.robot.yml
                     sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local' >> /etc/hosts"
                     docker/sdk up -t
                     docker/sdk cli composer dump-autoload -o -a --apcu -q
@@ -206,7 +206,7 @@ jobs:
             -   name: Install Project
                 run: |
                     git clone --depth 1 https://github.com/spryker/docker-sdk.git ./docker
-                    docker/sdk boot deploy.ci.acceptance.postgress.cypress.yml
+                    docker/sdk boot .github/deploy/deploy.ci.acceptance.postgress.cypress.yml
                     sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local' >> /etc/hosts"
                     docker/sdk up -t
                     docker/sdk cli composer dump-autoload -o -a --apcu -q
@@ -286,7 +286,7 @@ jobs:
                 continue-on-error: false
                 run: |
                     git clone --depth 1 https://github.com/spryker/docker-sdk.git ./docker
-                    docker/sdk boot deploy.ci.acceptance.postgres.robot.yml
+                    docker/sdk boot .github/deploy/deploy.ci.acceptance.postgres.robot.yml
                     sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local' >> /etc/hosts"
                     docker/sdk up -t
                     docker/sdk cli composer dump-autoload -o -a --apcu -q
