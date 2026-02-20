@@ -7,7 +7,8 @@
 
 {% define data = {
     description: '',
-    attributes: []
+    attributes: [],
+    attachments: [],
 } %}
 
 {% block class %}
@@ -39,4 +40,20 @@
             </div>
         </div>
     {% endif %}
+
+    {% block attachments %}
+        {% if data.attachments is not empty %}
+            <h2 class="{{ attachmentsTitleClass is defined ? attachmentsTitleClass : '' }}">{{ 'product.attachments.downloads' | trans }}</h2>
+            <ul class="{{ attachmentsListClass is defined ? attachmentsListClass : '' }}">
+                {% for attachment in data.attachments %}
+                    <li class="{{ attachmentsListItemClass is defined ? attachmentsListItemClass : '' }}">
+                        <a href="{{ attachment.url }}" target="_blank" rel="noopener noreferrer" class="{{ attachmentsListItemLinkClass is defined ? attachmentsListItemLinkClass : '' }}">
+                            {{ attachment.label }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endblock %}
+
 {% endblock %}
