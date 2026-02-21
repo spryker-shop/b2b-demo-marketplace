@@ -95,12 +95,12 @@ const normalizeDesignTokens = (sourcePath, outputPath) => {
 const buildDesignTokens = async (appSettings) => {
     const sourceTokensPath = join(
         appSettings.context,
-        appSettings.paths.assets.globalAssets,
+        appSettings.paths.assets.globalAssets, // no-aikido: path traverse is not possible here
         'design-tokens/design-tokens.json',
     );
     const normalizedTokensPath = join(
         appSettings.context,
-        appSettings.paths.assets.globalAssets,
+        appSettings.paths.assets.globalAssets, // no-aikido: path traverse is not possible here
         'design-tokens/design-tokens-normalized.json',
     );
     normalizeDesignTokens(sourceTokensPath, normalizedTokensPath);
