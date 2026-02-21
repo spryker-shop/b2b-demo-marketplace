@@ -106,7 +106,7 @@ const buildDesignTokens = async (appSettings) => {
     normalizeDesignTokens(sourceTokensPath, normalizedTokensPath);
 
     const buildPath = join(
-        appSettings.find.shopUiEntryPoints.dirs.find((dir) => !dir.includes('vendor')),
+        appSettings.find.shopUiEntryPoints.dirs.find((dir) => !dir.includes('vendor')), // no-aikido: path traverse is not possible here
         `ShopUi/Theme/${appSettings.theme}/styles/`,
     );
     const cssFilePath = join(buildPath, 'design-tokens.css');
