@@ -95,18 +95,18 @@ const normalizeDesignTokens = (sourcePath, outputPath) => {
 const buildDesignTokens = async (appSettings) => {
     const sourceTokensPath = join(
         appSettings.context,
-        appSettings.paths.assets.globalAssets, // no-aikido: path traverse is not possible here
+        appSettings.paths.assets.globalAssets,
         'design-tokens/design-tokens.json',
     );
     const normalizedTokensPath = join(
         appSettings.context,
-        appSettings.paths.assets.globalAssets, // no-aikido: path traverse is not possible here
+        appSettings.paths.assets.globalAssets,
         'design-tokens/design-tokens-normalized.json',
     );
     normalizeDesignTokens(sourceTokensPath, normalizedTokensPath);
 
     const buildPath = join(
-        appSettings.find.shopUiEntryPoints.dirs.find((dir) => !dir.includes('vendor')), // no-aikido: path traverse is not possible here
+        appSettings.find.shopUiEntryPoints.dirs.find((dir) => !dir.includes('vendor')),
         `ShopUi/Theme/${appSettings.theme}/styles/`,
     );
     const cssFilePath = join(buildPath, 'design-tokens.css');
