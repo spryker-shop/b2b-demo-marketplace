@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
-const { join } = require('path');
 const StyleDictionary = require('style-dictionary').default;
+const { join } = require('path');
 
 function normalizeKey(s) {
     return String(s)
