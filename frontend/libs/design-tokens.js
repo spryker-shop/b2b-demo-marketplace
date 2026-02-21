@@ -3,7 +3,7 @@ const path = require('path');
 const { join } = require('path');
 const StyleDictionary = require('style-dictionary').default;
 
-function normKey(s) {
+function normalizeKey(s) {
     return String(s)
         .trim()
         .replace(/\s*\.\s*/g, '.')
@@ -14,8 +14,8 @@ function normKey(s) {
         .replace(/\./g, ' ');
 }
 
-function toCamel(s) {
-    const parts = normKey(s).split(' ').filter(Boolean);
+function toCamelCase(s) {
+    const parts = normalizeKey(s).split(' ').filter(Boolean);
 
     if (!parts.length) return '';
 
@@ -23,21 +23,24 @@ function toCamel(s) {
 
     return (
         head.toLowerCase() +
-        rest.map(word => word ? word[0].toUpperCase() + word.slice(1).toLowerCase() : '').join('')
+        rest.map((word) => (word ? word[0].toUpperCase() + word.slice(1).toLowerCase() : '')).join('')
     );
 }
 
-function normRefValue(v) {
+function normalizeRefValue(v) {
     if (typeof v !== 'string') return v;
 
     return v.replace(/\{([^}]+)\}/g, (_, path) => {
-        const segs = path.split('.').map(x => x.trim()).filter(Boolean);
-        const out = segs.map(s => {
+        const segs = path
+            .split('.')
+            .map((x) => x.trim())
+            .filter(Boolean);
+        const out = segs.map((s) => {
             const trimmed = s.trim().replace(/\s+/g, ' ');
 
             if (/^\d+$/.test(trimmed)) return trimmed;
 
-            return toCamel(trimmed);
+            return toCamelCase(trimmed);
         });
 
         return `{${out.join('.')}}`;
@@ -48,7 +51,7 @@ function convert(node) {
     if (node && typeof node === 'object' && !Array.isArray(node)) {
         if ('$value' in node || '$type' in node) {
             const out = {};
-            if ('$value' in node) out.value = normRefValue(node.$value);
+            if ('$value' in node) out.value = normalizeRefValue(node.$value);
 
             if ('$type' in node) out.type = node.$type;
 
@@ -64,7 +67,7 @@ function convert(node) {
         const output = {};
 
         for (const [k, v] of Object.entries(node)) {
-            const normalized = toCamel(k);
+            const normalized = toCamelCase(k);
 
             if (!normalized) continue;
 
@@ -86,16 +89,26 @@ const normalizeDesignTokens = (sourcePath, outputPath) => {
     }
 
     fs.writeFileSync(outputPath, JSON.stringify(converted, null, 2) + '\n', 'utf8');
-    console.log(`✔ Normalized design tokens: ${outputPath}`);
+    console.log(`Normalized design tokens: ${outputPath}`);
 };
 
-
 const buildDesignTokens = async (appSettings) => {
-    const sourceTokensPath = join(appSettings.context, appSettings.paths.assets.globalAssets, 'design-tokens/design-tokens.json');
-    const normalizedTokensPath = join(appSettings.context, appSettings.paths.assets.globalAssets, 'design-tokens/design-tokens-normalized.json');
+    const sourceTokensPath = join(
+        appSettings.context,
+        appSettings.paths.assets.globalAssets,
+        'design-tokens/design-tokens.json',
+    );
+    const normalizedTokensPath = join(
+        appSettings.context,
+        appSettings.paths.assets.globalAssets,
+        'design-tokens/design-tokens-normalized.json',
+    );
     normalizeDesignTokens(sourceTokensPath, normalizedTokensPath);
 
-    const buildPath = join(appSettings.find.shopUiEntryPoints.dirs.find(dir => !dir.includes('vendor')), `ShopUi/Theme/${appSettings.theme}/styles/`);
+    const buildPath = join(
+        appSettings.find.shopUiEntryPoints.dirs.find((dir) => !dir.includes('vendor')),
+        `ShopUi/Theme/${appSettings.theme}/styles/`,
+    );
     const cssFilePath = join(buildPath, 'design-tokens.css');
 
     const sd = new StyleDictionary({
@@ -110,12 +123,12 @@ const buildDesignTokens = async (appSettings) => {
                         format: 'css/variables',
                         options: {
                             selector: ':root',
-                            outputReferences: true
-                        }
-                    }
-                ]
-            }
-        }
+                            outputReferences: true,
+                        },
+                    },
+                ],
+            },
+        },
     });
     await sd.buildAllPlatforms();
 
