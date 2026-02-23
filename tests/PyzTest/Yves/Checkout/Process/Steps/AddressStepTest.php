@@ -136,6 +136,7 @@ class AddressStepTest extends Unit
     }
 
     /**
+     * @group test1
      * @return void
      */
     public function testExecuteAddressStepWhenLoggedInUserCreatesNewAddressWithItemLevelShippingAddresses(): void
@@ -366,7 +367,7 @@ class AddressStepTest extends Unit
     /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface|\PHPUnit\Framework\MockObject\MockObject|null $customerClientMock
      *
-     * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep|\PHPUnit\Framework\MockObject\MockObject
+     * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep
      */
     protected function createAddressStep($customerClientMock = null): AddressStep
     {
@@ -374,23 +375,16 @@ class AddressStepTest extends Unit
             $customerClientMock = $this->createCustomerClientMock();
         }
 
-        $addressStepMock = $this->getMockBuilder(AddressStep::class)
-            ->addMethods(['getDataClass'])
-            ->setConstructorArgs([
-                $this->createCalculationClientMock(),
-                $this->createAddressStepExecutorMock($customerClientMock),
-                $this->createAddressStepPostConditionCheckerMock(),
-                $this->createConfigMock(),
-                'address_step',
-                'escape_route',
-                $this->getCheckoutAddressStepEnterPreCheckPlugins(),
-                [],
-            ])
-            ->getMock();
-
-        $addressStepMock->method('getDataClass')->willReturn(new QuoteTransfer());
-
-        return $addressStepMock;
+        return (new AddressStep(
+            $this->createCalculationClientMock(),
+            $this->createAddressStepExecutorMock($customerClientMock),
+            $this->createAddressStepPostConditionCheckerMock(),
+            $this->createConfigMock(),
+            'address_step',
+            'escape_route',
+            $this->getCheckoutAddressStepEnterPreCheckPlugins(),
+            [],
+        ));
     }
 
     /**
@@ -414,7 +408,7 @@ class AddressStepTest extends Unit
                 $customerClientMock,
                 $this->getShoppingListItemExpanderPlugins(),
             ])
-            ->enableProxyingToOriginalMethods()
+            ->onlyMethods([])
             ->getMock();
     }
 
@@ -425,7 +419,7 @@ class AddressStepTest extends Unit
     {
         return $this->getMockBuilder(PostConditionChecker::class)
             ->setConstructorArgs([$this->createCustomerServiceMock()])
-            ->enableProxyingToOriginalMethods()
+            ->onlyMethods([])
             ->getMock();
     }
 
@@ -450,7 +444,7 @@ class AddressStepTest extends Unit
      */
     protected function createCustomerClientMock(): CheckoutPageToCustomerClientInterface
     {
-        return $this->getMockBuilder(CheckoutPageToCustomerClientInterface::class)->getMock();
+        return $this->createMock(CheckoutPageToCustomerClientInterface::class);
     }
 
     /**
@@ -458,10 +452,7 @@ class AddressStepTest extends Unit
      */
     protected function createCustomerServiceMock(): CheckoutPageToCustomerServiceInterface
     {
-        return $this->getMockBuilder(CheckoutPageToCustomerServiceBridge::class)
-            ->setConstructorArgs([$this->tester->getCustomerService()])
-            ->enableProxyingToOriginalMethods()
-            ->getMock();
+        return new CheckoutPageToCustomerServiceBridge($this->tester->getCustomerService());
     }
 
     /**
@@ -469,9 +460,10 @@ class AddressStepTest extends Unit
      */
     protected function createCustomerAddressExpanderPluginMock(): AddressTransferExpanderPluginInterface
     {
-        return $this->getMockBuilder(CustomerAddressExpanderPlugin::class)
-            ->enableProxyingToOriginalMethods()
-            ->getMock();
+        $plugin = new CustomerAddressExpanderPlugin();
+        $plugin->setFactory($this->tester->getFactory('CustomerPage'));
+
+        return $plugin;
     }
 
     /**
@@ -479,9 +471,10 @@ class AddressStepTest extends Unit
      */
     protected function createCompanyUnitAddressExpanderPluginMock(): AddressTransferExpanderPluginInterface
     {
-        return $this->getMockBuilder(CompanyUnitAddressExpanderPlugin::class)
-            ->enableProxyingToOriginalMethods()
-            ->getMock();
+        $plugin = new CompanyUnitAddressExpanderPlugin();
+        $plugin->setFactory($this->tester->getFactory('CompanyPage'));
+
+        return $plugin;
     }
 
     /**
@@ -510,8 +503,9 @@ class AddressStepTest extends Unit
      */
     protected function getQuoteApprovalCheckerCheckoutAddressStepEnterPreCheckPluginMock(): CheckoutAddressStepEnterPreCheckPluginInterface
     {
-        return $this->getMockBuilder(QuoteApprovalCheckerCheckoutAddressStepEnterPreCheckPlugin::class)
-            ->enableProxyingToOriginalMethods()
-            ->getMock();
+        $plugin = new QuoteApprovalCheckerCheckoutAddressStepEnterPreCheckPlugin();
+        $plugin->setFactory($this->tester->getFactory('QuoteApprovalWidget'));
+
+        return $plugin;
     }
 }
