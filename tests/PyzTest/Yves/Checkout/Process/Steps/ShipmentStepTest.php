@@ -142,7 +142,7 @@ class ShipmentStepTest extends Unit
     {
         return $this->getMockBuilder(PostConditionChecker::class)
             ->setConstructorArgs([$this->createShipmentServiceMock(), $giftCardItemsCheckerMock])
-            ->enableProxyingToOriginalMethods()
+            ->onlyMethods([])
             ->getMock();
     }
 
@@ -152,7 +152,7 @@ class ShipmentStepTest extends Unit
     protected function createGiftCardItemsCheckerMock(): GiftCardItemsCheckerInterface
     {
         return $this->getMockBuilder(GiftCardItemsChecker::class)
-            ->enableProxyingToOriginalMethods()
+            ->onlyMethods([])
             ->getMock();
     }
 
@@ -163,7 +163,7 @@ class ShipmentStepTest extends Unit
     {
         return $this->getMockBuilder(CheckoutPageToShipmentServiceBridge::class)
             ->setConstructorArgs([$this->tester->getShipmentService()])
-            ->enableProxyingToOriginalMethods()
+            ->onlyMethods([])
             ->getMock();
     }
 
@@ -182,8 +182,9 @@ class ShipmentStepTest extends Unit
      */
     protected function getQuoteApprovalCheckerCheckoutShipmentStepEnterPreCheckPluginMock(): CheckoutShipmentStepEnterPreCheckPluginInterface
     {
-        return $this->getMockBuilder(QuoteApprovalCheckerCheckoutShipmentStepEnterPreCheckPlugin::class)
-            ->enableProxyingToOriginalMethods()
-            ->getMock();
+        $plugin = new QuoteApprovalCheckerCheckoutShipmentStepEnterPreCheckPlugin();
+        $plugin->setFactory($this->tester->getFactory('QuoteApprovalWidget'));
+
+        return $plugin;
     }
 }
