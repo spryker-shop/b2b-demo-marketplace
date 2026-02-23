@@ -27,12 +27,12 @@
         }
     }
 
-    &__row:has(&__col:nth-child(2) .table-action-list) &__col:first-child {
-        width: 100%;
-    }
-
     &__row:nth-child(even) &__col {
         background: none;
+    }
+
+    &__row:has(&__col:nth-child(2) .table-action-list) &__col:first-child {
+        width: 100%;
     }
 
     &__row:not(&__row--head) {
