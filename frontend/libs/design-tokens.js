@@ -15,9 +15,15 @@ function normalizeKey(s) {
 }
 
 function toCamelCase(s) {
-    const parts = normalizeKey(s).split(' ').filter(Boolean);
+    const normalized = normalizeKey(s);
+    const parts = normalized.split(' ').filter(Boolean);
 
     if (!parts.length) return '';
+
+    // If there's only one part and no spaces in original, return as-is (already camelCase)
+    if (parts.length === 1 && !String(s).includes(' ') && !String(s).includes('/')) {
+        return s;
+    }
 
     const [head, ...rest] = parts;
 
@@ -31,7 +37,9 @@ function normalizeRefValue(v) {
     if (typeof v !== 'string') return v;
 
     return v.replace(/\{([^}]+)\}/g, (_, path) => {
-        const segs = path
+        // Remove extra spaces around dots
+        const cleanPath = path.replace(/\s*\.\s*/g, '.');
+        const segs = cleanPath
             .split('.')
             .map((x) => x.trim())
             .filter(Boolean);
@@ -49,14 +57,22 @@ function normalizeRefValue(v) {
 
 function convert(node) {
     if (node && typeof node === 'object' && !Array.isArray(node)) {
-        if ('$value' in node || '$type' in node) {
-            const out = {};
-            if ('$value' in node) out.value = normalizeRefValue(node.$value);
+        const hasValue = '$value' in node || 'value' in node;
+        const hasType = '$type' in node || 'type' in node;
 
-            if ('$type' in node) out.type = node.$type;
+        if (hasValue || hasType) {
+            const out = {};
+
+            if ('$value' in node || 'value' in node) {
+                out.value = normalizeRefValue(node.$value || node.value);
+            }
+
+            if ('$type' in node || 'type' in node) {
+                out.type = node.$type || node.type;
+            }
 
             for (const [k, v] of Object.entries(node)) {
-                if (k === '$value' || k === '$type') continue;
+                if (k === '$value' || k === '$type' || k === 'value' || k === 'type') continue;
 
                 out[k] = v;
             }
@@ -83,12 +99,22 @@ const normalizeDesignTokens = (sourcePath, outputPath) => {
     const raw = JSON.parse(fs.readFileSync(sourcePath, 'utf8'));
     const converted = convert(raw);
 
+    const flattened = {};
+
+    for (const [key, value] of Object.entries(converted)) {
+        if (key.startsWith('primitives') || key.startsWith('colourUsage')) {
+            Object.assign(flattened, value);
+        } else {
+            flattened[key] = value;
+        }
+    }
+
     const outputDir = path.dirname(outputPath);
     if (!fs.existsSync(outputDir)) {
         fs.mkdirSync(outputDir, { recursive: true });
     }
 
-    fs.writeFileSync(outputPath, JSON.stringify(converted, null, 2) + '\n', 'utf8');
+    fs.writeFileSync(outputPath, JSON.stringify(flattened, null, 2) + '\n', 'utf8');
     console.log(`Normalized design tokens: ${outputPath}`);
 };
 
