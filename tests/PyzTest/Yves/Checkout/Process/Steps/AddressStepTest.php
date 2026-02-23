@@ -136,7 +136,6 @@ class AddressStepTest extends Unit
     }
 
     /**
-     * @group test1
      * @return void
      */
     public function testExecuteAddressStepWhenLoggedInUserCreatesNewAddressWithItemLevelShippingAddresses(): void
