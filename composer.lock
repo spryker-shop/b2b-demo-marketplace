@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8cb9e770cdbb696c9bd7e9251b6d2719",
+    "content-hash": "722e35b45ccddc0393cf72b20b1c36ef",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -849,16 +849,16 @@
         },
         {
             "name": "api-platform/metadata",
-            "version": "v4.2.16",
+            "version": "v4.2.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/api-platform/metadata.git",
-                "reference": "f90cd4258477821e0174788a6666507824c7c6b9"
+                "reference": "0071674a851f1c9564e4b16b9812495cceef154d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/api-platform/metadata/zipball/f90cd4258477821e0174788a6666507824c7c6b9",
-                "reference": "f90cd4258477821e0174788a6666507824c7c6b9",
+                "url": "https://api.github.com/repos/api-platform/metadata/zipball/0071674a851f1c9564e4b16b9812495cceef154d",
+                "reference": "0071674a851f1c9564e4b16b9812495cceef154d",
                 "shasum": ""
             },
             "require": {
@@ -876,7 +876,7 @@
                 "api-platform/state": "^4.2.4",
                 "phpspec/prophecy-phpunit": "^2.2",
                 "phpstan/phpdoc-parser": "^1.29 || ^2.0",
-                "phpunit/phpunit": "^12.2",
+                "phpunit/phpunit": "11.5.x-dev",
                 "symfony/config": "^6.4 || ^7.0 || ^8.0",
                 "symfony/routing": "^6.4 || ^7.0 || ^8.0",
                 "symfony/var-dumper": "^6.4 || ^7.0 || ^8.0",
@@ -941,9 +941,9 @@
                 "swagger"
             ],
             "support": {
-                "source": "https://github.com/api-platform/metadata/tree/v4.2.16"
+                "source": "https://github.com/api-platform/metadata/tree/v4.2.10"
             },
-            "time": "2026-02-13T15:07:33+00:00"
+            "time": "2025-12-11T16:36:37+00:00"
         },
         {
             "name": "api-platform/openapi",
@@ -39087,16 +39087,16 @@
         },
         {
             "name": "spryker/error-handler",
-            "version": "2.13.0",
+            "version": "2.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/error-handler.git",
-                "reference": "90d99ef3aab62a3eec7adc045b97d3ecf58cfdc1"
+                "reference": "0693f200f048f8b20b3ce22d65733a9a42fb967b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/error-handler/zipball/90d99ef3aab62a3eec7adc045b97d3ecf58cfdc1",
-                "reference": "90d99ef3aab62a3eec7adc045b97d3ecf58cfdc1",
+                "url": "https://api.github.com/repos/spryker/error-handler/zipball/0693f200f048f8b20b3ce22d65733a9a42fb967b",
+                "reference": "0693f200f048f8b20b3ce22d65733a9a42fb967b",
                 "shasum": ""
             },
             "require": {
@@ -39109,6 +39109,7 @@
                 "spryker/log": "^3.0.0",
                 "spryker/monitoring": "^1.0.0 || ^2.0.0",
                 "spryker/symfony": "^3.5.0",
+                "spryker/twig": "^3.15.0",
                 "spryker/util-sanitize": "^2.3.0"
             },
             "require-dev": {
@@ -39142,9 +39143,9 @@
             ],
             "description": "ErrorHandler module",
             "support": {
-                "source": "https://github.com/spryker/error-handler/tree/2.13.0"
+                "source": "https://github.com/spryker/error-handler/tree/2.14.0"
             },
-            "time": "2026-02-16T12:55:41+00:00"
+            "time": "2026-02-20T15:18:11+00:00"
         },
         {
             "name": "spryker/error-handler-extension",
@@ -39249,16 +39250,16 @@
         },
         {
             "name": "spryker/event-behavior",
-            "version": "1.33.1",
+            "version": "1.34.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/event-behavior.git",
-                "reference": "6e2513867b7a3959ba7fac1459fc873f051bd75e"
+                "reference": "a1048daa32e8bf4b50d0afc8d04861b77c13a13b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/event-behavior/zipball/6e2513867b7a3959ba7fac1459fc873f051bd75e",
-                "reference": "6e2513867b7a3959ba7fac1459fc873f051bd75e",
+                "url": "https://api.github.com/repos/spryker/event-behavior/zipball/a1048daa32e8bf4b50d0afc8d04861b77c13a13b",
+                "reference": "a1048daa32e8bf4b50d0afc8d04861b77c13a13b",
                 "shasum": ""
             },
             "require": {
@@ -39267,7 +39268,7 @@
                 "spryker/event-dispatcher-extension": "^1.0.0",
                 "spryker/kernel": "^3.72.0",
                 "spryker/laminas": "^1.0.0",
-                "spryker/propel": "^3.45.0",
+                "spryker/propel": "^3.47.0",
                 "spryker/propel-orm": "^1.16.0",
                 "spryker/symfony": "^3.1.0",
                 "spryker/transfer": "^3.39.0",
@@ -39320,7 +39321,7 @@
             "support": {
                 "source": "https://github.com/spryker/event-behavior"
             },
-            "time": "2026-02-20T13:11:57+00:00"
+            "time": "2026-02-23T07:41:19+00:00"
         },
         {
             "name": "spryker/event-dispatcher",
@@ -82348,22 +82349,21 @@
         },
         {
             "name": "symfony/type-info",
-            "version": "v7.4.4",
+            "version": "v8.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/type-info.git",
-                "reference": "f83c725e72b39b2704b9d6fc85070ad6ac7a5889"
+                "reference": "106a2d3bbf0d4576b2f70e6ca866fa420956ed0d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/type-info/zipball/f83c725e72b39b2704b9d6fc85070ad6ac7a5889",
-                "reference": "f83c725e72b39b2704b9d6fc85070ad6ac7a5889",
+                "url": "https://api.github.com/repos/symfony/type-info/zipball/106a2d3bbf0d4576b2f70e6ca866fa420956ed0d",
+                "reference": "106a2d3bbf0d4576b2f70e6ca866fa420956ed0d",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
-                "psr/container": "^1.1|^2.0",
-                "symfony/deprecation-contracts": "^2.5|^3"
+                "php": ">=8.4",
+                "psr/container": "^1.1|^2.0"
             },
             "conflict": {
                 "phpstan/phpdoc-parser": "<1.30"
@@ -82407,7 +82407,7 @@
                 "type"
             ],
             "support": {
-                "source": "https://github.com/symfony/type-info/tree/v7.4.4"
+                "source": "https://github.com/symfony/type-info/tree/v8.0.4"
             },
             "funding": [
                 {
@@ -82427,7 +82427,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-01-09T12:14:21+00:00"
+            "time": "2026-01-09T12:15:10+00:00"
         },
         {
             "name": "symfony/uid",
@@ -86576,20 +86576,15 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.12.29",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "0835c625a38ac6484f050077116b6668bc3ab57d"
-            },
+            "version": "2.1.39",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/0835c625a38ac6484f050077116b6668bc3ab57d",
-                "reference": "0835c625a38ac6484f050077116b6668bc3ab57d",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/c6f73a2af4cbcd99c931d0fb8f08548cc0fa8224",
+                "reference": "c6f73a2af4cbcd99c931d0fb8f08548cc0fa8224",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.2|^8.0"
+                "php": "^7.4|^8.0"
             },
             "conflict": {
                 "phpstan/phpstan-shim": "*"
@@ -86630,7 +86625,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-09-16T08:46:57+00:00"
+            "time": "2026-02-11T14:48:56+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -88993,28 +88988,28 @@
         },
         {
             "name": "spryker-sdk/phpstan-spryker",
-            "version": "0.5.0",
+            "version": "0.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-sdk/phpstan-spryker.git",
-                "reference": "e9a1d24c05775f5b4f47eaff1a406c816aa36072"
+                "reference": "29aeb5d199d418752c80c5fe2c3ef2c86f54935b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-sdk/phpstan-spryker/zipball/e9a1d24c05775f5b4f47eaff1a406c816aa36072",
-                "reference": "e9a1d24c05775f5b4f47eaff1a406c816aa36072",
+                "url": "https://api.github.com/repos/spryker-sdk/phpstan-spryker/zipball/29aeb5d199d418752c80c5fe2c3ef2c86f54935b",
+                "reference": "29aeb5d199d418752c80c5fe2c3ef2c86f54935b",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.3",
-                "phpstan/phpstan": "^1.12.0",
-                "phpunit/phpunit": "^12.1.0"
+                "phpstan/phpstan": "^2.1.0"
             },
             "require-dev": {
                 "ergebnis/composer-normalize": "^2.1.1",
                 "jakub-onderka/php-parallel-lint": "^1.0",
                 "phing/phing": "^2.16.0",
-                "phpstan/phpstan-strict-rules": "^1.0.0",
+                "phpstan/phpstan-strict-rules": "^2.0.0",
+                "phpunit/phpunit": "^12.1.0",
                 "spryker/code-sniffer": "*",
                 "squizlabs/php_codesniffer": "^3.6.0"
             },
@@ -89054,7 +89049,7 @@
                 "issues": "https://github.com/spryker-sdk/phpstan-spryker/issues",
                 "source": "https://github.com/spryker-sdk/phpstan-spryker"
             },
-            "time": "2026-02-17T12:50:00+00:00"
+            "time": "2026-02-20T10:53:28+00:00"
         },
         {
             "name": "spryker-sdk/spryk",
