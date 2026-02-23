@@ -233,12 +233,7 @@ const buildDesignTokens = async (appSettings) => {
         platforms: {
             css: {
                 buildPath,
-                transforms: [
-                    'attribute/cti',
-                    'name/kebab',
-                    'time/seconds',
-                    'color/css',
-                ],
+                transforms: ['attribute/cti', 'name/kebab', 'time/seconds', 'color/css'],
                 files: [
                     {
                         destination: 'design-tokens.css',
