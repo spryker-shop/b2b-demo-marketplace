@@ -15,13 +15,60 @@
     {{parent()}} grid grid--gap grid--justify
 {% endblock %}
 
+{% block attachmentCol %}
+    <a href="{{ currentAttachment.url }}" target="_blank" rel="noopener noreferrer" class="link">{{ currentAttachment.label }}</a>
+{% endblock %}
+
 {% block body %}
-    {% if data.description %}
+    {% if data.description or data.attachments is not empty %}
         <div class="col col--sm-12 col--lg-6">
-            <h2 class="{{ config.name }}__title title title--h4 title--mobile-toggler-section js-pdp-section__trigger" data-toggle-target='.js-pdp-section__target-description'>{{ 'product.attribute.long_description' | trans }}</h2>
-            <div itemprop="description" class="{{ config.name }}__description js-pdp-section__target-description is-hidden-sm-md">
-                {{ data.description | raw }}
-            </div>
+            {% if data.description %}
+                <h2 class="{{ config.name }}__title title title--h4 title--mobile-toggler-section js-pdp-section__trigger" data-toggle-target='.js-pdp-section__target-description'>{{ 'product.attribute.long_description' | trans }}</h2>
+                <div itemprop="description" class="{{ config.name }}__description js-pdp-section__target-description is-hidden-sm-md {{ data.attachments is not empty ? "#{config.name}__description--with-attachments" : '' }}">
+                    {{ data.description | raw }}
+                </div>
+            {% endif %}
+
+            {% if data.attachments is not empty %}
+                <h2 class="{{ config.name }}__title title title--h3 title--mobile-toggler-section js-pdp-section__trigger" data-toggle-target='.js-pdp-section__target-attachments'>{{ 'product.attachments.downloads' | trans }}</h2>
+
+                {% set columns = [
+                    {
+                        id: 'name',
+                        title: 'product.attachments.name.col' | trans,
+                    },
+                    {
+                        id: 'actions',
+                        type: 'actions',
+                        title: 'product.attachments.download.col' | trans,
+                        modifiers: ['align-center'],
+                    },
+                ] %}
+
+                {% set rows = [] %}
+                {% for attachment in data.attachments %}
+                    {% set currentAttachment = attachment %}
+                    {% set rows = rows | merge([{
+                        name: block('attachmentCol'),
+                        actions: [{
+                            iconModifier: 'big',
+                            url: attachment.url,
+                            title: 'self_service_portal.company_file.table.actions.download',
+                            icon: 'download',
+                            target: '_blank',
+                        }],
+                    }]) %}
+                {% endfor %}
+
+                {% include molecule('advanced-table', 'SelfServicePortal') with {
+                    class: 'js-pdp-section__target-attachments is-hidden-sm-md',
+                    data: {
+                        columns: columns,
+                        rows: rows,
+                    },
+                    qa: 'attachments-table',
+                } only %}
+            {% endif %}
         </div>
     {% endif %}
 
@@ -40,20 +87,4 @@
             </div>
         </div>
     {% endif %}
-
-    {% block attachments %}
-        {% if data.attachments is not empty %}
-            <h2 class="{{ attachmentsTitleClass is defined ? attachmentsTitleClass : '' }}">{{ 'product.attachments.downloads' | trans }}</h2>
-            <ul class="{{ attachmentsListClass is defined ? attachmentsListClass : '' }}">
-                {% for attachment in data.attachments %}
-                    <li class="{{ attachmentsListItemClass is defined ? attachmentsListItemClass : '' }}">
-                        <a href="{{ attachment.url }}" target="_blank" rel="noopener noreferrer" class="{{ attachmentsListItemLinkClass is defined ? attachmentsListItemLinkClass : '' }}">
-                            {{ attachment.label }}
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    {% endblock %}
-
 {% endblock %}
