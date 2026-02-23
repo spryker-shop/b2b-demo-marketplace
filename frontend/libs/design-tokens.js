@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 const fs = require('fs');
 const path = require('path');
 const StyleDictionary = require('style-dictionary').default;
@@ -10,20 +11,19 @@ function normalizeKey(s) {
         .replace(/\s+/g, ' ')
         .replace(/&/g, 'and')
         .replace(/[^\w.\- ]+/g, '')
+        .replace(/^-+|-+$/g, '')
+        .replace(/-/g, ' ')
         .trim()
         .replace(/\./g, ' ');
 }
 
-function toCamelCase(s) {
-    const normalized = normalizeKey(s);
+function toCamelCase(word) {
+    const normalized = normalizeKey(word);
     const parts = normalized.split(' ').filter(Boolean);
 
     if (!parts.length) return '';
 
-    // If there's only one part and no spaces in original, return as-is (already camelCase)
-    if (parts.length === 1 && !String(s).includes(' ') && !String(s).includes('/')) {
-        return s;
-    }
+    if (parts.length === 1) return parts[0].toLowerCase();
 
     const [head, ...rest] = parts;
 
@@ -33,26 +33,37 @@ function toCamelCase(s) {
     );
 }
 
-function normalizeRefValue(v) {
-    if (typeof v !== 'string') return v;
+function normalizeRefValue(value) {
+    if (typeof value === 'string') {
+        return value.replace(/\{([^}]+)\}/g, (_, path) => {
+            const cleanPath = path.replace(/\s*\.\s*/g, '.');
+            const segs = cleanPath
+                .split('.')
+                .map((x) => x.trim())
+                .filter(Boolean);
+            const out = segs.map((s) => {
+                const trimmed = s.trim().replace(/\s+/g, ' ');
 
-    return v.replace(/\{([^}]+)\}/g, (_, path) => {
-        // Remove extra spaces around dots
-        const cleanPath = path.replace(/\s*\.\s*/g, '.');
-        const segs = cleanPath
-            .split('.')
-            .map((x) => x.trim())
-            .filter(Boolean);
-        const out = segs.map((s) => {
-            const trimmed = s.trim().replace(/\s+/g, ' ');
+                if (/^\d+$/.test(trimmed)) return trimmed;
 
-            if (/^\d+$/.test(trimmed)) return trimmed;
+                return toCamelCase(trimmed);
+            });
 
-            return toCamelCase(trimmed);
+            return `{${out.join('.')}}`;
         });
+    }
 
-        return `{${out.join('.')}}`;
-    });
+    if (value && typeof value === 'object' && !Array.isArray(value)) {
+        const result = {};
+
+        for (const [key, val] of Object.entries(value)) {
+            result[key] = normalizeRefValue(val);
+        }
+
+        return result;
+    }
+
+    return value;
 }
 
 function convert(node) {
@@ -82,17 +93,54 @@ function convert(node) {
 
         const output = {};
 
-        for (const [k, v] of Object.entries(node)) {
-            const normalized = toCamelCase(k);
+        for (const [key, val] of Object.entries(node)) {
+            const normalized = toCamelCase(key);
 
-            if (!normalized) continue;
+            if (!normalized || output[normalized]) continue;
 
-            output[normalized] = convert(v);
+            output[normalized] = convert(val);
         }
 
         return output;
     }
     return node;
+}
+
+function expandCompositeTokens(obj, parentPath = []) {
+    const isPlainObject = (v) => v && typeof v === 'object' && !Array.isArray(v);
+    const TYPOGRAPHY_TYPE_MAP = {
+        fontFamily: 'fontFamilies',
+        fontWeight: 'fontWeights',
+        fontSize: 'dimension',
+        lineHeight: 'lineHeights',
+        letterSpacing: 'letterSpacing',
+    };
+    const result = {};
+
+    for (const [key, value] of Object.entries(obj)) {
+        const path = [...parentPath, key];
+
+        if (!isPlainObject(value)) continue;
+
+        if (isPlainObject(value) && 'value' in value && 'type' in value) {
+            if (value.type === 'typography' && isPlainObject(value.value)) {
+                for (const [subKey, subValue] of Object.entries(value.value)) {
+                    result[[...path, subKey].join('.')] = {
+                        value: subValue,
+                        type: TYPOGRAPHY_TYPE_MAP[subKey] ?? 'other',
+                    };
+                }
+            } else {
+                result[path.join('.')] = value;
+            }
+
+            continue;
+        }
+
+        Object.assign(result, expandCompositeTokens(value, path));
+    }
+
+    return result;
 }
 
 const normalizeDesignTokens = (sourcePath, outputPath) => {
@@ -109,12 +157,25 @@ const normalizeDesignTokens = (sourcePath, outputPath) => {
         }
     }
 
+    const expanded = expandCompositeTokens(flattened);
+    const final = {};
+
+    for (const [path, token] of Object.entries(expanded)) {
+        const parts = path.split('.');
+        let current = final;
+        for (let i = 0; i < parts.length - 1; i++) {
+            if (!current[parts[i]]) current[parts[i]] = {};
+            current = current[parts[i]];
+        }
+        current[parts[parts.length - 1]] = token;
+    }
+
     const outputDir = path.dirname(outputPath);
     if (!fs.existsSync(outputDir)) {
         fs.mkdirSync(outputDir, { recursive: true });
     }
 
-    fs.writeFileSync(outputPath, JSON.stringify(flattened, null, 2) + '\n', 'utf8');
+    fs.writeFileSync(outputPath, JSON.stringify(final, null, 2) + '\n', 'utf8');
     console.log(`Normalized design tokens: ${outputPath}`);
 };
 
@@ -137,12 +198,47 @@ const buildDesignTokens = async (appSettings) => {
     );
     const cssFilePath = join(buildPath, 'design-tokens.css');
 
+    StyleDictionary.registerTransform({
+        name: 'size/pxToRem',
+        type: 'value',
+        filter: (token) => {
+            const dimensionTypes = ['dimension', 'fontSizes', 'borderRadius', 'spacing', 'borderWidth', 'sizing'];
+
+            if (dimensionTypes.includes(token.type)) {
+                return true;
+            }
+
+            if (token.type === 'number' && token.path) {
+                const pathStr = token.path.join('.');
+                const relevantKeywords = ['radius', 'spacing', 'strokeWidth', 'space', 'shadow', 'focus'];
+
+                return relevantKeywords.some((keyword) => pathStr.includes(keyword));
+            }
+
+            return false;
+        },
+        transform: (token) => {
+            const val = parseFloat(token.value);
+            return isNaN(val) ? token.value : `${val}px`;
+        },
+    });
+
     const sd = new StyleDictionary({
+        log: {
+            verbosity: 'silent',
+            warnings: 'disabled',
+            errors: 'error',
+        },
         source: [normalizedTokensPath],
         platforms: {
             css: {
-                transformGroup: 'css',
                 buildPath,
+                transforms: [
+                    'attribute/cti',
+                    'name/kebab',
+                    'time/seconds',
+                    'color/css',
+                ],
                 files: [
                     {
                         destination: 'design-tokens.css',
@@ -157,6 +253,8 @@ const buildDesignTokens = async (appSettings) => {
         },
     });
     await sd.buildAllPlatforms();
+
+    console.log(`Built design tokens CSS: ${cssFilePath}`);
 
     return cssFilePath;
 };
