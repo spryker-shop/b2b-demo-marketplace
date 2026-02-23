@@ -2,14 +2,14 @@ namespace: PyzTest
 actor: Tester
 
 include:
-    - tests/PyzTest/*/*
+    - PyzTest/*/*
 
 paths:
-    tests: tests
-    output: tests/_output
-    data: tests/_data
-    support: tests/_support
-    envs: tests/_envs
+    tests: .
+    output: _output
+    data: _data
+    support: _support
+    envs: _envs
 
 settings:
     suite_class: \PHPUnit_Framework_TestSuite
@@ -28,7 +28,6 @@ extensions:
         - \SprykerTest\Shared\Testify\Helper\SuiteFilterHelper
     config:
         \SprykerTest\Shared\Testify\Helper\SuiteFilterHelper:
-            exclusive:
-                - Presentation
+            inclusive:
                 - Glue
-                - Api
+                - EndToEnd
