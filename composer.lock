@@ -11848,12 +11848,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/product.git",
-                "reference": "6e6fffaa3e00c62f1b3484b55779a664831a4979"
+                "reference": "31207733d26a5acdb621b21e2d7f6083d939cfae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/product/zipball/6e6fffaa3e00c62f1b3484b55779a664831a4979",
-                "reference": "6e6fffaa3e00c62f1b3484b55779a664831a4979",
+                "url": "https://api.github.com/repos/spryker-feature/product/zipball/31207733d26a5acdb621b21e2d7f6083d939cfae",
+                "reference": "31207733d26a5acdb621b21e2d7f6083d939cfae",
                 "shasum": ""
             },
             "require": {
@@ -11866,6 +11866,8 @@
                 "spryker-shop/product-widget": "^1.5.0",
                 "spryker/product": "^6.52.0",
                 "spryker/product-abstract-data-feed": "^0.2.2",
+                "spryker/product-attachment": "^1.0.0",
+                "spryker/product-attachment-storage": "^1.0.0",
                 "spryker/product-attribute": "^1.17.0",
                 "spryker/product-attribute-gui": "^2.0.0",
                 "spryker/product-category-filter": "^1.4.0",
@@ -11895,7 +11897,7 @@
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "202512.x-dev"
+                    "dev-master": "202602.x-dev"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -11906,7 +11908,7 @@
             "support": {
                 "source": "https://github.com/spryker-feature/product/tree/master"
             },
-            "time": "2025-12-16T12:12:43+00:00"
+            "time": "2026-02-20T11:02:37+00:00"
         },
         {
             "name": "spryker-feature/product-approval-process",
@@ -19133,16 +19135,16 @@
         },
         {
             "name": "spryker-shop/product-detail-page",
-            "version": "3.29.0",
+            "version": "3.30.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-shop/product-detail-page.git",
-                "reference": "e39015f927cff56e623ad782b830bca90a03954b"
+                "reference": "b7570260c517b5539cc38274dc2d086b4a7cd754"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-shop/product-detail-page/zipball/e39015f927cff56e623ad782b830bca90a03954b",
-                "reference": "e39015f927cff56e623ad782b830bca90a03954b",
+                "url": "https://api.github.com/repos/spryker-shop/product-detail-page/zipball/b7570260c517b5539cc38274dc2d086b4a7cd754",
+                "reference": "b7570260c517b5539cc38274dc2d086b4a7cd754",
                 "shasum": ""
             },
             "require": {
@@ -19193,9 +19195,9 @@
             ],
             "description": "ProductDetailPage module",
             "support": {
-                "source": "https://github.com/spryker-shop/product-detail-page/tree/3.29.0"
+                "source": "https://github.com/spryker-shop/product-detail-page/tree/3.30.0"
             },
-            "time": "2026-02-12T08:48:01+00:00"
+            "time": "2026-02-20T09:53:09+00:00"
         },
         {
             "name": "spryker-shop/product-discontinued-widget",
@@ -53927,6 +53929,121 @@
             "time": "2025-12-09T14:55:34+00:00"
         },
         {
+            "name": "spryker/product-attachment",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/product-attachment.git",
+                "reference": "f9a087932838f33e0d923e7a5ad07e122043068d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/product-attachment/zipball/f9a087932838f33e0d923e7a5ad07e122043068d",
+                "reference": "f9a087932838f33e0d923e7a5ad07e122043068d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.3",
+                "spryker/data-import": "^1.3.0",
+                "spryker/event-behavior": "^1.32.0",
+                "spryker/kernel": "^3.76.0",
+                "spryker/locale": "^4.0.0",
+                "spryker/product": "^6.26.0",
+                "spryker/product-extension": "^1.5.0",
+                "spryker/product-management-extension": "^1.10.0",
+                "spryker/propel-orm": "^1.0.0",
+                "spryker/symfony": "^3.19.2",
+                "spryker/transfer": "^3.27.0",
+                "spryker/translator": "^1.14.3"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ProductAttachment module",
+            "support": {
+                "source": "https://github.com/spryker/product-attachment/tree/1.1.0"
+            },
+            "time": "2026-02-20T18:54:52+00:00"
+        },
+        {
+            "name": "spryker/product-attachment-storage",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/product-attachment-storage.git",
+                "reference": "71723d4ab8292a4de73d501a6a830278f905e9ab"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/product-attachment-storage/zipball/71723d4ab8292a4de73d501a6a830278f905e9ab",
+                "reference": "71723d4ab8292a4de73d501a6a830278f905e9ab",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.3",
+                "spryker/event": "^2.15.0",
+                "spryker/event-behavior": "^1.0.0",
+                "spryker/kernel": "^3.76.0",
+                "spryker/product-attachment": "^1.1.0",
+                "spryker/product-storage-extension": "^1.0.0",
+                "spryker/propel-orm": "^1.0.0",
+                "spryker/storage": "^3.0.0",
+                "spryker/synchronization": "^1.0.0",
+                "spryker/synchronization-behavior": "^1.0.0",
+                "spryker/synchronization-extension": "^1.0.0",
+                "spryker/transfer": "^3.27.0",
+                "spryker/util-encoding": "^2.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/container": "*",
+                "spryker/locale": "*",
+                "spryker/product": "*",
+                "spryker/propel": "*",
+                "spryker/queue": "*",
+                "spryker/rabbit-mq": "*",
+                "spryker/store": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ProductAttachmentStorage module",
+            "support": {
+                "source": "https://github.com/spryker/product-attachment-storage/tree/1.0.2"
+            },
+            "time": "2026-02-20T18:54:52+00:00"
+        },
+        {
             "name": "spryker/product-attribute",
             "version": "1.17.0",
             "source": {
@@ -57644,16 +57761,16 @@
         },
         {
             "name": "spryker/product-management",
-            "version": "0.20.4",
+            "version": "0.20.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-management.git",
-                "reference": "65ca9cbf34df6490a77023598e41d8c34614c34f"
+                "reference": "f695723a054304185c9bd66a96cd8b6a44ba6d29"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-management/zipball/65ca9cbf34df6490a77023598e41d8c34614c34f",
-                "reference": "65ca9cbf34df6490a77023598e41d8c34614c34f",
+                "url": "https://api.github.com/repos/spryker/product-management/zipball/f695723a054304185c9bd66a96cd8b6a44ba6d29",
+                "reference": "f695723a054304185c9bd66a96cd8b6a44ba6d29",
                 "shasum": ""
             },
             "require": {
@@ -57675,7 +57792,7 @@
                 "spryker/product-category": "^4.12.1",
                 "spryker/product-group": "^1.0.0",
                 "spryker/product-image": "^3.0.0",
-                "spryker/product-management-extension": "^1.9.0",
+                "spryker/product-management-extension": "^1.10.0",
                 "spryker/product-validity": "^1.0.0",
                 "spryker/propel-orm": "^1.0.0",
                 "spryker/stock": "^8.0.0",
@@ -57722,9 +57839,9 @@
             ],
             "description": "ProductManagement module",
             "support": {
-                "source": "https://github.com/spryker/product-management/tree/0.20.4"
+                "source": "https://github.com/spryker/product-management/tree/0.20.5"
             },
-            "time": "2025-12-09T14:55:34+00:00"
+            "time": "2026-02-20T09:53:09+00:00"
         },
         {
             "name": "spryker/product-management-extension",
@@ -89275,7 +89392,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/cypress-tests.git",
-                "reference": "5cc919d5eee5c97bae17313cb0bc84f5409b8e63"
+                "reference": "17fc13c07c88120670f4d12b99d3f5ba7575fad6"
             },
             "default-branch": true,
             "type": "spryker-test",
@@ -89283,7 +89400,7 @@
                 "MIT"
             ],
             "description": "This repository is dedicated to housing an extensive collection of UI end-to-end tests, meticulously crafted using Cypress for Spryker applications. These tests are designed to thoroughly evaluate the user interface, ensuring that all interactions and visual elements function as intended in real-world scenarios. By leveraging Cypress's advanced browser automation capabilities, this suite provides an efficient and effective means of validating the user experience, confirming the seamless operation and aesthetic integrity of Spryker's front-end components. Our commitment to rigorous UI testing helps maintain the high standard of quality and reliability that Spryker users expect.",
-            "time": "2026-02-16T10:37:16+00:00"
+            "time": "2026-02-23T16:14:37+00:00"
         },
         {
             "name": "spryker/development",
