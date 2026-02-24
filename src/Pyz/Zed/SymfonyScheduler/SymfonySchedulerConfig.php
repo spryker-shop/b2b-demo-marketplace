@@ -71,10 +71,6 @@ class SymfonySchedulerConfig extends SprykerSymfonySchedulerConfigAlias
                 'command' => $logger . '$PHP_BIN vendor/bin/console price-product:schedule:apply',
                 'schedule' => '0 6 * * *',
             ],
-            'check-product-offer-validity' => [
-                'command' => $logger . '$PHP_BIN vendor/bin/console product-offer:check-validity',
-                'schedule' => '0 6 * * *',
-            ],
             'remove-expired-refresh-tokens' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/console oauth:refresh-token:remove-expired',
                 'schedule' => '*/5 * * * *',
@@ -86,14 +82,6 @@ class SymfonySchedulerConfig extends SprykerSymfonySchedulerConfigAlias
             'order-invoice-send' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/console order:invoice:send',
                 'schedule' => '*/5 * * * *',
-            ],
-            'page-product-abstract-refresh' => [
-                'command' => $logger . '$PHP_BIN vendor/bin/console product-page-search:product-abstract-refresh',
-                'schedule' => '0 6 * * *',
-            ],
-            'send-push-notifications' => [
-                'command' => $logger . '$PHP_BIN vendor/bin/console push-notification:send',
-                'schedule' => '* * * * *',
             ],
             'glue-api-generate-documentation' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/glue api:generate:documentation --invalidated-after-interval 90sec',
@@ -112,14 +100,6 @@ class SymfonySchedulerConfig extends SprykerSymfonySchedulerConfigAlias
                 'schedule' => '0 0 * * *',
             ],
         ];
-
-        /* Push notification */
-        if (getenv('SPRYKER_PUSH_NOTIFICATION_WEB_PUSH_PHP_VAPID_PUBLIC_KEY')) {
-            $jobs['delete-expired-push-notification-subscriptions'] = [
-                'command' => $logger . '$PHP_BIN vendor/bin/console push-notification:delete-expired-push-notification-subscriptions',
-                'schedule' => '0 0 * * 0',
-            ];
-        }
 
         /* Message broker */
         if ($this->get(MessageBrokerConstants::IS_ENABLED)) {
