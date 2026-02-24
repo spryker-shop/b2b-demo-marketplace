@@ -41,6 +41,7 @@ use Spryker\Shared\SessionRedis\SessionRedisConstants;
 use Spryker\Shared\StorageDatabase\StorageDatabaseConstants;
 use Spryker\Shared\StorageRedis\StorageRedisConstants;
 use Spryker\Shared\SymfonyMailer\SymfonyMailerConstants;
+use Spryker\Shared\SymfonyMessenger\SymfonyMessengerConstants;
 use Spryker\Shared\Testify\TestifyConstants;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
 use Spryker\Zed\OauthDummy\OauthDummyConfig;
@@ -201,6 +202,21 @@ $config[RabbitMqEnv::RABBITMQ_CONNECTIONS] = array_map(static function ($storeNa
         RabbitMqEnv::RABBITMQ_DEFAULT_CONNECTION => $dynamicStoreEnabled ? $storeName === $currentRegion : $storeName === APPLICATION_STORE,
     ];
 }, $dynamicStoreEnabled ? [$currentRegion] : Store::getInstance()->getAllowedStores());
+
+foreach ($config[RabbitMqEnv::RABBITMQ_CONNECTIONS] as $connection) {
+    if ($connection[RabbitMqEnv::RABBITMQ_DEFAULT_CONNECTION] === false) {
+        continue;
+    }
+
+    $config[SymfonyMessengerConstants::QUEUE_DSN] = sprintf(
+        'amqp://%s:%s@%s:%s/%s',
+        $connection[RabbitMqEnv::RABBITMQ_USERNAME],
+        $connection[RabbitMqEnv::RABBITMQ_PASSWORD],
+        $connection[RabbitMqEnv::RABBITMQ_HOST],
+        $connection[RabbitMqEnv::RABBITMQ_PORT],
+        $connection[RabbitMqEnv::RABBITMQ_VIRTUAL_HOST],
+    );
+}
 
 // ---------- LOGGER
 
