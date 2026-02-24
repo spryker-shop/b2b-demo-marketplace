@@ -47,6 +47,9 @@ class SymfonyMessengerDependencyProvider extends SprykerSymfonyMessengerDependen
         ];
     }
 
+    /**
+     * @return array<\Spryker\Zed\SymfonyScheduler\Communication\Plugin\SymfonyMessenger\CompiledCronTransportGroupAwarePlugin>
+     */
     protected function getGroupAwareTransportsPlugins(): array
     {
         return [
