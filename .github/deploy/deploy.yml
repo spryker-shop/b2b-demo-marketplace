@@ -9,6 +9,7 @@ image:
     php:
         enabled-extensions:
             - otel
+            - amqp
         ini:
             'opcache.revalidate_freq': 0
             'opcache.validate_timestamps': 0

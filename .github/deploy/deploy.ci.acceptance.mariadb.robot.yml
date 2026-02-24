@@ -10,6 +10,7 @@ image:
     php:
         enabled-extensions:
             - otel
+            - amqp
     environment:
         SPRYKER_PRODUCT_CONFIGURATOR_HOST: date-time-configurator-example.spryker.local
         SPRYKER_PRODUCT_CONFIGURATOR_PORT: 80
