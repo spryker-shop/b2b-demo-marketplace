@@ -9,11 +9,6 @@ declare(strict_types = 1);
  * - jobs[]['role'] default value is 'admin'
  */
 
-/* ProductValidity */
-
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\MessageBroker\MessageBrokerConstants;
-
 //$logger = 'config/Zed/cronjobs/bin/loggable.sh '; // script for jenkins logging
 $logger = '';
 
