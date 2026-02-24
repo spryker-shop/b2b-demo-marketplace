@@ -48,6 +48,12 @@ config/Yves/cache_bust.php
 
 # public stuff
 public/*/assets/
+
+# design tokens - ignore generated files, keep source
+/frontend/assets/global/default/design-tokens/*
+!/frontend/assets/global/default/design-tokens/design-tokens.json
+/src/Pyz/Yves/ShopUi/Theme/*/styles/design-tokens.css
+
 public/Configurator/dist/
 
 # docker stuff
