@@ -186,6 +186,8 @@ use Spryker\Zed\StorageRedis\Communication\Console\StorageRedisExportRdbConsole;
 use Spryker\Zed\StorageRedis\Communication\Console\StorageRedisImportRdbConsole;
 use Spryker\Zed\StoreContextDataImport\StoreContextDataImportConfig;
 use Spryker\Zed\StoreDataImport\StoreDataImportConfig;
+use Spryker\Zed\SymfonyMessenger\Communication\Console\SymfonyMessengerConsumeMessagesConsole;
+use Spryker\Zed\SymfonyScheduler\Communication\Console\SchedulerListConsole;
 use Spryker\Zed\Synchronization\Communication\Console\ExportSynchronizedDataConsole;
 use Spryker\Zed\Synchronization\Communication\Plugin\Console\DirectSynchronizationConsolePlugin;
 use Spryker\Zed\Transfer\Communication\Console\DataBuilderGeneratorConsole;
@@ -457,6 +459,9 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new ContainerBuilderConsole(),
 
             new AlgoliaEntityExportConsole(),
+
+            new SymfonyMessengerConsumeMessagesConsole(),
+            new SchedulerListConsole(),
         ];
 
         $propelCommands = $container->getLocator()->propel()->facade()->getConsoleCommands();

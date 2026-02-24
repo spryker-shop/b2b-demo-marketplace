@@ -1,0 +1,164 @@
+<?php
+
+/**
+ * This file is part of the Spryker Suite.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
+ */
+
+declare(strict_types = 1);
+
+namespace Pyz\Client\SymfonyMessenger;
+
+use Spryker\Client\SymfonyMessenger\SymfonyMessengerConfig as SprykerSymfonyMessengerConfig;
+use Spryker\Shared\AssetStorage\AssetStorageConfig;
+use Spryker\Shared\AvailabilityStorage\AvailabilityStorageConfig;
+use Spryker\Shared\AvailabilityStorage\AvailabilityStorageConstants;
+use Spryker\Shared\CategoryPageSearch\CategoryPageSearchConstants;
+use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
+use Spryker\Shared\CmsPageSearch\CmsPageSearchConstants;
+use Spryker\Shared\CmsStorage\CmsStorageConstants;
+use Spryker\Shared\CompanyUserStorage\CompanyUserStorageConfig;
+use Spryker\Shared\ConfigurableBundlePageSearch\ConfigurableBundlePageSearchConfig;
+use Spryker\Shared\ConfigurableBundleStorage\ConfigurableBundleStorageConfig;
+use Spryker\Shared\ContentStorage\ContentStorageConfig;
+use Spryker\Shared\CustomerAccessStorage\CustomerAccessStorageConstants;
+use Spryker\Shared\CustomerStorage\CustomerStorageConfig;
+use Spryker\Shared\Event\EventConfig;
+use Spryker\Shared\Event\EventConstants;
+use Spryker\Shared\FileManagerStorage\FileManagerStorageConstants;
+use Spryker\Shared\GlossaryStorage\GlossaryStorageConfig;
+use Spryker\Shared\Log\LogConstants;
+use Spryker\Shared\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageConfig;
+use Spryker\Shared\MerchantSearch\MerchantSearchConfig;
+use Spryker\Shared\MerchantStorage\MerchantStorageConfig;
+use Spryker\Shared\PriceProductOfferStorage\PriceProductOfferStorageConfig;
+use Spryker\Shared\PriceProductStorage\PriceProductStorageConfig;
+use Spryker\Shared\PriceProductStorage\PriceProductStorageConstants;
+use Spryker\Shared\ProductConfigurationStorage\ProductConfigurationStorageConfig;
+use Spryker\Shared\ProductImageStorage\ProductImageStorageConfig;
+use Spryker\Shared\ProductOfferAvailabilityStorage\ProductOfferAvailabilityStorageConfig;
+use Spryker\Shared\ProductOfferServicePointStorage\ProductOfferServicePointStorageConfig;
+use Spryker\Shared\ProductOfferShipmentTypeStorage\ProductOfferShipmentTypeStorageConfig;
+use Spryker\Shared\ProductOfferStorage\ProductOfferStorageConfig;
+use Spryker\Shared\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig;
+use Spryker\Shared\ProductPageSearch\ProductPageSearchConfig;
+use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
+use Spryker\Shared\ProductStorage\ProductStorageConfig;
+use Spryker\Shared\ProductStorage\ProductStorageConstants;
+use Spryker\Shared\PublishAndSynchronizeHealthCheck\PublishAndSynchronizeHealthCheckConfig;
+use Spryker\Shared\PublishAndSynchronizeHealthCheckSearch\PublishAndSynchronizeHealthCheckSearchConfig;
+use Spryker\Shared\PublishAndSynchronizeHealthCheckStorage\PublishAndSynchronizeHealthCheckStorageConfig;
+use Spryker\Shared\Publisher\PublisherConfig;
+use Spryker\Shared\RabbitMq\RabbitMqEnv;
+use Spryker\Shared\SalesReturnSearch\SalesReturnSearchConfig;
+use Spryker\Shared\SearchHttp\SearchHttpConfig;
+use Spryker\Shared\ServicePointSearch\ServicePointSearchConfig;
+use Spryker\Shared\ServicePointStorage\ServicePointStorageConfig;
+use Spryker\Shared\ShipmentTypeStorage\ShipmentTypeStorageConfig;
+use Spryker\Shared\ShoppingListStorage\ShoppingListStorageConfig;
+use Spryker\Shared\StoreStorage\StoreStorageConfig;
+use Spryker\Shared\TaxProductStorage\TaxProductStorageConfig;
+use Spryker\Shared\TaxStorage\TaxStorageConfig;
+use Spryker\Shared\UrlStorage\UrlStorageConfig;
+use Spryker\Shared\UrlStorage\UrlStorageConstants;
+use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConfig;
+
+class SymfonyMessengerConfig extends SprykerSymfonyMessengerConfig
+{
+    /**
+     * @return array<mixed>
+     */
+    public function getQueueConfiguration(): array
+    {
+        return array_merge(
+            [
+                EventConstants::EVENT_QUEUE => [
+                    EventConfig::EVENT_ROUTING_KEY_RETRY => EventConstants::EVENT_QUEUE_RETRY,
+                    EventConfig::EVENT_ROUTING_KEY_ERROR => EventConstants::EVENT_QUEUE_ERROR,
+                ],
+                $this->get(LogConstants::LOG_QUEUE_NAME),
+            ],
+            $this->getPublishQueueConfiguration(),
+            $this->getSynchronizationQueueConfiguration(),
+        );
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    protected function getPublishQueueConfiguration(): array
+    {
+        return [
+            AvailabilityStorageConfig::PUBLISH_AVAILABILITY,
+            CustomerStorageConfig::PUBLISH_CUSTOMER_INVALIDATED,
+            MerchantStorageConfig::PUBLISH_MERCHANT,
+            PublishAndSynchronizeHealthCheckConfig::PUBLISH_PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK,
+            PublisherConfig::PUBLISH_QUEUE => [
+                PublisherConfig::PUBLISH_ROUTING_KEY_RETRY => PublisherConfig::PUBLISH_RETRY_QUEUE,
+                PublisherConfig::PUBLISH_ROUTING_KEY_ERROR => PublisherConfig::PUBLISH_ERROR_QUEUE,
+            ],
+            PriceProductStorageConfig::PUBLISH_PRICE_PRODUCT_ABSTRACT,
+            PriceProductStorageConfig::PUBLISH_PRICE_PRODUCT_CONCRETE,
+            ProductImageStorageConfig::PUBLISH_PRODUCT_ABSTRACT_IMAGE,
+            ProductImageStorageConfig::PUBLISH_PRODUCT_CONCRETE_IMAGE,
+            ProductPageSearchConfig::PUBLISH_PRODUCT_ABSTRACT_PAGE,
+            ProductPageSearchConfig::PUBLISH_PRODUCT_CONCRETE_PAGE,
+            ProductStorageConfig::PUBLISH_PRODUCT_ABSTRACT,
+            ProductStorageConfig::PUBLISH_PRODUCT_CONCRETE,
+            UrlStorageConfig::PUBLISH_URL => [
+                PublisherConfig::PUBLISH_ROUTING_KEY_RETRY => UrlStorageConfig::PUBLISH_URL_RETRY,
+            ],
+        ];
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    protected function getSynchronizationQueueConfiguration(): array
+    {
+        return [
+            PublishAndSynchronizeHealthCheckSearchConfig::SYNC_SEARCH_PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK,
+            PublishAndSynchronizeHealthCheckStorageConfig::SYNC_STORAGE_PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK,
+            GlossaryStorageConfig::SYNC_STORAGE_TRANSLATION,
+            UrlStorageConstants::URL_SYNC_STORAGE_QUEUE,
+            AvailabilityStorageConstants::AVAILABILITY_SYNC_STORAGE_QUEUE,
+            CustomerAccessStorageConstants::CUSTOMER_ACCESS_SYNC_STORAGE_QUEUE,
+            CustomerStorageConfig::CUSTOMER_INVALIDATED_SYNC_STORAGE_QUEUE,
+            CategoryStorageConstants::CATEGORY_SYNC_STORAGE_QUEUE,
+            ProductStorageConstants::PRODUCT_SYNC_STORAGE_QUEUE,
+            PriceProductStorageConstants::PRICE_SYNC_STORAGE_QUEUE,
+            ProductPackagingUnitStorageConfig::PRODUCT_PACKAGING_UNIT_SYNC_STORAGE_QUEUE,
+            ConfigurableBundleStorageConfig::CONFIGURABLE_BUNDLE_SYNC_STORAGE_QUEUE,
+            ConfigurableBundlePageSearchConfig::CONFIGURABLE_BUNDLE_SEARCH_QUEUE,
+            CmsStorageConstants::CMS_SYNC_STORAGE_QUEUE,
+            CategoryPageSearchConstants::CATEGORY_SYNC_SEARCH_QUEUE,
+            CmsPageSearchConstants::CMS_SYNC_SEARCH_QUEUE,
+            ProductPageSearchConstants::PRODUCT_SYNC_SEARCH_QUEUE,
+            FileManagerStorageConstants::FILE_SYNC_STORAGE_QUEUE,
+            ShoppingListStorageConfig::SHOPPING_LIST_SYNC_STORAGE_QUEUE,
+            CompanyUserStorageConfig::COMPANY_USER_SYNC_STORAGE_QUEUE,
+            ContentStorageConfig::CONTENT_SYNC_STORAGE_QUEUE,
+            TaxProductStorageConfig::PRODUCT_ABSTRACT_TAX_SET_SYNC_STORAGE_QUEUE,
+            TaxStorageConfig::TAX_SET_SYNC_STORAGE_QUEUE,
+            MerchantStorageConfig::MERCHANT_SYNC_STORAGE_QUEUE,
+            MerchantOpeningHoursStorageConfig::MERCHANT_OPENING_HOURS_SYNC_STORAGE_QUEUE,
+            ProductOfferStorageConfig::PRODUCT_OFFER_SYNC_STORAGE_QUEUE,
+            PriceProductOfferStorageConfig::PRICE_PRODUCT_OFFER_OFFER_SYNC_STORAGE_QUEUE,
+            ProductOfferAvailabilityStorageConfig::PRODUCT_OFFER_AVAILABILITY_SYNC_STORAGE_QUEUE,
+            SalesReturnSearchConfig::SYNC_SEARCH_RETURN,
+            MerchantSearchConfig::SYNC_SEARCH_MERCHANT,
+            ProductConfigurationStorageConfig::PRODUCT_CONFIGURATION_SYNC_STORAGE_QUEUE,
+            StoreStorageConfig::STORE_SYNC_STORAGE_QUEUE,
+            AssetStorageConfig::ASSET_SYNC_STORAGE_QUEUE,
+            SearchHttpConfig::SEARCH_HTTP_CONFIG_SYNC_QUEUE,
+            ServicePointSearchConfig::QUEUE_NAME_SYNC_SEARCH_SERVICE_POINT,
+            ServicePointStorageConfig::QUEUE_NAME_SYNC_STORAGE_SERVICE_POINT,
+            ShipmentTypeStorageConfig::QUEUE_NAME_SYNC_STORAGE_SHIPMENT_TYPE,
+            ProductOfferServicePointStorageConfig::QUEUE_NAME_SYNC_STORAGE_PRODUCT_OFFER_SERVICE,
+            ProductOfferShipmentTypeStorageConfig::PRODUCT_OFFER_SHIPMENT_TYPE_SYNC_STORAGE_QUEUE,
+            SelfServicePortalConfig::QUEUE_NAME_SYNC_STORAGE_SSP_MODEL,
+            SelfServicePortalConfig::QUEUE_NAME_SYNC_STORAGE_SSP_ASSET,
+            SelfServicePortalConfig::QUEUE_NAME_SYNC_SEARCH_SSP_ASSET,
+        ];
+    }
+}
