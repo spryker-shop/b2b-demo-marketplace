@@ -172,6 +172,7 @@ jobs:
             TRAVIS: 1
             SPRYKER_CURRENT_REGION: EU
             DYNAMIC_STORE_MODE: true
+            DOCKER_PHP_EXTENSIONS: 'protobuf grpc opentelemetry amqp'
 
         steps:
             -   uses: actions/checkout@v4
@@ -246,6 +247,7 @@ jobs:
             SPRYKER_CURRENT_REGION: EU
             DYNAMIC_STORE_MODE: true
             COMPOSER_IGNORE_CHROMEDRIVER: 1
+            DOCKER_PHP_EXTENSIONS: 'protobuf grpc opentelemetry amqp'
 
         steps:
             -   uses: actions/checkout@v4
@@ -278,6 +280,7 @@ jobs:
             TRAVIS: 1
             SPRYKER_CURRENT_REGION: EU
             DYNAMIC_STORE_MODE: true
+            DOCKER_PHP_EXTENSIONS: 'protobuf grpc opentelemetry amqp'
         steps:
             -   uses: actions/checkout@v4
 
@@ -435,6 +438,7 @@ jobs:
             TRAVIS: 1
             SPRYKER_CURRENT_REGION: EU
             DYNAMIC_STORE_MODE: true
+            DOCKER_PHP_EXTENSIONS: 'protobuf grpc opentelemetry amqp'
         steps:
             -   uses: actions/checkout@v4
 
