@@ -9,7 +9,7 @@
             position: relative;
 
             &:not(:last-child) {
-                margin-right: rem(4);
+                margin-right: rem(var(--space-2));
             }
 
             &:hover #{$name}__tooltip {
@@ -34,7 +34,7 @@
             left: rem(-15);
             background: $setting-color-gray-5;
             color: $setting-color-white;
-            font-size: rem(16);
+            font-size: rem(var(--fontsize-2));
             padding: rem(5) rem(11) rem(7) rem(10);
             white-space: nowrap;
             border-radius: $setting-border-radius;

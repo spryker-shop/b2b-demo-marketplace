@@ -1,343 +1,132 @@
-@mixin shop-ui-button($name: '.button') {
-    #{$name} {
-        @include helper-effect-transition(background-color border-color color);
-        background-color: $setting-color-main;
-        border: solid 1px $setting-color-main;
-        border-radius: $setting-border-radius;
-        color: $setting-color-white;
-        font-size: rem(14);
-        font-weight: fw(medium);
-        line-height: rem(18);
-        padding: rem(10) rem(30);
-        text-align: center;
-        cursor: pointer;
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
-        gap: 0.3rem;
+.button {
+    @include helper-effect-transition(background-color border-color box-shadow color);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: rem(var(--space-2));
+    padding: rem(var(--space-4)) rem(var(--space-6));
+    border-radius: var(--radius-md);
+    border: rem(var(--stroke-width-thin)) solid var(--background-brand-primary);
+    background: var(--background-brand-primary);
+    font-size: rem(var(--fontsize-1));
+    font-weight: var(--font-family-weight-medium);
+    line-height: var(--lineheights-0);
+    color: var(--black-and-white-white);
 
-        &:hover,
-        &:focus {
-            background-color: helper-color-dark($setting-color-main);
-            border-color: helper-color-dark($setting-color-main);
-            color: $setting-color-white;
-            text-decoration: none;
+    &:hover {
+        border-color: var(--green-90);
+        background: var(--green-90);
+        color: var(--black-and-white-white);
+    }
+
+    &:focus:not(:focus-visible),
+    &:active {
+        border-color: var(--green-100);
+        background: var(--green-100);
+        color: var(--black-and-white-white);
+    }
+
+    &--hollow {
+        color: var(--text-brand-primary);
+        background: transparent;
+
+        &:hover {
+            border-color: var(--background-brand-primary);
+            background: transparent;
+            color: var(--text-brand-primary);
+            box-shadow: inset 0 0 0 rem(var(--stroke-width-thin)) var(--background-brand-primary);
         }
 
-        &--hollow {
-            background-color: $setting-color-transparent;
-            border: 1px solid $setting-color-main;
-            color: $setting-color-main;
+        &:focus:not(:focus-visible),
+        &:active {
+            border-color: var(--background-brand-primary);
+            background: var(--background-brand-tertiary);
+            color: var(--text-brand-primary);
+            box-shadow: inset 0 0 0 rem(var(--stroke-width-thin)) var(--background-brand-primary);
+        }
+    }
 
-            &:hover,
-            &:focus {
-                border-color: $setting-color-main;
-                color: $setting-color-white;
-                background-color: $setting-color-main;
-            }
+    &--tertiary {
+        color: var(--text-brand-primary);
+        background: transparent;
+        border-color: transparent;
 
-            &-icon {
-                @include helper-effect-transition(color);
-                padding: 0.25rem 0.5rem;
-                background-color: $setting-color-transparent;
-                border: none;
-                color: $setting-color-main;
-
-                &:hover,
-                &:focus {
-                    background-color: $setting-color-transparent;
-                    color: helper-color-light($setting-color-main);
-                }
-            }
-
-            &-icon-small {
-                @include helper-effect-transition(color);
-                background-color: $setting-color-transparent;
-                border: none;
-                font-size: rem(12);
-                color: $setting-color-gray-4;
-                line-height: 0.9;
-                padding: rem(5) rem(10);
-                margin: 0 rem(8);
-
-                &:hover,
-                &:focus {
-                    background-color: $setting-color-transparent;
-                    color: $setting-color-main;
-                }
-            }
-
-            &-second {
-                color: $setting-color-white;
-                border-color: $setting-color-white;
-
-                &:hover,
-                &:focus {
-                    color: helper-color-dark($setting-color-white);
-                    background-color: $setting-color-transparent;
-                    border-color: helper-color-dark($setting-color-white);
-                }
-            }
-
-            &-alternative {
-                color: $setting-color-gray-3;
-                border-color: $setting-color-gray-2;
-
-                &:hover,
-                &:focus {
-                    border-color: $setting-color-gray-3;
-                    color: $setting-color-white;
-                    background-color: $setting-color-gray-3;
-                }
-            }
-
-            &-active {
-                background: $setting-color-alpha-9;
-
-                &:hover,
-                &:focus {
-                    border-color: $setting-color-main;
-                    color: $setting-color-main;
-                    background: $setting-color-alpha-9;
-                }
-            }
+        &:hover {
+            border-color: var(--background-brand-tertiary);
+            background: var(--background-brand-tertiary);
+            color: var(--text-brand-primary);
         }
 
-        &--alternative {
-            background-color: $setting-color-alt;
-            border-color: $setting-color-alt;
-            color: $setting-color-white;
+        &:focus:not(:focus-visible),
+        &:active {
+            border-color: var(--background-brand-secondary);
+            background: var(--background-brand-secondary);
+            color: var(--text-brand-primary);
+        }
+    }
 
-            &:hover,
-            &:focus {
-                background-color: helper-color-dark($setting-color-alt);
-                border-color: helper-color-dark($setting-color-alt);
-            }
+    &--alert,
+    &--destructive {
+        border-color: var(--background-semantic-error-bold);
+        background: var(--background-semantic-error-bold);
+
+        &:hover {
+            border-color: var(--red-90);
+            background: var(--red-90);
         }
 
-        &--small-space {
-            padding-left: rem(15);
-            padding-right: rem(15);
+        &:focus:not(:focus-visible),
+        &:active {
+            border-color: var(--red-100);
+            background: var(--red-100);
+        }
+    }
+
+    &--secondary {
+        color: var(--black-and-white-black);
+        background: transparent;
+        border-color: transparent;
+
+        &:hover {
+            border-color: var(--background-neutral-secondary);
+            background: var(--background-neutral-secondary);
+            color: var(--black-and-white-black);
         }
 
-        &--small {
-            font-size: rem(13);
-            padding: rem(6) rem(20);
+        &:focus:not(:focus-visible),
+        &:active {
+            border-color: var(--background-neutral-tertiary);
+            background: var(--background-neutral-tertiary);
+            color: var(--black-and-white-black);
         }
+    }
 
-        &--small-on-mobile {
-            font-size: rem(13);
-            padding: rem(6) rem(20);
+    &:focus-visible {
+        box-shadow: var(--shadows-focus-x) var(--shadows-focus-y) var(--shadows-focus-blur) var(--shadows-focus-spread)
+            var(--shadows-focus);
+        outline: unset;
+    }
 
-            @include helper-breakpoint-media-min($lg) {
-                font-size: rem(14);
-                padding: rem(10) rem(28);
-            }
+    &[disabled],
+    &--disabled {
+        background: var(--background-neutral-disabled);
+        border-color: var(--background-neutral-disabled);
+        color: var(--black-and-white-white);
+        cursor: not-allowed;
+        pointer-events: none;
+    }
 
-            @include helper-breakpoint-media-min($xl) {
-                padding: rem(10) rem(30);
-            }
-        }
+    &--sm {
+        padding: rem(var(--space-3)) rem(var(--space-5));
+    }
 
-        &--medium {
-            font-size: rem(14);
-            line-height: normal;
-            padding: rem(10) rem(30);
+    &--lg {
+        padding: rem(var(--space-3)) rem(var(--space-7));
+    }
 
-            @include helper-breakpoint-media-min($lg) {
-                font-size: rem(16);
-                line-height: rem(20);
-                padding: rem(15) rem(27);
-            }
-        }
-
-        &--big {
-            font-size: rem(16);
-            line-height: rem(20);
-            padding: rem(15) rem(32);
-
-            @include helper-breakpoint-media-min($lg) {
-                padding-left: rem(27);
-                padding-right: rem(27);
-            }
-        }
-
-        &--bigger {
-            padding-top: rem(12);
-            padding-bottom: rem(12);
-        }
-
-        &--form {
-            padding-top: rem(14);
-            padding-bottom: rem(14);
-        }
-
-        &--mobile-tight {
-            padding-left: rem(15);
-            padding-right: rem(15);
-
-            @include helper-breakpoint-media-min($lg) {
-                padding-left: rem(30);
-                padding-right: rem(30);
-            }
-        }
-
-        &--expand {
-            width: 100%;
-        }
-
-        &--expand-sm-only {
-            @include helper-breakpoint-media-max($md - 1) {
-                width: 100%;
-            }
-        }
-
-        &--expand-sm-lg {
-            @include helper-breakpoint-media-max($lg - 1) {
-                width: 100%;
-            }
-        }
-
-        &--checkout {
-            min-width: rem(200);
-        }
-
-        &--edit,
-        &--back {
-            @include helper-effect-transition(color);
-            color: $setting-color-gray-5;
-
-            &:hover,
-            &:focus {
-                color: $setting-color-gray-2;
-            }
-        }
-
-        &--back {
-            font-weight: fw(regular);
-        }
-
-        &--second {
-            @include helper-effect-transition(color border-color);
-            color: $setting-color-gray-5;
-            border-color: $setting-color-gray-2;
-
-            &:hover,
-            &:focus {
-                background-color: $setting-color-transparent;
-                border-color: $setting-color-main;
-                color: $setting-color-main;
-            }
-        }
-
-        &--icon {
-            padding-left: rem(10);
-            padding-right: rem(10);
-        }
-
-        &[disabled],
-        &--disabled {
-            background-color: $setting-color-gray-2 !important;
-            border-color: $setting-color-gray-2 !important;
-            color: $setting-color-white;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
-
-        &--justify {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-        }
-
-        &--justify-center {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-        }
-
-        &--additional {
-            padding: rem(14) rem(20);
-            background: $setting-color-white;
-            border-color: $setting-color-gray-6;
-            color: $setting-color-gray-5;
-            box-shadow:
-                0 rem(10) rem(18) 0 rgba($setting-color-black, 0.05),
-                0 rem(3) rem(3) 0 rgba($setting-color-black, 0.04);
-            font-size: rem(15);
-        }
-
-        &--tight {
-            padding-left: rem(20);
-            padding-right: rem(20);
-        }
-
-        &--shopping-list {
-            position: absolute;
-            bottom: rem(22);
-            left: rem(22);
-            width: calc(100% - #{rem(44)});
-
-            @include helper-breakpoint-media-min($lg) {
-                position: static;
-                width: auto;
-            }
-        }
-
-        &--no-horizontal-padding {
-            padding-left: 0;
-            padding-right: 0;
-        }
-
-        &--inline {
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-            padding: rem(15);
-            font-size: rem(11);
-            line-height: rem(13);
-        }
-
-        &--md-left-indent {
-            @include helper-breakpoint-media-min($md) {
-                margin-left: rem(132);
-            }
-        }
-
-        @each $action, $setting-color-action in $setting-color-actions {
-            @include shop-ui-button-action($action, $setting-color-action);
-        }
-
-        @content;
+    &--icon {
+        min-width: rem(32);
+        min-height: rem(32);
+        padding: var(--space-1);
     }
 }
-
-@mixin shop-ui-button-action($action, $setting-color-action) {
-    &--#{$action} {
-        background-color: $setting-color-action;
-        border-color: $setting-color-action;
-
-        &:hover,
-        &:focus {
-            background-color: helper-color-dark($setting-color-action);
-            border-color: helper-color-dark($setting-color-action);
-        }
-    }
-
-    &--#{$action}#{&}--hollow {
-        background-color: $setting-color-transparent;
-        border-color: $setting-color-action;
-        color: $setting-color-action;
-
-        &:hover,
-        &:focus {
-            background-color: $setting-color-action;
-            color: $setting-color-white;
-        }
-    }
-
-    @content;
-}
-
-@include shop-ui-button;
