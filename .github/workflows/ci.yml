@@ -360,6 +360,7 @@ jobs:
             -   name: Install Project
                 run: |
                     git clone --depth 1 https://github.com/spryker/docker-sdk.git ./docker
+                    composer require --dev spryker/robotframework-suite-tests:"dev-release_202512.0_state"
                     ./uninstall-frontend-marketplace.sh
                     ./uninstall-marketplace-modules.sh
                     docker/sdk boot .github/deploy/deploy.ci.api.mariadb.robot.yml
