@@ -111,7 +111,7 @@ class SummaryStepTest extends Unit
     {
         return $this->getMockBuilder(CheckoutPageToShipmentServiceBridge::class)
             ->setConstructorArgs([$this->tester->getShipmentService()])
-            ->enableProxyingToOriginalMethods()
+            ->onlyMethods([])
             ->getMock();
     }
 

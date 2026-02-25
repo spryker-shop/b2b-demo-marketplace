@@ -75,6 +75,7 @@ image:
             - blackfire
             - newrelic
             - otel
+            - amqp
     node:
         version: 20
         npm: 10
@@ -88,7 +89,10 @@ assets:
     mode: production
     compression:
         brotli:
-            static: on
+            static: true
+            level: 5
+        gzip:
+            static: true
             level: 5
 
 regions:
