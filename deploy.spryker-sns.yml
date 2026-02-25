@@ -59,6 +59,7 @@ image:
     php:
         enabled-extensions:
             - otel
+            - amqp
         ini:
             'opcache.revalidate_freq': 0
             'opcache.enable_cli': 0
@@ -81,7 +82,10 @@ assets:
     mode: production
     compression:
         brotli:
-            static: on
+            static: true
+            level: 5
+        gzip:
+            static: true
             level: 5
 
 regions:
