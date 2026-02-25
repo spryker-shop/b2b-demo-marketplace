@@ -46,6 +46,7 @@ image:
     php:
         enabled-extensions:
             - otel
+            - amqp
     environment:
         SPRYKER_PRODUCT_CONFIGURATOR_HOST: date-time-configurator-example.cloud.spryker.toys
         SPRYKER_PRODUCT_CONFIGURATOR_PORT: 443
