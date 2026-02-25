@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable max-lines */
 const fs = require('fs');
 const path = require('path');
@@ -122,7 +123,7 @@ function expandCompositeTokens(obj, parentPath = []) {
 
         if (!isPlainObject(value)) continue;
 
-        if (isPlainObject(value) && 'value' in value && 'type' in value) {
+        if ('value' in value && 'type' in value) {
             if (value.type === 'typography' && isPlainObject(value.value)) {
                 for (const [subKey, subValue] of Object.entries(value.value)) {
                     result[[...path, subKey].join('.')] = {
@@ -150,7 +151,9 @@ const normalizeDesignTokens = (sourcePath, outputPath) => {
     const flattened = {};
 
     for (const [key, value] of Object.entries(converted)) {
-        if (key.startsWith('primitives') || key.startsWith('colourUsage')) {
+        const flattenPatterns = ['primitives', 'colour', 'spacingdefault'];
+
+        if (flattenPatterns.some((pattern) => key.startsWith(pattern))) {
             Object.assign(flattened, value);
         } else {
             flattened[key] = value;
@@ -199,7 +202,22 @@ const buildDesignTokens = async (appSettings) => {
     const cssFilePath = join(buildPath, 'design-tokens.css');
 
     StyleDictionary.registerTransform({
-        name: 'size/pxToRem',
+        name: 'name/kebab-clean',
+        type: 'name',
+        transform: (token) => {
+            const parts = (token.path ?? [])
+                .map((part) => String(part))
+                .map((part) => part.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase())
+                .map((kebab) => kebab.replace(/default/gi, ''))
+                .map((kebab) => kebab.replace(/-+/g, '-').replace(/^-|-$/g, ''))
+                .filter(Boolean);
+
+            return parts.join('-');
+        },
+    });
+
+    StyleDictionary.registerTransform({
+        name: 'value/px-force',
         type: 'value',
         filter: (token) => {
             const dimensionTypes = ['dimension', 'fontSizes', 'borderRadius', 'spacing', 'borderWidth', 'sizing'];
@@ -233,7 +251,7 @@ const buildDesignTokens = async (appSettings) => {
         platforms: {
             css: {
                 buildPath,
-                transforms: ['attribute/cti', 'name/kebab', 'time/seconds', 'color/css'],
+                transforms: ['attribute/cti', 'name/kebab-clean', 'value/px-force', 'time/seconds', 'color/css'],
                 files: [
                     {
                         destination: 'design-tokens.css',

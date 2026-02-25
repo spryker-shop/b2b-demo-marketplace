@@ -1,6 +1,11 @@
 @use 'sass:math';
+@use 'sass:meta';
 
 @function rem($value: $setting-font-size-base, $type: string) {
+    @if meta.type-of($value) != 'number' {
+        @return calc(#{$value} / #{$setting-font-size-base} * 1rem);
+    }
+
     $remSize: math.div($value, math.div($setting-font-size-base, 1px));
 
     @if ($type == number) {

@@ -82,12 +82,12 @@
 
     hr {
         @include helper-ui-clearfix;
-        border-bottom: 1px solid $setting-color-gray-3;
-        margin: 0.5rem 0;
+        border-bottom: var(--stroke-width-thin) solid $setting-color-gray-3;
+        margin: rem(var(--space-3)) 0;
     }
 
     small {
-        font-size: rem(12);
+        font-size: rem(var(--fontsize-0));
 
         @include helper-breakpoint-media-min($lg) {
             @include helper-font-size(small);
@@ -101,7 +101,7 @@
     p,
     blockquote,
     iframe {
-        margin: 0.5rem 0;
+        margin: rem(var(--space-3)) 0;
     }
 
     .text-color {

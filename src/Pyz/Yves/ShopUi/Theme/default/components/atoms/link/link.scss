@@ -131,10 +131,10 @@
     &--to-button {
         width: 100%;
         padding: rem(11);
-        font-size: rem(14);
+        font-size: rem(var(--fontsize-1));
         justify-content: center;
         border-radius: $setting-border-radius;
-        border: rem(1) solid $setting-color-gray-1;
+        border: rem(var(--stroke-width-thin)) solid $setting-color-gray-1;
 
         @include helper-breakpoint-media-min($lg) {
             width: auto;
@@ -146,7 +146,7 @@
     }
 
     &--smaller {
-        font-size: rem(12);
+        font-size: rem(var(--fontsize-0));
 
         &:hover {
             text-decoration: none;

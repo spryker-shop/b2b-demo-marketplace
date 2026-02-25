@@ -1,6 +1,6 @@
 @include shop-ui-title {
     &--footer {
-        font: fw(bold) rem(16) / rem(50) $setting-font-family;
+        font: fw(bold) rem(var(--fontsize-2)) / rem(50) $setting-font-family;
         position: relative;
         text-transform: capitalize;
         display: block;
@@ -20,13 +20,13 @@
     }
 
     &--subscription {
-        font: fw(bold) rem(16) / rem(50) $setting-font-family;
+        font: fw(bold) rem(var(--fontsize-2)) / rem(50) $setting-font-family;
         position: relative;
         display: block;
 
         @include helper-breakpoint-media-min($md) {
             font-weight: fw(medium);
-            font-size: rem(18);
+            font-size: rem(var(--fontsize-3));
             line-height: normal;
         }
 
@@ -53,46 +53,46 @@
     }
 
     &--second {
-        font-size: rem(18);
+        font-size: rem(var(--fontsize-3));
         margin-bottom: rem(14);
 
         @include helper-breakpoint-media-min($lg) {
-            font-size: rem(24);
+            font-size: rem(var(--fontsize-5));
         }
     }
 
     &__index {
         color: $setting-color-main;
-        margin-right: rem(4);
+        margin-right: rem(var(--space-2));
 
         @include helper-breakpoint-media-min($lg) {
-            margin-right: rem(8);
+            margin-right: rem(var(--space-3));
         }
     }
 
     &--sub {
         color: $setting-color-gray-3;
         font-weight: fw(regular);
-        margin-bottom: rem(12);
+        margin-bottom: rem(var(--space-4));
     }
 
     &--error-page {
-        font: fw(bold) rem(32) / rem(41) $setting-font-family;
+        font: fw(bold) rem(var(--fontsize-6)) / rem(41) $setting-font-family;
         margin-bottom: rem(7);
     }
 
     &--product-review {
-        margin: rem(36) 0 rem(24);
+        margin: rem(36) 0 rem(var(--space-7));
     }
 
     &--product-slider {
         text-align: center;
         font-size: rem(28);
-        margin-bottom: rem(16);
+        margin-bottom: rem(var(--space-5));
 
         @include helper-breakpoint-media-min($lg) {
             margin-bottom: rem(33);
-            font-size: rem(32);
+            font-size: rem(var(--fontsize-6));
         }
     }
 
@@ -127,10 +127,10 @@
 
     &--product-sold-by {
         color: $setting-color-gray-5;
-        font-size: rem(18);
+        font-size: rem(var(--fontsize-3));
         font-weight: fw(regular);
-        padding: rem(20) 0 rem(14);
-        border-bottom: rem(1) solid $setting-color-gray-1;
+        padding: rem(var(--space-6)) 0 rem(14);
+        border-bottom: rem(var(--stroke-width-thin)) solid $setting-color-gray-1;
 
         @include helper-breakpoint-media-min($lg) {
             font-size: rem(22);
@@ -143,7 +143,7 @@
     }
 
     &--mobile-toggler-section {
-        margin-bottom: rem(24);
+        margin-bottom: rem(var(--space-7));
         font-weight: fw(medium);
         line-height: normal;
         color: $setting-color-gray-5;
@@ -161,7 +161,7 @@
                 top: 50%;
                 transform: translateY(-50%);
                 width: rem(10);
-                height: rem(2);
+                height: rem(var(--stroke-width-medium));
                 background: $setting-color-gray-5;
             }
 
@@ -182,7 +182,7 @@
         font-weight: fw(medium);
 
         @include helper-breakpoint-media-min($lg) {
-            margin-left: rem(20);
+            margin-left: rem(var(--space-6));
         }
     }
 
@@ -190,17 +190,17 @@
         color: $setting-color-alt;
         line-height: rem(52);
         background-color: $setting-color-alpha-5;
-        margin: 0 rem(-15) rem(8);
+        margin: 0 rem(-15) rem(var(--space-3));
 
         @include helper-breakpoint-media-min($lg) {
-            font-size: rem(16);
-            margin: 0 0 rem(8);
+            font-size: rem(var(--fontsize-2));
+            margin: 0 0 rem(var(--space-3));
         }
     }
 
     &--review-subtitle {
-        margin-bottom: rem(20);
-        font-size: rem(18);
+        margin-bottom: rem(var(--space-6));
+        font-size: rem(var(--fontsize-3));
         font-weight: fw(medium);
         line-height: normal;
         color: $setting-color-gray-5;
@@ -208,7 +208,7 @@
 
         @include helper-breakpoint-media-min($lg) {
             text-align: left;
-            font-size: rem(24);
+            font-size: rem(var(--fontsize-5));
         }
     }
 
@@ -218,8 +218,8 @@
         position: relative;
 
         @include helper-breakpoint-media-min($lg) {
-            padding-bottom: rem(20);
-            margin-bottom: rem(20);
+            padding-bottom: rem(var(--space-6));
+            margin-bottom: rem(var(--space-6));
         }
 
         &::after {
@@ -230,7 +230,7 @@
             right: rem(-15);
             bottom: 0;
             width: calc(100% + #{$setting-grid-space * 2});
-            height: rem(1);
+            height: rem(var(--stroke-width-thin));
             background-color: $setting-color-gray-6;
 
             @include helper-breakpoint-media-min($lg) {

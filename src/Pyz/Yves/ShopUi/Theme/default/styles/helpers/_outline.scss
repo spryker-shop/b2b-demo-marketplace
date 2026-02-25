@@ -2,8 +2,8 @@
  * Forces element outline.
  */
 @mixin helper-outline {
-    outline: rem(1) solid $setting-color-main;
-    outline-offset: rem(1);
+    outline: rem(var(--stroke-width-thin)) solid $setting-color-main;
+    outline-offset: rem(var(--stroke-width-thin));
 
     @content;
 }

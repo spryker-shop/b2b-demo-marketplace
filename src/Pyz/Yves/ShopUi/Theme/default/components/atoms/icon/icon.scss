@@ -6,7 +6,7 @@ $shop-ui-icon-size-bigger: 1.5rem;
 
     &--logo {
         width: rem(96);
-        height: rem(32);
+        height: rem(var(--space-8));
         max-width: 100%;
 
         @include helper-breakpoint-media-min($lg) {
@@ -21,7 +21,7 @@ $shop-ui-icon-size-bigger: 1.5rem;
 
     &--checkout {
         width: rem(109);
-        height: rem(32);
+        height: rem(var(--space-8));
 
         @include helper-breakpoint-media-min($lg) {
             width: rem(167);
@@ -44,7 +44,7 @@ $shop-ui-icon-size-bigger: 1.5rem;
     }
 
     &--quick-order-delete-row {
-        width: rem(16);
+        width: rem(var(--space-5));
         height: rem(17);
         margin: rem(7) 0;
         fill: $setting-color-gray-2;
@@ -52,8 +52,8 @@ $shop-ui-icon-size-bigger: 1.5rem;
 
     &--contact {
         width: rem(22);
-        height: rem(24);
-        margin-bottom: rem(8);
+        height: rem(var(--space-7));
+        margin-bottom: rem(var(--space-3));
 
         @include helper-breakpoint-media-min($lg) {
             display: none;
@@ -82,7 +82,7 @@ $shop-ui-icon-size-bigger: 1.5rem;
         }
 
         &::before {
-            height: rem(2);
+            height: rem(var(--stroke-width-medium));
             width: 100%;
             top: 50%;
             left: 0;
@@ -95,7 +95,7 @@ $shop-ui-icon-size-bigger: 1.5rem;
 
         &::after {
             height: 100%;
-            width: rem(2);
+            width: rem(var(--stroke-width-medium));
             top: 0;
             left: 50%;
             transform: translateX(-50%);
@@ -114,11 +114,11 @@ $shop-ui-icon-size-bigger: 1.5rem;
 
     &--toggler-cross-thin {
         &::before {
-            height: rem(2);
+            height: rem(var(--stroke-width-medium));
         }
 
         &::after {
-            width: rem(2);
+            width: rem(var(--stroke-width-medium));
         }
     }
 
@@ -126,7 +126,7 @@ $shop-ui-icon-size-bigger: 1.5rem;
         display: inline-block;
         width: rem(26);
         height: rem(23);
-        margin: rem(-6) rem(12) rem(-2) 0;
+        margin: rem(-6) rem(var(--space-4)) rem(-2) 0;
     }
 
     &--toggler-cross-link {
@@ -149,7 +149,7 @@ $shop-ui-icon-size-bigger: 1.5rem;
 
     &--invoice-logo {
         width: rem(52);
-        height: rem(20);
+        height: rem(var(--space-6));
 
         @include helper-breakpoint-media-min($lg) {
             width: rem(83);
@@ -165,7 +165,7 @@ $shop-ui-icon-size-bigger: 1.5rem;
     &--payment-logo {
         position: absolute;
         top: rem(27);
-        right: rem(20);
+        right: rem(var(--space-6));
 
         @include helper-breakpoint-media-min($lg) {
             top: rem(27);
@@ -200,7 +200,7 @@ $shop-ui-icon-size-bigger: 1.5rem;
     }
 
     &--pay-pal-logo-footer {
-        width: rem(64);
+        width: rem(var(--space-11));
     }
 
     &--klarna-logo-footer {
@@ -213,7 +213,7 @@ $shop-ui-icon-size-bigger: 1.5rem;
 
     &--copyright {
         width: rem(106);
-        height: rem(48);
+        height: rem(var(--space-10));
     }
 
     &--view-mode-switch {
@@ -224,7 +224,7 @@ $shop-ui-icon-size-bigger: 1.5rem;
 
     &--reset {
         @include helper-effect-transition(color);
-        margin-right: rem(8);
+        margin-right: rem(var(--space-3));
         color: $setting-color-gray-5;
     }
 
@@ -240,13 +240,13 @@ $shop-ui-icon-size-bigger: 1.5rem;
     }
 
     &--create-new-cart {
-        width: rem(24);
+        width: rem(var(--space-7));
         height: rem(18);
         vertical-align: bottom;
     }
 
     &--trolley {
-        width: rem(20);
+        width: rem(var(--space-6));
     }
 
     &--title {
@@ -255,22 +255,22 @@ $shop-ui-icon-size-bigger: 1.5rem;
     }
 
     &--sm-lg-regular {
-        width: rem(16);
-        height: rem(16);
+        width: rem(var(--space-5));
+        height: rem(var(--space-5));
 
         @include helper-breakpoint-media-min($lg) {
-            width: rem(20);
-            height: rem(20);
+            width: rem(var(--space-6));
+            height: rem(var(--space-6));
         }
     }
 
     &--sm-lg-bigger {
-        width: rem(16);
-        height: rem(16);
+        width: rem(var(--space-5));
+        height: rem(var(--space-5));
 
         @include helper-breakpoint-media-min($lg) {
-            width: rem(24);
-            height: rem(24);
+            width: rem(var(--space-7));
+            height: rem(var(--space-7));
         }
     }
 
@@ -298,8 +298,8 @@ $shop-ui-icon-size-bigger: 1.5rem;
     }
 
     &--clock {
-        width: rem(12);
-        height: rem(12);
+        width: rem(var(--space-4));
+        height: rem(var(--space-4));
     }
 
     &--cart-locked {

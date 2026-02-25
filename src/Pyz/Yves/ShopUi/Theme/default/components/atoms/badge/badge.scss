@@ -11,7 +11,7 @@
     &--multi-cart {
         display: inline-block;
         color: $setting-color-gray-4;
-        padding: rem(4) rem(5);
+        padding: rem(var(--space-2)) rem(5);
         margin-right: rem(9);
         vertical-align: middle;
         min-width: rem(52);
@@ -37,7 +37,7 @@
     &--summary {
         text-transform: uppercase;
         letter-spacing: rem(0.2);
-        padding: rem(5) rem(8);
+        padding: rem(5) rem(var(--space-3));
     }
 
     &--counter {
@@ -46,7 +46,7 @@
         font-size: rem(11);
         line-height: normal;
         color: $setting-color-gray-4;
-        padding: rem(5) rem(8);
+        padding: rem(5) rem(var(--space-3));
     }
 
     &--order {
@@ -54,15 +54,15 @@
         color: $setting-color-black;
         font-size: map_get($setting-font-size, tiny);
         letter-spacing: rem(0.15);
-        padding: rem(2) rem(10);
+        padding: rem(var(--space-1)) rem(10);
     }
 
     &--round {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        min-width: rem(24);
-        height: rem(24);
+        min-width: rem(var(--space-7));
+        height: rem(var(--space-7));
         padding: 0 rem(3);
         border-radius: 50%;
     }
