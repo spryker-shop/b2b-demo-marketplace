@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bc571f7ed2e337fc6fa54e50e7bb973c",
+    "content-hash": "0d05a57f8fa86c4b8c5169674a3451b4",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -1678,16 +1678,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.370.1",
+            "version": "3.371.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "273a9bbed9e73016be390b8428f7925f15ea053e"
+                "reference": "80bafcdc7f22362e204f49c5adfea66e85939cc8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/273a9bbed9e73016be390b8428f7925f15ea053e",
-                "reference": "273a9bbed9e73016be390b8428f7925f15ea053e",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/80bafcdc7f22362e204f49c5adfea66e85939cc8",
+                "reference": "80bafcdc7f22362e204f49c5adfea66e85939cc8",
                 "shasum": ""
             },
             "require": {
@@ -1769,9 +1769,9 @@
             "support": {
                 "forum": "https://github.com/aws/aws-sdk-php/discussions",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.370.1"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.371.0"
             },
-            "time": "2026-02-23T19:05:30+00:00"
+            "time": "2026-02-24T19:08:17+00:00"
         },
         {
             "name": "beberlei/assert",
@@ -9264,7 +9264,7 @@
         },
         {
             "name": "spryker-feature/acl",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/acl.git",
@@ -9283,6 +9283,7 @@
                 "spryker/acl-entity": "^1.15.0",
                 "spryker/acl-entity-data-import": "^0.2.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -9295,13 +9296,13 @@
             ],
             "description": "ACL [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/acl/tree/202512.0"
+                "source": "https://github.com/spryker-feature/acl/tree/master"
             },
             "time": "2025-12-16T12:12:58+00:00"
         },
         {
             "name": "spryker-feature/agent-assist",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/agent-assist.git",
@@ -9322,6 +9323,7 @@
                 "spryker/agent-gui": "^2.0.0",
                 "spryker/security-blocker-storefront-agent": "^1.0.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -9334,13 +9336,13 @@
             ],
             "description": "Agent Assist [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/agent-assist/tree/202512.0"
+                "source": "https://github.com/spryker-feature/agent-assist/tree/master"
             },
             "time": "2025-12-16T12:12:14+00:00"
         },
         {
             "name": "spryker-feature/alternative-products",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/alternative-products.git",
@@ -9364,6 +9366,7 @@
             "suggest": {
                 "spryker-feature/product": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -9376,13 +9379,13 @@
             ],
             "description": "Alternative Products [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/alternative-products/tree/202512.0"
+                "source": "https://github.com/spryker-feature/alternative-products/tree/master"
             },
             "time": "2025-12-16T12:12:39+00:00"
         },
         {
             "name": "spryker-feature/analytics",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/analytics.git",
@@ -9398,6 +9401,7 @@
                 "php": ">=8.2",
                 "spryker/analytics-gui": "^1.1.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -9410,13 +9414,13 @@
             ],
             "description": "Analytics [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/analytics/tree/202512.0"
+                "source": "https://github.com/spryker-feature/analytics/tree/master"
             },
             "time": "2025-12-16T12:20:05+00:00"
         },
         {
             "name": "spryker-feature/approval-process",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/approval-process.git",
@@ -9433,6 +9437,7 @@
                 "spryker-shop/quote-approval-widget": "^1.5.0",
                 "spryker/quote-approval": "^1.9.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -9445,13 +9450,13 @@
             ],
             "description": "Approval process [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/approval-process/tree/202512.0"
+                "source": "https://github.com/spryker-feature/approval-process/tree/master"
             },
             "time": "2025-12-16T12:30:23+00:00"
         },
         {
             "name": "spryker-feature/availability-notification",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/availability-notification.git",
@@ -9474,6 +9479,7 @@
                 "spryker-feature/mailing-notifications": "Recommended feature dependency.",
                 "spryker-feature/product": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -9486,7 +9492,7 @@
             ],
             "description": "Availability Notification [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/availability-notification/tree/202512.0"
+                "source": "https://github.com/spryker-feature/availability-notification/tree/master"
             },
             "time": "2025-12-16T12:20:19+00:00"
         },
@@ -9591,7 +9597,7 @@
         },
         {
             "name": "spryker-feature/catalog",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/catalog.git",
@@ -9612,6 +9618,7 @@
             "suggest": {
                 "spryker-feature/spryker-core": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -9624,7 +9631,7 @@
             ],
             "description": "Catalog [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/catalog/tree/202512.0"
+                "source": "https://github.com/spryker-feature/catalog/tree/master"
             },
             "time": "2025-12-16T12:12:23+00:00"
         },
@@ -9679,7 +9686,7 @@
         },
         {
             "name": "spryker-feature/checkout",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/checkout.git",
@@ -9703,6 +9710,7 @@
                 "spryker/sales-order-threshold-gui": "^2.0.0",
                 "spryker/step-engine": "^3.7.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -9715,13 +9723,13 @@
             ],
             "description": "Checkout [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/checkout/tree/202512.0"
+                "source": "https://github.com/spryker-feature/checkout/tree/master"
             },
             "time": "2025-12-16T12:20:40+00:00"
         },
         {
             "name": "spryker-feature/cms",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/cms.git",
@@ -9781,6 +9789,7 @@
                 "spryker/content-product-set-gui": "^1.4.0",
                 "spryker/content-storage": "^2.7.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -9793,13 +9802,13 @@
             ],
             "description": "CMS [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/cms/tree/202512.0"
+                "source": "https://github.com/spryker-feature/cms/tree/master"
             },
             "time": "2025-12-16T12:12:27+00:00"
         },
         {
             "name": "spryker-feature/comments",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/comments.git",
@@ -9821,6 +9830,7 @@
             "suggest": {
                 "spryker-feature/customer-account-management": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -9833,13 +9843,13 @@
             ],
             "description": "Comments [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/comments/tree/202512.0"
+                "source": "https://github.com/spryker-feature/comments/tree/master"
             },
             "time": "2025-12-16T12:27:17+00:00"
         },
         {
             "name": "spryker-feature/company-account",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/company-account.git",
@@ -9889,6 +9899,7 @@
             "suggest": {
                 "spryker-feature/customer-account-management": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -9901,13 +9912,13 @@
             ],
             "description": "Company Account [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/company-account/tree/202512.0"
+                "source": "https://github.com/spryker-feature/company-account/tree/master"
             },
             "time": "2025-12-16T12:20:09+00:00"
         },
         {
             "name": "spryker-feature/configurable-bundle",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/configurable-bundle.git",
@@ -9934,6 +9945,7 @@
                 "spryker/configurable-bundle-storage": "^2.7.0",
                 "spryker/sales-configurable-bundle": "^1.8.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -9946,13 +9958,13 @@
             ],
             "description": "Configurable Bundle [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/configurable-bundle/tree/202512.0"
+                "source": "https://github.com/spryker-feature/configurable-bundle/tree/master"
             },
             "time": "2025-12-16T12:20:44+00:00"
         },
         {
             "name": "spryker-feature/configurable-product",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/configurable-product.git",
@@ -9979,6 +9991,7 @@
                 "spryker/sales-product-configuration": "^1.3.0",
                 "spryker/sales-product-configuration-gui": "^1.0.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -9991,13 +10004,13 @@
             ],
             "description": "Configurable Product [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/configurable-product/tree/202512.0"
+                "source": "https://github.com/spryker-feature/configurable-product/tree/master"
             },
             "time": "2025-12-16T12:26:02+00:00"
         },
         {
             "name": "spryker-feature/configurable-product-shopping-lists",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/configurable-product-shopping-lists.git",
@@ -10017,6 +10030,7 @@
             "suggest": {
                 "spryker-feature/shopping-lists": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -10029,13 +10043,13 @@
             ],
             "description": "Configurable Product Shopping Lists [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/configurable-product-shopping-lists/tree/202512.0"
+                "source": "https://github.com/spryker-feature/configurable-product-shopping-lists/tree/master"
             },
             "time": "2025-12-16T12:30:14+00:00"
         },
         {
             "name": "spryker-feature/customer-access",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/customer-access.git",
@@ -10057,6 +10071,7 @@
             "suggest": {
                 "spryker-feature/spryker-core": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -10069,13 +10084,13 @@
             ],
             "description": "Customer Access [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/customer-access/tree/202512.0"
+                "source": "https://github.com/spryker-feature/customer-access/tree/master"
             },
             "time": "2025-12-16T12:25:12+00:00"
         },
         {
             "name": "spryker-feature/customer-account-management",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/customer-account-management.git",
@@ -10103,6 +10118,7 @@
                 "spryker/oauth-customer-validation": "^1.0.0",
                 "spryker/oauth-revoke": "^1.4.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -10115,13 +10131,13 @@
             ],
             "description": "Customer Account Management [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/customer-account-management/tree/202512.0"
+                "source": "https://github.com/spryker-feature/customer-account-management/tree/master"
             },
             "time": "2025-12-16T12:12:30+00:00"
         },
         {
             "name": "spryker-feature/data-exchange-api",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/data-exchange-api.git",
@@ -10139,6 +10155,7 @@
                 "spryker/dynamic-entity-backend-api": "^1.14.0",
                 "spryker/dynamic-entity-gui": "^1.5.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -10151,13 +10168,13 @@
             ],
             "description": "Data Exchange API [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/data-exchange-api/tree/202512.0"
+                "source": "https://github.com/spryker-feature/data-exchange-api/tree/master"
             },
             "time": "2025-12-16T12:25:17+00:00"
         },
         {
             "name": "spryker-feature/deployment-tools",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/deployment-tools.git",
@@ -10179,6 +10196,7 @@
                 "spryker/publish-and-synchronize-health-check-search": "^1.2.0",
                 "spryker/publish-and-synchronize-health-check-storage": "^1.2.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -10191,13 +10209,13 @@
             ],
             "description": "Deployment tools [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/deployment-tools/tree/202512.0"
+                "source": "https://github.com/spryker-feature/deployment-tools/tree/master"
             },
             "time": "2025-12-16T12:20:47+00:00"
         },
         {
             "name": "spryker-feature/file-manager",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/file-manager.git",
@@ -10217,6 +10235,7 @@
                 "spryker/file-manager-gui": "^3.0.0",
                 "spryker/file-manager-storage": "^2.5.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -10229,7 +10248,7 @@
             ],
             "description": "File Manager [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/file-manager/tree/202512.0"
+                "source": "https://github.com/spryker-feature/file-manager/tree/master"
             },
             "time": "2025-12-16T12:25:20+00:00"
         },
@@ -10284,7 +10303,7 @@
         },
         {
             "name": "spryker-feature/invoice",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/invoice.git",
@@ -10303,6 +10322,7 @@
             "suggest": {
                 "spryker-feature/payments": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -10315,13 +10335,13 @@
             ],
             "description": "Invoice [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/invoice/tree/202512.0"
+                "source": "https://github.com/spryker-feature/invoice/tree/master"
             },
             "time": "2025-12-16T12:31:26+00:00"
         },
         {
             "name": "spryker-feature/mailing-notifications",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/mailing-notifications.git",
@@ -10341,6 +10361,7 @@
                 "spryker/newsletter": "^4.7.0",
                 "spryker/symfony-mailer": "^1.5.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -10353,22 +10374,22 @@
             ],
             "description": "Mailing & Notifications [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/mailing-notifications/tree/202512.0"
+                "source": "https://github.com/spryker-feature/mailing-notifications/tree/master"
             },
             "time": "2025-12-16T12:25:26+00:00"
         },
         {
             "name": "spryker-feature/marketplace-agent-assist",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/marketplace-agent-assist.git",
-                "reference": "6812ec1d1257a7ae6b904c0750a14e0f5049f750"
+                "reference": "cd4a5609c495211479add9232683831ed721a622"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/marketplace-agent-assist/zipball/6812ec1d1257a7ae6b904c0750a14e0f5049f750",
-                "reference": "6812ec1d1257a7ae6b904c0750a14e0f5049f750",
+                "url": "https://api.github.com/repos/spryker-feature/marketplace-agent-assist/zipball/cd4a5609c495211479add9232683831ed721a622",
+                "reference": "cd4a5609c495211479add9232683831ed721a622",
                 "shasum": ""
             },
             "require": {
@@ -10378,6 +10399,7 @@
                 "spryker/merchant-agent": "^1.1.0",
                 "spryker/merchant-agent-gui": "^2.0.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -10390,13 +10412,13 @@
             ],
             "description": "Marketplace Agent Assist [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/marketplace-agent-assist/tree/202512.0"
+                "source": "https://github.com/spryker-feature/marketplace-agent-assist/tree/master"
             },
-            "time": "2025-12-16T12:27:13+00:00"
+            "time": "2026-01-15T09:10:10+00:00"
         },
         {
             "name": "spryker-feature/marketplace-cart",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/marketplace-cart.git",
@@ -10413,6 +10435,7 @@
                 "spryker/cart-note": "^1.4.0",
                 "spryker/cart-note-merchant-sales-order-gui": "^1.0.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -10425,7 +10448,7 @@
             ],
             "description": "Marketplace Cart [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/marketplace-cart/tree/202512.0"
+                "source": "https://github.com/spryker-feature/marketplace-cart/tree/master"
             },
             "time": "2025-12-16T12:20:25+00:00"
         },
@@ -10519,16 +10542,16 @@
         },
         {
             "name": "spryker-feature/marketplace-merchant",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/marketplace-merchant.git",
-                "reference": "527204f704330d67a78516fa24afa04055f2a0b1"
+                "reference": "d375f6e5ae48fa96a1ef9160613c3190e72da470"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/marketplace-merchant/zipball/527204f704330d67a78516fa24afa04055f2a0b1",
-                "reference": "527204f704330d67a78516fa24afa04055f2a0b1",
+                "url": "https://api.github.com/repos/spryker-feature/marketplace-merchant/zipball/d375f6e5ae48fa96a1ef9160613c3190e72da470",
+                "reference": "d375f6e5ae48fa96a1ef9160613c3190e72da470",
                 "shasum": ""
             },
             "require": {
@@ -10552,6 +10575,7 @@
             "suggest": {
                 "spryker-feature/merchant": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -10564,13 +10588,13 @@
             ],
             "description": "Marketplace Merchant [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/marketplace-merchant/tree/202512.0"
+                "source": "https://github.com/spryker-feature/marketplace-merchant/tree/master"
             },
-            "time": "2025-12-16T12:27:10+00:00"
+            "time": "2026-01-15T09:10:14+00:00"
         },
         {
             "name": "spryker-feature/marketplace-merchant-commission",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/marketplace-merchant-commission.git",
@@ -10593,6 +10617,7 @@
                 "spryker/sales-merchant-commission-merchant-portal-gui": "^1.1.0",
                 "spryker/sales-payment-merchant-sales-merchant-commission": "^1.0.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -10605,7 +10630,7 @@
             ],
             "description": "Marketplace Merchant Commission [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/marketplace-merchant-commission/tree/202512.0"
+                "source": "https://github.com/spryker-feature/marketplace-merchant-commission/tree/master"
             },
             "time": "2025-12-16T12:27:23+00:00"
         },
@@ -10728,7 +10753,7 @@
         },
         {
             "name": "spryker-feature/marketplace-merchant-order-threshold",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/marketplace-merchant-order-threshold.git",
@@ -10748,6 +10773,7 @@
                 "spryker-feature/marketplace-order-management": "Recommended feature dependency.",
                 "spryker-feature/merchant-order-threshold": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -10760,7 +10786,7 @@
             ],
             "description": "Marketplace Merchant Order Threshold [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/marketplace-merchant-order-threshold/tree/202512.0"
+                "source": "https://github.com/spryker-feature/marketplace-merchant-order-threshold/tree/master"
             },
             "time": "2025-12-16T12:30:37+00:00"
         },
@@ -10972,16 +10998,16 @@
         },
         {
             "name": "spryker-feature/marketplace-order-management",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/marketplace-order-management.git",
-                "reference": "9e2b834774b085412a1fea6ba42eee925f1e1f8c"
+                "reference": "ec7772338378327b51e89cd11618a571e80665a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/marketplace-order-management/zipball/9e2b834774b085412a1fea6ba42eee925f1e1f8c",
-                "reference": "9e2b834774b085412a1fea6ba42eee925f1e1f8c",
+                "url": "https://api.github.com/repos/spryker-feature/marketplace-order-management/zipball/ec7772338378327b51e89cd11618a571e80665a4",
+                "reference": "ec7772338378327b51e89cd11618a571e80665a4",
                 "shasum": ""
             },
             "require": {
@@ -11005,6 +11031,7 @@
                 "spryker-feature/marketplace-merchant": "Recommended feature dependency.",
                 "spryker-feature/order-management": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -11017,13 +11044,13 @@
             ],
             "description": "Marketplace Order Management [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/marketplace-order-management/tree/202512.0"
+                "source": "https://github.com/spryker-feature/marketplace-order-management/tree/master"
             },
-            "time": "2025-12-16T12:25:30+00:00"
+            "time": "2026-01-15T09:10:19+00:00"
         },
         {
             "name": "spryker-feature/marketplace-packaging-units",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/marketplace-packaging-units.git",
@@ -11039,6 +11066,7 @@
                 "php": ">=8.2",
                 "spryker/product-offer-packaging-unit": "^1.0.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -11051,7 +11079,7 @@
             ],
             "description": "Marketplace Packaging Units [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/marketplace-packaging-units/tree/202512.0"
+                "source": "https://github.com/spryker-feature/marketplace-packaging-units/tree/master"
             },
             "time": "2025-12-16T12:32:07+00:00"
         },
@@ -11107,7 +11135,7 @@
         },
         {
             "name": "spryker-feature/marketplace-product-approval-process",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/marketplace-product-approval-process.git",
@@ -11124,6 +11152,7 @@
                 "spryker/merchant-product-approval": "^1.1.0",
                 "spryker/merchant-product-approval-data-import": "^0.1.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -11136,7 +11165,7 @@
             ],
             "description": "Marketplace Product Approval Process [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/marketplace-product-approval-process/tree/202512.0"
+                "source": "https://github.com/spryker-feature/marketplace-product-approval-process/tree/master"
             },
             "time": "2025-12-16T12:27:29+00:00"
         },
@@ -11194,7 +11223,7 @@
         },
         {
             "name": "spryker-feature/marketplace-product-offer-prices",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/marketplace-product-offer-prices.git",
@@ -11226,6 +11255,7 @@
                 "spryker-feature/marketplace-product-offer": "Recommended feature dependency.",
                 "spryker-feature/prices": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -11238,13 +11268,13 @@
             ],
             "description": "Marketplace Product Offer Prices [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/marketplace-product-offer-prices/tree/202512.0"
+                "source": "https://github.com/spryker-feature/marketplace-product-offer-prices/tree/master"
             },
             "time": "2025-12-16T12:25:43+00:00"
         },
         {
             "name": "spryker-feature/marketplace-product-options",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/marketplace-product-options.git",
@@ -11270,6 +11300,7 @@
                 "spryker-feature/marketplace-merchant": "Recommended feature dependency.",
                 "spryker-feature/product-options": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -11282,13 +11313,13 @@
             ],
             "description": "Marketplace Product Options [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/marketplace-product-options/tree/202512.0"
+                "source": "https://github.com/spryker-feature/marketplace-product-options/tree/master"
             },
             "time": "2025-12-16T12:26:18+00:00"
         },
         {
             "name": "spryker-feature/marketplace-promotions-discounts",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/marketplace-promotions-discounts.git",
@@ -11315,6 +11346,7 @@
                 "spryker-feature/marketplace-order-management": "Recommended feature dependency.",
                 "spryker-feature/promotions-discounts": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -11327,13 +11359,13 @@
             ],
             "description": "Marketplace Promotions & Discounts [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/marketplace-promotions-discounts/tree/202512.0"
+                "source": "https://github.com/spryker-feature/marketplace-promotions-discounts/tree/master"
             },
             "time": "2025-12-16T12:25:15+00:00"
         },
         {
             "name": "spryker-feature/marketplace-return-management",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/marketplace-return-management.git",
@@ -11360,6 +11392,7 @@
                 "spryker-feature/marketplace-order-management": "Recommended feature dependency.",
                 "spryker-feature/return-management": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -11372,13 +11405,13 @@
             ],
             "description": "Marketplace Return Management [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/marketplace-return-management/tree/202512.0"
+                "source": "https://github.com/spryker-feature/marketplace-return-management/tree/master"
             },
             "time": "2025-12-16T12:26:38+00:00"
         },
         {
             "name": "spryker-feature/marketplace-shipment",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/marketplace-shipment.git",
@@ -11402,6 +11435,7 @@
                 "spryker-feature/marketplace-merchant": "Recommended feature dependency.",
                 "spryker-feature/shipment": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -11414,13 +11448,13 @@
             ],
             "description": "Marketplace Shipment [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/marketplace-shipment/tree/202512.0"
+                "source": "https://github.com/spryker-feature/marketplace-shipment/tree/master"
             },
             "time": "2025-12-16T12:26:52+00:00"
         },
         {
             "name": "spryker-feature/marketplace-shopping-lists",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/marketplace-shopping-lists.git",
@@ -11439,6 +11473,7 @@
                 "spryker/product-offer-shopping-list-data-import": "^0.1.0",
                 "spryker/shopping-list": "^4.20.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -11451,7 +11486,7 @@
             ],
             "description": "Marketplace Shopping Lists [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/marketplace-shopping-lists/tree/202512.0"
+                "source": "https://github.com/spryker-feature/marketplace-shopping-lists/tree/master"
             },
             "time": "2025-12-16T12:30:31+00:00"
         },
@@ -11499,7 +11534,7 @@
         },
         {
             "name": "spryker-feature/merchant",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/merchant.git",
@@ -11519,6 +11554,7 @@
                 "spryker/merchant-search": "^1.2.0",
                 "spryker/merchant-storage": "^1.5.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -11531,13 +11567,13 @@
             ],
             "description": "Merchant [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/merchant/tree/202512.0"
+                "source": "https://github.com/spryker-feature/merchant/tree/master"
             },
             "time": "2025-12-16T12:27:20+00:00"
         },
         {
             "name": "spryker-feature/merchant-category",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/merchant-category.git",
@@ -11560,6 +11596,7 @@
                 "spryker-feature/category-management": "Recommended feature dependency.",
                 "spryker-feature/marketplace-merchant": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -11572,13 +11609,13 @@
             ],
             "description": "Merchant Category [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/merchant-category/tree/202512.0"
+                "source": "https://github.com/spryker-feature/merchant-category/tree/master"
             },
             "time": "2025-12-16T12:20:36+00:00"
         },
         {
             "name": "spryker-feature/merchant-contract-requests",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/merchant-contract-requests.git",
@@ -11600,6 +11637,7 @@
             "suggest": {
                 "spryker-feature/merchant": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -11612,13 +11650,13 @@
             ],
             "description": "Merchant B2B Contract Requests [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/merchant-contract-requests/tree/202512.0"
+                "source": "https://github.com/spryker-feature/merchant-contract-requests/tree/master"
             },
             "time": "2025-12-16T12:27:58+00:00"
         },
         {
             "name": "spryker-feature/merchant-contracts",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/merchant-contracts.git",
@@ -11641,6 +11679,7 @@
             "suggest": {
                 "spryker-feature/merchant": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -11653,13 +11692,13 @@
             ],
             "description": "Merchant B2B Contracts [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/merchant-contracts/tree/202512.0"
+                "source": "https://github.com/spryker-feature/merchant-contracts/tree/master"
             },
             "time": "2025-12-16T12:28:01+00:00"
         },
         {
             "name": "spryker-feature/merchant-custom-prices",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/merchant-custom-prices.git",
@@ -11681,6 +11720,7 @@
             "suggest": {
                 "spryker-feature/merchant": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -11693,13 +11733,13 @@
             ],
             "description": "Merchant Custom Prices [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/merchant-custom-prices/tree/202512.0"
+                "source": "https://github.com/spryker-feature/merchant-custom-prices/tree/master"
             },
             "time": "2025-12-16T12:30:11+00:00"
         },
         {
             "name": "spryker-feature/merchant-opening-hours",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/merchant-opening-hours.git",
@@ -11722,6 +11762,7 @@
             "suggest": {
                 "spryker-feature/marketplace-merchant": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -11734,13 +11775,13 @@
             ],
             "description": "Merchant Opening Hours [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/merchant-opening-hours/tree/202512.0"
+                "source": "https://github.com/spryker-feature/merchant-opening-hours/tree/master"
             },
             "time": "2025-12-16T12:27:26+00:00"
         },
         {
             "name": "spryker-feature/merchant-order-threshold",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/merchant-order-threshold.git",
@@ -11762,6 +11803,7 @@
                 "spryker-feature/checkout": "Recommended feature dependency.",
                 "spryker-feature/merchant": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -11774,7 +11816,7 @@
             ],
             "description": "Merchant Order Threshold [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/merchant-order-threshold/tree/202512.0"
+                "source": "https://github.com/spryker-feature/merchant-order-threshold/tree/master"
             },
             "time": "2025-12-16T12:30:06+00:00"
         },
@@ -11816,7 +11858,7 @@
         },
         {
             "name": "spryker-feature/merchant-product-restrictions",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/merchant-product-restrictions.git",
@@ -11838,6 +11880,7 @@
                 "spryker-feature/merchant": "Recommended feature dependency.",
                 "spryker-feature/product": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -11850,13 +11893,13 @@
             ],
             "description": "Merchant Product restrictions [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/merchant-product-restrictions/tree/202512.0"
+                "source": "https://github.com/spryker-feature/merchant-product-restrictions/tree/master"
             },
             "time": "2025-12-16T12:28:05+00:00"
         },
         {
             "name": "spryker-feature/multiple-carts",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/multiple-carts.git",
@@ -11878,6 +11921,7 @@
             "suggest": {
                 "spryker-feature/cart": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -11890,13 +11934,13 @@
             ],
             "description": "Multiple carts [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/multiple-carts/tree/202512.0"
+                "source": "https://github.com/spryker-feature/multiple-carts/tree/master"
             },
             "time": "2025-12-16T12:30:09+00:00"
         },
         {
             "name": "spryker-feature/navigation",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/navigation.git",
@@ -11921,6 +11965,7 @@
             "suggest": {
                 "spryker-feature/spryker-core": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -11933,13 +11978,13 @@
             ],
             "description": "Navigation [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/navigation/tree/202512.0"
+                "source": "https://github.com/spryker-feature/navigation/tree/master"
             },
             "time": "2025-12-16T12:20:52+00:00"
         },
         {
             "name": "spryker-feature/non-splittable-products",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/non-splittable-products.git",
@@ -11960,6 +12005,7 @@
             "suggest": {
                 "spryker-feature/product": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -11972,13 +12018,13 @@
             ],
             "description": "Non-splittable Products [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/non-splittable-products/tree/202512.0"
+                "source": "https://github.com/spryker-feature/non-splittable-products/tree/master"
             },
             "time": "2025-12-16T12:26:24+00:00"
         },
         {
             "name": "spryker-feature/order-amendment",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/order-amendment.git",
@@ -11997,6 +12043,7 @@
                 "spryker/sales-order-amendment": "^1.1.0",
                 "spryker/sales-order-amendment-oms": "^1.0.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -12009,13 +12056,13 @@
             ],
             "description": "Order Amendment [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/order-amendment/tree/202512.0"
+                "source": "https://github.com/spryker-feature/order-amendment/tree/master"
             },
             "time": "2025-12-16T12:12:55+00:00"
         },
         {
             "name": "spryker-feature/order-management",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/order-management.git",
@@ -12046,6 +12093,7 @@
                 "spryker/sales-quantity": "^3.6.0",
                 "spryker/sales-split": "^5.3.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -12058,13 +12106,13 @@
             ],
             "description": "Order Management [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/order-management/tree/202512.0"
+                "source": "https://github.com/spryker-feature/order-management/tree/master"
             },
             "time": "2025-12-16T12:25:33+00:00"
         },
         {
             "name": "spryker-feature/packaging-units",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/packaging-units.git",
@@ -12086,6 +12134,7 @@
             "suggest": {
                 "spryker-feature/product": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -12098,13 +12147,13 @@
             ],
             "description": "Packaging units [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/packaging-units/tree/202512.0"
+                "source": "https://github.com/spryker-feature/packaging-units/tree/master"
             },
             "time": "2025-12-16T12:30:20+00:00"
         },
         {
             "name": "spryker-feature/payments",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/payments.git",
@@ -12127,6 +12176,7 @@
                 "spryker/payment-gui": "^2.0.0",
                 "spryker/sales-payment-detail": "^1.5.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -12139,13 +12189,13 @@
             ],
             "description": "Payments [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/payments/tree/202512.0"
+                "source": "https://github.com/spryker-feature/payments/tree/master"
             },
             "time": "2025-12-16T12:12:36+00:00"
         },
         {
             "name": "spryker-feature/persistent-cart-sharing",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/persistent-cart-sharing.git",
@@ -12163,6 +12213,7 @@
                 "spryker-shop/persistent-cart-share-widget": "^1.3.0",
                 "spryker/persistent-cart-share": "^1.1.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -12175,13 +12226,13 @@
             ],
             "description": "Persistent Cart Sharing [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/persistent-cart-sharing/tree/202512.0"
+                "source": "https://github.com/spryker-feature/persistent-cart-sharing/tree/master"
             },
             "time": "2025-12-16T12:32:57+00:00"
         },
         {
             "name": "spryker-feature/prices",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/prices.git",
@@ -12211,6 +12262,7 @@
                 "spryker/price-product-volume": "^3.6.0",
                 "spryker/price-product-volume-gui": "^3.4.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -12223,7 +12275,7 @@
             ],
             "description": "Prices [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/prices/tree/202512.0"
+                "source": "https://github.com/spryker-feature/prices/tree/master"
             },
             "time": "2025-12-16T12:25:09+00:00"
         },
@@ -12297,7 +12349,7 @@
         },
         {
             "name": "spryker-feature/product-approval-process",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/product-approval-process.git",
@@ -12317,6 +12369,7 @@
                 "spryker/product-approval-gui": "^2.0.0",
                 "spryker/product-management": "^0.20.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -12329,13 +12382,13 @@
             ],
             "description": "Product Approval Process [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/product-approval-process/tree/202512.0"
+                "source": "https://github.com/spryker-feature/product-approval-process/tree/master"
             },
             "time": "2025-12-16T12:25:56+00:00"
         },
         {
             "name": "spryker-feature/product-barcode",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/product-barcode.git",
@@ -12356,6 +12409,7 @@
             "suggest": {
                 "spryker-feature/product": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -12368,13 +12422,13 @@
             ],
             "description": "Product Barcode [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/product-barcode/tree/202512.0"
+                "source": "https://github.com/spryker-feature/product-barcode/tree/master"
             },
             "time": "2025-12-16T12:25:58+00:00"
         },
         {
             "name": "spryker-feature/product-bundles",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/product-bundles.git",
@@ -12396,6 +12450,7 @@
             "suggest": {
                 "spryker-feature/product": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -12408,13 +12463,13 @@
             ],
             "description": "Product Bundles [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/product-bundles/tree/202512.0"
+                "source": "https://github.com/spryker-feature/product-bundles/tree/master"
             },
             "time": "2025-12-16T12:20:29+00:00"
         },
         {
             "name": "spryker-feature/product-customer-restrictions",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/product-customer-restrictions.git",
@@ -12433,6 +12488,7 @@
             "suggest": {
                 "spryker-feature/product": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -12445,13 +12501,13 @@
             ],
             "description": "Product Customer Restrictions [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/product-customer-restrictions/tree/202512.0"
+                "source": "https://github.com/spryker-feature/product-customer-restrictions/tree/master"
             },
             "time": "2025-12-16T12:33:11+00:00"
         },
         {
             "name": "spryker-feature/product-groups",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/product-groups.git",
@@ -12472,6 +12528,7 @@
             "suggest": {
                 "spryker-feature/product": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -12484,13 +12541,13 @@
             ],
             "description": "Product Groups [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/product-groups/tree/202512.0"
+                "source": "https://github.com/spryker-feature/product-groups/tree/master"
             },
             "time": "2025-12-16T12:26:10+00:00"
         },
         {
             "name": "spryker-feature/product-labels",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/product-labels.git",
@@ -12516,6 +12573,7 @@
             "suggest": {
                 "spryker-feature/product": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -12528,13 +12586,13 @@
             ],
             "description": "Product Labels [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/product-labels/tree/202512.0"
+                "source": "https://github.com/spryker-feature/product-labels/tree/master"
             },
             "time": "2025-12-16T12:26:12+00:00"
         },
         {
             "name": "spryker-feature/product-lists",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/product-lists.git",
@@ -12557,6 +12615,7 @@
             "suggest": {
                 "spryker-feature/product": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -12569,13 +12628,13 @@
             ],
             "description": "Product Lists [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/product-lists/tree/202512.0"
+                "source": "https://github.com/spryker-feature/product-lists/tree/master"
             },
             "time": "2025-12-16T12:26:15+00:00"
         },
         {
             "name": "spryker-feature/product-offer-service-points",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/product-offer-service-points.git",
@@ -12597,6 +12656,7 @@
             "suggest": {
                 "spryker-feature/service-points": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -12609,13 +12669,13 @@
             ],
             "description": "Product Offer Service Points [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/product-offer-service-points/tree/202512.0"
+                "source": "https://github.com/spryker-feature/product-offer-service-points/tree/master"
             },
             "time": "2025-12-16T12:27:39+00:00"
         },
         {
             "name": "spryker-feature/product-offer-service-points-availability",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/product-offer-service-points-availability.git",
@@ -12637,6 +12697,7 @@
             "suggest": {
                 "spryker-feature/product-offer-service-points": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -12649,13 +12710,13 @@
             ],
             "description": "Product Offer Service Points Availability [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/product-offer-service-points-availability/tree/202512.0"
+                "source": "https://github.com/spryker-feature/product-offer-service-points-availability/tree/master"
             },
             "time": "2025-12-16T12:27:36+00:00"
         },
         {
             "name": "spryker-feature/product-offer-shipment",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/product-offer-shipment.git",
@@ -12677,6 +12738,7 @@
             "suggest": {
                 "spryker-feature/shipment": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -12689,13 +12751,13 @@
             ],
             "description": "Product Offer Shipment [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/product-offer-shipment/tree/202512.0"
+                "source": "https://github.com/spryker-feature/product-offer-shipment/tree/master"
             },
             "time": "2025-12-16T12:27:42+00:00"
         },
         {
             "name": "spryker-feature/product-offer-shipment-availability",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/product-offer-shipment-availability.git",
@@ -12715,6 +12777,7 @@
             "suggest": {
                 "spryker-feature/product-offer-shipment": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -12727,13 +12790,13 @@
             ],
             "description": "Product Offer Shipment Availability [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/product-offer-shipment-availability/tree/202512.0"
+                "source": "https://github.com/spryker-feature/product-offer-shipment-availability/tree/master"
             },
             "time": "2025-12-16T12:33:25+00:00"
         },
         {
             "name": "spryker-feature/product-options",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/product-options.git",
@@ -12754,6 +12817,7 @@
             "suggest": {
                 "spryker-feature/product": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -12766,13 +12830,13 @@
             ],
             "description": "Product Options [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/product-options/tree/202512.0"
+                "source": "https://github.com/spryker-feature/product-options/tree/master"
             },
             "time": "2025-12-16T12:26:21+00:00"
         },
         {
             "name": "spryker-feature/product-rating-reviews",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/product-rating-reviews.git",
@@ -12792,6 +12856,7 @@
                 "spryker/product-review-search": "^1.14.0",
                 "spryker/product-review-storage": "^1.7.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -12804,13 +12869,13 @@
             ],
             "description": "Product Rating & Reviews [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/product-rating-reviews/tree/202512.0"
+                "source": "https://github.com/spryker-feature/product-rating-reviews/tree/master"
             },
             "time": "2025-12-16T12:12:50+00:00"
         },
         {
             "name": "spryker-feature/product-relations",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/product-relations.git",
@@ -12833,6 +12898,7 @@
             "suggest": {
                 "spryker-feature/product": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -12845,13 +12911,13 @@
             ],
             "description": "Product Relations [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/product-relations/tree/202512.0"
+                "source": "https://github.com/spryker-feature/product-relations/tree/master"
             },
             "time": "2025-12-16T12:12:46+00:00"
         },
         {
             "name": "spryker-feature/product-sets",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/product-sets.git",
@@ -12876,6 +12942,7 @@
             "suggest": {
                 "spryker-feature/product": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -12888,13 +12955,13 @@
             ],
             "description": "Product Sets [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/product-sets/tree/202512.0"
+                "source": "https://github.com/spryker-feature/product-sets/tree/master"
             },
             "time": "2025-12-16T12:12:52+00:00"
         },
         {
             "name": "spryker-feature/promotions-discounts",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/promotions-discounts.git",
@@ -12915,6 +12982,7 @@
                 "spryker/discount": "^9.51.0",
                 "spryker/discount-promotion": "^4.15.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -12927,13 +12995,13 @@
             ],
             "description": "Promotions & Discounts [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/promotions-discounts/tree/202512.0"
+                "source": "https://github.com/spryker-feature/promotions-discounts/tree/master"
             },
             "time": "2025-12-16T12:20:23+00:00"
         },
         {
             "name": "spryker-feature/quick-add-to-cart",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/quick-add-to-cart.git",
@@ -12953,6 +13021,7 @@
             "suggest": {
                 "spryker-feature/cart": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -12965,7 +13034,7 @@
             ],
             "description": "Quick add to cart [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/quick-add-to-cart/tree/202512.0"
+                "source": "https://github.com/spryker-feature/quick-add-to-cart/tree/master"
             },
             "time": "2025-12-16T12:33:39+00:00"
         },
@@ -13020,7 +13089,7 @@
         },
         {
             "name": "spryker-feature/reclamations",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/reclamations.git",
@@ -13037,6 +13106,7 @@
                 "spryker/sales-reclamation": "^1.3.0",
                 "spryker/sales-reclamation-gui": "^2.0.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -13049,13 +13119,13 @@
             ],
             "description": "Reclamations [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/reclamations/tree/202512.0"
+                "source": "https://github.com/spryker-feature/reclamations/tree/master"
             },
             "time": "2025-12-16T12:26:35+00:00"
         },
         {
             "name": "spryker-feature/refunds",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/refunds.git",
@@ -13071,6 +13141,7 @@
                 "php": ">=8.2",
                 "spryker/refund": "^5.13.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -13083,13 +13154,13 @@
             ],
             "description": "Refunds [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/refunds/tree/202512.0"
+                "source": "https://github.com/spryker-feature/refunds/tree/master"
             },
             "time": "2025-12-16T12:26:32+00:00"
         },
         {
             "name": "spryker-feature/reorder",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/reorder.git",
@@ -13109,6 +13180,7 @@
             "suggest": {
                 "spryker-feature/cart": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -13121,13 +13193,13 @@
             ],
             "description": "Reorder [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/reorder/tree/202512.0"
+                "source": "https://github.com/spryker-feature/reorder/tree/master"
             },
             "time": "2025-12-16T12:12:20+00:00"
         },
         {
             "name": "spryker-feature/resource-sharing",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/resource-sharing.git",
@@ -13147,6 +13219,7 @@
             "suggest": {
                 "spryker-feature/customer-account-management": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -13159,13 +13232,13 @@
             ],
             "description": "Resource Sharing [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/resource-sharing/tree/202512.0"
+                "source": "https://github.com/spryker-feature/resource-sharing/tree/master"
             },
             "time": "2025-12-16T12:30:28+00:00"
         },
         {
             "name": "spryker-feature/return-management",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/return-management.git",
@@ -13188,6 +13261,7 @@
             "suggest": {
                 "spryker-feature/order-management": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -13200,13 +13274,13 @@
             ],
             "description": "Return Management [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/return-management/tree/202512.0"
+                "source": "https://github.com/spryker-feature/return-management/tree/master"
             },
             "time": "2025-12-16T12:26:42+00:00"
         },
         {
             "name": "spryker-feature/scheduled-prices",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/scheduled-prices.git",
@@ -13224,6 +13298,7 @@
                 "spryker/price-product-schedule-data-import": "^0.1.0",
                 "spryker/price-product-schedule-gui": "^3.0.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -13236,13 +13311,13 @@
             ],
             "description": "Scheduled Prices [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/scheduled-prices/tree/202512.0"
+                "source": "https://github.com/spryker-feature/scheduled-prices/tree/master"
             },
             "time": "2025-12-16T12:25:47+00:00"
         },
         {
             "name": "spryker-feature/search",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/search.git",
@@ -13262,6 +13337,7 @@
                 "spryker/search-elasticsearch-gui": "^2.0.0",
                 "spryker/search-http": "^0.5.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -13274,7 +13350,7 @@
             ],
             "description": "Search [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/search/tree/202512.0"
+                "source": "https://github.com/spryker-feature/search/tree/master"
             },
             "time": "2025-12-16T12:26:49+00:00"
         },
@@ -13440,7 +13516,7 @@
         },
         {
             "name": "spryker-feature/service-points",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/service-points.git",
@@ -13463,6 +13539,7 @@
                 "spryker/service-point-search": "^1.3.0",
                 "spryker/service-point-storage": "^1.1.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -13475,13 +13552,13 @@
             ],
             "description": "Service Points [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/service-points/tree/202512.0"
+                "source": "https://github.com/spryker-feature/service-points/tree/master"
             },
             "time": "2025-12-16T12:27:45+00:00"
         },
         {
             "name": "spryker-feature/service-points-cart",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/service-points-cart.git",
@@ -13501,6 +13578,7 @@
             "suggest": {
                 "spryker-feature/cart": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -13513,13 +13591,13 @@
             ],
             "description": "Service Points Cart [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/service-points-cart/tree/202512.0"
+                "source": "https://github.com/spryker-feature/service-points-cart/tree/master"
             },
             "time": "2025-12-16T12:27:48+00:00"
         },
         {
             "name": "spryker-feature/shared-carts",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/shared-carts.git",
@@ -13541,6 +13619,7 @@
             "suggest": {
                 "spryker-feature/cart": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -13553,13 +13632,13 @@
             ],
             "description": "Shared carts [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/shared-carts/tree/202512.0"
+                "source": "https://github.com/spryker-feature/shared-carts/tree/master"
             },
             "time": "2025-12-16T12:27:55+00:00"
         },
         {
             "name": "spryker-feature/shipment",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/shipment.git",
@@ -13583,6 +13662,7 @@
                 "spryker/shipment-type-data-import": "^0.2.0",
                 "spryker/shipment-type-storage": "^1.3.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -13595,13 +13675,13 @@
             ],
             "description": "Shipment [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/shipment/tree/202512.0"
+                "source": "https://github.com/spryker-feature/shipment/tree/master"
             },
             "time": "2025-12-16T12:26:46+00:00"
         },
         {
             "name": "spryker-feature/shipment-service-points",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/shipment-service-points.git",
@@ -13622,6 +13702,7 @@
             "suggest": {
                 "spryker-feature/service-points": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -13634,13 +13715,13 @@
             ],
             "description": "Shipment Service Points [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/shipment-service-points/tree/202512.0"
+                "source": "https://github.com/spryker-feature/shipment-service-points/tree/master"
             },
             "time": "2025-12-16T12:27:52+00:00"
         },
         {
             "name": "spryker-feature/shopping-lists",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/shopping-lists.git",
@@ -13671,6 +13752,7 @@
                 "spryker-feature/product": "Recommended feature dependency.",
                 "spryker-feature/spryker-core": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -13683,13 +13765,13 @@
             ],
             "description": "Shopping Lists [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/shopping-lists/tree/202512.0"
+                "source": "https://github.com/spryker-feature/shopping-lists/tree/master"
             },
             "time": "2025-12-16T12:30:34+00:00"
         },
         {
             "name": "spryker-feature/spryker-core",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/spryker-core.git",
@@ -13791,6 +13873,7 @@
                 "spryker/vault": "^1.4.0",
                 "spryker/zed-request": "^3.24.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -13803,13 +13886,13 @@
             ],
             "description": "Spryker Core [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/spryker-core/tree/202512.0"
+                "source": "https://github.com/spryker-feature/spryker-core/tree/master"
             },
             "time": "2025-12-16T12:12:33+00:00"
         },
         {
             "name": "spryker-feature/spryker-core-back-office",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/spryker-core-back-office.git",
@@ -13838,6 +13921,7 @@
                 "spryker/user-password-reset-mail": "^1.1.0",
                 "spryker/zed-navigation": "^1.14.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -13850,13 +13934,13 @@
             ],
             "description": "Spryker Core Back Office [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/spryker-core-back-office/tree/202512.0"
+                "source": "https://github.com/spryker-feature/spryker-core-back-office/tree/master"
             },
             "time": "2025-12-16T12:13:04+00:00"
         },
         {
             "name": "spryker-feature/state-machine",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/state-machine.git",
@@ -13872,6 +13956,7 @@
                 "php": ">=8.2",
                 "spryker/state-machine": "^2.23.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -13884,13 +13969,13 @@
             ],
             "description": "State Machine [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/state-machine/tree/202512.0"
+                "source": "https://github.com/spryker-feature/state-machine/tree/master"
             },
             "time": "2025-12-16T12:26:54+00:00"
         },
         {
             "name": "spryker-feature/tax",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/tax.git",
@@ -13908,6 +13993,7 @@
                 "spryker/tax-product-storage": "^1.6.0",
                 "spryker/tax-storage": "^1.6.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -13920,7 +14006,7 @@
             ],
             "description": "Tax [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/tax/tree/202512.0"
+                "source": "https://github.com/spryker-feature/tax/tree/master"
             },
             "time": "2025-12-16T12:26:27+00:00"
         },
@@ -89651,7 +89737,7 @@
         },
         {
             "name": "spryker-feature/development-tools",
-            "version": "202512.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/development-tools.git",
@@ -89672,6 +89758,7 @@
                 "spryker/development": "^3.49.0",
                 "spryker/web-profiler": "^1.6.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -89684,7 +89771,7 @@
             ],
             "description": "Development tools [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/development-tools/tree/202512.0"
+                "source": "https://github.com/spryker-feature/development-tools/tree/master"
             },
             "time": "2025-12-16T12:31:18+00:00"
         },
@@ -91038,155 +91125,764 @@
     ],
     "aliases": [
         {
+            "package": "spryker-feature/acl",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/agent-assist",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/alternative-products",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/analytics",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/approval-process",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/availability-notification",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
             "package": "spryker-feature/buy-box",
             "version": "9999999-dev",
-            "alias": "202512.0",
-            "alias_normalized": "202512.0"
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
         },
         {
             "package": "spryker-feature/cart",
             "version": "9999999-dev",
-            "alias": "202512.0",
-            "alias_normalized": "202512.0"
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/catalog",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
         },
         {
             "package": "spryker-feature/category-management",
             "version": "9999999-dev",
-            "alias": "202512.0",
-            "alias_normalized": "202512.0"
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/checkout",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/cms",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/comments",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/company-account",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/configurable-bundle",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/configurable-product",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/configurable-product-shopping-lists",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/customer-access",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/customer-account-management",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/data-exchange-api",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/deployment-tools",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/development-tools",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/file-manager",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
         },
         {
             "package": "spryker-feature/inventory-management",
             "version": "9999999-dev",
-            "alias": "202512.0",
-            "alias_normalized": "202512.0"
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/invoice",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/mailing-notifications",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/marketplace-agent-assist",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/marketplace-cart",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
         },
         {
             "package": "spryker-feature/marketplace-comments",
             "version": "9999999-dev",
-            "alias": "202512.0",
-            "alias_normalized": "202512.0"
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
         },
         {
             "package": "spryker-feature/marketplace-inventory-management",
             "version": "9999999-dev",
-            "alias": "202512.0",
-            "alias_normalized": "202512.0"
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/marketplace-merchant",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/marketplace-merchant-commission",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
         },
         {
             "package": "spryker-feature/marketplace-merchant-contract-requests",
             "version": "9999999-dev",
-            "alias": "202512.0",
-            "alias_normalized": "202512.0"
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
         },
         {
             "package": "spryker-feature/marketplace-merchant-contracts",
             "version": "9999999-dev",
-            "alias": "202512.0",
-            "alias_normalized": "202512.0"
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
         },
         {
             "package": "spryker-feature/marketplace-merchant-custom-prices",
             "version": "9999999-dev",
-            "alias": "202512.0",
-            "alias_normalized": "202512.0"
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/marketplace-merchant-order-threshold",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
         },
         {
             "package": "spryker-feature/marketplace-merchant-portal-product-management",
             "version": "9999999-dev",
-            "alias": "202512.0",
-            "alias_normalized": "202512.0"
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
         },
         {
             "package": "spryker-feature/marketplace-merchant-portal-product-offer-management",
             "version": "9999999-dev",
-            "alias": "202512.0",
-            "alias_normalized": "202512.0"
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
         },
         {
             "package": "spryker-feature/marketplace-merchant-portal-product-offer-service-points",
             "version": "9999999-dev",
-            "alias": "202512.0",
-            "alias_normalized": "202512.0"
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
         },
         {
             "package": "spryker-feature/marketplace-merchant-portal-product-offer-shipment",
             "version": "9999999-dev",
-            "alias": "202512.0",
-            "alias_normalized": "202512.0"
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
         },
         {
             "package": "spryker-feature/marketplace-merchantportal-core",
             "version": "9999999-dev",
-            "alias": "202512.0",
-            "alias_normalized": "202512.0"
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/marketplace-order-management",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/marketplace-packaging-units",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
         },
         {
             "package": "spryker-feature/marketplace-product",
             "version": "9999999-dev",
-            "alias": "202512.0",
-            "alias_normalized": "202512.0"
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/marketplace-product-approval-process",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
         },
         {
             "package": "spryker-feature/marketplace-product-offer",
             "version": "9999999-dev",
-            "alias": "202512.0",
-            "alias_normalized": "202512.0"
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/marketplace-product-offer-prices",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/marketplace-product-options",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/marketplace-promotions-discounts",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/marketplace-return-management",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/marketplace-shipment",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/marketplace-shopping-lists",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
         },
         {
             "package": "spryker-feature/measurement-units",
             "version": "9999999-dev",
-            "alias": "202512.0",
-            "alias_normalized": "202512.0"
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/merchant",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/merchant-category",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/merchant-contract-requests",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/merchant-contracts",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/merchant-custom-prices",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/merchant-opening-hours",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/merchant-order-threshold",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
         },
         {
             "package": "spryker-feature/merchant-portal-data-import",
             "version": "9999999-dev",
-            "alias": "202512.0",
-            "alias_normalized": "202512.0"
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/merchant-product-restrictions",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/multiple-carts",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/navigation",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/non-splittable-products",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/order-amendment",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/order-management",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/packaging-units",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/payments",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/persistent-cart-sharing",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/prices",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
         },
         {
             "package": "spryker-feature/product",
             "version": "9999999-dev",
-            "alias": "202512.0",
-            "alias_normalized": "202512.0"
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/product-approval-process",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/product-barcode",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/product-bundles",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/product-customer-restrictions",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/product-groups",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/product-labels",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/product-lists",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/product-offer-service-points",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/product-offer-service-points-availability",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/product-offer-shipment",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/product-offer-shipment-availability",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/product-options",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/product-rating-reviews",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/product-relations",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/product-sets",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/promotions-discounts",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/quick-add-to-cart",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
         },
         {
             "package": "spryker-feature/quotation-process",
             "version": "9999999-dev",
-            "alias": "202512.0",
-            "alias_normalized": "202512.0"
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/reclamations",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/refunds",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/reorder",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/resource-sharing",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/return-management",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/scheduled-prices",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/search",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
         },
         {
             "package": "spryker-feature/self-service-portal",
             "version": "9999999-dev",
-            "alias": "202512.0",
-            "alias_normalized": "202512.0"
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/service-points",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/service-points-cart",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/shared-carts",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/shipment",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/shipment-service-points",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/shopping-lists",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/spryker-core",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/spryker-core-back-office",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/state-machine",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
+            "package": "spryker-feature/tax",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
         }
     ],
     "minimum-stability": "dev",
     "stability-flags": {
+        "spryker-feature/acl": 20,
+        "spryker-feature/agent-assist": 20,
+        "spryker-feature/alternative-products": 20,
+        "spryker-feature/analytics": 20,
+        "spryker-feature/approval-process": 20,
+        "spryker-feature/availability-notification": 20,
         "spryker-feature/buy-box": 20,
         "spryker-feature/cart": 20,
+        "spryker-feature/catalog": 20,
         "spryker-feature/category-management": 20,
+        "spryker-feature/checkout": 20,
+        "spryker-feature/cms": 20,
+        "spryker-feature/comments": 20,
+        "spryker-feature/company-account": 20,
+        "spryker-feature/configurable-bundle": 20,
+        "spryker-feature/configurable-product": 20,
+        "spryker-feature/configurable-product-shopping-lists": 20,
+        "spryker-feature/customer-access": 20,
+        "spryker-feature/customer-account-management": 20,
+        "spryker-feature/data-exchange-api": 20,
+        "spryker-feature/deployment-tools": 20,
+        "spryker-feature/development-tools": 20,
+        "spryker-feature/file-manager": 20,
         "spryker-feature/inventory-management": 20,
+        "spryker-feature/invoice": 20,
+        "spryker-feature/mailing-notifications": 20,
+        "spryker-feature/marketplace-agent-assist": 20,
+        "spryker-feature/marketplace-cart": 20,
         "spryker-feature/marketplace-comments": 20,
         "spryker-feature/marketplace-inventory-management": 20,
+        "spryker-feature/marketplace-merchant": 20,
+        "spryker-feature/marketplace-merchant-commission": 20,
         "spryker-feature/marketplace-merchant-contract-requests": 20,
         "spryker-feature/marketplace-merchant-contracts": 20,
         "spryker-feature/marketplace-merchant-custom-prices": 20,
+        "spryker-feature/marketplace-merchant-order-threshold": 20,
         "spryker-feature/marketplace-merchant-portal-product-management": 20,
         "spryker-feature/marketplace-merchant-portal-product-offer-management": 20,
         "spryker-feature/marketplace-merchant-portal-product-offer-service-points": 20,
         "spryker-feature/marketplace-merchant-portal-product-offer-shipment": 20,
         "spryker-feature/marketplace-merchantportal-core": 20,
+        "spryker-feature/marketplace-order-management": 20,
+        "spryker-feature/marketplace-packaging-units": 20,
         "spryker-feature/marketplace-product": 20,
+        "spryker-feature/marketplace-product-approval-process": 20,
         "spryker-feature/marketplace-product-offer": 20,
+        "spryker-feature/marketplace-product-offer-prices": 20,
+        "spryker-feature/marketplace-product-options": 20,
+        "spryker-feature/marketplace-promotions-discounts": 20,
+        "spryker-feature/marketplace-return-management": 20,
+        "spryker-feature/marketplace-shipment": 20,
+        "spryker-feature/marketplace-shopping-lists": 20,
         "spryker-feature/measurement-units": 20,
+        "spryker-feature/merchant": 20,
+        "spryker-feature/merchant-category": 20,
+        "spryker-feature/merchant-contract-requests": 20,
+        "spryker-feature/merchant-contracts": 20,
+        "spryker-feature/merchant-custom-prices": 20,
+        "spryker-feature/merchant-opening-hours": 20,
+        "spryker-feature/merchant-order-threshold": 20,
         "spryker-feature/merchant-portal-data-import": 20,
+        "spryker-feature/merchant-product-restrictions": 20,
+        "spryker-feature/multiple-carts": 20,
+        "spryker-feature/navigation": 20,
+        "spryker-feature/non-splittable-products": 20,
+        "spryker-feature/order-amendment": 20,
+        "spryker-feature/order-management": 20,
+        "spryker-feature/packaging-units": 20,
+        "spryker-feature/payments": 20,
+        "spryker-feature/persistent-cart-sharing": 20,
+        "spryker-feature/prices": 20,
         "spryker-feature/product": 20,
+        "spryker-feature/product-approval-process": 20,
+        "spryker-feature/product-barcode": 20,
+        "spryker-feature/product-bundles": 20,
+        "spryker-feature/product-customer-restrictions": 20,
+        "spryker-feature/product-groups": 20,
+        "spryker-feature/product-labels": 20,
+        "spryker-feature/product-lists": 20,
+        "spryker-feature/product-offer-service-points": 20,
+        "spryker-feature/product-offer-service-points-availability": 20,
+        "spryker-feature/product-offer-shipment": 20,
+        "spryker-feature/product-offer-shipment-availability": 20,
+        "spryker-feature/product-options": 20,
+        "spryker-feature/product-rating-reviews": 20,
+        "spryker-feature/product-relations": 20,
+        "spryker-feature/product-sets": 20,
+        "spryker-feature/promotions-discounts": 20,
+        "spryker-feature/quick-add-to-cart": 20,
         "spryker-feature/quotation-process": 20,
+        "spryker-feature/reclamations": 20,
+        "spryker-feature/refunds": 20,
+        "spryker-feature/reorder": 20,
+        "spryker-feature/resource-sharing": 20,
+        "spryker-feature/return-management": 20,
+        "spryker-feature/scheduled-prices": 20,
+        "spryker-feature/search": 20,
         "spryker-feature/self-service-portal": 20,
+        "spryker-feature/service-points": 20,
+        "spryker-feature/service-points-cart": 20,
+        "spryker-feature/shared-carts": 20,
+        "spryker-feature/shipment": 20,
+        "spryker-feature/shipment-service-points": 20,
+        "spryker-feature/shopping-lists": 20,
+        "spryker-feature/spryker-core": 20,
+        "spryker-feature/spryker-core-back-office": 20,
+        "spryker-feature/state-machine": 20,
+        "spryker-feature/tax": 20,
         "spryker/cypress-tests": 20,
         "spryker/docker-chromedriver": 20,
         "spryker/robotframework-suite-tests": 20
