@@ -1,0 +1,130 @@
+# SD-000: Solution Design Title
+
+## Metadata
+
+| Field | Value |
+|-------|-------|
+| **Status** | [Draft / In Review / Approved / Implemented / Superseded] |
+| **Date** | YYYY-MM-DD |
+| **Author(s)** | Name(s) |
+| **Stakeholders** | Team/role names |
+
+## Problem Statement
+
+What problem are we solving? What are the business or technical drivers? Why is this needed now?
+
+## Goals & Requirements
+
+What must this solution achieve?
+
+### Functional Requirements
+- Requirement 1
+- Requirement 2
+
+### Non-Functional Requirements
+- Performance: [specific metrics]
+- Scalability: [specific requirements]
+- Security: [specific requirements]
+
+### Constraints
+- Technical constraints (existing systems, technology choices)
+- Business constraints (budget, timeline, resources)
+- Regulatory/compliance requirements
+
+## Proposed Solution
+
+### Overview
+
+High-level description of the proposed solution approach.
+
+### Architecture
+
+[Include relevant diagrams: C4 diagrams, sequence diagrams, component diagrams, etc.]
+
+
+### Key Components
+
+| Component | Responsibility | Technology |
+|-----------|----------------|------------|
+| Component A | What it does | Tech stack |
+| Component B | What it does | Tech stack |
+
+### Integration Points
+
+- **Internal Modules**: Plugin contracts (e.g., PluginInterface), Facade method calls, Client usage
+- **External Systems**: REST API endpoints, webhooks, event streaming protocols (e.g., AMQP with RabbitMQ)
+- **Data Flows**: Message broker patterns (RabbitMQ publishers/subscribers), asynchronous processing
+
+### Data Model
+
+[If relevant, describe data structures, entities, relationships. In Spryker context, include:
+- **Database Schema**: Define Propel schema (`spy_*.schema.xml`) with table structure, columns, indexes, and behaviors
+- **Transfer Objects**: Document transfer definitions (`.transfer.xml`) that map to database entities
+- **Entity Relationships**: Show relationships between entities and transfer objects]
+
+## Implementation Plan
+
+### Phases
+
+1. **Phase 1**: Description
+2. **Phase 2**: Description
+3. **Phase 3**: Description
+
+### Dependencies
+
+- **Spryker Module Dependencies**: List modules this solution depends on (e.g., Log, Sales, Kernel)
+- **External System Dependencies**: Dependencies on external services/systems
+- **Prerequisites**: Code changes, database migrations, or other prerequisites that must be completed first
+
+### Rollout Strategy & Cost
+
+- **Approach**: Big bang / Phased / Feature flags
+- **Timeline**: Rollout schedule and milestones
+- **Estimated Effort**: Implementation cost/effort in team-days or story points
+- **Resources**: Team members and skills required
+- **Risk Mitigation**: Rollback plan and contingencies
+
+## Trade-offs & Considerations
+
+### Advantages
+- Benefit 1
+- Benefit 2
+
+### Disadvantages
+- Limitation 1
+- Limitation 2
+
+### Risks
+
+| Risk | Impact | Mitigation |
+|------|--------|------------|
+| Risk 1 | High/Medium/Low | How we address it |
+
+## Alternatives Considered
+
+### Alternative 1: [Name]
+- **Description**: Brief description
+- **Pros**: Advantages
+- **Cons**: Disadvantages
+- **Why not chosen**: Specific reason
+
+### Alternative 2: [Name]
+- **Description**: Brief description
+- **Pros**: Advantages
+- **Cons**: Disadvantages
+- **Why not chosen**: Specific reason
+
+## Open Questions
+
+- Question 1?
+- Question 2?
+
+## Related Documentation
+
+- **ADRs**: Link to related architecture decisions
+- **Other Solution Designs**: Link to related designs
+- **External References**: Links to RFCs, documentation, research
+
+---
+
+*Corresponds to [arc42 Section 4](https://docs.arc42.org/section-4/)*

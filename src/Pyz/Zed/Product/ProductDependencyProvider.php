@@ -24,6 +24,8 @@ use Spryker\Zed\Product\ProductDependencyProvider as SprykerProductDependencyPro
 use Spryker\Zed\ProductAlternativeGui\Communication\Plugin\Product\ProductConcretePluginUpdate as ProductAlternativeGuiProductConcretePluginUpdate;
 use Spryker\Zed\ProductApproval\Communication\Plugin\Product\ApprovalStatusProductConcreteMergerPlugin;
 use Spryker\Zed\ProductApproval\Communication\Plugin\Product\ProductApprovalProductAbstractPreCreatePlugin;
+use Spryker\Zed\ProductAttachment\Communication\Plugin\Product\ProductAttachmentProductAbstractAfterUpdatePlugin;
+use Spryker\Zed\ProductAttachment\Communication\Plugin\Product\ProductAttachmentProductAbstractPostCreatePlugin;
 use Spryker\Zed\ProductBundle\Communication\Plugin\Product\ProductBundleDeactivatorProductConcreteAfterUpdatePlugin;
 use Spryker\Zed\ProductBundle\Communication\Plugin\Product\ProductBundleProductConcreteAfterCreatePlugin;
 use Spryker\Zed\ProductBundle\Communication\Plugin\Product\ProductBundleProductConcreteAfterUpdatePlugin;
@@ -72,6 +74,7 @@ class ProductDependencyProvider extends SprykerProductDependencyProvider
             new ImageSetProductAbstractPostCreatePlugin(),
             new TaxSetProductAbstractPostCreatePlugin(),
             new PriceProductAbstractPostCreatePlugin(),
+            new ProductAttachmentProductAbstractPostCreatePlugin(),
         ];
     }
 
@@ -106,6 +109,7 @@ class ProductDependencyProvider extends SprykerProductDependencyProvider
             new ImageSetProductAbstractAfterUpdatePlugin(),
             new TaxSetProductAbstractAfterUpdatePlugin(),
             new PriceProductAbstractAfterUpdatePlugin(),
+            new ProductAttachmentProductAbstractAfterUpdatePlugin(),
         ];
     }
 

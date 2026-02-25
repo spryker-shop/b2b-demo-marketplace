@@ -39,6 +39,10 @@ use Spryker\Zed\ProductApprovalGui\Communication\Plugin\ProductManagement\Produc
 use Spryker\Zed\ProductApprovalGui\Communication\Plugin\ProductManagement\ProductApprovalProductTableConfigurationExpanderPlugin;
 use Spryker\Zed\ProductApprovalGui\Communication\Plugin\ProductManagement\ProductApprovalProductTableDataBulkExpanderPlugin;
 use Spryker\Zed\ProductApprovalGui\Communication\Plugin\ProductManagement\ProductApprovalProductTableQueryCriteriaExpanderPlugin;
+use Spryker\Zed\ProductAttachment\Communication\Plugin\ProductManagement\ProductAttachmentImageTabContentProviderPlugin;
+use Spryker\Zed\ProductAttachment\Communication\Plugin\ProductManagement\ProductAttachmentProductAbstractFormDataProviderExpanderPlugin;
+use Spryker\Zed\ProductAttachment\Communication\Plugin\ProductManagement\ProductAttachmentProductAbstractFormExpanderPlugin;
+use Spryker\Zed\ProductAttachment\Communication\Plugin\ProductManagement\ProductAttachmentProductAbstractTransferMapperPlugin;
 use Spryker\Zed\ProductConfigurationGui\Communication\Plugin\ProductManagement\ProductConfigurationProductTableDataBulkExpanderPlugin;
 use Spryker\Zed\ProductDiscontinuedGui\Communication\Plugin\DiscontinuedNotesProductFormTransferMapperExpanderPlugin;
 use Spryker\Zed\ProductDiscontinuedGui\Communication\Plugin\DiscontinuedProductConcreteEditFormExpanderPlugin;
@@ -145,6 +149,7 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
     {
         return [
             new MerchantRelationshipProductAbstractFormExpanderPlugin(),
+            new ProductAttachmentProductAbstractFormExpanderPlugin(),
         ];
     }
 
@@ -282,6 +287,30 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
             new IsSearchableForLocaleConcreteProductReadinessProviderPlugin(),
             new StorageTablePriceProductConcreteReadinessProviderPlugin(),
             new StorageTableProductConcreteReadinessProviderPlugin(),
+        ];
+    }
+
+    protected function getProductAbstractTransferMapperPlugins(): array
+    {
+        return [
+            new ProductAttachmentProductAbstractTransferMapperPlugin(),
+        ];
+    }
+
+    protected function getProductAbstractFormDataProviderExpanderPlugins(): array
+    {
+        return [
+            new ProductAttachmentProductAbstractFormDataProviderExpanderPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormTabContentProviderPluginInterface>
+     */
+    protected function getProductAbstractFormTabContentProviderPlugins(): array
+    {
+        return [
+            new ProductAttachmentImageTabContentProviderPlugin(),
         ];
     }
 }

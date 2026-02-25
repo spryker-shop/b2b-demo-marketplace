@@ -13,6 +13,7 @@ use Spryker\Client\MerchantProductStorage\Plugin\ProductOfferStorage\MerchantPro
 use Spryker\Client\MerchantStorage\Plugin\ProductOfferStorage\MerchantProductOfferStorageExpanderPlugin;
 use Spryker\Client\PriceProductOfferStorage\Plugin\ProductOfferStorage\LowestPriceProductOfferStorageCollectionSorterPlugin;
 use Spryker\Client\PriceProductOfferStorage\Plugin\ProductOfferStorage\PriceProductOfferStorageExpanderPlugin;
+use Spryker\Client\ProductOfferAvailabilityStorage\Plugin\ProductOfferStorage\ProductOfferAvailabilityProductOfferStorageBulkExpanderPlugin;
 use Spryker\Client\ProductOfferServicePointStorage\Plugin\ProductOfferStorage\ServiceProductOfferStorageExpanderPlugin;
 use Spryker\Client\ProductOfferShipmentTypeStorage\Plugin\ProductOfferStorage\ShipmentTypeProductOfferStorageExpanderPlugin;
 use Spryker\Client\ProductOfferStorage\Plugin\ProductOfferStorage\DefaultProductOfferReferenceStrategyPlugin;
@@ -63,6 +64,16 @@ class ProductOfferStorageDependencyProvider extends SprykerProductOfferStorageDe
     {
         return [
             new ShipmentTypeServicePointProductOfferStorageFilterPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Client\ProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageBulkExpanderPluginInterface>
+     */
+    protected function getProductOfferStorageBulkExpanderPlugins(): array
+    {
+        return [
+            new ProductOfferAvailabilityProductOfferStorageBulkExpanderPlugin(),
         ];
     }
 }
