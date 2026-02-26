@@ -55,9 +55,6 @@ use Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\PaginatedResultFor
 use Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\SortedResultFormatterPlugin;
 use Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\SpellingSuggestionResultFormatterPlugin;
 use Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\SuggestionByTypeResultFormatterPlugin;
-use Spryker\Client\SearchHttp\Plugin\Catalog\Query\ProductConcreteSearchHttpQueryPlugin;
-use Spryker\Client\SearchHttp\Plugin\Catalog\Query\SearchHttpQueryPlugin;
-use Spryker\Client\SearchHttp\Plugin\Catalog\Query\SuggestionSearchHttpQueryPlugin;
 use Spryker\Client\SearchHttp\Plugin\Catalog\QueryExpander\BasicSearchHttpQueryExpanderPlugin;
 use Spryker\Client\SearchHttp\Plugin\Catalog\QueryExpander\FacetSearchHttpQueryExpanderPlugin;
 use Spryker\Client\SearchHttp\Plugin\Catalog\ResultFormatter\CompletionSearchHttpResultFormatterPlugin;
@@ -70,6 +67,9 @@ use Spryker\Client\SearchHttp\Plugin\Catalog\ResultFormatter\SpellingSuggestionS
 use Spryker\Client\SearchHttp\Plugin\Search\ProductConcreteCatalogSearchHttpResultFormatterPlugin;
 use Spryker\Client\SearchHttp\Plugin\Search\SearchHttpSearchResultCountPlugin;
 use Spryker\Shared\SearchHttp\SearchHttpConfig;
+use SprykerEco\Client\Algolia\Plugin\Search\AlgoliaProductConcreteSearchQueryPlugin;
+use SprykerEco\Client\Algolia\Plugin\Search\AlgoliaSearchQueryPlugin;
+use SprykerEco\Client\Algolia\Plugin\Search\AlgoliaSuggestionSearchQueryPlugin;
 use SprykerFeature\Client\SelfServicePortal\Plugin\Catalog\ProductClassFacetConfigTransferBuilderPlugin;
 use SprykerFeature\Client\SelfServicePortal\Plugin\Catalog\SspAssetQueryExpanderPlugin;
 
@@ -257,7 +257,7 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
     protected function createCatalogSearchQueryPluginVariants(): array
     {
         return [
-            new SearchHttpQueryPlugin(),
+            new AlgoliaSearchQueryPlugin(),
         ];
     }
 
@@ -269,7 +269,7 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
     protected function createSuggestionQueryPluginVariants(): array
     {
         return [
-            new SuggestionSearchHttpQueryPlugin(),
+            new AlgoliaSuggestionSearchQueryPlugin(),
         ];
     }
 
@@ -322,7 +322,7 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
     protected function createProductConcreteCatalogSearchQueryPluginVariants(): array
     {
         return [
-            new ProductConcreteSearchHttpQueryPlugin(),
+            new AlgoliaProductConcreteSearchQueryPlugin(),
         ];
     }
 

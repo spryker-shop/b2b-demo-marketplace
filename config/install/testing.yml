@@ -24,9 +24,6 @@ sections:
         provider-processor-glue-backend:
             command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue api:generate'
 
-        provider-processor-glue-storefront:
-            command: 'GLUE_APPLICATION=GLUE_STOREFRONT vendor/bin/glue api:generate'
-
     cache:
         router-cache-warmup-yves:
             command: 'vendor/bin/yves router:cache:warm-up'

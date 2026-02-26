@@ -13,7 +13,17 @@
 {% block salesReturnContent %}
     {% set contentWrapperClass = '' %}
 
-    {{ parent() }}
+    <div class="{{ contentWrapperClass }}">
+        {% block salesReturnContentInner %}
+            {{ parent() }}
+        {% endblock %}
+    </div>
+{% endblock %}
+
+{% block salesReturnContentEmptyMessage %}
+    {% block emptyState %}
+        {{ parent() }}
+    {% endblock %}
 {% endblock %}
 
 {% block salesReturnTableUnderline %}{% endblock %}
