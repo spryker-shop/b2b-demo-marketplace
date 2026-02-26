@@ -377,7 +377,6 @@
         "spryker/architecture-sniffer": "^0.5.9",
         "spryker/code-sniffer": "^0.17.31",
         "spryker/cypress-tests": "dev-master",
-        "spryker/docker-chromedriver": "dev-master",
         "spryker/profiler": "^0.1.3",
         "spryker/robotframework-suite-tests": "dev-master",
         "spryker/testify": "^3.63.1",
@@ -463,23 +462,9 @@
         }
     },
     "scripts": {
-        "compile": [
-            "mkdir -p ./data/DE/logs/ZED",
-            "echo '<?php return \"development-heroku\";' > config/Shared/console_env_local.php",
-            "./deploy/heroku/run.sh"
-        ],
-        "post-install-cmd": [
-            "ChromedriverInstaller\\Installer::installChromedriver"
-        ],
-        "post-update-cmd": [
-            "ChromedriverInstaller\\Installer::installChromedriver"
-        ],
         "phpstan": [
             "php -d memory_limit=1024M vendor/bin/phpstan analyze -c phpstan.neon src/ -l 6"
         ],
-        "phpstan-setup": "vendor/bin/console dev:ide-auto-completion:generate",
-        "prefer-mid": [
-            "COMPOSER_MEMORY_LIMIT=-1 composer require twig/twig:\"^2.9.0\""
-        ]
+        "phpstan-setup": "vendor/bin/console dev:ide-auto-completion:generate"
     }
 }
