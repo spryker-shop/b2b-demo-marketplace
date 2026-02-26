@@ -15,14 +15,10 @@ use Symfony\Config\SprykerApiPlatformConfig;
 return static function (SprykerApiPlatformConfig $sprykerApiPlatform): void {
     $sprykerApiPlatform->apiTypes(['storefront']);
 
-    // The following configuration is optional. By default, the source directories are set to 'src/Pyz'.
+    // The following configuration is optional. By default, the source directories are set to 'src/Spryker', 'src/SprykerFeature', and 'src/Pyz'.
     $sprykerApiPlatform->sourceDirectories([
+        'src/Spryker',
+        'src/SprykerFeature',
         'src/Pyz',
-        'vendor/spryker',
-        'vendor/spryker-shop',
-        'vendor/spryker-feature',
     ]);
-
-    //    $sprykerApiPlatform->generatedDir('src/Generated/Api');
-    //    $sprykerApiPlatform->cacheDir('%kernel.cache_dir%/api-generator');
 };

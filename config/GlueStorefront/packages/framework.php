@@ -19,5 +19,5 @@ return static function (FrameworkConfig $framework, string $env): void {
             'base_path' => '/assets',
         ]);
 
-    $framework->test($env === 'dockerdev');
+    $framework->test(in_array($env, ['dockerdev', 'dockerci'], true));
 };

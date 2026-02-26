@@ -10,6 +10,6 @@ use Symfony\Bundle\TwigBundle\TwigBundle;
 return [
     FrameworkBundle::class => ['all' => true],
     TwigBundle::class => ['all' => true],
-    ApiPlatformBundle::class => ['all' => true],
     SprykerApiPlatformBundle::class => ['all' => true],
+    ApiPlatformBundle::class => ['all' => true],
 ];
