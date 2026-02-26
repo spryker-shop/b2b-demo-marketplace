@@ -156,6 +156,9 @@ sections:
 
         update-product-labels:
             command: 'vendor/bin/console product-label:relations:update'
+        
+        trigger-events:
+            command: 'vendor/bin/console publish:trigger-events'
 
         publish-and-sync:
             command: 'vendor/bin/console queue:worker:start --stop-when-empty'
