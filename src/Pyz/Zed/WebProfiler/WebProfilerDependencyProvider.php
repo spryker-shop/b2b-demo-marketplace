@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\WebProfiler;
 
+use Spryker\Glue\Propel\Plugin\WebProfiler\WebProfilerPropelDataCollectorPlugin;
 use Spryker\Zed\Config\Communication\Plugin\WebProfiler\WebProfilerConfigDataCollectorPlugin;
 use Spryker\Zed\Profiler\Communication\Plugin\WebProfiler\WebProfilerProfilerDataCollectorPlugin;
 use Spryker\Zed\WebProfiler\Communication\Plugin\WebProfiler\WebProfilerAjaxDataCollectorPlugin;
@@ -42,6 +43,7 @@ class WebProfilerDependencyProvider extends SprykerWebProfilerDependencyProvider
             new WebProfilerMemoryDataCollectorPlugin(),
             new WebProfilerTimeDataCollectorPlugin(),
             new WebProfilerTwigDataCollectorPlugin(),
+            new WebProfilerPropelDataCollectorPlugin(),
         ];
 
         if (class_exists(WebProfilerProfilerDataCollectorPlugin::class)) {
