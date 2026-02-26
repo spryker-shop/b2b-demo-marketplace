@@ -922,6 +922,18 @@
             ],
             "success_messages": ["✓ Client RabbitMqConfig cleaned from marketplace-specific queue configurations"]
         },
+        "src/Pyz/Client/SymfonyMessenger/SymfonyMessengerConfig.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantOpeningHoursStorageConfig" },
+                {
+                    "type": "remove_array_constant_entry",
+                    "constant_reference": "MerchantOpeningHoursStorageConfig::MERCHANT_OPENING_HOURS_SYNC_STORAGE_QUEUE"
+                }
+            ],
+            "success_messages": [
+                "✓ Client SymfonyMessengerConfig cleaned from marketplace-specific queue configurations"
+            ]
+        },
         "src/Pyz/Client/Search/SearchDependencyProvider.php": {
             "operations": [
                 { "type": "remove_use", "class_name": "MerchantNameSearchConfigExpanderPlugin" },
@@ -1083,6 +1095,17 @@
                 }
             ],
             "success_messages": ["✓ Removed marketplace payment configuration from config_oms-development.php"]
+        },
+        "src/Pyz/Yves/ShopUi/Theme/default/components/molecules/product-item/product-item.twig": {
+            "operations": [
+                {
+                    "type": "regex_replace",
+                    "pattern": "\\n\\{%\\s*block\\s+ajaxAddToCart\\s*%\\}\\n\\{%\\s*endblock\\s*%\\}",
+                    "replacement": "",
+                    "flags": ""
+                }
+            ],
+            "success_messages": ["✓ Removed ajaxAddToCart block from product-item.twig"]
         }
     },
     "import_entities_to_remove": [
