@@ -518,7 +518,6 @@ jobs:
             -   name: Run project in Docker
                 run: |
                     git clone --depth 1 https://github.com/spryker/docker-sdk.git ./docker
-                    composer require --dev spryker/cypress-tests:"dev-b2b-icp-starting-point" --ignore-platform-reqs
                     ./uninstall-frontend-marketplace.sh
                     ./uninstall-marketplace-modules.sh
                     docker/sdk boot .github/deploy/deploy.ci.acceptance.mariadb.cypress.yml
