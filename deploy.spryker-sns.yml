@@ -31,31 +31,43 @@ x-frontend-auth: &frontend-auth
     auth:
         engine: basic
         users:
-            - username: CHANGE_ME # must be changed
-              password: CHANGE_ME # must be changed
+            - username: cloud
+              password: cloud
         exclude:
             - '${ALLOWED_IP}' # AWS gateway
             - 185.60.20.0/24 # PayOne
 
-namespace: example-staging # INIT_IMAGE_PREFIX
+namespace: spryker-cloud
 tag: '1.0'
 
-environment: docker
+environment: docker.dev
 image:
     tag: spryker/php:8.4
+    environment:
+        SPRYKER_DNS_RESOLVER_IP: '10.105.0.2'
+        SPRYKER_HOOK_BEFORE_DEPLOY: 'vendor/bin/install -r EU/pre-deploy -vvv'
+        SPRYKER_HOOK_AFTER_DEPLOY: 'true'
+        SPRYKER_HOOK_INSTALL: 'vendor/bin/install -r EU/production --no-ansi -vvv'
+        SPRYKER_HOOK_DESTRUCTIVE_INSTALL: 'vendor/bin/install -r destructive --no-ansi -vvv'
+        SPRYKER_PRODUCT_CONFIGURATOR_HOST: demo-date-time-configurator.sns.sh01.demo-spryker.com
+        SPRYKER_PRODUCT_CONFIGURATOR_PORT: 443
+        SPRYKER_PRODUCT_CONFIGURATOR_ENCRYPTION_KEY: 'change123'
+        SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR: '0c1ffefeebdab4a3d839d0e52590c9a2'
+        SPRYKER_YVES_HOST_EU: yves.eu.sns.sh01.demo-spryker.com
+        SPRYKER_YVES_HOST_US: yves.us.sns.sh01.demo-spryker.com
+        SPRYKER_DYNAMIC_STORE_MODE: true
     php:
         enabled-extensions:
             - otel
-            - amqp
-    environment:
-        SPRYKER_PRODUCT_CONFIGURATOR_HOST: date-time-configurator-example.cloud.spryker.toys
-        SPRYKER_PRODUCT_CONFIGURATOR_PORT: 443
-        SPRYKER_YVES_HOST_EU: eu.example.cloud.spryker.toys
-        SPRYKER_HOOK_BEFORE_DEPLOY: 'vendor/bin/install -r pre-deploy -vvv'
-        SPRYKER_HOOK_AFTER_DEPLOY: 'true'
-        SPRYKER_HOOK_INSTALL: 'vendor/bin/install -r dynamic-store --no-ansi -vvv'
-        SPRYKER_HOOK_DESTRUCTIVE_INSTALL: 'vendor/bin/install -r destructive --no-ansi -vvv'
-        SPRYKER_DYNAMIC_STORE_MODE: true
+        ini:
+            'opcache.revalidate_freq': 0
+            'opcache.enable_cli': 0
+            'opcache.enable': 0
+            'max_execution_time': 300
+            'request_terminate_timeout': 300
+            'upload_max_filesize': '100M'
+            'post_max_size': '100M'
+
     node:
         version: 24
         npm: 10
@@ -78,64 +90,80 @@ assets:
 regions:
     EU:
         services:
+            mail:
+                sender:
+                    name: Spryker No-Reply
+                    email: no-reply@sh01.spryker.toys
             database:
-                database: CHANGE_ME #Example: customer_staging
+                database: spryker_sns
                 username: spryker
                 password: secret
-
             broker:
-                namespace: eu_docker
+                namespace: eu-docker
             key_value_store:
                 namespace: 1
             search:
                 namespace: eu_search
+
 groups:
     EU:
         region: EU
         applications:
-            yves:
-                application: yves
-                endpoints:
-                    date-time-configurator-example.cloud.spryker.toys:
-                        entry-point: Configurator
-                    www.eu.example.cloud.spryker.toys:
-                        region: EU
-                        <<: *frontend-auth
-                    eu.example.cloud.spryker.toys:
-                        region: EU
-                        <<: *frontend-auth
-            boffice:
-                application: backoffice
-                endpoints:
-                    backoffice.eu.example.cloud.spryker.toys:
-                        region: EU
-                        primal: true
-            backgw:
-                application: backend-gateway
-                endpoints:
-                    backend-gateway.eu.example.cloud.spryker.toys:
-                        region: EU
-                        primal: true
-            glue:
-                application: glue
-                endpoints:
-                    glue.eu.example.cloud.spryker.toys:
-                        region: EU
             mportal:
                 application: merchant-portal
                 endpoints:
-                    mp.eu.example.cloud.spryker.toys:
+                    mp.eu.sns.sh01.demo-spryker.com:
                         entry-point: MerchantPortal
                         region: EU
                         primal: true
                         services:
                             session:
                                 namespace: 7
+            yves:
+                application: yves
+                endpoints:
+                    demo-date-time-configurator.sns.sh01.demo-spryker.com:
+                        entry-point: Configurator
+                    yves.eu.sns.sh01.demo-spryker.com:
+                        region: EU
+                        services:
+                            session:
+                                namespace: 1
+                http:
+                    max-request-body-size: 100M
+            boffice:
+                application: backoffice
+                endpoints:
+                    backoffice.eu.sns.sh01.demo-spryker.com:
+                        region: EU
+                        primal: true
+                        services:
+                            session:
+                                namespace: 3
+                http:
+                    max-request-body-size: 100M
+            backgw:
+                application: backend-gateway
+                endpoints:
+                    backend-gateway.eu.sns.sh01.demo-spryker.com:
+                        region: EU
+                        primal: true
+            glue:
+                application: glue
+                endpoints:
+                    glue.eu.sns.sh01.demo-spryker.com:
+                        cors-allow-origin: '*'
+                        region: EU
             gluebackend:
                 application: glue-backend
+                limits:
+                    request-terminate-timeout: 5m
+                http:
+                    timeout: 5m
                 endpoints:
-                    glue-backend.eu.example.cloud.spryker.toys:
+                    glue-backend.eu.sns.sh01.demo-spryker.com:
                         region: EU
+                        cors-allow-origin: '*'
 services:
     database:
         engine: mysql
@@ -153,7 +181,7 @@ services:
             username: 'spryker'
             password: 'secret'
         endpoints:
-            queue.example.cloud.spryker.toys:
+            queue.sns.sh01.demo-spryker.com:
             localhost:5672:
                 protocol: tcp
     session:
@@ -172,12 +200,15 @@ services:
     scheduler:
         engine: jenkins
         version: '2.516.3'
+        csrf-protection-enabled: true
         endpoints:
-            scheduler.example.cloud.spryker.toys:
+            scheduler.sns.sh01.demo-spryker.com:
     mail_catcher:
         engine: mailpit
         endpoints:
-            mail.example.cloud.spryker.toys:
+            mail.sns.sh01.demo-spryker.com:
+    webdriver:
+        engine: chromedriver
 
 docker:
     blackfire:
@@ -185,15 +216,14 @@ docker:
 
     ssl:
         enabled: true
-        redirect: true
+
+    testing:
+        store: EU
 
     debug:
         enabled: false
         xdebug:
             enabled: false
-
-    testing:
-        region: EU
 
     mount:
         baked:

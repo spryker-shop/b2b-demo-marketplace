@@ -112,7 +112,7 @@ jobs:
 
             -   uses: actions/setup-node@v4
                 with:
-                    node-version: '20'
+                    node-version: '24'
 
             -   name: Install NPM packages
                 run: |
@@ -134,7 +134,7 @@ jobs:
             -   name: Setup Node.js
                 uses: actions/setup-node@v5
                 with:
-                    node-version: '20'
+                    node-version: '24'
                     cache: 'npm'
 
             -   name: Install NPM packages
@@ -163,6 +163,7 @@ jobs:
                 if: always()
 
     php-84-mariadb-acceptance-alpine:
+        needs: [js-validation, validation]
         name: "Codeception / Acceptance & API"
         runs-on: ubuntu-latest
         env:
@@ -235,6 +236,7 @@ jobs:
                 if: always()
 
     php-84-mariadb-functional-alpine:
+        needs: [validation]
         name: "Codeception / Functional Tests"
         runs-on: ubuntu-latest
         env:
@@ -267,6 +269,7 @@ jobs:
                 if: always()
 
     docker-alpine-php-84-mariadb-robot-api:
+        needs: [validation]
         name: "Robot / API"
         runs-on: ubuntu-latest
         env:
@@ -400,6 +403,7 @@ jobs:
                 if: always()
 
     docker-alpine-php-84-mariadb-cypress:
+        needs: [js-validation, validation]
         name: "Cypress / UI"
         runs-on: ubuntu-latest
         env:
@@ -561,6 +565,7 @@ jobs:
                 if: always()
 
     docker-alpine-php-84-mariadb-robot-ui:
+        needs: [js-validation, validation]
         name: "Robot / UI"
         runs-on: ubuntu-latest
         env:
