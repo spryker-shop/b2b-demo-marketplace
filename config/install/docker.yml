@@ -71,6 +71,9 @@ sections:
 
         provider-processor-glue-backend:
             command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue api:generate'
+        
+        generate-transfer-databuilders:
+            command: 'vendor/bin/console transfer:databuilder:generate'
 
     build-production:
         excluded: true

@@ -160,4 +160,19 @@ class SymfonyMessengerConfig extends SprykerSymfonyMessengerConfig
             SelfServicePortalConfig::QUEUE_NAME_SYNC_SEARCH_SSP_ASSET,
         ];
     }
+
+    public function getQueueTransportConfiguration(): array
+    {
+        return [
+            'default' => [
+                'auto_setup' => false,
+                'persistent' => 'false',
+                'connect_timeout' => 3,
+                'read_timeout' => 130,
+                'write_timeout' => 130,
+                'heartbeat' => 1,
+                'rpc_timeout' => 0,
+            ],
+        ];
+    }
 }
