@@ -365,6 +365,7 @@ jobs:
                     ./uninstall-marketplace-modules.sh
                     docker/sdk boot .github/deploy/deploy.ci.api.mariadb.robot.yml
                     docker/sdk up -t
+                    docker/sdk cli composer dump-autoload -o -a --apcu -q
 
             -   name: Run Tests
                 id: tests
@@ -507,11 +508,15 @@ jobs:
                     sudo sysctl -w fs.file-max=262144
                     sudo sysctl -w vm.max_map_count=262144
                     ulimit -n 65536
+                    chmod +x uninstall-marketplace-modules.sh
+                    chmod +x uninstall-frontend-marketplace.sh
 
             -   name: Run project in Docker
                 run: |
                     git clone --depth 1 https://github.com/spryker/docker-sdk.git ./docker
                     composer require --dev spryker/cypress-tests:"dev-b2b-icp-starting-point" --ignore-platform-reqs
+                    ./uninstall-frontend-marketplace.sh
+                    ./uninstall-marketplace-modules.sh
                     docker/sdk boot .github/deploy/deploy.ci.acceptance.mariadb.cypress.yml
                     sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local' >> /etc/hosts"
                     docker/sdk up -t
