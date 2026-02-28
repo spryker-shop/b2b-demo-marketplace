@@ -28,14 +28,9 @@ StyleDictionary.registerTransform({
     type: 'name',
     transform: ({ path }) => {
         const p = path.map((s) => String(s).toLowerCase().replace(/\s+/g, '-'));
+        const parts = p[0] === 'primitives' || p[0] === 'typography' ? p.slice(1) : p;
 
-        if (p[0] === 'typography' && (p[1] === 'primitive' || p[1] === 'semantic') && p[2] === 'typography') {
-            return p[1] === 'primitive' ? ['typography', ...p.slice(3)].join('-') : p.slice(3).join('-');
-        }
-
-        if (p[0] === 'primitives' && p.length > 1) return p.slice(1).join('-');
-
-        return p.join('-');
+        return parts.join('-');
     },
 });
 
@@ -43,8 +38,7 @@ StyleDictionary.registerTransform({
     name: 'value/px-custom',
     type: 'value',
     filter: ({ value, type, path }) => {
-        if (typeof value !== 'number') return false;
-        if (type === 'color' || type === 'string') return false;
+        if (typeof value !== 'number' || type === 'color' || type === 'string') return false;
 
         const p = (path ?? []).join('.').toLowerCase();
         return !p.includes('weight') && !p.includes('letterspacing');
