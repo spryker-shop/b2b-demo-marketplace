@@ -23,6 +23,8 @@ use Spryker\Zed\User\UserDependencyProvider as SprykerUserDependencyProvider;
 use Spryker\Zed\UserLocale\Communication\Plugin\User\AssignUserLocalePreSavePlugin;
 use Spryker\Zed\UserLocale\Communication\Plugin\User\UserLocaleTransferExpanderPlugin;
 use Spryker\Zed\UserLocaleGui\Communication\Plugin\UserLocaleFormExpanderPlugin;
+use SprykerEco\Zed\AmazonQuicksight\Communication\Plugin\User\DeleteQuicksightUserPostUpdatePlugin;
+use SprykerEco\Zed\AmazonQuicksight\Communication\Plugin\User\QuicksightUserExpanderPlugin;
 
 class UserDependencyProvider extends SprykerUserDependencyProvider
 {
@@ -111,6 +113,26 @@ class UserDependencyProvider extends SprykerUserDependencyProvider
     {
         return [
             new MerchantAgentUserQueryCriteriaExpanderPlugin(),
+        ];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\UserExtension\Dependency\Plugin\UserExpanderPluginInterface>
+     */
+    protected function getUserExpanderPlugins(): array
+    {
+        return [
+            new QuicksightUserExpanderPlugin(),
+        ];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\UserExtension\Dependency\Plugin\UserPostUpdatePluginInterface>
+     */
+    protected function getUserPostUpdatePlugins(): array
+    {
+        return [
+            new DeleteQuicksightUserPostUpdatePlugin(),
         ];
     }
 }

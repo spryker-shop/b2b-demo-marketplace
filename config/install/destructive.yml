@@ -64,6 +64,8 @@ sections:
 
         check-product-validity:
             command: 'vendor/bin/console product:check-validity'
+        create-quicksight-users:
+            command: 'vendor/bin/console quicksight-user:sync:save'
 
     scheduler-start:
         trigger-events:
