@@ -22,7 +22,7 @@
 
     &:focus-visible {
         box-shadow: var(--shadows-focus-x) var(--shadows-focus-y) var(--shadows-focus-blur) var(--shadows-focus-spread)
-            var(--shadows-focus);
+            var(--shadows-focus-colour);
         outline: unset;
     }
 
@@ -95,23 +95,23 @@
 
     &--alert,
     &--destructive {
-        border-color: var(--background-semantic-error-bold);
-        background: var(--background-semantic-error-bold);
+        border-color: var(--background-state-error-bold);
+        background: var(--background-state-error-bold);
 
         &:hover {
-            border-color: var(--background-semantic-error);
-            background: var(--background-semantic-error-bold);
+            border-color: var(--background-state-error-bold);
+            background: var(--background-state-error-bold);
         }
 
         &:focus-visible {
             box-shadow: var(--shadows-focus-x) var(--shadows-focus-y) var(--shadows-focus-blur)
-                var(--shadows-focus-spread) var(--focus-colour-error);
+                var(--shadows-focus-spread) var(--background-state-error-subtle);
         }
 
         &:active,
         &:focus:not(:focus-visible) {
-            border-color: var(--background-semantic-error-bold);
-            background: var(--background-semantic-error-bold);
+            border-color: var(--background-state-error-bold);
+            background: var(--background-state-error-bold);
         }
     }
 

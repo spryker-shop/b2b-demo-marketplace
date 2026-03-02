@@ -2,35 +2,63 @@ const StyleDictionary = require('style-dictionary').default;
 const { join } = require('path');
 const { readFileSync, writeFileSync } = require('fs');
 
-const normalizeDTCG = (x) => {
+const normalizeTokens = (x, path = []) => {
     if (!x || typeof x !== 'object') return x;
 
-    if (x.$value !== undefined) {
-        let value = x.$value;
+    if (x.value !== undefined) {
+        let value = x.value;
+
         if (typeof value === 'string' && value.startsWith('{') && value.endsWith('}')) {
-            value = value.replace(/_/g, '-');
+            const refContent = value.slice(1, -1);
+
+            let normalizedRef = refContent;
+
+            if (!normalizedRef.includes('.')) {
+                normalizedRef = refContent;
+            } else if (refContent.startsWith('primitive.typography')) {
+                normalizedRef = `Typography.${refContent}`;
+            } else if (!refContent.startsWith('Primitives.') && !refContent.startsWith('Typography.')) {
+                normalizedRef = `Primitives.${refContent}`;
+            }
+
+            value = `{${normalizedRef}}`;
         }
 
-        return {
-            value,
-            ...(x.$type !== undefined && { type: x.$type }),
-            ...(x.$description !== undefined && { comment: x.$description }),
-        };
+        if (typeof value === 'object') {
+            return null;
+        }
+
+        return { ...x, value };
     }
 
-    return Object.fromEntries(
-        Object.entries(x).map(([k, v]) => [k, normalizeDTCG(v)])
-    );
+    const entries = Object.entries(x).map(([k, v]) => {
+        let normalizedKey = k;
+        const parts = k.split('/');
+        if (parts.length > 1) {
+            const secondPart = parts[1]?.toLowerCase();
+            if (secondPart?.startsWith('default') || secondPart?.startsWith('mode')) {
+                normalizedKey = parts[0];
+            }
+        }
+
+        const normalized = normalizeTokens(v, [...path, normalizedKey]);
+        return normalized === null ? null : [normalizedKey, normalized];
+    }).filter(Boolean);
+
+    return Object.fromEntries(entries);
 };
 
 StyleDictionary.registerTransform({
     name: 'name/kebab-custom',
     type: 'name',
     transform: ({ path }) => {
-        const p = path.map((s) => String(s).toLowerCase().replace(/\s+/g, '-'));
+        const p = path.map((s) => String(s).toLowerCase().replace(/\s+/g, '-').replace(/_/g, '-'));
         const parts = p[0] === 'primitives' || p[0] === 'typography' ? p.slice(1) : p;
 
-        return parts.join('-');
+        return parts.join('-')
+            .replace('semantic-colour-', '')
+            .replace('semantic-typography-', '')
+            .replace('semantic-', '');
     },
 });
 
@@ -57,7 +85,8 @@ const buildDesignTokens = async (appSettings) => {
     const cssFilePath = join(buildPath, 'design-tokens.css');
 
     const tokens = JSON.parse(readFileSync(sourceTokensPath, 'utf8'));
-    writeFileSync(tempTokensPath, JSON.stringify(normalizeDTCG(tokens), null, 2));
+    const normalized = normalizeTokens(tokens);
+    writeFileSync(tempTokensPath, JSON.stringify(normalized, null, 2));
 
     await new StyleDictionary({
         log: { verbosity: 'silent', warnings: 'disabled', errors: 'error' },
