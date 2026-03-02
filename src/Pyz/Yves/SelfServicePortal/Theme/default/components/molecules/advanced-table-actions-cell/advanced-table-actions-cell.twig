@@ -2,7 +2,7 @@
 
 {% block body %}
     {% include molecule('table-action-list') with {
-        modifiers: ['align-right'],
+        modifiers: data.config.modifiers ?? ['align-right'],
         data: {
             items: data.cell,
         },

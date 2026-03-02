@@ -80,12 +80,12 @@ MARKETPLACE_CORE_MODULES=(
 )
 
 echo "Step 1: Removing Marketplace Features..."
-composer remove --ignore-platform-req=ext-grpc --ignore-platform-req=ext-redis "${MARKETPLACE_FEATURES[@]}"
+composer remove --ignore-platform-req=ext-grpc --ignore-platform-req=ext-redis --ignore-platform-req=ext-amqp "${MARKETPLACE_FEATURES[@]}"
 echo "✓ Marketplace features marked for removal"
 echo ""
 
 echo "Step 2: Removing Marketplace Core Modules..."
-composer remove --ignore-platform-req=ext-grpc --ignore-platform-req=ext-redis "${MARKETPLACE_CORE_MODULES[@]}"
+composer remove --ignore-platform-req=ext-grpc --ignore-platform-req=ext-redis --ignore-platform-req=ext-amqp "${MARKETPLACE_CORE_MODULES[@]}"
 echo "✓ Marketplace core modules marked for removal"
 echo ""
 

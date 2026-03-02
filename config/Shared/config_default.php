@@ -34,7 +34,7 @@ use Pyz\Shared\Console\ConsoleConstants;
 use Pyz\Shared\Scheduler\SchedulerConfig;
 use Pyz\Yves\ShopApplication\YvesBootstrap;
 use Pyz\Zed\Application\Communication\ZedBootstrap;
-use Spryker\Client\RabbitMq\Model\RabbitMqAdapter;
+use Spryker\Client\SymfonyMessenger\Adapter\SymfonyMessengerQueueAdapter;
 use Spryker\Glue\Log\Plugin\GlueLoggerConfigPlugin;
 use Spryker\Glue\Log\Plugin\Log\GlueBackendSecurityAuditLoggerConfigPlugin;
 use Spryker\Glue\Log\Plugin\Log\GlueSecurityAuditLoggerConfigPlugin;
@@ -119,6 +119,7 @@ use Spryker\Shared\Sitemap\SitemapConstants;
 use Spryker\Shared\Storage\StorageConstants;
 use Spryker\Shared\StorageRedis\StorageRedisConstants;
 use Spryker\Shared\SymfonyMailer\SymfonyMailerConstants;
+use Spryker\Shared\SymfonyMessenger\SymfonyMessengerConstants;
 use Spryker\Shared\Synchronization\SynchronizationConstants;
 use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Shared\TaxApp\TaxAppConstants;
@@ -576,13 +577,13 @@ $config[QueueConstants::QUEUE_WORKER_FREE_MEMORY_BUFFER] = (int)getenv('QUEUE_WO
 $config[QueueConstants::QUEUE_WORKER_MEMORY_READ_PROCESS_TIMEOUT] = (int)getenv('QUEUE_WORKER_MEMORY_READ_PROCESS_TIMEOUT') ?: 5;
 $config[QueueConstants::QUEUE_ADAPTER_CONFIGURATION] = [
     EventConstants::EVENT_QUEUE => [
-        QueueConfig::CONFIG_QUEUE_ADAPTER => RabbitMqAdapter::class,
+        QueueConfig::CONFIG_QUEUE_ADAPTER => SymfonyMessengerQueueAdapter::class,
         QueueConfig::CONFIG_MAX_WORKER_NUMBER => 5,
     ],
 ];
 
 $config[QueueConstants::QUEUE_ADAPTER_CONFIGURATION_DEFAULT] = [
-    QueueConfig::CONFIG_QUEUE_ADAPTER => RabbitMqAdapter::class,
+    QueueConfig::CONFIG_QUEUE_ADAPTER => SymfonyMessengerQueueAdapter::class,
     QueueConfig::CONFIG_MAX_WORKER_NUMBER => 1,
 ];
 
@@ -618,6 +619,19 @@ foreach ($rabbitConnections as $key => $connection) {
         $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][constant(RabbitMqEnv::class . '::' . $constant)] = $value;
     }
     $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_DEFAULT_CONNECTION] = $key === $defaultKey;
+
+    if ($key !== $defaultKey) {
+        continue;
+    }
+
+    $config[SymfonyMessengerConstants::QUEUE_DSN] = sprintf(
+        'amqp://%s:%s@%s:%s/%s',
+        $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_USERNAME],
+        $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_PASSWORD],
+        $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_HOST],
+        $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_PORT],
+        $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_VIRTUAL_HOST],
+    );
 }
 
 // >>> SYNCHRONIZATION

@@ -65,6 +65,7 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Queue\QueueDependencyProvider as SprykerDependencyProvider;
 use Spryker\Zed\RabbitMq\Communication\Plugin\Queue\RabbitMqQueueMessageCheckerPlugin;
 use Spryker\Zed\RabbitMq\Communication\Plugin\Queue\RabbitMqQueueMetricsReaderPlugin;
+use Spryker\Zed\SymfonyMessenger\Communication\Plugin\Queue\SymfonyMessengerQueueMessageCheckerPlugin;
 use Spryker\Zed\Synchronization\Communication\Plugin\Queue\SynchronizationSearchQueueMessageProcessorPlugin;
 use Spryker\Zed\Synchronization\Communication\Plugin\Queue\SynchronizationStorageQueueMessageProcessorPlugin;
 use SprykerEco\Zed\Loggly\Communication\Plugin\LogglyLoggerQueueMessageProcessorPlugin;
@@ -151,6 +152,7 @@ class QueueDependencyProvider extends SprykerDependencyProvider
             parent::getQueueMessageCheckerPlugins(),
             [
                 new RabbitMqQueueMessageCheckerPlugin(),
+                new SymfonyMessengerQueueMessageCheckerPlugin(),
             ],
         );
     }
