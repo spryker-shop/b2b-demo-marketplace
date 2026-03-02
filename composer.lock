@@ -63579,16 +63579,16 @@
         },
         {
             "name": "spryker/propel",
-            "version": "3.48.0",
+            "version": "3.49.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/propel.git",
-                "reference": "c58cd2396c6a80efcf10dcbffaf44c8e4f9c335d"
+                "reference": "18dd1e0ff2a581b6d8062b681af904bb272fe513"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/propel/zipball/c58cd2396c6a80efcf10dcbffaf44c8e4f9c335d",
-                "reference": "c58cd2396c6a80efcf10dcbffaf44c8e4f9c335d",
+                "url": "https://api.github.com/repos/spryker/propel/zipball/18dd1e0ff2a581b6d8062b681af904bb272fe513",
+                "reference": "18dd1e0ff2a581b6d8062b681af904bb272fe513",
                 "shasum": ""
             },
             "require": {
@@ -63603,13 +63603,15 @@
                 "spryker/symfony": "^3.0.0",
                 "spryker/transfer": "^3.12.0",
                 "spryker/util-encoding": "^2.0.0",
-                "spryker/util-text": "^1.1.0"
+                "spryker/util-text": "^1.1.0",
+                "spryker/web-profiler-extension": "^1.0.0"
             },
             "require-dev": {
                 "spryker/code-sniffer": "*",
                 "spryker/console": "*",
                 "spryker/container": "*",
                 "spryker/laminas": "*",
+                "spryker/queue": "*",
                 "spryker/silex": "*",
                 "spryker/testify": "*"
             },
@@ -63635,9 +63637,9 @@
             ],
             "description": "Propel module",
             "support": {
-                "source": "https://github.com/spryker/propel/tree/3.48.0"
+                "source": "https://github.com/spryker/propel/tree/3.49.0"
             },
-            "time": "2025-10-06T10:15:34+00:00"
+            "time": "2026-02-26T15:39:26+00:00"
         },
         {
             "name": "spryker/propel-orm",
@@ -90113,7 +90115,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/cypress-tests.git",
-                "reference": "1641ec3691328053b4c1daf6cfde668288a1caba"
+                "reference": "9ced2eac6ab4a3f42f02ed28efdaa3ad1e35de7c"
             },
             "default-branch": true,
             "type": "spryker-test",
@@ -90121,7 +90123,7 @@
                 "MIT"
             ],
             "description": "This repository is dedicated to housing an extensive collection of UI end-to-end tests, meticulously crafted using Cypress for Spryker applications. These tests are designed to thoroughly evaluate the user interface, ensuring that all interactions and visual elements function as intended in real-world scenarios. By leveraging Cypress's advanced browser automation capabilities, this suite provides an efficient and effective means of validating the user experience, confirming the seamless operation and aesthetic integrity of Spryker's front-end components. Our commitment to rigorous UI testing helps maintain the high standard of quality and reliability that Spryker users expect.",
-            "time": "2026-02-24T13:56:37+00:00"
+            "time": "2026-02-27T11:40:27+00:00"
         },
         {
             "name": "spryker/development",
