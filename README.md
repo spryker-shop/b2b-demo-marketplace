@@ -131,7 +131,9 @@ You've set up your Spryker B2B Marketplace Demo Shop and can access your applica
 There are several testing frameworks integrated into this repository:
 
 - Codeception tests that are part of this repository are located in `tests` folder and you can adjust them as needed throughout the development of your project.
-- Robot Framework tests and Cypress tests that are used for testing of Spryker core features are located in separate repositories. They are integrated via `composer.json`. You should remove the mentions of `cypress-tests` and `robotframework-suite-tests` from `composer.json` unless you plan to re-use these tests on your project. Spryker does not guarantee these tests would work on a customized project.
+- Robot Framework tests and Cypress tests that are used for testing of Spryker core features are located in separate repositories. 
+- They are integrated via `composer.json`. You should remove the mentions of `spryker/cypress-tests` and `spryker/robotframework-suite-tests` from `composer.json` ("repositories" and "require-dev" sections) unless you plan to re-use these tests on your project.
+- Spryker does not guarantee these tests would work on a customized project.
 
 ## Troubleshooting installation of the B2B Marketplace Demo Shop
 
