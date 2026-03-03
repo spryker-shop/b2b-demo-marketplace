@@ -1,55 +1,59 @@
 @mixin shop-ui-input-extended($name: '.input') {
-    @include shop-ui-input($name) {
-        border-radius: $setting-border-radius;
-        color: $setting-color-gray-4;
-        font: fw(regular) rem(15) / rem(19) $setting-font-family;
-        padding: rem(14) rem(var(--space-6)) rem(13);
+    #{$name} {
+        @include helper-effect-transition(background-color border-color box-shadow color);
+        display: inline-flex;
+        height: rem(32);
+        padding: 0 var(--space-4);
+        justify-content: center;
+        align-items: center;
+        gap: var(--space-3);
+        width: 100%;
+        border-radius: var(--radius-sm);
+        border: var(--stroke-width-sm) solid var(--input-border-default);
+        background: var(--input-background-default);
+        color: var(--input-text-value);
+        font-size: var(--primitive-typography-size-12);
+        font-weight: var(--primitive-typography-font-weight-medium);
+        line-height: var(--primitive-typography-lh-16);
+        letter-spacing: var(--primitive-typography-letterspacing-normal);
 
-        &::placeholder {
-            color: $setting-color-gray-3;
-            opacity: 1;
+        &:hover {
+            border-color: var(--input-border-hover);
         }
 
-        &--small {
-            font-size: rem(var(--fontsize-1));
-            line-height: rem(18);
-            padding: rem(10) rem(var(--space-5));
+        &:focus {
+            border-color: var(--input-border-focus);
+            box-shadow: var(--shadows-focus-x) var(--shadows-focus-y) var(--shadows-focus-blur)
+                var(--shadows-focus-spread) var(--shadows-focus-colour);
         }
 
-        &--measurement-unit {
-            max-width: rem(90);
-            appearance: none;
-
-            &::-webkit-inner-spin-button,
-            &::-webkit-outer-spin-button {
-                appearance: none;
-                margin: 0;
-            }
+        &[invalid],
+        &--error {
+            border-color: var(--input-border-error);
         }
 
-        &--filter-range {
-            font-weight: fw(medium);
-            color: $setting-color-gray-4;
-            padding-right: rem(var(--space-7));
-            padding-left: rem(var(--space-3));
-
-            @include helper-breakpoint-media-min($md) {
-                padding-left: rem(var(--space-4));
-            }
+        &--disabled:hover,
+        &--disabled,
+        &[disabled]:hover,
+        &[disabled] {
+            color: var(--input-text-disabled);
+            border-color: var(--input-border-disabled);
+            background: var(--input-background-disabled);
+            cursor: not-allowed;
+            pointer-events: none;
         }
 
-        &--transparent[disabled] {
-            background-color: $setting-color-transparent;
+        &--readonly,
+        &[readonly] {
+            color: var(--input-text-value);
+            border-color: var(--input-border-default);
+            background: var(--input-background-disabled);
         }
 
-        &--inline {
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-            padding-left: rem(10);
-            padding-right: rem(10);
+        &--md {
+            height: rem(40);
+            padding: 0 var(--primitive-spacing-5);
         }
-
-        @content;
     }
 }
 
