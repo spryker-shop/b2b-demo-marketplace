@@ -59,9 +59,7 @@ StyleDictionary.registerTransform({
     name: 'name/kebab-custom',
     type: 'name',
     transform: ({ path }) => {
-        const p = (path ?? []).map((s) =>
-            String(s).toLowerCase().replace(/\s+/g, '-').replace(/_/g, '-'),
-        );
+        const p = (path ?? []).map((s) => String(s).toLowerCase().replace(/\s+/g, '-').replace(/_/g, '-'));
 
         const parts = p[0] === 'primitives' || p[0] === 'typography' ? p.slice(1) : p;
 
