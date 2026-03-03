@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable no-undef */
 const StyleDictionary = require('style-dictionary').default;
 const { join } = require('path');
 const { readFileSync, writeFileSync } = require('fs');
@@ -33,11 +35,9 @@ function normalizeKey(key) {
 function normalizeTokens(node) {
     if (!node || typeof node !== 'object') return node;
 
-    // leaf token
     if ('value' in node) {
         const value = normalizeRefString(node.value);
 
-        // drop composite tokens (object value)
         if (value && typeof value === 'object') return null;
 
         return { ...node, value };
@@ -118,8 +118,8 @@ const buildDesignTokens = async (appSettings) => {
         },
     }).buildAllPlatforms();
 
-    console.log(`Temp tokens saved at: ${tempTokensPath}`);
-    console.log(`Built design tokens CSS: ${cssFilePath}`);
+    console.info(`Temp tokens saved at: ${tempTokensPath}`);
+    console.info(`Built design tokens CSS: ${cssFilePath}`);
 
     return cssFilePath;
 };
