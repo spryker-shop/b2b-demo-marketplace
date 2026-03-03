@@ -89933,16 +89933,16 @@
         },
         {
             "name": "spryker-shop/web-profiler-widget",
-            "version": "1.4.3",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-shop/web-profiler-widget.git",
-                "reference": "00fa0e2477860012bfbda06f4c26636656556ceb"
+                "reference": "09c6df2da7dd86da37fccbde0f313bc71e8c3f23"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-shop/web-profiler-widget/zipball/00fa0e2477860012bfbda06f4c26636656556ceb",
-                "reference": "00fa0e2477860012bfbda06f4c26636656556ceb",
+                "url": "https://api.github.com/repos/spryker-shop/web-profiler-widget/zipball/09c6df2da7dd86da37fccbde0f313bc71e8c3f23",
+                "reference": "09c6df2da7dd86da37fccbde0f313bc71e8c3f23",
                 "shasum": ""
             },
             "require": {
@@ -89959,12 +89959,18 @@
                 "spryker/code-sniffer": "*",
                 "spryker/container": "*",
                 "spryker/event-dispatcher": "*",
-                "spryker/silex": "*"
+                "spryker/log": "*",
+                "spryker/monolog": "*",
+                "spryker/silex": "*",
+                "symfony/monolog-bridge": "*"
             },
             "suggest": {
                 "spryker/container": "Add this module when using plugins from this module.",
                 "spryker/event-dispatcher": "Add this module when using plugins from this module.",
-                "spryker/silex": "Add this module when using plugins that need Silex dependencies."
+                "spryker/log": "Add this module when using WebProfilerLoggerDataCollectorPlugin from this module.",
+                "spryker/monolog": "Add this module when using WebProfilerLoggerDataCollectorPlugin from this module.",
+                "spryker/silex": "Add this module when using plugins that need Silex dependencies.",
+                "symfony/monolog-bridge": "Add this module when using WebProfilerLoggerDataCollectorPlugin from this module."
             },
             "type": "library",
             "extra": {
@@ -89983,9 +89989,9 @@
             ],
             "description": "WebProfilerWidget module",
             "support": {
-                "source": "https://github.com/spryker-shop/web-profiler-widget/tree/1.4.3"
+                "source": "https://github.com/spryker-shop/web-profiler-widget/tree/1.5.0"
             },
-            "time": "2025-12-05T13:05:44+00:00"
+            "time": "2026-03-03T11:38:10+00:00"
         },
         {
             "name": "spryker/architecture-sniffer",
@@ -90397,16 +90403,16 @@
         },
         {
             "name": "spryker/web-profiler",
-            "version": "1.7.0",
+            "version": "1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/web-profiler.git",
-                "reference": "e9f1d0f18412c5a0ab5eb1bfa85dd6846c43d9bf"
+                "reference": "3d8f889f63bd94c0880ceca20c3ce9164604dc96"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/web-profiler/zipball/e9f1d0f18412c5a0ab5eb1bfa85dd6846c43d9bf",
-                "reference": "e9f1d0f18412c5a0ab5eb1bfa85dd6846c43d9bf",
+                "url": "https://api.github.com/repos/spryker/web-profiler/zipball/3d8f889f63bd94c0880ceca20c3ce9164604dc96",
+                "reference": "3d8f889f63bd94c0880ceca20c3ce9164604dc96",
                 "shasum": ""
             },
             "require": {
@@ -90425,13 +90431,19 @@
                 "spryker/config": "^3.0.0",
                 "spryker/container": "*",
                 "spryker/event-dispatcher": "*",
-                "spryker/silex": "*"
+                "spryker/log": "*",
+                "spryker/monolog": "*",
+                "spryker/silex": "*",
+                "symfony/monolog-bridge": "*"
             },
             "suggest": {
                 "spryker/config": "If you want to use ServiceProvider plugins.",
                 "spryker/container": "If you want to use the Router module.",
                 "spryker/event-dispatcher": "If you want to use the EventDispatcher module.",
-                "spryker/silex": "If you want to use ServiceProvider plugins."
+                "spryker/log": "Add this module when using WebProfilerLoggerDataCollectorPlugin from this module.",
+                "spryker/monolog": "Add this module when using WebProfilerLoggerDataCollectorPlugin from this module.",
+                "spryker/silex": "If you want to use ServiceProvider plugins.",
+                "symfony/monolog-bridge": "Add this module when using WebProfilerLoggerDataCollectorPlugin from this module."
             },
             "type": "library",
             "extra": {
@@ -90450,9 +90462,9 @@
             ],
             "description": "WebProfiler module",
             "support": {
-                "source": "https://github.com/spryker/web-profiler/tree/1.7.0"
+                "source": "https://github.com/spryker/web-profiler/tree/1.8.0"
             },
-            "time": "2026-01-05T10:24:28+00:00"
+            "time": "2026-03-03T11:38:10+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -91005,5 +91017,5 @@
     "platform-overrides": {
         "php": "8.3.13"
     },
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.6.0"
 }
