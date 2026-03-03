@@ -57,6 +57,7 @@ image:
     php:
         enabled-extensions:
             - otel
+            - amqp
         ini:
             'opcache.revalidate_freq': 0
             'opcache.enable_cli': 0
@@ -96,7 +97,7 @@ regions:
             broker:
                 namespace: eu-docker
             key_value_store:
-                namespace: 1
+                namespace: 461
             search:
                 namespace: eu_search
 
@@ -113,7 +114,7 @@ groups:
                         primal: true
                         services:
                             session:
-                                namespace: 7
+                                namespace: 467
             yves:
                 application: yves
                 endpoints:
@@ -123,7 +124,7 @@ groups:
                         region: EU
                         services:
                             session:
-                                namespace: 1
+                                namespace: 461
                 http:
                     max-request-body-size: 100M
             boffice:
@@ -134,7 +135,7 @@ groups:
                         primal: true
                         services:
                             session:
-                                namespace: 3
+                                namespace: 463
                 http:
                     max-request-body-size: 100M
             backgw:
