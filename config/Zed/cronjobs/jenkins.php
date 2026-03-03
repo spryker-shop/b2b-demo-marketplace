@@ -14,13 +14,13 @@ $logger = '';
 
 $jobs[] = [
     'name' => 'consume-queue',
-    'command' => $logger . '$PHP_BIN vendor/bin/console symfonymessenger:consume compiled-cron-scheduler --time-limit=3600',
+    'command' => $logger . '$PHP_BIN vendor/bin/console symfonymessenger:consume queue-worker-start --time-limit=600',
     'schedule' => '* * * * *',
     'enable' => true,
 ];
 $jobs[] = [
     'name' => 'consume-other-cron-jobs',
-    'command' => $logger . '$PHP_BIN vendor/bin/console symfonymessenger:consume compiled-cron-scheduler --time-limit=3600 --exclude-from-group=queue-worker-start',
+    'command' => $logger . '$PHP_BIN vendor/bin/console symfonymessenger:consume compiled-cron-scheduler --time-limit=600 --exclude-from-group=queue-worker-start',
     'schedule' => '* * * * *',
     'enable' => true,
 ];
