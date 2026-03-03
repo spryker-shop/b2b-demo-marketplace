@@ -44,11 +44,6 @@
         {% endif %}
     </select>
     {% block caret %}
-        {% include atom('icon') with {
-            class: config.name ~ '__caret',
-            data: {
-                name: 'caret-down'
-            }
-        } only %}
+        <span class="{{ config.name }}__caret material-symbols-outlined">arrow_forward_ios</span>
     {% endblock %}
 {% endblock %}

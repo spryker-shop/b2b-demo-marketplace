@@ -1,29 +1,59 @@
+@mixin base-input-styles {
+    display: inline-flex;
+    width: 100%;
+    height: rem(32);
+    padding: rem(6) var(--space-7) rem(6) var(--space-4);
+    align-items: center;
+    gap: var(--space-3);
+    color: var(--input-text-value);
+    border-radius: var(--radius-sm);
+    border: var(--stroke-width-sm) solid var(--input-border-default);
+    background: var(--input-background-default);
+    font-size: var(--primitive-typography-size-12);
+    font-weight: var(--primitive-typography-font-weight-medium);
+    line-height: var(--primitive-typography-lh-16);
+    letter-spacing: var(--primitive-typography-letterspacing-normal);
+    appearance: none;
+
+    &:hover {
+        border-color: var(--input-border-hover);
+    }
+
+    &:focus {
+        border-color: var(--input-border-focus);
+        box-shadow: var(--shadows-focus-x) var(--shadows-focus-y) var(--shadows-focus-blur) var(--shadows-focus-spread)
+            var(--shadows-focus-colour);
+    }
+
+    &[invalid],
+    &--error {
+        border-color: var(--input-border-error);
+    }
+
+    &--disabled:hover,
+    &--disabled,
+    &[disabled]:hover,
+    &[disabled] {
+        color: var(--input-text-disabled);
+        border-color: var(--input-border-disabled);
+        background: var(--input-background-disabled);
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+}
+
 @mixin shop-ui-custom-select($name: '.custom-select') {
     #{$name} {
         position: relative;
         max-width: 100%;
-        display: inline-block;
-
-        &:has(.light) {
-            .select2-selection__rendered,
-            #{$name}__select {
-                background: $setting-color-white;
-            }
-        }
+        display: inline-flex;
 
         &__select {
-            border-radius: $setting-border-radius;
-            border: rem(1) solid $setting-color-gray-1;
-            color: $setting-color-gray-5;
-            background: $setting-color-gray-7;
-            font: fw(regular) rem(15) / rem(46) $setting-font-family;
-            font-size: rem(13);
-            padding: 0 rem(35) 0 rem(16);
-            appearance: none;
+            @include base-input-styles;
 
-            @include helper-breakpoint-media-min($lg) {
-                padding: 0 rem(45) 0 rem(20);
-                font-size: rem(14);
+            &--md {
+                height: rem(40);
+                padding: rem(10) var(--space-7) rem(10) var(--space-5);
             }
         }
 
@@ -34,10 +64,15 @@
             right: rem(16);
             transform: translateY(-50%);
             pointer-events: none;
+            rotate: 90deg;
+            font-size: 1rem;
+            margin-top: rem(-6);
+            color: var(--icon-secondary);
+        }
 
-            @include helper-breakpoint-media-min($lg) {
-                right: rem(21);
-            }
+        &:has(.select2-selection__rendered:hover) &__caret,
+        &:has(.custom-select__select:hover) &__caret {
+            color: var(--icon-primary);
         }
 
         &--alternative {
@@ -170,16 +205,7 @@
         }
 
         &-selection__rendered {
-            display: block;
-            border-radius: $setting-border-radius;
-            border: rem(1) solid $setting-color-gray-1;
-            color: $setting-color-gray-5;
-            background: $setting-color-gray-7;
-            font: fw(regular) rem(15) / rem(46) $setting-font-family;
-            padding: 0 rem(45) 0 rem(20);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            @include base-input-styles;
         }
 
         &-selection__arrow {
