@@ -10,6 +10,7 @@ image:
     php:
         enabled-extensions:
             - otel
+            - amqp
         ini:
             max_execution_time: 300
             request_terminate_timeout: 300
@@ -24,7 +25,7 @@ image:
         SPRYKER_YVES_HOST_US: yves.us.spryker.local
         SPRYKER_DYNAMIC_STORE_MODE: true
     node:
-        version: 20
+        version: 24
         npm: 10
 
 composer:

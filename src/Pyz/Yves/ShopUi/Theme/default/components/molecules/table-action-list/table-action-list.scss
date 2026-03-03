@@ -9,6 +9,10 @@
             justify-content: flex-end;
         }
 
+        &--align-center {
+            justify-content: center;
+        }
+
         @include helper-breakpoint-media-min($lg) {
             width: 100%;
             padding: 0 rem(10) 0 0;

@@ -46,6 +46,7 @@ image:
     php:
         enabled-extensions:
             - otel
+            - amqp
     environment:
         SPRYKER_PRODUCT_CONFIGURATOR_HOST: date-time-configurator-example.cloud.spryker.toys
         SPRYKER_PRODUCT_CONFIGURATOR_PORT: 443
@@ -56,7 +57,7 @@ image:
         SPRYKER_HOOK_DESTRUCTIVE_INSTALL: 'vendor/bin/install -r destructive --no-ansi -vvv'
         SPRYKER_DYNAMIC_STORE_MODE: true
     node:
-        version: 20
+        version: 24
         npm: 10
 
 composer:

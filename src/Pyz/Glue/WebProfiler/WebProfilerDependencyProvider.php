@@ -13,6 +13,7 @@ use Spryker\Glue\Http\Plugin\Twig\HttpKernelTwigPlugin;
 use Spryker\Glue\Http\Plugin\Twig\RuntimeLoaderTwigPlugin;
 use Spryker\Glue\Http\Plugin\WebProfiler\WebProfilerExternalHttpDataCollectorPlugin;
 use Spryker\Glue\Profiler\Plugin\WebProfiler\WebProfilerProfilerDataCollectorPlugin;
+use Spryker\Glue\Propel\Plugin\WebProfiler\WebProfilerPropelDataCollectorPlugin;
 use Spryker\Glue\Redis\Plugin\WebProfiler\WebProfilerRedisDataCollectorPlugin;
 use Spryker\Glue\SearchElasticsearch\Plugin\WebProfiler\WebProfilerElasticsearchDataCollectorPlugin;
 use Spryker\Glue\WebProfiler\Plugin\WebProfiler\WebProfilerConfigDataCollectorPlugin;
@@ -43,6 +44,7 @@ class WebProfilerDependencyProvider extends SprykerWebProfilerDependencyProvider
             new WebProfilerExternalHttpDataCollectorPlugin(),
             new WebProfilerExceptionDataCollectorPlugin(),
             new WebProfilerLoggerDataCollectorPlugin(),
+            new WebProfilerPropelDataCollectorPlugin(),
         ];
 
         if (class_exists(WebProfilerProfilerDataCollectorPlugin::class)) {

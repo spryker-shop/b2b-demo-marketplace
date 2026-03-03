@@ -15,8 +15,9 @@
 
 {% define attributes = {
     href: data.url,
-    target: data.target | default,
+    target: data.target | default ?: false,
     'data-init-single-click': data.isSingleClickable,
+    rel: (data.target | default) == '_blank' ? 'noopener noreferrer' : false,
 } %}
 
 {% block body %}

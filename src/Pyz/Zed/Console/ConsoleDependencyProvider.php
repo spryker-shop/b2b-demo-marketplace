@@ -100,6 +100,7 @@ use Spryker\Zed\PriceProductSchedule\Communication\Console\PriceProductScheduleC
 use Spryker\Zed\PriceProductScheduleDataImport\PriceProductScheduleDataImportConfig;
 use Spryker\Zed\ProductAlternativeDataImport\ProductAlternativeDataImportConfig;
 use Spryker\Zed\ProductApprovalDataImport\ProductApprovalDataImportConfig;
+use Spryker\Zed\ProductAttachment\ProductAttachmentConfig;
 use Spryker\Zed\ProductDiscontinued\Communication\Console\DeactivateDiscontinuedProductsConsole;
 use Spryker\Zed\ProductDiscontinuedDataImport\ProductDiscontinuedDataImportConfig;
 use Spryker\Zed\ProductLabel\Communication\Console\ProductLabelRelationUpdaterConsole;
@@ -185,6 +186,8 @@ use Spryker\Zed\StorageRedis\Communication\Console\StorageRedisExportRdbConsole;
 use Spryker\Zed\StorageRedis\Communication\Console\StorageRedisImportRdbConsole;
 use Spryker\Zed\StoreContextDataImport\StoreContextDataImportConfig;
 use Spryker\Zed\StoreDataImport\StoreDataImportConfig;
+use Spryker\Zed\SymfonyMessenger\Communication\Console\SymfonyMessengerConsumeMessagesConsole;
+use Spryker\Zed\SymfonyScheduler\Communication\Console\SchedulerListConsole;
 use Spryker\Zed\Synchronization\Communication\Console\ExportSynchronizedDataConsole;
 use Spryker\Zed\Synchronization\Communication\Plugin\Console\DirectSynchronizationConsolePlugin;
 use Spryker\Zed\Transfer\Communication\Console\DataBuilderGeneratorConsole;
@@ -361,6 +364,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . SelfServicePortalConfig::IMPORT_TYPE_SSP_MODEL),
             new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . SelfServicePortalConfig::IMPORT_TYPE_SSP_MODEL_ASSET),
             new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . SelfServicePortalConfig::IMPORT_TYPE_SSP_MODEL_PRODUCT_LIST),
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ProductAttachmentConfig::IMPORT_TYPE_PRODUCT_ATTACHMENT),
 
             // Publish and Synchronization
             new EventBehaviorTriggerTimeoutConsole(),
@@ -455,6 +459,9 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new ContainerBuilderConsole(),
 
             new AlgoliaEntityExportConsole(),
+
+            new SymfonyMessengerConsumeMessagesConsole(),
+            new SchedulerListConsole(),
         ];
 
         $propelCommands = $container->getLocator()->propel()->facade()->getConsoleCommands();

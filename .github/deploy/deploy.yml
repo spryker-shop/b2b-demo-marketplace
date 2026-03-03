@@ -9,6 +9,7 @@ image:
     php:
         enabled-extensions:
             - otel
+            - amqp
         ini:
             'opcache.revalidate_freq': 0
             'opcache.validate_timestamps': 0
@@ -21,7 +22,7 @@ image:
         SPRYKER_YVES_HOST_EU: yves.eu.spryker.local
         SPRYKER_YVES_HOST_US: yves.us.spryker.local
     node:
-        version: 20
+        version: 24
         npm: 10
 
 composer:

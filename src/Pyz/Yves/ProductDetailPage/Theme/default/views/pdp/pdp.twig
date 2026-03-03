@@ -75,8 +75,9 @@
             {% include molecule('product-detail', 'ProductDetailPage') with {
                 data: {
                     description: data.product.description,
-                    attributes: data.product.attributes
-                }
+                    attributes: data.product.attributes,
+                    attachments: data.product.attachments | default([]),
+                },
             } only %}
 
             {% widget 'ProductDetailPageReviewWidget' args [data.product.idProductAbstract] only %}{% endwidget %}
