@@ -30,10 +30,10 @@
         border-color: var(--input-border-error);
     }
 
-    &--disabled:hover,
     &--disabled,
-    &[disabled]:hover,
-    &[disabled] {
+    &[disabled],
+    &--disabled:hover,
+    &[disabled]:hover {
         color: var(--input-text-disabled);
         border-color: var(--input-border-disabled);
         background: var(--input-background-disabled);
