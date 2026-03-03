@@ -2,63 +2,75 @@ const StyleDictionary = require('style-dictionary').default;
 const { join } = require('path');
 const { readFileSync, writeFileSync } = require('fs');
 
-const normalizeTokens = (x, path = []) => {
-    if (!x || typeof x !== 'object') return x;
+const REF_RULES = [
+    { test: (r) => r.startsWith('Primitives.') || r.startsWith('Typography.'), map: (r) => r },
+    { test: (r) => r.startsWith('primitive.typography'), map: (r) => `Typography.${r}` },
+    { test: (r) => !r.includes('.'), map: (r) => r },
+];
 
-    if (x.value !== undefined) {
-        let value = x.value;
+function normalizeRefString(str) {
+    if (typeof str !== 'string') return str;
 
-        if (typeof value === 'string' && value.startsWith('{') && value.endsWith('}')) {
-            const refContent = value.slice(1, -1);
+    const match = str.match(/^\{(.+)\}$/);
 
-            let normalizedRef = refContent;
+    if (!match) return str;
 
-            if (!normalizedRef.includes('.')) {
-                normalizedRef = refContent;
-            } else if (refContent.startsWith('primitive.typography')) {
-                normalizedRef = `Typography.${refContent}`;
-            } else if (!refContent.startsWith('Primitives.') && !refContent.startsWith('Typography.')) {
-                normalizedRef = `Primitives.${refContent}`;
-            }
+    const ref = match[1];
+    const rule = REF_RULES.find((x) => x.test(ref));
+    const normalized = rule ? rule.map(ref) : `Primitives.${ref}`;
 
-            value = `{${normalizedRef}}`;
-        }
+    return `{${normalized}}`;
+}
 
-        if (typeof value === 'object') {
-            return null;
-        }
+function normalizeKey(key) {
+    const [first, second] = String(key).split('/');
+    if (!second) return first;
 
-        return { ...x, value };
+    const s = second.toLowerCase();
+    return ['default', 'mode'].some((p) => s.startsWith(p)) ? first : key;
+}
+
+function normalizeTokens(node) {
+    if (!node || typeof node !== 'object') return node;
+
+    // leaf token
+    if ('value' in node) {
+        const value = normalizeRefString(node.value);
+
+        // drop composite tokens (object value)
+        if (value && typeof value === 'object') return null;
+
+        return { ...node, value };
     }
 
-    const entries = Object.entries(x).map(([k, v]) => {
-        let normalizedKey = k;
-        const parts = k.split('/');
-        if (parts.length > 1) {
-            const secondPart = parts[1]?.toLowerCase();
-            if (secondPart?.startsWith('default') || secondPart?.startsWith('mode')) {
-                normalizedKey = parts[0];
-            }
-        }
+    const out = {};
 
-        const normalized = normalizeTokens(v, [...path, normalizedKey]);
-        return normalized === null ? null : [normalizedKey, normalized];
-    }).filter(Boolean);
+    for (const [k, v] of Object.entries(node)) {
+        const nk = normalizeKey(k);
+        const nv = normalizeTokens(v);
 
-    return Object.fromEntries(entries);
-};
+        if (nv !== null) out[nk] = nv;
+    }
+
+    return out;
+}
 
 StyleDictionary.registerTransform({
     name: 'name/kebab-custom',
     type: 'name',
     transform: ({ path }) => {
-        const p = path.map((s) => String(s).toLowerCase().replace(/\s+/g, '-').replace(/_/g, '-'));
+        const p = (path ?? []).map((s) =>
+            String(s).toLowerCase().replace(/\s+/g, '-').replace(/_/g, '-'),
+        );
+
         const parts = p[0] === 'primitives' || p[0] === 'typography' ? p.slice(1) : p;
 
-        return parts.join('-')
+        return parts
+            .join('-')
             .replace('semantic-colour-', '')
             .replace('semantic-typography-', '')
-            .replace('semantic-', '');
+            .replace('semantic-', '')
+            .replace('spacing-space-', 'space-');
     },
 });
 
