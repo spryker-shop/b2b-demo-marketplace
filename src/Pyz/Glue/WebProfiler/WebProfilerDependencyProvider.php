@@ -16,6 +16,7 @@ use Spryker\Glue\Profiler\Plugin\WebProfiler\WebProfilerProfilerDataCollectorPlu
 use Spryker\Glue\Redis\Plugin\WebProfiler\WebProfilerRedisDataCollectorPlugin;
 use Spryker\Glue\SearchElasticsearch\Plugin\WebProfiler\WebProfilerElasticsearchDataCollectorPlugin;
 use Spryker\Glue\WebProfiler\Plugin\WebProfiler\WebProfilerConfigDataCollectorPlugin;
+use Spryker\Glue\WebProfiler\Plugin\WebProfiler\WebProfilerEventsDataCollectorPlugin;
 use Spryker\Glue\WebProfiler\Plugin\WebProfiler\WebProfilerExceptionDataCollectorPlugin;
 use Spryker\Glue\WebProfiler\Plugin\WebProfiler\WebProfilerLoggerDataCollectorPlugin;
 use Spryker\Glue\WebProfiler\Plugin\WebProfiler\WebProfilerMemoryDataCollectorPlugin;
@@ -37,6 +38,7 @@ class WebProfilerDependencyProvider extends SprykerWebProfilerDependencyProvider
             new WebProfilerMemoryDataCollectorPlugin(),
             new WebProfilerTimeDataCollectorPlugin(),
             new WebProfilerConfigDataCollectorPlugin(),
+            new WebProfilerEventsDataCollectorPlugin(),
             new WebProfilerRedisDataCollectorPlugin(),
             new WebProfilerElasticsearchDataCollectorPlugin(),
             new WebProfilerZedRequestDataCollectorPlugin(),
