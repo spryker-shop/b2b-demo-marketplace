@@ -44,6 +44,10 @@ sections:
     setup-queue:
         queue-setup:
             command: 'vendor/bin/console queue:setup'
+    
+    data-builders-for-performance-tests:
+       generate-transfer-databuilders:
+            command: 'vendor/bin/console transfer:databuilder:generate'
 
     setup-minimal-data:
         import-demodata:
