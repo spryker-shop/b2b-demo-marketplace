@@ -1,0 +1,30 @@
+{% extends '@Spryker:ProductManagement/Product/_partials/general-tab.twig' %}
+
+{% block descriptionField %}
+    {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.first), 'localeName': locale.localeName} %}
+        {% block content %}
+            {% for input in form[formKey] %}
+                <div class="form-group {% if input.vars.errors | length %}has-error{% endif %}">
+                    {% include '@SprykerEco:ProductManagementAi/_partials/ai-request-builder-button.twig' with {
+                        data: {
+                            field: input,
+                            locale: locale,
+                        },
+                    } %}
+
+                    {{ form_label(input) }}
+                    {{ form_widget(input, {'attr': {'class': 'name-translation js-infomational-field'}}) }}
+                    {{ form_errors(input) }}
+                </div>
+            {% endfor %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block description %}
+    {{ parent() }}
+
+    {# AI specific feature template using for integration. It's not stable template for using it in core. #}
+    {% include '@SprykerEco:ProductManagementAi/_partials/category-modal-trigger.twig' %}
+    {% include '@SprykerEco:ProductManagementAi/_partials/ai-request-builder-popovers.twig' %}
+{% endblock %}
