@@ -630,10 +630,10 @@ foreach ($rabbitConnections as $key => $connection) {
 
     $config[SymfonyMessengerConstants::QUEUE_DSN] = sprintf(
         'amqp://%s:%s@%s:%s/%s',
-        $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_USERNAME],
-        $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_PASSWORD],
-        $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_HOST],
-        $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_PORT],
+        $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_USERNAME] ?? $defaultConnection[RabbitMqEnv::RABBITMQ_USERNAME],
+        $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_PASSWORD] ?? $defaultConnection[RabbitMqEnv::RABBITMQ_PASSWORD],
+        $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_HOST] ?? $defaultConnection[RabbitMqEnv::RABBITMQ_HOST],
+        $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_PORT] ?? $defaultConnection[RabbitMqEnv::RABBITMQ_PORT],
         $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_VIRTUAL_HOST],
     );
 }
