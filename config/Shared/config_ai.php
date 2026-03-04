@@ -8,7 +8,7 @@ use Spryker\Shared\AiFoundation\AiFoundationConstants;
 $openAiConfiguration = [
     'provider_name' => AiFoundationConstants::PROVIDER_OPENAI,
     'provider_config' => [
-        'key' => getenv('OPENAI_API_KEY') ?: null,
+        'key' => getenv('OPENAI_API_KEY') ?: '',
         'model' => 'gpt-4o',
     ],
 ];
