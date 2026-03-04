@@ -24,11 +24,14 @@ use SprykerShop\Yves\ContentProductWidget\Dependency\Client\ContentProductWidget
 use SprykerShop\Yves\ContentProductWidget\Dependency\Client\ContentProductWidgetToProductStorageClientBridgeInterface;
 
 /**
+ * Auto-generated group annotations
+ *
  * @group PyzTest
  * @group Yves
  * @group ContentProductWidget
  * @group Reader
  * @group ContentProductAbstractReaderTest
+ * Add your own group annotations below this line
  */
 class ContentProductAbstractReaderTest extends Unit
 {
