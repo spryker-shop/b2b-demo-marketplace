@@ -1,46 +1,4 @@
-@mixin base-input-styles {
-    display: inline-flex;
-    width: 100%;
-    height: rem(32);
-    padding: rem(6) var(--scale-7) rem(6) var(--scale-4);
-    align-items: center;
-    gap: var(--scale-3);
-    color: var(--input-text-value);
-    border-radius: var(--radius-sm);
-    border: var(--stroke-sm) solid var(--input-border-default);
-    background: var(--input-background-default);
-    font-size: var(--font-size-12);
-    font-weight: var(--font-weight-medium);
-    line-height: var(--font-line-height-16);
-    letter-spacing: var(--font-letter-spacing-normal);
-    appearance: none;
-
-    &:hover {
-        border-color: var(--input-border-hover);
-    }
-
-    &:focus {
-        border-color: var(--input-border-focus);
-        box-shadow: var(--shadows-focus-x) var(--shadows-focus-y) var(--shadows-focus-blur) var(--shadows-focus-spread)
-            var(--shadows-focus-color);
-    }
-
-    &[invalid],
-    &--error {
-        border-color: var(--input-border-error);
-    }
-
-    &--disabled,
-    &[disabled],
-    &--disabled:hover,
-    &[disabled]:hover {
-        color: var(--input-text-disabled);
-        border-color: var(--input-border-disabled);
-        background: var(--input-background-disabled);
-        cursor: not-allowed;
-        pointer-events: none;
-    }
-}
+@import '../../atoms/input/input';
 
 @mixin shop-ui-custom-select($name: '.custom-select') {
     #{$name} {
@@ -48,13 +6,8 @@
         max-width: 100%;
         display: inline-flex;
 
-        &__select {
-            @include base-input-styles;
-
-            &--md {
-                height: rem(40);
-                padding: rem(10) var(--scale-7) rem(10) var(--scale-5);
-            }
+        @include shop-ui-input-extended('.custom-select__select') {
+            appearance: none;
         }
 
         &__caret {
@@ -75,91 +28,7 @@
             color: var(--icon-primary);
         }
 
-        &--alternative {
-            text-transform: uppercase;
-            width: 100%;
-
-            @include helper-breakpoint-media-min($lg) {
-                width: auto;
-            }
-
-            #{$name}__select {
-                width: 100%;
-                font-size: rem(12);
-                line-height: rem(38);
-                padding: 0 rem(20) 0 rem(6);
-                border: rem(1) solid $setting-color-gray-1;
-                color: $setting-color-gray-5;
-                background: $setting-color-gray-6;
-
-                @include helper-breakpoint-media-min($lg) {
-                    width: auto;
-                    text-transform: uppercase;
-                    border-radius: 0;
-                    background: $setting-color-transparent;
-                    border: none;
-                    color: $setting-color-gray-4;
-                    font-size: rem(11);
-                    line-height: rem(40);
-                    font-weight: fw(bold);
-                    letter-spacing: rem(0.6);
-                    padding: 0 rem(30) 0 rem(18);
-                }
-            }
-
-            #{$name}__caret {
-                right: rem(3);
-            }
-        }
-
-        &--small {
-            #{$name}__select {
-                font-size: rem(13);
-                line-height: rem(38);
-                font-weight: fw(medium);
-
-                @include helper-breakpoint-media-min($lg) {
-                    font-size: rem(14);
-                    font-weight: fw(regular);
-                }
-            }
-        }
-
-        &--smaller {
-            width: 100%;
-
-            #{$name}__select {
-                width: 100%;
-                font-size: rem(12);
-                line-height: rem(20);
-                font-weight: fw(regular);
-                border-radius: $setting-border-radius;
-                border: none;
-                background: $setting-color-gray-7;
-                padding: 0 rem(27) 0 rem(8);
-            }
-
-            #{$name}__caret {
-                right: rem(3);
-            }
-        }
-
-        &--mobile-expand {
-            width: 100%;
-
-            @include helper-breakpoint-media-min($lg) {
-                width: auto;
-            }
-
-            #{$name}__select {
-                width: 100%;
-
-                @include helper-breakpoint-media-min($lg) {
-                    width: auto;
-                }
-            }
-        }
-
+        &--expended,
         &--full-width {
             width: 100%;
 
@@ -168,29 +37,122 @@
             }
         }
 
-        &--margin-bottom {
-            margin-bottom: rem(21);
-        }
+        // &--alternative {
+        //     text-transform: uppercase;
+        //     width: 100%;
 
-        &--shopping-list {
-            margin-top: rem(12);
+        //     @include helper-breakpoint-media-min($lg) {
+        //         width: auto;
+        //     }
 
-            @include helper-breakpoint-media-min($xl) {
-                margin-left: rem(132);
-                width: calc(100% - 132px);
-            }
-        }
+        //     #{$name}__select {
+        //         width: 100%;
+        //         font-size: rem(12);
+        //         line-height: rem(38);
+        //         padding: 0 rem(20) 0 rem(6);
+        //         border: rem(1) solid $setting-color-gray-1;
+        //         color: $setting-color-gray-5;
+        //         background: $setting-color-gray-6;
 
-        &--light {
-            #{$name}__select,
-            .select2-selection__rendered {
-                background: $setting-color-gray-7;
+        //         @include helper-breakpoint-media-min($lg) {
+        //             width: auto;
+        //             text-transform: uppercase;
+        //             border-radius: 0;
+        //             background: $setting-color-transparent;
+        //             border: none;
+        //             color: $setting-color-gray-4;
+        //             font-size: rem(11);
+        //             line-height: rem(40);
+        //             font-weight: fw(bold);
+        //             letter-spacing: rem(0.6);
+        //             padding: 0 rem(30) 0 rem(18);
+        //         }
+        //     }
 
-                @include helper-breakpoint-media-min($lg) {
-                    background: $setting-color-white;
-                }
-            }
-        }
+        //     #{$name}__caret {
+        //         right: rem(3);
+        //     }
+        // }
+
+        // &--small {
+        //     #{$name}__select {
+        //         font-size: rem(13);
+        //         line-height: rem(38);
+        //         font-weight: fw(medium);
+
+        //         @include helper-breakpoint-media-min($lg) {
+        //             font-size: rem(14);
+        //             font-weight: fw(regular);
+        //         }
+        //     }
+        // }
+
+        // &--smaller {
+        //     width: 100%;
+
+        //     #{$name}__select {
+        //         width: 100%;
+        //         font-size: rem(12);
+        //         line-height: rem(20);
+        //         font-weight: fw(regular);
+        //         border-radius: $setting-border-radius;
+        //         border: none;
+        //         background: $setting-color-gray-7;
+        //         padding: 0 rem(27) 0 rem(8);
+        //     }
+
+        //     #{$name}__caret {
+        //         right: rem(3);
+        //     }
+        // }
+
+        // &--mobile-expand {
+        //     width: 100%;
+
+        //     @include helper-breakpoint-media-min($lg) {
+        //         width: auto;
+        //     }
+
+        //     #{$name}__select {
+        //         width: 100%;
+
+        //         @include helper-breakpoint-media-min($lg) {
+        //             width: auto;
+        //         }
+        //     }
+        // }
+
+        // &--full-width {
+        //     width: 100%;
+
+        //     #{$name}__select {
+        //         width: 100%;
+        //     }
+        // }
+
+        // &--margin-bottom {
+        //     margin-bottom: rem(21);
+        // }
+
+        // &--shopping-list {
+        //     margin-top: rem(12);
+
+        //     @include helper-breakpoint-media-min($xl) {
+        //         margin-left: rem(132);
+        //         width: calc(100% - 132px);
+        //     }
+        // }
+
+        // &--light {
+        //     #{$name}__select,
+        //     .select2-selection__rendered {
+        //         background: $setting-color-gray-7;
+
+        //         @include helper-breakpoint-media-min($lg) {
+        //             background: $setting-color-white;
+        //         }
+        //     }
+        // }
 
         @content;
     }
@@ -198,14 +160,18 @@
 
 @mixin shop-ui-select2($name: '.select2') {
     #{$name} {
-        &_selection:focus-visible {
-            #{$name}-selection__rendered {
-                border-color: $setting-color-input-border-focus;
+        @include shop-ui-input-extended('.select2-selection__rendered');
+
+        &-container--focus {
+            .select2-selection__rendered {
+                border-color: var(--input-border-focus);
+                box-shadow: var(--shadows-focus-x) var(--shadows-focus-y) var(--shadows-focus-blur)
+                    var(--shadows-focus-spread) var(--shadows-focus-color);
             }
         }
 
-        &-selection__rendered {
-            @include base-input-styles;
+        &-selection:focus-visible {
+            outline: none;
         }
 
         &-selection__arrow {
@@ -232,10 +198,6 @@
             position: relative;
             vertical-align: middle;
             cursor: pointer;
-
-            &--focus {
-                @include helper-outline;
-            }
 
             &--alternative {
                 #{$name}-selection__rendered {
@@ -334,11 +296,11 @@
             box-sizing: border-box;
             display: block;
             border: none;
-            border-radius: $setting-border-radius;
-            background: $setting-color-white;
-            box-shadow:
-                0 rem(18) rem(18) 0 $setting-color-shadow-1,
-                0 rem(3) rem(3) 0 $setting-color-shadow-1;
+            padding: var(--scale-4) 0;
+            border-radius: var(--radius-sm);
+            background: var(--background-surface);
+            box-shadow: var(--shadows-md-x) var(--shadows-md-y) var(--shadows-md-blur) var(--shadows-md-spread)
+                var(--shadows-md-color);
         }
 
         &-search--dropdown.select2-search--hide {
@@ -349,31 +311,42 @@
             display: block;
         }
 
+        &--md {
+            #{$name}-results__option {
+                min-height: rem(40);
+                font-size: var(--font-size-14);
+            }
+        }
+
         &-results__option {
-            color: $setting-color-text;
-            font-size: rem(15);
-            font-weight: fw(regular);
-            line-height: 1.87;
-            letter-spacing: rem(0.2);
-            padding: rem(10) rem(15);
-            overflow-wrap: break-word;
+            display: flex;
+            align-items: center;
+            font-size: var(--font-size-12);
+            font-weight: var(--font-weight-regular);
+            line-height: var(--font-line-height-16);
+            letter-spacing: var(--font-letter-spacing-normal);
+            color: var(--text-primary);
+            padding: var(--scale-2) var(--scale-8);
+            min-height: rem(32);
+            gap: var(--scale-8);
 
             &[aria-selected] {
                 cursor: pointer;
             }
 
             &:hover {
-                background: $setting-color-gray-7;
+                background: var(--background-subtle);
             }
 
             &[aria-selected='true'] {
                 position: relative;
-                background: $setting-color-main;
-                color: $setting-color-white;
+                background: var(--background-brand-subtle);
+                color: var(--text-brand);
             }
 
-            &--highlighted:not(:hover) {
-                @include helper-outline;
+            &--highlighted:not(:hover):not([aria-selected='true']) {
+                box-shadow: inset var(--shadows-focus-x) var(--shadows-focus-y) var(--shadows-focus-blur)
+                    var(--shadows-focus-spread) var(--background-brand-primary);
             }
         }
 

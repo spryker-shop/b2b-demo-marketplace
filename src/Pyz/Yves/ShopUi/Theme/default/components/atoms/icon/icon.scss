@@ -53,7 +53,7 @@ $shop-ui-icon-size-bigger: 1.5rem;
     &--contact {
         width: rem(22);
         height: rem(var(--scale-7));
-        margin-bottom: rem(var(--scale-3));
+        margin-bottom: rem(var(--scale-4));
 
         @include helper-breakpoint-media-min($lg) {
             display: none;
@@ -224,7 +224,7 @@ $shop-ui-icon-size-bigger: 1.5rem;
 
     &--reset {
         @include helper-effect-transition(color);
-        margin-right: rem(var(--scale-3));
+        margin-right: rem(var(--scale-4));
         color: $setting-color-gray-5;
     }
 
