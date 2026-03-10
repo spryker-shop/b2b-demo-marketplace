@@ -12,13 +12,9 @@ StyleDictionary.registerTransform({
 StyleDictionary.registerTransform({
     name: 'value/px-custom',
     type: 'value',
-    filter: ({ value, type, path }) => {
-        if (typeof value !== 'number' || type === 'color' || type === 'string') return false;
-
-        const p = (path ?? []).join('.').toLowerCase();
-        return !p.includes('weight') && !p.includes('letterspacing');
-    },
-    transform: ({ value }) => `${value}px`,
+    filter: (token) => typeof (token.$value || token.value) === 'number' &&
+        !token.path.join('.').toLowerCase().includes('weight'),
+    transform: (token) => `${token.$value || token.value}px`,
 });
 
 const buildDesignTokens = async (appSettings) => {
@@ -35,7 +31,7 @@ const buildDesignTokens = async (appSettings) => {
         platforms: {
             css: {
                 buildPath,
-                transforms: ['attribute/cti', 'name/kebab-custom', 'value/px-custom', 'color/css'],
+                transforms: ['attribute/cti', 'name/kebab-custom', 'color/css', 'value/px-custom'],
                 files: [
                     {
                         destination: 'design-tokens.css',
