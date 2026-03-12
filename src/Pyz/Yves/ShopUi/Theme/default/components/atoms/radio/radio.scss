@@ -8,12 +8,60 @@
         }
 
         &__input:checked ~ {
-            #{$name}__box::after {
-                content: '';
-                width: rem(10);
-                height: rem(10);
-                background-color: var(--background-brand-primary);
-                border-radius: 100%;
+            #{$name}__box {
+                background: none;
+
+                &::after {
+                    content: '';
+                    width: rem(10);
+                    height: rem(10);
+                    background-color: var(--background-brand-primary);
+                    border-radius: 100%;
+                }
+            }
+        }
+
+        &__input[invalid]:checked,
+        &__input--error:checked {
+            & ~ #{$name}__box {
+                background: none;
+
+                &::after {
+                    background-color: var(--background-state-error-bold);
+                }
+            }
+        }
+
+        &__input[disabled]:checked,
+        &__input--disabled:checked {
+            & ~ #{$name}__box {
+                background: var(--input-background-disabled);
+
+                &::after {
+                    background-color: var(--icon-disabled);
+                }
+            }
+        }
+
+        &:hover {
+            #{$name}__input[invalid]:checked ~ #{$name}__box,
+            #{$name}__input--error:checked ~ #{$name}__box,
+            #{$name}__input:checked ~ #{$name}__box {
+                background: none;
+            }
+
+            #{$name}__input:checked ~ #{$name}__box::after {
+                background-color: var(--background-brand-hover);
+            }
+
+            #{$name}__input[disabled]:checked ~ #{$name}__box::after,
+            #{$name}__input--disabled:checked ~ #{$name}__box::after {
+                background-color: var(--icon-disabled);
+            }
+
+            #{$name}__input[invalid]:checked ~ #{$name}__box::after,
+            #{$name}__input--error:checked ~ #{$name}__box::after {
+                background: var(--background-state-error-bold);
             }
         }
 
