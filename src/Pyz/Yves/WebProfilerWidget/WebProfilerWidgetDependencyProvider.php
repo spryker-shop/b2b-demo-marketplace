@@ -10,6 +10,7 @@ declare(strict_types = 1);
 namespace Pyz\Yves\WebProfilerWidget;
 
 use Spryker\Yves\Http\Plugin\WebProfilerWidget\WebProfilerExternalHttpDataCollectorPlugin;
+use Spryker\Yves\Log\Plugin\WebProfiler\WebProfilerAuditLogDataCollectorPlugin;
 use Spryker\Yves\Profiler\Plugin\WebProfiler\WebProfilerProfilerDataCollectorPlugin;
 use Spryker\Yves\Redis\Plugin\WebProfiler\WebProfilerRedisDataCollectorPlugin;
 use Spryker\Yves\SearchElasticsearch\Plugin\WebProfiler\WebProfilerElasticsearchDataCollectorPlugin;
@@ -23,6 +24,7 @@ use SprykerShop\Yves\WebProfilerWidget\Plugin\WebProfiler\WebProfilerLoggerDataC
 use SprykerShop\Yves\WebProfilerWidget\Plugin\WebProfiler\WebProfilerMemoryDataCollectorPlugin;
 use SprykerShop\Yves\WebProfilerWidget\Plugin\WebProfiler\WebProfilerRequestDataCollectorPlugin;
 use SprykerShop\Yves\WebProfilerWidget\Plugin\WebProfiler\WebProfilerRouterDataCollectorPlugin;
+use SprykerShop\Yves\WebProfilerWidget\Plugin\WebProfiler\WebProfilerSessionDataCollectorPlugin;
 use SprykerShop\Yves\WebProfilerWidget\Plugin\WebProfiler\WebProfilerTimeDataCollectorPlugin;
 use SprykerShop\Yves\WebProfilerWidget\Plugin\WebProfiler\WebProfilerTwigDataCollectorPlugin;
 use SprykerShop\Yves\WebProfilerWidget\WebProfilerWidgetDependencyProvider as SprykerWebProfilerDependencyProvider;
@@ -40,6 +42,7 @@ class WebProfilerWidgetDependencyProvider extends SprykerWebProfilerDependencyPr
             new WebProfilerAjaxDataCollectorPlugin(),
             new SymfonyWebProfilerConfigDataCollectorPlugin(),
             new WebProfilerConfigDataCollectorPlugin(),
+            new WebProfilerSessionDataCollectorPlugin(),
             new WebProfilerEventsDataCollectorPlugin(),
             new WebProfilerExceptionDataCollectorPlugin(),
             new WebProfilerLoggerDataCollectorPlugin(),
@@ -50,6 +53,7 @@ class WebProfilerWidgetDependencyProvider extends SprykerWebProfilerDependencyPr
             new WebProfilerElasticsearchDataCollectorPlugin(),
             new WebProfilerZedRequestDataCollectorPlugin(),
             new WebProfilerExternalHttpDataCollectorPlugin(),
+            new WebProfilerAuditLogDataCollectorPlugin(),
         ];
 
         if (class_exists(WebProfilerProfilerDataCollectorPlugin::class)) {
