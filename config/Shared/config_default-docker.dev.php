@@ -39,6 +39,7 @@ use Spryker\Shared\ZedRequest\ZedRequestConstants;
 use Spryker\Zed\OauthDummy\OauthDummyConfig;
 use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConstants;
 use SprykerShop\Shared\CalculationPage\CalculationPageConstants;
+use SprykerShop\Shared\ContentNavigationWidget\ContentNavigationWidgetConstants;
 use SprykerShop\Shared\ErrorPage\ErrorPageConstants;
 use SprykerShop\Shared\ShopApplication\ShopApplicationConstants;
 use SprykerShop\Shared\WebProfilerWidget\WebProfilerWidgetConstants;
@@ -264,3 +265,4 @@ if (!getenv('SPRYKER_S3_SSP_ASSETS_BUCKET')) {
         'path' => '/data/ssp-model-image',
     ];
 }
+$config[ContentNavigationWidgetConstants::NAVIGATION_REVALIDATION_TIME_IN_SECONDS] = 300;//5 min for local development
