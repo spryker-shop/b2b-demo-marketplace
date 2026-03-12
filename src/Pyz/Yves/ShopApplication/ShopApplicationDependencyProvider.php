@@ -492,9 +492,9 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             new CustomerConfirmationUserCheckerApplicationPlugin(),
         ];
 
-        if (class_exists(WebProfilerApplicationPlugin::class)) {
-            $applicationPlugins[] = new WebProfilerApplicationPlugin();
-        }
+        // if (class_exists(WebProfilerApplicationPlugin::class)) {
+        //     $applicationPlugins[] = new WebProfilerApplicationPlugin();
+        // }
 
         return $applicationPlugins;
     }
