@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          name="zed"
+          xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd"
+          namespace="Orm\Zed\BackofficeAssistant\Persistence"
+          package="src.Orm.Zed.BackofficeAssistant.Persistence">
+
+    <table name="demo_backoffice_assistant_conversation" idMethod="native" phpName="DemoBackofficeAssistantConversation">
+        <column name="id_backoffice_assistant_conversation" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="fk_user" type="INTEGER" required="true"/>
+        <column name="conversation_reference" type="VARCHAR" size="512" required="true"/>
+        <column name="name" type="VARCHAR" size="255" required="true"/>
+
+        <foreign-key foreignTable="spy_user" phpName="SpyUser" onDelete="CASCADE">
+            <reference local="fk_user" foreign="id_user"/>
+        </foreign-key>
+
+        <unique name="demo_backoffice_assistant_conversation-unique-conversation_reference">
+            <unique-column name="conversation_reference"/>
+        </unique>
+
+        <index name="demo_backoffice_assistant_conversation-index-fk_user">
+            <index-column name="fk_user"/>
+        </index>
+
+        <behavior name="timestampable"/>
+    </table>
+
+</database>

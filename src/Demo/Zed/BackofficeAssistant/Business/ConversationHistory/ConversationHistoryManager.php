@@ -1,0 +1,52 @@
+<?php
+
+/**
+ * This file is part of the Spryker Commerce OS.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
+ */
+
+declare(strict_types = 1);
+
+namespace Demo\Zed\BackofficeAssistant\Business\ConversationHistory;
+
+use Demo\Service\BackofficeAssistant\BackofficeAssistantServiceInterface;
+use Demo\Zed\BackofficeAssistant\Persistence\BackofficeAssistantEntityManagerInterface;
+use Demo\Zed\BackofficeAssistant\Persistence\BackofficeAssistantRepositoryInterface;
+use Generated\Shared\Transfer\BackofficeAssistantConversationHistoryTransfer;
+
+class ConversationHistoryManager implements ConversationHistoryManagerInterface
+{
+    /**
+     * @param \Demo\Zed\BackofficeAssistant\Persistence\BackofficeAssistantRepositoryInterface $repository
+     * @param \Demo\Zed\BackofficeAssistant\Persistence\BackofficeAssistantEntityManagerInterface $entityManager
+     * @param \Demo\Service\BackofficeAssistant\BackofficeAssistantServiceInterface $service
+     */
+    public function __construct(
+        protected BackofficeAssistantRepositoryInterface $repository,
+        protected BackofficeAssistantEntityManagerInterface $entityManager,
+        protected BackofficeAssistantServiceInterface $service,
+    ) {
+    }
+
+    public function create(
+        BackofficeAssistantConversationHistoryTransfer $transfer,
+    ): BackofficeAssistantConversationHistoryTransfer {
+        $conversationReference = $this->service->generateConversationReference(
+            (string)$transfer->getFkUser(),
+        );
+
+        $transfer->setConversationReference($conversationReference);
+
+        return $this->entityManager->createConversationHistory($transfer);
+    }
+
+    public function getByFkUser(int $idUser): array
+    {
+        return $this->repository->getConversationHistoriesByFkUser($idUser);
+    }
+
+    public function hasForUser(int $idUser, string $conversationReference): bool
+    {
+        return $this->repository->hasConversationHistoryForUser($idUser, $conversationReference);
+    }
+}
