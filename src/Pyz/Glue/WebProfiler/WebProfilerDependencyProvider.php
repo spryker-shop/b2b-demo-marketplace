@@ -12,6 +12,7 @@ namespace Pyz\Glue\WebProfiler;
 use Spryker\Glue\Http\Plugin\Twig\HttpKernelTwigPlugin;
 use Spryker\Glue\Http\Plugin\Twig\RuntimeLoaderTwigPlugin;
 use Spryker\Glue\Http\Plugin\WebProfiler\WebProfilerExternalHttpDataCollectorPlugin;
+use Spryker\Glue\Log\Plugin\WebProfiler\WebProfilerAuditLogDataCollectorPlugin;
 use Spryker\Glue\Profiler\Plugin\WebProfiler\WebProfilerProfilerDataCollectorPlugin;
 use Spryker\Glue\Propel\Plugin\WebProfiler\WebProfilerPropelDataCollectorPlugin;
 use Spryker\Glue\Redis\Plugin\WebProfiler\WebProfilerRedisDataCollectorPlugin;
@@ -47,6 +48,7 @@ class WebProfilerDependencyProvider extends SprykerWebProfilerDependencyProvider
             new WebProfilerExceptionDataCollectorPlugin(),
             new WebProfilerLoggerDataCollectorPlugin(),
             new WebProfilerPropelDataCollectorPlugin(),
+            new WebProfilerAuditLogDataCollectorPlugin(),
         ];
 
         if (class_exists(WebProfilerProfilerDataCollectorPlugin::class)) {
