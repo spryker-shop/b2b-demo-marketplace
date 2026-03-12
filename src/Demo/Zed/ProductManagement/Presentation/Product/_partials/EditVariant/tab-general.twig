@@ -1,0 +1,68 @@
+{# @var locale \Generated\Shared\Transfer\LocaleTransfer #}
+
+<div class="well">
+    {% apply trans|raw %}
+        <h3>{{ 'Add General Information' | trans }}</h3>
+        <p>{{ 'Below the name and description for your product can be edited for different locales (in different languages).' | trans }}</p>
+        <p><i>{{ 'Note: The SKU prefix, just like the SKUs of your product variants, are not editable after saving anymore.' | trans }}</i></p>
+    {% endapply %}
+</div>
+
+{{ form_row(form.sku) }}
+
+{% if form.form_product_concrete_super_attributes is defined %}
+    {{ form_row(form.form_product_concrete_super_attributes) }}
+{% endif %}
+
+{% for locale in localeCollection %}
+    {% set formKey = 'general_' ~ locale.localeName %}
+
+    {% if form[formKey] is defined %}
+
+        {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.first), 'localeName': locale.localeName} %}
+            {% block content %}
+                {% for input in form[formKey] %}
+                    <div class="form-group {% if input.vars.errors|length %}has-error{% endif %}">
+                        {% if input.vars.name != 'is_searchable' %}
+                        {% include '@SprykerEco:ProductManagementAi/_partials/ai-request-builder-button.twig' with {
+                            data: {
+                                field: input,
+                                locale: locale,
+                            },
+                        } %}
+                        {% endif %}
+                        {{ form_label(input) }}
+                        {{ form_widget(input, {'attr': {'class': 'name-translation'}}) }}
+                        {{ form_errors(input) }}
+                    </div>
+                {% endfor %}
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
+{% endfor %}
+
+{{ form_row(form.valid_from) }}
+{{ form_row(form.valid_to) }}
+{# @uses CompanySupplier #}
+{% if form.companySuppliers is defined %}
+    {{ form_row(form.companySuppliers) }}
+{% endif %}
+
+{% include '@SprykerEco:ProductManagementAi/_partials/ai-request-builder-popovers.twig' %}
+
+{% include '@SelfServicePortal/Partials/concrete-product-form-shipment-type-field.twig' ignore missing with {
+   form: form,
+} %}
+
+{% include '@SelfServicePortal/Partials/concrete-product-form-product-class-field.twig' ignore missing with {
+    form: form,
+} %}
+
+{# Deptecated, will be removed in the next major #}
+{% include '@SelfServicePortal/Partials/concrete-product-form-is-service-date-time-enabled-field.twig' ignore missing with {
+    form: form,
+} %}
+
+{% block footer_js %}
+    <script src="{{ assetsPath('js/spryker-zed-productmanagement-concrete-add.js') }}"></script>
+{% endblock %}

@@ -129,6 +129,7 @@ use Spryker\Shared\User\UserConstants;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
 use Spryker\Yves\Log\Plugin\Log\YvesSecurityAuditLoggerConfigPlugin;
 use Spryker\Yves\Log\Plugin\YvesLoggerConfigPlugin;
+use Spryker\Zed\AiFoundation\Communication\Plugin\Log\AiInteractionAuditLoggerConfigPlugin;
 use Spryker\Zed\Log\Communication\Plugin\Log\MerchantPortalSecurityAuditLoggerConfigPlugin;
 use Spryker\Zed\Log\Communication\Plugin\Log\ZedSecurityAuditLoggerConfigPlugin;
 use Spryker\Zed\Log\Communication\Plugin\ZedLoggerConfigPlugin;
@@ -163,8 +164,9 @@ $config[KernelConstants::SPRYKER_ROOT] = APPLICATION_ROOT_DIR . '/vendor/spryker
 $config[KernelConstants::RESOLVABLE_CLASS_NAMES_CACHE_ENABLED] = true;
 $config[KernelConstants::RESOLVED_INSTANCE_CACHE_ENABLED] = true;
 
-$config[KernelConstants::PROJECT_NAMESPACE] = 'Pyz';
+$config[KernelConstants::PROJECT_NAMESPACE] = 'Demo';
 $config[KernelConstants::PROJECT_NAMESPACES] = [
+    'Demo',
     'Pyz',
 ];
 $config[KernelConstants::CORE_NAMESPACES] = [
@@ -192,6 +194,9 @@ $config[RouterConstants::IS_STORE_ROUTING_ENABLED]
     = $config[AgentPageConstants::IS_STORE_ROUTING_ENABLED]
     = $config[SecurityBlockerPageConstants::IS_STORE_ROUTING_ENABLED]
     = $config[LocaleConstants::IS_STORE_ROUTING_ENABLED] = (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
+
+// >>> AI FOUNDATION
+require 'config_ai.php';
 
 // >>> DEV TOOLS
 
@@ -532,6 +537,7 @@ $config[LogConstants::AUDIT_LOGGER_CONFIG_PLUGINS_YVES] = [
 ];
 $config[LogConstants::AUDIT_LOGGER_CONFIG_PLUGINS_ZED] = [
     ZedSecurityAuditLoggerConfigPlugin::class,
+    AiInteractionAuditLoggerConfigPlugin::class,
 ];
 $config[LogConstants::AUDIT_LOGGER_CONFIG_PLUGINS_GLUE] = [
     GlueSecurityAuditLoggerConfigPlugin::class,
@@ -541,6 +547,7 @@ $config[LogConstants::AUDIT_LOGGER_CONFIG_PLUGINS_GLUE_BACKEND] = [
 ];
 $config[LogConstants::AUDIT_LOGGER_CONFIG_PLUGINS_MERCHANT_PORTAL] = [
     MerchantPortalSecurityAuditLoggerConfigPlugin::class,
+    AiInteractionAuditLoggerConfigPlugin::class,
 ];
 
 $config[LogConstants::LOG_QUEUE_NAME] = 'log-queue';
@@ -1055,6 +1062,7 @@ $sprykerGlueBackendHost = getenv('SPRYKER_GLUE_BACKEND_HOST');
 $sprykerGlueBackendPort = (int)(getenv('SPRYKER_GLUE_BACKEND_PORT')) ?: 443;
 $config[GlueBackendApiApplicationConstants::GLUE_BACKEND_API_HOST] = $sprykerGlueBackendHost;
 $config[GlueBackendApiApplicationConstants::PROJECT_NAMESPACES] = [
+    'Demo',
     'Pyz',
 ];
 $config[GlueBackendApiApplicationConstants::GLUE_BACKEND_CORS_ALLOW_ORIGIN] = getenv('SPRYKER_GLUE_APPLICATION_CORS_ALLOW_ORIGIN') ?: '*';
