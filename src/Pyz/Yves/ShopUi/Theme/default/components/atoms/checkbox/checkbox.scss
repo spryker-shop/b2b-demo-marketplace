@@ -1,95 +1,49 @@
 @mixin shop-ui-checkbox($name: '.checkbox') {
     #{$name} {
-        display: inline-block;
+        display: inline-flex;
         position: relative;
 
         &__container {
             cursor: pointer;
             display: flex;
-            flex-flow: row nowrap;
             align-items: center;
+            gap: rem(var(--scale-8));
         }
 
         &__box {
             @include helper-effect-transition(border-color background-color);
             display: block;
-            width: rem(26);
-            height: rem(26);
-            line-height: rem(26);
-            border: rem(1) solid $setting-color-input-border;
-            background-color: $setting-color-white;
-            margin-right: rem(10);
-            text-align: center;
-            border-radius: $setting-border-radius;
-            flex: none;
-
-            @include helper-breakpoint-media-min($lg) {
-                margin-right: rem(14);
-                width: rem(20);
-                height: rem(20);
-                line-height: 1;
-            }
-
-            &--filter {
-                width: rem(24);
-                height: rem(24);
-                line-height: rem(24);
-
-                @include helper-breakpoint-media-min($lg) {
-                    width: 1.125rem;
-                    height: 1.125rem;
-                    line-height: 1.125rem;
-                }
-            }
-
-            &--shopping-list {
-                position: absolute;
-                top: rem(-10);
-                right: rem(15);
-                margin-right: 0;
-                z-index: $setting-zi-element;
-
-                @include helper-breakpoint-media-min($lg) {
-                    position: static;
-                    margin-right: rem(10);
-                }
-            }
-
-            &--alternative {
-                border: solid rem(2) $setting-color-gray-2;
-            }
+            width: rem(18);
+            height: rem(18);
+            border-radius: rem(var(--radius-xs));
+            border: rem(var(--stroke-sm)) solid var(--input-border-default);
+            background: var(--input-background-default);
         }
 
         &__input {
             @include helper-accessible-visibility-invisible;
             position: absolute;
 
-            &:focus ~ {
-                #{$name}__box {
-                    @include helper-outline;
-                }
+            &:focus ~ #{$name}__box {
+                box-shadow: var(--shadows-focus-x) var(--shadows-focus-y) var(--shadows-focus-blur)
+                    var(--shadows-focus-spread) var(--shadows-focus-color);
             }
 
             &:checked ~ {
                 #{$name}__box {
-                    background-color: $setting-color-main;
-                    border-color: $setting-color-main;
+                    background-color: var(--background-brand-primary);
+                    border-color: var(--background-brand-primary);
+                    position: relative;
 
-                    #{$name}__check {
-                        @include helper-visibility-visible;
-                    }
-
-                    &--alternative {
-                        background-color: $setting-color-white;
-                        border-color: $setting-color-gray-2;
-                    }
-                }
-
-                #{$name}__label.label {
-                    font-weight: fw(bold);
-
-                    &--alternative {
-                        font-weight: fw(regular);
+                    &::after {
+                        content: 'check';
+                        font-family: 'Material Symbols Outlined';
+                        position: absolute;
+                        left: 50%;
+                        top: 50%;
+                        translate: -50% -50%;
+                        font-size: rem(var(--font-size-18));
+                        color: var(--text-inverse);
                     }
                 }
             }
@@ -98,118 +52,86 @@
             &--disabled {
                 & ~ #{$name}__box,
                 & ~ #{$name}__box:hover {
-                    background-color: $setting-color-white;
-                    border-color: $setting-color-gray-1;
+                    border-color: var(--input-border-disabled);
                     cursor: not-allowed;
                 }
 
-                &:checked ~ #{$name}__box {
-                    background-color: $setting-color-gray-1;
-                    border-color: $setting-color-gray-1;
+                &:checked ~ #{$name}__box,
+                &:checked ~ #{$name}__box:hover {
+                    border-color: var(--input-border-disabled);
+                    background: var(--input-background-disabled);
+
+                    &::after {
+                        color: var(--icon-disabled);
+                    }
                 }
 
                 & ~ #{$name}__label.label {
-                    color: $setting-color-gray-2;
+                    color: var(--input-text-disabled);
                     cursor: not-allowed;
                 }
             }
-        }
 
-        &__check {
-            @include helper-visibility-invisible;
-            @include helper-effect-transition;
-            color: $setting-color-white;
-            vertical-align: baseline;
+            &[invalid],
+            &--error {
+                & ~ #{$name}__box,
+                & ~ #{$name}__box:hover {
+                    border-color: var(--background-state-error-bold);
+                    cursor: not-allowed;
+                }
 
-            &--alternative {
-                color: $setting-color-gray-2;
-                margin-bottom: rem(2);
+                &:checked ~ #{$name}__box,
+                &:checked ~ #{$name}__box:hover {
+                    border-color: var(--background-state-error-bold);
+                    background: var(--background-state-error-bold);
+                }
             }
-        }
-
-        &__label.label {
-            display: inline-block;
-            vertical-align: middle;
-            text-transform: none;
-            font-size: rem(14);
-            font-weight: fw(regular);
-            margin: 0;
-            user-select: none;
-            flex: 1;
-
-            &--filter {
-                flex-grow: 1;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                font-size: rem(14);
-                font-weight: fw(regular);
-                text-transform: none;
-                margin-bottom: 0;
-            }
-
-            &--alternative {
-                margin-bottom: 0;
-                font-size: rem(15);
-                font-weight: fw(regular);
-                line-height: rem(20);
-                color: $setting-color-gray-2;
-                text-transform: none;
-            }
-        }
-
-        &__counter {
-            padding-left: rem(8);
         }
 
         &--expand {
-            display: block;
-        }
-
-        &--filter {
             width: 100%;
-            font-size: rem(15);
-            line-height: rem(18);
-
-            @include helper-breakpoint-media-min($lg) {
-                font-size: rem(14);
-            }
         }
 
-        &--alternative {
-            margin-bottom: rem(15);
-
-            &:hover {
-                #{$name}__box--alternative {
-                    border-color: $setting-color-gray-2;
-                }
-            }
-        }
-
-        &--pdp {
-            @include helper-breakpoint-media-min($lg) {
-                margin-left: rem(132);
-            }
-
-            &:hover {
-                #{$name}__box--alternative {
-                    border-color: $setting-color-gray-2;
-                }
-            }
-        }
-
-        &--error &__box {
-            border-color: $setting-color-alt;
+        &__label:empty {
+            display: none;
         }
 
         &:hover {
             #{$name}__box {
-                border-color: $setting-color-main;
+                border-color: var(--input-border-hover);
+            }
+
+            #{$name}__input:checked ~ #{$name}__box {
+                background: var(--background-brand-hover);
+                border-color: var(--background-brand-hover);
+            }
+
+            #{$name}__input[invalid] ~ #{$name}__box,
+            #{$name}__input--error ~ #{$name}__box {
+                border-color: var(--background-state-error-bold);
+            }
+
+            #{$name}__input[invalid]:checked ~ #{$name}__box,
+            #{$name}__input--error:checked ~ #{$name}__box {
+                border-color: var(--background-state-error-bold);
+                background: var(--background-state-error-bold);
             }
 
             #{$name}__input[disabled] ~ #{$name}__box,
             #{$name}__input--disabled ~ #{$name}__box {
-                border-color: $setting-color-gray-1;
+                border-color: var(--input-border-disabled);
+            }
+
+            #{$name}__input[disabled]:checked ~ #{$name}__box,
+            #{$name}__input--disabled:checked ~ #{$name}__box {
+                border-color: var(--input-border-disabled);
+                background: var(--input-background-disabled);
+            }
+        }
+
+        &--intermediate {
+            #{$name}__input:checked ~ #{$name}__box::after {
+                content: 'remove';
             }
         }
 

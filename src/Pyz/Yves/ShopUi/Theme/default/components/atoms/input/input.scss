@@ -27,8 +27,8 @@
         &:focus-visible,
         &:focus {
             border-color: var(--input-border-focus);
-            box-shadow: rem(var(--shadows-focus-x)) rem(var(--shadows-focus-y)) rem(var(--shadows-focus-blur))
-                rem(var(--shadows-focus-spread)) var(--shadows-focus-color);
+            box-shadow: var(--shadows-focus-x) var(--shadows-focus-y) var(--shadows-focus-blur)
+                var(--shadows-focus-spread) var(--shadows-focus-color);
             outline: none;
         }
 
@@ -37,8 +37,8 @@
             border-color: var(--input-border-error);
 
             &:focus {
-                box-shadow: rem(var(--shadows-focus-x)) rem(var(--shadows-focus-y)) rem(var(--shadows-focus-blur))
-                    rem(var(--shadows-focus-spread)) var(--shadows-focus-color-error);
+                box-shadow: var(--shadows-focus-x) var(--shadows-focus-y) var(--shadows-focus-blur)
+                    var(--shadows-focus-spread) var(--shadows-focus-color-error);
             }
         }
 
