@@ -24568,12 +24568,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/ai-foundation.git",
-                "reference": "98b1109692f11ebb9284242cb26b2f0b82644a31"
+                "reference": "c46d6a4a616d3c3a8871f4fe1fd6fda1645042b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/ai-foundation/zipball/98b1109692f11ebb9284242cb26b2f0b82644a31",
-                "reference": "98b1109692f11ebb9284242cb26b2f0b82644a31",
+                "url": "https://api.github.com/repos/spryker/ai-foundation/zipball/c46d6a4a616d3c3a8871f4fe1fd6fda1645042b8",
+                "reference": "c46d6a4a616d3c3a8871f4fe1fd6fda1645042b8",
                 "shasum": ""
             },
             "require": {
@@ -24581,13 +24581,21 @@
                 "neuron-core/neuron-ai": "^2.9.3",
                 "php": ">=8.3",
                 "spryker/kernel": "^3.30.0",
+                "spryker/log-extension": "^1.0.0",
+                "spryker/monolog": "^2.0.5",
+                "spryker/propel-orm": "^1.15.0",
+                "spryker/state-machine": "^2.0.0",
                 "spryker/transfer": "^3.27.0",
                 "spryker/zed-request": "^3.20.0"
             },
             "require-dev": {
                 "spryker/code-sniffer": "*",
+                "spryker/log": "*",
                 "spryker/propel": "*",
                 "spryker/testify": "*"
+            },
+            "suggest": {
+                "spryker/log": "Provides logging infrastructure and audit log support for Spryker features."
             },
             "default-branch": true,
             "type": "library",
@@ -24609,7 +24617,7 @@
             "support": {
                 "source": "https://github.com/spryker/ai-foundation/tree/master"
             },
-            "time": "2026-02-12T07:23:14+00:00"
+            "time": "2026-03-09T20:46:37+00:00"
         },
         {
             "name": "spryker/alternative-products-rest-api",
