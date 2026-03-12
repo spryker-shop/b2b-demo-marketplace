@@ -42445,16 +42445,16 @@
         },
         {
             "name": "spryker/log",
-            "version": "3.18.1",
+            "version": "3.19.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/log.git",
-                "reference": "4872cf4758de0a7cecb3de89345968a352b2d0b6"
+                "reference": "d456ae0a6bf6bc1b91b1f7e473cedb965e4670f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/log/zipball/4872cf4758de0a7cecb3de89345968a352b2d0b6",
-                "reference": "4872cf4758de0a7cecb3de89345968a352b2d0b6",
+                "url": "https://api.github.com/repos/spryker/log/zipball/d456ae0a6bf6bc1b91b1f7e473cedb965e4670f5",
+                "reference": "d456ae0a6bf6bc1b91b1f7e473cedb965e4670f5",
                 "shasum": ""
             },
             "require": {
@@ -42468,15 +42468,18 @@
                 "spryker/queue": "^0.3.0 || ^1.0.0",
                 "spryker/symfony": "^3.0.0",
                 "spryker/transfer": "^3.27.0",
-                "spryker/util-network": "^1.0.0"
+                "spryker/util-network": "^1.0.0",
+                "spryker/web-profiler-extension": "^1.0.0"
             },
             "require-dev": {
                 "spryker/code-sniffer": "*",
+                "spryker/container": "*",
                 "spryker/propel": "*",
                 "spryker/silex": "*",
                 "spryker/testify": "*"
             },
             "suggest": {
+                "spryker/container": "If WebProfilerAuditLogDataCollectorPlugin is used",
                 "spryker/silex": "If you want to use ServiceProvider."
             },
             "type": "library",
@@ -42497,9 +42500,9 @@
             ],
             "description": "Log module",
             "support": {
-                "source": "https://github.com/spryker/log/tree/3.18.1"
+                "source": "https://github.com/spryker/log/tree/3.19.0"
             },
-            "time": "2025-10-14T14:32:14+00:00"
+            "time": "2026-03-11T16:48:16+00:00"
         },
         {
             "name": "spryker/log-extension",
@@ -89863,16 +89866,16 @@
         },
         {
             "name": "spryker-shop/web-profiler-widget",
-            "version": "1.5.0",
+            "version": "1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-shop/web-profiler-widget.git",
-                "reference": "09c6df2da7dd86da37fccbde0f313bc71e8c3f23"
+                "reference": "b29fb2129045b27874cc00614773708dd5186d6f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-shop/web-profiler-widget/zipball/09c6df2da7dd86da37fccbde0f313bc71e8c3f23",
-                "reference": "09c6df2da7dd86da37fccbde0f313bc71e8c3f23",
+                "url": "https://api.github.com/repos/spryker-shop/web-profiler-widget/zipball/b29fb2129045b27874cc00614773708dd5186d6f",
+                "reference": "b29fb2129045b27874cc00614773708dd5186d6f",
                 "shasum": ""
             },
             "require": {
@@ -89919,9 +89922,9 @@
             ],
             "description": "WebProfilerWidget module",
             "support": {
-                "source": "https://github.com/spryker-shop/web-profiler-widget/tree/1.5.0"
+                "source": "https://github.com/spryker-shop/web-profiler-widget/tree/1.7.0"
             },
-            "time": "2026-03-03T11:38:10+00:00"
+            "time": "2026-03-11T12:41:04+00:00"
         },
         {
             "name": "spryker/architecture-sniffer",
@@ -90333,16 +90336,16 @@
         },
         {
             "name": "spryker/web-profiler",
-            "version": "1.8.0",
+            "version": "1.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/web-profiler.git",
-                "reference": "3d8f889f63bd94c0880ceca20c3ce9164604dc96"
+                "reference": "4c2efc418bd9d17d3a44e28063c6e6ace28acb19"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/web-profiler/zipball/3d8f889f63bd94c0880ceca20c3ce9164604dc96",
-                "reference": "3d8f889f63bd94c0880ceca20c3ce9164604dc96",
+                "url": "https://api.github.com/repos/spryker/web-profiler/zipball/4c2efc418bd9d17d3a44e28063c6e6ace28acb19",
+                "reference": "4c2efc418bd9d17d3a44e28063c6e6ace28acb19",
                 "shasum": ""
             },
             "require": {
@@ -90392,9 +90395,9 @@
             ],
             "description": "WebProfiler module",
             "support": {
-                "source": "https://github.com/spryker/web-profiler/tree/1.8.0"
+                "source": "https://github.com/spryker/web-profiler/tree/1.10.0"
             },
-            "time": "2026-03-03T11:38:10+00:00"
+            "time": "2026-03-11T12:41:04+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
