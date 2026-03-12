@@ -340,6 +340,7 @@ jobs:
                 if: always()
 
     docker-alpine-php-84-mariadb-robot-api-b2b:
+        needs: [validation]
         name: "Robot / API B2B"
         runs-on: ubuntu-latest
         env:
@@ -490,6 +491,7 @@ jobs:
                 if: always()
 
     docker-alpine-php-84-mariadb-cypress-b2b:
+        needs: [js-validation, validation]
         name: "Cypress / UI B2B"
         runs-on: ubuntu-latest
         env:
