@@ -2,34 +2,44 @@
     #{$name} {
         @include helper-effect-transition(background-color border-color box-shadow color);
         display: inline-flex;
-        height: rem(32);
-        padding: 0 var(--space-4);
-        justify-content: center;
+        height: rem(36);
+        padding: 0 rem(var(--scale-16));
         align-items: center;
-        gap: var(--space-3);
+        gap: rem(var(--scale-8));
         width: 100%;
-        border-radius: var(--radius-sm);
-        border: var(--stroke-width-sm) solid var(--input-border-default);
+        border-radius: rem(var(--radius-sm));
+        border: rem(var(--stroke-sm)) solid var(--input-border-default);
         background: var(--input-background-default);
         color: var(--input-text-value);
-        font-size: var(--primitive-typography-size-12);
-        font-weight: var(--primitive-typography-font-weight-medium);
-        line-height: var(--primitive-typography-lh-16);
-        letter-spacing: var(--primitive-typography-letterspacing-normal);
+        font-size: rem(var(--font-size-14));
+        font-weight: var(--font-weight-medium);
+        line-height: rem(var(--font-line-height-16));
+        letter-spacing: rem(var(--font-letter-spacing-normal));
+
+        ::placeholder {
+            color: var(--input-text-placeholder);
+        }
 
         &:hover {
             border-color: var(--input-border-hover);
         }
 
+        &:focus-visible,
         &:focus {
             border-color: var(--input-border-focus);
-            box-shadow: var(--shadows-focus-x) var(--shadows-focus-y) var(--shadows-focus-blur)
-                var(--shadows-focus-spread) var(--shadows-focus-colour);
+            box-shadow: rem(var(--shadows-focus-x)) rem(var(--shadows-focus-y)) rem(var(--shadows-focus-blur))
+                rem(var(--shadows-focus-spread)) var(--shadows-focus-color);
+            outline: none;
         }
 
         &[invalid],
         &--error {
             border-color: var(--input-border-error);
+
+            &:focus {
+                box-shadow: rem(var(--shadows-focus-x)) rem(var(--shadows-focus-y)) rem(var(--shadows-focus-blur))
+                    rem(var(--shadows-focus-spread)) var(--shadows-focus-color-error);
+            }
         }
 
         &--disabled:hover,
@@ -50,10 +60,12 @@
             background: var(--input-background-disabled);
         }
 
-        &--md {
-            height: rem(40);
-            padding: 0 var(--primitive-spacing-5);
+        &--sm {
+            height: rem(32);
+            font-size: rem(var(--font-size-12));
         }
+
+        @content;
     }
 }
 

@@ -1,17 +1,17 @@
 @mixin shop-ui-label($name: '.label') {
     #{$name} {
-        display: block;
-        font-size: map_get($setting-font-size, tiny);
-        font-weight: map_get($setting-font-weight, bold);
-        margin-bottom: 0.4rem;
-        text-transform: uppercase;
-        color: $setting-color-gray-5;
-
+        color: var(--text-primary);
+        font-family: var(--font-family-sans, Inter);
+        font-size: rem(var(--font-size-12));
+        font-style: normal;
+        font-weight: var(--font-weight-medium);
+        line-height: rem(var(--font-line-height-16));
+        letter-spacing: rem(var(--font-letter-spacing-normal));
         &--required {
             &::after {
                 content: '*';
                 margin-left: 0.2rem;
-                color: $setting-color-main;
+                color: var(--text-state-error);
             }
         }
 
@@ -28,7 +28,7 @@
             width: 100%;
             min-height: rem(120);
             padding: rem(10);
-            border: rem(var(--stroke-width-medium)) dashed $setting-color-gray-2;
+            border: rem(var(--stroke-md)) dashed $setting-color-gray-2;
             border-radius: rem(var(--radius-xs));
             background-color: $setting-color-white;
             text-transform: initial;

@@ -41,7 +41,7 @@
         position: relative;
         background-color: $setting-color-white;
         color: $setting-color-text;
-        font-family: var(--primitive-typography-font-family-primary);
+        font-family: var(--font-family-sans);
         overflow-x: hidden;
     }
 
@@ -82,8 +82,8 @@
 
     hr {
         @include helper-ui-clearfix;
-        border-bottom: var(--stroke-width-thin) solid $setting-color-gray-3;
-        margin: rem(var(--space-3)) 0;
+        border-bottom: var(--stroke-sm) solid $setting-color-gray-3;
+        margin: rem(var(--scale-4)) 0;
     }
 
     small {
@@ -101,7 +101,7 @@
     p,
     blockquote,
     iframe {
-        margin: rem(var(--space-3)) 0;
+        margin: rem(var(--scale-4)) 0;
     }
 
     .text-color {

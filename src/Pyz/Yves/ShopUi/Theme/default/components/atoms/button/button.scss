@@ -4,15 +4,16 @@
         display: inline-flex;
         justify-content: center;
         align-items: center;
-        gap: rem(var(--space-2));
-        padding: rem(var(--space-4)) rem(var(--space-6));
+        gap: rem(var(--scale-2));
+        padding: rem(var(--scale-4)) rem(var(--scale-16));
+        min-height: rem(40);
         border-radius: var(--radius-md);
-        border: rem(var(--stroke-width-sm)) solid var(--background-brand-primary);
+        border: rem(var(--stroke-sm)) solid var(--background-brand-primary);
         background: var(--background-brand-primary);
-        font-size: var(--primitive-typography-size-14);
-        font-weight: var(--primitive-typography-font-weight-medium);
-        line-height: var(--primitive-typography-lh-20);
-        letter-spacing: var(--primitive-typography-letterspacing-normal, 0);
+        font-size: var(--font-size-14);
+        font-weight: var(--font-weight-medium);
+        line-height: var(--font-line-height-20);
+        letter-spacing: var(--font-letter-spacing-normal, 0);
         color: var(--text-inverse);
 
         &:hover {
@@ -23,7 +24,7 @@
 
         &:focus-visible {
             box-shadow: var(--shadows-focus-x) var(--shadows-focus-y) var(--shadows-focus-blur)
-                var(--shadows-focus-spread) var(--shadows-focus-colour);
+                var(--shadows-focus-spread) var(--shadows-focus-color);
             outline: unset;
         }
 
@@ -117,17 +118,24 @@
         }
 
         &--sm {
-            padding: rem(var(--space-3)) rem(var(--space-5));
+            min-height: rem(32);
+            padding-left: rem(var(--scale-12));
+            padding-right: rem(var(--scale-12));
         }
 
         &--lg {
-            padding: rem(var(--space-3)) rem(var(--space-7));
+            min-height: rem(48);
+            padding-left: rem(var(--scale-20));
+            padding-right: rem(var(--scale-20));
         }
 
         &--icon-only {
-            min-width: rem(32);
-            min-height: rem(32);
-            padding: var(--space-1);
+            padding-left: rem(var(--scale-8));
+            padding-right: rem(var(--scale-8));
+        }
+
+        &--expand {
+            width: 100%;
         }
     }
 }
