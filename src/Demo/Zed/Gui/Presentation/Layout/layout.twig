@@ -5,14 +5,3 @@
 
     {% include '@BackofficeAssistant/Partials/chat-widget.twig' %}
 {% endblock %}
-
-{% block common_js %}
-    <script>
-        window.BackofficeAssistantConfig = {
-            userName: '{{ username is defined ? username | e('js') : '' }}'
-        };
-    </script>
-    <script src="{{ assetsPath('js/spryker-zed-backoffice-assistant.js') }}"></script>
-
-    {{ parent() }}
-{% endblock %}
