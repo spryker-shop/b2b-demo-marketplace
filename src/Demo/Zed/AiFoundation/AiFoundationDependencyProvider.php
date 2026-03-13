@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Demo\Zed\AiFoundation;
 
+use Demo\Zed\BackofficeAssistant\Communication\Plugin\Tool\OrderToolSetPlugin;
 use Spryker\Zed\AiFoundation\AiFoundationDependencyProvider as SprykerAiFoundationDependencyProvider;
 use Spryker\Zed\AiFoundation\Communication\Plugin\AuditLogPostPromptPlugin;
 use Spryker\Zed\AiFoundation\Communication\Plugin\Log\AiInteractionHandlerPlugin;
@@ -22,6 +23,16 @@ class AiFoundationDependencyProvider extends SprykerAiFoundationDependencyProvid
     {
         return [
             new AiInteractionHandlerPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\AiFoundation\Dependency\Tools\ToolSetPluginInterface>
+     */
+    protected function getAiToolSetPlugins(): array
+    {
+        return [
+            new OrderToolSetPlugin(),
         ];
     }
 

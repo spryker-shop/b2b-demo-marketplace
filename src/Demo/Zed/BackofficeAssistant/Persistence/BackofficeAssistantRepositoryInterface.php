@@ -35,4 +35,16 @@ interface BackofficeAssistantRepositoryInterface
      * @return bool
      */
     public function hasConversationHistoryForUser(int $idUser, string $conversationReference): bool;
+
+    /**
+     * Specification:
+     * - Returns the agent string for the conversation with the given reference, or null if not found.
+     *
+     * @api
+     *
+     * @param string $conversationReference
+     *
+     * @return string|null
+     */
+    public function findAgentByConversationReference(string $conversationReference): ?string;
 }

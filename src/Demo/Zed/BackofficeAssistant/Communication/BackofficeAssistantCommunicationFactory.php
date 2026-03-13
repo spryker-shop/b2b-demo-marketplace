@@ -25,4 +25,12 @@ class BackofficeAssistantCommunicationFactory extends AbstractCommunicationFacto
     {
         return $this->getProvidedDependency(BackofficeAssistantDependencyProvider::FACADE_USER);
     }
+
+    /**
+     * @return array<\Demo\Zed\BackofficeAssistant\Dependency\BackofficeAssistantAgentPluginInterface>
+     */
+    public function getBackofficeAssistantAgentPlugins(): array
+    {
+        return $this->getProvidedDependency(BackofficeAssistantDependencyProvider::PLUGINS_BACKOFFICE_ASSISTANT_AGENT);
+    }
 }

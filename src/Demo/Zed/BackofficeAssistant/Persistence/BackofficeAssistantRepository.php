@@ -37,4 +37,18 @@ class BackofficeAssistantRepository extends AbstractRepository implements Backof
             ->filterByConversationReference($conversationReference)
             ->exists();
     }
+
+    public function findAgentByConversationReference(string $conversationReference): ?string
+    {
+        $entity = $this->getFactory()
+            ->createBackofficeAssistantConversationQuery()
+            ->filterByConversationReference($conversationReference)
+            ->findOne();
+
+        if ($entity === null) {
+            return null;
+        }
+
+        return $entity->getAgent();
+    }
 }

@@ -27,4 +27,29 @@ interface BackofficeAssistantEntityManagerInterface
     public function createConversationHistory(
         BackofficeAssistantConversationHistoryTransfer $transfer,
     ): BackofficeAssistantConversationHistoryTransfer;
+
+    /**
+     * Specification:
+     * - Updates the agent field on the conversation identified by the given reference.
+     *
+     * @api
+     *
+     * @param string $conversationReference
+     * @param string $agent
+     *
+     * @return void
+     */
+    public function updateConversationHistoryAgent(string $conversationReference, string $agent): void;
+
+    /**
+     * Specification:
+     * - Deletes the conversation history record identified by the given reference.
+     *
+     * @api
+     *
+     * @param string $conversationReference
+     *
+     * @return void
+     */
+    public function deleteConversationHistoryByReference(string $conversationReference): void;
 }

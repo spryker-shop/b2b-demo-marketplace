@@ -21,7 +21,10 @@
                 <span class="fa fa-plus"></span>
             </button>
         </div>
-        <strong class="backoffice-assistant__header-title">Backoffice Assistant</strong>
+        <div class="backoffice-assistant__header-center">
+            <strong class="backoffice-assistant__header-title">Backoffice Assistant</strong>
+            <span class="backoffice-assistant__agent-badge js-backoffice-assistant__agent-badge"></span>
+        </div>
         <button type="button"
                 class="backoffice-assistant__close js-backoffice-assistant__close"
                 aria-label="Close AI Assistant">
@@ -39,14 +42,28 @@
     <div class="backoffice-assistant__messages js-backoffice-assistant__messages"></div>
 
     <div class="backoffice-assistant__footer">
-        <textarea class="backoffice-assistant__input js-backoffice-assistant__input"
-                  rows="1"
-                  placeholder="Ask me anything..."
-                  aria-label="Message input"></textarea>
-        <button type="button"
-                class="backoffice-assistant__send js-backoffice-assistant__send"
-                aria-label="Send message">
-            <span class="fa fa-paper-plane"></span>
-        </button>
+        <div class="backoffice-assistant__attachments-preview js-backoffice-assistant__attachments-preview"></div>
+        <div class="backoffice-assistant__footer-row">
+            <button type="button"
+                    class="backoffice-assistant__attach js-backoffice-assistant__attach"
+                    aria-label="Attach file"
+                    title="Attach file">
+                <span class="fa fa-paperclip"></span>
+            </button>
+            <input type="file"
+                   class="backoffice-assistant__file-input js-backoffice-assistant__file-input"
+                   accept="image/png,image/jpeg,image/gif,image/webp,application/pdf,text/plain,text/csv,.csv"
+                   multiple
+                   hidden />
+            <textarea class="backoffice-assistant__input js-backoffice-assistant__input"
+                      rows="1"
+                      placeholder="Ask me anything..."
+                      aria-label="Message input"></textarea>
+            <button type="button"
+                    class="backoffice-assistant__send js-backoffice-assistant__send"
+                    aria-label="Send message">
+                <span class="fa fa-paper-plane"></span>
+            </button>
+        </div>
     </div>
 </div>

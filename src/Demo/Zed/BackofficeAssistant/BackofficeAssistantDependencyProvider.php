@@ -9,6 +9,10 @@ declare(strict_types = 1);
 
 namespace Demo\Zed\BackofficeAssistant;
 
+use Demo\Zed\BackofficeAssistant\Communication\Plugin\Agent\DiscountAgentPlugin;
+use Demo\Zed\BackofficeAssistant\Communication\Plugin\Agent\GeneralPurposeAgentPlugin;
+use Demo\Zed\BackofficeAssistant\Communication\Plugin\Agent\OrderAgentPlugin;
+use Demo\Zed\BackofficeAssistant\Communication\Plugin\Agent\ProductAgentPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -20,6 +24,8 @@ class BackofficeAssistantDependencyProvider extends AbstractBundleDependencyProv
 
     public const string SERVICE_BACKOFFICE_ASSISTANT = 'SERVICE_BACKOFFICE_ASSISTANT';
 
+    public const string PLUGINS_BACKOFFICE_ASSISTANT_AGENT = 'PLUGINS_BACKOFFICE_ASSISTANT_AGENT';
+
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
@@ -28,7 +34,24 @@ class BackofficeAssistantDependencyProvider extends AbstractBundleDependencyProv
 
         $container->set(static::FACADE_USER, fn (Container $container) => $container->getLocator()->user()->facade());
 
+        $container->set(static::PLUGINS_BACKOFFICE_ASSISTANT_AGENT, function (): array {
+            return $this->getBackofficeAssistantAgentPlugins();
+        });
+
         return $container;
+    }
+
+    /**
+     * @return array<\Demo\Zed\BackofficeAssistant\Dependency\BackofficeAssistantAgentPluginInterface>
+     */
+    protected function getBackofficeAssistantAgentPlugins(): array
+    {
+        return [
+            new GeneralPurposeAgentPlugin(),
+            new ProductAgentPlugin(),
+            new DiscountAgentPlugin(),
+            new OrderAgentPlugin(),
+        ];
     }
 
     public function provideBusinessLayerDependencies(Container $container): Container

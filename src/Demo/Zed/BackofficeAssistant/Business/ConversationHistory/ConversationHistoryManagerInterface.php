@@ -51,4 +51,35 @@ interface ConversationHistoryManagerInterface
      * @return bool
      */
     public function hasForUser(int $idUser, string $conversationReference): bool;
+
+    /**
+     * Specification:
+     * - Updates the agent field on the conversation identified by the given reference.
+     *
+     * @param string $conversationReference
+     * @param string $agent
+     *
+     * @return void
+     */
+    public function updateAgent(string $conversationReference, string $agent): void;
+
+    /**
+     * Specification:
+     * - Returns the agent string for the conversation with the given reference, or null if not found.
+     *
+     * @param string $conversationReference
+     *
+     * @return string|null
+     */
+    public function findAgentByConversationReference(string $conversationReference): ?string;
+
+    /**
+     * Specification:
+     * - Deletes the conversation history record identified by the given reference.
+     *
+     * @param string $conversationReference
+     *
+     * @return void
+     */
+    public function deleteByReference(string $conversationReference): void;
 }

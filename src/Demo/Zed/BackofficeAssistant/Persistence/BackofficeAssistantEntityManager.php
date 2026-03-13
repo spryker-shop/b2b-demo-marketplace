@@ -31,4 +31,44 @@ class BackofficeAssistantEntityManager extends AbstractEntityManager implements 
             ->createMapper()
             ->mapEntityToTransfer($entity, $transfer);
     }
+
+    /**
+     * @param string $conversationReference
+     * @param string $agent
+     *
+     * @return void
+     */
+    public function updateConversationHistoryAgent(string $conversationReference, string $agent): void
+    {
+        $entity = $this->getFactory()
+            ->createBackofficeAssistantConversationQuery()
+            ->filterByConversationReference($conversationReference)
+            ->findOne();
+
+        if ($entity === null) {
+            return;
+        }
+
+        $entity->setAgent($agent);
+        $entity->save();
+    }
+
+    /**
+     * @param string $conversationReference
+     *
+     * @return void
+     */
+    public function deleteConversationHistoryByReference(string $conversationReference): void
+    {
+        $entity = $this->getFactory()
+            ->createBackofficeAssistantConversationQuery()
+            ->filterByConversationReference($conversationReference)
+            ->findOne();
+
+        if ($entity === null) {
+            return;
+        }
+
+        $entity->delete();
+    }
 }
