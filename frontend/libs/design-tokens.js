@@ -12,8 +12,8 @@ StyleDictionary.registerTransform({
 StyleDictionary.registerTransform({
     name: 'value/px-custom',
     type: 'value',
-    filter: (token) => typeof (token.$value || token.value) === 'number' &&
-        !token.path.join('.').toLowerCase().includes('weight'),
+    filter: (token) =>
+        typeof (token.$value || token.value) === 'number' && !token.path.join('.').toLowerCase().includes('weight'),
     transform: (token) => `${token.$value || token.value}px`,
 });
 
