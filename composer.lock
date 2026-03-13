@@ -20193,16 +20193,16 @@
         },
         {
             "name": "spryker-shop/product-review-widget",
-            "version": "1.18.0",
+            "version": "1.19.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-shop/product-review-widget.git",
-                "reference": "4304fd75dab5a933a65d157236dc51ca0ce02643"
+                "reference": "cbd3da3a377f78612e012d6fe73190cdd7f14458"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-shop/product-review-widget/zipball/4304fd75dab5a933a65d157236dc51ca0ce02643",
-                "reference": "4304fd75dab5a933a65d157236dc51ca0ce02643",
+                "url": "https://api.github.com/repos/spryker-shop/product-review-widget/zipball/cbd3da3a377f78612e012d6fe73190cdd7f14458",
+                "reference": "cbd3da3a377f78612e012d6fe73190cdd7f14458",
                 "shasum": ""
             },
             "require": {
@@ -20221,6 +20221,7 @@
             },
             "require-dev": {
                 "spryker-shop/catalog-page": "*",
+                "spryker-shop/content-product-widget": "*",
                 "spryker-shop/product-detail-page": "*",
                 "spryker-shop/product-widget": "*",
                 "spryker/code-sniffer": "*",
@@ -20231,6 +20232,7 @@
             },
             "suggest": {
                 "spryker-shop/catalog-page": "Widget plugins are available for this module.",
+                "spryker-shop/content-product-widget": "If you want to use ContentProductAbstractCollectionExpanderPlugin",
                 "spryker-shop/product-detail-page": "Widget plugins are available for this module.",
                 "spryker-shop/product-widget": "Widget plugins are available for this module.",
                 "spryker/router": "Use this module when you want to use the Router.",
@@ -20253,9 +20255,9 @@
             ],
             "description": "ProductReviewWidget module",
             "support": {
-                "source": "https://github.com/spryker-shop/product-review-widget/tree/1.18.0"
+                "source": "https://github.com/spryker-shop/product-review-widget/tree/1.19.0"
             },
-            "time": "2026-03-11T14:10:06+00:00"
+            "time": "2026-03-12T09:21:31+00:00"
         },
         {
             "name": "spryker-shop/product-search-widget",
@@ -90951,5 +90953,5 @@
     "platform-overrides": {
         "php": "8.3.13"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
