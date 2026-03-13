@@ -23,16 +23,16 @@ project-level changes from `spryker/suite` into a demoshop. It is primarily focu
 Before doing anything, collect all required inputs. Check the conversation for answers already
 provided. Ask only for what is still missing.
 
-| Info | Question to ask |
-|------|----------------|
-| JIRA ticket | "What is the JIRA ticket number for this integration? (e.g. ABC-1234)" |
-| Integration ticket | "Is there a separate integration/BugFix Integration ticket? If so, what is its number?" |
-| Upcoming release tag | "What is the tag of the upcoming release? (e.g. 1.23.0)" |
-| Suite PR URL | "What is the GitHub URL of the pull request in spryker/suite that needs to be integrated?" |
-| Packages to update | "Which spryker/* packages need to be updated? (list them all)" |
-| Security fix | "Is this a security fix integration? (yes/no)" |
-| Project changes | "Are there project-level changes in the suite PR that also need to be applied to the demoshop? (yes/no)" |
-| Branch check | "Are you on the master branch and have you pulled the latest changes before starting?" |
+| Info                | Question to ask                                                                                          |
+|---------------------|----------------------------------------------------------------------------------------------------------|
+| JIRA ticket         | "What is the JIRA ticket number for this integration? (e.g. ABC-1234)"                                   |
+| Integration ticket  | "Is there a separate integration/BugFix Integration ticket? If so, what is its number?"                  |
+| Suite PR URL        | "What is the GitHub URL of the pull request in spryker/suite that needs to be integrated?"               |
+| Current release tag | Can be taken from one of the spryker-feature/* packages defined in the composer.json (don't ask)         |
+| Packages to update  | "Which spryker/* packages need to be updated? (list them all)"                                           |
+| Security fix        | "Is this a security fix integration? (yes/no)"                                                           |
+| Project changes     | "Are there project-level changes in the suite PR that also need to be applied to the demoshop? (yes/no)" |
+| Branch check        | "Are you on the master branch and have you pulled the latest changes before starting?"                   |
 
 If the user says they are **not** on an updated master branch, stop and ask them to do that first.
 
@@ -102,7 +102,7 @@ cat composer.json | grep "vendor/package-name"
 - **If present:** treat it like a standard package — run `composer depends` and resolve its
   feature package. If not found in a feature update this package.
 - **If absent:** add it directly to the `require` section of the **root demoshop `composer.json`**
-  with version `dev-master as {upcoming-release-tag}`, then include it in the `composer update`
+  with version `dev-master as {current-release-tag}`, then include it in the `composer update`
   call in Step 5.
 
 ---
@@ -113,12 +113,12 @@ For each resolved `spryker-feature/*` package, update its version constraint in 
 `composer.json` to:
 
 ```
-"dev-master as {upcoming-release-tag}"
+"dev-master as {current-release-tag}"
 ```
 
-**Example** (upcoming release `1.23.0`):
+**Example** (current release `202602.0`):
 ```json
-"spryker-feature/spryker-core": "dev-master as 1.23.0"
+"spryker-feature/spryker-core": "dev-master as 202602.0"
 ```
 
 Edit `composer.json` directly. After all changes are made, verify the file is valid JSON:
@@ -206,7 +206,6 @@ Integration summary
 Branch:            {branch-name}
 JIRA ticket:       {ticket}
 Integration ticket:{integration-ticket or "none"}
-Upcoming release:  {tag}
 Suite PR:          {url}
 Security fix:      yes/no
 
