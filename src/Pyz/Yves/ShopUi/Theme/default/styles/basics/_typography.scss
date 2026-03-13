@@ -1,16 +1,16 @@
 @mixin basic-typography() {
     html {
-        font-size: $setting-font-size-base;
+        font-size: var(--font-size-16);
     }
 
     body {
         @include helper-font-size(default);
-        @include helper-font-weight(regular);
-        @include helper-font-line-height(default);
+        font-weight: var(--font-weight-regular);
+        line-height: var(--font-line-height-24);
         letter-spacing: rem(0.12);
         position: relative;
-        background-color: $setting-color-white;
-        color: $setting-color-text;
+        background-color: var(--background-page);
+        color: var(--text-inverse);
         font-family: var(--font-family-sans);
         overflow-x: hidden;
     }

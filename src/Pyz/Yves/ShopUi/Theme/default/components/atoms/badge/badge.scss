@@ -21,41 +21,41 @@
     &--info {
         color: var(--text-state-info);
         background: var(--background-state-info-subtle);
-
-        &#{$name}--solid {
-            background: var(--background-state-info-bold);
-        }
     }
 
     &--success {
         color: var(--text-state-success);
         background: var(--background-state-success-subtle);
-
-        &#{$name}--solid {
-            background: var(--background-state-success-bold);
-        }
     }
 
     &--warning {
         background: var(--background-state-warning-subtle);
         color: var(--text-state-warning);
-
-        &#{$name}--solid {
-            background: var(--background-state-warning-bold);
-        }
     }
 
     &--error {
         background: var(--background-state-error-subtle);
         color: var(--text-state-error);
-
-        &#{$name}--solid {
-            background: var(--background-state-error-bold);
-        }
     }
 
     &--solid {
         color: var(--text-inverse);
         background: var(--background-inverse);
+    }
+
+    &--info#{&}--solid {
+        background: var(--background-state-info-bold);
+    }
+
+    &--success#{&}--solid {
+        background: var(--background-state-success-bold);
+    }
+
+    &--warning#{&}--solid {
+        background: var(--background-state-warning-bold);
+    }
+
+    &--error#{&}--solid {
+        background: var(--background-state-error-bold);
     }
 }
