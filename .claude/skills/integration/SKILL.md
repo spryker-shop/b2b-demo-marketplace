@@ -18,6 +18,38 @@ project-level changes from `spryker/suite` into a demoshop. It is primarily focu
 
 ---
 
+## Step 0 — Check Prerequisites
+
+Before starting the workflow, verify that all required CLI tools are available.
+
+### GitHub CLI (`gh`)
+
+Run:
+```bash
+gh --version
+```
+
+- **If the command succeeds:** continue to Step 1.
+- **If the command fails (not found):** stop and display this message to the user:
+
+```
+The GitHub CLI (gh) is required for this integration workflow but was not found on your system.
+
+Install it:
+  macOS:   brew install gh
+  Linux:   https://github.com/cli/cli/blob/trunk/docs/install_linux.md
+  Windows: winget install --id GitHub.cli
+
+After installing, authenticate with:
+  gh auth login
+
+Then re-run this skill.
+```
+
+Do **not** proceed with the integration until `gh` is available and authenticated.
+
+---
+
 ## Step 1 — Gather Required Information
 
 Before doing anything, collect all required inputs. Check the conversation for answers already
