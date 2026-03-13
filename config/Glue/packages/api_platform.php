@@ -37,9 +37,11 @@ return static function (ApiPlatformConfig $apiPlatform, string $env): void {
             'filter' => true,
             'docExpansion' => 'none',
         ])
-        ->apiKeys('JWT', ['name' => 'Authorization', 'type' => 'header']);
+        ->httpAuth('JWT', ['scheme' => 'bearer', 'bearerFormat' => 'JWT']);
 
     $apiPlatform->defaults()->paginationItemsPerPage(10);
+    $apiPlatform->defaults()->filters(['spryker.api_platform.filter.property']);
+
     $apiPlatform->collection()
         ->existsParameterName('exists')
         ->order('ASC')
@@ -54,4 +56,6 @@ return static function (ApiPlatformConfig $apiPlatform, string $env): void {
     $apiPlatform->formats('jsonld', ['mime_types' => ['application/ld+json']]);
     $apiPlatform->formats('xml', ['mime_types' => ['application/xml', 'text/xml']]);
     $apiPlatform->formats('csv', ['mime_types' => ['text/csv']]);
+
+    $apiPlatform->errorFormats('jsonapi', ['mime_types' => ['application/vnd.api+json']]);
 };
