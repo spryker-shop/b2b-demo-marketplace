@@ -6,6 +6,10 @@
         @return calc(#{$value} / #{$setting-font-size-base} * 1rem);
     }
 
+    @if $value == 0 {
+        @return 0;
+    }
+
     $remSize: math.div($value, math.div($setting-font-size-base, 1px));
 
     @if ($type == number) {

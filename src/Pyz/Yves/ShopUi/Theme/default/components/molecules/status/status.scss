@@ -1,26 +1,18 @@
 @include shop-ui-status {
-    font-size: rem(12);
-    line-height: rem(20);
-    background: lighten($setting-color-alt, 50%);
-    color: darken($setting-color-alt, 27%);
-    padding: 0 rem(6);
-    border-radius: $setting-border-radius-2;
-    margin: rem(2) rem(2) rem(2) 0;
-
-    &--borderless {
-        border-radius: 0;
-    }
-
-    &--small {
-        padding: 0 rem(16);
-    }
-
+    &--shipped,
+    &--in-stock,
+    &--never-out-of-stock,
+    &--available,
     &--approved,
     &--ready,
     &--paid,
     &--delivered {
-        background-color: lighten($setting-color-main, 75%);
-        color: darken($setting-color-main, 5%);
+        color: var(--text-state-success);
+        background: var(--background-state-success-subtle);
+
+        &::before {
+            background: var(--background-state-success-subtle);
+        }
     }
 
     &--cancelled,
@@ -28,45 +20,31 @@
     &--returned,
     &--waiting-for-return,
     &--return-canceled {
-        background-color: $setting-color-gray-1;
-        color: $setting-color-gray-8;
+        background: var(--background-state-warning-subtle);
+        color: var(--text-state-warning);
+
+        &::before {
+            background: var(--background-state-warning-subtle);
+        }
     }
 
-    &--shipped {
-        background: lighten($setting-color-blue-1, 63%);
-        color: $setting-color-blue-1;
-    }
-
+    &--out-of-stock,
     &--rejected,
     &--not-configured {
-        background: lighten($setting-color-alt, 50%);
-        color: darken($setting-color-alt, 27%);
+        background: var(--background-state-error-subtle);
+        color: var(--text-state-error);
+
+        &::before {
+            background: var(--background-state-error-subtle);
+        }
     }
 
     &--availability {
-        background-color: lighten($setting-color-main, 75%);
-        font-weight: 500;
+        color: var(--text-state-info);
+        background: var(--background-state-info-subtle);
 
         &::before {
-            background-color: $setting-color-main;
-        }
-    }
-
-    &--in-stock,
-    &--never-out-of-stock,
-    &--available {
-        background-color: lighten(map-get($setting-color-actions, 'success'), 75%);
-
-        &::before {
-            background-color: map-get($setting-color-actions, 'success');
-        }
-    }
-
-    &--out-of-stock {
-        background-color: lighten(map-get($setting-color-actions, 'alert'), 50%);
-
-        &::before {
-            background-color: map-get($setting-color-actions, 'alert');
+            background: var(--background-state-info-subtle);
         }
     }
 }
