@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "617831bada8157a8c47b15c7a4583b21",
+    "content-hash": "fea77d58b5227f4531b6b52e528411fb",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -4443,16 +4443,16 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "2.8.0",
+            "version": "2.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "21dc724a0583619cd1652f673303492272778051"
+                "reference": "7d0ed42f28e42d61352a7a79de682e5e67fec884"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/21dc724a0583619cd1652f673303492272778051",
-                "reference": "21dc724a0583619cd1652f673303492272778051",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/7d0ed42f28e42d61352a7a79de682e5e67fec884",
+                "reference": "7d0ed42f28e42d61352a7a79de682e5e67fec884",
                 "shasum": ""
             },
             "require": {
@@ -4468,6 +4468,7 @@
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.8.2",
                 "http-interop/http-factory-tests": "0.9.0",
+                "jshttp/mime-db": "1.54.0.1",
                 "phpunit/phpunit": "^8.5.44 || ^9.6.25"
             },
             "suggest": {
@@ -4539,7 +4540,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
-                "source": "https://github.com/guzzle/psr7/tree/2.8.0"
+                "source": "https://github.com/guzzle/psr7/tree/2.9.0"
             },
             "funding": [
                 {
@@ -4555,7 +4556,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-08-23T21:21:41+00:00"
+            "time": "2026-03-10T16:41:02+00:00"
         },
         {
             "name": "hidehalo/nanoid-php",
@@ -13103,7 +13104,7 @@
         },
         {
             "name": "spryker-feature/scheduled-prices",
-            "version": "202602.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/scheduled-prices.git",
@@ -13121,6 +13122,7 @@
                 "spryker/price-product-schedule-data-import": "^0.1.0",
                 "spryker/price-product-schedule-gui": "^3.0.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -13133,7 +13135,7 @@
             ],
             "description": "Scheduled Prices [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/scheduled-prices/tree/202602.0"
+                "source": "https://github.com/spryker-feature/scheduled-prices/tree/master"
             },
             "time": "2026-02-25T12:39:23+00:00"
         },
@@ -13177,7 +13179,7 @@
         },
         {
             "name": "spryker-feature/self-service-portal",
-            "version": "202602.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/self-service-portal.git",
@@ -13312,6 +13314,7 @@
                 "spryker/catalog": "If you want to use the product class catalog feature, you need to install this module.",
                 "spryker/container": "Add this module when you want to use the Container."
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -13330,7 +13333,7 @@
             ],
             "description": "SelfServicePortal module",
             "support": {
-                "source": "https://github.com/spryker-feature/self-service-portal/tree/202602.0"
+                "source": "https://github.com/spryker-feature/self-service-portal/tree/master"
             },
             "time": "2026-02-17T16:41:36+00:00"
         },
@@ -24711,16 +24714,16 @@
         },
         {
             "name": "spryker/application",
-            "version": "3.45.0",
+            "version": "3.46.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/application.git",
-                "reference": "930015e4e151bf8d80d7ec15d4d5dab619ebfa36"
+                "reference": "9ed0fd85a54122a0844bfe163e7825745aea74f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/application/zipball/930015e4e151bf8d80d7ec15d4d5dab619ebfa36",
-                "reference": "930015e4e151bf8d80d7ec15d4d5dab619ebfa36",
+                "url": "https://api.github.com/repos/spryker/application/zipball/9ed0fd85a54122a0844bfe163e7825745aea74f4",
+                "reference": "9ed0fd85a54122a0844bfe163e7825745aea74f4",
                 "shasum": ""
             },
             "require": {
@@ -24776,9 +24779,9 @@
             ],
             "description": "Application module",
             "support": {
-                "source": "https://github.com/spryker/application/tree/3.45.0"
+                "source": "https://github.com/spryker/application/tree/3.46.0"
             },
-            "time": "2026-03-09T09:13:58+00:00"
+            "time": "2026-03-11T11:00:51+00:00"
         },
         {
             "name": "spryker/application-extension",
@@ -27790,16 +27793,16 @@
         },
         {
             "name": "spryker/category",
-            "version": "5.22.0",
+            "version": "5.23.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/category.git",
-                "reference": "746c68b3585d6f5fd320db8099a9177b9ff02c2d"
+                "reference": "f76f61558c9d60c612e4df07e5da68b32404b128"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/category/zipball/746c68b3585d6f5fd320db8099a9177b9ff02c2d",
-                "reference": "746c68b3585d6f5fd320db8099a9177b9ff02c2d",
+                "url": "https://api.github.com/repos/spryker/category/zipball/f76f61558c9d60c612e4df07e5da68b32404b128",
+                "reference": "f76f61558c9d60c612e4df07e5da68b32404b128",
                 "shasum": ""
             },
             "require": {
@@ -27810,7 +27813,7 @@
                 "spryker/kernel": "^3.30.0",
                 "spryker/locale": "^3.0.0 || ^4.0.0",
                 "spryker/propel": "^3.0.0",
-                "spryker/propel-orm": "^1.0.0",
+                "spryker/propel-orm": "^1.22.0",
                 "spryker/store": "^1.0.0",
                 "spryker/touch": "^4.5.0",
                 "spryker/transfer": "^3.27.0",
@@ -27841,9 +27844,9 @@
             ],
             "description": "Category module",
             "support": {
-                "source": "https://github.com/spryker/category/tree/5.22.0"
+                "source": "https://github.com/spryker/category/tree/5.23.0"
             },
-            "time": "2026-02-12T11:08:10+00:00"
+            "time": "2026-03-12T15:23:09+00:00"
         },
         {
             "name": "spryker/category-data-feed",
@@ -35099,6 +35102,48 @@
             "time": "2025-08-04T10:29:10+00:00"
         },
         {
+            "name": "spryker/configuration-extension",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/configuration-extension.git",
+                "reference": "4d1eff32193c3b77a505f81eb14b69b491305bd0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/configuration-extension/zipball/4d1eff32193c3b77a505f81eb14b69b491305bd0",
+                "reference": "4d1eff32193c3b77a505f81eb14b69b491305bd0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.3",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ConfigurationExtension module",
+            "support": {
+                "source": "https://github.com/spryker/configuration-extension/tree/1.0.0"
+            },
+            "time": "2026-03-12T12:11:14+00:00"
+        },
+        {
             "name": "spryker/console",
             "version": "4.18.0",
             "source": {
@@ -36917,26 +36962,26 @@
         },
         {
             "name": "spryker/customer-access-storage",
-            "version": "1.11.0",
+            "version": "1.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/customer-access-storage.git",
-                "reference": "c781e96f407a43378071ed91c3e0377c3ccdbfc6"
+                "reference": "96a8796528d961aee95d1399a5ea241e8cf92ea6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/customer-access-storage/zipball/c781e96f407a43378071ed91c3e0377c3ccdbfc6",
-                "reference": "c781e96f407a43378071ed91c3e0377c3ccdbfc6",
+                "url": "https://api.github.com/repos/spryker/customer-access-storage/zipball/96a8796528d961aee95d1399a5ea241e8cf92ea6",
+                "reference": "96a8796528d961aee95d1399a5ea241e8cf92ea6",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/customer-access": "^1.0.0",
                 "spryker/kernel": "^3.37.0",
                 "spryker/propel-orm": "^1.5.0",
                 "spryker/publisher-extension": "^1.0.0",
                 "spryker/storage": "^3.0.0",
-                "spryker/synchronization": "^0.2.0 || ^1.0.0",
+                "spryker/synchronization": "^1.0.0",
                 "spryker/synchronization-behavior": "^1.0.0",
                 "spryker/synchronization-extension": "^1.1.0"
             },
@@ -36971,9 +37016,9 @@
             ],
             "description": "CustomerAccessStorage module",
             "support": {
-                "source": "https://github.com/spryker/customer-access-storage/tree/1.11.0"
+                "source": "https://github.com/spryker/customer-access-storage/tree/1.12.0"
             },
-            "time": "2025-08-04T10:29:10+00:00"
+            "time": "2026-03-12T19:45:37+00:00"
         },
         {
             "name": "spryker/customer-catalog",
@@ -40485,20 +40530,20 @@
         },
         {
             "name": "spryker/glossary-storage",
-            "version": "1.12.0",
+            "version": "1.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/glossary-storage.git",
-                "reference": "a2bee5e402c6747a076fcf0145f4e0e609421d39"
+                "reference": "f20a9b3b749fd53c1564bc0484c03530c4e7c8c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/glossary-storage/zipball/a2bee5e402c6747a076fcf0145f4e0e609421d39",
-                "reference": "a2bee5e402c6747a076fcf0145f4e0e609421d39",
+                "url": "https://api.github.com/repos/spryker/glossary-storage/zipball/f20a9b3b749fd53c1564bc0484c03530c4e7c8c2",
+                "reference": "f20a9b3b749fd53c1564bc0484c03530c4e7c8c2",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/event-behavior": "^1.1.0",
                 "spryker/glossary": "^3.7.0",
                 "spryker/kernel": "^3.30.0",
@@ -40506,7 +40551,7 @@
                 "spryker/publisher-extension": "^1.0.0",
                 "spryker/storage": "^3.4.0",
                 "spryker/symfony": "^3.0.0",
-                "spryker/synchronization": "^0.2.2 || ^1.9.0",
+                "spryker/synchronization": "^1.9.0",
                 "spryker/synchronization-behavior": "^1.0.0",
                 "spryker/synchronization-extension": "^1.0.0",
                 "spryker/transfer": "^3.25.0",
@@ -40542,9 +40587,9 @@
             ],
             "description": "GlossaryStorage module",
             "support": {
-                "source": "https://github.com/spryker/glossary-storage/tree/1.12.0"
+                "source": "https://github.com/spryker/glossary-storage/tree/1.13.0"
             },
-            "time": "2025-08-04T10:29:10+00:00"
+            "time": "2026-03-12T19:45:37+00:00"
         },
         {
             "name": "spryker/glue-application",
@@ -41320,16 +41365,16 @@
         },
         {
             "name": "spryker/gui",
-            "version": "4.11.0",
+            "version": "4.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/gui.git",
-                "reference": "686afe8095889e387e3ad7bddd2bdd59beb4baf6"
+                "reference": "d0e3cb68bedb82856c457497b77032bf1a0bb95f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/gui/zipball/686afe8095889e387e3ad7bddd2bdd59beb4baf6",
-                "reference": "686afe8095889e387e3ad7bddd2bdd59beb4baf6",
+                "url": "https://api.github.com/repos/spryker/gui/zipball/d0e3cb68bedb82856c457497b77032bf1a0bb95f",
+                "reference": "d0e3cb68bedb82856c457497b77032bf1a0bb95f",
                 "shasum": ""
             },
             "require": {
@@ -41379,9 +41424,9 @@
             ],
             "description": "Gui module",
             "support": {
-                "source": "https://github.com/spryker/gui/tree/4.11.0"
+                "source": "https://github.com/spryker/gui/tree/4.12.0"
             },
-            "time": "2026-02-27T15:08:41+00:00"
+            "time": "2026-03-11T11:00:51+00:00"
         },
         {
             "name": "spryker/gui-extension",
@@ -41945,16 +41990,16 @@
         },
         {
             "name": "spryker/kernel",
-            "version": "3.81.1",
+            "version": "3.82.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/kernel.git",
-                "reference": "51079521e94f77d1778e434032f8c7f6b8567a39"
+                "reference": "29eed081c79fd96e13e25bc971f739fdc8ea18c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/kernel/zipball/51079521e94f77d1778e434032f8c7f6b8567a39",
-                "reference": "51079521e94f77d1778e434032f8c7f6b8567a39",
+                "url": "https://api.github.com/repos/spryker/kernel/zipball/29eed081c79fd96e13e25bc971f739fdc8ea18c5",
+                "reference": "29eed081c79fd96e13e25bc971f739fdc8ea18c5",
                 "shasum": ""
             },
             "require": {
@@ -41978,6 +42023,7 @@
                 "spryker/testify": "^3.3.0"
             },
             "suggest": {
+                "spryker/configuration": "Add this module if you want to use AbstractBundleConfig::getModuleConfig methods.",
                 "spryker/event-dispatcher": "Add this module when you want to use the EventDispatcher.",
                 "spryker/silex": "Add this when you still want to use the abandoned Silex."
             },
@@ -42000,9 +42046,9 @@
             ],
             "description": "Kernel module",
             "support": {
-                "source": "https://github.com/spryker/kernel/tree/3.81.1"
+                "source": "https://github.com/spryker/kernel/tree/3.82.0"
             },
-            "time": "2026-03-03T20:04:23+00:00"
+            "time": "2026-03-12T12:11:14+00:00"
         },
         {
             "name": "spryker/kernel-app",
@@ -53198,20 +53244,20 @@
         },
         {
             "name": "spryker/price-product-schedule",
-            "version": "2.12.0",
+            "version": "2.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/price-product-schedule.git",
-                "reference": "4def0175dd78c1c6e6de4498bc4bf52e08a6f9dc"
+                "reference": "83e52dbbbe4d638d33c13082183ef14d146cb256"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/price-product-schedule/zipball/4def0175dd78c1c6e6de4498bc4bf52e08a6f9dc",
-                "reference": "4def0175dd78c1c6e6de4498bc4bf52e08a6f9dc",
+                "url": "https://api.github.com/repos/spryker/price-product-schedule/zipball/83e52dbbbe4d638d33c13082183ef14d146cb256",
+                "reference": "83e52dbbbe4d638d33c13082183ef14d146cb256",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/currency": "^3.8.0 || ^4.0.0",
                 "spryker/kernel": "^3.72.0",
                 "spryker/price-product": "^4.35.0",
@@ -53220,7 +53266,7 @@
                 "spryker/propel-orm": "^1.8.0",
                 "spryker/store": "^1.19.0",
                 "spryker/symfony": "^3.2.2",
-                "spryker/transfer": "^3.25.0",
+                "spryker/transfer": "^3.27.0",
                 "spryker/user": "^3.7.0",
                 "spryker/util-csv": "^1.0.0"
             },
@@ -53247,9 +53293,9 @@
             ],
             "description": "PriceProductSchedule module",
             "support": {
-                "source": "https://github.com/spryker/price-product-schedule/tree/2.12.0"
+                "source": "https://github.com/spryker/price-product-schedule/tree/2.14.0"
             },
-            "time": "2025-08-04T11:20:12+00:00"
+            "time": "2026-03-11T13:02:20+00:00"
         },
         {
             "name": "spryker/price-product-schedule-data-import",
@@ -53303,16 +53349,16 @@
         },
         {
             "name": "spryker/price-product-schedule-gui",
-            "version": "3.0.0",
+            "version": "3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/price-product-schedule-gui.git",
-                "reference": "0fb1bae7b1b1fb9eb68df629297905f284ffccef"
+                "reference": "99c6aca8cd3950f84307d9455226be61a117d7c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/price-product-schedule-gui/zipball/0fb1bae7b1b1fb9eb68df629297905f284ffccef",
-                "reference": "0fb1bae7b1b1fb9eb68df629297905f284ffccef",
+                "url": "https://api.github.com/repos/spryker/price-product-schedule-gui/zipball/99c6aca8cd3950f84307d9455226be61a117d7c5",
+                "reference": "99c6aca8cd3950f84307d9455226be61a117d7c5",
                 "shasum": ""
             },
             "require": {
@@ -53323,7 +53369,7 @@
                 "spryker/locale": "^3.0.0 || ^4.0.0",
                 "spryker/money": "^2.7.0",
                 "spryker/price-product": "^2.12.0 || ^4.0.0",
-                "spryker/price-product-schedule": "^2.1.0",
+                "spryker/price-product-schedule": "^2.13.0",
                 "spryker/product": "^6.10.0",
                 "spryker/product-management-extension": "^1.3.0",
                 "spryker/propel-orm": "^1.8.0",
@@ -53332,7 +53378,7 @@
                 "spryker/transfer": "^3.27.0",
                 "spryker/translator": "^1.1.0",
                 "spryker/twig": "^3.16.0",
-                "spryker/util-csv": "^1.1.0",
+                "spryker/util-csv": "^1.2.0",
                 "spryker/util-date-time": "^1.4.0",
                 "spryker/util-text": "^1.2.0",
                 "spryker/validator": "^1.2.0"
@@ -53346,7 +53392,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0.x-dev"
+                    "dev-master": "3.0.x-dev"
                 }
             },
             "autoload": {
@@ -53360,22 +53406,22 @@
             ],
             "description": "PriceProductScheduleGui module",
             "support": {
-                "source": "https://github.com/spryker/price-product-schedule-gui/tree/3.0.0"
+                "source": "https://github.com/spryker/price-product-schedule-gui/tree/3.1.0"
             },
-            "time": "2025-11-15T10:58:02+00:00"
+            "time": "2026-03-04T12:03:26+00:00"
         },
         {
             "name": "spryker/price-product-storage",
-            "version": "4.14.0",
+            "version": "4.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/price-product-storage.git",
-                "reference": "5db23aa12025206a498c17884d4439a05360525f"
+                "reference": "f5f3cdf1d49ce78c2f8a4b7ed8a11963d80517fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/price-product-storage/zipball/5db23aa12025206a498c17884d4439a05360525f",
-                "reference": "5db23aa12025206a498c17884d4439a05360525f",
+                "url": "https://api.github.com/repos/spryker/price-product-storage/zipball/f5f3cdf1d49ce78c2f8a4b7ed8a11963d80517fb",
+                "reference": "f5f3cdf1d49ce78c2f8a4b7ed8a11963d80517fb",
                 "shasum": ""
             },
             "require": {
@@ -53391,7 +53437,7 @@
                 "spryker/quick-order-extension": "^1.1.0",
                 "spryker/storage": "^3.4.0",
                 "spryker/store": "^1.7.0",
-                "spryker/synchronization": "^0.2.0 || ^1.0.0",
+                "spryker/synchronization": "^1.0.0",
                 "spryker/synchronization-behavior": "^1.13.0",
                 "spryker/synchronization-extension": "^1.0.0",
                 "spryker/transfer": "^3.42.0"
@@ -53424,9 +53470,9 @@
             ],
             "description": "PriceProductStorage module",
             "support": {
-                "source": "https://github.com/spryker/price-product-storage/tree/4.14.0"
+                "source": "https://github.com/spryker/price-product-storage/tree/4.15.0"
             },
-            "time": "2025-11-17T13:32:34+00:00"
+            "time": "2026-03-12T19:45:37+00:00"
         },
         {
             "name": "spryker/price-product-storage-extension",
@@ -61778,16 +61824,16 @@
         },
         {
             "name": "spryker/product-page-search",
-            "version": "3.44.1",
+            "version": "3.45.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-page-search.git",
-                "reference": "8bf5318fc22dad27a65d118eb4ac769405608d49"
+                "reference": "a69361ad2b978a49b7f4a58cabe460679d8e457b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-page-search/zipball/8bf5318fc22dad27a65d118eb4ac769405608d49",
-                "reference": "8bf5318fc22dad27a65d118eb4ac769405608d49",
+                "url": "https://api.github.com/repos/spryker/product-page-search/zipball/a69361ad2b978a49b7f4a58cabe460679d8e457b",
+                "reference": "a69361ad2b978a49b7f4a58cabe460679d8e457b",
                 "shasum": ""
             },
             "require": {
@@ -61812,7 +61858,7 @@
                 "spryker/search": "^7.0.0 || ^8.0.0",
                 "spryker/store": "^1.7.0",
                 "spryker/symfony": "^3.0.0",
-                "spryker/synchronization": "^0.1.0 || ^1.0.0",
+                "spryker/synchronization": "^1.0.0",
                 "spryker/synchronization-behavior": "^1.13.0",
                 "spryker/synchronization-extension": "^1.0.0",
                 "spryker/transfer": "^3.27.0",
@@ -61852,9 +61898,9 @@
             ],
             "description": "ProductPageSearch module",
             "support": {
-                "source": "https://github.com/spryker/product-page-search/tree/3.44.1"
+                "source": "https://github.com/spryker/product-page-search/tree/3.45.0"
             },
-            "time": "2026-01-20T07:58:38+00:00"
+            "time": "2026-03-12T19:45:37+00:00"
         },
         {
             "name": "spryker/product-page-search-extension",
@@ -63150,16 +63196,16 @@
         },
         {
             "name": "spryker/product-storage",
-            "version": "1.49.0",
+            "version": "1.50.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-storage.git",
-                "reference": "e10b85fc5bc485fb57bce0ba57312db63ba00d76"
+                "reference": "b841807fb3e59e97cb0633781123720b0d95c8f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-storage/zipball/e10b85fc5bc485fb57bce0ba57312db63ba00d76",
-                "reference": "e10b85fc5bc485fb57bce0ba57312db63ba00d76",
+                "url": "https://api.github.com/repos/spryker/product-storage/zipball/b841807fb3e59e97cb0633781123720b0d95c8f8",
+                "reference": "b841807fb3e59e97cb0633781123720b0d95c8f8",
                 "shasum": ""
             },
             "require": {
@@ -63177,7 +63223,7 @@
                 "spryker/storage": "^3.4.0",
                 "spryker/store": "^1.7.0",
                 "spryker/symfony": "^3.0.0",
-                "spryker/synchronization": "^0.2.0 || ^1.0.0",
+                "spryker/synchronization": "^1.0.0",
                 "spryker/synchronization-behavior": "^1.13.0",
                 "spryker/synchronization-extension": "^1.0.0",
                 "spryker/transfer": "^3.27.0",
@@ -63217,9 +63263,9 @@
             ],
             "description": "ProductStorage module",
             "support": {
-                "source": "https://github.com/spryker/product-storage/tree/1.49.0"
+                "source": "https://github.com/spryker/product-storage/tree/1.50.0"
             },
-            "time": "2026-03-11T14:10:06+00:00"
+            "time": "2026-03-12T19:45:37+00:00"
         },
         {
             "name": "spryker/product-storage-extension",
@@ -63576,20 +63622,20 @@
         },
         {
             "name": "spryker/propel-orm",
-            "version": "1.21.2",
+            "version": "1.22.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/propel-orm.git",
-                "reference": "575951b8a1b887c60d2ec593ba89d0498d13be9f"
+                "reference": "08c5b8d17a71a48ead85b4afe0046a15dc8ccc45"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/propel-orm/zipball/575951b8a1b887c60d2ec593ba89d0498d13be9f",
-                "reference": "575951b8a1b887c60d2ec593ba89d0498d13be9f",
+                "url": "https://api.github.com/repos/spryker/propel-orm/zipball/08c5b8d17a71a48ead85b4afe0046a15dc8ccc45",
+                "reference": "08c5b8d17a71a48ead85b4afe0046a15dc8ccc45",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "propel/propel": "2.0.0-beta3",
                 "spryker/config": "^3.0.0",
                 "spryker/error-handler": "^2.0.0",
@@ -63621,9 +63667,9 @@
             ],
             "description": "PropelOrm module",
             "support": {
-                "source": "https://github.com/spryker/propel-orm/tree/1.21.2"
+                "source": "https://github.com/spryker/propel-orm/tree/1.22.0"
             },
-            "time": "2025-07-25T07:53:52+00:00"
+            "time": "2026-03-12T15:23:09+00:00"
         },
         {
             "name": "spryker/propel-orm-extension",
@@ -65225,16 +65271,16 @@
         },
         {
             "name": "spryker/router",
-            "version": "1.26.0",
+            "version": "1.26.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/router.git",
-                "reference": "c6d423b4eb1e430bdd49f3a3b7634e4b9bff55de"
+                "reference": "8ff399fbb735dd93c22fd31a7a90ec9f6b1e43cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/router/zipball/c6d423b4eb1e430bdd49f3a3b7634e4b9bff55de",
-                "reference": "c6d423b4eb1e430bdd49f3a3b7634e4b9bff55de",
+                "url": "https://api.github.com/repos/spryker/router/zipball/8ff399fbb735dd93c22fd31a7a90ec9f6b1e43cd",
+                "reference": "8ff399fbb735dd93c22fd31a7a90ec9f6b1e43cd",
                 "shasum": ""
             },
             "require": {
@@ -65281,9 +65327,9 @@
             ],
             "description": "Router module",
             "support": {
-                "source": "https://github.com/spryker/router/tree/1.26.0"
+                "source": "https://github.com/spryker/router/tree/1.26.1"
             },
-            "time": "2026-03-11T14:10:06+00:00"
+            "time": "2026-03-12T10:59:22+00:00"
         },
         {
             "name": "spryker/router-extension",
@@ -73169,16 +73215,16 @@
         },
         {
             "name": "spryker/store",
-            "version": "1.35.1",
+            "version": "1.36.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/store.git",
-                "reference": "d271418bfd0ee45ee17e40e7d3e88760e4529432"
+                "reference": "6602f13f55568dfcce296b2c4c6b7299cfa727fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/store/zipball/d271418bfd0ee45ee17e40e7d3e88760e4529432",
-                "reference": "d271418bfd0ee45ee17e40e7d3e88760e4529432",
+                "url": "https://api.github.com/repos/spryker/store/zipball/6602f13f55568dfcce296b2c4c6b7299cfa727fc",
+                "reference": "6602f13f55568dfcce296b2c4c6b7299cfa727fc",
                 "shasum": ""
             },
             "require": {
@@ -73186,6 +73232,7 @@
                 "spryker/acl-merchant-portal-extension": "^1.0.0",
                 "spryker/application-extension": "^1.0.0",
                 "spryker/cart-reorder-extension": "^1.0.0",
+                "spryker/configuration-extension": "^1.0.0",
                 "spryker/kernel": "^3.30.0",
                 "spryker/log": "^1.0.0 || ^2.0.0 || ^3.0.0",
                 "spryker/message-broker-extension": "^1.0.0",
@@ -73233,9 +73280,9 @@
             ],
             "description": "Store module",
             "support": {
-                "source": "https://github.com/spryker/store/tree/1.35.1"
+                "source": "https://github.com/spryker/store/tree/1.36.0"
             },
-            "time": "2026-03-09T09:13:58+00:00"
+            "time": "2026-03-12T12:11:14+00:00"
         },
         {
             "name": "spryker/store-context",
@@ -74940,16 +74987,16 @@
         },
         {
             "name": "spryker/translator",
-            "version": "1.14.3",
+            "version": "1.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/translator.git",
-                "reference": "cf8d7bcdcc8e77ad411c74137a3d8919ca4b7ec4"
+                "reference": "964547dee6903f5c62f0cff9cf1e3b2c979bc22f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/translator/zipball/cf8d7bcdcc8e77ad411c74137a3d8919ca4b7ec4",
-                "reference": "cf8d7bcdcc8e77ad411c74137a3d8919ca4b7ec4",
+                "url": "https://api.github.com/repos/spryker/translator/zipball/964547dee6903f5c62f0cff9cf1e3b2c979bc22f",
+                "reference": "964547dee6903f5c62f0cff9cf1e3b2c979bc22f",
                 "shasum": ""
             },
             "require": {
@@ -74995,9 +75042,9 @@
             ],
             "description": "Translator module",
             "support": {
-                "source": "https://github.com/spryker/translator/tree/1.14.3"
+                "source": "https://github.com/spryker/translator/tree/1.15.0"
             },
-            "time": "2025-12-04T11:50:23+00:00"
+            "time": "2026-03-12T12:11:14+00:00"
         },
         {
             "name": "spryker/translator-extension",
@@ -75877,20 +75924,20 @@
         },
         {
             "name": "spryker/util-csv",
-            "version": "1.1.1",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/util-csv.git",
-                "reference": "017e05000f835c60ed0967b8c2e0488cc20c1934"
+                "reference": "76ce9b49e5150b5f37e534e8442c3eab4b720b30"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/util-csv/zipball/017e05000f835c60ed0967b8c2e0488cc20c1934",
-                "reference": "017e05000f835c60ed0967b8c2e0488cc20c1934",
+                "url": "https://api.github.com/repos/spryker/util-csv/zipball/76ce9b49e5150b5f37e534e8442c3eab4b720b30",
+                "reference": "76ce9b49e5150b5f37e534e8442c3eab4b720b30",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.1",
+                "php": ">=8.3",
                 "spryker/kernel": "^3.30.0",
                 "spryker/symfony": "^3.1.0",
                 "spryker/transfer": "^3.27.0"
@@ -75916,9 +75963,9 @@
             ],
             "description": "UtilCsv module",
             "support": {
-                "source": "https://github.com/spryker/util-csv/tree/1.1.1"
+                "source": "https://github.com/spryker/util-csv/tree/1.2.0"
             },
-            "time": "2024-05-06T12:15:28+00:00"
+            "time": "2026-03-04T12:03:26+00:00"
         },
         {
             "name": "spryker/util-data-reader",
@@ -76285,20 +76332,20 @@
         },
         {
             "name": "spryker/util-sanitize",
-            "version": "2.3.0",
+            "version": "2.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/util-sanitize.git",
-                "reference": "79f1a06e310c698e1843abd383c62caee85ceb82"
+                "reference": "872856bb1dedecf1554b17f258ca60ae0be79c61"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/util-sanitize/zipball/79f1a06e310c698e1843abd383c62caee85ceb82",
-                "reference": "79f1a06e310c698e1843abd383c62caee85ceb82",
+                "url": "https://api.github.com/repos/spryker/util-sanitize/zipball/872856bb1dedecf1554b17f258ca60ae0be79c61",
+                "reference": "872856bb1dedecf1554b17f258ca60ae0be79c61",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.3",
+                "php": ">=8.3",
                 "spryker/kernel": "^3.30.0",
                 "spryker/util-sanitize-extension": "^1.0.0"
             },
@@ -76323,9 +76370,9 @@
             ],
             "description": "UtilSanitize module",
             "support": {
-                "source": "https://github.com/spryker/util-sanitize/tree/2.3.0"
+                "source": "https://github.com/spryker/util-sanitize/tree/2.3.1"
             },
-            "time": "2021-04-23T07:34:05+00:00"
+            "time": "2026-03-12T15:23:09+00:00"
         },
         {
             "name": "spryker/util-sanitize-extension",
@@ -90926,9 +90973,24 @@
             "time": "2025-12-08T11:19:18+00:00"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "package": "spryker-feature/scheduled-prices",
+            "version": "9999999-dev",
+            "alias": "202604.0",
+            "alias_normalized": "202604.0"
+        },
+        {
+            "package": "spryker-feature/self-service-portal",
+            "version": "9999999-dev",
+            "alias": "202604.0",
+            "alias_normalized": "202604.0"
+        }
+    ],
     "minimum-stability": "dev",
     "stability-flags": {
+        "spryker-feature/scheduled-prices": 20,
+        "spryker-feature/self-service-portal": 20,
         "spryker/cypress-tests": 20,
         "spryker/robotframework-suite-tests": 20
     },
