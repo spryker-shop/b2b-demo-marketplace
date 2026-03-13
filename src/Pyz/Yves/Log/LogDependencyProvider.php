@@ -21,6 +21,7 @@ use Spryker\Yves\Log\Plugin\Processor\PsrLogMessageProcessorPlugin;
 use Spryker\Yves\Log\Plugin\Processor\RequestProcessorPlugin;
 use Spryker\Yves\Log\Plugin\Processor\ResponseProcessorPlugin;
 use Spryker\Yves\Log\Plugin\Processor\ServerProcessorPlugin;
+use Spryker\Yves\Opentelemetry\Plugin\Log\OpentelemetryLogProcessorPlugin;
 use SprykerShop\Yves\AgentPage\Plugin\Log\AgentCurrentRequestProcessorPlugin;
 
 class LogDependencyProvider extends SprykerLogDependencyProvider
@@ -57,6 +58,7 @@ class LogDependencyProvider extends SprykerLogDependencyProvider
             new RequestProcessorPlugin(),
             new ResponseProcessorPlugin(),
             new GuzzleBodyProcessorPlugin(),
+            new OpentelemetryLogProcessorPlugin(),
         ];
     }
 
@@ -74,6 +76,7 @@ class LogDependencyProvider extends SprykerLogDependencyProvider
             new ResponseProcessorPlugin(),
             new AuditLogMetaDataProcessorPlugin(),
             new AgentCurrentRequestProcessorPlugin(),
+            new OpentelemetryLogProcessorPlugin(),
         ];
     }
 }

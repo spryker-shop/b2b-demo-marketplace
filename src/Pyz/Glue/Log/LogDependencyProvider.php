@@ -20,6 +20,7 @@ use Spryker\Glue\Log\Plugin\Processor\PsrLogMessageProcessorPlugin;
 use Spryker\Glue\Log\Plugin\Processor\RequestProcessorPlugin;
 use Spryker\Glue\Log\Plugin\Processor\ResponseProcessorPlugin;
 use Spryker\Glue\Log\Plugin\Processor\ServerProcessorPlugin;
+use Spryker\Glue\Opentelemetry\Plugin\Log\OpentelemetryLogProcessorPlugin;
 
 class LogDependencyProvider extends SprykerLogDependencyProvider
 {
@@ -65,6 +66,7 @@ class LogDependencyProvider extends SprykerLogDependencyProvider
             new RequestProcessorPlugin(),
             new ResponseProcessorPlugin(),
             new GuzzleBodyProcessorPlugin(),
+            new OpentelemetryLogProcessorPlugin(),
         ];
     }
 
@@ -80,6 +82,7 @@ class LogDependencyProvider extends SprykerLogDependencyProvider
             new AuditLogRequestProcessorPlugin(),
             new ResponseProcessorPlugin(),
             new AuditLogMetaDataProcessorPlugin(),
+            new OpentelemetryLogProcessorPlugin(),
         ];
     }
 
@@ -95,6 +98,7 @@ class LogDependencyProvider extends SprykerLogDependencyProvider
             new AuditLogRequestProcessorPlugin(),
             new ResponseProcessorPlugin(),
             new AuditLogMetaDataProcessorPlugin(),
+            new OpentelemetryLogProcessorPlugin(),
         ];
     }
 }

@@ -20,6 +20,7 @@ use Spryker\Zed\Log\Communication\Plugin\Processor\RequestProcessorPlugin;
 use Spryker\Zed\Log\Communication\Plugin\Processor\ResponseProcessorPlugin;
 use Spryker\Zed\Log\Communication\Plugin\Processor\ServerProcessorPlugin;
 use Spryker\Zed\Log\LogDependencyProvider as SprykerLogDependencyProvider;
+use Spryker\Zed\Opentelemetry\Communication\Plugin\Log\OpentelemetryLogProcessorPlugin;
 use Spryker\Zed\Propel\Communication\Plugin\Log\EntityProcessorPlugin;
 use Spryker\Zed\User\Communication\Plugin\Log\CurrentUserDataRequestProcessorPlugin;
 
@@ -68,6 +69,7 @@ class LogDependencyProvider extends SprykerLogDependencyProvider
             new RequestProcessorPlugin(),
             new ResponseProcessorPlugin(),
             new GuzzleBodyProcessorPlugin(),
+            new OpentelemetryLogProcessorPlugin(),
         ];
     }
 
@@ -84,6 +86,7 @@ class LogDependencyProvider extends SprykerLogDependencyProvider
             new CurrentUserDataRequestProcessorPlugin(),
             new ResponseProcessorPlugin(),
             new AuditLogMetaDataProcessorPlugin(),
+            new OpentelemetryLogProcessorPlugin(),
         ];
     }
 
@@ -100,6 +103,7 @@ class LogDependencyProvider extends SprykerLogDependencyProvider
             new CurrentUserDataRequestProcessorPlugin(),
             new ResponseProcessorPlugin(),
             new AuditLogMetaDataProcessorPlugin(),
+            new OpentelemetryLogProcessorPlugin(),
         ];
     }
 }

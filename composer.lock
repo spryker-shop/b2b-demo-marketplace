@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7f401fb72652069742b50601ba5a1ed0",
+    "content-hash": "67cc5866a3396879519a23815a1846cd",
     "packages": [
         {
             "name": "async-aws/core",
@@ -45819,16 +45819,16 @@
         },
         {
             "name": "spryker/opentelemetry",
-            "version": "1.18.1",
+            "version": "dev-feature/frw-11283-logs-processor",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/opentelemetry.git",
-                "reference": "93cf45658733f99da4396974c30d297ba6dd8baa"
+                "reference": "d05f613ef32473aff1f9958c4623cf540a70bac6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/opentelemetry/zipball/93cf45658733f99da4396974c30d297ba6dd8baa",
-                "reference": "93cf45658733f99da4396974c30d297ba6dd8baa",
+                "url": "https://api.github.com/repos/spryker/opentelemetry/zipball/d05f613ef32473aff1f9958c4623cf540a70bac6",
+                "reference": "d05f613ef32473aff1f9958c4623cf540a70bac6",
                 "shasum": ""
             },
             "require": {
@@ -45886,9 +45886,9 @@
             "description": "Opentelemetry module",
             "support": {
                 "issues": "https://github.com/spryker/opentelemetry/issues",
-                "source": "https://github.com/spryker/opentelemetry/tree/1.18.1"
+                "source": "https://github.com/spryker/opentelemetry/tree/feature/frw-11283-logs-processor"
             },
-            "time": "2025-10-13T08:01:29+00:00"
+            "time": "2026-03-13T13:02:50+00:00"
         },
         {
             "name": "spryker/order-amendments-rest-api",
@@ -82397,6 +82397,7 @@
         "spryker-feature/merchant-portal-data-import": 20,
         "spryker/cypress-tests": 20,
         "spryker/docker-chromedriver": 20,
+        "spryker/opentelemetry": 20,
         "spryker/robotframework-suite-tests": 20
     },
     "prefer-stable": true,
@@ -82418,5 +82419,5 @@
     "platform-overrides": {
         "php": "8.3.13"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
