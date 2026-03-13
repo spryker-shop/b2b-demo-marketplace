@@ -1,30 +1,35 @@
 @mixin shop-ui-flash-message($name: '.flash-message') {
     #{$name} {
         @include helper-effect-transition(translate opacity);
-        --notification-color: #{lighten($setting-color-blue-1, 20%)};
-        max-width: rem(630);
-        border-radius: rem(4);
-        background: $setting-color-white;
-        border-left: rem(6) solid var(--notification-color);
+
+        --notification-border: var(--background-state-info-bold);
+        --notification-background: var(--background-state-info-subtle);
+        --notification-icon: var(--icon-state-info);
+
         display: flex;
-        gap: rem(10);
         align-items: flex-start;
-        box-shadow: rem(-2) rem(2) rem(20) 0 #12121226;
-        font-size: rem(14);
+        max-width: rem(630);
         translate: 0 -100%;
         opacity: 0;
+        gap: var(--scale-12);
+        border-radius: var(--radius-md);
+        border-left: var(--stroke-lg) solid var(--notification-border);
+        background: var(--notification-background);
+        font-size: var(--font-size-12);
+        line-height: var(--font-line-height-16);
+        letter-spacing: var(--font-letter-spacing-normal);
         pointer-events: none;
         max-height: 0;
         overflow: clip;
-        color: $setting-color-gray-4;
+        color: var(--text-primary);
 
         &--show {
             pointer-events: all;
             translate: 0 0;
             opacity: 1;
             max-height: 100vh;
-            margin-top: rem(12);
-            padding: rem(17) rem(10) rem(10) rem(15);
+            margin-top: var(--scale-12);
+            padding: var(--scale-16) var(--scale-40) var(--scale-16) var(--scale-20);
         }
 
         &__content {
@@ -32,46 +37,46 @@
         }
 
         &__title {
-            font-size: rem(16);
-            line-height: 1.44;
-            letter-spacing: rem(1.2);
-            color: $setting-color-gray-8;
+            display: block;
+            font-size: var(--font-size-14);
+            font-weight: var(--font-weight-medium);
+            line-height: var(--font-line-height-20);
         }
 
         &__text {
-            margin-top: rem(0);
+            margin-top: var(--scale-2);
+            color: var(--text-secondary);
         }
 
         &__close {
+            color: var(--icon-primary);
+            position: absolute;
+            right: var(--scale-12);
+            top: var(--scale-8);
             background: none;
             cursor: pointer;
-            margin-top: rem(-13);
         }
 
-        &__icon-wrapper {
-            width: rem(38);
-            aspect-ratio: 1;
-            background: color-mix(in srgb, var(--notification-color), #ffffff 80%);
-            color: var(--notification-color);
-            border-radius: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-grow: 0;
-            flex-shrink: 0;
-            margin-top: rem(-7);
+        &__icon {
+            color: var(--notification-icon);
         }
 
         &--success {
-            --notification-color: #{lighten(map-get($setting-color-actions, 'success'), 20%)};
+            --notification-border: var(--background-state-success-bold);
+            --notification-background: var(--background-state-success-subtle);
+            --notification-icon: var(--icon-state-success);
         }
 
         &--warning {
-            --notification-color: #{lighten(map-get($setting-color-actions, 'warning'), 20%)};
+            --notification-border: var(--background-state-warning-bold);
+            --notification-background: var(--background-state-warning-subtle);
+            --notification-icon: var(--icon-state-warning);
         }
 
         &--alert {
-            --notification-color: #{lighten(map-get($setting-color-actions, 'alert'), 20%)};
+            --notification-border: var(--background-state-error-bold);
+            --notification-background: var(--background-state-error-subtle);
+            --notification-icon: var(--icon-state-error);
         }
 
         @content;

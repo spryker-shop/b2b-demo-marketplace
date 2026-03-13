@@ -1,0 +1,20 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'font-icon',
+    tag: 'span',
+} %}
+
+{% define data = {
+    name: required,
+} %}
+
+{% define attributes = {
+    title: data.name,
+} %}
+
+{% block class %}{{ parent() }} material-symbols-outlined{% endblock %}
+
+{% block body %}
+    {{ data.name }}
+{% endblock %}
