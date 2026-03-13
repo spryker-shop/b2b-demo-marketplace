@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="BackofficeAssistantConversationHistory" strict="true">
+        <property name="idBackofficeAssistantConversation" type="int"/>
+        <property name="fkUser" type="int"/>
+        <property name="conversationReference" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="BackofficeAssistantPromptRequest" strict="true">
+        <property name="prompt" type="string"/>
+        <property name="conversationReference" type="string"/>
+    </transfer>
+
+    <transfer name="BackofficeAssistantPromptResponse" strict="true">
+        <property name="aiResponse" type="string"/>
+        <property name="conversationReference" type="string"/>
+    </transfer>
+
+</transfers>
