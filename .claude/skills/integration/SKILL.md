@@ -71,7 +71,7 @@ pulls it in using `composer depends`.
 ### Standard packages
 
 ```bash
-composer depends {vendor/package-name}
+composer depends {vendor/package-name} | grep spryker-feature
 ```
 
 Look for a result that matches `spryker-feature/*`. That is the feature package to update.
