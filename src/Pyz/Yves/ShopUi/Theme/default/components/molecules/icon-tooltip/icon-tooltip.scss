@@ -3,33 +3,35 @@
         display: inline-block;
         position: relative;
 
-        $spacing-under-tooltip: rem(10);
+        --spacing-under-tooltip: #{rem(10)};
+        --border-angle-size: #{rem(3)};
 
         &__tooltip {
             @include helper-effect-transition(transform);
-            background: $setting-color-alpha-7;
-            color: $setting-color-white;
-            text-transform: uppercase;
-            font: fw(medium) rem(10) $setting-font-family;
-            white-space: nowrap;
-            padding: rem(7) rem(14);
-            border-radius: $setting-border-radius;
+            padding: var(--scale-6) var(--scale-8);
             position: absolute;
             left: 50%;
-            bottom: calc(100% + #{$spacing-under-tooltip});
+            bottom: calc(100% + var(--spacing-under-tooltip));
             transform-origin: bottom center;
             transform: translateX(-50%) scale(0);
-
-            $border-angle-size: rem(3);
+            border-radius: var(--radius-sm);
+            background: var(--background-inverse);
+            box-shadow: var(--shadows-sm-x) var(--shadows-sm-y) var(--shadows-sm-blur) var(--shadows-sm-spread)
+                var(--shadows-sm-color);
+            font-size: var(--font-size-12);
+            font-weight: var(--font-weight-regular);
+            line-height: var(--font-line-height-16);
+            letter-spacing: var(--font-letter-spacing-normal);
+            white-space: nowrap;
 
             &::before {
                 content: '';
-                border-top: solid $border-angle-size $setting-color-alpha-7;
-                border-left: solid $border-angle-size $setting-color-transparent;
-                border-right: solid $border-angle-size $setting-color-transparent;
+                border-top: solid var(--border-angle-size) var(--background-inverse);
+                border-left: solid var(--border-angle-size) transparent;
+                border-right: solid var(--border-angle-size) transparent;
                 position: absolute;
                 top: 100%;
-                left: calc(50% - #{$border-angle-size});
+                left: calc(50% - var(--border-angle-size));
             }
 
             #{$name}:hover & {
