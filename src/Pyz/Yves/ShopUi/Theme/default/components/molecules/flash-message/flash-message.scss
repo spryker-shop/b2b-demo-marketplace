@@ -1,11 +1,9 @@
 @mixin shop-ui-flash-message($name: '.flash-message') {
     #{$name} {
         @include helper-effect-transition(translate opacity);
-
         --notification-border: var(--background-state-info-bold);
         --notification-background: var(--background-state-info-subtle);
         --notification-icon: var(--icon-state-info);
-
         display: flex;
         align-items: flex-start;
         max-width: rem(630);
