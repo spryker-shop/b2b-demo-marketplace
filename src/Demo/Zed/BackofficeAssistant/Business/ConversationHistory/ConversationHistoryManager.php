@@ -61,9 +61,22 @@ class ConversationHistoryManager implements ConversationHistoryManagerInterface
         $this->entityManager->updateConversationHistoryAgent($conversationReference, $agent);
     }
 
+    /**
+     * @return void
+     */
+    public function updateUserSelectedAgent(string $conversationReference, ?string $userSelectedAgent): void
+    {
+        $this->entityManager->updateConversationHistoryUserSelectedAgent($conversationReference, $userSelectedAgent);
+    }
+
     public function findAgentByConversationReference(string $conversationReference): ?string
     {
         return $this->repository->findAgentByConversationReference($conversationReference);
+    }
+
+    public function findUserSelectedAgentByConversationReference(string $conversationReference): ?string
+    {
+        return $this->repository->findUserSelectedAgentByConversationReference($conversationReference);
     }
 
     /**

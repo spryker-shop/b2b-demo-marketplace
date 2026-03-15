@@ -47,4 +47,12 @@ interface BackofficeAssistantRepositoryInterface
      * @return string|null
      */
     public function findAgentByConversationReference(string $conversationReference): ?string;
+
+    /**
+     * Specification:
+     * - Returns the user_selected_agent for the conversation, or null if not set (Auto).
+     *
+     * @api
+     */
+    public function findUserSelectedAgentByConversationReference(string $conversationReference): ?string;
 }

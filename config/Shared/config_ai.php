@@ -14,7 +14,7 @@ $openAiConfiguration = [
     'provider_name' => AiFoundationConstants::PROVIDER_OPENAI,
     'provider_config' => [
         'key' => getenv('OPEN_AI_API_TOKEN') ?: '',
-        'model' => 'gpt-4o-mini',
+        'model' => 'gpt-4o-mini', // Fast and non-reasoning model
     ],
 ];
 

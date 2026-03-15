@@ -61,6 +61,14 @@ class BackofficeAssistantFacade extends AbstractFacade implements BackofficeAssi
     }
 
     /**
+     * @return void
+     */
+    public function updateConversationUserSelectedAgent(string $conversationReference, ?string $userSelectedAgent): void
+    {
+        $this->getFactory()->createConversationHistoryManager()->updateUserSelectedAgent($conversationReference, $userSelectedAgent);
+    }
+
+    /**
      * @param string $conversationReference
      *
      * @return string|null
@@ -68,6 +76,11 @@ class BackofficeAssistantFacade extends AbstractFacade implements BackofficeAssi
     public function findAgentByConversationReference(string $conversationReference): ?string
     {
         return $this->getFactory()->createConversationHistoryManager()->findAgentByConversationReference($conversationReference);
+    }
+
+    public function findUserSelectedAgentByConversationReference(string $conversationReference): ?string
+    {
+        return $this->getFactory()->createConversationHistoryManager()->findUserSelectedAgentByConversationReference($conversationReference);
     }
 
     /**

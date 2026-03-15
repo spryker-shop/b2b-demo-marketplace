@@ -54,6 +54,24 @@ class BackofficeAssistantEntityManager extends AbstractEntityManager implements 
     }
 
     /**
+     * @return void
+     */
+    public function updateConversationHistoryUserSelectedAgent(string $conversationReference, ?string $userSelectedAgent): void
+    {
+        $entity = $this->getFactory()
+            ->createBackofficeAssistantConversationQuery()
+            ->filterByConversationReference($conversationReference)
+            ->findOne();
+
+        if ($entity === null) {
+            return;
+        }
+
+        $entity->setUserSelectedAgent($userSelectedAgent);
+        $entity->save();
+    }
+
+    /**
      * @param string $conversationReference
      *
      * @return void

@@ -92,8 +92,9 @@ class PromptController extends AbstractController
             $context = $data['context'] ?? [];
             $attachments = $this->buildAttachmentTransfers($data['attachments'] ?? []);
             $conversationReference = $this->resolveConversationReference($prompt, $data['conversation_reference'] ?? '');
+            $selectedAgent = $data['selected_agent'] ?? '';
 
-            $this->handlePrompt($prompt, $context, $conversationReference, $attachments);
+            $this->handlePrompt($prompt, $context, $conversationReference, $attachments, $selectedAgent);
         }, 200, [
             'Content-Type' => 'text/event-stream',
             'Cache-Control' => 'no-cache',
@@ -106,10 +107,11 @@ class PromptController extends AbstractController
      * @param array<string, mixed> $context
      * @param string $conversationReference
      * @param array<\Generated\Shared\Transfer\AttachmentTransfer> $attachments
+     * @param string $selectedAgent
      *
      * @return void
      */
-    protected function handlePrompt(string $prompt, array $context, string $conversationReference, array $attachments = []): void
+    protected function handlePrompt(string $prompt, array $context, string $conversationReference, array $attachments = [], string $selectedAgent = ''): void
     {
         if (!$prompt) {
             $this->emitEvent(['type' => 'error', 'message' => 'Prompt is required']);
@@ -119,6 +121,25 @@ class PromptController extends AbstractController
 
         $conversationHistory = $this->resolveConversationHistory($conversationReference);
         $previousAgent = $this->emitPreviousAgentEvent($conversationReference);
+
+        $this->getFacade()->updateConversationUserSelectedAgent($conversationReference, $selectedAgent ?: null);
+
+        if ($selectedAgent) {
+            if ($previousAgent !== $selectedAgent) {
+                $this->getFacade()->updateConversationAgent($conversationReference, $selectedAgent);
+            }
+
+            $this->emitEvent([
+                'type' => 'agent_selected',
+                'agent' => $selectedAgent,
+                'conversation_reference' => $conversationReference,
+            ]);
+
+            $this->executeSelectedAgent($selectedAgent, $prompt, $conversationReference, $attachments);
+
+            return;
+        }
+
         $promptContent = $this->buildIntentRouterPrompt($conversationHistory, $prompt, $previousAgent, $context);
         $intentRouterResponse = $this->routeIntent($promptContent);
 
