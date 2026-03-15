@@ -42,21 +42,10 @@ interface BackofficeAssistantEntityManagerInterface
     public function updateConversationHistoryAgent(string $conversationReference, string $agent): void;
 
     /**
-     * Specification:
-     * - Deletes the conversation history record identified by the given reference.
-     *
-     * @api
-     *
      * @param string $conversationReference
+     * @param string|null $userSelectedAgent
      *
      * @return void
-     */
-    /**
-     * Specification:
-     * - Updates the user_selected_agent field on the conversation identified by the given reference.
-     * - Null means the user chose Auto (intent router decides).
-     *
-     * @api
      */
     public function updateConversationHistoryUserSelectedAgent(string $conversationReference, ?string $userSelectedAgent): void;
 
