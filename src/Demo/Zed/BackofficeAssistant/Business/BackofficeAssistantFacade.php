@@ -62,12 +62,33 @@ class BackofficeAssistantFacade extends AbstractFacade implements BackofficeAssi
 
     /**
      * @param string $conversationReference
+     * @param string|null $userSelectedAgent
+     *
+     * @return void
+     */
+    public function updateConversationUserSelectedAgent(string $conversationReference, ?string $userSelectedAgent): void
+    {
+        $this->getFactory()->createConversationHistoryManager()->updateUserSelectedAgent($conversationReference, $userSelectedAgent);
+    }
+
+    /**
+     * @param string $conversationReference
      *
      * @return string|null
      */
     public function findAgentByConversationReference(string $conversationReference): ?string
     {
         return $this->getFactory()->createConversationHistoryManager()->findAgentByConversationReference($conversationReference);
+    }
+
+    /**
+     * @param string $conversationReference
+     *
+     * @return string|null
+     */
+    public function findUserSelectedAgentByConversationReference(string $conversationReference): ?string
+    {
+        return $this->getFactory()->createConversationHistoryManager()->findUserSelectedAgentByConversationReference($conversationReference);
     }
 
     /**

@@ -68,6 +68,18 @@ interface BackofficeAssistantFacadeInterface
 
     /**
      * Specification:
+     * - Persists the user's explicit agent selection for the conversation.
+     * - Null means the user selected Auto (intent router will decide).
+     *
+     * @api
+     *
+     * @param string $conversationReference
+     * @param string|null $userSelectedAgent
+     */
+    public function updateConversationUserSelectedAgent(string $conversationReference, ?string $userSelectedAgent): void;
+
+    /**
+     * Specification:
      * - Returns the agent string for the conversation with the given reference, or null if not found.
      *
      * @api
@@ -77,6 +89,18 @@ interface BackofficeAssistantFacadeInterface
      * @return string|null
      */
     public function findAgentByConversationReference(string $conversationReference): ?string;
+
+    /**
+     * Specification:
+     * - Returns the user_selected_agent for the conversation, or null if not set (Auto).
+     *
+     * @api
+     *
+     * @param string $conversationReference
+     *
+     * @return string|null
+     */
+    public function findUserSelectedAgentByConversationReference(string $conversationReference): ?string;
 
     /**
      * Specification:

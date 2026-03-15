@@ -28,16 +28,23 @@ class ConversationHistoriesController extends AbstractController
         $idUser = (int)$this->getFactory()->getUserFacade()->getCurrentUser()->getIdUser();
         $histories = $this->getFacade()->getConversationHistoriesByFkUser($idUser);
 
-        return $this->jsonResponse(
-            array_map(
-                fn ($history) => [
+        $availableAgents = array_map(
+            static fn ($plugin) => $plugin->getName(),
+            $this->getFactory()->getBackofficeAssistantAgentPlugins(),
+        );
+
+        return $this->jsonResponse([
+            'histories' => array_map(
+                static fn ($history) => [
                     'conversation_reference' => $history->getConversationReference(),
                     'name' => $history->getName(),
                     'agent' => $history->getAgent() ?? '',
+                    'user_selected_agent' => $history->getUserSelectedAgent() ?? '',
                 ],
                 $histories,
             ),
-        );
+            'available_agents' => $availableAgents,
+        ]);
     }
 
     public function detailAction(Request $request): JsonResponse
@@ -78,10 +85,15 @@ class ConversationHistoriesController extends AbstractController
 
         $agent = $this->getFacade()->findAgentByConversationReference($conversationReference);
 
+        $userSelectedAgent = $this->getFacade()->findUserSelectedAgentByConversationReference($conversationReference);
+
         return $this->jsonResponse(
             array_merge(
                 $conversationHistory->toArray(),
-                ['agent' => $agent ?? ''],
+                [
+                    'agent' => $agent ?? '',
+                    'user_selected_agent' => $userSelectedAgent ?? '',
+                ],
             ),
         );
     }

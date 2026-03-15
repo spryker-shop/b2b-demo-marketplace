@@ -12,6 +12,7 @@
         <column name="conversation_reference" type="VARCHAR" size="512" required="true"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
         <column name="agent" type="VARCHAR" size="255" required="false"/>
+        <column name="user_selected_agent" type="VARCHAR" size="255" required="false"/>
 
         <foreign-key foreignTable="spy_user" phpName="SpyUser" onDelete="CASCADE">
             <reference local="fk_user" foreign="id_user"/>

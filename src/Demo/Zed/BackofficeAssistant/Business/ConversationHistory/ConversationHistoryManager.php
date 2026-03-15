@@ -45,6 +45,12 @@ class ConversationHistoryManager implements ConversationHistoryManagerInterface
         return $this->repository->getConversationHistoriesByFkUser($idUser);
     }
 
+    /**
+     * @param int $idUser
+     * @param string $conversationReference
+     *
+     * @return bool
+     */
     public function hasForUser(int $idUser, string $conversationReference): bool
     {
         return $this->repository->hasConversationHistoryForUser($idUser, $conversationReference);
@@ -61,9 +67,25 @@ class ConversationHistoryManager implements ConversationHistoryManagerInterface
         $this->entityManager->updateConversationHistoryAgent($conversationReference, $agent);
     }
 
+    /**
+     * @param string $conversationReference
+     * @param string|null $userSelectedAgent
+     *
+     * @return void
+     */
+    public function updateUserSelectedAgent(string $conversationReference, ?string $userSelectedAgent): void
+    {
+        $this->entityManager->updateConversationHistoryUserSelectedAgent($conversationReference, $userSelectedAgent);
+    }
+
     public function findAgentByConversationReference(string $conversationReference): ?string
     {
         return $this->repository->findAgentByConversationReference($conversationReference);
+    }
+
+    public function findUserSelectedAgentByConversationReference(string $conversationReference): ?string
+    {
+        return $this->repository->findUserSelectedAgentByConversationReference($conversationReference);
     }
 
     /**
