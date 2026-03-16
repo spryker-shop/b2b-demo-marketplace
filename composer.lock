@@ -4615,6 +4615,68 @@
             "time": "2024-11-04T03:00:05+00:00"
         },
         {
+            "name": "inspector-apm/inspector-php",
+            "version": "3.16.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/inspector-apm/inspector-php.git",
+                "reference": "c45f3a5460da04d395f4b124e6237ab7da0ab6a6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/inspector-apm/inspector-php/zipball/c45f3a5460da04d395f4b124e6237ab7da0ab6a6",
+                "reference": "c45f3a5460da04d395f4b124e6237ab7da0ab6a6",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "ext-curl": "*",
+                "friendsofphp/php-cs-fixer": "^3.75",
+                "neuron-core/neuron-ai": "^2.8",
+                "phpstan/phpstan": "^2.1",
+                "phpunit/phpunit": "^9.0",
+                "rector/rector": "^2.2",
+                "tomasvotruba/type-coverage": "^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.16.x-dev",
+                    "dev-develop": "3.16.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Inspector\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Valerio Barbera",
+                    "email": "valerio@inspector.dev"
+                }
+            ],
+            "description": "Inspector monitoring for PHP applications.",
+            "keywords": [
+                "inspector",
+                "monitoring",
+                "observability",
+                "php",
+                "telemetry"
+            ],
+            "support": {
+                "issues": "https://github.com/inspector-apm/inspector-php/issues",
+                "source": "https://github.com/inspector-apm/inspector-php/tree/3.16.6"
+            },
+            "time": "2026-01-21T11:26:33+00:00"
+        },
+        {
             "name": "jms/metadata",
             "version": "2.9.0",
             "source": {
@@ -6664,6 +6726,82 @@
                 "source": "https://github.com/nelmio/NelmioCorsBundle/tree/2.6.1"
             },
             "time": "2026-01-12T15:59:08+00:00"
+        },
+        {
+            "name": "neuron-core/neuron-ai",
+            "version": "2.11.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neuron-core/neuron-ai.git",
+                "reference": "31a3b00ea9dc238abf748a89233020ab4c9cc718"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neuron-core/neuron-ai/zipball/31a3b00ea9dc238abf748a89233020ab4c9cc718",
+                "reference": "31a3b00ea9dc238abf748a89233020ab4c9cc718",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.9",
+                "inspector-apm/inspector-php": "^3.15.10",
+                "php": "^8.1",
+                "psr/http-message": "^1.0|^2.0",
+                "psr/log": "^1.0|^2.0|^3.0"
+            },
+            "require-dev": {
+                "aws/aws-sdk-php": "^3.209",
+                "elasticsearch/elasticsearch": "^8.0",
+                "ext-pdo": "*",
+                "friendsofphp/php-cs-fixer": "^3.75",
+                "google/auth": "^1.49",
+                "html2text/html2text": "^4.3",
+                "illuminate/database": "^10.0|^11.0|^12.0",
+                "phpstan/phpstan": "^2.1",
+                "phpunit/phpunit": "^9.0",
+                "rector/rector": "^2.0",
+                "spatie/fork": "^1.2",
+                "tomasvotruba/type-coverage": "^2.0",
+                "typesense/typesense-php": "^5.0"
+            },
+            "suggest": {
+                "aws/aws-sdk-php": "^3.209",
+                "elasticsearch/elasticsearch": "^7.0|^8.0",
+                "php-http/curl-client": "^2.3",
+                "spatie/fork": "^1.2",
+                "symfony/process": "^4.0|^5.0|^6.0|^7.0",
+                "typesense/typesense-php": "^5.0"
+            },
+            "bin": [
+                "bin/neuron"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "NeuronAI\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Valerio Barbera",
+                    "email": "valerio@inspector.dev"
+                }
+            ],
+            "description": "The PHP Agentic Framework.",
+            "support": {
+                "issues": "https://github.com/neuron-core/neuron-ai/issues",
+                "source": "https://github.com/neuron-core/neuron-ai/tree/2.11.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/neuron-core",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-01-15T09:46:43+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -9318,6 +9456,66 @@
                 "source": "https://github.com/spryker-eco/new-relic/tree/master"
             },
             "time": "2020-06-19T09:30:20+00:00"
+        },
+        {
+            "name": "spryker-eco/product-management-ai",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-eco/product-management-ai.git",
+                "reference": "d1033c865abd3f67817374454645406ef2702397"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-eco/product-management-ai/zipball/d1033c865abd3f67817374454645406ef2702397",
+                "reference": "d1033c865abd3f67817374454645406ef2702397",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.3",
+                "spryker/ai-foundation": ">=0.4.0",
+                "spryker/category": "^5.0.0",
+                "spryker/gui": "^4.0.0",
+                "spryker/kernel": "^3.33.0",
+                "spryker/locale": "^4.0.0",
+                "spryker/log": "^3.10.5",
+                "spryker/product": "^6.0.0",
+                "spryker/product-category": "^4.17.0",
+                "spryker/product-extension": "^1.1.0",
+                "spryker/product-management-extension": "^1.2.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/transfer": "^3.27.0",
+                "spryker/util-encoding": "^2.0.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "*",
+                "spryker/code-sniffer": "*"
+            },
+            "suggest": {
+                "spryker/propel-orm": "Used for Propel schema generation."
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SprykerEco\\": "src/SprykerEco/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ProductManagementAi module",
+            "support": {
+                "issues": "https://github.com/spryker-eco/product-management-ai/issues",
+                "source": "https://github.com/spryker-eco/product-management-ai/tree/master"
+            },
+            "time": "2026-02-26T15:16:18+00:00"
         },
         {
             "name": "spryker-feature/acl",
@@ -24420,6 +24618,63 @@
                 "source": "https://github.com/spryker/agent-security-merchant-portal-gui/tree/2.0.0"
             },
             "time": "2026-01-14T12:55:29+00:00"
+        },
+        {
+            "name": "spryker/ai-foundation",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/ai-foundation.git",
+                "reference": "c46d6a4a616d3c3a8871f4fe1fd6fda1645042b8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/ai-foundation/zipball/c46d6a4a616d3c3a8871f4fe1fd6fda1645042b8",
+                "reference": "c46d6a4a616d3c3a8871f4fe1fd6fda1645042b8",
+                "shasum": ""
+            },
+            "require": {
+                "aws/aws-sdk-php": "^3.209",
+                "neuron-core/neuron-ai": "^2.9.3",
+                "php": ">=8.3",
+                "spryker/kernel": "^3.30.0",
+                "spryker/log-extension": "^1.0.0",
+                "spryker/monolog": "^2.0.5",
+                "spryker/propel-orm": "^1.15.0",
+                "spryker/state-machine": "^2.0.0",
+                "spryker/transfer": "^3.27.0",
+                "spryker/zed-request": "^3.20.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/log": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "suggest": {
+                "spryker/log": "Provides logging infrastructure and audit log support for Spryker features."
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "AiFoundation module",
+            "support": {
+                "source": "https://github.com/spryker/ai-foundation/tree/master"
+            },
+            "time": "2026-03-09T20:46:37+00:00"
         },
         {
             "name": "spryker/alternative-products-rest-api",
@@ -39629,16 +39884,16 @@
         },
         {
             "name": "spryker/event",
-            "version": "2.15.0",
+            "version": "2.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/event.git",
-                "reference": "b659d20f1fc15b02f36f02154d417105866526a3"
+                "reference": "5b7dbce536f26d15b29c6f251e614b0bee57eb8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/event/zipball/b659d20f1fc15b02f36f02154d417105866526a3",
-                "reference": "b659d20f1fc15b02f36f02154d417105866526a3",
+                "url": "https://api.github.com/repos/spryker/event/zipball/5b7dbce536f26d15b29c6f251e614b0bee57eb8c",
+                "reference": "5b7dbce536f26d15b29c6f251e614b0bee57eb8c",
                 "shasum": ""
             },
             "require": {
@@ -39649,17 +39904,19 @@
                 "spryker/monolog": "^2.0.0",
                 "spryker/propel-orm": "^1.6.0",
                 "spryker/queue": "^1.18.0",
-                "spryker/util-encoding": "^2.1.0"
+                "spryker/symfony": "^3.0.0",
+                "spryker/util-encoding": "^2.1.0",
+                "spryker/web-profiler-extension": "^1.0.0"
             },
             "require-dev": {
                 "spryker/code-sniffer": "*",
+                "spryker/container": "*",
                 "spryker/propel": "^3.0.0",
                 "spryker/publisher": "*",
-                "spryker/symfony": "*",
                 "spryker/testify": "*"
             },
             "suggest": {
-                "spryker/symfony": "When the EventListenerDumpConsole command should be used."
+                "spryker/container": "When WebProfilerApplicationEventsDataCollectorPlugin is used"
             },
             "type": "library",
             "extra": {
@@ -39679,9 +39936,9 @@
             ],
             "description": "Event module",
             "support": {
-                "source": "https://github.com/spryker/event/tree/2.15.0"
+                "source": "https://github.com/spryker/event/tree/2.16.0"
             },
-            "time": "2025-11-01T12:00:48+00:00"
+            "time": "2026-03-06T11:36:02+00:00"
         },
         {
             "name": "spryker/event-behavior",
@@ -42578,16 +42835,16 @@
         },
         {
             "name": "spryker/log",
-            "version": "3.18.1",
+            "version": "3.19.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/log.git",
-                "reference": "4872cf4758de0a7cecb3de89345968a352b2d0b6"
+                "reference": "d456ae0a6bf6bc1b91b1f7e473cedb965e4670f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/log/zipball/4872cf4758de0a7cecb3de89345968a352b2d0b6",
-                "reference": "4872cf4758de0a7cecb3de89345968a352b2d0b6",
+                "url": "https://api.github.com/repos/spryker/log/zipball/d456ae0a6bf6bc1b91b1f7e473cedb965e4670f5",
+                "reference": "d456ae0a6bf6bc1b91b1f7e473cedb965e4670f5",
                 "shasum": ""
             },
             "require": {
@@ -42601,15 +42858,18 @@
                 "spryker/queue": "^0.3.0 || ^1.0.0",
                 "spryker/symfony": "^3.0.0",
                 "spryker/transfer": "^3.27.0",
-                "spryker/util-network": "^1.0.0"
+                "spryker/util-network": "^1.0.0",
+                "spryker/web-profiler-extension": "^1.0.0"
             },
             "require-dev": {
                 "spryker/code-sniffer": "*",
+                "spryker/container": "*",
                 "spryker/propel": "*",
                 "spryker/silex": "*",
                 "spryker/testify": "*"
             },
             "suggest": {
+                "spryker/container": "If WebProfilerAuditLogDataCollectorPlugin is used",
                 "spryker/silex": "If you want to use ServiceProvider."
             },
             "type": "library",
@@ -42630,9 +42890,9 @@
             ],
             "description": "Log module",
             "support": {
-                "source": "https://github.com/spryker/log/tree/3.18.1"
+                "source": "https://github.com/spryker/log/tree/3.19.0"
             },
-            "time": "2025-10-14T14:32:14+00:00"
+            "time": "2026-03-11T16:48:16+00:00"
         },
         {
             "name": "spryker/log-extension",
@@ -89995,16 +90255,16 @@
         },
         {
             "name": "spryker-shop/web-profiler-widget",
-            "version": "1.5.0",
+            "version": "1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-shop/web-profiler-widget.git",
-                "reference": "09c6df2da7dd86da37fccbde0f313bc71e8c3f23"
+                "reference": "b29fb2129045b27874cc00614773708dd5186d6f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-shop/web-profiler-widget/zipball/09c6df2da7dd86da37fccbde0f313bc71e8c3f23",
-                "reference": "09c6df2da7dd86da37fccbde0f313bc71e8c3f23",
+                "url": "https://api.github.com/repos/spryker-shop/web-profiler-widget/zipball/b29fb2129045b27874cc00614773708dd5186d6f",
+                "reference": "b29fb2129045b27874cc00614773708dd5186d6f",
                 "shasum": ""
             },
             "require": {
@@ -90051,9 +90311,9 @@
             ],
             "description": "WebProfilerWidget module",
             "support": {
-                "source": "https://github.com/spryker-shop/web-profiler-widget/tree/1.5.0"
+                "source": "https://github.com/spryker-shop/web-profiler-widget/tree/1.7.0"
             },
-            "time": "2026-03-03T11:38:10+00:00"
+            "time": "2026-03-11T12:41:04+00:00"
         },
         {
             "name": "spryker/architecture-sniffer",
@@ -90465,16 +90725,16 @@
         },
         {
             "name": "spryker/web-profiler",
-            "version": "1.8.0",
+            "version": "1.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/web-profiler.git",
-                "reference": "3d8f889f63bd94c0880ceca20c3ce9164604dc96"
+                "reference": "4c2efc418bd9d17d3a44e28063c6e6ace28acb19"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/web-profiler/zipball/3d8f889f63bd94c0880ceca20c3ce9164604dc96",
-                "reference": "3d8f889f63bd94c0880ceca20c3ce9164604dc96",
+                "url": "https://api.github.com/repos/spryker/web-profiler/zipball/4c2efc418bd9d17d3a44e28063c6e6ace28acb19",
+                "reference": "4c2efc418bd9d17d3a44e28063c6e6ace28acb19",
                 "shasum": ""
             },
             "require": {
@@ -90524,9 +90784,9 @@
             ],
             "description": "WebProfiler module",
             "support": {
-                "source": "https://github.com/spryker/web-profiler/tree/1.8.0"
+                "source": "https://github.com/spryker/web-profiler/tree/1.10.0"
             },
-            "time": "2026-03-03T11:38:10+00:00"
+            "time": "2026-03-11T12:41:04+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -91057,6 +91317,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "spryker-eco/product-management-ai": 20,
+        "spryker/ai-foundation": 20,
         "spryker/cypress-tests": 20,
         "spryker/robotframework-suite-tests": 20
     },
@@ -91079,5 +91341,5 @@
     "platform-overrides": {
         "php": "8.3.13"
     },
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.6.0"
 }
