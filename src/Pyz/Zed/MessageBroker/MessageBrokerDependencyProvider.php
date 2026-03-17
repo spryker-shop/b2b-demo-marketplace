@@ -27,6 +27,7 @@ use Spryker\Zed\Payment\Communication\Plugin\MessageBroker\PaymentOperationsMess
 use Spryker\Zed\ProductReview\Communication\Plugin\MessageBroker\ProductReviewAddReviewsMessageHandlerPlugin;
 use Spryker\Zed\SalesPaymentDetail\Communication\Plugin\MessageBroker\SalesPaymentDetailMessageHandlerPlugin;
 use Spryker\Zed\Session\Communication\Plugin\MessageBroker\SessionTrackingIdMessageAttributeProviderPlugin;
+
 /**
  * @method \Pyz\Zed\MessageBroker\MessageBrokerConfig getConfig()
  */
