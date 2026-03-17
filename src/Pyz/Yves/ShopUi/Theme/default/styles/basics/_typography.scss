@@ -1,17 +1,16 @@
 @mixin basic-typography() {
     html {
-        font-size: var(--font-size-16);
+        font-size: var(--body-lg-size);
     }
 
     body {
-        @include helper-font-size(default);
-        font-weight: var(--font-weight-regular);
-        line-height: var(--font-line-height-24);
-        letter-spacing: rem(0.12);
+        font-weight: var(--body-lg-weight);
+        font-family: var(--body-lg-family);
+        line-height: var(--body-lg-line-height);
+        letter-spacing: var(--body-lg-letter-spacing);
         position: relative;
         background-color: var(--background-page);
-        color: var(--text-inverse);
-        font-family: var(--font-family-sans);
+        color: var(--text-primary);
         overflow-x: hidden;
     }
 
@@ -20,28 +19,40 @@
         -moz-osx-font-smoothing: grayscale;
     }
 
-    @each $i in (1, 2, 3, 4, 5, 6) {
+    $heading-sizes: (
+        1: 'xl',
+        2: 'lg',
+        3: 'md',
+        4: 'sm',
+        5: 'sm',
+        6: 'sm',
+    );
+
+    @each $i, $size in $heading-sizes {
         h#{$i} {
-            @include helper-font-weight(medium);
-            @include helper-font-size($i);
-            @include helper-font-line-height($i);
             display: block;
-            color: $setting-color-text;
+            font-family: var(--heading-#{$size}-family);
+            font-weight: var(--heading-#{$size}-weight);
+            font-size: var(--heading-#{$size}-size);
+            line-height: var(--heading-#{$size}-line-height);
+            letter-spacing: var(--heading-#{$size}-letter-spacing);
+            color: var(--text-primary);
         }
     }
 
     a {
-        color: $setting-color-alt;
+        color: var(--text-brand);
         text-decoration: none;
 
         &:hover {
-            color: $setting-color-main;
+            color: var(--text-brand);
+            text-decoration: underline;
         }
     }
 
     b,
     strong {
-        @include helper-font-weight(bold);
+        font-weight: var(--font-weight-bold);
     }
 
     i,
@@ -52,31 +63,30 @@
 
     hr {
         @include helper-ui-clearfix;
-        border-bottom: var(--stroke-sm) solid $setting-color-gray-3;
-        margin: rem(var(--scale-4)) 0;
+        border-bottom: var(--stroke-sm) solid var(--border-default);
+        margin: var(--scale-4) 0;
     }
 
     small {
-        font-size: rem(var(--fontsize-0));
-
-        @include helper-breakpoint-media-min($lg) {
-            @include helper-font-size(small);
-        }
+        font-size: rem(var(--body-lg-size));
     }
 
     big {
-        @include helper-font-size(big);
+        font-size: var(--font-size-20);
     }
 
     p,
     blockquote,
     iframe {
-        margin: rem(var(--scale-4)) 0;
+        margin: var(--scale-4) 0;
     }
 
-    .text-color {
-        &-main {
-            color: $setting-color-gray-4;
+    .divider {
+        display: block;
+        border-top: var(--stroke-sm) solid var(--border-default);
+
+        &--dashed {
+            border-style: dashed;
         }
     }
 }
