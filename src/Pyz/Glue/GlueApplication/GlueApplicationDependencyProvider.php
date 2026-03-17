@@ -236,10 +236,10 @@ use Spryker\Glue\ShoppingListsRestApi\Plugin\GlueApplication\ShoppingListsResour
 use Spryker\Glue\ShoppingListsRestApi\ShoppingListsRestApiConfig;
 use Spryker\Glue\StoresApi\Plugin\GlueStorefrontApiApplication\StoreApplicationPlugin;
 use Spryker\Glue\StoresRestApi\Plugin\StoresResourceRoutePlugin;
-use SprykerEco\Glue\Vertex\Plugin\VertexTaxValidateIdResourceRoutePlugin;
 use Spryker\Glue\UpSellingProductsRestApi\Plugin\GlueApplication\CartUpSellingProductsResourceRoutePlugin;
 use Spryker\Glue\UrlsRestApi\Plugin\GlueApplication\UrlResolverResourceRoutePlugin;
 use Spryker\Glue\WebProfiler\Plugin\Application\WebProfilerApplicationPlugin;
+use SprykerEco\Glue\Vertex\Plugin\VertexTaxValidateIdResourceRoutePlugin;
 use SprykerFeature\Glue\SelfServicePortal\Plugin\GlueApplication\SspAssetsResourceRoutePlugin;
 use SprykerFeature\Glue\SelfServicePortal\Plugin\GlueApplication\SspInquiriesResourceRoutePlugin;
 use SprykerFeature\Glue\SelfServicePortal\Plugin\GlueApplication\SspServicesResourceRoutePlugin;
