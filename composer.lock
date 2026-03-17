@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "edb70d150010caf7478996e876d6e148",
+    "content-hash": "9d8ecd0a6a7292e533261859dd74acd2",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -9295,6 +9295,63 @@
                 "source": "https://github.com/spryker-eco/algolia/tree/1.0.1"
             },
             "time": "2026-02-18T12:55:25+00:00"
+        },
+        {
+            "name": "spryker-eco/amazon-quicksight",
+            "version": "2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-eco/amazon-quicksight.git",
+                "reference": "f24b19639cfb527095d9af11ed840cb0903c2426"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-eco/amazon-quicksight/zipball/f24b19639cfb527095d9af11ed840cb0903c2426",
+                "reference": "f24b19639cfb527095d9af11ed840cb0903c2426",
+                "shasum": ""
+            },
+            "require": {
+                "aws/aws-sdk-php": "^3.90.0",
+                "php": ">=8.2",
+                "spryker/analytics-gui-extension": "^1.0.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/messenger": "^3.0.0",
+                "spryker/propel-orm": "^1.0.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/twig": "^3.0.0",
+                "spryker/user": "^3.16.0",
+                "spryker/user-extension": "^1.5.0",
+                "spryker/util-encoding": "^2.0.0",
+                "spryker/uuid-behavior": "^1.0.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "*",
+                "spryker/code-sniffer": "*",
+                "spryker/container": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SprykerEco\\": "src/SprykerEco/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "AmazonQuicksight module",
+            "support": {
+                "issues": "https://github.com/spryker-eco/amazon-quicksight/issues",
+                "source": "https://github.com/spryker-eco/amazon-quicksight/tree/2.1.0"
+            },
+            "time": "2025-05-06T08:49:01+00:00"
         },
         {
             "name": "spryker-eco/loggly",
@@ -91284,5 +91341,5 @@
     "platform-overrides": {
         "php": "8.3.13"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
