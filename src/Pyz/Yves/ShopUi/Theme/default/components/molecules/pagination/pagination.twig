@@ -41,6 +41,8 @@
                             name: 'chevron-right'
                         }
                     } only %}
+
+                    {{ 'pagination.previous' | trans }}
                 </a>
             </li>
 
@@ -79,6 +81,8 @@
                             name: 'chevron-right'
                         }
                     } only %}
+
+                    {{ 'pagination.previous' | trans }}
                 </span>
             </li>
         {% endif %}
@@ -116,6 +120,8 @@
 
             <li class="{{config.name}}__item">
                 <a class="{{config.name}}__step {{config.name}}__step--next" href="{{ path(data.paginationPath, data.parameters|merge({page: data.currentPage + 1})) }}{{ data.anchor }}">
+                    {{ 'pagination.next' | trans }}
+
                     {% include atom('icon') with {
                         class: config.name ~ '__reset-icon',
                         data: {
@@ -127,6 +133,8 @@
         {% elseif data.showAlwaysFirstAndLast %}
             <li class="{{config.name}}__item">
                 <span class="{{config.name}}__step {{config.name}}__step--next {{config.name}}__step--disabled">
+                    {{ 'pagination.next' | trans }}
+
                     {% include atom('icon') with {
                         class: config.name ~ '__reset-icon',
                         data: {
