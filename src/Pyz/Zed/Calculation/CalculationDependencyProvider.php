@@ -43,8 +43,8 @@ use Spryker\Zed\SalesOrderThreshold\Communication\Plugin\Calculation\RemoveSales
 use Spryker\Zed\Shipment\Communication\Plugin\Calculation\FilterObsoleteShipmentExpensesCalculatorPlugin;
 use Spryker\Zed\Shipment\Communication\Plugin\Calculation\ShipmentTaxRateCalculatorPlugin;
 use Spryker\Zed\Shipment\Communication\Plugin\Calculation\ShipmentTotalCalculatorPlugin;
-use Spryker\Zed\TaxApp\Communication\Plugin\Calculation\TaxAppCalculationPlugin;
 use Spryker\Zed\TaxProductConnector\Communication\Plugin\Calculation\ProductItemTaxRateCalculatorPlugin;
+use SprykerEco\Zed\Vertex\Communication\Plugin\Calculation\VertexCalculationPlugin;
 
 class CalculationDependencyProvider extends SprykerCalculationDependencyProvider
 {
@@ -213,7 +213,7 @@ class CalculationDependencyProvider extends SprykerCalculationDependencyProvider
             new DiscountAmountAggregatorForGenericAmountPlugin(),
             new ItemDiscountAmountFullAggregatorPlugin(),
 
-            new TaxAppCalculationPlugin(),
+            new VertexCalculationPlugin(),
 
             new PriceToPayAggregatorPlugin(),
 
@@ -257,7 +257,7 @@ class CalculationDependencyProvider extends SprykerCalculationDependencyProvider
             new DiscountAmountAggregatorForGenericAmountPlugin(),
             new ItemDiscountAmountFullAggregatorPlugin(),
 
-            new TaxAppCalculationPlugin(),
+            new VertexCalculationPlugin(),
 
             new PriceToPayAggregatorPlugin(),
 

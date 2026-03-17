@@ -236,7 +236,7 @@ use Spryker\Glue\ShoppingListsRestApi\Plugin\GlueApplication\ShoppingListsResour
 use Spryker\Glue\ShoppingListsRestApi\ShoppingListsRestApiConfig;
 use Spryker\Glue\StoresApi\Plugin\GlueStorefrontApiApplication\StoreApplicationPlugin;
 use Spryker\Glue\StoresRestApi\Plugin\StoresResourceRoutePlugin;
-use Spryker\Glue\TaxAppRestApi\Plugin\TaxValidateIdResourceRoutePlugin;
+use SprykerEco\Glue\Vertex\Plugin\VertexTaxValidateIdResourceRoutePlugin;
 use Spryker\Glue\UpSellingProductsRestApi\Plugin\GlueApplication\CartUpSellingProductsResourceRoutePlugin;
 use Spryker\Glue\UrlsRestApi\Plugin\GlueApplication\UrlResolverResourceRoutePlugin;
 use Spryker\Glue\WebProfiler\Plugin\Application\WebProfilerApplicationPlugin;
@@ -335,7 +335,7 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
             new PaymentsResourceRoutePlugin(),
             new PaymentCancellationsResourceRoutePlugin(),
             new PaymentCustomersResourceRoutePlugin(),
-            new TaxValidateIdResourceRoutePlugin(),
+            new VertexTaxValidateIdResourceRoutePlugin(),
             new MultiFactorAuthTypesResourcePlugin(),
             new MultiFactorAuthTriggerResourcePlugin(),
             new MultiFactorAuthActivateResourcePlugin(),
