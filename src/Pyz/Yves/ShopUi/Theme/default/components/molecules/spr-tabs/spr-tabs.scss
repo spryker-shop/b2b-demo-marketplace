@@ -1,0 +1,91 @@
+@mixin shop-ui-spr-tabs($name: '.spr-tabs') {
+    #{$name} {
+        &__nav {
+            display: flex;
+
+            &--with-bar {
+                border-bottom: var(--stroke-sm) solid var(--border-subtle);
+            }
+        }
+
+        &__trigger {
+            @include helper-effect-transition(color border-color);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--scale-8);
+            padding: var(--scale-12) var(--scale-16);
+            font-size: var(--font-size-14);
+            font-weight: var(--font-weight-regular);
+            line-height: var(--font-line-height-20);
+            color: var(--text-secondary);
+            background: transparent;
+            border: none;
+            border-bottom: var(--stroke-md) solid transparent;
+            cursor: pointer;
+            margin-bottom: calc(var(--stroke-sm) * -1);
+
+            &:hover,
+            &:focus {
+                color: var(--text-primary);
+                font-weight: var(--font-weight-medium);
+                outline: none;
+            }
+
+            &:focus-visible {
+                box-shadow: var(--shadows-focus-x) var(--shadows-focus-y) var(--shadows-focus-blur)
+                    var(--shadows-focus-spread) var(--shadows-focus-color);
+            }
+
+            &--active {
+                color: var(--text-brand);
+                font-weight: var(--font-weight-semibold);
+                border-bottom-color: var(--border-brand);
+                pointer-events: none;
+            }
+
+            &--disabled,
+            &:disabled {
+                color: var(--text-disabled);
+                cursor: not-allowed;
+                pointer-events: none;
+            }
+
+            &--sm {
+                padding: var(--scale-8) var(--scale-12);
+                font-size: var(--font-size-12);
+                line-height: var(--font-line-height-16);
+            }
+        }
+
+        &__icon {
+            font-size: var(--font-size-18);
+        }
+
+        &__trigger-label {
+            &::after {
+                content: attr(data-text);
+                display: block;
+                height: 0;
+                overflow: hidden;
+                visibility: hidden;
+                font-weight: var(--font-weight-semibold);
+                pointer-events: none;
+                user-select: none;
+            }
+        }
+
+        &__panels {
+            padding-top: var(--scale-24);
+        }
+
+        &__panel {
+            &--hidden {
+                display: none;
+            }
+        }
+
+        @content;
+    }
+}
+
+@include shop-ui-spr-tabs();
