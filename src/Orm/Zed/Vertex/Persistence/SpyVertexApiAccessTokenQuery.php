@@ -9,7 +9,7 @@ declare(strict_types = 1);
 
 namespace Orm\Zed\Vertex\Persistence;
 
-use Orm\Zed\Vertex\Persistence\Base\SpyVertexApiAccessTokenQuery as BaseSpyVertexApiAccessTokenQuery;
+use SprykerEco\Zed\Vertex\Persistence\Propel\AbstractSpyVertexApiAccessTokenQuery as BaseSpyVertexApiAccessTokenQuery;
 
 /**
  * Skeleton subclass for performing query and update operations on the 'spy_vertex_api_access_token' table.

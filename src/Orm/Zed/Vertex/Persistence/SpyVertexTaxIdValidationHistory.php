@@ -9,7 +9,7 @@ declare(strict_types = 1);
 
 namespace Orm\Zed\Vertex\Persistence;
 
-use Orm\Zed\Vertex\Persistence\Base\SpyVertexTaxIdValidationHistory as BaseSpyVertexTaxIdValidationHistory;
+use SprykerEco\Zed\Vertex\Persistence\Propel\AbstractSpyVertexTaxIdValidationHistory as BaseSpyVertexTaxIdValidationHistory;
 
 /**
  * Skeleton subclass for representing a row from the 'spy_vertex_tax_id_validation_history' table.

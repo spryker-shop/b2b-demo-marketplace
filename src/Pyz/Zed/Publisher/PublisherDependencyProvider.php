@@ -242,7 +242,6 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
             $this->getProductPageSearchPlugins(),
             $this->getProductAbstractPageSearchPlugins(),
             $this->getProductOfferAvailabilityStoragePlugins(),
-            $this->getTaxAppPlugins(),
             $this->getProductStoragePlugins(),
             $this->getSspModelStoragePlugins(),
             $this->getSspAssetStoragePlugins(),
@@ -692,14 +691,6 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
         return [
             new RefreshAssetStoreRelationPublisherPlugin(),
         ];
-    }
-
-    /**
-     * @return list<\Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface>
-     */
-    public function getTaxAppPlugins(): array
-    {
-        return [];
     }
 
     /**
