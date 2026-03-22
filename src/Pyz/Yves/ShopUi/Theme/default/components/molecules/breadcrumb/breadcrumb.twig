@@ -1,0 +1,51 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'breadcrumb',
+    tag: 'ul'
+} %}
+
+{% define data = {
+    steps: [],
+    startWithHome: true,
+    size: 'md',
+    separator: 'slash'
+} %}
+
+{% set modifiers = (modifiers ?? []) | merge([data.size]) %}
+
+{% block body %}
+    {% set stepsCount = data.steps | length %}
+
+    {% if data.startWithHome %}
+        {% include molecule('breadcrumb-step') with {
+            modifiers: stepsCount == 0 ? ['current'] : [],
+            data: {
+                url: path('home'),
+                label: 'global.home' | trans,
+                iconName: 'house',
+                iconModifiers: ['filled'],
+                separator: data.separator,
+                isCurrent: stepsCount == 0,
+            }
+        } only %}
+    {% endif %}
+
+    {% block breadcrumbs %}
+        {% for step in data.steps %}
+            {% include molecule('breadcrumb-step') with {
+                modifiers: loop.last ? ['current'] : [],
+                data: {
+                    url: step.url | default,
+                    label: step.label | default,
+                    itemProp: step.itemProp | default,
+                    iconName: step.iconName | default,
+                    separator: data.separator,
+                    isCurrent: loop.last,
+                    formName: step.formName | default,
+                    tokenFieldName: step.tokenFieldName | default,
+                }
+            } only %}
+        {% endfor %}
+    {% endblock %}
+{% endblock %}

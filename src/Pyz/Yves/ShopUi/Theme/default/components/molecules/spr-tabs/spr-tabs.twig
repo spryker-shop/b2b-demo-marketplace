@@ -1,0 +1,90 @@
+{% extends model('component') %}
+
+{#
+  Parameters:
+    * items (array) : list of tab objects, each with:
+        - id (string) : unique tab identifier
+        - label (object):
+            - text (string) : visible label text
+            - icon (string|null) : optional icon name (atom 'font-icon')
+        - content (string) : tab panel content
+        - disabled (bool) : whether the tab is disabled (default false)
+    * activeTab (string) : id of the initially active tab (defaults to first non-disabled item id)
+#}
+
+{% define config = {
+    name: 'spr-tabs',
+    tag: 'spr-tabs',
+} %}
+
+{% define data = {
+    items: [],
+    activeTab: '',
+} %}
+
+{% define attributes = {
+    'active-class': config.name ~ '__trigger--active',
+    'panel-hidden-class': config.name ~ '__panel--hidden',
+} %}
+
+{%- block body -%}
+    {% set activeId = data.activeTab %}
+
+    {% if not activeId %}
+        {% for item in data.items %}
+            {% if not activeId and not (item.disabled | default(false)) %}
+                {% set activeId = item.id %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    <div class="{{ _self.renderClass(config.name ~ '__nav', modifiers) }}" role="tablist">
+        {% for item in data.items %}
+            {% set isDisabled = item.disabled | default(false) %}
+            {% set isActive = item.id == activeId and not isDisabled %}
+
+            <button
+                class="
+                    {{ _self.renderClass(config.name ~ '__trigger', modifiers) }}
+                    {{ config.jsName }}__trigger
+                    {% if isActive %} {{ config.name }}__trigger--active{% endif %}
+                    {% if isDisabled %} {{ config.name }}__trigger--disabled{% endif %}
+                "
+                role="tab"
+                aria-selected="{{ isActive ? 'true' : 'false' }}"
+                aria-controls="{{ config.name }}-panel-{{ item.id }}"
+                aria-disabled="{{ isDisabled ? 'true' : 'false' }}"
+                id="{{ config.name }}-trigger-{{ item.id }}"
+                data-tab-id="{{ item.id }}"
+                {% if isDisabled %}disabled{% endif %}
+            >
+                {% if item.label.icon | default(null) %}
+                    {% include atom('font-icon') with {
+                        class: config.name ~ '__icon',
+                        data: {
+                            name: item.label.icon,
+                        },
+                    } only %}
+                {% endif %}
+
+                <span class="{{ config.name }}__trigger-label" data-text="{{ item.label.text }}">{{ item.label.text }}</span>
+            </button>
+        {% endfor %}
+    </div>
+
+    <div class="{{ config.name }}__panels">
+        {% for item in data.items %}
+            {% set isActive = item.id == activeId and not (item.disabled | default(false)) %}
+            <div
+                class="{{ config.name }}__panel {{ config.jsName }}__panel{% if not isActive %} {{ config.name }}__panel--hidden{% endif %}"
+                role="tabpanel"
+                id="{{ config.name }}-panel-{{ item.id }}"
+                aria-labelledby="{{ config.name }}-trigger-{{ item.id }}"
+                data-tab-id="{{ item.id }}"
+                tabindex="0"
+            >
+                {{ item.content | raw }}
+            </div>
+        {% endfor %}
+    </div>
+{%- endblock -%}
