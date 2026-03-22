@@ -1,7 +1,63 @@
 @mixin shop-ui-breadcrumb-step($name: '.breadcrumb-step') {
     #{$name} {
-        display: inline-block;
-        font: fw(500) rem(13) / rem(16) $setting-font-family;
+        display: inline-flex;
+        align-items: center;
+        font-size: inherit;
+        line-height: inherit;
+
+        &__link {
+            @include helper-effect-transition(color);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--scale-4);
+            padding: var(--scale-2) var(--scale-0);
+            color: var(--text-brand);
+            font-weight: var(--font-weight-medium);
+            text-decoration: none;
+            cursor: pointer;
+
+            &:hover,
+            &:focus {
+                text-decoration: none;
+
+                #{$name}__label {
+                    text-decoration: underline;
+                }
+            }
+        }
+
+        &__label {
+            text-decoration: none;
+        }
+
+        &--current {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--scale-4);
+            padding: var(--scale-2) var(--scale-0);
+            color: var(--text-primary);
+            font-weight: var(--font-weight-semibold);
+        }
+
+        &__icon {
+            display: inline-flex;
+            align-items: center;
+            color: inherit;
+            font-size: var(--breadcrumb-icon-size, #{rem(var(--font-size-18))});
+            text-decoration: none;
+        }
+
+        &__separator {
+            display: inline-flex;
+            align-items: center;
+            color: var(--text-tertiary);
+            user-select: none;
+            padding: 0 var(--scale-8);
+        }
+
+        &__separator--chevron {
+            padding: var(--scale-2) 0;
+        }
 
         &--progress-step,
         &--progress-complete {
@@ -68,40 +124,13 @@
         }
 
         &:last-child {
-            #{$name}__separator {
+            > #{$name}__separator:not(#{$name}__separator--slash):not(#{$name}__separator--chevron) {
                 display: none;
             }
-
-            #{$name}__link {
-                color: $setting-color-gray-4;
-            }
         }
 
-        &__separator {
-            margin-left: rem(4);
-            margin-right: rem(4);
-            color: $setting-color-gray-3;
-        }
-
-        &--active {
-            font-weight: fw(medium);
-            border-bottom: rem(1) solid $setting-color-text;
-            color: $setting-color-text;
-        }
-
-        &__link {
-            cursor: pointer;
-        }
-
-        &__link,
-        &--disabled:not(&--active) {
-            @include helper-effect-transition(color);
-            color: $setting-color-gray-4;
-
-            &:hover,
-            &:focus {
-                color: $setting-color-gray-4;
-            }
+        &__form {
+            display: inline-block;
         }
 
         &__checked {
@@ -145,8 +174,15 @@
             }
         }
 
-        &__form {
-            display: inline-block;
+        &--active {
+            font-weight: fw(medium);
+            border-bottom: rem(1) solid $setting-color-text;
+            color: $setting-color-text;
+        }
+
+        &--disabled:not(&--active) {
+            @include helper-effect-transition(color);
+            color: $setting-color-gray-4;
         }
 
         @content;
