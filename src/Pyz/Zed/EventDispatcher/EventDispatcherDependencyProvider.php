@@ -34,6 +34,8 @@ use Spryker\Zed\Router\Communication\Plugin\EventDispatcher\RouterLocaleEventDis
 use Spryker\Zed\Router\Communication\Plugin\EventDispatcher\RouterSslRedirectEventDispatcherPlugin;
 use Spryker\Zed\SecurityBlockerBackofficeGui\Communication\Plugin\EventDispatcher\SecurityBlockerBackofficeUserEventDispatcherPlugin;
 use Spryker\Zed\SecurityBlockerMerchantPortalGui\Communication\Plugin\EventDispatcher\SecurityBlockerMerchantPortalUserEventDispatcherPlugin;
+use Spryker\Zed\SecurityGui\Communication\Plugin\EventDispatcher\LastVisitedPageEventDispatcherPlugin;
+use Spryker\Zed\SecurityMerchantPortalGui\Communication\Plugin\EventDispatcher\LastVisitedPageEventDispatcherPlugin as MerchantPortalLastVisitedPageEventDispatcherPlugin;
 use Spryker\Zed\Session\Communication\Plugin\EventDispatcher\SaveSessionEventDispatcherPlugin;
 use Spryker\Zed\Session\Communication\Plugin\EventDispatcher\SessionEventDispatcherPlugin;
 use Spryker\Zed\Twig\Communication\Plugin\EventDispatcher\TwigEventDispatcherPlugin;
@@ -110,6 +112,7 @@ class EventDispatcherDependencyProvider extends SprykerEventDispatcherDependency
             new SecurityBlockerBackofficeUserEventDispatcherPlugin(),
             new SecurityBlockerMerchantPortalUserEventDispatcherPlugin(),
             new EnvironmentInfoHeaderEventDispatcherPlugin(),
+            new LastVisitedPageEventDispatcherPlugin(),
         ];
 
         if (class_exists(ProfilerRequestEventDispatcherPlugin::class)) {
@@ -126,6 +129,7 @@ class EventDispatcherDependencyProvider extends SprykerEventDispatcherDependency
     {
         return [
             new MerchantPortalHeadersSecurityEventDispatcherPlugin(),
+            new MerchantPortalLastVisitedPageEventDispatcherPlugin(),
         ];
     }
 
