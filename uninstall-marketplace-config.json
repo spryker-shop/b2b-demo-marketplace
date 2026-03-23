@@ -267,9 +267,11 @@
                 { "type": "remove_use", "class_name": "SecurityBlockerMerchantPortalUserEventDispatcherPlugin" },
                 { "type": "remove_use", "class_name": "SecurityBlockerAgentMerchantPortalEventDispatcherPlugin" },
                 { "type": "remove_use", "class_name": "MerchantPortalHeadersSecurityEventDispatcherPlugin" },
+                { "type": "remove_use", "class_name": "MerchantPortalLastVisitedPageEventDispatcherPlugin" },
                 { "type": "remove_plugin", "plugin_class": "SecurityBlockerMerchantPortalUserEventDispatcherPlugin" },
                 { "type": "remove_plugin", "plugin_class": "SecurityBlockerAgentMerchantPortalEventDispatcherPlugin" },
                 { "type": "remove_plugin", "plugin_class": "MerchantPortalHeadersSecurityEventDispatcherPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantPortalLastVisitedPageEventDispatcherPlugin" },
                 { "type": "remove_method", "method_name": "getMerchantPortalEventDispatcherPlugins" }
             ],
             "success_messages": ["✓ EventDispatcherDependencyProvider cleaned from marketplace-specific plugins"]
@@ -1037,8 +1039,10 @@
         "config/Shared/config_default-docker.dev.php": {
             "operations": [
                 { "type": "remove_use", "class_name": "MerchantPortalConstants" },
+                { "type": "remove_use", "class_name": "SecurityMerchantPortalGuiConstants" },
                 { "type": "remove_config_assignment", "constant_pattern": "MerchantPortalConstants::BASE_URL_MP" },
                 { "type": "remove_config_assignment", "constant_pattern": "MerchantPortalConstants::" },
+                { "type": "remove_config_assignment", "constant_pattern": "SecurityMerchantPortalGuiConstants::ZED_IS_SSL_ENABLED" },
                 { "type": "remove_filesystem_config", "filesystem_name": "merchant-product-data-import-files" },
                 { "type": "remove_filesystem_config", "filesystem_name": "merchant-product-offer-data-import-files" },
                 { "type": "remove_section_comment", "comment_pattern": "MERCHANT PORTAL" }
@@ -1048,8 +1052,10 @@
         "config/Shared/config_default-ci.php": {
             "operations": [
                 { "type": "remove_use", "class_name": "MerchantPortalConstants" },
+                { "type": "remove_use", "class_name": "SecurityMerchantPortalGuiConstants" },
                 { "type": "remove_config_assignment", "constant_pattern": "MerchantPortalConstants::BASE_URL_MP" },
                 { "type": "remove_config_assignment", "constant_pattern": "MerchantPortalConstants::" },
+                { "type": "remove_config_assignment", "constant_pattern": "SecurityMerchantPortalGuiConstants::ZED_IS_SSL_ENABLED" },
                 { "type": "remove_filesystem_config", "filesystem_name": "merchant-product-data-import-files" },
                 { "type": "remove_filesystem_config", "filesystem_name": "merchant-product-offer-data-import-files" },
                 { "type": "remove_section_comment", "comment_pattern": "MERCHANT PORTAL" }
