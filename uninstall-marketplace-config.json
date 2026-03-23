@@ -1042,7 +1042,7 @@
                 { "type": "remove_use", "class_name": "SecurityMerchantPortalGuiConstants" },
                 { "type": "remove_config_assignment", "constant_pattern": "MerchantPortalConstants::BASE_URL_MP" },
                 { "type": "remove_config_assignment", "constant_pattern": "MerchantPortalConstants::" },
-                { "type": "remove_config_assignment", "constant_pattern": "SecurityMerchantPortalGuiConstants::ZED_IS_SSL_ENABLED" },
+                { "type": "remove_line_containing", "pattern": "SecurityMerchantPortalGuiConstants::" },
                 { "type": "remove_filesystem_config", "filesystem_name": "merchant-product-data-import-files" },
                 { "type": "remove_filesystem_config", "filesystem_name": "merchant-product-offer-data-import-files" },
                 { "type": "remove_section_comment", "comment_pattern": "MERCHANT PORTAL" }
@@ -1055,7 +1055,7 @@
                 { "type": "remove_use", "class_name": "SecurityMerchantPortalGuiConstants" },
                 { "type": "remove_config_assignment", "constant_pattern": "MerchantPortalConstants::BASE_URL_MP" },
                 { "type": "remove_config_assignment", "constant_pattern": "MerchantPortalConstants::" },
-                { "type": "remove_config_assignment", "constant_pattern": "SecurityMerchantPortalGuiConstants::ZED_IS_SSL_ENABLED" },
+                { "type": "remove_line_containing", "constant_pattern": "SecurityMerchantPortalGuiConstants::" },
                 { "type": "remove_filesystem_config", "filesystem_name": "merchant-product-data-import-files" },
                 { "type": "remove_filesystem_config", "filesystem_name": "merchant-product-offer-data-import-files" },
                 { "type": "remove_section_comment", "comment_pattern": "MERCHANT PORTAL" }
