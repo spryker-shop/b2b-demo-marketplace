@@ -183,7 +183,6 @@ use Spryker\Zed\StoreStorage\Communication\Plugin\Publisher\LocaleStore\LocaleSt
 use Spryker\Zed\StoreStorage\Communication\Plugin\Publisher\Store\StoreSynchronizationTriggeringPublisherPlugin;
 use Spryker\Zed\StoreStorage\Communication\Plugin\Publisher\Store\StoreWritePublisherPlugin;
 use Spryker\Zed\StoreStorage\Communication\Plugin\Publisher\StorePublisherTriggerPlugin;
-use Spryker\Zed\TaxApp\Communication\Plugin\Publisher\Store\RefreshTaxAppStoreRelationPublisherPlugin;
 use Spryker\Zed\TaxProductStorage\Communication\Plugin\Publisher\TaxProductPublisherTriggerPlugin;
 use Spryker\Zed\TaxStorage\Communication\Plugin\Publisher\TaxSetPublisherTriggerPlugin;
 use SprykerEco\Zed\Algolia\Communication\Plugin\Publisher\CmsPage\AlgoliaCmsPagePublisherPlugin;
@@ -243,7 +242,6 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
             $this->getProductPageSearchPlugins(),
             $this->getProductAbstractPageSearchPlugins(),
             $this->getProductOfferAvailabilityStoragePlugins(),
-            $this->getTaxAppPlugins(),
             $this->getProductStoragePlugins(),
             $this->getSspModelStoragePlugins(),
             $this->getSspAssetStoragePlugins(),
@@ -692,16 +690,6 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
     {
         return [
             new RefreshAssetStoreRelationPublisherPlugin(),
-        ];
-    }
-
-    /**
-     * @return list<\Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface>
-     */
-    public function getTaxAppPlugins(): array
-    {
-        return [
-            new RefreshTaxAppStoreRelationPublisherPlugin(),
         ];
     }
 

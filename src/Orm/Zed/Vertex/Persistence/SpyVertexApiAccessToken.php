@@ -7,12 +7,12 @@
 
 declare(strict_types = 1);
 
-namespace Orm\Zed\TaxApp\Persistence;
+namespace Orm\Zed\Vertex\Persistence;
 
-use Spryker\Zed\TaxApp\Persistence\Propel\AbstractSpyTaxAppConfigQuery as BaseSpyTaxAppConfigQuery;
+use SprykerEco\Zed\Vertex\Persistence\Propel\AbstractSpyVertexApiAccessToken as BaseSpyVertexApiAccessToken;
 
 /**
- * Skeleton subclass for performing query and update operations on the 'spy_tax_app_config' table.
+ * Skeleton subclass for representing a row from the 'spy_vertex_api_access_token' table.
  *
  *
  *
@@ -20,6 +20,6 @@ use Spryker\Zed\TaxApp\Persistence\Propel\AbstractSpyTaxAppConfigQuery as BaseSp
  * application requirements. This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-class SpyTaxAppConfigQuery extends BaseSpyTaxAppConfigQuery
+class SpyVertexApiAccessToken extends BaseSpyVertexApiAccessToken
 {
 }
