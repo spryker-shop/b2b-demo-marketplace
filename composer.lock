@@ -69351,20 +69351,22 @@
         },
         {
             "name": "spryker/security-gui",
-            "version": "2.3.0",
+            "version": "2.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/security-gui.git",
-                "reference": "77d86e2dc07825063e1aca3d72396e60c277f728"
+                "reference": "2b10a4d90e9287d63ee8f500cbc12156e522e73b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/security-gui/zipball/77d86e2dc07825063e1aca3d72396e60c277f728",
-                "reference": "77d86e2dc07825063e1aca3d72396e60c277f728",
+                "url": "https://api.github.com/repos/spryker/security-gui/zipball/2b10a4d90e9287d63ee8f500cbc12156e522e73b",
+                "reference": "2b10a4d90e9287d63ee8f500cbc12156e522e73b",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.3",
+                "spryker/event-dispatcher-extension": "^1.0.0",
+                "spryker/http": "^1.16.0",
                 "spryker/kernel": "^3.30.0",
                 "spryker/log": "^3.17.0",
                 "spryker/messenger": "^3.0.0",
@@ -69373,7 +69375,7 @@
                 "spryker/security": "^1.8.0",
                 "spryker/security-blocker": "^1.0.0",
                 "spryker/security-extension": "^1.0.0",
-                "spryker/security-gui-extension": "^1.4.0",
+                "spryker/security-gui-extension": "^1.5.0",
                 "spryker/session": "^4.0.0",
                 "spryker/symfony": "^3.5.0",
                 "spryker/transfer": "^3.27.0",
@@ -69393,7 +69395,8 @@
                 "spryker/testify": "*"
             },
             "suggest": {
-                "spryker-shop/customer-page": "ADD SUGGEST DESCRIPTION",
+                "spryker-shop/customer-page": "Required to wire the LastVisitedPageCustomerRedirectStrategyPlugin for Storefront post-login redirect.",
+                "spryker/event-dispatcher": "Required to wire the LastVisitedPageEventDispatcherPlugin into the event dispatcher stack.",
                 "spryker/router": "You need to install this module when you want to use the RouterExtension interfaces."
             },
             "type": "library",
@@ -69413,9 +69416,9 @@
             ],
             "description": "SecurityGui module",
             "support": {
-                "source": "https://github.com/spryker/security-gui/tree/2.3.0"
+                "source": "https://github.com/spryker/security-gui/tree/2.4.0"
             },
-            "time": "2026-03-13T11:49:27+00:00"
+            "time": "2026-03-18T08:39:11+00:00"
         },
         {
             "name": "spryker/security-gui-extension",
