@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 @mixin basic-grid() {
     .container {
         display: block;
@@ -29,7 +31,7 @@
         @each $breakpoint, $edges in $setting-breakpoints {
             @include helper-breakpoint-media-min(helper-breakpoint-edge-min($edges)) {
                 @for $column from 1 through $setting-grid-columns {
-                    $ratio: $column / $setting-grid-columns;
+                    $ratio: math.div($column, $setting-grid-columns);
 
                     &--#{$breakpoint}-#{$column} {
                         width: calc(#{percentage($ratio)} + #{$ratio - 1} * var(--grid-gap, 0px));
@@ -143,7 +145,7 @@
         &--stretch {
             align-items: stretch;
 
-            .box--stretch {
+            .col > * {
                 height: 100%;
             }
         }
