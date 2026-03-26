@@ -1,146 +1,118 @@
 @mixin shop-ui-banner($name: '.banner') {
     #{$name} {
+        display: flex;
+        flex-direction: column;
         overflow: hidden;
-        height: rem(200);
-        margin-bottom: rem(10);
+        background-color: var(--background-page);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadows-md-x) var(--shadows-md-y) var(--shadows-md-blur) var(--shadows-md-spread)
+            var(--shadows-md-color);
 
-        @include helper-breakpoint-media-min($lg) {
-            height: rem(450);
-            margin-bottom: rem(30);
+        &__image-wrapper {
+            display: block;
+            overflow: hidden;
+            flex-shrink: 0;
+            width: 100%;
+            aspect-ratio: 11 / 4;
         }
 
-        &--medium {
-            height: rem(400);
+        &__image-wrapper--medium,
+        &__image-wrapper--small {
+            aspect-ratio: 5 / 3;
         }
 
+        &__body {
+            display: flex;
+            flex-direction: column;
+            padding: var(--scale-24);
+            flex-grow: 1;
+        }
+
+        &__body--medium {
+            padding: var(--scale-20);
+        }
+
+        &__body--small {
+            padding: var(--scale-16);
+        }
+
+        &__content {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        &--medium,
         &--small {
-            height: rem(200);
-
-            @include helper-breakpoint-media-min($lg) {
-                height: rem(340);
-            }
-        }
-
-        &--success {
-            height: auto;
-            margin-bottom: rem(15);
-
-            @include helper-breakpoint-media-min($lg) {
-                height: rem(450);
-                margin-bottom: rem(40);
-            }
-        }
-
-        &--color-second {
-            color: $setting-color-white;
-        }
-
-        &--spacing-bottom-reset {
-            margin-bottom: 0;
-        }
-
-        &__container {
-            min-height: 100%;
-            background-position: center;
-            background-size: cover;
-            background-repeat: no-repeat;
-            text-align: center;
-            position: relative;
-            padding: rem(10);
-            margin: 0 rem(15);
-
-            @include helper-breakpoint-media-min($lg) {
-                text-align: left;
-                padding-bottom: rem(20);
-                padding-top: rem(20);
+            #{$name}__title {
+                --line-height: var(--heading-md-line-height);
+                line-height: var(--line-height);
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                max-height: calc(2 * var(--line-heigh));
             }
 
-            @include helper-breakpoint-media-min($xl) {
-                padding: rem(40) rem(30);
+            #{$name}__text {
+                --line-height: var(--body-md-line-height);
+                line-height: var(--line-height);
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                max-height: calc(3 * var(--line-height));
             }
-
-            &--success {
-                margin: 0;
-                padding: rem(20) rem(15) rem(26);
-
-                @include helper-breakpoint-media-min($lg) {
-                    padding-top: 0;
-                    padding-bottom: 0;
-                }
-            }
-
-            &--spacing-x-reset {
-                margin-left: 0;
-                margin-right: 0;
-            }
-
-            &::after {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: linear-gradient(to top, $setting-color-black 0%, $setting-color-gray-3 100%);
-                opacity: 0.6;
-            }
-        }
-
-        &__title,
-        &__text {
-            color: $setting-color-white;
         }
 
         &__title {
-            font-size: rem(25);
-            line-height: rem(25);
-            font-weight: fw(medium);
-            margin-bottom: rem(10);
+            font-family: var(--heading-lg-family);
+            font-size: var(--heading-lg-size);
+            font-weight: var(--heading-lg-weight);
+            line-height: var(--heading-lg-line-height);
+            letter-spacing: var(--heading-lg-letter-spacing);
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        &--medium #{$name}__title {
+            font-size: var(--heading-md-size);
+            letter-spacing: var(--heading-md-letter-spacing);
+        }
+
+        &--small #{$name}__title {
+            --line-height: var(--heading-sm-line-height);
+            font-size: var(--heading-sm-size);
+            letter-spacing: var(--heading-sm-letter-spacing);
         }
 
         &__text {
-            font-size: rem(16);
-            line-height: normal;
-            font-weight: fw(regular);
-            margin-bottom: rem(26);
-
-            @include helper-breakpoint-media-min($lg) {
-                font-size: rem(14);
-            }
-
-            &--subtitle {
-                font-family: $setting-font-family;
-                font-weight: fw(medium);
-                margin-bottom: 0;
-
-                @include helper-breakpoint-media-min($lg) {
-                    font-size: rem(38);
-                    line-height: rem(40);
-                }
-            }
+            font-family: var(--body-md-family);
+            font-size: var(--body-md-size);
+            font-weight: var(--body-md-weight);
+            line-height: var(--body-md-line-height);
+            letter-spacing: var(--body-md-letter-spacing);
+            color: var(--text-secondary);
+            padding: var(--scale-20) 0;
+            margin: 0;
         }
 
-        &__success-title {
-            font-size: rem(32);
-            line-height: rem(34);
-            color: $setting-color-white;
-            margin-bottom: rem(11);
-
-            @include helper-breakpoint-media-min($lg) {
-                margin-bottom: rem(32);
-                font-size: rem(50);
-                line-height: rem(55);
-            }
+        &--medium #{$name}__text {
+            font-size: var(--body-sm-size);
+            line-height: var(--body-sm-line-height);
+            padding: var(--scale-16) 0;
         }
 
-        &__success-text {
-            font-size: rem(18);
-            letter-spacing: rem(0.3);
+        &--small #{$name}__text {
+            font-size: var(--body-sm-size);
+            line-height: var(--body-sm-line-height);
+            padding: var(--scale-12) 0;
+        }
 
-            @include helper-breakpoint-media-min($lg) {
-                font-size: rem(22);
-                letter-spacing: rem(0.4);
-            }
+        &__cta {
+            align-self: flex-start;
         }
 
         @content;

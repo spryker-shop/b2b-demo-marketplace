@@ -1,4 +1,5 @@
 {% extends molecule('banner', '@SprykerShop:ShopUi') %}
+{% import _self as component %}
 
 {% define config = {
     name: 'banner',
@@ -6,44 +7,43 @@
 } %}
 
 {% define data = {
-    clickUrl: '',
+    imageUrl: '',
+    imageAlt: '',
     content: '',
+    clickUrl: '',
     buttonTitle: '',
 } %}
 
-{% set containerClass = config.name ~ '__container grid grid--left grid--bottom' %}
-{% set contentClass = 'col col--sm-12' %}
-
-{% block content %}
-    {{ data.content | raw }}
-
-    {% set clickUrl = functionExists('generatePath') ? generatePath(data.clickUrl) : data.clickUrl %}
-    {% if clickUrl %}
-        <a href="{{ clickUrl | trans }}" class="button button--tight button--additional">
-            {{ (data.buttonTitle ?: 'show_more.btn.title') | trans }}
-        </a>
-    {% endif %}
-{% endblock %}
-
 {% block body %}
-    {% embed molecule('lazy-image') with {
-        class: containerClass,
-        modifiers: modifiers,
-        data: {
-            imageSrc: data.imageUrl,
-            isBackground: true,
-        },
-        embed: {
-            contentClass: contentClass,
-            contentBlock: block('content'),
-        },
-    } only %}
-        {% block content %}
-            {{ parent() }}
+    {% if data.imageUrl %}
+        {% include molecule('lazy-image') with {
+            class: component.renderClass(config.name ~ '__image-wrapper', modifiers),
+            data: {
+                imageSrc: data.imageUrl,
+                imageTitle: data.imageAlt,
+                isBackground: true,
+            },
+        } only %}
+    {% endif %}
 
-            <div class="{{ config.name }}__content {{ embed.contentClass }}">
-                {{ embed.contentBlock | raw }}
+    <div class="{{ component.renderClass(config.name ~ '__body', modifiers) }}">
+        {% if data.content %}
+            <div class="{{ component.renderClass(config.name ~ '__content', modifiers) }}">
+                {{ data.content | raw }}
             </div>
-        {% endblock %}
-    {% endembed %}
+        {% endif %}
+
+        {% if data.clickUrl %}
+            <a
+                href="{{ functionExists('generatePath') ? generatePath(data.clickUrl) : data.clickUrl }}"
+                class="{{ component.renderClass(config.name ~ '__cta', modifiers) }} button {% if 'small' in modifiers or 'medium' in modifiers %}button--sm{% endif %}"
+            >
+                {{ (data.buttonTitle ?: 'show_more.btn.title') | trans }}
+
+                {% include atom('font-icon') with {
+                    data: { name: 'arrow_forward' },
+                } only %}
+            </a>
+        {% endif %}
+    </div>
 {% endblock %}
