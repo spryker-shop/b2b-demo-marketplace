@@ -2,15 +2,15 @@ $setting-font-family: 'Circular', sans-serif;
 
 $setting-font-size: (
     1: rem(50),
-    2: rem(32),
-    3: rem(24),
-    4: rem(18),
-    5: rem(16),
-    6: rem(14),
-    big: rem(18),
-    default: rem(16),
-    small: rem(14),
-    tiny: rem(12),
+    2: rem(var(--fontsize-6)),
+    3: rem(var(--fontsize-5)),
+    4: rem(var(--fontsize-3)),
+    5: rem(var(--fontsize-2)),
+    6: rem(var(--fontsize-1)),
+    big: rem(var(--fontsize-3)),
+    default: rem(var(--fontsize-2)),
+    small: rem(var(--fontsize-1)),
+    tiny: rem(var(--fontsize-0)),
 );
 
 $setting-font-weight: (

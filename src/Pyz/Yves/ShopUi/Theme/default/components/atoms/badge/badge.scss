@@ -1,69 +1,61 @@
 @include shop-ui-badge('.badge') {
-    border-radius: $setting-border-radius;
-    font-size: rem(11);
-    line-height: normal;
-    font-weight: fw(bold);
-    letter-spacing: rem(0.4);
-    color: $setting-color-white;
-    background-color: $setting-color-gray-1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: rem(var(--scale-2)) rem(var(--scale-8));
+    gap: rem(var(--scale-4));
+    font-size: rem(var(--font-size-12));
+    font-weight: var(--font-weight-medium);
+    line-height: rem(var(--font-line-height-16));
+    border-radius: rem(var(--radius-sm));
+    background: var(--background-muted);
+    color: var(--text-primary);
+    border: none;
 
-    &--shopping-list,
-    &--multi-cart {
-        display: inline-block;
-        color: $setting-color-gray-4;
-        padding: rem(4) rem(5);
-        margin-right: rem(9);
-        vertical-align: middle;
-        min-width: rem(52);
-
-        @include helper-breakpoint-media-min($lg) {
-            padding-left: rem(9);
-            padding-right: rem(9);
-            min-width: rem(64);
-        }
+    &--md {
+        padding: rem(var(--scale-4)) rem(var(--scale-8));
+        font-size: rem(var(--font-size-14));
+        line-height: rem(var(--font-line-height-20));
     }
 
-    &--title {
-        background-color: $setting-color-gray-3;
-        text-transform: uppercase;
+    &--info {
+        color: var(--text-state-info);
+        background: var(--background-state-info-subtle);
     }
 
-    &--access {
-        color: $setting-color-white;
-        background-color: $setting-color-main;
-        text-transform: uppercase;
+    &--success {
+        color: var(--text-state-success);
+        background: var(--background-state-success-subtle);
     }
 
-    &--summary {
-        text-transform: uppercase;
-        letter-spacing: rem(0.2);
-        padding: rem(5) rem(8);
+    &--warning {
+        background: var(--background-state-warning-subtle);
+        color: var(--text-state-warning);
     }
 
-    &--counter {
-        background-color: $setting-color-alpha-3;
-        border-radius: $setting-border-radius;
-        font-size: rem(11);
-        line-height: normal;
-        color: $setting-color-gray-4;
-        padding: rem(5) rem(8);
+    &--error {
+        background: var(--background-state-error-subtle);
+        color: var(--text-state-error);
     }
 
-    &--order {
-        background-color: $setting-color-gray-6;
-        color: $setting-color-black;
-        font-size: map_get($setting-font-size, tiny);
-        letter-spacing: rem(0.15);
-        padding: rem(2) rem(10);
+    &--solid {
+        color: var(--text-inverse);
+        background: var(--background-inverse);
     }
 
-    &--round {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-width: rem(24);
-        height: rem(24);
-        padding: 0 rem(3);
-        border-radius: 50%;
+    &--info#{&}--solid {
+        background: var(--background-state-info-bold);
+    }
+
+    &--success#{&}--solid {
+        background: var(--background-state-success-bold);
+    }
+
+    &--warning#{&}--solid {
+        background: var(--background-state-warning-bold);
+    }
+
+    &--error#{&}--solid {
+        background: var(--background-state-error-bold);
     }
 }

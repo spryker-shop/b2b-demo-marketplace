@@ -1,52 +1,68 @@
 @mixin shop-ui-input-extended($name: '.input') {
-    @include shop-ui-input($name) {
-        border-radius: $setting-border-radius;
-        color: $setting-color-gray-4;
-        font: fw(regular) rem(15) / rem(19) $setting-font-family;
-        padding: rem(14) rem(20) rem(13);
+    #{$name} {
+        @include helper-effect-transition(background-color border-color box-shadow color);
+        display: inline-flex;
+        height: rem(36);
+        padding: 0 rem(var(--scale-16));
+        align-items: center;
+        gap: rem(var(--scale-8));
+        width: 100%;
+        border-radius: rem(var(--radius-sm));
+        border: rem(var(--stroke-sm)) solid var(--input-border-default);
+        background: var(--input-background-default);
+        color: var(--input-text-value);
+        font-size: rem(var(--font-size-14));
+        font-weight: var(--font-weight-medium);
+        line-height: rem(var(--font-line-height-16));
+        letter-spacing: rem(var(--font-letter-spacing-normal));
 
-        &::placeholder {
-            color: $setting-color-gray-3;
-            opacity: 1;
+        ::placeholder {
+            color: var(--input-text-placeholder);
         }
 
-        &--small {
-            font-size: rem(14);
-            line-height: rem(18);
-            padding: rem(10) rem(16);
+        &:hover {
+            border-color: var(--input-border-hover);
         }
 
-        &--measurement-unit {
-            max-width: rem(90);
-            appearance: none;
+        &:focus-visible,
+        &:focus {
+            border-color: var(--input-border-focus);
+            box-shadow: var(--shadows-focus-x) var(--shadows-focus-y) var(--shadows-focus-blur)
+                var(--shadows-focus-spread) var(--shadows-focus-color);
+            outline: none;
+        }
 
-            &::-webkit-inner-spin-button,
-            &::-webkit-outer-spin-button {
-                appearance: none;
-                margin: 0;
+        &[invalid],
+        &--error {
+            border-color: var(--input-border-error);
+
+            &:focus {
+                box-shadow: var(--shadows-focus-x) var(--shadows-focus-y) var(--shadows-focus-blur)
+                    var(--shadows-focus-spread) var(--shadows-focus-color-error);
             }
         }
 
-        &--filter-range {
-            font-weight: fw(medium);
-            color: $setting-color-gray-4;
-            padding-right: rem(24);
-            padding-left: rem(8);
-
-            @include helper-breakpoint-media-min($md) {
-                padding-left: rem(12);
-            }
+        &--disabled:hover,
+        &--disabled,
+        &[disabled]:hover,
+        &[disabled] {
+            color: var(--input-text-disabled);
+            border-color: var(--input-border-disabled);
+            background: var(--input-background-disabled);
+            cursor: not-allowed;
+            pointer-events: none;
         }
 
-        &--transparent[disabled] {
-            background-color: $setting-color-transparent;
+        &--readonly,
+        &[readonly] {
+            color: var(--input-text-value);
+            border-color: var(--input-border-default);
+            background: var(--input-background-disabled);
         }
 
-        &--inline {
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-            padding-left: rem(10);
-            padding-right: rem(10);
+        &--sm {
+            height: rem(32);
+            font-size: rem(var(--font-size-12));
         }
 
         @content;

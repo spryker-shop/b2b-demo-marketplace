@@ -1,47 +1,16 @@
 @mixin basic-typography() {
-    @font-face {
-        font-family: Circular;
-        src:
-            url('../fonts/lineto-circular-pro-book.woff2') format('woff2'),
-            url('../fonts/circular-pro/lineto-circular-pro-book.woff') format('woff');
-        font-weight: 400;
-        font-style: normal;
-        font-display: fallback;
-    }
-
-    @font-face {
-        font-family: Circular;
-        src:
-            url('../fonts/lineto-circular-pro-medium.woff2') format('woff2'),
-            url('../fonts/circular-pro/lineto-circular-pro-medium.woff') format('woff');
-        font-weight: 500;
-        font-style: normal;
-        font-display: fallback;
-    }
-
-    @font-face {
-        font-family: Circular;
-        src:
-            url('../fonts/lineto-circular-pro-bold.woff2') format('woff2'),
-            url('../fonts/circular-pro/lineto-circular-pro-bold.woff') format('woff');
-        font-weight: 700;
-        font-style: normal;
-        font-display: fallback;
-    }
-
     html {
-        font-size: $setting-font-size-base;
+        font-size: var(--body-lg-size);
     }
 
     body {
-        @include helper-font-size(default);
-        @include helper-font-weight(regular);
-        @include helper-font-line-height(default);
-        letter-spacing: rem(0.12);
+        font-weight: var(--body-lg-weight);
+        font-family: var(--body-lg-family);
+        line-height: var(--body-lg-line-height);
+        letter-spacing: var(--body-lg-letter-spacing);
         position: relative;
-        background-color: $setting-color-white;
-        color: $setting-color-text;
-        font-family: $setting-font-family;
+        background-color: var(--background-page);
+        color: var(--text-primary);
         overflow-x: hidden;
     }
 
@@ -50,28 +19,40 @@
         -moz-osx-font-smoothing: grayscale;
     }
 
-    @each $i in (1, 2, 3, 4, 5, 6) {
+    $heading-sizes: (
+        1: 'xl',
+        2: 'lg',
+        3: 'md',
+        4: 'sm',
+        5: 'sm',
+        6: 'sm',
+    );
+
+    @each $i, $size in $heading-sizes {
         h#{$i} {
-            @include helper-font-weight(medium);
-            @include helper-font-size($i);
-            @include helper-font-line-height($i);
             display: block;
-            color: $setting-color-text;
+            font-family: var(--heading-#{$size}-family);
+            font-weight: var(--heading-#{$size}-weight);
+            font-size: var(--heading-#{$size}-size);
+            line-height: var(--heading-#{$size}-line-height);
+            letter-spacing: var(--heading-#{$size}-letter-spacing);
+            color: var(--text-primary);
         }
     }
 
     a {
-        color: $setting-color-alt;
+        color: var(--text-brand);
         text-decoration: none;
 
         &:hover {
-            color: $setting-color-main;
+            color: var(--text-brand);
+            text-decoration: underline;
         }
     }
 
     b,
     strong {
-        @include helper-font-weight(bold);
+        font-weight: var(--font-weight-bold);
     }
 
     i,
@@ -82,31 +63,30 @@
 
     hr {
         @include helper-ui-clearfix;
-        border-bottom: 1px solid $setting-color-gray-3;
-        margin: 0.5rem 0;
+        border-bottom: var(--stroke-sm) solid var(--border-default);
+        margin: var(--scale-4) 0;
     }
 
     small {
-        font-size: rem(12);
-
-        @include helper-breakpoint-media-min($lg) {
-            @include helper-font-size(small);
-        }
+        font-size: rem(var(--body-lg-size));
     }
 
     big {
-        @include helper-font-size(big);
+        font-size: var(--font-size-20);
     }
 
     p,
     blockquote,
     iframe {
-        margin: 0.5rem 0;
+        margin: var(--scale-4) 0;
     }
 
-    .text-color {
-        &-main {
-            color: $setting-color-gray-4;
+    .divider {
+        display: block;
+        border-top: var(--stroke-sm) solid var(--border-default);
+
+        &--dashed {
+            border-style: dashed;
         }
     }
 }

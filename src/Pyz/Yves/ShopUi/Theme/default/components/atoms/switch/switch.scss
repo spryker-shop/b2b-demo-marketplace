@@ -1,43 +1,82 @@
 @mixin shop-ui-switch($name: '.switch') {
     #{$name} {
-        @include helper-effect-transition(background-color margin-left, $setting-effect-default-duration);
-        display: block;
-        position: relative;
-        width: rem(34);
-        height: rem(14);
-        background-color: transparentize($setting-color-gray-1, 0.4);
-        border-radius: rem(7);
-        overflow: visible;
-        margin: rem(3) 0 rem(3) rem(10);
+        display: inline-flex;
+        align-items: center;
         cursor: pointer;
+        user-select: none;
+        gap: rem(var(--scale-8));
 
-        &__handle {
-            @include helper-effect-transition(background-color left, $setting-effect-default-duration);
-            display: block;
+        &__input {
             position: absolute;
-            width: rem(20);
-            height: rem(20);
-            margin: rem(-3) 0 0 rem(-10);
-            border-radius: 50%;
-            background-color: $setting-color-white;
-            box-shadow: 0 rem(2) rem(4) $setting-color-text;
-            left: 0;
-            top: 0;
-        }
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
 
-        &--active {
-            background-color: transparentize($setting-color-main, 0.5);
-            margin-left: 0;
-
-            #{$name}__handle {
-                left: 100%;
-                background-color: $setting-color-main;
+            &:disabled {
+                cursor: not-allowed;
             }
         }
 
-        &[disabled] {
-            opacity: 0.5;
-            cursor: not-allowed;
+        &__track {
+            @include helper-effect-transition(background border-color);
+            display: block;
+            position: relative;
+            width: rem(44);
+            height: rem(24);
+            background: var(--background-inverse);
+            border: var(--stroke-sm) solid var(--input-border-default);
+            border-radius: var(--radius-full);
+            cursor: pointer;
+
+            &::after {
+                @include helper-effect-transition(left);
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: rem(2);
+                translate: 0 -50%;
+                width: rem(20);
+                height: rem(20);
+                border-radius: 50%;
+                background: var(--icon-inverse);
+                pointer-events: none;
+            }
+        }
+
+        &__track:has(#{$name}__input:disabled) {
+            border-color: var(--input-border-disabled);
+            background: var(--input-background-disabled);
+
+            &::after {
+                background: var(--icon-disabled);
+            }
+        }
+
+        &__track:has(#{$name}__input:focus),
+        &__track:has(#{$name}__input:focus-visible) {
+            box-shadow: var(--shadows-focus-x) var(--shadows-focus-y) var(--shadows-focus-blur)
+                var(--shadows-focus-spread) var(--shadows-focus-color);
+        }
+
+        &__track:has(#{$name}__input:checked) {
+            &::after {
+                left: calc(100% - rem(22));
+            }
+        }
+
+        &__track:has(#{$name}__input:checked:not(:disabled)) {
+            background: var(--background-brand-primary);
+            border-color: var(--background-brand-primary);
+
+            &:hover {
+                background: var(--background-brand-hover);
+                border-color: var(--background-brand-hover);
+            }
+        }
+
+        &__label {
+            color: var(--text-primary);
         }
     }
 }

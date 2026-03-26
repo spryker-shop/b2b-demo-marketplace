@@ -1,4 +1,4 @@
-/* stylelint-disable */
+@use 'sass:math';
 
 @mixin basic-grid() {
     .container {
@@ -21,23 +21,24 @@
         }
     }
 
+    // col widths use calc() to subtract the gap share:
+    //   width = K/N * 100% + (K/N − 1) * var(--grid-gap, 0px)
+    // When --grid-gap is 0 (no gap modifier) the formula collapses to the plain percentage.
     .col {
-        @include helper-ui-clearfix;
-        float: left;
-        display: block;
         flex-grow: 0;
         flex-basis: auto;
 
         @each $breakpoint, $edges in $setting-breakpoints {
             @include helper-breakpoint-media-min(helper-breakpoint-edge-min($edges)) {
                 @for $column from 1 through $setting-grid-columns {
+                    $ratio: math.div($column, $setting-grid-columns);
+
                     &--#{$breakpoint}-#{$column} {
-                        width: helper-grid-span($column);
-                        min-width: helper-grid-span($column);
+                        width: calc(#{percentage($ratio)} + #{$ratio - 1} * var(--grid-gap, 0px));
                     }
 
                     &--push-left-#{$breakpoint}-#{$column} {
-                        margin-left: helper-grid-span($column);
+                        margin-left: calc(#{percentage($ratio)} + #{$ratio - 1} * var(--grid-gap, 0px));
                     }
                 }
 
@@ -62,34 +63,27 @@
 
         &--top {
             align-self: flex-start;
-            margin-bottom: auto;
         }
 
         &--bottom {
             align-self: flex-end;
-            margin-top: auto;
         }
 
         &--left {
-            justify-self: flex-start;
             margin-right: auto;
         }
 
         &--right {
-            justify-self: flex-end;
             margin-left: auto;
         }
 
         &--center {
-            justify-self: center;
             margin-left: auto;
             margin-right: auto;
         }
 
         &--middle {
             align-self: center;
-            margin-top: auto;
-            margin-bottom: auto;
         }
 
         &--equal {
@@ -111,8 +105,6 @@
     }
 
     .grid {
-        @include helper-ui-clearfix;
-        clear: both;
         display: flex;
         flex-flow: row wrap;
         align-items: flex-start;
@@ -153,98 +145,37 @@
         &--stretch {
             align-items: stretch;
 
-            & > .col {
-                margin-top: 0;
-                margin-bottom: 0;
-            }
-
-            .box--stretch {
+            .col > * {
                 height: 100%;
             }
         }
 
-        &--with-gutter,
-        &--gap {
-            margin-left: -$setting-grid-space-mobile;
-            margin-right: -$setting-grid-space-mobile;
-            width: calc(100% + #{$setting-grid-space-mobile * 2});
+        &--gap,
+        &--with-gutter {
+            --grid-gap: #{$setting-grid-space-mobile * 2};
+            gap: var(--grid-gap);
 
             @include helper-breakpoint-media-min($lg) {
-                margin-left: -$setting-grid-space;
-                margin-right: -$setting-grid-space;
-                width: calc(100% + #{$setting-grid-space * 2});
+                --grid-gap: #{$setting-grid-space * 2};
             }
-
-            & > .col {
-                padding-left: $setting-grid-space-mobile;
-                padding-right: $setting-grid-space-mobile;
-
-                @include helper-breakpoint-media-min($lg) {
-                    padding-left: $setting-grid-space;
-                    padding-right: $setting-grid-space;
-                }
-            }
-        }
-
-        &--with-gutter > .col {
-            padding-top: $setting-grid-space;
-            padding-bottom: $setting-grid-space;
         }
 
         &--gap-small {
-            margin-left: rem(-10);
-            margin-right: rem(-10);
-            width: calc(100% + #{rem(20)});
-
-            & > .col {
-                padding-left: rem(10);
-                padding-right: rem(10);
-            }
+            --grid-gap: #{rem(20)};
+            gap: var(--grid-gap);
         }
 
         &--gap-smaller {
-            margin-left: rem(-5);
-            margin-right: rem(-5);
-            width: calc(100% + #{rem(10)});
-
-            & > .col {
-                padding-left: rem(5);
-                padding-right: rem(5);
-            }
+            --grid-gap: #{rem(10)};
+            gap: var(--grid-gap);
         }
 
         &--justify-column {
             justify-content: space-between;
-
-            & > .col {
-                margin-top: auto;
-                margin-bottom: auto;
-
-                &:first-child {
-                    margin-top: 0;
-                }
-
-                &:last-of-type {
-                    margin-bottom: 0;
-                }
-            }
         }
 
         &--justify {
             justify-content: space-between;
-
-            & > .col {
-                margin-left: auto;
-                margin-right: auto;
-
-                &:first-child {
-                    margin-left: 0;
-                }
-
-                &:last-child {
-                    margin-right: 0;
-                }
-            }
         }
 
         &--nowrap {

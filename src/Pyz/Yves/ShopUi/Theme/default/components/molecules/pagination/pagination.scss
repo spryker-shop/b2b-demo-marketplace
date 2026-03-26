@@ -1,6 +1,7 @@
 @mixin shop-ui-pagination($name: '.pagination') {
     #{$name} {
-        @include helper-font-size(small);
+        font-size: var(--font-size-12);
+        font-weight: var(--font-weight-medium);
         text-align: center;
         margin-top: rem(7);
 
@@ -15,6 +16,7 @@
         &__list {
             display: flex;
             justify-content: center;
+            gap: var(--scale-8);
         }
 
         &__item {
@@ -29,47 +31,42 @@
         }
 
         &__step {
-            @include helper-effect-transition(color);
-            display: inline-block;
+            @include helper-effect-transition(color background);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             padding: rem(4);
-            color: $setting-color-gray-5;
-            min-width: rem(34);
-            line-height: rem(24);
+            min-width: rem(40);
+            height: rem(40);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            background: transparent;
 
-            @include helper-breakpoint-media-min($md) {
-                min-width: rem(40);
-                line-height: rem(30);
-                padding-left: rem(8);
-                padding-right: rem(8);
+            &--sm {
+                min-width: rem(32);
+                height: rem(32);
             }
 
+            &--previous,
+            &--next,
             &--button {
-                border: rem(1) solid $setting-color-gray-5;
-                border-radius: $setting-border-radius;
-                color: $setting-color-gray-5;
-                margin-left: rem(2);
-                margin-right: rem(2);
-
-                @include helper-breakpoint-media-min($md) {
-                    margin-left: rem(5);
-                    margin-right: rem(5);
-                }
-
                 &:hover,
                 &:focus {
-                    color: $setting-color-gray-5;
+                    background: var(--background-subtle);
                 }
             }
 
             &--current {
-                background-color: $setting-color-gray-7;
-                color: $setting-color-gray-5;
-                font-weight: fw(bold);
+                background: var(--background-brand-primary);
+                color: var(--text-inverse);
+                pointer-events: none;
             }
 
             &--previous,
             &--next {
-                min-width: rem(20);
+                gap: var(--scale-4);
+                padding: 0 var(--scale-12);
+                border: var(--stroke-sm) solid var(--border-subtle);
 
                 &:hover,
                 &:focus {
@@ -81,7 +78,7 @@
                 &,
                 &:hover,
                 &:focus {
-                    color: $setting-color-dark;
+                    color: var(--text-disabled);
                 }
             }
         }
