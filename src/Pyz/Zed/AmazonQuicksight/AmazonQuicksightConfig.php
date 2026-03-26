@@ -13,7 +13,7 @@ use SprykerEco\Zed\AmazonQuicksight\AmazonQuicksightConfig as SprykerAmazonQuick
 
 class AmazonQuicksightConfig extends SprykerAmazonQuicksightConfig
 {
-    protected const string ASSET_BUNDLE_IMPORT_FILE_PATH = '%s/src/Pyz/Zed/AmazonQuicksight/data/asset-bundle.zip';
+    protected const string ASSET_BUNDLE_IMPORT_FILE_PATH = '%s/src/Pyz/Zed/AmazonQuicksight/data/b2b-mp-asset-bundle.zip';
 
     /**
      * @var list<string>
