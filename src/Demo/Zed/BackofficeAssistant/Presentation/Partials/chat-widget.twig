@@ -1,0 +1,90 @@
+{% block styles %}
+    <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-backoffice-assistant.css') }}" />
+{% endblock %}
+
+{% block content %}
+    <button type="button"
+            class="backoffice-assistant__toggle js-backoffice-assistant__toggle"
+            aria-label="Open AI Assistant">
+        <span class="backoffice-assistant__toggle-icon">&#x1F916;</span>
+        <span class="backoffice-assistant__toggle-text">Assistant</span>
+    </button>
+
+    <div class="backoffice-assistant__panel js-backoffice-assistant__panel" role="dialog" aria-label="AI Assistant">
+        <div class="backoffice-assistant__header">
+            <div class="backoffice-assistant__header-actions">
+                <button type="button"
+                        class="backoffice-assistant__header-btn js-backoffice-assistant__history-btn"
+                        title="Chat history"
+                        aria-label="Chat history">
+                    <span class="fa fa-history"></span>
+                </button>
+                <button type="button"
+                        class="backoffice-assistant__header-btn js-backoffice-assistant__new-chat"
+                        title="New conversation"
+                        aria-label="New conversation">
+                    <span class="fa fa-plus"></span>
+                </button>
+            </div>
+            <div class="backoffice-assistant__header-center">
+                <strong class="backoffice-assistant__header-title">Backoffice Assistant</strong>
+                <div class="backoffice-assistant__agent-row">
+                    <span class="backoffice-assistant__agent-badge js-backoffice-assistant__agent-badge"></span>
+                    <select class="backoffice-assistant__agent-select js-backoffice-assistant__agent-select"
+                            aria-label="Select agent">
+                        <option value="">Auto</option>
+                    </select>
+                </div>
+            </div>
+            <button type="button"
+                    class="backoffice-assistant__close js-backoffice-assistant__close"
+                    aria-label="Close AI Assistant">
+                <span class="fa fa-times"></span>
+            </button>
+        </div>
+
+        <div class="backoffice-assistant__histories js-backoffice-assistant__histories" hidden>
+            <ul class="backoffice-assistant__histories-list js-backoffice-assistant__histories-list"></ul>
+            <p class="backoffice-assistant__histories-empty js-backoffice-assistant__histories-empty" hidden>
+                No conversations yet. Start a new one!
+            </p>
+        </div>
+
+        <div class="backoffice-assistant__messages js-backoffice-assistant__messages"></div>
+
+        <div class="backoffice-assistant__footer">
+            <div class="backoffice-assistant__attachments-preview js-backoffice-assistant__attachments-preview"></div>
+            <div class="backoffice-assistant__footer-row">
+                <button type="button"
+                        class="backoffice-assistant__attach js-backoffice-assistant__attach"
+                        aria-label="Attach file"
+                        title="Attach file">
+                    <span class="fa fa-paperclip"></span>
+                </button>
+                <input type="file"
+                       class="backoffice-assistant__file-input js-backoffice-assistant__file-input"
+                       accept="image/png,image/jpeg,image/gif,image/webp,application/pdf,text/plain,text/csv,.csv"
+                       multiple
+                       hidden />
+                <textarea class="backoffice-assistant__input js-backoffice-assistant__input"
+                          rows="1"
+                          placeholder="Ask me anything..."
+                          aria-label="Message input"></textarea>
+                <button type="button"
+                        class="backoffice-assistant__send js-backoffice-assistant__send"
+                        aria-label="Send message">
+                    <span class="fa fa-paper-plane"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        window.BackofficeAssistantConfig = {
+            userName: '{{ username is defined ? username | e('js') : '' }}'
+        };
+    </script>
+    <script src="{{ assetsPath('js/spryker-zed-backoffice-assistant.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="BackofficeAssistantConversationHistory" strict="true">
+        <property name="idBackofficeAssistantConversation" type="int"/>
+        <property name="fkUser" type="int"/>
+        <property name="conversationReference" type="string"/>
+        <property name="name" type="string"/>
+        <property name="agent" type="string"/>
+        <property name="userSelectedAgent" type="string"/>
+    </transfer>
+
+    <transfer name="BackofficeAssistantPromptRequest" strict="true">
+        <property name="prompt" type="string"/>
+        <property name="conversationReference" type="string"/>
+        <property name="attachments" type="Attachment[]" singular="attachment"/>
+    </transfer>
+
+    <transfer name="BackofficeAssistantPromptResponse" strict="true">
+        <property name="aiResponse" type="string"/>
+        <property name="conversationReference" type="string"/>
+        <property name="toolInvocations" type="ToolInvocation[]" singular="toolInvocation"/>
+    </transfer>
+
+    <transfer name="IntentRouterResponse" strict="true">
+        <property name="agent" type="string" description="The next agent to be called for the given intent. Select agent among provided agents with description. If no agent is selected, the agent will be 'Guardrail'."/>
+        <property name="reasoningMessage" type="string" description="Message to be displayed to the user about the decision taken."/>
+    </transfer>
+
+</transfers>

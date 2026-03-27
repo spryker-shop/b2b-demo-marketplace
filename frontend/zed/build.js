@@ -10,7 +10,7 @@ const mergeWithStrategy = mergeWithCustomize({
 
 const myCustomZedSettings = mergeWithStrategy(oryxForZed.settings, {
     entry: {
-        dirs: [path.resolve('./src/Pyz/Zed/')], // Path for entry points on project level
+        dirs: [path.resolve('./src/Pyz/Zed/'), path.resolve('./src/Demo/Zed/')], // Path for entry points on project level
     },
 });
 
