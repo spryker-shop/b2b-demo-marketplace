@@ -19169,6 +19169,58 @@
             "time": "2026-03-06T14:41:13+00:00"
         },
         {
+            "name": "spryker-shop/product-comparison-page",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-shop/product-comparison-page.git",
+                "reference": "b05b640208734e05812248f16e3d2ee99c46e39b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-shop/product-comparison-page/zipball/b05b640208734e05812248f16e3d2ee99c46e39b",
+                "reference": "b05b640208734e05812248f16e3d2ee99c46e39b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.3",
+                "spryker-shop/shop-application": "^1.0.0",
+                "spryker-shop/shop-ui": "^1.73.0",
+                "spryker/kernel": "^3.52.0",
+                "spryker/product-storage": "^1.29.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/router": "*"
+            },
+            "suggest": {
+                "spryker/router": "Use this module if you want use the RouterProviderPlugin.",
+                "spryker/silex": "Use this module when using plugins that need Silex dependencies."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SprykerShop\\": "src/SprykerShop/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ProductComparisonPage module",
+            "support": {
+                "source": "https://github.com/spryker-shop/product-comparison-page/tree/1.0.1"
+            },
+            "time": "2026-03-06T13:00:58+00:00"
+        },
+        {
             "name": "spryker-shop/product-configuration-cart-widget",
             "version": "1.0.0",
             "source": {
