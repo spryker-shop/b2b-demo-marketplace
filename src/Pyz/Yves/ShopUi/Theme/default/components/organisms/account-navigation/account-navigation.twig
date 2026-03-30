@@ -1,5 +1,4 @@
 {% extends organism('side-drawer') %}
-{% import _self as component %}
 
 {% define config = {
     name: 'account-navigation',
@@ -15,56 +14,49 @@
 } %}
 
 {% block close %}
-    <button class="{{ config.name }}__close {{ attributes['trigger-selector'] }}">
-        {% include atom('icon') with {
-            modifiers: ['small'],
-            data: {
-                name: 'cross',
-            },
-        } only %}
+    <button class="{{ config.name }}__close {{ attributes['trigger-selector'] }}" type="button" aria-label="{{ 'header.menu.close' | trans }}">
+        <span class="material-symbols-outlined" aria-hidden="true">close</span>
     </button>
 {% endblock %}
 
-{% block topBlock %}
-    <div class="{{ component.renderClass(config.name ~ '__account', modifiers) }}">
-        {% include atom('icon') with {
-            class:  config.name ~ '__account-icon',
-            modifiers: ['big'],
-            data: {
-                name: data.introIcon,
-            },
-        } only %}
-        <span class="{{ config.name }}__account-text">
-            {{ data.title }}
-        </span>
-    </div>
-{% endblock %}
+{% block topBlock %}{% endblock %}
 
 {% block navigation %}
-    {% embed molecule('navigation-sidebar') with {
-        modifiers: ['account'],
-        data: {
-            activePage: data.activePage,
-            items: data.items,
-        },
-        embed: {
-            isSSP: data.isSSP,
-        }
-    } only %}
-        {% block menu %}
-            {% if embed.isSSP %}
-                {% widget 'SspListMenuItemWidget' args [data.activePage] only %}
-                    {% block menu %}
-                        {% widget widgetData  with {
-                            data: {
-                                modifiers: ['account'],
-                            },
-                        } only %}{% endwidget %}
-                    {% endblock %}
-                {% endwidget %}
-            {% else %}
-                {{ parent() }}
-            {% endif %}
-        {% endblock %}
-    {% endembed %}
+    <div class="{{ config.name }}__menu">
+        {% set accountTabs = [{
+            id: 'user-account',
+            label: 'customer.account.user_account' | trans,
+            items: [
+                { label: 'customer.account.overview' | trans, icon: 'home', url: url('customer/overview') },
+                { label: 'customer.account.profile_data' | trans, icon: 'person', url: url('customer/profile') },
+                { label: 'customer.account.address' | trans, icon: 'location_on', url: url('customer/address') },
+                { label: 'customer.account.order_history' | trans, icon: 'receipt_long', url: url('customer/order') },
+                { label: 'return_page.default_title' | trans, icon: 'undo', url: url('return/list') },
+                { label: 'customer.account.newsletter' | trans, icon: 'mail', url: url('customer/newsletter') },
+                { label: 'quote_request_page.quote_request' | trans, icon: 'request_quote', url: url('quote-request') },
+                { label: 'customer.logout' | trans, icon: 'logout', url: url('logout'), isDanger: true },
+            ],
+        }] %}
+
+        {% if can('SeeCompanyMenuPermissionPlugin') %}
+            {% set accountTabs = accountTabs | merge([{
+                id: 'company-account',
+                label: 'company.account.company_account' | trans,
+                items: [
+                    { label: 'company.account.overview' | trans, icon: 'apartment', url: url('company/overview') },
+                    { label: 'company.account.company_role.users' | trans, icon: 'group', url: url('company/user') },
+                    { label: 'company.account.business_unit' | trans, icon: 'corporate_fare', url: url('company/business-unit') },
+                    { label: 'company.account.company_user.role' | trans, icon: 'manage_accounts', url: url('company/company-role') },
+                    { label: 'company.account.merchant_relations' | trans, icon: 'handshake', url: url('company/merchant-relation') },
+                    { label: 'merchant_relation_request_page.merchant_relation_request' | trans, icon: 'pending_actions', url: url('company/merchant-relation-request') },
+                ],
+            }]) %}
+        {% endif %}
+
+        {% include molecule('account-menu') with {
+            data: {
+                tabs: accountTabs,
+            },
+        } only %}
+    </div>
 {% endblock %}

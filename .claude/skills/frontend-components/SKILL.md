@@ -161,6 +161,68 @@ class="{{ component.renderClass(config.name ~ '__body', modifiers) }}"
 {# → "banner__body  banner__body--small" #}
 ```
 
+## Preset-based component architecture
+
+When multiple UI variants share the same trigger+dropdown structure, encode them as **presets** in a single molecule rather than creating separate components:
+
+```twig
+{% define data = {
+    preset: required,
+    isDrawer: false,
+    drillDownTarget: '',
+    panelOnly: false,
+} %}
+```
+
+**`isDrawer: true`** — mobile mode: renders only the trigger with `js-side-drawer__drill-down-trigger` class and `data-target-panel` attribute; TS finds no `js-{name}__trigger` → exits early, no hover events wired.
+
+**`panelOnly: true`** — skips trigger + wrapper entirely; renders only the inner content block. Used when the same content needs to appear both in a desktop dropdown and a mobile drawer panel body.
+
+This pattern lets one component serve three contexts:
+- Desktop: trigger + dropdown (hover/aria-expanded driven)
+- Drawer trigger: drill-down button only (no dropdown)
+- Drawer panel body: content only (no trigger, no wrapper)
+
+## Widget deep block override
+
+Override blocks inside nested widgets using successive `{% block %}` overrides:
+
+```twig
+{% widget 'SspListMenuItemWidget' args [false] only %}
+    {% block menu %}
+        {% widget widgetData only %}
+            {% block content %}
+                <a href="{{ data.url }}" class="account-menu__row">
+                    <span class="account-menu__row-label">{{ data.label }}</span>
+                </a>
+            {% endblock %}
+        {% endwidget %}
+    {% endblock %}
+{% endwidget %}
+```
+
+The inner `{% widget widgetData only %}` re-renders each item widget with your custom `content` block. `widgetData` is the item passed down from the parent widget's `menu` block.
+
+## `account-menu` molecule data contract
+
+```twig
+{% include molecule('account-menu') with {
+    data: {
+        tabs: [{
+            id: 'user-account',
+            label: 'translation.key',
+            items: [
+                { label: 'key', icon: 'material_icon_name', url: url('route'), isDanger: true },
+            ],
+        }],
+    },
+} only %}
+```
+
+- Single tab → renders flat list, no tab switcher
+- Multiple tabs → renders tabbed interface with tab switcher
+- `isDanger: true` → applies `--danger` modifier (red color) to the row
+
 ## Twig helper functions
 
 ```twig

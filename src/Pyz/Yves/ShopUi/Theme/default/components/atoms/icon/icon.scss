@@ -5,18 +5,9 @@ $shop-ui-icon-size-bigger: 1.5rem;
     z-index: $setting-zi-icon;
 
     &--logo {
-        width: rem(96);
-        height: rem(var(--scale-8));
+        width: rem(138);
+        height: rem(52);
         max-width: 100%;
-
-        @include helper-breakpoint-media-min($lg) {
-            width: rem(175);
-            height: rem(70);
-        }
-
-        @include helper-breakpoint-media-min($xl) {
-            width: rem(195);
-        }
     }
 
     &--checkout {

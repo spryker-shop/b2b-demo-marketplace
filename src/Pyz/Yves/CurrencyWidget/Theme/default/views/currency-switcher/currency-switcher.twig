@@ -13,14 +13,14 @@
         {% endfor %}
 
         {% include molecule('custom-select') with {
-            modifiers: ['alternative'],
+            modifiers: ['nav-top'],
             data: {
                 options: options,
             },
             attributes: {
                 name: 'currency-iso-code',
                 'data-form-submitter': true,
-                'config-theme': 'alternative',
+                'config-theme': 'nav-top',
                 'aria-label': 'aria_label.currency.switcher' | trans,
             },
         } only %}

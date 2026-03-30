@@ -2,179 +2,245 @@
     #{$name} {
         position: relative;
         z-index: $setting-zi-header;
-        background: $setting-color-white;
+        background: var(--background-surface);
 
         .body-has-overlay & {
             z-index: auto;
         }
 
-        &__row {
-            padding: rem(8);
-        }
-
-        &__navigation-top {
+        &__top-bar {
+            display: none;
             position: relative;
             z-index: $setting-zi-header + 3;
+
+            @include helper-breakpoint-media-min($xl) {
+                display: block;
+            }
         }
 
-        &__navigation-main {
-            position: relative;
-            z-index: $setting-zi-header + 1;
-        }
-
-        &__top {
-            display: none;
+        &__main-bar-inner {
+            display: flex;
+            align-items: center;
+            height: rem(68);
+            padding: 0 var(--scale-16);
 
             @include helper-breakpoint-media-min($lg) {
-                display: block;
-                padding-left: rem(50);
-                background: $setting-color-gray-6;
+                height: rem(84);
+                padding: 0 var(--scale-40);
             }
 
             @include helper-breakpoint-media-min($xl) {
-                padding-left: 0;
+                padding: 0 var(--scale-64);
+            }
+        }
+
+        &__mobile-menu {
+            display: flex;
+            align-items: center;
+            margin-right: var(--scale-12);
+
+            @include helper-breakpoint-media-min($xl) {
+                display: none;
+            }
+        }
+
+        &__hamburger {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            color: var(--icon-primary);
+
+            .material-symbols-outlined {
+                font-size: rem(28);
             }
         }
 
         &__logo {
-            flex-grow: 1;
-            text-align: center;
-
-            @include helper-breakpoint-media-min($lg) {
-                margin-top: rem(-17);
-                padding: 0 rem(30) 0 0;
-                flex-grow: 0;
-            }
-
-            @include helper-breakpoint-media-min($xl) {
-                padding-right: rem(58);
-            }
-        }
-
-        &__main {
-            padding: rem(8) 0 0;
-            min-height: rem(56);
-            border-bottom: rem(1) solid $setting-color-gray-1;
-
-            @include helper-breakpoint-media-min($lg) {
-                min-height: rem(114);
-                padding: rem(30) 0 0;
-            }
-
-            &--checkout {
-                position: relative;
-                padding-top: rem(14);
-                padding-bottom: rem(14);
-                min-height: 0;
-
-                @include helper-breakpoint-media-min($lg) {
-                    padding-top: rem(20);
-                    padding-bottom: rem(20);
-                }
-            }
+            flex-shrink: 0;
         }
 
         &__search {
-            width: 0;
-            flex-grow: 0;
-
-            @include helper-breakpoint-media-min($lg) {
-                flex-grow: 1;
-            }
-
-            @include helper-breakpoint-media-min($xl) {
-                max-width: rem(515);
-            }
-        }
-
-        &__login {
-            margin-right: rem(-5);
-
-            @include helper-breakpoint-media-min($md) {
-                margin-right: 0;
-                margin-left: 1.875rem;
-            }
-        }
-
-        &__navigation {
             display: none;
 
             @include helper-breakpoint-media-min($xl) {
                 display: block;
-                background: $setting-color-white;
+                flex: 1 1 auto;
+                min-width: rem(320);
+                padding: 0 var(--scale-32);
             }
         }
 
         &__actions {
-            margin: 0 rem(-10);
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+        }
 
-            @include helper-breakpoint-media-min($lg) {
-                position: absolute;
-                top: rem(7);
-                left: rem(15);
+        &__actions-pills {
+            display: none;
+
+            @include helper-breakpoint-media-min($xl) {
+                display: flex;
+                align-items: center;
+                gap: var(--scale-12);
             }
+        }
+
+        &__account-pill-desktop {
+            display: none;
+
+            @include helper-breakpoint-media-min($xl) {
+                display: block;
+            }
+        }
+
+        &__mobile-cart {
+            display: flex;
 
             @include helper-breakpoint-media-min($xl) {
                 display: none;
             }
+        }
 
-            &-item {
-                padding: 0 rem(10);
-                color: $setting-color-black;
+        &__mobile-cart-link {
+            display: flex;
+            align-items: center;
+            gap: var(--scale-2);
+            color: var(--icon-primary);
+            text-decoration: none;
+            position: relative;
 
-                @include helper-breakpoint-media-min($lg) {
-                    &--search {
-                        display: none;
-                    }
+            .material-symbols-outlined {
+                font-size: rem(26);
+            }
+        }
+
+        &__mobile-cart-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: rem(18);
+            height: rem(18);
+            padding: 0 var(--scale-4);
+            border-radius: var(--radius-full);
+            background-color: var(--background-brand-primary);
+            color: var(--text-inverse);
+            font-family: var(--label-sm-family);
+            font-size: rem(11);
+            font-weight: var(--label-sm-weight);
+            line-height: 1;
+        }
+
+        &__nav-bar {
+            display: none;
+            border-bottom: var(--stroke-sm) solid var(--border-strong);
+
+            @include helper-breakpoint-media-min($xl) {
+                display: block;
+            }
+        }
+
+        &__nav-bar-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: rem(44);
+            padding: 0 var(--scale-40);
+
+            @include helper-breakpoint-media-min($xl) {
+                padding: 0 var(--scale-64);
+            }
+        }
+
+        &__nav-categories {
+            display: flex;
+            align-items: center;
+            gap: var(--scale-24);
+
+            .menu__link--lvl-0,
+            .menu__text--lvl-0 {
+                color: var(--text-secondary);
+                font-family: var(--body-md-family);
+                font-size: var(--body-md-size);
+                font-weight: var(--font-weight-medium);
+                line-height: var(--body-md-line-height);
+
+                &:hover {
+                    color: var(--text-brand);
                 }
             }
         }
 
-        &__user {
-            padding-left: rem(20);
+        &__nav-quick-links {
+            display: flex;
+            align-items: center;
+            gap: var(--scale-24);
+            margin-left: auto;
+        }
 
-            @include helper-breakpoint-media-min($lg) {
-                display: none;
+        &__nav-link {
+            @include helper-effect-transition(color);
+            display: flex;
+            align-items: center;
+            gap: var(--scale-4);
+            font-family: var(--body-md-family);
+            font-size: var(--body-md-size);
+            font-weight: var(--font-weight-medium);
+            line-height: var(--body-md-line-height);
+            color: var(--text-secondary);
+            text-decoration: none;
+            white-space: nowrap;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+
+            &:hover {
+                color: var(--text-brand);
             }
         }
 
-        &__user-nav {
-            padding-top: rem(10);
-            width: 100%;
+        &__nav-link-chevron {
+            @include helper-effect-transition(transform);
+            font-size: rem(18);
+            color: var(--icon-secondary);
+        }
 
-            @include helper-breakpoint-media-min($lg) {
-                padding-top: rem(20);
-            }
-
-            @include helper-breakpoint-media-min($xl) {
-                width: auto;
-                padding: 0 0 0 rem(43);
+        &__main-bar--checkout {
+            .header__main-bar-inner {
+                height: auto;
+                padding-top: var(--scale-16);
+                padding-bottom: var(--scale-16);
             }
         }
 
         &__back {
             display: flex;
             align-items: center;
-            color: $setting-color-text;
-            font-size: rem(12);
-            line-height: rem(13);
-            text-align: center;
-            font-weight: fw(medium);
+            color: var(--text-primary);
+            font-family: var(--body-sm-family);
+            font-size: var(--body-sm-size);
+            line-height: var(--body-sm-line-height);
+            font-weight: var(--font-weight-medium);
 
-            @include helper-breakpoint-media-min($lg) {
-                @include helper-effect-transition(color border-color);
+            @include helper-breakpoint-media-min($xl) {
+                @include helper-effect-transition(color order-color);
                 display: inline-block;
-                padding: rem(10) rem(30);
-                border: rem(1) solid currentColor;
-                border-radius: $setting-border-radius;
-                font-size: rem(14);
-                line-height: rem(18);
+                padding: var(--scale-8) var(--scale-24);
+                border: var(--stroke-sm) solid currentColor;
+                border-radius: var(--radius-sm);
+                font-size: var(--body-md-size);
+                line-height: var(--body-md-line-height);
                 text-align: left;
 
                 &:hover,
                 &:focus {
-                    border-color: $setting-color-main;
-                    color: $setting-color-main;
+                    border-color: var(--border-brand);
+                    color: var(--text-brand);
                 }
             }
         }
@@ -183,19 +249,19 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            font-size: rem(10);
-            font-weight: fw(medium);
+            font-size: var(--body-sm-size);
+            font-weight: var(--font-weight-medium);
 
-            @include helper-breakpoint-media-min($lg) {
+            @include helper-breakpoint-media-min($xl) {
                 flex-direction: row;
-                font-size: rem(14);
+                font-size: var(--body-md-size);
             }
 
             &-text {
                 text-align: center;
 
-                @include helper-breakpoint-media-min($lg) {
-                    padding-left: rem(9);
+                @include helper-breakpoint-media-min($xl) {
+                    padding-left: var(--scale-8);
                 }
             }
         }

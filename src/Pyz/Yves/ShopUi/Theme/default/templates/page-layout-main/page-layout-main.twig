@@ -181,6 +181,7 @@
         {% block header %}
             {% embed organism('header') with {
                 data: {
+                    showTopBar: true,
                     isAjaxMode: data.isAjaxHeader,
                     ajaxCartUrl: data.ajaxCartUrl,
                 },
@@ -192,17 +193,6 @@
                     <nav aria-label="{{ 'shop_ui.aria_label.main.navigation' | trans }}">
                         {% cms_slot 'slt-desktop-header' %}
                     </nav>
-                {% endblock %}
-
-                {% block mobile %}
-                    <a href="#" class="link link--alt {{ pageLayoutMainJsClassName }}__side-drawer-trigger">
-                        {% include atom('icon') with {
-                            modifiers: ['big'],
-                            data: {
-                                name: 'bars',
-                            },
-                        } only %}
-                    </a>
                 {% endblock %}
             {% endembed %}
         {% endblock %}

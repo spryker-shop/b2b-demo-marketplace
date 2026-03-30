@@ -5,11 +5,14 @@ import {
     OverlayEventDetail,
 } from 'ShopUi/components/molecules/main-overlay/main-overlay';
 
+const CLEAR_VISIBLE_CLASS = 'search-form__clear--visible';
+
 export default class SuggestSearch extends SuggestSearchCore {
     protected overlay: HTMLElement;
     protected wrapper: HTMLElement;
     protected openTrigger: HTMLElement;
     protected closeTrigger: HTMLElement;
+    protected clearButton: HTMLElement;
     protected eventShowOverlay: CustomEvent<OverlayEventDetail>;
     protected eventHideOverlay: CustomEvent<OverlayEventDetail>;
     protected isOverlayShown: boolean;
@@ -19,6 +22,7 @@ export default class SuggestSearch extends SuggestSearchCore {
         this.wrapper = <HTMLElement>document.getElementsByClassName(this.wrapperClassName)[0];
         this.openTrigger = <HTMLElement>document.getElementsByClassName(this.openClassName)[0];
         this.closeTrigger = <HTMLElement>document.getElementsByClassName(this.closeClassName)[0];
+        this.clearButton = <HTMLElement>document.getElementsByClassName(this.clearClassName)[0];
 
         super.readyCallback();
     }
@@ -26,29 +30,41 @@ export default class SuggestSearch extends SuggestSearchCore {
     protected mapEvents(): void {
         super.mapEvents();
 
-        this.openTrigger.addEventListener('click', () => this.toggleSearch(true));
-        this.closeTrigger.addEventListener('click', () => {
-            this.hideSugestions();
-            this.toggleSearch(false);
-        });
+        if (this.openTrigger) {
+            this.openTrigger.addEventListener('click', () => this.toggleSearch(true));
+        }
+
+        if (this.closeTrigger) {
+            this.closeTrigger.addEventListener('click', () => {
+                this.hideSugestions();
+                this.toggleSearch(false);
+            });
+        }
+
+        if (this.clearButton) {
+            this.clearButton.addEventListener('click', () => this.onClearClick());
+        }
 
         if (this.shouldCloseByOverlayClick) {
             this.mapOverlayClickEvent();
         }
 
         this.mapWindowResizeEvent();
+        this.mapInputForClear();
     }
 
     protected mapOverlayClickEvent(): void {
-        this.overlay.addEventListener('click', () => {
-            this.hideSugestions();
-            this.toggleSearch(false);
-        });
+        if (this.overlay) {
+            this.overlay.addEventListener('click', () => {
+                this.hideSugestions();
+                this.toggleSearch(false);
+            });
+        }
     }
 
     protected mapWindowResizeEvent(): void {
         window.addEventListener('resize', () => {
-            if (!this.wrapper.classList.contains(this.wrapperToggleClassName)) {
+            if (!this.wrapper?.classList.contains(this.wrapperToggleClassName)) {
                 return;
             }
 
@@ -56,6 +72,35 @@ export default class SuggestSearch extends SuggestSearchCore {
                 this.toggleSearch(false);
             }
         });
+    }
+
+    protected mapInputForClear(): void {
+        if (!this.searchInput || !this.clearButton) {
+            return;
+        }
+
+        this.searchInput.addEventListener('input', () => this.updateClearVisibility());
+        this.searchInput.addEventListener('focus', () => this.updateClearVisibility());
+        this.updateClearVisibility();
+    }
+
+    protected updateClearVisibility(): void {
+        if (!this.clearButton) {
+            return;
+        }
+
+        const hasValue = this.searchInput?.value.trim().length > 0;
+        this.clearButton.classList.toggle(CLEAR_VISIBLE_CLASS, hasValue);
+    }
+
+    protected onClearClick(): void {
+        if (this.searchInput) {
+            this.searchInput.value = '';
+            this.searchInput.focus();
+        }
+
+        this.hideSugestions();
+        this.updateClearVisibility();
     }
 
     showSugestions(): void {
@@ -67,6 +112,8 @@ export default class SuggestSearch extends SuggestSearchCore {
         if (window.innerWidth >= this.overlayBreakpoint && !this.isOverlayShown) {
             this.toggleSearch(true);
         }
+
+        this.updateClearVisibility();
     }
 
     hideSugestions(): void {
@@ -78,6 +125,8 @@ export default class SuggestSearch extends SuggestSearchCore {
         if (window.innerWidth >= this.overlayBreakpoint && this.isOverlayShown) {
             this.toggleSearch(false);
         }
+
+        this.updateClearVisibility();
     }
 
     protected setupOverlayConfig(): void {
@@ -94,7 +143,7 @@ export default class SuggestSearch extends SuggestSearchCore {
     }
 
     protected toggleSearch(isShown: boolean): void {
-        this.wrapper.classList.toggle(this.wrapperToggleClassName, isShown);
+        this.wrapper?.classList.toggle(this.wrapperToggleClassName, isShown);
         this.classList.toggle(`${this.name}--with-overlay`, isShown);
         document.body.classList.toggle(this.bodyOverlayClassName, isShown);
         this.toggleOverlay(isShown);
@@ -128,6 +177,14 @@ export default class SuggestSearch extends SuggestSearchCore {
 
     protected get closeClassName(): string {
         return this.getAttribute('close-class-name');
+    }
+
+    protected get clearClassName(): string {
+        return `js-${this.parentClassName}__clear`;
+    }
+
+    protected get parentClassName(): string {
+        return this.getAttribute('parent-class-name') || 'search-form';
     }
 
     protected get shouldCloseByOverlayClick(): boolean {

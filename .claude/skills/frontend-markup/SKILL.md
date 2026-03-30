@@ -143,6 +143,78 @@ Sass division: always `math.div()`, never `/`:
 $ratio: math.div($column, $setting-grid-columns);
 ```
 
+## Twig content capture (`{% set %}...{% endset %}`)
+
+Capture rendered HTML into a variable to avoid repeating logic in multiple branches:
+
+```twig
+{% set presetContent %}
+    {% if data.preset == 'user-account' %}
+        {% include molecule('account-menu') with { data: { tabs: accountTabs } } only %}
+    {% elseif data.preset == 'self-service' %}
+        <div class="account-menu__list">...</div>
+    {% endif %}
+{% endset %}
+
+{% if data.panelOnly %}
+    {{ presetContent | raw }}
+{% else %}
+    <div class="{{ config.name }}__dropdown">
+        {{ presetContent | raw }}
+    </div>
+{% endif %}
+```
+
+Use when the same rendered block needs to appear in two different wrapper contexts.
+
+## CSS: `aria-expanded` as open/close state source
+
+**Do NOT use `:focus-within`** for dropdown open/close — it stays active after click because the button keeps focus, so hover-out doesn't close the dropdown.
+
+Instead, make TS set `aria-expanded` on the trigger as the single source of truth, and read it in CSS:
+
+```scss
+&__trigger[aria-expanded='true'] ~ &__dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+&__trigger[aria-expanded='true'] &__chevron {
+    transform: rotate(180deg);
+}
+```
+
+Note: `~ &__dropdown` is the **sibling combinator** (trigger and dropdown are siblings).
+Note: `&__chevron` uses **descendant** selector (chevron is inside trigger).
+
+CSS hover still works alongside this — both selectors open the dropdown:
+```scss
+&:hover &__dropdown { ... }               // hover path
+&__trigger[aria-expanded='true'] ~ &__dropdown { ... }  // click path (TS-driven)
+```
+
+## Hover bridge `::after` (gap between trigger and dropdown)
+
+Prevents dropdown from closing when mouse moves through the gap between trigger and dropdown panel:
+
+```scss
+&__trigger {
+    position: relative;
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        right: 0;
+        height: 8px;
+    }
+}
+```
+
+The `::after` fills the visual gap — the mouse stays within the trigger's hit area while crossing to the dropdown.
+
 ## Vendor atoms to reuse
 
 ```twig

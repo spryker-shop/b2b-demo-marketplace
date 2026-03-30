@@ -1,0 +1,23 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'header-cart-pill',
+    tag: 'div',
+} %}
+
+{% define data = {
+    quantity: 0,
+    url: url('cart'),
+} %}
+
+{% block body %}
+    <a href="{{ data.url }}" class="{{ config.name }}__trigger" aria-label="{{ 'header.cart' | trans }}{% if data.quantity > 0 %}, {{ data.quantity }} {{ 'header.cart.items' | trans }}{% endif %}">
+        <span class="{{ config.name }}__icon">
+            <span class="material-symbols-outlined" aria-hidden="true">shopping_cart</span>
+        </span>
+
+        {% if data.quantity > 0 %}
+            <span class="{{ config.name }}__badge" aria-hidden="true">{{ data.quantity }}</span>
+        {% endif %}
+    </a>
+{% endblock %}

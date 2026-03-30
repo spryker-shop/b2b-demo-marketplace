@@ -13,14 +13,15 @@
         {% endfor %}
 
         {% include molecule('custom-select') with {
-            modifiers: ['alternative'],
+            modifiers: ['nav-top'],
             data: {
                 options: options,
+                icon: 'store',
             },
             attributes: {
                 name: '_store',
                 'data-form-submitter': true,
-                'config-theme': 'alternative',
+                'config-theme': 'nav-top',
                 'aria-label': 'aria_label.store.switcher' | trans,
             },
         } only %}

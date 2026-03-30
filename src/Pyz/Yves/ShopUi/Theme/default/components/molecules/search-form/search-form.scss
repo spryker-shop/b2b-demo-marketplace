@@ -1,18 +1,20 @@
 @mixin shop-ui-search-form($name: '.search-form') {
     #{$name} {
-        @include helper-visibility-invisible;
         @include helper-effect-transition(transform visibility opacity);
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         transform: translateY(-100%);
+        visibility: hidden;
+        opacity: 0;
 
         &--main-search {
             z-index: $setting-zi-header + 1;
 
             @include helper-breakpoint-media-min($lg) {
-                @include helper-visibility-visible;
+                visibility: visible;
+                opacity: 1;
                 display: block;
                 position: relative;
                 transform: none;
@@ -22,44 +24,132 @@
         }
 
         &--active {
-            @include helper-visibility-visible;
+            visibility: visible;
+            opacity: 1;
             transform: translateY(0);
             z-index: $setting-zi-header-overlay;
         }
 
-        &__button {
-            position: absolute;
-            top: 0;
-            width: rem(45);
-            height: 100%;
+        // The form element — acts as the search input container
+        &__form {
+            display: flex;
+            align-items: center;
+            gap: var(--scale-8);
+            height: rem(44);
+            padding-left: var(--scale-16);
+            padding-right: var(--scale-4);
+            background: var(--input-background-default);
+            border: var(--stroke-sm) solid var(--input-border-default);
+            border-radius: var(--radius-md);
+            transition:
+                border-color 0.15s ease,
+                box-shadow 0.15s ease;
+
+            &:focus-within {
+                background: var(--background-surface);
+                border-color: var(--input-border-focus);
+                box-shadow:
+                    var(--shadows-focus-x)
+                    var(--shadows-focus-y)
+                    var(--shadows-focus-blur)
+                    var(--shadows-focus-spread)
+                    var(--shadows-focus-color);
+            }
+        }
+
+        // Text input
+        &__input {
+            flex: 1 1 0;
+            min-width: 0;
+            border: none;
+            outline: none;
+            background: transparent;
+            padding: 0;
+            font-family: var(--body-md-family);
+            font-size: var(--body-md-size);
+            font-weight: var(--body-md-weight);
+            line-height: var(--body-md-line-height);
+            letter-spacing: var(--body-md-letter-spacing);
+            color: var(--input-text-value);
+
+            &::placeholder {
+                color: var(--input-text-placeholder);
+            }
+        }
+
+        // Clear button — hidden by default, shown when input has value
+        &__clear {
+            display: none;
+            flex-shrink: 0;
+            align-items: center;
+            justify-content: center;
+            width: rem(20);
+            height: rem(20);
             padding: 0;
             border: none;
-            background: $setting-color-transparent;
-            color: $setting-color-gray-4;
-            z-index: $setting-zi-search-suggestions + 3;
+            border-radius: var(--radius-full);
+            background: var(--background-subtle);
+            color: var(--icon-secondary);
             cursor: pointer;
-
-            @include helper-breakpoint-media-min($lg) {
-                width: rem(55);
-            }
-
-            &--submit {
-                left: 0;
-            }
-
-            &--close {
-                right: 0;
-
-                @include helper-breakpoint-media-min($lg) {
-                    display: none;
-                }
-            }
+            transition: background-color 0.15s ease;
 
             &:hover {
-                #{$name}__icon {
-                    color: $setting-color-gray-3;
-                    fill: $setting-color-gray-3;
-                }
+                background: var(--background-muted);
+            }
+
+            .material-symbols-outlined {
+                font-size: rem(12);
+            }
+
+            &--visible {
+                display: flex;
+            }
+        }
+
+        // Search submit button (icon-only CTA inside the input)
+        &__submit {
+            display: flex;
+            flex-shrink: 0;
+            align-items: center;
+            justify-content: center;
+            width: rem(36);
+            height: rem(36);
+            padding: 0;
+            border: none;
+            border-radius: var(--radius-sm);
+            background: var(--background-subtle);
+            color: var(--icon-secondary);
+            cursor: pointer;
+            transition: background-color 0.15s ease;
+
+            &:hover {
+                background: var(--background-muted);
+            }
+
+            .material-symbols-outlined {
+                font-size: rem(16);
+            }
+        }
+
+        // Mobile close button (X to dismiss search panel on mobile)
+        &__button-close {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: rem(45);
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            border: none;
+            background: transparent;
+            color: var(--icon-secondary);
+            cursor: pointer;
+            z-index: $setting-zi-search-suggestions + 3;
+
+            @include helper-breakpoint-media-min($lg) {
+                display: none;
             }
         }
 

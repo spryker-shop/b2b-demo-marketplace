@@ -7,8 +7,8 @@
 {% define attributes = {
     'wrapper-class-name': 'js-' ~ config.name,
     'wrapper-toggle-class-name': config.name ~ '--active',
-    'open-class-name': required,
-    'close-class-name': required,
+    'open-class-name': '',
+    'close-class-name': '',
 } %}
 
 {% block extraClass %}
@@ -16,29 +16,34 @@
 {% endblock %}
 
 {% block body %}
-    <form action="{{ data.searchUrl }}">
+    <form class="{{ config.name }}__form" action="{{ data.searchUrl }}">
         <input
-            class="suggest-search__input {{ config.jsName }}__input--{{ attributes['data-search-id'] }}"
+            class="{{ config.name }}__input {{ config.jsName }}__input--{{ attributes['data-search-id'] }}"
             name="q"
             type="text"
-            placeholder="{{ 'global.search' | trans }}"
+            placeholder="{{ 'search.form.placeholder' | trans }}"
             value="{{ data.searchValue }}"
             autocomplete="off"
         >
 
-        <button class="{{ config.name }}__button {{ config.name }}__button--submit" aria-label="{{ 'global.search' | trans }}">
-            {% include atom('icon') with {
-                class: config.name ~ '__icon',
-                modifiers: ['search'],
-                data: {
-                    name: 'search',
-                },
-            } only %}
+        <button
+            type="button"
+            class="{{ config.name }}__clear {{ config.jsName }}__clear"
+            aria-label="{{ 'global.close' | trans }}"
+        >
+            <span class="material-symbols-outlined" aria-hidden="true">close</span>
         </button>
 
-        <button type="button" class="{{ config.name }}__button {{ config.name }}__button--close {% block close %}{% endblock %}">
+        <button
+            type="submit"
+            class="{{ config.name }}__submit"
+            aria-label="{{ 'global.search' | trans }}"
+        >
+            <span class="material-symbols-outlined" aria-hidden="true">search</span>
+        </button>
+
+        <button type="button" class="{{ config.name }}__button-close {% block close %}{% endblock %}">
             {% include atom('icon') with {
-                class: config.name ~ '__icon',
                 modifiers: ['small'],
                 data: {
                     name: 'cross',

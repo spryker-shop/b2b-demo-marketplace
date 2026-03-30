@@ -5,6 +5,7 @@
 
             &--with-bar {
                 border-bottom: var(--stroke-sm) solid var(--border-subtle);
+                width: 100%;
             }
         }
 
@@ -12,6 +13,8 @@
             @include helper-effect-transition(color border-color);
             display: inline-flex;
             align-items: center;
+            justify-content: center;
+            flex-grow: 1;
             gap: var(--scale-8);
             padding: var(--scale-12) var(--scale-16);
             font-size: var(--font-size-14);
@@ -20,14 +23,15 @@
             color: var(--text-secondary);
             background: transparent;
             border: none;
+            font-weight: var(--font-weight-medium);
             border-bottom: var(--stroke-md) solid transparent;
             cursor: pointer;
             margin-bottom: calc(var(--stroke-sm) * -1);
+            overflow: hidden;
 
             &:hover,
             &:focus {
                 color: var(--text-primary);
-                font-weight: var(--font-weight-medium);
                 outline: none;
             }
 
@@ -59,19 +63,6 @@
 
         &__icon {
             font-size: var(--font-size-18);
-        }
-
-        &__trigger-label {
-            &::after {
-                content: attr(data-text);
-                display: block;
-                height: 0;
-                overflow: hidden;
-                visibility: hidden;
-                font-weight: var(--font-weight-semibold);
-                pointer-events: none;
-                user-select: none;
-            }
         }
 
         &__panels {

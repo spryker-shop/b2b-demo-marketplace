@@ -67,12 +67,12 @@
                     } only %}
                 {% endif %}
 
-                <span class="{{ config.name }}__trigger-label" data-text="{{ item.label.text }}">{{ item.label.text }}</span>
+                <span class="{{ config.name }}__trigger-label">{{ item.label.text | trans }}</span>
             </button>
         {% endfor %}
     </div>
 
-    <div class="{{ config.name }}__panels">
+    <div class="{{ _self.renderClass(config.name ~ '__panels', modifiers) }}">
         {% for item in data.items %}
             {% set isActive = item.id == activeId and not (item.disabled | default(false)) %}
             <div
