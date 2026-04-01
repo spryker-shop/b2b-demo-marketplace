@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9d8ecd0a6a7292e533261859dd74acd2",
+    "content-hash": "0309c67c4ab78f65115d8482ff483078",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -9457,66 +9457,6 @@
                 "source": "https://github.com/spryker-eco/new-relic/tree/master"
             },
             "time": "2020-06-19T09:30:20+00:00"
-        },
-        {
-            "name": "spryker-eco/product-management-ai",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/spryker-eco/product-management-ai.git",
-                "reference": "d1033c865abd3f67817374454645406ef2702397"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/spryker-eco/product-management-ai/zipball/d1033c865abd3f67817374454645406ef2702397",
-                "reference": "d1033c865abd3f67817374454645406ef2702397",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=8.3",
-                "spryker/ai-foundation": ">=0.4.0",
-                "spryker/category": "^5.0.0",
-                "spryker/gui": "^4.0.0",
-                "spryker/kernel": "^3.33.0",
-                "spryker/locale": "^4.0.0",
-                "spryker/log": "^3.10.5",
-                "spryker/product": "^6.0.0",
-                "spryker/product-category": "^4.17.0",
-                "spryker/product-extension": "^1.1.0",
-                "spryker/product-management-extension": "^1.2.0",
-                "spryker/symfony": "^3.0.0",
-                "spryker/transfer": "^3.27.0",
-                "spryker/util-encoding": "^2.0.0"
-            },
-            "require-dev": {
-                "phpstan/phpstan": "*",
-                "spryker/code-sniffer": "*"
-            },
-            "suggest": {
-                "spryker/propel-orm": "Used for Propel schema generation."
-            },
-            "default-branch": true,
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "SprykerEco\\": "src/SprykerEco/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "proprietary"
-            ],
-            "description": "ProductManagementAi module",
-            "support": {
-                "issues": "https://github.com/spryker-eco/product-management-ai/issues",
-                "source": "https://github.com/spryker-eco/product-management-ai/tree/master"
-            },
-            "time": "2026-02-26T15:16:18+00:00"
         },
         {
             "name": "spryker-eco/vertex",
@@ -91458,8 +91398,6 @@
     ],
     "minimum-stability": "dev",
     "stability-flags": {
-        "spryker-eco/product-management-ai": 20,
-        "spryker/ai-foundation": 20,
         "spryker-feature/customer-account-management": 20,
         "spryker-feature/marketplace-merchantportal-core": 20,
         "spryker-feature/product": 20,
@@ -91467,6 +91405,7 @@
         "spryker-feature/self-service-portal": 20,
         "spryker-feature/spryker-core": 20,
         "spryker-feature/spryker-core-back-office": 20,
+        "spryker/ai-foundation": 20,
         "spryker/cypress-tests": 20,
         "spryker/robotframework-suite-tests": 20
     },
@@ -91485,7 +91424,7 @@
         "ext-readline": "*",
         "ext-redis": "*"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "platform-overrides": {
         "php": "8.3.13"
     },
