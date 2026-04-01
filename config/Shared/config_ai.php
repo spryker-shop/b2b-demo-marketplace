@@ -2,6 +2,7 @@
 
 declare(strict_types = 1);
 
+use Demo\Shared\AiCommerce\AiCommerceConstants as DemoAiCommerceConstants;
 use Spryker\Shared\AiFoundation\AiFoundationConstants;
 use SprykerFeature\Shared\AiCommerce\AiCommerceConstants;
 
@@ -30,6 +31,12 @@ $config[AiFoundationConstants::AI_CONFIGURATIONS] = [
     ]),
     AiCommerceConstants::AI_CONFIGURATION_DISCOUNT_MANAGEMENT => array_merge($openAiConfiguration, [
         'system_prompt' => AiFoundationConstants::CONFIGURATION_REFERENCE_PREFIX . AiCommerceConstants::CONFIGURATION_KEY_DISCOUNT_MANAGEMENT_SYSTEM_PROMPT,
+        'provider_config' => array_merge($openAiConfiguration['provider_config'], [
+            'model' => 'gpt-4.1', // fast non-reasoning model
+        ]),
+    ]),
+    DemoAiCommerceConstants::AI_CONFIGURATION_PLACE_ORDER => array_merge($openAiConfiguration, [
+        'system_prompt' => AiFoundationConstants::CONFIGURATION_REFERENCE_PREFIX . DemoAiCommerceConstants::CONFIGURATION_KEY_PLACE_ORDER_SYSTEM_PROMPT,
         'provider_config' => array_merge($openAiConfiguration['provider_config'], [
             'model' => 'gpt-4.1', // fast non-reasoning model
         ]),
