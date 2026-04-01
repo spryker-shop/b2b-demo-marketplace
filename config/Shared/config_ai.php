@@ -9,7 +9,7 @@ use SprykerFeature\Shared\AiCommerce\AiCommerceConstants;
 $openAiConfiguration = [
     'provider_name' => AiFoundationConstants::PROVIDER_OPENAI,
     'provider_config' => [
-        'key' => AiFoundationConstants::CONFIGURATION_REFERENCE_PREFIX . 'ai_commerce:open_ai:general:openai_api_token',
+        'key' => getenv('OPEN_AI_API_TOKEN') ?: '',
         'model' => 'gpt-4o',
     ],
 ];
