@@ -1,5 +1,16 @@
 {% extends molecule('quick-order-form', '@SprykerShop:QuickOrderPage') %}
 
+{% define data = {
+    form: required,
+    products: [],
+    prices: [],
+    additionalColumns: [],
+    fileTemplateExtensions: [],
+    textOrderForm: required,
+    uploadOrderForm: required,
+    pluginForms: [],
+} %}
+
 {% block body %}
     {% include molecule('ajax-provider') with {
         class: config.jsName ~ '__provider ' ~ config.jsName ~ '__add-row-provider',
@@ -48,7 +59,8 @@
         embed: {
             name: config.name,
             jsName: config.jsName,
-            additionalColumns: data.additionalColumns
+            additionalColumns: data.additionalColumns,
+            pluginForms: data.pluginForms,
         }
     } only %}
         {% block fieldset %}
@@ -89,6 +101,20 @@
                                 fileTemplateExtensions: data.fileTemplateExtensions,
                             },
                         } only %}
+
+                        {% for pluginForm in embed.pluginForms %}
+                            <hr>
+
+                            {% if pluginForm.vars.template_path is defined %}
+                                {% include pluginForm.vars.template_path with {
+                                    data: {
+                                        form: pluginForm,
+                                    },
+                                } only %}
+                            {% else %}
+                                {{ form_widget(pluginForm) }}
+                            {% endif %}
+                        {% endfor %}
                     </div>
                 {% endblock %}
             </div>
