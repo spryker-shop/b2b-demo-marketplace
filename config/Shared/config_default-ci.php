@@ -36,6 +36,8 @@ use Spryker\Shared\Router\RouterConstants;
 use Spryker\Shared\Scheduler\SchedulerConstants;
 use Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants;
 use Spryker\Shared\SecurityBlocker\SecurityBlockerConstants;
+use Spryker\Shared\SecurityGui\SecurityGuiConstants;
+use Spryker\Shared\SecurityMerchantPortalGui\SecurityMerchantPortalGuiConstants;
 use Spryker\Shared\Session\SessionConstants;
 use Spryker\Shared\SessionRedis\SessionRedisConstants;
 use Spryker\Shared\StorageDatabase\StorageDatabaseConstants;
@@ -46,6 +48,7 @@ use Spryker\Shared\Testify\TestifyConstants;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
 use Spryker\Zed\OauthDummy\OauthDummyConfig;
 use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConstants;
+use SprykerShop\Shared\CustomerPage\CustomerPageConstants;
 use SprykerShop\Shared\ErrorPage\ErrorPageConstants;
 
 // ############################################################################
@@ -88,6 +91,9 @@ $config[SessionConstants::ZED_SSL_ENABLED]
     = $config[SessionConstants::YVES_SSL_ENABLED]
     = $config[RouterConstants::YVES_IS_SSL_ENABLED]
     = $config[RouterConstants::ZED_IS_SSL_ENABLED]
+    = $config[CustomerPageConstants::YVES_IS_SSL_ENABLED]
+    = $config[SecurityGuiConstants::ZED_IS_SSL_ENABLED]
+    = $config[SecurityMerchantPortalGuiConstants::ZED_IS_SSL_ENABLED]
     = $config[HttpConstants::ZED_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED]
     = $config[HttpConstants::YVES_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED]
     = $config[ApplicationConstants::ZED_SSL_ENABLED]

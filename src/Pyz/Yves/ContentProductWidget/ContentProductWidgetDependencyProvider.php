@@ -11,6 +11,7 @@ namespace Pyz\Yves\ContentProductWidget;
 
 use SprykerShop\Yves\ContentProductWidget\ContentProductWidgetDependencyProvider as SprykerContentProductWidgetDependencyProvider;
 use SprykerShop\Yves\ProductCategoryWidget\Plugin\ContentProductWidget\ProductCategoryContentProductAbstractCollectionExpanderPlugin;
+use SprykerShop\Yves\ProductReviewWidget\Plugin\ContentProductWidget\ProductReviewContentProductAbstractCollectionExpanderPlugin;
 
 class ContentProductWidgetDependencyProvider extends SprykerContentProductWidgetDependencyProvider
 {
@@ -18,6 +19,7 @@ class ContentProductWidgetDependencyProvider extends SprykerContentProductWidget
     {
         return [
             new ProductCategoryContentProductAbstractCollectionExpanderPlugin(),
+            new ProductReviewContentProductAbstractCollectionExpanderPlugin(),
         ];
     }
 }

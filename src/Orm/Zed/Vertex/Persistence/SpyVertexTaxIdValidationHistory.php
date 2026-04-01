@@ -7,12 +7,12 @@
 
 declare(strict_types = 1);
 
-namespace Orm\Zed\TaxApp\Persistence;
+namespace Orm\Zed\Vertex\Persistence;
 
-use Spryker\Zed\TaxApp\Persistence\Propel\AbstractSpyTaxIdValidationHistoryQuery as BaseSpyTaxIdValidationHistoryQuery;
+use SprykerEco\Zed\Vertex\Persistence\Propel\AbstractSpyVertexTaxIdValidationHistory as BaseSpyVertexTaxIdValidationHistory;
 
 /**
- * Skeleton subclass for performing query and update operations on the 'spy_tax_id_validation_history' table.
+ * Skeleton subclass for representing a row from the 'spy_vertex_tax_id_validation_history' table.
  *
  *
  *
@@ -20,6 +20,6 @@ use Spryker\Zed\TaxApp\Persistence\Propel\AbstractSpyTaxIdValidationHistoryQuery
  * application requirements. This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-class SpyTaxIdValidationHistoryQuery extends BaseSpyTaxIdValidationHistoryQuery
+class SpyVertexTaxIdValidationHistory extends BaseSpyVertexTaxIdValidationHistory
 {
 }
