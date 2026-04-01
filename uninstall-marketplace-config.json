@@ -360,10 +360,14 @@
         "src/Pyz/Zed/Product/ProductDependencyProvider.php": {
             "operations": [
                 { "type": "remove_use", "class_name": "MerchantProductProductAbstractPostCreatePlugin" },
+                { "type": "remove_use", "class_name": "MerchantProductProductAbstractAfterUpdatePlugin" },
+                { "type": "remove_use", "class_name": "MerchantProductProductAbstractExpanderPlugin" },
                 { "type": "remove_use", "class_name": "MerchantProductApprovalProductAbstractPreCreatePlugin" },
                 { "type": "remove_use", "class_name": "ProductApprovalProductAbstractPreCreatePlugin" },
                 { "type": "remove_use", "class_name": "ApprovalStatusProductConcreteMergerPlugin" },
                 { "type": "remove_plugin", "plugin_class": "MerchantProductProductAbstractPostCreatePlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductProductAbstractAfterUpdatePlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductProductAbstractExpanderPlugin" },
                 { "type": "remove_plugin", "plugin_class": "MerchantProductApprovalProductAbstractPreCreatePlugin" },
                 { "type": "remove_plugin", "plugin_class": "ProductApprovalProductAbstractPreCreatePlugin" },
                 { "type": "remove_plugin", "plugin_class": "ApprovalStatusProductConcreteMergerPlugin" }
@@ -400,6 +404,11 @@
         "src/Pyz/Zed/ProductManagement/ProductManagementDependencyProvider.php": {
             "operations": [
                 { "type": "remove_use", "class_name": "MerchantProductAbstractListActionViewDataExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProductAbstractFormDataProviderExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProductAbstractFormExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProductAbstractFormOptionsExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProductAbstractFormOptionsResolverExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProductAbstractGeneralTabContentProviderPlugin" },
                 { "type": "remove_use", "class_name": "MerchantProductProductAbstractEditViewExpanderPlugin" },
                 {
                     "type": "remove_use",
@@ -412,7 +421,13 @@
                 { "type": "remove_use", "class_name": "ProductApprovalProductTableConfigurationExpanderPlugin" },
                 { "type": "remove_use", "class_name": "ProductApprovalProductTableDataBulkExpanderPlugin" },
                 { "type": "remove_use", "class_name": "ProductApprovalProductTableQueryCriteriaExpanderPlugin" },
+                { "type": "remove_use", "class_name": "ProductAttachmentImageTabContentProviderPlugin" },
                 { "type": "remove_plugin", "plugin_class": "MerchantProductAbstractListActionViewDataExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductAbstractFormDataProviderExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductAbstractFormExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductAbstractFormOptionsExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductAbstractFormOptionsResolverExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductAbstractGeneralTabContentProviderPlugin" },
                 { "type": "remove_plugin", "plugin_class": "MerchantProductProductAbstractEditViewExpanderPlugin" },
                 {
                     "type": "remove_plugin",
