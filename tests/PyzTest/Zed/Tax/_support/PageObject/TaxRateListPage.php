@@ -19,12 +19,12 @@ class TaxRateListPage
     /**
      * @var string
      */
-    public const SELECTOR_DATA_TABLE = '.dataTables_wrapper';
+    public const SELECTOR_DATA_TABLE = '.dt-container';
 
     /**
      * @var string
      */
-    public const SELECTOR_SEARCH = 'input.form-control.input-sm';
+    public const SELECTOR_SEARCH = 'input.form-control.form-control-sm';
 
     /**
      * @var string

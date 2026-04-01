@@ -7,13 +7,11 @@
 
 declare(strict_types = 1);
 
-namespace Pyz\Zed\Gui;
+namespace Pyz\Zed\SecurityOauthUser;
 
-use Spryker\Zed\Gui\GuiConfig as SprykerGuiConfig;
+use Spryker\Zed\SecurityOauthUser\SecurityOauthUserConfig as SprykerSecurityOauthUserConfig;
 
-class GuiConfig extends SprykerGuiConfig
+class SecurityOauthUserConfig extends SprykerSecurityOauthUserConfig
 {
-    protected const string NAVIGATION_ICONS_TYPE_DEFAULT = 'google-material';
-
     protected const string HOME_PATH = '/dashboard';
 }

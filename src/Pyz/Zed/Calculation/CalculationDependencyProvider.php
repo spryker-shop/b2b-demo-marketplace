@@ -43,8 +43,8 @@ use Spryker\Zed\SalesOrderThreshold\Communication\Plugin\Calculation\RemoveSales
 use Spryker\Zed\Shipment\Communication\Plugin\Calculation\FilterObsoleteShipmentExpensesCalculatorPlugin;
 use Spryker\Zed\Shipment\Communication\Plugin\Calculation\ShipmentTaxRateCalculatorPlugin;
 use Spryker\Zed\Shipment\Communication\Plugin\Calculation\ShipmentTotalCalculatorPlugin;
-use Spryker\Zed\TaxApp\Communication\Plugin\Calculation\TaxAppCalculationPlugin;
 use Spryker\Zed\TaxProductConnector\Communication\Plugin\Calculation\ProductItemTaxRateCalculatorPlugin;
+use SprykerEco\Zed\Vertex\Communication\Plugin\Calculation\VertexCalculationPlugin;
 
 class CalculationDependencyProvider extends SprykerCalculationDependencyProvider
 {
@@ -120,8 +120,8 @@ class CalculationDependencyProvider extends SprykerCalculationDependencyProvider
      * TaxRateAverageAggregatorPlugin - average tax rate for item, used when recalculating canceled amount when refunded
      *    - Item.taxRateAverageAggregation
      *
-     *  TaxAppCalculationPlugin - Calculate tax using external tax application. Replaces all tax calculation plugins above.
-     *  Replaced tax calculation plugins should be moved to {@link \Spryker\Zed\TaxApp\TaxAppDependencyProvider::getFallbackQuoteCalculationPlugins} method.
+     *  VertexCalculationPlugin - Calculate tax using Vertex tax application. Replaces all tax calculation plugins above.
+     *  Replaced tax calculation plugins should be moved to {@link \SprykerEco\Zed\Vertex\VertexDependencyProvider::getFallbackQuoteCalculationPlugins} method.
      *  Replaced tax calculation plugin stack should include all plugins which were present between extracted tax-related plugins.
      *
      * ProductItemTaxRateCalculatorPlugin - Sets tax rate to item based on shipping address
@@ -213,7 +213,7 @@ class CalculationDependencyProvider extends SprykerCalculationDependencyProvider
             new DiscountAmountAggregatorForGenericAmountPlugin(),
             new ItemDiscountAmountFullAggregatorPlugin(),
 
-            new TaxAppCalculationPlugin(),
+            new VertexCalculationPlugin(),
 
             new PriceToPayAggregatorPlugin(),
 
@@ -257,7 +257,7 @@ class CalculationDependencyProvider extends SprykerCalculationDependencyProvider
             new DiscountAmountAggregatorForGenericAmountPlugin(),
             new ItemDiscountAmountFullAggregatorPlugin(),
 
-            new TaxAppCalculationPlugin(),
+            new VertexCalculationPlugin(),
 
             new PriceToPayAggregatorPlugin(),
 

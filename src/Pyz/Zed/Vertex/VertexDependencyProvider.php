@@ -7,7 +7,7 @@
 
 declare(strict_types = 1);
 
-namespace Pyz\Zed\TaxApp;
+namespace Pyz\Zed\Vertex;
 
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\ItemTaxAmountFullAggregatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\PriceToPayAggregatorPlugin;
@@ -18,27 +18,43 @@ use Spryker\Zed\ProductOfferAvailability\Communication\Plugin\TaxApp\ProductOffe
 use Spryker\Zed\Tax\Communication\Plugin\Calculator\TaxAmountAfterCancellationCalculatorPlugin;
 use Spryker\Zed\Tax\Communication\Plugin\Calculator\TaxAmountCalculatorPlugin;
 use Spryker\Zed\Tax\Communication\Plugin\Calculator\TaxRateAverageAggregatorPlugin;
-use Spryker\Zed\TaxApp\TaxAppDependencyProvider as SprykerTaxAppDependencyProvider;
+use SprykerEco\Zed\Vertex\Communication\Plugin\Order\OrderCustomerWithVertexCodeExpanderPlugin;
+use SprykerEco\Zed\Vertex\Communication\Plugin\Order\OrderExpensesWithVertexCodeExpanderPlugin;
+use SprykerEco\Zed\Vertex\Communication\Plugin\Order\OrderItemProductOptionWithVertexCodeExpanderPlugin;
+use SprykerEco\Zed\Vertex\Communication\Plugin\Order\OrderItemWithVertexSpecificFieldsExpanderPlugin;
+use SprykerEco\Zed\Vertex\Communication\Plugin\Quote\CalculableObjectCustomerWithVertexCodeExpanderPlugin;
+use SprykerEco\Zed\Vertex\Communication\Plugin\Quote\CalculableObjectExpensesWithVertexCodeExpanderPlugin;
+use SprykerEco\Zed\Vertex\Communication\Plugin\Quote\CalculableObjectItemProductOptionWithVertexCodeExpanderPlugin;
+use SprykerEco\Zed\Vertex\Communication\Plugin\Quote\CalculableObjectItemWithVertexSpecificFieldsExpanderPlugin;
+use SprykerEco\Zed\Vertex\VertexDependencyProvider as SprykerVertexDependencyProvider;
 
-class TaxAppDependencyProvider extends SprykerTaxAppDependencyProvider
+class VertexDependencyProvider extends SprykerVertexDependencyProvider
 {
     /**
-     * @return array<\Spryker\Zed\TaxAppExtension\Dependency\Plugin\CalculableObjectTaxAppExpanderPluginInterface>
+     * @return array<\SprykerEco\Zed\Vertex\Dependency\Plugin\CalculableObjectVertexExpanderPluginInterface|\Spryker\Zed\TaxAppExtension\Dependency\Plugin\CalculableObjectTaxAppExpanderPluginInterface>
      */
-    protected function getCalculableObjectTaxAppExpanderPlugins(): array
+    protected function getCalculableObjectVertexExpanderPlugins(): array
     {
         return [
+            new CalculableObjectCustomerWithVertexCodeExpanderPlugin(),
+            new CalculableObjectExpensesWithVertexCodeExpanderPlugin(),
+            new CalculableObjectItemProductOptionWithVertexCodeExpanderPlugin(),
+            new CalculableObjectItemWithVertexSpecificFieldsExpanderPlugin(),
             new MerchantProfileAddressCalculableObjectTaxAppExpanderPlugin(),
             new ProductOfferAvailabilityCalculableObjectTaxAppExpanderPlugin(),
         ];
     }
 
     /**
-     * @return array<\Spryker\Zed\TaxAppExtension\Dependency\Plugin\OrderTaxAppExpanderPluginInterface>
+     * @return array<\SprykerEco\Zed\Vertex\Dependency\Plugin\OrderVertexExpanderPluginInterface|\Spryker\Zed\TaxAppExtension\Dependency\Plugin\OrderTaxAppExpanderPluginInterface>
      */
-    protected function getOrderTaxAppExpanderPlugins(): array
+    protected function getOrderVertexExpanderPlugins(): array
     {
         return [
+            new OrderCustomerWithVertexCodeExpanderPlugin(),
+            new OrderExpensesWithVertexCodeExpanderPlugin(),
+            new OrderItemProductOptionWithVertexCodeExpanderPlugin(),
+            new OrderItemWithVertexSpecificFieldsExpanderPlugin(),
             new MerchantProfileAddressOrderTaxAppExpanderPlugin(),
             new ProductOfferAvailabilityOrderTaxAppExpanderPlugin(),
         ];
