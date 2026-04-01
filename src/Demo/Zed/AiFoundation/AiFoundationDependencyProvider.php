@@ -11,7 +11,14 @@ namespace Demo\Zed\AiFoundation;
 
 use Spryker\Zed\AiFoundation\AiFoundationDependencyProvider as SprykerAiFoundationDependencyProvider;
 use Spryker\Zed\AiFoundation\Communication\Plugin\AuditLogPostPromptPlugin;
+use Spryker\Zed\AiFoundation\Communication\Plugin\AuditLogPostToolCallPlugin;
 use Spryker\Zed\AiFoundation\Communication\Plugin\Log\AiInteractionHandlerPlugin;
+use SprykerFeature\Zed\AiCommerce\Communication\Plugin\AiFoundation\BackofficeAssistantSsePostToolCallPlugin;
+use SprykerFeature\Zed\AiCommerce\Communication\Plugin\AiFoundation\BackofficeAssistantSsePreToolCallPlugin;
+use SprykerFeature\Zed\AiCommerce\Communication\Plugin\AiFoundation\DiscountManagementToolSetPlugin;
+use SprykerFeature\Zed\AiCommerce\Communication\Plugin\AiFoundation\NavigationToolSetPlugin;
+use SprykerFeature\Zed\AiCommerce\Communication\Plugin\AiFoundation\OrderDetailsToolSetPlugin;
+use SprykerFeature\Zed\AiCommerce\Communication\Plugin\AiFoundation\OrderManagementToolSetPlugin;
 
 class AiFoundationDependencyProvider extends SprykerAiFoundationDependencyProvider
 {
@@ -26,12 +33,46 @@ class AiFoundationDependencyProvider extends SprykerAiFoundationDependencyProvid
     }
 
     /**
+     * @return array<\Spryker\Zed\AiFoundation\Dependency\Plugin\PreToolCallPluginInterface>
+     */
+    protected function getPreToolCallPlugins(): array
+    {
+        return [
+            new BackofficeAssistantSsePreToolCallPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\AiFoundation\Dependency\Plugin\PostToolCallPluginInterface>
+     */
+    protected function getPostToolCallPlugins(): array
+    {
+        return [
+            new BackofficeAssistantSsePostToolCallPlugin(),
+            new AuditLogPostToolCallPlugin(),
+        ];
+    }
+
+    /**
      * @return array<\Spryker\Zed\AiFoundation\Dependency\Plugin\PostPromptPluginInterface>
      */
     protected function getPostPromptPlugins(): array
     {
         return [
             new AuditLogPostPromptPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\AiFoundation\Dependency\Tools\ToolSetPluginInterface>
+     */
+    protected function getAiToolSetPlugins(): array
+    {
+        return [
+            new NavigationToolSetPlugin(),
+            new OrderManagementToolSetPlugin(),
+            new OrderDetailsToolSetPlugin(),
+            new DiscountManagementToolSetPlugin(),
         ];
     }
 }

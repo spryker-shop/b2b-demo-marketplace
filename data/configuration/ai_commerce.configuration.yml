@@ -1,0 +1,35 @@
+# yaml-language-server: $schema=../../../../Spryker/Configuration/resources/configuration/configuration-schema-v1.json
+features:
+    - key: ai_commerce
+      name: AI Commerce
+      description: AI-powered commerce features configuration.
+      enabled: true
+      order: 0
+      tabs:
+          - key: open_ai
+            name: Open AI
+            description: OpenAI provider configuration.
+            enabled: true
+            order: 1
+            groups:
+                - key: general
+                  name: General
+                  description: General settings for the OpenAI provider.
+                  enabled: true
+                  order: 0
+                  scopes:
+                      - global
+                  settings:
+                      - key: openai_api_token
+                        name: OpenAI API Token
+                        description: The API token used to authenticate requests to the OpenAI service.
+                        type: string
+                        default_value: ''
+                        enabled: true
+                        secret: true
+                        storefront: false
+                        scopes:
+                            - global
+
+
+

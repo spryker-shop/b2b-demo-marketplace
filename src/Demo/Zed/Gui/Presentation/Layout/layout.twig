@@ -1,0 +1,6 @@
+{% extends '@Spryker:Gui/Layout/layout.twig' %}
+
+{% block footer_js %}
+    {% include '@AiCommerce/Partials/chat-widget.twig' %}
+    {{ parent() }}
+{% endblock %}

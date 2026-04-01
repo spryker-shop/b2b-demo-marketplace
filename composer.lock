@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "62174227e5457035622b0a45e7728893",
+    "content-hash": "c1a5036d37729efeb3f202df27dba8dc",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -9600,16 +9600,16 @@
         },
         {
             "name": "spryker-feature/ai-commerce",
-            "version": "0.2.0",
+            "version": "dev-beta/feature/backoffice-assistant",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/ai-commerce.git",
-                "reference": "01231176e540cd52badb65b1738706f3f9f98c69"
+                "reference": "001578346b27d33cdb96cb88ce71584dad695a39"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/ai-commerce/zipball/01231176e540cd52badb65b1738706f3f9f98c69",
-                "reference": "01231176e540cd52badb65b1738706f3f9f98c69",
+                "url": "https://api.github.com/repos/spryker-feature/ai-commerce/zipball/001578346b27d33cdb96cb88ce71584dad695a39",
+                "reference": "001578346b27d33cdb96cb88ce71584dad695a39",
                 "shasum": ""
             },
             "require": {
@@ -9619,21 +9619,35 @@
                 "spryker/ai-foundation": "^0.7.0",
                 "spryker/application": "^3.46.0",
                 "spryker/catalog": "^5.12.0",
+                "spryker/configuration": "^0.1.0",
+                "spryker/discount": "^9.0.0",
+                "spryker/glossary": "^3.0.0",
                 "spryker/glossary-storage": "^1.0.0",
                 "spryker/kernel": "^3.72.0",
                 "spryker/locale": "^4.12.0",
                 "spryker/log": "^3.0.0",
                 "spryker/messenger": "^3.6.0",
+                "spryker/oms": "^11.0.0",
+                "spryker/propel-orm": "^1.20.0",
+                "spryker/sales": "^11.0.0",
                 "spryker/symfony": "^3.19.0",
-                "spryker/transfer": "^3.42.0"
+                "spryker/transfer": "^3.42.0",
+                "spryker/twig-extension": "^1.0.0",
+                "spryker/user": "^3.0.0"
             },
             "require-dev": {
                 "spryker/code-sniffer": "*",
+                "spryker/container": "*",
+                "spryker/propel": "*",
                 "spryker/router": "*",
-                "spryker/testify": "*"
+                "spryker/shipment": "*",
+                "spryker/testify": "*",
+                "spryker/twig": "*"
             },
             "suggest": {
-                "spryker/router": "Required for SearchByImageRouteProviderPlugin to register search by image routes in Yves."
+                "spryker/container": "When using BackofficeAssistant",
+                "spryker/router": "Required for SearchByImageRouteProviderPlugin to register search by image routes in Yves.",
+                "spryker/twig": "When using AiCommerceTwigPlugin"
             },
             "type": "library",
             "extra": {
@@ -9652,9 +9666,9 @@
             ],
             "description": "AiCommerce module",
             "support": {
-                "source": "https://github.com/spryker-feature/ai-commerce/tree/0.2.0"
+                "source": "https://github.com/spryker-feature/ai-commerce/tree/beta/feature/backoffice-assistant"
             },
-            "time": "2026-03-31T11:35:06+00:00"
+            "time": "2026-04-01T15:22:28+00:00"
         },
         {
             "name": "spryker-feature/alternative-products",
@@ -35571,6 +35585,60 @@
                 "source": "https://github.com/spryker/configurable-bundles-rest-api/tree/1.2.0"
             },
             "time": "2025-08-04T10:29:10+00:00"
+        },
+        {
+            "name": "spryker/configuration",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/configuration.git",
+                "reference": "340ef44c39f30948141985340c16488f15fd367b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/configuration/zipball/340ef44c39f30948141985340c16488f15fd367b",
+                "reference": "340ef44c39f30948141985340c16488f15fd367b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.3",
+                "spryker/acl": "^3.0.0",
+                "spryker/configuration-extension": "^1.0.0",
+                "spryker/kernel": "^3.82.0",
+                "spryker/propel-orm": "^1.0.0",
+                "spryker/publisher-extension": "^1.0.0",
+                "spryker/storage": "^3.0.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/synchronization": "^1.0.0",
+                "spryker/synchronization-behavior": "^1.0.0",
+                "spryker/transfer": "^3.27.0",
+                "spryker/util-encryption": "^1.1.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Configuration module",
+            "support": {
+                "source": "https://github.com/spryker/configuration/tree/0.1.0"
+            },
+            "time": "2026-03-12T12:11:14+00:00"
         },
         {
             "name": "spryker/configuration-extension",
@@ -91450,6 +91518,7 @@
     ],
     "minimum-stability": "dev",
     "stability-flags": {
+        "spryker-feature/ai-commerce": 20,
         "spryker-feature/customer-account-management": 20,
         "spryker-feature/marketplace-merchantportal-core": 20,
         "spryker-feature/product": 20,
@@ -91479,5 +91548,5 @@
     "platform-overrides": {
         "php": "8.3.13"
     },
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.6.0"
 }

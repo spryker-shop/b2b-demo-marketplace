@@ -22,6 +22,7 @@ use Spryker\Zed\CompanyBusinessUnitDataImport\CompanyBusinessUnitDataImportConfi
 use Spryker\Zed\CompanyDataImport\CompanyDataImportConfig;
 use Spryker\Zed\CompanyUnitAddressDataImport\CompanyUnitAddressDataImportConfig;
 use Spryker\Zed\CompanyUnitAddressLabelDataImport\CompanyUnitAddressLabelDataImportConfig;
+use Spryker\Zed\Configuration\Communication\Console\ConfigurationSyncConsole;
 use Spryker\Zed\Console\Communication\Plugin\Console\MultiProcessRunConsole;
 use Spryker\Zed\Console\ConsoleDependencyProvider as SprykerConsoleDependencyProvider;
 use Spryker\Zed\Container\Communication\Console\ContainerBuilderConsole;
@@ -525,6 +526,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
         }
 
         $commands[] = new QuicksightUserSyncSaveConsole();
+        $commands[] = new ConfigurationSyncConsole();
 
         return $commands;
     }
