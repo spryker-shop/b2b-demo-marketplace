@@ -109,14 +109,4 @@ class QuickOrderPageDependencyProvider extends SprykerQuickOrderPageDependencyPr
             new ProductOfferQuickOrderItemMapperPlugin(),
         ];
     }
-
-    /**
-     * @return array<\SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormPluginInterface>
-     */
-    protected function getQuickOrderFormPlugins(): array
-    {
-        return [
-            new AiCommerceQuickOrderImageToCartFormPlugin(),
-        ];
-    }
 }
