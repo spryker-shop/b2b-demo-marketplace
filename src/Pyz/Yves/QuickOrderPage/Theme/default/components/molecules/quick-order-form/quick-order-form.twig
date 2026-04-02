@@ -103,17 +103,17 @@
                         } only %}
 
                         {% for pluginForm in embed.pluginForms %}
-                            <hr>
-
-                            {% if pluginForm.vars.template_path is defined %}
-                                {% include pluginForm.vars.template_path with {
-                                    data: {
-                                        form: pluginForm,
-                                    },
-                                } only %}
-                            {% else %}
-                                {{ form_widget(pluginForm) }}
-                            {% endif %}
+                            <div class="plugins-quick-order-form">
+                                {% if pluginForm.vars.template_path is defined %}
+                                    {% include pluginForm.vars.template_path with {
+                                        data: {
+                                            form: pluginForm,
+                                        },
+                                    } only %}
+                                {% else %}
+                                    {{ form_widget(pluginForm) }}
+                                {% endif %}
+                            </div>
                         {% endfor %}
                     </div>
                 {% endblock %}
