@@ -14,7 +14,7 @@
         }
 
         &__sidebar-header {
-            padding: var(--scale-20) var(--scale-20);
+            padding: 0 var(--scale-16) var(--scale-20) var(--scale-20);
             font-family: var(--label-sm-family);
             font-size: var(--label-sm-size);
             font-weight: var(--font-weight-semibold);
@@ -28,7 +28,7 @@
             overflow-y: auto;
             overflow-x: hidden;
             list-style: none;
-            padding: var(--scale-4) 0;
+            padding: var(--scale-20) 0 var(--scale-4);
             margin: 0;
             display: flex;
             flex-direction: column;
@@ -165,7 +165,7 @@
         &__panel-items {
             display: flex;
             flex-direction: column;
-            gap: var(--scale-12);
+            gap: var(--scale-20);
             list-style: none;
             padding: 0;
             margin: 0 0 var(--scale-4);
