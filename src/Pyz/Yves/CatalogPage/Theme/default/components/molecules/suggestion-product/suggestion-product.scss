@@ -1,6 +1,5 @@
 @mixin catalog-page-suggestion-product($name: '.suggestion-product') {
     #{$name} {
-        padding-bottom: rem(10);
 
         &__title {
             font-size: rem(17);
@@ -16,6 +15,9 @@
             @include helper-effect-transition(color);
             display: flex;
             align-items: center;
+            height: rem(60);
+            gap: rem(14);
+            padding: 0 var(--scale-20) 0 var(--scale-16);
             color: $setting-color-gray-4;
 
             &:hover {
@@ -26,34 +28,56 @@
         &__thumbnail {
             min-width: rem(52);
             width: rem(52);
+            height: rem(52);
 
             @include helper-breakpoint-media-min($lg) {
-                min-width: rem(42);
-                width: rem(42);
+                min-width: rem(44);
+                width: rem(44);
+                height: rem(44);
+                border-radius: rem(6);
+                overflow: hidden;
+            }
+
+            img {
+                @include helper-breakpoint-media-min($lg) {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
             }
         }
 
         &__name {
             flex-grow: 1;
-            padding-left: rem(14);
-            font-size: rem(12);
-            font-weight: fw(medium);
-            line-height: rem(14);
-            letter-spacing: rem(0.1);
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-2);
+        }
 
-            @include helper-breakpoint-media-min($lg) {
-                font-size: rem(13);
-            }
+        &__title {
+            font-family: var(--body-sm-family);
+            font-size: var(--body-sm-size);
+            font-weight: var(--body-sm-weight);
+            line-height: var(--body-sm-line-height);
+            color: var(--text-primary);
+        }
+
+        &__sku {
+            font-size: rem(10);
+            font-weight: fw(regular);
+            line-height: 1.2;
+            color: var(--text-secondary);
         }
 
         &__price {
             display: block;
-            padding-top: 3px;
 
             .price__amount {
-                color: $setting-color-gray-3;
-                font-size: rem(13);
-                font-weight: fw(bold);
+                font-family: var(--label-sm-family);
+                font-size: var(--label-sm-size);
+                font-weight: var(--label-sm-weight);
+                line-height: var(--label-sm-line-height);
+                color: var(--text-primary);
 
                 &--alt {
                     color: $setting-color-alt;

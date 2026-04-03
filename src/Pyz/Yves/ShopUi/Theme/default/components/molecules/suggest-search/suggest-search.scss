@@ -10,14 +10,15 @@
             border: var(--stroke-sm) solid var(--border-default);
             border-radius: var(--radius-lg);
             background: var(--background-surface);
-            box-shadow: var(--shadows-md-x) var(--shadows-md-y) var(--shadows-md-blur) var(--shadows-md-spread)
-                var(--shadows-md-color);
+            box-shadow: var(--shadows-sm-x) var(--shadows-sm-y) var(--shadows-sm-blur) var(--shadows-sm-spread)
+                var(--shadows-sm-color);
             max-height: rem(300);
             overflow-x: hidden;
             overflow-y: auto;
             z-index: $setting-zi-search-suggestions + 3;
 
             @include helper-breakpoint-media-min($lg) {
+                width: rem(720);
                 max-height: 30rem;
             }
         }
@@ -90,7 +91,19 @@
         }
 
         &__product-action {
-            padding: var(--scale-20) var(--scale-16) var(--scale-16);
+            height: rem(48);
+            display: flex;
+            align-items: center;
+            gap: var(--scale-8);
+            padding: 0 var(--scale-20);
+            border-top: var(--stroke-sm) solid var(--border-subtle);
+
+            .button {
+                font-family: var(--body-sm-family);
+                font-size: var(--body-sm-size);
+                font-weight: var(--body-sm-weight);
+                line-height: var(--body-sm-line-height);
+            }
         }
 
         &__item {

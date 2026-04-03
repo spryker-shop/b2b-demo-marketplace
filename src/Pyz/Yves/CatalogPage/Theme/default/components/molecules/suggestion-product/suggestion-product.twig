@@ -12,7 +12,15 @@
         {% endif %}
 
         <span class="{{ config.name }}__name">
-            {{ data.title }}
+            <span class="{{ config.name }}__title">
+                {{ data.title }}
+            </span>
+
+            {% if data.product.abstract_sku is defined %}
+                <span class="{{ config.name }}__sku">
+                    SKU: {{ data.product.abstract_sku }}
+                </span>
+            {% endif %}
 
             {% if can('SeePricePermissionPlugin') %}
                 {% include molecule('money-price') with {
