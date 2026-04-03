@@ -1,0 +1,80 @@
+@mixin shop-ui-nav-pill($name: '.nav-pill', $dropdown-width: rem(430)) {
+    #{$name} {
+        position: relative;
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            height: var(--scale-8);
+        }
+
+        &__dropdown {
+            @include helper-effect-transition(opacity visibility transform);
+            position: absolute;
+            top: calc(100% + var(--scale-8));
+            right: 0;
+            width: $dropdown-width;
+            background: var(--background-surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadows-md-x) var(--shadows-md-y) var(--shadows-md-blur) var(--shadows-md-spread)
+                var(--shadows-md-color);
+            z-index: $setting-zi-dropdown;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: translateY(rem(-4));
+            overflow: hidden;
+        }
+
+        &:hover &__dropdown,
+        &__trigger[aria-expanded='true'] ~ &__dropdown {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        @content;
+    }
+}
+
+@mixin shop-ui-panel-dropdown($name: '.panel-dropdown') {
+    #{$name} {
+        &__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--scale-20) var(--scale-12) var(--scale-8) var(--scale-16);
+        }
+
+        &__title {
+            font-family: var(--label-md-family);
+            font-size: var(--label-md-size);
+            font-weight: var(--label-md-weight);
+            line-height: var(--label-md-line-height);
+            color: var(--text-primary);
+        }
+
+        &__divider {
+            height: 1px;
+            background-color: var(--border-subtle);
+        }
+
+        &__footer {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: var(--scale-8);
+            padding: var(--scale-12) var(--scale-16);
+
+            .side-drawer & {
+                justify-content: center;
+            }
+        }
+
+        @content;
+    }
+}

@@ -3,7 +3,6 @@
 
 {% define config = {
     name: 'account-menu',
-    tag: 'div',
 } %}
 
 {% define data = {
@@ -14,9 +13,6 @@
     <a href="{{ item.url }}" class="{{ name }}__row{% if item.isDanger | default(false) %} {{ name }}__row--danger{% endif %}">
         {% include atom('font-icon') with {
             class: name ~ '__row-icon',
-            attributes: {
-                'aria-hidden': 'true',
-            },
             data: {
                 name: item.icon,
             },

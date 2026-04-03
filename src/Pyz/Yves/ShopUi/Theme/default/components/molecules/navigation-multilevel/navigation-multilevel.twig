@@ -16,18 +16,84 @@
     'reverse-class-name': 'menu-wrapper--reverse',
 } %}
 
+{% macro navPanel(node, panelId, jsName) %}
+    <div class="side-drawer__panel js-side-drawer__panel navigation-multilevel__nav-panel"
+         data-panel-id="{{ panelId }}">
+        <div class="side-drawer__content">
+            <div class="navigation-multilevel__nav-panel-body">
+                <div class="navigation-multilevel__nav-panel-section-header">
+                    {{ node.title }}
+                </div>
+                <ul class="navigation-multilevel__nav-panel-items">
+                    {% for childNode in node.children %}
+                        {% set childPanelId = panelId ~ '-' ~ loop.index %}
+                        <li class="navigation-multilevel__nav-panel-item">
+                            {% if childNode.children | length > 0 %}
+                                <button
+                                    type="button"
+                                    class="navigation-multilevel__mobile-row js-side-drawer__drill-down-trigger"
+                                    data-target-panel="{{ childPanelId }}"
+                                >
+                                    <span class="navigation-multilevel__mobile-row-label">{{ childNode.title }}</span>
+                                    {% include atom('font-icon') with {
+                                        class: 'navigation-multilevel__mobile-row-chevron',
+                                        modifiers: ['size-inherit'],
+                                        data: { name: 'chevron_right' },
+                                    } only %}
+                                </button>
+                            {% else %}
+                                <a
+                                    href="{{ functionExists('generatePath') ? generatePath(childNode.url) : childNode.url }}"
+                                    class="navigation-multilevel__nav-panel-link"
+                                >{{ childNode.title }}</a>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+                {% if node.url %}
+                    <a
+                        href="{{ functionExists('generatePath') ? generatePath(node.url) : node.url }}"
+                        class="navigation-multilevel__nav-panel-view-all"
+                    >
+                        {{ 'navigation.all_prefix' | trans }} {{ node.title }}
+                        {% include atom('font-icon') with {
+                            class: 'navigation-multilevel__nav-panel-view-all-arrow',
+                            modifiers: ['size-inherit'],
+                            data: { name: 'chevron_right' },
+                        } only %}
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% for childNode in node.children %}
+        {% if childNode.children | length > 0 %}
+            {% set childPanelId = panelId ~ '-' ~ loop.index %}
+            {{ _self.navPanel(childNode, childPanelId, jsName) }}
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+
 {% block body %}
     <ul class="menu menu--lvl-0">
         {% for node in data.nodes %}
             {% set hasChildren = node.children | length > 0 %}
-            
+
             {% include molecule('navigation-multilevel-node') with {
                 class: 'menu__item menu__item--lvl-0 ' ~ (hasChildren ? 'menu__item--has-children-dropdown' : ''),
                 data: {
                     node: node,
                     parentJsName: config.jsName,
+                    nodeIndex: loop.index,
                 },
             } only %}
         {% endfor %}
     </ul>
+
+    {% for node in data.nodes %}
+        {% if node.children | length > 0 %}
+            {{ _self.navPanel(node, config.jsName ~ '-panel-' ~ loop.index, config.jsName) }}
+        {% endif %}
+    {% endfor %}
 {% endblock %}

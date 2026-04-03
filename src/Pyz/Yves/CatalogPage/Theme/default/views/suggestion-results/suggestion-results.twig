@@ -19,7 +19,7 @@
 {% set rightVisible = data.product_abstract is not empty %}
 
 {% block body %}
-    {% set colClasses = is_granted('ROLE_USER') ? 'col col--sm-12 col--md-6 col--xl-6' : 'col col--sm-12 col--md-6 col--lg-12 col--xl-6' %}
+    {% set colClasses = 'col col--sm-12 col--xl-6' %}
 
     <div class="grid grid--gap">
         {% if leftVisible %}

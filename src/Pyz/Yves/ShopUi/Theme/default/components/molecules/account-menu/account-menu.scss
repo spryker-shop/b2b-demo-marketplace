@@ -14,11 +14,6 @@
             border-radius: var(--radius-sm);
             transition: background-color 0.15s ease;
 
-            @include helper-breakpoint-media-min($lg) {
-                font-size: var(--body-sm-size);
-                line-height: var(--body-sm-line-height);
-            }
-
             &:hover {
                 background-color: var(--background-subtle);
                 text-decoration: none;
@@ -39,7 +34,7 @@
             font-size: rem(18);
             flex-shrink: 0;
 
-            @include helper-breakpoint-media-min($lg) {
+            @include helper-breakpoint-media-min($xl) {
                 display: block;
             }
         }

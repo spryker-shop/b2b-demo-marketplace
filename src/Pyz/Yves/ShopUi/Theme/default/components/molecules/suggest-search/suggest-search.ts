@@ -19,10 +19,9 @@ export default class SuggestSearch extends SuggestSearchCore {
 
     protected init(): void {
         this.overlay = <HTMLElement>document.getElementsByClassName(this.overlayClassName)[0];
-        this.wrapper = <HTMLElement>document.getElementsByClassName(this.wrapperClassName)[0];
         this.openTrigger = <HTMLElement>document.getElementsByClassName(this.openClassName)[0];
         this.closeTrigger = <HTMLElement>document.getElementsByClassName(this.closeClassName)[0];
-        this.clearButton = <HTMLElement>document.getElementsByClassName(this.clearClassName)[0];
+        this.wrapper = <HTMLElement>document.getElementsByClassName(this.wrapperClassName)[0];
 
         super.readyCallback();
     }
@@ -39,10 +38,6 @@ export default class SuggestSearch extends SuggestSearchCore {
                 this.hideSugestions();
                 this.toggleSearch(false);
             });
-        }
-
-        if (this.clearButton) {
-            this.clearButton.addEventListener('click', () => this.onClearClick());
         }
 
         if (this.shouldCloseByOverlayClick) {
@@ -75,10 +70,22 @@ export default class SuggestSearch extends SuggestSearchCore {
     }
 
     protected mapInputForClear(): void {
-        if (!this.searchInput || !this.clearButton) {
+        if (!this.searchInput) {
             return;
         }
 
+        const searchForm = this.closest(`.${this.parentClassName}`);
+        this.wrapper = <HTMLElement>(searchForm ?? document.getElementsByClassName(this.wrapperClassName)[0]);
+        this.clearButton = <HTMLElement>(
+            searchForm?.querySelector(`.js-${this.parentClassName}__clear`) ??
+            document.getElementsByClassName(this.clearClassName)[0]
+        );
+
+        if (!this.clearButton) {
+            return;
+        }
+
+        this.clearButton.addEventListener('click', () => this.onClearClick());
         this.searchInput.addEventListener('input', () => this.updateClearVisibility());
         this.searchInput.addEventListener('focus', () => this.updateClearVisibility());
         this.updateClearVisibility();
@@ -99,6 +106,7 @@ export default class SuggestSearch extends SuggestSearchCore {
             this.searchInput.focus();
         }
 
+        this.setHintValue('');
         this.hideSugestions();
         this.updateClearVisibility();
     }
@@ -143,6 +151,10 @@ export default class SuggestSearch extends SuggestSearchCore {
     }
 
     protected toggleSearch(isShown: boolean): void {
+        if (this.classList.contains(`${this.name}--drawer`)) {
+            return;
+        }
+
         this.wrapper?.classList.toggle(this.wrapperToggleClassName, isShown);
         this.classList.toggle(`${this.name}--with-overlay`, isShown);
         document.body.classList.toggle(this.bodyOverlayClassName, isShown);

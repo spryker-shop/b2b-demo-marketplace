@@ -20,7 +20,6 @@
             text-align: left;
             white-space: nowrap;
             transition: background-color 0.2s ease;
-
             height: rem(50);
             padding: var(--scale-8) var(--scale-12);
             border-radius: var(--radius-md);
@@ -39,8 +38,8 @@
             #{$name}--drawer & {
                 width: 100%;
                 height: auto;
-                padding: var(--scale-12) var(--scale-16);
-                border-radius: var(--radius-sm);
+                padding: var(--scale-12) 0;
+                border-radius: 0;
                 background: transparent;
             }
         }
@@ -68,13 +67,16 @@
             #{$name}--drawer & {
                 width: 100%;
                 justify-content: space-between;
-                padding: var(--scale-12) var(--scale-16);
+                padding: var(--scale-12) 0;
                 color: var(--text-primary);
-                font-size: var(--body-sm-size);
+                font-family: var(--body-lg-family);
+                font-size: var(--body-lg-size);
+                font-weight: var(--body-lg-weight);
+                line-height: var(--body-lg-line-height);
+                text-align: left;
 
                 &:hover {
                     color: var(--text-primary);
-                    background-color: var(--background-subtle);
                 }
             }
         }
@@ -119,7 +121,7 @@
             align-items: center;
             color: var(--icon-secondary);
             flex-shrink: 0;
-            font-size: rem(20);
+            font-size: rem(18);
             transition: transform 0.15s ease;
 
             #{$name}--drawer & {
@@ -137,7 +139,7 @@
             border-radius: var(--radius-lg);
             box-shadow: var(--shadows-md-x) var(--shadows-md-y) var(--shadows-md-blur) var(--shadows-md-spread)
                 var(--shadows-md-color);
-            z-index: $setting-zi-element + 5;
+            z-index: $setting-zi-dropdown;
             opacity: 0;
             visibility: hidden;
             pointer-events: none;

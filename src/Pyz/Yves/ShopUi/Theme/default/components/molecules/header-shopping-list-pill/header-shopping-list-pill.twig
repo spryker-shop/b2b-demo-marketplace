@@ -1,0 +1,34 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'header-shopping-list-pill',
+    tag: 'header-shopping-list-pill',
+} %}
+
+{% block body %}
+    <a
+        href="{{ url('shopping-list') }}"
+        class="link--no-decoration {{ config.name }}__trigger {{ config.jsName }}__trigger"
+        aria-expanded="false"
+        aria-label="{{ 'customer.account.shopping_list' | trans }}"
+    >
+        <span class="{{ config.name }}__label">{{ 'customer.account.shopping_list' | trans }}</span>
+        {% include atom('font-icon') with {
+            class: config.name ~ '__chevron',
+            data: { name: 'keyboard_arrow_down' },
+            attributes: { 'aria-hidden': 'true' },
+        } only %}
+    </a>
+
+    <div class="{{ config.name }}__dropdown {{ config.jsName }}__dropdown" aria-hidden="true">
+        {% widget 'ShoppingListNavigationMenuWidget' only %}
+            {% block body %}
+                {% include molecule('shopping-list-panel', 'ShoppingListWidget') with {
+                    data: {
+                        shoppingLists: _widget.shoppingListCollection.shoppingLists,
+                    },
+                } only %}
+            {% endblock %}
+        {% endwidget %}
+    </div>
+{% endblock %}

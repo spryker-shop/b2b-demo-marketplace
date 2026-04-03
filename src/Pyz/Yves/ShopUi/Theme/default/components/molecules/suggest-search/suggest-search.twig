@@ -12,7 +12,7 @@
 } %}
 
 {% block body %}
-    <div class="is-hidden {{ config.name }}__container {{ config.jsName }}__container"></div>
+    <div class="is-hidden {{ _self.renderClass(config.name ~ '__container', modifiers) }} {{ config.jsName }}__container"></div>
 
     {% include molecule('ajax-provider') with {
         class: config.jsName ~ '__ajax-provider',

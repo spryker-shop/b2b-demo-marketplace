@@ -43,16 +43,20 @@
                 width: auto !important;
             }
 
-            &:has(.select2-selection__rendered:hover) .custom-select__caret,
-            &:has(.custom-select__select:hover) .custom-select__caret {
-                color: var(--text-inverse);
-                opacity: 1;
+            #{$name}__icon {
+                display: none;
             }
 
-            #{$name}__icon {
-                font-size: rem(14);
-                color: var(--text-inverse);
-                opacity: 0.7;
+            &:has(#{$name}__icon) {
+                @include helper-breakpoint-media-min($xl) {
+                    #{$name}__select {
+                        padding-left: rem(28);
+                    }
+
+                    .select2-selection__rendered {
+                        padding-left: rem(28);
+                    }
+                }
             }
 
             #{$name}__select {
@@ -61,16 +65,17 @@
                 border: none;
                 background: none;
                 box-shadow: none;
-                color: var(--text-inverse);
-                font-family: var(--body-sm-family);
-                font-size: var(--font-size-12);
-                font-weight: var(--body-sm-weight);
-                line-height: var(--body-sm-line-height);
+                color: var(--text-primary);
+                font-family: var(--body-lg-family);
+                font-size: var(--body-lg-size);
+                font-weight: var(--body-lg-weight);
+                line-height: var(--body-lg-line-height);
                 white-space: nowrap;
                 appearance: none;
                 cursor: pointer;
                 min-height: 0;
                 height: auto;
+                padding-right: rem(28);
 
                 &:focus {
                     outline: none;
@@ -83,32 +88,65 @@
             }
 
             #{$name}__caret {
-                position: static;
-                transform: none;
-                rotate: 0;
-                top: auto;
-                right: auto;
+                position: absolute;
+                right: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                rotate: 0deg;
                 margin: 0;
-                font-size: rem(10);
-                color: var(--text-inverse);
-                opacity: 0.7;
+                font-size: rem(18);
+                color: var(--icon-secondary);
+                opacity: 1;
             }
 
-            @include helper-breakpoint-media-max($lg) {
+            @include helper-breakpoint-media-min($xl) {
                 #{$name}__icon {
-                    display: none;
+                    display: block;
+                    position: absolute;
+                    left: 0;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    pointer-events: none;
+                    font-size: rem(14);
+                    color: var(--text-inverse);
+                    opacity: 0.7;
                 }
 
-                #{$name}__caret {
-                    display: none;
+                &:has(#{$name}__icon) {
+                    #{$name}__select {
+                        padding-left: rem(22);
+                    }
+
+                    .select2-selection__rendered {
+                        padding-left: rem(22);
+                    }
                 }
 
                 #{$name}__select {
-                    color: var(--text-primary);
-                    font-family: var(--body-lg-family);
-                    font-size: var(--body-lg-size);
-                    font-weight: var(--body-lg-weight);
-                    line-height: var(--body-lg-line-height);
+                    color: var(--text-inverse);
+                    font-family: var(--body-sm-family);
+                    font-size: var(--body-sm-size);
+                    font-weight: var(--body-sm-weight);
+                    line-height: var(--body-sm-line-height);
+                    padding-right: 0;
+                }
+
+                #{$name}__caret {
+                    position: static;
+                    transform: none;
+                    rotate: 90deg;
+                    top: auto;
+                    right: auto;
+                    margin: 0;
+                    font-size: rem(10);
+                    color: var(--text-inverse);
+                    opacity: 0.7;
+                }
+
+                &:has(.select2-selection__rendered:hover) .custom-select__caret,
+                &:has(.custom-select__select:hover) .custom-select__caret {
+                    color: var(--text-inverse);
+                    opacity: 1;
                 }
             }
         }
@@ -184,7 +222,7 @@
                     @include helper-breakpoint-media-min($xl) {
                         color: var(--text-inverse);
                         font-family: var(--body-sm-family);
-                        font-size: var(--font-size-12);
+                        font-size: var(--body-sm-size);
                         font-weight: var(--body-sm-weight);
                         line-height: var(--body-sm-line-height);
                     }
@@ -235,7 +273,7 @@
         &--sm {
             #{$name}-results__option {
                 min-height: rem(32);
-                font-size: var(--font-size-12);
+                font-size: var(--body-sm-size);
                 padding-left: rem(var(--scale-8));
                 padding-right: rem(var(--scale-8));
 
@@ -250,8 +288,8 @@
             align-items: center;
             font-size: var(--font-size-14);
             font-weight: var(--font-weight-regular);
-            line-height: var(--font-line-height-16);
-            letter-spacing: var(--font-letter-spacing-normal);
+            line-height: var(--body-sm-line-height);
+            letter-spacing: var(--body-sm-letter-spacing);
             color: var(--text-primary);
             padding: rem(var(--scale-2)) rem(var(--scale-12));
             min-height: rem(36);

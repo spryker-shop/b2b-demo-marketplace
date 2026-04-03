@@ -5,14 +5,16 @@
             top: 100%;
             left: 0;
             width: 100%;
-            padding: var(--scale-8) var(--scale-16) var(--scale-24);
-            border-radius: 0 0 var(--radius-md) var(--radius-md);
+            margin-top: var(--scale-4);
+            padding: 0 0 var(--scale-16);
+            border: var(--stroke-sm) solid var(--border-default);
+            border-radius: var(--radius-lg);
             background: var(--background-surface);
-            box-shadow:
-                var(--shadows-md-x) var(--shadows-md-y) var(--shadows-md-blur)
-                var(--shadows-md-spread) var(--shadows-md-color);
+            box-shadow: var(--shadows-md-x) var(--shadows-md-y) var(--shadows-md-blur) var(--shadows-md-spread)
+                var(--shadows-md-color);
             max-height: rem(300);
             overflow-x: hidden;
+            overflow-y: auto;
             z-index: $setting-zi-search-suggestions + 3;
 
             @include helper-breakpoint-media-min($lg) {
@@ -20,11 +22,28 @@
             }
         }
 
+        &--drawer {
+            #{$name}__container {
+                position: fixed;
+                top: rem(116);
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                max-height: none;
+                border: none;
+                border-radius: 0;
+                box-shadow: none;
+                margin-top: 0;
+                z-index: $setting-zi-side-drawer + 1;
+
+                @include helper-breakpoint-media-min($md) {
+                    width: rem(390);
+                }
+            }
+        }
+
         &__input,
         &__hint {
-            // These classes are still added by the vendor TS for compatibility.
-            // The actual input is styled by search-form__input.
-            // Only override the active states here.
             &--active {
                 border-radius: 0;
                 outline: none;
@@ -42,21 +61,36 @@
 
         &__hint {
             position: absolute;
-            top: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            font-family: var(--body-sm-family);
+            font-size: var(--body-sm-size);
+            font-weight: var(--body-sm-weight);
+            line-height: var(--body-sm-line-height);
             color: var(--text-placeholder);
             z-index: $setting-zi-search-suggestions + 1;
+            border: none;
+            width: 100%;
+            padding-right: rem(65);
+            pointer-events: none;
 
             &--active {
-                background-color: var(--background-subtle);
+                background: transparent;
+            }
+
+            &:focus-visible,
+            &:focus {
+                border: none;
             }
         }
 
         &__product {
-            padding-bottom: var(--scale-8);
+            padding: 0 var(--scale-16) var(--scale-8);
         }
 
         &__product-action {
-            padding-top: var(--scale-20);
+            padding: var(--scale-20) var(--scale-16) var(--scale-16);
         }
 
         &__item {
@@ -66,9 +100,6 @@
         }
 
         &--with-overlay {
-            position: relative;
-            z-index: $setting-zi-header-overlay;
-
             #{$name}__loader {
                 top: rem(-60);
 

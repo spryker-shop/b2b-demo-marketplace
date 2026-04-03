@@ -13,8 +13,8 @@
         color: var(--input-text-value);
         font-size: rem(var(--font-size-14));
         font-weight: var(--font-weight-medium);
-        line-height: rem(var(--font-line-height-16));
-        letter-spacing: rem(var(--font-letter-spacing-normal));
+        line-height: rem(var(--body-sm-line-height));
+        letter-spacing: rem(var(--body-sm-letter-spacing));
 
         ::placeholder {
             color: var(--input-text-placeholder);
@@ -62,7 +62,7 @@
 
         &--sm {
             height: rem(32);
-            font-size: rem(var(--font-size-12));
+            font-size: rem(var(--body-sm-size));
         }
 
         @content;

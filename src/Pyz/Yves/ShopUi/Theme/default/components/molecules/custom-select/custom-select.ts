@@ -11,11 +11,15 @@ export default class CustomSelect extends Component {
     protected isInited = false;
     protected timeout = 300;
 
-    protected readyCallback(): void {}
+    protected readyCallback(): void { }
 
     protected init(): void {
         this.select = <HTMLSelectElement>this.getElementsByClassName(`${this.jsName}`)[0];
         this.$select = $(this.select);
+
+        if (this.configMobileResolution) {
+            this.mobileResolution = this.configMobileResolution;
+        }
 
         this.mapEvents();
 
@@ -97,5 +101,10 @@ export default class CustomSelect extends Component {
 
     protected get autoInit(): boolean {
         return this.select.hasAttribute('auto-init');
+    }
+
+    protected get configMobileResolution(): number {
+        const value = this.select.getAttribute('mobile-resolution');
+        return value ? parseInt(value, 10) : null;
     }
 }

@@ -9,13 +9,14 @@ export default class SideDrawer extends SideDrawerCore {
     protected closeButtonIcon: HTMLElement;
     protected activePanelClass = `${this.name}__panel--active`;
     protected currentPanelId = 'main';
+    protected panelHistory: string[] = [];
 
     protected init(): void {
         this.overlay = <HTMLElement>document.getElementsByClassName(this.overlayClassName)[0];
         this.panels = <HTMLElement[]>Array.from(this.querySelectorAll(`.${this.jsName}__panel`));
         this.drillDownTriggers = <HTMLElement[]>Array.from(this.querySelectorAll(`.${this.jsName}__drill-down-trigger`));
         this.closeButton = <HTMLElement>this.querySelector(`.${this.name}__close`);
-        this.closeButtonIcon = <HTMLElement>this.closeButton?.querySelector('.material-symbols-outlined');
+        this.closeButtonIcon = <HTMLElement>this.closeButton?.querySelector(`.${this.jsName}__close-icon`);
 
         super.init();
     }
@@ -26,6 +27,19 @@ export default class SideDrawer extends SideDrawerCore {
         this.mapWindowResizeEvent();
         this.mapDrillDownEvents();
         this.mapCloseButtonEvent();
+        this.mapTriggerDrillDownEvents();
+    }
+
+    protected mapTriggerDrillDownEvents(): void {
+        this.triggers.forEach((trigger: HTMLElement) => {
+            const targetPanelId = trigger.getAttribute('data-target-panel');
+
+            if (targetPanelId) {
+                trigger.addEventListener('click', () => {
+                    requestAnimationFrame(() => this.navigateTo(targetPanelId));
+                });
+            }
+        });
     }
 
     protected mapCloseButtonEvent(): void {
@@ -58,6 +72,8 @@ export default class SideDrawer extends SideDrawerCore {
     }
 
     protected navigateTo(panelId: string): void {
+        this.panels = <HTMLElement[]>Array.from(this.querySelectorAll(`.${this.jsName}__panel`));
+
         const targetPanel = this.panels.find(
             (panel: HTMLElement) => panel.getAttribute('data-panel-id') === panelId,
         );
@@ -69,23 +85,27 @@ export default class SideDrawer extends SideDrawerCore {
         this.panels.forEach((panel: HTMLElement) => panel.classList.remove(this.activePanelClass));
         targetPanel.classList.add(this.activePanelClass);
 
+        this.panelHistory.push(this.currentPanelId);
         this.currentPanelId = panelId;
         this.syncCloseButton();
     }
 
     protected navigateBack(): void {
-        const mainPanel = this.panels.find(
-            (panel: HTMLElement) => panel.getAttribute('data-panel-id') === 'main',
+        const previousPanelId = this.panelHistory.pop() ?? 'main';
+        this.panels = <HTMLElement[]>Array.from(this.querySelectorAll(`.${this.jsName}__panel`));
+
+        const previousPanel = this.panels.find(
+            (panel: HTMLElement) => panel.getAttribute('data-panel-id') === previousPanelId,
         );
 
-        if (!mainPanel) {
+        if (!previousPanel) {
             return;
         }
 
         this.panels.forEach((panel: HTMLElement) => panel.classList.remove(this.activePanelClass));
-        mainPanel.classList.add(this.activePanelClass);
+        previousPanel.classList.add(this.activePanelClass);
 
-        this.currentPanelId = 'main';
+        this.currentPanelId = previousPanelId;
         this.syncCloseButton();
     }
 
@@ -143,6 +163,7 @@ export default class SideDrawer extends SideDrawerCore {
         this.toggleOverlay(isShown);
 
         if (!isShown) {
+            this.panelHistory = [];
             this.navigateBack();
         }
     }

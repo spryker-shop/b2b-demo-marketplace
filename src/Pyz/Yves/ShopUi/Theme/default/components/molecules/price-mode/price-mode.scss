@@ -1,7 +1,10 @@
 @mixin shop-ui-price-mode($name: '.price-mode') {
     #{$name} {
-        color: $setting-color-gray-5;
-        letter-spacing: rem(0.2);
+        font-family: var(--body-sm-family);
+        font-size: var(--body-sm-size);
+        font-weight: var(--body-sm-weight);
+        line-height: var(--body-sm-line-height);
+        color: var(--text-secondary);
 
         &--small {
             font-size: rem(12);

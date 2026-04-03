@@ -12,7 +12,11 @@
         <div class="{{ config.name }}__header">
             {% block close %}
                 <button class="{{ config.name }}__close" type="button" aria-label="{{ 'header.menu.close' | trans }}">
-                    <span class="material-symbols-outlined" aria-hidden="true">close</span>
+                    {% include atom('font-icon') with {
+                        class: config.jsName ~ '__close-icon',
+                        modifiers: ['size-inherit'],
+                        data: { name: 'close' },
+                    } only %}
                 </button>
             {% endblock %}
 
@@ -21,13 +25,35 @@
                 modifiers: ['drawer'],
             } only %}
 
-            <a href="{{ url('cart') }}" class="{{ config.name }}__header-cart" aria-label="{{ 'header.cart' | trans }}">
-                <span class="material-symbols-outlined" aria-hidden="true">shopping_cart</span>
-                {% set cartQuantity = app['cart.quantity'] | default(0) %}
-                {% if cartQuantity > 0 %}
-                    <span class="{{ config.name }}__header-cart-badge">{{ cartQuantity }}</span>
-                {% endif %}
-            </a>
+            {% set cartQuantity = functionExists('getCartQuantity') ? getCartQuantity() : app['cart.quantity'] | default(0) %}
+            {% if is_granted('ROLE_USER') %}
+                {% set drawerName = config.name %}
+                {% widget 'MiniCartWidget' args [cartQuantity] with {
+                    embed: { drawerName: drawerName },
+                } only %}
+                    {% block body %}
+                        {% include atom('cart-trigger') with {
+                            class: embed.drawerName ~ '__header-cart js-side-drawer__drill-down-trigger',
+                            data: { quantity: _widget.cartQuantity },
+                            attributes: {
+                                type: 'button',
+                                'aria-label': 'header.cart' | trans,
+                                'data-target-panel': 'cart-panel',
+                            },
+                        } only %}
+                    {% endblock %}
+                {% nowidget %}
+                    {% include atom('cart-trigger') with {
+                        class: drawerName ~ '__header-cart js-side-drawer__drill-down-trigger',
+                        data: { quantity: cartQuantity },
+                        attributes: {
+                            type: 'button',
+                            'aria-label': 'header.cart' | trans,
+                            'data-target-panel': 'cart-panel',
+                        },
+                    } only %}
+                {% endwidget %}
+            {% endif %}
         </div>
 
         <div class="{{ config.name }}__panels">
@@ -83,10 +109,10 @@
 
                     {% if is_granted('ROLE_USER') %}
                         <div class="{{ config.name }}__zone-quick-links">
-                            <a href="{{ url('shopping-list') }}" class="{{ config.name }}__quick-link-row">
+                            <button type="button" class="{{ config.name }}__quick-link-row js-side-drawer__drill-down-trigger" data-target-panel="shopping-list-panel">
                                 <span>{{ 'customer.account.shopping_list' | trans }}</span>
-                                <span class="material-symbols-outlined {{ config.name }}__row-chevron" aria-hidden="true">chevron_right</span>
-                            </a>
+                                {% include atom('font-icon') with { class: config.name ~ '__row-chevron', data: { name: 'chevron_right' }, attributes: { 'aria-hidden': 'true' } } only %}
+                            </button>
 
                             {% if can('SeeCompanyMenuPermissionPlugin') %}
                                 {% include molecule('header-dropdown') with {
@@ -99,9 +125,8 @@
                                 } only %}
                             {% endif %}
 
-                            <a href="{{ url('quick-order') }}" class="{{ config.name }}__quick-link-row">
+                            <a href="{{ url('quick-order') }}" class="{{ config.name }}__quick-link-row link--no-decoration">
                                 <span>{{ 'quick-order.page-title' | trans }}</span>
-                                <span class="material-symbols-outlined {{ config.name }}__row-chevron" aria-hidden="true">chevron_right</span>
                             </a>
 
                             <hr class="divider {{ config.name }}__zone-divider">
@@ -112,17 +137,14 @@
                         {% if can('SeePricePermissionPlugin') %}
                             <div class="{{ config.name }}__preference-row">
                                 {% widget 'PriceModeSwitcherWidget' only %}{% endwidget %}
-                                <span class="material-symbols-outlined {{ config.name }}__row-chevron" aria-hidden="true">chevron_right</span>
                             </div>
                             <div class="{{ config.name }}__preference-row">
                                 {% widget 'CurrencyWidget' only %}{% endwidget %}
-                                <span class="material-symbols-outlined {{ config.name }}__row-chevron" aria-hidden="true">chevron_right</span>
                             </div>
                         {% endif %}
 
                         <div class="{{ config.name }}__preference-row">
                             {% widget 'LanguageSwitcherWidget' args [app.request.pathInfo, app.request.queryString, app.request.requestUri] only %}{% endwidget %}
-                            <span class="material-symbols-outlined {{ config.name }}__row-chevron" aria-hidden="true">chevron_right</span>
                         </div>
 
                         {% widget 'StoreSwitcher' with {
@@ -133,17 +155,10 @@
                             {% block body %}
                                 <div class="{{ embed.configName }}__preference-row">
                                     {{ parent() }}
-                                    <span class="material-symbols-outlined {{ embed.configName }}__row-chevron" aria-hidden="true">chevron_right</span>
                                 </div>
                             {% endblock %}
                         {% endwidget %}
                     </div>
-
-                    {% if is_granted('ROLE_USER') %}
-                        <div class="{{ config.name }}__zone-logout">
-                            <a href="{{ url('logout') }}" class="button button--hollow button--expand">{{ 'customer.logout' | trans }}</a>
-                        </div>
-                    {% endif %}
                 </div>
             </div>
 
@@ -176,6 +191,32 @@
                     </div>
                 </div>
             {% endif %}
+
+            {% if is_granted('ROLE_USER') %}
+                <div class="{{ config.name }}__panel {{ config.jsName }}__panel" data-panel-id="shopping-list-panel">
+                    <div class="{{ config.name }}__content">
+                        <div class="{{ config.name }}__panel-body">
+                            {% widget 'ShoppingListNavigationMenuWidget' only %}
+                                {% block body %}
+                                    {% include molecule('shopping-list-panel', 'ShoppingListWidget') with {
+                                        data: {
+                                            shoppingLists: _widget.shoppingListCollection.shoppingLists,
+                                        },
+                                    } only %}
+                                {% endblock %}
+                            {% endwidget %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="{{ config.name }}__panel {{ config.jsName }}__panel" data-panel-id="cart-panel">
+                <div class="{{ config.name }}__content">
+                    <div class="{{ config.name }}__panel-body">
+                        {% widget 'MiniCartWidget' args [cartQuantity] only %}{% endwidget %}
+                    </div>
+                </div>
+            </div>
         </div>
     </aside>
 {% endblock %}

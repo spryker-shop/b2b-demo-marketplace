@@ -49,25 +49,27 @@
             align-items: center;
             padding: 0 var(--scale-12);
 
+            &::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                width: rem(1);
+                height: rem(16);
+                background-color: rgb(255 255 255 / 25%);
+            }
+
             &:first-child {
                 padding-left: 0;
+
+                &::before {
+                    display: none;
+                }
             }
 
             &:last-child {
                 padding-right: 0;
-            }
-
-            & + & {
-                &::before {
-                    content: '';
-                    position: absolute;
-                    left: 0;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    width: rem(1);
-                    height: rem(16);
-                    background-color: rgb(255 255 255 / 25%);
-                }
             }
         }
 

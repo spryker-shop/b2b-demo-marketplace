@@ -18,12 +18,11 @@
             gap: var(--scale-8);
             padding: var(--scale-12) var(--scale-16);
             font-size: var(--font-size-14);
-            font-weight: var(--font-weight-regular);
+            font-weight: var(--font-weight-medium);
             line-height: var(--font-line-height-20);
             color: var(--text-secondary);
             background: transparent;
             border: none;
-            font-weight: var(--font-weight-medium);
             border-bottom: var(--stroke-md) solid transparent;
             cursor: pointer;
             margin-bottom: calc(var(--stroke-sm) * -1);
@@ -56,8 +55,8 @@
 
             &--sm {
                 padding: var(--scale-8) var(--scale-12);
-                font-size: var(--font-size-12);
-                line-height: var(--font-line-height-16);
+                font-size: var(--body-sm-size);
+                line-height: var(--body-sm-line-height);
             }
         }
 

@@ -1,58 +1,33 @@
-@mixin shop-ui-header-cart-pill($name: '.header-cart-pill') {
-    #{$name} {
-        &__trigger {
-            display: flex;
-            align-items: center;
-            gap: var(--scale-4);
-            padding: var(--scale-8) var(--scale-12);
-            border-radius: var(--radius-md);
-            border: var(--stroke-sm) solid var(--border-default);
-            background: var(--background-surface);
-            cursor: pointer;
-            transition: background-color 0.2s ease, border-color 0.2s ease;
-            text-decoration: none;
-            color: var(--text-primary);
+@import '~src/ShopUi/styles/panel-dropdown';
 
-            &:hover,
-            &:focus-visible {
-                border-color: var(--border-strong);
-                background-color: var(--background-subtle);
-            }
+@include shop-ui-nav-pill('.header-cart-pill', rem(429)) {
+    &__trigger {
+        display: flex;
+        align-items: center;
+        gap: var(--scale-2);
+        height: rem(50);
+        padding: var(--scale-8) var(--scale-12);
+        border-radius: var(--radius-md);
+        border: none;
+        background: var(--background-surface);
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+        text-decoration: none;
+        color: var(--text-primary);
+        overflow: hidden;
 
-            &:focus-visible {
-                outline: var(--stroke-md) solid var(--focus-ring);
-                outline-offset: var(--stroke-md);
-            }
+        &:hover,
+        &:focus-visible {
+            background-color: var(--background-subtle);
         }
 
-        &__icon {
-            display: flex;
-            align-items: center;
-            color: var(--icon-primary);
-
-            .material-symbols-outlined {
-                font-size: rem(22);
-            }
+        &:focus-visible {
+            outline: var(--stroke-md) solid var(--focus-ring);
+            outline-offset: var(--stroke-md);
         }
 
-        &__badge {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-width: rem(20);
-            height: rem(20);
-            padding: 0 var(--scale-6);
-            border-radius: var(--radius-sm);
-            background-color: var(--background-brand-primary);
-            color: var(--text-inverse);
-            font-family: var(--label-sm-family);
-            font-size: var(--label-sm-size);
-            font-weight: var(--label-sm-weight);
-            line-height: var(--label-sm-line-height);
+        .cart-trigger__icon {
+            font-size: rem(20);
         }
-
-        @content;
     }
 }
-
-@include shop-ui-header-cart-pill();

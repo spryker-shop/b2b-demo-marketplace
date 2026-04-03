@@ -19,7 +19,6 @@
                 position: relative;
                 transform: none;
                 transition: none;
-                z-index: $setting-zi-element;
             }
         }
 
@@ -30,14 +29,13 @@
             z-index: $setting-zi-header-overlay;
         }
 
-        // The form element — acts as the search input container
         &__form {
+            position: relative;
             display: flex;
             align-items: center;
             gap: var(--scale-8);
-            height: rem(44);
-            padding-left: var(--scale-16);
-            padding-right: var(--scale-4);
+            height: rem(36);
+            padding: 0 var(--scale-4) 0 var(--scale-16);
             background: var(--input-background-default);
             border: var(--stroke-sm) solid var(--input-border-default);
             border-radius: var(--radius-md);
@@ -48,16 +46,25 @@
             &:focus-within {
                 background: var(--background-surface);
                 border-color: var(--input-border-focus);
-                box-shadow:
-                    var(--shadows-focus-x)
-                    var(--shadows-focus-y)
-                    var(--shadows-focus-blur)
-                    var(--shadows-focus-spread)
-                    var(--shadows-focus-color);
+                box-shadow: var(--shadows-focus-x) var(--shadows-focus-y) var(--shadows-focus-blur)
+                    var(--shadows-focus-spread) var(--shadows-focus-color);
+            }
+
+            &--disabled {
+                background: var(--input-background-disabled);
+                border-color: var(--input-border-disabled);
+                pointer-events: none;
+
+                #{$name}__input {
+                    color: var(--input-text-disabled);
+
+                    &::placeholder {
+                        color: var(--input-text-disabled);
+                    }
+                }
             }
         }
 
-        // Text input
         &__input {
             flex: 1 1 0;
             min-width: 0;
@@ -65,11 +72,11 @@
             outline: none;
             background: transparent;
             padding: 0;
-            font-family: var(--body-md-family);
-            font-size: var(--body-md-size);
-            font-weight: var(--body-md-weight);
-            line-height: var(--body-md-line-height);
-            letter-spacing: var(--body-md-letter-spacing);
+            font-family: var(--body-sm-family);
+            font-size: var(--body-sm-size);
+            font-weight: var(--body-sm-weight);
+            line-height: var(--body-sm-line-height);
+            letter-spacing: var(--body-sm-letter-spacing);
             color: var(--input-text-value);
 
             &::placeholder {
@@ -77,7 +84,6 @@
             }
         }
 
-        // Clear button — hidden by default, shown when input has value
         &__clear {
             display: none;
             flex-shrink: 0;
@@ -96,24 +102,20 @@
             &:hover {
                 background: var(--background-muted);
             }
-
-            .material-symbols-outlined {
-                font-size: rem(12);
-            }
+            font-size: rem(12);
 
             &--visible {
                 display: flex;
             }
         }
 
-        // Search submit button (icon-only CTA inside the input)
         &__submit {
             display: flex;
             flex-shrink: 0;
             align-items: center;
             justify-content: center;
-            width: rem(36);
-            height: rem(36);
+            width: rem(28);
+            height: rem(28);
             padding: 0;
             border: none;
             border-radius: var(--radius-sm);
@@ -125,13 +127,9 @@
             &:hover {
                 background: var(--background-muted);
             }
-
-            .material-symbols-outlined {
-                font-size: rem(16);
-            }
+            font-size: rem(16);
         }
 
-        // Mobile close button (X to dismiss search panel on mobile)
         &__button-close {
             position: absolute;
             top: 0;
@@ -149,6 +147,23 @@
             z-index: $setting-zi-search-suggestions + 3;
 
             @include helper-breakpoint-media-min($lg) {
+                display: none;
+            }
+        }
+
+        &--with-overlay {
+            z-index: $setting-zi-header-overlay + 1;
+        }
+
+        &--drawer {
+            position: relative;
+            transform: none;
+            visibility: visible;
+            opacity: 1;
+            transition: none;
+            width: 100%;
+
+            #{$name}__button-close {
                 display: none;
             }
         }

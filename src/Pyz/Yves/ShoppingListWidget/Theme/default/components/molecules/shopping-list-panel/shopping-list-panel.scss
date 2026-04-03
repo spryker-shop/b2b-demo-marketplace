@@ -1,0 +1,99 @@
+@import '~src/ShopUi/styles/panel-dropdown';
+
+@mixin shopping-list-widget-shopping-list-panel($name: '.shopping-list-panel') {
+    @include shop-ui-panel-dropdown($name) {
+        .side-drawer & {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        &__rows {
+            padding: var(--scale-8) 0;
+
+            .side-drawer & {
+                flex: 1;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+
+        &__row {
+            display: flex;
+            align-items: center;
+            padding: var(--scale-8) var(--scale-16);
+            text-decoration: none;
+            transition: background-color 0.15s ease;
+
+            &:hover {
+                background-color: var(--background-subtle);
+            }
+        }
+
+        &__row-info {
+            display: flex;
+            flex-direction: column;
+            gap: rem(6);
+            flex: 1;
+            min-width: 0;
+        }
+
+        &__name {
+            display: block;
+            font-family: var(--label-md-family);
+            font-size: var(--label-md-size);
+            font-weight: var(--label-md-weight);
+            line-height: var(--label-md-line-height);
+            color: var(--text-brand);
+            text-decoration: none;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        &__meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: var(--body-sm-family);
+            font-size: var(--body-sm-size);
+            font-weight: var(--body-sm-weight);
+            line-height: var(--body-sm-line-height);
+            color: var(--text-secondary);
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        &__meta-left {
+            display: flex;
+            align-items: center;
+            gap: rem(5);
+            overflow: hidden;
+        }
+
+        &__meta-dot {
+            color: var(--icon-secondary);
+        }
+
+        &__meta-owner {
+            flex-shrink: 0;
+        }
+
+        &__empty {
+            padding: var(--scale-8) var(--scale-16);
+            font-family: var(--body-sm-family);
+            font-size: var(--body-sm-size);
+            color: var(--text-secondary);
+        }
+
+        &__footer {
+            .side-drawer & {
+                flex-shrink: 0;
+                border-top: 1px solid var(--border-subtle);
+                padding: var(--scale-16) var(--scale-16);
+            }
+        }
+    }
+}
+
+@include shopping-list-widget-shopping-list-panel;
