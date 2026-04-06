@@ -1,43 +1,43 @@
 {
-  "skill_name": "adversarial-review",
-  "evals": [
-    {
-      "id": 1,
-      "prompt": "Can you review this TypeScript function for me? I'm not sure if it's production-ready.\n\n```typescript\nasync function fetchUserData(userId: string): Promise<User> {\n  const url = `https://api.internal.com/users/${userId}`;\n  const response = await fetch(url);\n  const data = await response.json();\n  return data as User;\n}\n```",
-      "expected_output": "A definitive adversarial review report with consensus issues (no error handling, no status check, SQL/URL injection risk via unvalidated userId), high-priority suggestions (validate input, check response.ok, add try/catch), and a synthesis section.",
-      "files": [],
-      "expectations": [
-        "The synthesis identifies lack of response.ok / error handling as a consensus issue",
-        "The synthesis flags unvalidated userId as a security concern",
-        "The report includes a High-Priority Suggestions section with numbered items",
-        "The report includes an Executive Summary",
-        "Output is structured Markdown with clear section headers"
-      ]
-    },
-    {
-      "id": 2,
-      "prompt": "Please review this README I wrote for my open source library:\n\n# fast-cache\nA fast caching library.\n\n## Install\nnpm install fast-cache\n\n## Usage\nconst cache = new Cache();\ncache.set('key', value);\ncache.get('key');\n\n## License\nMIT",
-      "expected_output": "A definitive adversarial review identifying thin documentation as a consensus issue (no API docs, no options/config, no TTL or eviction strategy mentioned, no examples for common use cases), with suggestions for improving README completeness.",
-      "files": [],
-      "expectations": [
-        "The synthesis identifies missing API documentation as a consensus issue",
-        "The report suggests adding configuration options or TTL documentation",
-        "The report includes a What's Working Well section (e.g., notes brevity or clear license)",
-        "The synthesis includes a High-Priority Suggestions section"
-      ]
-    },
-    {
-      "id": 3,
-      "prompt": "I'd like a thorough adversarial review of this database migration script before I run it in production:\n\n```sql\n-- Migration: add user roles\nALTER TABLE users ADD COLUMN role VARCHAR(50);\nUPDATE users SET role = 'user';\nALTER TABLE users ALTER COLUMN role SET NOT NULL;\n```",
-      "expected_output": "A review identifying: no transaction wrapper (data inconsistency risk), no rollback plan, UPDATE on full table without batching (lock risk on large tables), no index on new column. Cross-review should reinforce these, synthesis should rank them clearly.",
-      "files": [],
-      "expectations": [
-        "The synthesis flags lack of transaction wrapping as a consensus or critical concern",
-        "The report mentions table-lock / performance risk for large tables",
-        "The report mentions no rollback strategy",
-        "The synthesis report has a Consensus Issues section",
-        "Output is structured Markdown"
-      ]
-    }
-  ]
+    "skill_name": "adversarial-review",
+    "evals": [
+        {
+            "id": 1,
+            "prompt": "Can you review this TypeScript function for me? I'm not sure if it's production-ready.\n\n```typescript\nasync function fetchUserData(userId: string): Promise<User> {\n  const url = `https://api.internal.com/users/${userId}`;\n  const response = await fetch(url);\n  const data = await response.json();\n  return data as User;\n}\n```",
+            "expected_output": "A definitive adversarial review report with consensus issues (no error handling, no status check, SQL/URL injection risk via unvalidated userId), high-priority suggestions (validate input, check response.ok, add try/catch), and a synthesis section.",
+            "files": [],
+            "expectations": [
+                "The synthesis identifies lack of response.ok / error handling as a consensus issue",
+                "The synthesis flags unvalidated userId as a security concern",
+                "The report includes a High-Priority Suggestions section with numbered items",
+                "The report includes an Executive Summary",
+                "Output is structured Markdown with clear section headers"
+            ]
+        },
+        {
+            "id": 2,
+            "prompt": "Please review this README I wrote for my open source library:\n\n# fast-cache\nA fast caching library.\n\n## Install\nnpm install fast-cache\n\n## Usage\nconst cache = new Cache();\ncache.set('key', value);\ncache.get('key');\n\n## License\nMIT",
+            "expected_output": "A definitive adversarial review identifying thin documentation as a consensus issue (no API docs, no options/config, no TTL or eviction strategy mentioned, no examples for common use cases), with suggestions for improving README completeness.",
+            "files": [],
+            "expectations": [
+                "The synthesis identifies missing API documentation as a consensus issue",
+                "The report suggests adding configuration options or TTL documentation",
+                "The report includes a What's Working Well section (e.g., notes brevity or clear license)",
+                "The synthesis includes a High-Priority Suggestions section"
+            ]
+        },
+        {
+            "id": 3,
+            "prompt": "I'd like a thorough adversarial review of this database migration script before I run it in production:\n\n```sql\n-- Migration: add user roles\nALTER TABLE users ADD COLUMN role VARCHAR(50);\nUPDATE users SET role = 'user';\nALTER TABLE users ALTER COLUMN role SET NOT NULL;\n```",
+            "expected_output": "A review identifying: no transaction wrapper (data inconsistency risk), no rollback plan, UPDATE on full table without batching (lock risk on large tables), no index on new column. Cross-review should reinforce these, synthesis should rank them clearly.",
+            "files": [],
+            "expectations": [
+                "The synthesis flags lack of transaction wrapping as a consensus or critical concern",
+                "The report mentions table-lock / performance risk for large tables",
+                "The report mentions no rollback strategy",
+                "The synthesis report has a Consensus Issues section",
+                "Output is structured Markdown"
+            ]
+        }
+    ]
 }

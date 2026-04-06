@@ -14,7 +14,9 @@ export default class SideDrawer extends SideDrawerCore {
     protected init(): void {
         this.overlay = <HTMLElement>document.getElementsByClassName(this.overlayClassName)[0];
         this.panels = <HTMLElement[]>Array.from(this.querySelectorAll(`.${this.jsName}__panel`));
-        this.drillDownTriggers = <HTMLElement[]>Array.from(this.querySelectorAll(`.${this.jsName}__drill-down-trigger`));
+        this.drillDownTriggers = <HTMLElement[]>(
+            Array.from(this.querySelectorAll(`.${this.jsName}__drill-down-trigger`))
+        );
         this.closeButton = <HTMLElement>this.querySelector(`.${this.name}__close`);
         this.closeButtonIcon = <HTMLElement>this.closeButton?.querySelector(`.${this.jsName}__close-icon`);
 
@@ -74,9 +76,7 @@ export default class SideDrawer extends SideDrawerCore {
     protected navigateTo(panelId: string): void {
         this.panels = <HTMLElement[]>Array.from(this.querySelectorAll(`.${this.jsName}__panel`));
 
-        const targetPanel = this.panels.find(
-            (panel: HTMLElement) => panel.getAttribute('data-panel-id') === panelId,
-        );
+        const targetPanel = this.panels.find((panel: HTMLElement) => panel.getAttribute('data-panel-id') === panelId);
 
         if (!targetPanel) {
             return;

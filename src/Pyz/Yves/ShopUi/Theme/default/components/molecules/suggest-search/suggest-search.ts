@@ -77,8 +77,8 @@ export default class SuggestSearch extends SuggestSearchCore {
         const searchForm = this.closest(`.${this.parentClassName}`);
         this.wrapper = <HTMLElement>(searchForm ?? document.getElementsByClassName(this.wrapperClassName)[0]);
         this.clearButton = <HTMLElement>(
-            searchForm?.querySelector(`.js-${this.parentClassName}__clear`) ??
-            document.getElementsByClassName(this.clearClassName)[0]
+            (searchForm?.querySelector(`.js-${this.parentClassName}__clear`) ??
+                document.getElementsByClassName(this.clearClassName)[0])
         );
 
         if (!this.clearButton) {
