@@ -1,6 +1,7 @@
 @mixin shop-ui-account-menu($name: '.account-menu') {
     #{$name} {
         &__row {
+            @include helper-effect-transition(background-color);
             display: flex;
             align-items: center;
             gap: var(--scale-12);
@@ -12,7 +13,6 @@
             font-weight: var(--font-weight-medium);
             line-height: var(--body-md-line-height);
             border-radius: var(--radius-sm);
-            transition: background-color 0.15s ease;
 
             &:hover {
                 background-color: var(--background-subtle);

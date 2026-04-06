@@ -2,6 +2,7 @@
 
 {% define config = {
     name: 'mega-menu',
+    tag: 'mega-menu',
 } %}
 
 {% define data = {
@@ -21,7 +22,7 @@
                 <li class="{{ config.name }}__sidebar-item">
                     <a
                         href="{{ functionExists('generatePath') ? generatePath(childNode.url) : childNode.url }}"
-                        class="{{ config.name }}__sidebar-link"
+                        class="{{ config.name }}__sidebar-link link--no-decoration"
                     >
                         <span class="{{ config.name }}__sidebar-label">{{ childNode.title }}</span>
                         {% include atom('font-icon') with {
@@ -45,7 +46,7 @@
                                     <li class="{{ config.name }}__panel-item">
                                         <a
                                             href="{{ functionExists('generatePath') ? generatePath(grandchild.url) : grandchild.url }}"
-                                            class="{{ config.name }}__panel-link"
+                                            class="{{ config.name }}__panel-link link--no-decoration"
                                         >{{ grandchild.title }}</a>
                                     </li>
                                 {% endfor %}
@@ -70,7 +71,7 @@
             <div class="{{ config.name }}__footer">
                 <a
                     href="{{ functionExists('generatePath') ? generatePath(data.node.url) : data.node.url }}"
-                    class="{{ config.name }}__footer-link"
+                    class="{{ config.name }}__footer-link link--no-decoration"
                 >
                     {{ 'navigation.all_prefix' | trans }} {{ data.node.title }}
                     {% include atom('font-icon') with {

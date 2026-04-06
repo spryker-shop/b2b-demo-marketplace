@@ -11,7 +11,6 @@ export default class NavigationMultilevel extends Component {
     protected touchTriggers: HTMLElement[];
     protected eventShowOverlay: CustomEvent<OverlayEventDetail>;
     protected eventHideOverlay: CustomEvent<OverlayEventDetail>;
-    protected hideTimers: Map<HTMLElement, ReturnType<typeof setTimeout>> = new Map();
 
     protected readyCallback(): void {}
 
@@ -59,12 +58,6 @@ export default class NavigationMultilevel extends Component {
             const trigger = <HTMLElement>event.currentTarget;
             event.preventDefault();
 
-            const pending = this.hideTimers.get(trigger);
-            if (pending !== undefined) {
-                clearTimeout(pending);
-                this.hideTimers.delete(trigger);
-            }
-
             trigger.classList.add(this.classToToggle);
 
             if (trigger.querySelector('.menu-wrapper--lvl-1')) {
@@ -78,14 +71,10 @@ export default class NavigationMultilevel extends Component {
             const trigger = <HTMLElement>event.currentTarget;
             event.preventDefault();
 
-            const timer = setTimeout(() => {
-                trigger.classList.remove(this.classToToggle);
-                if (trigger.querySelector('.menu-wrapper--lvl-1')) {
-                    this.toggleOverlay(false);
-                }
-                this.hideTimers.delete(trigger);
-            }, 200);
-            this.hideTimers.set(trigger, timer);
+            trigger.classList.remove(this.classToToggle);
+            if (trigger.querySelector('.menu-wrapper--lvl-1')) {
+                this.toggleOverlay(false);
+            }
         }
     }
 

@@ -30,6 +30,7 @@
         }
 
         &__form {
+            @include helper-effect-transition(border-color box-shadow);
             position: relative;
             display: flex;
             align-items: center;
@@ -39,9 +40,6 @@
             background: var(--input-background-default);
             border: var(--stroke-sm) solid var(--input-border-default);
             border-radius: var(--radius-md);
-            transition:
-                border-color 0.15s ease,
-                box-shadow 0.15s ease;
 
             &:focus-within {
                 background: var(--background-surface);
@@ -85,6 +83,7 @@
         }
 
         &__clear {
+            @include helper-effect-transition(background-color);
             display: none;
             flex-shrink: 0;
             align-items: center;
@@ -97,7 +96,6 @@
             background: var(--background-subtle);
             color: var(--icon-secondary);
             cursor: pointer;
-            transition: background-color 0.15s ease;
 
             &:hover {
                 background: var(--background-muted);
@@ -110,6 +108,7 @@
         }
 
         &__submit {
+            @include helper-effect-transition(background-color);
             display: flex;
             flex-shrink: 0;
             align-items: center;
@@ -122,7 +121,6 @@
             background: var(--background-subtle);
             color: var(--icon-secondary);
             cursor: pointer;
-            transition: background-color 0.15s ease;
 
             &:hover {
                 background: var(--background-muted);

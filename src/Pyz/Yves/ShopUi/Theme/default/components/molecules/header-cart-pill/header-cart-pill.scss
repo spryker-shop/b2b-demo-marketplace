@@ -2,6 +2,7 @@
 
 @include shop-ui-nav-pill('.header-cart-pill', rem(429)) {
     &__trigger {
+        @include helper-effect-transition(background-color);
         display: flex;
         align-items: center;
         gap: var(--scale-2);
@@ -11,7 +12,6 @@
         border: none;
         background: var(--background-surface);
         cursor: pointer;
-        transition: background-color 0.2s ease;
         text-decoration: none;
         color: var(--text-primary);
         overflow: hidden;

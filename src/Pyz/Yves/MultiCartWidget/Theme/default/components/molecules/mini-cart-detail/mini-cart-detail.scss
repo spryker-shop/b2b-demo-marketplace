@@ -1,9 +1,7 @@
-@import '~src/ShopUi/styles/panel-dropdown';
-
 @mixin shop-ui-mini-cart-detail($name: '.mini-cart-detail') {
     #{$name} {
         &__wrapper {
-            transition: background-color 0.15s ease;
+            @include helper-effect-transition(background-color);
 
             &:hover {
                 background-color: var(--background-subtle);
@@ -14,18 +12,17 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: var(--scale-8) var(--scale-16);
+            padding: var(--scale-12) var(--scale-16);
             text-decoration: none;
             gap: var(--scale-16);
 
-            &--expanded {
-                padding-top: var(--scale-12);
-                padding-bottom: var(--scale-12);
-            }
+            @include helper-breakpoint-media-min($xl) {
+                padding: var(--scale-8) var(--scale-16);
 
-            .side-drawer & {
-                padding-top: var(--scale-12);
-                padding-bottom: var(--scale-12);
+                &--expanded {
+                    padding-top: var(--scale-12);
+                    padding-bottom: var(--scale-12);
+                }
             }
         }
 
@@ -73,6 +70,7 @@
         }
 
         &__meta {
+            @include helper-effect-transition(max-height opacity);
             display: flex;
             align-items: center;
             gap: rem(5);
@@ -83,21 +81,20 @@
             color: var(--text-secondary);
             white-space: nowrap;
             overflow: hidden;
-            max-height: 0;
-            opacity: 0;
-            transition:
-                max-height 0.2s ease,
-                opacity 0.2s ease;
-        }
-
-        &__link--expanded &__meta {
             max-height: rem(40);
             opacity: 1;
+
+            @include helper-breakpoint-media-min($xl) {
+                max-height: 0;
+                opacity: 0;
+            }
         }
 
-        .side-drawer & &__meta {
-            max-height: rem(40);
-            opacity: 1;
+        @include helper-breakpoint-media-min($xl) {
+            &__link--expanded &__meta {
+                max-height: rem(40);
+                opacity: 1;
+            }
         }
 
         &__meta-left {
@@ -128,7 +125,7 @@
         }
 
         &__expand-btn {
-            display: flex;
+            display: none;
             align-items: center;
             justify-content: center;
             background: none;
@@ -140,8 +137,8 @@
             width: rem(16);
             height: rem(16);
 
-            .side-drawer & {
-                display: none;
+            @include helper-breakpoint-media-min($xl) {
+                display: flex;
             }
         }
 
@@ -172,47 +169,4 @@
     }
 }
 
-@mixin shop-ui-mini-cart($name: '.mini-cart') {
-    @include shop-ui-panel-dropdown($name) {
-        .side-drawer & {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-
-        &__header {
-            flex-shrink: 0;
-        }
-
-        &__divider {
-            flex-shrink: 0;
-        }
-
-        &__rows {
-            flex: 1;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        &__row {
-            padding: 0;
-        }
-
-        &__row--active {
-            padding: 0;
-        }
-
-        &__footer {
-            .side-drawer & {
-                flex-shrink: 0;
-                border-top: 1px solid var(--border-subtle);
-                padding: var(--scale-16) var(--scale-16);
-            }
-        }
-
-        @content;
-    }
-}
-
 @include shop-ui-mini-cart-detail;
-@include shop-ui-mini-cart;

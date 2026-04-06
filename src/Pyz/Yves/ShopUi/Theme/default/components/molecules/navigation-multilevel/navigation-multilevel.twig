@@ -53,7 +53,7 @@
                 {% if node.url %}
                     <a
                         href="{{ functionExists('generatePath') ? generatePath(node.url) : node.url }}"
-                        class="navigation-multilevel__nav-panel-view-all"
+                        class="navigation-multilevel__nav-panel-view-all link--no-decoration"
                     >
                         {{ 'navigation.all_prefix' | trans }} {{ node.title }}
                         {% include atom('font-icon') with {

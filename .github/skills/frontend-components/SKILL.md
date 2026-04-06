@@ -143,21 +143,6 @@ Lazy loads via `viewport-intersection-observer` JS + `<noscript>` fallback.
 } only %}
 ```
 
-## Custom element tag — required for TS components
-
-When a component has TypeScript behavior (i.e., `index.ts` calls `register('my-component', ...)`), **`config.tag` must match `config.name`** in the Twig config. Otherwise the component renders as `<div>` and the custom element never initializes.
-
-```twig
-{% define config = {
-    name: 'mega-menu',
-    tag: 'mega-menu',
-} %}
-```
-
-The vendor `component.twig` defaults `tag` to `'div'`. The `register()` call uses `customElements.define()`, which only fires lifecycle callbacks on elements matching the registered tag name. If the rendered HTML tag is `<div>` instead of `<mega-menu>`, the TS class never attaches.
-
-The `custom-element` CSS class is also only added when `config.name == config.tag` (line 43 of `component.twig`).
-
 ## Modifiers
 
 Passed as array from the caller:

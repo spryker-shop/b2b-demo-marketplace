@@ -1,8 +1,11 @@
 @mixin shop-ui-mega-menu($name: '.mega-menu') {
     #{$name} {
-        display: flex;
+        display: none;
         height: rem(450);
-        overflow: hidden;
+
+        @include helper-breakpoint-media-min($xl) {
+            display: flex;
+        }
 
         &__sidebar {
             display: flex;
@@ -14,13 +17,14 @@
         }
 
         &__sidebar-header {
-            padding: 0 var(--scale-16) var(--scale-20) var(--scale-20);
+            padding: var(--scale-20) var(--scale-16);
             font-family: var(--label-sm-family);
             font-size: var(--label-sm-size);
             font-weight: var(--font-weight-semibold);
             line-height: var(--label-sm-line-height);
             color: var(--text-tertiary);
             flex-shrink: 0;
+            margin: 0;
         }
 
         &__sidebar-items {
@@ -28,7 +32,7 @@
             overflow-y: auto;
             overflow-x: hidden;
             list-style: none;
-            padding: var(--scale-20) 0 var(--scale-4);
+            padding: 0 0 var(--scale-4);
             margin: 0;
             display: flex;
             flex-direction: column;
@@ -64,26 +68,9 @@
             flex-shrink: 0;
         }
 
-        &__sidebar-items:not(:has(#{$name}__sidebar-item:hover))
-            #{$name}__sidebar-item:first-child
-            #{$name}__sidebar-link {
-            background: var(--background-subtle);
-            font-weight: var(--font-weight-semibold);
-
-            &::before {
-                content: '';
-                position: absolute;
-                left: 0;
-                top: 0;
-                height: 100%;
-                width: rem(3);
-                background: var(--background-brand-primary);
-            }
-        }
-
+        &__sidebar-item.is-active #{$name}__sidebar-link,
         &__sidebar-item:hover #{$name}__sidebar-link {
             background: var(--background-subtle);
-            font-weight: var(--font-weight-semibold);
 
             &::before {
                 content: '';
@@ -134,10 +121,7 @@
             overflow-y: auto;
         }
 
-        &__sidebar-items:not(:has(#{$name}__sidebar-item:hover)) #{$name}__sidebar-item:first-child #{$name}__panel {
-            display: block;
-        }
-
+        &__sidebar-item.is-active #{$name}__panel,
         &__sidebar-item:hover #{$name}__panel {
             display: block;
         }
@@ -165,7 +149,7 @@
         &__panel-items {
             display: flex;
             flex-direction: column;
-            gap: var(--scale-20);
+            gap: var(--scale-6);
             list-style: none;
             padding: 0;
             margin: 0 0 var(--scale-4);
@@ -188,7 +172,7 @@
             display: inline-flex;
             align-items: center;
             gap: var(--scale-4);
-            padding-top: var(--scale-4);
+            padding-top: var(--scale-16);
             font-family: var(--body-md-family);
             font-size: var(--body-md-size);
             font-weight: var(--font-weight-semibold);

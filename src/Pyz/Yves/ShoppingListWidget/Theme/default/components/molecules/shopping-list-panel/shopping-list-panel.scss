@@ -19,11 +19,11 @@
         }
 
         &__row {
+            @include helper-effect-transition(background-color);
             display: flex;
             align-items: center;
             padding: var(--scale-8) var(--scale-16);
             text-decoration: none;
-            transition: background-color 0.15s ease;
 
             &:hover {
                 background-color: var(--background-subtle);

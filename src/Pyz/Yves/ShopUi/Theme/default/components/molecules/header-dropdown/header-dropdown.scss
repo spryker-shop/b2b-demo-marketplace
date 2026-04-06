@@ -12,6 +12,7 @@
         }
 
         &__trigger--user-account {
+            @include helper-effect-transition(background-color);
             display: flex;
             align-items: center;
             gap: var(--scale-8);
@@ -19,7 +20,6 @@
             cursor: pointer;
             text-align: left;
             white-space: nowrap;
-            transition: background-color 0.2s ease;
             height: rem(50);
             padding: var(--scale-8) var(--scale-12);
             border-radius: var(--radius-md);
@@ -45,6 +45,7 @@
         }
 
         &__trigger--self-service {
+            @include helper-effect-transition(color);
             display: flex;
             align-items: center;
             gap: var(--scale-4);
@@ -58,7 +59,6 @@
             font-weight: var(--font-weight-medium);
             line-height: var(--body-md-line-height);
             color: var(--text-secondary);
-            transition: color 0.2s ease;
 
             &:hover {
                 color: var(--text-brand);
@@ -117,12 +117,12 @@
         }
 
         &__chevron {
+            @include helper-effect-transition(transform);
             display: flex;
             align-items: center;
             color: var(--icon-secondary);
             flex-shrink: 0;
             font-size: rem(18);
-            transition: transform 0.15s ease;
 
             #{$name}--drawer & {
                 margin-left: auto;
