@@ -5,8 +5,6 @@ import {
     OverlayEventDetail,
 } from 'ShopUi/components/molecules/main-overlay/main-overlay';
 
-const CLEAR_VISIBLE_CLASS = 'search-form__clear--visible';
-
 export default class SuggestSearch extends SuggestSearchCore {
     protected overlay: HTMLElement;
     protected wrapper: HTMLElement;
@@ -97,7 +95,7 @@ export default class SuggestSearch extends SuggestSearchCore {
         }
 
         const hasValue = this.searchInput?.value.trim().length > 0;
-        this.clearButton.classList.toggle(CLEAR_VISIBLE_CLASS, hasValue);
+        this.clearButton.classList.toggle(this.clearVisibleClass, hasValue);
     }
 
     protected onClearClick(): void {
@@ -193,6 +191,10 @@ export default class SuggestSearch extends SuggestSearchCore {
 
     protected get clearClassName(): string {
         return `js-${this.parentClassName}__clear`;
+    }
+
+    protected get clearVisibleClass(): string {
+        return this.getAttribute('clear-visible-class') ?? '';
     }
 
     protected get parentClassName(): string {

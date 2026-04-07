@@ -2,7 +2,7 @@
 name: Planner
 description: Analyzes redesign and frontend feature requests in the Spryker B2B Demo Marketplace, researches the codebase, and produces a structured execution plan and documentation without writing code.
 argument-hint: A user request to analyze and plan a Spryker frontend feature or redesign.
-model: opus
+model: Claude Opus 4.6 (copilot)
 tools: ['read/readFile', 'search', 'edit', 'vscode/memory', 'context7/*']
 ---
 

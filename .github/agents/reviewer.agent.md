@@ -3,7 +3,7 @@ name: Reviewer
 description: Reviews frontend implementation for correctness, Spryker conventions, and scope discipline using the adversarial-review skill before normal review.
 argument-hint: Task summary, acceptance criteria, changed files, PRD refs, and constraints.
 tools: ['read', 'search', 'context7/*']
-model: sonnet
+model: Claude Sonnet 4.6 (copilot)
 ---
 
 You are the **Reviewer** — a specialized review agent for the Spryker B2B Demo Marketplace frontend.

@@ -1,5 +1,3 @@
-$shop-ui-side-drawer-width: rem(390);
-
 @mixin shop-ui-side-drawer($name: '.side-drawer') {
     #{$name} {
         position: relative;
@@ -25,8 +23,8 @@ $shop-ui-side-drawer-width: rem(390);
             @include helper-breakpoint-media-min($md) {
                 @include helper-effect-transition(opacity visibility left);
                 top: 0;
-                left: -$shop-ui-side-drawer-width;
-                width: $shop-ui-side-drawer-width;
+                left: -100%;
+                width: 100%;
                 box-shadow: var(--shadows-lg-x) var(--shadows-lg-y) var(--shadows-lg-blur) var(--shadows-lg-spread)
                     var(--shadows-lg-color);
             }
@@ -63,6 +61,13 @@ $shop-ui-side-drawer-width: rem(390);
 
         &__header-cart {
             padding: 0;
+        }
+
+        &__header-sign-in {
+            font-size: var(--button-sm-size);
+            line-height: var(--button-sm-line-height);
+            min-height: rem(32);
+            padding: var(--scale-4) var(--scale-12);
         }
 
         &__panels {
@@ -168,10 +173,10 @@ $shop-ui-side-drawer-width: rem(390);
             justify-content: space-between;
             width: 100%;
             padding: var(--scale-6) 0;
-            font-family: var(--body-lg-family);
-            font-size: var(--body-lg-size);
-            font-weight: var(--body-lg-weight);
-            line-height: var(--body-lg-line-height);
+            font-family: var(--body-md-family);
+            font-size: var(--body-md-size);
+            font-weight: var(--body-md-weight);
+            line-height: var(--body-md-line-height);
             color: var(--text-primary);
             text-decoration: none;
             background: none;
@@ -189,6 +194,7 @@ $shop-ui-side-drawer-width: rem(390);
             align-items: center;
             justify-content: space-between;
             padding: var(--scale-6) 0;
+            font-size: var(--body-md-size);
 
             form {
                 width: 100%;

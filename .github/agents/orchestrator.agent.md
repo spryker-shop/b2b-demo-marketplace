@@ -2,7 +2,7 @@
 name: Orchestrator
 description: Coordinates the full multi-agent workflow for the Spryker B2B Demo Marketplace frontend across planning, implementation, review, and verification. Never implements directly.
 argument-hint: A frontend feature, redesign, bugfix, or refactoring request for the Spryker codebase.
-model: opus
+model: Claude Opus 4.6 (copilot)
 tools: ['read/readFile', 'execute', 'agent', 'vscode/memory', 'search', 'context7/*']
 agents: [Planner, Coder, Reviewer, Tester, AskAgain]
 ---

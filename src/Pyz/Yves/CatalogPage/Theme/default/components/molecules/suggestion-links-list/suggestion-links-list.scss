@@ -3,7 +3,7 @@
         &__title {
             display: flex;
             align-items: center;
-            height: rem(32);
+            height: var(--scale-32);
             padding: 0 var(--scale-20);
             background: var(--background-subtle);
             font-family: var(--label-sm-family);
@@ -15,17 +15,12 @@
             text-transform: uppercase;
 
             &--bottom-indent {
-                padding-bottom: rem(16);
+                padding-bottom: var(--scale-16);
             }
         }
 
         &__item {
-            font-size: rem(15);
-            font-weight: fw(regular);
-            line-height: rem(18);
-            letter-spacing: rem(0.1);
-            padding: 7px 0;
-            border-top: var(--stroke-sm) solid var(--border-default);
+            border-top: var(--stroke-sm) solid var(--border-subtle);
 
             &:first-child {
                 border-top: none;
@@ -33,6 +28,7 @@
         }
 
         &__link {
+            @include helper-effect-transition(background-color color);
             display: flex;
             align-items: center;
             height: rem(44);
@@ -45,7 +41,8 @@
             text-decoration: none;
 
             &:hover {
-                color: $setting-color-gray-5;
+                color: var(--text-brand);
+                background-color: var(--background-subtle);
             }
         }
 

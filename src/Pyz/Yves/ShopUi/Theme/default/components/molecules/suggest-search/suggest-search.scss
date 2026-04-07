@@ -6,12 +6,11 @@
             left: 0;
             width: 100%;
             margin-top: var(--scale-4);
-            padding: 0 0 var(--scale-16);
             border: var(--stroke-sm) solid var(--border-default);
             border-radius: var(--radius-lg);
             background: var(--background-surface);
-            box-shadow: var(--shadows-sm-x) var(--shadows-sm-y) var(--shadows-sm-blur) var(--shadows-sm-spread)
-                var(--shadows-sm-color);
+            box-shadow: var(--shadows-md-x) var(--shadows-md-y) var(--shadows-md-blur) var(--shadows-md-spread)
+                var(--shadows-md-color);
             max-height: rem(300);
             overflow-x: hidden;
             overflow-y: auto;
@@ -90,19 +89,25 @@
             padding: 0;
         }
 
-        &__product-action {
-            height: rem(48);
+        &__all-items {
             display: flex;
             align-items: center;
-            gap: var(--scale-8);
+            width: 100%;
+            height: var(--scale-32);
             padding: 0 var(--scale-20);
-            border-top: var(--stroke-sm) solid var(--border-subtle);
+            background: var(--background-subtle);
+            font-family: var(--label-sm-family);
+            font-size: var(--label-sm-size);
+            font-weight: var(--label-sm-weight);
+            line-height: var(--label-sm-line-height);
+            letter-spacing: var(--label-sm-letter-spacing);
+            color: var(--text-brand);
+            text-transform: uppercase;
+            cursor: pointer;
+            justify-content: space-between;
 
-            .button {
-                font-family: var(--body-sm-family);
-                font-size: var(--body-sm-size);
-                font-weight: var(--body-sm-weight);
-                line-height: var(--body-sm-line-height);
+            &:hover {
+                color: var(--text-primary);
             }
         }
 

@@ -2,7 +2,7 @@
 name: Coder
 description: Implements redesign and frontend code changes in the Spryker B2B Demo Marketplace codebase with minimal diffs, then returns control to the orchestrated workflow.
 argument-hint: A task description with acceptance criteria, target files, PRD refs, and optional error context.
-model: opus
+model: Claude Opus 4.6 (copilot)
 tools: ['vscode', 'execute', 'read', 'search', 'edit', 'vscode/memory', 'todo', 'context7/*']
 ---
 

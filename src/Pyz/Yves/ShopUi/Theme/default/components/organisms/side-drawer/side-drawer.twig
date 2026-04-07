@@ -53,6 +53,11 @@
                         },
                     } only %}
                 {% endwidget %}
+            {% else %}
+                <a href="{{ url('login', { redirectUri: app.request.uri }) }}"
+                   class="button {{ config.name }}__header-sign-in">
+                    {{ 'customer.please_login' | trans }}
+                </a>
             {% endif %}
         </div>
 
@@ -87,11 +92,6 @@
                                     drillDownTarget: 'account-panel',
                                 },
                             } only %}
-                        {% else %}
-                            <div class="{{ config.name }}__guest-auth">
-                                <a href="{{ url('login') }}" class="button button--expand {{ config.name }}__guest-auth-btn">{{ 'customer.please_login' | trans }}</a>
-                                <a href="{{ url('register') }}" class="button button--hollow button--expand {{ config.name }}__guest-auth-btn">{{ 'customer.signup' | trans }}</a>
-                            </div>
                         {% endif %}
                     </div>
 

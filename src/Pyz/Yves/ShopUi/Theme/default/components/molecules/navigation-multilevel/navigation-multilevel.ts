@@ -6,7 +6,6 @@ import {
 } from 'ShopUi/components/molecules/main-overlay/main-overlay';
 
 export default class NavigationMultilevel extends Component {
-    protected overlay: HTMLElement;
     protected triggers: HTMLElement[];
     protected touchTriggers: HTMLElement[];
     protected eventShowOverlay: CustomEvent<OverlayEventDetail>;
