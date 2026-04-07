@@ -10,6 +10,8 @@ declare(strict_types = 1);
 namespace Pyz\Zed\Product;
 
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\MerchantProduct\Communication\Plugin\Product\MerchantProductProductAbstractAfterUpdatePlugin;
+use Spryker\Zed\MerchantProduct\Communication\Plugin\Product\MerchantProductProductAbstractExpanderPlugin;
 use Spryker\Zed\MerchantProduct\Communication\Plugin\Product\MerchantProductProductAbstractPostCreatePlugin;
 use Spryker\Zed\MerchantProductApproval\Communication\Plugin\Product\MerchantProductApprovalProductAbstractPreCreatePlugin;
 use Spryker\Zed\MerchantProductOffer\Communication\Plugin\Product\MerchantProductOfferProductConcreteExpanderPlugin;
@@ -110,6 +112,7 @@ class ProductDependencyProvider extends SprykerProductDependencyProvider
             new TaxSetProductAbstractAfterUpdatePlugin(),
             new PriceProductAbstractAfterUpdatePlugin(),
             new ProductAttachmentProductAbstractAfterUpdatePlugin(),
+            new MerchantProductProductAbstractAfterUpdatePlugin(),
         ];
     }
 
@@ -191,6 +194,7 @@ class ProductDependencyProvider extends SprykerProductDependencyProvider
             new ProductImageProductAbstractExpanderPlugin(),
             new TaxSetProductAbstractExpanderPlugin(),
             new PriceProductProductAbstractExpanderPlugin(),
+            new MerchantProductProductAbstractExpanderPlugin(),
         ];
     }
 

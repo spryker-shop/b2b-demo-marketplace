@@ -27,7 +27,6 @@ use Spryker\Zed\Payment\Communication\Plugin\MessageBroker\PaymentOperationsMess
 use Spryker\Zed\ProductReview\Communication\Plugin\MessageBroker\ProductReviewAddReviewsMessageHandlerPlugin;
 use Spryker\Zed\SalesPaymentDetail\Communication\Plugin\MessageBroker\SalesPaymentDetailMessageHandlerPlugin;
 use Spryker\Zed\Session\Communication\Plugin\MessageBroker\SessionTrackingIdMessageAttributeProviderPlugin;
-use Spryker\Zed\TaxApp\Communication\Plugin\MessageBroker\TaxAppMessageHandlerPlugin;
 
 /**
  * @method \Pyz\Zed\MessageBroker\MessageBrokerConfig getConfig()
@@ -64,7 +63,6 @@ class MessageBrokerDependencyProvider extends SprykerMessageBrokerDependencyProv
             new PaymentMethodMessageHandlerPlugin(),
             new AssetMessageHandlerPlugin(),
             new ProductReviewAddReviewsMessageHandlerPlugin(),
-            new TaxAppMessageHandlerPlugin(),
             new PaymentOperationsMessageHandlerPlugin(),
             new SalesPaymentDetailMessageHandlerPlugin(),
             new MerchantAppOnboardingMessageHandlerPlugin(),

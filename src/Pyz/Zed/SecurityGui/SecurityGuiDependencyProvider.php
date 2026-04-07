@@ -11,6 +11,7 @@ namespace Pyz\Zed\SecurityGui;
 
 use Spryker\Zed\MerchantUser\Communication\Plugin\SecurityGui\MerchantUserUserRoleFilterPlugin;
 use Spryker\Zed\MultiFactorAuth\Communication\Plugin\AuthenticationHandler\User\UserMultiFactorAuthenticationHandlerPlugin;
+use Spryker\Zed\SecurityGui\Communication\Plugin\Security\Handler\LastVisitedPageBackOfficeUserRedirectStrategyPlugin;
 use Spryker\Zed\SecurityGui\SecurityGuiDependencyProvider as SprykerSecurityGuiDependencyProvider;
 
 class SecurityGuiDependencyProvider extends SprykerSecurityGuiDependencyProvider
@@ -32,6 +33,16 @@ class SecurityGuiDependencyProvider extends SprykerSecurityGuiDependencyProvider
     {
         return [
             new UserMultiFactorAuthenticationHandlerPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\SecurityGuiExtension\Dependency\Plugin\BackOfficeUserRedirectStrategyPluginInterface>
+     */
+    protected function getBackOfficeUserRedirectStrategyPlugins(): array
+    {
+        return [
+            new LastVisitedPageBackOfficeUserRedirectStrategyPlugin(),
         ];
     }
 }

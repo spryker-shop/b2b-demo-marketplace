@@ -85,4 +85,18 @@ class SalesConfig extends SprykerSalesConfig
     {
         return 'OrderItemReference';
     }
+
+    /**
+     * @return array<string, string>
+     */
+    public function getOrderDetailBlockUrlToTemplateMap(): array
+    {
+        return [
+            '/cart-note/sales/list' => '@CartNote/Sales/list.twig',
+            '/comment-sales-connector/sales/list' => '@CommentSalesConnector/Sales/list.twig',
+            '/cart-note-product-bundle-connector/sales/list' => '@CartNoteProductBundleConnector/Sales/list.twig',
+            '/sales-payment-gui/sales/list' => '@SalesPaymentGui/Sales/list.twig',
+            '/discount/sales/list' => '@Discount/Sales/list.twig',
+        ];
+    }
 }

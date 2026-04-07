@@ -13,6 +13,7 @@ use Pyz\Shared\SelfServicePortal\SelfServicePortalConfig;
 use Spryker\Shared\AssetStorage\AssetStorageConfig;
 use Spryker\Shared\AvailabilityStorage\AvailabilityStorageConfig;
 use Spryker\Shared\AvailabilityStorage\AvailabilityStorageConstants;
+use Spryker\Shared\CategoryImageStorage\CategoryImageStorageConfig;
 use Spryker\Shared\CategoryPageSearch\CategoryPageSearchConstants;
 use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
 use Spryker\Shared\CmsPageSearch\CmsPageSearchConstants;
@@ -21,6 +22,7 @@ use Spryker\Shared\CompanyUserStorage\CompanyUserStorageConfig;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\ConfigurableBundlePageSearch\ConfigurableBundlePageSearchConfig;
 use Spryker\Shared\ConfigurableBundleStorage\ConfigurableBundleStorageConfig;
+use Spryker\Shared\Configuration\ConfigurationConstants;
 use Spryker\Shared\ContentStorage\ContentStorageConfig;
 use Spryker\Shared\CustomerAccessStorage\CustomerAccessStorageConstants;
 use Spryker\Shared\CustomerStorage\CustomerStorageConfig;
@@ -29,19 +31,36 @@ use Spryker\Shared\FileManagerStorage\FileManagerStorageConstants;
 use Spryker\Shared\GlossaryStorage\GlossaryStorageConfig;
 use Spryker\Shared\Log\LogConstants;
 use Spryker\Shared\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageConfig;
+use Spryker\Shared\MerchantProductOfferSearch\MerchantProductOfferSearchConfig;
 use Spryker\Shared\MerchantSearch\MerchantSearchConfig;
 use Spryker\Shared\MerchantStorage\MerchantStorageConfig;
+use Spryker\Shared\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig;
 use Spryker\Shared\PriceProductOfferStorage\PriceProductOfferStorageConfig;
 use Spryker\Shared\PriceProductStorage\PriceProductStorageConfig;
 use Spryker\Shared\PriceProductStorage\PriceProductStorageConstants;
+use Spryker\Shared\ProductAlternativeStorage\ProductAlternativeStorageConfig;
+use Spryker\Shared\ProductCategoryFilterStorage\ProductCategoryFilterStorageConfig;
 use Spryker\Shared\ProductConfigurationStorage\ProductConfigurationStorageConfig;
+use Spryker\Shared\ProductDiscontinuedStorage\ProductDiscontinuedStorageConfig;
+use Spryker\Shared\ProductGroupStorage\ProductGroupStorageConstants;
 use Spryker\Shared\ProductImageStorage\ProductImageStorageConfig;
+use Spryker\Shared\ProductListSearch\ProductListSearchConfig;
+use Spryker\Shared\ProductListStorage\ProductListStorageConfig;
+use Spryker\Shared\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageConfig;
 use Spryker\Shared\ProductOfferAvailabilityStorage\ProductOfferAvailabilityStorageConfig;
 use Spryker\Shared\ProductOfferServicePointStorage\ProductOfferServicePointStorageConfig;
 use Spryker\Shared\ProductOfferShipmentTypeStorage\ProductOfferShipmentTypeStorageConfig;
 use Spryker\Shared\ProductOfferStorage\ProductOfferStorageConfig;
+use Spryker\Shared\ProductOptionStorage\ProductOptionStorageConfig;
+use Spryker\Shared\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConfig;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
+use Spryker\Shared\ProductQuantityStorage\ProductQuantityStorageConfig;
+use Spryker\Shared\ProductReviewSearch\ProductReviewSearchConfig;
+use Spryker\Shared\ProductReviewStorage\ProductReviewStorageConfig;
+use Spryker\Shared\ProductSearchConfigStorage\ProductSearchConfigStorageConfig;
+use Spryker\Shared\ProductSetPageSearch\ProductSetPageSearchConfig;
+use Spryker\Shared\ProductSetStorage\ProductSetStorageConfig;
 use Spryker\Shared\ProductStorage\ProductStorageConfig;
 use Spryker\Shared\ProductStorage\ProductStorageConstants;
 use Spryker\Shared\PublishAndSynchronizeHealthCheck\PublishAndSynchronizeHealthCheckConfig;
@@ -140,6 +159,34 @@ class QueueDependencyProvider extends SprykerDependencyProvider
             ShipmentTypeStorageConfig::QUEUE_NAME_SYNC_STORAGE_SHIPMENT_TYPE => new SynchronizationStorageQueueMessageProcessorPlugin(),
             ProductOfferServicePointStorageConfig::QUEUE_NAME_SYNC_STORAGE_PRODUCT_OFFER_SERVICE => new SynchronizationStorageQueueMessageProcessorPlugin(),
             ProductOfferShipmentTypeStorageConfig::PRODUCT_OFFER_SHIPMENT_TYPE_SYNC_STORAGE_QUEUE => new SynchronizationStorageQueueMessageProcessorPlugin(),
+            CategoryImageStorageConfig::PUBLISH_CATEGORY_IMAGE_QUEUE => new EventQueueMessageProcessorPlugin(),
+            CompanyUserStorageConfig::PUBLISH_COMPANY_USER_QUEUE => new EventQueueMessageProcessorPlugin(),
+            MerchantProductOfferSearchConfig::PUBLISH_MERCHANT_PRODUCT_OFFER_QUEUE => new EventQueueMessageProcessorPlugin(),
+            PriceProductMerchantRelationshipStorageConfig::PUBLISH_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_QUEUE => new EventQueueMessageProcessorPlugin(),
+            PriceProductMerchantRelationshipStorageConfig::PUBLISH_PRICE_PRODUCT_CONCRETE_MERCHANT_RELATIONSHIP_QUEUE => new EventQueueMessageProcessorPlugin(),
+            PriceProductMerchantRelationshipStorageConfig::PUBLISH_PRICE_PRODUCT_ABSTRACT_MERCHANT_RELATIONSHIP_QUEUE => new EventQueueMessageProcessorPlugin(),
+            PriceProductOfferStorageConfig::PUBLISH_PRICE_PRODUCT_OFFER_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductAlternativeStorageConfig::PUBLISH_PRODUCT_ALTERNATIVE_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductCategoryFilterStorageConfig::PUBLISH_PRODUCT_CATEGORY_FILTER_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductDiscontinuedStorageConfig::PUBLISH_PRODUCT_DISCONTINUED_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductGroupStorageConstants::PUBLISH_PRODUCT_GROUP_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductListSearchConfig::PUBLISH_PRODUCT_LIST_SEARCH_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductListStorageConfig::PUBLISH_PRODUCT_LIST_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductListStorageConfig::PUBLISH_PRODUCT_LIST_PRODUCT_ABSTRACT_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductListStorageConfig::PUBLISH_PRODUCT_LIST_PRODUCT_CONCRETE_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductOfferAvailabilityStorageConfig::PUBLISH_PRODUCT_OFFER_AVAILABILITY_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductOptionStorageConfig::PUBLISH_PRODUCT_OPTION_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductQuantityStorageConfig::PUBLISH_PRODUCT_QUANTITY_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductReviewSearchConfig::PUBLISH_PRODUCT_REVIEW_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductSearchConfigStorageConfig::PUBLISH_PRODUCT_SEARCH_CONFIG_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductSetPageSearchConfig::PUBLISH_PRODUCT_SET_PAGE_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductSetStorageConfig::PUBLISH_PRODUCT_SET_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ShoppingListStorageConfig::PUBLISH_SHOPPING_LIST_QUEUE => new EventQueueMessageProcessorPlugin(),
+            TaxProductStorageConfig::PUBLISH_TAX_PRODUCT_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductMeasurementUnitStorageConfig::PUBLISH_PRODUCT_MEASUREMENT_UNIT_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductPackagingUnitStorageConfig::PUBLISH_PRODUCT_PACKAGING_UNIT_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductReviewStorageConfig::PUBLISH_PRODUCT_REVIEW_STORAGE_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ConfigurationConstants::QUEUE_NAME_SYNC_CONFIGURATION => new SynchronizationStorageQueueMessageProcessorPlugin(),
         ];
     }
 

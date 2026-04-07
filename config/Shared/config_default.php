@@ -10,9 +10,7 @@ use Generated\Shared\Transfer\AssetDeletedTransfer;
 use Generated\Shared\Transfer\AssetUpdatedTransfer;
 use Generated\Shared\Transfer\CancelPaymentTransfer;
 use Generated\Shared\Transfer\CapturePaymentTransfer;
-use Generated\Shared\Transfer\ConfigureTaxAppTransfer;
 use Generated\Shared\Transfer\DeletePaymentMethodTransfer;
-use Generated\Shared\Transfer\DeleteTaxAppTransfer;
 use Generated\Shared\Transfer\MerchantAppOnboardingStatusChangedTransfer;
 use Generated\Shared\Transfer\OrderStatusChangedTransfer;
 use Generated\Shared\Transfer\PaymentAuthorizationFailedTransfer;
@@ -27,7 +25,6 @@ use Generated\Shared\Transfer\PaymentRefundFailedTransfer;
 use Generated\Shared\Transfer\PaymentUpdatedTransfer;
 use Generated\Shared\Transfer\ReadyForMerchantAppOnboardingTransfer;
 use Generated\Shared\Transfer\RefundPaymentTransfer;
-use Generated\Shared\Transfer\SubmitPaymentTaxInvoiceTransfer;
 use Generated\Shared\Transfer\UpdatePaymentMethodTransfer;
 use Monolog\Logger;
 use Pyz\Shared\Console\ConsoleConstants;
@@ -51,6 +48,7 @@ use Spryker\Shared\CartsRestApi\CartsRestApiConstants;
 use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Shared\CmsGui\CmsGuiConstants;
+use Spryker\Shared\Configuration\ConfigurationConstants;
 use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Shared\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConstants;
 use Spryker\Shared\DummyMarketplacePayment\DummyMarketplacePaymentConfig;
@@ -122,7 +120,6 @@ use Spryker\Shared\SymfonyMailer\SymfonyMailerConstants;
 use Spryker\Shared\SymfonyMessenger\SymfonyMessengerConstants;
 use Spryker\Shared\Synchronization\SynchronizationConstants;
 use Spryker\Shared\Tax\TaxConstants;
-use Spryker\Shared\TaxApp\TaxAppConstants;
 use Spryker\Shared\Testify\TestifyConstants;
 use Spryker\Shared\Translator\TranslatorConstants;
 use Spryker\Shared\User\UserConstants;
@@ -138,6 +135,7 @@ use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Payment\PaymentConfig;
 use Spryker\Zed\Propel\PropelConfig;
 use SprykerEco\Shared\Algolia\AlgoliaConstants;
+use SprykerEco\Shared\Vertex\VertexConstants;
 use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConstants;
 use SprykerShop\Shared\AgentPage\AgentPageConstants;
 use SprykerShop\Shared\ContentNavigationWidget\ContentNavigationWidgetConstants;
@@ -571,6 +569,8 @@ $config[QueueConstants::QUEUE_WORKER_MEMORY_READ_PROCESS_TIMEOUT] = (int)getenv(
 $config[EventBehaviorConstants::EVENT_BEHAVIOR_TRIGGERING_ACTIVE] = true;
 
 $config[EventConstants::MAX_RETRY_ON_FAIL] = 5;
+$config[QueueConstants::QUEUE_WORKER_MAX_PROCESSES] = 5;
+$config[QueueConstants::QUEUE_WORKER_DELAY_WHEN_NOT_EMPTY_MILLISECONDS] = 1000;
 $config[QueueConstants::QUEUE_PROCESS_TRIGGER_INTERVAL_MICROSECONDS] = 1001;
 $config[QueueConstants::QUEUE_MESSAGE_CHUNK_SIZE_MAP] = json_decode(getenv('QUEUE_MESSAGE_CHUNK_SIZE_MAP') ?: '[]', true);
 $config[QueueConstants::RESOURCE_AWARE_QUEUE_WORKER_ENABLED] = (bool)getenv('RESOURCE_AWARE_QUEUE_WORKER_ENABLED') ?? false;
@@ -945,7 +945,6 @@ $config[SearchHttpConstants::TENANT_IDENTIFIER]
     = $config[OauthClientConstants::TENANT_IDENTIFIER]
     = $config[PaymentConstants::TENANT_IDENTIFIER]
     = $config[AppCatalogGuiConstants::TENANT_IDENTIFIER]
-    = $config[TaxAppConstants::TENANT_IDENTIFIER]
     = $config[CmsConstants::TENANT_IDENTIFIER]
     = getenv('SPRYKER_TENANT_IDENTIFIER') ?: '';
 
@@ -973,9 +972,6 @@ $config[MessageBrokerAwsConstants::MESSAGE_TO_CHANNEL_MAP] = [
     AssetDeletedTransfer::class => 'asset-commands',
     AddReviewsTransfer::class => 'product-review-commands',
     OrderStatusChangedTransfer::class => 'order-events',
-    ConfigureTaxAppTransfer::class => 'tax-commands',
-    DeleteTaxAppTransfer::class => 'tax-commands',
-    SubmitPaymentTaxInvoiceTransfer::class => 'payment-tax-invoice-commands',
     ReadyForMerchantAppOnboardingTransfer::class => 'merchant-app-events',
     MerchantAppOnboardingStatusChangedTransfer::class => 'merchant-app-events',
 ];
@@ -988,13 +984,11 @@ $config[MessageBrokerConstants::CHANNEL_TO_RECEIVER_TRANSPORT_MAP] = [
     'payment-events' => MessageBrokerAwsConfig::HTTP_CHANNEL_TRANSPORT,
     'payment-method-commands' => MessageBrokerAwsConfig::HTTP_CHANNEL_TRANSPORT,
     'product-review-commands' => MessageBrokerAwsConfig::HTTP_CHANNEL_TRANSPORT,
-    'tax-commands' => MessageBrokerAwsConfig::HTTP_CHANNEL_TRANSPORT,
 ];
 
 $config[MessageBrokerConstants::CHANNEL_TO_SENDER_TRANSPORT_MAP] = [
     'payment-commands' => MessageBrokerAwsConfig::HTTP_CHANNEL_TRANSPORT,
     'order-events' => MessageBrokerAwsConfig::HTTP_CHANNEL_TRANSPORT,
-    'payment-tax-invoice-commands' => MessageBrokerAwsConfig::HTTP_CHANNEL_TRANSPORT,
 ];
 
 // -------------------------------- ACP AWS --------------------------------------
@@ -1020,7 +1014,6 @@ $config[AppCatalogGuiConstants::OAUTH_PROVIDER_NAME]
     = $config[OauthClientConstants::OAUTH_PROVIDER_NAME_FOR_ACP]
     = $config[OauthClientConstants::OAUTH_PROVIDER_NAME_FOR_MESSAGE_BROKER]
     = $config[OauthClientConstants::OAUTH_PROVIDER_NAME_FOR_PAYMENT_AUTHORIZE]
-    = $config[TaxAppConstants::OAUTH_PROVIDER_NAME]
     = OauthAuth0Config::PROVIDER_NAME;
 
 $config[AppCatalogGuiConstants::OAUTH_GRANT_TYPE]
@@ -1033,11 +1026,7 @@ $config[AppCatalogGuiConstants::OAUTH_OPTION_AUDIENCE] = 'aop-atrs';
 
 $config[OauthClientConstants::OAUTH_PROVIDER_NAME_FOR_PAYMENT_AUTHORIZE] = OauthAuth0Config::PROVIDER_NAME;
 $config[OauthClientConstants::OAUTH_GRANT_TYPE_FOR_PAYMENT_AUTHORIZE] = OauthAuth0Config::GRANT_TYPE_CLIENT_CREDENTIALS;
-$config[TaxAppConstants::OAUTH_PROVIDER_NAME] = OauthAuth0Config::PROVIDER_NAME;
-$config[TaxAppConstants::OAUTH_GRANT_TYPE] = OauthAuth0Config::GRANT_TYPE_CLIENT_CREDENTIALS;
-
 $config[OauthClientConstants::OAUTH_OPTION_AUDIENCE_FOR_ACP]
-    = $config[TaxAppConstants::OAUTH_OPTION_AUDIENCE]
     = $config[OauthClientConstants::OAUTH_OPTION_AUDIENCE_FOR_PAYMENT_AUTHORIZE]
     = 'aop-app';
 
@@ -1096,6 +1085,10 @@ if ($isTestifyConstantsClassExists) {
 
 $config[RedisConstants::REDIS_COMPRESSION_ENABLED] = getenv('SPRYKER_KEY_VALUE_COMPRESSING_ENABLED') ?: true;
 
+// Configuration system
+$config[ConfigurationConstants::ENCRYPTION_KEY] = hex2bin(getenv('SPRYKER_CONFIGURATION_ENCRYPTION_KEY') ?: '') ?: null;
+$config[ConfigurationConstants::ENCRYPTION_INIT_VECTOR] = hex2bin(getenv('SPRYKER_CONFIGURATION_ENCRYPTION_INIT_VECTOR') ?: '') ?: null;
+
 // Self-Service Portal
 $config[SelfServicePortalConstants::DEFAULT_TOTAL_FILE_MAX_SIZE] = getenv('SPRYKER_SSP_DEFAULT_TOTAL_FILE_MAX_SIZE') ?: '100M';
 $config[SelfServicePortalConstants::DEFAULT_FILE_MAX_SIZE] = getenv('SPRYKER_SSP_DEFAULT_FILE_MAX_SIZE') ?: '10M';
@@ -1106,4 +1099,14 @@ $config[AlgoliaConstants::APPLICATION_ID] = getenv('ALGOLIA_APPLICATION_ID');
 $config[AlgoliaConstants::ADMIN_API_KEY] = getenv('ALGOLIA_WRITE_API_KEY');
 $config[AlgoliaConstants::SEARCH_ONLY_API_KEY] = getenv('ALGOLIA_SEARCH_API_KEY');
 $config[AlgoliaConstants::IS_ACTIVE] = $config[AlgoliaConstants::APPLICATION_ID] && $config[AlgoliaConstants::ADMIN_API_KEY] && $config[AlgoliaConstants::SEARCH_ONLY_API_KEY];
+
+// Vertex
+$config[VertexConstants::IS_ACTIVE] = getenv('VERTEX_IS_ACTIVE') ?: null;
+$config[VertexConstants::CLIENT_ID] = getenv('VERTEX_CLIENT_ID') ?: null;
+$config[VertexConstants::CLIENT_SECRET] = getenv('VERTEX_CLIENT_SECRET') ?: null;
+$config[VertexConstants::SECURITY_URI] = getenv('VERTEX_SECURITY_URI') ?: null;
+$config[VertexConstants::TRANSACTION_CALLS_URI] = getenv('VERTEX_TRANSACTION_CALLS_URI') ?: null;
+$config[VertexConstants::TAXAMO_API_URL] = getenv('TAXAMO_API_URL') ?: null;
+$config[VertexConstants::TAXAMO_TOKEN] = getenv('TAXAMO_TOKEN') ?: null;
+
 $config[ContentNavigationWidgetConstants::NAVIGATION_REVALIDATION_TIME_IN_SECONDS] = 3600;

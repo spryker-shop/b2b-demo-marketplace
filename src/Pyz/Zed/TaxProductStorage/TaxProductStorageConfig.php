@@ -10,7 +10,7 @@ declare(strict_types = 1);
 namespace Pyz\Zed\TaxProductStorage;
 
 use Pyz\Zed\Synchronization\SynchronizationConfig;
-use Spryker\Shared\Publisher\PublisherConfig;
+use Spryker\Shared\TaxProductStorage\TaxProductStorageConfig as SprykerSharedTaxProductStorageConfig;
 use Spryker\Zed\TaxProductStorage\TaxProductStorageConfig as SprykerTaxProductStorageConfig;
 
 class TaxProductStorageConfig extends SprykerTaxProductStorageConfig
@@ -28,6 +28,6 @@ class TaxProductStorageConfig extends SprykerTaxProductStorageConfig
      */
     public function getEventQueueName(): ?string
     {
-        return PublisherConfig::PUBLISH_QUEUE;
+        return SprykerSharedTaxProductStorageConfig::PUBLISH_TAX_PRODUCT_QUEUE;
     }
 }
