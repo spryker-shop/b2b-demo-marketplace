@@ -9,83 +9,213 @@
 
 {% block body %}
     <aside class="{{ config.name }}__drawer">
-        {% block close %}
-            <button class="{{ config.name }}__close {{ attributes['trigger-selector'] }}">
-                {% include atom('icon') with {
-                    data: {
-                        name: 'cross',
-                    },
+        <div class="{{ config.name }}__header">
+            {% block close %}
+                <button class="{{ config.name }}__close" type="button" aria-label="{{ 'header.menu.close' | trans }}">
+                    {% include atom('font-icon') with {
+                        class: config.jsName ~ '__close-icon',
+                        modifiers: ['size-inherit'],
+                        data: { name: 'close' },
+                    } only %}
+                </button>
+            {% endblock %}
+
+            {% include molecule('logo') with {
+                class: config.name ~ '__header-logo',
+                modifiers: ['drawer'],
+            } only %}
+
+            {% set cartQuantity = functionExists('getCartQuantity') ? getCartQuantity() : app['cart.quantity'] | default(0) %}
+            {% if is_granted('ROLE_USER') %}
+                {% set drawerName = config.name %}
+                {% widget 'MiniCartWidget' args [cartQuantity] with {
+                    embed: { drawerName: drawerName },
                 } only %}
-            </button>
-        {% endblock %}
-
-        {% block topBlock %}
-            <div class="grid grid--gap-smaller {{ config.name }}__navigation-top">
-                {% if is_granted('ROLE_USER') %}
-                    <div class="col {{ config.name }}__navigation-top-actions">
-                        {% widget 'PriceModeSwitcherWidget' only %}{% endwidget %}
-                    </div>
-                    <div class="col {{ config.name }}__navigation-top-actions">
-                        {% widget 'CurrencyWidget' only %}{% endwidget %}
-                    </div>
-                    <div class="col {{ config.name }}__navigation-top-actions">
-                        {% widget 'LanguageSwitcherWidget' args [app.request.pathInfo, app.request.queryString, app.request.requestUri] only %}{% endwidget %}
-                    </div>
-
-                    {% widget 'StoreSwitcher' with {
-                        embed: {
-                            configName: config.name,
-                        },
-                    } only %}
-                        {% block body %}
-                            <div class="col {{ embed.configName }}__navigation-top-actions">
-                                {{ parent() }}
-                            </div>
-                        {% endblock %}
-                    {% endwidget %}
-                {% else %}
-                    <div class="col col--sm-4 {{ config.name }}__navigation-top-actions">
-                        {% widget 'LanguageSwitcherWidget' args [app.request.pathInfo, app.request.queryString, app.request.requestUri] only %}{% endwidget %}
-                    </div>
-
-                    {% widget 'StoreSwitcher' with {
-                        embed: {
-                            configName: config.name,
-                        },
-                    } only %}
-                        {% block body %}
-                            <div class="col col--sm-4 {{ embed.configName }}__navigation-top-actions">
-                                {{ parent() }}
-                            </div>
-                        {% endblock %}
-                    {% endwidget %}
-                {% endif %}
-            </div>
-        {% endblock %}
-
-        <div class="{{ config.name }}__holder">
-            <div class="{{ config.name }}__navigation">
-                {% block navigation %}
-                    {% widget 'NavigationWidget' args ['MAIN_NAVIGATION', 'navigation-main'] only %}{% endwidget %}
-                {% endblock %}
-            </div>
-
-            <div class="{{ config.name }}__info">
-                <a href="tel:{{ 'global.phone.number' | trans | replace({' ': ''}) }}" class="{{ config.name }}__contact">
-                    <span class="{{ config.name }}__contact-icon">
-                        {% include atom('icon') with {
-                            modifiers: ['bigger'],
-                            data: {
-                                name: 'cell-phone',
+                    {% block body %}
+                        {% include atom('cart-trigger') with {
+                            class: embed.drawerName ~ '__header-cart js-side-drawer__drill-down-trigger',
+                            data: { quantity: _widget.cartQuantity },
+                            attributes: {
+                                type: 'button',
+                                'aria-label': 'header.cart' | trans,
+                                'data-target-panel': 'cart-panel',
                             },
                         } only %}
-                    </span>
-                    <span class="{{ config.name }}__contact-text {{ config.name }}__contact-text--weight">{{ 'global.contact_us' | trans }}:</span>
-                    <span class="{{ config.name }}__contact-text">{{ 'global.phone.number' | trans}}</span>
+                    {% endblock %}
+                {% nowidget %}
+                    {% include atom('cart-trigger') with {
+                        class: drawerName ~ '__header-cart js-side-drawer__drill-down-trigger',
+                        data: { quantity: cartQuantity },
+                        attributes: {
+                            type: 'button',
+                            'aria-label': 'header.cart' | trans,
+                            'data-target-panel': 'cart-panel',
+                        },
+                    } only %}
+                {% endwidget %}
+            {% else %}
+                <a href="{{ url('login', { redirectUri: app.request.uri }) }}"
+                   class="button {{ config.name }}__header-sign-in">
+                    {{ 'customer.please_login' | trans }}
                 </a>
-                {% if is_granted('ROLE_USER') %}
-                    <a href="{{ url('logout') }}" class="spacing-top spacing-top--big button button--hollow button--expand">{{ 'customer.logout' | trans }}</a>
-                {% endif %}
+            {% endif %}
+        </div>
+
+        <div class="{{ config.name }}__panels">
+            <div class="{{ config.name }}__panel {{ config.name }}__panel--active {{ config.jsName }}__panel" data-panel-id="main">
+                <div class="{{ config.name }}__content">
+                    <div class="{{ config.name }}__zone-search">
+                        {% embed molecule('search-form') with {
+                            modifiers: ['drawer'],
+                            attributes: {
+                                'data-search-id': 'mobile',
+                            },
+                        } only %}
+                        {% endembed %}
+                    </div>
+
+                    <div class="{{ config.name }}__zone-account">
+                        {% if is_granted('ROLE_USER') %}
+                            {% set customerFullNameWidget = findWidget('CustomerFullNameWidget') %}
+                            {% set customerFullName = customerFullNameWidget.customerFullName | default('') %}
+
+                            {% set menuItemCompanyWidget = findWidget('MenuItemCompanyWidget') %}
+                            {% set companyName = menuItemCompanyWidget.companyName | default('') %}
+
+                            {% include molecule('header-dropdown') with {
+                                modifiers: ['drawer'],
+                                data: {
+                                    preset: 'user-account',
+                                    userName: customerFullName,
+                                    companyName: companyName,
+                                    isDrawer: true,
+                                    drillDownTarget: 'account-panel',
+                                },
+                            } only %}
+                        {% endif %}
+                    </div>
+
+                    <div class="{{ config.name }}__zone-browse">
+                        <span class="{{ config.name }}__zone-label">{{ 'header.drawer.browse' | trans }}</span>
+
+                        <div class="{{ config.name }}__browse-list">
+                            {% block navigation %}
+                                {% widget 'NavigationWidget' args ['MAIN_NAVIGATION', 'navigation-main'] only %}{% endwidget %}
+                            {% endblock %}
+                        </div>
+
+                        <hr class="divider {{ config.name }}__zone-divider">
+                    </div>
+
+                    {% if is_granted('ROLE_USER') %}
+                        <div class="{{ config.name }}__zone-quick-links">
+                            <button type="button" class="{{ config.name }}__quick-link-row js-side-drawer__drill-down-trigger" data-target-panel="shopping-list-panel">
+                                <span>{{ 'customer.account.shopping_list' | trans }}</span>
+                                {% include atom('font-icon') with { class: config.name ~ '__row-chevron', data: { name: 'chevron_right' }, attributes: { 'aria-hidden': 'true' } } only %}
+                            </button>
+
+                            {% if can('SeeCompanyMenuPermissionPlugin') %}
+                                {% include molecule('header-dropdown') with {
+                                    modifiers: ['drawer'],
+                                    data: {
+                                        preset: 'self-service',
+                                        isDrawer: true,
+                                        drillDownTarget: 'ssp-panel',
+                                    },
+                                } only %}
+                            {% endif %}
+
+                            <a href="{{ url('quick-order') }}" class="{{ config.name }}__quick-link-row link--no-decoration">
+                                <span>{{ 'quick-order.page-title' | trans }}</span>
+                            </a>
+
+                            <hr class="divider {{ config.name }}__zone-divider">
+                        </div>
+                    {% endif %}
+
+                    <div class="{{ config.name }}__zone-preferences">
+                        {% if can('SeePricePermissionPlugin') %}
+                            <div class="{{ config.name }}__preference-row">
+                                {% widget 'PriceModeSwitcherWidget' only %}{% endwidget %}
+                            </div>
+                            <div class="{{ config.name }}__preference-row">
+                                {% widget 'CurrencyWidget' only %}{% endwidget %}
+                            </div>
+                        {% endif %}
+
+                        <div class="{{ config.name }}__preference-row">
+                            {% widget 'LanguageSwitcherWidget' args [app.request.pathInfo, app.request.queryString, app.request.requestUri] only %}{% endwidget %}
+                        </div>
+
+                        {% widget 'StoreSwitcher' with {
+                            embed: {
+                                configName: config.name,
+                            },
+                        } only %}
+                            {% block body %}
+                                <div class="{{ embed.configName }}__preference-row">
+                                    {{ parent() }}
+                                </div>
+                            {% endblock %}
+                        {% endwidget %}
+                    </div>
+                </div>
+            </div>
+
+            {% if is_granted('ROLE_USER') %}
+                <div class="{{ config.name }}__panel {{ config.jsName }}__panel" data-panel-id="account-panel">
+                    <div class="{{ config.name }}__content">
+                        <div class="{{ config.name }}__panel-body">
+                            {% include molecule('header-dropdown') with {
+                                data: {
+                                    preset: 'user-account',
+                                    panelOnly: true,
+                                },
+                            } only %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if is_granted('ROLE_USER') and can('SeeCompanyMenuPermissionPlugin') %}
+                <div class="{{ config.name }}__panel {{ config.jsName }}__panel" data-panel-id="ssp-panel">
+                    <div class="{{ config.name }}__content">
+                        <div class="{{ config.name }}__panel-body">
+                            {% include molecule('header-dropdown') with {
+                                data: {
+                                    preset: 'self-service',
+                                    panelOnly: true,
+                                },
+                            } only %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if is_granted('ROLE_USER') %}
+                <div class="{{ config.name }}__panel {{ config.jsName }}__panel" data-panel-id="shopping-list-panel">
+                    <div class="{{ config.name }}__content">
+                        <div class="{{ config.name }}__panel-body">
+                            {% widget 'ShoppingListNavigationMenuWidget' only %}
+                                {% block body %}
+                                    {% include molecule('shopping-list-panel', 'ShoppingListWidget') with {
+                                        data: {
+                                            shoppingLists: _widget.shoppingListCollection.shoppingLists,
+                                        },
+                                    } only %}
+                                {% endblock %}
+                            {% endwidget %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="{{ config.name }}__panel {{ config.jsName }}__panel" data-panel-id="cart-panel">
+                <div class="{{ config.name }}__content">
+                    <div class="{{ config.name }}__panel-body">
+                        {% widget 'MiniCartWidget' args [cartQuantity] only %}{% endwidget %}
+                    </div>
+                </div>
             </div>
         </div>
     </aside>

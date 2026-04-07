@@ -2,107 +2,75 @@
 
 {% define config = {
     name: 'mini-cart-detail',
+    tag: 'mini-cart-detail',
 } %}
 
 {% define data = {
     cart: required,
     total: data.cart.totals.grandTotal | default(0),
+    isExpanded: data.cart.isDefault | default(false),
 } %}
 
 {% block body %}
     {% set cart = data.cart %}
     {% set itemCount = cart.items | length %}
+    {% set isExpanded = data.isExpanded %}
 
-    <div class="grid grid--nowrap">
-        <div class="col">
-            {% include molecule('mini-cart-radio', 'MultiCartWidget') with {
-                class: 'spacing-right spacing-top spacing-top--big',
-                data: {
-                    idCart: cart.idQuote,
-                    isDefault: cart.isDefault,
-                    ariaLabel: 'multi_cart_widget.aria_label.mini-cart-radio-switcher' | trans({'%cartName%': cart.name}),
-                }
-            } only %}
-        </div>
-        <div class="col col--expand">
-            <div class="grid grid--nowrap">
-                <div class="col col--sm-8 col--md-9">
+    <div class="{{ config.name }}__wrapper">
+        <a href="{{ url('cart') }}" class="{{ config.name }}__link link--no-decoration {{ isExpanded ? config.name ~ '__link--expanded' : '' }} {{ config.jsName }}__link">
+            <div class="{{ config.name }}__info">
+                <div class="{{ config.name }}__name-line">
+                    <span class="{{ config.name }}__name">{{ cart.name }}</span>
                     {% if cart.isDefault %}
-                        <a class="{{ config.name }}__title grid grid--nowrap" href="{{ path('cart') }}">
-                            <strong class="col {{ config.name }}__name"
-                                    title="{{ cart.name }}"
-                                    aria-label="{{ 'multi_cart_widget.cart.cart_name.aria_label' | trans({ '%cartName%': cart.name }) }}"
-                            >{{ cart.name }}</strong>
-                            <span class="col {{ config.name }}__marker">
-                                ({{ 'multi_cart_widget.cart.default' | trans }})
-                            </span>
-                        </a>
-                    {% else %}
-                        {% embed molecule('single-button-form') with {
-                            data: {
-                                formAction: path('multi-cart/set-default', {idQuote: cart.idQuote}),
-                                buttonText: cart.name,
-                                buttonClass: config.name ~ '__title',
-                                fieldName: 'multi_cart_set_default_form[_token]',
-                                fieldValue: csrf_token('multi_cart_set_default_form'),
-                                iconName: '',
-                            },
-                            embed: {
-                                name: config.name,
-                            },
-                        } only %}
-                            {% block text %}
-                                <strong class="{{ embed.name }}__name">{{ data.buttonText }}</strong>
-                            {% endblock %}
-                        {% endembed %}
+                        <span class="{{ config.name }}__badge">{{ 'multi_cart_widget.cart.default' | trans }}</span>
                     {% endif %}
                 </div>
-                <div class="col col--sm-4 col--md-3 text-right">
-                    <div class="grid grid--right">
-                        {% if widgetGlobalExists('QuoteApprovalStatusWidget') %}
-                            {% widget 'QuoteApprovalStatusWidget' args [cart] only %}
-                                {% block body %}
-                                    {% include molecule('quote-status') with {
-                                        class: 'col',
-                                        modifiers: [_widget.quoteStatus | lower, 'small'],
-                                        data: {
-                                            quoteStatus: _widget.quoteStatus
-                                        }
-                                    } only %}
-                                {% endblock %}
-                            {% endwidget %}
+
+            <div class="{{ config.name }}__meta {{ config.jsName }}__meta">
+                {% widget 'ProductBundleItemCounterWidget' args [cart] only %}
+                    {% block body %}
+                        <span>{{ parent() }}</span>
+                    {% endblock %}
+                {% nowidget %}
+                    <span>{{ itemCount }} {{ (itemCount == 1 ? 'multi_cart_widget.cart.item' : 'multi_cart_widget.cart.items') | trans }}</span>
+                {% endwidget %}
+
+                        {% if cart.idQuote %}
+                            <span class="{{ config.name }}__meta-dot">&middot;</span>
+                            {% widget 'SharedCartPermissionGroupWidget' args [cart] only %}{% endwidget %}
                         {% endif %}
-                        <span class="col">
-                           {{ data.total | money(true, cart.currency.code) }}<br/>
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <div class="{{ config.name }}__info grid grid--middle">
-                <div class="col grid grid--nowrap grid--middle">
-                    {% widget 'ProductBundleItemCounterWidget' args [cart] with {
-                        configName: config.name
-                    } only %}
-                        {% block body %}
-                            <span class="{{ configName }}__quantity">
-                                {{ parent() }}
-                            </span>
-                        {% endblock %}
-                    {% endwidget %}
-                    <span class="spacing-right spacing-right--big">
-                        {% widget 'SharedCartPermissionGroupWidget' args [cart] only %}{% endwidget %}
+
+                        {% if cart.priceMode is not empty %}
+                            <span class="{{ config.name }}__meta-dot">&middot;</span>
+                            {% include molecule('price-mode') with {
+                                data: {
+                                    priceMode: cart.priceMode,
+                                    showIcon: false,
+                                },
+                            } only %}
+                        {% endif %}
                     </span>
                 </div>
-                {% if cart.priceMode is not empty %}
-                    {% include molecule('price-mode') with {
-                        class: config.name ~ '__price-mode col',
-                        modifiers: ['small'],
-                        data: {
-                            priceMode: cart.priceMode
-                        }
-                    } only %}
-                {% endif %}
             </div>
-        </div>
+
+            <div class="{{ config.name }}__price-wrapper">
+                {% if cart.totals is not null and cart.currency is not null %}
+                    <span class="{{ config.name }}__price">{{ data.total | money(true, cart.currency.code) }}</span>
+                {% endif %}
+
+                <button type="button" class="{{ config.name }}__expand-btn {{ config.jsName }}__expand-btn" aria-label="{{ 'mini_cart_detail.toggle' | trans }}" onclick="event.preventDefault();">
+                    <span class="{{ config.name }}__expand-icon {{ config.name }}__expand-icon--less">
+                        {% include atom('font-icon') with {
+                            data: { name: 'expand_less' },
+                        } only %}
+                    </span>
+                    <span class="{{ config.name }}__expand-icon {{ config.name }}__expand-icon--more">
+                        {% include atom('font-icon') with {
+                            data: { name: 'expand_more' },
+                        } only %}
+                    </span>
+                </button>
+            </div>
+        </a>
     </div>
 {% endblock %}

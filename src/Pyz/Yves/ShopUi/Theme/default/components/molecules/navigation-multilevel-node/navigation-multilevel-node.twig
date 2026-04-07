@@ -7,7 +7,8 @@
 
 {% define data = {
     levelMenu: 1,
-    parentJsName: ''
+    parentJsName: '',
+    nodeIndex: 0,
 } %}
 
 {% set cssClass = data.node.cssClass is empty ? '' : ' ' ~ data.node.cssClass %}
@@ -19,68 +20,162 @@
 {% block body %}
     {{ parent() }}
 
-    {% if(data.node.children | length > 0) %}
-        <div class="menu-wrapper menu-wrapper--lvl-{{ data.levelMenu }} {{ data.parentJsName }}__wrapper is-hidden-sm-lg">
-            <ul class="menu menu--lvl-{{ data.levelMenu }}">
-                {% for childNode in data.node.children %}
-                    {% set hasChildren = childNode.children | length > 0 %}
-
-                    {% include molecule('navigation-multilevel-node') with {
-                        class: 'menu__item menu__item--lvl-' ~ data.levelMenu ~ (hasChildren ? ' menu__item--has-children-list' : ''),
-                        data: {
-                            node: childNode,
-                            levelMenu: data.levelMenu + 1,
-                            parentJsName: data.parentJsName
-                        }
-                    } only %}
-                {% endfor %}
-            </ul>
-        </div>
+    {% if data.node.children | length > 0 %}
+        {% if data.levelMenu == 1 %}
+            {% include molecule('mega-menu') with {
+                data: {
+                    node: data.node,
+                    parentJsName: data.parentJsName,
+                },
+            } only %}
+        {% else %}
+            <div class="menu-wrapper menu-wrapper--lvl-{{ data.levelMenu }} {{ data.parentJsName }}__wrapper">
+                <ul class="menu menu--lvl-{{ data.levelMenu }}">
+                    {% for childNode in data.node.children %}
+                        {% set hasChildren = childNode.children | length > 0 %}
+                        {% include molecule('navigation-multilevel-node') with {
+                            class: 'menu__item menu__item--lvl-' ~ data.levelMenu ~ (hasChildren ? ' menu__item--has-children-list' : ''),
+                            data: {
+                                node: childNode,
+                                levelMenu: data.levelMenu + 1,
+                                parentJsName: data.parentJsName
+                            }
+                        } only %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
     {% endif %}
 {% endblock %}
 
-{% block mobileTrigger %}
-   {% if(data.node.children | length > 0) %}
-       <button class="menu__trigger-button menu__trigger-button--lvl-{{ data.levelMenu - 1 }} {{ data.parentJsName }}__touch-trigger" data-toggle-target=".{{ data.parentJsName }}__wrapper" data-class-to-toggle="is-hidden-sm-lg">
-           {% include atom('icon') with {
-               class: 'menu__trigger-button-icon',
-               data: {
-                   name: 'caret-down',
-               },
-           } only %}
-       </button>
-   {% endif %}
-{% endblock %}
+{% block mobileTrigger %}{% endblock %}
 
 {% block url %}
+    {% if data.levelMenu == 1 and data.node.children | length > 0 %}
+        <button
+            type="button"
+            class="navigation-multilevel__mobile-row js-side-drawer__drill-down-trigger"
+            data-target-panel="{{ data.parentJsName }}-panel-{{ data.nodeIndex }}"
+        >
+            <span class="navigation-multilevel__mobile-row-label">{{ data.node.title }}</span>
+            <span class="navigation-multilevel__mobile-row-chevron">
+                {% include atom('font-icon') with {
+                    modifiers: ['size-inherit'],
+                    data: { name: 'chevron_right' },
+                } only %}
+            </span>
+        </button>
+    {% endif %}
     <span class="menu__trigger menu__trigger--lvl-{{ data.levelMenu - 1 }}">
-        <a class="menu__link menu__link--lvl-{{ data.levelMenu - 1 }}" href="{{ functionExists('generatePath') ? generatePath(data.node.url) : data.node.url }}">{{ data.node.title }}</a>
+        <a
+            class="menu__link menu__link--lvl-{{ data.levelMenu - 1 }}"
+            href="{{ functionExists('generatePath') ? generatePath(data.node.url) : data.node.url }}"
+        >{{ data.node.title }}</a>
 
-        {{block('mobileTrigger')}}
+        {% if data.node.children | length > 0 and data.levelMenu > 1 %}
+            <span class="menu__item-arrow">
+                {% include atom('font-icon') with {
+                    modifiers: ['size-inherit'],
+                    data: { name: 'keyboard_arrow_right' },
+                } only %}
+            </span>
+        {% endif %}
     </span>
 {% endblock %}
 
 {% block link %}
+    {% if data.levelMenu == 1 and data.node.children | length > 0 %}
+        <button
+            type="button"
+            class="navigation-multilevel__mobile-row js-side-drawer__drill-down-trigger"
+            data-target-panel="{{ data.parentJsName }}-panel-{{ data.nodeIndex }}"
+        >
+            <span class="navigation-multilevel__mobile-row-label">{{ data.node.title }}</span>
+            <span class="navigation-multilevel__mobile-row-chevron">
+                {% include atom('font-icon') with {
+                    modifiers: ['size-inherit'],
+                    data: { name: 'chevron_right' },
+                } only %}
+            </span>
+        </button>
+    {% endif %}
     <span class="menu__trigger menu__trigger--lvl-{{ data.levelMenu - 1 }}">
-        <a class="menu__link menu__link--lvl-{{ data.levelMenu - 1 }}" href="{{ functionExists('generatePath') ? generatePath(data.node.url) : data.node.url }}">{{ data.node.title }}</a>
+        <a
+            class="menu__link menu__link--lvl-{{ data.levelMenu - 1 }}"
+            href="{{ functionExists('generatePath') ? generatePath(data.node.url) : data.node.url }}"
+        >{{ data.node.title }}</a>
 
-        {{block('mobileTrigger')}}
+        {% if data.node.children | length > 0 and data.levelMenu > 1 %}
+            <span class="menu__item-arrow">
+                {% include atom('font-icon') with {
+                    modifiers: ['size-inherit'],
+                    data: { name: 'keyboard_arrow_right' },
+                } only %}
+            </span>
+        {% endif %}
     </span>
 {% endblock %}
 
 {% block externalUrl %}
+    {% if data.levelMenu == 1 and data.node.children | length > 0 %}
+        <button
+            type="button"
+            class="navigation-multilevel__mobile-row js-side-drawer__drill-down-trigger"
+            data-target-panel="{{ data.parentJsName }}-panel-{{ data.nodeIndex }}"
+        >
+            <span class="navigation-multilevel__mobile-row-label">{{ data.node.title }}</span>
+            <span class="navigation-multilevel__mobile-row-chevron">
+                {% include atom('font-icon') with {
+                    modifiers: ['size-inherit'],
+                    data: { name: 'chevron_right' },
+                } only %}
+            </span>
+        </button>
+    {% endif %}
     <span class="menu__trigger menu__trigger--lvl-{{ data.levelMenu - 1 }}">
-        <a class="menu__link menu__link--lvl-{{ data.levelMenu - 1 }}" href="{{ data.node.url }}" target="_blank">{{ data.node.title }}</a>
+        <a
+            class="menu__link menu__link--lvl-{{ data.levelMenu - 1 }}"
+            href="{{ data.node.url }}"
+            target="_blank"
+        >{{ data.node.title }}</a>
 
-        {{block('mobileTrigger')}}
+        {% if data.node.children | length > 0 and data.levelMenu > 1 %}
+            <span class="menu__item-arrow">
+                {% include atom('font-icon') with {
+                    modifiers: ['size-inherit'],
+                    data: { name: 'keyboard_arrow_right' },
+                } only %}
+            </span>
+        {% endif %}
     </span>
 {% endblock %}
 
 {% block other %}
+    {% if data.levelMenu == 1 and data.node.children | length > 0 %}
+        <button
+            type="button"
+            class="navigation-multilevel__mobile-row js-side-drawer__drill-down-trigger"
+            data-target-panel="{{ data.parentJsName }}-panel-{{ data.nodeIndex }}"
+        >
+            <span class="navigation-multilevel__mobile-row-label">{{ data.node.title }}</span>
+            <span class="navigation-multilevel__mobile-row-chevron">
+                {% include atom('font-icon') with {
+                    modifiers: ['size-inherit'],
+                    data: { name: 'chevron_right' },
+                } only %}
+            </span>
+        </button>
+    {% endif %}
     <span class="menu__trigger menu__trigger--lvl-{{ data.levelMenu - 1 }}">
         <span class="menu__text menu__text--lvl-{{ data.levelMenu - 1 }}">{{ data.node.title }}</span>
 
-        {{block('mobileTrigger')}}
+        {% if data.node.children | length > 0 and data.levelMenu > 1 %}
+            <span class="menu__item-arrow">
+                {% include atom('font-icon') with {
+                    modifiers: ['size-inherit'],
+                    data: { name: 'keyboard_arrow_right' },
+                } only %}
+            </span>
+        {% endif %}
     </span>
 {% endblock %}
-

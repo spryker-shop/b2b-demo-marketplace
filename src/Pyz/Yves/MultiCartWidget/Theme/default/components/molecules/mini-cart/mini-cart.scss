@@ -1,0 +1,52 @@
+@import '~src/ShopUi/styles/panel-dropdown';
+
+@mixin shop-ui-mini-cart($name: '.mini-cart') {
+    @include shop-ui-panel-dropdown($name) {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+
+        @include helper-breakpoint-media-min($xl) {
+            display: block;
+            height: auto;
+        }
+
+        &__header {
+            flex-shrink: 0;
+        }
+
+        &__divider {
+            flex-shrink: 0;
+        }
+
+        &__rows {
+            flex: 1;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        &__row {
+            padding: 0;
+        }
+
+        &__row--active {
+            padding: 0;
+        }
+
+        &__footer {
+            flex-shrink: 0;
+            border-top: rem(1) solid var(--border-subtle);
+            padding: var(--scale-16) var(--scale-16);
+
+            @include helper-breakpoint-media-min($xl) {
+                flex-shrink: initial;
+                border-top: none;
+                padding: var(--scale-12) var(--scale-16);
+            }
+        }
+
+        @content;
+    }
+}
+
+@include shop-ui-mini-cart;

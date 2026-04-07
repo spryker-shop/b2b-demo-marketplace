@@ -6,71 +6,14 @@
 
 {% define config = {
     name: data.parentName,
-    jsName: 'js-' ~ data.parentName,
 } %}
 
-{% block separatorCartItem %}{% endblock %}
-
-{% block menuItem %}{% endblock %}
-
-{% block contentInner %}
-    {% embed molecule('cart-counter') with {
-        class: config.jsName ~ '__trigger',
+{% block contentOuter %}
+    {% include molecule('mini-cart', 'MultiCartWidget') with {
         data: {
-            quantity: data.cartQuantity,
-        },
-        attributes: {
-            'data-toggle-target': '.' ~ config.jsName ~ '__sub-nav-cart',
-        },
-        embed: {
-            parentConfigName: config.name,
+            activeCart: data.activeCart,
+            carts: data.carts,
+            isMultiCartAllowed: data.isMultiCartAllowed,
         },
     } only %}
-        {% block content %}
-            {% set linkClass = embed.parentConfigName ~ '__link' %}
-            {{ parent() }}
-        {% endblock %}
-    {% endembed %}
-
-    <div class="{{ config.name }}__sub-nav {{ config.name }}__sub-nav--pull-left spacing spacing--inner spacing--reset {{ config.jsName }}__sub-nav-cart">
-        <button class="{{ config.name }}__sub-nav-close {{ config.jsName }}__trigger" data-toggle-target='.{{ config.jsName }}__sub-nav-cart'>
-            {% include atom('icon') with {
-                data: {
-                    name: 'cross',
-                },
-            } only %}
-        </button>
-
-        <h4 class="{{ config.name }}__sub-nav-title">
-            {{ 'multi_cart_widget.cart.carts'|trans }}
-        </h4>
-
-        <div class="{{ config.name }}__sub-nav-inner">
-            {% set menuClassName = 'menu menu--wide' %}
-            {% set menuItemClassName = 'menu__item' %}
-
-            {{ block('cartList') }}
-        </div>
-
-        <div class="{{ config.name }}__sub-nav-actions">
-            <div class="grid grid--gap grid--justify grid--nowrap-lg-only">
-                <div class="col col--bottom-indent col--mobile-expand">
-                    <a class="button button--mobile-tight button--expand button--hollow spacing-right spacing-right--big" href="{{ path('multi-cart') }}">
-                        {{ 'multi_cart_widget.cart.view_all' | trans }}
-                    </a>
-                </div>
-                <div class="col col--bottom-indent col--mobile-expand">
-                    <a class="button button--mobile-tight button--expand" href="{{ url('multi-cart/create') }}">
-                        {% include atom('icon') with {
-                            modifiers: ['create-new-cart'],
-                            data: {
-                                name: 'create-new-cart',
-                            },
-                        } only %}
-                        {{ 'multi_cart_widget.cart.add' | trans }}
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
 {% endblock %}

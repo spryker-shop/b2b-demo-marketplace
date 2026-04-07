@@ -1,0 +1,33 @@
+@import '~src/ShopUi/styles/panel-dropdown';
+
+@include shop-ui-nav-pill('.header-cart-pill', rem(429)) {
+    &__trigger {
+        @include helper-effect-transition(background-color);
+        display: flex;
+        align-items: center;
+        gap: var(--scale-2);
+        height: rem(50);
+        padding: var(--scale-8) var(--scale-12);
+        border-radius: var(--radius-md);
+        border: none;
+        background: var(--background-surface);
+        cursor: pointer;
+        text-decoration: none;
+        color: var(--text-primary);
+        overflow: hidden;
+
+        &:hover,
+        &:focus-visible {
+            background-color: var(--background-subtle);
+        }
+
+        &:focus-visible {
+            outline: var(--stroke-md) solid var(--focus-ring);
+            outline-offset: var(--stroke-md);
+        }
+
+        .cart-trigger__icon {
+            font-size: rem(20);
+        }
+    }
+}

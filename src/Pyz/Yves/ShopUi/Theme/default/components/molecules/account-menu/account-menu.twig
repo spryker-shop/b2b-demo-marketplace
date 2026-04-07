@@ -1,0 +1,61 @@
+{% extends model('component') %}
+{% import _self as self %}
+
+{% define config = {
+    name: 'account-menu',
+} %}
+
+{% define data = {
+    tabs: [],
+} %}
+
+{% macro menuRow(item, name) %}
+    <a href="{{ item.url }}" class="{{ name }}__row{% if item.isDanger | default(false) %} {{ name }}__row--danger{% endif %}">
+        {% include atom('font-icon') with {
+            class: name ~ '__row-icon',
+            data: {
+                name: item.icon,
+            },
+        } only %}
+        <span class="{{ name }}__row-label">{{ item.label | trans }}</span>
+    </a>
+{% endmacro %}
+
+{% block body %}
+    {% block customContent %}
+        {% if data.tabs | length == 1 %}
+            {% set tab = data.tabs | first %}
+            <div class="{{ config.name }}__list">
+                {% for item in tab.items %}
+                    {{ self.menuRow(item, config.name) }}
+                {% endfor %}
+            </div>
+        {% elseif data.tabs | length > 1 %}
+            {% set tabItems = [] %}
+
+            {% for tab in data.tabs %}
+                {% set tabContent %}
+                    {% for item in tab.items %}
+                        {{ self.menuRow(item, config.name) }}
+                    {% endfor %}
+                {% endset %}
+
+                {% set tabItems = tabItems | merge([{
+                    id: tab.id,
+                    label: {
+                        text: tab.label,
+                    },
+                    content: tabContent,
+                }]) %}
+            {% endfor %}
+
+            {% include molecule('spr-tabs') with {
+                modifiers: ['with-bar', 'account-menu', 'sm'],
+                data: {
+                    items: tabItems,
+                    activeTab: (data.tabs | first).id | default(''),
+                },
+            } only %}
+        {% endif %}
+    {% endblock %}
+{% endblock %}
