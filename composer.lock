@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "40e7d862128e7ae3f48ed87fe9ed4a5d",
+    "content-hash": "e71713eb1ce3eff3591d66f8855a368c",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -9600,7 +9600,7 @@
         },
         {
             "name": "spryker-feature/ai-commerce",
-            "version": "0.3.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/ai-commerce.git",
@@ -9649,6 +9649,7 @@
                 "spryker/router": "Required for SearchByImageRouteProviderPlugin to register search by image routes in Yves.",
                 "spryker/twig": "When using AiCommerceTwigPlugin"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -9666,7 +9667,7 @@
             ],
             "description": "AiCommerce module",
             "support": {
-                "source": "https://github.com/spryker-feature/ai-commerce/tree/0.3.0"
+                "source": "https://github.com/spryker-feature/ai-commerce/tree/master"
             },
             "time": "2026-04-03T10:46:11+00:00"
         },
@@ -91520,6 +91521,7 @@
     ],
     "minimum-stability": "dev",
     "stability-flags": {
+        "spryker-feature/ai-commerce": 20,
         "spryker-feature/customer-account-management": 20,
         "spryker-feature/marketplace-merchantportal-core": 20,
         "spryker-feature/product": 20,
