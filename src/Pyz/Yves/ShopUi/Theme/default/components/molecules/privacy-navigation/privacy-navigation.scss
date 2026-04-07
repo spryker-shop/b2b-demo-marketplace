@@ -1,8 +1,8 @@
 .privacy-navigation {
     text-align: left;
-    padding-top: rem(10);
-    padding-left: $setting-grid-space;
-    padding-right: $setting-grid-space;
+    padding-top: var(--scale-12);
+    padding-left: var(--scale-16);
+    padding-right: var(--scale-16);
     order: 2;
     width: 100%;
     display: flex;
@@ -18,15 +18,15 @@
     }
 
     &__item {
-        padding: 0 rem(8);
-        margin-bottom: rem(5);
+        padding: 0 var(--scale-8);
+        margin-bottom: var(--scale-4);
 
         @include helper-breakpoint-media-min($lg) {
             padding: 0;
         }
 
         &:not(:first-child) {
-            padding-top: 5px;
+            padding-top: var(--scale-4);
         }
     }
 }

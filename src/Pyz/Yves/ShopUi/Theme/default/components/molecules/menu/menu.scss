@@ -57,7 +57,7 @@
             }
 
             &--footer {
-                margin: rem(16) rem(8) 0;
+                margin: var(--scale-16) var(--scale-8) 0;
 
                 @include helper-breakpoint-media-min($lg) {
                     margin-top: 0;
@@ -65,7 +65,7 @@
             }
 
             &--social {
-                margin: 0 rem(8);
+                margin: 0 var(--scale-8);
 
                 &:first-child {
                     margin-left: 0;
@@ -80,8 +80,8 @@
         &--footer {
             display: flex;
             flex-wrap: wrap;
-            margin: 0 rem(-8) rem(26);
-            padding: 0 rem(20);
+            margin: 0 calc(-1 * var(--scale-8)) var(--scale-24);
+            padding: 0 var(--scale-20);
             justify-content: center;
 
             @include helper-breakpoint-media-min($md) {

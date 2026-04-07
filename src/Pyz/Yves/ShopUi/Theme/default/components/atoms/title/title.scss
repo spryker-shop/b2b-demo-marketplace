@@ -1,13 +1,15 @@
 @include shop-ui-title {
     &--footer {
-        font: fw(bold) rem(var(--fontsize-2)) / rem(50) $setting-font-family;
+        font-weight: var(--heading-sm-weight);
+        font-size: var(--heading-sm-size);
+        line-height: var(--heading-sm-line-height);
+        font-family: var(--heading-sm-family);
         position: relative;
         text-transform: capitalize;
         display: block;
 
         @include helper-breakpoint-media-min($md) {
-            line-height: rem(34);
-            margin-bottom: rem(10);
+            margin-bottom: var(--scale-12);
         }
     }
 

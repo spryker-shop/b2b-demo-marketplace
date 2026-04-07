@@ -1,10 +1,10 @@
 @mixin shop-ui-navigation-footer-item($name: '.navigation-footer-item') {
     #{$name} {
-        border-top: solid 1px $setting-color-white;
+        border-top: solid var(--stroke-sm) var(--border-subtle);
 
         @include helper-breakpoint-media-min($md) {
             border-top: 0;
-            padding-bottom: 1.5rem;
+            padding-bottom: var(--scale-24);
         }
 
         @include helper-breakpoint-media-min($lg) {

@@ -1,45 +1,45 @@
 @mixin shop-ui-footer($name: '.footer') {
     #{$name} {
-        background-color: $setting-color-gray-7;
+        background-color: var(--background-subtle);
 
         &__subscribe {
             @include helper-breakpoint-media-min($md) {
-                padding-top: rem(20);
-                padding-bottom: rem(32);
+                padding-top: var(--scale-20);
+                padding-bottom: var(--scale-32);
             }
 
             @include helper-breakpoint-media-min($lg) {
-                padding-top: rem(50);
-                padding-bottom: rem(50);
+                padding-top: var(--scale-48);
+                padding-bottom: var(--scale-48);
             }
 
             @include helper-breakpoint-media-min($xl) {
-                padding-top: rem(77);
-                padding-bottom: rem(77);
+                padding-top: var(--scale-64);
+                padding-bottom: var(--scale-64);
             }
         }
 
         &__logos {
             @include helper-breakpoint-media-min($md) {
-                background-color: $setting-color-bg;
-                padding: 0.5rem 0 0;
+                background-color: var(--background-surface);
+                padding: var(--scale-8) 0 0;
                 box-shadow:
-                    0 3px 3px 0 $setting-color-shadow-1,
-                    0 18px 18px 0 $setting-color-shadow-1;
+                    0 3px 3px 0 var(--shadows-sm-color),
+                    0 18px 18px 0 var(--shadows-sm-color);
             }
 
             @include helper-breakpoint-media-min($lg) {
-                padding: rem(26) 0;
+                padding: var(--scale-24) 0;
             }
         }
 
         &__navigation {
             @include helper-breakpoint-media-min($md) {
-                padding-top: rem(35);
+                padding-top: var(--scale-32);
             }
 
             @include helper-breakpoint-media-min($lg) {
-                padding-top: rem(54);
+                padding-top: var(--scale-48);
             }
         }
 
@@ -47,7 +47,7 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
-            border-top: solid 1px $setting-color-white;
+            border-top: solid var(--stroke-sm) var(--border-subtle);
 
             .title {
                 width: 100%;
@@ -72,60 +72,60 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: $setting-color-gray-5;
-            font-size: rem(14);
-            font-weight: fw(medium);
+            color: var(--text-secondary);
+            font-size: var(--body-md-size);
+            font-weight: var(--font-weight-medium);
             text-align: center;
-            width: calc(50% - #{rem(10)});
-            min-height: rem(70);
-            border: solid 1px $setting-color-gray-2;
-            border-radius: $setting-border-radius;
+            width: calc(50% - var(--scale-12));
+            min-height: var(--scale-64);
+            border: solid var(--stroke-sm) var(--border-default);
+            border-radius: var(--radius-sm);
 
             @include helper-breakpoint-media-min($lg) {
                 display: block;
                 width: 100%;
                 min-height: 0;
                 border: none;
-                font-size: rem(15);
+                font-size: var(--body-md-size);
                 text-align: left;
             }
 
             @include helper-breakpoint-media-min($xl) {
-                font-size: rem(18);
-                line-height: rem(23);
+                font-size: var(--body-lg-size);
+                line-height: var(--body-lg-line-height);
             }
         }
 
         &__phone {
             @include helper-breakpoint-media-min($lg) {
                 display: block;
-                margin-bottom: 1rem;
-                color: $setting-color-gray-4;
+                margin-bottom: var(--scale-16);
+                color: var(--text-tertiary);
             }
 
             &:hover,
             &:focus {
-                color: $setting-color-gray-3;
+                color: var(--text-tertiary);
             }
         }
 
         &__social-buttons {
-            margin-top: rem(31);
-            margin-bottom: rem(23);
+            margin-top: var(--scale-32);
+            margin-bottom: var(--scale-24);
             flex-direction: column-reverse;
 
             @include helper-breakpoint-media-min($md) {
-                margin-top: rem(42);
-                margin-bottom: rem(47);
+                margin-top: var(--scale-40);
+                margin-bottom: var(--scale-48);
                 flex-direction: row;
             }
         }
 
         &__hint {
-            font-size: rem(13);
+            font-size: var(--body-sm-size);
             text-align: center;
-            letter-spacing: rem(0.54);
-            padding-bottom: rem(12);
+            letter-spacing: var(--body-sm-letter-spacing);
+            padding-bottom: var(--scale-12);
 
             @include helper-breakpoint-media-min($md) {
                 text-align: left;
@@ -133,9 +133,9 @@
         }
 
         &__thanks-certeo {
-            font-size: rem(13);
+            font-size: var(--body-sm-size);
             text-align: center;
-            letter-spacing: rem(0.54);
+            letter-spacing: var(--body-sm-letter-spacing);
 
             @include helper-breakpoint-media-min($md) {
                 text-align: left;
@@ -143,9 +143,9 @@
         }
 
         &__copyright {
-            background-color: $setting-color-blue-1;
+            background-color: var(--background-brand-primary);
             text-align: center;
-            color: $setting-color-white;
+            color: var(--text-inverse);
         }
 
         @content;

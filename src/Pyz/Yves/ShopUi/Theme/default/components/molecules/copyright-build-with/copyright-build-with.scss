@@ -1,10 +1,13 @@
 @mixin shop-ui-copyright-build-with($name: '.copyright-build-with') {
     #{$name} {
-        font: fw(bold) rem(12) / rem(15) $setting-font-family;
-        letter-spacing: rem(0.67);
+        font-weight: var(--font-weight-bold);
+        font-size: var(--label-sm-size);
+        line-height: var(--label-sm-line-height);
+        font-family: var(--label-sm-family);
+        letter-spacing: var(--label-sm-letter-spacing);
         text-transform: uppercase;
-        padding-top: rem(19);
-        padding-bottom: rem(21);
+        padding-top: var(--scale-20);
+        padding-bottom: var(--scale-20);
         position: relative;
         display: flex;
         flex-wrap: wrap;
@@ -12,16 +15,16 @@
         justify-content: center;
 
         &__text {
-            margin-right: rem(18);
-            padding-top: rem(12);
+            margin-right: var(--scale-16);
+            padding-top: var(--scale-12);
         }
 
         &__link {
-            color: $setting-color-white;
+            color: var(--text-inverse);
 
             &:hover,
             &:focus {
-                color: $setting-color-white;
+                color: var(--text-inverse);
             }
         }
     }
