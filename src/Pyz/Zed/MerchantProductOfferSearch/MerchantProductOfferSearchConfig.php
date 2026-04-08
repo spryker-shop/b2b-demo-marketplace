@@ -9,7 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\MerchantProductOfferSearch;
 
-use Spryker\Shared\Publisher\PublisherConfig;
+use Spryker\Shared\MerchantProductOfferSearch\MerchantProductOfferSearchConfig as SprykerSharedMerchantProductOfferSearchConfig;
 use Spryker\Zed\MerchantProductOfferSearch\MerchantProductOfferSearchConfig as SprykerMerchantProductOfferSearchConfig;
 
 class MerchantProductOfferSearchConfig extends SprykerMerchantProductOfferSearchConfig
@@ -19,7 +19,7 @@ class MerchantProductOfferSearchConfig extends SprykerMerchantProductOfferSearch
      */
     public function getMerchantEventQueueName(): ?string
     {
-        return PublisherConfig::PUBLISH_QUEUE;
+        return SprykerSharedMerchantProductOfferSearchConfig::PUBLISH_MERCHANT_PRODUCT_OFFER_QUEUE;
     }
 
     /**
@@ -27,6 +27,6 @@ class MerchantProductOfferSearchConfig extends SprykerMerchantProductOfferSearch
      */
     public function getMerchantProductOfferEventQueueName(): ?string
     {
-        return PublisherConfig::PUBLISH_QUEUE;
+        return SprykerSharedMerchantProductOfferSearchConfig::PUBLISH_MERCHANT_PRODUCT_OFFER_QUEUE;
     }
 }

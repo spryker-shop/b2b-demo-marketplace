@@ -42,6 +42,7 @@ use Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\CategoryTree\Cate
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\CategoryTree\CategoryTreeWriteForPublishingPublisherPlugin;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\CategoryTreePublisherTriggerPlugin;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\ParentWritePublisherPlugin;
+use Spryker\Zed\Configuration\Communication\Plugin\Publisher\ConfigurationValueWritePublisherPlugin;
 use Spryker\Zed\CustomerAccessStorage\Communication\Plugin\Publisher\CustomerAccessPublisherTriggerPlugin;
 use Spryker\Zed\CustomerStorage\Communication\Plugin\Publisher\Customer\CustomerInvalidatedWritePublisherPlugin;
 use Spryker\Zed\FileManagerStorage\Communication\Plugin\Publisher\FileManagerPublisherTriggerPlugin;
@@ -253,6 +254,7 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
             $this->getProductOfferServicePointStoragePlugins(),
             $this->getProductOfferShipmentTypeStoragePlugins(),
             $this->getAlgoliaPlugins(),
+            $this->getConfigurationStoragePlugins(),
         );
     }
 
@@ -842,6 +844,16 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
             new AlgoliaProductConcreteDeletePublisherPlugin(),
             new ProductCategoryProductUpdatedEventTriggerPlugin(),
             new ProductLabelProductUpdatedEventTriggerPlugin(),
+        ];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface>
+     */
+    protected function getConfigurationStoragePlugins(): array
+    {
+        return [
+            new ConfigurationValueWritePublisherPlugin(),
         ];
     }
 }

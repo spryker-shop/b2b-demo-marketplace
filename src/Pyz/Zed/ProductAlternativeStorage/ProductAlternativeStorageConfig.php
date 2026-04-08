@@ -10,7 +10,7 @@ declare(strict_types = 1);
 namespace Pyz\Zed\ProductAlternativeStorage;
 
 use Pyz\Zed\Synchronization\SynchronizationConfig;
-use Spryker\Shared\Publisher\PublisherConfig;
+use Spryker\Shared\ProductAlternativeStorage\ProductAlternativeStorageConfig as SprykerSharedProductAlternativeStorageConfig;
 use Spryker\Zed\ProductAlternativeStorage\ProductAlternativeStorageConfig as SprykerProductAlternativeStorageConfig;
 
 class ProductAlternativeStorageConfig extends SprykerProductAlternativeStorageConfig
@@ -36,7 +36,7 @@ class ProductAlternativeStorageConfig extends SprykerProductAlternativeStorageCo
      */
     public function getProductAlternativeEventQueueName(): ?string
     {
-        return PublisherConfig::PUBLISH_QUEUE;
+        return SprykerSharedProductAlternativeStorageConfig::PUBLISH_PRODUCT_ALTERNATIVE_QUEUE;
     }
 
     /**
@@ -44,6 +44,6 @@ class ProductAlternativeStorageConfig extends SprykerProductAlternativeStorageCo
      */
     public function getProductReplacementForEventQueueName(): ?string
     {
-        return PublisherConfig::PUBLISH_QUEUE;
+        return SprykerSharedProductAlternativeStorageConfig::PUBLISH_PRODUCT_ALTERNATIVE_QUEUE;
     }
 }
