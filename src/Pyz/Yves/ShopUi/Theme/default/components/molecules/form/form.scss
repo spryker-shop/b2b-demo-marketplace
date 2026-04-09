@@ -123,19 +123,13 @@ $address-form-width: rem(710);
     }
 
     &--subscription {
-        padding-bottom: rem(32);
-
-        @include helper-breakpoint-media-min($md) {
-            padding-bottom: 0;
-        }
-
         #{$name}__container {
-            position: relative;
+            display: flex;
+            gap: var(--scale-8);
         }
 
-        #{$name}__fields,
-        #{$name}__actions,
-        #{$name}__action {
+        #{$name}__fields {
+            flex: 1;
             margin: 0;
         }
 
@@ -143,10 +137,9 @@ $address-form-width: rem(710);
             padding: 0;
         }
 
-        #{$name}__actions {
-            position: absolute;
-            right: 0;
-            bottom: 0;
+        #{$name}__actions,
+        #{$name}__action {
+            margin: 0;
         }
 
         .label {
@@ -154,44 +147,32 @@ $address-form-width: rem(710);
         }
 
         .input {
-            border-radius: 0;
-            border: none;
-            border-bottom: 2px solid $setting-color-gray-4;
-            background-color: $setting-color-transparent;
-            font-size: rem(16);
-            line-height: rem(20);
-            letter-spacing: rem(0.2);
-            color: $setting-color-gray-4;
-            padding: rem(10) rem(36) rem(10) 0;
+            border-radius: var(--radius-sm);
+            border: solid var(--stroke-sm) var(--input-border-default);
+            background-color: var(--input-background-default);
+            font-size: var(--body-md-size);
+            line-height: var(--body-md-line-height);
+            letter-spacing: var(--font-letter-spacing-normal);
+            color: var(--input-text-value);
+            padding: var(--scale-8) var(--scale-16);
 
             &::placeholder {
-                color: $setting-color-gray-4;
-                opacity: 1;
-            }
-
-            @include helper-breakpoint-media-min($lg) {
-                font-size: rem(18);
-                line-height: rem(23);
-                letter-spacing: rem(0.27);
-                padding: rem(13) rem(46) rem(16) 0;
+                color: var(--input-text-placeholder);
             }
         }
 
         .button {
-            color: $setting-color-gray-4;
-            min-height: rem(42);
-            padding-right: rem(10);
-            padding-bottom: rem(10);
+            color: var(--text-inverse);
+            background-color: transparent;
+            border: solid var(--stroke-sm) var(--border-subtle);
+            border-radius: var(--radius-sm);
+            padding: var(--scale-8);
+            min-height: 0;
 
             &:hover,
             &:focus {
-                color: $setting-color-gray-3;
-            }
-
-            @include helper-breakpoint-media-min($lg) {
-                min-height: rem(54);
-                padding-right: rem(22);
-                padding-bottom: rem(10);
+                color: var(--text-inverse);
+                border-color: var(--border-default);
             }
         }
     }

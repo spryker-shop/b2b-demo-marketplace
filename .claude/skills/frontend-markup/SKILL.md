@@ -224,3 +224,150 @@ The `::after` fills the visual gap — the mouse stays within the trigger's hit 
 {# Material Design font icon #}
 {% include atom('font-icon') with { data: { name: 'arrow_forward' } } only %}
 ```
+
+## Footer payment strip
+
+Desktop/tablet payment strip in the footer is rendered inside `footer__logos` and uses existing navigation templates, not a bespoke logo component.
+
+```twig
+{% block logos %}
+    <div class="{{ config.name }}__logos">
+        {% block logosInner %}
+            {% cms_slot 'slt-footer-partners' %}
+        {% endblock %}
+    </div>
+{% endblock %}
+```
+
+Project-specific styling rule:
+
+```scss
+.footer__logos {
+    .navigation-item--footer-logo,
+    .navigation-footer-item--footer-logo {
+        @include helper-breakpoint-media-min($md) {
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    .navigation-item__title--footer-logo,
+    .title--footer-logo {
+        display: block;
+        white-space: nowrap;
+        color: var(--text-secondary);
+        text-transform: none;
+    }
+
+    .menu--footer {
+        justify-content: flex-start;
+        gap: var(--scale-24);
+        margin: 0;
+        padding: 0;
+    }
+}
+```
+
+Do not hide `title--footer-logo` from `md` upward. The Figma payment strip keeps the copy visible next to the logo list on tablet/desktop.
+
+## Footer navigation section — class name gotcha
+
+The nav columns inside `footer__navigation` are rendered by `NavigationWidget` via `navigation-list` molecule. The actual DOM class names differ from what you might expect from the component name:
+
+| What you might write | Actual DOM class |
+|---|---|
+| `.navigation-list__list--footer` | `.list--footer` (on `<ul>`) |
+| `.navigation-list__link--footer` | `.link--footer` (on `<a>`) |
+| `.navigation-footer-item` | `.navigation-item` (on the column wrapper) |
+
+`renderClass('list', ['secondary', 'footer'])` → `list list--secondary list--footer`
+`renderClass('link', ['secondary', 'footer'])` → `link link--secondary link--footer`
+
+**Rule:** Always scope these inside `.footer__navigation` to avoid bleeding into other navigation contexts.
+
+```scss
+.footer__navigation {
+    .navigation-item {
+        display: flex;
+        flex-direction: column;
+        gap: var(--scale-20);
+    }
+
+    .list--footer {
+        display: flex;
+        flex-direction: column;
+        gap: var(--scale-8);
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .link--footer {
+        font-size: var(--body-md-size);
+        font-weight: var(--font-weight-regular);
+        line-height: var(--body-md-line-height);
+        color: var(--text-primary);
+        text-decoration: none;
+    }
+}
+```
+
+## Footer navigation — mobile accordion override
+
+The `NavigationWidget` wraps each nav list in a `<div class="js-*__target is-hidden-sm-only">` which is `display:none` on mobile. When the toggler icon is hidden (per Figma — no chevron), the lists become permanently invisible on mobile.
+
+Fix: force-show the target wrappers inside `__navigation`:
+
+```scss
+&__navigation {
+    .toggler-accordion__icon {
+        display: none;
+    }
+
+    [class*='__target'] {
+        display: block;
+    }
+}
+```
+
+## Hiding custom elements inside flex containers — use class selector, not element tag
+
+Spryker custom elements (e.g. `toggler-accordion`) extend `Component` which adds the `custom-element` class. That class carries `.custom-element { display: block }` in the global stylesheet.
+
+**Problem:** If you try to hide the element with a bare tag selector inside a BEM block, the browser silently drops the rule from the CSSOM (custom element tag selectors are unreliable in descendant rules). The `.custom-element` class rule wins, so the element stays `display: block` — and as a zero-width flex item it still consumes gap space, pushing other flex children to wrap.
+
+**Fix:** Target the BEM class instead of the tag:
+
+```scss
+// ❌ does not work — browser ignores this rule in the CSSOM
+&__navigation {
+    toggler-accordion {
+        display: none;
+    }
+}
+
+// ✅ correct — class selector is parsed reliably and has higher specificity
+&__navigation {
+    .toggler-accordion {
+        display: none;
+    }
+}
+```
+
+This applies wherever you need to suppress a custom element inside a flex/grid container for desktop layout.
+
+## Icon modifier sizing — never use `rem(var(--*))` for dimensions
+
+`rem()` is a Sass function expecting a unitless number. Passing a CSS `var()` into it produces garbage output (e.g. a 150px SVG instead of 28px).
+
+```scss
+// ❌ broken — rem() cannot resolve a CSS custom property at build time
+height: rem(var(--scale-7));
+
+// ✅ correct — use a fixed px value or a raw CSS var without rem()
+height: 28px;
+// or if the token resolves to a known px value:
+height: var(--scale-28);
+```
+
+The `&--contact` icon modifier had this bug — it rendered as 150px tall. Fixed to explicit `width/height: 20px` with `flex-shrink: 0`.

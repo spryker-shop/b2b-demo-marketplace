@@ -6,13 +6,6 @@
 } %}
 
 {% block body %}
-
-    {% block subscribe %}
-        <div class="container {{ config.name }}__subscribe">
-            {{ render(path('newsletter/subscribe')) }}
-        </div>
-    {% endblock %}
-
     {% block logos %}
         <div class="{{ config.name }}__logos">
             {% block logosInner %}
@@ -25,20 +18,29 @@
                         title: 'global.payment_shipping' | trans,
                         category: categoryPaymentProviders,
                         template: 'navigation-providers-payment',
-                        toggleClass: config.jsName ~ '-' ~ categoryPaymentProviders,
-                    },
-                } only %}
-
-                {% include molecule('toggler-accordion') with {
-                    attributes: {
-                        'wrap-class-name': config.jsName ~ '-' ~ categoryPaymentProviders,
-                        'trigger-class-name': config.jsName ~ '-' ~ categoryPaymentProviders ~ '__trigger',
-                        'class-to-toggle': 'is-hidden-sm-only',
                     },
                 } only %}
             {% endblock %}
         </div>
     {% endblock %}
+
+    {% block subscribe %}
+        <div class="{{ config.name }}__subscribe">
+            <div class="container">
+                {{ render(path('newsletter/subscribe')) }}
+            </div>
+        </div>
+    {% endblock %}
+
+    <span class="{{ config.name }}__text">{{ 'global.build_with' | trans }}</span>
+    <a class="{{ config.name }}__link" href="{{ 'global.build_with.link' | trans }}" target="_blank">
+        {% include atom('icon') with {
+            modifiers: ['copyright'],
+            data: {
+                name: 'build-with-logo'
+            }
+        } only %}
+    </a>
 
     {% block navigation %}
         <div class="container">
@@ -68,65 +70,64 @@
                 </div>
 
                 <div class="col col--sm-12 col--lg-3 {{ config.name }}__contact-info">
-                    <strong class="title title--footer">{{ 'global.contact_us' | trans }}</strong>
-
-                    {% set phoneNumberTranslation = 'global.phone.number' | trans %}
-
-                    <a class="{{ config.name }}__contact-info-item {{ config.name }}__phone" href="tel:{{ phoneNumberTranslation }}">
+                    <div class="{{ config.name }}__contact-logo">
                         {% include atom('icon') with {
-                            modifiers: ['contact'],
+                            modifiers: ['logo'],
                             data: {
-                                name: 'cell-phone',
+                                name: 'build-with-logo',
                             },
                         } only %}
-                        {{ phoneNumberTranslation }}
-                    </a>
+                        <p class="{{ config.name }}__contact-tagline">{{ 'global.tagline' | trans }}</p>
+                        <div class="{{ config.name }}__contact-divider"></div>
+                    </div>
+
+                    <span class="{{ config.name }}__contact-info-item">
+                        {% include atom('font-icon') with {
+                            data: { name: 'location_on' },
+                        } only %}
+                        {{ 'global.address.text' | trans }}
+                    </span>
 
                     {% set emailTranslation = 'global.email.text' | trans %}
 
                     <a class="{{ config.name }}__contact-info-item" href="mailto:{{ emailTranslation }}">
-                        {% include atom('icon') with {
-                            modifiers: ['contact'],
-                            data: {
-                                name: 'email',
-                            },
+                        {% include atom('font-icon') with {
+                            data: { name: 'email' },
                         } only %}
                         {{ emailTranslation }}
                     </a>
+
+                    {% set phoneNumberTranslation = 'global.phone.number' | trans %}
+
+                    <a class="{{ config.name }}__contact-info-item" href="tel:{{ phoneNumberTranslation }}">
+                        {% include atom('font-icon') with {
+                            data: { name: 'call' },
+                        } only %}
+                        {{ phoneNumberTranslation }}
+                    </a>
                 </div>
             </div>
-
-            {% block social %}
-                <div class="grid grid--gap grid--middle {{ config.name }}__social-buttons">
-                    <div class="col col--sm-12 col--md-7 col--lg-9">
-                        <div class="{{ config.name }}__hint">
-                            * {{ 'global.hint' | trans }}
-                        </div>
-                        <div class="{{ config.name }}__thanks-certeo">
-                            {{ 'global.thank_certeo' | trans }}
-                        </div>
-                    </div>
-
-                    {% block socialLinks %}
-                        {% include molecule('navigation-footer-item') with {
-                            modifiers: ['social'],
-                            class: 'col col--sm-12 col--md-5 col--lg-3',
-                            data: {
-                                category: 'SOCIAL_LINKS',
-                                template: 'navigation-social',
-                            },
-                        } only %}
-                    {% endblock %}
-                </div>
-            {% endblock %}
         </div>
     {% endblock %}
 
     {% block copyright %}
         <div class="{{ config.name }}__copyright">
             {% include molecule('copyright-build-with') with {
-                class: 'container'
+                class: 'container',
+                data: {
+                    socials: block('socialLinks')
+                }
             } only %}
         </div>
     {% endblock %}
+{% endblock %}
+
+{% block socialLinks %}
+    {% include molecule('navigation-footer-item') with {
+        modifiers: ['social'],
+        data: {
+            category: 'SOCIAL_LINKS',
+            template: 'navigation-social',
+        },
+    } only %}
 {% endblock %}

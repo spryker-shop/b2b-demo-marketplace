@@ -42,13 +42,9 @@ $shop-ui-icon-size-bigger: 1.5rem;
     }
 
     &--contact {
-        width: rem(22);
-        height: rem(var(--scale-7));
-        margin-bottom: rem(var(--scale-4));
-
-        @include helper-breakpoint-media-min($lg) {
-            display: none;
-        }
+        flex-shrink: 0;
+        width: rem(20);
+        height: rem(20);
     }
 
     &--cross {

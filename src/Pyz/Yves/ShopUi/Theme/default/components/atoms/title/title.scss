@@ -15,32 +15,27 @@
 
     &--footer-logo {
         margin-bottom: 0;
+        color: var(--text-secondary);
+        font-family: var(--body-md-family);
+        font-size: var(--body-md-size);
+        font-weight: var(--font-weight-regular);
+        line-height: var(--body-md-line-height);
+        letter-spacing: var(--body-md-letter-spacing);
+        text-transform: none;
 
         @include helper-breakpoint-media-min($md) {
-            display: none;
+            display: block;
         }
     }
 
     &--subscription {
-        font: fw(bold) rem(var(--fontsize-2)) / rem(50) $setting-font-family;
+        font-family: var(--heading-sm-family);
+        font-size: var(--heading-sm-size);
+        font-weight: var(--heading-sm-weight);
+        line-height: var(--heading-sm-line-height);
+        letter-spacing: var(--heading-sm-letter-spacing);
         position: relative;
         display: block;
-
-        @include helper-breakpoint-media-min($md) {
-            font-weight: fw(medium);
-            font-size: rem(var(--fontsize-3));
-            line-height: normal;
-        }
-
-        @include helper-breakpoint-media-min($lg) {
-            font-size: rem(26);
-        }
-
-        @include helper-breakpoint-media-min($xl) {
-            font-size: rem(34);
-            line-height: rem(43);
-            letter-spacing: rem(0.3);
-        }
     }
 
     &--checkout {
