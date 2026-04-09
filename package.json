@@ -15,9 +15,9 @@
         "vendor/spryker-feature/*/assets/Zed"
     ],
     "scripts": {
-        "yves": "node ./frontend/build development",
+        "yves": "NODE_OPTIONS=\"--max-old-space-size=4096\" node ./frontend/build development",
         "yves:watch": "node ./frontend/build development-watch",
-        "yves:production": "node ./frontend/build production",
+        "yves:production": "NODE_OPTIONS=\"--max-old-space-size=4096\" node ./frontend/build production",
         "yves:help": "node ./frontend/libs/command-line-parser --help",
         "yves:stylelint": "node ./frontend/libs/stylelint.mjs",
         "yves:stylelint:fix": "node ./frontend/libs/stylelint.mjs --fix",
