@@ -88,6 +88,7 @@ use Spryker\Zed\SymfonyMessenger\Communication\Plugin\Queue\SymfonyMessengerQueu
 use Spryker\Zed\Synchronization\Communication\Plugin\Queue\SynchronizationSearchQueueMessageProcessorPlugin;
 use Spryker\Zed\Synchronization\Communication\Plugin\Queue\SynchronizationStorageQueueMessageProcessorPlugin;
 use SprykerEco\Zed\Loggly\Communication\Plugin\LogglyLoggerQueueMessageProcessorPlugin;
+use SprykerFeature\Shared\ProductExperienceManagement\ProductExperienceManagementConfig;
 
 class QueueDependencyProvider extends SprykerDependencyProvider
 {
@@ -186,6 +187,8 @@ class QueueDependencyProvider extends SprykerDependencyProvider
             ProductMeasurementUnitStorageConfig::PUBLISH_PRODUCT_MEASUREMENT_UNIT_QUEUE => new EventQueueMessageProcessorPlugin(),
             ProductPackagingUnitStorageConfig::PUBLISH_PRODUCT_PACKAGING_UNIT_QUEUE => new EventQueueMessageProcessorPlugin(),
             ProductReviewStorageConfig::PUBLISH_PRODUCT_REVIEW_STORAGE_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductExperienceManagementConfig::PUBLISH_PRODUCT_ATTRIBUTE => new EventQueueMessageProcessorPlugin(),
+            ProductExperienceManagementConfig::PRODUCT_ATTRIBUTE_SYNC_STORAGE_QUEUE => new SynchronizationStorageQueueMessageProcessorPlugin(),
             ConfigurationConstants::QUEUE_NAME_SYNC_CONFIGURATION => new SynchronizationStorageQueueMessageProcessorPlugin(),
         ];
     }

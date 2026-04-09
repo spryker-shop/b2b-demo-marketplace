@@ -46,6 +46,8 @@
 
             {{ block('rating') }}
 
+            {% block productAttributeVisibility %}{% endblock %}
+
             {% block priceContainer %}
                 {% block price %}
                     {% if can('SeePricePermissionPlugin') %}

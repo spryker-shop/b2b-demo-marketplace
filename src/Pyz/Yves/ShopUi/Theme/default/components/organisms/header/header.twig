@@ -39,9 +39,11 @@
                     {% endblock %}
                 </div>
 
+                {% set logoUrl = configurationValue('theme:logos:logos:yves_logo_url') %}
                 {% include molecule('logo') with {
                     class: config.name ~ '__logo',
                     modifiers: ['main'],
+                    attributes: logoUrl is not empty ? { src: logoUrl } : {}
                 } only %}
 
                 <div class="{{ config.name }}__search">

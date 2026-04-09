@@ -758,6 +758,36 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'root' => '/ssp-model-image',
         'path' => '',
     ],
+    'backoffice-media' => [
+        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
+        'key' => getenv('SPRYKER_S3_PUBLIC_ASSETS_KEY') ?: '',
+        'bucket' => getenv('SPRYKER_S3_PUBLIC_ASSETS_BUCKET') ?: '',
+        'secret' => getenv('SPRYKER_S3_PUBLIC_ASSETS_SECRET') ?: '',
+        'root' => '/backoffice-media',
+        'path' => '/',
+        'version' => 'latest',
+        'region' => getenv('AWS_REGION'),
+    ],
+    'storefront-media' => [
+        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
+        'key' => getenv('SPRYKER_S3_PUBLIC_ASSETS_KEY') ?: '',
+        'bucket' => getenv('SPRYKER_S3_PUBLIC_ASSETS_BUCKET') ?: '',
+        'secret' => getenv('SPRYKER_S3_PUBLIC_ASSETS_SECRET') ?: '',
+        'root' => '/storefront-media',
+        'path' => '',
+        'version' => 'latest',
+        'region' => getenv('AWS_REGION'),
+    ],
+    'merchant-portal-media' => [
+        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
+        'key' => getenv('SPRYKER_S3_PUBLIC_ASSETS_KEY') ?: '',
+        'bucket' => getenv('SPRYKER_S3_PUBLIC_ASSETS_BUCKET') ?: '',
+        'secret' => getenv('SPRYKER_S3_PUBLIC_ASSETS_SECRET') ?: '',
+        'root' => '/merchant-portal-media',
+        'path' => '',
+        'version' => 'latest',
+        'region' => getenv('AWS_REGION'),
+    ],
 ];
 $config[FileManagerConstants::STORAGE_NAME] = 'files';
 $config[SelfServicePortalConstants::STORAGE_NAME] = 'ssp-files';

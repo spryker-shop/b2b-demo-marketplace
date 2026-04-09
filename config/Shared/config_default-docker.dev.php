@@ -15,6 +15,7 @@ use Spryker\Shared\ErrorHandler\ErrorRenderer\WebExceptionErrorRenderer;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\WebHtmlErrorRenderer;
 use Spryker\Shared\Event\EventConstants;
 use Spryker\Shared\FileSystem\FileSystemConstants;
+use Spryker\Shared\Flysystem\FlysystemConstants;
 use Spryker\Shared\GlueApplication\GlueApplicationConstants;
 use Spryker\Shared\GlueBackendApiApplication\GlueBackendApiApplicationConstants;
 use Spryker\Shared\GlueStorefrontApiApplication\GlueStorefrontApiApplicationConstants;
@@ -271,4 +272,26 @@ if (!getenv('SPRYKER_S3_SSP_ASSETS_BUCKET')) {
         'path' => '/data/ssp-model-image',
     ];
 }
+
+if (!getenv('SPRYKER_S3_PUBLIC_ASSETS_BUCKET')) {
+    $publicUrl = sprintf(
+        '%s%s',
+        $config[ApplicationConstants::BASE_URL_YVES],
+        '/assets/static/images',
+    );
+
+    $localMediaFileSystemConfig = [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => APPLICATION_ROOT_DIR . '/public/Yves/assets/static/images',
+        'path' => '',
+    ];
+
+    $config[FileSystemConstants::FILESYSTEM_SERVICE]['backoffice-media'] = $localMediaFileSystemConfig;
+    $config[FileSystemConstants::FILESYSTEM_SERVICE]['storefront-media'] = $localMediaFileSystemConfig;
+    $config[FileSystemConstants::FILESYSTEM_SERVICE]['merchant-portal-media'] = $localMediaFileSystemConfig;
+    $config[FlysystemConstants::FLYSYSTEM_OPTIONS] = [
+        'public_url' => $publicUrl,
+    ];
+}
+
 $config[ContentNavigationWidgetConstants::NAVIGATION_REVALIDATION_TIME_IN_SECONDS] = 300;//5 min for local development

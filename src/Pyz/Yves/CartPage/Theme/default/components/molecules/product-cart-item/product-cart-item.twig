@@ -33,6 +33,15 @@
             <div class="{{ config.name }}__col {{ config.name }}__col--content col">
                 {{ block('title') }}
                 {{ block('info') }}
+
+                {% widget 'ProductAttributeVisibilityCartWidget' args [data.list is iterable ? null : data.list, data.listItem.idProductAbstract, data.listItem.id] only %}
+                    {% block body %}
+                        {% set attributesBadgeClassName = "badge badge--secondary spacing-right--small spacing-bottom--small" %}
+                        {{ parent() }}
+                    {% endblock %}
+                {% nowidget %}
+                {% endwidget %}
+
                 {{ block('productConfiguration') }}
                 {{ block('productInfo') }}
 

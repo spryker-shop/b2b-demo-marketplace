@@ -350,6 +350,30 @@
             ],
             "success_messages": ["✓ MerchantDependencyProvider cleaned from marketplace-specific plugins"]
         },
+        "src/Pyz/Zed/MerchantGui/MerchantGuiDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantProfileFormExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProfileContactPersonFormTabExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProfileFormTabExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProfileLegalInformationFormTabExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantStockMerchantFormExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantUserTabMerchantFormTabExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantUserViewMerchantUpdateFormViewExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProfileFormExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantStockMerchantFormExpanderPlugin" },
+                { "type": "remove_method", "method_name": "getMerchantFormTabsExpanderPlugins" },
+                { "type": "remove_method", "method_name": "getMerchantUpdateFormViewExpanderPlugins" },
+                { "type": "remove_method", "method_name": "getMerchantViewFormViewExpanderPlugins" }
+            ],
+            "success_messages": [
+                "✓ MerchantGuiDependencyProvider cleaned from marketplace-specific plugins",
+                "✓ Removed MerchantProfileFormExpanderPlugin",
+                "✓ Removed MerchantStockMerchantFormExpanderPlugin",
+                "✓ Removed getMerchantFormTabsExpanderPlugins method",
+                "✓ Removed getMerchantUpdateFormViewExpanderPlugins method",
+                "✓ Removed getMerchantViewFormViewExpanderPlugins method"
+            ]
+        },
         "src/Pyz/Zed/PriceProduct/PriceProductDependencyProvider.php": {
             "operations": [
                 { "type": "remove_use", "class_name": "MerchantRelationshipVolumePriceProductValidatorPlugin" },
@@ -723,6 +747,10 @@
         "src/Pyz/Zed/SalesOrderAmendment/SalesOrderAmendmentConfig.php": {
             "operations": [{ "type": "remove_array_value_entry", "array_value": "QuoteTransfer::MERCHANT_REFERENCE" }],
             "success_messages": ["✓ SalesOrderAmendmentConfig cleaned from marketplace-specific configuration"]
+        },
+        "src/Pyz/Zed/SelfServicePortal/SelfServicePortalConfig.php": {
+            "operations": [{ "type": "replace_string", "old_value": "'MER000008'", "new_value": "'MERSPRYKER'" }],
+            "success_messages": ["✓ SelfServicePortalConfig updated getDefaultMerchantReference to return 'MERSPRYKER'"]
         },
         "src/Pyz/Zed/MerchantSearch/MerchantSearchDependencyProvider.php": {
             "operations": [
@@ -1171,7 +1199,7 @@
     "docker_config_substitutions": {
         "data/import/common/minimal.yml": "data/import/b2b_common/minimal.yml",
         "data:import --config=data/import/local/full_${SPRYKER_REGION}.yml": "data:import --config=data/import/local/b2b_full_EU.yml",
-        "data:import --config=data/import/local/full_ROBOT.yml": "data:import --config=data/import/local/b2b_full_EU.yml",
+        "data:import --config=data/import/local/full_ROBOT.yml": "data:import --config=data/import/local/b2b_full_ROBOT.yml",
         "data:import --config=data/import/local/full_EU.yml": "data:import --config=data/import/local/b2b_full_EU.yml"
     },
     "directories_to_remove": [
@@ -1184,7 +1212,6 @@
         "src/Pyz/Zed/MerchantCommission:MerchantCommission",
         "src/Pyz/Zed/MerchantCategory:MerchantCategory",
         "src/Pyz/Zed/MerchantCommissionGui:MerchantCommissionGui",
-        "src/Pyz/Zed/MerchantGui:MerchantGui",
         "src/Pyz/Zed/MerchantOms:MerchantOms",
         "src/Pyz/Zed/MerchantOpeningHours:MerchantOpeningHours",
         "src/Pyz/Zed/MerchantOpeningHoursStorage:MerchantOpeningHoursStorage",
