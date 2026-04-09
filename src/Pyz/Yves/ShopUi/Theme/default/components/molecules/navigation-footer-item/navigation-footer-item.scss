@@ -4,38 +4,16 @@
             border-top: none;
         }
 
-        @content;
-    }
-}
-
-.footer__navigation {
-    .navigation-item {
-        display: flex;
-        flex-direction: column;
-        gap: var(--scale-20);
-    }
-
-    .list--footer {
-        display: flex;
-        flex-direction: column;
-        gap: var(--scale-8);
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    .link--footer {
-        @include helper-effect-transition(color);
-        font-size: var(--body-md-size);
-        font-weight: var(--font-weight-regular);
-        line-height: var(--body-md-line-height);
-        color: var(--text-primary);
-        text-decoration: none;
-
-        &:hover,
-        &:focus {
-            color: var(--text-secondary);
+        &--footer-logo {
+            @include helper-breakpoint-media-min($md) {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: var(--scale-32);
+            }
         }
+
+        @content;
     }
 }
 

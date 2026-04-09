@@ -2,94 +2,82 @@
     #{$name} {
         background-color: var(--background-subtle);
 
+        @include shop-ui-title() {
+            &--footer {
+                font-weight: var(--font-weight-semibold);
+                font-size: var(--label-sm-size);
+                line-height: var(--label-sm-line-height);
+                font-family: var(--label-sm-family);
+                text-transform: uppercase;
+                margin-bottom: var(--scale-12);
+            }
+        }
+
+        &__logos {
+            background-color: var(--background-page);
+            border-top: solid var(--stroke-sm) var(--border-subtle);
+            padding: var(--scale-20) 0;
+
+            @include shop-ui-title() {
+                &--footer-logo {
+                    color: var(--text-secondary);
+                    font-family: var(--body-md-family);
+                    font-size: var(--body-md-size);
+                    font-weight: var(--font-weight-regular);
+                    line-height: var(--body-md-line-height);
+                    letter-spacing: var(--body-md-letter-spacing);
+                    text-transform: none;
+                    flex-shrink: 0;
+                    margin: 0;
+                }
+            }
+
+            @include shop-ui-menu() {
+                &--footer {
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+                    gap: var(--scale-24);
+                    margin: 0;
+                    padding: 0;
+                    flex-wrap: wrap;
+                }
+
+                &__item--footer {
+                    margin: 0;
+                    width: rem(50);
+                }
+            }
+        }
+
         &__subscribe {
-            background-color: var(--background-brand-primary);
+            background: var(--forest-100);
             color: var(--text-inverse);
             padding: var(--scale-32) 0;
 
             @include helper-breakpoint-media-min($md) {
                 padding: var(--scale-40) 0;
             }
-        }
 
-        &__logos {
-            background-color: var(--background-surface);
-            border-top: solid var(--stroke-sm) var(--border-subtle);
-            border-bottom: solid var(--stroke-sm) var(--border-subtle);
-            padding: var(--scale-16) 0;
-
-            @include helper-breakpoint-media-min($md) {
-                padding: var(--scale-20) 0;
-            }
-
-            @include helper-breakpoint-media-min($lg) {
-                padding: var(--scale-24) 0;
-            }
-
-            .navigation-item--footer-logo,
-            .navigation-footer-item--footer-logo {
-                @include helper-breakpoint-media-min($md) {
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                    gap: var(--scale-32);
+            @include shop-ui-title() {
+                &--subscription {
+                    font-family: var(--heading-sm-family);
+                    font-size: var(--heading-sm-size);
+                    font-weight: var(--heading-sm-weight);
+                    line-height: var(--heading-sm-line-height);
+                    letter-spacing: var(--heading-sm-letter-spacing);
+                    position: relative;
+                    display: block;
                 }
-            }
-
-            .toggler-accordion__icon {
-                display: none;
-            }
-
-            .navigation-item--footer-logo {
-                border-top: 0;
-                padding-bottom: 0;
-            }
-
-            .navigation-footer-item__title--footer-logo {
-                flex-shrink: 0;
-                white-space: nowrap;
-            }
-
-            .menu--footer {
-                align-items: center;
-                justify-content: flex-start;
-                gap: var(--scale-24);
-                margin: 0;
-                padding: 0;
-
-                @include helper-breakpoint-media-min($md) {
-                    flex-wrap: nowrap;
-                }
-            }
-
-            .menu__item--footer {
-                margin: 0;
             }
         }
 
         &__navigation {
             background-color: var(--background-page);
-            padding-top: var(--scale-40);
-            padding-bottom: var(--scale-48);
+            padding: var(--scale-24) 0;
 
-            .title--footer {
-                font-size: var(--font-size-12);
-                font-weight: var(--font-weight-semibold);
-                line-height: var(--font-line-height-16);
-                text-transform: uppercase;
-                margin-bottom: 0;
-            }
-
-            .toggler-accordion {
-                display: none;
-            }
-
-            .toggler-accordion__icon {
-                display: none;
-            }
-
-            [class*='__target'] {
-                display: block;
+            @include helper-breakpoint-media-min($md) {
+                padding: var(--scale-40) 0;
             }
         }
 
@@ -97,13 +85,6 @@
             display: flex;
             flex-direction: column;
             gap: var(--scale-12);
-            border-top: solid var(--stroke-sm) var(--border-subtle);
-            padding-top: var(--scale-24);
-
-            @include helper-breakpoint-media-min($md) {
-                border-top: 0;
-                padding-top: 0;
-            }
         }
 
         &__contact-logo {
@@ -111,11 +92,6 @@
             flex-direction: column;
             gap: var(--scale-8);
             margin-bottom: var(--scale-8);
-
-            .icon--logo {
-                width: 122px;
-                height: 46px;
-            }
         }
 
         &__contact-tagline {
@@ -151,57 +127,58 @@
             }
         }
 
-        &__social-buttons {
-            margin-top: var(--scale-32);
-            margin-bottom: var(--scale-24);
-            flex-direction: column-reverse;
-
-            @include helper-breakpoint-media-min($md) {
-                margin-top: var(--scale-40);
-                margin-bottom: var(--scale-48);
-                flex-direction: row;
-            }
-        }
-
-        &__hint {
-            font-size: var(--body-sm-size);
-            text-align: center;
-            letter-spacing: var(--body-sm-letter-spacing);
-            padding-bottom: var(--scale-12);
-
-            @include helper-breakpoint-media-min($md) {
-                text-align: left;
-            }
-        }
-
-        &__thanks-certeo {
-            font-size: var(--body-sm-size);
-            text-align: center;
-            letter-spacing: var(--body-sm-letter-spacing);
-
-            @include helper-breakpoint-media-min($md) {
-                text-align: left;
-            }
-        }
-
         &__copyright {
             background-color: var(--background-subtle);
 
-            .menu--social {
+            &-inner {
                 display: flex;
                 align-items: center;
-                justify-content: flex-end;
-                gap: var(--scale-8);
-                margin: 0;
+                justify-content: space-between;
+                padding-top: var(--scale-16);
+                padding-bottom: var(--scale-16);
             }
 
-            .menu__item--social {
-                margin: 0;
+            @include shop-ui-menu() {
+                &--social {
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-end;
+                    gap: var(--scale-8);
+                    margin: 0;
+                    padding: 0;
+                    flex-wrap: wrap;
+                    line-height: 1;
+                }
+
+                &__item--social {
+                    margin: 0;
+                }
             }
 
-            .icon--big {
-                width: 16px;
-                height: 16px;
+            .link {
+                color: var(--icon-secondary);
+
+                &:hover {
+                    color: var(--icon-primary);
+                }
+            }
+        }
+
+        &__navigation-item {
+            .grid {
+                --grid-gap: var(--scale-24);
+
+                @include helper-breakpoint-media-min($md) {
+                    --grid-gap: var(--scale-64);
+                    justify-content: flex-end;
+                }
+            }
+
+            .navigation-item {
+                @include helper-breakpoint-media-min($md) {
+                    width: auto;
+                    max-width: 30%;
+                }
             }
         }
 

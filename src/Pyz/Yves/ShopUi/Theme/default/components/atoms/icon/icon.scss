@@ -179,23 +179,7 @@ $shop-ui-icon-size-bigger: 1.5rem;
 
     &--footer {
         height: rem(28);
-        width: rem(93);
-    }
-
-    &--invoice-logo-footer {
-        width: rem(73);
-    }
-
-    &--pay-pal-logo-footer {
-        width: rem(var(--scale-11));
-    }
-
-    &--klarna-logo-footer {
-        width: rem(68);
-    }
-
-    &--dhl-logo-footer {
-        width: rem(76);
+        width: 100%;
     }
 
     &--copyright {
@@ -293,5 +277,10 @@ $shop-ui-icon-size-bigger: 1.5rem;
         width: rem(30);
         height: rem(23);
         color: $setting-color-alt;
+    }
+
+    &--social {
+        width: rem(16);
+        height: rem(16);
     }
 }

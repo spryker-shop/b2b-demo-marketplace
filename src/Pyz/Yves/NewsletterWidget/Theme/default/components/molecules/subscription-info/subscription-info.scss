@@ -1,13 +1,18 @@
 .subscription-info {
-    &__text {
-        font-size: var(--body-md-size);
-        font-weight: var(--font-weight-regular);
-        line-height: var(--body-md-line-height);
-        margin: var(--scale-8) 0 var(--scale-16);
+    &__section {
+        display: block;
+        font-size: var(--body-sm-size);
+        font-weight: var(--body-sm-weight);
+        line-height: var(--body-sm-line-height);
+        margin-bottom: var(--scale-12);
+        text-transform: uppercase;
+    }
 
-        @include helper-breakpoint-media-min($md) {
-            margin-top: var(--scale-16);
-            margin-bottom: 0;
-        }
+    &__text {
+        display: block;
+        font-size: var(--body-md-size);
+        font-weight: var(--body-md-weight);
+        line-height: var(--body-md-line-height);
+        margin-top: var(--scale-8);
     }
 }

@@ -1,43 +1,4 @@
 @include shop-ui-title {
-    &--footer {
-        font-weight: var(--heading-sm-weight);
-        font-size: var(--heading-sm-size);
-        line-height: var(--heading-sm-line-height);
-        font-family: var(--heading-sm-family);
-        position: relative;
-        text-transform: capitalize;
-        display: block;
-
-        @include helper-breakpoint-media-min($md) {
-            margin-bottom: var(--scale-12);
-        }
-    }
-
-    &--footer-logo {
-        margin-bottom: 0;
-        color: var(--text-secondary);
-        font-family: var(--body-md-family);
-        font-size: var(--body-md-size);
-        font-weight: var(--font-weight-regular);
-        line-height: var(--body-md-line-height);
-        letter-spacing: var(--body-md-letter-spacing);
-        text-transform: none;
-
-        @include helper-breakpoint-media-min($md) {
-            display: block;
-        }
-    }
-
-    &--subscription {
-        font-family: var(--heading-sm-family);
-        font-size: var(--heading-sm-size);
-        font-weight: var(--heading-sm-weight);
-        line-height: var(--heading-sm-line-height);
-        letter-spacing: var(--heading-sm-letter-spacing);
-        position: relative;
-        display: block;
-    }
-
     &--checkout {
         font-size: rem(22);
         font-weight: fw(bold);

@@ -25,126 +25,128 @@
         {% include organism('navigation-top') only %}
     </div>
 
-    <div class="{{ config.name }}__main-bar">
-        <div class="{{ config.name }}__main-bar-inner">
-            <div class="{{ config.name }}__mobile-menu">
-                {% block mobile %}
-                    <button class="link link--no-decoration js-page-layout-main__side-drawer-trigger {{ config.name }}__hamburger" type="button" aria-label="{{ 'header.menu.open' | trans }}">
-                        {% include atom('font-icon') with {
-                            modifiers: ['size-inherit'],
-                            data: { name: 'menu' },
+    <div class="container">
+        <div class="{{ config.name }}__main-bar">
+            <div class="{{ config.name }}__main-bar-inner">
+                <div class="{{ config.name }}__mobile-menu">
+                    {% block mobile %}
+                        <button class="link link--no-decoration js-page-layout-main__side-drawer-trigger {{ config.name }}__hamburger" type="button" aria-label="{{ 'header.menu.open' | trans }}">
+                            {% include atom('font-icon') with {
+                                modifiers: ['size-inherit'],
+                                data: { name: 'menu' },
+                            } only %}
+                        </button>
+                    {% endblock %}
+                </div>
+
+                {% include molecule('logo') with {
+                    class: config.name ~ '__logo',
+                    modifiers: ['main'],
+                } only %}
+
+                <div class="{{ config.name }}__search">
+                    {% if data.showSearchForm %}
+                        {% embed molecule('search-form') with {
+                            class: config.name ~ '__search-form',
+                            modifiers: ['main-search'],
+                            attributes: {
+                                'data-search-id': 'desktop',
+                                'open-class-name': config.jsName ~ '__open-search-trigger',
+                                'close-class-name': config.jsName ~ '__close-search-trigger',
+                            },
+                            embed: {
+                                jsTriggerSearchClass: config.jsName ~ '__close-search-trigger',
+                            },
                         } only %}
-                    </button>
-                {% endblock %}
-            </div>
+                            {% block close %}
+                                {{ embed.jsTriggerSearchClass }}
+                            {% endblock %}
+                        {% endembed %}
+                    {% endif %}
+                </div>
 
-            {% include molecule('logo') with {
-                class: config.name ~ '__logo',
-                modifiers: ['main'],
-            } only %}
-
-            <div class="{{ config.name }}__search">
-                {% if data.showSearchForm %}
-                    {% embed molecule('search-form') with {
-                        class: config.name ~ '__search-form',
-                        modifiers: ['main-search'],
-                        attributes: {
-                            'data-search-id': 'desktop',
-                            'open-class-name': config.jsName ~ '__open-search-trigger',
-                            'close-class-name': config.jsName ~ '__close-search-trigger',
-                        },
-                        embed: {
-                            jsTriggerSearchClass: config.jsName ~ '__close-search-trigger',
-                        },
-                    } only %}
-                        {% block close %}
-                            {{ embed.jsTriggerSearchClass }}
-                        {% endblock %}
-                    {% endembed %}
-                {% endif %}
-            </div>
-
-            <div class="{{ config.name }}__actions">
-                {% if data.showUserMenu %}
-                    {% if is_granted('ROLE_USER') %}
-                        <div class="{{ config.name }}__actions-pills">
-                            {% widget 'MiniCartWidget' args [data.cartQuantity] only %}
-                                {% block body %}
+                <div class="{{ config.name }}__actions">
+                    {% if data.showUserMenu %}
+                        {% if is_granted('ROLE_USER') %}
+                            <div class="{{ config.name }}__actions-pills">
+                                {% widget 'MiniCartWidget' args [data.cartQuantity] only %}
+                                    {% block body %}
+                                        {% include molecule('header-cart-pill') with {
+                                            data: {
+                                                quantity: _widget.cartQuantity,
+                                            },
+                                        } only %}
+                                    {% endblock %}
+                                {% nowidget %}
                                     {% include molecule('header-cart-pill') with {
                                         data: {
-                                            quantity: _widget.cartQuantity,
+                                            quantity: data.cartQuantity,
                                         },
                                     } only %}
-                                {% endblock %}
-                            {% nowidget %}
-                                {% include molecule('header-cart-pill') with {
-                                    data: {
-                                        quantity: data.cartQuantity,
-                                    },
-                                } only %}
-                            {% endwidget %}
+                                {% endwidget %}
 
-                            {% set customerFullNameWidget = findWidget('CustomerFullNameWidget') %}
-                            {% set menuItemCompanyWidget = findWidget('MenuItemCompanyWidget') %}
+                                {% set customerFullNameWidget = findWidget('CustomerFullNameWidget') %}
+                                {% set menuItemCompanyWidget = findWidget('MenuItemCompanyWidget') %}
 
-                            <div class="{{ config.name }}__account-pill-desktop">
+                                <div class="{{ config.name }}__account-pill-desktop">
+                                    {% include molecule('header-dropdown') with {
+                                        data: {
+                                            preset: 'user-account',
+                                            userName: customerFullNameWidget.customerFullName | default(''),
+                                            companyName: menuItemCompanyWidget.companyName | default(''),
+                                        },
+                                    } only %}
+                                </div>
+                            </div>
+
+                            <div class="{{ config.name }}__mobile-cart">
+                                <button type="button" class="{{ config.name }}__mobile-cart-link js-page-layout-main__side-drawer-trigger" data-target-panel="cart-panel" aria-label="{{ 'header.cart' | trans }}{% if data.cartQuantity > 0 %}, {{ data.cartQuantity }} {{ 'header.cart.items' | trans }}{% endif %}">
+                                    {% include atom('font-icon') with {
+                                        modifiers: ['size-inherit'],
+                                        data: { name: 'shopping_cart' },
+                                    } only %}
+                                    {% if data.cartQuantity > 0 %}
+                                        <span class="{{ config.name }}__mobile-cart-badge" aria-hidden="true">{{ data.cartQuantity }}</span>
+                                    {% endif %}
+                                </button>
+                            </div>
+                        {% else %}
+                            <a href="{{ url('login', { 'redirectUri': app.request.uri }) }}"
+                            class="button {{ config.name }}__sign-in">{{ 'customer.please_login'|trans }}</a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        {% if data.showNavigation %}
+            <div class="{{ config.name }}__nav-bar" id="{{ attributes.navigationId }}">
+                <div class="{{ config.name }}__nav-bar-inner">
+                    <nav class="{{ config.name }}__nav-categories" aria-label="{{ 'shop_ui.aria_label.main.navigation' | trans }}">
+                        {% block navigation %}
+                            {% widget 'NavigationWidget' args ['MAIN_NAVIGATION', 'navigation-main'] only %}{% endwidget %}
+                        {% endblock %}
+                    </nav>
+
+                    {% if is_granted('ROLE_USER') %}
+                        <div class="{{ config.name }}__nav-quick-links">
+                            {% include molecule('header-shopping-list-pill') only %}
+
+                            {% if can('SeeCompanyMenuPermissionPlugin') %}
                                 {% include molecule('header-dropdown') with {
                                     data: {
-                                        preset: 'user-account',
-                                        userName: customerFullNameWidget.customerFullName | default(''),
-                                        companyName: menuItemCompanyWidget.companyName | default(''),
+                                        preset: 'self-service',
                                     },
                                 } only %}
-                            </div>
-                        </div>
+                            {% endif %}
 
-                        <div class="{{ config.name }}__mobile-cart">
-                            <button type="button" class="{{ config.name }}__mobile-cart-link js-page-layout-main__side-drawer-trigger" data-target-panel="cart-panel" aria-label="{{ 'header.cart' | trans }}{% if data.cartQuantity > 0 %}, {{ data.cartQuantity }} {{ 'header.cart.items' | trans }}{% endif %}">
-                                {% include atom('font-icon') with {
-                                    modifiers: ['size-inherit'],
-                                    data: { name: 'shopping_cart' },
-                                } only %}
-                                {% if data.cartQuantity > 0 %}
-                                    <span class="{{ config.name }}__mobile-cart-badge" aria-hidden="true">{{ data.cartQuantity }}</span>
-                                {% endif %}
-                            </button>
+                            <a href="{{ url('quick-order') }}" class="{{ config.name }}__nav-link">
+                                {{ 'quick-order.page-title' | trans }}
+                            </a>
                         </div>
-                    {% else %}
-                        <a href="{{ url('login', { 'redirectUri': app.request.uri }) }}"
-                           class="button {{ config.name }}__sign-in">{{ 'customer.please_login'|trans }}</a>
                     {% endif %}
-                {% endif %}
+                </div>
             </div>
-        </div>
+        {% endif %}
     </div>
-
-    {% if data.showNavigation %}
-        <div class="{{ config.name }}__nav-bar" id="{{ attributes.navigationId }}">
-            <div class="{{ config.name }}__nav-bar-inner">
-                <nav class="{{ config.name }}__nav-categories" aria-label="{{ 'shop_ui.aria_label.main.navigation' | trans }}">
-                    {% block navigation %}
-                        {% widget 'NavigationWidget' args ['MAIN_NAVIGATION', 'navigation-main'] only %}{% endwidget %}
-                    {% endblock %}
-                </nav>
-
-                {% if is_granted('ROLE_USER') %}
-                    <div class="{{ config.name }}__nav-quick-links">
-                        {% include molecule('header-shopping-list-pill') only %}
-
-                        {% if can('SeeCompanyMenuPermissionPlugin') %}
-                            {% include molecule('header-dropdown') with {
-                                data: {
-                                    preset: 'self-service',
-                                },
-                            } only %}
-                        {% endif %}
-
-                        <a href="{{ url('quick-order') }}" class="{{ config.name }}__nav-link">
-                            {{ 'quick-order.page-title' | trans }}
-                        </a>
-                    </div>
-                {% endif %}
-            </div>
-        </div>
-    {% endif %}
 {% endblock %}

@@ -122,61 +122,6 @@ $address-form-width: rem(710);
         }
     }
 
-    &--subscription {
-        #{$name}__container {
-            display: flex;
-            gap: var(--scale-8);
-        }
-
-        #{$name}__fields {
-            flex: 1;
-            margin: 0;
-        }
-
-        #{$name}__field {
-            padding: 0;
-        }
-
-        #{$name}__actions,
-        #{$name}__action {
-            margin: 0;
-        }
-
-        .label {
-            display: none;
-        }
-
-        .input {
-            border-radius: var(--radius-sm);
-            border: solid var(--stroke-sm) var(--input-border-default);
-            background-color: var(--input-background-default);
-            font-size: var(--body-md-size);
-            line-height: var(--body-md-line-height);
-            letter-spacing: var(--font-letter-spacing-normal);
-            color: var(--input-text-value);
-            padding: var(--scale-8) var(--scale-16);
-
-            &::placeholder {
-                color: var(--input-text-placeholder);
-            }
-        }
-
-        .button {
-            color: var(--text-inverse);
-            background-color: transparent;
-            border: solid var(--stroke-sm) var(--border-subtle);
-            border-radius: var(--radius-sm);
-            padding: var(--scale-8);
-            min-height: 0;
-
-            &:hover,
-            &:focus {
-                color: var(--text-inverse);
-                border-color: var(--border-default);
-            }
-        }
-    }
-
     &--browse-file {
         #{$name}__field:not(:first-of-type),
         #{$name}__actions,

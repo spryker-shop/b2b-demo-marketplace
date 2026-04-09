@@ -13,12 +13,7 @@
             align-items: center;
             justify-content: space-between;
             height: rem(40);
-            padding: 0 var(--scale-40);
             margin: 0 auto;
-
-            @include helper-breakpoint-media-min($xl) {
-                padding: 0 var(--scale-64);
-            }
         }
 
         &__benefits {

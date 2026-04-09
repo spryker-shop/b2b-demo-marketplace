@@ -10,9 +10,7 @@
 } %}
 
 {% block body %}
-    <strong class="title title--subscription">
-        {{ data.title }}
-    </strong>
-
+    <strong class="{{ config.name }}__section">{{ 'customer.account.newsletter' | trans }}</strong>
+    <strong class="title title--subscription">{{ data.title }}</strong>
     <p class="{{ config.name }}__text">{{ data.text | raw }}</p>
 {% endblock %}

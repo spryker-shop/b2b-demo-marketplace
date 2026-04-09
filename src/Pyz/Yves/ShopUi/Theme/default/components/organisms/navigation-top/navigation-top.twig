@@ -11,46 +11,48 @@
 ] %}
 
 {% block body %}
-    <div class="{{ config.name }}__inner">
-        <div class="{{ config.name }}__benefits">
-            {% for text in benefits %}
-                {% include molecule('panel-info-item') with {
-                    data: {
-                        info: text,
+    <div class="container">
+        <div class="{{ config.name }}__inner">
+            <div class="{{ config.name }}__benefits">
+                {% for text in benefits %}
+                    {% include molecule('panel-info-item') with {
+                        data: {
+                            info: text,
+                        },
+                    } only %}
+
+                    {% if not loop.last %}
+                        <span class="{{ config.name }}__divider"></span>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            <ul class="{{ config.name }}__selectors">
+                {% if can('SeePricePermissionPlugin') %}
+                    <li class="{{ config.name }}__selector-item">
+                        {% widget 'PriceModeSwitcherWidget' only %}{% endwidget %}
+                    </li>
+                    <li class="{{ config.name }}__selector-item">
+                        {% widget 'CurrencyWidget' only %}{% endwidget %}
+                    </li>
+                {% endif %}
+
+                <li class="{{ config.name }}__selector-item">
+                    {% widget 'LanguageSwitcherWidget' args [app.request.pathInfo, app.request.queryString, app.request.requestUri] only %}{% endwidget %}
+                </li>
+
+                {% widget 'StoreSwitcher' with {
+                    embed: {
+                        configName: config.name,
                     },
                 } only %}
-
-                {% if not loop.last %}
-                    <span class="{{ config.name }}__divider"></span>
-                {% endif %}
-            {% endfor %}
+                    {% block body %}
+                        <li class="{{ embed.configName }}__selector-item">
+                            {{ parent() }}
+                        </li>
+                    {% endblock %}
+                {% endwidget %}
+            </ul>
         </div>
-
-        <ul class="{{ config.name }}__selectors">
-            {% if can('SeePricePermissionPlugin') %}
-                <li class="{{ config.name }}__selector-item">
-                    {% widget 'PriceModeSwitcherWidget' only %}{% endwidget %}
-                </li>
-                <li class="{{ config.name }}__selector-item">
-                    {% widget 'CurrencyWidget' only %}{% endwidget %}
-                </li>
-            {% endif %}
-
-            <li class="{{ config.name }}__selector-item">
-                {% widget 'LanguageSwitcherWidget' args [app.request.pathInfo, app.request.queryString, app.request.requestUri] only %}{% endwidget %}
-            </li>
-
-            {% widget 'StoreSwitcher' with {
-                embed: {
-                    configName: config.name,
-                },
-            } only %}
-                {% block body %}
-                    <li class="{{ embed.configName }}__selector-item">
-                        {{ parent() }}
-                    </li>
-                {% endblock %}
-            {% endwidget %}
-        </ul>
     </div>
 {% endblock %}

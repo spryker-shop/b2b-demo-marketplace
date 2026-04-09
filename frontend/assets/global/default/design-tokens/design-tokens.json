@@ -294,6 +294,48 @@
                 "$value": "#3b3b3d"
             }
         },
+        "forest": {
+            "10": {
+                "$type": "color",
+                "$value": "#EEF7F6"
+            },
+            "20": {
+                "$type": "color",
+                "$value": "#CBE6E3"
+            },
+            "30": {
+                "$type": "color",
+                "$value": "#A6D4CF"
+            },
+            "40": {
+                "$type": "color",
+                "$value": "#80C2BB"
+            },
+            "50": {
+                "$type": "color",
+                "$value": "#5AAFA7"
+            },
+            "60": {
+                "$type": "color",
+                "$value": "#469189"
+            },
+            "70": {
+                "$type": "color",
+                "$value": "#37726C"
+            },
+            "80": {
+                "$type": "color",
+                "$value": "#2B5955"
+            },
+            "90": {
+                "$type": "color",
+                "$value": "#234845"
+            },
+            "100": {
+                "$type": "color",
+                "$value": "#1B3835"
+            }
+        },
         "black": {
             "$type": "color",
             "$value": "#000000"
@@ -341,6 +383,24 @@
                 "subtle": {
                     "$type": "color",
                     "$value": "{Color.teal.10}"
+                }
+            },
+            "accent": {
+                "primary": {
+                    "$type": "color",
+                    "$value": "{Color.forest.60}"
+                },
+                "hover": {
+                    "$type": "color",
+                    "$value": "{Color.forest.70}"
+                },
+                "pressed": {
+                    "$type": "color",
+                    "$value": "{Color.forest.80}"
+                },
+                "subtle": {
+                    "$type": "color",
+                    "$value": "{Color.forest.10}"
                 }
             },
             "state": {
@@ -867,6 +927,94 @@
                 "weight": {
                     "$type": "number",
                     "$value": "{Typography.font.weight.medium}"
+                },
+                "size": {
+                    "$type": "dimension",
+                    "$value": "{Typography.font.size.12}"
+                },
+                "line-height": {
+                    "$type": "dimension",
+                    "$value": "{Typography.font.line-height.16}"
+                },
+                "letter-spacing": {
+                    "$type": "number",
+                    "$value": "{Typography.font.letter-spacing.normal}"
+                }
+            },
+            "md-semibold": {
+                "family": {
+                    "$type": "string",
+                    "$value": "{Typography.font.family.sans}"
+                },
+                "weight": {
+                    "$type": "number",
+                    "$value": "{Typography.font.weight.semibold}"
+                },
+                "size": {
+                    "$type": "dimension",
+                    "$value": "{Typography.font.size.14}"
+                },
+                "line-height": {
+                    "$type": "dimension",
+                    "$value": "{Typography.font.line-height.20}"
+                },
+                "letter-spacing": {
+                    "$type": "number",
+                    "$value": "{Typography.font.letter-spacing.normal}"
+                }
+            },
+            "sm-semibold": {
+                "family": {
+                    "$type": "string",
+                    "$value": "{Typography.font.family.sans}"
+                },
+                "weight": {
+                    "$type": "number",
+                    "$value": "{Typography.font.weight.semibold}"
+                },
+                "size": {
+                    "$type": "dimension",
+                    "$value": "{Typography.font.size.12}"
+                },
+                "line-height": {
+                    "$type": "dimension",
+                    "$value": "{Typography.font.line-height.16}"
+                },
+                "letter-spacing": {
+                    "$type": "number",
+                    "$value": "{Typography.font.letter-spacing.normal}"
+                }
+            },
+            "md-regular": {
+                "family": {
+                    "$type": "string",
+                    "$value": "{Typography.font.family.sans}"
+                },
+                "weight": {
+                    "$type": "number",
+                    "$value": "{Typography.font.weight.regular}"
+                },
+                "size": {
+                    "$type": "dimension",
+                    "$value": "{Typography.font.size.14}"
+                },
+                "line-height": {
+                    "$type": "dimension",
+                    "$value": "{Typography.font.line-height.20}"
+                },
+                "letter-spacing": {
+                    "$type": "number",
+                    "$value": "{Typography.font.letter-spacing.normal}"
+                }
+            },
+            "sm-regular": {
+                "family": {
+                    "$type": "string",
+                    "$value": "{Typography.font.family.sans}"
+                },
+                "weight": {
+                    "$type": "number",
+                    "$value": "{Typography.font.weight.regular}"
                 },
                 "size": {
                     "$type": "dimension",

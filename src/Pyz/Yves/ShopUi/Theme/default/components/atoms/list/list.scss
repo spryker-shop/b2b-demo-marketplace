@@ -3,16 +3,6 @@
         color: var(--text-state-error);
     }
 
-    &--footer {
-        padding: 0 var(--scale-12);
-        margin-bottom: var(--scale-24);
-
-        @include helper-breakpoint-media-min($md) {
-            padding: 0;
-            margin-bottom: 0;
-        }
-    }
-
     &--checkout {
         margin-bottom: 0;
 

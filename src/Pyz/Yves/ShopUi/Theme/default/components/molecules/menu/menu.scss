@@ -56,14 +56,6 @@
                 margin-bottom: rem(10);
             }
 
-            &--footer {
-                margin: var(--scale-16) var(--scale-8) 0;
-
-                @include helper-breakpoint-media-min($lg) {
-                    margin-top: 0;
-                }
-            }
-
             &--social {
                 margin: 0 var(--scale-8);
 
@@ -74,21 +66,6 @@
                 &:last-child {
                     margin-right: 0;
                 }
-            }
-        }
-
-        &--footer {
-            display: flex;
-            flex-wrap: wrap;
-            margin: 0 calc(-1 * var(--scale-8)) var(--scale-24);
-            padding: 0 var(--scale-20);
-            justify-content: center;
-
-            @include helper-breakpoint-media-min($md) {
-                margin-bottom: 0;
-                flex-wrap: nowrap;
-                justify-content: space-between;
-                padding: 0;
             }
         }
 

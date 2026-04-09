@@ -16,20 +16,24 @@
             content: '·';
             margin-right: var(--scale-8);
             color: var(--text-primary);
+            top: 1px;
+            position: relative;
         }
     }
 
-    .link--privacy {
-        @include helper-effect-transition(color);
-        font-size: var(--body-sm-size);
-        font-weight: var(--font-weight-regular);
-        line-height: var(--body-sm-line-height);
-        color: var(--text-primary);
-        text-decoration: none;
+    @include shop-ui-link {
+        &--privacy {
+            @include helper-effect-transition(color);
+            font-size: var(--label-sm-size);
+            font-weight: var(--label-sm-weight);
+            line-height: var(--label-sm-line-height);
+            color: var(--text-primary);
+            text-decoration: none;
 
-        &:hover,
-        &:focus {
-            color: var(--text-secondary);
+            &:hover,
+            &:focus {
+                color: var(--text-secondary);
+            }
         }
     }
 }

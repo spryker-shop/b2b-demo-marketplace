@@ -15,26 +15,28 @@
 {% block body %}
     <div class="grid grid--middle grid--justify">
         {% include molecule('subscription-info', 'NewsletterWidget') with {
-            class: 'col col--sm-12 col--md-5 col--lg-6',
+            class: 'col col--sm-12 col--lg-6',
             data: {
                 title: 'global.subscribe.title' | trans,
                 text: 'newsletter.form.subscribe.text' | trans,
             }
         } only %}
 
-        <div class="col col--sm-12 col--md-6 col--lg-5">
+        <div class="col col--sm-12 col--lg-5">
             {% include molecule('form') with {
                 modifiers: ['inline', 'subscription'],
                 data: {
                     form: data.form,
                     submit: {
                         enable: true,
-                        text: '',
-                        icon: 'chevron-right',
-                        class: 'button'
+                        text: 'newsletter.form.subscribe' | trans,
+                        postIcon: 'arrow_forward',
+                        class: config.name ~ '__action button button--secondary',
                     }
                 }
             } only %}
+            <p class="{{ config.name }}__message">{{ 'You can unsubscribe at any time.' | trans }}</p>
+
             {% if data.events.success is not empty %}
                 <p class="{{ config.name }}__message {{ config.name }}__message--success" role="status">{{ data.events.success | trans }}</p>
             {% elseif data.events.error is not empty %}
