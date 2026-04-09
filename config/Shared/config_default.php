@@ -154,6 +154,7 @@ use Symfony\Component\HttpFoundation\Cookie;
 // ------------------------------ CODEBASE: TO REMOVE -------------------------
 // ----------------------------------------------------------------------------
 
+
 $sprykerBackendHost = getenv('SPRYKER_BE_HOST') ?: 'not-configured-host';
 $sprykerFrontendHost = getenv('SPRYKER_FE_HOST') ?: 'not-configured-host';
 
