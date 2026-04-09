@@ -35,17 +35,6 @@
         color: darken($setting-color-alt, 27%);
     }
 
-    &--availability {
-        background: var(--background-state-warning-subtle);
-        font-weight: 500;
-        padding: 0 rem(12) 0 rem(30);
-        color: $setting-color-black;
-
-        &::before {
-            background: var(--background-state-warning-subtle);
-        }
-    }
-
     &--out-of-stock,
     &--rejected,
     &--not-configured {
@@ -60,6 +49,8 @@
     &--availability {
         color: var(--text-state-info);
         background: var(--background-state-info-subtle);
+        font-weight: 500;
+        padding: 0 rem(12) 0 rem(30);
 
         &::before {
             background: var(--background-state-info-subtle);
