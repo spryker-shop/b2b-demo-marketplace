@@ -161,6 +161,7 @@ const getConfiguration = async (appSettings) => {
                                 loader: 'sass-loader',
                                 options: {
                                     implementation: require('sass'),
+                                    api: 'legacy',
                                     additionalData: (content, loaderContext) => {
                                         const currentFilePath = loaderContext.resourcePath;
                                         const allResources = [sharedScss, ...styles].filter(Boolean);
