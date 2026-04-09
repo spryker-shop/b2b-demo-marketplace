@@ -196,6 +196,11 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
     public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
 
     /**
+     * @var string
+     */
+    public const FACADE_PRODUCT_EXPERIENCE_MANAGEMENT = 'FACADE_PRODUCT_EXPERIENCE_MANAGEMENT';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -214,6 +219,7 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
         $container = $this->addStockFacade($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addMerchantUserFacade($container);
+        $container = $this->addProductExperienceManagementFacade($container);
 
         return $container;
     }
@@ -353,6 +359,20 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
     {
         $container->set(static::FACADE_MERCHANT_USER, function (Container $container) {
             return $container->getLocator()->merchantUser()->facade();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductExperienceManagementFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRODUCT_EXPERIENCE_MANAGEMENT, function (Container $container) {
+            return $container->getLocator()->productExperienceManagement()->facade();
         });
 
         return $container;

@@ -18,6 +18,7 @@
             name: data.product.abstract_name,
             image: data.product.images ? data.product.images.0.external_url_small,
             idProductAbstract: data.product.id_product_abstract,
+            products: data.products,
         },
     } only %}
         {% block labels %}
@@ -37,6 +38,17 @@
                     },
                 } only %}{% endwidget %}
             </div>
+        {% endblock %}
+
+        {% block productAttributeVisibility %}
+            {% widget 'ProductAttributeVisibilityPlpWidget' args [data.products, data.product.id_product_abstract] only %}
+                {% block body %}
+                    {% set attributesBadgeClassName = "badge badge--secondary spacing-right--small spacing-bottom--small" %}
+                    {{ parent() }}
+                {% endblock %}
+
+            {% nowidget %}
+            {% endwidget %}
         {% endblock %}
     {% endembed %}
 {% endblock %}

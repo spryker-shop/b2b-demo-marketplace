@@ -78,6 +78,7 @@ use Spryker\Shared\TaxProductStorage\TaxProductStorageConfig;
 use Spryker\Shared\TaxStorage\TaxStorageConfig;
 use Spryker\Shared\UrlStorage\UrlStorageConfig;
 use Spryker\Shared\UrlStorage\UrlStorageConstants;
+use SprykerFeature\Shared\ProductExperienceManagement\ProductExperienceManagementConfig;
 use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConfig;
 
 class SymfonyMessengerConfig extends SprykerSymfonyMessengerConfig
@@ -152,6 +153,7 @@ class SymfonyMessengerConfig extends SprykerSymfonyMessengerConfig
             ProductMeasurementUnitStorageConfig::PUBLISH_PRODUCT_MEASUREMENT_UNIT_QUEUE,
             ProductPackagingUnitStorageConfig::PUBLISH_PRODUCT_PACKAGING_UNIT_QUEUE,
             ProductReviewStorageConfig::PUBLISH_PRODUCT_REVIEW_STORAGE_QUEUE,
+            ProductExperienceManagementConfig::PUBLISH_PRODUCT_ATTRIBUTE,
         ];
     }
 
@@ -203,6 +205,7 @@ class SymfonyMessengerConfig extends SprykerSymfonyMessengerConfig
             SelfServicePortalConfig::QUEUE_NAME_SYNC_STORAGE_SSP_MODEL,
             SelfServicePortalConfig::QUEUE_NAME_SYNC_STORAGE_SSP_ASSET,
             SelfServicePortalConfig::QUEUE_NAME_SYNC_SEARCH_SSP_ASSET,
+            ProductExperienceManagementConfig::PRODUCT_ATTRIBUTE_SYNC_STORAGE_QUEUE,
             ConfigurationConstants::QUEUE_NAME_SYNC_CONFIGURATION,
         ];
     }
