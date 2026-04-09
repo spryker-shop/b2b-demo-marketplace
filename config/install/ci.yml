@@ -50,7 +50,7 @@ sections:
             command: 'vendor/bin/console translator:generate-cache'
 
         class-resolver-build:
-            command: "vendor/bin/console cache:class-resolver:build"
+            command: 'vendor/bin/console cache:class-resolver:build'
 
     database-migrate:
         queue-setup:
@@ -125,7 +125,7 @@ sections:
 
     frontend:
         dependencies-install:
-            command: 'vendor/bin/console frontend:project:install-dependencies'
+            command: 'vendor/bin/console frontend:project:install-dependencies -vvv'
 
         yves-build-frontend:
             command: 'vendor/bin/console frontend:yves:build'
