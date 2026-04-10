@@ -144,7 +144,15 @@
             visibility: hidden;
             pointer-events: none;
             transform: translateY(rem(-4));
-            overflow: hidden;
+
+            &::before {
+                content: '';
+                position: absolute;
+                bottom: 100%;
+                left: 0;
+                width: 100%;
+                height: var(--scale-8);
+            }
         }
 
         &:hover &__dropdown,
