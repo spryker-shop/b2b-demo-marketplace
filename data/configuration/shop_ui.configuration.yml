@@ -21,9 +21,10 @@ features:
                   enabled: true
                   settings:
                       - key: background_brand_primary
-                        name: Theme Main Color
-                        description: Primary brand color used across the storefront
+                        name: Brand Primary
+                        description: Main brand color for primary buttons and key actions
                         type: color
+                        default_value: '#318272'
                         scopes:
                             - global
                             - store
@@ -32,14 +33,49 @@ features:
                         storefront: true
                         constraints:
                             - type: regex
-                              message: 'Must be a valid hex color (e.g. #00bebe)'
+                              message: 'Must be a valid hex color (e.g. #ff0000)'
+                              options:
+                                  pattern: '^#[0-9A-Fa-f]{6}$'
+
+                      - key: background_brand_hover
+                        name: Brand Hover
+                        description: Brand color on hover state
+                        type: color
+                        default_value: '#226558'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        constraints:
+                            - type: regex
+                              message: 'Must be a valid hex color (e.g. #ff0000)'
+                              options:
+                                  pattern: '^#[0-9A-Fa-f]{6}$'
+
+                      - key: background_brand_pressed
+                        name: Brand Pressed
+                        description: Brand color on active/pressed state
+                        type: color
+                        default_value: '#15483e'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        constraints:
+                            - type: regex
+                              message: 'Must be a valid hex color (e.g. #ff0000)'
                               options:
                                   pattern: '^#[0-9A-Fa-f]{6}$'
 
                       - key: background_brand_subtle
-                        name: Theme Alternative Color
-                        description: Secondary brand color for accents and highlights
+                        name: Brand Subtle
+                        description: Light tinted brand background for tags, badges, and highlights
                         type: color
+                        default_value: '#f3fffc'
                         scopes:
                             - global
                             - store
@@ -48,14 +84,15 @@ features:
                         storefront: true
                         constraints:
                             - type: regex
-                              message: 'Must be a valid hex color (e.g. #eb553c)'
+                              message: 'Must be a valid hex color (e.g. #ff0000)'
                               options:
                                   pattern: '^#[0-9A-Fa-f]{6}$'
 
-                      - key: background_brand_subtle2
-                        name: Theme Alternative2 Color
-                        description: Secondary brand color for accents and highlights
+                      - key: background_accent_primary
+                        name: Accent Primary
+                        description: Main accent color for secondary actions and highlights
                         type: color
+                        default_value: '#469189'
                         scopes:
                             - global
                             - store
@@ -64,6 +101,142 @@ features:
                         storefront: true
                         constraints:
                             - type: regex
-                              message: 'Must be a valid hex color (e.g. #eb553c)'
+                              message: 'Must be a valid hex color (e.g. #ff0000)'
+                              options:
+                                  pattern: '^#[0-9A-Fa-f]{6}$'
+
+                      - key: background_accent_hover
+                        name: Accent Hover
+                        description: Accent color on hover state
+                        type: color
+                        default_value: '#37726c'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        constraints:
+                            - type: regex
+                              message: 'Must be a valid hex color (e.g. #ff0000)'
+                              options:
+                                  pattern: '^#[0-9A-Fa-f]{6}$'
+
+                      - key: background_accent_pressed
+                        name: Accent Pressed
+                        description: Accent color on active/pressed state
+                        type: color
+                        default_value: '#2b5955'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        constraints:
+                            - type: regex
+                              message: 'Must be a valid hex color (e.g. #ff0000)'
+                              options:
+                                  pattern: '^#[0-9A-Fa-f]{6}$'
+
+                      - key: background_accent_subtle
+                        name: Accent Subtle
+                        description: Light tinted accent background
+                        type: color
+                        default_value: '#eef7f6'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        constraints:
+                            - type: regex
+                              message: 'Must be a valid hex color (e.g. #ff0000)'
+                              options:
+                                  pattern: '^#[0-9A-Fa-f]{6}$'
+
+                      - key: text_brand
+                        name: Brand Text
+                        description: Brand-colored text for links and emphasized content
+                        type: color
+                        default_value: '#226558'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        constraints:
+                            - type: regex
+                              message: 'Must be a valid hex color (e.g. #ff0000)'
+                              options:
+                                  pattern: '^#[0-9A-Fa-f]{6}$'
+
+                      - key: border_brand
+                        name: Brand Border
+                        description: Brand-colored border for active or selected elements
+                        type: color
+                        default_value: '#318272'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        constraints:
+                            - type: regex
+                              message: 'Must be a valid hex color (e.g. #ff0000)'
+                              options:
+                                  pattern: '^#[0-9A-Fa-f]{6}$'
+
+                      - key: icon_brand
+                        name: Brand Icon
+                        description: Brand-colored icon for branded visual elements
+                        type: color
+                        default_value: '#226558'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        constraints:
+                            - type: regex
+                              message: 'Must be a valid hex color (e.g. #ff0000)'
+                              options:
+                                  pattern: '^#[0-9A-Fa-f]{6}$'
+
+                      - key: focus_ring
+                        name: Focus Ring
+                        description: Color of the focus outline for interactive elements
+                        type: color
+                        default_value: '#acffef'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        constraints:
+                            - type: regex
+                              message: 'Must be a valid hex color (e.g. #ff0000)'
+                              options:
+                                  pattern: '^#[0-9A-Fa-f]{6}$'
+
+                      - key: shadows_focus_color
+                        name: Focus Shadow
+                        description: Shadow color for focused elements
+                        type: color
+                        default_value: '#acffef'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        constraints:
+                            - type: regex
+                              message: 'Must be a valid hex color (e.g. #ff0000)'
                               options:
                                   pattern: '^#[0-9A-Fa-f]{6}$'
