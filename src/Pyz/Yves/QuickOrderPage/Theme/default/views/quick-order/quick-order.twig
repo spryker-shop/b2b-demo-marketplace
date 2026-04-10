@@ -1,5 +1,34 @@
 {% extends view('quick-order', '@SprykerShop:QuickOrderPage') %}
 
+{% define data = {
+    forms: {
+        quickOrderForm: _view.quickOrderForm,
+        textOrderForm: _view.textOrderForm,
+        uploadOrderForm: _view.uploadOrderForm,
+    },
+    pluginForms: _view.pluginForms | default([]),
+    additionalColumns: _view.additionalColumns,
+    products: _view.products,
+    prices: _view.prices,
+    fileTemplateExtensions: _view.fileTemplateExtensions,
+    title: 'quick-order.page-title' | trans,
+} %}
+
+{% block content %}
+    {% include molecule('quick-order-form', 'QuickOrderPage') with {
+        data: {
+            form: data.forms.quickOrderForm,
+            products: data.products,
+            prices: data.prices,
+            fileTemplateExtensions: data.fileTemplateExtensions,
+            additionalColumns: data.additionalColumns,
+            textOrderForm: data.forms.textOrderForm,
+            uploadOrderForm: data.forms.uploadOrderForm,
+            pluginForms: data.pluginForms,
+        },
+    } only %}
+{% endblock %}
+
 {% block contentClass %}
     page-layout-main page-layout-main--quick-order-page
 {% endblock %}

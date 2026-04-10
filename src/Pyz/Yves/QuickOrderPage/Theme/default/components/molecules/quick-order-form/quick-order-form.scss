@@ -9,6 +9,23 @@
 
         @content;
     }
+
+    .plugins-quick-order-form {
+        background-color: #f6f6f6;
+        padding: 1.0625rem 1.25rem;
+        border-radius: 2px;
+        margin-top: 0.5rem;
+    }
+
+    .quick-order-image-to-cart {
+        .label--browse-file {
+            min-height: 1rem;
+        }
+
+        .input-dropzone__description {
+            font-size: 0.775rem;
+        }
+    }
 }
 
 @include quick-order-page-quick-order-form;

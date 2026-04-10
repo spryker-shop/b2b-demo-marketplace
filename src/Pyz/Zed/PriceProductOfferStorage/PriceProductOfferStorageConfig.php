@@ -10,7 +10,7 @@ declare(strict_types = 1);
 namespace Pyz\Zed\PriceProductOfferStorage;
 
 use Pyz\Zed\Synchronization\SynchronizationConfig;
-use Spryker\Shared\Publisher\PublisherConfig;
+use Spryker\Shared\PriceProductOfferStorage\PriceProductOfferStorageConfig as SprykerSharedPriceProductOfferStorageConfig;
 use Spryker\Zed\PriceProductOfferStorage\PriceProductOfferStorageConfig as SprykerPriceProductOfferStorageConfig;
 
 class PriceProductOfferStorageConfig extends SprykerPriceProductOfferStorageConfig
@@ -22,6 +22,6 @@ class PriceProductOfferStorageConfig extends SprykerPriceProductOfferStorageConf
 
     public function getEventQueueName(): ?string
     {
-        return PublisherConfig::PUBLISH_QUEUE;
+        return SprykerSharedPriceProductOfferStorageConfig::PUBLISH_PRICE_PRODUCT_OFFER_QUEUE;
     }
 }

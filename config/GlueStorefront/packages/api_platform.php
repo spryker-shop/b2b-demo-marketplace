@@ -21,8 +21,6 @@ return static function (ApiPlatformConfig $apiPlatform, string $env): void {
     $apiPlatform->doctrine()->enabled(false);
     $apiPlatform->doctrineMongodbOdm()->enabled(false);
 
-    $apiPlatform->mapping()->paths(['%kernel.project_dir%/src/Generated/Api/Storefront']);
-
     if ($env === 'dockerdev') {
         $apiPlatform->enableSwagger(true);
         $apiPlatform->enableSwaggerUi(true);

@@ -58,6 +58,9 @@ sections:
         provider-processor-glue-backend:
             command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue api:generate'
 
+        configuration-sync:
+            command: 'vendor/bin/console configuration:sync'
+
     build-development:
         generate-transfers:
             command: 'vendor/bin/console transfer:generate'
