@@ -1,0 +1,11 @@
+{% extends molecule('search-by-image', '@SprykerFeature:AiCommerce') %}
+
+{% block triggerFileButton %}
+    {% set triggerButtonClassname = "search-by-image__popup-trigger search-by-image__popup-trigger--#{data.dataSearchId}" %}
+    {{ parent() }}
+{% endblock %}
+
+{% block triggerPhotoButton %}
+    {% set triggerButtonClassname = "search-by-image__popup-trigger search-by-image__popup-trigger--#{data.dataSearchId}" %}
+    {{ parent() }}
+{% endblock %}
