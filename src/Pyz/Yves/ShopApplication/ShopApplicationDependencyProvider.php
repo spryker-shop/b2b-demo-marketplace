@@ -29,6 +29,7 @@ use Spryker\Yves\Sitemap\Widget\SitemapWidget;
 use Spryker\Yves\Translator\Plugin\Application\TranslatorApplicationPlugin;
 use Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin;
 use Spryker\Yves\Validator\Plugin\Application\ValidatorApplicationPlugin;
+use SprykerFeature\Yves\AiCommerce\SearchByImage\Widget\ImageSearchAiWidget;
 use SprykerFeature\Yves\BuyBox\Widget\BuyBoxWidget;
 use SprykerFeature\Yves\ProductExperienceManagement\Widget\ProductAttributeVisibilityCartWidget;
 use SprykerFeature\Yves\ProductExperienceManagement\Widget\ProductAttributeVisibilityPdpWidget;
@@ -436,6 +437,7 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             ProductAttributeVisibilityPdpWidget::class,
             ProductAttributeVisibilityPlpWidget::class,
             ProductAttributeVisibilityCartWidget::class,
+            ImageSearchAiWidget::class,
         ];
     }
 

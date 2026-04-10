@@ -26,6 +26,16 @@
             autocomplete="off"
         >
 
+        {% if data.byImage and widgetGlobalExists('ImageSearchAiWidget') %}
+            <div class="{{ config.name }}__button {{ config.name }}-search">
+                {% widget 'ImageSearchAiWidget' with {
+                    data: {
+                        dataSearchId: attributes['data-search-id'],
+                    },
+                } only %}{% endwidget %}
+            </div>
+        {% endif %}
+
         <button class="{{ config.name }}__button {{ config.name }}__button--submit" aria-label="{{ 'global.search' | trans }}">
             {% include atom('icon') with {
                 class: config.name ~ '__icon',
