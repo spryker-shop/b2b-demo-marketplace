@@ -75,6 +75,9 @@
                             embed: {
                                 jsTriggerSearchClass: config.jsName ~ '__close-search-trigger',
                             },
+                            data: {
+                                byImage: true,
+                            },
                         } only %}
                             {% block close %}
                                 {{ embed.jsTriggerSearchClass }}

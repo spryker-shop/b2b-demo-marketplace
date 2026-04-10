@@ -15,6 +15,7 @@
     {{ config.jsName }}
 {% endblock %}
 
+
 {% block body %}
     <form action="{{ data.searchUrl }}">
         <input
@@ -25,6 +26,14 @@
             value="{{ data.searchValue }}"
             autocomplete="off"
         >
+
+        {% if data.byImage and widgetGlobalExists('ImageSearchAiWidget') %}
+            {% widget 'ImageSearchAiWidget' with {
+                data: {
+                    dataSearchId: attributes['data-search-id'],
+                },
+            } only %}{% endwidget %}
+        {% endif %}
 
         <button class="{{ config.name }}__button {{ config.name }}__button--submit" aria-label="{{ 'global.search' | trans }}">
             {% include atom('icon') with {

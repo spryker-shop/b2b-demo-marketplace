@@ -24,7 +24,6 @@ use Spryker\Yves\Router\Plugin\RouterEnhancer\LanguagePrefixRouterEnhancerPlugin
 use Spryker\Yves\Router\Plugin\RouterEnhancer\StorePrefixRouterEnhancerPlugin;
 use Spryker\Yves\Router\RouterDependencyProvider as SprykerRouterDependencyProvider;
 use Spryker\Yves\Sitemap\Plugin\Router\SitemapRouteProviderPlugin;
-use SprykerFeature\Yves\AiCommerce\SearchByImage\Plugin\Router\SearchByImageRouteProviderPlugin;
 use SprykerFeature\Yves\SelfServicePortal\Plugin\Router\SelfServicePortalPageRouteProviderPlugin;
 use SprykerShop\Yves\AgentPage\Plugin\Router\AgentPageRouteProviderPlugin;
 use SprykerShop\Yves\AgentWidget\Plugin\Router\AgentWidgetRouteProviderPlugin;
@@ -189,7 +188,6 @@ class RouterDependencyProvider extends SprykerRouterDependencyProvider
             new ServicePointWidgetRouteProviderPlugin(),
             new SelfServicePortalPageRouteProviderPlugin(),
             new MerchantRegistrationRequestPageRouteProviderPlugin(),
-            new SearchByImageRouteProviderPlugin(),
         ];
     }
 
