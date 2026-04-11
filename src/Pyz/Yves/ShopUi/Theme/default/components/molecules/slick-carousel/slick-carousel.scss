@@ -115,7 +115,7 @@
                     @include helper-effect-transition(width background);
                     width: rem(6);
                     height: rem(6);
-                    background: rgba(255, 255, 255, 0.3);
+                    background: rgb(255 255 255 / 30%);
                     border-radius: var(--radius-sm);
                     border: none;
                     padding: 0;
@@ -132,7 +132,7 @@
                     &.slick-active {
                         button {
                             width: rem(24);
-                            background: rgba(255, 255, 255, 0.7);
+                            background: rgb(255 255 255 / 70%);
                         }
                     }
                 }
