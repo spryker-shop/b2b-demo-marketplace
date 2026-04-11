@@ -1,19 +1,43 @@
 {% extends view('mini-cart', 'SprykerShop:MultiCartWidget') %}
 
 {% define data = {
-    parentName: 'mini-cart',
+    view: 'header',
+    className: '',
 } %}
 
-{% define config = {
-    name: data.parentName,
-} %}
+{% block contentInner %}
+    {% if data.view == 'header' %}
+        {% include molecule('header-cart-pill', 'MultiCartWidget') with {
+            class: data.className,
+            data: {
+                quantity: _widget.cartQuantity,
+                activeCart: data.activeCart,
+                carts: data.carts,
+                isMultiCartAllowed: data.isMultiCartAllowed,
+            },
+        } only %}
+    {% endif %}
 
-{% block contentOuter %}
-    {% include molecule('mini-cart', 'MultiCartWidget') with {
-        data: {
-            activeCart: data.activeCart,
-            carts: data.carts,
-            isMultiCartAllowed: data.isMultiCartAllowed,
-        },
-    } only %}
+    {% if data.view == 'side-drawer' %}
+        {% include atom('cart-trigger') with {
+            class: data.className,
+            data: { quantity: _widget.cartQuantity },
+            attributes: {
+                type: 'button',
+                'aria-label': 'header.cart' | trans,
+                'data-target-panel': 'cart-panel',
+            },
+        } only %}
+    {% endif %}
+
+    {% if data.view == 'mini-cart' %}
+        {% include molecule('mini-cart', 'MultiCartWidget') with {
+            class: data.className,
+            data: {
+                activeCart: data.activeCart,
+                carts: data.carts,
+                isMultiCartAllowed: data.isMultiCartAllowed,
+            },
+        } only %}
+    {% endif %}
 {% endblock %}

@@ -74,6 +74,10 @@ export default class SideDrawer extends SideDrawerCore {
     }
 
     protected navigateTo(panelId: string): void {
+        if (panelId === this.currentPanelId) {
+            return;
+        }
+
         this.panels = <HTMLElement[]>Array.from(this.querySelectorAll(`.${this.jsName}__panel`));
 
         const targetPanel = this.panels.find((panel: HTMLElement) => panel.getAttribute('data-panel-id') === panelId);

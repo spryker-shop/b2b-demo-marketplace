@@ -69,20 +69,13 @@
                     {% if data.showUserMenu %}
                         {% if is_granted('ROLE_USER') %}
                             <div class="{{ config.name }}__actions-pills">
-                                {% widget 'MiniCartWidget' args [data.cartQuantity] only %}
-                                    {% block body %}
-                                        {% include molecule('header-cart-pill') with {
-                                            data: {
-                                                quantity: _widget.cartQuantity,
-                                            },
-                                        } only %}
-                                    {% endblock %}
-                                {% nowidget %}
-                                    {% include molecule('header-cart-pill') with {
-                                        data: {
-                                            quantity: data.cartQuantity,
-                                        },
-                                    } only %}
+                                {% widget 'MiniCartWidget' args [data.cartQuantity] with {
+                                    config: config,
+                                    data: {
+                                        isAjaxMode: data.isAjaxMode,
+                                        view: 'header',
+                                    },
+                                } only %}
                                 {% endwidget %}
 
                                 {% set customerFullNameWidget = findWidget('CustomerFullNameWidget') %}
