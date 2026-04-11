@@ -13,10 +13,13 @@ export default class MegaMenu extends Component {
         }
 
         this.sidebarItems.forEach((item) => {
-            item.addEventListener('mouseenter', () => {
+            const activate = () => {
                 this.sidebarItems.forEach((i) => i.classList.remove('is-active'));
                 item.classList.add('is-active');
-            });
+            };
+
+            item.addEventListener('mouseenter', activate);
+            item.addEventListener('focusin', activate);
         });
     }
 }

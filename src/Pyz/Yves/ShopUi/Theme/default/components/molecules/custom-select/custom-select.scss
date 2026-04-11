@@ -77,8 +77,10 @@
                 height: auto;
                 padding-right: rem(28);
 
-                &:focus {
-                    outline: none;
+                &:focus-visible {
+                    outline: var(--stroke-md) solid var(--focus-ring);
+                    outline-offset: var(--scale-2);
+                    border-radius: var(--radius-xs);
                 }
 
                 option {
@@ -177,7 +179,9 @@
         }
 
         &-selection:focus-visible {
-            outline: none;
+            outline: var(--stroke-md) solid var(--focus-ring);
+            outline-offset: var(--scale-2);
+            border-radius: var(--radius-xs);
         }
 
         &-selection__arrow {

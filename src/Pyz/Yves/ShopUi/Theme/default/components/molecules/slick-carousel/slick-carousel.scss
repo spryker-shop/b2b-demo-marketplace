@@ -112,14 +112,19 @@
                 margin: 0;
 
                 button {
-                    @include helper-effect-transition(width background);
+                    @include helper-effect-transition(width opacity);
                     width: rem(6);
                     height: rem(6);
-                    background: rgb(255 255 255 / 30%);
+                    background: var(--white);
                     border-radius: var(--radius-sm);
                     border: none;
                     padding: 0;
                     cursor: pointer;
+                    opacity: 0.3;
+
+                    &:hover {
+                        opacity: 0.7;
+                    }
                 }
 
                 li {
@@ -132,7 +137,7 @@
                     &.slick-active {
                         button {
                             width: rem(24);
-                            background: rgb(255 255 255 / 70%);
+                            opacity: 0.7;
                         }
                     }
                 }
