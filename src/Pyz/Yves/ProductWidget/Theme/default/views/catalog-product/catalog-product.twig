@@ -43,7 +43,7 @@
         {% block productAttributeVisibility %}
             {% widget 'ProductAttributeVisibilityPlpWidget' args [data.products, data.product.id_product_abstract] only %}
                 {% block body %}
-                    {% set attributesBadgeClassName = "badge badge--secondary spacing-right--small spacing-bottom--small" %}
+                    {% set attributesBadgeClassName = "badge badge--solid spacing-right--small spacing-bottom--small" %}
                     {{ parent() }}
                 {% endblock %}
 

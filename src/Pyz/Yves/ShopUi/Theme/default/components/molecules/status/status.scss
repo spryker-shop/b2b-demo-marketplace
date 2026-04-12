@@ -1,4 +1,34 @@
 @include shop-ui-status {
+    $name: &;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: rem(var(--scale-2)) rem(var(--scale-8));
+    gap: rem(var(--scale-4));
+    font-size: rem(var(--body-sm-size));
+    font-weight: var(--font-weight-medium);
+    line-height: rem(var(--body-sm-line-height));
+    border-radius: rem(var(--radius-sm));
+    background: var(--background-muted);
+    color: var(--text-primary);
+    border: none;
+
+    &--md {
+        padding: rem(var(--scale-4)) rem(var(--scale-8));
+        font-size: rem(var(--font-size-14));
+        line-height: rem(var(--font-line-height-20));
+    }
+
+    &--solid {
+        color: var(--text-inverse);
+        background: var(--background-inverse);
+    }
+
+    &::before {
+        display: none;
+    }
+
     &--shipped,
     &--in-stock,
     &--never-out-of-stock,
@@ -10,8 +40,8 @@
         color: var(--text-state-success);
         background: var(--background-state-success-subtle);
 
-        &::before {
-            background: var(--background-state-success-subtle);
+        #{$name}--sold {
+            background: var(--background-state-success-bold);
         }
     }
 
@@ -20,19 +50,12 @@
     &--returned,
     &--waiting-for-return,
     &--return-canceled {
-        background-color: $setting-color-gray-1;
-        color: $setting-color-gray-8;
-    }
+        background: var(--background-state-warning-subtle);
+        color: var(--text-state-warning);
 
-    &--shipped {
-        background: lighten($setting-color-blue-1, 63%);
-        color: $setting-color-blue-1;
-    }
-
-    &--rejected,
-    &--not-configured {
-        background: lighten($setting-color-alt, 50%);
-        color: darken($setting-color-alt, 27%);
+        #{$name}--sold {
+            background: var(--background-state-warning-bold);
+        }
     }
 
     &--out-of-stock,
@@ -41,19 +64,18 @@
         background: var(--background-state-error-subtle);
         color: var(--text-state-error);
 
-        &::before {
-            background: var(--background-state-error-subtle);
+        #{$name}--sold {
+            background: var(--background-state-error-bold);
         }
     }
 
+    &--info,
     &--availability {
         color: var(--text-state-info);
         background: var(--background-state-info-subtle);
-        font-weight: 500;
-        padding: 0 rem(12) 0 rem(30);
 
-        &::before {
-            background: var(--background-state-info-subtle);
+        #{$name}--sold {
+            background: var(--background-state-info-bold);
         }
     }
 }

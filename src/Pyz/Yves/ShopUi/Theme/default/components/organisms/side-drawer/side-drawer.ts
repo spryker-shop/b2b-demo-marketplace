@@ -1,12 +1,11 @@
 import SideDrawerCore from 'ShopUi/components/organisms/side-drawer/side-drawer';
 
 export default class SideDrawer extends SideDrawerCore {
-    protected overlay: HTMLElement;
-    protected isOverlayShown: boolean;
-    protected panels: HTMLElement[];
-    protected drillDownTriggers: HTMLElement[];
-    protected closeButton: HTMLElement;
-    protected closeButtonIcon: HTMLElement;
+    protected overlay!: HTMLElement;
+    protected isOverlayShown = false;
+    protected panels: HTMLElement[] = [];
+    protected closeButton!: HTMLElement;
+    protected closeButtonIcon!: HTMLElement;
     protected activePanelClass = `${this.name}__panel--active`;
     protected currentPanelId = 'main';
     protected panelHistory: string[] = [];
@@ -14,9 +13,6 @@ export default class SideDrawer extends SideDrawerCore {
     protected init(): void {
         this.overlay = <HTMLElement>document.getElementsByClassName(this.overlayClassName)[0];
         this.panels = <HTMLElement[]>Array.from(this.querySelectorAll(`.${this.jsName}__panel`));
-        this.drillDownTriggers = <HTMLElement[]>(
-            Array.from(this.querySelectorAll(`.${this.jsName}__drill-down-trigger`))
-        );
         this.closeButton = <HTMLElement>this.querySelector(`.${this.name}__close`);
         this.closeButtonIcon = <HTMLElement>this.closeButton?.querySelector(`.${this.jsName}__close-icon`);
 
@@ -62,14 +58,22 @@ export default class SideDrawer extends SideDrawerCore {
     }
 
     protected mapDrillDownEvents(): void {
-        this.drillDownTriggers.forEach((trigger: HTMLElement) => {
-            trigger.addEventListener('click', () => {
-                const targetPanelId = trigger.getAttribute('data-target-panel');
+        this.addEventListener('click', (event: Event) => {
+            if (!(event.target instanceof Element)) {
+                return;
+            }
 
-                if (targetPanelId) {
-                    this.navigateTo(targetPanelId);
-                }
-            });
+            const trigger = event.target.closest(`.${this.jsName}__drill-down-trigger`) as HTMLElement | null;
+
+            if (!trigger || !this.contains(trigger)) {
+                return;
+            }
+
+            const targetPanelId = trigger.getAttribute('data-target-panel');
+
+            if (targetPanelId) {
+                this.navigateTo(targetPanelId);
+            }
         });
     }
 
@@ -179,11 +183,11 @@ export default class SideDrawer extends SideDrawerCore {
     }
 
     protected get lockedBodyClassName(): string {
-        return this.getAttribute('locked-body-class-name');
+        return this.getAttribute('locked-body-class-name') ?? '';
     }
 
     protected get overlayClassName(): string {
-        return this.getAttribute('overlay-class-name');
+        return this.getAttribute('overlay-class-name') ?? '';
     }
 
     protected get shouldCloseByOverlayClick(): boolean {

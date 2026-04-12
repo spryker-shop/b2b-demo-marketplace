@@ -94,12 +94,21 @@
         &__actions-row {
             display: flex;
             flex-direction: column;
+            gap: var(--scale-8);
 
             @include helper-breakpoint-media-min($xl) {
                 position: absolute;
                 right: 0;
                 bottom: 0;
                 flex-direction: row;
+            }
+
+            .button {
+                padding: var(--scale-8) var(--scale-12);
+                font-size: var(--button-sm-size);
+                font-weight: var(--button-sm-weight);
+                line-height: var(--button-sm-line-height);
+                border-radius: var(--radius-sm);
             }
         }
 

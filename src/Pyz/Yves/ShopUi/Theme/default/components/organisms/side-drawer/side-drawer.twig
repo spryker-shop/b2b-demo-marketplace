@@ -27,13 +27,16 @@
 
             {% set cartQuantity = functionExists('getCartQuantity') ? getCartQuantity() : app['cart.quantity'] | default(0) %}
             {% if is_granted('ROLE_USER') %}
-                {% widget 'MiniCartWidget' args [cartQuantity] with {
-                    data: {
-                        view: 'side-drawer',
-                        className: config.name ~ '__header-cart js-side-drawer__drill-down-trigger',
-                    },
-                } only %}
-                {% endwidget %}
+                <div>
+                    {% widget 'MiniCartWidget' args [cartQuantity] with {
+                        data: {
+                            isAjaxMode: data.isAjaxMode,
+                            view: 'side-drawer',
+                            ajaxClassSuffix: 'side-drawer-trigger',
+                        },
+                    } only %}
+                    {% endwidget %}
+                </div>
             {% else %}
                 <a href="{{ url('login', { redirectUri: app.request.uri }) }}"
                    class="button {{ config.name }}__header-sign-in">
@@ -196,7 +199,9 @@
                     <div class="{{ config.name }}__panel-body">
                         {% widget 'MiniCartWidget' args [cartQuantity] with {
                             data: {
+                                isAjaxMode: data.isAjaxMode,
                                 view: 'mini-cart',
+                                ajaxClassSuffix: 'side-drawer-panel',
                             },
                         } only %}
                         {% endwidget %}

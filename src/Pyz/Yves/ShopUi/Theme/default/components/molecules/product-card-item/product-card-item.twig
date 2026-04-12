@@ -32,7 +32,7 @@
     {% set amountSalesUnit = listItem.amountSalesUnit ?? null %}
     {% set quantitySalesUnit = listItem.quantitySalesUnit ?? null %}
 
-    <div class="grid grid--stretch grid--gap">
+    <div class="grid grid--stretch">
         <div class="{{ component.renderClass(config.name ~ '__col', modifiers, config.name ~ '__col--image') }} col">
             {% block image %}
                 {% set imageUrl = listItem.images[0].externalUrlLarge ?? '' %}

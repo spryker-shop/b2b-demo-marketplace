@@ -69,14 +69,22 @@
                     {% if data.showUserMenu %}
                         {% if is_granted('ROLE_USER') %}
                             <div class="{{ config.name }}__actions-pills">
-                                {% widget 'MiniCartWidget' args [data.cartQuantity] with {
-                                    config: config,
-                                    data: {
-                                        isAjaxMode: data.isAjaxMode,
-                                        view: 'header',
-                                    },
-                                } only %}
-                                {% endwidget %}
+                                <div class="{{ config.name }}__cart-pill-wrap">
+                                    {% widget 'MiniCartWidget' args [data.cartQuantity] with {
+                                        config: config,
+                                        data: {
+                                            isAjaxMode: data.isAjaxMode,
+                                            view: 'header',
+                                        },
+                                    } only %}
+                                    {% endwidget %}
+
+                                    <button type="button"
+                                        class="{{ config.name }}__cart-pill-overlay js-page-layout-main__side-drawer-trigger"
+                                        data-target-panel="cart-panel"
+                                        aria-label="{{ 'header.cart' | trans }}">
+                                    </button>
+                                </div>
 
                                 {% set customerFullNameWidget = findWidget('CustomerFullNameWidget') %}
                                 {% set menuItemCompanyWidget = findWidget('MenuItemCompanyWidget') %}
@@ -90,18 +98,6 @@
                                         },
                                     } only %}
                                 </div>
-                            </div>
-
-                            <div class="{{ config.name }}__mobile-cart">
-                                <button type="button" class="{{ config.name }}__mobile-cart-link js-page-layout-main__side-drawer-trigger" data-target-panel="cart-panel" aria-label="{{ 'header.cart' | trans }}{% if data.cartQuantity > 0 %}, {{ data.cartQuantity }} {{ 'header.cart.items' | trans }}{% endif %}">
-                                    {% include atom('font-icon') with {
-                                        modifiers: ['size-inherit'],
-                                        data: { name: 'shopping_cart' },
-                                    } only %}
-                                    {% if data.cartQuantity > 0 %}
-                                        <span class="{{ config.name }}__mobile-cart-badge" aria-hidden="true">{{ data.cartQuantity }}</span>
-                                    {% endif %}
-                                </button>
                             </div>
                         {% else %}
                             <a href="{{ url('login', { 'redirectUri': app.request.uri }) }}"
