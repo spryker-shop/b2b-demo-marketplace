@@ -55,6 +55,10 @@ sections:
         check-product-validity:
             command: 'vendor/bin/console product:check-validity'
 
+    configuration:
+        configuration-sync:
+            command: 'vendor/bin/console configuration:sync'
+
     init-storage:
         clean-search:
             command: 'vendor/bin/console elasticsearch:index:delete -vvv --no-ansi'
