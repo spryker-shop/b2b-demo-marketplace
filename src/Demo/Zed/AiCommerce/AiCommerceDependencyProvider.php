@@ -9,6 +9,8 @@ declare(strict_types = 1);
 
 namespace Demo\Zed\AiCommerce;
 
+use Demo\Zed\AiCommerce\Communication\Plugin\Agent\PlaceOrderAgentPlugin;
+use Spryker\Zed\Kernel\Container;
 use SprykerFeature\Zed\AiCommerce\AiCommerceDependencyProvider as SprykerFeatureAiCommerceDependencyProvider;
 use SprykerFeature\Zed\AiCommerce\Communication\Plugin\Agent\DiscountManagementAgentPlugin;
 use SprykerFeature\Zed\AiCommerce\Communication\Plugin\Agent\FormFillAgentPlugin;
@@ -17,6 +19,122 @@ use SprykerFeature\Zed\AiCommerce\Communication\Plugin\Agent\OrderManagementAgen
 
 class AiCommerceDependencyProvider extends SprykerFeatureAiCommerceDependencyProvider
 {
+    public const string FACADE_CART = 'FACADE_CART';
+
+    public const string FACADE_CART_CODE = 'FACADE_CART_CODE';
+
+    public const string FACADE_CART_NOTE = 'FACADE_CART_NOTE';
+
+    public const string FACADE_CHECKOUT = 'FACADE_CHECKOUT';
+
+    public const string FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+
+    public const string FACADE_MESSENGER = 'FACADE_MESSENGER';
+
+    public const string FACADE_PAYMENT = 'FACADE_PAYMENT';
+
+    public const string FACADE_QUOTE = 'FACADE_QUOTE';
+
+    public const string FACADE_SHIPMENT = 'FACADE_SHIPMENT';
+
+    public function provideBusinessLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideBusinessLayerDependencies($container);
+
+        $container = $this->addCartFacade($container);
+        $container = $this->addCartCodeFacade($container);
+        $container = $this->addCartNoteFacade($container);
+        $container = $this->addCheckoutFacade($container);
+        $container = $this->addCustomerFacade($container);
+        $container = $this->addMessengerFacade($container);
+        $container = $this->addPaymentFacade($container);
+        $container = $this->addQuoteFacade($container);
+        $container = $this->addShipmentFacade($container);
+
+        return $container;
+    }
+
+    protected function addCartFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_CART, function (Container $container) {
+            return $container->getLocator()->cart()->facade();
+        });
+
+        return $container;
+    }
+
+    protected function addCartCodeFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_CART_CODE, function (Container $container) {
+            return $container->getLocator()->cartCode()->facade();
+        });
+
+        return $container;
+    }
+
+    protected function addCartNoteFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_CART_NOTE, function (Container $container) {
+            return $container->getLocator()->cartNote()->facade();
+        });
+
+        return $container;
+    }
+
+    protected function addCheckoutFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_CHECKOUT, function (Container $container) {
+            return $container->getLocator()->checkout()->facade();
+        });
+
+        return $container;
+    }
+
+    protected function addCustomerFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_CUSTOMER, function (Container $container) {
+            return $container->getLocator()->customer()->facade();
+        });
+
+        return $container;
+    }
+
+    protected function addMessengerFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_MESSENGER, function (Container $container) {
+            return $container->getLocator()->messenger()->facade();
+        });
+
+        return $container;
+    }
+
+    protected function addPaymentFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PAYMENT, function (Container $container) {
+            return $container->getLocator()->payment()->facade();
+        });
+
+        return $container;
+    }
+
+    protected function addQuoteFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_QUOTE, function (Container $container) {
+            return $container->getLocator()->quote()->facade();
+        });
+
+        return $container;
+    }
+
+    protected function addShipmentFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_SHIPMENT, function (Container $container) {
+            return $container->getLocator()->shipment()->facade();
+        });
+
+        return $container;
+    }
+
     /**
      * @return array<\SprykerFeature\Zed\AiCommerce\Dependency\BackofficeAssistant\BackofficeAssistantAgentPluginInterface>
      */
@@ -27,6 +145,7 @@ class AiCommerceDependencyProvider extends SprykerFeatureAiCommerceDependencyPro
             new OrderManagementAgentPlugin(),
             new DiscountManagementAgentPlugin(),
             new FormFillAgentPlugin(),
+            new PlaceOrderAgentPlugin(),
         ];
     }
 }

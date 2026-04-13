@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Demo\Zed\AiFoundation;
 
+use Demo\Zed\AiCommerce\Communication\Plugin\AiFoundation\PlaceOrderToolSetPlugin;
 use Spryker\Zed\AiFoundation\AiFoundationDependencyProvider as SprykerAiFoundationDependencyProvider;
 use Spryker\Zed\AiFoundation\Communication\Plugin\AuditLogPostPromptPlugin;
 use Spryker\Zed\AiFoundation\Communication\Plugin\AuditLogPostToolCallPlugin;
@@ -75,6 +76,7 @@ class AiFoundationDependencyProvider extends SprykerAiFoundationDependencyProvid
             new OrderDetailsToolSetPlugin(),
             new DiscountManagementToolSetPlugin(),
             new FormFillToolSetPlugin(),
+            new PlaceOrderToolSetPlugin(),
         ];
     }
 }
