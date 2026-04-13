@@ -28,12 +28,14 @@ description: Spryker ShopUi Twig/SCSS markup patterns — BEM, renderClass modif
 ```
 
 **Extending vendor:**
+
 ```twig
 {% extends molecule('banner', '@SprykerShop:ShopUi') %}
 {# then override only the blocks you need #}
 ```
 
 ## Data contract rules
+
 - **Never rename or remove** existing `data` fields — breaks all callers
 - Adding new optional fields (with defaults) is safe
 - `data.content | raw` — legacy pattern for passing pre-rendered HTML blocks
@@ -48,13 +50,20 @@ description: Spryker ShopUi Twig/SCSS markup patterns — BEM, renderClass modif
 ```
 
 **SCSS consequence — write flat BEM, no nesting:**
+
 ```scss
 // ✅ flat — when renderClass is on the element
-&__body--small  { padding: var(--scale-16); }
-&__body--medium { padding: var(--scale-20); }
+&__body--small {
+    padding: var(--scale-16);
+}
+&__body--medium {
+    padding: var(--scale-20);
+}
 
 // ⚠️ ancestor selector — only for elements inside data.content | raw
-&--small #{$name}__title { font-size: var(--heading-sm-size); }
+&--small #{$name}__title {
+    font-size: var(--heading-sm-size);
+}
 ```
 
 ## SCSS component mixin pattern
@@ -74,43 +83,179 @@ description: Spryker ShopUi Twig/SCSS markup patterns — BEM, renderClass modif
 ```
 
 Extension from outside (project-level):
+
 ```scss
 @include shop-ui-card {
-    &__container--custom { color: red; }
+    &__container--custom {
+        color: red;
+    }
 }
 ```
 
-## Design tokens  (`design-tokens.css`)
+## Badge-derived chips
+
+When a component is only a semantic variant of a badge-like chip, reuse `shop-ui-badge($name)` instead of copying the shell.
+
+Confirmed project patterns:
+
+```scss
+@include shop-ui-badge('.badge') {
+    @include helper-badge-chip;
+    font-weight: var(--font-weight-medium);
+
+    // badge-specific modifiers only
+}
+
+@include shop-ui-status {
+    $name: &;
+
+    @include helper-badge-chip;
+    font-weight: var(--font-weight-medium);
+
+    // status-specific state mappings only
+}
+
+@mixin quote-request-agent-widget-request-status($name: '.request-status') {
+    @include shop-ui-badge($name) {
+        // request-status-specific modifiers only
+    }
+}
+```
+
+Rule of thumb:
+
+- `badge` owns the shared chip shell plus badge typography and semantic modifiers.
+- The project `status` override reuses the shared chip shell through `@include helper-badge-chip;` inside `@include shop-ui-status { ... }` and owns its own font-weight plus status-specific state mappings.
+- A molecule like `label-group` should **not** inherit the full badge contract at the root when it also owns layout, hover, positioning, or product-label-specific semantics.
+- For `label-group`, reuse only the inner chip element styles such as `&__text` or `&__counter`, and keep molecule layout/modifiers local.
+
+If the shared chip shell must be reused across multiple components without depending on component import order, extract only the shell into a global ShopUi helper partial and wire it through `styles/shared.scss`:
+
+```scss
+// src/Pyz/Yves/ShopUi/Theme/default/styles/helpers/_badge-chip.scss
+@mixin helper-badge-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: rem(var(--scale-2)) rem(var(--scale-8));
+    gap: rem(var(--scale-4));
+    font-size: rem(var(--body-sm-size));
+    line-height: rem(var(--body-sm-line-height));
+    border-radius: rem(var(--radius-sm));
+    background: var(--background-muted);
+    color: var(--text-primary);
+    border: none;
+}
+
+// src/Pyz/Yves/ShopUi/Theme/default/styles/shared.scss
+@import 'helpers/badge-chip';
+
+// component SCSS
+@include shop-ui-badge('.badge') {
+    @include helper-badge-chip;
+    font-weight: var(--font-weight-medium);
+
+    &--md {
+        padding: rem(var(--scale-4)) rem(var(--scale-8));
+        font-size: rem(var(--font-size-14));
+        line-height: rem(var(--font-line-height-20));
+    }
+
+    &--solid {
+        color: var(--text-inverse);
+        background: var(--background-inverse);
+    }
+}
+```
+
+Keep only the reusable base chip shell in the helper. Font weight stays with each semantic consumer.
+
+Do not move badge-specific selectors like `&--md`, base `&--solid`, or molecule-specific state/color/layout mappings into `helper-badge-chip`.
+
+If badge and status still duplicate the same semantic declaration bodies after the shell extraction, use a separate declaration-only helper partial instead of adding selectors to `helper-badge-chip`:
+
+```scss
+// src/Pyz/Yves/ShopUi/Theme/default/styles/helpers/_badge-semantic.scss
+@mixin helper-badge-semantic-subtle($state) {
+    color: var(--text-state-#{$state});
+    background: var(--background-state-#{$state}-subtle);
+}
+
+@mixin helper-badge-semantic-bold-background($state) {
+    background: var(--background-state-#{$state}-bold);
+}
+
+// badge.scss keeps badge selectors local
+&--info {
+    @include helper-badge-semantic-subtle(info);
+}
+
+&--info#{&}--solid {
+    @include helper-badge-semantic-bold-background(info);
+}
+
+// status.scss keeps business-status mapping local
+&--shipped,
+&--in-stock {
+    @include helper-badge-semantic-subtle(success);
+
+    #{$name}--sold {
+        @include helper-badge-semantic-bold-background(success);
+    }
+}
+```
+
+Project rule: the reusable helper may own semantic declaration recipes, but badge still owns badge API selectors and status still owns business-status-to-semantic mapping. Do not extract badge-only `&--md` or the base `&--solid` inverse declarations into the helper.
+
+Inside `badge.scss`, keep the base `&--solid` block after the subtle semantic modifier blocks and before the `&--state#{&}--solid` background overrides. That source order is required so `.badge--info.badge--solid` keeps `color: var(--text-inverse)` from the base solid modifier while the semantic solid selector replaces only the background.
+
+If a non-badge consumer like `label-group__text` or `label-group__counter` reuses the helper, restore only the local element semantics the helper would otherwise override. In this project that explicitly includes `display`:
+
+```scss
+&__text {
+    @include helper-badge-chip;
+    display: block;
+}
+
+&__counter {
+    @include helper-badge-chip;
+    display: inline-block;
+}
+```
+
+## Design tokens (`design-tokens.css`)
 
 ```scss
 // Typography — scales: {sm, md, lg}
-font-size:      var(--heading-lg-size);
-line-height:    var(--heading-lg-line-height);
-font-weight:    var(--heading-lg-weight);
+font-size: var(--heading-lg-size);
+line-height: var(--heading-lg-line-height);
+font-weight: var(--heading-lg-weight);
 letter-spacing: var(--heading-lg-letter-spacing);
 // also: --body-{sm,md}-*, --button-{sm,md}-*
 
 // Spacing: --scale-{0,4,6,8,10,12,16,20,24,32,40,48}
 padding: var(--scale-24);
-gap:     var(--scale-16);
+gap: var(--scale-16);
 
 // Colors
-color:            var(--text-primary);           // #111827
-color:            var(--text-secondary);         // #6b7280
-color:            var(--text-inverse);           // #fff
-background-color: var(--background-page);        // #fff
+color: var(--text-primary); // #111827
+color: var(--text-secondary); // #6b7280
+color: var(--text-inverse); // #fff
+background-color: var(--background-page); // #fff
 background-color: var(--background-brand-primary);
 background-color: var(--background-brand-hover);
 
 // Shape
-border:        var(--stroke-sm) solid var(--border-default);
-border-radius: var(--radius-lg);   // 12px cards
-border-radius: var(--radius-md);   // 8px  buttons/badges
-border-radius: var(--radius-sm);   // 4px  tags
+border: var(--stroke-sm) solid var(--border-default);
+border-radius: var(--radius-lg); // 12px cards
+border-radius: var(--radius-md); // 8px  buttons/badges
+border-radius: var(--radius-sm); // 4px  tags
 
 // Shadow
-box-shadow: var(--shadows-sm-x) var(--shadows-sm-y) var(--shadows-sm-blur) var(--shadows-sm-spread) var(--shadows-sm-color);
-box-shadow: var(--shadows-md-x) var(--shadows-md-y) var(--shadows-md-blur) var(--shadows-md-spread) var(--shadows-md-color);
+box-shadow: var(--shadows-sm-x) var(--shadows-sm-y) var(--shadows-sm-blur) var(--shadows-sm-spread)
+    var(--shadows-sm-color);
+box-shadow: var(--shadows-md-x) var(--shadows-md-y) var(--shadows-md-blur) var(--shadows-md-spread)
+    var(--shadows-md-color);
 ```
 
 ## Line clamp (truncation)
@@ -121,7 +266,7 @@ display: -webkit-box;
 line-clamp: 2;
 -webkit-box-orient: vertical;
 overflow: hidden;
-max-height: calc(2 * var(--heading-sm-line-height));  // calc(), never rem()
+max-height: calc(2 * var(--heading-sm-line-height)); // calc(), never rem()
 ```
 
 ## Grid (`_grid.scss`)
@@ -130,7 +275,10 @@ Modern flexbox — no floats, no negative-margin gutter hack.
 
 ```scss
 // Gap via CSS custom property — col widths auto-adjust
-&--gap { --grid-gap: #{$setting-grid-space * 2}; gap: var(--grid-gap); }
+&--gap {
+    --grid-gap: #{$setting-grid-space * 2};
+    gap: var(--grid-gap);
+}
 
 // Col width formula: K/N * 100% + (K/N - 1) * gap
 // var(--grid-gap, 0px) → 0 when no gap modifier = backward compat
@@ -138,6 +286,7 @@ width: calc(#{percentage($ratio)} + #{$ratio - 1} * var(--grid-gap, 0px));
 ```
 
 Sass division: always `math.div()`, never `/`:
+
 ```scss
 @use 'sass:math';
 $ratio: math.div($column, $setting-grid-columns);
@@ -189,6 +338,7 @@ Note: `~ &__dropdown` is the **sibling combinator** (trigger and dropdown are si
 Note: `&__chevron` uses **descendant** selector (chevron is inside trigger).
 
 CSS hover still works alongside this — both selectors open the dropdown:
+
 ```scss
 &:hover &__dropdown { ... }               // hover path
 &__trigger[aria-expanded='true'] ~ &__dropdown { ... }  // click path (TS-driven)
@@ -274,11 +424,11 @@ Do not hide `title--footer-logo` from `md` upward. The Figma payment strip keeps
 
 The nav columns inside `footer__navigation` are rendered by `NavigationWidget` via `navigation-list` molecule. The actual DOM class names differ from what you might expect from the component name:
 
-| What you might write | Actual DOM class |
-|---|---|
-| `.navigation-list__list--footer` | `.list--footer` (on `<ul>`) |
-| `.navigation-list__link--footer` | `.link--footer` (on `<a>`) |
-| `.navigation-footer-item` | `.navigation-item` (on the column wrapper) |
+| What you might write             | Actual DOM class                           |
+| -------------------------------- | ------------------------------------------ |
+| `.navigation-list__list--footer` | `.list--footer` (on `<ul>`)                |
+| `.navigation-list__link--footer` | `.link--footer` (on `<a>`)                 |
+| `.navigation-footer-item`        | `.navigation-item` (on the column wrapper) |
 
 `renderClass('list', ['secondary', 'footer'])` → `list list--secondary list--footer`
 `renderClass('link', ['secondary', 'footer'])` → `link link--secondary link--footer`
