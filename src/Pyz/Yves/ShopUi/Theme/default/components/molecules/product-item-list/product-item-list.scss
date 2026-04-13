@@ -20,12 +20,13 @@
 
         &__image {
             position: relative;
+            border-radius: var(--radius-md) 0 0 var(--radius-md);
 
             @include helper-breakpoint-media-min($md) {
                 background: var(--background-subtle);
             }
 
-            @include helper-breakpoint-media-min($xl) {
+            @include helper-breakpoint-media-min($lg) {
                 padding: var(--scale-8) var(--scale-16);
             }
         }
@@ -50,10 +51,10 @@
         &__overlay {
             position: relative;
             display: block;
-            padding: var(--scale-8) var(--scale-16);
             margin: 0 calc(-1 * var(--scale-12)) var(--scale-12);
 
             @include helper-breakpoint-media-min($md) {
+                padding: var(--scale-8) var(--scale-16);
                 position: static;
                 padding: 0;
                 margin: 0;
@@ -79,43 +80,25 @@
         }
 
         &__details {
-            display: none;
-
-            @include helper-breakpoint-media-min($md) {
-                display: block;
-            }
-
-            @include helper-breakpoint-media-min($xl) {
-                position: relative;
-                width: 100%;
-            }
+            position: relative;
+            width: 100%;
         }
 
         &__actions-row {
             display: flex;
             flex-direction: column;
             gap: var(--scale-8);
+            margin-top: var(--scale-12);
 
-            @include helper-breakpoint-media-min($xl) {
-                position: absolute;
-                right: 0;
-                bottom: 0;
+            @include helper-breakpoint-media-min($lg) {
                 flex-direction: row;
-            }
-
-            .button {
-                padding: var(--scale-8) var(--scale-12);
-                font-size: var(--button-sm-size);
-                font-weight: var(--button-sm-weight);
-                line-height: var(--button-sm-line-height);
-                border-radius: var(--radius-sm);
             }
         }
 
         &__action {
             padding-top: var(--scale-8);
 
-            @include helper-breakpoint-media-min($xl) {
+            @include helper-breakpoint-media-min($lg) {
                 padding-top: 0;
                 padding-left: var(--scale-8);
             }

@@ -1,16 +1,6 @@
 @include shop-ui-badge('.badge') {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: rem(var(--scale-2)) rem(var(--scale-8));
-    gap: rem(var(--scale-4));
-    font-size: rem(var(--body-sm-size));
+    @include helper-badge-chip;
     font-weight: var(--font-weight-medium);
-    line-height: rem(var(--body-sm-line-height));
-    border-radius: rem(var(--radius-sm));
-    background: var(--background-muted);
-    color: var(--text-primary);
-    border: none;
 
     &--md {
         padding: rem(var(--scale-4)) rem(var(--scale-8));
@@ -19,23 +9,19 @@
     }
 
     &--info {
-        color: var(--text-state-info);
-        background: var(--background-state-info-subtle);
+        @include helper-badge-semantic-subtle(info);
     }
 
     &--success {
-        color: var(--text-state-success);
-        background: var(--background-state-success-subtle);
+        @include helper-badge-semantic-subtle(success);
     }
 
     &--warning {
-        background: var(--background-state-warning-subtle);
-        color: var(--text-state-warning);
+        @include helper-badge-semantic-subtle(warning);
     }
 
     &--error {
-        background: var(--background-state-error-subtle);
-        color: var(--text-state-error);
+        @include helper-badge-semantic-subtle(error);
     }
 
     &--solid {
@@ -44,18 +30,18 @@
     }
 
     &--info#{&}--solid {
-        background: var(--background-state-info-bold);
+        @include helper-badge-semantic-bold-background(info);
     }
 
     &--success#{&}--solid {
-        background: var(--background-state-success-bold);
+        @include helper-badge-semantic-bold-background(success);
     }
 
     &--warning#{&}--solid {
-        background: var(--background-state-warning-bold);
+        @include helper-badge-semantic-bold-background(warning);
     }
 
     &--error#{&}--solid {
-        background: var(--background-state-error-bold);
+        @include helper-badge-semantic-bold-background(error);
     }
 }

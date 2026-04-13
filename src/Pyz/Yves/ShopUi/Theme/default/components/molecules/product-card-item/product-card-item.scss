@@ -1,5 +1,3 @@
-$product-image-width: rem(78);
-$product-image-left-indent: rem(35);
 $dropdown-width: calc(100% + #{rem(4)});
 $dropdown-top-indent: calc(100% + #{rem(15)});
 
@@ -12,10 +10,6 @@ $dropdown-top-indent: calc(100% + #{rem(15)});
         position: relative;
         width: 100%;
         background: var(--background-surface);
-
-        @include helper-breakpoint-media-min($md) {
-            padding-right: var(--scale-24);
-        }
 
         @include helper-breakpoint-media-min($lg) {
             padding: 0;
@@ -32,22 +26,18 @@ $dropdown-top-indent: calc(100% + #{rem(15)});
             }
         }
 
-        .grid--stretch > .col > * {
-            height: auto;
-        }
-
         &__col {
             &--image {
                 border-radius: var(--radius-md) 0 0 var(--radius-md);
                 padding-top: 0;
                 padding-bottom: 0;
-                width: $product-image-width;
-                min-width: $product-image-width;
                 background: var(--background-muted);
+                width: 100%;
 
-                @include helper-breakpoint-media-min($md) {
+                @include helper-breakpoint-media-min($lg) {
                     width: 22%;
                     min-width: 22%;
+                    align-self: stretch;
                 }
             }
 
@@ -65,8 +55,8 @@ $dropdown-top-indent: calc(100% + #{rem(15)});
 
                 #{$name} & {
                     @include helper-breakpoint-media-min($lg) {
-                        padding-left: 0;
-                        padding-right: calc(var(--scale-16) * 3);
+                        padding-left: var(--scale-16);
+                        padding-right: var(--scale-16);
                     }
                 }
             }
@@ -84,15 +74,12 @@ $dropdown-top-indent: calc(100% + #{rem(15)});
             &--description {
                 padding-top: var(--scale-8);
                 padding-bottom: var(--scale-12);
-                width: calc(100% - #{$product-image-width});
-                min-width: calc(100% - #{$product-image-width});
-
-                @include helper-breakpoint-media-min($md) {
-                    width: 78%;
-                    min-width: 78%;
-                }
+                width: 100%;
 
                 @include helper-breakpoint-media-min($lg) {
+                    width: 78%;
+                    min-width: 78%;
+                    padding-left: var(--scale-16);
                     padding-top: var(--scale-20);
                     padding-bottom: var(--scale-16);
                 }
@@ -141,16 +128,9 @@ $dropdown-top-indent: calc(100% + #{rem(15)});
             }
 
             &--total {
-                flex-direction: column-reverse;
-
                 @include helper-breakpoint-media-min($lg) {
                     flex-direction: column;
                     align-items: flex-end;
-                }
-
-                .money-price.grid {
-                    display: flex;
-                    align-items: baseline;
                 }
             }
 
@@ -444,7 +424,7 @@ $dropdown-top-indent: calc(100% + #{rem(15)});
         &--order-detail {
             #{$name}__col {
                 &--image {
-                    margin-left: $product-image-left-indent;
+                    margin-left: rem(35);
                     padding-right: rem(5);
 
                     @include helper-breakpoint-media-min($md) {
@@ -475,20 +455,16 @@ $dropdown-top-indent: calc(100% + #{rem(15)});
                 }
 
                 &--description {
-                    width: calc(100% - #{$product-image-width} - #{$product-image-left-indent});
-                    min-width: calc(100% - #{$product-image-width} - #{$product-image-left-indent});
+                    width: 100%;
                     padding-top: 0;
                     padding-bottom: 0;
-
-                    @include helper-breakpoint-media-min($md) {
-                        width: 78%;
-                        min-width: 78%;
-                    }
 
                     @include helper-breakpoint-media-min($lg) {
                         padding-top: var(--scale-20);
                         padding-bottom: var(--scale-16);
                         margin-left: rem(-10);
+                        width: 78%;
+                        min-width: 78%;
                     }
                 }
             }

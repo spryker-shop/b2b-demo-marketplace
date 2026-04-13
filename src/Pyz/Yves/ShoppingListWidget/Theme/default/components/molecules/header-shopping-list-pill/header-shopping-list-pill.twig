@@ -6,7 +6,8 @@
 } %}
 
 {% define data = {
-    isAjaxMode: false,
+    isAjaxMode: true,
+    shoppingListCollection: data.shoppingListCollection,
 } %}
 
 {% block body %}
@@ -25,12 +26,10 @@
     </a>
 
     <div class="{{ config.name }}__dropdown {{ config.jsName }}__dropdown" aria-hidden="true">
-        {% widget 'ShoppingListNavigationMenuWidget' with {
+       {% include molecule('shopping-list-panel', 'ShoppingListWidget') with {
             data: {
-                isAjaxMode: data.isAjaxMode,
-                parentName: config.name,
+                shoppingLists: data.shoppingListCollection.shoppingLists,
             },
         } only %}
-        {% endwidget %}
     </div>
 {% endblock %}

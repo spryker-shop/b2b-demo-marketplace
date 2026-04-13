@@ -10,6 +10,7 @@
             border: var(--stroke-sm) solid var(--border-default);
             border-radius: var(--radius-md);
             overflow: hidden;
+            position: relative;
 
             &:hover {
                 border-color: var(--border-strong);
@@ -81,6 +82,16 @@
             line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
+
+            &::before {
+                content: '';
+                height: 13.75rem;
+                left: 0;
+                position: absolute;
+                right: 0;
+                top: 0;
+                z-index: 1;
+            }
         }
 
         &__attributes {
@@ -121,6 +132,10 @@
             display: flex;
             flex-direction: column;
             gap: var(--scale-6);
+
+            &:empty {
+                display: none;
+            }
         }
 
         &__price {

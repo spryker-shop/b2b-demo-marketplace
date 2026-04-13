@@ -119,7 +119,15 @@
 
                     {% if is_granted('ROLE_USER') %}
                         <div class="{{ config.name }}__nav-quick-links">
-                            {% include molecule('header-shopping-list-pill') only %}
+                            <div>
+                                {% widget 'ShoppingListNavigationMenuWidget' with {
+                                    data: {
+                                        isAjaxMode: data.isAjaxMode,
+                                        view: 'header',
+                                    },
+                                } only %}
+                                {% endwidget %}
+                            </div>
 
                             {% if can('SeeCompanyMenuPermissionPlugin') %}
                                 {% include molecule('header-dropdown') with {
