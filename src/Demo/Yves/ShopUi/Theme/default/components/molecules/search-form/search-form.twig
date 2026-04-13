@@ -1,0 +1,70 @@
+{% extends molecule('search-form', '@SprykerShop:ShopUi') %}
+
+{% define config = {
+    name: 'search-form',
+} %}
+
+{% define attributes = {
+    'wrapper-class-name': 'js-' ~ config.name,
+    'wrapper-toggle-class-name': config.name ~ '--active',
+    'open-class-name': required,
+    'close-class-name': required,
+} %}
+
+{% block extraClass %}
+    {{ config.jsName }}
+{% endblock %}
+
+
+{% block body %}
+    <form action="{{ data.searchUrl }}">
+        <input
+            class="suggest-search__input {{ config.jsName }}__input--{{ attributes['data-search-id'] }}"
+            name="q"
+            type="text"
+            placeholder="{{ 'global.search' | trans }}"
+            value="{{ data.searchValue }}"
+            autocomplete="off"
+        >
+
+        {% if data.byImage and widgetGlobalExists('ImageSearchAiWidget') %}
+            {% widget 'ImageSearchAiWidget' with {
+                data: {
+                    dataSearchId: attributes['data-search-id'],
+                },
+            } only %}{% endwidget %}
+        {% endif %}
+
+        <button class="{{ config.name }}__button {{ config.name }}__button--submit" aria-label="{{ 'global.search' | trans }}">
+            {% include atom('icon') with {
+                class: config.name ~ '__icon',
+                modifiers: ['search'],
+                data: {
+                    name: 'search',
+                },
+            } only %}
+        </button>
+
+        <button type="button" class="{{ config.name }}__button {{ config.name }}__button--close {% block close %}{% endblock %}">
+            {% include atom('icon') with {
+                class: config.name ~ '__icon',
+                modifiers: ['small'],
+                data: {
+                    name: 'cross',
+                },
+            } only %}
+        </button>
+
+        {% include molecule('suggest-search') with {
+            attributes: {
+                'parent-class-name': config.name,
+                'suggestion-url': path('search/suggestion'),
+                'input-class-name': config.jsName ~ '__input--' ~ attributes['data-search-id'],
+                'wrapper-class-name': attributes['wrapper-class-name'],
+                'wrapper-toggle-class-name': attributes['wrapper-toggle-class-name'],
+                'open-class-name': attributes['open-class-name'],
+                'close-class-name': attributes['close-class-name'],
+            },
+        } only %}
+    </form>
+{% endblock %}
