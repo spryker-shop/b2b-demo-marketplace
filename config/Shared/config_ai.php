@@ -2,19 +2,19 @@
 
 declare(strict_types = 1);
 
+use Pyz\Shared\AiCommerce\AiCommerceConstants;
 use Spryker\Shared\AiFoundation\AiFoundationConstants;
-use SprykerFeature\Shared\AiCommerce\AiCommerceConstants;
 
 $openAiConfiguration = [
     'provider_name' => AiFoundationConstants::PROVIDER_OPENAI,
     'provider_config' => [
-        'key' => AiFoundationConstants::CONFIGURATION_REFERENCE_PREFIX . 'ai_commerce:open_ai:general:openai_api_token',
-        'model' => AiFoundationConstants::CONFIGURATION_REFERENCE_PREFIX . 'ai_commerce:open_ai:general:openai_default_model',
+        'key' => AiFoundationConstants::CONFIGURATION_REFERENCE_PREFIX . AiCommerceConstants::CONFIGURATION_KEY_OPENAI_API_TOKEN,
+        'model' => AiFoundationConstants::CONFIGURATION_REFERENCE_PREFIX . AiCommerceConstants::CONFIGURATION_KEY_OPENAI_DEFAULT_MODEL,
     ],
 ];
 
 $openAiSmartAgentModelConfig = array_merge($openAiConfiguration['provider_config'], [
-    'model' => AiFoundationConstants::CONFIGURATION_REFERENCE_PREFIX . 'ai_commerce:open_ai:general:openai_smart_model',
+    'model' => AiFoundationConstants::CONFIGURATION_REFERENCE_PREFIX . AiCommerceConstants::CONFIGURATION_KEY_OPENAI_SMART_MODEL,
 ]);
 
 $config[AiFoundationConstants::AI_CONFIGURATIONS] = [
