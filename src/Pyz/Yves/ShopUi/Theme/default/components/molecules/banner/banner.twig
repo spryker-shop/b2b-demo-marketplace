@@ -27,11 +27,13 @@
     {% endif %}
 
     <div class="{{ component.renderClass(config.name ~ '__body', modifiers) }}">
-        {% if data.content %}
-            <div class="{{ component.renderClass(config.name ~ '__content', modifiers) }}">
-                {{ data.content | raw }}
-            </div>
-        {% endif %}
+        {% block content %}
+            {% if data.content %}
+                <div class="{{ component.renderClass(config.name ~ '__content', modifiers) }}">
+                    {{ data.content | raw }}
+                </div>
+            {% endif %}
+        {% endblock %}
 
         {% if data.clickUrl %}
             <a
