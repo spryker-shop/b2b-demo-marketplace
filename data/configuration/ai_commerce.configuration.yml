@@ -1,10 +1,6 @@
 # yaml-language-server: $schema=../../../../Spryker/Configuration/resources/configuration/configuration-schema-v1.json
 features:
     - key: ai_commerce
-      name: AI Commerce
-      description: AI-powered commerce features configuration.
-      enabled: true
-      order: 0
       tabs:
           - key: open_ai
             name: Open AI
@@ -58,7 +54,7 @@ features:
                         name: Enable Place Order Agent
                         description: When enabled, the Place Order Agent is available in the Backoffice Assistant.
                         type: boolean
-                        default_value: 'true'
+                        default_value: 'false'
                         enabled: true
                         secret: false
                         storefront: false
