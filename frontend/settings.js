@@ -31,9 +31,13 @@ const globalSettings = {
         // project folders
         project: './src/Pyz/Yves',
 
+        // demo project folders
+        demoProject: './src/Demo/Yves',
+
         // paths for icon sprite
         iconSprite: {
             sources: [
+                './src/Demo/Yves/ShopUi/Theme/default/components/atoms/icon-sprite/icon-sprite.twig',
                 './src/Pyz/Yves/ShopUi/Theme/default/components/atoms/icon-sprite/icon-sprite.twig',
                 './vendor/spryker-shop/shop-ui/src/SprykerShop/Yves/ShopUi/Theme/default/components/atoms/icon-sprite/icon-sprite.twig',
             ],
@@ -168,6 +172,9 @@ const getAppSettingsByTheme = (namespaceConfig, theme, pathToConfig) => {
         // project folders
         project: globalSettings.paths.project,
 
+        // demo project folders
+        demoProject: globalSettings.paths.demoProject,
+
         iconSprite: globalSettings.paths.iconSprite,
     };
 
@@ -231,6 +238,7 @@ const getAppSettingsByTheme = (namespaceConfig, theme, pathToConfig) => {
                     join(globalSettings.context, paths.features),
                     join(globalSettings.context, paths.eco),
                     join(globalSettings.context, paths.project),
+                    join(globalSettings.context, paths.demoProject),
                 ],
                 // files/dirs patterns
                 patterns: customThemeEntryPointPatterns(),

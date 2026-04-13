@@ -9,22 +9,32 @@ declare(strict_types = 1);
 
 namespace Demo\Zed\CmsBlock;
 
+use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\CmsBlock\CmsBlockConfig as SprykerCmsBlockConfig;
 
 class CmsBlockConfig extends SprykerCmsBlockConfig
 {
-    public const string DEMO_NAMESPACE = 'Demo';
-
     public function getCmsBlockTemplatePaths(): array
     {
-        return [
-            ...parent::getCmsBlockTemplatePaths(),
-            sprintf(
+        $templatePaths = [];
+
+        foreach ($this->getProjectNamespaces() as $projectNamespace) {
+            $templatePaths[] = sprintf(
                 '%s/%s/Shared/CmsBlock/Theme/%s',
                 APPLICATION_SOURCE_DIR,
-                static::DEMO_NAMESPACE,
+                $projectNamespace,
                 static::THEME_NAME_DEFAULT,
-            ),
-        ];
+            );
+        }
+
+        return $templatePaths;
+    }
+
+    /**
+     * @return array<string>
+     */
+    protected function getProjectNamespaces(): array
+    {
+        return $this->get(KernelConstants::PROJECT_NAMESPACES);
     }
 }
