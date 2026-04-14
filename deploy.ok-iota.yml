@@ -106,57 +106,105 @@ groups:
   EU:
     region: EU
     applications:
-      mportal:
-        application: merchant-portal
-        endpoints:
-          mp.eu.ok-iota.cloud.spryker.toys:
-            entry-point: MerchantPortal
-            region: EU
-            <<: *real-ip
       yves:
         application: yves
         endpoints:
-          date-time-configurator.ok-iota.cloud.spryker.toys:
-            entry-point: Configurator
           yves.eu.ok-iota.cloud.spryker.toys:
             region: EU
             <<: *frontend-auth
-      glue:
-        application: glue
-        endpoints:
+            entry-point: Yves
+            services:
+              session:
+                namespace: 2
+
           glue.eu.ok-iota.cloud.spryker.toys:
             region: EU
-            <<: *real-ip
-      gluestorefront:
-        application: glue-storefront
-        endpoints:
-            glue-storefront.de.ok-iota.cloud.spryker.toys:
-                region: EU
-      gluebackend:
-        application: glue-backend
-        endpoints:
-          glue-backend.eu.ok-iota.cloud.spryker.toys:
-            region: EU
-            <<: *real-ip
+            entry-point: Glue
+
       boffice:
         application: backoffice
         endpoints:
+          mp.eu.ok-iota.cloud.spryker.toys:
+            region: EU
+            <<: *frontend-auth
+            entry-point: MerchantPortal
+            services:
+              session:
+                namespace: 3
+
           backoffice.eu.ok-iota.cloud.spryker.toys:
             region: EU
             <<: *frontend-auth
-      backgw:
-        application: backend-gateway
-        endpoints:
+            entry-point: Backoffice
+            services:
+              session:
+                namespace: 4
+
           backend-gateway.eu.ok-iota.cloud.spryker.toys:
             region: EU
-            <<: *real-ip
-      backapi:
-        application: zed
-        endpoints:
-          backend-api.eu.ok-iota.cloud.spryker.toys:
+            entry-point: BackendGateway
+            primal: true
+
+          glue-backend.eu.ok-iota.cloud.spryker.toys:
             region: EU
-            entry-point: BackendApi
-            <<: *real-ip
+            entry-point: GlueBackend
+
+
+# groups:
+#   EU:
+#     region: EU
+#     applications:
+#       mportal:
+#         application: merchant-portal
+#         endpoints:
+#           mp.eu.ok-iota.cloud.spryker.toys:
+#             entry-point: MerchantPortal
+#             region: EU
+#             <<: *real-ip
+#       yves:
+#         application: yves
+#         endpoints:
+#           date-time-configurator.ok-iota.cloud.spryker.toys:
+#             entry-point: Configurator
+#           yves.eu.ok-iota.cloud.spryker.toys:
+#             region: EU
+#             <<: *frontend-auth
+#       glue:
+#         application: glue
+#         endpoints:
+#           glue.eu.ok-iota.cloud.spryker.toys:
+#             region: EU
+#             <<: *real-ip
+#       gluestorefront:
+#         application: glue-storefront
+#         endpoints:
+#             glue-storefront.de.ok-iota.cloud.spryker.toys:
+#                 region: EU
+#       gluebackend:
+#         application: glue-backend
+#         endpoints:
+#           glue-backend.eu.ok-iota.cloud.spryker.toys:
+#             region: EU
+#             <<: *real-ip
+#       boffice:
+#         application: backoffice
+#         endpoints:
+#           backoffice.eu.ok-iota.cloud.spryker.toys:
+#             region: EU
+#             <<: *frontend-auth
+#       backgw:
+#         application: backend-gateway
+#         endpoints:
+#           backend-gateway.eu.ok-iota.cloud.spryker.toys:
+#             region: EU
+#             <<: *real-ip
+#       backapi:
+#         application: zed
+#         endpoints:
+#           backend-api.eu.ok-iota.cloud.spryker.toys:
+#             region: EU
+#             entry-point: BackendApi
+#             <<: *real-ip
 
 
 services:
