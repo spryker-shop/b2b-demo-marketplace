@@ -224,19 +224,4 @@ class SymfonyMessengerConfig extends SprykerSymfonyMessengerConfig
             ],
         ];
     }
-
-    public function getQueueTransportConfiguration(): array
-    {
-        return [
-            'default' => [
-                'auto_setup' => false,
-                'persistent' => 'false',
-                'connect_timeout' => 3,
-                'read_timeout' => 130,
-                'write_timeout' => 130,
-                'heartbeat' => 0,
-                'rpc_timeout' => 0,
-            ],
-        ];
-    }
 }
