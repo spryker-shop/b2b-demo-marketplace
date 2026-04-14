@@ -1,5 +1,14 @@
 {% extends molecule('buy-box-item', '@SprykerFeature:BuyBox') %}
 
+{% block body %}
+    <div class="grid grid--nowrap grid--gap-smaller">
+        {% block itemInner %}
+            {{ parent() }}
+        {% endblock %}
+    </div>
+{% endblock %}
+
+
 {% block price %}
     <div class="spacing-bottom">
         {% widget 'CurrentProductPriceVolumeWidget' args [data.price] only %}

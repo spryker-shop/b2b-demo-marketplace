@@ -217,18 +217,16 @@ $address-form-width: rem(710);
         }
 
         #{$name}__action {
-            @include helper-effect-transition(color);
             margin: 0;
-            display: flex;
-            align-items: center;
             height: 100%;
             font-size: rem(12);
             font-weight: fw(bold);
-            color: $setting-color-gray-5;
+            background: none;
+            padding: 0 rem(5);
+            cursor: pointer;
 
-            &:hover,
-            &:focus {
-                color: $setting-color-gray-3;
+            &:hover {
+                color: var(--grey-40);
             }
         }
 

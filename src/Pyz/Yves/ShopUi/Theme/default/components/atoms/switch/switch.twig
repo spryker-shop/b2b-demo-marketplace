@@ -2,7 +2,6 @@
 
 {% define config = {
     name: 'switch',
-    tag: 'label'
 } %}
 
 {% define data = {
@@ -12,7 +11,7 @@
 } %}
 
 {% block body %}
-    <span class="{{ config.name }}__track">
+    <label class="{{ config.name }}__track">
         <input
             type="checkbox"
             class="{{ config.name }}__input"

@@ -36,9 +36,34 @@
         &__download-link {
             position: relative;
             display: inline-block;
-            padding-left: rem(33);
+            padding-left: rem(25);
             color: $setting-color-gray-4;
             font-weight: fw(bold);
+        }
+
+        &__download-icon {
+            position: absolute;
+            left: 0;
+            top: rem(2);
+        }
+
+        &__browse-file {
+            @include helper-effect-transition(border-color);
+            display: flex;
+            align-items: center;
+            width: 100%;
+            min-height: rem(120);
+            padding: rem(10);
+            border: rem(var(--stroke-md)) dashed $setting-color-gray-2;
+            border-radius: rem(var(--radius-xs));
+            background-color: $setting-color-white;
+            text-transform: initial;
+            font-weight: fw(regular);
+            cursor: pointer;
+
+            &:hover {
+                border-color: $setting-color-main;
+            }
         }
 
         @content;
