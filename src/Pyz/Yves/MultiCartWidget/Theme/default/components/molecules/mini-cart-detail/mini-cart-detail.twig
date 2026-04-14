@@ -17,7 +17,13 @@
     {% set isExpanded = data.isExpanded %}
 
     <div class="{{ config.name }}__wrapper">
-        <a href="{{ url('cart') }}" class="{{ config.name }}__link link--no-decoration {{ isExpanded ? config.name ~ '__link--expanded' : '' }} {{ config.jsName }}__link">
+        {% if not cart.isDefault and cart.idQuote %}
+            <form class="{{ config.jsName }}__activate-form" method="POST" action="{{ path('multi-cart/set-default', {idQuote: cart.idQuote}) }}" hidden>
+                <input type="hidden" name="multi_cart_set_default_form[_token]" value="{{ csrf_token('multi_cart_set_default_form') }}">
+            </form>
+        {% endif %}
+
+        <a href="{{ url('cart') }}" class="{{ config.name }}__link link--no-decoration {{ isExpanded ? config.name ~ '__link--expanded' : '' }} {{ config.jsName }}__link {{ not cart.isDefault ? config.jsName ~ '__link--activate' : '' }}">
             <div class="{{ config.name }}__info">
                 <div class="{{ config.name }}__name-line">
                     <span class="{{ config.name }}__name">{{ cart.name }}</span>
