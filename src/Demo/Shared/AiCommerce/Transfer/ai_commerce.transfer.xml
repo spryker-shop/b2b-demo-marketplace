@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="PlaceOrderAgentResponse" strict="true">
+        <property name="message" type="string" description="Response message to be displayed to the user."/>
+        <property name="reasoningMessage" type="string" description="Message to be displayed to the user as a reason why 'Guardrail' agent is selected."/>
+        <property name="agent" type="string" description="Set 'Place Order' by default when answer to user is provided. Set 'Guardrail' if user's intent is not related to supported agent functionality."/>
+    </transfer>
+
+</transfers>

@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-use Pyz\Shared\AiCommerce\AiCommerceConstants;
+use Demo\Shared\AiCommerce\AiCommerceConstants;
 use Spryker\Shared\AiFoundation\AiFoundationConstants;
 
 $openAiConfiguration = [
@@ -34,6 +34,10 @@ $config[AiFoundationConstants::AI_CONFIGURATIONS] = [
     ]),
     AiCommerceConstants::AI_CONFIGURATION_FORM_FILL => array_merge($openAiConfiguration, [
         'system_prompt' => AiFoundationConstants::CONFIGURATION_REFERENCE_PREFIX . AiCommerceConstants::CONFIGURATION_KEY_FORM_FILL_SYSTEM_PROMPT,
+        'provider_config' => $openAiSmartAgentModelConfig,
+    ]),
+    AiCommerceConstants::AI_CONFIGURATION_PLACE_ORDER => array_merge($openAiConfiguration, [
+        'system_prompt' => AiFoundationConstants::CONFIGURATION_REFERENCE_PREFIX . AiCommerceConstants::CONFIGURATION_KEY_PLACE_ORDER_SYSTEM_PROMPT,
         'provider_config' => $openAiSmartAgentModelConfig,
     ]),
 ];
