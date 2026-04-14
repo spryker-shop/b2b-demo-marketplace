@@ -4,6 +4,7 @@
 
         &__container {
             aspect-ratio: 16 / 5;
+            width: 100%;
             background-color: var(--background-inverse);
             background-position: center center;
             background-size: cover;
@@ -12,6 +13,7 @@
             position: relative;
             display: flex;
             align-items: center;
+            max-height: rem(450);
 
             &--banner {
                 aspect-ratio: auto;
