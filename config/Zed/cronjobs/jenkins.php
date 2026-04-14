@@ -203,3 +203,12 @@ if (getenv('SPRYKER_CURRENT_REGION')) {
         $job['region'] = getenv('SPRYKER_CURRENT_REGION');
     }
 }
+
+const GLOBAL_PRE_COMMAND = 'rm -f "${JENKINS_HOME}/jobs/${JOB_NAME}/builds/lastBuild"; ln -s "/media/jenkins/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}" "${JENKINS_HOME}/jobs/${JOB_NAME}/builds/lastBuild" && ';
+
+
+
+$jobs = array_map(function (array $job): array {
+    $job['command'] = GLOBAL_PRE_COMMAND . $job['command'];
+    return $job;
+}, $jobs)
