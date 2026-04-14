@@ -55,6 +55,8 @@
                     {{ block('sku') }}
                     {{ block('rating') }}
 
+                    {% block productAttributeVisibility %}{% endblock %}
+
                     {% block colors %}
                         {% widget 'ProductGroupColorWidget' args [data.idProductAbstract, data.product.selectedAttributes ?? []] use view('product-item-color-selector', 'ProductGroupWidget') with {
                             data: {

@@ -10,7 +10,7 @@ declare(strict_types = 1);
 namespace Pyz\Zed\ProductMeasurementUnitStorage;
 
 use Pyz\Zed\Synchronization\SynchronizationConfig;
-use Spryker\Shared\Publisher\PublisherConfig;
+use Spryker\Shared\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageConfig as SprykerSharedProductMeasurementUnitStorageConfig;
 use Spryker\Zed\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageConfig as SprykerProductMeasurementUnitStorageConfig;
 
 class ProductMeasurementUnitStorageConfig extends SprykerProductMeasurementUnitStorageConfig
@@ -28,7 +28,7 @@ class ProductMeasurementUnitStorageConfig extends SprykerProductMeasurementUnitS
      */
     public function getProductMeasurementUnitEventQueueName(): ?string
     {
-        return PublisherConfig::PUBLISH_QUEUE;
+        return SprykerSharedProductMeasurementUnitStorageConfig::PUBLISH_PRODUCT_MEASUREMENT_UNIT_QUEUE;
     }
 
     /**
@@ -36,6 +36,6 @@ class ProductMeasurementUnitStorageConfig extends SprykerProductMeasurementUnitS
      */
     public function getProductConcreteMeasurementUnitEventQueueName(): ?string
     {
-        return PublisherConfig::PUBLISH_QUEUE;
+        return SprykerSharedProductMeasurementUnitStorageConfig::PUBLISH_PRODUCT_MEASUREMENT_UNIT_QUEUE;
     }
 }

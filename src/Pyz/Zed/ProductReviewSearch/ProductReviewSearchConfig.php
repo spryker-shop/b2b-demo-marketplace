@@ -10,7 +10,7 @@ declare(strict_types = 1);
 namespace Pyz\Zed\ProductReviewSearch;
 
 use Pyz\Zed\Synchronization\SynchronizationConfig;
-use Spryker\Shared\Publisher\PublisherConfig;
+use Spryker\Shared\ProductReviewSearch\ProductReviewSearchConfig as SprykerSharedProductReviewSearchConfig;
 use Spryker\Zed\ProductReviewSearch\ProductReviewSearchConfig as SprykerProductReviewSearchConfig;
 
 class ProductReviewSearchConfig extends SprykerProductReviewSearchConfig
@@ -28,6 +28,6 @@ class ProductReviewSearchConfig extends SprykerProductReviewSearchConfig
      */
     public function getEventQueueName(): ?string
     {
-        return PublisherConfig::PUBLISH_QUEUE;
+        return SprykerSharedProductReviewSearchConfig::PUBLISH_PRODUCT_REVIEW_QUEUE;
     }
 }

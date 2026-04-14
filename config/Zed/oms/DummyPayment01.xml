@@ -154,7 +154,7 @@
             <event name="authorize" timeout="1 second"/>
             <event name="skip grace period" manual="true" timeout="2 hour"/>
             <event name="pay" manual="true" timeout="1 hour" timeoutProcessor="OmsTimeout/Initiation" command="DummyPayment/Pay"/>
-            <event name="submit tax invoice" onEnter="true" command="TaxApp/SubmitPaymentTaxInvoice"/>
+            <event name="submit tax invoice" onEnter="true" command="Vertex/SubmitPaymentTaxInvoice"/>
             <event name="request product review" onEnter="true" command="Order/RequestProductReviews"/>
             <event name="confirm" onEnter="true" manual="true" command="Oms/SendOrderConfirmation"/>
             <event name="skip timeout" manual="true" timeout="30 minute"/>

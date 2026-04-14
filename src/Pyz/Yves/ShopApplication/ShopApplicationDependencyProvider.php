@@ -30,6 +30,9 @@ use Spryker\Yves\Translator\Plugin\Application\TranslatorApplicationPlugin;
 use Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin;
 use Spryker\Yves\Validator\Plugin\Application\ValidatorApplicationPlugin;
 use SprykerFeature\Yves\BuyBox\Widget\BuyBoxWidget;
+use SprykerFeature\Yves\ProductExperienceManagement\Widget\ProductAttributeVisibilityCartWidget;
+use SprykerFeature\Yves\ProductExperienceManagement\Widget\ProductAttributeVisibilityPdpWidget;
+use SprykerFeature\Yves\ProductExperienceManagement\Widget\ProductAttributeVisibilityPlpWidget;
 use SprykerFeature\Yves\SelfServicePortal\Plugin\ShopApplication\AddressFormItemsByShipmentTypeWidgetCacheKeyGeneratorStrategyPlugin;
 use SprykerFeature\Yves\SelfServicePortal\Plugin\ShopApplication\SingleAddressPerShipmentTypeWidgetCacheKeyGeneratorStrategyPlugin;
 use SprykerFeature\Yves\SelfServicePortal\Plugin\ShopApplication\SspDashboardFilterControllerEventHandlerPlugin;
@@ -430,6 +433,9 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             ShipmentTypeAddressFormWidget::class,
             ProductOfferServicePointAvailabilityWidget::class,
             ProductOfferServicePointAvailabilityDisplayWidget::class,
+            ProductAttributeVisibilityPdpWidget::class,
+            ProductAttributeVisibilityPlpWidget::class,
+            ProductAttributeVisibilityCartWidget::class,
         ];
     }
 

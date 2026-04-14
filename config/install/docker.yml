@@ -75,6 +75,9 @@ sections:
         generate-transfer-databuilders:
             command: 'vendor/bin/console transfer:databuilder:generate'
 
+        configuration-sync:
+            command: 'vendor/bin/console configuration:sync'
+
     build-production:
         excluded: true
         cache-class-resolver-build:
