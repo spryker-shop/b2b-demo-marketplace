@@ -4,7 +4,7 @@
     <analytics>
         <label>Analytics</label>
         <title>Analytics</title>
-        <icon>fa-chart-bar</icon>
+        <icon>bar_chart_4_bars</icon>
         <bundle>analytics-gui</bundle>
         <controller>analytics</controller>
         <action>index</action>
@@ -15,13 +15,13 @@
         <bundle>dashboard</bundle>
         <controller>index</controller>
         <action>index</action>
-        <icon>fa-chart-area</icon>
+        <icon>grid_view</icon>
     </dashboard>
     <sales>
         <label>Sales</label>
         <uri>/sales</uri>
         <title>Sales</title>
-        <icon>fa-shopping-cart</icon>
+        <icon>local_mall</icon>
         <pages>
             <order-matrix>
                 <label>Order Matrix</label>
@@ -80,10 +80,52 @@
             </table>
         </pages>
     </sales>
+        <ssp>
+        <label>Customer Portal</label>
+        <title>Customer Portal</title>
+        <icon>interactive_space</icon>
+        <pages>
+            <self-service-portal-model>
+                <label>Models</label>
+                <title>Models</title>
+                <bundle>self-service-portal</bundle>
+                <controller>list-model</controller>
+                <action>index</action>
+            </self-service-portal-model>
+            <self-service-portal-asset>
+                <label>Assets</label>
+                <title>Assets</title>
+                <bundle>self-service-portal</bundle>
+                <controller>list-asset</controller>
+                <action>index</action>
+            </self-service-portal-asset>
+            <self-service-portal-company-file>
+                <label>File Attachments</label>
+                <title>File Attachments</title>
+                <bundle>self-service-portal</bundle>
+                <controller>list-file</controller>
+                <action>index</action>
+            </self-service-portal-company-file>
+            <self-service-portal-inquiries>
+                <label>Inquiries</label>
+                <title>Inquiries</title>
+                <bundle>self-service-portal</bundle>
+                <controller>list-inquiry</controller>
+                <action>index</action>
+            </self-service-portal-inquiries>
+            <self-service-portal-services>
+                <label>Booked Services</label>
+                <title>Booked Services</title>
+                <bundle>self-service-portal</bundle>
+                <controller>list-service</controller>
+                <action>index</action>
+            </self-service-portal-services>
+        </pages>
+    </ssp>
     <customer>
         <label>Customers</label>
         <title>Customers</title>
-        <icon>fa-users</icon>
+        <icon>account_circle</icon>
         <pages>
             <customer>
                 <label>Customers</label>
@@ -143,12 +185,19 @@
                 <controller>list-company-role</controller>
                 <action>index</action>
             </company-role-gui>
+            <purchasing-control>
+                <label>Purchasing Control</label>
+                <title>Purchasing Control</title>
+                <bundle>purchasing-control</bundle>
+                <controller>cost-center</controller>
+                <action>index</action>
+            </purchasing-control>
         </pages>
     </customer>
     <catalog>
         <label>Catalog</label>
         <title>Catalog</title>
-        <icon>fa-book</icon>
+        <icon>package_2</icon>
         <uri>#</uri>
         <pages>
             <products>
@@ -222,7 +271,7 @@
     <content>
         <label>Content</label>
         <title>Content</title>
-        <icon>fa-file-alt</icon>
+        <icon>article</icon>
         <uri>#</uri>
         <pages>
             <content-items>
@@ -288,7 +337,7 @@
     <merchandising>
         <label>Merchandising</label>
         <title>Merchandising</title>
-        <icon>fa-tags</icon>
+        <icon>box</icon>
         <uri>#</uri>
         <pages>
             <discount>
@@ -354,7 +403,7 @@
     <marketplace>
         <label>Marketplace</label>
         <title>Marketplace</title>
-        <icon>fa-shopping-basket</icon>
+        <icon>local_convenience_store</icon>
         <pages>
             <product-offer-gui>
                 <label>Offers</label>
@@ -384,6 +433,13 @@
                 <controller>list</controller>
                 <action>index</action>
             </merchant-relation-request-gui>
+            <merchant-registration-request>
+                <label>Merchant Registrations</label>
+                <title>Merchant Registrations</title>
+                <bundle>merchant-registration-request</bundle>
+                <controller>list</controller>
+                <action>index</action>
+            </merchant-registration-request>
             <merchant-commission-gui>
                 <label>Merchant Commissions</label>
                 <title>Merchant Commissions</title>
@@ -396,7 +452,7 @@
     <users>
         <label>Users</label>
         <title>Users</title>
-        <icon>fa-user</icon>
+        <icon>background_replace</icon>
         <pages>
             <user>
                 <label>Users</label>
@@ -424,7 +480,7 @@
     <app-catalog-gui>
         <label>Apps</label>
         <title>Apps</title>
-        <icon>fa-cubes</icon>
+        <icon>add_to_queue</icon>
         <bundle>app-catalog-gui</bundle>
         <controller>index</controller>
         <action>index</action>
@@ -432,7 +488,7 @@
     <dynamic-entities-gui>
         <label>Data Exchange API Configuration</label>
         <title>Data Exchange API Configuration</title>
-        <icon>fa-exchange-alt</icon>
+        <icon>arrows_left_right_circle</icon>
         <bundle>dynamic-entity-gui</bundle>
         <controller>configuration-list</controller>
         <action>index</action>
@@ -458,7 +514,7 @@
     <administration>
         <label>Administration</label>
         <title>Administration</title>
-        <icon>fa-users-cog</icon>
+        <icon>add_moderator</icon>
         <pages>
             <stores>
                 <label>Stores</label>
@@ -580,29 +636,8 @@
     <maintenance>
         <label>Maintenance</label>
         <title>Maintenance</title>
-        <icon>fa-wrench</icon>
+        <icon>build</icon>
         <pages>
-            <module-overview>
-                <label>Module Overview</label>
-                <title>Module Overview</title>
-                <bundle>development</bundle>
-                <controller>module-overview</controller>
-                <action>index</action>
-            </module-overview>
-            <dependencies>
-                <label>Dependencies</label>
-                <title>Bundle dependencies</title>
-                <bundle>development</bundle>
-                <controller>dependency</controller>
-                <action>index</action>
-            </dependencies>
-            <stability>
-                <label>Stability</label>
-                <title>Bundles stability</title>
-                <bundle>development</bundle>
-                <controller>dependency</controller>
-                <action>stability</action>
-            </stability>
             <phpinfo>
                 <label>PHP Info</label>
                 <title>PHP Info</title>
@@ -610,13 +645,6 @@
                 <controller>php-info</controller>
                 <action>index</action>
             </phpinfo>
-            <integration>
-                <label>Used Plugins</label>
-                <title>Used Plugins</title>
-                <bundle>development</bundle>
-                <controller>dependency-provider-plugin-usage</controller>
-                <action>index</action>
-            </integration>
             <permission>
                 <label>Sync Permissions</label>
                 <title>Sync Permissions</title>
@@ -631,13 +659,6 @@
                 <controller>index</controller>
                 <action>index</action>
             </index>
-            <architecture-sniffer>
-                <label>Architecture Sniffers</label>
-                <title>Architecture Sniffers</title>
-                <bundle>development</bundle>
-                <controller>architecture</controller>
-                <action>index</action>
-            </architecture-sniffer>
             <elasticsearch>
                 <label>Elastic Search</label>
                 <title>Elastic Search</title>
@@ -653,13 +674,6 @@
                 <action>index</action>
                 <visible>1</visible>
             </queue>
-            <spryk-gui>
-                <label>SprykGui</label>
-                <title>SprykGui</title>
-                <bundle>spryk-gui</bundle>
-                <controller>list</controller>
-                <action>index</action>
-            </spryk-gui>
             <storage-gui>
                 <label>Storage</label>
                 <title>Storage index</title>
@@ -669,4 +683,13 @@
             </storage-gui>
         </pages>
     </maintenance>
+    <configuration-management>
+        <label>Configuration</label>
+        <title>Configuration Management</title>
+        <icon>settings</icon>
+        <bundle>configuration</bundle>
+        <controller>manage</controller>
+        <action>index</action>
+        <visible>1</visible>
+    </configuration-management>
 </config>

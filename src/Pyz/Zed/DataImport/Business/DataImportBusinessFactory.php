@@ -63,7 +63,6 @@ use Pyz\Zed\DataImport\Business\Model\Product\ProductLocalizedAttributesExtracto
 use Pyz\Zed\DataImport\Business\Model\Product\Repository\ProductRepository;
 use Pyz\Zed\DataImport\Business\Model\ProductAbstract\AddCategoryKeysStep;
 use Pyz\Zed\DataImport\Business\Model\ProductAbstract\AddProductAbstractSkusStep;
-use Pyz\Zed\DataImport\Business\Model\ProductAbstract\ProductAbstractCheckExistenceStep;
 use Pyz\Zed\DataImport\Business\Model\ProductAbstract\ProductAbstractHydratorStep;
 use Pyz\Zed\DataImport\Business\Model\ProductAbstract\ProductAbstractSkuToIdProductAbstractStep;
 use Pyz\Zed\DataImport\Business\Model\ProductAbstract\Writer\ProductAbstractPropelDataSetWriter;
@@ -72,7 +71,6 @@ use Pyz\Zed\DataImport\Business\Model\ProductAbstractStore\Writer\ProductAbstrac
 use Pyz\Zed\DataImport\Business\Model\ProductAttributeKey\AddProductAttributeKeysStep;
 use Pyz\Zed\DataImport\Business\Model\ProductAttributeKey\ProductAttributeKeyWriter;
 use Pyz\Zed\DataImport\Business\Model\ProductConcrete\ProductConcreteAttributesUniqueCheckStep;
-use Pyz\Zed\DataImport\Business\Model\ProductConcrete\ProductConcreteCheckExistenceStep;
 use Pyz\Zed\DataImport\Business\Model\ProductConcrete\ProductConcreteHydratorStep;
 use Pyz\Zed\DataImport\Business\Model\ProductConcrete\ProductSkuToIdProductStep;
 use Pyz\Zed\DataImport\Business\Model\ProductConcrete\Writer\ProductConcretePropelDataSetWriter;
@@ -90,6 +88,7 @@ use Pyz\Zed\DataImport\Business\Model\ProductSearchAttribute\Hook\ProductSearchA
 use Pyz\Zed\DataImport\Business\Model\ProductSearchAttribute\ProductSearchAttributeWriter;
 use Pyz\Zed\DataImport\Business\Model\ProductSearchAttributeMap\ProductSearchAttributeMapWriter;
 use Pyz\Zed\DataImport\Business\Model\ProductSet\ProductSetImageExtractorStep;
+use Pyz\Zed\DataImport\Business\Model\ProductSet\ProductSetImageLocalizedAttributesExtractorStep;
 use Pyz\Zed\DataImport\Business\Model\ProductSet\ProductSetWriterStep;
 use Pyz\Zed\DataImport\Business\Model\ProductStock\ProductStockHydratorStep;
 use Pyz\Zed\DataImport\Business\Model\ProductStock\Writer\ProductStockPropelDataSetWriter;
@@ -124,6 +123,7 @@ use Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface;
 use Spryker\Zed\Stock\Business\StockFacadeInterface;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
+use SprykerFeature\Zed\ProductExperienceManagement\Business\ProductExperienceManagementFacadeInterface;
 
 /**
  * @method \Pyz\Zed\DataImport\DataImportConfig getConfig()
@@ -541,7 +541,12 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
             ->addStep($this->createProductAbstractSkuToIdProductAbstractStep(ProductImageHydratorStep::COLUMN_ABSTRACT_SKU, ProductImageHydratorStep::KEY_IMAGE_SET_FK_PRODUCT_ABSTRACT))
             ->addStep($this->createProductSkuToIdProductStep(ProductImageHydratorStep::COLUMN_CONCRETE_SKU, ProductImageHydratorStep::KEY_IMAGE_SET_FK_PRODUCT))
             ->addStep($this->createLocaleNameToIdStep(ProductImageHydratorStep::COLUMN_LOCALE, ProductImageHydratorStep::KEY_IMAGE_SET_FK_LOCALE))
-            ->addStep(new ProductImageHydratorStep());
+            ->addStep(new ProductImageHydratorStep())
+            ->addStep($this->createAddLocalesStep())
+            ->addStep($this->createLocalizedAttributesExtractorStep([
+                ProductImagePropelDataSetWriter::KEY_ALT_TEXT_SMALL,
+                ProductImagePropelDataSetWriter::KEY_ALT_TEXT_LARGE,
+            ]));
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
         $dataImporter->setDataSetWriter($this->createProductImageDataWriters());
@@ -674,7 +679,6 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker(ProductAbstractHydratorStep::BULK_SIZE);
         $dataSetStepBroker
-            ->addStep($this->createProductAbstractCheckExistenceStep())
             ->addStep($this->createAddLocalesStep())
             ->addStep($this->createAddCategoryKeysStep())
             ->addStep($this->createTaxSetNameToIdTaxSetStep(ProductAbstractHydratorStep::COLUMN_TAX_SET_NAME))
@@ -732,7 +736,6 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker(ProductConcreteHydratorStep::BULK_SIZE);
         $dataSetStepBroker
-            ->addStep($this->createProductConcreteCheckExistenceStep())
             ->addStep($this->createAddLocalesStep())
             ->addStep($this->createAttributesExtractorStep())
             ->addStep($this->createProductConcreteAttributesUniqueCheckStep())
@@ -807,7 +810,9 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
             ->addStep($this->createAddLocalesStep())
             ->addStep($this->createAddProductAttributeKeysStep())
             ->addStep($this->createProductManagementLocalizedAttributesExtractorStep())
-            ->addStep(new ProductManagementAttributeWriter());
+            ->addStep(new ProductManagementAttributeWriter(
+                $this->getProductExperienceManagementFacade(),
+            ));
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
 
@@ -820,6 +825,14 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
     public function createProductManagementLocalizedAttributesExtractorStep(): ProductManagementLocalizedAttributesExtractorStep
     {
         return new ProductManagementLocalizedAttributesExtractorStep();
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\ProductExperienceManagement\Business\ProductExperienceManagementFacadeInterface
+     */
+    protected function getProductExperienceManagementFacade(): ProductExperienceManagementFacadeInterface
+    {
+        return $this->getProvidedDependency(DataImportDependencyProvider::FACADE_PRODUCT_EXPERIENCE_MANAGEMENT);
     }
 
     /**
@@ -882,6 +895,7 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
             ->addStep($this->createAddProductAbstractSkusStep())
             ->addStep($this->createAddLocalesStep())
             ->addStep($this->createProductSetImageExtractorStep())
+            ->addStep($this->createProductSetImageLocalizedAttributesExtractorStep())
             ->addStep($this->createLocalizedAttributesExtractorStep([
                 ProductSetWriterStep::KEY_NAME,
                 ProductSetWriterStep::KEY_URL,
@@ -905,6 +919,14 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
     public function createProductSetImageExtractorStep(): ProductSetImageExtractorStep
     {
         return new ProductSetImageExtractorStep();
+    }
+
+    /**
+     * @return \Pyz\Zed\DataImport\Business\Model\ProductSet\ProductSetImageLocalizedAttributesExtractorStep
+     */
+    protected function createProductSetImageLocalizedAttributesExtractorStep(): ProductSetImageLocalizedAttributesExtractorStep
+    {
+        return new ProductSetImageLocalizedAttributesExtractorStep();
     }
 
     /**
@@ -1291,7 +1313,12 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
             ->addStep($this->createProductAbstractSkuToIdProductAbstractStep(CombinedProductImageHydratorStep::COLUMN_ABSTRACT_SKU, ProductImageHydratorStep::KEY_IMAGE_SET_FK_PRODUCT_ABSTRACT))
             ->addStep($this->createProductSkuToIdProductStep(CombinedProductImageHydratorStep::COLUMN_CONCRETE_SKU, ProductImageHydratorStep::KEY_IMAGE_SET_FK_PRODUCT))
             ->addStep($this->createLocaleNameToIdStep(CombinedProductImageHydratorStep::COLUMN_LOCALE, ProductImageHydratorStep::KEY_IMAGE_SET_FK_LOCALE))
-            ->addStep(new CombinedProductImageHydratorStep());
+            ->addStep(new CombinedProductImageHydratorStep())
+            ->addStep($this->createAddLocalesStep())
+            ->addStep($this->createLocalizedAttributesExtractorStep([
+                CombinedProductImagePropelDataSetWriter::KEY_ALT_TEXT_SMALL,
+                CombinedProductImagePropelDataSetWriter::KEY_ALT_TEXT_LARGE,
+            ]));
 
         $dataImporter->setDataSetCondition($this->createCombinedProductImageMandatoryColumnCondition());
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
@@ -1435,7 +1462,6 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker(CombinedProductAbstractHydratorStep::BULK_SIZE);
         $dataSetStepBroker
-            ->addStep($this->createProductAbstractCheckExistenceStep())
             ->addStep($this->createAddLocalesStep())
             ->addStep($this->createAddCategoryKeysStep())
             ->addStep($this->createTaxSetNameToIdTaxSetStep(CombinedProductAbstractHydratorStep::COLUMN_TAX_SET_NAME))
@@ -1496,7 +1522,6 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker(CombinedProductConcreteHydratorStep::BULK_SIZE);
         $dataSetStepBroker
-            ->addStep($this->createProductConcreteCheckExistenceStep())
             ->addStep($this->createAddLocalesStep())
             ->addStep($this->createCombinedAttributesExtractorStep())
             ->addStep($this->createProductConcreteAttributesUniqueCheckStep())
@@ -1595,26 +1620,6 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
         string $target = ProductSkuToIdProductStep::KEY_TARGET,
     ): DataImportStepInterface {
         return new ProductSkuToIdProductStep($source, $target);
-    }
-
-    /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
-     */
-    public function createProductAbstractCheckExistenceStep(): DataImportStepInterface
-    {
-        return new ProductAbstractCheckExistenceStep(
-            $this->createProductRepository(),
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
-     */
-    public function createProductConcreteCheckExistenceStep(): DataImportStepInterface
-    {
-        return new ProductConcreteCheckExistenceStep(
-            $this->createProductRepository(),
-        );
     }
 
     /**

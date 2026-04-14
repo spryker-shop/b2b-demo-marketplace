@@ -55,9 +55,11 @@
                     </div>
                 </div>
 
+                {% set logoUrl = configurationValue('theme:logos:logos:yves_logo_url') %}
                 {% include molecule('logo') with {
                     class: 'col ' ~  config.name ~ '__logo',
                     modifiers: ['main'],
+                    attributes: logoUrl is not empty ? { src: logoUrl } : {}
                 } only %}
 
                 <div class="col {{ config.name }}__search">
@@ -125,6 +127,18 @@
                                 </button>
                             </div>
                         </div>
+
+                        <div class="col">
+                            <button
+                                class="link link--alternative js-page-layout-main__ssp-navigation-trigger">
+                                {% include atom('icon') with {
+                                    modifiers: ['bigger'],
+                                    data: {
+                                        name: 'ssp',
+                                    },
+                                } only %}
+                            </button>
+                        </div>
                     </div>
                 {% endif %}
 
@@ -141,7 +155,7 @@
                                 },
                             } only %}
                         {% else %}
-                            <a href="{{ url('login') }}"
+                            <a href="{{ url('login', { 'redirectUri': app.request.uri }) }}"
                                class="button button--tight button--medium {{ config.name }}__login">{{ 'customer.please_login'|trans }}</a>
                         {% endif %}
                     {% endif %}

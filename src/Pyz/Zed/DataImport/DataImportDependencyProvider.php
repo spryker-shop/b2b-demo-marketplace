@@ -62,7 +62,9 @@ use Spryker\Zed\MerchantOmsDataImport\Communication\Plugin\DataImport\MerchantOm
 use Spryker\Zed\MerchantOpeningHoursDataImport\Communication\Plugin\MerchantOpeningHoursDateScheduleDataImportPlugin;
 use Spryker\Zed\MerchantOpeningHoursDataImport\Communication\Plugin\MerchantOpeningHoursWeekdayScheduleDataImportPlugin;
 use Spryker\Zed\MerchantProductApprovalDataImport\Communication\Plugin\DataImport\MerchantProductApprovalStatusDefaultDataImportPlugin;
+use Spryker\Zed\MerchantProductDataImport\Communication\Plugin\DataImport\MerchantCombinedProductDataImportPlugin;
 use Spryker\Zed\MerchantProductDataImport\Communication\Plugin\MerchantProductDataImportPlugin;
+use Spryker\Zed\MerchantProductOfferDataImport\Communication\Plugin\DataImport\MerchantCombinedProductOfferDataImportPlugin;
 use Spryker\Zed\MerchantProductOfferDataImport\Communication\Plugin\DataImport\MerchantProductOfferDataImportPlugin;
 use Spryker\Zed\MerchantProductOfferDataImport\Communication\Plugin\DataImport\MerchantProductOfferStoreDataImportPlugin;
 use Spryker\Zed\MerchantProductOptionDataImport\Communication\Plugin\DataImport\MerchantProductOptionGroupDataImportPlugin;
@@ -81,6 +83,7 @@ use Spryker\Zed\PriceProductOfferDataImport\Communication\Plugin\PriceProductOff
 use Spryker\Zed\PriceProductScheduleDataImport\Communication\Plugin\PriceProductScheduleDataImportPlugin;
 use Spryker\Zed\ProductAlternativeDataImport\Communication\Plugin\ProductAlternativeDataImportPlugin;
 use Spryker\Zed\ProductApprovalDataImport\Communication\Plugin\DataImport\ProductAbstractApprovalStatusDataImportPlugin;
+use Spryker\Zed\ProductAttachment\Communication\Plugin\DataImport\ProductAttachmentDataImportPlugin;
 use Spryker\Zed\ProductConfigurationDataImport\Communication\Plugin\ProductConfigurationDataImportPlugin;
 use Spryker\Zed\ProductDiscontinuedDataImport\Communication\Plugin\ProductDiscontinuedDataImportPlugin;
 use Spryker\Zed\ProductLabelDataImport\Communication\Plugin\ProductLabelDataImportPlugin;
@@ -92,6 +95,8 @@ use Spryker\Zed\ProductMeasurementUnitDataImport\Communication\Plugin\ProductMea
 use Spryker\Zed\ProductMeasurementUnitDataImport\Communication\Plugin\ProductMeasurementSalesUnitDataImportPlugin;
 use Spryker\Zed\ProductMeasurementUnitDataImport\Communication\Plugin\ProductMeasurementSalesUnitStoreDataImportPlugin;
 use Spryker\Zed\ProductMeasurementUnitDataImport\Communication\Plugin\ProductMeasurementUnitDataImportPlugin;
+use Spryker\Zed\ProductOfferServicePointDataImport\Communication\Plugin\DataImport\ProductOfferServiceDataImportPlugin;
+use Spryker\Zed\ProductOfferShipmentTypeDataImport\Communication\Plugin\DataImport\ProductOfferShipmentTypeDataImportPlugin;
 use Spryker\Zed\ProductOfferShoppingListDataImport\Communication\Plugin\DataImport\ProductOfferShoppingListItemDataImportPlugin;
 use Spryker\Zed\ProductOfferStockDataImport\Communication\Plugin\ProductOfferStockDataImportPlugin;
 use Spryker\Zed\ProductOfferValidityDataImport\Communication\DataImport\ProductOfferValidityDataImportPlugin;
@@ -104,10 +109,19 @@ use Spryker\Zed\QuoteRequestDataImport\Communication\Plugin\QuoteRequestDataImpo
 use Spryker\Zed\QuoteRequestDataImport\Communication\Plugin\QuoteRequestVersionDataImportPlugin;
 use Spryker\Zed\SalesOrderThresholdDataImport\Communication\Plugin\DataImport\SalesOrderThresholdDataImportPlugin;
 use Spryker\Zed\SalesReturnDataImport\Communication\Plugin\ReturnReasonDataImportPlugin;
+use Spryker\Zed\ServicePointDataImport\Communication\Plugin\DataImport\ServiceDataImportPlugin;
+use Spryker\Zed\ServicePointDataImport\Communication\Plugin\DataImport\ServicePointAddressDataImportPlugin;
+use Spryker\Zed\ServicePointDataImport\Communication\Plugin\DataImport\ServicePointDataImportPlugin;
+use Spryker\Zed\ServicePointDataImport\Communication\Plugin\DataImport\ServicePointStoreDataImportPlugin;
+use Spryker\Zed\ServicePointDataImport\Communication\Plugin\DataImport\ServiceTypeDataImportPlugin;
 use Spryker\Zed\SharedCartDataImport\Communication\Plugin\SharedCartDataImportPlugin;
 use Spryker\Zed\ShipmentDataImport\Communication\Plugin\ShipmentDataImportPlugin;
 use Spryker\Zed\ShipmentDataImport\Communication\Plugin\ShipmentMethodPriceDataImportPlugin;
 use Spryker\Zed\ShipmentDataImport\Communication\Plugin\ShipmentMethodStoreDataImportPlugin;
+use Spryker\Zed\ShipmentTypeDataImport\Communication\Plugin\DataImport\ShipmentMethodShipmentTypeDataImportPlugin;
+use Spryker\Zed\ShipmentTypeDataImport\Communication\Plugin\DataImport\ShipmentTypeDataImportPlugin;
+use Spryker\Zed\ShipmentTypeDataImport\Communication\Plugin\DataImport\ShipmentTypeStoreDataImportPlugin;
+use Spryker\Zed\ShipmentTypeServicePointDataImport\Communication\Plugin\DataImport\ShipmentTypeServiceTypeDataImportPlugin;
 use Spryker\Zed\ShoppingListDataImport\Communication\Plugin\ShoppingListCompanyBusinessUnitDataImportPlugin;
 use Spryker\Zed\ShoppingListDataImport\Communication\Plugin\ShoppingListCompanyUserDataImportPlugin;
 use Spryker\Zed\ShoppingListDataImport\Communication\Plugin\ShoppingListDataImportPlugin;
@@ -117,7 +131,18 @@ use Spryker\Zed\StockDataImport\Communication\Plugin\StockDataImportPlugin;
 use Spryker\Zed\StockDataImport\Communication\Plugin\StockStoreDataImportPlugin;
 use Spryker\Zed\StoreContextDataImport\Communication\Plugin\DataImport\StoreContextDataImportPlugin;
 use Spryker\Zed\StoreDataImport\Communication\Plugin\DataImport\StoreDataImportPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\DataImport\ProductClassDataImportPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\DataImport\ProductShipmentTypeDataImportPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\DataImport\ProductToProductClassDataImportPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\DataImport\SspAssetDataImportPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\DataImport\SspInquiryDataImportPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\DataImport\SspModelAssetDataImportPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\DataImport\SspModelDataImportPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\DataImport\SspModelProductListDataImportPlugin;
 
+/**
+ * @package Pyz\Zed\DataImport
+ */
 class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
 {
     /**
@@ -171,6 +196,11 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
     public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
 
     /**
+     * @var string
+     */
+    public const FACADE_PRODUCT_EXPERIENCE_MANAGEMENT = 'FACADE_PRODUCT_EXPERIENCE_MANAGEMENT';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -189,6 +219,7 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
         $container = $this->addStockFacade($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addMerchantUserFacade($container);
+        $container = $this->addProductExperienceManagementFacade($container);
 
         return $container;
     }
@@ -334,6 +365,20 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductExperienceManagementFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRODUCT_EXPERIENCE_MANAGEMENT, function (Container $container) {
+            return $container->getLocator()->productExperienceManagement()->facade();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return array<\Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface>
      */
     protected function getDataImporterPlugins(): array
@@ -370,6 +415,7 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
             new MerchantRelationshipSalesOrderThresholdDataImportPlugin(),
             new ProductListDataImportPlugin(),
             new ProductListCategoryDataImportPlugin(),
+            new ProductListDataImportPlugin(),
             new ProductListProductConcreteDataImportPlugin(),
             new MerchantRelationshipProductListDataImportPlugin(),
             new PriceProductDataImportPlugin(),
@@ -417,6 +463,16 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
             new ContentNavigationDataImportPlugin(),
             new CategoryStoreDataImportPlugin(),
 
+            new ServicePointDataImportPlugin(),
+            new ServicePointStoreDataImportPlugin(),
+            new ServicePointAddressDataImportPlugin(),
+            new ServiceTypeDataImportPlugin(),
+            new ServiceDataImportPlugin(),
+            new ShipmentTypeServiceTypeDataImportPlugin(),
+            new ShipmentTypeDataImportPlugin(),
+            new ShipmentTypeStoreDataImportPlugin(),
+            new ShipmentMethodShipmentTypeDataImportPlugin(),
+
             new MerchantProfileDataImportPlugin(),
             new MerchantProfileAddressDataImportPlugin(),
             new MerchantProductDataImportPlugin(),
@@ -426,6 +482,8 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
             new PriceProductOfferDataImportPlugin(),
             new MerchantStockDataImportPlugin(),
             new ProductOfferStockDataImportPlugin(),
+            new ProductOfferShipmentTypeDataImportPlugin(),
+            new ProductOfferServiceDataImportPlugin(),
             new ProductOfferShoppingListItemDataImportPlugin(),
 
             new MerchantOmsProcessDataImportPlugin(),
@@ -449,6 +507,17 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
             new MerchantCommissionAmountDataImportPlugin(),
             new MerchantCommissionStoreDataImportPlugin(),
             new MerchantCommissionMerchantDataImportPlugin(),
+            new MerchantCombinedProductDataImportPlugin(),
+            new MerchantCombinedProductOfferDataImportPlugin(),
+            new ProductShipmentTypeDataImportPlugin(),
+            new ProductClassDataImportPlugin(),
+            new ProductToProductClassDataImportPlugin(),
+            new SspInquiryDataImportPlugin(),
+            new SspAssetDataImportPlugin(),
+            new SspModelDataImportPlugin(),
+            new SspModelAssetDataImportPlugin(),
+            new SspModelProductListDataImportPlugin(),
+            new ProductAttachmentDataImportPlugin(),
         ];
     }
 

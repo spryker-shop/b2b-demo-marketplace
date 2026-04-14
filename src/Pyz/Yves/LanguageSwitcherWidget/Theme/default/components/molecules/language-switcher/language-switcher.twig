@@ -35,7 +35,7 @@
                 <option
                         value="{{ embed.getSchemeAndHttpHost }}{{ url }}"
                         {{ (language == embed.currentLanguage) ? 'selected' : ''}}>
-                    {{ language | upper }}
+                    {{- language | upper -}}
                 </option>
             {% endfor %}
         {% endblock %}

@@ -181,6 +181,9 @@ sections:
             groups:
                 - propel
 
+        acl-entity-metadata-validate:
+            command: 'vendor/bin/console acl-entity:metadata:validate'
+
         propel-diff:
             command: 'vendor/bin/console propel:diff'
             groups:

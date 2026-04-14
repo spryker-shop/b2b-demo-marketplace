@@ -10,7 +10,7 @@ declare(strict_types = 1);
 namespace Pyz\Zed\ProductCategoryFilterStorage;
 
 use Pyz\Zed\Synchronization\SynchronizationConfig;
-use Spryker\Shared\Publisher\PublisherConfig;
+use Spryker\Shared\ProductCategoryFilterStorage\ProductCategoryFilterStorageConfig as SprykerSharedProductCategoryFilterStorageConfig;
 use Spryker\Zed\ProductCategoryFilterStorage\ProductCategoryFilterStorageConfig as SprykerProductCategoryFilterStorageConfig;
 
 class ProductCategoryFilterStorageConfig extends SprykerProductCategoryFilterStorageConfig
@@ -28,6 +28,6 @@ class ProductCategoryFilterStorageConfig extends SprykerProductCategoryFilterSto
      */
     public function getEventQueueName(): ?string
     {
-        return PublisherConfig::PUBLISH_QUEUE;
+        return SprykerSharedProductCategoryFilterStorageConfig::PUBLISH_PRODUCT_CATEGORY_FILTER_QUEUE;
     }
 }

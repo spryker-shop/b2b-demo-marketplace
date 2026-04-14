@@ -1,9 +1,11 @@
 @include shop-ui-status {
-    border-radius: rem(16);
-    padding: rem(4) rem(16);
-    margin: rem(2) rem(2) rem(2) 0;
     font-size: rem(12);
-    text-align: center;
+    line-height: rem(20);
+    background: lighten($setting-color-alt, 50%);
+    color: darken($setting-color-alt, 27%);
+    padding: 0 rem(6);
+    border-radius: $setting-border-radius-2;
+    margin: rem(2) rem(2) rem(2) 0;
 
     &--borderless {
         border-radius: 0;
@@ -13,11 +15,12 @@
         padding: 0 rem(16);
     }
 
+    &--approved,
     &--ready,
     &--paid,
     &--delivered {
-        background-color: helper-color-light($setting-color-main, 52);
-        color: $setting-color-main;
+        background-color: lighten($setting-color-main, 75%);
+        color: darken($setting-color-main, 5%);
     }
 
     &--cancelled,
@@ -25,17 +28,47 @@
     &--returned,
     &--waiting-for-return,
     &--return-canceled {
-        background-color: helper-color-light($setting-color-gray-3);
-        color: $setting-color-gray-4;
+        background-color: $setting-color-gray-1;
+        color: $setting-color-gray-8;
     }
 
     &--shipped {
-        background-color: helper-color-light($setting-color-blue-1, 54);
+        background: lighten($setting-color-blue-1, 63%);
         color: $setting-color-blue-1;
     }
 
+    &--rejected,
     &--not-configured {
-        background-color: helper-color-light($setting-color-alt);
-        color: $setting-color-alt;
+        background: lighten($setting-color-alt, 50%);
+        color: darken($setting-color-alt, 27%);
+    }
+
+    &--availability {
+        background-color: lighten($setting-color-main, 75%);
+        font-weight: 500;
+        padding: 0 rem(12) 0 rem(30);
+        color: $setting-color-black;
+
+        &::before {
+            background-color: $setting-color-main;
+        }
+    }
+
+    &--in-stock,
+    &--never-out-of-stock,
+    &--available {
+        background-color: lighten(map-get($setting-color-actions, 'success'), 75%);
+
+        &::before {
+            background-color: map-get($setting-color-actions, 'success');
+        }
+    }
+
+    &--out-of-stock {
+        background-color: lighten(map-get($setting-color-actions, 'alert'), 50%);
+
+        &::before {
+            background-color: map-get($setting-color-actions, 'alert');
+        }
     }
 }

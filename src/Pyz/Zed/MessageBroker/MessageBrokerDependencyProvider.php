@@ -24,13 +24,9 @@ use Spryker\Zed\MessageBrokerAws\Communication\Plugin\MessageBroker\Sender\HttpC
 use Spryker\Zed\OauthClient\Communication\Plugin\MessageBroker\AccessTokenMessageAttributeProviderPlugin;
 use Spryker\Zed\Payment\Communication\Plugin\MessageBroker\PaymentMethodMessageHandlerPlugin;
 use Spryker\Zed\Payment\Communication\Plugin\MessageBroker\PaymentOperationsMessageHandlerPlugin;
-use Spryker\Zed\Product\Communication\Plugin\MessageBroker\ProductExportMessageHandlerPlugin;
 use Spryker\Zed\ProductReview\Communication\Plugin\MessageBroker\ProductReviewAddReviewsMessageHandlerPlugin;
 use Spryker\Zed\SalesPaymentDetail\Communication\Plugin\MessageBroker\SalesPaymentDetailMessageHandlerPlugin;
-use Spryker\Zed\SearchHttp\Communication\Plugin\MessageBroker\SearchEndpointMessageHandlerPlugin;
 use Spryker\Zed\Session\Communication\Plugin\MessageBroker\SessionTrackingIdMessageAttributeProviderPlugin;
-use Spryker\Zed\Store\Communication\Plugin\MessageBroker\CurrentStoreReferenceMessageAttributeProviderPlugin;
-use Spryker\Zed\TaxApp\Communication\Plugin\MessageBroker\TaxAppMessageHandlerPlugin;
 
 /**
  * @method \Pyz\Zed\MessageBroker\MessageBrokerConfig getConfig()
@@ -66,10 +62,7 @@ class MessageBrokerDependencyProvider extends SprykerMessageBrokerDependencyProv
             new AppConfigMessageHandlerPlugin(),
             new PaymentMethodMessageHandlerPlugin(),
             new AssetMessageHandlerPlugin(),
-            new ProductExportMessageHandlerPlugin(),
-            new SearchEndpointMessageHandlerPlugin(),
             new ProductReviewAddReviewsMessageHandlerPlugin(),
-            new TaxAppMessageHandlerPlugin(),
             new PaymentOperationsMessageHandlerPlugin(),
             new SalesPaymentDetailMessageHandlerPlugin(),
             new MerchantAppOnboardingMessageHandlerPlugin(),
@@ -88,7 +81,6 @@ class MessageBrokerDependencyProvider extends SprykerMessageBrokerDependencyProv
             new TransactionIdMessageAttributeProviderPlugin(),
             new SessionTrackingIdMessageAttributeProviderPlugin(),
             new TenantActorMessageAttributeProviderPlugin(),
-            new CurrentStoreReferenceMessageAttributeProviderPlugin(),
         ];
     }
 

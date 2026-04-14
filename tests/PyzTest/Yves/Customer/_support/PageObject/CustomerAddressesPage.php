@@ -21,7 +21,7 @@ class CustomerAddressesPage
     /**
      * @var string
      */
-    public const BUTTON_ADD_NEW_ADDRESS = '//nav//a[contains(@class, \'button\') and contains(text(), \'Add new address\')]';
+    public const BUTTON_ADD_NEW_ADDRESS = '[data-qa="customer-add-new-address"]';
 
     /**
      * @var string

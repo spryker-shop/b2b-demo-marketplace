@@ -8,10 +8,13 @@
         font-size: rem(14);
         font-weight: fw(medium);
         line-height: rem(18);
-        display: inline-block;
         padding: rem(10) rem(30);
         text-align: center;
         cursor: pointer;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.3rem;
 
         &:hover,
         &:focus {
@@ -169,11 +172,6 @@
             padding-bottom: rem(14);
         }
 
-        &--tight {
-            padding-left: rem(20);
-            padding-right: rem(20);
-        }
-
         &--mobile-tight {
             padding-left: rem(15);
             padding-right: rem(15);
@@ -265,9 +263,15 @@
             background: $setting-color-white;
             border-color: $setting-color-gray-6;
             color: $setting-color-gray-5;
-            box-shadow: 0 rem(10) rem(18) 0 rgba($setting-color-black, 0.05),
+            box-shadow:
+                0 rem(10) rem(18) 0 rgba($setting-color-black, 0.05),
                 0 rem(3) rem(3) 0 rgba($setting-color-black, 0.04);
             font-size: rem(15);
+        }
+
+        &--tight {
+            padding-left: rem(20);
+            padding-right: rem(20);
         }
 
         &--shopping-list {

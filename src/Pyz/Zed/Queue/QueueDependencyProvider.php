@@ -9,9 +9,11 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\Queue;
 
+use Pyz\Shared\SelfServicePortal\SelfServicePortalConfig;
 use Spryker\Shared\AssetStorage\AssetStorageConfig;
 use Spryker\Shared\AvailabilityStorage\AvailabilityStorageConfig;
 use Spryker\Shared\AvailabilityStorage\AvailabilityStorageConstants;
+use Spryker\Shared\CategoryImageStorage\CategoryImageStorageConfig;
 use Spryker\Shared\CategoryPageSearch\CategoryPageSearchConstants;
 use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
 use Spryker\Shared\CmsPageSearch\CmsPageSearchConstants;
@@ -20,6 +22,7 @@ use Spryker\Shared\CompanyUserStorage\CompanyUserStorageConfig;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\ConfigurableBundlePageSearch\ConfigurableBundlePageSearchConfig;
 use Spryker\Shared\ConfigurableBundleStorage\ConfigurableBundleStorageConfig;
+use Spryker\Shared\Configuration\ConfigurationConstants;
 use Spryker\Shared\ContentStorage\ContentStorageConfig;
 use Spryker\Shared\CustomerAccessStorage\CustomerAccessStorageConstants;
 use Spryker\Shared\CustomerStorage\CustomerStorageConfig;
@@ -28,17 +31,36 @@ use Spryker\Shared\FileManagerStorage\FileManagerStorageConstants;
 use Spryker\Shared\GlossaryStorage\GlossaryStorageConfig;
 use Spryker\Shared\Log\LogConstants;
 use Spryker\Shared\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageConfig;
+use Spryker\Shared\MerchantProductOfferSearch\MerchantProductOfferSearchConfig;
 use Spryker\Shared\MerchantSearch\MerchantSearchConfig;
 use Spryker\Shared\MerchantStorage\MerchantStorageConfig;
+use Spryker\Shared\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig;
 use Spryker\Shared\PriceProductOfferStorage\PriceProductOfferStorageConfig;
 use Spryker\Shared\PriceProductStorage\PriceProductStorageConfig;
 use Spryker\Shared\PriceProductStorage\PriceProductStorageConstants;
+use Spryker\Shared\ProductAlternativeStorage\ProductAlternativeStorageConfig;
+use Spryker\Shared\ProductCategoryFilterStorage\ProductCategoryFilterStorageConfig;
 use Spryker\Shared\ProductConfigurationStorage\ProductConfigurationStorageConfig;
+use Spryker\Shared\ProductDiscontinuedStorage\ProductDiscontinuedStorageConfig;
+use Spryker\Shared\ProductGroupStorage\ProductGroupStorageConstants;
 use Spryker\Shared\ProductImageStorage\ProductImageStorageConfig;
+use Spryker\Shared\ProductListSearch\ProductListSearchConfig;
+use Spryker\Shared\ProductListStorage\ProductListStorageConfig;
+use Spryker\Shared\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageConfig;
 use Spryker\Shared\ProductOfferAvailabilityStorage\ProductOfferAvailabilityStorageConfig;
+use Spryker\Shared\ProductOfferServicePointStorage\ProductOfferServicePointStorageConfig;
+use Spryker\Shared\ProductOfferShipmentTypeStorage\ProductOfferShipmentTypeStorageConfig;
 use Spryker\Shared\ProductOfferStorage\ProductOfferStorageConfig;
+use Spryker\Shared\ProductOptionStorage\ProductOptionStorageConfig;
+use Spryker\Shared\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConfig;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
+use Spryker\Shared\ProductQuantityStorage\ProductQuantityStorageConfig;
+use Spryker\Shared\ProductReviewSearch\ProductReviewSearchConfig;
+use Spryker\Shared\ProductReviewStorage\ProductReviewStorageConfig;
+use Spryker\Shared\ProductSearchConfigStorage\ProductSearchConfigStorageConfig;
+use Spryker\Shared\ProductSetPageSearch\ProductSetPageSearchConfig;
+use Spryker\Shared\ProductSetStorage\ProductSetStorageConfig;
 use Spryker\Shared\ProductStorage\ProductStorageConfig;
 use Spryker\Shared\ProductStorage\ProductStorageConstants;
 use Spryker\Shared\PublishAndSynchronizeHealthCheck\PublishAndSynchronizeHealthCheckConfig;
@@ -47,6 +69,9 @@ use Spryker\Shared\PublishAndSynchronizeHealthCheckStorage\PublishAndSynchronize
 use Spryker\Shared\Publisher\PublisherConfig;
 use Spryker\Shared\SalesReturnSearch\SalesReturnSearchConfig;
 use Spryker\Shared\SearchHttp\SearchHttpConfig;
+use Spryker\Shared\ServicePointSearch\ServicePointSearchConfig;
+use Spryker\Shared\ServicePointStorage\ServicePointStorageConfig;
+use Spryker\Shared\ShipmentTypeStorage\ShipmentTypeStorageConfig;
 use Spryker\Shared\ShoppingListStorage\ShoppingListStorageConfig;
 use Spryker\Shared\StoreStorage\StoreStorageConfig;
 use Spryker\Shared\TaxProductStorage\TaxProductStorageConfig;
@@ -58,9 +83,12 @@ use Spryker\Zed\Event\Communication\Plugin\Queue\EventRetryQueueMessageProcessor
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Queue\QueueDependencyProvider as SprykerDependencyProvider;
 use Spryker\Zed\RabbitMq\Communication\Plugin\Queue\RabbitMqQueueMessageCheckerPlugin;
+use Spryker\Zed\RabbitMq\Communication\Plugin\Queue\RabbitMqQueueMetricsReaderPlugin;
+use Spryker\Zed\SymfonyMessenger\Communication\Plugin\Queue\SymfonyMessengerQueueMessageCheckerPlugin;
 use Spryker\Zed\Synchronization\Communication\Plugin\Queue\SynchronizationSearchQueueMessageProcessorPlugin;
 use Spryker\Zed\Synchronization\Communication\Plugin\Queue\SynchronizationStorageQueueMessageProcessorPlugin;
 use SprykerEco\Zed\Loggly\Communication\Plugin\LogglyLoggerQueueMessageProcessorPlugin;
+use SprykerFeature\Shared\ProductExperienceManagement\ProductExperienceManagementConfig;
 
 class QueueDependencyProvider extends SprykerDependencyProvider
 {
@@ -76,7 +104,6 @@ class QueueDependencyProvider extends SprykerDependencyProvider
             EventConstants::EVENT_QUEUE_RETRY => new EventRetryQueueMessageProcessorPlugin(),
             PublisherConfig::PUBLISH_QUEUE => new EventQueueMessageProcessorPlugin(),
             PublisherConfig::PUBLISH_RETRY_QUEUE => new EventRetryQueueMessageProcessorPlugin(),
-            GlossaryStorageConfig::PUBLISH_TRANSLATION => new EventQueueMessageProcessorPlugin(),
             Config::get(LogConstants::LOG_QUEUE_NAME) => new LogglyLoggerQueueMessageProcessorPlugin(),
             GlossaryStorageConfig::SYNC_STORAGE_TRANSLATION => new SynchronizationStorageQueueMessageProcessorPlugin(),
             CmsStorageConstants::CMS_SYNC_STORAGE_QUEUE => new SynchronizationStorageQueueMessageProcessorPlugin(),
@@ -112,6 +139,7 @@ class QueueDependencyProvider extends SprykerDependencyProvider
             ContentStorageConfig::CONTENT_SYNC_STORAGE_QUEUE => new SynchronizationStorageQueueMessageProcessorPlugin(),
             TaxProductStorageConfig::PRODUCT_ABSTRACT_TAX_SET_SYNC_STORAGE_QUEUE => new SynchronizationStorageQueueMessageProcessorPlugin(),
             TaxStorageConfig::TAX_SET_SYNC_STORAGE_QUEUE => new SynchronizationStorageQueueMessageProcessorPlugin(),
+            MerchantStorageConfig::PUBLISH_MERCHANT => new EventQueueMessageProcessorPlugin(),
             SalesReturnSearchConfig::SYNC_SEARCH_RETURN => new SynchronizationSearchQueueMessageProcessorPlugin(),
             MerchantStorageConfig::MERCHANT_SYNC_STORAGE_QUEUE => new SynchronizationStorageQueueMessageProcessorPlugin(),
             MerchantSearchConfig::SYNC_SEARCH_MERCHANT => new SynchronizationSearchQueueMessageProcessorPlugin(),
@@ -124,6 +152,44 @@ class QueueDependencyProvider extends SprykerDependencyProvider
             ProductConfigurationStorageConfig::PRODUCT_CONFIGURATION_SYNC_STORAGE_QUEUE => new SynchronizationStorageQueueMessageProcessorPlugin(),
             SearchHttpConfig::SEARCH_HTTP_CONFIG_SYNC_QUEUE => new SynchronizationStorageQueueMessageProcessorPlugin(),
             UrlStorageConfig::PUBLISH_URL_RETRY => new EventRetryQueueMessageProcessorPlugin(),
+            SelfServicePortalConfig::QUEUE_NAME_SYNC_STORAGE_SSP_MODEL => new SynchronizationStorageQueueMessageProcessorPlugin(),
+            SelfServicePortalConfig::QUEUE_NAME_SYNC_STORAGE_SSP_ASSET => new SynchronizationStorageQueueMessageProcessorPlugin(),
+            SelfServicePortalConfig::QUEUE_NAME_SYNC_SEARCH_SSP_ASSET => new SynchronizationSearchQueueMessageProcessorPlugin(),
+            ServicePointSearchConfig::QUEUE_NAME_SYNC_SEARCH_SERVICE_POINT => new SynchronizationSearchQueueMessageProcessorPlugin(),
+            ServicePointStorageConfig::QUEUE_NAME_SYNC_STORAGE_SERVICE_POINT => new SynchronizationStorageQueueMessageProcessorPlugin(),
+            ShipmentTypeStorageConfig::QUEUE_NAME_SYNC_STORAGE_SHIPMENT_TYPE => new SynchronizationStorageQueueMessageProcessorPlugin(),
+            ProductOfferServicePointStorageConfig::QUEUE_NAME_SYNC_STORAGE_PRODUCT_OFFER_SERVICE => new SynchronizationStorageQueueMessageProcessorPlugin(),
+            ProductOfferShipmentTypeStorageConfig::PRODUCT_OFFER_SHIPMENT_TYPE_SYNC_STORAGE_QUEUE => new SynchronizationStorageQueueMessageProcessorPlugin(),
+            CategoryImageStorageConfig::PUBLISH_CATEGORY_IMAGE_QUEUE => new EventQueueMessageProcessorPlugin(),
+            CompanyUserStorageConfig::PUBLISH_COMPANY_USER_QUEUE => new EventQueueMessageProcessorPlugin(),
+            MerchantProductOfferSearchConfig::PUBLISH_MERCHANT_PRODUCT_OFFER_QUEUE => new EventQueueMessageProcessorPlugin(),
+            PriceProductMerchantRelationshipStorageConfig::PUBLISH_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_QUEUE => new EventQueueMessageProcessorPlugin(),
+            PriceProductMerchantRelationshipStorageConfig::PUBLISH_PRICE_PRODUCT_CONCRETE_MERCHANT_RELATIONSHIP_QUEUE => new EventQueueMessageProcessorPlugin(),
+            PriceProductMerchantRelationshipStorageConfig::PUBLISH_PRICE_PRODUCT_ABSTRACT_MERCHANT_RELATIONSHIP_QUEUE => new EventQueueMessageProcessorPlugin(),
+            PriceProductOfferStorageConfig::PUBLISH_PRICE_PRODUCT_OFFER_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductAlternativeStorageConfig::PUBLISH_PRODUCT_ALTERNATIVE_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductCategoryFilterStorageConfig::PUBLISH_PRODUCT_CATEGORY_FILTER_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductDiscontinuedStorageConfig::PUBLISH_PRODUCT_DISCONTINUED_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductGroupStorageConstants::PUBLISH_PRODUCT_GROUP_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductListSearchConfig::PUBLISH_PRODUCT_LIST_SEARCH_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductListStorageConfig::PUBLISH_PRODUCT_LIST_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductListStorageConfig::PUBLISH_PRODUCT_LIST_PRODUCT_ABSTRACT_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductListStorageConfig::PUBLISH_PRODUCT_LIST_PRODUCT_CONCRETE_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductOfferAvailabilityStorageConfig::PUBLISH_PRODUCT_OFFER_AVAILABILITY_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductOptionStorageConfig::PUBLISH_PRODUCT_OPTION_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductQuantityStorageConfig::PUBLISH_PRODUCT_QUANTITY_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductReviewSearchConfig::PUBLISH_PRODUCT_REVIEW_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductSearchConfigStorageConfig::PUBLISH_PRODUCT_SEARCH_CONFIG_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductSetPageSearchConfig::PUBLISH_PRODUCT_SET_PAGE_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductSetStorageConfig::PUBLISH_PRODUCT_SET_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ShoppingListStorageConfig::PUBLISH_SHOPPING_LIST_QUEUE => new EventQueueMessageProcessorPlugin(),
+            TaxProductStorageConfig::PUBLISH_TAX_PRODUCT_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductMeasurementUnitStorageConfig::PUBLISH_PRODUCT_MEASUREMENT_UNIT_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductPackagingUnitStorageConfig::PUBLISH_PRODUCT_PACKAGING_UNIT_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductReviewStorageConfig::PUBLISH_PRODUCT_REVIEW_STORAGE_QUEUE => new EventQueueMessageProcessorPlugin(),
+            ProductExperienceManagementConfig::PUBLISH_PRODUCT_ATTRIBUTE => new EventQueueMessageProcessorPlugin(),
+            ProductExperienceManagementConfig::PRODUCT_ATTRIBUTE_SYNC_STORAGE_QUEUE => new SynchronizationStorageQueueMessageProcessorPlugin(),
+            ConfigurationConstants::QUEUE_NAME_SYNC_CONFIGURATION => new SynchronizationStorageQueueMessageProcessorPlugin(),
         ];
     }
 
@@ -136,7 +202,18 @@ class QueueDependencyProvider extends SprykerDependencyProvider
             parent::getQueueMessageCheckerPlugins(),
             [
                 new RabbitMqQueueMessageCheckerPlugin(),
+                new SymfonyMessengerQueueMessageCheckerPlugin(),
             ],
         );
+    }
+
+    /**
+     * @return array<\Spryker\Zed\RabbitMq\Communication\Plugin\Queue\RabbitMqQueueMetricsReaderPlugin>
+     */
+    protected function getQueueMetricsExpanderPlugins(): array
+    {
+        return [
+            new RabbitMqQueueMetricsReaderPlugin(),
+        ];
     }
 }

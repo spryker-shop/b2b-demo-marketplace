@@ -19,6 +19,13 @@ class ShipmentConfig extends SprykerShipmentConfig
      */
     public function getShipmentHashFields(): array
     {
-        return array_merge(parent::getShipmentHashFields(), [ShipmentTransfer::MERCHANT_REFERENCE]);
+        return array_merge(
+            parent::getShipmentHashFields(),
+            [
+                ShipmentTransfer::MERCHANT_REFERENCE,
+                ShipmentTransfer::SHIPMENT_TYPE_UUID,
+
+            ],
+        );
     }
 }

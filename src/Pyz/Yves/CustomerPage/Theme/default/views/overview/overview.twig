@@ -100,12 +100,16 @@
         }
     } only %}
 
-    {% include molecule('order-table', 'CustomerPage') with {
+    {% embed molecule('order-table', 'CustomerPage') with {
         data: {
             orders: data.orders,
             ordersAggregatedItemStateDisplayNames: data.ordersAggregatedItemStateDisplayNames,
         },
     } only %}
+        {% block noOrder %}
+            <p>{{ 'customer.account.no_order' | trans }}</p>
+        {% endblock %}
+    {% endembed %}
 
     {% include molecule('action-card-grid') with {
         data: {

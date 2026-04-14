@@ -10,6 +10,7 @@ declare(strict_types = 1);
 namespace Pyz\Yves\Console;
 
 use Spryker\Yves\Console\ConsoleDependencyProvider as SprykerConsoleDependencyProvider;
+use Spryker\Yves\EventDispatcher\Plugin\Console\EventDispatcherApplicationPlugin;
 use Spryker\Yves\Form\Plugin\Application\FormApplicationPlugin;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Locale\Plugin\Application\ConsoleLocaleApplicationPlugin;
@@ -53,6 +54,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new RouterApplicationPlugin(),
             new TwigApplicationPlugin(),
             new FormApplicationPlugin(),
+            new EventDispatcherApplicationPlugin(),
         ];
     }
 

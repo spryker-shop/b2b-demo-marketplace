@@ -1,7 +1,7 @@
 # Spryker B2B Marketplace Demo Shop
 [![Build Status](https://github.com/spryker-shop/b2b-demo-marketplace/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/spryker-shop/b2b-demo-marketplace/actions?query=branch:master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker-shop/b2b-demo-marketplace/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spryker-shop/b2b-demo-marketplace/?branch=master)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.2-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.3-8892BF.svg)](https://php.net/)
 
 ## Description
 
@@ -125,6 +125,15 @@ docker/sdk clean-data && docker/sdk up && docker/sdk console q:w:s -v -s
 
 
 You've set up your Spryker B2B Marketplace Demo Shop and can access your applications.
+
+### Automated testing
+
+There are several testing frameworks integrated into this repository:
+
+* Codeception tests that are part of this repository are located in `tests` folder and you can adjust them as needed throughout the development of your project.
+* Robot Framework tests and Cypress tests that are used for testing of Spryker core features are located in separate repositories. 
+  - They are integrated via `composer.json`. You should remove the mentions of `spryker/cypress-tests` and `spryker/robotframework-suite-tests` from `composer.json` ("repositories" and "require-dev" sections) unless you plan to re-use these tests on your project.
+  - Spryker does not guarantee these tests would work on a customized project.
 
 ## Troubleshooting installation of the B2B Marketplace Demo Shop
 

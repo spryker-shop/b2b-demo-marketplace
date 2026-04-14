@@ -6,6 +6,6 @@ export default register(
         import(
             /* webpackMode: "lazy" */
             /* webpackChunkName: "flash-message" */
-            'ShopUi/components/molecules/flash-message/flash-message'
+            './flash-message'
         ),
 );

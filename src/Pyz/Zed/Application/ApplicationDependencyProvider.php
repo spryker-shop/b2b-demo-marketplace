@@ -108,7 +108,7 @@ class ApplicationDependencyProvider extends SprykerApplicationDependencyProvider
      */
     protected function getBackendGatewayApplicationPlugins(): array
     {
-        return [
+        $plugins = [
             new ZedSecurityApplicationPlugin(),
             new BackendGatewayEventDispatcherApplicationPlugin(),
             new RequestBackendGatewayApplicationPlugin(),
@@ -118,11 +118,16 @@ class ApplicationDependencyProvider extends SprykerApplicationDependencyProvider
             new MockArraySessionApplicationPlugin(),
             new TranslatorApplicationPlugin(),
             new TwigGatewayApplicationPlugin(),
-            new TwigApplicationPlugin(),
             new PropelApplicationPlugin(),
             new BackendGatewayRouterApplicationPlugin(),
             new HttpApplicationPlugin(),
         ];
+
+        if (class_exists(WebProfilerApplicationPlugin::class)) {
+            $plugins[] = new WebProfilerApplicationPlugin();
+        }
+
+        return $plugins;
     }
 
     /**

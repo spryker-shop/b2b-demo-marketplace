@@ -22,9 +22,12 @@ class PaymentAppShipmentConfig extends SprykerPaymentAppShipmentConfig
     ];
 
     /**
-     * @var list<string>
+     * @return list<string>
      */
-    protected const SHIPMENT_ITEM_COLLECTION_FIELD_NAMES = [
-        QuoteTransfer::BUNDLE_ITEMS,
-    ];
+    public function getShipmentItemCollectionFieldNames(): array
+    {
+        return [
+            QuoteTransfer::BUNDLE_ITEMS,
+        ];
+    }
 }

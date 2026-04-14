@@ -167,8 +167,9 @@ class PaymentStepTest extends Unit
      */
     protected function getQuoteApprovalCheckerCheckoutPaymentStepEnterPreCheckPluginMock(): CheckoutPaymentStepEnterPreCheckPluginInterface
     {
-        return $this->getMockBuilder(QuoteApprovalCheckerCheckoutPaymentStepEnterPreCheckPlugin::class)
-            ->enableProxyingToOriginalMethods()
-            ->getMock();
+        $plugin = new QuoteApprovalCheckerCheckoutPaymentStepEnterPreCheckPlugin();
+        $plugin->setFactory($this->tester->getFactory('QuoteApprovalWidget'));
+
+        return $plugin;
     }
 }

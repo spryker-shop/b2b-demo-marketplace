@@ -111,12 +111,13 @@
                     </div>
                 </div>
 
-                <div class="grid grid--stretch grid--gap">
+                <div class="grid grid--stretch grid--gap-small">
                     {% if data.products %}
                         {% for product in data.products %}
                             {% widget 'CatalogPageProductWidget' args [
                                 product,
                                 data.viewMode,
+                                data.products,
                             ] only %}
                             {% endwidget %}
                         {% endfor %}

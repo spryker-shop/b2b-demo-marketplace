@@ -3,6 +3,7 @@
 declare(strict_types = 1);
 
 use Monolog\Logger;
+use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
 use Spryker\Shared\AppCatalogGui\AppCatalogGuiConstants;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Customer\CustomerConstants;
@@ -13,6 +14,8 @@ use Spryker\Shared\ErrorHandler\ErrorRenderer\ApiErrorRenderer;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\WebExceptionErrorRenderer;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\WebHtmlErrorRenderer;
 use Spryker\Shared\Event\EventConstants;
+use Spryker\Shared\FileSystem\FileSystemConstants;
+use Spryker\Shared\Flysystem\FlysystemConstants;
 use Spryker\Shared\GlueApplication\GlueApplicationConstants;
 use Spryker\Shared\GlueBackendApiApplication\GlueBackendApiApplicationConstants;
 use Spryker\Shared\GlueStorefrontApiApplication\GlueStorefrontApiApplicationConstants;
@@ -30,12 +33,17 @@ use Spryker\Shared\Queue\QueueConfig;
 use Spryker\Shared\Queue\QueueConstants;
 use Spryker\Shared\Redis\RedisConstants;
 use Spryker\Shared\Router\RouterConstants;
+use Spryker\Shared\SecurityGui\SecurityGuiConstants;
+use Spryker\Shared\SecurityMerchantPortalGui\SecurityMerchantPortalGuiConstants;
 use Spryker\Shared\Session\SessionConstants;
 use Spryker\Shared\Testify\TestifyConstants;
 use Spryker\Shared\WebProfiler\WebProfilerConstants;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
 use Spryker\Zed\OauthDummy\OauthDummyConfig;
+use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConstants;
 use SprykerShop\Shared\CalculationPage\CalculationPageConstants;
+use SprykerShop\Shared\ContentNavigationWidget\ContentNavigationWidgetConstants;
+use SprykerShop\Shared\CustomerPage\CustomerPageConstants;
 use SprykerShop\Shared\ErrorPage\ErrorPageConstants;
 use SprykerShop\Shared\ShopApplication\ShopApplicationConstants;
 use SprykerShop\Shared\WebProfilerWidget\WebProfilerWidgetConstants;
@@ -54,7 +62,7 @@ $config[ApplicationConstants::ENABLE_APPLICATION_DEBUG]
     = $config[ShopApplicationConstants::ENABLE_APPLICATION_DEBUG]
     = (bool)getenv('SPRYKER_DEBUG_ENABLED');
 
-$config[PropelConstants::PROPEL_DEBUG] = (bool)getenv('SPRYKER_DEBUG_PROPEL_ENABLED');
+$config[PropelConstants::PROPEL_DEBUG] = (bool)getenv('SPRYKER_DEBUG_ENABLED');
 $config[CalculationPageConstants::ENABLE_CART_DEBUG] = (bool)getenv('SPRYKER_DEBUG_ENABLED');
 $config[ErrorPageConstants::ENABLE_ERROR_404_STACK_TRACE] = (bool)getenv('SPRYKER_DEBUG_ENABLED');
 $config[GlueApplicationConstants::GLUE_APPLICATION_REST_DEBUG] = (bool)getenv('SPRYKER_DEBUG_ENABLED');
@@ -84,6 +92,7 @@ $config[ErrorHandlerConstants::ERROR_LEVEL] = getenv('SPRYKER_DEBUG_DEPRECATIONS
 // >>> STORAGE
 
 $config[RedisConstants::REDIS_IS_DEV_MODE] = getenv('SPRYKER_REDIS_IS_DEV_MODE') !== false ? getenv('SPRYKER_REDIS_IS_DEV_MODE') : true;
+$config[RedisConstants::REDIS_COMPRESSION_ENABLED] = getenv('SPRYKER_KEY_VALUE_COMPRESSING_ENABLED') ?: false;
 
 // >>> QUEUE
 
@@ -111,6 +120,9 @@ if (!getenv('SPRYKER_SSL_ENABLE')) {
         = $config[SessionConstants::YVES_SSL_ENABLED]
         = $config[RouterConstants::YVES_IS_SSL_ENABLED]
         = $config[RouterConstants::ZED_IS_SSL_ENABLED]
+        = $config[CustomerPageConstants::YVES_IS_SSL_ENABLED]
+        = $config[SecurityGuiConstants::ZED_IS_SSL_ENABLED]
+        = $config[SecurityMerchantPortalGuiConstants::ZED_IS_SSL_ENABLED]
         = $config[ApplicationConstants::ZED_SSL_ENABLED]
         = $config[ApplicationConstants::YVES_SSL_ENABLED]
         = false;
@@ -149,6 +161,7 @@ if (!getenv('SPRYKER_SSL_ENABLE')) {
         = $config[NewsletterConstants::BASE_URL_YVES]
         = $config[MerchantRelationshipConstants::BASE_URL_YVES]
         = $config[MerchantRelationRequestConstants::BASE_URL_YVES]
+        = $config[SelfServicePortalConstants::BASE_URL_YVES]
         = sprintf(
             'http://%s%s',
             $yvesHost,
@@ -218,3 +231,67 @@ if ($isTestifyConstantsClassExists) {
         $sprykerGlueStorefrontPort !== 80 ? ':' . $sprykerGlueStorefrontPort : '',
     );
 }
+
+// >>> FILESYSTEM
+if (!getenv('SPRYKER_S3_MERCHANT_PRODUCT_DATA_IMPORT_FILES_BUCKET')) {
+    $config[FileSystemConstants::FILESYSTEM_SERVICE]['merchant-product-data-import-files'] = [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/data',
+        'path' => '/data/merchant-product-data-import-files',
+    ];
+
+    $config[FileSystemConstants::FILESYSTEM_SERVICE]['merchant-product-offer-data-import-files'] = [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/data',
+        'path' => '/data/merchant-product-offer-data-import-files',
+    ];
+}
+
+if (!getenv('SPRYKER_S3_SSP_ASSETS_BUCKET')) {
+    $config[FileSystemConstants::FILESYSTEM_SERVICE]['ssp-inquiry'] = [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/data',
+        'path' => '/data/ssp-inquiry',
+    ];
+
+    $config[FileSystemConstants::FILESYSTEM_SERVICE]['ssp-files'] = [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/data',
+        'path' => '/data/ssp-files',
+    ];
+
+    $config[FileSystemConstants::FILESYSTEM_SERVICE]['ssp-asset-image'] = [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/data',
+        'path' => '/data/ssp-asset-image',
+    ];
+
+    $config[FileSystemConstants::FILESYSTEM_SERVICE]['ssp-model-image'] = [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/data',
+        'path' => '/data/ssp-model-image',
+    ];
+}
+
+if (!getenv('SPRYKER_S3_PUBLIC_ASSETS_BUCKET')) {
+    $publicUrl = sprintf(
+        '%s%s',
+        $config[ApplicationConstants::BASE_URL_YVES],
+        '/assets/static/images',
+    );
+
+    $localMediaFileSystemConfig = [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => APPLICATION_ROOT_DIR . '/public/Yves/assets/static/images',
+        'path' => '',
+    ];
+
+    $config[FileSystemConstants::FILESYSTEM_SERVICE]['backoffice-media'] = $localMediaFileSystemConfig;
+    $config[FileSystemConstants::FILESYSTEM_SERVICE]['storefront-media'] = $localMediaFileSystemConfig;
+    $config[FileSystemConstants::FILESYSTEM_SERVICE]['merchant-portal-media'] = $localMediaFileSystemConfig;
+    $config[FlysystemConstants::FLYSYSTEM_OPTIONS] = [
+        'public_url' => $publicUrl,
+    ];
+}
+
+$config[ContentNavigationWidgetConstants::NAVIGATION_REVALIDATION_TIME_IN_SECONDS] = 300;//5 min for local development

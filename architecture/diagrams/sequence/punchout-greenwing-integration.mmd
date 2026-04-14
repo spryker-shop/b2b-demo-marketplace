@@ -1,0 +1,29 @@
+sequenceDiagram
+    %% Group participants with consistent colors
+    box rgb(39, 174, 96) External Systems
+        participant Procurement
+        participant Greenwing
+    end
+    box rgb(41, 128, 185) Spryker
+        participant Spryker API
+        participant WebShop
+    end
+    box transparent User
+        participant Customer
+    end
+
+    Procurement->>+Greenwing: /punchout-start/ { user, returnURL, configuration }
+    Greenwing->>Spryker API: Single Sign On { user, cart contents }
+    Spryker API->>Greenwing: { one-time-login-URL }
+    Greenwing->>-Procurement: { one-time-login-URL }
+    Procurement->>Customer: { one-time-login-URL }
+    Customer->>WebShop: { one-time-login-URL }
+    WebShop->>+Spryker API: { one-time-auth-token }
+    Spryker API->>-WebShop: { JWT access-token + refresh-token }
+
+    WebShop->>Spryker API: /carts API
+
+    WebShop->>+Spryker API: /punchout-finish/
+    Spryker API->>Spryker API: prepare [punchout content]
+    Spryker API->>-Greenwing: [punchout content]
+    Greenwing->>Procurement: returnURL [punchout content in Procurement format]

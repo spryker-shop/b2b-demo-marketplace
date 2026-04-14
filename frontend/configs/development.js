@@ -5,6 +5,7 @@ const filePathFilter = require('@jsdevtools/file-path-filter');
 const { findComponentEntryPoints, findComponentStyles, findAppEntryPoint } = require('../libs/finder');
 const { getAliasList } = require('../libs/alias');
 const { getAssetsConfig } = require('../libs/assets-configurator');
+const cleanDirs = require('../libs/clean-dirs');
 
 let isImagesOptimizationEnabled = false;
 let imagesOptimization = null;
@@ -42,6 +43,8 @@ const getConfiguration = async (appSettings) => {
         }
     }
 
+    cleanDirs([appSettings.paths.public, appSettings.paths.publicStatic]);
+
     const vendorTs = await findAppEntryPoint(appSettings.find.shopUiEntryPoints, './vendor.ts');
     const appTs = await findAppEntryPoint(appSettings.find.shopUiEntryPoints, './app.ts');
     const basicScss = await findAppEntryPoint(appSettings.find.shopUiEntryPoints, './styles/basic.scss');
@@ -76,6 +79,7 @@ const getConfiguration = async (appSettings) => {
                 chunkModules: false,
                 chunkOrigins: false,
                 modules: false,
+                warnings: false,
                 entrypoints: false,
             },
 
@@ -123,7 +127,7 @@ const getConfiguration = async (appSettings) => {
                             plugins: [
                                 ['@babel/plugin-transform-runtime'],
                                 [
-                                    '@babel/plugin-proposal-class-properties',
+                                    '@babel/plugin-transform-class-properties',
                                     {
                                         loose: true,
                                     },
@@ -154,12 +158,25 @@ const getConfiguration = async (appSettings) => {
                                 loader: 'sass-loader',
                                 options: {
                                     implementation: require('sass'),
-                                },
-                            },
-                            {
-                                loader: 'sass-resources-loader',
-                                options: {
-                                    resources: [sharedScss, ...styles],
+                                    additionalData: (content, loaderContext) => {
+                                        const currentFilePath = loaderContext.resourcePath;
+                                        const allResources = [sharedScss, ...styles].filter(Boolean);
+
+                                        if (allResources.length === 0) {
+                                            return content;
+                                        }
+
+                                        const imports = allResources
+                                            .map((resource) => {
+                                                if (currentFilePath === resource) {
+                                                    return;
+                                                }
+
+                                                return `@import "${resource}";`;
+                                            })
+                                            .join('\n');
+                                        return `${imports}\n${content}`;
+                                    },
                                 },
                             },
                         ],

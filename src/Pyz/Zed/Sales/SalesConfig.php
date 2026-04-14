@@ -36,6 +36,7 @@ class SalesConfig extends SprykerSalesConfig
             'sales_payment_details' => '/sales-payment-detail/sales/list',
             'discount' => '/discount/sales/list',
             'refund' => '/refund/sales/list',
+            'inquiries' => '/self-service-portal/list-order-inquiry',
         ];
 
         $externalBlocks = parent::getSalesDetailExternalBlocksUrls();
@@ -83,5 +84,19 @@ class SalesConfig extends SprykerSalesConfig
     public function getItemHashColumn(): string
     {
         return 'OrderItemReference';
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function getOrderDetailBlockUrlToTemplateMap(): array
+    {
+        return [
+            '/cart-note/sales/list' => '@CartNote/Sales/list.twig',
+            '/comment-sales-connector/sales/list' => '@CommentSalesConnector/Sales/list.twig',
+            '/cart-note-product-bundle-connector/sales/list' => '@CartNoteProductBundleConnector/Sales/list.twig',
+            '/sales-payment-gui/sales/list' => '@SalesPaymentGui/Sales/list.twig',
+            '/discount/sales/list' => '@Discount/Sales/list.twig',
+        ];
     }
 }

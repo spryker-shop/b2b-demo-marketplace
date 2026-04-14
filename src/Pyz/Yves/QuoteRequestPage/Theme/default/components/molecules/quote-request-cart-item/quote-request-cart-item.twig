@@ -32,6 +32,14 @@
                     {{ data.cartItem.sku }}
                 </small>
 
+                {% widget 'ProductAttributeVisibilityCartWidget' args [null, data.cartItem.idProductAbstract, data.cartItem.id] only %}
+                    {% block body %}
+                        {% set attributesBadgeClassName = "badge badge--secondary spacing-right--small spacing-bottom--small" %}
+                        {{ parent() }}
+                    {% endblock %}
+                {% nowidget %}
+                {% endwidget %}
+
                 <p class="text-small"><strong>{{ 'cart.item_quantity' | trans }}:</strong><span class="text-secondary spacing-x spacing-x--inner spacing-x--small">{{ data.cartItem.quantity | executeFilterIfExists('formatInt', app.locale) }}</span></p>
 
                 {% include molecule('quote-request-item-summary', 'QuoteRequestPage') with {

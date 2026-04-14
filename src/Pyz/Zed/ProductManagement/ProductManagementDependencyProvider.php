@@ -13,6 +13,11 @@ use Spryker\Zed\CmsBlockProductConnector\Communication\Plugin\CmsBlockProductAbs
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantGui\Communication\Plugin\ProductManagement\MerchantProductAbstractListActionViewDataExpanderPlugin;
+use Spryker\Zed\MerchantProductGui\Communication\Plugin\ProductManagement\MerchantProductAbstractFormDataProviderExpanderPlugin;
+use Spryker\Zed\MerchantProductGui\Communication\Plugin\ProductManagement\MerchantProductAbstractFormExpanderPlugin;
+use Spryker\Zed\MerchantProductGui\Communication\Plugin\ProductManagement\MerchantProductAbstractFormOptionsExpanderPlugin;
+use Spryker\Zed\MerchantProductGui\Communication\Plugin\ProductManagement\MerchantProductAbstractFormOptionsResolverExpanderPlugin;
+use Spryker\Zed\MerchantProductGui\Communication\Plugin\ProductManagement\MerchantProductAbstractGeneralTabContentProviderPlugin;
 use Spryker\Zed\MerchantProductGui\Communication\Plugin\ProductManagement\MerchantProductProductAbstractEditViewExpanderPlugin;
 use Spryker\Zed\MerchantProductGui\Communication\Plugin\ProductManagement\MerchantProductProductAbstractViewActionViewDataExpanderPlugin;
 use Spryker\Zed\MerchantProductGui\Communication\Plugin\ProductManagement\MerchantProductProductTableQueryCriteriaExpanderPlugin;
@@ -23,22 +28,45 @@ use Spryker\Zed\PriceProductScheduleGui\Communication\Plugin\ProductManagement\S
 use Spryker\Zed\PriceProductScheduleGui\Communication\Plugin\ProductManagement\ScheduledPriceProductAbstractFormEditTabsExpanderPlugin;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Plugin\ProductManagement\ScheduledPriceProductConcreteEditViewExpanderPlugin;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Plugin\ProductManagement\ScheduledPriceProductConcreteFormEditTabsExpanderPlugin;
+use Spryker\Zed\PriceProductStorage\Communication\Plugin\ProductManagement\StoragePriceProductAbstractReadinessProviderPlugin;
+use Spryker\Zed\PriceProductStorage\Communication\Plugin\ProductManagement\StorageTablePriceProductAbstractReadinessProviderPlugin;
+use Spryker\Zed\PriceProductStorage\Communication\Plugin\ProductManagement\StorageTablePriceProductConcreteReadinessProviderPlugin;
+use Spryker\Zed\Product\Communication\Plugin\ProductManagement\IsActiveAbstractProductReadinessProviderPlugin;
+use Spryker\Zed\Product\Communication\Plugin\ProductManagement\IsActiveConcreteProductReadinessProviderPlugin;
+use Spryker\Zed\Product\Communication\Plugin\ProductManagement\StoreRelationAbstractProductReadinessProviderPlugin;
 use Spryker\Zed\ProductAlternativeGui\Communication\Plugin\ProductManagement\ProductConcreteEditFormExpanderPlugin;
 use Spryker\Zed\ProductAlternativeGui\Communication\Plugin\ProductManagement\ProductConcreteFormEditDataProviderExpanderPlugin;
 use Spryker\Zed\ProductAlternativeGui\Communication\Plugin\ProductManagement\ProductConcreteFormEditTabsExpanderPlugin;
 use Spryker\Zed\ProductAlternativeGui\Communication\Plugin\ProductManagement\ProductFormTransferMapperExpanderPlugin;
+use Spryker\Zed\ProductApproval\Communication\Plugin\ProductManagement\ApprovalStatusAbstractProductReadinessProviderPlugin;
 use Spryker\Zed\ProductApprovalGui\Communication\Plugin\ProductManagement\ProductApprovalProductAbstractEditViewExpanderPlugin;
 use Spryker\Zed\ProductApprovalGui\Communication\Plugin\ProductManagement\ProductApprovalProductTableActionExpanderPlugin;
 use Spryker\Zed\ProductApprovalGui\Communication\Plugin\ProductManagement\ProductApprovalProductTableConfigurationExpanderPlugin;
 use Spryker\Zed\ProductApprovalGui\Communication\Plugin\ProductManagement\ProductApprovalProductTableDataBulkExpanderPlugin;
 use Spryker\Zed\ProductApprovalGui\Communication\Plugin\ProductManagement\ProductApprovalProductTableQueryCriteriaExpanderPlugin;
+use Spryker\Zed\ProductAttachment\Communication\Plugin\ProductManagement\ProductAttachmentImageTabContentProviderWithPriorityPlugin;
+use Spryker\Zed\ProductAttachment\Communication\Plugin\ProductManagement\ProductAttachmentProductAbstractFormDataProviderExpanderPlugin;
+use Spryker\Zed\ProductAttachment\Communication\Plugin\ProductManagement\ProductAttachmentProductAbstractFormExpanderPlugin;
+use Spryker\Zed\ProductAttachment\Communication\Plugin\ProductManagement\ProductAttachmentProductAbstractTransferMapperPlugin;
 use Spryker\Zed\ProductConfigurationGui\Communication\Plugin\ProductManagement\ProductConfigurationProductTableDataBulkExpanderPlugin;
 use Spryker\Zed\ProductDiscontinuedGui\Communication\Plugin\DiscontinuedNotesProductFormTransferMapperExpanderPlugin;
 use Spryker\Zed\ProductDiscontinuedGui\Communication\Plugin\DiscontinuedProductConcreteEditFormExpanderPlugin;
 use Spryker\Zed\ProductDiscontinuedGui\Communication\Plugin\DiscontinueProductConcreteFormEditDataProviderExpanderPlugin;
 use Spryker\Zed\ProductDiscontinuedGui\Communication\Plugin\DiscontinueProductConcreteFormEditTabsExpanderPlugin;
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider as SprykerProductManagementDependencyProvider;
+use Spryker\Zed\ProductPageSearch\Communication\Plugin\ProductManagement\PageSearchProductAbstractReadinessProviderPlugin;
+use Spryker\Zed\ProductSearch\Communication\Plugin\ProductManagement\IsSearchableForLocaleAbstractProductReadinessProviderPlugin;
+use Spryker\Zed\ProductSearch\Communication\Plugin\ProductManagement\IsSearchableForLocaleConcreteProductReadinessProviderPlugin;
+use Spryker\Zed\ProductStorage\Communication\Plugin\ProductManagement\StorageProductAbstractReadinessProviderPlugin;
+use Spryker\Zed\ProductStorage\Communication\Plugin\ProductManagement\StorageTableProductAbstractReadinessProviderPlugin;
+use Spryker\Zed\ProductStorage\Communication\Plugin\ProductManagement\StorageTableProductConcreteReadinessProviderPlugin;
 use Spryker\Zed\Store\Communication\Plugin\Form\StoreRelationToggleFormTypePlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductManagement\ProductClassFormExpanderPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductManagement\ProductClassProductConcreteFormEditDataProviderExpanderPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductManagement\ProductClassProductConcreteTransferMapperPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductManagement\ShipmentTypeProductConcreteFormEditDataProviderExpanderPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductManagement\ShipmentTypeProductConcreteFormExpanderPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductManagement\ShipmentTypeProductFormTransferMapperExpanderPlugin;
 
 class ProductManagementDependencyProvider extends SprykerProductManagementDependencyProvider
 {
@@ -101,6 +129,8 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
         return [
             new DiscontinueProductConcreteFormEditDataProviderExpanderPlugin(), #ProductDiscontinuedFeature
             new ProductConcreteFormEditDataProviderExpanderPlugin(), #ProductAlternativeFeature
+            new ShipmentTypeProductConcreteFormEditDataProviderExpanderPlugin(),
+            new ProductClassProductConcreteFormEditDataProviderExpanderPlugin(),
         ];
     }
 
@@ -112,6 +142,8 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
         return [
             new ProductFormTransferMapperExpanderPlugin(), #ProductAlternativeFeature
             new DiscontinuedNotesProductFormTransferMapperExpanderPlugin(), #ProductDiscontinuedFeature
+            new ShipmentTypeProductFormTransferMapperExpanderPlugin(),
+            new ProductClassProductConcreteTransferMapperPlugin(),
         ];
     }
 
@@ -122,6 +154,8 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
     {
         return [
             new MerchantRelationshipProductAbstractFormExpanderPlugin(),
+            new ProductAttachmentProductAbstractFormExpanderPlugin(),
+            new MerchantProductAbstractFormExpanderPlugin(),
         ];
     }
 
@@ -132,6 +166,8 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
     {
         return [
             new MerchantRelationshipProductConcreteFormExpanderPlugin(),
+            new ShipmentTypeProductConcreteFormExpanderPlugin(),
+            new ProductClassFormExpanderPlugin(),
         ];
     }
 
@@ -226,6 +262,83 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
     {
         return [
             new ProductApprovalProductTableActionExpanderPlugin(),
+        ];
+    }
+
+     /**
+      * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractReadinessProviderPluginInterface>
+      */
+    protected function getProductAbstractReadinessProviderPlugins(): array
+    {
+        return [
+            new ApprovalStatusAbstractProductReadinessProviderPlugin(),
+            new IsActiveAbstractProductReadinessProviderPlugin(),
+            new IsSearchableForLocaleAbstractProductReadinessProviderPlugin(),
+            new StoreRelationAbstractProductReadinessProviderPlugin(),
+            new StorageTableProductAbstractReadinessProviderPlugin(),
+            new StorageProductAbstractReadinessProviderPlugin(),
+            new PageSearchProductAbstractReadinessProviderPlugin(),
+            new StorageTablePriceProductAbstractReadinessProviderPlugin(),
+            new StoragePriceProductAbstractReadinessProviderPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteReadinessProviderPluginInterface>
+     */
+    protected function getProductConcreteReadinessProviderPlugins(): array
+    {
+        return [
+            new IsActiveConcreteProductReadinessProviderPlugin(),
+            new IsSearchableForLocaleConcreteProductReadinessProviderPlugin(),
+            new StorageTablePriceProductConcreteReadinessProviderPlugin(),
+            new StorageTableProductConcreteReadinessProviderPlugin(),
+        ];
+    }
+
+    protected function getProductAbstractTransferMapperPlugins(): array
+    {
+        return [
+            new ProductAttachmentProductAbstractTransferMapperPlugin(),
+        ];
+    }
+
+    protected function getProductAbstractFormDataProviderExpanderPlugins(): array
+    {
+        return [
+            new ProductAttachmentProductAbstractFormDataProviderExpanderPlugin(),
+            new MerchantProductAbstractFormDataProviderExpanderPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormOptionsExpanderPluginInterface>
+     */
+    protected function getProductAbstractFormOptionsExpanderPlugins(): array
+    {
+        return [
+            new MerchantProductAbstractFormOptionsExpanderPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormOptionsResolverExpanderPluginInterface>
+     */
+    protected function getProductAbstractFormOptionsResolverExpanderPlugins(): array
+    {
+        return [
+            new MerchantProductAbstractFormOptionsResolverExpanderPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormTabContentProviderWithPriorityPluginInterface>
+     */
+    protected function getProductAbstractFormTabContentProviderWithPriorityPlugins(): array
+    {
+        return [
+            new ProductAttachmentImageTabContentProviderWithPriorityPlugin(),
+            new MerchantProductAbstractGeneralTabContentProviderPlugin(),
         ];
     }
 }

@@ -117,6 +117,9 @@
                                             {% widget 'SoldByMerchantWidget' args [listItem] only %}
                                             {% endwidget %}
                                         {% endblock %}
+                                        {% block availability %}
+                                            {% widget 'ProductAvailabilityWidget' args [listItem] only %} {% endwidget %}
+                                        {% endblock %}
                                     {% endblock %}
 
                                     {% block packagingUnitCart %}
@@ -216,6 +219,20 @@
                                             },
                                         } only %}
                                     {% endif %}
+                                {% endblock %}
+
+                                {% block serviceInformation %}
+                                    {% if data.canEdit %}
+                                        {% widget 'SspCartItemAssetSelectorWidget' args [listItem, false] with {
+                                            ajaxTriggerAttribute: data.ajaxTriggerAttribute
+                                        } only %}{% endwidget %}
+                                    {% else %}
+                                        {% widget 'SspAssetInfoForItemWidget' args [listItem] only %}{% endwidget %}
+                                    {% endif %}
+
+                                    {% widget 'SspServicePointNameForItemWidget' args [listItem] only %}
+                                        {% elsewidget 'ServicePointNameForItemWidget' args [listItem] only %}
+                                    {% endwidget %}
                                 {% endblock %}
                             {% endblock %}
                         </div>

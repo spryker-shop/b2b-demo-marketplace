@@ -1,0 +1,34 @@
+{% extends molecule('buy-box-item', '@SprykerFeature:BuyBox') %}
+
+{% block price %}
+    <div class="spacing-bottom">
+        {% widget 'CurrentProductPriceVolumeWidget' args [data.price] only %}
+            {% block priceTable %}{% endblock %}
+            {% block price %}
+                {% embed molecule('volume-price', 'PriceProductVolumeWidget') with {
+                    class: 'grid grid--gap-smaller grid--right',
+                    modifiers: ['list'],
+                    attributes: {
+                        'data-json': jsonVolumeProductPrices | json_encode(),
+                    },
+                    data: {
+                        amount: data.amount,
+                        originalAmount: data.originalAmount,
+                    },
+                } only %}
+                    {% block body %}
+                        <div class="col is-hidden-sm-md">
+                            {{ block('priceModeWrap') }}
+                        </div>
+                        <div class="col text-right">
+                            {{ block('amount') }}
+                            {{ block('originalAmount') }}
+                        </div>
+                    {% endblock %}
+                {% endembed %}
+            {% endblock %}
+        {% nowidget %}
+            {{ parent() }}
+        {% endwidget %}
+    </div>
+{% endblock %}

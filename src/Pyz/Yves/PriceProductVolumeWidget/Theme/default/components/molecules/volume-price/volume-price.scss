@@ -1,11 +1,6 @@
 @mixin price-product-volume-widget-volume-price($name: '.volume-price') {
     #{$name} {
-        margin-top: rem(12);
-        margin-bottom: rem(23);
-
-        @include helper-breakpoint-media-min($lg) {
-            margin-top: 0;
-        }
+        margin-bottom: rem(12);
 
         &__amount {
             font-size: rem(24);
