@@ -35,10 +35,7 @@ $shop-ui-icon-size-bigger: 1.5rem;
     }
 
     &--quick-order-delete-row {
-        width: rem(var(--scale-5));
-        height: rem(17);
-        margin: rem(7) 0;
-        fill: $setting-color-gray-2;
+        color: $setting-color-gray-2;
     }
 
     &--contact {
@@ -226,36 +223,28 @@ $shop-ui-icon-size-bigger: 1.5rem;
     }
 
     &--sm-lg-regular {
-        width: rem(var(--scale-5));
-        height: rem(var(--scale-5));
+        width: var(--scale-14);
+        height: var(--scale-14);
 
         @include helper-breakpoint-media-min($lg) {
-            width: rem(var(--scale-6));
-            height: rem(var(--scale-6));
+            width: var(--scale-16);
+            height: var(--scale-16);
         }
     }
 
     &--sm-lg-bigger {
-        width: rem(var(--scale-5));
-        height: rem(var(--scale-5));
+        width: var(--scale-16);
+        height: var(--scale-16);
 
         @include helper-breakpoint-media-min($lg) {
-            width: rem(var(--scale-7));
-            height: rem(var(--scale-7));
+            width: var(--scale-20);
+            height: var(--scale-20);
         }
     }
 
     &--browse-file {
         width: rem(28);
         height: rem(28);
-    }
-
-    &--download-file {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: rem(30);
-        height: rem(30);
     }
 
     &--remove-file {
