@@ -19,7 +19,11 @@
         {% endblock %}
 
         {% block fieldset %}
-            {{ parent() }}
+            <div class="{{config.name}}__fields grid grid--bottom grid--gap-smaller">
+                {% block fields %}
+                    {{ parent() }}
+                {% endblock %}
+            </div>
         {% endblock %}
 
         {% block message %}
