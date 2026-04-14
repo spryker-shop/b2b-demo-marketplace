@@ -154,8 +154,13 @@
             }
         }
 
+        &-wrapper--narrow {
+            width: rem(500);
+        }
+
         &__item--lvl-0.is-shown #{$name}-wrapper--lvl-1,
-        &__item--lvl-0:hover #{$name}-wrapper--lvl-1 {
+        &__item--lvl-0:hover #{$name}-wrapper--lvl-1,
+        &__item--lvl-0:has(:focus-visible) #{$name}-wrapper--lvl-1 {
             @include helper-visibility-visible;
             transform: translateY(0);
             transition-delay: 0s;

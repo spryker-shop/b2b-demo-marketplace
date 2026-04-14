@@ -94,58 +94,53 @@
 
         &--jumbotron {
             display: block;
-            min-height: rem(390);
-
-            @include helper-breakpoint-media-min($lg) {
-                min-height: rem(505);
-            }
+            position: relative;
 
             .slick-slide {
-                margin: 0 rem(1);
-
-                @include helper-breakpoint-media-min($lg) {
-                    margin-left: rem(5);
-                    margin-right: rem(5);
-                }
+                margin: 0;
             }
 
             .slick-dots {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                margin-top: rem(18);
-
-                @include helper-breakpoint-media-min($lg) {
-                    margin-top: rem(24);
-                }
+                gap: var(--scale-6);
+                position: absolute;
+                bottom: var(--scale-16);
+                left: 0;
+                right: 0;
+                margin: 0;
 
                 button {
-                    width: rem(5);
-                    height: rem(5);
-                    background: $setting-color-light;
-                    border-radius: 50%;
-                    border: rem(2) solid $setting-color-transparent;
+                    @include helper-effect-transition(width opacity);
+                    width: rem(6);
+                    height: rem(6);
+                    background: var(--white);
+                    border-radius: var(--radius-sm);
+                    border: none;
+                    padding: 0;
                     cursor: pointer;
+                    opacity: 0.3;
+
+                    &:hover {
+                        opacity: 0.7;
+                    }
                 }
 
                 li {
                     display: block;
-                    position: relative;
-                    padding: rem(5);
-                    background: $setting-color-transparent;
+                    padding: 0;
+                    background: none;
                     font-size: 0;
                     cursor: pointer;
+                    height: rem(6);
 
-                    /* stylelint-disable selector-max-compound-selectors  */
                     &.slick-active {
                         button {
-                            width: rem(10);
-                            height: rem(10);
-                            background: $setting-color-transparent;
-                            border: rem(2) solid $setting-color-gray-4;
+                            width: rem(24);
+                            opacity: 0.7;
                         }
                     }
-                    /* stylelint-enable selector-max-compound-selectors  */
                 }
             }
         }

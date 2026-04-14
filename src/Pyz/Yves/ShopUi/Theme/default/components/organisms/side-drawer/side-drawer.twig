@@ -27,32 +27,16 @@
 
             {% set cartQuantity = functionExists('getCartQuantity') ? getCartQuantity() : app['cart.quantity'] | default(0) %}
             {% if is_granted('ROLE_USER') %}
-                {% set drawerName = config.name %}
-                {% widget 'MiniCartWidget' args [cartQuantity] with {
-                    embed: { drawerName: drawerName },
-                } only %}
-                    {% block body %}
-                        {% include atom('cart-trigger') with {
-                            class: embed.drawerName ~ '__header-cart js-side-drawer__drill-down-trigger',
-                            data: { quantity: _widget.cartQuantity },
-                            attributes: {
-                                type: 'button',
-                                'aria-label': 'header.cart' | trans,
-                                'data-target-panel': 'cart-panel',
-                            },
-                        } only %}
-                    {% endblock %}
-                {% nowidget %}
-                    {% include atom('cart-trigger') with {
-                        class: drawerName ~ '__header-cart js-side-drawer__drill-down-trigger',
-                        data: { quantity: cartQuantity },
-                        attributes: {
-                            type: 'button',
-                            'aria-label': 'header.cart' | trans,
-                            'data-target-panel': 'cart-panel',
+                <div>
+                    {% widget 'MiniCartWidget' args [cartQuantity] with {
+                        data: {
+                            isAjaxMode: data.isAjaxMode,
+                            view: 'side-drawer',
+                            ajaxClassSuffix: 'side-drawer-trigger',
                         },
                     } only %}
-                {% endwidget %}
+                    {% endwidget %}
+                </div>
             {% else %}
                 <a href="{{ url('login', { redirectUri: app.request.uri }) }}"
                    class="button {{ config.name }}__header-sign-in">
@@ -196,14 +180,12 @@
                 <div class="{{ config.name }}__panel {{ config.jsName }}__panel" data-panel-id="shopping-list-panel">
                     <div class="{{ config.name }}__content">
                         <div class="{{ config.name }}__panel-body">
-                            {% widget 'ShoppingListNavigationMenuWidget' only %}
-                                {% block body %}
-                                    {% include molecule('shopping-list-panel', 'ShoppingListWidget') with {
-                                        data: {
-                                            shoppingLists: _widget.shoppingListCollection.shoppingLists,
-                                        },
-                                    } only %}
-                                {% endblock %}
+                            {% widget 'ShoppingListNavigationMenuWidget' with {
+                                data: {
+                                    isAjaxMode: data.isAjaxMode,
+                                    view: 'side-drawer',
+                                },
+                            } only %}
                             {% endwidget %}
                         </div>
                     </div>
@@ -213,7 +195,14 @@
             <div class="{{ config.name }}__panel {{ config.jsName }}__panel" data-panel-id="cart-panel">
                 <div class="{{ config.name }}__content">
                     <div class="{{ config.name }}__panel-body">
-                        {% widget 'MiniCartWidget' args [cartQuantity] only %}{% endwidget %}
+                        {% widget 'MiniCartWidget' args [cartQuantity] with {
+                            data: {
+                                isAjaxMode: data.isAjaxMode,
+                                view: 'mini-cart',
+                                ajaxClassSuffix: 'side-drawer-panel',
+                            },
+                        } only %}
+                        {% endwidget %}
                     </div>
                 </div>
             </div>

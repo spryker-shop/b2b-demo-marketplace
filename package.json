@@ -16,7 +16,7 @@
     ],
     "scripts": {
         "yves": "NODE_OPTIONS=\"--max-old-space-size=4096\" node ./frontend/build development",
-        "yves:watch": "node ./frontend/build development-watch",
+        "yves:watch": "NODE_OPTIONS=\"--max-old-space-size=4096\" node ./frontend/build development-watch",
         "yves:production": "NODE_OPTIONS=\"--max-old-space-size=4096\" node ./frontend/build production",
         "yves:help": "node ./frontend/libs/command-line-parser --help",
         "yves:stylelint": "node ./frontend/libs/stylelint.mjs",

@@ -1,32 +1,22 @@
 @mixin shop-ui-jumbotron($name: '.jumbotron') {
-    $jumbotron-text-shadow:
-        0 2px 4px rgb(0 0 0 / 60%),
-        0 4px 12px rgb(0 0 0 / 40%);
-
     #{$name} {
         overflow: hidden;
 
         &__container {
-            height: rem(360);
-            background-color: $setting-color-main;
+            aspect-ratio: 16 / 5;
+            width: 100%;
+            background-color: var(--background-inverse);
             background-position: center center;
             background-size: cover;
             background-repeat: no-repeat;
-            text-align: center;
+            text-align: left;
             position: relative;
-            padding: 0 rem(15);
-
-            @include helper-breakpoint-media-min($md) {
-                padding-left: rem(40);
-                padding-right: rem(40);
-            }
-
-            @include helper-breakpoint-media-min($lg) {
-                height: rem(455);
-                text-align: left;
-            }
+            display: flex;
+            align-items: center;
+            max-height: rem(450);
 
             &--banner {
+                aspect-ratio: auto;
                 height: 100%;
                 padding: 0;
             }
@@ -38,58 +28,59 @@
                 left: 0;
                 width: 100%;
                 height: 100%;
-                background: linear-gradient(to top, $setting-color-black 0%, $setting-color-gray-3 100%);
-                opacity: 0.6;
+                background: linear-gradient(
+                    to right,
+                    rgb(17 23 37 / 100%) 1.65%,
+                    rgb(10 18 36 / 90%) 38.93%,
+                    rgb(10 18 36 / 79%) 54.96%,
+                    rgb(10 18 36 / 25%) 71.34%,
+                    rgb(10 18 36 / 0%) 88.76%
+                );
+                opacity: 0.7;
+
+                @include helper-breakpoint-media-min($lg) {
+                    width: 56%;
+                }
             }
         }
 
         &__content {
             position: relative;
+            max-width: rem(500);
+            padding: 0;
         }
 
         &--banner {
             height: rem(200);
         }
 
-        &__title,
-        &__text {
-            color: $setting-color-white;
+        &__label {
+            font-size: var(--label-sm-regular-size);
+            line-height: var(--label-sm-regular-line-height);
+            font-weight: var(--label-sm-regular-weight);
+            letter-spacing: var(--label-sm-regular-letter-spacing);
+            color: var(--text-inverse);
+            text-transform: uppercase;
+            margin-bottom: var(--scale-16);
         }
 
         &__title {
-            font-size: rem(34);
-            line-height: rem(38);
-            font-weight: fw(bold);
-            margin-bottom: rem(15);
-            letter-spacing: rem(-0.3);
-            text-shadow: $jumbotron-text-shadow;
-
-            @include helper-breakpoint-media-min($lg) {
-                font-size: rem(42);
-                line-height: rem(46);
-                letter-spacing: 0;
-            }
+            font-size: var(--heading-lg-size);
+            line-height: var(--heading-lg-line-height);
+            font-weight: var(--heading-lg-weight);
+            letter-spacing: var(--heading-lg-letter-spacing);
+            color: var(--text-inverse);
+            margin-bottom: var(--scale-12);
         }
 
         &__text {
-            padding: 0 rem(12);
-            font-size: rem(16);
-            line-height: rem(20);
-            font-weight: fw(regular);
-            letter-spacing: rem(0.41);
-            text-shadow: $jumbotron-text-shadow;
-            margin-bottom: rem(26);
-
-            @include helper-breakpoint-media-min($lg) {
-                padding: 0;
-                font-size: rem(18);
-                line-height: rem(22);
-            }
-
-            @include helper-breakpoint-media-min($xl) {
-                font-size: rem(22);
-                line-height: rem(28);
-            }
+            font-size: var(--body-md-size);
+            line-height: var(--body-md-line-height);
+            font-weight: var(--body-md-weight);
+            letter-spacing: normal;
+            color: var(--text-inverse);
+            padding: 0;
+            margin-bottom: var(--scale-20);
         }
 
         @content;

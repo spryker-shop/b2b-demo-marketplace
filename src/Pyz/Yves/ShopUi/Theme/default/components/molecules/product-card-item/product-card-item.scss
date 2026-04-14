@@ -1,37 +1,43 @@
-$product-image-width: rem(78);
-$product-image-left-indent: rem(35);
 $dropdown-width: calc(100% + #{rem(4)});
 $dropdown-top-indent: calc(100% + #{rem(15)});
 
 @mixin shop-ui-product-card-item($name: '.product-card-item') {
     #{$name} {
-        border: rem(2) solid $setting-color-gray-7;
-        border-radius: $setting-border-radius;
-        padding: rem(12);
-        margin-bottom: rem(10);
+        border: var(--stroke-sm) solid var(--border-default);
+        border-radius: var(--radius-md);
+        padding: var(--scale-12);
+        margin-bottom: var(--scale-12);
         position: relative;
         width: 100%;
-
-        @include helper-breakpoint-media-min($md) {
-            padding-right: rem(22);
-        }
+        background: var(--background-surface);
 
         @include helper-breakpoint-media-min($lg) {
             padding: 0;
-            margin-bottom: rem(20);
+            margin-bottom: var(--scale-20);
+        }
+
+        &:hover {
+            border-color: var(--border-strong);
+        }
+
+        & > .grid {
+            @include helper-breakpoint-media-min($lg) {
+                flex-wrap: nowrap;
+            }
         }
 
         &__col {
             &--image {
-                border-radius: $setting-border-radius 0 0 $setting-border-radius;
+                border-radius: var(--radius-md) 0 0 var(--radius-md);
                 padding-top: 0;
                 padding-bottom: 0;
-                width: $product-image-width;
-                min-width: $product-image-width;
+                background: var(--background-muted);
+                width: 100%;
 
-                @include helper-breakpoint-media-min($md) {
+                @include helper-breakpoint-media-min($lg) {
                     width: 22%;
                     min-width: 22%;
+                    align-self: stretch;
                 }
             }
 
@@ -49,8 +55,8 @@ $dropdown-top-indent: calc(100% + #{rem(15)});
 
                 #{$name} & {
                     @include helper-breakpoint-media-min($lg) {
-                        padding-left: 0;
-                        padding-right: calc(#{$setting-grid-space * 2} + #{$setting-grid-space});
+                        padding-left: var(--scale-16);
+                        padding-right: var(--scale-16);
                     }
                 }
             }
@@ -66,36 +72,33 @@ $dropdown-top-indent: calc(100% + #{rem(15)});
             }
 
             &--description {
-                padding-top: rem(8);
-                padding-bottom: rem(12);
-                width: calc(100% - #{$product-image-width});
-                min-width: calc(100% - #{$product-image-width});
-
-                @include helper-breakpoint-media-min($md) {
-                    width: 78%;
-                    min-width: 78%;
-                }
+                padding-top: var(--scale-8);
+                padding-bottom: var(--scale-12);
+                width: 100%;
 
                 @include helper-breakpoint-media-min($lg) {
-                    padding-top: rem(36);
-                    padding-bottom: rem(28);
+                    width: 78%;
+                    min-width: 78%;
+                    padding-left: var(--scale-16);
+                    padding-top: var(--scale-20);
+                    padding-bottom: var(--scale-16);
                 }
             }
 
             &--shopping-list:not(&--image) {
-                padding-bottom: rem(20);
+                padding-bottom: var(--scale-20);
                 padding-top: 0;
 
                 @include helper-breakpoint-media-min($lg) {
-                    padding-bottom: rem(28);
-                    padding-top: rem(28);
+                    padding-bottom: var(--scale-24);
+                    padding-top: var(--scale-24);
                 }
 
                 &:last-child {
                     padding-bottom: 0;
 
                     @include helper-breakpoint-media-min($lg) {
-                        padding-bottom: rem(20);
+                        padding-bottom: var(--scale-20);
                     }
                 }
             }
@@ -108,24 +111,23 @@ $dropdown-top-indent: calc(100% + #{rem(15)});
         }
 
         &__additional-title {
-            padding-top: rem(16);
-            font-size: rem(14);
-            font-weight: fw(bold);
-            line-height: normal;
+            padding-top: var(--scale-16);
+            font-size: var(--font-size-14);
+            font-weight: var(--font-weight-bold);
+            line-height: var(--font-line-height-20);
 
             @include helper-breakpoint-media-min($lg) {
-                padding-top: rem(28);
+                padding-top: var(--scale-24);
             }
         }
 
         &__inner {
             &--full-height {
-                height: 100%;
+                height: auto;
+                min-height: 100%;
             }
 
             &--total {
-                flex-direction: column-reverse;
-
                 @include helper-breakpoint-media-min($lg) {
                     flex-direction: column;
                     align-items: flex-end;
@@ -133,7 +135,7 @@ $dropdown-top-indent: calc(100% + #{rem(15)});
             }
 
             &--actions {
-                padding-bottom: rem(6);
+                padding-bottom: var(--scale-6);
 
                 @include helper-breakpoint-media-min($lg) {
                     padding-bottom: 0;
@@ -143,21 +145,29 @@ $dropdown-top-indent: calc(100% + #{rem(15)});
         }
 
         &__title {
-            font-size: rem(14);
-            font-weight: fw(medium);
-            line-height: normal;
-            color: $setting-color-gray-5;
+            font-size: var(--font-size-14);
+            font-weight: var(--font-weight-medium);
+            line-height: var(--font-line-height-20);
+            color: var(--text-primary);
             margin-bottom: 0;
+            text-decoration: none;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
 
             @include helper-breakpoint-media-min($lg) {
-                font-size: rem(20);
+                font-size: var(--heading-sm-size);
+                font-weight: var(--heading-sm-weight);
+                line-height: var(--heading-sm-line-height);
             }
 
             &--shopping-list-alternative {
-                font-size: rem(12);
+                font-size: var(--font-size-12);
 
                 @include helper-breakpoint-media-min($lg) {
-                    font-size: rem(16);
+                    font-size: var(--font-size-16);
                 }
             }
 
@@ -171,7 +181,7 @@ $dropdown-top-indent: calc(100% + #{rem(15)});
             width: rem(14);
             height: rem(14);
             border-radius: 50%;
-            margin-left: rem(4);
+            margin-left: var(--scale-4);
             text-indent: rem(-9999);
             vertical-align: middle;
         }
@@ -179,14 +189,14 @@ $dropdown-top-indent: calc(100% + #{rem(15)});
         &__color-preview {
             display: inline-block;
             position: relative;
-            font-size: rem(13);
-            font-weight: fw(medium);
-            color: $setting-color-gray-5;
-            padding-right: rem(21);
-            line-height: rem(21);
+            font-size: var(--font-size-12);
+            font-weight: var(--font-weight-medium);
+            color: var(--text-secondary);
+            padding-right: var(--scale-20);
+            line-height: var(--font-line-height-20);
 
             @include helper-breakpoint-media-min($lg) {
-                font-size: rem(14);
+                font-size: var(--font-size-14);
             }
         }
 
@@ -197,43 +207,65 @@ $dropdown-top-indent: calc(100% + #{rem(15)});
             width: rem(15);
             height: rem(15);
             border-radius: 50%;
-            border: rem(1) solid $setting-color-gray-1;
+            border: var(--stroke-sm) solid var(--border-subtle);
         }
 
         &__available {
             display: inline-block;
-            color: $setting-color-main;
-            font-weight: fw(medium);
-            line-height: normal;
-            margin-bottom: rem(8);
+            color: var(--text-state-success);
+            font-weight: var(--font-weight-medium);
+            line-height: var(--font-line-height-20);
+            margin-bottom: var(--scale-8);
+        }
+
+        &__col--content {
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-4);
+
+            .spacing-bottom {
+                margin-bottom: 0;
+            }
+
+            .text-secondary {
+                font-size: var(--label-sm-regular-size);
+                line-height: var(--label-sm-regular-line-height);
+                color: var(--text-tertiary);
+            }
+
+            .sold-by-merchant {
+                font-size: var(--label-sm-regular-size);
+                line-height: var(--label-sm-regular-line-height);
+                color: var(--text-secondary);
+            }
         }
 
         &__checkbox {
             height: 100%;
 
             &-col {
-                background-color: $setting-color-alpha-2;
-                padding-left: rem(12);
+                background-color: var(--background-subtle);
+                padding-left: var(--scale-12);
 
                 &--shopping-list {
                     position: absolute;
                     right: 0;
                     top: 0;
-                    background: $setting-color-transparent;
+                    background: transparent;
 
                     @include helper-breakpoint-media-min($lg) {
                         display: flex;
                         align-items: center;
                         position: static;
-                        background-color: $setting-color-alpha-2;
-                        padding-bottom: rem(20);
+                        background-color: var(--background-subtle);
+                        padding-bottom: var(--scale-20);
                     }
                 }
             }
         }
 
         &__quantity-holder {
-            padding-bottom: rem(16);
+            padding-bottom: var(--scale-16);
 
             @include helper-breakpoint-media-min($lg) {
                 padding-bottom: 0;
@@ -241,26 +273,26 @@ $dropdown-top-indent: calc(100% + #{rem(15)});
         }
 
         &__quantity {
-            font-size: rem(13);
-            color: $setting-color-gray-4;
+            font-size: var(--font-size-12);
+            color: var(--text-tertiary);
 
             @include helper-breakpoint-media-min($lg) {
-                font-size: rem(14);
+                font-size: var(--font-size-14);
             }
 
             &-title {
-                color: $setting-color-gray-5;
-                font-weight: fw(medium);
+                color: var(--text-secondary);
+                font-weight: var(--font-weight-medium);
             }
         }
 
         &__delete-cart {
             position: absolute;
-            bottom: rem(48);
-            right: rem(32);
+            bottom: var(--scale-48);
+            right: var(--scale-32);
 
             @include helper-breakpoint-media-min($lg) {
-                padding-top: rem(32);
+                padding-top: var(--scale-32);
                 position: static;
             }
         }
@@ -296,10 +328,10 @@ $dropdown-top-indent: calc(100% + #{rem(15)});
 
             .select2-selection__rendered,
             .custom-select__select {
-                background-color: $setting-color-white;
+                background-color: var(--background-surface);
 
                 @include helper-breakpoint-media-min($lg) {
-                    background-color: $setting-color-gray-7;
+                    background-color: var(--background-subtle);
                 }
             }
         }
@@ -313,7 +345,7 @@ $dropdown-top-indent: calc(100% + #{rem(15)});
         }
 
         &--checkout {
-            margin-bottom: rem(15);
+            margin-bottom: var(--scale-16);
 
             #{$name}__col {
                 &--image {
@@ -332,7 +364,7 @@ $dropdown-top-indent: calc(100% + #{rem(15)});
                     #{$name} & {
                         @include helper-breakpoint-media-min($lg) {
                             padding-left: 0;
-                            padding-right: #{$setting-grid-space * 2};
+                            padding-right: var(--scale-32);
                         }
                     }
                 }
@@ -351,8 +383,8 @@ $dropdown-top-indent: calc(100% + #{rem(15)});
                     @include helper-breakpoint-media-min($lg) {
                         width: 83%;
                         min-width: 83%;
-                        padding-top: rem(20);
-                        padding-bottom: rem(15);
+                        padding-top: var(--scale-20);
+                        padding-bottom: var(--scale-16);
                         margin-left: rem(-10);
                     }
                 }
@@ -363,7 +395,7 @@ $dropdown-top-indent: calc(100% + #{rem(15)});
             margin-bottom: rem(100);
 
             @include helper-breakpoint-media-min($lg) {
-                margin-bottom: rem(20);
+                margin-bottom: var(--scale-20);
             }
 
             #{$name}__col {
@@ -392,12 +424,12 @@ $dropdown-top-indent: calc(100% + #{rem(15)});
         &--order-detail {
             #{$name}__col {
                 &--image {
-                    margin-left: $product-image-left-indent;
+                    margin-left: rem(35);
                     padding-right: rem(5);
 
                     @include helper-breakpoint-media-min($md) {
                         margin-left: 0;
-                        padding-right: $setting-grid-space;
+                        padding-right: var(--scale-16);
                     }
                 }
 
@@ -410,7 +442,7 @@ $dropdown-top-indent: calc(100% + #{rem(15)});
                     #{$name} & {
                         @include helper-breakpoint-media-min($lg) {
                             padding-left: 0;
-                            padding-right: #{$setting-grid-space * 2};
+                            padding-right: var(--scale-32);
                         }
                     }
                 }
@@ -423,20 +455,16 @@ $dropdown-top-indent: calc(100% + #{rem(15)});
                 }
 
                 &--description {
-                    width: calc(100% - #{$product-image-width} - #{$product-image-left-indent});
-                    min-width: calc(100% - #{$product-image-width} - #{$product-image-left-indent});
+                    width: 100%;
                     padding-top: 0;
                     padding-bottom: 0;
 
-                    @include helper-breakpoint-media-min($md) {
+                    @include helper-breakpoint-media-min($lg) {
+                        padding-top: var(--scale-20);
+                        padding-bottom: var(--scale-16);
+                        margin-left: rem(-10);
                         width: 78%;
                         min-width: 78%;
-                    }
-
-                    @include helper-breakpoint-media-min($lg) {
-                        padding-top: rem(20);
-                        padding-bottom: rem(15);
-                        margin-left: rem(-10);
                     }
                 }
             }
@@ -449,7 +477,7 @@ $dropdown-top-indent: calc(100% + #{rem(15)});
         }
 
         &--shopping-list-alternative {
-            margin-bottom: rem(10);
+            margin-bottom: var(--scale-12);
 
             #{$name}__col {
                 width: 69%;

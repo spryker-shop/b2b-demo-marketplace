@@ -28,12 +28,16 @@
                 <div class="grid grid--gap">
                     <div class="col col--sm-12 col--lg-3 {{ config.name }}__contact-info">
                         <div class="{{ config.name }}__contact-logo">
-                            <a class="{{ config.name }}__link" href="{{ 'global.build_with.link' | trans }}" target="_blank">
-                                {% include molecule('logo') with {
-                                    class: config.name ~ '__logo',
-                                    modifiers: ['main'],
-                                } only %}
-                            </a>
+                            {% include molecule('logo') with {
+                                class: config.name ~ '__logo',
+                                modifiers: ['main'],
+                                data: {
+                                    url:  'global.build_with.link' | trans,
+                                    externalUrl: true,
+                                    configurable: false,
+                                }
+                            } only %}
+
                             <p class="{{ config.name }}__contact-tagline">{{ 'global.tagline' | trans }}</p>
                             <div class="{{ config.name }}__contact-divider"></div>
                         </div>

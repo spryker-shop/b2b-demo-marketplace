@@ -20,6 +20,9 @@
 
         {% block sidebar %}
             {% embed organism('side-drawer') with {
+                data: {
+                    isAjaxMode: data.isAjaxHeader | default(false),
+                },
                 attributes: {
                     'trigger-selector': pageLayoutMainJsClassName ~ '__side-drawer-trigger',
                     'container-selector': pageLayoutMainJsClassName ~ '__side-drawer-container',

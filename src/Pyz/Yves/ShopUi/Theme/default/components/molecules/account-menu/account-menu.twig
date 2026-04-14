@@ -10,7 +10,7 @@
 } %}
 
 {% macro menuRow(item, name) %}
-    <a href="{{ item.url }}" class="{{ name }}__row{% if item.isDanger | default(false) %} {{ name }}__row--danger{% endif %}">
+    <a href="{{ item.url }}" class="{{ name }}__row{% if item.isDanger | default(false) %} {{ name }}__row--danger{% endif %}"{% if item.qa is defined and item.qa %} data-qa="{{ item.qa }}"{% endif %}>
         {% include atom('font-icon') with {
             class: name ~ '__row-icon',
             data: {

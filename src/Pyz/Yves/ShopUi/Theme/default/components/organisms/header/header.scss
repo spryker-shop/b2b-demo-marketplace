@@ -3,6 +3,7 @@
         position: relative;
         z-index: $setting-zi-header;
         background: var(--background-surface);
+        border-bottom: var(--stroke-sm) solid var(--border-strong);
 
         .body-has-overlay & {
             z-index: auto;
@@ -53,6 +54,7 @@
 
         &__logo {
             flex-shrink: 0;
+            height: 100%;
         }
 
         &__search {
@@ -73,12 +75,29 @@
         }
 
         &__actions-pills {
-            display: none;
+            display: flex;
+            align-items: center;
 
             @include helper-breakpoint-media-min($xl) {
-                display: flex;
-                align-items: center;
                 gap: var(--scale-12);
+            }
+        }
+
+        &__cart-pill-wrap {
+            position: relative;
+        }
+
+        &__cart-pill-overlay {
+            position: absolute;
+            inset: 0;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1;
+
+            @include helper-breakpoint-media-min($xl) {
+                display: none;
             }
         }
 
@@ -90,49 +109,10 @@
             }
         }
 
-        &__mobile-cart {
-            display: flex;
-
-            @include helper-breakpoint-media-min($xl) {
-                display: none;
-            }
-        }
-
-        &__mobile-cart-link {
-            display: flex;
-            align-items: center;
-            gap: var(--scale-2);
-            color: var(--icon-primary);
-            text-decoration: none;
-            position: relative;
-            background: none;
-            border: none;
-            padding: 0;
-            cursor: pointer;
-            font-size: rem(26);
-        }
-
-        &__mobile-cart-badge {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-width: rem(18);
-            height: rem(18);
-            padding: 0 var(--scale-4);
-            border-radius: var(--radius-full);
-            background-color: var(--background-brand-primary);
-            color: var(--text-inverse);
-            font-family: var(--label-sm-family);
-            font-size: rem(11);
-            font-weight: var(--label-sm-weight);
-            line-height: 1;
-        }
-
         &__nav-bar {
             display: none;
             position: relative;
             z-index: $setting-zi-search-suggestions + 4;
-            border-bottom: var(--stroke-sm) solid var(--border-strong);
 
             @include helper-breakpoint-media-min($xl) {
                 display: block;

@@ -69,7 +69,8 @@
         }
 
         &__sidebar-item.is-active #{$name}__sidebar-link,
-        &__sidebar-item:hover #{$name}__sidebar-link {
+        &__sidebar-item:hover #{$name}__sidebar-link,
+        &__sidebar-item:focus-within #{$name}__sidebar-link {
             background: var(--background-subtle);
 
             &::before {
@@ -122,7 +123,8 @@
         }
 
         &__sidebar-item.is-active #{$name}__panel,
-        &__sidebar-item:hover #{$name}__panel {
+        &__sidebar-item:hover #{$name}__panel,
+        &__sidebar-item:focus-within #{$name}__panel {
             display: block;
         }
 

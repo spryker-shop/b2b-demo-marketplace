@@ -1,4 +1,13 @@
 @include shop-ui-status {
+    $name: &;
+
+    @include helper-badge-chip;
+    font-weight: var(--font-weight-medium);
+
+    &::before {
+        display: none;
+    }
+
     &--shipped,
     &--in-stock,
     &--never-out-of-stock,
@@ -7,11 +16,10 @@
     &--ready,
     &--paid,
     &--delivered {
-        color: var(--text-state-success);
-        background: var(--background-state-success-subtle);
+        @include helper-badge-semantic-subtle(success);
 
-        &::before {
-            background: var(--background-state-success-subtle);
+        #{$name}--sold {
+            @include helper-badge-semantic-bold-background(success);
         }
     }
 
@@ -20,40 +28,29 @@
     &--returned,
     &--waiting-for-return,
     &--return-canceled {
-        background-color: $setting-color-gray-1;
-        color: $setting-color-gray-8;
-    }
+        @include helper-badge-semantic-subtle(warning);
 
-    &--shipped {
-        background: lighten($setting-color-blue-1, 63%);
-        color: $setting-color-blue-1;
-    }
-
-    &--rejected,
-    &--not-configured {
-        background: lighten($setting-color-alt, 50%);
-        color: darken($setting-color-alt, 27%);
+        #{$name}--sold {
+            @include helper-badge-semantic-bold-background(warning);
+        }
     }
 
     &--out-of-stock,
     &--rejected,
     &--not-configured {
-        background: var(--background-state-error-subtle);
-        color: var(--text-state-error);
+        @include helper-badge-semantic-subtle(error);
 
-        &::before {
-            background: var(--background-state-error-subtle);
+        #{$name}--sold {
+            @include helper-badge-semantic-bold-background(error);
         }
     }
 
+    &--info,
     &--availability {
-        color: var(--text-state-info);
-        background: var(--background-state-info-subtle);
-        font-weight: 500;
-        padding: 0 rem(12) 0 rem(30);
+        @include helper-badge-semantic-subtle(info);
 
-        &::before {
-            background: var(--background-state-info-subtle);
+        #{$name}--sold {
+            @include helper-badge-semantic-bold-background(info);
         }
     }
 }

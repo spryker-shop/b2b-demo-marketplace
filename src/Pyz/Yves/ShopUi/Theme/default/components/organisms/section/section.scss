@@ -40,34 +40,6 @@
         &--bg-dark {
             padding: rem(22) 0 rem(19);
             background-color: $setting-color-gray-7;
-
-            @include helper-breakpoint-media-min($lg) {
-                padding: rem(50) 0 rem(80);
-
-                .product-card__container {
-                    background-color: $setting-color-white;
-                }
-            }
-
-            .product-card {
-                padding-bottom: rem(15);
-
-                @include helper-breakpoint-media-min($lg) {
-                    padding-bottom: rem(30);
-                }
-            }
-
-            .product-card__image-wrap {
-                background-color: $setting-color-white;
-
-                &::before {
-                    background: transparent;
-                }
-            }
-
-            .product-card__overlay::before {
-                background-color: $setting-color-transparent;
-            }
         }
 
         &--full-width {

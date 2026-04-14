@@ -1,19 +1,70 @@
 {% extends view('mini-cart', 'SprykerShop:MultiCartWidget') %}
 
 {% define data = {
-    parentName: 'mini-cart',
+    view: 'header',
 } %}
 
-{% define config = {
-    name: data.parentName,
-} %}
+{% block body %}
+    {% block contentOuter %}
+        <span class="{% if data.isAjaxMode %}{{ ajaxContentClass }}{% endif %}">
+            {% block contentInner %}
+                {% set viewMode = app.request.get('view') | default(data.view) %}
 
-{% block contentOuter %}
-    {% include molecule('mini-cart', 'MultiCartWidget') with {
-        data: {
-            activeCart: data.activeCart,
-            carts: data.carts,
-            isMultiCartAllowed: data.isMultiCartAllowed,
-        },
-    } only %}
+                {% if viewMode == 'header' %}
+                    {% include molecule('header-cart-pill', 'MultiCartWidget') with {
+                        data: {
+                            quantity: _widget.cartQuantity,
+                            activeCart: data.activeCart,
+                            carts: data.carts,
+                            isMultiCartAllowed: data.isMultiCartAllowed,
+                        },
+                    } only %}
+                {% endif %}
+
+                {% if viewMode == 'side-drawer' %}
+                    {% include atom('cart-trigger') with {
+                        class: 'side-drawer__header-cart js-side-drawer__drill-down-trigger',
+                        data: { quantity: _widget.cartQuantity },
+                        attributes: {
+                            type: 'button',
+                            'aria-label': 'header.cart' | trans,
+                            'data-target-panel': 'cart-panel',
+                        },
+                    } only %}
+                {% endif %}
+
+                {% if viewMode == 'mini-cart' %}
+                    {% include molecule('mini-cart', 'MultiCartWidget') with {
+                        data: {
+                            activeCart: data.activeCart,
+                            carts: data.carts,
+                            isMultiCartAllowed: data.isMultiCartAllowed,
+                        },
+                    } only %}
+                {% endif %}
+            {% endblock %}
+        </span>
+    {% endblock %}
+
+    {% if data.isAjaxMode %}
+        {% include molecule('ajax-provider') with {
+            class: ajaxCartProvider,
+            attributes: {
+                url: path('cart/async/mini-cart-view', {
+                    view: data.view,
+                }),
+                method: 'POST',
+                'event-host': 'CART_UPDATE_EVENT',
+                'element-visibility-checker-class-name': ajaxContentClass,
+            },
+        } only %}
+
+        {% include molecule('ajax-renderer') with {
+            attributes: {
+                'provider-class-name': ajaxCartProvider,
+                'target-class-name': ajaxContentClass,
+                'mount-after-render': true,
+            },
+        } only %}
+    {% endif %}
 {% endblock %}

@@ -7,6 +7,9 @@
 
 {% define data = {
     quantity: 0,
+    activeCart: null,
+    carts: [],
+    isMultiCartAllowed: false,
 } %}
 
 {% block body %}
@@ -28,6 +31,12 @@
     </a>
 
     <div class="{{ config.name }}__dropdown {{ config.jsName }}__dropdown" aria-hidden="true">
-        {% widget 'MiniCartWidget' args [data.quantity] only %}{% endwidget %}
+        {% include molecule('mini-cart', 'MultiCartWidget') with {
+            data: {
+                activeCart: data.activeCart,
+                carts: data.carts,
+                isMultiCartAllowed: data.isMultiCartAllowed,
+            },
+        } only %}
     </div>
 {% endblock %}

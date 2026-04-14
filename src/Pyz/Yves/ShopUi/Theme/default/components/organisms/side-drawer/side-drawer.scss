@@ -57,6 +57,7 @@
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
+            height: rem(52);
         }
 
         &__header-cart {
@@ -79,7 +80,7 @@
         }
 
         &__panel {
-            display: none;
+            display: flex;
             flex-direction: column;
             flex-grow: 1;
             overflow: hidden;
@@ -88,9 +89,12 @@
             left: 0;
             width: 100%;
             height: 100%;
+            opacity: 0;
+            visibility: hidden;
 
             &--active {
-                display: flex;
+                opacity: 1;
+                visibility: visible;
                 position: relative;
             }
         }

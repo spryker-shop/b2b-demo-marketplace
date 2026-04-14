@@ -166,7 +166,7 @@
             </span>
         </button>
     {% endif %}
-    <span class="menu__trigger menu__trigger--lvl-{{ data.levelMenu - 1 }}">
+    <span class="menu__trigger menu__trigger--lvl-{{ data.levelMenu - 1 }}" tabindex="0" role="button">
         <span class="menu__text menu__text--lvl-{{ data.levelMenu - 1 }}">{{ data.node.title }}</span>
 
         {% if data.node.children | length > 0 and data.levelMenu > 1 %}

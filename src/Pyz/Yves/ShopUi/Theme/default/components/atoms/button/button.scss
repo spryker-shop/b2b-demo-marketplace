@@ -72,6 +72,19 @@
             }
         }
 
+        &--hollow-icon {
+            background: none;
+            border-color: transparent;
+
+            &:active,
+            &:focus:not(:focus-visible),
+            &:hover {
+                background: none;
+                border-color: transparent;
+                color: var(--text-primary);
+            }
+        }
+
         &--tertiary {
             color: var(--text-primary);
             background: transparent;
