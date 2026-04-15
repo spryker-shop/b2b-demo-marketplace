@@ -18,13 +18,118 @@
             transition-delay: $setting-effect-default-duration;
         }
 
+        .slick-arrow {
+            display: none !important; /* stylelint-disable-line declaration-no-important */
+
+            @include helper-breakpoint-media-min($lg) {
+                position: absolute;
+                top: 50%;
+                display: block !important; /* stylelint-disable-line declaration-no-important */
+                font-size: 0;
+                width: var(--scale-40);
+                height: var(--scale-40);
+                background: var(--background-surface) url('../images/right-chevron.svg') center center no-repeat;
+                background-size: var(--scale-12);
+                border: var(--stroke-sm) solid var(--border-default);
+                border-radius: var(--radius-full);
+                z-index: $setting-zi-element-floating;
+                opacity: 1;
+                transform: translateY(-50%);
+                cursor: pointer;
+            }
+
+            &:hover {
+                background-color: var(--background-subtle);
+            }
+        }
+
+        .slick-prev {
+            @include helper-breakpoint-media-min($lg) {
+                left: calc(-1 * var(--scale-12));
+                transform: translateY(-50%) rotate(180deg);
+            }
+
+            @include helper-breakpoint-media-min($xxxl) {
+                left: calc(-1 * var(--scale-48));
+            }
+        }
+
+        .slick-next {
+            @include helper-breakpoint-media-min($lg) {
+                right: calc(-1 * var(--scale-12));
+            }
+
+            @include helper-breakpoint-media-min($xxxl) {
+                right: calc(-1 * var(--scale-48));
+            }
+        }
+
+        &--jumbotron {
+            padding-bottom: rem(--scale-32);
+            display: block;
+            position: relative;
+
+            .slick-slide {
+                margin: 0;
+            }
+
+            .slick-dots {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: var(--scale-6);
+                position: absolute;
+                bottom: var(--scale-16);
+                left: 0;
+                right: 0;
+                margin: 0;
+
+                button {
+                    @include helper-effect-transition(width opacity);
+                    width: rem(6);
+                    height: rem(6);
+                    background: var(--white);
+                    border-radius: var(--radius-sm);
+                    border: none;
+                    padding: 0;
+                    cursor: pointer;
+                    opacity: 0.3;
+
+                    &:hover {
+                        opacity: 0.7;
+                    }
+                }
+
+                li {
+                    display: block;
+                    padding: 0;
+                    background: none;
+                    font-size: 0;
+                    cursor: pointer;
+                    height: rem(6);
+
+                    &.slick-active {
+                        button {
+                            width: rem(24);
+                            opacity: 0.7;
+                        }
+                    }
+                }
+            }
+        }
+
         &--full-width {
-            margin-left: -$setting-grid-space;
-            margin-right: -$setting-grid-space;
+            margin-left: 0;
+            margin-right: 0;
+
+            @include helper-breakpoint-media-min($lg) {
+                margin-left: -$setting-grid-space;
+                margin-right: -$setting-grid-space;
+            }
 
             &#{$name}--equal-height {
-                margin-left: rem(-9);
-                margin-right: rem(-9);
+                margin-left: 0;
+                margin-right: 0;
 
                 @include helper-breakpoint-media-min($lg) {
                     margin-left: -$setting-grid-space;
@@ -34,6 +139,14 @@
         }
 
         &--equal-height {
+            .slick-list {
+                padding-right: var(--scale-48);
+
+                @include helper-breakpoint-media-min($lg) {
+                    padding-right: 0;
+                }
+            }
+
             .slick-track {
                 display: flex;
             }
@@ -92,112 +205,8 @@
             }
         }
 
-        &--jumbotron {
-            display: block;
-            position: relative;
-
-            .slick-slide {
-                margin: 0;
-            }
-
-            .slick-dots {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                gap: var(--scale-6);
-                position: absolute;
-                bottom: var(--scale-16);
-                left: 0;
-                right: 0;
-                margin: 0;
-
-                button {
-                    @include helper-effect-transition(width opacity);
-                    width: rem(6);
-                    height: rem(6);
-                    background: var(--white);
-                    border-radius: var(--radius-sm);
-                    border: none;
-                    padding: 0;
-                    cursor: pointer;
-                    opacity: 0.3;
-
-                    &:hover {
-                        opacity: 0.7;
-                    }
-                }
-
-                li {
-                    display: block;
-                    padding: 0;
-                    background: none;
-                    font-size: 0;
-                    cursor: pointer;
-                    height: rem(6);
-
-                    &.slick-active {
-                        button {
-                            width: rem(24);
-                            opacity: 0.7;
-                        }
-                    }
-                }
-            }
-        }
-
         &--non-fixed-height {
             min-height: auto;
-        }
-
-        .slick-arrow {
-            position: absolute;
-            top: rem(95);
-            font-size: 0;
-            width: rem(30);
-            height: rem(30);
-            background: url('../images/right-chevron.svg') center center no-repeat;
-            background-size: rem(15);
-            border-radius: 50%;
-            z-index: $setting-zi-element-floating;
-            opacity: 0.5;
-            transform: translateY(-50%);
-
-            @include helper-breakpoint-media-min($lg) {
-                margin-top: rem(-30);
-                top: 50%;
-            }
-
-            &:hover {
-                opacity: 1;
-                cursor: pointer;
-            }
-        }
-
-        .slick-prev {
-            left: rem(9);
-            transform: rotate(180deg);
-
-            @include helper-breakpoint-media-min($lg) {
-                left: rem(15);
-            }
-
-            @include helper-breakpoint-media-min($xxxl) {
-                left: rem(-5);
-            }
-        }
-
-        .slick-next {
-            right: rem(9);
-            margin-top: rem(15);
-
-            @include helper-breakpoint-media-min($lg) {
-                margin-top: rem(-15);
-                right: rem(15);
-            }
-
-            @include helper-breakpoint-media-min($xxxl) {
-                right: rem(-5);
-            }
         }
     }
 

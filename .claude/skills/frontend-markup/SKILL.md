@@ -506,6 +506,133 @@ Spryker custom elements (e.g. `toggler-accordion`) extend `Component` which adds
 
 This applies wherever you need to suppress a custom element inside a flex/grid container for desktop layout.
 
+## CMS-rendered sections live in a CSV — no page twig wrappers
+
+Sections on the homepage (Featured Products, Top sellers, Your Operations Are Our Priority, Featured Categories) are **not** hardcoded in `home.twig`. They are CMS blocks defined in:
+
+```
+data/import/common/common/cms_block.csv
+```
+
+Each row binds a template path (e.g. `@CmsBlock/template/section_block.twig`, `@CmsBlock/template/section_block.twig`, `@CmsBlock/template/banner_block.twig`) and placeholder HTML for `title` / `content` / `imageUrl` / `link`. The section block templates embed `organism('section')` with `modifiers: ['secondary']`, `modifiers: ['secondary', 'bg-dark']`, etc., and the HTML placeholders provide `<h2 class="section__title section__title--secondary">…</h2>` + `<p class="section__sub-title">…</p>` / `<p class="section__text">…</p>`.
+
+**Implication for visual changes:** Never try to wrap CMS-rendered sections in a page-level twig wrapper or scope SCSS under a page class — the section organism is the shared owner of the layout, typography, and spacing. Edit:
+
+- `components/organisms/section/section.scss` for section-level visual rules.
+- `data/import/common/common/cms_block.csv` + `docker/sdk console data:import` if the CSV content itself must change (e.g. to add a new modifier class to a title).
+
+## Editing shared SCSS: new rules on top, legacy below
+
+When redesign-aligned rules replace older ones inside a component mixin, put the **new** rules at the top of the mixin body and keep the older rules below with a `// LEGACY` comment. Do not delete legacy rules that are still referenced by non-redesigned pages — tag them so the source of truth is clear to the next maintainer:
+
+```scss
+@mixin shop-ui-section($name: '.section') {
+    #{$name} {
+        // Redesign-aligned base padding / typography goes here at the top.
+        &--secondary {
+            padding: var(--scale-32) 0;
+        }
+
+        &__title--secondary {
+            font-family: var(--heading-lg-family);
+            font-weight: var(--heading-lg-weight);
+            font-size: var(--heading-lg-size);
+            line-height: var(--heading-lg-line-height);
+            text-align: left;
+            color: var(--text-primary);
+        }
+
+        // LEGACY — kept for non-redesigned pages; do not reuse for new work.
+        &--center { … }
+
+        // LEGACY — kept for non-redesigned pages; do not reuse for new work.
+        &--last { padding-bottom: rem(70); }
+    }
+}
+```
+
+## Media queries are mobile-first — always `helper-breakpoint-media-min`
+
+Project convention: styles are **mobile-first**. Base declarations are the mobile values; larger breakpoints extend via `@include helper-breakpoint-media-min($lg)` / `$xl` / `$xxl` / `$xxxl`.
+
+Do **not** use `helper-breakpoint-media-max($lg - 1)` to write "desktop first, then override on mobile." That inverts the cascade and breaks the shared convention.
+
+```scss
+// ✅ mobile-first
+&__sub-title {
+    font-size: var(--body-md-size);
+    margin-bottom: var(--scale-24);
+
+    @include helper-breakpoint-media-min($lg) {
+        font-size: var(--body-lg-size);
+        margin-bottom: var(--scale-40);
+    }
+}
+
+// ❌ desktop-first with max-width override
+&__sub-title {
+    font-size: var(--body-lg-size);
+
+    @include helper-breakpoint-media-max($lg - 1) {
+        font-size: var(--body-md-size);
+    }
+}
+```
+
+## Slick arrow visibility — inline `display` needs `!important`
+
+Slick writes `style="display: inline-block;"` directly onto the `<button>` when it renders prev/next arrows. A plain `display: none` in CSS loses to the inline style, so on mobile-first setups where arrows should only appear from `$lg` upward, use `!important` on both states:
+
+```scss
+.slick-arrow {
+    display: none !important; /* stylelint-disable-line declaration-no-important */
+
+    @include helper-breakpoint-media-min($lg) {
+        display: block !important; /* stylelint-disable-line declaration-no-important */
+        // …sizing, position, border, etc.
+    }
+}
+```
+
+## Slick peek / next-slide reveal on mobile
+
+To show a partial next slide on mobile without touching the slick JS config, pad the `.slick-list` on the right. The padding eats into the list's track width so the right edge of the next slide pokes through. Reset it to `0` on desktop so the full-width track calculation is preserved for the `$lg+` layout:
+
+```scss
+&--equal-height {
+    .slick-list {
+        padding-right: var(--scale-48);
+
+        @include helper-breakpoint-media-min($lg) {
+            padding-right: 0;
+        }
+    }
+}
+```
+
+## Slick-carousel prev arrow vertical alignment
+
+The `.slick-arrow` base rule centers the arrow with `transform: translateY(-50%)`, but `.slick-prev` then sets `transform: rotate(180deg)`, which replaces the translate and drops the arrow down by half its height. Always re-apply both transforms on prev:
+
+```scss
+.slick-arrow {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.slick-prev {
+    transform: translateY(-50%) rotate(180deg);
+}
+```
+
+## Design tokens — spacing scale
+
+Available `--scale-*` values: `0, 2, 4, 6, 8, 12, 16, 20, 24, 32, 40, 48, 64`. There is no `--scale-10`, `--scale-28`, or `--scale-56` — don't assume them. Use `calc(…)` if an off-scale value is truly needed:
+
+```scss
+left: calc(-1 * var(--scale-48));
+```
+
 ## Icon modifier sizing — never use `rem(var(--*))` for dimensions
 
 `rem()` is a Sass function expecting a unitless number. Passing a CSS `var()` into it produces garbage output (e.g. a 150px SVG instead of 28px).

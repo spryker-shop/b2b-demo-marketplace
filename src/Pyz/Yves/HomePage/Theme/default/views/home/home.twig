@@ -2,7 +2,6 @@
 
 {% block contentTop %}
     {% embed molecule('slick-carousel') with {
-        class: 'spacing-bottom spacing-bottom--big',
         modifiers: ['jumbotron'],
         attributes: {
             'slider-config': '{
@@ -37,18 +36,23 @@
 {% block content %}
     {% cms_slot 'slt-3' %}
 
-    {% embed organism('section') with {
-        modifiers: ['secondary', 'full-width'],
-        class: 'spacing-top spacing-top--inner spacing-top--big',
-    } only %}
-        {% block inner %}
-            <div class="grid grid--stretch grid--gap">
-                {% cms_slot 'slt-4' %}
-            </div>
-        {% endblock %}
-    {% endembed %}
+    <div class="grid grid--stretch grid--gap grid--sm-scroll spacing-y--large">
+        {% cms_slot 'slt-4' %}
+    </div>
+
+    {% cms_slot 'slt-5' %}
 {% endblock %}
 
 {% block contentBottom %}
-    {% cms_slot 'slt-5' %}
+    {% embed organism('section') with {
+        class: 'spacing-top--large',
+        modifiers: ['highlight-bg'],
+        data: {
+            innerClass: 'container',
+        },
+    } only %}
+        {% block inner %}
+            {{ spyCmsBlock({ name: 'Your Operations Are Our Priority' }) }}
+        {% endblock %}
+    {% endembed %}
 {% endblock %}
