@@ -222,6 +222,8 @@
             {% endif %}
         {% endblock %}
         {% block body %}
+            {% widget 'CostCenterSelectorWidget' args [embed.cart] only %}{% endwidget %}
+            
             {% include molecule('summary-overview', 'CheckoutPage') with {
                 data: embed.overview,
             } only %}
