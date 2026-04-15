@@ -11,7 +11,6 @@ namespace Pyz\Zed\EventDispatcher;
 
 use Spryker\Shared\Http\Plugin\EventDispatcher\ResponseListenerEventDispatcherPlugin;
 use Spryker\Zed\Acl\Communication\Plugin\EventDispatcher\AccessControlEventDispatcherPlugin;
-use Spryker\Zed\AgentSecurityBlockerMerchantPortalGui\Communication\Plugin\EventDispatcher\SecurityBlockerAgentMerchantPortalEventDispatcherPlugin;
 use Spryker\Zed\Application\Communication\Plugin\EventDispatcher\HeadersSecurityEventDispatcherPlugin;
 use Spryker\Zed\ErrorHandler\Communication\Plugin\EventDispatcher\ErrorPageEventDispatcherPlugin;
 use Spryker\Zed\EventBehavior\Communication\Plugin\EventDispatcher\EventBehaviorEventDispatcherPlugin;
@@ -33,7 +32,6 @@ use Spryker\Zed\Router\Communication\Plugin\EventDispatcher\RouterListenerEventD
 use Spryker\Zed\Router\Communication\Plugin\EventDispatcher\RouterLocaleEventDispatcherPlugin;
 use Spryker\Zed\Router\Communication\Plugin\EventDispatcher\RouterSslRedirectEventDispatcherPlugin;
 use Spryker\Zed\SecurityBlockerBackofficeGui\Communication\Plugin\EventDispatcher\SecurityBlockerBackofficeUserEventDispatcherPlugin;
-use Spryker\Zed\SecurityBlockerMerchantPortalGui\Communication\Plugin\EventDispatcher\SecurityBlockerMerchantPortalUserEventDispatcherPlugin;
 use Spryker\Zed\SecurityGui\Communication\Plugin\EventDispatcher\LastVisitedPageEventDispatcherPlugin;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Plugin\EventDispatcher\LastVisitedPageEventDispatcherPlugin as MerchantPortalLastVisitedPageEventDispatcherPlugin;
 use Spryker\Zed\Session\Communication\Plugin\EventDispatcher\SaveSessionEventDispatcherPlugin;
@@ -70,10 +68,7 @@ class EventDispatcherDependencyProvider extends SprykerEventDispatcherDependency
             new ErrorPageEventDispatcherPlugin(),
             new RedirectUrlValidationEventDispatcherPlugin(),
             new EnvironmentInfoHeaderEventDispatcherPlugin(),
-            new SecurityBlockerBackofficeUserEventDispatcherPlugin(),
-            new SecurityBlockerMerchantPortalUserEventDispatcherPlugin(),
-            new SecurityBlockerAgentMerchantPortalEventDispatcherPlugin(),
-            new GatewayControllerEventDispatcherPlugin(),
+            new SecurityBlockerBackofficeUserEventDispatcherPlugin(),new GatewayControllerEventDispatcherPlugin(),
         ];
 
         if (class_exists(ProfilerRequestEventDispatcherPlugin::class)) {
@@ -109,9 +104,7 @@ class EventDispatcherDependencyProvider extends SprykerEventDispatcherDependency
             new ResponseListenerEventDispatcherPlugin(),
             new ErrorPageEventDispatcherPlugin(),
             new RedirectUrlValidationEventDispatcherPlugin(),
-            new SecurityBlockerBackofficeUserEventDispatcherPlugin(),
-            new SecurityBlockerMerchantPortalUserEventDispatcherPlugin(),
-            new EnvironmentInfoHeaderEventDispatcherPlugin(),
+            new SecurityBlockerBackofficeUserEventDispatcherPlugin(),new EnvironmentInfoHeaderEventDispatcherPlugin(),
             new LastVisitedPageEventDispatcherPlugin(),
         ];
 
@@ -120,17 +113,6 @@ class EventDispatcherDependencyProvider extends SprykerEventDispatcherDependency
         }
 
         return $plugins;
-    }
-
-    /**
-     * @return array<\Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface>
-     */
-    protected function getMerchantPortalEventDispatcherPlugins(): array
-    {
-        return [
-            new MerchantPortalHeadersSecurityEventDispatcherPlugin(),
-            new MerchantPortalLastVisitedPageEventDispatcherPlugin(),
-        ];
     }
 
     /**

@@ -10,9 +10,6 @@ declare(strict_types = 1);
 namespace Pyz\Zed\DataExport;
 
 use Spryker\Zed\DataExport\DataExportDependencyProvider as SprykerDataExportDependencyProvider;
-use Spryker\Zed\MerchantSalesOrderDataExport\Communication\Plugin\DataExport\MerchantOrderDataEntityExporterPlugin;
-use Spryker\Zed\MerchantSalesOrderDataExport\Communication\Plugin\DataExport\MerchantOrderExpenseDataEntityExporterPlugin;
-use Spryker\Zed\MerchantSalesOrderDataExport\Communication\Plugin\DataExport\MerchantOrderItemDataEntityExporterPlugin;
 use Spryker\Zed\SalesDataExport\Communication\Plugin\DataExport\OrderDataEntityExporterPlugin;
 use Spryker\Zed\SalesDataExport\Communication\Plugin\DataExport\OrderExpenseDataEntityExporterPlugin;
 use Spryker\Zed\SalesDataExport\Communication\Plugin\DataExport\OrderItemDataEntityExporterPlugin;
@@ -27,10 +24,6 @@ class DataExportDependencyProvider extends SprykerDataExportDependencyProvider
         return [
             new OrderDataEntityExporterPlugin(),
             new OrderItemDataEntityExporterPlugin(),
-            new OrderExpenseDataEntityExporterPlugin(),
-            new MerchantOrderDataEntityExporterPlugin(),
-            new MerchantOrderItemDataEntityExporterPlugin(),
-            new MerchantOrderExpenseDataEntityExporterPlugin(),
-        ];
+            new OrderExpenseDataEntityExporterPlugin(),];
     }
 }

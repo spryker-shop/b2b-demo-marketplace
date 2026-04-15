@@ -12,7 +12,6 @@ use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Shared\Collector\CollectorConstants;
 use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Shared\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConstants;
-use Spryker\Shared\DummyMarketplacePayment\DummyMarketplacePaymentConfig;
 use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
 use Spryker\Shared\Event\EventConstants;
 use Spryker\Shared\FileSystem\FileSystemConstants;
@@ -33,6 +32,7 @@ use Spryker\Shared\Queue\QueueConstants;
 use Spryker\Shared\RabbitMq\RabbitMqEnv;
 use Spryker\Shared\Router\RouterConstants;
 use Spryker\Shared\Sales\SalesConstants;
+use Spryker\Shared\DummyPayment\DummyPaymentConfig;
 use Spryker\Shared\Scheduler\SchedulerConstants;
 use Spryker\Shared\SchedulerJenkins\SchedulerJenkinsConfig;
 use Spryker\Shared\SchedulerJenkins\SchedulerJenkinsConstants;
@@ -125,28 +125,12 @@ $config[AclConstants::ACL_USER_RULE_WHITELIST][] = [
 ];
 
 $config[OmsConstants::ACTIVE_PROCESSES] = [
-    'MarketplacePayment01',
+    'DummyPayment01',
 ];
 $config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = [
-    DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE => 'MarketplacePayment01',
+    DummyPaymentConfig::PAYMENT_METHOD_INVOICE => 'DummyPayment01',
+    DummyPaymentConfig::PAYMENT_METHOD_CREDIT_CARD => 'DummyPayment01',
 ];
-
-$config[EventConstants::LOGGER_ACTIVE] = true;
-
-//Check how to generate https://oauth2.thephpleague.com/installation/
-$config[OauthConstants::PRIVATE_KEY_PATH] = 'file://' . APPLICATION_ROOT_DIR . '/config/Zed/dev_only_private.key';
-$config[OauthConstants::PUBLIC_KEY_PATH] = 'file://' . APPLICATION_ROOT_DIR . '/config/Zed/dev_only_public.key';
-$config[OauthConstants::ENCRYPTION_KEY] = 'lxZFUEsBCJ2Yb14IF2ygAHI5N4+ZAUXXaSeeJm6+twsUmIen';
-
-$config[OauthCustomerConnectorConstants::OAUTH_CLIENT_IDENTIFIER] = 'frontend';
-$config[OauthCustomerConnectorConstants::OAUTH_CLIENT_SECRET] = 'abc123';
-
-$config[MailConstants::MAILCATCHER_GUI] = sprintf('http://%s:1080', $config[ApplicationConstants::HOST_ZED]);
-/* End Backend */
-
-/* Yves */
-$config[ApplicationConstants::HOST_YVES] = getenv('SPRYKER_FE_HOST');
-$config[SessionConstants::YVES_SESSION_COOKIE_DOMAIN] = $config[ApplicationConstants::HOST_YVES];
 $config[ApplicationConstants::YVES_TRUSTED_HOSTS]
     = $config[HttpConstants::YVES_TRUSTED_HOSTS]
     = [];

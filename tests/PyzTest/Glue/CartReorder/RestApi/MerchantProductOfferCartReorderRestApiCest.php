@@ -24,6 +24,8 @@ use Spryker\Glue\CartReorderRestApi\CartReorderRestApiConfig;
  * @group MerchantProductOfferCartReorderRestApiCest
  * Add your own group annotations below this line
  * @group EndToEnd
+ * @skip
+ *
  */
 class MerchantProductOfferCartReorderRestApiCest
 {

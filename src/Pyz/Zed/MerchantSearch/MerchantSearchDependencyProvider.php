@@ -9,7 +9,6 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\MerchantSearch;
 
-use Spryker\Zed\MerchantCategorySearch\Communication\Plugin\MerchantSearch\MerchantCategoryMerchantSearchDataExpanderPlugin;
 use Spryker\Zed\MerchantSearch\MerchantSearchDependencyProvider as SprykerMerchantSearchDependencyProvider;
 
 class MerchantSearchDependencyProvider extends SprykerMerchantSearchDependencyProvider
@@ -19,8 +18,6 @@ class MerchantSearchDependencyProvider extends SprykerMerchantSearchDependencyPr
      */
     protected function getMerchantSearchDataExpanderPlugins(): array
     {
-        return [
-            new MerchantCategoryMerchantSearchDataExpanderPlugin(),
-        ];
+        return [];
     }
 }

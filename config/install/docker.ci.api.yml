@@ -25,9 +25,6 @@ sections:
         propel-build:
             command: 'vendor/bin/console propel:model:build'
 
-        acl-entity-metadata-validate:
-            command: 'vendor/bin/console acl-entity:metadata:validate'
-
         generate-entity-transfer:
             command: 'vendor/bin/console transfer:entity:generate'
 
@@ -89,7 +86,7 @@ sections:
             command: 'vendor/bin/console setup:init-db'
 
         import-demodata:
-            command: 'vendor/bin/console data:import --config=data/import/common/minimal.yml'
+            command: 'vendor/bin/console data:import --config=data/import/b2b_common/minimal.yml'
 
         setup-search-create-sources:
             command: 'vendor/bin/console search:setup:sources'

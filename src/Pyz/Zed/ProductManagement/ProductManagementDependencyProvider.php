@@ -12,15 +12,6 @@ namespace Pyz\Zed\ProductManagement;
 use Spryker\Zed\CmsBlockProductConnector\Communication\Plugin\CmsBlockProductAbstractBlockListViewPlugin;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\MerchantGui\Communication\Plugin\ProductManagement\MerchantProductAbstractListActionViewDataExpanderPlugin;
-use Spryker\Zed\MerchantProductGui\Communication\Plugin\ProductManagement\MerchantProductAbstractFormDataProviderExpanderPlugin;
-use Spryker\Zed\MerchantProductGui\Communication\Plugin\ProductManagement\MerchantProductAbstractFormExpanderPlugin;
-use Spryker\Zed\MerchantProductGui\Communication\Plugin\ProductManagement\MerchantProductAbstractFormOptionsExpanderPlugin;
-use Spryker\Zed\MerchantProductGui\Communication\Plugin\ProductManagement\MerchantProductAbstractFormOptionsResolverExpanderPlugin;
-use Spryker\Zed\MerchantProductGui\Communication\Plugin\ProductManagement\MerchantProductAbstractGeneralTabContentProviderPlugin;
-use Spryker\Zed\MerchantProductGui\Communication\Plugin\ProductManagement\MerchantProductProductAbstractEditViewExpanderPlugin;
-use Spryker\Zed\MerchantProductGui\Communication\Plugin\ProductManagement\MerchantProductProductAbstractViewActionViewDataExpanderPlugin;
-use Spryker\Zed\MerchantProductGui\Communication\Plugin\ProductManagement\MerchantProductProductTableQueryCriteriaExpanderPlugin;
 use Spryker\Zed\MoneyGui\Communication\Plugin\Form\MoneyFormTypePlugin;
 use Spryker\Zed\PriceProductMerchantRelationshipGui\Communication\Plugin\ProductManagement\MerchantRelationshipProductAbstractFormExpanderPlugin;
 use Spryker\Zed\PriceProductMerchantRelationshipGui\Communication\Plugin\ProductManagement\MerchantRelationshipProductConcreteFormExpanderPlugin;
@@ -38,12 +29,6 @@ use Spryker\Zed\ProductAlternativeGui\Communication\Plugin\ProductManagement\Pro
 use Spryker\Zed\ProductAlternativeGui\Communication\Plugin\ProductManagement\ProductConcreteFormEditDataProviderExpanderPlugin;
 use Spryker\Zed\ProductAlternativeGui\Communication\Plugin\ProductManagement\ProductConcreteFormEditTabsExpanderPlugin;
 use Spryker\Zed\ProductAlternativeGui\Communication\Plugin\ProductManagement\ProductFormTransferMapperExpanderPlugin;
-use Spryker\Zed\ProductApproval\Communication\Plugin\ProductManagement\ApprovalStatusAbstractProductReadinessProviderPlugin;
-use Spryker\Zed\ProductApprovalGui\Communication\Plugin\ProductManagement\ProductApprovalProductAbstractEditViewExpanderPlugin;
-use Spryker\Zed\ProductApprovalGui\Communication\Plugin\ProductManagement\ProductApprovalProductTableActionExpanderPlugin;
-use Spryker\Zed\ProductApprovalGui\Communication\Plugin\ProductManagement\ProductApprovalProductTableConfigurationExpanderPlugin;
-use Spryker\Zed\ProductApprovalGui\Communication\Plugin\ProductManagement\ProductApprovalProductTableDataBulkExpanderPlugin;
-use Spryker\Zed\ProductApprovalGui\Communication\Plugin\ProductManagement\ProductApprovalProductTableQueryCriteriaExpanderPlugin;
 use Spryker\Zed\ProductAttachment\Communication\Plugin\ProductManagement\ProductAttachmentImageTabContentProviderWithPriorityPlugin;
 use Spryker\Zed\ProductAttachment\Communication\Plugin\ProductManagement\ProductAttachmentProductAbstractFormDataProviderExpanderPlugin;
 use Spryker\Zed\ProductAttachment\Communication\Plugin\ProductManagement\ProductAttachmentProductAbstractFormExpanderPlugin;
@@ -154,9 +139,7 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
     {
         return [
             new MerchantRelationshipProductAbstractFormExpanderPlugin(),
-            new ProductAttachmentProductAbstractFormExpanderPlugin(),
-            new MerchantProductAbstractFormExpanderPlugin(),
-        ];
+            new ProductAttachmentProductAbstractFormExpanderPlugin(),];
     }
 
     /**
@@ -187,10 +170,7 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
     protected function getProductAbstractEditViewExpanderPlugins(): array
     {
         return [
-            new ScheduledPriceProductAbstractEditViewExpanderPlugin(),
-            new ProductApprovalProductAbstractEditViewExpanderPlugin(),
-            new MerchantProductProductAbstractEditViewExpanderPlugin(),
-        ];
+            new ScheduledPriceProductAbstractEditViewExpanderPlugin(),];
     }
 
     /**
@@ -208,9 +188,7 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
      */
     protected function getProductAbstractViewActionViewDataExpanderPlugins(): array
     {
-        return [
-            new MerchantProductProductAbstractViewActionViewDataExpanderPlugin(),
-        ];
+        return [];
     }
 
     /**
@@ -218,10 +196,7 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
      */
     protected function getProductTableQueryCriteriaExpanderPluginInterfaces(): array
     {
-        return [
-            new MerchantProductProductTableQueryCriteriaExpanderPlugin(),
-            new ProductApprovalProductTableQueryCriteriaExpanderPlugin(),
-        ];
+        return [];
     }
 
     /**
@@ -229,9 +204,7 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
      */
     protected function getProductAbstractListActionViewDataExpanderPlugins(): array
     {
-        return [
-            new MerchantProductAbstractListActionViewDataExpanderPlugin(),
-        ];
+        return [];
     }
 
     /**
@@ -239,9 +212,7 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
      */
     protected function getProductTableConfigurationExpanderPlugins(): array
     {
-        return [
-            new ProductApprovalProductTableConfigurationExpanderPlugin(),
-        ];
+        return [];
     }
 
     /**
@@ -249,9 +220,7 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
      */
     protected function getProductTableDataBulkExpanderPlugins(): array
     {
-        return [
-            new ProductApprovalProductTableDataBulkExpanderPlugin(),
-            new ProductConfigurationProductTableDataBulkExpanderPlugin(),
+        return [new ProductConfigurationProductTableDataBulkExpanderPlugin(),
         ];
     }
 
@@ -260,9 +229,7 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
      */
     protected function getProductTableActionExpanderPlugins(): array
     {
-        return [
-            new ProductApprovalProductTableActionExpanderPlugin(),
-        ];
+        return [];
     }
 
      /**
@@ -270,9 +237,7 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
       */
     protected function getProductAbstractReadinessProviderPlugins(): array
     {
-        return [
-            new ApprovalStatusAbstractProductReadinessProviderPlugin(),
-            new IsActiveAbstractProductReadinessProviderPlugin(),
+        return [new IsActiveAbstractProductReadinessProviderPlugin(),
             new IsSearchableForLocaleAbstractProductReadinessProviderPlugin(),
             new StoreRelationAbstractProductReadinessProviderPlugin(),
             new StorageTableProductAbstractReadinessProviderPlugin(),
@@ -306,9 +271,7 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
     protected function getProductAbstractFormDataProviderExpanderPlugins(): array
     {
         return [
-            new ProductAttachmentProductAbstractFormDataProviderExpanderPlugin(),
-            new MerchantProductAbstractFormDataProviderExpanderPlugin(),
-        ];
+            new ProductAttachmentProductAbstractFormDataProviderExpanderPlugin(),];
     }
 
     /**
@@ -316,9 +279,7 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
      */
     protected function getProductAbstractFormOptionsExpanderPlugins(): array
     {
-        return [
-            new MerchantProductAbstractFormOptionsExpanderPlugin(),
-        ];
+        return [];
     }
 
     /**
@@ -326,9 +287,7 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
      */
     protected function getProductAbstractFormOptionsResolverExpanderPlugins(): array
     {
-        return [
-            new MerchantProductAbstractFormOptionsResolverExpanderPlugin(),
-        ];
+        return [];
     }
 
     /**
@@ -337,8 +296,6 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
     protected function getProductAbstractFormTabContentProviderWithPriorityPlugins(): array
     {
         return [
-            new ProductAttachmentImageTabContentProviderWithPriorityPlugin(),
-            new MerchantProductAbstractGeneralTabContentProviderPlugin(),
-        ];
+            new ProductAttachmentImageTabContentProviderWithPriorityPlugin(),];
     }
 }

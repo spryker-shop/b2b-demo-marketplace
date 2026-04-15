@@ -21,7 +21,6 @@ use Spryker\Shared\GlueBackendApiApplication\GlueBackendApiApplicationConstants;
 use Spryker\Shared\GlueStorefrontApiApplication\GlueStorefrontApiApplicationConstants;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Log\LogConstants;
-use Spryker\Shared\MerchantPortalApplication\MerchantPortalConstants;
 use Spryker\Shared\MerchantRelationRequest\MerchantRelationRequestConstants;
 use Spryker\Shared\MerchantRelationship\MerchantRelationshipConstants;
 use Spryker\Shared\Newsletter\NewsletterConstants;
@@ -34,7 +33,6 @@ use Spryker\Shared\Queue\QueueConstants;
 use Spryker\Shared\Redis\RedisConstants;
 use Spryker\Shared\Router\RouterConstants;
 use Spryker\Shared\SecurityGui\SecurityGuiConstants;
-use Spryker\Shared\SecurityMerchantPortalGui\SecurityMerchantPortalGuiConstants;
 use Spryker\Shared\Session\SessionConstants;
 use Spryker\Shared\Testify\TestifyConstants;
 use Spryker\Shared\WebProfiler\WebProfilerConstants;
@@ -122,7 +120,6 @@ if (!getenv('SPRYKER_SSL_ENABLE')) {
         = $config[RouterConstants::ZED_IS_SSL_ENABLED]
         = $config[CustomerPageConstants::YVES_IS_SSL_ENABLED]
         = $config[SecurityGuiConstants::ZED_IS_SSL_ENABLED]
-        = $config[SecurityMerchantPortalGuiConstants::ZED_IS_SSL_ENABLED]
         = $config[ApplicationConstants::ZED_SSL_ENABLED]
         = $config[ApplicationConstants::YVES_SSL_ENABLED]
         = false;
@@ -139,15 +136,10 @@ if (!getenv('SPRYKER_SSL_ENABLE')) {
     );
 
 // ----------------------------------------------------------------------------
-// ------------------------------ MERCHANT PORTAL -----------------------------
+
 // ----------------------------------------------------------------------------
 
     $merchantPortalPort = (int)(getenv('SPRYKER_MP_PORT')) ?: 80;
-    $config[MerchantPortalConstants::BASE_URL_MP] = sprintf(
-        'http://%s%s',
-        getenv('SPRYKER_MP_HOST'),
-        $merchantPortalPort !== 80 ? ':' . $merchantPortalPort : '',
-    );
 
 // ----------------------------------------------------------------------------
 // ------------------------------ FRONTEND ------------------------------------

@@ -9,7 +9,6 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\ProductOptionStorage;
 
-use Spryker\Zed\MerchantProductOptionStorage\Communication\Plugin\ProductOptionStorage\MerchantProductOptionCollectionFilterPlugin;
 use Spryker\Zed\ProductOptionStorage\ProductOptionStorageDependencyProvider as SprykerProductOptionStorageDependencyProvider;
 
 class ProductOptionStorageDependencyProvider extends SprykerProductOptionStorageDependencyProvider
@@ -19,8 +18,6 @@ class ProductOptionStorageDependencyProvider extends SprykerProductOptionStorage
      */
     protected function getProductOptionCollectionFilterPlugins(): array
     {
-        return [
-            new MerchantProductOptionCollectionFilterPlugin(),
-        ];
+        return [];
     }
 }

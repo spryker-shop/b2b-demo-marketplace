@@ -11,7 +11,6 @@ namespace Pyz\Client\UrlStorage;
 
 use Spryker\Client\CategoryStorage\Plugin\UrlStorageCategoryNodeMapperPlugin;
 use Spryker\Client\CmsStorage\Plugin\UrlStorageCmsPageMapperPlugin;
-use Spryker\Client\MerchantStorage\Plugin\UrlStorageMerchantMapperPlugin;
 use Spryker\Client\ProductSetStorage\Plugin\UrlStorageProductSetMapperPlugin;
 use Spryker\Client\ProductStorage\Plugin\UrlStorageProductAbstractMapperPlugin;
 use Spryker\Client\UrlStorage\Plugin\UrlStorageRedirectMapperPlugin;
@@ -29,8 +28,6 @@ class UrlStorageDependencyProvider extends SprykerUrlDependencyProvider
             new UrlStorageCategoryNodeMapperPlugin(),
             new UrlStorageProductAbstractMapperPlugin(),
             new UrlStorageProductSetMapperPlugin(),
-            new UrlStorageRedirectMapperPlugin(),
-            new UrlStorageMerchantMapperPlugin(),
-        ];
+            new UrlStorageRedirectMapperPlugin(),];
     }
 }

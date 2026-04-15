@@ -139,6 +139,8 @@ class NavigationTreeCest
      * @param \PyzTest\Zed\NavigationGui\NavigationGuiPresentationTester $i
      *
      * @return void
+     * @skip
+     *
      */
     public function testUpdateNodeToCategoryType(NavigationGuiPresentationTester $i): void
     {

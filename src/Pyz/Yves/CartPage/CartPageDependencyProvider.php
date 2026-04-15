@@ -16,7 +16,6 @@ use SprykerFeature\Yves\SelfServicePortal\Plugin\CartPage\SspAssetPreAddToCartPl
 use SprykerShop\Yves\CartPage\CartPageDependencyProvider as SprykerCartPageDependencyProvider;
 use SprykerShop\Yves\DiscountPromotionWidget\Plugin\CartPage\DiscountPromotionAddToCartFormWidgetParameterExpanderPlugin;
 use SprykerShop\Yves\MerchantProductOfferWidget\Plugin\CartPage\MerchantProductOfferPreAddToCartPlugin;
-use SprykerShop\Yves\MerchantProductWidget\Plugin\CartPage\MerchantProductPreAddToCartPlugin;
 use SprykerShop\Yves\MultiCartWidget\Plugin\CartPage\MultiCartMiniCartViewExpanderPlugin;
 use SprykerShop\Yves\ProductBundleWidget\Plugin\CartPage\ProductBundleCartItemTransformerPlugin;
 use SprykerShop\Yves\UrlPage\Plugin\CartPage\UrlCartItemTransformerPlugin;
@@ -49,9 +48,7 @@ class CartPageDependencyProvider extends SprykerCartPageDependencyProvider
      */
     protected function getPreAddToCartPlugins(): array
     {
-        return [
-            new MerchantProductPreAddToCartPlugin(),
-            new MerchantProductOfferPreAddToCartPlugin(),
+        return [new MerchantProductOfferPreAddToCartPlugin(),
             new SspAssetPreAddToCartPlugin(),
             new ServicePointPreAddToCartPlugin(),
             new ShipmentTypePreAddToCartPlugin(),

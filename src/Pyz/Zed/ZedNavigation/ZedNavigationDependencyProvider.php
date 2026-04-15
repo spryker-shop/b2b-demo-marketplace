@@ -10,8 +10,6 @@ declare(strict_types = 1);
 namespace Pyz\Zed\ZedNavigation;
 
 use Spryker\Zed\Acl\Communication\Plugin\Navigation\AclNavigationItemCollectionFilterPlugin;
-use Spryker\Zed\MultiFactorAuthMerchantPortal\Communication\Plugin\Navigation\AgentMerchantPortalNavigationItemCollectionFilterPlugin;
-use Spryker\Zed\MultiFactorAuthMerchantPortal\Communication\Plugin\Navigation\MerchantPortalNavigationItemCollectionFilterPlugin;
 use Spryker\Zed\ZedNavigation\Communication\Plugin\BackofficeNavigationItemCollectionFilterPlugin;
 use Spryker\Zed\ZedNavigation\ZedNavigationDependencyProvider as SprykerZedNavigationDependencyProvider;
 
@@ -24,9 +22,6 @@ class ZedNavigationDependencyProvider extends SprykerZedNavigationDependencyProv
     {
         return [
             new AclNavigationItemCollectionFilterPlugin(),
-            new BackofficeNavigationItemCollectionFilterPlugin(),
-            new MerchantPortalNavigationItemCollectionFilterPlugin(),
-            new AgentMerchantPortalNavigationItemCollectionFilterPlugin(),
-        ];
+            new BackofficeNavigationItemCollectionFilterPlugin(),];
     }
 }
