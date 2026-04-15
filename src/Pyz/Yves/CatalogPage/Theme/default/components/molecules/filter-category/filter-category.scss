@@ -99,28 +99,16 @@
         }
 
         &--lvl-1 {
-            font-size: rem(15);
+            font-size: var(--font-size-16);
             font-weight: fw(medium);
-
-            @include helper-breakpoint-media-min($lg) {
-                font-size: rem(18);
-            }
         }
 
         &--lvl-2 {
-            font-size: rem(15);
-
-            @include helper-breakpoint-media-min($lg) {
-                font-size: rem(16);
-            }
+            font-size: var(--font-size-16);
         }
 
         &--lvl-3 {
-            font-size: rem(13);
-
-            @include helper-breakpoint-media-min($lg) {
-                font-size: rem(15);
-            }
+            font-size: var(--font-size-14);
         }
 
         &:hover,

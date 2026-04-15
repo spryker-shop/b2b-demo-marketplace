@@ -4,9 +4,9 @@
             @include helper-effect-transition(background-color color);
             display: flex;
             align-items: center;
-            height: rem(60);
+            min-height: rem(60);
             gap: var(--scale-12);
-            padding: 0 var(--scale-20) 0 var(--scale-16);
+            padding: var(--scale-6) var(--scale-16);
             color: var(--text-primary);
 
             &:hover {

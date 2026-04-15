@@ -148,13 +148,9 @@ $shop-ui-icon-size-bigger: 1.5rem;
 
     &--payment-logo {
         position: absolute;
-        top: rem(27);
+        top: 50%;
         right: rem(var(--scale-6));
-
-        @include helper-breakpoint-media-min($lg) {
-            top: rem(27);
-            right: rem(30);
-        }
+        translate: 0 -50%;
     }
 
     &--summary-shipping {
@@ -208,13 +204,13 @@ $shop-ui-icon-size-bigger: 1.5rem;
     }
 
     &--create-new-cart {
-        width: rem(var(--scale-7));
-        height: rem(18);
+        width: rem(var(--scale-16));
+        height: rem(var(--scale-16));
         vertical-align: bottom;
     }
 
     &--trolley {
-        width: rem(var(--scale-6));
+        width: rem(var(--scale-16));
     }
 
     &--title {
@@ -223,8 +219,8 @@ $shop-ui-icon-size-bigger: 1.5rem;
     }
 
     &--sm-lg-regular {
-        width: var(--scale-14);
-        height: var(--scale-14);
+        width: var(--scale-12);
+        height: var(--scale-12);
 
         @include helper-breakpoint-media-min($lg) {
             width: var(--scale-16);

@@ -140,6 +140,10 @@
             }
         }
 
+        &--width-auto {
+            width: auto;
+        }
+
         @content;
     }
 }
@@ -232,6 +236,10 @@
 
             &--disabled {
                 cursor: not-allowed;
+            }
+
+            &--open {
+                z-index: $setting-zi-side-drawer;
             }
         }
 
