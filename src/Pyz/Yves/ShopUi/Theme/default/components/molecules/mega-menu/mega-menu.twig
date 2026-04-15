@@ -51,17 +51,19 @@
                                     </li>
                                 {% endfor %}
                             </ul>
-                            <a
-                                href="{{ functionExists('generatePath') ? generatePath(childNode.url) : childNode.url }}"
-                                class="{{ config.name }}__panel-show-all"
-                            >
-                                {{ 'navigation.show_all' | trans }}
-                                {% include atom('font-icon') with {
-                                    class: config.name ~ '__panel-arrow',
-                                    modifiers: ['size-inherit'],
-                                    data: { name: 'arrow_forward' },
-                                } only %}
-                            </a>
+                            {% if childNode.url %}
+                                <a
+                                    href="{{ functionExists('generatePath') ? generatePath(childNode.url) : childNode.url }}"
+                                    class="{{ config.name }}__panel-show-all"
+                                >
+                                    {{ 'navigation.show_all' | trans }}
+                                    {% include atom('font-icon') with {
+                                        class: config.name ~ '__panel-arrow',
+                                        modifiers: ['size-inherit'],
+                                        data: { name: 'arrow_forward' },
+                                    } only %}
+                                </a>
+                            {% endif %}
                         </div>
                     {% endif %}
                 </li>

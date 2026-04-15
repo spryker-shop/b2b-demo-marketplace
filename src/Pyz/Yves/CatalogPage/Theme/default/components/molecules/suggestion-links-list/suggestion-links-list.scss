@@ -31,8 +31,8 @@
             @include helper-effect-transition(background-color color);
             display: flex;
             align-items: center;
-            height: rem(44);
-            padding: 0 var(--scale-20);
+            min-height: rem(44);
+            padding: var(--scale-6) var(--scale-16);
             font-family: var(--body-sm-family);
             font-size: var(--body-sm-size);
             font-weight: var(--body-sm-weight);
