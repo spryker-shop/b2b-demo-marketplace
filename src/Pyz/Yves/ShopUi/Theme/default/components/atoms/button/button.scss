@@ -72,19 +72,6 @@
             }
         }
 
-        &--hollow-icon {
-            background: none;
-            border-color: transparent;
-
-            &:active,
-            &:focus:not(:focus-visible),
-            &:hover {
-                background: none;
-                border-color: transparent;
-                color: var(--text-primary);
-            }
-        }
-
         &--tertiary {
             color: var(--text-primary);
             background: transparent;
@@ -136,19 +123,19 @@
 
         &--sm {
             min-height: rem(32);
-            padding-left: rem(var(--scale-12));
-            padding-right: rem(var(--scale-12));
+            padding-left: var(--scale-12);
+            padding-right: var(--scale-12);
         }
 
         &--lg {
             min-height: rem(48);
-            padding-left: rem(var(--scale-20));
-            padding-right: rem(var(--scale-20));
+            padding-left: var(--scale-20);
+            padding-right: var(--scale-20);
         }
 
         &--icon-only {
-            padding-left: rem(var(--scale-8));
-            padding-right: rem(var(--scale-8));
+            padding-left: var(--scale-8);
+            padding-right: var(--scale-8);
         }
 
         &--expand {

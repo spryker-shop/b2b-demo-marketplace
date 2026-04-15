@@ -3,18 +3,18 @@
         @include helper-effect-transition(background-color border-color box-shadow color);
         display: inline-flex;
         height: rem(36);
-        padding: 0 rem(var(--scale-16));
+        padding: 0 var(--scale-16);
         align-items: center;
-        gap: rem(var(--scale-8));
+        gap: var(--scale-8);
         width: 100%;
-        border-radius: rem(var(--radius-sm));
-        border: rem(var(--stroke-sm)) solid var(--input-border-default);
+        border-radius: var(--radius-sm);
+        border: var(--stroke-sm) solid var(--input-border-default);
         background: var(--input-background-default);
         color: var(--input-text-value);
-        font-size: rem(var(--font-size-14));
+        font-size: var(--font-size-14);
         font-weight: var(--font-weight-medium);
-        line-height: rem(var(--body-sm-line-height));
-        letter-spacing: rem(var(--body-sm-letter-spacing));
+        line-height: var(--body-sm-line-height);
+        letter-spacing: var(--body-sm-letter-spacing);
 
         ::placeholder {
             color: var(--input-text-placeholder);
@@ -62,7 +62,7 @@
 
         &--sm {
             height: rem(32);
-            font-size: rem(var(--body-sm-size));
+            font-size: var(--body-sm-size);
         }
 
         @content;
