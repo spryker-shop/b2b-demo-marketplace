@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4b5cb260ba4ae01003320eec9833d341",
+    "content-hash": "9807f27479ac56865f26efeee97479cf",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -9284,16 +9284,16 @@
         },
         {
             "name": "spryker-eco/algolia",
-            "version": "1.0.1",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-eco/algolia.git",
-                "reference": "de82e2637af81db08e34bc31d6a69dff65eb01f6"
+                "reference": "4cb0d70feadfcbfe78584eef448661ff6359e063"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-eco/algolia/zipball/de82e2637af81db08e34bc31d6a69dff65eb01f6",
-                "reference": "de82e2637af81db08e34bc31d6a69dff65eb01f6",
+                "url": "https://api.github.com/repos/spryker-eco/algolia/zipball/4cb0d70feadfcbfe78584eef448661ff6359e063",
+                "reference": "4cb0d70feadfcbfe78584eef448661ff6359e063",
                 "shasum": ""
             },
             "require": {
@@ -9304,10 +9304,11 @@
                 "php": ">=8.3",
                 "spryker-shop/traceable-event-widget": "^1.1.0",
                 "spryker/cms": "^7.18.0",
+                "spryker/configuration-extension": "^1.0.0",
                 "spryker/customer": "^7.70.0",
                 "spryker/event-behavior": "^1.32.0",
                 "spryker/http": "^1.15.0",
-                "spryker/kernel": "^3.76.0",
+                "spryker/kernel": "^3.84.0",
                 "spryker/locale": "^4.12.0",
                 "spryker/log": "^3.18.0",
                 "spryker/product": "^6.53.0",
@@ -9316,7 +9317,7 @@
                 "spryker/publisher-extension": "^1.0.0",
                 "spryker/search-extension": "^1.4.0",
                 "spryker/search-http": "^0.5.9",
-                "spryker/store": "^1.30.0",
+                "spryker/store": "^1.36.1",
                 "spryker/symfony": "^3.19.2"
             },
             "require-dev": {
@@ -9353,9 +9354,9 @@
             "description": "Algolia module",
             "support": {
                 "issues": "https://github.com/spryker-eco/algolia/issues",
-                "source": "https://github.com/spryker-eco/algolia/tree/1.0.1"
+                "source": "https://github.com/spryker-eco/algolia/tree/1.1.0"
             },
-            "time": "2026-02-18T12:55:25+00:00"
+            "time": "2026-04-09T11:09:21+00:00"
         },
         {
             "name": "spryker-eco/amazon-quicksight",
@@ -13382,6 +13383,72 @@
             "time": "2026-02-25T12:39:03+00:00"
         },
         {
+            "name": "spryker-feature/purchasing-control",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-feature/purchasing-control.git",
+                "reference": "f64ab334e2bdeb458750740e3b3fbe4d44c9a5eb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-feature/purchasing-control/zipball/f64ab334e2bdeb458750740e3b3fbe4d44c9a5eb",
+                "reference": "f64ab334e2bdeb458750740e3b3fbe4d44c9a5eb",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.3",
+                "spryker/checkout-extension": "^1.3.0",
+                "spryker/company-business-unit": "^2.0.0",
+                "spryker/currency": "^4.0.0",
+                "spryker/customer": "^7.0.0",
+                "spryker/gui": "^5.0.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/propel-orm": "^1.0.0",
+                "spryker/quote": "^2.0.0",
+                "spryker/quote-approval": "^1.5.0",
+                "spryker/quote-extension": "^1.0.0",
+                "spryker/sales": "^11.0.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/util-date-time": "^1.6.0",
+                "spryker/uuid-behavior": "^1.3.0",
+                "spryker/zed-request": "^3.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/country": "*",
+                "spryker/oms": "*",
+                "spryker/propel": "*",
+                "spryker/router": "*",
+                "spryker/testify": "*"
+            },
+            "suggest": {
+                "spryker/oms": "Use OMS to manage order states and processes.",
+                "spryker/router": "Use Router when the storefront needs to be able to route to the purchasing control module."
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SprykerFeature\\": "src/SprykerFeature/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "PurchasingControl module",
+            "support": {
+                "source": "https://github.com/spryker-feature/purchasing-control/tree/master"
+            },
+            "time": "2026-04-13T13:09:39+00:00"
+        },
+        {
             "name": "spryker-feature/quick-add-to-cart",
             "version": "202602.0",
             "source": {
@@ -15639,20 +15706,20 @@
         },
         {
             "name": "spryker-shop/checkout-page",
-            "version": "3.39.1",
+            "version": "3.40.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-shop/checkout-page.git",
-                "reference": "5036ba48a940a2dc9624e642f4285cff2157e0e6"
+                "reference": "5852aae0f6ecee01ae9deb2ff29307bc9d392394"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-shop/checkout-page/zipball/5036ba48a940a2dc9624e642f4285cff2157e0e6",
-                "reference": "5036ba48a940a2dc9624e642f4285cff2157e0e6",
+                "url": "https://api.github.com/repos/spryker-shop/checkout-page/zipball/5852aae0f6ecee01ae9deb2ff29307bc9d392394",
+                "reference": "5852aae0f6ecee01ae9deb2ff29307bc9d392394",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker-shop/checkout-page-extension": "^1.6.0",
                 "spryker-shop/customer-page": "^2.46.0",
                 "spryker-shop/money-widget": "^1.0.0",
@@ -15727,9 +15794,9 @@
             ],
             "description": "CheckoutPage module",
             "support": {
-                "source": "https://github.com/spryker-shop/checkout-page/tree/3.39.1"
+                "source": "https://github.com/spryker-shop/checkout-page/tree/3.40.0"
             },
-            "time": "2025-07-23T13:50:39+00:00"
+            "time": "2026-04-13T13:09:39+00:00"
         },
         {
             "name": "spryker-shop/checkout-page-extension",
@@ -91719,6 +91786,12 @@
             "alias_normalized": "202604.0"
         },
         {
+            "package": "spryker-feature/purchasing-control",
+            "version": "9999999-dev",
+            "alias": "202602.0",
+            "alias_normalized": "202602.0"
+        },
+        {
             "package": "spryker-feature/scheduled-prices",
             "version": "9999999-dev",
             "alias": "202604.0",
@@ -91751,6 +91824,7 @@
         "spryker-feature/marketplace-merchantportal-core": 20,
         "spryker-feature/product": 20,
         "spryker-feature/product-experience-management": 20,
+        "spryker-feature/purchasing-control": 20,
         "spryker-feature/scheduled-prices": 20,
         "spryker-feature/self-service-portal": 20,
         "spryker-feature/spryker-core": 20,
