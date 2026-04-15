@@ -148,7 +148,7 @@
                         {% block cartTitle %}
                             {{ data.cart.name }}
                             {% if isQuoteEnadled and can('ChangeCartItemPermissionPlugin', data.cart.idQuote) %}
-                                <a href="{{ path('multi-cart/update', {idQuote: data.cart.idQuote}) }}" class="col button button--tertiary button--edit cart-title__link">
+                                <a href="{{ path('multi-cart/update', {idQuote: data.cart.idQuote}) }}" class="col button button--tertiary button--icon-only button--edit cart-title__link">
                                     {% include molecule('icon-tooltip') with {
                                         modifiers: ['sm-lg-regular'],
                                         data: {

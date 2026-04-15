@@ -50,12 +50,12 @@
             <input type="hidden" name="{{ attributes['selected-value-key'] }}" class="{{ config.jsName }}__input-hidden"/>
             {% if attributes['show-clean-button'] %}
                 {% block cleanButton %}
-                    <button type="button" class="button button--tertiary {{ config.name }}__clean-button {{ config.jsName }}__clean-button">
+                    <button type="button" class="button button--tertiary button--icon-only {{ config.name }}__clean-button {{ config.jsName }}__clean-button">
                         {% include atom('icon') with {
                             class: config.name ~ '__icon',
                             data: {
-                                name: 'cross'
-                            }
+                                name: 'cross',
+                            },
                         } only %}
                     </button>
                 {% endblock %}
