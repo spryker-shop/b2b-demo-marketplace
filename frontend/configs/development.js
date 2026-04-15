@@ -79,6 +79,7 @@ const getConfiguration = async (appSettings) => {
                 chunkModules: false,
                 chunkOrigins: false,
                 modules: false,
+                warnings: false,
                 entrypoints: false,
             },
 
@@ -157,15 +158,6 @@ const getConfiguration = async (appSettings) => {
                                 loader: 'sass-loader',
                                 options: {
                                     implementation: require('sass'),
-                                    sassOptions: {
-                                        silenceDeprecations: [
-                                            'import',
-                                            'global-builtin',
-                                            'function-units',
-                                            'color-functions',
-                                            'bogus-combinators',
-                                        ],
-                                    },
                                     additionalData: (content, loaderContext) => {
                                         const currentFilePath = loaderContext.resourcePath;
                                         const allResources = [sharedScss, ...styles].filter(Boolean);
