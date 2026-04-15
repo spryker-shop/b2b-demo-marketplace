@@ -92,7 +92,6 @@
                 position: absolute;
                 right: 0;
                 top: 50%;
-                transform: translateY(-50%);
                 rotate: 0deg;
                 margin: 0;
                 font-size: rem(18);
@@ -134,7 +133,7 @@
 
                 #{$name}__caret {
                     position: static;
-                    transform: none;
+                    translate: none;
                     rotate: 90deg;
                     top: auto;
                     right: auto;
