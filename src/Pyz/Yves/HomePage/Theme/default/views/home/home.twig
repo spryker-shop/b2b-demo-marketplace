@@ -52,7 +52,7 @@
         },
     } only %}
         {% block inner %}
-            {{ spyCmsBlock({ name: 'Your Operations Are Our Priority' }) }}
+            {% cms_slot 'slt-home-bottom' %}
         {% endblock %}
     {% endembed %}
 {% endblock %}
