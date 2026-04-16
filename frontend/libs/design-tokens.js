@@ -17,6 +17,17 @@ StyleDictionary.registerTransform({
     transform: (token) => `${token.$value || token.value}px`,
 });
 
+StyleDictionary.registerFileHeader({
+    name: 'generated-header',
+    fileHeader: () => {
+        const now = new Date();
+        const date = now.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        const time = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+
+        return [`Generated at: ${date} ${time}`];
+    },
+});
+
 const buildDesignTokens = async (appSettings) => {
     const assetsRoot = join(appSettings.context, appSettings.paths.assets.globalAssets);
     const sourceTokensPath = join(assetsRoot, 'design-tokens/design-tokens.json');
@@ -36,7 +47,7 @@ const buildDesignTokens = async (appSettings) => {
                     {
                         destination: 'design-tokens.css',
                         format: 'css/variables',
-                        options: { selector: ':root', outputReferences: true },
+                        options: { selector: ':root', outputReferences: true, fileHeader: 'generated-header' },
                     },
                 ],
             },
