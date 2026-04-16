@@ -2,6 +2,13 @@
     $name: &;
     color: var(--text-primary);
 
+    &--row {
+        display: flex;
+        align-items: baseline;
+        gap: var(--scale-8);
+        flex-wrap: wrap;
+    }
+
     &--big {
         margin-top: rem(12);
         margin-bottom: rem(23);
