@@ -9,7 +9,7 @@ $dropdown-top-indent: calc(100% + #{rem(15)});
         margin-bottom: var(--scale-12);
         position: relative;
         width: 100%;
-        background: var(--background-surface);
+        background: var(--background-page);
 
         @include helper-breakpoint-media-min($lg) {
             padding: 0;
@@ -31,7 +31,6 @@ $dropdown-top-indent: calc(100% + #{rem(15)});
                 border-radius: var(--radius-md) 0 0 var(--radius-md);
                 padding-top: 0;
                 padding-bottom: 0;
-                background: var(--background-muted);
                 width: 100%;
 
                 @include helper-breakpoint-media-min($lg) {
@@ -324,15 +323,6 @@ $dropdown-top-indent: calc(100% + #{rem(15)});
                 width: 100%;
                 left: auto;
                 top: auto;
-            }
-
-            .select2-selection__rendered,
-            .custom-select__select {
-                background-color: var(--background-surface);
-
-                @include helper-breakpoint-media-min($lg) {
-                    background-color: var(--background-subtle);
-                }
             }
         }
 

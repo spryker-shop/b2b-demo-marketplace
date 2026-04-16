@@ -123,14 +123,17 @@
 {% block footer %}
     {% embed organism('footer') only %}
         {% block subscribe %}{% endblock %}
-        {% block logos %}{% endblock %}
 
-        {% block navigation %}
-            <div class="container">
-                <div class="grid grid--gap grid--center">
-                    {% cms_slot 'slt-footer-checkout-navigation' %}
-                </div>
+        {% block logosInner %}{% endblock %}
+
+        {% block navigationInner %}
+            <div class="grid grid--gap">
+                {% cms_slot 'slt-footer-checkout-navigation' %}
             </div>
+        {% endblock %}
+
+        {% block socialLinks %}
+            {% cms_slot 'slt-footer-checkout-social-links' %}
         {% endblock %}
     {% endembed %}
 {% endblock %}
