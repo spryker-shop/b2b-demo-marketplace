@@ -22,7 +22,7 @@ features:
                   settings:
                       - key: background_brand_primary
                         name: Brand Primary
-                        description: Main brand color for primary buttons and key actions
+                        description: Primary buttons, cart badge, pagination active page, checkbox/radio/switch checked state, mega-menu active indicator
                         type: color
                         default_value: '#318272'
                         scopes:
@@ -39,7 +39,7 @@ features:
 
                       - key: background_brand_hover
                         name: Brand Hover
-                        description: Brand color on hover state
+                        description: Hover state for primary buttons, checkbox, radio, and switch
                         type: color
                         default_value: '#226558'
                         scopes:
@@ -56,7 +56,7 @@ features:
 
                       - key: background_brand_pressed
                         name: Brand Pressed
-                        description: Brand color on active/pressed state
+                        description: Active/pressed state for primary buttons
                         type: color
                         default_value: '#15483e'
                         scopes:
@@ -73,7 +73,7 @@ features:
 
                       - key: background_brand_subtle
                         name: Brand Subtle
-                        description: Light tinted brand background for tags, badges, and highlights
+                        description: Tertiary button hover background, selected option highlight in dropdowns
                         type: color
                         default_value: '#f3fffc'
                         scopes:
@@ -90,9 +90,9 @@ features:
 
                       - key: background_accent_primary
                         name: Accent Primary
-                        description: Main accent color for secondary actions and highlights
+                        description: Secondary accent color for alternative CTAs and decorative elements
                         type: color
-                        default_value: '#469189'
+                        default_value: '#27514d'
                         scopes:
                             - global
                             - store
@@ -107,9 +107,9 @@ features:
 
                       - key: background_accent_hover
                         name: Accent Hover
-                        description: Accent color on hover state
+                        description: Hover state for accent-colored elements
                         type: color
-                        default_value: '#37726c'
+                        default_value: '#234845'
                         scopes:
                             - global
                             - store
@@ -124,9 +124,9 @@ features:
 
                       - key: background_accent_pressed
                         name: Accent Pressed
-                        description: Accent color on active/pressed state
+                        description: Active/pressed state for accent-colored elements
                         type: color
-                        default_value: '#2b5955'
+                        default_value: '#1b3835'
                         scopes:
                             - global
                             - store
@@ -141,7 +141,7 @@ features:
 
                       - key: background_accent_subtle
                         name: Accent Subtle
-                        description: Light tinted accent background
+                        description: Light tinted accent background for secondary badges and highlights
                         type: color
                         default_value: '#eef7f6'
                         scopes:
@@ -158,7 +158,7 @@ features:
 
                       - key: text_brand
                         name: Brand Text
-                        description: Brand-colored text for links and emphasized content
+                        description: Links, breadcrumbs, active tabs, navigation hover, shopping list names, mini-cart item links, suggest search highlights
                         type: color
                         default_value: '#226558'
                         scopes:
@@ -175,7 +175,7 @@ features:
 
                       - key: border_brand
                         name: Brand Border
-                        description: Brand-colored border for active or selected elements
+                        description: Active tab underline, checkout back-button border
                         type: color
                         default_value: '#318272'
                         scopes:
@@ -192,7 +192,7 @@ features:
 
                       - key: icon_brand
                         name: Brand Icon
-                        description: Brand-colored icon for branded visual elements
+                        description: Brand-colored icons across the storefront
                         type: color
                         default_value: '#226558'
                         scopes:
@@ -209,7 +209,7 @@ features:
 
                       - key: focus_ring
                         name: Focus Ring
-                        description: Color of the focus outline for interactive elements
+                        description: Keyboard focus outline on selects, user-account dropdown, cart pill
                         type: color
                         default_value: '#acffef'
                         scopes:
@@ -226,9 +226,94 @@ features:
 
                       - key: shadows_focus_color
                         name: Focus Shadow
-                        description: Shadow color for focused elements
+                        description: Focus glow on buttons, inputs, checkboxes, switches, selects, tabs
                         type: color
                         default_value: '#acffef'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        constraints:
+                            - type: regex
+                              message: 'Must be a valid hex color (e.g. #ff0000)'
+                              options:
+                                  pattern: '^#[0-9A-Fa-f]{6}$'
+
+                      - key: header_topbar
+                        name: Header Top Bar
+                        description: Background of the top info/utility bar above the main header
+                        type: color
+                        default_value: '#3b3b3d'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        constraints:
+                            - type: regex
+                              message: 'Must be a valid hex color (e.g. #ff0000)'
+                              options:
+                                  pattern: '^#[0-9A-Fa-f]{6}$'
+
+                      - key: header_main
+                        name: Header Main
+                        description: Background of the main header area with logo, search, and cart
+                        type: color
+                        default_value: '#ffffff'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        constraints:
+                            - type: regex
+                              message: 'Must be a valid hex color (e.g. #ff0000)'
+                              options:
+                                  pattern: '^#[0-9A-Fa-f]{6}$'
+
+                      - key: header_nav
+                        name: Header Navigation
+                        description: Background of the category navigation bar below the main header
+                        type: color
+                        default_value: '#fafafa'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        constraints:
+                            - type: regex
+                              message: 'Must be a valid hex color (e.g. #ff0000)'
+                              options:
+                                  pattern: '^#[0-9A-Fa-f]{6}$'
+
+                      - key: footer_newsletter
+                        name: Footer Newsletter
+                        description: Background of the newsletter subscription section in the footer
+                        type: color
+                        default_value: '#1b3835'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        constraints:
+                            - type: regex
+                              message: 'Must be a valid hex color (e.g. #ff0000)'
+                              options:
+                                  pattern: '^#[0-9A-Fa-f]{6}$'
+
+                      - key: footer_main
+                        name: Footer Main
+                        description: Background of the main footer area with links and contacts
+                        type: color
+                        default_value: '#ffffff'
                         scopes:
                             - global
                             - store
