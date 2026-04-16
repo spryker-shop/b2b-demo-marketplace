@@ -74,6 +74,7 @@
         &__navigation {
             background-color: var(--background-page);
             padding: var(--scale-24) 0;
+            border-top: rem(1) solid var(--border-subtle);
 
             @include helper-breakpoint-media-min($md) {
                 padding: var(--scale-40) 0;

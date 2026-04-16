@@ -35,9 +35,8 @@
                 {% widget 'AddItemsToShoppingListWidget' only %}{% endwidget %}
             {% endif %}
             {% if can("SeeAddToCartPermissionPlugin") %}
-                <button type="submit" name="createOrder" class="button button--hollow button--small">
+                <button type="submit" name="createOrder" class="button button--hollow button--sm">
                     {% include atom('icon') with {
-                        modifiers: ['cart-plus'],
                         data: {
                             name: 'cart-plus',
                         },
@@ -46,9 +45,8 @@
                     {{ 'quick-order.button.create-order' | trans }}
                 </button>
 
-                <button type="submit" name="addToCart" class="button button--small">
+                <button type="submit" name="addToCart" class="button button--sm">
                     {% include atom('icon') with {
-                        modifiers: ['cart-plus'],
                         data: {
                             name: 'cart-plus',
                         },
