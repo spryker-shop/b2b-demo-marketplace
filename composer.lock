@@ -12580,42 +12580,64 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/product-experience-management.git",
-                "reference": "9fdbc8495631475e58f3178b712951a81080cf7e"
+                "reference": "00a07dfb0962bc9b41aec8846a2ae5684b540aef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/product-experience-management/zipball/9fdbc8495631475e58f3178b712951a81080cf7e",
-                "reference": "9fdbc8495631475e58f3178b712951a81080cf7e",
+                "url": "https://api.github.com/repos/spryker-feature/product-experience-management/zipball/00a07dfb0962bc9b41aec8846a2ae5684b540aef",
+                "reference": "00a07dfb0962bc9b41aec8846a2ae5684b540aef",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.3",
+                "spryker/availability": "^9.0.0",
+                "spryker/category": "^5.0.0",
+                "spryker/currency": "^4.0.0",
+                "spryker/decimal-object": "^1.2.0",
+                "spryker/event": "^2.0.0",
                 "spryker/event-behavior": "^1.30.0",
+                "spryker/file-system": "^2.0.0",
+                "spryker/gui": "^5.0.0",
                 "spryker/kernel": "^3.30.0",
                 "spryker/locale": "^4.0.0",
+                "spryker/log": "^3.16.0",
+                "spryker/merchant": "^3.0.0",
+                "spryker/merchant-product": "^1.0.0",
+                "spryker/oms": "^11.0.0",
+                "spryker/price-product": "^4.0.0",
+                "spryker/product": "^6.0.0",
                 "spryker/product-attribute": "^1.11.0",
                 "spryker/product-attribute-extension": "^1.1.0",
                 "spryker/product-attribute-gui-extension": "^1.0.0",
+                "spryker/product-category": "^4.0.0",
+                "spryker/product-image": "^3.0.0",
+                "spryker/product-search": "^5.0.0",
                 "spryker/product-storage": "^1.29.0",
+                "spryker/propel-orm": "^1.0.0",
                 "spryker/publisher-extension": "^1.0.0",
+                "spryker/shipment-type": "^1.0.0",
+                "spryker/stock": "^8.0.0",
                 "spryker/storage": "^3.4.0",
                 "spryker/store": "^1.19.0",
                 "spryker/symfony": "^3.0.0",
                 "spryker/synchronization": "^1.9.0",
                 "spryker/synchronization-behavior": "^1.10.0",
                 "spryker/synchronization-extension": "^1.1.0",
-                "spryker/util-encoding": "^2.0.0"
+                "spryker/tax": "^5.0.0",
+                "spryker/url": "^3.0.0",
+                "spryker/util-date-time": "^1.0.0",
+                "spryker/util-encoding": "^2.0.0",
+                "spryker/util-text": "^1.0.0"
             },
             "require-dev": {
                 "spryker/code-sniffer": "*",
-                "spryker/gui": "*",
+                "spryker/container": "*",
                 "spryker/propel": "*",
                 "spryker/queue": "*",
                 "spryker/testify": "*"
             },
             "suggest": {
-                "spryker/gui": "If you want to use Select2ComboBoxType in form expander plugins.",
-                "spryker/propel-orm": "If you want to use Propel ORM for persistence."
+                "spryker-feature/self-service-portal": "Enables product class and shipment type import/export. Install dependency to get SelfServicePortal-specific data included in import and export operations."
             },
             "default-branch": true,
             "type": "library",
@@ -12637,7 +12659,7 @@
             "support": {
                 "source": "https://github.com/spryker-feature/product-experience-management/tree/master"
             },
-            "time": "2026-04-07T09:30:41+00:00"
+            "time": "2026-04-16T13:15:51+00:00"
         },
         {
             "name": "spryker-feature/product-groups",
