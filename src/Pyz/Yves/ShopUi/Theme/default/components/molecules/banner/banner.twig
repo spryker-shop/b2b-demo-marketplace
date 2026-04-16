@@ -38,7 +38,7 @@
         {% if data.clickUrl %}
             <a
                 href="{{ functionExists('generatePath') ? generatePath(data.clickUrl) : data.clickUrl }}"
-                class="{{ component.renderClass(config.name ~ '__cta', modifiers) }} button {% if 'small' in modifiers or 'medium' in modifiers %}button--sm{% endif %}"
+                class="{{ component.renderClass(config.name ~ '__cta', modifiers) }} button button--secondary"
             >
                 {{ (data.buttonTitle ?: 'show_more.btn.title') | trans }}
 

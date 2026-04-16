@@ -189,6 +189,32 @@
             }
         }
 
+        &--sm-scroll {
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scroll-padding-left: $setting-grid-space-mobile;
+
+            > .col {
+                flex: 0 0 80%;
+                max-width: rem(348);
+                scroll-snap-align: start;
+            }
+
+            @include helper-breakpoint-media-min($lg) {
+                flex-wrap: wrap;
+                overflow-x: visible;
+                scroll-snap-type: none;
+
+                > .col {
+                    flex: initial;
+                    max-width: none;
+                    scroll-snap-align: none;
+                }
+            }
+        }
+
         &--column {
             flex-direction: column;
         }
