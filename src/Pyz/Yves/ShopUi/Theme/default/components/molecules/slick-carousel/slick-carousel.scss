@@ -28,9 +28,8 @@
                 font-size: 0;
                 width: var(--scale-40);
                 height: var(--scale-40);
-                background: var(--background-surface) url('../images/right-chevron.svg') center center no-repeat;
+                background: var(--background-subtle) url('../images/right-chevron.svg') center center no-repeat;
                 background-size: var(--scale-12);
-                border: var(--stroke-sm) solid var(--border-default);
                 border-radius: var(--radius-full);
                 z-index: $setting-zi-element-floating;
                 opacity: 1;
@@ -39,7 +38,7 @@
             }
 
             &:hover {
-                background-color: var(--background-subtle);
+                background-color: var(--background-surface);
             }
         }
 
