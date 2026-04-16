@@ -389,4 +389,14 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'root' => '/data',
         'path' => '/data/ssp-model-image',
     ],
+    'product-experience-management-imports' => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/data',
+        'path' => '/data/pim-imports',
+    ],
+    'product-experience-management-exports' => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/data',
+        'path' => '/data/pim-exports',
+    ],
 ];
