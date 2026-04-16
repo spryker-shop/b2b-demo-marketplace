@@ -68,4 +68,18 @@ interface AiCommerceConstants extends SprykerFeatureAiCommerceConstants
      * @api
      */
     public const string CONFIGURATION_KEY_PLACE_ORDER_AGENT_IS_ENABLED = 'ai_commerce:backoffice_assistant:general:is_place_order_agent_enabled';
+
+    /**
+     * AI configuration name via OpenAI used by the search-by-image feature.
+     *
+     * @api
+     */
+    public const string AI_CONFIGURATION_SEARCH_BY_IMAGE_OPENAI = 'AI_COMMERCE:AI_CONFIGURATION_SEARCH_BY_IMAGE_OPENAI';
+
+    /**
+     * AI configuration name via OpenAI used by the quick order image-to-cart feature.
+     *
+     * @api
+     */
+    public const string AI_CONFIGURATION_QUICK_ORDER_IMAGE_TO_CART_OPENAI = 'AI_COMMERCE:AI_CONFIGURATION_QUICK_ORDER_IMAGE_TO_CART_OPENAI';
 }
