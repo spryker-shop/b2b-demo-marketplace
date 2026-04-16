@@ -1,6 +1,6 @@
 @mixin shop-ui-footer($name: '.footer') {
     #{$name} {
-        background-color: var(--background-subtle);
+        background-color: var(--footer-main);
 
         @include shop-ui-title() {
             &--footer {
@@ -14,7 +14,7 @@
         }
 
         &__logos {
-            background-color: var(--background-page);
+            border-top: solid var(--stroke-sm) var(--border-subtle);
             padding: var(--scale-20) 0;
 
             @include shop-ui-title() {
@@ -72,9 +72,7 @@
         }
 
         &__navigation {
-            background-color: var(--background-page);
             padding: var(--scale-24) 0;
-            border-top: rem(1) solid var(--border-subtle);
 
             @include helper-breakpoint-media-min($md) {
                 padding: var(--scale-40) 0;
