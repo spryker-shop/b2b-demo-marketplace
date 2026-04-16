@@ -449,6 +449,29 @@
             </merchant-commission-gui>
         </pages>
     </marketplace>
+    <import-export>
+        <label>Import &amp; Export</label>
+        <title>Import &amp; Export</title>
+        <icon>swap_vert</icon>
+        <pages>
+            <import>
+                <label>Import</label>
+                <title>Import</title>
+                <bundle>product-experience-management</bundle>
+                <controller>job</controller>
+                <action>index</action>
+                <visible>1</visible>
+            </import>
+            <export>
+                <label>Export</label>
+                <title>Export</title>
+                <bundle>product-experience-management</bundle>
+                <controller>export</controller>
+                <action>index</action>
+                <visible>1</visible>
+            </export>
+        </pages>
+    </import-export>
     <users>
         <label>Users</label>
         <title>Users</title>

@@ -247,6 +247,20 @@ if (!getenv('SPRYKER_S3_MERCHANT_PRODUCT_DATA_IMPORT_FILES_BUCKET')) {
     ];
 }
 
+if (!getenv('SPRYKER_S3_PEM_IMPORT_KEY')) {
+      $config[FileSystemConstants::FILESYSTEM_SERVICE]['product-experience-management-imports'] = [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/data',
+        'path' => '/data/pim-imports',
+    ];
+
+    $config[FileSystemConstants::FILESYSTEM_SERVICE]['product-experience-management-exports'] = [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/data',
+        'path' => '/data/pim-exports',
+    ];
+}
+
 if (!getenv('SPRYKER_S3_SSP_ASSETS_BUCKET')) {
     $config[FileSystemConstants::FILESYSTEM_SERVICE]['ssp-inquiry'] = [
         'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,

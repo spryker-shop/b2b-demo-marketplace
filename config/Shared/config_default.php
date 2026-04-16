@@ -787,6 +787,26 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'version' => 'latest',
         'region' => getenv('AWS_REGION'),
     ],
+    'product-experience-management-imports' => [
+        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
+        'key' => getenv('SPRYKER_S3_PEM_IMPORT_KEY') ?: '',
+        'bucket' => getenv('SPRYKER_S3_PEM_IMPORT_BUCKET') ?: '',
+        'secret' => getenv('SPRYKER_S3_PEM_IMPORT_SECRET') ?: '',
+        'root' => '/',
+        'path' => '/',
+        'version' => 'latest',
+        'region' => getenv('AWS_REGION'),
+    ],
+    'product-experience-management-exports' => [
+        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
+        'key' => getenv('SPRYKER_S3_PEM_EXPORT_KEY') ?: '',
+        'bucket' => getenv('SPRYKER_S3_PEM_EXPORT_BUCKET') ?: '',
+        'secret' => getenv('SPRYKER_S3_PEM_EXPORT_SECRET') ?: '',
+        'root' => '/',
+        'path' => '/',
+        'version' => 'latest',
+        'region' => getenv('AWS_REGION'),
+    ],
 ];
 $config[FileManagerConstants::STORAGE_NAME] = 'files';
 $config[SelfServicePortalConstants::STORAGE_NAME] = 'ssp-files';

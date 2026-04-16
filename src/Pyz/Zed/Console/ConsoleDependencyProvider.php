@@ -210,6 +210,7 @@ use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 use SprykerSdk\Zed\AiDev\Communication\Console\GeneratePromptsConsole;
 use SprykerSdk\Zed\AiDev\Communication\Console\McpServerConsole;
 use SprykerShop\Zed\DateTimeConfiguratorPageExample\Communication\Console\DateTimeProductConfiguratorBuildFrontendConsole;
+use SprykerFeature\Zed\ProductExperienceManagement\Communication\Console\ImportJobRunConsole;
 
 /**
  * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
@@ -455,6 +456,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new StorageRedisDataReSaveConsole(),
             new SitemapGenerateConsole(),
             new DataImportMerchantImportConsole(),
+            new ImportJobRunConsole(),
 
             // Container commands
             new ContainerBuilderConsole(),
