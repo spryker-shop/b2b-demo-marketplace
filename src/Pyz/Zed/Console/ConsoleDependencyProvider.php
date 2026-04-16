@@ -206,11 +206,11 @@ use Spryker\Zed\ZedNavigation\Communication\Console\BuildNavigationConsole;
 use Spryker\Zed\ZedNavigation\Communication\Console\RemoveNavigationCacheConsole;
 use SprykerEco\Zed\Algolia\Communication\Console\AlgoliaEntityExportConsole;
 use SprykerEco\Zed\NewRelic\Communication\Console\RecordDeploymentConsole;
+use SprykerFeature\Zed\ProductExperienceManagement\Communication\Console\ImportJobRunConsole;
 use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 use SprykerSdk\Zed\AiDev\Communication\Console\GeneratePromptsConsole;
 use SprykerSdk\Zed\AiDev\Communication\Console\McpServerConsole;
 use SprykerShop\Zed\DateTimeConfiguratorPageExample\Communication\Console\DateTimeProductConfiguratorBuildFrontendConsole;
-use SprykerFeature\Zed\ProductExperienceManagement\Communication\Console\ImportJobRunConsole;
 
 /**
  * @SuppressWarnings(PHPMD.ExcessiveMethodLength)

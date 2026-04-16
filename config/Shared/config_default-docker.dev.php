@@ -252,13 +252,13 @@ if (!getenv('SPRYKER_S3_PEM_IMPORT_KEY')) {
         'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
         'root' => '/data',
         'path' => '/data/pim-imports',
-    ];
+      ];
 
-    $config[FileSystemConstants::FILESYSTEM_SERVICE]['product-experience-management-exports'] = [
+      $config[FileSystemConstants::FILESYSTEM_SERVICE]['product-experience-management-exports'] = [
         'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
         'root' => '/data',
         'path' => '/data/pim-exports',
-    ];
+      ];
 }
 
 if (!getenv('SPRYKER_S3_SSP_ASSETS_BUCKET')) {
