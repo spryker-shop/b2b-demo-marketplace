@@ -33,6 +33,8 @@ use SprykerFeature\Yves\BuyBox\Widget\BuyBoxWidget;
 use SprykerFeature\Yves\ProductExperienceManagement\Widget\ProductAttributeVisibilityCartWidget;
 use SprykerFeature\Yves\ProductExperienceManagement\Widget\ProductAttributeVisibilityPdpWidget;
 use SprykerFeature\Yves\ProductExperienceManagement\Widget\ProductAttributeVisibilityPlpWidget;
+use SprykerFeature\Yves\PurchasingControl\Widget\CostCenterSelectorWidget;
+use SprykerFeature\Yves\PurchasingControl\Widget\CostCenterSummaryWidget;
 use SprykerFeature\Yves\SelfServicePortal\Plugin\ShopApplication\AddressFormItemsByShipmentTypeWidgetCacheKeyGeneratorStrategyPlugin;
 use SprykerFeature\Yves\SelfServicePortal\Plugin\ShopApplication\SingleAddressPerShipmentTypeWidgetCacheKeyGeneratorStrategyPlugin;
 use SprykerFeature\Yves\SelfServicePortal\Plugin\ShopApplication\SspDashboardFilterControllerEventHandlerPlugin;
@@ -436,6 +438,8 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             ProductAttributeVisibilityPdpWidget::class,
             ProductAttributeVisibilityPlpWidget::class,
             ProductAttributeVisibilityCartWidget::class,
+            CostCenterSelectorWidget::class, #CostCenterFeature
+            CostCenterSummaryWidget::class, #CostCenterFeature
         ];
     }
 

@@ -79,6 +79,7 @@ const getConfiguration = async (appSettings) => {
                 chunkModules: false,
                 chunkOrigins: false,
                 modules: false,
+                warnings: false,
                 entrypoints: false,
             },
 
