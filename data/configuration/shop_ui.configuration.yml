@@ -156,6 +156,23 @@ features:
                               options:
                                   pattern: '^#[0-9A-Fa-f]{6}$'
 
+                      - key: background_highlight
+                        name: Background Highlight
+                        description: Accent background for highlighted sections on the page
+                        type: color
+                        default_value: '#f9faff'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        constraints:
+                            - type: regex
+                              message: 'Must be a valid hex color (e.g. #ff0000)'
+                              options:
+                                  pattern: '^#[0-9A-Fa-f]{6}$'
+
                       - key: text_brand
                         name: Brand Text
                         description: Links, breadcrumbs, active tabs, navigation hover, shopping list names, mini-cart item links, suggest search highlights
@@ -314,6 +331,23 @@ features:
                         description: Background of the main footer area with links and contacts
                         type: color
                         default_value: '#ffffff'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        constraints:
+                            - type: regex
+                              message: 'Must be a valid hex color (e.g. #ff0000)'
+                              options:
+                                  pattern: '^#[0-9A-Fa-f]{6}$'
+
+                      - key: footer_bottombar
+                        name: Footer Bottom Bar
+                        description: Background of the bottom bar in the footer with payment icons and copyright
+                        type: color
+                        default_value: '#f5f5f5'
                         scopes:
                             - global
                             - store

@@ -1,7 +1,7 @@
 @mixin shop-ui-navigation-top($name: '.navigation-top') {
     #{$name} {
         display: none;
-        background-color: var(--background-inverse);
+        background-color: var(--header-topbar);
         color: var(--text-inverse);
 
         @include helper-breakpoint-media-min($lg) {

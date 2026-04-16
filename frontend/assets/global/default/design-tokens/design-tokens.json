@@ -631,10 +631,6 @@
                 "$type": "color",
                 "$value": "{Color.grey.900}"
             },
-            "greyblue": {
-                "$type": "color",
-                "$value": "{Color.greyblue.25}"
-            },
             "brand": {
                 "primary": {
                     "$type": "color",
@@ -712,6 +708,10 @@
                         "$value": "{Color.red.700}"
                     }
                 }
+            },
+            "highlight": {
+                "$type": "color",
+                "$value": "{Color.greyblue.25}"
             }
         },
         "text": {
@@ -765,7 +765,7 @@
         "border": {
             "default": {
                 "$type": "color",
-                "$value": "{Color.grey.350}"
+                "$value": "{Color.grey.200}"
             },
             "subtle": {
                 "$type": "color",
@@ -919,17 +919,17 @@
             }
         },
         "footer": {
-            "payment": {
+            "main": {
                 "$type": "color",
-                "$value": "{Color.grey.50}"
+                "$value": "{Color.white}"
             },
             "newsletter": {
                 "$type": "color",
                 "$value": "{Color.forest.900}"
             },
-            "main": {
+            "bottombar": {
                 "$type": "color",
-                "$value": "{Color.white}"
+                "$value": "{Color.grey.50}"
             }
         }
     },

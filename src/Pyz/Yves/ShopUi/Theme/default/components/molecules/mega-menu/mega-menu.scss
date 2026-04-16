@@ -5,6 +5,13 @@
 
         @include helper-breakpoint-media-min($xl) {
             display: flex;
+            background: var(--header-nav);
+            width: rem(992);
+            max-width: calc(100vw - #{rem(128)});
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadows-lg-x) var(--shadows-lg-y) var(--shadows-lg-blur) var(--shadows-lg-spread)
+                var(--shadows-lg-color);
+            z-index: $setting-zi-element + 2;
         }
 
         &__sidebar {

@@ -20,7 +20,7 @@
         }
 
         &--highlight-bg {
-            background-color: var(--background-highlight, #f9faff);
+            background-color: var(--background-highlight);
             padding: var(--scale-48) var(--scale-20);
 
             @include helper-breakpoint-media-min($lg) {
@@ -147,10 +147,6 @@
             @include helper-breakpoint-media-min($lg) {
                 margin-bottom: var(--scale-12);
             }
-        }
-
-        &--bg-dark {
-            background-color: var(--background-highlight, #f9faff);
         }
 
         // LEGACY — kept for non-redesigned pages; do not reuse for new work.
