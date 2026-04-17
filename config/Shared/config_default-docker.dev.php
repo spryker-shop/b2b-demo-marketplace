@@ -250,6 +250,7 @@ if (!getenv('SPRYKER_S3_MERCHANT_PRODUCT_DATA_IMPORT_FILES_BUCKET')) {
 }
 
 if (getenv('DATA_IMPORT_S3_BUCKET')) {
+    // should be fixed here CC-38218
     $config[FileSystemConstants::FILESYSTEM_SERVICE]['product-experience-management-imports'] = [
         'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
         'key' => getenv('DATA_IMPORT_S3_KEY') ?: '',
