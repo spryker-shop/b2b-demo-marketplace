@@ -31,6 +31,19 @@
             {{ data.isDisabled is defined and data.isDisabled ? 'disabled' : '' }}
         >
 
+        {% include molecule('suggest-search') with {
+            modifiers: modifiers,
+            attributes: {
+                'parent-class-name': config.name,
+                'suggestion-url': path('search/suggestion'),
+                'input-class-name': config.jsName ~ '__input--' ~ attributes['data-search-id'],
+                'wrapper-class-name': attributes['wrapper-class-name'],
+                'wrapper-toggle-class-name': attributes['wrapper-toggle-class-name'],
+                'open-class-name': attributes['open-class-name'],
+                'close-class-name': attributes['close-class-name'],
+            },
+        } only %}
+
         <button
             type="button"
             class="{{ config.name }}__clear {{ config.jsName }}__clear"
@@ -56,18 +69,5 @@
         <button type="button" class="{{ config.name }}__button-close {% block close %}{% endblock %}" aria-label="{{ 'global.close' | trans }}">
             {% include atom('font-icon') with { data: { name: 'close' }, attributes: { 'aria-hidden': 'true' } } only %}
         </button>
-
-        {% include molecule('suggest-search') with {
-            modifiers: modifiers,
-            attributes: {
-                'parent-class-name': config.name,
-                'suggestion-url': path('search/suggestion'),
-                'input-class-name': config.jsName ~ '__input--' ~ attributes['data-search-id'],
-                'wrapper-class-name': attributes['wrapper-class-name'],
-                'wrapper-toggle-class-name': attributes['wrapper-toggle-class-name'],
-                'open-class-name': attributes['open-class-name'],
-                'close-class-name': attributes['close-class-name'],
-            },
-        } only %}
     </form>
 {% endblock %}
