@@ -4,10 +4,7 @@
     #{$name} {
         position: relative;
         max-width: 100%;
-        gap: rem(4);
-        align-items: center;
-        display: inline-flex;
-        width: 100%;
+        display: inline-block;
 
         @include shop-ui-input-extended('.custom-select__select') {
             appearance: none;
@@ -37,6 +34,9 @@
         }
 
         &--nav-top {
+            display: inline-flex;
+            gap: rem(4);
+            align-items: center;
             max-width: none;
 
             .select2-container {
