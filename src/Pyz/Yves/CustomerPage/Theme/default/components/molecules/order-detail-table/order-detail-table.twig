@@ -133,10 +133,8 @@
                                     {% endblock %}
                                 {% endwidget %}
 
-                                <div class="spacing-y">
-                                    {% widget 'SspServiceChangeScheduledTimeLinkWidget' args [data.listItem] only %}{% endwidget %}
-                                </div>
-
+                                {% widget 'SspServiceChangeScheduledTimeLinkWidget' args [data.listItem] only %}{% endwidget %}
+                                
                                 {% widget 'SspServiceCancelWidget' args [data.listItem] only %}{% endwidget %}
                             {% endblock %}
 
