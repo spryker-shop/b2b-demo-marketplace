@@ -23,11 +23,11 @@
             height: rem(50);
             padding: var(--scale-8) var(--scale-12);
             border-radius: var(--radius-md);
-            background: var(--background-surface);
+            background: transparent;
 
             &:hover,
             &:focus-visible {
-                background-color: var(--background-subtle);
+                background: var(--background-surface);
             }
 
             &:focus-visible {
