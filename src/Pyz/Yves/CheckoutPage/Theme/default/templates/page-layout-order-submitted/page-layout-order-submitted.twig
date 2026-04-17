@@ -28,27 +28,26 @@
                     {% set title = data.title %}
                     {% set message = embed.message %}
 
-                    <div class="col col--md-10 col--lg-8">
-                        {% if title %}
-                            <h1 class="{{ config.name }}__title">{{ title }}</h1>
-                        {% endif %}
+                    {% if title %}
+                        <h1 class="{{ config.name }}__title">{{ title }}</h1>
+                    {% endif %}
 
-                        {% if message %}
-                            <p class="{{ config.name }}__text">
-                                {% if embed.quote %}
-                                    {% widget 'UpdateOrderCheckoutSuccessTitleWidget' args [message, embed.quote] only %}{% endwidget %}
-                                {% else %}
-                                    {{ message }}
-                                {% endif %}
-                            </p>
-                        {% endif %}
-                        <div class="grid grid--gap">
-                            <div class="col col--sm-12 col--lg-auto spacing-bottom">
-                                <a href="{{ functionExists('generatePath') ? generatePath('checkout.success.to_orders.url' | trans) : 'checkout.success.to_orders.url' | trans }}" class="button button--expand button--big">{{ 'checkout.success.to_orders.title' | trans }}</a>
-                            </div>
-                            <div class="col col--sm-12 col--lg-auto spacing-bottom">
-                                <a href="{{ path('home') }}" class="button button--expand button--medium button--hollow">{{ 'checkout.success.back_to_home.title' | trans }}</a>
-                            </div>
+                    {% if message %}
+                        <p class="{{ config.name }}__text">
+                            {% if embed.quote %}
+                                {% widget 'UpdateOrderCheckoutSuccessTitleWidget' args [message, embed.quote] only %}{% endwidget %}
+                            {% else %}
+                                {{ message }}
+                            {% endif %}
+                        </p>
+                    {% endif %}
+                    
+                    <div class="grid grid--gap-smaller">
+                        <div class="col col--sm-12 col--lg-auto spacing-bottom">
+                            <a href="{{ functionExists('generatePath') ? generatePath('checkout.success.to_orders.url' | trans) : 'checkout.success.to_orders.url' | trans }}" class="button button--expand button--big">{{ 'checkout.success.to_orders.title' | trans }}</a>
+                        </div>
+                        <div class="col col--sm-12 col--lg-auto spacing-bottom">
+                            <a href="{{ path('home') }}" class="button button--expand button--medium button--hollow">{{ 'checkout.success.back_to_home.title' | trans }}</a>
                         </div>
                     </div>
                 {% endblock %}
