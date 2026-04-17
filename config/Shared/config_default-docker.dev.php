@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 use Monolog\Logger;
 use Pyz\Shared\Console\ConsoleConstants;
+use Spryker\Service\FlysystemAws3v3FileSystem\Plugin\Flysystem\Aws3v3FilesystemBuilderPlugin;
 use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
 use Spryker\Shared\AppCatalogGui\AppCatalogGuiConstants;
 use Spryker\Shared\Application\ApplicationConstants;
@@ -248,18 +249,27 @@ if (!getenv('SPRYKER_S3_MERCHANT_PRODUCT_DATA_IMPORT_FILES_BUCKET')) {
     ];
 }
 
-if (!getenv('SPRYKER_S3_PEM_IMPORT_KEY')) {
+if (getenv('DATA_IMPORT_S3_BUCKET')) {
       $config[FileSystemConstants::FILESYSTEM_SERVICE]['product-experience-management-imports'] = [
-        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
-        'root' => '/data',
-        'path' => '/data/pim-imports',
-      ];
-
-      $config[FileSystemConstants::FILESYSTEM_SERVICE]['product-experience-management-exports'] = [
-        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
-        'root' => '/data',
-        'path' => '/data/pim-exports',
-      ];
+        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
+        'key' => getenv('DATA_IMPORT_S3_KEY') ?: '',
+        'bucket' => getenv('DATA_IMPORT_S3_BUCKET') ?: '',
+        'secret' => getenv('DATA_IMPORT_S3_SECRET') ?: '',
+        'root' => '/',
+        'path' => '/',
+        'version' => 'latest',
+        'region' => getenv('AWS_REGION'),
+    ];
+    $config[FileSystemConstants::FILESYSTEM_SERVICE]['product-experience-management-exports'] = [
+        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
+        'key' => getenv('DATA_IMPORT_S3_KEY') ?: '',
+        'bucket' => getenv('DATA_IMPORT_S3_BUCKET') ?: '',
+        'secret' => getenv('DATA_IMPORT_S3_SECRET') ?: '',
+        'root' => '/',
+        'path' => '/',
+        'version' => 'latest',
+        'region' => getenv('AWS_REGION'),
+    ];
 }
 
 if (!getenv('SPRYKER_S3_SSP_ASSETS_BUCKET')) {
