@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e46ff58a0badd45a6a2956c0caa4e6a1",
+    "content-hash": "a5b89d51aed40b12d9820e26cfba5ea9",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -9332,6 +9332,83 @@
             "time": "2020-06-19T09:30:20+00:00"
         },
         {
+            "name": "spryker-eco/stripe",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-eco/stripe.git",
+                "reference": "6e12fdef59c436917a2cb3c77ead93a2090cbf95"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-eco/stripe/zipball/6e12fdef59c436917a2cb3c77ead93a2090cbf95",
+                "reference": "6e12fdef59c436917a2cb3c77ead93a2090cbf95",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.3",
+                "spryker/acl-merchant-portal-extension": "^1.0.0",
+                "spryker/application": "^3.46.0",
+                "spryker/cart": "^7.16.0",
+                "spryker/checkout-extension": "^1.5.0",
+                "spryker/configuration-extension": "^1.0.0",
+                "spryker/installer-extension": "^1.0.0",
+                "spryker/kernel": "^3.84.0",
+                "spryker/log": "^3.0.0",
+                "spryker/merchant-app": "^1.5.0",
+                "spryker/merchant-user": "^1.0.0",
+                "spryker/payment-app": "^2.4.0",
+                "spryker/payment-extension": "^1.1.0",
+                "spryker/refund": "^5.0.0",
+                "spryker/sales": "^11.78.0",
+                "spryker/sales-payment-detail": "^1.5.0",
+                "spryker/sales-payment-merchant-extension": "^1.1.0",
+                "spryker/step-engine": "^3.7.0",
+                "spryker/symfony": "^3.19.0",
+                "spryker/util-encoding": "^2.0.0",
+                "spryker/zed-request": "^3.26.0",
+                "stripe/stripe-php": "^v13.0.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^2.1",
+                "spryker-shop/checkout-page": "*",
+                "spryker-shop/checkout-widget": "*",
+                "spryker/code-sniffer": "*",
+                "spryker/oms": "*",
+                "spryker/router": "*",
+                "spryker/testify": "*"
+            },
+            "suggest": {
+                "spryker-shop/checkout-page": "When the project uses Yves and built-in module payment page.",
+                "spryker-shop/checkout-widget": "When the project uses Yves and built-in module payment page.",
+                "spryker/merchant-sales-merchant-commission": "Required for commission-aware merchant payouts.",
+                "spryker/merchant-sales-order": "Required when project have marketplace merchant orders and OMS uses StripeManualMarketplace01.xml.",
+                "spryker/oms": "When OMS plugins are used.",
+                "spryker/router": "When Yves router plugins are used."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SprykerEco\\": "src/SprykerEco/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Stripe module",
+            "support": {
+                "issues": "https://github.com/spryker-eco/stripe/issues",
+                "source": "https://github.com/spryker-eco/stripe/tree/1.0.0"
+            },
+            "time": "2026-04-16T13:54:56+00:00"
+        },
+        {
             "name": "spryker-eco/vertex",
             "version": "1.2.0",
             "source": {
@@ -15467,16 +15544,16 @@
         },
         {
             "name": "spryker-shop/checkout-page",
-            "version": "3.40.0",
+            "version": "3.40.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-shop/checkout-page.git",
-                "reference": "5852aae0f6ecee01ae9deb2ff29307bc9d392394"
+                "reference": "71ac468bf908330fb83df2ed264ad297598693c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-shop/checkout-page/zipball/5852aae0f6ecee01ae9deb2ff29307bc9d392394",
-                "reference": "5852aae0f6ecee01ae9deb2ff29307bc9d392394",
+                "url": "https://api.github.com/repos/spryker-shop/checkout-page/zipball/71ac468bf908330fb83df2ed264ad297598693c0",
+                "reference": "71ac468bf908330fb83df2ed264ad297598693c0",
                 "shasum": ""
             },
             "require": {
@@ -15555,9 +15632,9 @@
             ],
             "description": "CheckoutPage module",
             "support": {
-                "source": "https://github.com/spryker-shop/checkout-page/tree/3.40.0"
+                "source": "https://github.com/spryker-shop/checkout-page/tree/3.40.1"
             },
-            "time": "2026-04-13T13:09:39+00:00"
+            "time": "2026-04-16T15:34:30+00:00"
         },
         {
             "name": "spryker-shop/checkout-page-extension",
@@ -43386,20 +43463,20 @@
         },
         {
             "name": "spryker/merchant-app",
-            "version": "1.4.0",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/merchant-app.git",
-                "reference": "41016f7c6ea43552703b0d20b5600b622cc51544"
+                "reference": "832464bf5db5aeb75a306df73d7641350deea091"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/merchant-app/zipball/41016f7c6ea43552703b0d20b5600b622cc51544",
-                "reference": "41016f7c6ea43552703b0d20b5600b622cc51544",
+                "url": "https://api.github.com/repos/spryker/merchant-app/zipball/832464bf5db5aeb75a306df73d7641350deea091",
+                "reference": "832464bf5db5aeb75a306df73d7641350deea091",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/kernel": "^3.30.0",
                 "spryker/kernel-app": "^1.1.0",
                 "spryker/kernel-app-extension": "^1.0.0",
@@ -43436,22 +43513,22 @@
             ],
             "description": "MerchantApp module",
             "support": {
-                "source": "https://github.com/spryker/merchant-app/tree/1.4.0"
+                "source": "https://github.com/spryker/merchant-app/tree/1.5.0"
             },
-            "time": "2025-08-04T10:53:26+00:00"
+            "time": "2026-04-16T15:34:30+00:00"
         },
         {
             "name": "spryker/merchant-app-merchant-portal-gui",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/merchant-app-merchant-portal-gui.git",
-                "reference": "d1e2a624c28d164f8375443f5268a5baaf921ca0"
+                "reference": "0d77f36a602a9c47ad188fbf18b7bba93d43a364"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/merchant-app-merchant-portal-gui/zipball/d1e2a624c28d164f8375443f5268a5baaf921ca0",
-                "reference": "d1e2a624c28d164f8375443f5268a5baaf921ca0",
+                "url": "https://api.github.com/repos/spryker/merchant-app-merchant-portal-gui/zipball/0d77f36a602a9c47ad188fbf18b7bba93d43a364",
+                "reference": "0d77f36a602a9c47ad188fbf18b7bba93d43a364",
                 "shasum": ""
             },
             "require": {
@@ -43497,9 +43574,9 @@
             ],
             "description": "MerchantAppMerchantPortalGui module",
             "support": {
-                "source": "https://github.com/spryker/merchant-app-merchant-portal-gui/tree/2.0.0"
+                "source": "https://github.com/spryker/merchant-app-merchant-portal-gui/tree/2.0.1"
             },
-            "time": "2026-01-14T12:55:29+00:00"
+            "time": "2026-04-16T15:34:30+00:00"
         },
         {
             "name": "spryker/merchant-categories-rest-api",
@@ -51637,20 +51714,20 @@
         },
         {
             "name": "spryker/payment-app",
-            "version": "2.3.0",
+            "version": "2.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/payment-app.git",
-                "reference": "c6001fc404a45711ea6814e7807119aa77ee2be3"
+                "reference": "1fb47d8b89f4642a02cffcacf3eb40e52d1686a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/payment-app/zipball/c6001fc404a45711ea6814e7807119aa77ee2be3",
-                "reference": "c6001fc404a45711ea6814e7807119aa77ee2be3",
+                "url": "https://api.github.com/repos/spryker/payment-app/zipball/1fb47d8b89f4642a02cffcacf3eb40e52d1686a9",
+                "reference": "1fb47d8b89f4642a02cffcacf3eb40e52d1686a9",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/cart": "^7.5.0",
                 "spryker/kernel": "^3.30.0",
                 "spryker/kernel-app": "^1.0.0",
@@ -51696,9 +51773,9 @@
             ],
             "description": "PaymentApp module",
             "support": {
-                "source": "https://github.com/spryker/payment-app/tree/2.3.0"
+                "source": "https://github.com/spryker/payment-app/tree/2.4.0"
             },
-            "time": "2025-08-04T11:20:12+00:00"
+            "time": "2026-04-16T15:34:30+00:00"
         },
         {
             "name": "spryker/payment-app-extension",
@@ -67367,20 +67444,20 @@
         },
         {
             "name": "spryker/sales-payment-merchant",
-            "version": "1.4.0",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/sales-payment-merchant.git",
-                "reference": "f5990ddd353989deade0d02afe6c7ba821fd7e05"
+                "reference": "6075da74eb8be773cfe311c111259b27b9c1966f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/sales-payment-merchant/zipball/f5990ddd353989deade0d02afe6c7ba821fd7e05",
-                "reference": "f5990ddd353989deade0d02afe6c7ba821fd7e05",
+                "url": "https://api.github.com/repos/spryker/sales-payment-merchant/zipball/6075da74eb8be773cfe311c111259b27b9c1966f",
+                "reference": "6075da74eb8be773cfe311c111259b27b9c1966f",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/acl-merchant-portal-extension": "^1.0.0",
                 "spryker/kernel": "^3.30.0",
                 "spryker/kernel-app": "^1.0.0",
@@ -67405,7 +67482,8 @@
                 "spryker/testify": "*"
             },
             "suggest": {
-                "spryker/oms": "When you want to use the Command and Condition plugins of this module"
+                "spryker/oms": "When you want to use the Command and Condition plugins of this module",
+                "spryker/sales-payment-merchant-sales-merchant-commission": "To configure behavior of merchant payments excluding marketplace commission."
             },
             "type": "library",
             "extra": {
@@ -67425,26 +67503,26 @@
             ],
             "description": "SalesPaymentMerchant module",
             "support": {
-                "source": "https://github.com/spryker/sales-payment-merchant/tree/1.4.0"
+                "source": "https://github.com/spryker/sales-payment-merchant/tree/1.5.0"
             },
-            "time": "2025-08-15T12:11:43+00:00"
+            "time": "2026-04-16T15:34:30+00:00"
         },
         {
             "name": "spryker/sales-payment-merchant-extension",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/sales-payment-merchant-extension.git",
-                "reference": "fc4d73d90bfa269dab892a8c04fc0bba20f3f89b"
+                "reference": "1e0c2d5071d2e20e4ba7ed97602c663bfce39299"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/sales-payment-merchant-extension/zipball/fc4d73d90bfa269dab892a8c04fc0bba20f3f89b",
-                "reference": "fc4d73d90bfa269dab892a8c04fc0bba20f3f89b",
+                "url": "https://api.github.com/repos/spryker/sales-payment-merchant-extension/zipball/1e0c2d5071d2e20e4ba7ed97602c663bfce39299",
+                "reference": "1e0c2d5071d2e20e4ba7ed97602c663bfce39299",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.1",
+                "php": ">=8.3",
                 "spryker/transfer": "^3.27.0"
             },
             "require-dev": {
@@ -67467,22 +67545,22 @@
             ],
             "description": "SalesPaymentMerchantExtension module",
             "support": {
-                "source": "https://github.com/spryker/sales-payment-merchant-extension/tree/1.0.0"
+                "source": "https://github.com/spryker/sales-payment-merchant-extension/tree/1.1.0"
             },
-            "time": "2024-08-06T15:45:00+00:00"
+            "time": "2026-04-16T15:34:30+00:00"
         },
         {
             "name": "spryker/sales-payment-merchant-sales-merchant-commission",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/sales-payment-merchant-sales-merchant-commission.git",
-                "reference": "d8032629c56e85b26a5a8c3be319a3a83767f756"
+                "reference": "b9609d2381a030057514837eb49f8481dd0542a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/sales-payment-merchant-sales-merchant-commission/zipball/d8032629c56e85b26a5a8c3be319a3a83767f756",
-                "reference": "d8032629c56e85b26a5a8c3be319a3a83767f756",
+                "url": "https://api.github.com/repos/spryker/sales-payment-merchant-sales-merchant-commission/zipball/b9609d2381a030057514837eb49f8481dd0542a6",
+                "reference": "b9609d2381a030057514837eb49f8481dd0542a6",
                 "shasum": ""
             },
             "require": {
@@ -67516,9 +67594,9 @@
             ],
             "description": "SalesPaymentMerchantSalesMerchantCommission module",
             "support": {
-                "source": "https://github.com/spryker/sales-payment-merchant-sales-merchant-commission/tree/1.0.1"
+                "source": "https://github.com/spryker/sales-payment-merchant-sales-merchant-commission/tree/1.0.2"
             },
-            "time": "2025-11-11T16:30:09+00:00"
+            "time": "2026-04-16T15:34:30+00:00"
         },
         {
             "name": "spryker/sales-product-configuration",
@@ -77884,6 +77962,65 @@
             "time": "2026-04-02T14:44:32+00:00"
         },
         {
+            "name": "stripe/stripe-php",
+            "version": "v13.18.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/stripe/stripe-php.git",
+                "reference": "02abb043b103766f4ed920642ae56ffdc58c7467"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/02abb043b103766f4ed920642ae56ffdc58c7467",
+                "reference": "02abb043b103766f4ed920642ae56ffdc58c7467",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "php": ">=5.6.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "3.5.0",
+                "phpstan/phpstan": "^1.2",
+                "phpunit/phpunit": "^5.7 || ^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Stripe\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Stripe and contributors",
+                    "homepage": "https://github.com/stripe/stripe-php/contributors"
+                }
+            ],
+            "description": "Stripe PHP Library",
+            "homepage": "https://stripe.com/",
+            "keywords": [
+                "api",
+                "payment processing",
+                "stripe"
+            ],
+            "support": {
+                "issues": "https://github.com/stripe/stripe-php/issues",
+                "source": "https://github.com/stripe/stripe-php/tree/v13.18.0"
+            },
+            "time": "2024-04-09T21:08:04+00:00"
+        },
+        {
             "name": "swiftmailer/swiftmailer",
             "version": "v6.3.0",
             "source": {
@@ -81099,16 +81236,16 @@
         },
         {
             "name": "symfony/polyfill-intl-grapheme",
-            "version": "v1.33.0",
+            "version": "v1.36.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-intl-grapheme.git",
-                "reference": "380872130d3a5dd3ace2f4010d95125fde5d5c70"
+                "reference": "ad1b7b9092976d6c948b8a187cec9faaea9ec1df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-intl-grapheme/zipball/380872130d3a5dd3ace2f4010d95125fde5d5c70",
-                "reference": "380872130d3a5dd3ace2f4010d95125fde5d5c70",
+                "url": "https://api.github.com/repos/symfony/polyfill-intl-grapheme/zipball/ad1b7b9092976d6c948b8a187cec9faaea9ec1df",
+                "reference": "ad1b7b9092976d6c948b8a187cec9faaea9ec1df",
                 "shasum": ""
             },
             "require": {
@@ -81157,7 +81294,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-intl-grapheme/tree/v1.33.0"
+                "source": "https://github.com/symfony/polyfill-intl-grapheme/tree/v1.36.0"
             },
             "funding": [
                 {
@@ -81177,20 +81314,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-06-27T09:58:17+00:00"
+            "time": "2026-04-10T16:19:22+00:00"
         },
         {
             "name": "symfony/polyfill-intl-icu",
-            "version": "v1.33.0",
+            "version": "v1.36.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-intl-icu.git",
-                "reference": "bfc8fa13dbaf21d69114b0efcd72ab700fb04d0c"
+                "reference": "3510b63d07376b04e57e27e82607d468bb134f78"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-intl-icu/zipball/bfc8fa13dbaf21d69114b0efcd72ab700fb04d0c",
-                "reference": "bfc8fa13dbaf21d69114b0efcd72ab700fb04d0c",
+                "url": "https://api.github.com/repos/symfony/polyfill-intl-icu/zipball/3510b63d07376b04e57e27e82607d468bb134f78",
+                "reference": "3510b63d07376b04e57e27e82607d468bb134f78",
                 "shasum": ""
             },
             "require": {
@@ -81245,7 +81382,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-intl-icu/tree/v1.33.0"
+                "source": "https://github.com/symfony/polyfill-intl-icu/tree/v1.36.0"
             },
             "funding": [
                 {
@@ -81265,11 +81402,11 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-06-20T22:24:30+00:00"
+            "time": "2026-04-10T16:50:15+00:00"
         },
         {
             "name": "symfony/polyfill-intl-idn",
-            "version": "v1.33.0",
+            "version": "v1.36.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-intl-idn.git",
@@ -81332,7 +81469,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-intl-idn/tree/v1.33.0"
+                "source": "https://github.com/symfony/polyfill-intl-idn/tree/v1.36.0"
             },
             "funding": [
                 {
@@ -81356,7 +81493,7 @@
         },
         {
             "name": "symfony/polyfill-intl-normalizer",
-            "version": "v1.33.0",
+            "version": "v1.36.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-intl-normalizer.git",
@@ -81417,7 +81554,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-intl-normalizer/tree/v1.33.0"
+                "source": "https://github.com/symfony/polyfill-intl-normalizer/tree/v1.36.0"
             },
             "funding": [
                 {
@@ -81441,16 +81578,16 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.33.0",
+            "version": "v1.36.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "6d857f4d76bd4b343eac26d6b539585d2bc56493"
+                "reference": "6a21eb99c6973357967f6ce3708cd55a6bec6315"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/6d857f4d76bd4b343eac26d6b539585d2bc56493",
-                "reference": "6d857f4d76bd4b343eac26d6b539585d2bc56493",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/6a21eb99c6973357967f6ce3708cd55a6bec6315",
+                "reference": "6a21eb99c6973357967f6ce3708cd55a6bec6315",
                 "shasum": ""
             },
             "require": {
@@ -81502,7 +81639,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.33.0"
+                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.36.0"
             },
             "funding": [
                 {
@@ -81522,11 +81659,11 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-12-23T08:48:59+00:00"
+            "time": "2026-04-10T17:25:58+00:00"
         },
         {
             "name": "symfony/polyfill-php73",
-            "version": "v1.33.0",
+            "version": "v1.36.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php73.git",
@@ -81582,7 +81719,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php73/tree/v1.33.0"
+                "source": "https://github.com/symfony/polyfill-php73/tree/v1.36.0"
             },
             "funding": [
                 {
@@ -81606,16 +81743,16 @@
         },
         {
             "name": "symfony/polyfill-php80",
-            "version": "v1.33.0",
+            "version": "v1.36.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php80.git",
-                "reference": "0cc9dd0f17f61d8131e7df6b84bd344899fe2608"
+                "reference": "dfb55726c3a76ea3b6459fcfda1ec2d80a682411"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php80/zipball/0cc9dd0f17f61d8131e7df6b84bd344899fe2608",
-                "reference": "0cc9dd0f17f61d8131e7df6b84bd344899fe2608",
+                "url": "https://api.github.com/repos/symfony/polyfill-php80/zipball/dfb55726c3a76ea3b6459fcfda1ec2d80a682411",
+                "reference": "dfb55726c3a76ea3b6459fcfda1ec2d80a682411",
                 "shasum": ""
             },
             "require": {
@@ -81666,7 +81803,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php80/tree/v1.33.0"
+                "source": "https://github.com/symfony/polyfill-php80/tree/v1.36.0"
             },
             "funding": [
                 {
@@ -81686,7 +81823,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-01-02T08:10:11+00:00"
+            "time": "2026-04-10T16:19:22+00:00"
         },
         {
             "name": "symfony/polyfill-php82",
@@ -81770,16 +81907,16 @@
         },
         {
             "name": "symfony/polyfill-php83",
-            "version": "v1.33.0",
+            "version": "v1.36.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php83.git",
-                "reference": "17f6f9a6b1735c0f163024d959f700cfbc5155e5"
+                "reference": "3600c2cb22399e25bb226e4a135ce91eeb2a6149"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php83/zipball/17f6f9a6b1735c0f163024d959f700cfbc5155e5",
-                "reference": "17f6f9a6b1735c0f163024d959f700cfbc5155e5",
+                "url": "https://api.github.com/repos/symfony/polyfill-php83/zipball/3600c2cb22399e25bb226e4a135ce91eeb2a6149",
+                "reference": "3600c2cb22399e25bb226e4a135ce91eeb2a6149",
                 "shasum": ""
             },
             "require": {
@@ -81826,7 +81963,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php83/tree/v1.33.0"
+                "source": "https://github.com/symfony/polyfill-php83/tree/v1.36.0"
             },
             "funding": [
                 {
@@ -81846,20 +81983,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-07-08T02:45:35+00:00"
+            "time": "2026-04-10T17:25:58+00:00"
         },
         {
             "name": "symfony/polyfill-php84",
-            "version": "v1.33.0",
+            "version": "v1.36.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php84.git",
-                "reference": "d8ced4d875142b6a7426000426b8abc631d6b191"
+                "reference": "88486db2c389b290bf87ff1de7ebc1e13e42bb06"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php84/zipball/d8ced4d875142b6a7426000426b8abc631d6b191",
-                "reference": "d8ced4d875142b6a7426000426b8abc631d6b191",
+                "url": "https://api.github.com/repos/symfony/polyfill-php84/zipball/88486db2c389b290bf87ff1de7ebc1e13e42bb06",
+                "reference": "88486db2c389b290bf87ff1de7ebc1e13e42bb06",
                 "shasum": ""
             },
             "require": {
@@ -81906,7 +82043,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php84/tree/v1.33.0"
+                "source": "https://github.com/symfony/polyfill-php84/tree/v1.36.0"
             },
             "funding": [
                 {
@@ -81926,7 +82063,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-06-24T13:30:11+00:00"
+            "time": "2026-04-10T18:47:49+00:00"
         },
         {
             "name": "symfony/polyfill-uuid",
@@ -84700,16 +84837,16 @@
         },
         {
             "name": "webmozart/assert",
-            "version": "2.1.6",
+            "version": "2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webmozarts/assert.git",
-                "reference": "ff31ad6efc62e66e518fbab1cde3453d389bcdc8"
+                "reference": "eb0d790f735ba6cff25c683a85a1da0eadeff9e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozarts/assert/zipball/ff31ad6efc62e66e518fbab1cde3453d389bcdc8",
-                "reference": "ff31ad6efc62e66e518fbab1cde3453d389bcdc8",
+                "url": "https://api.github.com/repos/webmozarts/assert/zipball/eb0d790f735ba6cff25c683a85a1da0eadeff9e4",
+                "reference": "eb0d790f735ba6cff25c683a85a1da0eadeff9e4",
                 "shasum": ""
             },
             "require": {
@@ -84756,9 +84893,9 @@
             ],
             "support": {
                 "issues": "https://github.com/webmozarts/assert/issues",
-                "source": "https://github.com/webmozarts/assert/tree/2.1.6"
+                "source": "https://github.com/webmozarts/assert/tree/2.3.0"
             },
-            "time": "2026-02-27T10:28:38+00:00"
+            "time": "2026-04-11T10:33:05+00:00"
         },
         {
             "name": "webmozart/glob",
@@ -91548,9 +91685,9 @@
         "ext-readline": "*",
         "ext-redis": "*"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "platform-overrides": {
         "php": "8.3.13"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
