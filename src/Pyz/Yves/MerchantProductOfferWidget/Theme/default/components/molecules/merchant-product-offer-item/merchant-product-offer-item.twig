@@ -6,6 +6,12 @@
 
 {% block extraClass %}{% endblock %}
 
+{% block body %}
+    <div class="grid grid--gap-smaller grid--nowrap">
+        {{ block('offerInner') }}
+    </div>
+{% endblock %}
+
 {% block contentCol %}
     <div class="col col--expand col--reset-min-width">
         {{ block('content') }}
