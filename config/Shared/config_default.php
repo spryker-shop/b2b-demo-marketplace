@@ -135,6 +135,7 @@ use Spryker\Zed\OauthAuth0\OauthAuth0Config;
 use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Payment\PaymentConfig;
 use Spryker\Zed\Propel\PropelConfig;
+use SprykerEco\Shared\Stripe\StripeConfig;
 use SprykerEco\Shared\Vertex\VertexConstants;
 use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConstants;
 use SprykerShop\Shared\AgentPage\AgentPageConstants;
@@ -926,16 +927,19 @@ $config[GlueApplicationConstants::GLUE_APPLICATION_CORS_ALLOW_ORIGIN] = getenv('
 $config[OmsConstants::ACTIVE_PROCESSES] = [
     'MarketplacePayment01',
     'ForeignPaymentStateMachine01',
+    'StripeManualMarketplace01',
 ];
 
 $config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = [
     DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE => 'MarketplacePayment01',
     PaymentConfig::PAYMENT_FOREIGN_PROVIDER => 'ForeignPaymentStateMachine01',
+    StripeConfig::PAYMENT_METHOD_NAME => 'StripeManualMarketplace01',
 ];
 
 $config[OmsConstants::PROCESS_LOCATION] = [
     OmsConfig::DEFAULT_PROCESS_LOCATION,
     APPLICATION_ROOT_DIR . '/vendor/spryker/sales-payment/config/Zed/Oms',
+    APPLICATION_ROOT_DIR . '/vendor/spryker-eco/stripe/config/Zed/oms',
 ];
 
 // ----------------------------------------------------------------------------

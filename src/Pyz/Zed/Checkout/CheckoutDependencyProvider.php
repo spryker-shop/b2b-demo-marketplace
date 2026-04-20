@@ -73,6 +73,7 @@ use Spryker\Zed\Shipment\Communication\Plugin\Checkout\ReplaceSalesOrderShipment
 use Spryker\Zed\Shipment\Communication\Plugin\Checkout\SalesOrderShipmentSavePlugin;
 use Spryker\Zed\ShipmentCheckoutConnector\Communication\Plugin\Checkout\ShipmentCheckoutPreCheckPlugin;
 use Spryker\Zed\ShipmentTypeCart\Communication\Plugin\Checkout\ShipmentTypeCheckoutPreConditionPlugin;
+use SprykerEco\Zed\Stripe\Communication\Plugin\Checkout\StripeCheckoutPostSavePlugin;
 use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\Checkout\BudgetCheckoutPreConditionPlugin;
 use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\Checkout\ConsumeBudgetCheckoutPostSavePlugin;
 use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\Checkout\CostCenterOrderSaverPlugin;
@@ -225,6 +226,7 @@ class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
             new CloseQuoteRequestCheckoutPostSaveHookPlugin(),
             new PaymentAuthorizationCheckoutPostSavePlugin(),
             new PaymentConfirmPreOrderPaymentCheckoutPostSavePlugin(),
+            new StripeCheckoutPostSavePlugin(),
             new ConsumeBudgetCheckoutPostSavePlugin(),
         ];
     }

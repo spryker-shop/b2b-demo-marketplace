@@ -276,12 +276,28 @@
             ],
             "success_messages": ["✓ EventDispatcherDependencyProvider cleaned from marketplace-specific plugins"]
         },
+        "src/Pyz/Zed/Installer/InstallerDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "StripeMarketplaceInstallerPlugin" },
+                { "type": "remove_plugin", "plugin_class": "StripeMarketplaceInstallerPlugin" }
+            ],
+            "success_messages": ["✓ Removed StripeMarketplaceInstallerPlugin from InstallerDependencyProvider"]
+        },
         "src/Pyz/Zed/Mail/MailDependencyProvider.php": {
             "operations": [
                 { "type": "remove_use", "class_name": "MerchantUserPasswordResetMailTypeBuilderPlugin" },
                 { "type": "remove_plugin", "plugin_class": "MerchantUserPasswordResetMailTypeBuilderPlugin" }
             ],
             "success_messages": ["✓ MailDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/MessageBroker/MessageBrokerDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantAppOnboardingMessageHandlerPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantAppOnboardingMessageHandlerPlugin" }
+            ],
+            "success_messages": [
+                "✓ Removed MerchantAppOnboardingMessageHandlerPlugin from MessageBrokerDependencyProvider"
+            ]
         },
         "src/Pyz/Zed/MultiFactorAuth/MultiFactorAuthDependencyProvider.php": {
             "operations": [
@@ -1075,9 +1091,19 @@
                 },
                 { "type": "remove_filesystem_config", "filesystem_name": "merchant-product-data-import-files" },
                 { "type": "remove_filesystem_config", "filesystem_name": "merchant-product-offer-data-import-files" },
-                { "type": "remove_section_comment", "comment_pattern": "MERCHANT PORTAL" }
+                { "type": "remove_section_comment", "comment_pattern": "MERCHANT PORTAL" },
+                { "type": "remove_array_value", "array_value": "MarketplacePayment01" },
+                {
+                    "type": "replace_string",
+                    "old_value": "'StripeManualMarketplace01'",
+                    "new_value": "'StripeManual01'"
+                }
             ],
-            "success_messages": ["✓ Removed merchant portal configuration from config_default.php"]
+            "success_messages": [
+                "✓ Removed merchant portal configuration from config_default.php",
+                "✓ Removed MarketplacePayment01 from ACTIVE_PROCESSES in config_default.php",
+                "✓ Replaced StripeManualMarketplace01 with StripeManual01"
+            ]
         },
         "config/Shared/config_default-docker.dev.php": {
             "operations": [
