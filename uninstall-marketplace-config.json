@@ -1092,6 +1092,7 @@
                 { "type": "remove_filesystem_config", "filesystem_name": "merchant-product-data-import-files" },
                 { "type": "remove_filesystem_config", "filesystem_name": "merchant-product-offer-data-import-files" },
                 { "type": "remove_section_comment", "comment_pattern": "MERCHANT PORTAL" },
+                { "type": "remove_array_value", "array_value": "MarketplacePayment01" },
                 {
                     "type": "replace_string",
                     "old_value": "'StripeManualMarketplace01'",
@@ -1100,6 +1101,7 @@
             ],
             "success_messages": [
                 "✓ Removed merchant portal configuration from config_default.php",
+                "✓ Removed MarketplacePayment01 from ACTIVE_PROCESSES in config_default.php",
                 "✓ Replaced StripeManualMarketplace01 with StripeManual01"
             ]
         },
