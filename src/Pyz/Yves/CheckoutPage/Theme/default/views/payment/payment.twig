@@ -3,7 +3,9 @@
 {# customForms data property is necessary for Eco payments integrations #}
 {% define data = {
     stepNumder: 3,
-    customForms: {},
+    customForms: {
+        'Stripe/stripe': ['stripe'],
+    },
 } %}
 
 {% block containerClass %}container--small{% endblock %}
@@ -107,7 +109,7 @@
                                         {% else %}
                                             {% set viewName = embed.customForms[data.form.vars.template_path] | first %}
                                             {% set moduleName = embed.customForms[data.form.vars.template_path] | last %}
-                                            {% include view(viewName, moduleName) ignore missing with {
+                                            {% include view(viewName, moduleName) with {
                                                 form: data.form.parent,
                                             } only %}
                                         {% endif %}

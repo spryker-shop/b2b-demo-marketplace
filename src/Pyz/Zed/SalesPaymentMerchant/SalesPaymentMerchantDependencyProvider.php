@@ -11,8 +11,10 @@ namespace Pyz\Zed\SalesPaymentMerchant;
 
 use Spryker\Zed\SalesPaymentMerchant\SalesPaymentMerchantDependencyProvider as SprykerSalesPaymentMerchantDependencyProvider;
 use Spryker\Zed\SalesPaymentMerchantExtension\Communication\Dependency\Plugin\MerchantPayoutCalculatorPluginInterface;
+use Spryker\Zed\SalesPaymentMerchantExtension\Communication\Dependency\Plugin\MerchantPayoutTransmissionPluginInterface;
 use Spryker\Zed\SalesPaymentMerchantSalesMerchantCommission\Communication\Plugin\SalesPaymentMerchant\PayoutAmountMerchantPayoutCalculatorPlugin;
 use Spryker\Zed\SalesPaymentMerchantSalesMerchantCommission\Communication\Plugin\SalesPaymentMerchant\PayoutReverseAmountMerchantPayoutCalculatorPlugin;
+use SprykerEco\Zed\Stripe\Communication\Plugin\SalesPaymentMerchant\StripePayoutTransmissionPlugin;
 
 class SalesPaymentMerchantDependencyProvider extends SprykerSalesPaymentMerchantDependencyProvider
 {
@@ -30,5 +32,10 @@ class SalesPaymentMerchantDependencyProvider extends SprykerSalesPaymentMerchant
     protected function getMerchantPayoutReverseAmountCalculatorPlugin(): ?MerchantPayoutCalculatorPluginInterface
     {
         return new PayoutReverseAmountMerchantPayoutCalculatorPlugin();
+    }
+
+    protected function getMerchantPayoutTransmissionPlugin(): ?MerchantPayoutTransmissionPluginInterface
+    {
+        return new StripePayoutTransmissionPlugin();
     }
 }

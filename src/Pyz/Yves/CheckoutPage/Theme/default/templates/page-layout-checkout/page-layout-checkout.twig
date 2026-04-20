@@ -9,7 +9,7 @@
         },
         embed: {
             cart: cart | default,
-            backUrl: data.backUrl,
+            backUrl: data.backUrl | default('#'),
         },
     } only %}
         {% block headerMainContent %}
@@ -107,7 +107,7 @@
                     {% if data.step is defined and data.breadcrumbs | length > 1 %}
                         <span class="title__index">{{ data.stepNumder }}</span>
                     {% endif %}
-                    {{ data.title }}
+                    {% block headTitle %}{{ parent() | default(data.title) }}{% endblock %}
                 </h1>
             {% endif %}
 

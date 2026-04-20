@@ -184,6 +184,9 @@ sections:
         import-demodata:
             command: 'vendor/bin/console data:import --config=data/import/local/full_${SPRYKER_REGION}.yml'
 
+        stripe:
+            command: 'vendor/bin/console data:import --config=vendor/spryker-eco/stripe/data/import/stripe.yml -vvv --no-ansi'
+
         setup-search-create-sources:
             command: 'vendor/bin/console search:setup:sources'
 

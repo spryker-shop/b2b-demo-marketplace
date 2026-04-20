@@ -76,7 +76,7 @@
                     price: can('SeePricePermissionPlugin') ? item.sumSubtotalAggregation : null,
                     quantity: item.quantity,
                 }),
-                total: can('SeePricePermissionPlugin') ? data.quote.totals.grandTotal : null,
+                total: can('SeePricePermissionPlugin') ? data.quote.totals.grandTotal | default(0) : null,
             }),
         } %}
     {% endif %}
