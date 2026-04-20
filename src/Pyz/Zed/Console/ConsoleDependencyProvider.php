@@ -208,7 +208,9 @@ use SprykerEco\Zed\Algolia\Communication\Console\AlgoliaEntityExportConsole;
 use SprykerEco\Zed\NewRelic\Communication\Console\RecordDeploymentConsole;
 use SprykerFeature\Zed\ProductExperienceManagement\Communication\Console\ImportJobRunConsole;
 use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
+use SprykerSdk\Zed\AiDev\Communication\Console\GenerateAgentsFileConsole;
 use SprykerSdk\Zed\AiDev\Communication\Console\GeneratePromptsConsole;
+use SprykerSdk\Zed\AiDev\Communication\Console\GenerateSkillsConsole;
 use SprykerSdk\Zed\AiDev\Communication\Console\McpServerConsole;
 use SprykerShop\Zed\DateTimeConfiguratorPageExample\Communication\Console\DateTimeProductConfiguratorBuildFrontendConsole;
 
@@ -516,6 +518,8 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             if (class_exists(McpServerConsole::class)) {
                 $commands[] = new McpServerConsole();
                 $commands[] = new GeneratePromptsConsole();
+                $commands[] = new GenerateAgentsFileConsole();
+                $commands[] = new GenerateSkillsConsole();
             }
 
             if (class_exists(SecurityCheckerCommand::class)) {

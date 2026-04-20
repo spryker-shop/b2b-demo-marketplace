@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e46ff58a0badd45a6a2956c0caa4e6a1",
+    "content-hash": "10c3ebf2ecc2760e469d08cabbe892b5",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -90136,22 +90136,23 @@
         },
         {
             "name": "spryker-sdk/ai-dev",
-            "version": "0.2.2",
+            "version": "0.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-sdk/ai-dev.git",
-                "reference": "6460a86836e29eb8f67aeaaf46b4120578f627ad"
+                "reference": "f3609e038080360ff7b1fdd3607871f91dd9b9d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-sdk/ai-dev/zipball/6460a86836e29eb8f67aeaaf46b4120578f627ad",
-                "reference": "6460a86836e29eb8f67aeaaf46b4120578f627ad",
+                "url": "https://api.github.com/repos/spryker-sdk/ai-dev/zipball/f3609e038080360ff7b1fdd3607871f91dd9b9d2",
+                "reference": "f3609e038080360ff7b1fdd3607871f91dd9b9d2",
                 "shasum": ""
             },
             "require": {
                 "nikic/php-parser": ">=5.0",
                 "php": ">=8.3",
                 "php-mcp/server": "^3.3",
+                "spryker/csv": "^3.0",
                 "spryker/guzzle": ">=2.0.0",
                 "spryker/kernel": ">=3.30.0",
                 "spryker/module-finder": ">=1.0.0",
@@ -90163,9 +90164,10 @@
             },
             "require-dev": {
                 "phpstan/phpstan": ">=1.12.29",
-                "spryker-sdk/phpstan-spryker": ">=0.4.3",
+                "spryker-sdk/phpstan-spryker": ">=0.5.1",
                 "spryker/code-sniffer": ">=0.17.30",
-                "spryker/development": "*"
+                "spryker/development": "*",
+                "spryker/testify": "*"
             },
             "type": "library",
             "extra": {
@@ -90185,9 +90187,9 @@
             "description": "AiDev module",
             "support": {
                 "issues": "https://github.com/spryker-sdk/ai-dev/issues",
-                "source": "https://github.com/spryker-sdk/ai-dev/tree/0.2.2"
+                "source": "https://github.com/spryker-sdk/ai-dev/tree/0.4.0"
             },
-            "time": "2026-01-19T15:37:25+00:00"
+            "time": "2026-04-20T05:44:45+00:00"
         },
         {
             "name": "spryker-sdk/benchmark",
@@ -91548,7 +91550,7 @@
         "ext-readline": "*",
         "ext-redis": "*"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "platform-overrides": {
         "php": "8.3.13"
     },
