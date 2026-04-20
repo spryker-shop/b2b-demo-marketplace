@@ -295,7 +295,9 @@
                 { "type": "remove_use", "class_name": "MerchantAppOnboardingMessageHandlerPlugin" },
                 { "type": "remove_plugin", "plugin_class": "MerchantAppOnboardingMessageHandlerPlugin" }
             ],
-            "success_messages": ["✓ Removed MerchantAppOnboardingMessageHandlerPlugin from MessageBrokerDependencyProvider"]
+            "success_messages": [
+                "✓ Removed MerchantAppOnboardingMessageHandlerPlugin from MessageBrokerDependencyProvider"
+            ]
         },
         "src/Pyz/Zed/MultiFactorAuth/MultiFactorAuthDependencyProvider.php": {
             "operations": [
@@ -1090,7 +1092,11 @@
                 { "type": "remove_filesystem_config", "filesystem_name": "merchant-product-data-import-files" },
                 { "type": "remove_filesystem_config", "filesystem_name": "merchant-product-offer-data-import-files" },
                 { "type": "remove_section_comment", "comment_pattern": "MERCHANT PORTAL" },
-                { "type": "replace_string", "old_value": "'StripeManualMarketplace01'", "new_value": "'StripeManual01'" }
+                {
+                    "type": "replace_string",
+                    "old_value": "'StripeManualMarketplace01'",
+                    "new_value": "'StripeManual01'"
+                }
             ],
             "success_messages": [
                 "✓ Removed merchant portal configuration from config_default.php",
