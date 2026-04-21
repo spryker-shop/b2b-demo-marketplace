@@ -87,6 +87,11 @@
                 font-size: rem(18);
                 color: var(--icon-secondary);
                 opacity: 1;
+                rotate: -90deg;
+
+                @include helper-breakpoint-media-min($xl) {
+                    rotate: unset;
+                }
             }
 
             @include helper-breakpoint-media-min($xl) {
