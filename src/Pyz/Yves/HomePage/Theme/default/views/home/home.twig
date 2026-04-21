@@ -2,12 +2,12 @@
 
 {% block contentTop %}
     {% embed molecule('slick-carousel') with {
-        modifiers: ['jumbotron'],
+        modifiers: ['jumbotron', 'equal-height'],
         attributes: {
             'slider-config': '{
                 "slidesToShow": 1,
                 "dots": true,
-                "autoplay": true,
+                "autoplay": false,
                 "nextArrow": false,
                 "prevArrow": false,
                 "autoplaySpeed": 4000,

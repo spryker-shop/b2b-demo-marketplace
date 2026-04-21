@@ -38,5 +38,27 @@
         .label {
             display: none;
         }
+
+        .list--alert {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .list--alert .list__item {
+            padding: var(--scale-4) var(--scale-8);
+            border-radius: var(--radius-xs);
+            background: var(--background-state-error-bold);
+            color: var(--text-inverse);
+            font-size: var(--caption-size);
+            font-weight: var(---caption-weight);
+            line-height: var(--caption-line-height);
+            letter-spacing: var(--caption-letter-spacing);
+
+            &::before {
+                display: none;
+            }
+        }
     }
 }

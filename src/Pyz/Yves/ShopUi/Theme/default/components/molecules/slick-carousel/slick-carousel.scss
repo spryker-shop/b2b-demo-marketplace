@@ -64,54 +64,63 @@
         }
 
         &--jumbotron {
-            padding-bottom: rem(--scale-32);
             display: block;
             position: relative;
 
-            .slick-slide {
-                margin: 0;
-            }
-
-            .slick-dots {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                gap: var(--scale-6);
-                position: absolute;
-                bottom: var(--scale-16);
-                left: 0;
-                right: 0;
-                margin: 0;
-
-                button {
-                    @include helper-effect-transition(width opacity);
-                    width: rem(6);
-                    height: rem(6);
-                    background: var(--white);
-                    border-radius: var(--radius-sm);
-                    border: none;
-                    padding: 0;
-                    cursor: pointer;
-                    opacity: 0.3;
-
-                    &:hover {
-                        opacity: 0.7;
-                    }
+            #{$name}__container {
+                .slick-list {
+                    padding-right: 0;
                 }
 
-                li {
-                    display: block;
-                    padding: 0;
-                    background: none;
-                    font-size: 0;
-                    cursor: pointer;
-                    height: rem(6);
+                .slick-slide {
+                    margin: 0;
+                }
 
-                    &.slick-active {
-                        button {
-                            width: rem(24);
+                .slick-dots {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    gap: var(--scale-6);
+                    position: absolute;
+                    bottom: var(--scale-16);
+                    left: 0;
+                    right: 0;
+                    margin: 0;
+
+                    button {
+                        @include helper-effect-transition(width opacity);
+                        width: rem(6);
+                        height: rem(6);
+                        background: var(--white);
+                        border-radius: var(--radius-sm);
+                        border: none;
+                        padding: 0;
+                        cursor: pointer;
+                        opacity: 0.3;
+
+                        &:hover {
                             opacity: 0.7;
                         }
+                    }
+
+                    li {
+                        display: block;
+                        padding: 0;
+                        background: none;
+                        font-size: 0;
+                        cursor: pointer;
+                        height: rem(6);
+
+                        &.slick-active {
+                            button {
+                                width: rem(24);
+                                opacity: 0.7;
+                            }
+                        }
+                    }
+
+                    .jumbotron {
+                        height: 100%;
                     }
                 }
             }
