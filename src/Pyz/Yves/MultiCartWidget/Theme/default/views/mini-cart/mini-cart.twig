@@ -6,7 +6,7 @@
 
 {% block body %}
     {% block contentOuter %}
-        <span class="{% if data.isAjaxMode %}{{ ajaxContentClass }}{% endif %}">
+        <span class="mini-cart-content{% if data.isAjaxMode %} {{ ajaxContentClass }}{% endif %}">
             {% block contentInner %}
                 {% set viewMode = app.request.get('view') | default(data.view) %}
 

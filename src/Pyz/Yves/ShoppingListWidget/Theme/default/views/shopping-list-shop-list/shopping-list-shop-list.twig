@@ -10,7 +10,7 @@
 
 {% block body %}
     {% block contentOuter %}
-        <span class="{% if data.isAjaxMode %}{{ shoppingListAjaxContentClass }}{% endif %}">
+        <span class="shopping-list-panel-content {% if data.isAjaxMode %}{{ shoppingListAjaxContentClass }}{% endif %}">
             {% block contentInner %}
                 {% if activeView == 'header' %}
                     {% include molecule('header-shopping-list-pill', 'ShoppingListWidget') with {
