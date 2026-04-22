@@ -170,6 +170,9 @@ sections:
         import-demodata:
             command: 'vendor/bin/console data:import --config=data/import/local/b2b_full_EU.yml'
 
+        stripe:
+            command: 'vendor/bin/console data:import --config=vendor/spryker-eco/stripe/data/import/stripe.yml -vvv --no-ansi'
+
         setup-search-create-sources:
             command: 'vendor/bin/console search:setup:sources'
 

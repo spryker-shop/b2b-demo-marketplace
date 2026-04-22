@@ -178,6 +178,7 @@ class CartDependencyProvider extends SprykerCartDependencyProvider
             new SanitizeCartShipmentItemExpanderPlugin(),
             new ProductConfigurationGroupKeyItemExpanderPlugin(),new GroupKeyWithCartIdentifierItemExpanderPlugin(),
             new RemoveQuotePaymentCartItemExpanderPlugin(),
+            new AvailabilityItemExpanderPlugin(),
         ];
     }
 
