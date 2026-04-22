@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3b2138536839c346923ea453b54427a6",
+    "content-hash": "2b8bf2f492b449b49d7a5ed6ec4f28ec",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -9330,6 +9330,83 @@
                 "source": "https://github.com/spryker-eco/new-relic/tree/master"
             },
             "time": "2020-06-19T09:30:20+00:00"
+        },
+        {
+            "name": "spryker-eco/stripe",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-eco/stripe.git",
+                "reference": "6e12fdef59c436917a2cb3c77ead93a2090cbf95"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-eco/stripe/zipball/6e12fdef59c436917a2cb3c77ead93a2090cbf95",
+                "reference": "6e12fdef59c436917a2cb3c77ead93a2090cbf95",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.3",
+                "spryker/acl-merchant-portal-extension": "^1.0.0",
+                "spryker/application": "^3.46.0",
+                "spryker/cart": "^7.16.0",
+                "spryker/checkout-extension": "^1.5.0",
+                "spryker/configuration-extension": "^1.0.0",
+                "spryker/installer-extension": "^1.0.0",
+                "spryker/kernel": "^3.84.0",
+                "spryker/log": "^3.0.0",
+                "spryker/merchant-app": "^1.5.0",
+                "spryker/merchant-user": "^1.0.0",
+                "spryker/payment-app": "^2.4.0",
+                "spryker/payment-extension": "^1.1.0",
+                "spryker/refund": "^5.0.0",
+                "spryker/sales": "^11.78.0",
+                "spryker/sales-payment-detail": "^1.5.0",
+                "spryker/sales-payment-merchant-extension": "^1.1.0",
+                "spryker/step-engine": "^3.7.0",
+                "spryker/symfony": "^3.19.0",
+                "spryker/util-encoding": "^2.0.0",
+                "spryker/zed-request": "^3.26.0",
+                "stripe/stripe-php": "^v13.0.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^2.1",
+                "spryker-shop/checkout-page": "*",
+                "spryker-shop/checkout-widget": "*",
+                "spryker/code-sniffer": "*",
+                "spryker/oms": "*",
+                "spryker/router": "*",
+                "spryker/testify": "*"
+            },
+            "suggest": {
+                "spryker-shop/checkout-page": "When the project uses Yves and built-in module payment page.",
+                "spryker-shop/checkout-widget": "When the project uses Yves and built-in module payment page.",
+                "spryker/merchant-sales-merchant-commission": "Required for commission-aware merchant payouts.",
+                "spryker/merchant-sales-order": "Required when project have marketplace merchant orders and OMS uses StripeManualMarketplace01.xml.",
+                "spryker/oms": "When OMS plugins are used.",
+                "spryker/router": "When Yves router plugins are used."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SprykerEco\\": "src/SprykerEco/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Stripe module",
+            "support": {
+                "issues": "https://github.com/spryker-eco/stripe/issues",
+                "source": "https://github.com/spryker-eco/stripe/tree/1.0.0"
+            },
+            "time": "2026-04-16T13:54:56+00:00"
         },
         {
             "name": "spryker-eco/vertex",
@@ -41142,20 +41219,20 @@
         },
         {
             "name": "spryker/merchant-app",
-            "version": "1.4.0",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/merchant-app.git",
-                "reference": "41016f7c6ea43552703b0d20b5600b622cc51544"
+                "reference": "832464bf5db5aeb75a306df73d7641350deea091"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/merchant-app/zipball/41016f7c6ea43552703b0d20b5600b622cc51544",
-                "reference": "41016f7c6ea43552703b0d20b5600b622cc51544",
+                "url": "https://api.github.com/repos/spryker/merchant-app/zipball/832464bf5db5aeb75a306df73d7641350deea091",
+                "reference": "832464bf5db5aeb75a306df73d7641350deea091",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/kernel": "^3.30.0",
                 "spryker/kernel-app": "^1.1.0",
                 "spryker/kernel-app-extension": "^1.0.0",
@@ -41192,9 +41269,9 @@
             ],
             "description": "MerchantApp module",
             "support": {
-                "source": "https://github.com/spryker/merchant-app/tree/1.4.0"
+                "source": "https://github.com/spryker/merchant-app/tree/1.5.0"
             },
-            "time": "2025-08-04T10:53:26+00:00"
+            "time": "2026-04-16T15:34:30+00:00"
         },
         {
             "name": "spryker/merchant-data-import",
@@ -46974,20 +47051,20 @@
         },
         {
             "name": "spryker/payment-app",
-            "version": "2.3.0",
+            "version": "2.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/payment-app.git",
-                "reference": "c6001fc404a45711ea6814e7807119aa77ee2be3"
+                "reference": "1fb47d8b89f4642a02cffcacf3eb40e52d1686a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/payment-app/zipball/c6001fc404a45711ea6814e7807119aa77ee2be3",
-                "reference": "c6001fc404a45711ea6814e7807119aa77ee2be3",
+                "url": "https://api.github.com/repos/spryker/payment-app/zipball/1fb47d8b89f4642a02cffcacf3eb40e52d1686a9",
+                "reference": "1fb47d8b89f4642a02cffcacf3eb40e52d1686a9",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/cart": "^7.5.0",
                 "spryker/kernel": "^3.30.0",
                 "spryker/kernel-app": "^1.0.0",
@@ -47033,9 +47110,9 @@
             ],
             "description": "PaymentApp module",
             "support": {
-                "source": "https://github.com/spryker/payment-app/tree/2.3.0"
+                "source": "https://github.com/spryker/payment-app/tree/2.4.0"
             },
-            "time": "2025-08-04T11:20:12+00:00"
+            "time": "2026-04-16T15:34:30+00:00"
         },
         {
             "name": "spryker/payment-app-extension",
@@ -61707,20 +61784,20 @@
         },
         {
             "name": "spryker/sales-payment-merchant-extension",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/sales-payment-merchant-extension.git",
-                "reference": "fc4d73d90bfa269dab892a8c04fc0bba20f3f89b"
+                "reference": "1e0c2d5071d2e20e4ba7ed97602c663bfce39299"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/sales-payment-merchant-extension/zipball/fc4d73d90bfa269dab892a8c04fc0bba20f3f89b",
-                "reference": "fc4d73d90bfa269dab892a8c04fc0bba20f3f89b",
+                "url": "https://api.github.com/repos/spryker/sales-payment-merchant-extension/zipball/1e0c2d5071d2e20e4ba7ed97602c663bfce39299",
+                "reference": "1e0c2d5071d2e20e4ba7ed97602c663bfce39299",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.1",
+                "php": ">=8.3",
                 "spryker/transfer": "^3.27.0"
             },
             "require-dev": {
@@ -61743,9 +61820,9 @@
             ],
             "description": "SalesPaymentMerchantExtension module",
             "support": {
-                "source": "https://github.com/spryker/sales-payment-merchant-extension/tree/1.0.0"
+                "source": "https://github.com/spryker/sales-payment-merchant-extension/tree/1.1.0"
             },
-            "time": "2024-08-06T15:45:00+00:00"
+            "time": "2026-04-16T15:34:30+00:00"
         },
         {
             "name": "spryker/sales-product-configuration",
@@ -71650,6 +71727,65 @@
                 "source": "https://github.com/spryker/zed-request-extension/tree/1.1.0"
             },
             "time": "2023-03-31T19:36:11+00:00"
+        },
+        {
+            "name": "stripe/stripe-php",
+            "version": "v13.18.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/stripe/stripe-php.git",
+                "reference": "02abb043b103766f4ed920642ae56ffdc58c7467"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/02abb043b103766f4ed920642ae56ffdc58c7467",
+                "reference": "02abb043b103766f4ed920642ae56ffdc58c7467",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "php": ">=5.6.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "3.5.0",
+                "phpstan/phpstan": "^1.2",
+                "phpunit/phpunit": "^5.7 || ^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Stripe\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Stripe and contributors",
+                    "homepage": "https://github.com/stripe/stripe-php/contributors"
+                }
+            ],
+            "description": "Stripe PHP Library",
+            "homepage": "https://stripe.com/",
+            "keywords": [
+                "api",
+                "payment processing",
+                "stripe"
+            ],
+            "support": {
+                "issues": "https://github.com/stripe/stripe-php/issues",
+                "source": "https://github.com/stripe/stripe-php/tree/v13.18.0"
+            },
+            "time": "2024-04-09T21:08:04+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
