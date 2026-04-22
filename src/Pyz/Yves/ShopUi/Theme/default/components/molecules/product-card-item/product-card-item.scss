@@ -239,20 +239,20 @@ $dropdown-top-indent: calc(100% + #{rem(15)});
             }
         }
 
+        &__quantity-holder {
+            padding-bottom: var(--scale-16);
+
+            @include helper-breakpoint-media-min($lg) {
+                padding-bottom: 0;
+            }
+        }
+
         &__checkbox {
             height: 100%;
 
             &-col {
                 padding-left: var(--scale-12);
                 align-self: center;
-            }
-        }
-
-        &__quantity-holder {
-            padding-bottom: var(--scale-16);
-
-            @include helper-breakpoint-media-min($lg) {
-                padding-bottom: 0;
             }
         }
 
