@@ -243,23 +243,8 @@ $dropdown-top-indent: calc(100% + #{rem(15)});
             height: 100%;
 
             &-col {
-                background-color: var(--background-subtle);
                 padding-left: var(--scale-12);
-
-                &--shopping-list {
-                    position: absolute;
-                    right: 0;
-                    top: 0;
-                    background: transparent;
-
-                    @include helper-breakpoint-media-min($lg) {
-                        display: flex;
-                        align-items: center;
-                        position: static;
-                        background-color: var(--background-subtle);
-                        padding-bottom: var(--scale-20);
-                    }
-                }
+                align-self: center;
             }
         }
 
