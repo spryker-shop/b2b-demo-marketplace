@@ -1,32 +1,39 @@
 .privacy-navigation {
-    text-align: left;
-    padding-top: rem(10);
-    padding-left: $setting-grid-space;
-    padding-right: $setting-grid-space;
-    order: 2;
-    width: 100%;
     display: flex;
-    align-items: flex-end;
-    justify-content: center;
-
-    @include helper-breakpoint-media-min($lg) {
-        display: block;
-        width: 25%;
-        position: absolute;
-        right: 0;
-        padding-top: 0;
-    }
+    align-items: center;
+    gap: var(--scale-8);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-shrink: 0;
+    white-space: nowrap;
 
     &__item {
-        padding: 0 rem(8);
-        margin-bottom: rem(5);
+        padding: 0;
+        margin: 0;
 
-        @include helper-breakpoint-media-min($lg) {
-            padding: 0;
+        &:not(:first-child)::before {
+            content: '·';
+            margin-right: var(--scale-8);
+            color: var(--text-primary);
+            top: 1px;
+            position: relative;
         }
+    }
 
-        &:not(:first-child) {
-            padding-top: 5px;
+    @include shop-ui-link {
+        &--privacy {
+            @include helper-effect-transition(color);
+            font-size: var(--label-sm-size);
+            font-weight: var(--label-sm-weight);
+            line-height: var(--label-sm-line-height);
+            color: var(--text-primary);
+            text-decoration: none;
+
+            &:hover,
+            &:focus {
+                color: var(--text-secondary);
+            }
         }
     }
 }

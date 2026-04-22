@@ -5,8 +5,8 @@ $name: '.product-item-color-selector';
 @include helper-color-selector($name) {
     @include helper-effect-transition(opacity);
     position: absolute;
-    bottom: rem(-9);
-    left: 0;
+    bottom: 0;
+    left: rem(15);
     z-index: $setting-zi-element + 1;
     display: flex;
     flex-wrap: wrap;

@@ -43,12 +43,15 @@
             {% endblock %}
         {% endif %}
     </select>
+
     {% block caret %}
-        {% include atom('icon') with {
-            class: config.name ~ '__caret',
-            data: {
-                name: 'caret-down'
-            }
-        } only %}
+        <span class="{{ config.name }}__caret">
+            {% include atom('font-icon') with {
+                modifiers: ['size-inherit'],
+                data: {
+                    name: 'keyboard_arrow_down',
+                },
+            } only %}
+        </span>
     {% endblock %}
 {% endblock %}

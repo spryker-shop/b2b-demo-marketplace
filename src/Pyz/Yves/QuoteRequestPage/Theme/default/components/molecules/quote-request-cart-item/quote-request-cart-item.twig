@@ -12,7 +12,7 @@
 } %}
 
 {% block body %}
-    <div class="grid grid--stretch grid--gap">
+    <div class="grid">
         <div class="{{ config.name }}__column {{ config.name }}__column--image col">
             {% set imageUrl = data.cartItem.images is not empty ? data.cartItem.images[0].externalUrlLarge : null %}
 
@@ -34,7 +34,7 @@
 
                 {% widget 'ProductAttributeVisibilityCartWidget' args [null, data.cartItem.idProductAbstract, data.cartItem.id] only %}
                     {% block body %}
-                        {% set attributesBadgeClassName = "badge badge--secondary spacing-right--small spacing-bottom--small" %}
+                        {% set attributesBadgeClassName = "badge badge--solid spacing-right--small spacing-bottom--small" %}
                         {{ parent() }}
                     {% endblock %}
                 {% nowidget %}
@@ -83,17 +83,24 @@
                     {% set priceModeGross = 'GROSS_MODE' %}
                     {% set originUnitPrice = (data.priceMode == priceModeGross) ? data.cartItem.originUnitGrossPrice : data.cartItem.originUnitNetPrice %}
                     {% set isOriginPriceHidden = data.cartItem.unitPrice | money(true, data.currency.code) == originUnitPrice | money(true, data.currency.code) %}
-                    <div class="spacing-bottom text-right">
+                    <div class="spacing-bottom--biggest">
                         <strong class="{{ isOriginPriceHidden ? 'is-hidden' }} spacing-right">
                             <s class="text-big text-secondary">{{ originUnitPrice | money(true, data.currency.code) }}</s>
                         </strong>
                         <strong class="text-big">{{ data.cartItem.unitPrice | money(true, data.currency.code) }}</strong>
                     </div>
+
+
                 {% endblock %}
-                <div class="box spacing spacing--inner grid grid--justify grid--middle">
-                    <strong class="col text-small">{{ 'cart.item.item_total' | trans }}: </strong>
-                    <strong class="col text-big">{{ data.cartItem.sumSubtotalAggregation | money(true, data.currency.code) }}</strong>
-                </div>
+
+                <div><strong class="text-right">{{ 'cart.item.item_total' | trans }}</strong></div>
+
+                {% include molecule('money-price') with {
+                    data: {
+                        amount: data.cartItem.sumSubtotalAggregation,
+                        currencyIsoCode: data.currency.code,
+                    },
+                } only %}
             </div>
         </div>
     </div>

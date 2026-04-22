@@ -5,23 +5,14 @@ $shop-ui-icon-size-bigger: 1.5rem;
     z-index: $setting-zi-icon;
 
     &--logo {
-        width: rem(96);
-        height: rem(32);
+        width: rem(138);
+        height: rem(52);
         max-width: 100%;
-
-        @include helper-breakpoint-media-min($lg) {
-            width: rem(175);
-            height: rem(70);
-        }
-
-        @include helper-breakpoint-media-min($xl) {
-            width: rem(195);
-        }
     }
 
     &--checkout {
         width: rem(109);
-        height: rem(32);
+        height: rem(var(--scale-8));
 
         @include helper-breakpoint-media-min($lg) {
             width: rem(167);
@@ -44,20 +35,13 @@ $shop-ui-icon-size-bigger: 1.5rem;
     }
 
     &--quick-order-delete-row {
-        width: rem(16);
-        height: rem(17);
-        margin: rem(7) 0;
-        fill: $setting-color-gray-2;
+        color: $setting-color-gray-2;
     }
 
     &--contact {
-        width: rem(22);
-        height: rem(24);
-        margin-bottom: rem(8);
-
-        @include helper-breakpoint-media-min($lg) {
-            display: none;
-        }
+        flex-shrink: 0;
+        width: rem(20);
+        height: rem(20);
     }
 
     &--cross {
@@ -82,7 +66,7 @@ $shop-ui-icon-size-bigger: 1.5rem;
         }
 
         &::before {
-            height: rem(2);
+            height: rem(var(--stroke-md));
             width: 100%;
             top: 50%;
             left: 0;
@@ -95,7 +79,7 @@ $shop-ui-icon-size-bigger: 1.5rem;
 
         &::after {
             height: 100%;
-            width: rem(2);
+            width: rem(var(--stroke-md));
             top: 0;
             left: 50%;
             transform: translateX(-50%);
@@ -114,11 +98,11 @@ $shop-ui-icon-size-bigger: 1.5rem;
 
     &--toggler-cross-thin {
         &::before {
-            height: rem(2);
+            height: rem(var(--stroke-md));
         }
 
         &::after {
-            width: rem(2);
+            width: rem(var(--stroke-md));
         }
     }
 
@@ -126,7 +110,7 @@ $shop-ui-icon-size-bigger: 1.5rem;
         display: inline-block;
         width: rem(26);
         height: rem(23);
-        margin: rem(-6) rem(12) rem(-2) 0;
+        margin: rem(-6) rem(var(--scale-4)) rem(-2) 0;
     }
 
     &--toggler-cross-link {
@@ -149,7 +133,7 @@ $shop-ui-icon-size-bigger: 1.5rem;
 
     &--invoice-logo {
         width: rem(52);
-        height: rem(20);
+        height: rem(var(--scale-6));
 
         @include helper-breakpoint-media-min($lg) {
             width: rem(83);
@@ -164,13 +148,9 @@ $shop-ui-icon-size-bigger: 1.5rem;
 
     &--payment-logo {
         position: absolute;
-        top: rem(27);
-        right: rem(20);
-
-        @include helper-breakpoint-media-min($lg) {
-            top: rem(27);
-            right: rem(30);
-        }
+        top: 50%;
+        right: rem(var(--scale-6));
+        translate: 0 -50%;
     }
 
     &--summary-shipping {
@@ -192,28 +172,12 @@ $shop-ui-icon-size-bigger: 1.5rem;
 
     &--footer {
         height: rem(28);
-        width: rem(93);
-    }
-
-    &--invoice-logo-footer {
-        width: rem(73);
-    }
-
-    &--pay-pal-logo-footer {
-        width: rem(64);
-    }
-
-    &--klarna-logo-footer {
-        width: rem(68);
-    }
-
-    &--dhl-logo-footer {
-        width: rem(76);
+        width: 100%;
     }
 
     &--copyright {
         width: rem(106);
-        height: rem(48);
+        height: rem(var(--scale-10));
     }
 
     &--view-mode-switch {
@@ -224,7 +188,7 @@ $shop-ui-icon-size-bigger: 1.5rem;
 
     &--reset {
         @include helper-effect-transition(color);
-        margin-right: rem(8);
+        margin-right: rem(var(--scale-4));
         color: $setting-color-gray-5;
     }
 
@@ -240,13 +204,13 @@ $shop-ui-icon-size-bigger: 1.5rem;
     }
 
     &--create-new-cart {
-        width: rem(24);
-        height: rem(18);
+        width: rem(var(--scale-16));
+        height: rem(var(--scale-16));
         vertical-align: bottom;
     }
 
     &--trolley {
-        width: rem(20);
+        width: rem(var(--scale-16));
     }
 
     &--title {
@@ -255,36 +219,28 @@ $shop-ui-icon-size-bigger: 1.5rem;
     }
 
     &--sm-lg-regular {
-        width: rem(16);
-        height: rem(16);
+        width: var(--scale-12);
+        height: var(--scale-12);
 
         @include helper-breakpoint-media-min($lg) {
-            width: rem(20);
-            height: rem(20);
+            width: var(--scale-16);
+            height: var(--scale-16);
         }
     }
 
     &--sm-lg-bigger {
-        width: rem(16);
-        height: rem(16);
+        width: var(--scale-16);
+        height: var(--scale-16);
 
         @include helper-breakpoint-media-min($lg) {
-            width: rem(24);
-            height: rem(24);
+            width: var(--scale-20);
+            height: var(--scale-20);
         }
     }
 
     &--browse-file {
         width: rem(28);
         height: rem(28);
-    }
-
-    &--download-file {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: rem(30);
-        height: rem(30);
     }
 
     &--remove-file {
@@ -298,13 +254,18 @@ $shop-ui-icon-size-bigger: 1.5rem;
     }
 
     &--clock {
-        width: rem(12);
-        height: rem(12);
+        width: rem(var(--scale-4));
+        height: rem(var(--scale-4));
     }
 
     &--cart-locked {
         width: rem(30);
         height: rem(23);
         color: $setting-color-alt;
+    }
+
+    &--social {
+        width: rem(16);
+        height: rem(16);
     }
 }
