@@ -129,12 +129,14 @@ use Spryker\Yves\Log\Plugin\YvesLoggerConfigPlugin;
 use Spryker\Zed\AiFoundation\Communication\Plugin\Log\AiInteractionAuditLoggerConfigPlugin;
 use Spryker\Zed\Log\Communication\Plugin\Log\MerchantPortalSecurityAuditLoggerConfigPlugin;
 use Spryker\Zed\Log\Communication\Plugin\Log\ZedSecurityAuditLoggerConfigPlugin;
+use Spryker\Zed\Log\Communication\Plugin\ZedCliLoggerConfigPlugin;
 use Spryker\Zed\Log\Communication\Plugin\ZedLoggerConfigPlugin;
 use Spryker\Zed\MessageBrokerAws\MessageBrokerAwsConfig;
 use Spryker\Zed\OauthAuth0\OauthAuth0Config;
 use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Payment\PaymentConfig;
 use Spryker\Zed\Propel\PropelConfig;
+use SprykerEco\Shared\Stripe\StripeConfig;
 use SprykerEco\Shared\Algolia\AlgoliaConstants;
 use SprykerEco\Shared\AmazonQuicksight\AmazonQuicksightConstants;
 use SprykerEco\Shared\Vertex\VertexConstants;
@@ -529,6 +531,7 @@ $config[ErrorHandlerConstants::ERROR_LEVEL_LOG_ONLY] = E_DEPRECATED | E_USER_DEP
 
 $config[LogConstants::LOGGER_CONFIG] = SprykerLoggerConfig::class;
 $config[LogConstants::LOGGER_CONFIG_ZED] = ZedLoggerConfigPlugin::class;
+$config[LogConstants::LOGGER_CONFIG_ZED_CLI] = ZedCliLoggerConfigPlugin::class;
 $config[LogConstants::LOGGER_CONFIG_YVES] = YvesLoggerConfigPlugin::class;
 $config[LogConstants::LOGGER_CONFIG_GLUE] = GlueLoggerConfigPlugin::class;
 
@@ -633,14 +636,11 @@ foreach ($rabbitConnections as $key => $connection) {
         continue;
     }
 
-    $config[SymfonyMessengerConstants::QUEUE_DSN] = sprintf(
-        'amqp://%s:%s@%s:%s/%s',
-        $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_USERNAME] ?? $defaultConnection[RabbitMqEnv::RABBITMQ_USERNAME],
-        $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_PASSWORD] ?? $defaultConnection[RabbitMqEnv::RABBITMQ_PASSWORD],
-        $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_HOST] ?? $defaultConnection[RabbitMqEnv::RABBITMQ_HOST],
-        $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_PORT] ?? $defaultConnection[RabbitMqEnv::RABBITMQ_PORT],
-        $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_VIRTUAL_HOST],
-    );
+    $config[SymfonyMessengerConstants::QUEUE_AMQP_HOST] = $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_HOST];
+    $config[SymfonyMessengerConstants::QUEUE_AMQP_PORT] = $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_PORT];
+    $config[SymfonyMessengerConstants::QUEUE_AMQP_USERNAME] = $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_USERNAME];
+    $config[SymfonyMessengerConstants::QUEUE_AMQP_PASSWORD] = $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_PASSWORD];
+    $config[SymfonyMessengerConstants::QUEUE_AMQP_VIRTUAL_HOST] = $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_VIRTUAL_HOST];
 }
 
 // >>> SYNCHRONIZATION
@@ -796,6 +796,26 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'version' => 'latest',
         'region' => getenv('AWS_REGION'),
     ],
+    'product-experience-management-imports' => [
+        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
+        'key' => getenv('SPRYKER_S3_PEM_IMPORT_KEY') ?: '',
+        'bucket' => getenv('SPRYKER_S3_PEM_IMPORT_BUCKET') ?: '',
+        'secret' => getenv('SPRYKER_S3_PEM_IMPORT_SECRET') ?: '',
+        'root' => '/',
+        'path' => '/',
+        'version' => 'latest',
+        'region' => getenv('AWS_REGION'),
+    ],
+    'product-experience-management-exports' => [
+        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
+        'key' => getenv('SPRYKER_S3_PEM_EXPORT_KEY') ?: '',
+        'bucket' => getenv('SPRYKER_S3_PEM_EXPORT_BUCKET') ?: '',
+        'secret' => getenv('SPRYKER_S3_PEM_EXPORT_SECRET') ?: '',
+        'root' => '/',
+        'path' => '/',
+        'version' => 'latest',
+        'region' => getenv('AWS_REGION'),
+    ],
 ];
 $config[FileManagerConstants::STORAGE_NAME] = 'files';
 $config[SelfServicePortalConstants::STORAGE_NAME] = 'ssp-files';
@@ -913,16 +933,19 @@ $config[GlueApplicationConstants::GLUE_APPLICATION_CORS_ALLOW_ORIGIN] = getenv('
 $config[OmsConstants::ACTIVE_PROCESSES] = [
     'MarketplacePayment01',
     'ForeignPaymentStateMachine01',
+    'StripeManualMarketplace01',
 ];
 
 $config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = [
     DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE => 'MarketplacePayment01',
     PaymentConfig::PAYMENT_FOREIGN_PROVIDER => 'ForeignPaymentStateMachine01',
+    StripeConfig::PAYMENT_METHOD_NAME => 'StripeManualMarketplace01',
 ];
 
 $config[OmsConstants::PROCESS_LOCATION] = [
     OmsConfig::DEFAULT_PROCESS_LOCATION,
     APPLICATION_ROOT_DIR . '/vendor/spryker/sales-payment/config/Zed/Oms',
+    APPLICATION_ROOT_DIR . '/vendor/spryker-eco/stripe/config/Zed/oms',
 ];
 
 // ----------------------------------------------------------------------------

@@ -6,127 +6,104 @@
 } %}
 
 {% block body %}
-
-    {% block subscribe %}
-        <div class="container {{ config.name }}__subscribe">
-            {{ render(path('newsletter/subscribe')) }}
+    {% block logos %}
+        <div class="{{ config.name }}__logos">
+            <div class="container">
+                {% block logosInner %}{% endblock %}
+            </div>
         </div>
     {% endblock %}
 
-    {% block logos %}
-        <div class="{{ config.name }}__logos">
-            {% block logosInner %}
-                {% set categoryPaymentProviders = 'PAYMENT_PROVIDERS' %}
-
-                {% include molecule('navigation-footer-item') with {
-                    modifiers: ['footer-logo'],
-                    class: 'container',
-                    data: {
-                        title: 'global.payment_shipping' | trans,
-                        category: categoryPaymentProviders,
-                        template: 'navigation-providers-payment',
-                        toggleClass: config.jsName ~ '-' ~ categoryPaymentProviders,
-                    },
-                } only %}
-
-                {% include molecule('toggler-accordion') with {
-                    attributes: {
-                        'wrap-class-name': config.jsName ~ '-' ~ categoryPaymentProviders,
-                        'trigger-class-name': config.jsName ~ '-' ~ categoryPaymentProviders ~ '__trigger',
-                        'class-to-toggle': 'is-hidden-sm-only',
-                    },
-                } only %}
-            {% endblock %}
+    {% block subscribe %}
+        <div class="{{ config.name }}__subscribe">
+            <div class="container">
+                {{ render(path('newsletter/subscribe')) }}
+            </div>
         </div>
     {% endblock %}
 
     {% block navigation %}
-        <div class="container">
-            <div class="grid grid--gap {{ config.name }}__navigation">
-                <div class="col col--sm-12 col--lg-9">
-                    {% block navigationInner %}
-                        {% include molecule('navigation-footer') with {
-                            class: 'grid grid--gap',
-                            data: {
-                                items: [
-                                    {
-                                        category: 'FOOTER_NAVIGATION_TOP_CATEGORIES',
-                                        title: 'global.top_categories' | trans,
-                                    },
-                                    {
-                                        category: 'FOOTER_NAVIGATION_POPULAR_BRANDS',
-                                        title: 'global.popular_brands' | trans,
-                                    },
-                                    {
-                                        category: 'FOOTER_NAVIGATION',
-                                        title: 'global.about' | trans,
-                                    },
-                                ],
-                            },
-                        } only %}
-                    {% endblock %}
-                </div>
+        <div class="{{ config.name }}__navigation">
+            <div class="container">
+                <div class="grid grid--gap">
+                    <div class="col col--sm-12 col--lg-3 {{ config.name }}__contact-info">
+                        <div class="{{ config.name }}__contact-logo">
+                            {% include molecule('logo') with {
+                                class: config.name ~ '__logo',
+                                modifiers: ['main'],
+                                data: {
+                                    url:  'global.build_with.link' | trans,
+                                    externalUrl: true,
+                                    configurable: false,
+                                }
+                            } only %}
 
-                <div class="col col--sm-12 col--lg-3 {{ config.name }}__contact-info">
-                    <strong class="title title--footer">{{ 'global.contact_us' | trans }}</strong>
-
-                    {% set phoneNumberTranslation = 'global.phone.number' | trans %}
-
-                    <a class="{{ config.name }}__contact-info-item {{ config.name }}__phone" href="tel:{{ phoneNumberTranslation }}">
-                        {% include atom('icon') with {
-                            modifiers: ['contact'],
-                            data: {
-                                name: 'cell-phone',
-                            },
-                        } only %}
-                        {{ phoneNumberTranslation }}
-                    </a>
-
-                    {% set emailTranslation = 'global.email.text' | trans %}
-
-                    <a class="{{ config.name }}__contact-info-item" href="mailto:{{ emailTranslation }}">
-                        {% include atom('icon') with {
-                            modifiers: ['contact'],
-                            data: {
-                                name: 'email',
-                            },
-                        } only %}
-                        {{ emailTranslation }}
-                    </a>
-                </div>
-            </div>
-
-            {% block social %}
-                <div class="grid grid--gap grid--middle {{ config.name }}__social-buttons">
-                    <div class="col col--sm-12 col--md-7 col--lg-9">
-                        <div class="{{ config.name }}__hint">
-                            * {{ 'global.hint' | trans }}
+                            <p class="{{ config.name }}__contact-tagline">{{ 'global.tagline' | trans }}</p>
+                            <div class="{{ config.name }}__contact-divider"></div>
                         </div>
-                        <div class="{{ config.name }}__thanks-certeo">
-                            {{ 'global.thank_certeo' | trans }}
-                        </div>
+
+                        {% set emailTranslation = 'global.email.text' | trans %}
+
+                        <a class="{{ config.name }}__contact-info-item" href="mailto:{{ emailTranslation }}">
+                            {% include atom('font-icon') with {
+                                data: { name: 'email' },
+                            } only %}
+                            {{ emailTranslation }}
+                        </a>
+
+                        {% set phoneNumberTranslation = 'global.phone.number' | trans %}
+
+                        <a class="{{ config.name }}__contact-info-item" href="tel:{{ phoneNumberTranslation }}">
+                            {% include atom('font-icon') with {
+                                data: { name: 'call' },
+                            } only %}
+                            {{ phoneNumberTranslation }}
+                        </a>
                     </div>
 
-                    {% block socialLinks %}
-                        {% include molecule('navigation-footer-item') with {
-                            modifiers: ['social'],
-                            class: 'col col--sm-12 col--md-5 col--lg-3',
-                            data: {
-                                category: 'SOCIAL_LINKS',
-                                template: 'navigation-social',
-                            },
-                        } only %}
-                    {% endblock %}
+                    <div class="col col--sm-12 col--lg-9 {{ config.name }}__navigation-item">
+                        {% block navigationInner %}
+                            {% include molecule('navigation-footer') with {
+                                class: 'grid grid--gap',
+                                data: {
+                                    items: [
+                                        {
+                                            category: 'FOOTER_NAVIGATION_TOP_CATEGORIES',
+                                            title: 'global.top_categories' | trans,
+                                        },
+                                        {
+                                            category: 'FOOTER_NAVIGATION_POPULAR_BRANDS',
+                                            title: 'global.popular_brands' | trans,
+                                        },
+                                        {
+                                            category: 'FOOTER_NAVIGATION',
+                                            title: 'global.about' | trans,
+                                        },
+                                    ],
+                                },
+                            } only %}
+                        {% endblock %}
+                    </div>
                 </div>
-            {% endblock %}
+            </div>
         </div>
     {% endblock %}
 
     {% block copyright %}
         <div class="{{ config.name }}__copyright">
-            {% include molecule('copyright-build-with') with {
-                class: 'container'
-            } only %}
+            <div class="container {{ config.name }}__copyright-inner">
+                {% include molecule('privacy-navigation') only %}
+
+                {% block socialLinks %}
+                    {% include molecule('navigation-footer-item') with {
+                        modifiers: ['social'],
+                        data: {
+                            category: 'SOCIAL_LINKS',
+                            template: 'navigation-social',
+                        },
+                    } only %}
+                {% endblock %}
+            </div>
         </div>
     {% endblock %}
 {% endblock %}

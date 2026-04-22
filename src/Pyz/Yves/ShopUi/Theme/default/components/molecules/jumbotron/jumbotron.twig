@@ -14,6 +14,8 @@
     headline: '',
     subHeadline: '',
     isBanner: false,
+    label: '',
+    containerMode: false,
 } %}
 
 {% set backgroundImage = data.imageUrl is empty ?: 'background-image: url(' ~ data.imageUrl ~ '); ' %}
@@ -24,17 +26,28 @@
     {% endif %}
 
     <div class="{{ component.renderClass(config.name ~ '__container', modifiers) }} grid grid--left {% block contentPositionClass %}grid--bottom{% endblock %}" style="{{backgroundImage}}">
+        {% if data.containerMode %}
+            <div class="container">
+        {% endif %}
+
         <div class="{{ component.renderClass(config.name ~ '__content', modifiers) }} col col--sm-12 spacing-y spacing-y--biggest">
             {% if data.content is not empty %}
                 {{ data.content | raw }}
             {% else %}
+                {% if data.label %}
+                    <span class="{{ config.name }}__label">{{ data.label }}</span>
+                {% endif %}
                 <h1 class="{{ config.name }}__title">{{ data.headline }}</h1>
                 <h2 class="{{ config.name }}__text title title--h4">{{ data.subHeadline }}</h2>
             {% endif %}
             {% if data.btnTitle %}
-                <a href="{{ functionExists('generatePath') ? generatePath(data.link | trans) : data.link | trans }}" class="button button--big button--additional">{{ data.btnTitle | trans }}</a>
+                <a href="{{ functionExists('generatePath') ? generatePath(data.link | trans) : data.link | trans }}" class="button button--big">{{ data.btnTitle | trans }}</a>
             {% endif %}
         </div>
+
+        {% if data.containerMode %}
+            </div>
+        {% endif %}
     </div>
 
     {% if data.isBanner %}

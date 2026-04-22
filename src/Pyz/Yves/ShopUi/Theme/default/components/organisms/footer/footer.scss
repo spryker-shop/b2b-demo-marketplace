@@ -1,151 +1,183 @@
 @mixin shop-ui-footer($name: '.footer') {
     #{$name} {
-        background-color: $setting-color-gray-7;
+        background-color: var(--footer-main);
 
-        &__subscribe {
-            @include helper-breakpoint-media-min($md) {
-                padding-top: rem(20);
-                padding-bottom: rem(32);
-            }
-
-            @include helper-breakpoint-media-min($lg) {
-                padding-top: rem(50);
-                padding-bottom: rem(50);
-            }
-
-            @include helper-breakpoint-media-min($xl) {
-                padding-top: rem(77);
-                padding-bottom: rem(77);
+        @include shop-ui-title() {
+            &--footer {
+                font-weight: var(--font-weight-semibold);
+                font-size: var(--label-sm-size);
+                line-height: var(--label-sm-line-height);
+                font-family: var(--label-sm-family);
+                text-transform: uppercase;
+                margin-bottom: var(--scale-12);
             }
         }
 
         &__logos {
-            @include helper-breakpoint-media-min($md) {
-                background-color: $setting-color-bg;
-                padding: 0.5rem 0 0;
-                box-shadow:
-                    0 3px 3px 0 $setting-color-shadow-1,
-                    0 18px 18px 0 $setting-color-shadow-1;
+            border-top: solid var(--stroke-sm) var(--border-subtle);
+            padding: var(--scale-20) 0;
+
+            @include shop-ui-title() {
+                &--footer-logo {
+                    color: var(--text-secondary);
+                    font-family: var(--body-md-family);
+                    font-size: var(--body-md-size);
+                    font-weight: var(--font-weight-regular);
+                    line-height: var(--body-md-line-height);
+                    letter-spacing: var(--body-md-letter-spacing);
+                    text-transform: none;
+                    flex-shrink: 0;
+                    margin: 0;
+                }
             }
 
-            @include helper-breakpoint-media-min($lg) {
-                padding: rem(26) 0;
+            @include shop-ui-menu() {
+                &--footer {
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+                    gap: var(--scale-24);
+                    margin: 0;
+                    padding: 0;
+                    flex-wrap: wrap;
+                }
+
+                &__item--footer {
+                    margin: 0;
+                    width: rem(50);
+                }
+            }
+        }
+
+        &__subscribe {
+            background: var(--footer-newsletter);
+            color: var(--text-inverse);
+            padding: var(--scale-32) 0;
+
+            @include helper-breakpoint-media-min($md) {
+                padding: var(--scale-40) 0;
+            }
+
+            @include shop-ui-title() {
+                &--subscription {
+                    font-family: var(--heading-sm-family);
+                    font-size: var(--heading-sm-size);
+                    font-weight: var(--heading-sm-weight);
+                    line-height: var(--heading-sm-line-height);
+                    letter-spacing: var(--heading-sm-letter-spacing);
+                    position: relative;
+                    display: block;
+                }
             }
         }
 
         &__navigation {
-            @include helper-breakpoint-media-min($md) {
-                padding-top: rem(35);
-            }
+            padding: var(--scale-24) 0;
 
-            @include helper-breakpoint-media-min($lg) {
-                padding-top: rem(54);
+            @include helper-breakpoint-media-min($md) {
+                padding: var(--scale-40) 0;
             }
         }
 
         &__contact-info {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            border-top: solid 1px $setting-color-white;
+            flex-direction: column;
+            gap: var(--scale-12);
+        }
 
-            .title {
-                width: 100%;
-            }
+        &__contact-logo {
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-8);
+            margin-bottom: var(--scale-8);
+        }
 
-            @include helper-breakpoint-media-min($md) {
-                border-top: 0;
-            }
+        &__contact-tagline {
+            font-size: var(--body-sm-size);
+            font-weight: var(--font-weight-regular);
+            line-height: var(--body-sm-line-height);
+            color: var(--text-primary);
+            white-space: nowrap;
+            margin: 0;
+        }
 
-            @include helper-breakpoint-media-min($lg) {
-                display: block;
-            }
-
-            &::after {
-                display: none;
-            }
+        &__contact-divider {
+            width: 24px;
+            height: 2px;
+            background-color: var(--background-brand-primary);
+            flex-shrink: 0;
         }
 
         &__contact-info-item {
             @include helper-effect-transition(color);
             display: flex;
-            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            color: $setting-color-gray-5;
-            font-size: rem(14);
-            font-weight: fw(medium);
-            text-align: center;
-            width: calc(50% - #{rem(10)});
-            min-height: rem(70);
-            border: solid 1px $setting-color-gray-2;
-            border-radius: $setting-border-radius;
-
-            @include helper-breakpoint-media-min($lg) {
-                display: block;
-                width: 100%;
-                min-height: 0;
-                border: none;
-                font-size: rem(15);
-                text-align: left;
-            }
-
-            @include helper-breakpoint-media-min($xl) {
-                font-size: rem(18);
-                line-height: rem(23);
-            }
-        }
-
-        &__phone {
-            @include helper-breakpoint-media-min($lg) {
-                display: block;
-                margin-bottom: 1rem;
-                color: $setting-color-gray-4;
-            }
+            gap: var(--scale-8);
+            color: var(--text-primary);
+            font-size: var(--body-md-size);
+            font-weight: var(--font-weight-regular);
+            line-height: var(--body-md-line-height);
+            text-decoration: none;
 
             &:hover,
             &:focus {
-                color: $setting-color-gray-3;
-            }
-        }
-
-        &__social-buttons {
-            margin-top: rem(31);
-            margin-bottom: rem(23);
-            flex-direction: column-reverse;
-
-            @include helper-breakpoint-media-min($md) {
-                margin-top: rem(42);
-                margin-bottom: rem(47);
-                flex-direction: row;
-            }
-        }
-
-        &__hint {
-            font-size: rem(13);
-            text-align: center;
-            letter-spacing: rem(0.54);
-            padding-bottom: rem(12);
-
-            @include helper-breakpoint-media-min($md) {
-                text-align: left;
-            }
-        }
-
-        &__thanks-certeo {
-            font-size: rem(13);
-            text-align: center;
-            letter-spacing: rem(0.54);
-
-            @include helper-breakpoint-media-min($md) {
-                text-align: left;
+                color: var(--text-secondary);
             }
         }
 
         &__copyright {
-            background-color: $setting-color-blue-1;
-            text-align: center;
-            color: $setting-color-white;
+            background-color: var(--footer-bottombar);
+
+            &-inner {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding-top: var(--scale-16);
+                padding-bottom: var(--scale-16);
+            }
+
+            @include shop-ui-menu() {
+                &--social {
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-end;
+                    gap: var(--scale-8);
+                    margin: 0;
+                    padding: 0;
+                    flex-wrap: wrap;
+                    line-height: 1;
+                }
+
+                &__item--social {
+                    margin: 0;
+                }
+            }
+
+            .link {
+                color: var(--icon-secondary);
+
+                &:hover {
+                    color: var(--icon-primary);
+                }
+            }
+        }
+
+        &__navigation-item {
+            .grid {
+                --grid-gap: var(--scale-24);
+
+                @include helper-breakpoint-media-min($md) {
+                    --grid-gap: var(--scale-64);
+                    justify-content: flex-end;
+                }
+            }
+
+            .navigation-item {
+                @include helper-breakpoint-media-min($md) {
+                    width: auto;
+                    max-width: 30%;
+                }
+            }
         }
 
         @content;

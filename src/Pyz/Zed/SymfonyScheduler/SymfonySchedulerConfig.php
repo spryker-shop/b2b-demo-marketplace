@@ -99,6 +99,10 @@ class SymfonySchedulerConfig extends SprykerSymfonySchedulerConfigAlias
                 'command' => $logger . '$PHP_BIN vendor/bin/console data-import:merchant-import',
                 'schedule' => '0 0 * * *',
             ],
+            'import-job-run' => [
+                'command' => $logger . '$PHP_BIN vendor/bin/console import:job:run',
+                'schedule' => '* * * * *',
+            ],
         ];
 
         /* Message broker */

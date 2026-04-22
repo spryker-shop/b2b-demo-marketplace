@@ -22,9 +22,5 @@
     &__title {
         font: fw(bold) rem(22) / 1.25 $setting-font-family;
         margin-bottom: rem(12);
-
-        @include helper-breakpoint-media-min($lg) {
-            font-size: rem(28);
-        }
     }
 }
