@@ -149,12 +149,141 @@
                     class="col col--right {% if is_granted('ROLE_USER') %} {{ config.name }}__user-nav {% else %} {{ config.name }}__login-wrap {% endif %}">
                     {% if data.showUserMenu %}
                         {% if is_granted('ROLE_USER') %}
-                            {% include molecule('user-navigation') with {
-                                data: {
-                                    user: data.user,
-                                    cartQuantity: data.cartQuantity,
-                                    isAjaxMode: data.isAjaxMode,
-                                    ajaxCartUrl: data.ajaxCartUrl,
+                            {% set cartQuantityText = data.cartQuantity > 0 ? data.cartQuantity ~ ' ' %}
+                            {% set shouldShowMiniCart = findWidget('MiniCartWidget', [cartQuantityText]).isMultiCartAllowed %}
+
+                            <ul class="user-navigation__list">
+                                <li class="user-navigation__item user-navigation__item--user">
+                                    <div class="user-navigation__user-name">
+                                        <span class="user-navigation__icon">
+                                            {% include atom('icon') with {
+                                                modifiers: ['bigger'],
+                                                data: { name: 'user' },
+                                            } only %}
+                                            {% include atom('icon') with {
+                                                class: 'user-navigation__arrow',
+                                                data: { name: 'caret-down' },
+                                            } only %}
+                                        </span>
+                                        <span class="user-navigation__text">{% widget 'CustomerFullNameWidget' only %}{% endwidget %}</span>
+                                    </div>
+                                    {% include molecule('navigation-list') with {
+                                        modifiers: ['secondary'],
+                                        class: 'user-navigation__sub-nav',
+                                        data: {
+                                            nodes: [
+                                                { url: url('customer/overview'), title: 'customer.account.overview' | trans },
+                                                { url: url('customer/profile'), title: 'customer.account.profile_data' | trans },
+                                                { url: url('customer/address'), title: 'customer.account.address' | trans },
+                                                { url: url('customer/order'), title: 'customer.account.order_history' | trans },
+                                                { url: url('return/list'), title: 'return_page.default_title' | trans },
+                                                { url: url('customer/newsletter'), title: 'customer.account.newsletter' | trans },
+                                                { url: url('quote-request'), title: 'quote_request_widget.request_for_quote.list.title' | trans },
+                                                { url: url('logout'), title: 'customer.logout' | trans, additionalClass: 'link--additional' },
+                                            ],
+                                        },
+                                    } only %}
+                                </li>
+
+                                {% if
+                                    can('ViewDashboardPermissionPlugin') or
+                                    can('ViewCompanyBusinessUnitFilesPermissionPlugin') or
+                                    can('ViewCompanyFilesPermissionPlugin') or
+                                    can('ViewBusinessUnitSspAssetPermissionPlugin') or
+                                    can('ViewCompanySspAssetPermissionPlugin') or
+                                    can('ViewBusinessUnitSspServicePermissionPlugin') or
+                                    can('ViewCompanySspServicePermissionPlugin') or
+                                    can('ViewBusinessUnitSspInquiryPermissionPlugin') or
+                                    can('ViewCompanySspInquiryPermissionPlugin')
+                                %}
+                                    <li class="user-navigation__item user-navigation__item--user">
+                                        <div class="user-navigation__user-name">
+                                            <span class="user-navigation__icon">
+                                                {% include atom('icon') with {
+                                                    modifiers: ['bigger'],
+                                                    data: { name: 'ssp' },
+                                                } only %}
+                                                {% include atom('icon') with {
+                                                    class: 'user-navigation__arrow',
+                                                    data: { name: 'caret-down' },
+                                                } only %}
+                                            </span>
+                                            <span class="user-navigation__text">{{ 'self_service_portal.customer_navigation.title' | trans }}</span>
+                                        </div>
+                                        {% embed molecule('navigation-list') with {
+                                            modifiers: ['secondary'],
+                                            class: 'user-navigation__sub-nav',
+                                        } only %}
+                                            {% block menu %}
+                                                {% widget 'SspListMenuItemWidget' args [false] only %}
+                                                    {% block menu %}
+                                                        {% widget widgetData only %}
+                                                            {% block content %}
+                                                                <li>
+                                                                    <a class="link link--secondary" href="{{ data.url }}">{{ data.label }}</a>
+                                                                </li>
+                                                            {% endblock %}
+                                                        {% endwidget %}
+                                                    {% endblock %}
+                                                {% endwidget %}
+                                            {% endblock %}
+                                        {% endembed %}
+                                    </li>
+                                {% endif %}
+
+                                <li class="user-navigation__item">
+                                    <a class="user-navigation__link" href="{{ url('quick-order') }}">
+                                        <span class="user-navigation__icon">
+                                            {% include atom('icon') with {
+                                                modifiers: ['bigger', 'quick-order'],
+                                                data: { name: 'quick-order' },
+                                            } only %}
+                                        </span>
+                                        <span class="user-navigation__text">{{ 'quick-order.page-title' | trans }}</span>
+                                    </a>
+                                </li>
+
+                                <li class="user-navigation__item">
+                                    {% widget 'ShoppingListNavigationMenuWidget' with {
+                                        config: config,
+                                        data: {
+                                            isAjaxMode: data.isAjaxMode,
+                                            parentName: 'user-navigation',
+                                        },
+                                    } only %}
+                                    {% endwidget %}
+                                </li>
+
+                                <li class="user-navigation__item">
+                                    {% if not shouldShowMiniCart %}
+                                        <a class="user-navigation__link" href="{{ url('cart') }}">
+                                            <span class="user-navigation__empty-cart">
+                                                {% include atom('icon') with {
+                                                    modifiers: ['bigger'],
+                                                    data: { name: 'cart' },
+                                                } only %}
+                                            </span>
+                                            <span>{{ 'global.my-cart' | trans }}</span>
+                                        </a>
+                                    {% else %}
+                                        {% widget 'MiniCartWidget' args [cartQuantityText] with {
+                                            config: config,
+                                            data: {
+                                                isAjaxMode: data.isAjaxMode,
+                                                parentName: 'user-navigation',
+                                            },
+                                        } only %}
+                                        {% endwidget %}
+                                    {% endif %}
+                                </li>
+                            </ul>
+
+                            {% include molecule('toggler-accordion') with {
+                                attributes: {
+                                    'wrap-class-name': 'js-user-navigation',
+                                    'trigger-class-name': 'js-user-navigation__trigger',
+                                    'class-to-toggle': 'user-navigation__sub-nav--touch-active',
+                                    'active-on-touch': 'true',
                                 },
                             } only %}
                         {% else %}
