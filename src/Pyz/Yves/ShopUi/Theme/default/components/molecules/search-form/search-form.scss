@@ -106,6 +106,7 @@
             }
         }
 
+        &__search-by-image,
         &__submit {
             @include helper-effect-transition(background-color);
             display: flex;
@@ -120,11 +121,11 @@
             background: var(--background-subtle);
             color: var(--icon-secondary);
             cursor: pointer;
+            font-size: rem(16);
 
             &:hover {
                 background: var(--background-muted);
             }
-            font-size: rem(16);
         }
 
         &__button-close {

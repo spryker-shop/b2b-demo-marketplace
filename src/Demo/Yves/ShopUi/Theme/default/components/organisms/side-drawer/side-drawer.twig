@@ -1,0 +1,214 @@
+{% extends organism('side-drawer', '@SprykerShop:ShopUi') %}
+
+{% define attributes = {
+    'locked-body-class-name': 'is-locked-tablet',
+    'overlay-class-name': 'main-overlay',
+    'should-close-by-overlay-click': true,
+    'overlay-breakpoint': 1024,
+} %}
+
+{% block body %}
+    <aside class="{{ config.name }}__drawer">
+        <div class="{{ config.name }}__header">
+            {% block close %}
+                <button class="{{ config.name }}__close" type="button" aria-label="{{ 'header.menu.close' | trans }}">
+                    {% include atom('font-icon') with {
+                        class: config.jsName ~ '__close-icon',
+                        modifiers: ['size-inherit'],
+                        data: { name: 'close' },
+                    } only %}
+                </button>
+            {% endblock %}
+
+            {% include molecule('logo') with {
+                class: config.name ~ '__header-logo',
+                modifiers: ['drawer'],
+            } only %}
+
+            {% set cartQuantity = functionExists('getCartQuantity') ? getCartQuantity() : app['cart.quantity'] | default(0) %}
+            {% if is_granted('ROLE_USER') %}
+                <div>
+                    {% widget 'MiniCartWidget' args [cartQuantity] with {
+                        data: {
+                            isAjaxMode: data.isAjaxMode,
+                            view: 'side-drawer',
+                            ajaxClassSuffix: 'side-drawer-trigger',
+                        },
+                    } only %}
+                    {% endwidget %}
+                </div>
+            {% else %}
+                <a href="{{ url('login', { redirectUri: app.request.uri }) }}"
+                   class="button {{ config.name }}__header-sign-in">
+                    {{ 'customer.please_login' | trans }}
+                </a>
+            {% endif %}
+        </div>
+
+        <div class="{{ config.name }}__panels">
+            <div class="{{ config.name }}__panel {{ config.name }}__panel--active {{ config.jsName }}__panel" data-panel-id="main">
+                <div class="{{ config.name }}__content">
+                    <div class="{{ config.name }}__zone-search">
+                        {% embed molecule('search-form') with {
+                            modifiers: ['drawer'],
+                            attributes: {
+                                'data-search-id': 'mobile',
+                            },
+                            data: {
+                                byImage: true,
+                            },
+                        } only %}
+                        {% endembed %}
+                    </div>
+
+                    <div class="{{ config.name }}__zone-account">
+                        {% if is_granted('ROLE_USER') %}
+                            {% set customerFullNameWidget = findWidget('CustomerFullNameWidget') %}
+                            {% set customerFullName = customerFullNameWidget.customerFullName | default('') %}
+
+                            {% set menuItemCompanyWidget = findWidget('MenuItemCompanyWidget') %}
+                            {% set companyName = menuItemCompanyWidget.companyName | default('') %}
+
+                            {% include molecule('header-dropdown') with {
+                                modifiers: ['drawer'],
+                                data: {
+                                    preset: 'user-account',
+                                    userName: customerFullName,
+                                    companyName: companyName,
+                                    isDrawer: true,
+                                    drillDownTarget: 'account-panel',
+                                },
+                            } only %}
+                        {% endif %}
+                    </div>
+
+                    <div class="{{ config.name }}__zone-browse">
+                        <span class="{{ config.name }}__zone-label">{{ 'header.drawer.browse' | trans }}</span>
+
+                        <div class="{{ config.name }}__browse-list">
+                            {% block navigation %}
+                                {% widget 'NavigationWidget' args ['MAIN_NAVIGATION', 'navigation-main'] only %}{% endwidget %}
+                            {% endblock %}
+                        </div>
+
+                        <hr class="divider {{ config.name }}__zone-divider">
+                    </div>
+
+                    {% if is_granted('ROLE_USER') %}
+                        <div class="{{ config.name }}__zone-quick-links">
+                            <button type="button" class="{{ config.name }}__quick-link-row js-side-drawer__drill-down-trigger" data-target-panel="shopping-list-panel">
+                                <span>{{ 'customer.account.shopping_list' | trans }}</span>
+                                {% include atom('font-icon') with { class: config.name ~ '__row-chevron', data: { name: 'chevron_right' }, attributes: { 'aria-hidden': 'true' } } only %}
+                            </button>
+
+                            {% if can('SeeCompanyMenuPermissionPlugin') %}
+                                {% include molecule('header-dropdown') with {
+                                    modifiers: ['drawer'],
+                                    data: {
+                                        preset: 'self-service',
+                                        isDrawer: true,
+                                        drillDownTarget: 'ssp-panel',
+                                    },
+                                } only %}
+                            {% endif %}
+
+                            <a href="{{ url('quick-order') }}" class="{{ config.name }}__quick-link-row link--no-decoration">
+                                <span>{{ 'quick-order.page-title' | trans }}</span>
+                            </a>
+
+                            <hr class="divider {{ config.name }}__zone-divider">
+                        </div>
+                    {% endif %}
+
+                    <div class="{{ config.name }}__zone-preferences">
+                        {% if can('SeePricePermissionPlugin') %}
+                            <div class="{{ config.name }}__preference-row">
+                                {% widget 'PriceModeSwitcherWidget' only %}{% endwidget %}
+                            </div>
+                            <div class="{{ config.name }}__preference-row">
+                                {% widget 'CurrencyWidget' only %}{% endwidget %}
+                            </div>
+                        {% endif %}
+
+                        <div class="{{ config.name }}__preference-row">
+                            {% widget 'LanguageSwitcherWidget' args [app.request.pathInfo, app.request.queryString, app.request.requestUri] only %}{% endwidget %}
+                        </div>
+
+                        {% widget 'StoreSwitcher' with {
+                            embed: {
+                                configName: config.name,
+                            },
+                        } only %}
+                            {% block body %}
+                                <div class="{{ embed.configName }}__preference-row">
+                                    {{ parent() }}
+                                </div>
+                            {% endblock %}
+                        {% endwidget %}
+                    </div>
+                </div>
+            </div>
+
+            {% if is_granted('ROLE_USER') %}
+                <div class="{{ config.name }}__panel {{ config.jsName }}__panel" data-panel-id="account-panel">
+                    <div class="{{ config.name }}__content">
+                        <div class="{{ config.name }}__panel-body">
+                            {% include molecule('header-dropdown') with {
+                                data: {
+                                    preset: 'user-account',
+                                    panelOnly: true,
+                                },
+                            } only %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if is_granted('ROLE_USER') and can('SeeCompanyMenuPermissionPlugin') %}
+                <div class="{{ config.name }}__panel {{ config.jsName }}__panel" data-panel-id="ssp-panel">
+                    <div class="{{ config.name }}__content">
+                        <div class="{{ config.name }}__panel-body">
+                            {% include molecule('header-dropdown') with {
+                                data: {
+                                    preset: 'self-service',
+                                    panelOnly: true,
+                                },
+                            } only %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if is_granted('ROLE_USER') %}
+                <div class="{{ config.name }}__panel {{ config.jsName }}__panel" data-panel-id="shopping-list-panel">
+                    <div class="{{ config.name }}__content">
+                        <div class="{{ config.name }}__panel-body">
+                            {% widget 'ShoppingListNavigationMenuWidget' with {
+                                data: {
+                                    isAjaxMode: data.isAjaxMode,
+                                    view: 'side-drawer',
+                                },
+                            } only %}
+                            {% endwidget %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="{{ config.name }}__panel {{ config.jsName }}__panel" data-panel-id="cart-panel">
+                <div class="{{ config.name }}__content">
+                    <div class="{{ config.name }}__panel-body">
+                        {% widget 'MiniCartWidget' args [cartQuantity] with {
+                            data: {
+                                isAjaxMode: data.isAjaxMode,
+                                view: 'mini-cart',
+                                ajaxClassSuffix: 'side-drawer-panel',
+                            },
+                        } only %}
+                        {% endwidget %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+{% endblock %}
