@@ -34,6 +34,7 @@ use Spryker\Zed\CompanyUnitAddressDataImport\Communication\Plugin\CompanyUnitAdd
 use Spryker\Zed\CompanyUnitAddressLabelDataImport\Communication\Plugin\CompanyUnitAddressLabelDataImportPlugin;
 use Spryker\Zed\CompanyUnitAddressLabelDataImport\Communication\Plugin\CompanyUnitAddressLabelRelationDataImportPlugin;
 use Spryker\Zed\CompanyUserDataImport\Communication\Plugin\DataImport\CompanyUserDataImportPlugin;
+use Spryker\Zed\Configuration\Communication\Plugin\DataImport\ConfigurationValueDataImportPlugin;
 use Spryker\Zed\ConfigurableBundleDataImport\Communication\Plugin\ConfigurableBundleTemplateDataImportPlugin;
 use Spryker\Zed\ConfigurableBundleDataImport\Communication\Plugin\ConfigurableBundleTemplateImageDataImportPlugin;
 use Spryker\Zed\ConfigurableBundleDataImport\Communication\Plugin\ConfigurableBundleTemplateSlotDataImportPlugin;
@@ -518,6 +519,7 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
             new SspModelAssetDataImportPlugin(),
             new SspModelProductListDataImportPlugin(),
             new ProductAttachmentDataImportPlugin(),
+            new ConfigurationValueDataImportPlugin(),
         ];
     }
 
