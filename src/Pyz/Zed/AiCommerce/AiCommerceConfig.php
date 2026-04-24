@@ -16,21 +16,21 @@ class AiCommerceConfig extends SprykerAiCommerceConfig
 {
     public function getContentImproverAiConfigurationName(): ?string
     {
-        return AiCommerceConstants::AI_CONFIGURATION_SMART_PIM;
+        return AiCommerceConstants::AI_CONFIGURATION_SMART_PIM_OPENAI;
     }
 
     public function getImageAltTextAiConfigurationName(): ?string
     {
-        return AiCommerceConstants::AI_CONFIGURATION_SMART_PIM;
+        return AiCommerceConstants::AI_CONFIGURATION_SMART_PIM_OPENAI;
     }
 
     public function getCategorySuggestionAiConfigurationName(): ?string
     {
-        return AiCommerceConstants::AI_CONFIGURATION_SMART_PIM;
+        return AiCommerceConstants::AI_CONFIGURATION_SMART_PIM_OPENAI;
     }
 
     public function getTranslationAiConfigurationName(): ?string
     {
-        return AiCommerceConstants::AI_CONFIGURATION_SMART_PIM;
+        return AiCommerceConstants::AI_CONFIGURATION_SMART_PIM_OPENAI;
     }
 }

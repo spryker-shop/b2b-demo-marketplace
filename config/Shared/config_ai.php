@@ -15,5 +15,5 @@ $openAiConfiguration = [
 
 $config[AiFoundationConstants::AI_CONFIGURATIONS] = [
     AiFoundationConstants::AI_CONFIGURATION_DEFAULT => $openAiConfiguration,
-    AiCommerceConstants::AI_CONFIGURATION_SMART_PIM => $openAiConfiguration,
+    AiCommerceConstants::AI_CONFIGURATION_SMART_PIM_OPENAI => $openAiConfiguration,
 ];

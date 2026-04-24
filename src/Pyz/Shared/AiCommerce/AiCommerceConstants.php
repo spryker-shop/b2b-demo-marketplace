@@ -39,5 +39,5 @@ interface AiCommerceConstants extends SprykerFeatureAiCommerceConstants
      *
      * @api
      */
-    public const string AI_CONFIGURATION_SMART_PIM = 'AI_COMMERCE:AI_CONFIGURATION_SMART_PIM';
+    public const string AI_CONFIGURATION_SMART_PIM_OPENAI = 'AI_COMMERCE:AI_CONFIGURATION_SMART_PIM_OPENAI';
 }
