@@ -32,7 +32,7 @@ use Spryker\Zed\Shipment\Business\ShipmentFacadeInterface;
 use SprykerFeature\Zed\AiCommerce\Business\AiCommerceBusinessFactory as SprykerFeatureAiCommerceBusinessFactory;
 
 /**
- * @method \SprykerFeature\Zed\AiCommerce\AiCommerceConfig getConfig()
+ * @method \Pyz\Zed\AiCommerce\AiCommerceConfig getConfig()
  * @method \SprykerFeature\Zed\AiCommerce\Persistence\AiCommerceEntityManagerInterface getEntityManager()
  * @method \SprykerFeature\Zed\AiCommerce\Persistence\AiCommerceRepositoryInterface getRepository()
  */

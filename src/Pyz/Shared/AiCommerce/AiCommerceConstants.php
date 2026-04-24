@@ -28,13 +28,6 @@ interface AiCommerceConstants extends SprykerFeatureAiCommerceConstants
     public const string CONFIGURATION_KEY_OPENAI_DEFAULT_MODEL = 'ai_commerce:open_ai:general:openai_default_model';
 
     /**
-     * Configuration key for the fast non-reasoning OpenAI model used for agent operations.
-     *
-     * @api
-     */
-    public const string CONFIGURATION_KEY_OPENAI_SMART_MODEL = 'ai_commerce:open_ai:general:openai_smart_model';
-
-    /**
      * AI configuration name used by the Smart PIM agent for handling PIM-related queries and actions.
      *
      * @api

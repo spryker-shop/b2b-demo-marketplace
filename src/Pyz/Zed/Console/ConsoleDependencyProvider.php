@@ -518,10 +518,6 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
                 $commands[] = new GeneratePromptsConsole();
             }
 
-            if (class_exists(SecurityCheckerCommand::class)) {
-                $commands[] = new SecurityCheckerCommand();
-            }
-
             $commands[] = new MessageBrokerDebugConsole();
             $commands[] = new MessageBrokerAwsSqsQueuesCreatorConsole();
             $commands[] = new MessageBrokerAwsSnsTopicsCreatorConsole();
