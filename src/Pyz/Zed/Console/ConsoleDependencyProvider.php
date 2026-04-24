@@ -206,6 +206,8 @@ use Spryker\Zed\ZedNavigation\Communication\Console\RemoveNavigationCacheConsole
 use SprykerEco\Zed\Algolia\Communication\Console\AlgoliaEntityExportConsole;
 use SprykerEco\Zed\AmazonQuicksight\Communication\Console\QuicksightUserSyncSaveConsole;
 use SprykerEco\Zed\NewRelic\Communication\Console\RecordDeploymentConsole;
+use SprykerEco\Zed\PunchoutGateway\Communication\Console\PunchoutCxmlDemoConnectionCreateConsole;
+use SprykerEco\Zed\PunchoutGateway\Communication\Console\PunchoutOciDemoConnectionCreateConsole;
 use SprykerFeature\Zed\ProductExperienceManagement\Communication\Console\ImportJobRunConsole;
 use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 use SprykerSdk\Zed\AiDev\Communication\Console\GeneratePromptsConsole;
@@ -522,6 +524,10 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             $commands[] = new MessageBrokerAwsSqsQueuesCreatorConsole();
             $commands[] = new MessageBrokerAwsSnsTopicsCreatorConsole();
             $commands[] = new MessageBrokerSqsToSnsSubscriberConsole();
+
+            // Punchout Gateway demo connections
+            $commands[] = new PunchoutOciDemoConnectionCreateConsole();
+            $commands[] = new PunchoutCxmlDemoConnectionCreateConsole();
         }
 
         $commands[] = new QuicksightUserSyncSaveConsole();

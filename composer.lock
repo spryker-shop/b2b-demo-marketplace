@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "27e459ceade14248cc8c9555c46df7e7",
+    "content-hash": "18508657e9f8f51240bdcd6462fd1a63",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -9519,6 +9519,80 @@
                 "source": "https://github.com/spryker-eco/new-relic/tree/2.1.0"
             },
             "time": "2024-10-07T04:46:02+00:00"
+        },
+        {
+            "name": "spryker-eco/punchout-gateway",
+            "version": "0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-eco/punchout-gateway.git",
+                "reference": "96276eb2b2d7333c53b15028c90085c61cd01382"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-eco/punchout-gateway/zipball/96276eb2b2d7333c53b15028c90085c61cd01382",
+                "reference": "96276eb2b2d7333c53b15028c90085c61cd01382",
+                "shasum": ""
+            },
+            "require": {
+                "friendsofcxml/cxml-php": "^2.2.1",
+                "php": ">=8.3",
+                "spryker-shop/cart-page": "^3.58.0",
+                "spryker-shop/customer-page": "^2.74.0",
+                "spryker/application": "^3.9.0",
+                "spryker/application-extension": "^1.1.0",
+                "spryker/calculation": "^4.0.0",
+                "spryker/cart": "^7.0.0",
+                "spryker/currency": "^4.0.0",
+                "spryker/customer": "^7.10.0",
+                "spryker/kernel": "^3.76.0",
+                "spryker/log": "^3.17.0",
+                "spryker/price": "^5.0.0",
+                "spryker/propel-orm": "^1.0.0",
+                "spryker/quote": "^2.0.0",
+                "spryker/quote-extension": "^1.0.0",
+                "spryker/session": "^4.0.0",
+                "spryker/store": "^1.19.0",
+                "spryker/symfony": "^3.1.0",
+                "spryker/transfer": "^3.42.0",
+                "spryker/util-encoding": "^2.1.1",
+                "spryker/zed-request": "^3.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/container": "*",
+                "spryker/price-product": "*",
+                "spryker/product": "*",
+                "spryker/product-cart-connector": "*",
+                "spryker/propel": "*",
+                "spryker/router": "*",
+                "spryker/testify": "*"
+            },
+            "suggest": {
+                "spryker/router": "In order to integrate the module into Yves"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SprykerEco\\": "src/SprykerEco/",
+                    "SprykerEcoTest\\Shared\\PunchoutGateway\\Helper\\": "tests/SprykerEcoTest/Shared/PunchoutGateway/_support/Helper/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "PunchoutGateway module",
+            "support": {
+                "issues": "https://github.com/spryker-eco/punchout-gateway/issues",
+                "source": "https://github.com/spryker-eco/punchout-gateway/tree/0.2.0"
+            },
+            "time": "2026-04-24T10:38:09+00:00"
         },
         {
             "name": "spryker-eco/stripe",
