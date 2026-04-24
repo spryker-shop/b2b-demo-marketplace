@@ -32,6 +32,8 @@ use Spryker\Zed\ProductBundle\Communication\Plugin\Product\ProductBundleDeactiva
 use Spryker\Zed\ProductBundle\Communication\Plugin\Product\ProductBundleProductConcreteAfterCreatePlugin;
 use Spryker\Zed\ProductBundle\Communication\Plugin\Product\ProductBundleProductConcreteAfterUpdatePlugin;
 use Spryker\Zed\ProductBundle\Communication\Plugin\Product\ProductBundleProductConcreteExpanderPlugin;
+use Spryker\Zed\ProductCategory\Communication\Plugin\Product\ProductCategoryProductAbstractAfterUpdatePlugin;
+use Spryker\Zed\ProductCategory\Communication\Plugin\Product\ProductCategoryProductAbstractPostCreatePlugin;
 use Spryker\Zed\ProductCategory\Communication\Plugin\Product\ProductConcreteCategoriesExpanderPlugin;
 use Spryker\Zed\ProductDiscontinued\Communication\Plugin\SaveDiscontinuedNotesProductConcretePluginUpdate;
 use Spryker\Zed\ProductDiscontinuedProductBundleConnector\Communication\Plugin\Product\DiscontinuedProductConcreteAfterCreatePlugin;
@@ -77,6 +79,7 @@ class ProductDependencyProvider extends SprykerProductDependencyProvider
             new TaxSetProductAbstractPostCreatePlugin(),
             new PriceProductAbstractPostCreatePlugin(),
             new ProductAttachmentProductAbstractPostCreatePlugin(),
+            new ProductCategoryProductAbstractPostCreatePlugin(),
         ];
     }
 
@@ -113,6 +116,7 @@ class ProductDependencyProvider extends SprykerProductDependencyProvider
             new PriceProductAbstractAfterUpdatePlugin(),
             new ProductAttachmentProductAbstractAfterUpdatePlugin(),
             new MerchantProductProductAbstractAfterUpdatePlugin(),
+            new ProductCategoryProductAbstractAfterUpdatePlugin(),
         ];
     }
 

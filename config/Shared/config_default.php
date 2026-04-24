@@ -1156,3 +1156,5 @@ $config[VertexConstants::TAXAMO_API_URL] = getenv('TAXAMO_API_URL') ?: null;
 $config[VertexConstants::TAXAMO_TOKEN] = getenv('TAXAMO_TOKEN') ?: null;
 
 $config[ContentNavigationWidgetConstants::NAVIGATION_REVALIDATION_TIME_IN_SECONDS] = 3600;
+
+require 'config_ai.php';
