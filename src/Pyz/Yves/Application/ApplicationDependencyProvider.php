@@ -10,6 +10,7 @@ declare(strict_types = 1);
 namespace Pyz\Yves\Application;
 
 use Spryker\Yves\Application\ApplicationDependencyProvider as SprykerApplicationDependencyProvider;
+use SprykerEco\Yves\PunchoutGateway\Plugin\Application\PunchoutSecurityHeaderExpanderPlugin;
 use SprykerShop\Yves\DateTimeConfiguratorPageExample\Plugin\Application\ConfiguratorSecurityHeaderExpanderPlugin;
 
 class ApplicationDependencyProvider extends SprykerApplicationDependencyProvider
@@ -21,6 +22,7 @@ class ApplicationDependencyProvider extends SprykerApplicationDependencyProvider
     {
         return [
             new ConfiguratorSecurityHeaderExpanderPlugin(),
+            new PunchoutSecurityHeaderExpanderPlugin(),
         ];
     }
 }
