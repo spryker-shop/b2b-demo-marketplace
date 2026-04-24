@@ -135,6 +135,7 @@ use Spryker\Zed\OauthAuth0\OauthAuth0Config;
 use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Payment\PaymentConfig;
 use Spryker\Zed\Propel\PropelConfig;
+use SprykerEco\Shared\PunchoutGateway\PunchoutGatewayConstants;
 use SprykerEco\Shared\Stripe\StripeConfig;
 use SprykerEco\Shared\Vertex\VertexConstants;
 use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConstants;
@@ -1156,5 +1157,7 @@ $config[VertexConstants::TAXAMO_API_URL] = getenv('TAXAMO_API_URL') ?: null;
 $config[VertexConstants::TAXAMO_TOKEN] = getenv('TAXAMO_TOKEN') ?: null;
 
 $config[ContentNavigationWidgetConstants::NAVIGATION_REVALIDATION_TIME_IN_SECONDS] = 3600;
+
+$config[PunchoutGatewayConstants::ENABLE_LOGGING] = getenv('PUNCHOUT_GATEWAY_ENABLE_LOGGING') ?? false;
 
 require 'config_ai.php';
