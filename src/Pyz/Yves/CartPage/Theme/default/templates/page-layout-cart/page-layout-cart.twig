@@ -48,6 +48,9 @@
         {% block emptyCart %}
             <div class="grid">
                 <div class="col col--xl-9">
+
+                    {% widget 'PunchoutCartWidget' args [data.cart] only %}{% endwidget %}
+
                     {% block emptyCartMessage %}
                         <div class="text-center">
                             {% include atom('icon') with {
@@ -177,6 +180,9 @@
                 </div>
             </div>
             <div class="col col--sm-12 col--xl-9">
+
+                {% widget 'PunchoutCartWidget' args [data.cart] only %}{% endwidget %}
+
                 {% if data.isQuoteLocked %}
                     {% include molecule('cart-locking', 'CartPage') with {
                         data: {

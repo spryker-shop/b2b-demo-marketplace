@@ -34,6 +34,7 @@ class QuoteConfig extends SprykerQuoteConfig
             QuoteTransfer::QUOTE_PROCESS_FLOW,
             QuoteTransfer::ORIGINAL_SALES_ORDER_ITEM_UNIT_PRICES,
             QuoteTransfer::ORIGINAL_SALES_ORDER_ITEMS,
+            QuoteTransfer::PUNCHOUT_SESSION,
         ]);
     }
 }
