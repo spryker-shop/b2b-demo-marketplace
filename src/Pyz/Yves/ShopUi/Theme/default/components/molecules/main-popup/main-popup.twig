@@ -1,5 +1,10 @@
 {% extends molecule('main-popup', '@SprykerShop:ShopUi') %}
 
+{% define data = {
+    subtitle: '',
+    footer: '',
+} %}
+
 {% define attributes = {
     'additional-overlay-class-name': '',
 } %}
@@ -8,4 +13,27 @@
     {{ attributes['additional-overlay-class-name'] }}
 
     {{ parent() }}
+{% endblock %}
+
+{% block title %}
+    <div class="{{ config.name }}__title-block">
+        {% if data.title %}
+            <h2 class="{{ config.name }}__title">{{ data.title }}</h2>
+        {% endif %}
+        {% if data.subtitle %}
+            <p class="{{ config.name }}__subtitle">{{ data.subtitle }}</p>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+
+    {% block foot %}
+        {% if data.footer %}
+            <div class="{{ config.name }}__foot {{ _self.renderClass(config.name ~ '__foot', modifiers) }}">
+                {{ data.footer | raw }}
+            </div>
+        {% endif %}
+    {% endblock %}
 {% endblock %}

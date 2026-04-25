@@ -1,12 +1,8 @@
 @include shop-ui-list {
-    &--footer {
-        padding: 0 rem(10);
-        margin-bottom: rem(26);
+    line-height: 1.25;
 
-        @include helper-breakpoint-media-min($md) {
-            padding: 0;
-            margin-bottom: 0;
-        }
+    &--alert {
+        color: var(--text-state-error);
     }
 
     &--checkout {

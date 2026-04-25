@@ -9,24 +9,10 @@ declare(strict_types = 1);
 
 namespace Demo\Shared\AiCommerce;
 
-use SprykerFeature\Shared\AiCommerce\AiCommerceConstants as SprykerFeatureAiCommerceConstants;
+use Pyz\Shared\AiCommerce\AiCommerceConstants as PyzFeatureAiCommerceConstants;
 
-interface AiCommerceConstants extends SprykerFeatureAiCommerceConstants
+interface AiCommerceConstants extends PyzFeatureAiCommerceConstants
 {
-    /**
-     * Configuration key for the OpenAI API token.
-     *
-     * @api
-     */
-    public const string CONFIGURATION_KEY_OPENAI_API_TOKEN = 'ai_commerce:open_ai:general:openai_api_token';
-
-    /**
-     * Configuration key for the default OpenAI model used for general AI operations.
-     *
-     * @api
-     */
-    public const string CONFIGURATION_KEY_OPENAI_DEFAULT_MODEL = 'ai_commerce:open_ai:general:openai_default_model';
-
     /**
      * Configuration key for the fast non-reasoning OpenAI model used for agent operations.
      *

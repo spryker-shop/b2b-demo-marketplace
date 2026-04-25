@@ -1,0 +1,33 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'avatar',
+    tag: 'span',
+} %}
+
+{% define data = {
+    placeholder: null,
+    image: null,
+    status: null,
+} %}
+
+{% block body %}
+    {% if data.placeholder %}
+        {{ data.placeholder }}
+    {% else %}
+        {% include atom('font-icon') with {
+            modifiers: ['filled'],
+            data: {
+                name: 'person'
+            }
+        } only %}
+    {% endif %}
+
+    {% if data.image %}
+        <span class="{{ config.name }}__image" style="background-image: url('{{ data.image }}');"></span>
+    {% endif %}
+
+    {% if data.status %}
+        <span class="{{ config.name }}__status"></span>
+    {% endif %}
+{% endblock %}

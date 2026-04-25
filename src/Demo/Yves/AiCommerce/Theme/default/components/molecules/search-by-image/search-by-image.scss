@@ -1,24 +1,9 @@
 @include ai-commerce-search-by-image {
-    position: absolute;
-    right: rem(40);
-    top: 50%;
-    translate: 0 -50%;
-    z-index: $setting-zi-search-suggestions + 2;
-
-    @include helper-breakpoint(lg) {
-        right: rem(10);
-    }
-
     &__popup-trigger {
         @include helper-effect-transition(rotate);
-        border: none;
-        width: rem(32);
-        height: rem(32);
         background: none;
         cursor: pointer;
         display: flex;
-        align-items: center;
-        justify-content: center;
 
         &:hover {
             rotate: 90deg;

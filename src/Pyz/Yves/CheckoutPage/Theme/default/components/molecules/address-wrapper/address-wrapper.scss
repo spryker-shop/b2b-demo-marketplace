@@ -51,6 +51,10 @@ $address-form-background-width: calc(100% + #{rem(40)});
             #{$name}__inner-content {
                 max-width: $address-form-width;
                 margin: 0 auto;
+                display: flex;
+                flex-wrap: wrap;
+                --grid-gap: #{rem(10)};
+                gap: var(--grid-gap);
             }
 
             &--mobile-background {

@@ -1,0 +1,5 @@
+{% extends '@Spryker:ProductManagement/Edit/index.twig' %}
+{% block content %}
+    {{ parent() }}
+    {% include '@SprykerFeature:AiCommerce/SmartProductManagement/_partials/product-management-ai-modals.twig' ignore missing %}
+{% endblock %}

@@ -1,155 +1,52 @@
 @include shop-ui-link {
-    color: $setting-color-main;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+    cursor: pointer;
+    color: var(--text-brand);
+    font-size: var(--font-size-14, 14px);
+    font-weight: 500;
+    gap: var(--scale-4);
 
-    &--icon {
-        display: flex;
-        align-items: center;
-        color: $setting-color-gray-5;
-        font-size: rem(13);
-        font-weight: fw(medium);
-        line-height: rem(16);
+    &:hover {
+        text-decoration: underline;
+        color: var(--text-brand);
+    }
 
-        @include helper-breakpoint-media-min($xl) {
-            @include helper-effect-transition(color);
-        }
+    &--sm {
+        font-size: var(--body-sm-size);
+    }
 
-        .icon {
-            color: currentColor;
-        }
+    &--lg {
+        font-size: var(--font-size-16);
+    }
 
-        &:hover,
-        &:focus {
+    &--subtle,
+    &--subtle:hover {
+        color: var(--text-secondary);
+    }
+
+    &--danger,
+    &--danger:hover {
+        color: var(--text-state-error);
+    }
+
+    &--no-decoration {
+        text-decoration: none;
+
+        &:hover {
             text-decoration: none;
-            color: $setting-color-gray-3;
         }
     }
 
     &--footer {
-        color: $setting-color-gray-3;
-        line-height: rem(30);
-
-        &:hover,
-        &:focus {
-            color: $setting-color-gray-4;
-        }
-    }
-
-    &--checkout {
-        font-size: rem(13);
-        line-height: normal;
-    }
-
-    &--social {
-        color: $setting-color-gray-4;
-
-        &:hover,
-        &:focus {
-            color: $setting-color-gray-3;
-        }
-    }
-
-    &--privacy {
-        color: $setting-color-white;
-
-        &:hover,
-        &:focus {
-            color: $setting-color-alt;
-        }
-    }
-
-    &--action {
-        color: $setting-color-gray-5;
-
-        &:hover,
-        &:focus {
-            color: $setting-color-gray-4;
-        }
-    }
-
-    &--error-block {
-        text-decoration: underline;
-        font: fw(regular) rem(15) / rem(30) $setting-font-family;
-        color: $setting-color-gray-2;
-    }
-
-    &--company-user {
-        color: $setting-color-gray-4;
-        white-space: nowrap;
-
-        @include helper-breakpoint-media-min($xl) {
-            @include helper-effect-transition(color);
-        }
-
-        &:focus,
-        &:hover {
-            text-decoration: none;
-            color: $setting-color-text;
-        }
-    }
-
-    &--secondary {
-        color: $setting-color-gray-4;
-
-        @include helper-breakpoint-media-min($xl) {
-            @include helper-effect-transition(color);
-        }
+        color: var(--icon-secondary);
 
         &:hover {
-            text-decoration: none;
-            color: $setting-color-text;
-        }
-    }
-
-    &--alternative {
-        color: $setting-color-black;
-
-        @include helper-breakpoint-media-min($xl) {
-            @include helper-effect-transition(color);
-        }
-
-        &:focus,
-        &:hover {
-            text-decoration: none;
-            color: $setting-color-gray-3;
-        }
-    }
-
-    &--additional {
-        color: $setting-color-main;
-
-        @include helper-breakpoint-media-min($xl) {
-            @include helper-effect-transition(color);
-        }
-
-        &:focus,
-        &:hover {
-            text-decoration: none;
-            color: $setting-color-gray-4;
-        }
-    }
-
-    &--to-button {
-        width: 100%;
-        padding: rem(11);
-        font-size: rem(14);
-        justify-content: center;
-        border-radius: $setting-border-radius;
-        border: rem(1) solid $setting-color-gray-1;
-
-        @include helper-breakpoint-media-min($lg) {
-            width: auto;
-            border: 0;
-            justify-content: flex-start;
-            padding: 0;
-            font-size: rem(13);
-        }
-    }
-
-    &--smaller {
-        font-size: rem(12);
-
-        &:hover {
-            text-decoration: none;
+            color: var(--icon-primary);
         }
     }
 }

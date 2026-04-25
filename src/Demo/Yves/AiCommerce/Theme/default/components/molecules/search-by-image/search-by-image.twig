@@ -1,11 +1,75 @@
 {% extends molecule('search-by-image', '@SprykerFeature:AiCommerce') %}
 
-{% block triggerFileButton %}
-    {% set triggerButtonClassname = "search-by-image__popup-trigger search-by-image__popup-trigger--#{data.dataSearchId}" %}
-    {{ parent() }}
-{% endblock %}
+{% block body %}
+    {% set imageField = data.form.image %}
+    {% set tokenField = data.form._token %}
 
-{% block triggerPhotoButton %}
+    {% set instanceUid = random(999999) %}
     {% set triggerButtonClassname = "search-by-image__popup-trigger search-by-image__popup-trigger--#{data.dataSearchId}" %}
-    {{ parent() }}
+    {% set triggerButtonFilePopupTriggerClassname = "js-search-by-image__file-popup-trigger--#{data.dataSearchId}-#{instanceUid}" %}
+    {% set triggerButtonPhotoPopupTriggerClassname = "js-search-by-image__photo-popup-trigger--#{data.dataSearchId}-#{instanceUid}" %}
+
+    {% block triggerFileButton %}
+        <button type="button" class="{{ config.jsName }}__btn-search-by-file {{ triggerButtonClassname }} {{ triggerButtonFilePopupTriggerClassname }}">
+            {% include atom('icon') with {
+                data: { name: 'visual-search' },
+            } only %}
+        </button>
+    {% endblock %}
+
+    {% block triggerPhotoButton %}
+        <button type="button" class="{{ config.jsName }}__btn-search-by-photo {{ triggerButtonClassname }} {{ triggerButtonPhotoPopupTriggerClassname }} is-hidden">
+            {% include atom('icon') with {
+                data: { name: 'visual-search' },
+            } only %}
+        </button>
+    {% endblock %}
+
+    <input class="{{ config.name }}__file-input {{ config.jsName }}__file-input"
+            type="file" name="{{ imageField.vars.full_name }}"
+            accept="{{ imageField.vars.attr.accept }}">
+
+    <input class="{{ config.name }}__token {{ config.jsName }}__token"
+            type="hidden" name="{{ tokenField.vars.full_name }}"
+            value="{{ tokenField.vars.value }}">
+
+    {% include molecule('ajax-provider') with {
+        class: config.jsName ~ '__ajax-provider',
+        attributes: {
+            url: data.formAction,
+            method: 'POST',
+            'response-type': 'json',
+        },
+    } only %}
+
+    {% block searchByFilePopup %}
+        {% include molecule('main-popup') with {
+            class: "#{config.name}__search-by-file-popup #{config.name}__search-by-file-popup--#{data.dataSearchId}",
+            data: {
+                title: 'ai_commerce.search_by_image.form.image.label' | trans,
+                content: block('searchByFilePopupContent'),
+            },
+            attributes: {
+                'content-id': "search-by-file__main-popup--#{data.dataSearchId}-#{instanceUid}",
+                'trigger-class-name': triggerButtonFilePopupTriggerClassname,
+                'has-content-mount': true,
+            },
+        } only %}
+    {% endblock %}
+
+    {% block searchByPhotoPopup %}
+        {% include molecule('main-popup') with {
+            class: "#{config.name}__search-by-photo-popup #{config.name}__search-by-photo-popup--#{data.dataSearchId}",
+            modifiers: ['camera-view'],
+            data: {
+                title: 'ai_commerce.search_by_image.form.image.label' | trans,
+                content: block('searchByPhotoPopupContent'),
+            },
+            attributes: {
+                'content-id': "search-by-photo__main-popup--#{data.dataSearchId}-#{instanceUid}",
+                'trigger-class-name': triggerButtonPhotoPopupTriggerClassname,
+                'has-content-mount': true,
+            },
+        } only %}
+    {% endblock %}
 {% endblock %}
