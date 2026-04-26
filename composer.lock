@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cc6e78b59f1fa13b7dcbfd330c2e251e",
+    "content-hash": "f5cb48b52ae579f51057aca9e340901c",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -35163,16 +35163,16 @@
         },
         {
             "name": "spryker/composer-autoload-plugin",
-            "version": "0.2.1",
+            "version": "dev-bugfix/supesc-1103/fix-autoloading",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/composer-autoload-plugin.git",
-                "reference": "d4f4d022731fef7d90d36fddae39df189f77897c"
+                "reference": "4dfb20fba8d6a0ea6c16377f8b78fe237f13762d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/composer-autoload-plugin/zipball/d4f4d022731fef7d90d36fddae39df189f77897c",
-                "reference": "d4f4d022731fef7d90d36fddae39df189f77897c",
+                "url": "https://api.github.com/repos/spryker/composer-autoload-plugin/zipball/4dfb20fba8d6a0ea6c16377f8b78fe237f13762d",
+                "reference": "4dfb20fba8d6a0ea6c16377f8b78fe237f13762d",
                 "shasum": ""
             },
             "require": {
@@ -35204,9 +35204,9 @@
             "description": "Composer plugin to optimize autoload generation for Spryker projects",
             "support": {
                 "issues": "https://github.com/spryker/composer-autoload-plugin/issues",
-                "source": "https://github.com/spryker/composer-autoload-plugin/tree/0.2.1"
+                "source": "https://github.com/spryker/composer-autoload-plugin/tree/bugfix/supesc-1103/fix-autoloading"
             },
-            "time": "2025-11-26T14:35:30+00:00"
+            "time": "2026-04-26T11:11:52+00:00"
         },
         {
             "name": "spryker/config",
@@ -92017,6 +92017,7 @@
         "spryker-feature/self-service-portal": 20,
         "spryker-feature/spryker-core": 20,
         "spryker-feature/spryker-core-back-office": 20,
+        "spryker/composer-autoload-plugin": 20,
         "spryker/cypress-tests": 20,
         "spryker/robotframework-suite-tests": 20
     },
