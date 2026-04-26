@@ -2,8 +2,7 @@
 
 {% block contentTop %}
     {% embed molecule('slick-carousel') with {
-        class: 'spacing-bottom spacing-bottom--big',
-        modifiers: ['jumbotron'],
+        modifiers: ['jumbotron', 'equal-height'],
         attributes: {
             'slider-config': '{
                 "slidesToShow": 1,
@@ -12,31 +11,16 @@
                 "nextArrow": false,
                 "prevArrow": false,
                 "autoplaySpeed": 4000,
-                "centerMode": true,
-                "centerPadding": "240px",
-                "responsive": [{
-                     "breakpoint": 1400,
-                     "settings": {
-                         "centerPadding": "130px"
-                     }
-                },
-                {
-                    "breakpoint": 1200,
-                    "settings": {
-                        "centerPadding": "40px"
-                    }
-                },
+                "responsive": [
                 {
                     "breakpoint": 768,
                     "settings": {
-                        "centerPadding": "12px",
                         "autoplay": false
                     }
                 },
                 {
                     "breakpoint": 375,
                     "settings": {
-                        "centerMode": false,
                         "autoplay": false
                     }
                 }]
@@ -52,18 +36,23 @@
 {% block content %}
     {% cms_slot 'slt-3' %}
 
-    {% embed organism('section') with {
-        modifiers: ['secondary', 'full-width'],
-        class: 'spacing-top spacing-top--inner spacing-top--big',
-    } only %}
-        {% block inner %}
-            <div class="grid grid--left grid--middle">
-                {% cms_slot 'slt-4' %}
-            </div>
-        {% endblock %}
-    {% endembed %}
+    <div class="grid grid--stretch grid--gap grid--sm-scroll spacing-top--medium spacing-bottom--large">
+        {% cms_slot 'slt-4' %}
+    </div>
+
+    {% cms_slot 'slt-5' %}
 {% endblock %}
 
 {% block contentBottom %}
-    {% cms_slot 'slt-5' %}
+    {% embed organism('section') with {
+        class: 'spacing-top--large',
+        modifiers: ['highlight-bg'],
+        data: {
+            innerClass: 'container',
+        },
+    } only %}
+        {% block inner %}
+            {% cms_slot 'slt-home-bottom' %}
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

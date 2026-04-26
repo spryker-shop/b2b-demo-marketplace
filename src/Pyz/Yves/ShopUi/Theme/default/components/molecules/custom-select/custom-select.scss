@@ -1,130 +1,142 @@
+@import '../../atoms/input/input';
+
 @mixin shop-ui-custom-select($name: '.custom-select') {
     #{$name} {
         position: relative;
         max-width: 100%;
-        display: inline-block;
+        gap: rem(4);
+        align-items: center;
+        display: inline-flex;
+        width: 100%;
 
-        &:has(.light) {
-            .select2-selection__rendered,
-            #{$name}__select {
-                background: $setting-color-white;
-            }
-        }
-
-        &__select {
-            border-radius: $setting-border-radius;
-            border: rem(1) solid $setting-color-gray-1;
-            color: $setting-color-gray-5;
-            background: $setting-color-gray-7;
-            font: fw(regular) rem(15) / rem(46) $setting-font-family;
-            font-size: rem(13);
-            padding: 0 rem(35) 0 rem(16);
+        @include shop-ui-input-extended('.custom-select__select') {
             appearance: none;
-
-            @include helper-breakpoint-media-min($lg) {
-                padding: 0 rem(45) 0 rem(20);
-                font-size: rem(14);
-            }
+            padding-right: var(--scale-24);
+            min-width: rem(70);
         }
 
         &__caret {
             position: absolute;
             z-index: $setting-zi-custom-select + 1;
             top: 50%;
-            right: rem(16);
-            transform: translateY(-50%);
+            right: rem(8);
+            translate: 0 -40%;
             pointer-events: none;
-
-            @include helper-breakpoint-media-min($lg) {
-                right: rem(21);
-            }
+            font-size: 1rem;
+            color: var(--icon-secondary);
         }
 
-        &--alternative {
-            text-transform: uppercase;
-            width: 100%;
+        &:has(.select2-selection__rendered:hover) &__caret,
+        &:has(.custom-select__select:hover) &__caret {
+            color: var(--icon-primary);
+        }
 
-            @include helper-breakpoint-media-min($lg) {
-                width: auto;
+        &__icon {
+            flex-shrink: 0;
+            pointer-events: none;
+        }
+
+        &--nav-top {
+            max-width: none;
+
+            .select2-container {
+                width: auto !important;
+            }
+
+            #{$name}__icon {
+                display: none;
             }
 
             #{$name}__select {
-                width: 100%;
-                font-size: rem(12);
-                line-height: rem(38);
-                padding: 0 rem(20) 0 rem(6);
-                border: rem(1) solid $setting-color-gray-1;
-                color: $setting-color-gray-5;
-                background: $setting-color-gray-6;
-
-                @include helper-breakpoint-media-min($lg) {
-                    width: auto;
-                    text-transform: uppercase;
-                    border-radius: 0;
-                    background: $setting-color-transparent;
-                    border: none;
-                    color: $setting-color-gray-4;
-                    font-size: rem(11);
-                    line-height: rem(40);
-                    font-weight: fw(bold);
-                    letter-spacing: rem(0.6);
-                    padding: 0 rem(30) 0 rem(18);
-                }
-            }
-
-            #{$name}__caret {
-                right: rem(3);
-            }
-        }
-
-        &--small {
-            #{$name}__select {
-                font-size: rem(13);
-                line-height: rem(38);
-                font-weight: fw(medium);
-
-                @include helper-breakpoint-media-min($lg) {
-                    font-size: rem(14);
-                    font-weight: fw(regular);
-                }
-            }
-        }
-
-        &--smaller {
-            width: 100%;
-
-            #{$name}__select {
-                width: 100%;
-                font-size: rem(12);
-                line-height: rem(20);
-                font-weight: fw(regular);
-                border-radius: $setting-border-radius;
+                padding: 0;
+                margin: 0;
                 border: none;
-                background: $setting-color-gray-7;
-                padding: 0 rem(27) 0 rem(8);
+                background: none;
+                box-shadow: none;
+                color: var(--text-primary);
+                font-family: var(--body-md-family);
+                font-size: var(--body-md-size);
+                font-weight: var(--body-md-weight);
+                line-height: var(--body-md-line-height);
+                white-space: nowrap;
+                appearance: none;
+                cursor: pointer;
+                min-height: 0;
+                height: auto;
+                padding-right: rem(28);
+                min-width: 0;
+
+                &:focus-visible {
+                    outline: var(--stroke-md) solid var(--focus-ring);
+                    outline-offset: var(--scale-2);
+                    border-radius: var(--radius-xs);
+                }
+
+                option {
+                    color: var(--text-primary);
+                    background: var(--background-surface);
+                }
             }
 
             #{$name}__caret {
-                right: rem(3);
+                position: absolute;
+                right: 0;
+                top: 50%;
+                translate: 0 -50%;
+                margin: 0;
+                font-size: rem(18);
+                color: var(--icon-secondary);
+                opacity: 1;
+                rotate: -90deg;
+
+                @include helper-breakpoint-media-min($xl) {
+                    rotate: unset;
+                }
             }
-        }
 
-        &--mobile-expand {
-            width: 100%;
+            @include helper-breakpoint-media-min($xl) {
+                #{$name}__icon {
+                    display: block;
+                    position: absolute;
+                    left: 0;
+                    top: 50%;
+                    translate: 0 -50%;
+                    pointer-events: none;
+                    font-size: rem(14);
+                    color: var(--text-inverse);
+                    opacity: 0.7;
+                }
 
-            @include helper-breakpoint-media-min($lg) {
-                width: auto;
-            }
+                &:has(#{$name}__icon) {
+                    .select2-selection__rendered,
+                    #{$name}__select {
+                        padding-left: rem(22);
+                    }
+                }
 
-            #{$name}__select {
-                width: 100%;
+                #{$name}__select {
+                    color: var(--text-inverse);
+                    font-family: var(--body-sm-family);
+                    font-size: var(--body-sm-size);
+                    font-weight: var(--body-sm-weight);
+                    line-height: var(--body-sm-line-height);
+                    padding-right: 0;
+                }
 
-                @include helper-breakpoint-media-min($lg) {
-                    width: auto;
+                #{$name}__caret {
+                    translate: 0 -40%;
+                    opacity: 0.7;
+                }
+
+                &:has(.select2-selection__rendered:hover) .custom-select__caret,
+                &:has(.custom-select__select:hover) .custom-select__caret {
+                    color: var(--text-inverse);
+                    opacity: 1;
                 }
             }
         }
 
+        &--expended,
         &--full-width {
             width: 100%;
 
@@ -133,28 +145,8 @@
             }
         }
 
-        &--margin-bottom {
-            margin-bottom: rem(21);
-        }
-
-        &--shopping-list {
-            margin-top: rem(12);
-
-            @include helper-breakpoint-media-min($xl) {
-                margin-left: rem(132);
-                width: calc(100% - 132px);
-            }
-        }
-
-        &--light {
-            #{$name}__select,
-            .select2-selection__rendered {
-                background: $setting-color-gray-7;
-
-                @include helper-breakpoint-media-min($lg) {
-                    background: $setting-color-white;
-                }
-            }
+        &--width-auto {
+            width: auto;
         }
 
         @content;
@@ -163,23 +155,23 @@
 
 @mixin shop-ui-select2($name: '.select2') {
     #{$name} {
-        &_selection:focus-visible {
-            #{$name}-selection__rendered {
-                border-color: $setting-color-input-border-focus;
+        @include shop-ui-input-extended('.select2-selection__rendered') {
+            padding-right: var(--scale-24);
+            min-width: rem(70);
+        }
+
+        &-container--focus {
+            .select2-selection__rendered {
+                border-color: var(--input-border-focus);
+                box-shadow: var(--shadows-focus-x) var(--shadows-focus-y) var(--shadows-focus-blur)
+                    var(--shadows-focus-spread) var(--shadows-focus-color);
             }
         }
 
-        &-selection__rendered {
-            display: block;
-            border-radius: $setting-border-radius;
-            border: rem(1) solid $setting-color-gray-1;
-            color: $setting-color-gray-5;
-            background: $setting-color-gray-7;
-            font: fw(regular) rem(15) / rem(46) $setting-font-family;
-            padding: 0 rem(45) 0 rem(20);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+        &-selection:focus-visible {
+            outline: var(--stroke-md) solid var(--focus-ring);
+            outline-offset: var(--scale-2);
+            border-radius: var(--radius-xs);
         }
 
         &-selection__arrow {
@@ -207,24 +199,32 @@
             vertical-align: middle;
             cursor: pointer;
 
-            &--focus {
-                @include helper-outline;
-            }
-
-            &--alternative {
+            &--nav-top {
                 #{$name}-selection__rendered {
-                    border-radius: 0;
+                    padding-left: var(--scale-4);
+                    color: var(--text-primary);
+                    font-family: var(--body-md-family);
+                    font-size: var(--body-md-size);
+                    font-weight: var(--body-md-weight);
+                    line-height: var(--body-md-line-height);
+                    white-space: nowrap;
+                    cursor: pointer;
                     border: none;
                     background: none;
-                    font-size: rem(11);
-                    line-height: rem(40);
-                    font-weight: fw(bold);
-                    letter-spacing: rem(0.6);
-                    padding: 0 rem(30) 0 rem(10);
+                    box-shadow: none;
+                    min-width: 0;
+
+                    @include helper-breakpoint-media-min($xl) {
+                        color: var(--text-inverse);
+                        font-family: var(--body-sm-family);
+                        font-size: var(--body-sm-size);
+                        font-weight: var(--body-sm-weight);
+                        line-height: var(--body-sm-line-height);
+                    }
                 }
 
                 #{$name}-dropdown {
-                    border-radius: 0 0 $setting-border-radius $setting-border-radius;
+                    min-width: rem(120);
                     box-shadow:
                         0 rem(18) rem(18) 0 $setting-color-shadow-1,
                         0 rem(3) rem(3) 0 $setting-color-shadow-1;
@@ -239,66 +239,12 @@
                 }
             }
 
-            &--open {
-                z-index: $setting-zi-custom-select + 1;
-            }
-
-            &--small {
-                #{$name}-selection__rendered {
-                    font-size: rem(14);
-                    line-height: rem(38);
-                }
-
-                #{$name}-results__option {
-                    font-size: rem(14);
-                }
-            }
-
-            &--smaller {
-                left: auto !important;
-
-                #{$name}-selection__rendered {
-                    border-radius: $setting-border-radius;
-                    border: none;
-                    font-size: rem(12);
-                    line-height: rem(20);
-                    font-weight: fw(regular);
-                    padding: 0 rem(27) 0 rem(8);
-                }
-
-                #{$name}-dropdown {
-                    padding: rem(3) 0;
-                    border-radius: 0 0 $setting-border-radius $setting-border-radius;
-                    box-shadow:
-                        0 rem(18) rem(18) 0 $setting-color-shadow-1,
-                        0 rem(3) rem(3) 0 $setting-color-shadow-1;
-                }
-
-                #{$name}-results__option {
-                    padding: 0 rem(12);
-                    font-size: rem(13);
-                    line-height: 2.23;
-                }
-            }
-
-            &--group {
-                .select2-dropdown {
-                    padding: rem(15) rem(20);
-                }
-
-                .select2-results__option {
-                    padding-left: rem(20);
-                }
-
-                .select2-results__options--nested {
-                    .select2-results__option {
-                        margin-left: rem(-20);
-                    }
-                }
-            }
-
             &--disabled {
                 cursor: not-allowed;
+            }
+
+            &--open {
+                z-index: $setting-zi-side-drawer;
             }
         }
 
@@ -308,11 +254,11 @@
             box-sizing: border-box;
             display: block;
             border: none;
-            border-radius: $setting-border-radius;
-            background: $setting-color-white;
-            box-shadow:
-                0 rem(18) rem(18) 0 $setting-color-shadow-1,
-                0 rem(3) rem(3) 0 $setting-color-shadow-1;
+            padding: var(--scale-4) 0;
+            border-radius: var(--radius-sm);
+            background: var(--background-surface);
+            box-shadow: var(--shadows-md-x) var(--shadows-md-y) var(--shadows-md-blur) var(--shadows-md-spread)
+                var(--shadows-md-color);
         }
 
         &-search--dropdown.select2-search--hide {
@@ -323,39 +269,73 @@
             display: block;
         }
 
+        &--sm {
+            #{$name}-results__option {
+                min-height: rem(32);
+                font-size: var(--body-sm-size);
+                padding-left: var(--scale-8);
+                padding-right: var(--scale-8);
+
+                &[aria-selected='true'] {
+                    padding-right: rem(36);
+                }
+            }
+        }
+
+        &-results__options {
+            width: 100%;
+        }
+
         &-results__option {
-            color: $setting-color-text;
-            font-size: rem(15);
-            font-weight: fw(regular);
-            line-height: 1.87;
-            letter-spacing: rem(0.2);
-            padding: rem(10) rem(15);
-            overflow-wrap: break-word;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            font-size: var(--font-size-14);
+            font-weight: var(--font-weight-regular);
+            line-height: var(--body-sm-line-height);
+            letter-spacing: var(--body-sm-letter-spacing);
+            color: var(--text-primary);
+            padding: var(--scale-2) var(--scale-12);
+            min-height: rem(36);
+            gap: var(--scale-8);
 
             &[aria-selected] {
                 cursor: pointer;
             }
 
-            &:hover {
-                background: $setting-color-gray-7;
+            &:not(:has(.select2-results__group)):hover {
+                background: var(--background-subtle);
             }
 
             &[aria-selected='true'] {
                 position: relative;
-                background: $setting-color-main;
-                color: $setting-color-white;
+                background: var(--background-brand-subtle);
+                color: var(--text-brand);
+                padding-right: rem(40);
+
+                &::after {
+                    content: 'check';
+                    font-family: 'Material Symbols Outlined', sans-serif;
+                    position: absolute;
+                    right: var(--scale-12);
+                    top: 50%;
+                    translate: -50% -50%;
+                    font-size: var(--font-size-18);
+                }
             }
 
-            &--highlighted:not(:hover) {
-                @include helper-outline;
+            &--highlighted:not(:hover, [aria-selected='true']) {
+                box-shadow: inset var(--shadows-focus-x) var(--shadows-focus-y) var(--shadows-focus-blur)
+                    var(--shadows-focus-spread) var(--background-brand-primary);
             }
         }
 
         &-results__group {
             font-size: rem(12);
+            padding-top: rem(12);
             font-weight: fw(bold);
             color: $setting-color-gray-5;
-            margin-left: rem(-20);
+            flex-basis: 100%;
         }
 
         @content;

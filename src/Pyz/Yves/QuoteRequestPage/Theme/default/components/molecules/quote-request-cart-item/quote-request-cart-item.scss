@@ -2,32 +2,36 @@ $quote-request-cart-item-image-width: rem(78);
 
 @mixin quote-request-page-quote-request-cart-item($name: '.quote-request-cart-item') {
     #{$name} {
-        border: rem(2) solid $setting-color-gray-7;
-        border-radius: $setting-border-radius;
-        padding: rem(12);
-        margin-bottom: rem(10);
+        border: var(--stroke-sm) solid var(--border-default);
+        border-radius: var(--radius-md);
+        padding: var(--scale-12);
+        margin-bottom: var(--scale-16);
         position: relative;
 
         @include helper-breakpoint-media-min($md) {
-            padding-right: rem(22);
+            padding-right: var(--scale-24);
         }
 
         @include helper-breakpoint-media-min($lg) {
             padding: 0;
-            margin-bottom: rem(20);
+            margin-bottom: var(--scale-20);
+        }
+
+        &:hover {
+            border-color: var(--border-strong);
         }
 
         &__column {
-            padding-top: rem(8);
-            padding-bottom: rem(12);
+            padding-top: var(--scale-8);
+            padding-bottom: var(--scale-12);
 
             @include helper-breakpoint-media-min($lg) {
-                padding-top: rem(36);
-                padding-bottom: rem(28);
+                padding-top: var(--scale-20);
+                padding-bottom: var(--scale-16);
             }
 
             &--image {
-                border-radius: $setting-border-radius 0 0 $setting-border-radius;
+                border-radius: var(--radius-md) 0 0 var(--radius-md);
                 padding-top: 0;
                 padding-bottom: 0;
                 width: $quote-request-cart-item-image-width;
@@ -46,6 +50,8 @@ $quote-request-cart-item-image-width: rem(78);
                 min-width: calc(100% - #{$quote-request-cart-item-image-width});
 
                 @include helper-breakpoint-media-min($md) {
+                    display: flex;
+                    flex-wrap: wrap;
                     width: 78%;
                     min-width: 78%;
                 }
@@ -56,10 +62,12 @@ $quote-request-cart-item-image-width: rem(78);
                 padding-bottom: 0;
                 width: 100%;
                 min-width: 100%;
+                padding-right: var(--scale-16);
+                padding-left: var(--scale-16);
 
                 @include helper-breakpoint-media-min($lg) {
-                    padding-top: rem(36);
-                    padding-bottom: rem(28);
+                    padding-top: var(--scale-20);
+                    padding-bottom: var(--scale-16);
                     width: 40%;
                     min-width: 40%;
                     text-align: right;
@@ -68,19 +76,37 @@ $quote-request-cart-item-image-width: rem(78);
                 #{$name} & {
                     @include helper-breakpoint-media-min($lg) {
                         padding-left: 0;
-                        padding-right: calc(#{$setting-grid-space * 2} + #{$setting-grid-space});
+                        padding-right: var(--scale-48);
                     }
                 }
             }
 
             &--content {
+                display: flex;
+                flex-direction: column;
+                gap: var(--scale-4);
                 width: 100%;
                 min-width: 100%;
-                padding-right: rem(16);
+                padding-right: var(--scale-16);
+                padding-left: var(--scale-16);
 
                 @include helper-breakpoint-media-min($lg) {
                     width: 60%;
                     min-width: 60%;
+                }
+
+                h6 {
+                    font-size: var(--heading-sm-size);
+                    font-weight: var(--heading-sm-weight);
+                    line-height: var(--heading-sm-line-height);
+                    color: var(--text-primary);
+                    margin: 0;
+                }
+
+                .text-secondary {
+                    font-size: var(--label-sm-regular-size);
+                    line-height: var(--label-sm-regular-line-height);
+                    color: var(--text-tertiary);
                 }
             }
         }

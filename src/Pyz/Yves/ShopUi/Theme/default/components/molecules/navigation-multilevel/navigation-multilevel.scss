@@ -1,0 +1,98 @@
+@mixin shop-ui-navigation-multilevel($name: '.navigation-multilevel') {
+    #{$name} {
+        @include helper-breakpoint-media-min($xl) {
+            align-self: stretch;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        &__mobile-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: var(--scale-6) 0;
+            font-family: var(--body-md-family);
+            font-size: var(--body-md-size);
+            font-weight: var(--body-md-weight);
+            line-height: var(--body-md-line-height);
+            color: var(--text-primary);
+            background: none;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+
+            @include helper-breakpoint-media-min($xl) {
+                display: none;
+            }
+        }
+
+        &__mobile-row-chevron {
+            font-size: rem(18);
+            color: var(--icon-secondary);
+            flex-shrink: 0;
+        }
+
+        &__nav-panel-body {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        &__nav-panel-section-header {
+            padding: var(--scale-4) var(--scale-16) var(--scale-6);
+            font-family: var(--caption-family);
+            font-size: var(--caption-size);
+            font-weight: var(--font-weight-regular);
+            line-height: var(--caption-line-height);
+            color: var(--text-tertiary);
+            flex-shrink: 0;
+        }
+
+        &__nav-panel-view-all {
+            display: flex;
+            align-items: center;
+            gap: var(--scale-8);
+            padding: var(--scale-16);
+            font-family: var(--body-md-family);
+            font-size: var(--body-md-size);
+            font-weight: var(--font-weight-semibold);
+            color: var(--text-brand);
+            text-decoration: none;
+            flex-shrink: 0;
+            border-top: rem(1) solid var(--border-subtle);
+        }
+
+        &__nav-panel-view-all-arrow {
+            font-size: rem(18);
+            flex-shrink: 0;
+        }
+
+        &__nav-panel-items {
+            list-style: none;
+            padding: var(--scale-4) var(--scale-16) 0;
+            margin: 0;
+            flex: 1;
+            overflow-y: auto;
+            min-height: 0;
+        }
+
+        &__nav-panel-link {
+            display: flex;
+            align-items: center;
+            gap: var(--scale-12);
+            padding: var(--scale-6) 0;
+            font-family: var(--body-md-family);
+            font-size: var(--body-md-size);
+            font-weight: var(--body-md-weight);
+            line-height: var(--body-md-line-height);
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        @content;
+    }
+}
+
+@include shop-ui-navigation-multilevel();

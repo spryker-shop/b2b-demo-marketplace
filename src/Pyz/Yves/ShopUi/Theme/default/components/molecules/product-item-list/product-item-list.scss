@@ -3,36 +3,28 @@
         position: relative;
 
         &__container {
-            padding: 0 rem(9) rem(15);
-            margin-bottom: rem(20);
-            border-radius: $setting-border-radius;
-            border: rem(1) solid $setting-color-alpha-2;
+            padding: var(--scale-12);
+            margin-bottom: var(--scale-16);
+            border-radius: var(--radius-md);
+            border: var(--stroke-sm) solid var(--border-default);
+            background: var(--background-page);
             position: relative;
 
             @include helper-breakpoint-media-min($md) {
                 padding: 0;
             }
 
-            @include helper-breakpoint-media-min($xl) {
-                @include helper-effect-transition(background-color box-shadow);
-
-                &:hover {
-                    box-shadow:
-                        0 rem(3) rem(3) 0 $setting-color-shadow-1,
-                        0 rem(18) rem(18) 0 $setting-color-shadow-1;
-                }
+            &:hover {
+                border-color: var(--border-strong);
             }
         }
 
         &__image {
             position: relative;
+            border-radius: var(--radius-md) 0 0 var(--radius-md);
 
-            @include helper-breakpoint-media-min($md) {
-                background-color: $setting-color-bg;
-            }
-
-            @include helper-breakpoint-media-min($xl) {
-                padding: rem(8) rem(16);
+            @include helper-breakpoint-media-min($lg) {
+                padding: var(--scale-8) var(--scale-16);
             }
         }
 
@@ -40,45 +32,28 @@
             position: relative;
 
             @include helper-breakpoint-media-min($md) {
-                padding: rem(37) rem(10) rem(70);
-            }
-
-            @include helper-breakpoint-media-min($lg) {
-                padding-left: rem(20);
-                padding-right: rem(30);
+                padding: var(--scale-16) var(--scale-16) var(--scale-16) var(--scale-20);
             }
         }
 
         &__total {
-            padding-top: rem(10);
+            padding-top: var(--scale-12);
 
             @include helper-breakpoint-media-min($md) {
                 text-align: right;
-                padding: rem(35) rem(30) rem(20) rem(18);
+                padding: var(--scale-16) var(--scale-20) var(--scale-16) var(--scale-12);
             }
         }
 
         &__overlay {
             position: relative;
             display: block;
-            padding: rem(8) rem(16);
-            margin: 0 rem(-9) rem(15);
+            margin: 0 calc(-1 * var(--scale-12)) var(--scale-12);
 
             @include helper-breakpoint-media-min($md) {
                 position: static;
                 padding: 0;
                 margin: 0;
-            }
-
-            &::before {
-                content: '';
-                position: absolute;
-                left: 0;
-                top: 0;
-                right: 0;
-                bottom: 0;
-                background-color: $setting-color-alpha-2;
-                z-index: $setting-zi-element;
             }
         }
 
@@ -92,99 +67,86 @@
         }
 
         &__name {
-            font-weight: fw(medium);
-            line-height: normal;
-            color: $setting-color-gray-5;
-            letter-spacing: rem(0.1);
+            font-size: var(--heading-sm-size);
+            font-weight: var(--heading-sm-weight);
+            line-height: var(--heading-sm-line-height);
+            color: var(--text-primary);
+            display: block;
+            text-decoration: none;
         }
 
         &__details {
-            display: none;
-
-            @include helper-breakpoint-media-min($md) {
-                display: block;
-            }
-
-            @include helper-breakpoint-media-min($xl) {
-                position: relative;
-                width: 100%;
-            }
+            position: relative;
+            width: 100%;
         }
 
         &__actions-row {
             display: flex;
             flex-direction: column;
+            gap: var(--scale-8);
+            margin-top: var(--scale-12);
 
-            @include helper-breakpoint-media-min($xl) {
-                position: absolute;
-                right: 0;
-                bottom: 0;
+            @include helper-breakpoint-media-min($lg) {
                 flex-direction: row;
             }
         }
 
         &__action {
-            padding-top: rem(8);
+            padding-top: var(--scale-8);
 
-            @include helper-breakpoint-media-min($xl) {
+            @include helper-breakpoint-media-min($lg) {
                 padding-top: 0;
-                padding-left: rem(8);
+                padding-left: var(--scale-8);
             }
         }
 
         &--order {
             #{$name}__container {
                 margin-bottom: 0;
-                font-size: map_get($setting-font-size, small);
-                background: $setting-color-alpha-2;
-                color: $setting-color-black;
-                padding: rem(15) rem(15) rem(15) 0;
+                font-size: var(--body-sm-size);
+                background: var(--background-subtle);
+                color: var(--text-primary);
+                padding: var(--scale-16);
+                border-radius: var(--radius-none);
+                border: none;
+                border-bottom: var(--stroke-sm) solid var(--border-default);
 
                 @include helper-breakpoint-media-min($md) {
-                    font-size: map_get($setting-font-size, default);
+                    font-size: var(--body-md-size);
                 }
 
                 &:hover {
-                    box-shadow: none;
-                    background: $setting-color-alpha-2;
+                    border-color: var(--border-default);
                 }
             }
 
             #{$name}__overlay {
                 margin: 0;
                 padding: 0;
-
-                &::before {
-                    background: $setting-color-transparent;
-
-                    @include helper-breakpoint-media-min($md) {
-                        background: $setting-color-alpha-2;
-                    }
-                }
             }
 
             #{$name}__image {
-                padding: 0 rem(15);
+                padding: 0 var(--scale-16);
                 align-self: center;
             }
 
             #{$name}__name {
-                font-weight: fw(bold);
+                font-weight: var(--font-weight-bold);
                 display: block;
-                line-height: rem(20);
-                margin-bottom: rem(5);
+                line-height: var(--font-line-height-20);
+                margin-bottom: var(--scale-4);
             }
 
             #{$name}__sku {
-                color: $setting-color-gray-3;
-                font-size: map_get($setting-font-size, small);
+                color: var(--text-tertiary);
+                font-size: var(--body-sm-size);
             }
 
             #{$name}__quantity {
-                color: $setting-color-gray-3;
+                color: var(--text-tertiary);
 
                 @include helper-breakpoint-media-min($md) {
-                    padding-left: rem(15);
+                    padding-left: var(--scale-16);
                 }
 
                 @include helper-breakpoint-media-min($lg) {
@@ -194,19 +156,19 @@
 
             #{$name}__price {
                 height: auto;
-                font-weight: fw(bold);
+                font-weight: var(--font-weight-bold);
 
                 @include helper-breakpoint-media-min($lg) {
-                    padding-left: rem(15);
+                    padding-left: var(--scale-16);
                     text-align: right;
                 }
             }
 
             #{$name}__sum-price {
-                font-weight: fw(bold);
+                font-weight: var(--font-weight-bold);
 
                 @include helper-breakpoint-media-min($md) {
-                    padding-left: rem(15);
+                    padding-left: var(--scale-16);
                 }
 
                 @include helper-breakpoint-media-min($lg) {

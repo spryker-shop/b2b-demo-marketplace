@@ -24,26 +24,11 @@
         {% endif %}
     {% endif %}
 
-    {% set selectorPart = title | lower | replace({' ': '-'}) %}
-    {% set triggerClass = 'js-navigation-footer-' ~ selectorPart ~ '__trigger' %}
-    {% set targetClass = 'js-navigation-footer-' ~ selectorPart %}
-
-    {% block navigationItem %}
-        {% include molecule('navigation-item', 'ContentNavigationWidget') with {
-            class: 'col col--sm-12 col--md-4 ' ~ targetClass,
-            data: {
-                nodes: data.navigation.nodes,
-                title: title,
-                toggleClass: targetClass,
-            },
-        } only %}
-
-        {% include molecule('toggler-accordion') with {
-            attributes: {
-                'wrap-class-name': targetClass,
-                'trigger-class-name': triggerClass,
-                'class-to-toggle': 'is-hidden-sm-only',
-            },
-        } only %}
-    {% endblock %}
+    {% include molecule('navigation-item', 'ContentNavigationWidget') with {
+        class: 'col col--sm-12 col--md-4 ',
+        data: {
+            nodes: data.navigation.nodes,
+            title: title,
+        },
+    } only %}
 {% endblock %}
