@@ -383,6 +383,12 @@ $config[AclConstants::ACL_DEFAULT_RULES] = [
         'action' => '*',
         'type' => 'allow',
     ],
+    [
+        'bundle' => 'security-oauth-knpu',
+        'controller' => '*',
+        'action' => '*',
+        'type' => 'allow',
+    ],
 ];
 // ACL: Allow or disallow of urls for Zed Admin GUI
 $config[AclConstants::ACL_USER_RULE_WHITELIST] = [

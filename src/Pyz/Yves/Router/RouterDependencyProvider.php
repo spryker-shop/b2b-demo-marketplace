@@ -23,6 +23,7 @@ use Spryker\Yves\Router\Plugin\Router\YvesRouterPlugin;
 use Spryker\Yves\Router\Plugin\RouterEnhancer\LanguagePrefixRouterEnhancerPlugin;
 use Spryker\Yves\Router\Plugin\RouterEnhancer\StorePrefixRouterEnhancerPlugin;
 use Spryker\Yves\Router\RouterDependencyProvider as SprykerRouterDependencyProvider;
+use Spryker\Yves\SecurityOauthKnpu\Plugin\Router\SecurityOauthKnpuRouteProviderPlugin;
 use Spryker\Yves\Sitemap\Plugin\Router\SitemapRouteProviderPlugin;
 use SprykerEco\Yves\PunchoutGateway\Plugin\Router\PunchoutGatewayRouteProviderPlugin;
 use SprykerEco\Yves\Stripe\Plugin\Router\StripeRouteProviderPlugin;
@@ -194,6 +195,7 @@ class RouterDependencyProvider extends SprykerRouterDependencyProvider
             new MerchantRegistrationRequestPageRouteProviderPlugin(),
             new CostCenterRouteProviderPlugin(),
             new PunchoutGatewayRouteProviderPlugin(),
+            new SecurityOauthKnpuRouteProviderPlugin(),
         ];
     }
 

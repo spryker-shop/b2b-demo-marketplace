@@ -22,6 +22,7 @@ use Spryker\Zed\Messenger\Communication\Plugin\Application\MessengerApplicationP
 use Spryker\Zed\Propel\Communication\Plugin\Application\PropelApplicationPlugin;
 use Spryker\Zed\Router\Communication\Plugin\Application\MerchantPortalRouterApplicationPlugin;
 use Spryker\Zed\Security\Communication\Plugin\Application\ZedSecurityApplicationPlugin;
+use Spryker\Zed\SecurityOauthKnpu\Communication\Plugin\Application\OauthKnpuApplicationPlugin;
 use Spryker\Zed\Session\Communication\Plugin\Application\SessionApplicationPlugin;
 use Spryker\Zed\Translator\Communication\Plugin\Application\TranslatorApplicationPlugin;
 use Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin;
@@ -54,6 +55,7 @@ class MerchantPortalApplicationDependencyProvider extends SprykerMerchantPortalA
             new ZedUiApplicationPlugin(),
             new AclEntityApplicationPlugin(),
             new MerchantPortalEventDispatcherApplicationPlugin(),
+            new OauthKnpuApplicationPlugin(),
         ];
 
         if (class_exists(WebProfilerApplicationPlugin::class)) {
