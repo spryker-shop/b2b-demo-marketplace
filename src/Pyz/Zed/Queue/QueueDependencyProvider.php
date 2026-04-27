@@ -209,7 +209,7 @@ class QueueDependencyProvider extends SprykerDependencyProvider
     }
 
     /**
-     * @return array<\Spryker\Zed\RabbitMq\Communication\Plugin\Queue\RabbitMqQueueMetricsReaderPlugin>
+     * @return array<\Spryker\Zed\QueueExtension\Dependency\Plugin\QueueMetricsReaderPluginInterface>
      */
     protected function getQueueMetricsExpanderPlugins(): array
     {
