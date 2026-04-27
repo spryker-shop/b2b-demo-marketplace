@@ -36,6 +36,12 @@ return static function (ApiPlatformConfig $apiPlatform, string $env): void {
         ->apiKeys('JWT', ['name' => 'Authorization', 'type' => 'header']);
 
     $apiPlatform->defaults()->paginationItemsPerPage(10);
+    $apiPlatform->defaults()->filters(['spryker.api_platform.filter.property']);
+
+    // Allow string "true"/"false" to be coerced to bool — the old Glue backend accepted
+    // stringified booleans in request bodies (e.g. "isActive": "true").
+    $apiPlatform->defaults()->denormalizationContext(['disable_type_enforcement' => true]);
+
     $apiPlatform->collection()
         ->existsParameterName('exists')
         ->order('ASC')
@@ -46,8 +52,12 @@ return static function (ApiPlatformConfig $apiPlatform, string $env): void {
             ->itemsPerPageParameterName('itemsPerPage')
             ->partialParameterName('partial');
 
-    $apiPlatform->formats('jsonld', ['mime_types' => ['application/ld+json']]);
+    $apiPlatform->formats('jsonapi', ['mime_types' => ['application/vnd.api+json', 'application/json']]);
     $apiPlatform->formats('jsonapi', ['mime_types' => ['application/vnd.api+json']]);
     $apiPlatform->formats('xml', ['mime_types' => ['application/xml', 'text/xml']]);
     $apiPlatform->formats('csv', ['mime_types' => ['text/csv']]);
+
+    $apiPlatform->patchFormats('jsonapi', ['mime_types' => ['application/vnd.api+json', 'application/json']]);
+
+    $apiPlatform->errorFormats('jsonapi', ['mime_types' => ['application/vnd.api+json', 'application/json']]);
 };

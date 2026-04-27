@@ -6,6 +6,15 @@ sections:
         cache-zed-clear:
             command: 'vendor/bin/console cache:clear'
 
+        provider-processor-glue:
+            command: 'vendor/bin/glue api:generate'
+
+        provider-processor-glue-backend:
+            command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue api:generate'
+
+        provider-processor-glue-storefront:
+            command: 'GLUE_APPLICATION=GLUE_STOREFRONT vendor/bin/glue api:generate'
+
         cache-glue-api-clear:
             command: 'vendor/bin/glue cache:clear'
 
@@ -65,12 +74,6 @@ sections:
 
         install-backend-api-assets:
             command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue assets:install public/GlueBackend/assets/'
-
-        provider-processor-glue:
-            command: 'vendor/bin/glue api:generate'
-
-        provider-processor-glue-backend:
-            command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue api:generate'
 
         configuration-sync:
             command: 'vendor/bin/console configuration:sync'

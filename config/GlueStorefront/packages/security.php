@@ -8,7 +8,7 @@
 declare(strict_types = 1);
 
 use Spryker\ApiPlatform\Security\ApiUserProvider;
-use Spryker\ApiPlatform\Security\OauthAuthenticator;
+use Spryker\ApiPlatform\Security\GlueAuthenticationEntryPoint;
 use Symfony\Config\SecurityConfig;
 
 return static function (SecurityConfig $security): void {
@@ -19,7 +19,7 @@ return static function (SecurityConfig $security): void {
         ->lazy(true)
         ->stateless(true)
         ->provider('api_oauth_provider')
-        ->customAuthenticators([OauthAuthenticator::class]);
+        ->entryPoint(GlueAuthenticationEntryPoint::class);
 
     // Public by default - individual resources use security expressions for authorization
     $security->accessControl()
