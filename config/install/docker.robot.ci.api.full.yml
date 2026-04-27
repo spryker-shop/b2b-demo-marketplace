@@ -43,9 +43,6 @@ sections:
         generate-scope-collection-file:
             command: 'vendor/bin/console oauth:scope-collection-file:generate'
 
-        provider-processor-prepare-dirs:
-            command: 'mkdir -p src/Generated/Api/Storefront src/Generated/Api/Backend'
-
         provider-processor-glue:
             command: 'vendor/bin/glue api:generate'
 

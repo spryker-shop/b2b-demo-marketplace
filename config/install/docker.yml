@@ -6,9 +6,6 @@ sections:
         cache-zed-clear:
             command: 'vendor/bin/console cache:clear'
 
-        provider-processor-prepare-dirs:
-            command: 'mkdir -p src/Generated/Api/Storefront src/Generated/Api/Backend'
-
         cache-glue-api-clear:
             command: 'vendor/bin/glue cache:clear'
 
