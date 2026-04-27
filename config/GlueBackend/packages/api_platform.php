@@ -53,7 +53,7 @@ return static function (ApiPlatformConfig $apiPlatform, string $env): void {
             ->partialParameterName('partial');
 
     $apiPlatform->formats('jsonapi', ['mime_types' => ['application/vnd.api+json', 'application/json']]);
-    $apiPlatform->formats('jsonapi', ['mime_types' => ['application/vnd.api+json']]);
+    $apiPlatform->formats('jsonld', ['mime_types' => ['application/ld+json']]);
     $apiPlatform->formats('xml', ['mime_types' => ['application/xml', 'text/xml']]);
     $apiPlatform->formats('csv', ['mime_types' => ['text/csv']]);
 
