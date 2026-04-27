@@ -23,6 +23,7 @@ use Spryker\Zed\CompanyDataImport\CompanyDataImportConfig;
 use Spryker\Zed\CompanyUnitAddressDataImport\CompanyUnitAddressDataImportConfig;
 use Spryker\Zed\CompanyUnitAddressLabelDataImport\CompanyUnitAddressLabelDataImportConfig;
 use Spryker\Zed\Configuration\Communication\Console\ConfigurationSyncConsole;
+use Spryker\Zed\Configuration\Communication\Plugin\Application\ConfigurationApplicationPlugin;
 use Spryker\Zed\Console\Communication\Plugin\Console\MultiProcessRunConsole;
 use Spryker\Zed\Console\ConsoleDependencyProvider as SprykerConsoleDependencyProvider;
 use Spryker\Zed\Container\Communication\Console\ContainerBuilderConsole;
@@ -210,6 +211,7 @@ use SprykerEco\Zed\PunchoutGateway\Communication\Console\PunchoutCxmlDemoConnect
 use SprykerEco\Zed\PunchoutGateway\Communication\Console\PunchoutOciDemoConnectionCreateConsole;
 use SprykerFeature\Zed\ProductExperienceManagement\Communication\Console\ImportJobRunConsole;
 use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
+use SprykerSdk\Zed\AiDev\Communication\Console\AiToolSetupConsole;
 use SprykerSdk\Zed\AiDev\Communication\Console\GeneratePromptsConsole;
 use SprykerSdk\Zed\AiDev\Communication\Console\McpServerConsole;
 use SprykerShop\Zed\DateTimeConfiguratorPageExample\Communication\Console\DateTimeProductConfiguratorBuildFrontendConsole;
@@ -520,6 +522,14 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
                 $commands[] = new GeneratePromptsConsole();
             }
 
+            if (class_exists(AiToolSetupConsole::class)) {
+                $commands[] = new AiToolSetupConsole();
+            }
+
+            if (class_exists(SecurityCheckerCommand::class)) {
+                $commands[] = new SecurityCheckerCommand();
+            }
+
             $commands[] = new MessageBrokerDebugConsole();
             $commands[] = new MessageBrokerAwsSqsQueuesCreatorConsole();
             $commands[] = new MessageBrokerAwsSnsTopicsCreatorConsole();
@@ -563,6 +573,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
         $applicationPlugins[] = new TwigApplicationPlugin();
         $applicationPlugins[] = new FormApplicationPlugin();
         $applicationPlugins[] = new EventDispatcherApplicationPlugin();
+        $applicationPlugins[] = new ConfigurationApplicationPlugin();
 
         return $applicationPlugins;
     }
