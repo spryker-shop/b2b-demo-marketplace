@@ -21,4 +21,10 @@ return static function (SprykerApiPlatformConfig $sprykerApiPlatform): void {
         'src/SprykerFeature',
         'src/Pyz',
     ]);
+
+    $sprykerApiPlatform->excludedPathFragments([
+        'vendor/spryker/customer/resources/api/',
+        'vendor/spryker/store/resources/api/',
+        'vendor/spryker/authentication/resources/api/',
+    ]);
 };
