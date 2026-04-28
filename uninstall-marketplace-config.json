@@ -1105,6 +1105,27 @@
         }
     },
     "config_files": {
+        "config/Yves/bundles.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "KnpUOAuth2ClientBundle" },
+                { "type": "remove_line_containing", "pattern": "KnpUOAuth2ClientBundle::class" }
+            ],
+            "success_messages": ["✓ Removed KnpUOAuth2ClientBundle from config/Yves/bundles.php"]
+        },
+        "config/Zed/bundles.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "KnpUOAuth2ClientBundle" },
+                { "type": "remove_line_containing", "pattern": "KnpUOAuth2ClientBundle::class" }
+            ],
+            "success_messages": ["✓ Removed KnpUOAuth2ClientBundle from config/Zed/bundles.php"]
+        },
+        "config/MerchantPortal/bundles.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "KnpUOAuth2ClientBundle" },
+                { "type": "remove_line_containing", "pattern": "KnpUOAuth2ClientBundle::class" }
+            ],
+            "success_messages": ["✓ Removed KnpUOAuth2ClientBundle from config/MerchantPortal/bundles.php"]
+        },
         "config/Shared/config_default.php": {
             "operations": [
                 { "type": "remove_use", "class_name": "SecurityBlockerMerchantPortalConstants" },
