@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "10a0f531e89890c5361e3c05ae5ec82d",
+    "content-hash": "a58d9f4f01906be378a35441776c50f0",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -70609,6 +70609,74 @@
                 "source": "https://github.com/spryker/security-merchant-portal-gui-extension/tree/1.5.0"
             },
             "time": "2026-04-27T19:53:27+00:00"
+        },
+        {
+            "name": "spryker/security-oauth-knpu",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/security-oauth-knpu.git",
+                "reference": "29128437a9ceecc1f9e943ce72ccb654a42ecd40"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/security-oauth-knpu/zipball/29128437a9ceecc1f9e943ce72ccb654a42ecd40",
+                "reference": "29128437a9ceecc1f9e943ce72ccb654a42ecd40",
+                "shasum": ""
+            },
+            "require": {
+                "knpuniversity/oauth2-client-bundle": "^2.0.0",
+                "league/oauth2-client": "^2.0.0",
+                "php": ">=8.3",
+                "spryker-shop/customer-page-extension": "^1.9.0",
+                "spryker/acl-merchant-portal-extension": "^1.0.0",
+                "spryker/application-extension": "^1.1.0",
+                "spryker/container": "^1.10.0",
+                "spryker/customer": "^7.0.0",
+                "spryker/customer-extension": "^1.7.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/log": "^3.0.0",
+                "spryker/merchant-user": "^1.0.0",
+                "spryker/security-extension": "^1.0.0",
+                "spryker/security-gui-extension": "^1.5.0",
+                "spryker/security-merchant-portal-gui-extension": "^1.5.0",
+                "spryker/security-oauth-user-extension": "^1.1.0",
+                "spryker/symfony": "^3.20.0",
+                "spryker/transfer": "^3.27.0",
+                "spryker/user": "^3.0.0"
+            },
+            "require-dev": {
+                "spryker/application": "*",
+                "spryker/code-sniffer": "*",
+                "spryker/locale": "*",
+                "spryker/merchant": "*",
+                "spryker/propel": "*",
+                "spryker/router": "*",
+                "spryker/testify": "*"
+            },
+            "suggest": {
+                "spryker/router": "Needed to register OAuth callback routes in Symfony's router so KnpU can generate correct redirect URLs."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "SecurityOauthKnpu module",
+            "support": {
+                "source": "https://github.com/spryker/security-oauth-knpu/tree/1.0.1"
+            },
+            "time": "2026-04-28T06:22:25+00:00"
         },
         {
             "name": "spryker/security-oauth-user",
