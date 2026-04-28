@@ -3,11 +3,14 @@
         "src/Pyz/Zed/Application/ApplicationDependencyProvider.php": {
             "operations": [
                 { "type": "remove_use", "class_name": "GuiTableApplicationPlugin" },
-                { "type": "remove_plugin", "plugin_class": "GuiTableApplicationPlugin" }
+                { "type": "remove_use", "class_name": "OauthKnpuApplicationPlugin" },
+                { "type": "remove_plugin", "plugin_class": "GuiTableApplicationPlugin" },
+                { "type": "remove_plugin", "plugin_class": "OauthKnpuApplicationPlugin" }
             ],
             "success_messages": [
                 "✓ ApplicationDependencyProvider cleaned from marketplace-specific plugins",
-                "✓ Removed GuiTableApplicationPlugin"
+                "✓ Removed GuiTableApplicationPlugin",
+                "✓ Removed OauthKnpuApplicationPlugin"
             ]
         },
         "src/Pyz/Zed/Acl/AclConfig.php": {
@@ -644,23 +647,40 @@
             ],
             "success_messages": ["✓ SalesReturnGuiDependencyProvider cleaned from marketplace-specific plugins"]
         },
+        "src/Pyz/Zed/Customer/CustomerDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "AcceptOnlyOauthCustomerAuthenticationStrategyPlugin" },
+                { "type": "remove_use", "class_name": "CreateCustomerOauthCustomerAuthenticationStrategyPlugin" },
+                { "type": "remove_use", "class_name": "KnpuOauthCustomerIdentityPersistencePlugin" },
+                { "type": "remove_use", "class_name": "KnpuOauthCustomerIdentityStrategyPlugin" },
+                { "type": "remove_method", "method_name": "getOauthCustomerAuthenticationStrategyPlugins" },
+                { "type": "remove_method", "method_name": "getOauthCustomerPostResolvePlugins" }
+            ],
+            "success_messages": ["✓ CustomerDependencyProvider cleaned from SecurityOauthKnpu plugins"]
+        },
         "src/Pyz/Zed/Security/SecurityDependencyProvider.php": {
             "operations": [
                 { "type": "remove_use", "class_name": "MultiFactorAuthenticationAgentMerchantUserSecurityPlugin" },
                 { "type": "remove_use", "class_name": "ZedAgentMerchantUserSecurityPlugin" },
                 { "type": "remove_use", "class_name": "MultiFactorAuthenticationMerchantUserSecurityPlugin" },
                 { "type": "remove_use", "class_name": "ZedMerchantUserSecurityPlugin" },
+                { "type": "remove_use", "class_name": "ZedOauthMerchantPortalSecurityPlugin" },
+                { "type": "remove_use", "class_name": "ZedKnpuOauthUserSecurityPlugin" },
                 { "type": "remove_plugin", "plugin_class": "ZedAgentMerchantUserSecurityPlugin" },
                 { "type": "remove_plugin", "plugin_class": "ZedMerchantUserSecurityPlugin" },
                 { "type": "remove_plugin", "plugin_class": "MultiFactorAuthenticationMerchantUserSecurityPlugin" },
-                { "type": "remove_plugin", "plugin_class": "MultiFactorAuthenticationAgentMerchantUserSecurityPlugin" }
+                { "type": "remove_plugin", "plugin_class": "MultiFactorAuthenticationAgentMerchantUserSecurityPlugin" },
+                { "type": "remove_plugin", "plugin_class": "ZedOauthMerchantPortalSecurityPlugin" },
+                { "type": "remove_plugin", "plugin_class": "ZedKnpuOauthUserSecurityPlugin" }
             ],
             "success_messages": ["✓ SecurityDependencyProvider cleaned from marketplace-specific plugins"]
         },
         "src/Pyz/Zed/SecurityGui/SecurityGuiDependencyProvider.php": {
             "operations": [
                 { "type": "remove_use", "class_name": "MerchantUserUserRoleFilterPlugin" },
-                { "type": "remove_plugin", "plugin_class": "MerchantUserUserRoleFilterPlugin" }
+                { "type": "remove_use", "class_name": "KnpuOauthAuthenticationLinkPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantUserUserRoleFilterPlugin" },
+                { "type": "remove_plugin", "plugin_class": "KnpuOauthAuthenticationLinkPlugin" }
             ],
             "success_messages": ["✓ SecurityGuiDependencyProvider cleaned from marketplace-specific plugins"]
         },
@@ -800,12 +820,23 @@
                     "type": "remove_use",
                     "class_name": "MerchantShipmentCheckoutAddressStepPreGroupItemsByShipmentPlugin"
                 },
+                { "type": "remove_use", "class_name": "KnpuCustomerAuthenticationLinkPlugin" },
+                { "type": "remove_use", "class_name": "KnpuOauthCustomerClientStrategyPlugin" },
                 {
                     "type": "remove_plugin",
                     "plugin_class": "MerchantShipmentCheckoutAddressStepPreGroupItemsByShipmentPlugin"
-                }
+                },
+                { "type": "remove_method", "method_name": "getOauthCustomerClientStrategyPlugins" },
+                { "type": "remove_method", "method_name": "getCustomerAuthenticationLinkPlugins" }
             ],
             "success_messages": ["✓ Yves CustomerPageDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Yves/Security/SecurityDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "OauthCustomerSecurityPlugin" },
+                { "type": "remove_plugin", "plugin_class": "OauthCustomerSecurityPlugin" }
+            ],
+            "success_messages": ["✓ Yves SecurityDependencyProvider cleaned from SecurityOauthKnpu plugins"]
         },
         "src/Pyz/Yves/QuickOrderPage/QuickOrderPageDependencyProvider.php": {
             "operations": [
@@ -819,7 +850,9 @@
         "src/Pyz/Yves/Router/RouterDependencyProvider.php": {
             "operations": [
                 { "type": "remove_use", "class_name": "MerchantRegistrationRequestPageRouteProviderPlugin" },
-                { "type": "remove_plugin", "plugin_class": "MerchantRegistrationRequestPageRouteProviderPlugin" }
+                { "type": "remove_use", "class_name": "SecurityOauthKnpuRouteProviderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantRegistrationRequestPageRouteProviderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "SecurityOauthKnpuRouteProviderPlugin" }
             ],
             "success_messages": ["✓ Yves RouterDependencyProvider cleaned from marketplace-specific plugins"]
         },
@@ -853,7 +886,11 @@
                 {
                     "type": "remove_plugin",
                     "plugin_class": "MerchantSalesReturnCreateFormWidgetCacheKeyGeneratorStrategyPlugin"
-                }
+                },
+                { "type": "remove_use", "class_name": "OauthKnpuApplicationPlugin" },
+                { "type": "remove_use", "class_name": "OauthAuthenticationLinksWidget" },
+                { "type": "remove_plugin", "plugin_class": "OauthAuthenticationLinksWidget" },
+                { "type": "remove_plugin", "plugin_class": "OauthKnpuApplicationPlugin" }
             ],
             "success_messages": ["✓ Yves ShopApplicationDependencyProvider cleaned from marketplace-specific widgets"]
         },
@@ -1265,7 +1302,10 @@
         "src/Pyz/Zed/GuiTable:GuiTable",
         "src/Pyz/Zed/ProductApprovalGui:ProductApprovalGui",
         "tests/PyzTest/Zed/AclEntity:AclEntity",
-        "public/MerchantPortal:MerchantPortal"
+        "public/MerchantPortal:MerchantPortal",
+        "src/Pyz/Zed/SecurityOauthUser:SecurityOauthUser",
+        "src/Pyz/Yves/SecurityOauthKnpu:SecurityOauthKnpu",
+        "src/Pyz/Zed/SecurityOauthKnpu:SecurityOauthKnpu"
     ],
     "xml_files": {
         "config/Zed/oms/DummyPayment01.xml": {
