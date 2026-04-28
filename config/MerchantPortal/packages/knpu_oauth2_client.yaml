@@ -1,0 +1,12 @@
+knpu_oauth2_client:
+  clients:
+    sso_merchant_portal:
+      type: keycloak
+      auth_server_url: '%env(SPRYKER_OAUTH_SSO_MP_BASE_URL)%'
+      realm: '%env(SPRYKER_OAUTH_SSO_MP_REALM)%'
+      client_id: '%env(SPRYKER_OAUTH_SSO_MP_CLIENT_ID)%'
+      client_secret: '%env(SPRYKER_OAUTH_SSO_MP_CLIENT_SECRET)%'
+      # Using full URL instead of route name because Spryker's routes aren't in Symfony's router
+      redirect_route: '%env(SPRYKER_OAUTH_REDIRECT_URI_MERCHANT_PORTAL)%'
+      redirect_params: {}
+      version: '25.0.0'
