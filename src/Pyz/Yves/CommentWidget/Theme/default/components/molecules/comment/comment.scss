@@ -1,3 +1,6 @@
+@use '~src/ShopUi/styles/shared' as *;
+@use 'CommentWidget/components/molecules/comment/comment.scss' as *;
+
 @include comment-widget-comment() {
     background: $setting-color-white;
     padding: rem(11);

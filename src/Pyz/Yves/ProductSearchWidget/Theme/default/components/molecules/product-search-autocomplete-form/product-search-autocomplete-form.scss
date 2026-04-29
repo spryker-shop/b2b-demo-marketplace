@@ -1,3 +1,6 @@
+@use '~src/ShopUi/styles/shared' as *;
+@use 'ShopUi/components/molecules/autocomplete-form/autocomplete-form.scss' as *;
+
 @mixin product-search-widget-product-search-autocomplete-form {
     @include shop-ui-autocomplete-form($name: '.product-search-autocomplete-form') {
         &__field {

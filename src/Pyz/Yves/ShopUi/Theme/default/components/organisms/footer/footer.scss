@@ -1,3 +1,7 @@
+@use '~src/ShopUi/styles/shared' as *;
+@use 'ShopUi/components/atoms/title/title.scss' as *;
+@use 'ShopUi/components/molecules/menu/menu.scss' as *;
+
 @mixin shop-ui-footer($name: '.footer') {
     #{$name} {
         background-color: var(--footer-main);

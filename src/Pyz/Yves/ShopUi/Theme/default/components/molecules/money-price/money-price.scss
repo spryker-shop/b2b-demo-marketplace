@@ -1,3 +1,6 @@
+@use '~src/ShopUi/styles/shared' as *;
+@use 'ShopUi/components/molecules/money-price/money-price.scss' as *;
+
 @include shop-ui-money-price {
     $name: &;
     color: var(--text-primary);

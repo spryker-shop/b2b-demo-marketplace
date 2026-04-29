@@ -1,3 +1,6 @@
+@use '~src/ShopUi/styles/shared' as *;
+@use 'ShopUi/components/atoms/thumbnail/thumbnail.scss' as *;
+
 @include shop-ui-thumbnail {
     &--smaller {
         height: rem(52);

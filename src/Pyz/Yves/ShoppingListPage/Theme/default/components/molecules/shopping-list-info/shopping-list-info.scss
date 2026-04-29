@@ -1,3 +1,6 @@
+@use '~src/ShopUi/styles/shared' as *;
+@use 'ShoppingListPage/components/molecules/shopping-list-info/shopping-list-info.scss' as *;
+
 @include shopping-list-page-shopping-list-info() {
     padding: rem(20);
     background-color: $setting-color-gray-7;

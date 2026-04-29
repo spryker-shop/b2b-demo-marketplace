@@ -1,3 +1,6 @@
+@use '~src/ShopUi/styles/shared' as *;
+@use 'CommentWidget/components/molecules/tag-list/tag-list.scss' as *;
+
 @include comment-widget-tag-list() {
     font-size: rem(12);
 

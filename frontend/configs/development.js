@@ -162,26 +162,6 @@ const getConfiguration = async (appSettings) => {
                                 loader: 'sass-loader',
                                 options: {
                                     implementation: require('sass'),
-                                    api: 'legacy',
-                                    additionalData: (content, loaderContext) => {
-                                        const currentFilePath = loaderContext.resourcePath;
-                                        const allResources = [sharedScss, ...styles].filter(Boolean);
-
-                                        if (allResources.length === 0) {
-                                            return content;
-                                        }
-
-                                        const imports = allResources
-                                            .map((resource) => {
-                                                if (currentFilePath === resource) {
-                                                    return;
-                                                }
-
-                                                return `@import "${resource}";`;
-                                            })
-                                            .join('\n');
-                                        return `${imports}\n${content}`;
-                                    },
                                 },
                             },
                         ],

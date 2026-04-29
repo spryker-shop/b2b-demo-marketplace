@@ -1,3 +1,5 @@
+@use '~src/ShopUi/styles/shared' as *;
+@use 'ShopUi/components/molecules/ajax-loader/ajax-loader.scss' as *;
 @include shop-ui-ajax-loader {
     background: $setting-color-alpha-4;
 

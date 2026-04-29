@@ -1,3 +1,6 @@
+@use '~src/ShopUi/styles/shared' as *;
+@use 'SelfServicePortal/components/molecules/advanced-table/advanced-table.scss' as *;
+
 @include self-service-portal-advanced-table($name: '.advanced-table') {
     &__head {
         background-color: $setting-color-gray-7;

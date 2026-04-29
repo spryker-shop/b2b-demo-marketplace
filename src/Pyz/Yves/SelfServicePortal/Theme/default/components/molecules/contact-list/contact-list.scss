@@ -1,3 +1,6 @@
+@use '~src/ShopUi/styles/shared' as *;
+@use 'SelfServicePortal/components/molecules/contact-list/contact-list.scss' as *;
+
 @include self-service-portal-contact-list($name: '.contact-list') {
     &.box {
         padding: rem(13) rem(18);

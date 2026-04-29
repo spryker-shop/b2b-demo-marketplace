@@ -1,3 +1,4 @@
+@use '~src/ShopUi/styles/shared' as *;
 @mixin shopping-list-product-option-list($name: '.shopping-list-product-option-list') {
     #{$name} {
         &__item:not(:first-child) {

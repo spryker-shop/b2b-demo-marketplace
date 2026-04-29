@@ -1,3 +1,4 @@
+@use '~src/ShopUi/styles/shared' as *;
 @mixin shop-ui-button($name: '.button') {
     #{$name} {
         @include helper-effect-transition(background-color border-color box-shadow color);

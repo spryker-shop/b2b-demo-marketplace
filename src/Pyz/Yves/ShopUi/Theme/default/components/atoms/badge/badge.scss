@@ -1,3 +1,6 @@
+@use '~src/ShopUi/styles/shared' as *;
+@use 'ShopUi/components/atoms/badge/badge.scss' as *;
+
 @include shop-ui-badge('.badge') {
     @include helper-badge-chip;
     font-weight: var(--font-weight-medium);

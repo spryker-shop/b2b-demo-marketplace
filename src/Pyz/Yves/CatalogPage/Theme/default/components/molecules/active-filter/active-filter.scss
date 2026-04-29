@@ -1,3 +1,4 @@
+@use '~src/ShopUi/styles/shared' as *;
 .active-filter {
     @include helper-effect-transition(background-color border-color box-shadow);
     background-color: $setting-color-gray-7;

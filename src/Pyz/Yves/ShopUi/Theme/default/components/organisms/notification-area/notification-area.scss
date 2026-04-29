@@ -1,3 +1,5 @@
+@use '~src/ShopUi/styles/shared' as *;
+@use 'ShopUi/components/organisms/notification-area/notification-area.scss' as *;
 $name: '.notification-area';
 
 @include shop-ui-notification-area($name) {

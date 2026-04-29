@@ -1,3 +1,6 @@
+@use '~src/ShopUi/styles/shared' as *;
+@use 'SelfServicePortal/components/molecules/image-uploader/image-uploader.scss' as *;
+
 @include self-service-portal-image-uploader($name: '.image-uploader') {
     &__container {
         max-height: rem(225);

@@ -1,3 +1,6 @@
+@use '~src/ShopUi/styles/shared' as *;
+@use 'ShopUi/components/atoms/box/box.scss' as *;
+
 @include shop-ui-box($name: '.box') {
     background-color: $setting-color-gray-7;
     border: none;

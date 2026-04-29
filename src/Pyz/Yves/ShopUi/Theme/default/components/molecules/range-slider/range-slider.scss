@@ -1,3 +1,4 @@
+@use '~src/ShopUi/styles/shared' as *;
 @import '~nouislider/distribute/nouislider.min.css';
 
 $line-width: rem(2);
@@ -67,5 +68,3 @@ $width-handle: rem(14);
         @content;
     }
 }
-
-@include quick-order-page-quick-order-row-partial();

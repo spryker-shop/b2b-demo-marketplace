@@ -1,3 +1,6 @@
+@use '~src/ShopUi/styles/shared' as *;
+@use 'QuickOrderPage/components/molecules/quick-order-row/quick-order-row.scss' as *;
+
 @include quick-order-page-quick-order-row() {
     &__holder-quantity {
         padding: rem(8) rem(10);

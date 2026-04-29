@@ -1,3 +1,5 @@
+@use '~src/ShopUi/styles/shared' as *;
+@use 'ShopUi/components/molecules/collapsible-list/collapsible-list.scss' as *;
 @include shop-ui-collapsible-list {
     $name: '.collapsible-list';
     margin-bottom: rem(20);
