@@ -1,0 +1,49 @@
+services:
+  keycloak-db-init:
+    image: mariadb:11.8
+    command:
+      - sh
+      - -c
+      - |
+        until mariadb -h database -u root -psecret -e 'SELECT 1' 2>/dev/null; do
+          echo 'Waiting for database...'
+          sleep 2
+        done
+        mariadb -h database -u root -psecret -e "CREATE DATABASE IF NOT EXISTS keycloak CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci; DROP USER IF EXISTS 'keycloak'@'%'; CREATE USER 'keycloak'@'%' IDENTIFIED BY 'keycloak-secret'; GRANT ALL PRIVILEGES ON keycloak.* TO 'keycloak'@'%'; FLUSH PRIVILEGES;"
+        echo 'Keycloak database and user ready.'
+        sleep infinity
+    healthcheck:
+      test: ['CMD-SHELL', "mariadb -h database -u keycloak -pkeycloak-secret -e 'USE keycloak'"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - private
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:25.0
+    depends_on:
+      keycloak-db-init:
+        condition: service_healthy
+    environment:
+      KC_DB: mariadb
+      KC_DB_URL: jdbc:mariadb://database:3306/keycloak
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: keycloak-secret
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_HTTP_PORT: 28080
+      KC_HOSTNAME_STRICT: false
+      KC_HTTP_ENABLED: true
+    command: start-dev --import-realm
+    ports:
+      - '28080:28080'
+    volumes:
+      - ./data/keycloak:/opt/keycloak/data/import
+    networks:
+      public:
+        aliases:
+          - keycloak.b2b-mp.local
+      private:
+        aliases:
+          - keycloak.b2b-mp.local

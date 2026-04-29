@@ -48,6 +48,8 @@
         {% endblock %}
     {% endembed %}
 
+    {% widget 'OauthAuthenticationLinksWidget' only %}{% endwidget %}
+
     {% widget 'MultiFactorAuthHandlerWidget' with {
         data: {
             id: _view.loginForm.vars.name,

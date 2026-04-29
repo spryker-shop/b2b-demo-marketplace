@@ -1,0 +1,12 @@
+knpu_oauth2_client:
+  clients:
+    sso_zed:
+      type: keycloak
+      auth_server_url: '%env(SPRYKER_OAUTH_SSO_ZED_BASE_URL)%'
+      realm: '%env(SPRYKER_OAUTH_SSO_ZED_REALM)%'
+      client_id: '%env(SPRYKER_OAUTH_SSO_ZED_CLIENT_ID)%'
+      client_secret: '%env(SPRYKER_OAUTH_SSO_ZED_CLIENT_SECRET)%'
+      # Using full URL instead of route name because Spryker's routes aren't in Symfony's router
+      redirect_route: '%env(SPRYKER_OAUTH_REDIRECT_URI_ZED)%'
+      redirect_params: {}
+      version: '25.0.0'

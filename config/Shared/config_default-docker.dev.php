@@ -309,3 +309,10 @@ if (!getenv('SPRYKER_S3_PUBLIC_ASSETS_BUCKET')) {
 }
 
 $config[ContentNavigationWidgetConstants::NAVIGATION_REVALIDATION_TIME_IN_SECONDS] = 300;//5 min for local development
+
+$config[KernelConstants::DOMAIN_WHITELIST] = array_merge(
+    $config[KernelConstants::DOMAIN_WHITELIST],
+    [
+        'keycloak.b2b-mp.local', // trusted OAuth provider domain
+    ],
+);

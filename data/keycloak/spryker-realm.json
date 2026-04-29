@@ -1,0 +1,140 @@
+{
+  "realm": "spryker",
+  "enabled": true,
+  "sslRequired": "none",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": true,
+  "editUsernameAllowed": false,
+  "bruteForceProtected": true,
+  "roles": {
+    "realm": [
+      {
+        "name": "user",
+        "description": "Standard user privileges"
+      },
+      {
+        "name": "admin",
+        "description": "Administrator privileges"
+      }
+    ]
+  },
+  "defaultRoles": ["user"],
+  "users": [
+    {
+      "username": "admin@spryker.local",
+      "email": "admin@spryker.local",
+      "firstName": "Admin",
+      "lastName": "Spryker",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "change123"
+        }
+      ],
+      "realmRoles": ["user"]
+    },
+    {
+      "username": "sonia@spryker.com",
+      "email": "sonia@spryker.com",
+      "firstName": "Sonia",
+      "lastName": "Wagner",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "change123"
+        }
+      ],
+      "realmRoles": ["user", "admin"]
+    },
+    {
+      "username": "harald@spryker.com",
+      "email": "harald@spryker.com",
+      "firstName": "Harald",
+      "lastName": "Schmidt",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "change123"
+        }
+      ],
+      "realmRoles": ["user", "admin", "merchant_user"]
+    }
+  ],
+  "clients": [
+    {
+      "clientId": "spryker-yves",
+      "name": "Spryker Yves Storefront",
+      "description": "OAuth2 client for Yves storefront authentication",
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "spryker-yves-secret",
+      "publicClient": false,
+      "protocol": "openid-connect",
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "redirectUris": ["http://yves.eu.b2b-mp.local/*"],
+      "webOrigins": ["http://yves.eu.b2b-mp.local"],
+      "defaultClientScopes": ["openid", "profile", "email"],
+      "optionalClientScopes": ["roles"]
+    },
+    {
+      "clientId": "spryker-zed",
+      "name": "Spryker Zed Backoffice",
+      "description": "OAuth2 client for Zed backoffice authentication",
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "spryker-zed-secret",
+      "publicClient": false,
+      "protocol": "openid-connect",
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "redirectUris": [
+        "http://backoffice.eu.b2b-mp.local/*",
+        "https://backoffice.eu.b2b-mp.local/*",
+        "http://zed.eu.b2b-mp.local/*",
+        "https://zed.eu.b2b-mp.local/*",
+        "http://localhost/*",
+        "http://127.0.0.1/*"
+      ],
+      "webOrigins": [
+        "http://backoffice.eu.b2b-mp.local",
+        "https://backoffice.eu.b2b-mp.local",
+        "http://zed.eu.b2b-mp.local",
+        "https://zed.eu.b2b-mp.local",
+        "*"
+      ],
+      "defaultClientScopes": ["openid", "profile", "email"],
+      "optionalClientScopes": ["roles"]
+    },
+    {
+      "clientId": "spryker-merchant-portal",
+      "name": "Spryker Merchant Portal",
+      "description": "OAuth2 client for Merchant Portal authentication",
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "spryker-merchant-portal-secret",
+      "publicClient": false,
+      "protocol": "openid-connect",
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "redirectUris": ["http://mp.eu.b2b-mp.local/*"],
+      "webOrigins": ["http://mp.eu.b2b-mp.local"],
+      "defaultClientScopes": ["openid", "profile", "email"],
+      "optionalClientScopes": ["roles"]
+    }
+  ]
+}
