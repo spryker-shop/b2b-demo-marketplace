@@ -36,6 +36,8 @@ use Spryker\Shared\Router\RouterConstants;
 use Spryker\Shared\Scheduler\SchedulerConstants;
 use Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants;
 use Spryker\Shared\SecurityBlocker\SecurityBlockerConstants;
+use Spryker\Shared\SecurityGui\SecurityGuiConstants;
+use Spryker\Shared\SecurityMerchantPortalGui\SecurityMerchantPortalGuiConstants;
 use Spryker\Shared\Session\SessionConstants;
 use Spryker\Shared\SessionRedis\SessionRedisConstants;
 use Spryker\Shared\StorageDatabase\StorageDatabaseConstants;
@@ -46,6 +48,7 @@ use Spryker\Shared\Testify\TestifyConstants;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
 use Spryker\Zed\OauthDummy\OauthDummyConfig;
 use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConstants;
+use SprykerShop\Shared\CustomerPage\CustomerPageConstants;
 use SprykerShop\Shared\ErrorPage\ErrorPageConstants;
 
 // ############################################################################
@@ -88,6 +91,9 @@ $config[SessionConstants::ZED_SSL_ENABLED]
     = $config[SessionConstants::YVES_SSL_ENABLED]
     = $config[RouterConstants::YVES_IS_SSL_ENABLED]
     = $config[RouterConstants::ZED_IS_SSL_ENABLED]
+    = $config[CustomerPageConstants::YVES_IS_SSL_ENABLED]
+    = $config[SecurityGuiConstants::ZED_IS_SSL_ENABLED]
+    = $config[SecurityMerchantPortalGuiConstants::ZED_IS_SSL_ENABLED]
     = $config[HttpConstants::ZED_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED]
     = $config[HttpConstants::YVES_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED]
     = $config[ApplicationConstants::ZED_SSL_ENABLED]
@@ -208,14 +214,11 @@ foreach ($config[RabbitMqEnv::RABBITMQ_CONNECTIONS] as $connection) {
         continue;
     }
 
-    $config[SymfonyMessengerConstants::QUEUE_DSN] = sprintf(
-        'amqp://%s:%s@%s:%s/%s',
-        $connection[RabbitMqEnv::RABBITMQ_USERNAME],
-        $connection[RabbitMqEnv::RABBITMQ_PASSWORD],
-        $connection[RabbitMqEnv::RABBITMQ_HOST],
-        $connection[RabbitMqEnv::RABBITMQ_PORT],
-        $connection[RabbitMqEnv::RABBITMQ_VIRTUAL_HOST],
-    );
+    $config[SymfonyMessengerConstants::QUEUE_AMQP_HOST] = $connection[RabbitMqEnv::RABBITMQ_HOST];
+    $config[SymfonyMessengerConstants::QUEUE_AMQP_PORT] = $connection[RabbitMqEnv::RABBITMQ_PORT];
+    $config[SymfonyMessengerConstants::QUEUE_AMQP_USERNAME] = $connection[RabbitMqEnv::RABBITMQ_USERNAME];
+    $config[SymfonyMessengerConstants::QUEUE_AMQP_PASSWORD] = $connection[RabbitMqEnv::RABBITMQ_PASSWORD];
+    $config[SymfonyMessengerConstants::QUEUE_AMQP_VIRTUAL_HOST] = $connection[RabbitMqEnv::RABBITMQ_VIRTUAL_HOST];
 }
 
 // ---------- LOGGER
@@ -382,5 +385,15 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
         'root' => '/data',
         'path' => '/data/ssp-model-image',
+    ],
+    'product-experience-management-imports' => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/data',
+        'path' => '/data/pim-imports',
+    ],
+    'product-experience-management-exports' => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/data',
+        'path' => '/data/pim-exports',
     ],
 ];

@@ -17,4 +17,8 @@ class PriceProductScheduleGuiConfig extends SprykerPriceProductScheduleGuiConfig
      * @var bool
      */
     protected const IS_FILE_EXTENSION_VALIDATION_ENABLED = true;
+
+    protected const bool IS_GZIP_CSV_EXPORT_ENABLED = true;
+
+    protected const int CSV_EXPORT_MAX_PRICE_COUNT = 500000;
 }

@@ -1,145 +1,214 @@
 @mixin shop-ui-banner($name: '.banner') {
     #{$name} {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
         overflow: hidden;
-        height: rem(200);
-        margin-bottom: rem(10);
+        background-color: var(--background-page);
+        border: var(--stroke-sm) solid var(--border-default);
+        border-radius: var(--radius-lg);
+        min-height: rem(350);
 
         @include helper-breakpoint-media-min($lg) {
-            height: rem(450);
-            margin-bottom: rem(30);
+            flex-direction: row;
+            align-items: stretch;
         }
 
-        &--medium {
-            height: rem(400);
-        }
-
-        &--small {
-            height: rem(200);
+        &__image-wrapper {
+            display: block;
+            overflow: hidden;
+            flex-shrink: 0;
+            width: 100%;
+            aspect-ratio: 11 / 4;
 
             @include helper-breakpoint-media-min($lg) {
-                height: rem(340);
+                width: calc(720 / 1260 * 100%);
+                aspect-ratio: auto;
+                align-self: stretch;
             }
         }
 
-        &--success {
-            height: auto;
-            margin-bottom: rem(15);
+        &__image-wrapper--medium,
+        &__image-wrapper--small {
+            aspect-ratio: 5 / 3;
 
             @include helper-breakpoint-media-min($lg) {
-                height: rem(450);
-                margin-bottom: rem(40);
-            }
-        }
-
-        &--color-second {
-            color: $setting-color-white;
-        }
-
-        &--spacing-bottom-reset {
-            margin-bottom: 0;
-        }
-
-        &__container {
-            min-height: 100%;
-            background-position: center;
-            background-size: cover;
-            background-repeat: no-repeat;
-            text-align: center;
-            position: relative;
-            padding: rem(10);
-            margin: 0 rem(15);
-
-            @include helper-breakpoint-media-min($lg) {
-                text-align: left;
-                padding-bottom: rem(20);
-                padding-top: rem(20);
-            }
-
-            @include helper-breakpoint-media-min($xl) {
-                padding: rem(40) rem(30);
-            }
-
-            &--success {
-                margin: 0;
-                padding: rem(20) rem(15) rem(26);
-
-                @include helper-breakpoint-media-min($lg) {
-                    padding-top: 0;
-                    padding-bottom: 0;
-                }
-            }
-
-            &--spacing-x-reset {
-                margin-left: 0;
-                margin-right: 0;
-            }
-
-            &::after {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
                 width: 100%;
-                height: 100%;
-                background: linear-gradient(to top, $setting-color-black 0%, $setting-color-gray-3 100%);
-                opacity: 0.6;
+                aspect-ratio: 5 / 3;
             }
         }
 
-        &__title,
-        &__text {
-            color: $setting-color-white;
+        &__body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: var(--scale-20);
+            padding: var(--scale-24) var(--scale-20) var(--scale-20);
+            flex-grow: 1;
+
+            @include helper-breakpoint-media-min($lg) {
+                padding: var(--scale-32) var(--scale-20) var(--scale-20);
+            }
+        }
+
+        &__content {
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-12);
+            flex-grow: 1;
+        }
+
+        &__label {
+            display: block;
+            font-family: var(--body-md-family);
+            font-weight: var(--body-md-weight);
+            font-size: var(--body-md-size);
+            line-height: var(--body-md-line-height);
+            letter-spacing: var(--body-md-letter-spacing);
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        &__title-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-8);
         }
 
         &__title {
-            font-size: rem(25);
-            line-height: rem(25);
-            font-weight: fw(medium);
-            margin-bottom: rem(10);
+            font-family: var(--heading-lg-family);
+            font-size: var(--heading-lg-size);
+            font-weight: var(--heading-lg-weight);
+            line-height: var(--heading-lg-line-height);
+            letter-spacing: var(--heading-lg-letter-spacing);
+            color: var(--text-primary);
+            margin: 0;
         }
 
         &__text {
-            font-size: rem(16);
-            line-height: normal;
-            font-weight: fw(regular);
-            margin-bottom: rem(26);
+            font-family: var(--body-md-family);
+            font-size: var(--body-md-size);
+            font-weight: var(--body-md-weight);
+            line-height: var(--body-md-line-height);
+            letter-spacing: var(--body-md-letter-spacing);
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        &__badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--scale-8);
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        &__badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--scale-2) var(--scale-8);
+            background-color: var(--background-subtle);
+            border-radius: var(--radius-sm);
+            font-family: var(--label-sm-family);
+            font-weight: var(--label-sm-weight);
+            font-size: var(--label-sm-size);
+            line-height: var(--label-sm-line-height);
+            letter-spacing: var(--label-sm-letter-spacing);
+            color: var(--text-primary);
+        }
+
+        &__cta {
+            align-self: flex-start;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--scale-4);
+            padding: var(--scale-6) var(--scale-12);
+            background-color: transparent;
+            border: var(--stroke-sm) solid var(--border-default);
+            border-radius: var(--radius-sm);
+            font-family: var(--button-sm-family);
+            font-weight: var(--button-sm-weight);
+            font-size: var(--button-sm-size);
+            line-height: var(--button-sm-line-height);
+            letter-spacing: var(--button-sm-letter-spacing);
+            color: var(--text-secondary);
+            text-decoration: none;
+
+            &:hover,
+            &:focus {
+                background-color: var(--background-subtle);
+                color: var(--text-primary);
+                text-decoration: none;
+            }
+        }
+
+        // --small: redesigned vertical card with image area + bordered body.
+        &--small {
+            flex-direction: column;
+            border: none;
+            border-radius: var(--radius-lg);
+            background-color: transparent;
 
             @include helper-breakpoint-media-min($lg) {
-                font-size: rem(14);
+                flex-direction: column;
             }
 
-            &--subtitle {
-                font-family: $setting-font-family;
-                font-weight: fw(medium);
-                margin-bottom: 0;
+            #{$name}__image-wrapper {
+                width: 100%;
+                aspect-ratio: auto;
+                flex-grow: 1;
+                flex-shrink: 1;
+                flex-basis: 0;
+                min-height: rem(180);
+                background-color: var(--background-subtle);
+                border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+                align-self: stretch;
 
                 @include helper-breakpoint-media-min($lg) {
-                    font-size: rem(38);
-                    line-height: rem(40);
+                    width: 100%;
                 }
             }
-        }
 
-        &__success-title {
-            font-size: rem(32);
-            line-height: rem(34);
-            color: $setting-color-white;
-            margin-bottom: rem(11);
+            #{$name}__body {
+                gap: var(--scale-12);
+                padding: var(--scale-8) var(--scale-16) var(--scale-16);
+                border: var(--stroke-sm) solid var(--border-default);
+                border-top: 0;
+                border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+                background-color: var(--background-page);
 
-            @include helper-breakpoint-media-min($lg) {
-                margin-bottom: rem(32);
-                font-size: rem(50);
-                line-height: rem(55);
+                @include helper-breakpoint-media-min($lg) {
+                    padding: var(--scale-12) var(--scale-20) var(--scale-16);
+                }
             }
-        }
 
-        &__success-text {
-            font-size: rem(18);
-            letter-spacing: rem(0.3);
+            #{$name}__content {
+                gap: var(--scale-8);
+                flex-grow: 0;
+            }
 
-            @include helper-breakpoint-media-min($lg) {
-                font-size: rem(22);
-                letter-spacing: rem(0.4);
+            #{$name}__title {
+                font-family: var(--heading-sm-family);
+                font-weight: var(--heading-sm-weight);
+                font-size: var(--heading-sm-size);
+                line-height: var(--heading-sm-line-height);
+                letter-spacing: var(--heading-sm-letter-spacing);
+            }
+
+            #{$name}__text {
+                font-family: var(--body-sm-family);
+                font-size: var(--body-sm-size);
+                line-height: var(--body-sm-line-height);
+
+                @include helper-breakpoint-media-min($lg) {
+                    font-family: var(--body-md-family);
+                    font-size: var(--body-md-size);
+                    line-height: var(--body-md-line-height);
+                }
             }
         }
 

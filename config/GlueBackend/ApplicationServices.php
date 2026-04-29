@@ -10,20 +10,12 @@
 
 declare(strict_types = 1);
 
-use Spryker\Service\Container\ProxyFactory;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 return static function (ContainerConfigurator $configurator): void {
-    $services = $configurator->services()
+    $configurator->services()
         ->defaults()
         ->autowire()
         ->public()
         ->autoconfigure();
-
-    /**
-     * Make ProxyFactory available in the DIC. The Proxy is used to be able to lazy-load services which are not known to
-     * the ContainerBuilder at compile time. The Container is compiled based on this configuration file, so services from modules
-     * that are not included here will not be available at runtime unless they are proxied.
-     */
-    $services->set(ProxyFactory::class)->public();
 };

@@ -185,6 +185,13 @@
                 <controller>list-company-role</controller>
                 <action>index</action>
             </company-role-gui>
+            <purchasing-control>
+                <label>Purchasing Control</label>
+                <title>Purchasing Control</title>
+                <bundle>purchasing-control</bundle>
+                <controller>cost-center</controller>
+                <action>index</action>
+            </purchasing-control>
         </pages>
     </customer>
     <catalog>
@@ -442,6 +449,29 @@
             </merchant-commission-gui>
         </pages>
     </marketplace>
+    <import-export>
+        <label>Import &amp; Export</label>
+        <title>Import &amp; Export</title>
+        <icon>swap_vert</icon>
+        <pages>
+            <import>
+                <label>Import</label>
+                <title>Import</title>
+                <bundle>product-experience-management</bundle>
+                <controller>job</controller>
+                <action>index</action>
+                <visible>1</visible>
+            </import>
+            <export>
+                <label>Export</label>
+                <title>Export</title>
+                <bundle>product-experience-management</bundle>
+                <controller>export</controller>
+                <action>index</action>
+                <visible>1</visible>
+            </export>
+        </pages>
+    </import-export>
     <users>
         <label>Users</label>
         <title>Users</title>
@@ -667,6 +697,13 @@
                 <action>index</action>
                 <visible>1</visible>
             </queue>
+            <symfony-scheduler>
+                <label>Scheduler</label>
+                <title>Scheduler</title>
+                <bundle>symfony-scheduler</bundle>
+                <controller>index</controller>
+                <action>index</action>
+            </symfony-scheduler>
             <storage-gui>
                 <label>Storage</label>
                 <title>Storage index</title>
@@ -676,4 +713,13 @@
             </storage-gui>
         </pages>
     </maintenance>
+    <configuration-management>
+        <label>Configuration</label>
+        <title>Configuration Management</title>
+        <icon>settings</icon>
+        <bundle>configuration</bundle>
+        <controller>manage</controller>
+        <action>index</action>
+        <visible>1</visible>
+    </configuration-management>
 </config>

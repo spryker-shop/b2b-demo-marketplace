@@ -1,4 +1,4 @@
-$product-review-rating-selector-icon-size: 14px;
+$product-review-rating-selector-icon-size: 10px;
 $product-review-rating-selector-icon-size-pdp: 16px;
 $product-review-rating-selector-icon-size-big: 24px;
 
@@ -41,7 +41,7 @@ $product-review-rating-selector-icon-size-big: 24px;
                 position: relative;
                 min-width: $product-review-rating-selector-icon-size;
                 min-height: $product-review-rating-selector-icon-size;
-                color: $setting-color-gray-3;
+                color: var(--background-muted);
                 width: $product-review-rating-selector-icon-size;
 
                 &--half-left {
@@ -55,11 +55,11 @@ $product-review-rating-selector-icon-size-big: 24px;
 
             &:hover > #{$name}__star,
             &:hover ~ #{$name}__step > #{$name}__star {
-                color: $setting-color-yellow-1;
+                color: var(--yellow-300);
             }
 
             &--active > #{$name}__star {
-                color: $setting-color-yellow-1;
+                color: var(--yellow-300);
                 width: $product-review-rating-selector-icon-size;
             }
         }
@@ -118,7 +118,7 @@ $product-review-rating-selector-icon-size-big: 24px;
         }
 
         &__count {
-            font-size: rem(13);
+            @include helper-font-size(tiny);
             line-height: rem(16);
             font-family: $setting-font-family;
             color: $setting-color-gray-4;

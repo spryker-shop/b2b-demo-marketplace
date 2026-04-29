@@ -13,6 +13,11 @@ use Spryker\Zed\CmsBlockProductConnector\Communication\Plugin\CmsBlockProductAbs
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantGui\Communication\Plugin\ProductManagement\MerchantProductAbstractListActionViewDataExpanderPlugin;
+use Spryker\Zed\MerchantProductGui\Communication\Plugin\ProductManagement\MerchantProductAbstractFormDataProviderExpanderPlugin;
+use Spryker\Zed\MerchantProductGui\Communication\Plugin\ProductManagement\MerchantProductAbstractFormExpanderPlugin;
+use Spryker\Zed\MerchantProductGui\Communication\Plugin\ProductManagement\MerchantProductAbstractFormOptionsExpanderPlugin;
+use Spryker\Zed\MerchantProductGui\Communication\Plugin\ProductManagement\MerchantProductAbstractFormOptionsResolverExpanderPlugin;
+use Spryker\Zed\MerchantProductGui\Communication\Plugin\ProductManagement\MerchantProductAbstractGeneralTabContentProviderPlugin;
 use Spryker\Zed\MerchantProductGui\Communication\Plugin\ProductManagement\MerchantProductProductAbstractEditViewExpanderPlugin;
 use Spryker\Zed\MerchantProductGui\Communication\Plugin\ProductManagement\MerchantProductProductAbstractViewActionViewDataExpanderPlugin;
 use Spryker\Zed\MerchantProductGui\Communication\Plugin\ProductManagement\MerchantProductProductTableQueryCriteriaExpanderPlugin;
@@ -39,10 +44,11 @@ use Spryker\Zed\ProductApprovalGui\Communication\Plugin\ProductManagement\Produc
 use Spryker\Zed\ProductApprovalGui\Communication\Plugin\ProductManagement\ProductApprovalProductTableConfigurationExpanderPlugin;
 use Spryker\Zed\ProductApprovalGui\Communication\Plugin\ProductManagement\ProductApprovalProductTableDataBulkExpanderPlugin;
 use Spryker\Zed\ProductApprovalGui\Communication\Plugin\ProductManagement\ProductApprovalProductTableQueryCriteriaExpanderPlugin;
-use Spryker\Zed\ProductAttachment\Communication\Plugin\ProductManagement\ProductAttachmentImageTabContentProviderPlugin;
+use Spryker\Zed\ProductAttachment\Communication\Plugin\ProductManagement\ProductAttachmentImageTabContentProviderWithPriorityPlugin;
 use Spryker\Zed\ProductAttachment\Communication\Plugin\ProductManagement\ProductAttachmentProductAbstractFormDataProviderExpanderPlugin;
 use Spryker\Zed\ProductAttachment\Communication\Plugin\ProductManagement\ProductAttachmentProductAbstractFormExpanderPlugin;
 use Spryker\Zed\ProductAttachment\Communication\Plugin\ProductManagement\ProductAttachmentProductAbstractTransferMapperPlugin;
+use Spryker\Zed\ProductCategory\Communication\Plugin\ProductManagement\ProductCategoryAbstractFormExpanderPlugin;
 use Spryker\Zed\ProductConfigurationGui\Communication\Plugin\ProductManagement\ProductConfigurationProductTableDataBulkExpanderPlugin;
 use Spryker\Zed\ProductDiscontinuedGui\Communication\Plugin\DiscontinuedNotesProductFormTransferMapperExpanderPlugin;
 use Spryker\Zed\ProductDiscontinuedGui\Communication\Plugin\DiscontinuedProductConcreteEditFormExpanderPlugin;
@@ -56,6 +62,7 @@ use Spryker\Zed\ProductStorage\Communication\Plugin\ProductManagement\StoragePro
 use Spryker\Zed\ProductStorage\Communication\Plugin\ProductManagement\StorageTableProductAbstractReadinessProviderPlugin;
 use Spryker\Zed\ProductStorage\Communication\Plugin\ProductManagement\StorageTableProductConcreteReadinessProviderPlugin;
 use Spryker\Zed\Store\Communication\Plugin\Form\StoreRelationToggleFormTypePlugin;
+use SprykerFeature\Zed\AiCommerce\Communication\Plugin\ProductManagement\ProductManagementAiProductAbstractFormTabContentProviderWithPriorityPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductManagement\ProductClassFormExpanderPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductManagement\ProductClassProductConcreteFormEditDataProviderExpanderPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductManagement\ProductClassProductConcreteTransferMapperPlugin;
@@ -150,6 +157,8 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
         return [
             new MerchantRelationshipProductAbstractFormExpanderPlugin(),
             new ProductAttachmentProductAbstractFormExpanderPlugin(),
+            new MerchantProductAbstractFormExpanderPlugin(),
+            new ProductCategoryAbstractFormExpanderPlugin(),
         ];
     }
 
@@ -301,16 +310,39 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
     {
         return [
             new ProductAttachmentProductAbstractFormDataProviderExpanderPlugin(),
+            new MerchantProductAbstractFormDataProviderExpanderPlugin(),
         ];
     }
 
     /**
-     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormTabContentProviderPluginInterface>
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormOptionsExpanderPluginInterface>
      */
-    protected function getProductAbstractFormTabContentProviderPlugins(): array
+    protected function getProductAbstractFormOptionsExpanderPlugins(): array
     {
         return [
-            new ProductAttachmentImageTabContentProviderPlugin(),
+            new MerchantProductAbstractFormOptionsExpanderPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormOptionsResolverExpanderPluginInterface>
+     */
+    protected function getProductAbstractFormOptionsResolverExpanderPlugins(): array
+    {
+        return [
+            new MerchantProductAbstractFormOptionsResolverExpanderPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormTabContentProviderWithPriorityPluginInterface>
+     */
+    protected function getProductAbstractFormTabContentProviderWithPriorityPlugins(): array
+    {
+        return [
+            new ProductAttachmentImageTabContentProviderWithPriorityPlugin(),
+            new MerchantProductAbstractGeneralTabContentProviderPlugin(),
+            new ProductManagementAiProductAbstractFormTabContentProviderWithPriorityPlugin(),
         ];
     }
 }

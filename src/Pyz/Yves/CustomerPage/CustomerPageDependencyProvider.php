@@ -12,6 +12,8 @@ namespace Pyz\Yves\CustomerPage;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\MerchantShipment\Plugin\CustomerPage\MerchantShipmentCheckoutAddressStepPreGroupItemsByShipmentPlugin;
 use Spryker\Yves\MultiFactorAuth\Plugin\AuthenticationHandler\Customer\CustomerMultiFactorAuthenticationHandlerPlugin;
+use Spryker\Yves\SecurityOauthKnpu\Plugin\CustomerPage\KnpuCustomerAuthenticationLinkPlugin;
+use Spryker\Yves\SecurityOauthKnpu\Plugin\CustomerPage\KnpuOauthCustomerClientStrategyPlugin;
 use SprykerFeature\Yves\SelfServicePortal\Plugin\CustomerPage\SingleAddressPerShipmentTypeCheckoutMultiShippingAddressesFormExpanderPlugin;
 use SprykerShop\Yves\AgentPage\Plugin\Security\UpdateAgentTokenAfterCustomerAuthenticationSuccessPlugin;
 use SprykerShop\Yves\ClickAndCollectPageExample\Plugin\CustomerPage\ClickAndCollectServiceTypeCheckoutAddressCollectionFormExpanderPlugin;
@@ -22,6 +24,7 @@ use SprykerShop\Yves\CompanyPage\Plugin\CustomerPage\CompanyBusinessUnitOrderSea
 use SprykerShop\Yves\CompanyPage\Plugin\CustomerPage\CompanyUserPreAuthUserCheckPlugin;
 use SprykerShop\Yves\CompanyUserInvitationPage\Plugin\CompanyUserInvitationPreRegistrationCustomerTransferExpanderPlugin;
 use SprykerShop\Yves\CustomerPage\CustomerPageDependencyProvider as SprykerShopCustomerPageDependencyProvider;
+use SprykerShop\Yves\CustomerPage\Plugin\CustomerPage\LastVisitedPageCustomerRedirectStrategyPlugin;
 use SprykerShop\Yves\CustomerPage\Plugin\CustomerPage\RedirectUriCustomerRedirectStrategyPlugin;
 use SprykerShop\Yves\ServicePointWidget\Plugin\CustomerPage\ServicePointAddressCheckoutAddressCollectionFormExpanderPlugin;
 use SprykerShop\Yves\ServicePointWidget\Plugin\CustomerPage\ServicePointCheckoutAddressCollectionFormExpanderPlugin;
@@ -70,6 +73,7 @@ class CustomerPageDependencyProvider extends SprykerShopCustomerPageDependencyPr
         return [
             new BusinessOnBehalfCompanyUserRedirectAfterLoginStrategyPlugin(), #BusinessOnBehalfFeature
             new RedirectUriCustomerRedirectStrategyPlugin(),
+            new LastVisitedPageCustomerRedirectStrategyPlugin(),
         ];
     }
 
@@ -172,6 +176,26 @@ class CustomerPageDependencyProvider extends SprykerShopCustomerPageDependencyPr
     {
         return [
             new CustomerMultiFactorAuthenticationHandlerPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\OauthCustomerClientStrategyPluginInterface>
+     */
+    protected function getOauthCustomerClientStrategyPlugins(): array
+    {
+        return [
+            new KnpuOauthCustomerClientStrategyPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\CustomerAuthenticationLinkPluginInterface>
+     */
+    protected function getCustomerAuthenticationLinkPlugins(): array
+    {
+        return [
+            new KnpuCustomerAuthenticationLinkPlugin(),
         ];
     }
 }

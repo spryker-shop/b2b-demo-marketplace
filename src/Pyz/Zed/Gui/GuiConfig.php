@@ -14,4 +14,6 @@ use Spryker\Zed\Gui\GuiConfig as SprykerGuiConfig;
 class GuiConfig extends SprykerGuiConfig
 {
     protected const string NAVIGATION_ICONS_TYPE_DEFAULT = 'google-material';
+
+    protected const string HOME_PATH = '/dashboard';
 }

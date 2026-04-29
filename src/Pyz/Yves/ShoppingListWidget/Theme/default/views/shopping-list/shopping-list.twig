@@ -22,7 +22,7 @@
 {% block body %}
     <form class="js-shopping-list__form" method="POST" action="{{ path('shopping-list/add-item') }}">
 
-        <div class="grid grid--stretch grid--nowrap grid--justify spacing-top--bigger">
+        <div class="grid grid--stretch grid--nowrap grid--justify spacing-y--bigger">
             {% include molecule('quantity-counter') with {
                 modifiers: ['right-space']
             } only %}
@@ -35,6 +35,7 @@
                 {% endif %}
 
                 {% include molecule('form-data-injector', 'ShoppingListWidget') with {
+                    class: "is-hidden",
                     attributes: {
                         'destination-form-class-name': 'js-shopping-list__form',
                         'fields-selector': '.js-product-configurator__form-add-to-cart .js-custom-select:not([name="quantity"]):not([name="id_quote"])'

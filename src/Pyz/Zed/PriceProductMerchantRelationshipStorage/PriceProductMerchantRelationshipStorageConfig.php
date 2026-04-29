@@ -10,7 +10,7 @@ declare(strict_types = 1);
 namespace Pyz\Zed\PriceProductMerchantRelationshipStorage;
 
 use Pyz\Zed\Synchronization\SynchronizationConfig;
-use Spryker\Shared\Publisher\PublisherConfig;
+use Spryker\Shared\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig as SprykerSharedPriceProductMerchantRelationshipStorageConfig;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig as SprykerPriceProductMerchantRelationshipStorageConfig;
 
 /**
@@ -39,7 +39,7 @@ class PriceProductMerchantRelationshipStorageConfig extends SprykerPriceProductM
      */
     public function getMerchantRelationEventQueueName(): ?string
     {
-        return PublisherConfig::PUBLISH_QUEUE;
+        return SprykerSharedPriceProductMerchantRelationshipStorageConfig::PUBLISH_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_QUEUE;
     }
 
     /**
@@ -47,7 +47,7 @@ class PriceProductMerchantRelationshipStorageConfig extends SprykerPriceProductM
      */
     public function getPriceProductConcreteMerchantRelationEventQueueName(): ?string
     {
-        return PublisherConfig::PUBLISH_QUEUE;
+        return SprykerSharedPriceProductMerchantRelationshipStorageConfig::PUBLISH_PRICE_PRODUCT_CONCRETE_MERCHANT_RELATIONSHIP_QUEUE;
     }
 
     /**
@@ -55,6 +55,6 @@ class PriceProductMerchantRelationshipStorageConfig extends SprykerPriceProductM
      */
     public function getPriceProductAbstractMerchantRelationEventQueueName(): ?string
     {
-        return PublisherConfig::PUBLISH_QUEUE;
+        return SprykerSharedPriceProductMerchantRelationshipStorageConfig::PUBLISH_PRICE_PRODUCT_ABSTRACT_MERCHANT_RELATIONSHIP_QUEUE;
     }
 }

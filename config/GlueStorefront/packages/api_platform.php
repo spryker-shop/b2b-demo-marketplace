@@ -21,8 +21,6 @@ return static function (ApiPlatformConfig $apiPlatform, string $env): void {
     $apiPlatform->doctrine()->enabled(false);
     $apiPlatform->doctrineMongodbOdm()->enabled(false);
 
-    $apiPlatform->mapping()->paths(['%kernel.project_dir%/src/Generated/Api/Storefront']);
-
     if ($env === 'dockerdev') {
         $apiPlatform->enableSwagger(true);
         $apiPlatform->enableSwaggerUi(true);
@@ -40,6 +38,10 @@ return static function (ApiPlatformConfig $apiPlatform, string $env): void {
         ->apiKeys('JWT', ['name' => 'Authorization', 'type' => 'header']);
 
     $apiPlatform->defaults()->paginationItemsPerPage(10);
+    $apiPlatform->defaults()->filters(['spryker.api_platform.filter.property']);
+    $apiPlatform->defaults()->normalizationContext(['skip_null_values' => false]);
+    $apiPlatform->defaults()->denormalizationContext(['disable_type_enforcement' => true]);
+
     $apiPlatform->collection()
         ->existsParameterName('exists')
         ->order('ASC')
@@ -50,8 +52,12 @@ return static function (ApiPlatformConfig $apiPlatform, string $env): void {
             ->itemsPerPageParameterName('itemsPerPage')
             ->partialParameterName('partial');
 
-    $apiPlatform->formats('jsonapi', ['mime_types' => ['application/vnd.api+json']]);
+    $apiPlatform->formats('jsonapi', ['mime_types' => ['application/vnd.api+json', 'application/json']]);
     $apiPlatform->formats('jsonld', ['mime_types' => ['application/ld+json']]);
     $apiPlatform->formats('xml', ['mime_types' => ['application/xml', 'text/xml']]);
     $apiPlatform->formats('csv', ['mime_types' => ['text/csv']]);
+
+    $apiPlatform->patchFormats('jsonapi', ['mime_types' => ['application/vnd.api+json', 'application/json']]);
+
+    $apiPlatform->errorFormats('jsonapi', ['mime_types' => ['application/vnd.api+json', 'application/json']]);
 };

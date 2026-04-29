@@ -36,6 +36,7 @@ use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\ViewTableButtonTwigP
 use Spryker\Zed\Gui\Communication\Plugin\Twig\FormRuntimeLoaderTwigPlugin;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\GuiFilterTwigPlugin;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\GuiTwigLoaderPlugin;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\HomePathTwigPlugin;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\NavigationIconsTypeTwigPlugin;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\NavigationLinkTwigPlugin;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\NumberFormatterTwigPlugin;
@@ -58,6 +59,7 @@ use Spryker\Zed\WebProfiler\Communication\Plugin\Twig\WebProfilerTwigLoaderPlugi
 use Spryker\Zed\ZedNavigation\Communication\Plugin\Twig\ZedNavigationTwigPlugin;
 use Spryker\Zed\ZedUi\Communication\Plugin\Twig\BooleanToStringTwigPlugin;
 use Spryker\Zed\ZedUi\Communication\Plugin\ZedUiNavigationTwigPlugin;
+use SprykerFeature\Zed\AiCommerce\Communication\Plugin\Twig\AiCommerceTwigPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Twig\SelfServicePortalTwigPlugin;
 
 class TwigDependencyProvider extends SprykerTwigDependencyProvider
@@ -117,7 +119,9 @@ class TwigDependencyProvider extends SprykerTwigDependencyProvider
             new MerchantUserTwigPlugin(),
             new MerchantNavigationTypeTwigPlugin(),
             new SelfServicePortalTwigPlugin(),
+            new AiCommerceTwigPlugin(),
             new NavigationIconsTypeTwigPlugin(),
+            new HomePathTwigPlugin(),
         ];
     }
 

@@ -10,6 +10,8 @@ declare(strict_types = 1);
 namespace Pyz\Zed\Product;
 
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\MerchantProduct\Communication\Plugin\Product\MerchantProductProductAbstractAfterUpdatePlugin;
+use Spryker\Zed\MerchantProduct\Communication\Plugin\Product\MerchantProductProductAbstractExpanderPlugin;
 use Spryker\Zed\MerchantProduct\Communication\Plugin\Product\MerchantProductProductAbstractPostCreatePlugin;
 use Spryker\Zed\MerchantProductApproval\Communication\Plugin\Product\MerchantProductApprovalProductAbstractPreCreatePlugin;
 use Spryker\Zed\MerchantProductOffer\Communication\Plugin\Product\MerchantProductOfferProductConcreteExpanderPlugin;
@@ -30,6 +32,8 @@ use Spryker\Zed\ProductBundle\Communication\Plugin\Product\ProductBundleDeactiva
 use Spryker\Zed\ProductBundle\Communication\Plugin\Product\ProductBundleProductConcreteAfterCreatePlugin;
 use Spryker\Zed\ProductBundle\Communication\Plugin\Product\ProductBundleProductConcreteAfterUpdatePlugin;
 use Spryker\Zed\ProductBundle\Communication\Plugin\Product\ProductBundleProductConcreteExpanderPlugin;
+use Spryker\Zed\ProductCategory\Communication\Plugin\Product\ProductCategoryProductAbstractAfterUpdatePlugin;
+use Spryker\Zed\ProductCategory\Communication\Plugin\Product\ProductCategoryProductAbstractPostCreatePlugin;
 use Spryker\Zed\ProductCategory\Communication\Plugin\Product\ProductConcreteCategoriesExpanderPlugin;
 use Spryker\Zed\ProductDiscontinued\Communication\Plugin\SaveDiscontinuedNotesProductConcretePluginUpdate;
 use Spryker\Zed\ProductDiscontinuedProductBundleConnector\Communication\Plugin\Product\DiscontinuedProductConcreteAfterCreatePlugin;
@@ -75,6 +79,7 @@ class ProductDependencyProvider extends SprykerProductDependencyProvider
             new TaxSetProductAbstractPostCreatePlugin(),
             new PriceProductAbstractPostCreatePlugin(),
             new ProductAttachmentProductAbstractPostCreatePlugin(),
+            new ProductCategoryProductAbstractPostCreatePlugin(),
         ];
     }
 
@@ -110,6 +115,8 @@ class ProductDependencyProvider extends SprykerProductDependencyProvider
             new TaxSetProductAbstractAfterUpdatePlugin(),
             new PriceProductAbstractAfterUpdatePlugin(),
             new ProductAttachmentProductAbstractAfterUpdatePlugin(),
+            new MerchantProductProductAbstractAfterUpdatePlugin(),
+            new ProductCategoryProductAbstractAfterUpdatePlugin(),
         ];
     }
 
@@ -191,6 +198,7 @@ class ProductDependencyProvider extends SprykerProductDependencyProvider
             new ProductImageProductAbstractExpanderPlugin(),
             new TaxSetProductAbstractExpanderPlugin(),
             new PriceProductProductAbstractExpanderPlugin(),
+            new MerchantProductProductAbstractExpanderPlugin(),
         ];
     }
 

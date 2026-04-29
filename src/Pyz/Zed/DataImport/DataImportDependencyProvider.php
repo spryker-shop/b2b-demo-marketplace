@@ -37,6 +37,7 @@ use Spryker\Zed\CompanyUserDataImport\Communication\Plugin\DataImport\CompanyUse
 use Spryker\Zed\ConfigurableBundleDataImport\Communication\Plugin\ConfigurableBundleTemplateDataImportPlugin;
 use Spryker\Zed\ConfigurableBundleDataImport\Communication\Plugin\ConfigurableBundleTemplateImageDataImportPlugin;
 use Spryker\Zed\ConfigurableBundleDataImport\Communication\Plugin\ConfigurableBundleTemplateSlotDataImportPlugin;
+use Spryker\Zed\Configuration\Communication\Plugin\DataImport\ConfigurationValueDataImportPlugin;
 use Spryker\Zed\ContentBannerDataImport\Communication\Plugin\ContentBannerDataImportPlugin;
 use Spryker\Zed\ContentNavigationDataImport\Communication\Plugin\DataImport\ContentNavigationDataImportPlugin;
 use Spryker\Zed\ContentProductDataImport\Communication\Plugin\ContentProductAbstractListDataImportPlugin;
@@ -196,6 +197,11 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
     public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
 
     /**
+     * @var string
+     */
+    public const FACADE_PRODUCT_EXPERIENCE_MANAGEMENT = 'FACADE_PRODUCT_EXPERIENCE_MANAGEMENT';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -214,6 +220,7 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
         $container = $this->addStockFacade($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addMerchantUserFacade($container);
+        $container = $this->addProductExperienceManagementFacade($container);
 
         return $container;
     }
@@ -359,6 +366,20 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductExperienceManagementFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRODUCT_EXPERIENCE_MANAGEMENT, function (Container $container) {
+            return $container->getLocator()->productExperienceManagement()->facade();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return array<\Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface>
      */
     protected function getDataImporterPlugins(): array
@@ -498,6 +519,7 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
             new SspModelAssetDataImportPlugin(),
             new SspModelProductListDataImportPlugin(),
             new ProductAttachmentDataImportPlugin(),
+            new ConfigurationValueDataImportPlugin(),
         ];
     }
 

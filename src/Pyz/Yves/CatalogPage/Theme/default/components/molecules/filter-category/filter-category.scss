@@ -91,6 +91,7 @@
         cursor: pointer;
         background-color: $setting-color-transparent;
         font: fw(regular) rem(13) / rem(16) $setting-font-family;
+        gap: rem(var(--scale-2));
 
         @include helper-breakpoint-media-min($lg) {
             margin-bottom: rem(11);
@@ -99,28 +100,16 @@
         }
 
         &--lvl-1 {
-            font-size: rem(15);
+            font-size: var(--font-size-16);
             font-weight: fw(medium);
-
-            @include helper-breakpoint-media-min($lg) {
-                font-size: rem(18);
-            }
         }
 
         &--lvl-2 {
-            font-size: rem(15);
-
-            @include helper-breakpoint-media-min($lg) {
-                font-size: rem(16);
-            }
+            font-size: var(--font-size-16);
         }
 
         &--lvl-3 {
-            font-size: rem(13);
-
-            @include helper-breakpoint-media-min($lg) {
-                font-size: rem(15);
-            }
+            font-size: var(--font-size-14);
         }
 
         &:hover,
@@ -146,5 +135,9 @@
         &--active {
             text-decoration: underline;
         }
+    }
+
+    &__counter {
+        @include helper-font-size(medium);
     }
 }

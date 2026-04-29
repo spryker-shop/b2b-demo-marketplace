@@ -23,6 +23,8 @@ use Spryker\Zed\CompanyBusinessUnitDataImport\CompanyBusinessUnitDataImportConfi
 use Spryker\Zed\CompanyDataImport\CompanyDataImportConfig;
 use Spryker\Zed\CompanyUnitAddressDataImport\CompanyUnitAddressDataImportConfig;
 use Spryker\Zed\CompanyUnitAddressLabelDataImport\CompanyUnitAddressLabelDataImportConfig;
+use Spryker\Zed\Configuration\Communication\Console\ConfigurationSyncConsole;
+use Spryker\Zed\Configuration\Communication\Plugin\Application\ConfigurationApplicationPlugin;
 use Spryker\Zed\Console\Communication\Plugin\Console\MultiProcessRunConsole;
 use Spryker\Zed\Console\ConsoleDependencyProvider as SprykerConsoleDependencyProvider;
 use Spryker\Zed\Container\Communication\Console\ContainerBuilderConsole;
@@ -205,7 +207,11 @@ use Spryker\Zed\ZedNavigation\Communication\Console\BuildNavigationConsole;
 use Spryker\Zed\ZedNavigation\Communication\Console\RemoveNavigationCacheConsole;
 use SprykerEco\Zed\Algolia\Communication\Console\AlgoliaEntityExportConsole;
 use SprykerEco\Zed\NewRelic\Communication\Console\RecordDeploymentConsole;
+use SprykerEco\Zed\PunchoutGateway\Communication\Console\PunchoutCxmlDemoConnectionCreateConsole;
+use SprykerEco\Zed\PunchoutGateway\Communication\Console\PunchoutOciDemoConnectionCreateConsole;
+use SprykerFeature\Zed\ProductExperienceManagement\Communication\Console\ImportJobRunConsole;
 use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
+use SprykerSdk\Zed\AiDev\Communication\Console\AiToolSetupConsole;
 use SprykerSdk\Zed\AiDev\Communication\Console\GeneratePromptsConsole;
 use SprykerSdk\Zed\AiDev\Communication\Console\McpServerConsole;
 use SprykerShop\Zed\DateTimeConfiguratorPageExample\Communication\Console\DateTimeProductConfiguratorBuildFrontendConsole;
@@ -454,6 +460,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new StorageRedisDataReSaveConsole(),
             new SitemapGenerateConsole(),
             new DataImportMerchantImportConsole(),
+            new ImportJobRunConsole(),
 
             // Container commands
             new ContainerBuilderConsole(),
@@ -462,6 +469,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
 
             new SymfonyMessengerConsumeMessagesConsole(),
             new SchedulerListConsole(),
+            new ConfigurationSyncConsole(),
         ];
 
         $propelCommands = $container->getLocator()->propel()->facade()->getConsoleCommands();
@@ -514,6 +522,10 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
                 $commands[] = new GeneratePromptsConsole();
             }
 
+            if (class_exists(AiToolSetupConsole::class)) {
+                $commands[] = new AiToolSetupConsole();
+            }
+
             if (class_exists(SecurityCheckerCommand::class)) {
                 $commands[] = new SecurityCheckerCommand();
             }
@@ -522,6 +534,10 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             $commands[] = new MessageBrokerAwsSqsQueuesCreatorConsole();
             $commands[] = new MessageBrokerAwsSnsTopicsCreatorConsole();
             $commands[] = new MessageBrokerSqsToSnsSubscriberConsole();
+
+            // Punchout Gateway demo connections
+            $commands[] = new PunchoutOciDemoConnectionCreateConsole();
+            $commands[] = new PunchoutCxmlDemoConnectionCreateConsole();
         }
 
         return $commands;
@@ -555,6 +571,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
         $applicationPlugins[] = new TwigApplicationPlugin();
         $applicationPlugins[] = new FormApplicationPlugin();
         $applicationPlugins[] = new EventDispatcherApplicationPlugin();
+        $applicationPlugins[] = new ConfigurationApplicationPlugin();
 
         return $applicationPlugins;
     }
