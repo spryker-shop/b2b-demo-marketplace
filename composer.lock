@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b76eefa2679744e65e4de67279b04996",
+    "content-hash": "23dc83cd6931e5e1239173d351c2a487",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -35215,7 +35215,7 @@
         },
         {
             "name": "spryker/composer-autoload-plugin",
-            "version": "0.2.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/composer-autoload-plugin.git",
@@ -35231,6 +35231,7 @@
                 "composer-plugin-api": "^2.0",
                 "php": ">=8.3"
             },
+            "default-branch": true,
             "type": "composer-plugin",
             "extra": {
                 "class": "Spryker\\Composer\\Plugin\\AutoloadPlugin",
@@ -35256,7 +35257,7 @@
             "description": "Composer plugin to optimize autoload generation for Spryker projects",
             "support": {
                 "issues": "https://github.com/spryker/composer-autoload-plugin/issues",
-                "source": "https://github.com/spryker/composer-autoload-plugin/tree/0.2.1"
+                "source": "https://github.com/spryker/composer-autoload-plugin/tree/master"
             },
             "time": "2025-11-26T14:35:30+00:00"
         },
@@ -92216,6 +92217,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "spryker/composer-autoload-plugin": 20,
         "spryker/cypress-tests": 20,
         "spryker/robotframework-suite-tests": 20
     },
