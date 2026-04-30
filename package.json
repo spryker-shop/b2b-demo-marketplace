@@ -36,7 +36,9 @@
         "mp:lint": "ng lint",
         "mp:test": "ng test",
         "mp:update:paths": "node ./frontend/merchant-portal/update-config-paths",
-        "postinstall": "npm run mp:update:paths"
+        "postinstall": "npm run mp:update:paths",
+        "storybook": "NODE_OPTIONS=--max-old-space-size=8192 storybook dev -p 6006 -c src/Pyz/Yves/ShopUi/Theme/storybook/config",
+        "storybook:build": "NODE_OPTIONS=--max-old-space-size=8192 storybook build -c src/Pyz/Yves/ShopUi/Theme/storybook/config -o storybook-static"
     },
     "engines": {
         "node": ">=24.14.0",
@@ -90,6 +92,8 @@
         "@spryker/frontend-config.eslint": "~0.1.0",
         "@spryker/frontend-config.stylelint": "~0.0.6",
         "@spryker/oryx-for-zed": "~3.6.1",
+        "@storybook/addon-essentials": "^8.6.18",
+        "@storybook/html-webpack5": "^8.6.18",
         "@types/jest": "~30.0.0",
         "@types/node": "~25.0.9",
         "@types/webpack": "~5.28.5",
@@ -118,6 +122,7 @@
         "sass": "~1.97.0",
         "sass-loader": "~16.0.6",
         "sass-resources-loader": "~2.2.5",
+        "storybook": "^8.6.18",
         "style-dictionary": "^4.4.0",
         "stylelint": "~16.26.1",
         "stylelint-config-standard-less": "~3.0.1",
@@ -125,6 +130,7 @@
         "terser-webpack-plugin": "~5.3.16",
         "ts-node": "~10.9.2",
         "tslib": "~2.8.1",
+        "twig": "^1.17.1",
         "typescript": "~5.9.3",
         "typescript-eslint": "^8.53.0",
         "webpack": "~5.104.1",
