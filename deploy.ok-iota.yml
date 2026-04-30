@@ -124,18 +124,19 @@ groups:
           glue.eu.ok-iota.cloud.spryker.toys:
             region: EU
             entry-point: Glue
-
-      boffice:
-        application: backoffice
+      mportal:
+        application: merchant-portal
         endpoints:
           mp.eu.ok-iota.cloud.spryker.toys:
-            region: EU
-            <<: *frontend-auth
             entry-point: MerchantPortal
+            region: EU
+            <<: *real-ip
             services:
               session:
                 namespace: 3
-
+      boffice:
+        application: backoffice
+        endpoints:
           backoffice.eu.ok-iota.cloud.spryker.toys:
             region: EU
             <<: *frontend-auth
