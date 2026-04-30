@@ -1,19 +1,36 @@
 import { renderMolecule } from 'storybook-helpers/render-twig';
 import { componentDocs, section, Meta, StoryObj } from 'storybook-helpers/docs';
 
-
 const docs = componentDocs({
     name: 'status',
     tag: 'span',
     extends: "molecule('status', '@SprykerShop:ShopUi')",
     data: [
         { prop: 'label', type: 'string', default: 'required', desc: 'Text label for the status badge' },
-        { prop: 'status', type: 'string', default: 'required', desc: 'Status key (used as CSS modifier, e.g. approved, cancelled)' },
+        {
+            prop: 'status',
+            type: 'string',
+            default: 'required',
+            desc: 'Status key (used as CSS modifier, e.g. approved, cancelled)',
+        },
     ],
     modifiers: [
-        'shipped', 'in-stock', 'available', 'approved', 'ready', 'paid', 'delivered',
-        'cancelled', 'ready-for-return', 'returned', 'waiting-for-return',
-        'out-of-stock', 'rejected', 'not-configured', 'info', 'availability',
+        'shipped',
+        'in-stock',
+        'available',
+        'approved',
+        'ready',
+        'paid',
+        'delivered',
+        'cancelled',
+        'ready-for-return',
+        'returned',
+        'waiting-for-return',
+        'out-of-stock',
+        'rejected',
+        'not-configured',
+        'info',
+        'availability',
         'solid',
     ],
     notes: 'Pyz overrides extraClass block and SCSS. Uses helper-badge-chip and semantic color mixins.',
@@ -43,7 +60,8 @@ export const Overview: StoryObj = {
         ];
 
         return (
-            section('Subtle (default)',
+            section(
+                'Subtle (default)',
                 statuses
                     .map((s) =>
                         renderMolecule('status', {
@@ -52,7 +70,8 @@ export const Overview: StoryObj = {
                     )
                     .join(''),
             ) +
-            section('Solid',
+            section(
+                'Solid',
                 solidStatuses
                     .map((s) =>
                         renderMolecule('status', {

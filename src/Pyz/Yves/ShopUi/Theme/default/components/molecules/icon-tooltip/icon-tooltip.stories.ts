@@ -1,7 +1,6 @@
 import { renderMolecule } from 'storybook-helpers/render-twig';
 import { componentDocs, section, Meta, StoryObj } from 'storybook-helpers/docs';
 
-
 const docs = componentDocs({
     name: 'icon-tooltip',
     tag: 'span',
@@ -20,18 +19,20 @@ export default meta;
 export const Overview: StoryObj = {
     render: () => {
         return (
-            section('Info / Edit / Delete',
+            section(
+                'Info / Edit / Delete',
                 renderMolecule('icon-tooltip', {
                     data: { icon: 'flash-message-info', text: 'Helpful information' },
                 }) +
-                renderMolecule('icon-tooltip', {
-                    data: { icon: 'edit', text: 'Edit this item' },
-                }) +
-                renderMolecule('icon-tooltip', {
-                    data: { icon: 'delete', text: 'Delete this item' },
-                }),
+                    renderMolecule('icon-tooltip', {
+                        data: { icon: 'edit', text: 'Edit this item' },
+                    }) +
+                    renderMolecule('icon-tooltip', {
+                        data: { icon: 'delete', text: 'Delete this item' },
+                    }),
             ) +
-            section('Big modifier',
+            section(
+                'Big modifier',
                 renderMolecule('icon-tooltip', {
                     modifiers: ['big'],
                     data: { icon: 'eye', text: 'View details' },

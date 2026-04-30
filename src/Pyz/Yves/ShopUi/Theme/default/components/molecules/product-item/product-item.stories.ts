@@ -1,7 +1,6 @@
 import { renderMolecule } from 'storybook-helpers/render-twig';
 import { componentDocs, sectionFull, Meta, StoryObj } from 'storybook-helpers/docs';
 
-
 const docs = componentDocs({
     name: 'product-item',
     tag: 'div',
@@ -28,9 +27,10 @@ export const Overview: StoryObj = {
     render: () => {
         const wrap = (html) => `<div style="max-width: 300px;">${html}</div>`;
 
-        return (
-            sectionFull('Product Item',
-                wrap(renderMolecule('product-item', {
+        return sectionFull(
+            'Product Item',
+            wrap(
+                renderMolecule('product-item', {
                     data: {
                         category: 'Power Tools',
                         product: {
@@ -70,7 +70,12 @@ export const Overview: StoryObj = {
                                     // Pyz tooltip reads `attributes.farbe`; the
                                     // vendor `aria-label` reads `attributes.color`.
                                     attributes: { color: 'Black', farbe: 'black' },
-                                    images: [{ externalUrlSmall: 'https://placehold.co/200x200/1f1f1f/fff?text=Black', altText: 'Black variant' }],
+                                    images: [
+                                        {
+                                            externalUrlSmall: 'https://placehold.co/200x200/1f1f1f/fff?text=Black',
+                                            altText: 'Black variant',
+                                        },
+                                    ],
                                     labels: [{ key: 'NEW', frontEndReference: 'success' }],
                                     rating: { averageRating: 4.5 },
                                     prices: { DEFAULT: 3499, ORIGINAL: 4999 },
@@ -84,7 +89,12 @@ export const Overview: StoryObj = {
                                     available: true,
                                     idProductConcrete: 2,
                                     attributes: { color: 'Red', farbe: 'red' },
-                                    images: [{ externalUrlSmall: 'https://placehold.co/200x200/c62828/fff?text=Red', altText: 'Red variant' }],
+                                    images: [
+                                        {
+                                            externalUrlSmall: 'https://placehold.co/200x200/c62828/fff?text=Red',
+                                            altText: 'Red variant',
+                                        },
+                                    ],
                                     labels: [
                                         { key: 'TOP', frontEndReference: 'info' },
                                         { key: 'SALE', frontEndReference: 'sale' },
@@ -101,7 +111,12 @@ export const Overview: StoryObj = {
                                     available: true,
                                     idProductConcrete: 3,
                                     attributes: { color: 'Blue', farbe: 'blue' },
-                                    images: [{ externalUrlSmall: 'https://placehold.co/200x200/1565c0/fff?text=Blue', altText: 'Blue variant' }],
+                                    images: [
+                                        {
+                                            externalUrlSmall: 'https://placehold.co/200x200/1565c0/fff?text=Blue',
+                                            altText: 'Blue variant',
+                                        },
+                                    ],
                                     labels: [{ key: 'BESTSELLER', frontEndReference: 'info' }],
                                     rating: { averageRating: 5.0 },
                                     prices: { DEFAULT: 3499 },
@@ -109,8 +124,8 @@ export const Overview: StoryObj = {
                             ],
                         },
                     },
-                })),
-            )
+                }),
+            ),
         );
     },
 };

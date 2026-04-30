@@ -32,14 +32,26 @@ export interface ComponentDocsInput {
     notes?: string;
 }
 
-const styles = 'style="margin: 0 0 32px; padding: 20px; background: #fafbfc; border: 1px solid #e8e8e8; border-radius: 8px; font-family: Inter, sans-serif;"';
-const thStyle = 'style="text-align: left; padding: 6px 12px 6px 0; font-size: 13px; color: #666; border-bottom: 1px solid #eee;"';
-const tdStyle = 'style="padding: 6px 12px 6px 0; font-size: 13px; border-bottom: 1px solid #f0f0f0; vertical-align: top;"';
+const styles =
+    'style="margin: 0 0 32px; padding: 20px; background: #fafbfc; border: 1px solid #e8e8e8; border-radius: 8px; font-family: Inter, sans-serif;"';
+const thStyle =
+    'style="text-align: left; padding: 6px 12px 6px 0; font-size: 13px; color: #666; border-bottom: 1px solid #eee;"';
+const tdStyle =
+    'style="padding: 6px 12px 6px 0; font-size: 13px; border-bottom: 1px solid #f0f0f0; vertical-align: top;"';
 const codeStyle = 'style="font-size: 12px; background: #eef1f5; padding: 2px 6px; border-radius: 3px; color: #333;"';
-const sectionHeadStyle = 'style="margin: 0 0 12px; font-size: 14px; color: #666; text-transform: uppercase; letter-spacing: 0.05em;"';
+const sectionHeadStyle =
+    'style="margin: 0 0 12px; font-size: 14px; color: #666; text-transform: uppercase; letter-spacing: 0.05em;"';
 const sectionWrapStyle = 'style="margin-bottom: 12px; padding-bottom: 24px; border-bottom: 1px solid #eee;"';
 
-export function componentDocs({ name, tag, extends: ext, data, modifiers, attributes, notes }: ComponentDocsInput): string {
+export function componentDocs({
+    name,
+    tag,
+    extends: ext,
+    data,
+    modifiers,
+    attributes,
+    notes,
+}: ComponentDocsInput): string {
     let html = `<div ${styles}>`;
     html += `<div style="display: flex; gap: 12px; align-items: baseline; margin-bottom: 12px;">`;
     html += `<h2 style="margin: 0; font-size: 18px;">${name}</h2>`;

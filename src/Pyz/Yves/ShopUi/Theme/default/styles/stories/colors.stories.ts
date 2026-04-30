@@ -3,7 +3,8 @@ import type { Meta, StoryObj } from 'storybook-helpers/docs';
 const meta: Meta = { title: 'Basic/Colors' };
 export default meta;
 
-const sectionStyle = 'margin: 0 0 32px; padding: 20px; background: #fafbfc; border: 1px solid #e8e8e8; border-radius: 8px;';
+const sectionStyle =
+    'margin: 0 0 32px; padding: 20px; background: #fafbfc; border: 1px solid #e8e8e8; border-radius: 8px;';
 const headStyle = 'margin: 0 0 16px; font-size: 14px; color: #666; text-transform: uppercase; letter-spacing: 0.05em;';
 const gridStyle = 'display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px;';
 const swatchStyle = () =>
@@ -29,7 +30,24 @@ const semantic = (label, varNames) => `
         ${varNames.map(swatch).join('')}
     </div>`;
 
-const greySteps = ['25', '50', '100', '150', '200', '300', '350', '400', '450', '500', '600', '700', '750', '800', '900', '950'];
+const greySteps = [
+    '25',
+    '50',
+    '100',
+    '150',
+    '200',
+    '300',
+    '350',
+    '400',
+    '450',
+    '500',
+    '600',
+    '700',
+    '750',
+    '800',
+    '900',
+    '950',
+];
 const colorSteps = ['25', '50', '100', '200', '300', '400', '500', '600', '700', '800', '900'];
 
 export const Overview: StoryObj = {
@@ -37,40 +55,40 @@ export const Overview: StoryObj = {
         <div style="font-family: 'Inter', sans-serif;">
             <div style="${sectionStyle}">
                 ${semantic('Surfaces &amp; backgrounds', [
-        '--background-page',
-        '--background-surface',
-        '--background-subtle',
-        '--background-muted',
-        '--background-inverse',
-        '--background-brand-primary',
-        '--background-brand-hover',
-        '--background-brand-subtle',
-        '--background-accent-primary',
-        '--background-accent-subtle',
-    ])}
+                    '--background-page',
+                    '--background-surface',
+                    '--background-subtle',
+                    '--background-muted',
+                    '--background-inverse',
+                    '--background-brand-primary',
+                    '--background-brand-hover',
+                    '--background-brand-subtle',
+                    '--background-accent-primary',
+                    '--background-accent-subtle',
+                ])}
             </div>
 
             <div style="${sectionStyle}">
                 ${semantic('State colors', [
-        '--background-state-success-subtle',
-        '--background-state-success-bold',
-        '--background-state-info-subtle',
-        '--background-state-info-bold',
-        '--background-state-warning-subtle',
-        '--background-state-warning-bold',
-        '--background-state-error-subtle',
-        '--background-state-error-bold',
-    ])}
+                    '--background-state-success-subtle',
+                    '--background-state-success-bold',
+                    '--background-state-info-subtle',
+                    '--background-state-info-bold',
+                    '--background-state-warning-subtle',
+                    '--background-state-warning-bold',
+                    '--background-state-error-subtle',
+                    '--background-state-error-bold',
+                ])}
             </div>
 
             <div style="${sectionStyle}">
                 ${semantic('Borders', [
-        '--border-default',
-        '--border-subtle',
-        '--border-strong',
-        '--border-brand',
-        '--border-state-success',
-    ])}
+                    '--border-default',
+                    '--border-subtle',
+                    '--border-strong',
+                    '--border-brand',
+                    '--border-state-success',
+                ])}
             </div>
 
             <div style="${sectionStyle}">

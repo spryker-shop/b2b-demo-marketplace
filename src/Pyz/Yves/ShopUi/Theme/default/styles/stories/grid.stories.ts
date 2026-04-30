@@ -3,15 +3,19 @@ import type { Meta, StoryObj } from 'storybook-helpers/docs';
 const meta: Meta = { title: 'Basic/Grid' };
 export default meta;
 
-const sectionStyle = 'margin: 0 0 32px; padding: 20px; background: #fafbfc; border: 1px solid #e8e8e8; border-radius: 8px;';
+const sectionStyle =
+    'margin: 0 0 32px; padding: 20px; background: #fafbfc; border: 1px solid #e8e8e8; border-radius: 8px;';
 const headStyle = 'margin: 0 0 16px; font-size: 14px; color: #666; text-transform: uppercase; letter-spacing: 0.05em;';
 const subHeadStyle = 'font-family: ui-monospace, monospace; font-size: 12px; color: #666; margin: 16px 0 8px;';
-const cellStyle = 'background: var(--background-brand-subtle); color: var(--text-brand); padding: 16px; border: 1px solid var(--border-brand); border-radius: 4px; text-align: center; font-family: ui-monospace, monospace; font-size: 12px;';
+const cellStyle =
+    'background: var(--background-brand-subtle); color: var(--text-brand); padding: 16px; border: 1px solid var(--border-brand); border-radius: 4px; text-align: center; font-family: ui-monospace, monospace; font-size: 12px;';
 const tallCellStyle = `${cellStyle} min-height: 60px; display: flex; align-items: center; justify-content: center;`;
-const mutedCell = 'background: var(--background-accent-subtle); color: var(--text-secondary); padding: 12px; border: 1px solid var(--border-default); border-radius: 4px; text-align: center; font-family: ui-monospace, monospace; font-size: 12px;';
+const mutedCell =
+    'background: var(--background-accent-subtle); color: var(--text-secondary); padding: 12px; border: 1px solid var(--border-default); border-radius: 4px; text-align: center; font-family: ui-monospace, monospace; font-size: 12px;';
 
 const cell = (label, opts = '') => `<div class="col col--sm-3"><div style="${cellStyle} ${opts}">${label}</div></div>`;
-const tallCell = (label, h, opts = '') => `<div class="col col--sm-3" style="${opts}"><div style="${tallCellStyle} height: ${h};">${label}</div></div>`;
+const tallCell = (label, h, opts = '') =>
+    `<div class="col col--sm-3" style="${opts}"><div style="${tallCellStyle} height: ${h};">${label}</div></div>`;
 
 export const Overview: StoryObj = {
     render: () => `
@@ -19,11 +23,15 @@ export const Overview: StoryObj = {
             <div style="${sectionStyle}">
                 <h3 style="${headStyle}">12-column grid (.grid + .col)</h3>
                 <div class="grid grid--gap" style="margin-bottom: 16px;">
-                    ${[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((i) => `
+                    ${[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                        .map(
+                            (i) => `
                         <div class="col col--sm-1">
                             <div style="${mutedCell}">${i}</div>
                         </div>
-                    `).join('')}
+                    `,
+                        )
+                        .join('')}
                 </div>
 
                 <h3 style="${headStyle}">Column spans (col--sm-N)</h3>

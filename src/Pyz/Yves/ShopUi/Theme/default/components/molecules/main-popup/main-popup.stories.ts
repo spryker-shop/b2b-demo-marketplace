@@ -1,7 +1,6 @@
 import { renderMolecule } from 'storybook-helpers/render-twig';
 import { componentDocs, sectionFull, Meta, StoryObj } from 'storybook-helpers/docs';
 
-
 const docs = componentDocs({
     name: 'main-popup',
     tag: 'main-popup',
@@ -107,18 +106,13 @@ export const Overview: StoryObj = {
         return (
             showcaseStyles +
             '<main-overlay class="main-overlay" data-qa="component main-overlay"></main-overlay>' +
-            sectionFull('Live trigger (click to open the real popup)',
+            sectionFull(
+                'Live trigger (click to open the real popup)',
                 `<button class="button js-popup-live-trigger">Open popup</button>` + livePopups,
             ) +
-            sectionFull('Confirm dialog (preview)',
-                `<div class="sb-popup-showcase">${confirmPopup}</div>`,
-            ) +
-            sectionFull('Info popup, no footer (preview)',
-                `<div class="sb-popup-showcase">${infoPopup}</div>`,
-            ) +
-            sectionFull('Form popup, wide modifier (preview)',
-                `<div class="sb-popup-showcase">${formPopup}</div>`,
-            )
+            sectionFull('Confirm dialog (preview)', `<div class="sb-popup-showcase">${confirmPopup}</div>`) +
+            sectionFull('Info popup, no footer (preview)', `<div class="sb-popup-showcase">${infoPopup}</div>`) +
+            sectionFull('Form popup, wide modifier (preview)', `<div class="sb-popup-showcase">${formPopup}</div>`)
         );
     },
 };

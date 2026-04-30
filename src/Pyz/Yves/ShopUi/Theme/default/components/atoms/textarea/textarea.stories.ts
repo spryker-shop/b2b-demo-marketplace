@@ -1,6 +1,5 @@
 import { componentDocs, section, Meta, StoryObj } from 'storybook-helpers/docs';
 
-
 const docs = componentDocs({
     name: 'textarea',
     tag: 'textarea',
@@ -18,21 +17,11 @@ export default meta;
 export const Overview: StoryObj = {
     render: () => {
         return (
-            section('Default',
-                '<textarea class="textarea" placeholder="Default textarea"></textarea>'
-            ) +
-            section('Error',
-                '<textarea class="textarea textarea--error" placeholder="Error state"></textarea>'
-            ) +
-            section('Disabled',
-                '<textarea class="textarea" placeholder="Disabled" disabled></textarea>'
-            ) +
-            section('Readonly',
-                '<textarea class="textarea" readonly>Read-only content</textarea>'
-            ) +
-            section('Medium',
-                '<textarea class="textarea textarea--md" placeholder="Medium textarea"></textarea>'
-            )
+            section('Default', '<textarea class="textarea" placeholder="Default textarea"></textarea>') +
+            section('Error', '<textarea class="textarea textarea--error" placeholder="Error state"></textarea>') +
+            section('Disabled', '<textarea class="textarea" placeholder="Disabled" disabled></textarea>') +
+            section('Readonly', '<textarea class="textarea" readonly>Read-only content</textarea>') +
+            section('Medium', '<textarea class="textarea textarea--md" placeholder="Medium textarea"></textarea>')
         );
     },
 };

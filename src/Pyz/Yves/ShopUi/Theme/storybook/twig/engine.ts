@@ -136,7 +136,8 @@ Twig.extend((TwigInternalRef: TwigInternal) => {
     templateRegistry = TwigInternalRef.Templates?.registry ?? null;
 });
 if (typeof window !== 'undefined') {
-    (window as Window & { __TWIG_REGISTRY__?: typeof templateRegistry; __TWIG__?: typeof Twig }).__TWIG_REGISTRY__ = templateRegistry;
+    (window as Window & { __TWIG_REGISTRY__?: typeof templateRegistry; __TWIG__?: typeof Twig }).__TWIG_REGISTRY__ =
+        templateRegistry;
     (window as Window & { __TWIG__?: typeof Twig }).__TWIG__ = Twig;
 }
 

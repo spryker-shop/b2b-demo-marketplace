@@ -1,13 +1,17 @@
 import { renderAtom } from 'storybook-helpers/render-twig';
 import { componentDocs, section, Meta, StoryObj } from 'storybook-helpers/docs';
 
-
 const docs = componentDocs({
     name: 'select',
     tag: 'label',
     extends: "model('component')",
     data: [
-        { prop: 'options', type: 'array', default: '[]', desc: 'Options list — each: {value, label, selected?, disabled?}' },
+        {
+            prop: 'options',
+            type: 'array',
+            default: '[]',
+            desc: 'Options list — each: {value, label, selected?, disabled?}',
+        },
         { prop: 'isGrouped', type: 'boolean', default: 'false', desc: 'Render options inside optgroup elements' },
     ],
     modifiers: ['expand', 'error', 'naked'],
@@ -42,15 +46,9 @@ export const Overview: StoryObj = {
         };
 
         return (
-            section('Default options',
-                renderAtom('select', { data: { options } })
-            ) +
-            section('Selected',
-                renderAtom('select', { data: { options: selectedOptions } })
-            ) +
-            section('Grouped',
-                renderAtom('select', { data: { options: groupedOptions, isGrouped: true } })
-            )
+            section('Default options', renderAtom('select', { data: { options } })) +
+            section('Selected', renderAtom('select', { data: { options: selectedOptions } })) +
+            section('Grouped', renderAtom('select', { data: { options: groupedOptions, isGrouped: true } }))
         );
     },
 };

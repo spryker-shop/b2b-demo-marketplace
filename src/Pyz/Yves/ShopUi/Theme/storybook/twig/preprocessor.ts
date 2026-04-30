@@ -49,25 +49,50 @@ function preprocessTernaryNoElse(source: string): string {
                 j++;
                 continue;
             }
-            if (c === "'" || c === '"') { quote = c; j++; continue; }
+            if (c === "'" || c === '"') {
+                quote = c;
+                j++;
+                continue;
+            }
             if (c === '(') paren++;
             else if (c === ')') {
-                if (paren === 0) { boundary = j; break; }
+                if (paren === 0) {
+                    boundary = j;
+                    break;
+                }
                 paren--;
             } else if (c === '[') bracket++;
             else if (c === ']') {
-                if (bracket === 0) { boundary = j; break; }
+                if (bracket === 0) {
+                    boundary = j;
+                    break;
+                }
                 bracket--;
             } else if (c === '{') brace++;
             else if (c === '}') {
-                if (brace === 0) { boundary = j; break; }
+                if (brace === 0) {
+                    boundary = j;
+                    break;
+                }
                 brace--;
             } else if (paren === 0 && bracket === 0 && brace === 0) {
-                if (c === ',') { boundary = j; break; }
-                if (c === ':') { foundColon = true; break; }
+                if (c === ',') {
+                    boundary = j;
+                    break;
+                }
+                if (c === ':') {
+                    foundColon = true;
+                    break;
+                }
                 // Twig tag close
-                if (c === '%' && source[j + 1] === '}') { boundary = j; break; }
-                if (c === '}' && source[j + 1] === '}') { boundary = j; break; }
+                if (c === '%' && source[j + 1] === '}') {
+                    boundary = j;
+                    break;
+                }
+                if (c === '}' && source[j + 1] === '}') {
+                    boundary = j;
+                    break;
+                }
             }
             j++;
         }
@@ -99,8 +124,7 @@ function preprocessDefine(source: string): string {
 
 declare const __WIDGET_MAP__: Record<string, string>;
 
-const widgetMap: Record<string, string> =
-    typeof __WIDGET_MAP__ !== 'undefined' ? __WIDGET_MAP__ : {};
+const widgetMap: Record<string, string> = typeof __WIDGET_MAP__ !== 'undefined' ? __WIDGET_MAP__ : {};
 
 function extractWidgetWithClause(tagContent: string): string | null {
     // Pull the `with { … }` payload out of a `{% widget 'Foo' args [...] [use view(...)] with {…} only %}` tag.
@@ -237,13 +261,10 @@ function preprocessArrowFunctions(source: string): string {
 function preprocessOnly(source: string): string {
     // twig.js supports `{% include "x" with {} only %}` but NOT `{% include "x" only %}`.
     // Add `with {}` before bare `only` keywords so twig.js can parse them.
-    return source.replace(
-        /(%\}|'|"|\))\s+only\s*(-?%\})/g,
-        (match, before: string, after: string) => {
-            if (before === '%}') return match;
-            return before + ' with {} only ' + after.replace(/^-?/, '');
-        },
-    );
+    return source.replace(/(%\}|'|"|\))\s+only\s*(-?%\})/g, (match, before: string, after: string) => {
+        if (before === '%}') return match;
+        return before + ' with {} only ' + after.replace(/^-?/, '');
+    });
 }
 
 function preprocessParentCalls(source: string): string {
@@ -260,22 +281,22 @@ function preprocessParentCalls(source: string): string {
 // templates that rely on macro resolution through `{% extends %}` — which
 // twig.js cannot follow. Bodies match the vendor model byte-for-byte.
 const COMPONENT_MACRO_DEFS =
-    "{% macro renderClass(name, modifiers, extra) %}" +
-    "{{-name | trim-}}" +
-    "{%- for modifier in modifiers | default([]) -%}" +
-    "{%- if modifier | trim is not empty %} {{name}}--{{modifier | trim}}{% endif -%}" +
-    "{% endfor -%}" +
-    "{%- if extra %} {{extra-}}{% endif -%}" +
-    "{% endmacro %}\n" +
-    "{% macro renderAttributes(attributes) %}" +
-    "{%- for name, value in attributes | default({}) -%}" +
-    "{%- if value is same as(true) -%}" +
+    '{% macro renderClass(name, modifiers, extra) %}' +
+    '{{-name | trim-}}' +
+    '{%- for modifier in modifiers | default([]) -%}' +
+    '{%- if modifier | trim is not empty %} {{name}}--{{modifier | trim}}{% endif -%}' +
+    '{% endfor -%}' +
+    '{%- if extra %} {{extra-}}{% endif -%}' +
+    '{% endmacro %}\n' +
+    '{% macro renderAttributes(attributes) %}' +
+    '{%- for name, value in attributes | default({}) -%}' +
+    '{%- if value is same as(true) -%}' +
     "{{-' ' ~ name-}}" +
-    "{%- elseif value is not same as(false) -%}" +
+    '{%- elseif value is not same as(false) -%}' +
     "{{-' ' ~ name-}}='{{-value-}}'" +
-    "{%- endif -%}" +
-    "{%- endfor -%}" +
-    "{% endmacro %}\n";
+    '{%- endif -%}' +
+    '{%- endfor -%}' +
+    '{% endmacro %}\n';
 
 function preprocessMacros(source: string): string {
     // twig.js does not support `{% macro %}` with `{% embed %}` inside, and it
@@ -322,13 +343,10 @@ function preprocessMacros(source: string): string {
     if (!Object.keys(macros).length) return source;
 
     const aliases = new Set<string>();
-    stripped = stripped.replace(
-        /\{%-?\s*import\s+_self\s+as\s+(\w+)\s*-?%\}/g,
-        (_, alias: string) => {
-            aliases.add(alias);
-            return '';
-        },
-    );
+    stripped = stripped.replace(/\{%-?\s*import\s+_self\s+as\s+(\w+)\s*-?%\}/g, (_, alias: string) => {
+        aliases.add(alias);
+        return '';
+    });
 
     if (!aliases.size) aliases.add('macros');
 
@@ -348,9 +366,7 @@ function inlineMacroCalls(source: string, macros: MacroMap, aliases: Set<string>
                 const args = splitTwigArgList(argsStr);
                 const setStmts = params
                     .map((param, idx) => {
-                        const value = args[idx] !== undefined
-                            ? args[idx]
-                            : param.def !== null ? param.def : "''";
+                        const value = args[idx] !== undefined ? args[idx] : param.def !== null ? param.def : "''";
                         return `{% set ${param.name} = ${value} %}`;
                     })
                     .join('');
@@ -447,7 +463,10 @@ function preprocessStripBranchBlocks(source: string): string {
             if (tokens[j].type === 'block') depth++;
             else if (tokens[j].type === 'endblock') {
                 depth--;
-                if (depth === 0) { endIdx = j; break; }
+                if (depth === 0) {
+                    endIdx = j;
+                    break;
+                }
             }
         }
         if (endIdx === -1) continue;
@@ -487,7 +506,9 @@ function preprocessEmbedToInclude(source: string): string {
     // the include's `with` clause, keeping the wiring intact.
     const embedRe = /\{%-?\s*embed\s+([\s\S]*?)\s*-?%\}([\s\S]*?)\{%-?\s*endembed\s*-?%\}/g;
     return source.replace(embedRe, (match, head: string, body: string) => {
-        const stripped = body.replace(/\{%-?\s*block\s+\w+\s*-?%\}|\{%-?\s*endblock\s*-?%\}|\{\{\s*parent\(\)\s*\}\}/g, '').trim();
+        const stripped = body
+            .replace(/\{%-?\s*block\s+\w+\s*-?%\}|\{%-?\s*endblock\s*-?%\}|\{\{\s*parent\(\)\s*\}\}/g, '')
+            .trim();
         // Extract every top-level `{% set NAME = EXPR %}`; anything else means
         // the override has real content we shouldn't drop, so bail.
         const setRe = /\{%-?\s*set\s+(\w+)\s*=\s*([\s\S]*?)\s*-?%\}/g;
@@ -553,8 +574,14 @@ function preprocessLazyImagePreserveSets(source: string): string {
         // them in.
     }
     return source
-        .replace(/\{%-?\s*set\s+imageExtraClasses\s*=\s*''\s*-?%\}/g, "{% set imageExtraClasses = imageExtraClasses | default('') %}")
-        .replace(/\{%-?\s*set\s+backgroundExtraClasses\s*=\s*''\s*-?%\}/g, "{% set backgroundExtraClasses = backgroundExtraClasses | default('') %}");
+        .replace(
+            /\{%-?\s*set\s+imageExtraClasses\s*=\s*''\s*-?%\}/g,
+            "{% set imageExtraClasses = imageExtraClasses | default('') %}",
+        )
+        .replace(
+            /\{%-?\s*set\s+backgroundExtraClasses\s*=\s*''\s*-?%\}/g,
+            "{% set backgroundExtraClasses = backgroundExtraClasses | default('') %}",
+        );
 }
 
 export function preprocess(source: string): string {

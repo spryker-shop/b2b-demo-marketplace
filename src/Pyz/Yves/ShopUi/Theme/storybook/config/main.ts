@@ -37,9 +37,7 @@ const shopUiVendor = path.resolve(projectRoot, 'vendor/spryker-shop/shop-ui/src/
 const shopUiPyz = path.resolve(projectRoot, 'src/Pyz/Yves/ShopUi/Theme/default');
 
 export default {
-    stories: [
-        path.join(projectRoot, 'src/Pyz/Yves/ShopUi/Theme/default/**/*.stories.{js,ts}'),
-    ],
+    stories: [path.join(projectRoot, 'src/Pyz/Yves/ShopUi/Theme/default/**/*.stories.{js,ts}')],
 
     framework: '@storybook/html-webpack5',
 
@@ -92,10 +90,7 @@ export default {
             'storybook-helpers': path.resolve(projectRoot, 'src/Pyz/Yves/ShopUi/Theme/storybook/helpers'),
         };
 
-        config.resolve.extensions = [...new Set([
-            ...(config.resolve.extensions || []),
-            '.ts', '.js', '.scss',
-        ])];
+        config.resolve.extensions = [...new Set([...(config.resolve.extensions || []), '.ts', '.js', '.scss'])];
 
         const widgetMap = buildWidgetMap(projectRoot);
 

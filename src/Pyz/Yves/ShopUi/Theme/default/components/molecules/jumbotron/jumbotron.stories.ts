@@ -1,7 +1,6 @@
 import { renderMolecule } from 'storybook-helpers/render-twig';
 import { componentDocs, sectionFull, Meta, StoryObj } from 'storybook-helpers/docs';
 
-
 const docs = componentDocs({
     name: 'jumbotron',
     tag: 'section',
@@ -25,20 +24,19 @@ export default meta;
 
 export const Overview: StoryObj = {
     render: () => {
-        return (
-            sectionFull('Container mode with all props',
-                renderMolecule('jumbotron', {
-                    data: {
-                        headline: 'B2B Marketplace',
-                        subHeadline: 'Everything for your business in one place',
-                        imageUrl: 'https://placehold.co/1200x500/0a1f44/ffffff?text=Hero+Banner',
-                        btnTitle: 'Explore',
-                        link: '#',
-                        label: 'Featured',
-                        containerMode: true,
-                    },
-                }),
-            )
+        return sectionFull(
+            'Container mode with all props',
+            renderMolecule('jumbotron', {
+                data: {
+                    headline: 'B2B Marketplace',
+                    subHeadline: 'Everything for your business in one place',
+                    imageUrl: 'https://placehold.co/1200x500/0a1f44/ffffff?text=Hero+Banner',
+                    btnTitle: 'Explore',
+                    link: '#',
+                    label: 'Featured',
+                    containerMode: true,
+                },
+            }),
         );
     },
 };
