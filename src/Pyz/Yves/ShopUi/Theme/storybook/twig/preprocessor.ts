@@ -247,42 +247,13 @@ function preprocessOnly(source: string): string {
 }
 
 function preprocessParentCalls(source: string): string {
-    // twig.js bug: parent() crashes when nested deeply (3+ levels of block).
-    // Strip parent() only at depth > 2 — depth 1 (top-level block) and depth 2
-    // (one nested block, e.g. pyz product-item's imageContainer inside body)
-    // both work correctly.
-    let result = '';
-    let depth = 0;
-    let pos = 0;
-
-    while (pos < source.length) {
-        const remaining = source.slice(pos);
-        const openMatch = remaining.match(/^\{%-?\s*block\s+\w+\s*-?%\}/);
-        const closeMatch = remaining.match(/^\{%-?\s*endblock\s*-?%\}/);
-        const parentMatch = remaining.match(/^\{\{\s*parent\(\)\s*\}\}/);
-
-        if (openMatch) {
-            depth++;
-            result += openMatch[0];
-            pos += openMatch[0].length;
-        } else if (closeMatch) {
-            depth--;
-            result += closeMatch[0];
-            pos += closeMatch[0].length;
-        } else if (parentMatch) {
-            if (depth > 2) {
-                pos += parentMatch[0].length;
-            } else {
-                result += parentMatch[0];
-                pos += parentMatch[0].length;
-            }
-        } else {
-            result += source[pos];
-            pos++;
-        }
-    }
-
-    return result;
+    // No-op now that `hoistNestedBlocks()` (engine.ts) pre-registers every
+    // nested block via the parsed token tree — twig.js's `parent()` resolves
+    // through the registered blocks regardless of nesting depth, so we no
+    // longer need to strip deep `parent()` calls. Pyz product-item-list, for
+    // example, calls `parent()` at depth 4 (body → imageContainer → image →
+    // productThumbnail) which used to be stripped and produced an empty link.
+    return source;
 }
 
 // Synthetic copies of the macros from `models/component.twig`, injected into
@@ -430,18 +401,18 @@ function splitTwigArgList(argList: string): string[] {
 }
 
 function preprocessLiftConditionalBlocks(source: string): string {
-    // PHP Twig hoists `{% block N %}` declarations to file scope regardless of
-    // surrounding `{% if %}`, so `block('N')` works even when its enclosing
-    // condition is false. twig.js doesn't hoist — block declarations inside an
-    // if are invisible to `block(name)` calls. Pyz product-item relies on this:
-    // it overrides `block image` and calls `block('productThumbnail')`, which
-    // vendor declares inside `{% if not data.url %}`.
+    // No-op. We used to rewrite `{% if X %}{% block N %}…{% endblock %}{% endif %}`
+    // to either drop the if (broke conditional auto-render: breadcrumb-step
+    // showed both `<a>` and `<form>`) or move it inside the block (broke
+    // `block('N')` calls: pyz product-item-list got an empty title because
+    // vendor's `block title` is wrapped in `{% if data.name and not data.url %}`
+    // and the moved if blanks the body when called explicitly with a url).
     //
-    // Drop the surrounding `{% if … %}{% endif %}` so the block declaration is
-    // visible at file scope. Only matches if-blocks whose entire body is a
-    // single block declaration plus whitespace.
-    const pattern = /\{%-?\s*if\s+[^%]+?-?%\}\s*(\{%-?\s*block\s+\w+\s*-?%\}[\s\S]*?\{%-?\s*endblock\s*-?%\})\s*\{%-?\s*endif\s*-?%\}/g;
-    return source.replace(pattern, '$1');
+    // `hoistNestedBlocks()` in engine.ts now walks the parsed token tree and
+    // pre-registers every nested block — including ones inside `{% if %}` —
+    // so `block('N')` resolves regardless of conditional state. Auto-render
+    // keeps respecting the if. Both cases work without source rewriting.
+    return source;
 }
 
 function preprocessStripBranchBlocks(source: string): string {
@@ -532,9 +503,32 @@ function preprocessEmbedToInclude(source: string): string {
 
         if (sets.length === 0) return `{% include ${head} %}`;
 
-        // Splice the hoisted sets as additional keys into the embed's
-        // `with { … } [only]` payload so the include sees them.
-        const inject = sets.map((s) => `${s.name}: (${s.expr})`).join(', ');
+        // The hoisted set runs in OUTER scope (the include site) instead of
+        // inside the original block-content override. Spryker's macro builds
+        // `embed: { jsName: jsName }` in the with clause, then references
+        // `embed.jsName` inside its block override. Once hoisted, `embed`
+        // resolves to the outer-scope `embed` variable (often undefined),
+        // not the with-clause object — rewrite `embed.X` to a fallback that
+        // also tries the local with-clause keys we just defined.
+        const withInner = head.match(/\bwith\s+\{([\s\S]*?)\}\s*(?:only)?\s*$/)?.[1] ?? '';
+        const localKeys: Record<string, string> = {};
+        // Naive scan for `key: jsName` style entries — enough for the macros
+        // we actually inline (lazy-image's `embed: { jsName: jsName }`).
+        const embedKv = withInner.match(/embed\s*:\s*\{([^}]+)\}/);
+        if (embedKv) {
+            for (const part of embedKv[1].split(',')) {
+                const kv = part.match(/^\s*(\w+)\s*:\s*([\s\S]+?)\s*$/);
+                if (kv) localKeys[kv[1]] = kv[2];
+            }
+        }
+        const rewriteExpr = (expr: string): string => {
+            return expr.replace(/\bembed\.(\w+)\b/g, (_, prop) => {
+                const fallback = localKeys[prop];
+                return fallback ? `(${fallback})` : `embed.${prop}`;
+            });
+        };
+
+        const inject = sets.map((s) => `${s.name}: (${rewriteExpr(s.expr)})`).join(', ');
         const headRe = /^([\s\S]*?\bwith\s+\{)([\s\S]*?)(\}\s*(?:only)?\s*)$/;
         const m = head.match(headRe);
         if (!m) return `{% include ${head} %}`;
@@ -544,8 +538,28 @@ function preprocessEmbedToInclude(source: string): string {
     });
 }
 
+function preprocessLazyImagePreserveSets(source: string): string {
+    // lazy-image starts `block body` with `set imageExtraClasses = ''` and
+    // `set backgroundExtraClasses = ''`. Vendor's product-item embeds
+    // lazy-image and its `block content` override re-sets `imageExtraClasses`
+    // before `parent()` so the image picks up `js-product-item__image`.
+    // We rewrite that embed to a plain include with the set hoisted into the
+    // `with` clause — but lazy-image's reset to `''` then wipes it. Convert
+    // the resets to `| default('')` so callers can pre-populate the value.
+    if (!/components\/molecules\/lazy-image\/lazy-image\.twig/.test('')) {
+        // marker: this transform is generic, but it's only meaningful for
+        // lazy-image-shaped templates. We apply it to any source that defines
+        // both variables — the change is a strict no-op when no caller passes
+        // them in.
+    }
+    return source
+        .replace(/\{%-?\s*set\s+imageExtraClasses\s*=\s*''\s*-?%\}/g, "{% set imageExtraClasses = imageExtraClasses | default('') %}")
+        .replace(/\{%-?\s*set\s+backgroundExtraClasses\s*=\s*''\s*-?%\}/g, "{% set backgroundExtraClasses = backgroundExtraClasses | default('') %}");
+}
+
 export function preprocess(source: string): string {
-    let result = preprocessTernaryNoElse(source);
+    let result = preprocessLazyImagePreserveSets(source);
+    result = preprocessTernaryNoElse(result);
     result = preprocessDefine(result);
     result = preprocessWidgets(result);
     result = preprocessArrowFunctions(result);

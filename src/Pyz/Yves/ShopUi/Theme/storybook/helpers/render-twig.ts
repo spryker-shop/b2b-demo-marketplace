@@ -45,9 +45,8 @@ function ensureTemplatesLoaded(): void {
     );
     loadTemplates(pyzContext, 'ShopUi');
 
-    // Vendor widget templates: register every twig under
-    // `vendor/spryker-shop/<pkg>/src/SprykerShop/Yves/<ModuleName>/Theme/default/...`
-    // as `@ModuleName/<inner-path>` so `{% widget %}` rewrites that point at
+    // Vendor widget templates from spryker-shop: register every twig as
+    // `@ModuleName/<inner-path>` so `{% widget %}` rewrites that point at
     // `@ProductReviewWidget/views/.../tpl.twig` resolve. Skip ShopUi itself —
     // it's already loaded above with Pyz overrides on top.
     const allVendorContext = require.context(
@@ -67,6 +66,25 @@ function ensureTemplatesLoaded(): void {
         // that `extends molecule('x', '@SprykerShop:ProductLabelWidget')` can
         // still find vendor.
         registerSingleTemplate(`@@SprykerShop:${moduleName}/${innerPath}`, source);
+    });
+
+    // Vendor widget templates from spryker-feature: same pattern. Spryker's
+    // self-service-portal and other "feature" modules ship their twigs here
+    // and their Pyz overrides extend `view('x', '@SprykerFeature:Module')`,
+    // so we have to register both `@Module/...` and the namespaced variant.
+    const featureVendorContext = require.context(
+        '../../../../../../../vendor/spryker-feature',
+        true,
+        /\/Theme\/default\/.+\.twig$/,
+    );
+    featureVendorContext.keys().forEach((key: string) => {
+        const m = key.match(/Yves\/(\w+)\/Theme\/default\/(.+)$/);
+        if (!m) return;
+        const moduleName = m[1];
+        const innerPath = m[2];
+        const source = featureVendorContext(key) as string;
+        registerSingleTemplate(`@${moduleName}/${innerPath}`, source);
+        registerSingleTemplate(`@@SprykerFeature:${moduleName}/${innerPath}`, source);
     });
 
     // Pyz widget-module twig overrides — same pattern as ShopUi above:

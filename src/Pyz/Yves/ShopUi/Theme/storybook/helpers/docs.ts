@@ -1,3 +1,14 @@
+import type { Meta as SbMeta, StoryObj as SbStoryObj } from '@storybook/html';
+
+// `translations` is a Pyz-specific field: the storybook decorator reads it off
+// the story export and feeds it into the twig-engine's i18n stub before render
+// so `{{ 'key' | trans }}` resolves. It's not part of Storybook's contract,
+// so we widen `StoryObj` here once and re-export — saves every story file
+// from declaring its own union.
+export type Translations = Record<string, string>;
+export type Meta = SbMeta;
+export type StoryObj = SbStoryObj & { translations?: Translations };
+
 interface DocsDataProp {
     prop: string;
     type?: string;

@@ -37,7 +37,7 @@
         "mp:update:paths": "node ./frontend/merchant-portal/update-config-paths",
         "postinstall": "npm run mp:update:paths",
         "storybook": "NODE_OPTIONS=--max-old-space-size=8192 storybook dev -p 6006 -c src/Pyz/Yves/ShopUi/Theme/storybook/config",
-        "storybook:build": "NODE_OPTIONS=--max-old-space-size=8192 storybook build -c src/Pyz/Yves/ShopUi/Theme/storybook/config -o storybook-static"
+        "storybook:build": "NODE_OPTIONS=--max-old-space-size=8192 storybook build -c src/Pyz/Yves/ShopUi/Theme/storybook/config -o public/Storybook"
     },
     "engines": {
         "node": ">=24.14.0",
