@@ -1,7 +1,6 @@
 import { renderMolecule } from 'storybook-helpers/render-twig';
 import { componentDocs, sectionFull, Meta, StoryObj } from 'storybook-helpers/docs';
 
-
 const docs = componentDocs({
     name: 'logo',
     tag: 'div',
@@ -19,12 +18,14 @@ export default meta;
 export const Overview: StoryObj = {
     render: () => {
         return (
-            sectionFull('Default (internal link)',
+            sectionFull(
+                'Default (internal link)',
                 renderMolecule('logo', {
                     data: { externalUrl: false },
                 }),
             ) +
-            sectionFull('External link (target=_blank)',
+            sectionFull(
+                'External link (target=_blank)',
                 renderMolecule('logo', {
                     data: { externalUrl: true },
                 }),

@@ -3,9 +3,11 @@ import type { Meta, StoryObj } from 'storybook-helpers/docs';
 const meta: Meta = { title: 'Basic/Typography' };
 export default meta;
 
-const sectionStyle = 'margin: 0 0 32px; padding: 20px; background: #fafbfc; border: 1px solid #e8e8e8; border-radius: 8px;';
+const sectionStyle =
+    'margin: 0 0 32px; padding: 20px; background: #fafbfc; border: 1px solid #e8e8e8; border-radius: 8px;';
 const headStyle = 'margin: 0 0 16px; font-size: 14px; color: #666; text-transform: uppercase; letter-spacing: 0.05em;';
-const rowStyle = 'display: grid; grid-template-columns: 160px 1fr 200px; gap: 16px; align-items: baseline; padding: 8px 0; border-bottom: 1px solid #f0f0f0;';
+const rowStyle =
+    'display: grid; grid-template-columns: 160px 1fr 200px; gap: 16px; align-items: baseline; padding: 8px 0; border-bottom: 1px solid #f0f0f0;';
 const tokenStyle = 'font-size: 12px; color: #888; font-family: ui-monospace, monospace;';
 const metaStyle = 'font-size: 12px; color: #888; font-family: ui-monospace, monospace; text-align: right;';
 

@@ -6,11 +6,7 @@ import { setup, mount } from 'ShopUi/app';
 import { setTranslations, clearTranslations } from 'storybook-helpers/render-twig';
 
 declare const require: NodeJS.Require & {
-    context: (
-        directory: string,
-        useSubdirectories: boolean,
-        regExp: RegExp,
-    ) => __WebpackModuleApi.RequireContext;
+    context: (directory: string, useSubdirectories: boolean, regExp: RegExp) => __WebpackModuleApi.RequireContext;
 };
 
 interface StoryContext {
@@ -29,7 +25,7 @@ fetch('/icons/sprite.svg')
         div.style.display = 'none';
         document.body.prepend(div);
     })
-    .catch(() => { });
+    .catch(() => {});
 
 // --- 1. Vendor components FIRST (base styles + web component registration) ---
 const vendorComponents = require.context(
@@ -40,7 +36,9 @@ const vendorComponents = require.context(
 vendorComponents.keys().forEach((key) => {
     try {
         vendorComponents(key);
-    } catch (e) { /* swallow — vendor components without runnable index are expected */ }
+    } catch (e) {
+        /* swallow — vendor components without runnable index are expected */
+    }
 });
 
 // --- 1b. Widget-module components (rating-selector, label-group, …)
@@ -74,15 +72,13 @@ widgetComponents.keys().forEach((key: string) => {
     }
     try {
         widgetComponents(key);
-    } catch (e) { /* swallow — many widget-module index.ts files only register web components */ }
+    } catch (e) {
+        /* swallow — many widget-module index.ts files only register web components */
+    }
 });
 
 // --- 2. Pyz components SECOND (override styles + web component re-registration) ---
-const pyzComponents = require.context(
-    '../../default/components',
-    true,
-    /index\.ts$/,
-);
+const pyzComponents = require.context('../../default/components', true, /index\.ts$/);
 pyzComponents.keys().forEach((key) => {
     try {
         pyzComponents(key);
@@ -129,9 +125,7 @@ setup({
 // --- Decorator: mount Spryker web components after each story render ---
 export const decorators = [
     (storyFn: StoryFn, context: StoryContext) => {
-        const translations = context.moduleExport?.translations
-            || context.parameters?.translations
-            || {};
+        const translations = context.moduleExport?.translations || context.parameters?.translations || {};
         setTranslations(translations);
 
         const html = storyFn();

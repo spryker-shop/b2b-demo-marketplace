@@ -1,13 +1,17 @@
 import { renderMolecule } from 'storybook-helpers/render-twig';
 import { componentDocs, section, sectionFull, Meta, StoryObj } from 'storybook-helpers/docs';
 
-
 const docs = componentDocs({
     name: 'flash-message',
     tag: 'flash-message',
     extends: "model('component')",
     data: [
-        { prop: 'action', type: 'string', default: "''", desc: "Message type: 'success', 'info', 'warning', or 'alert'" },
+        {
+            prop: 'action',
+            type: 'string',
+            default: "''",
+            desc: "Message type: 'success', 'info', 'warning', or 'alert'",
+        },
         { prop: 'title', type: 'string', default: "''", desc: 'Title text of the notification' },
         { prop: 'text', type: 'string', default: "''", desc: 'Body text of the notification' },
         { prop: 'icon', type: 'string', default: 'null', desc: 'Override icon name (defaults to action-based icon)' },
@@ -26,29 +30,33 @@ export default meta;
 export const Overview: StoryObj = {
     render: () => {
         return (
-            sectionFull('Success',
+            sectionFull(
+                'Success',
                 renderMolecule('flash-message', {
                     modifiers: ['show'],
                     data: { action: 'success', title: 'Success', text: 'Your changes have been saved.' },
-                })
+                }),
             ) +
-            sectionFull('Info',
+            sectionFull(
+                'Info',
                 renderMolecule('flash-message', {
                     modifiers: ['show'],
                     data: { action: 'info', title: 'Information', text: 'Your session will expire in 5 minutes.' },
-                })
+                }),
             ) +
-            sectionFull('Warning',
+            sectionFull(
+                'Warning',
                 renderMolecule('flash-message', {
                     modifiers: ['show'],
                     data: { action: 'warning', title: 'Warning', text: 'Some items in your cart are low in stock.' },
-                })
+                }),
             ) +
-            sectionFull('Alert',
+            sectionFull(
+                'Alert',
                 renderMolecule('flash-message', {
                     modifiers: ['show'],
                     data: { action: 'alert', title: 'Error', text: 'Something went wrong. Please try again.' },
-                })
+                }),
             )
         );
     },

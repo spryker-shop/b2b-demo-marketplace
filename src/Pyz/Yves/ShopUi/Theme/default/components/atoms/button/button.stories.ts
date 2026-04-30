@@ -1,6 +1,5 @@
 import { componentDocs, section, Meta, StoryObj } from 'storybook-helpers/docs';
 
-
 const docs = componentDocs({
     name: 'button',
     tag: 'button',
@@ -14,25 +13,26 @@ export default meta;
 export const Overview: StoryObj = {
     render: () => {
         return (
-            section('Types',
+            section(
+                'Types',
                 '<button class="button">Primary</button>' +
-                '<button class="button button--secondary">Secondary</button>' +
-                '<button class="button button--tertiary">Tertiary</button>' +
-                '<button class="button button--destructive">Destructive</button>' +
-                '<button class="button" disabled>Disabled</button>'
+                    '<button class="button button--secondary">Secondary</button>' +
+                    '<button class="button button--tertiary">Tertiary</button>' +
+                    '<button class="button button--destructive">Destructive</button>' +
+                    '<button class="button" disabled>Disabled</button>',
             ) +
-            section('Sizes',
+            section(
+                'Sizes',
                 '<button class="button button--sm">Small</button>' +
-                '<button class="button">Default</button>' +
-                '<button class="button button--lg">Large</button>'
+                    '<button class="button">Default</button>' +
+                    '<button class="button button--lg">Large</button>',
             ) +
-            section('Expand',
-                '<button class="button button--expand">Full width</button>'
-            ) +
-            section('Icon-only',
+            section('Expand', '<button class="button button--expand">Full width</button>') +
+            section(
+                'Icon-only',
                 '<button class="button button--icon-only"><span class="material-symbols-outlined">add</span></button>' +
-                '<button class="button button--secondary button--icon-only"><span class="material-symbols-outlined">edit</span></button>' +
-                '<button class="button button--tertiary button--icon-only"><span class="material-symbols-outlined">delete</span></button>'
+                    '<button class="button button--secondary button--icon-only"><span class="material-symbols-outlined">edit</span></button>' +
+                    '<button class="button button--tertiary button--icon-only"><span class="material-symbols-outlined">delete</span></button>',
             )
         );
     },

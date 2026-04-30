@@ -1,7 +1,6 @@
 import { renderMolecule } from 'storybook-helpers/render-twig';
 import { componentDocs, sectionFull, Meta, StoryObj } from 'storybook-helpers/docs';
 
-
 const docs = componentDocs({
     name: 'pagination',
     tag: 'nav',
@@ -10,7 +9,12 @@ const docs = componentDocs({
         { prop: 'parameters', type: 'array', default: '[]', desc: 'Associative array with current route arguments' },
         { prop: 'currentPage', type: 'int', default: '1', desc: 'Currently active page number' },
         { prop: 'paginationPath', type: 'string', default: "''", desc: 'Route name for page links' },
-        { prop: 'showAlwaysFirstAndLast', type: 'boolean', default: 'false', desc: 'Always show first/last nav buttons (disabled at boundary)' },
+        {
+            prop: 'showAlwaysFirstAndLast',
+            type: 'boolean',
+            default: 'false',
+            desc: 'Always show first/last nav buttons (disabled at boundary)',
+        },
         { prop: 'maxPage', type: 'int', default: '10', desc: 'Total number of pages' },
         { prop: 'extremePagesLimit', type: 'int', default: '1', desc: 'Number of first/last pages to display' },
         { prop: 'nearbyPagesLimit', type: 'int', default: '2', desc: 'Number of pages around the active page' },
@@ -25,12 +29,12 @@ export default meta;
 export const Overview: StoryObj = {
     translations: {
         'pagination.previous': 'Previous',
-        'pagination.next': 'Next'
+        'pagination.next': 'Next',
     },
     render: () => {
-
         return (
-            sectionFull('Middle page (3 of 10)',
+            sectionFull(
+                'Middle page (3 of 10)',
                 renderMolecule('pagination', {
                     data: {
                         currentPage: 3,
@@ -40,7 +44,8 @@ export const Overview: StoryObj = {
                     },
                 }),
             ) +
-            sectionFull('First page',
+            sectionFull(
+                'First page',
                 renderMolecule('pagination', {
                     data: {
                         currentPage: 1,
@@ -50,7 +55,8 @@ export const Overview: StoryObj = {
                     },
                 }),
             ) +
-            sectionFull('Last page',
+            sectionFull(
+                'Last page',
                 renderMolecule('pagination', {
                     data: {
                         currentPage: 10,
@@ -60,7 +66,8 @@ export const Overview: StoryObj = {
                     },
                 }),
             ) +
-            sectionFull('Few pages (no first/last buttons)',
+            sectionFull(
+                'Few pages (no first/last buttons)',
                 renderMolecule('pagination', {
                     data: {
                         currentPage: 1,

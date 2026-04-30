@@ -1,7 +1,6 @@
 import { renderMolecule } from 'storybook-helpers/render-twig';
 import { componentDocs, section, sectionFull, Meta, StoryObj } from 'storybook-helpers/docs';
 
-
 const docs = componentDocs({
     name: 'custom-select',
     tag: 'custom-select',
@@ -31,14 +30,13 @@ export const Overview: StoryObj = {
             { value: '3', label: 'Option three' },
         ];
 
-        return (
-            sectionFull('With options',
-                '' +
+        return sectionFull(
+            'With options',
+            '' +
                 renderMolecule('custom-select', {
                     data: { options },
                 }) +
-                '</div>'
-            )
+                '</div>',
         );
     },
 };

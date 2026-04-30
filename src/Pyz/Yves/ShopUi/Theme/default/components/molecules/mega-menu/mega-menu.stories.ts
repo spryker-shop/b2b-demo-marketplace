@@ -1,7 +1,6 @@
 import { renderMolecule } from 'storybook-helpers/render-twig';
 import { componentDocs, sectionFull, Meta, StoryObj } from 'storybook-helpers/docs';
 
-
 const docs = componentDocs({
     name: 'mega-menu',
     tag: 'mega-menu',
@@ -43,22 +42,31 @@ export const Overview: StoryObj = {
                 }
             </style>` +
             '<div class="sb-mega-menu-frame">' +
-            sectionFull('Default',
+            sectionFull(
+                'Default',
                 renderMolecule('mega-menu', {
                     data: {
                         node: {
                             title: 'All Categories',
                             url: '#',
                             children: [
-                                { title: 'Office Supplies', url: '#', children: [
-                                    { title: 'Paper & Pads', url: '#', children: [] },
-                                    { title: 'Pens & Markers', url: '#', children: [] },
-                                    { title: 'Binders & Folders', url: '#', children: [] },
-                                ] },
-                                { title: 'Electronics', url: '#', children: [
-                                    { title: 'Laptops', url: '#', children: [] },
-                                    { title: 'Monitors', url: '#', children: [] },
-                                ] },
+                                {
+                                    title: 'Office Supplies',
+                                    url: '#',
+                                    children: [
+                                        { title: 'Paper & Pads', url: '#', children: [] },
+                                        { title: 'Pens & Markers', url: '#', children: [] },
+                                        { title: 'Binders & Folders', url: '#', children: [] },
+                                    ],
+                                },
+                                {
+                                    title: 'Electronics',
+                                    url: '#',
+                                    children: [
+                                        { title: 'Laptops', url: '#', children: [] },
+                                        { title: 'Monitors', url: '#', children: [] },
+                                    ],
+                                },
                                 { title: 'Furniture', url: '#', children: [] },
                             ],
                         },

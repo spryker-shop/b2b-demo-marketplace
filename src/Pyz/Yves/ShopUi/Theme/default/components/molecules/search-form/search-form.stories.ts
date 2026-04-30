@@ -18,77 +18,79 @@ export default meta;
 
 const SUGGEST_URL = '/storybook-mock/search';
 
-
 function buildSuggestionHtml() {
-    return renderTemplateById(
-        '@CatalogPage/views/suggestion-results/suggestion-results.twig',
-        {
-            completion: [
-                'hammerbacher',
-                'sheet steel',
-                'thermotech solutions',
-                'steel sheets, stove-enameled',
-                'ecoheat systems',
-                'industrial thermal co',
+    return renderTemplateById('@CatalogPage/views/suggestion-results/suggestion-results.twig', {
+        completion: [
+            'hammerbacher',
+            'sheet steel',
+            'thermotech solutions',
+            'steel sheets, stove-enameled',
+            'ecoheat systems',
+            'industrial thermal co',
+        ],
+        suggestionByType: {
+            category: [
+                { name: 'Heat Recovery Systems', url: '/DE/en/thermal-energy-systems/heat-recovery-systems' },
+                {
+                    name: 'Industrial Heat Pumps',
+                    url: '/DE/en/air-conditioning-and-heating-solutions/industrial-heat-pumps',
+                },
+                {
+                    name: 'Air Conditioning and Heating Solutions',
+                    url: '/DE/en/air-conditioning-and-heating-solutions',
+                },
             ],
-            suggestionByType: {
-                category: [
-                    { name: 'Heat Recovery Systems', url: '/DE/en/thermal-energy-systems/heat-recovery-systems' },
-                    { name: 'Industrial Heat Pumps', url: '/DE/en/air-conditioning-and-heating-solutions/industrial-heat-pumps' },
-                    { name: 'Air Conditioning and Heating Solutions', url: '/DE/en/air-conditioning-and-heating-solutions' },
-                ],
-                cms_page: [
-                    { name: 'Demo Landing Page', url: '/DE/en/demo-landing-page' },
-                    { name: 'GTC', url: '/DE/en/gtc' },
-                ],
-                product_abstract: [
-                    {
-                        sku: 'HP-ECO-45K',
-                        url: '/DE/en/highefficiencyheatpump45kw',
-                        abstract_name: 'High-Efficiency Heat Pump 45kW',
-                        images: [{ external_url_small: 'https://placehold.co/80x80/e8e8e8/666?text=Pump' }],
-                        price: 19200,
-                        prices: { ORIGINAL: 21000 },
-                    },
-                    {
-                        sku: 'GS-HE-4002',
-                        url: '/DE/en/gasketsetforheatexchanger',
-                        abstract_name: 'Gasket Set for Heat Exchanger',
-                        images: [{ external_url_small: 'https://placehold.co/80x80/e8e8e8/666?text=Gasket' }],
-                        price: 5200,
-                    },
-                    {
-                        sku: 'HPCP-3020',
-                        url: '/DE/en/modularheatpumpcontrolpanel',
-                        abstract_name: 'Modular Heat Pump Control Panel',
-                        images: [{ external_url_small: 'https://placehold.co/80x80/e8e8e8/666?text=Panel' }],
-                        price: 98000,
-                    },
-                    {
-                        sku: 'HP-IND-60K',
-                        url: '/DE/en/industrialheatpump60kw',
-                        abstract_name: 'Industrial Heat Pump 60kW',
-                        images: [{ external_url_small: 'https://placehold.co/80x80/e8e8e8/666?text=Pump' }],
-                        price: 24700,
-                    },
-                    {
-                        sku: 'M39658',
-                        url: '/DE/en/stehpult-hoehenverstellbar-mobil-lichtgrau-M39658',
-                        abstract_name: 'Standing desk, height-adjustable - mobile, light gray',
-                        images: [{ external_url_small: 'https://placehold.co/80x80/e8e8e8/666?text=Desk' }],
-                        price: 49900,
-                    },
-                    {
-                        sku: 'M1013287',
-                        url: '/DE/en/rednerpult-hoehenverstellbar-mobil-mit-4-rollen-M1013287',
-                        abstract_name: 'Smit Visual lectern, height-adjustable - mobile, with 4 rollers',
-                        images: [{ external_url_small: 'https://placehold.co/80x80/e8e8e8/666?text=Lectern' }],
-                        price: 79000,
-                    },
-                ],
-            },
+            cms_page: [
+                { name: 'Demo Landing Page', url: '/DE/en/demo-landing-page' },
+                { name: 'GTC', url: '/DE/en/gtc' },
+            ],
+            product_abstract: [
+                {
+                    sku: 'HP-ECO-45K',
+                    url: '/DE/en/highefficiencyheatpump45kw',
+                    abstract_name: 'High-Efficiency Heat Pump 45kW',
+                    images: [{ external_url_small: 'https://placehold.co/80x80/e8e8e8/666?text=Pump' }],
+                    price: 19200,
+                    prices: { ORIGINAL: 21000 },
+                },
+                {
+                    sku: 'GS-HE-4002',
+                    url: '/DE/en/gasketsetforheatexchanger',
+                    abstract_name: 'Gasket Set for Heat Exchanger',
+                    images: [{ external_url_small: 'https://placehold.co/80x80/e8e8e8/666?text=Gasket' }],
+                    price: 5200,
+                },
+                {
+                    sku: 'HPCP-3020',
+                    url: '/DE/en/modularheatpumpcontrolpanel',
+                    abstract_name: 'Modular Heat Pump Control Panel',
+                    images: [{ external_url_small: 'https://placehold.co/80x80/e8e8e8/666?text=Panel' }],
+                    price: 98000,
+                },
+                {
+                    sku: 'HP-IND-60K',
+                    url: '/DE/en/industrialheatpump60kw',
+                    abstract_name: 'Industrial Heat Pump 60kW',
+                    images: [{ external_url_small: 'https://placehold.co/80x80/e8e8e8/666?text=Pump' }],
+                    price: 24700,
+                },
+                {
+                    sku: 'M39658',
+                    url: '/DE/en/stehpult-hoehenverstellbar-mobil-lichtgrau-M39658',
+                    abstract_name: 'Standing desk, height-adjustable - mobile, light gray',
+                    images: [{ external_url_small: 'https://placehold.co/80x80/e8e8e8/666?text=Desk' }],
+                    price: 49900,
+                },
+                {
+                    sku: 'M1013287',
+                    url: '/DE/en/rednerpult-hoehenverstellbar-mobil-mit-4-rollen-M1013287',
+                    abstract_name: 'Smit Visual lectern, height-adjustable - mobile, with 4 rollers',
+                    images: [{ external_url_small: 'https://placehold.co/80x80/e8e8e8/666?text=Lectern' }],
+                    price: 79000,
+                },
+            ],
         },
-    );
+    });
 }
 
 // XHR mock reads the latest payload from this closure — render() rebuilds it
@@ -143,15 +145,14 @@ export const Overview: StoryObj = {
             completion: 'heavy duty industrial bolt set',
         });
 
-        return (
-            sectionFull('Search form with populated suggestions',
-                `<div style="max-width: 600px; min-height: 720px; padding-top: 8px;">` +
+        return sectionFull(
+            'Search form with populated suggestions',
+            `<div style="max-width: 600px; min-height: 720px; padding-top: 8px;">` +
                 renderMolecule('search-form', {
                     data: { searchUrl: SUGGEST_URL },
                     modifiers: ['main-search'],
                 }) +
-                `</div>`
-            )
+                `</div>`,
         );
     },
 };

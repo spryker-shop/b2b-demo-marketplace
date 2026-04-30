@@ -1,7 +1,6 @@
 import { renderMolecule } from 'storybook-helpers/render-twig';
 import { componentDocs, section, sectionFull, Meta, StoryObj } from 'storybook-helpers/docs';
 
-
 const docs = componentDocs({
     name: 'formatted-number-input',
     tag: 'formatted-number-input',
@@ -10,9 +9,24 @@ const docs = componentDocs({
         { prop: 'inputName', type: 'string', default: 'required', desc: 'Name attribute for the hidden input' },
         { prop: 'inputValue', type: 'string', default: 'required', desc: 'Initial numeric value' },
         { prop: 'inputExtraClasses', type: 'string', default: "''", desc: 'Extra CSS classes for the visible input' },
-        { prop: 'inputAttributes', type: 'object', default: '{}', desc: 'Additional HTML attributes for the visible input' },
-        { prop: 'hiddenInputExtraClasses', type: 'string', default: "''", desc: 'Extra CSS classes for the hidden input' },
-        { prop: 'hiddenInputAttributes', type: 'object', default: '{}', desc: 'Additional HTML attributes for the hidden input' },
+        {
+            prop: 'inputAttributes',
+            type: 'object',
+            default: '{}',
+            desc: 'Additional HTML attributes for the visible input',
+        },
+        {
+            prop: 'hiddenInputExtraClasses',
+            type: 'string',
+            default: "''",
+            desc: 'Extra CSS classes for the hidden input',
+        },
+        {
+            prop: 'hiddenInputAttributes',
+            type: 'object',
+            default: '{}',
+            desc: 'Additional HTML attributes for the hidden input',
+        },
     ],
     attributes: [
         { attr: 'grouping-separator', default: "'' (locale-based)", desc: 'Thousands grouping separator' },
@@ -31,9 +45,9 @@ export default meta;
 
 export const Overview: StoryObj = {
     render: () => {
-        return (
-            sectionFull('Basic',
-                '' +
+        return sectionFull(
+            'Basic',
+            '' +
                 renderMolecule('formatted-number-input', {
                     data: {
                         inputName: 'quantity',
@@ -45,8 +59,7 @@ export const Overview: StoryObj = {
                         'decimal-rounding': 2,
                     },
                 }) +
-                '</div>'
-            )
+                '</div>',
         );
     },
 };

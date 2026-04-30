@@ -1,6 +1,5 @@
 import { componentDocs, section, Meta, StoryObj } from 'storybook-helpers/docs';
 
-
 const docs = componentDocs({
     name: 'label',
     tag: 'label',
@@ -14,15 +13,9 @@ export default meta;
 export const Overview: StoryObj = {
     render: () => {
         return (
-            section('Default',
-                '<label class="label">Default label</label>'
-            ) +
-            section('Required',
-                '<label class="label label--required">Required label</label>'
-            ) +
-            section('Small',
-                '<label class="label label--sm">Small label</label>'
-            )
+            section('Default', '<label class="label">Default label</label>') +
+            section('Required', '<label class="label label--required">Required label</label>') +
+            section('Small', '<label class="label label--sm">Small label</label>')
         );
     },
 };

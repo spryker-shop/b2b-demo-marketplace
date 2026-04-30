@@ -1,7 +1,6 @@
 import { renderAtom } from 'storybook-helpers/render-twig';
 import { componentDocs, section, Meta, StoryObj } from 'storybook-helpers/docs';
 
-
 const docs = componentDocs({
     name: 'avatar',
     tag: 'span',
@@ -20,26 +19,25 @@ export default meta;
 export const Overview: StoryObj = {
     render: () => {
         return (
-            section('Initials',
+            section(
+                'Initials',
                 renderAtom('avatar', { data: { placeholder: 'AB' } }) +
-                renderAtom('avatar', { data: { placeholder: 'JD' } }) +
-                renderAtom('avatar', { data: { placeholder: 'KS' } })
+                    renderAtom('avatar', { data: { placeholder: 'JD' } }) +
+                    renderAtom('avatar', { data: { placeholder: 'KS' } }),
             ) +
-            section('Image',
-                renderAtom('avatar', { data: { image: 'https://i.pravatar.cc/48?img=1' } })
-            ) +
-            section('Icon fallback',
-                renderAtom('avatar', {})
-            ) +
-            section('Status dot',
+            section('Image', renderAtom('avatar', { data: { image: 'https://i.pravatar.cc/48?img=1' } })) +
+            section('Icon fallback', renderAtom('avatar', {})) +
+            section(
+                'Status dot',
                 renderAtom('avatar', { data: { placeholder: 'AB', status: true } }) +
-                renderAtom('avatar', { data: { status: true } })
+                    renderAtom('avatar', { data: { status: true } }),
             ) +
-            section('Sizes',
+            section(
+                'Sizes',
                 renderAtom('avatar', { modifiers: ['sm'], data: { placeholder: 'SM' } }) +
-                renderAtom('avatar', { data: { placeholder: 'MD' } }) +
-                renderAtom('avatar', { modifiers: ['lg'], data: { placeholder: 'LG' } }) +
-                renderAtom('avatar', { modifiers: ['xl'], data: { placeholder: 'XL' } })
+                    renderAtom('avatar', { data: { placeholder: 'MD' } }) +
+                    renderAtom('avatar', { modifiers: ['lg'], data: { placeholder: 'LG' } }) +
+                    renderAtom('avatar', { modifiers: ['xl'], data: { placeholder: 'XL' } }),
             )
         );
     },

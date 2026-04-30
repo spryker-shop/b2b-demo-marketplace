@@ -11,11 +11,7 @@ import {
 export { setTranslations, clearTranslations };
 
 declare const require: NodeRequire & {
-    context: (
-        directory: string,
-        useSubdirectories: boolean,
-        regExp: RegExp,
-    ) => __WebpackModuleApi.RequireContext;
+    context: (directory: string, useSubdirectories: boolean, regExp: RegExp) => __WebpackModuleApi.RequireContext;
 };
 
 declare const __WIDGET_MAP__: Record<string, string>;
@@ -38,11 +34,7 @@ function ensureTemplatesLoaded(): void {
     );
     loadTemplates(vendorContext, 'ShopUi', '@SprykerShop:ShopUi');
 
-    const pyzContext = require.context(
-        '../../default',
-        true,
-        /\.twig$/,
-    );
+    const pyzContext = require.context('../../default', true, /\.twig$/);
     loadTemplates(pyzContext, 'ShopUi');
 
     // Vendor widget templates from spryker-shop: register every twig as
@@ -91,11 +83,7 @@ function ensureTemplatesLoaded(): void {
     // re-register under `@ModuleName/...` so Pyz wins, and additionally under
     // `@@SprykerShop:ModuleName/...` so child templates that use
     // `extends molecule('x', '@SprykerShop:ProductLabelWidget')` still find vendor.
-    const pyzWidgetTwigs = require.context(
-        '../../../..',
-        true,
-        /^\.\/(?!ShopUi)\w+\/Theme\/default\/.+\.twig$/,
-    );
+    const pyzWidgetTwigs = require.context('../../../..', true, /^\.\/(?!ShopUi)\w+\/Theme\/default\/.+\.twig$/);
     pyzWidgetTwigs.keys().forEach((key: string) => {
         const m = key.match(/^\.\/(\w+)\/Theme\/default\/(.+)$/);
         if (!m) return;

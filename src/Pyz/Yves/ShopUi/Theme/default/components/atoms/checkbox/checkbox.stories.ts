@@ -1,7 +1,6 @@
 import { renderAtom } from 'storybook-helpers/render-twig';
 import { componentDocs, section, Meta, StoryObj } from 'storybook-helpers/docs';
 
-
 const docs = componentDocs({
     name: 'checkbox',
     tag: 'span',
@@ -24,26 +23,38 @@ export default meta;
 export const Overview: StoryObj = {
     render: () => {
         return (
-            section('Unchecked',
-                renderAtom('checkbox', { data: { label: 'Unchecked option' } })
+            section('Unchecked', renderAtom('checkbox', { data: { label: 'Unchecked option' } })) +
+            section('Checked', renderAtom('checkbox', { data: { label: 'Checked option', isChecked: true } })) +
+            section(
+                'Required',
+                renderAtom('checkbox', { data: { label: 'Required field' }, attributes: { required: true } }),
             ) +
-            section('Checked',
-                renderAtom('checkbox', { data: { label: 'Checked option', isChecked: true } })
+            section(
+                'Disabled',
+                renderAtom('checkbox', {
+                    data: { label: 'Disabled unchecked' },
+                    attributes: { disabled: 'disabled' },
+                }) +
+                    renderAtom('checkbox', {
+                        data: { label: 'Disabled checked', isChecked: true },
+                        attributes: { disabled: 'disabled' },
+                    }),
             ) +
-            section('Required',
-                renderAtom('checkbox', { data: { label: 'Required field' }, attributes: { required: true } })
-            ) +
-            section('Disabled',
-                renderAtom('checkbox', { data: { label: 'Disabled unchecked' }, attributes: { disabled: 'disabled' } }) +
-                renderAtom('checkbox', { data: { label: 'Disabled checked', isChecked: true }, attributes: { disabled: 'disabled' } })
-            ) +
-            section('Group',
+            section(
+                'Group',
                 renderAtom('checkbox', { data: { label: 'Option A' }, attributes: { name: 'group1' } }) +
-                renderAtom('checkbox', { data: { label: 'Option B', isChecked: true }, attributes: { name: 'group1' } }) +
-                renderAtom('checkbox', { data: { label: 'Option C' }, attributes: { name: 'group1' } })
+                    renderAtom('checkbox', {
+                        data: { label: 'Option B', isChecked: true },
+                        attributes: { name: 'group1' },
+                    }) +
+                    renderAtom('checkbox', { data: { label: 'Option C' }, attributes: { name: 'group1' } }),
             ) +
-            section('Intermediate',
-                renderAtom('checkbox', { modifiers: ['intermediate'], data: { label: 'Intermediate', isChecked: true } })
+            section(
+                'Intermediate',
+                renderAtom('checkbox', {
+                    modifiers: ['intermediate'],
+                    data: { label: 'Intermediate', isChecked: true },
+                }),
             )
         );
     },

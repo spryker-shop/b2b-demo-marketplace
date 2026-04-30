@@ -1,7 +1,6 @@
 import { renderAtom } from 'storybook-helpers/render-twig';
 import { componentDocs, section, Meta, StoryObj } from 'storybook-helpers/docs';
 
-
 const docs = componentDocs({
     name: 'switch',
     tag: 'div',
@@ -21,15 +20,12 @@ export default meta;
 export const Overview: StoryObj = {
     render: () => {
         return (
-            section('Off',
-                renderAtom('switch', { data: { label: 'Inactive toggle' } })
-            ) +
-            section('On (active)',
-                renderAtom('switch', { modifiers: ['active'], data: { label: 'Active toggle' } })
-            ) +
-            section('Disabled',
+            section('Off', renderAtom('switch', { data: { label: 'Inactive toggle' } })) +
+            section('On (active)', renderAtom('switch', { modifiers: ['active'], data: { label: 'Active toggle' } })) +
+            section(
+                'Disabled',
                 renderAtom('switch', { modifiers: ['disabled'], data: { label: 'Disabled off' } }) +
-                renderAtom('switch', { modifiers: ['active', 'disabled'], data: { label: 'Disabled on' } })
+                    renderAtom('switch', { modifiers: ['active', 'disabled'], data: { label: 'Disabled on' } }),
             )
         );
     },
