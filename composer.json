@@ -473,6 +473,14 @@
         }
     },
     "scripts": {
+        "post-install-cmd": [
+            "\"vendor/bin/phpcs\" --config-set installed_paths vendor/phpcompatibility/php-compatibility",
+            "GitHook\\Composer\\Scripts\\HookInstaller::installProjectHooks"
+        ],
+        "post-update-cmd": [
+            "\"vendor/bin/phpcs\" --config-set installed_paths vendor/phpcompatibility/php-compatibility",
+            "GitHook\\Composer\\Scripts\\HookInstaller::installProjectHooks"
+        ],
         "phpstan": [
             "php -d memory_limit=1024M vendor/bin/phpstan analyze -c phpstan.neon src/ -l 6"
         ],
