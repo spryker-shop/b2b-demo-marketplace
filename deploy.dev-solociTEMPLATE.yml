@@ -37,10 +37,11 @@ tag: "1.0"
 
 environment: docker.dev
 image:
-  tag: spryker/php:8.3
+  tag: spryker/php:8.4
   php:
     enabled-extensions:
       - otel
+      - amqp
 
   environment:
     SPRYKER_DYNAMIC_STORE_MODE: true
@@ -64,8 +65,8 @@ image:
     OTEL_EXPORTER_OTLP_ENDPOINT: "http://169.254.172.1:9317"
 
   node:
-    version: 18
-    npm: 9
+    version: 24
+    npm: 10
 
 composer:
   mode: --no-dev
@@ -108,7 +109,7 @@ groups:
         endpoints:
           mp.eu.dev-change_me.cloud.spryker.toys:
             entry-point: MerchantPortal
-            region: DE
+            region: EU
             <<: *real-ip
       yves:
         application: yves
@@ -116,13 +117,13 @@ groups:
           date-time-configurator-example.dev-change_me.cloud.spryker.toys:
             entry-point: Configurator
           yves.eu.dev-change_me.cloud.spryker.toys:
-            region: DE
+            region: EU
             <<: *frontend-auth
       glue:
         application: glue
         endpoints:
           glue.eu.dev-change_me.cloud.spryker.toys:
-            region: DE
+            region: EU
             <<: *real-ip
       gluestorefront:
         application: glue-storefront
@@ -159,7 +160,7 @@ groups:
 services:
   database:
     engine: mysql
-    version: mariadb-10.4
+    version: mariadb-10.11
     root:
       username: "root"
       password: "secret"
@@ -168,7 +169,7 @@ services:
         protocol: tcp
   broker:
     engine: rabbitmq
-    version: "3.9"
+    version: "4.1"
     api:
       username: "spryker"
       password: "secret"
@@ -177,9 +178,9 @@ services:
       localhost:5672:
         protocol: tcp
   session:
-    engine: redis
+    engine: valkey
   key_value_store:
-    engine: redis
+    engine: valkey
     endpoints:
       localhost:16379:
         protocol: tcp
@@ -191,7 +192,7 @@ services:
         protocol: tcp
   scheduler:
     engine: jenkins
-    version: "2.401"
+    version: "2.492.3"
     csrf-protection-enabled: false
     endpoints:
       scheduler.dev-change_me.cloud.spryker.toys:
