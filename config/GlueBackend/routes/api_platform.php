@@ -10,6 +10,10 @@ declare(strict_types = 1);
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
 return static function (RoutingConfigurator $routingConfigurator): void {
+    if (!is_dir(dirname(__DIR__, 2) . '/src/Generated/Api/Backend')) {
+        return;
+    }
+
     $routingConfigurator->import('.', 'api_platform')
         ->prefix('/');
 };

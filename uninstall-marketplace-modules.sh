@@ -77,6 +77,7 @@ MARKETPLACE_CORE_MODULES=(
     "spryker/sales-merchant-portal-gui"
     "spryker/security-blocker-merchant-portal-gui"
     "spryker/tax-merchant-portal-gui"
+    "spryker/security-oauth-knpu"
 )
 
 echo "Step 1: Removing Marketplace Features..."
