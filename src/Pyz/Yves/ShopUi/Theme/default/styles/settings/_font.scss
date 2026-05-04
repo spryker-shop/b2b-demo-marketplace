@@ -1,16 +1,16 @@
-$setting-font-family: 'Circular', sans-serif;
+$setting-font-family: var(--font-family-sans);
 
 $setting-font-size: (
-    1: rem(50),
-    2: rem(32),
-    3: rem(24),
-    4: rem(18),
-    5: rem(16),
-    6: rem(14),
-    big: rem(18),
-    default: rem(16),
-    small: rem(14),
-    tiny: rem(12),
+    1: 50px,
+    2: var(--heading-xl-size),
+    3: var(--heading-md-size),
+    4: var(--font-size-18),
+    5: var(--body-lg-size),
+    6: var(--body-md-size),
+    big: var(--font-size-18),
+    default: var(--body-lg-size),
+    small: var(--body-md-size),
+    tiny: var(--body-sm-size),
 );
 
 $setting-font-weight: (

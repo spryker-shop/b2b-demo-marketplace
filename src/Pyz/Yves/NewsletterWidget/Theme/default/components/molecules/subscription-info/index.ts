@@ -1,1 +1,1 @@
-import './subscription-info';
+import './subscription-info.scss';

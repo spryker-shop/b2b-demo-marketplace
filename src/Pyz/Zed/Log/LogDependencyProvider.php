@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\Log;
 
+use Spryker\Zed\Log\Communication\Plugin\Handler\NonBufferedStreamHandlerPlugin;
 use Spryker\Zed\Log\Communication\Plugin\Handler\StreamHandlerPlugin;
 use Spryker\Zed\Log\Communication\Plugin\Log\AuditLogMetaDataProcessorPlugin;
 use Spryker\Zed\Log\Communication\Plugin\Log\AuditLogRequestProcessorPlugin;
@@ -32,6 +33,16 @@ class LogDependencyProvider extends SprykerLogDependencyProvider
     {
         return [
             new StreamHandlerPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Shared\Log\Dependency\Plugin\LogHandlerPluginInterface>
+     */
+    protected function getCliLogHandlers(): array
+    {
+        return [
+            new NonBufferedStreamHandlerPlugin(),
         ];
     }
 

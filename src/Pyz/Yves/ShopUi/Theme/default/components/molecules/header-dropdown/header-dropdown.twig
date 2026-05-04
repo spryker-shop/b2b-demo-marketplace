@@ -1,0 +1,134 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'header-dropdown',
+    tag: 'header-dropdown',
+} %}
+
+{% define data = {
+    preset: required,
+    userName: '',
+    companyName: '',
+    isDrawer: false,
+    drillDownTarget: '',
+    panelOnly: false,
+} %}
+
+{% block body %}
+    {% set isDrawer = data.isDrawer %}
+
+    {% if data.preset == 'user-account' %}
+        {% set accountTabs = [{
+            id: 'user-account',
+            label: 'customer.account.user_account',
+            items: [
+                { label: 'customer.account.overview', icon: 'home', url: url('customer/overview') },
+                { label: 'customer.account.profile_data', icon: 'person', url: url('customer/profile') },
+                { label: 'customer.account.address', icon: 'location_on', url: url('customer/address') },
+                { label: 'customer.account.order_history', icon: 'receipt_long', url: url('customer/order') },
+                { label: 'return_page.default_title', icon: 'undo', url: url('return/list') },
+                { label: 'customer.account.newsletter', icon: 'mail', url: url('customer/newsletter') },
+                { label: 'quote_request_page.quote_request', icon: 'request_quote', url: url('quote-request') },
+                { label: 'customer.logout', icon: 'logout', url: url('logout'), isDanger: true, qa: 'customer-logout-link' },
+            ],
+        }] %}
+
+        {% if can('SeeCompanyMenuPermissionPlugin') %}
+            {% set accountTabs = accountTabs | merge([{
+                id: 'company-account',
+                label: 'company.account.company_account',
+                items: [
+                    { label: 'company.account.overview', icon: 'apartment', url: url('company/overview') },
+                    { label: 'company.account.company_role.users', icon: 'group', url: url('company/user') },
+                    { label: 'company.account.business_unit', icon: 'corporate_fare', url: url('company/business-unit') },
+                    { label: 'company.account.company_user.role', icon: 'manage_accounts', url: url('company/company-role') },
+                    { label: 'company.account.merchant_relations', icon: 'handshake', url: url('company/merchant-relation') },
+                    { label: 'merchant_relation_request_page.merchant_relation_request', icon: 'pending_actions', url: url('company/merchant-relation-request') },
+                ],
+            }]) %}
+        {% endif %}
+    {% endif %}
+
+    {% set presetContent %}
+        {% if data.preset == 'user-account' %}
+            {% include molecule('account-menu') with {
+                data: {
+                    tabs: accountTabs,
+                },
+            } only %}
+        {% elseif data.preset == 'self-service' %}
+            <div class="account-menu__list">
+                {% widget 'SspListMenuItemWidget' args [false] only %}
+                    {% block menu %}
+                        {% widget widgetData only %}
+                            {% block content %}
+                                <a href="{{ data.url }}" class="account-menu__row">
+                                    <span class="account-menu__row-label">{{ data.label }}</span>
+                                </a>
+                            {% endblock %}
+                        {% endwidget %}
+                    {% endblock %}
+                {% endwidget %}
+            </div>
+        {% endif %}
+    {% endset %}
+
+    {% if not data.panelOnly %}
+        {% if data.preset == 'user-account' %}
+            <button
+                class="{{ config.name }}__trigger {{ config.name }}__trigger--user-account{% if not isDrawer %} {{ config.jsName }}__trigger{% else %} js-side-drawer__drill-down-trigger{% endif %}"
+                type="button"
+                {% if not isDrawer %}aria-label="{{ 'header.account.menu' | trans }}" aria-expanded="false"{% endif %}
+                {% if isDrawer and data.drillDownTarget %}data-target-panel="{{ data.drillDownTarget }}"{% endif %}
+            >
+                <span class="{{ config.name }}__avatar">
+                    {% include atom('avatar') with {
+                        data: {
+                            placeholder: data.userName | split(' ') | map(v => v | first) | join(''),
+                        },
+                    } only %}
+                </span>
+                <span class="{{ config.name }}__info">
+                    <span class="{{ config.name }}__name">{{ data.userName }}</span>
+                    {% if data.companyName %}
+                        <span class="{{ config.name }}__company">{{ data.companyName }}</span>
+                    {% endif %}
+                </span>
+                <span class="{{ config.name }}__chevron">
+                    {% include atom('font-icon') with {
+                        modifiers: ['size-inherit'],
+                        data: {
+                            name: isDrawer ? 'chevron_right' : 'keyboard_arrow_down',
+                        },
+                    } only %}
+                </span>
+            </button>
+
+        {% elseif data.preset == 'self-service' %}
+            <button
+                class="{{ config.name }}__trigger {{ config.name }}__trigger--self-service{% if not isDrawer %} {{ config.jsName }}__trigger{% else %} js-side-drawer__drill-down-trigger{% endif %}"
+                type="button"
+                {% if not isDrawer %}aria-expanded="false"{% endif %}
+                {% if isDrawer and data.drillDownTarget %}data-target-panel="{{ data.drillDownTarget }}"{% endif %}
+            >
+                <span class="{{ config.name }}__label">{{ 'self_service_portal.customer_navigation.title' | trans }}</span>
+                <span class="{{ config.name }}__chevron">
+                    {% include atom('font-icon') with {
+                        modifiers: ['size-inherit'],
+                        data: {
+                            name: isDrawer ? 'chevron_right' : 'keyboard_arrow_down',
+                        },
+                    } only %}
+                </span>
+            </button>
+        {% endif %}
+    {% endif %}
+
+    {% if data.panelOnly %}
+        {{ presetContent | raw }}
+    {% elseif not isDrawer %}
+        <div class="{{ config.name }}__dropdown {{ config.jsName }}__dropdown" aria-hidden="true">
+            {{ presetContent | raw }}
+        </div>
+    {% endif %}
+{% endblock %}

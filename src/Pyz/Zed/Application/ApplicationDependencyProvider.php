@@ -10,6 +10,7 @@ declare(strict_types = 1);
 namespace Pyz\Zed\Application;
 
 use Spryker\Zed\Application\ApplicationDependencyProvider as SprykerApplicationDependencyProvider;
+use Spryker\Zed\Configuration\Communication\Plugin\Application\ConfigurationApplicationPlugin;
 use Spryker\Zed\Currency\Communication\Plugin\Application\CurrencyBackendGatewayApplicationPlugin;
 use Spryker\Zed\ErrorHandler\Communication\Plugin\Application\ErrorHandlerApplicationPlugin;
 use Spryker\Zed\EventDispatcher\Communication\Plugin\Application\BackendApiEventDispatcherApplicationPlugin;
@@ -28,6 +29,7 @@ use Spryker\Zed\Router\Communication\Plugin\Application\BackendGatewayRouterAppl
 use Spryker\Zed\Router\Communication\Plugin\Application\BackofficeRouterApplicationPlugin;
 use Spryker\Zed\Router\Communication\Plugin\Application\RouterApplicationPlugin;
 use Spryker\Zed\Security\Communication\Plugin\Application\ZedSecurityApplicationPlugin;
+use Spryker\Zed\SecurityOauthKnpu\Communication\Plugin\Application\OauthKnpuApplicationPlugin;
 use Spryker\Zed\Session\Communication\Plugin\Application\MockArraySessionApplicationPlugin;
 use Spryker\Zed\Session\Communication\Plugin\Application\SessionApplicationPlugin;
 use Spryker\Zed\Store\Communication\Plugin\Application\BackofficeStoreApplicationPlugin;
@@ -63,6 +65,7 @@ class ApplicationDependencyProvider extends SprykerApplicationDependencyProvider
             new ZedSecurityApplicationPlugin(),
             new NumberFormatterApplicationPlugin(),
             new BackofficeStoreApplicationPlugin(),
+            new OauthKnpuApplicationPlugin(),
         ];
 
         if (class_exists(WebProfilerApplicationPlugin::class)) {
@@ -94,6 +97,8 @@ class ApplicationDependencyProvider extends SprykerApplicationDependencyProvider
             new GuiTableApplicationPlugin(),
             new NumberFormatterApplicationPlugin(),
             new BackofficeStoreApplicationPlugin(),
+            new ConfigurationApplicationPlugin(),
+            new OauthKnpuApplicationPlugin(),
         ];
 
         // if (class_exists(WebProfilerApplicationPlugin::class)) {
@@ -121,6 +126,7 @@ class ApplicationDependencyProvider extends SprykerApplicationDependencyProvider
             new PropelApplicationPlugin(),
             new BackendGatewayRouterApplicationPlugin(),
             new HttpApplicationPlugin(),
+            new ConfigurationApplicationPlugin(),
         ];
 
         if (class_exists(WebProfilerApplicationPlugin::class)) {
@@ -143,6 +149,7 @@ class ApplicationDependencyProvider extends SprykerApplicationDependencyProvider
             new BackendApiRouterApplicationPlugin(),
             new HttpApplicationPlugin(),
             new ValidatorApplicationPlugin(),
+            new ConfigurationApplicationPlugin(),
         ];
     }
 }

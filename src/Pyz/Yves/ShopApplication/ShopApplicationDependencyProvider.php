@@ -24,11 +24,13 @@ use Spryker\Yves\MultiFactorAuth\Widget\MultiFactorAuthHandlerWidget;
 use Spryker\Yves\MultiFactorAuth\Widget\SetMultiFactorAuthMenuItemWidget;
 use Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin;
 use Spryker\Yves\Security\Plugin\Application\YvesSecurityApplicationPlugin;
+use Spryker\Yves\SecurityOauthKnpu\Plugin\Application\OauthKnpuApplicationPlugin;
 use Spryker\Yves\Session\Plugin\Application\SessionApplicationPlugin;
 use Spryker\Yves\Sitemap\Widget\SitemapWidget;
 use Spryker\Yves\Translator\Plugin\Application\TranslatorApplicationPlugin;
 use Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin;
 use Spryker\Yves\Validator\Plugin\Application\ValidatorApplicationPlugin;
+use SprykerEco\Yves\PunchoutGateway\Widget\PunchoutCartWidget;
 use SprykerFeature\Yves\BuyBox\Widget\BuyBoxWidget;
 use SprykerFeature\Yves\ProductExperienceManagement\Widget\ProductAttributeVisibilityCartWidget;
 use SprykerFeature\Yves\ProductExperienceManagement\Widget\ProductAttributeVisibilityPdpWidget;
@@ -104,6 +106,7 @@ use SprykerShop\Yves\ConfigurableBundleWidget\Widget\QuoteConfiguredBundleWidget
 use SprykerShop\Yves\CurrencyWidget\Widget\CurrencyWidget;
 use SprykerShop\Yves\CustomerPage\Plugin\Application\CustomerConfirmationUserCheckerApplicationPlugin;
 use SprykerShop\Yves\CustomerPage\Widget\CustomerNavigationWidget;
+use SprykerShop\Yves\CustomerPage\Widget\OauthAuthenticationLinksWidget;
 use SprykerShop\Yves\CustomerValidationPage\Plugin\ShopApplication\LogoutInvalidatedCustomerFilterControllerEventHandlerPlugin;
 use SprykerShop\Yves\DiscountPromotionWidget\Plugin\ShopApplication\CartDiscountPromotionProductListWidgetCacheKeyGeneratorStrategyPlugin;
 use SprykerShop\Yves\DiscountPromotionWidget\Widget\CartDiscountPromotionProductListWidget;
@@ -440,6 +443,8 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             ProductAttributeVisibilityCartWidget::class,
             CostCenterSelectorWidget::class, #CostCenterFeature
             CostCenterSummaryWidget::class, #CostCenterFeature
+            PunchoutCartWidget::class,
+            OauthAuthenticationLinksWidget::class,
         ];
     }
 
@@ -500,6 +505,7 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             new ValidatorApplicationPlugin(),
             new YvesSecurityApplicationPlugin(),
             new CustomerConfirmationUserCheckerApplicationPlugin(),
+            new OauthKnpuApplicationPlugin(),
         ];
 
         // if (class_exists(WebProfilerApplicationPlugin::class)) {

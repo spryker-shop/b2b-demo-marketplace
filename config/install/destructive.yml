@@ -69,6 +69,9 @@ sections:
         check-product-validity:
             command: 'vendor/bin/console product:check-validity'
 
+        stripe:
+            command: 'vendor/bin/console data:import --config=vendor/spryker-eco/stripe/data/import/stripe.yml -vvv --no-ansi'
+
     scheduler-start:
         trigger-events:
             command: 'vendor/bin/console publish:trigger-events'

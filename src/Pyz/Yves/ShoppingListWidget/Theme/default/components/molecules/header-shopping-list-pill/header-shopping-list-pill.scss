@@ -1,0 +1,35 @@
+@import '~src/ShopUi/styles/panel-dropdown';
+
+@include shop-ui-nav-pill('.header-shopping-list-pill') {
+    &__trigger {
+        @include helper-effect-transition(color);
+        display: flex;
+        align-items: center;
+        gap: var(--scale-4);
+        font-family: var(--body-md-family);
+        font-size: var(--body-md-size);
+        font-weight: var(--font-weight-medium);
+        line-height: var(--body-md-line-height);
+        color: var(--text-secondary);
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        white-space: nowrap;
+
+        &:hover,
+        &[aria-expanded='true'] {
+            color: var(--text-brand);
+        }
+    }
+
+    &__chevron {
+        @include helper-effect-transition(transform);
+        font-size: rem(18);
+        color: var(--icon-secondary);
+    }
+
+    &__trigger[aria-expanded='true'] &__chevron {
+        transform: rotate(180deg);
+    }
+}
