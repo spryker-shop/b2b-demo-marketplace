@@ -177,7 +177,7 @@ $config[SecurityBlockerConstants::SECURITY_BLOCKER_REDIS_PORT] = 6379;
 $config[SecurityBlockerConstants::SECURITY_BLOCKER_REDIS_PASSWORD] = false;
 $config[SecurityBlockerConstants::SECURITY_BLOCKER_REDIS_DATABASE] = 7;
 
-$config[SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_TTL] = 600;
+$config[SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_TTL] = 1200;
 $config[SecurityBlockerConstants::SECURITY_BLOCKER_BLOCK_FOR] = 300;
 $config[SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_NUMBER_OF_ATTEMPTS] = 1000;
 
