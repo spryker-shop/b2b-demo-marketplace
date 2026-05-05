@@ -9,6 +9,8 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\MerchantPortalApplication\Communication;
 
+use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\Kernel\Container\ContainerProxy;
 use Spryker\Zed\MerchantPortalApplication\Communication\MerchantPortalApplicationCommunicationFactory as SprykerMerchantPortalApplicationCommunicationFactory;
 
 /**
@@ -16,4 +18,13 @@ use Spryker\Zed\MerchantPortalApplication\Communication\MerchantPortalApplicatio
  */
 class MerchantPortalApplicationCommunicationFactory extends SprykerMerchantPortalApplicationCommunicationFactory
 {
+    public function createServiceContainer(): ContainerInterface
+    {
+        return new ContainerProxy([
+            'logger' => null,
+            'debug' => $this->getConfig()->isDebugModeEnabled(),
+            'charset' => 'UTF-8',
+            'canUseDi' => true,
+        ]);
+    }
 }
