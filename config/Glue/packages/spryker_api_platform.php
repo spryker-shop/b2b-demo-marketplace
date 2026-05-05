@@ -23,6 +23,10 @@ return static function (SprykerApiPlatformConfig $sprykerApiPlatform): void {
         'vendor/spryker-feature',
     ]);
 
-    //    $sprykerApiPlatform->generatedDir('src/Generated/Api');
-    //    $sprykerApiPlatform->cacheDir('%kernel.cache_dir%/api-generator');
+    // Keep these modules on the legacy Glue REST stack by hiding their API Platform schemas from the generator.
+    $sprykerApiPlatform->excludedPathFragments([
+        'vendor/spryker/customer/resources/api/',
+        'vendor/spryker/store/resources/api/',
+        'vendor/spryker/authentication/resources/api/',
+    ]);
 };

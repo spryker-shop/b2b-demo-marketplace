@@ -24,7 +24,7 @@ class CustomerLoginPage
     /**
      * @var string
      */
-    public const TITLE_LOGIN = 'Please Login';
+    public const TITLE_LOGIN = 'Sign in';
 
     /**
      * @var string

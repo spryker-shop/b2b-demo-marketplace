@@ -28,6 +28,17 @@ use Spryker\Zed\OmsProductOfferReservation\Communication\Plugin\Oms\ProductOffer
 use Spryker\Zed\OmsProductOfferReservation\Communication\Plugin\Oms\ProductOfferOmsReservationReaderStrategyPlugin;
 use Spryker\Zed\OmsProductOfferReservation\Communication\Plugin\Oms\ProductOfferOmsReservationWriterStrategyPlugin;
 use Spryker\Zed\OmsProductOfferReservation\Communication\Plugin\Oms\ProductOfferReservationPostSaveTerminationAwareStrategyPlugin;
+use Spryker\Zed\PaymentApp\Communication\Plugin\Oms\IsPaymentAppPaymentStatusAuthorizationFailedConditionPlugin;
+use Spryker\Zed\PaymentApp\Communication\Plugin\Oms\IsPaymentAppPaymentStatusAuthorizedConditionPlugin;
+use Spryker\Zed\PaymentApp\Communication\Plugin\Oms\IsPaymentAppPaymentStatusCanceledConditionPlugin;
+use Spryker\Zed\PaymentApp\Communication\Plugin\Oms\IsPaymentAppPaymentStatusCancellationFailedConditionPlugin;
+use Spryker\Zed\PaymentApp\Communication\Plugin\Oms\IsPaymentAppPaymentStatusCapturedConditionPlugin;
+use Spryker\Zed\PaymentApp\Communication\Plugin\Oms\IsPaymentAppPaymentStatusCaptureFailedConditionPlugin;
+use Spryker\Zed\PaymentApp\Communication\Plugin\Oms\IsPaymentAppPaymentStatusCaptureRequestedConditionPlugin;
+use Spryker\Zed\PaymentApp\Communication\Plugin\Oms\IsPaymentAppPaymentStatusOverpaidConditionPlugin;
+use Spryker\Zed\PaymentApp\Communication\Plugin\Oms\IsPaymentAppPaymentStatusRefundedConditionPlugin;
+use Spryker\Zed\PaymentApp\Communication\Plugin\Oms\IsPaymentAppPaymentStatusRefundFailedConditionPlugin;
+use Spryker\Zed\PaymentApp\Communication\Plugin\Oms\IsPaymentAppPaymentStatusUnderpaidConditionPlugin;
 use Spryker\Zed\ProductBundle\Communication\Plugin\Oms\ProductBundleReservationPostSaveTerminationAwareStrategyPlugin;
 use Spryker\Zed\ProductOfferPackagingUnit\Communication\Plugin\Oms\ProductOfferPackagingUnitOmsReservationAggregationPlugin;
 use Spryker\Zed\ProductPackagingUnit\Communication\Plugin\Oms\ProductPackagingUnitOmsReservationAggregationPlugin;
@@ -47,6 +58,9 @@ use Spryker\Zed\SalesPaymentMerchant\Communication\Plugin\Oms\Condition\IsMercha
 use Spryker\Zed\SalesReturn\Communication\Plugin\Oms\Command\StartReturnCommandPlugin;
 use Spryker\Zed\Shipment\Dependency\Plugin\Oms\ShipmentManualEventGrouperPlugin;
 use Spryker\Zed\Shipment\Dependency\Plugin\Oms\ShipmentOrderMailExpanderPlugin;
+use SprykerEco\Zed\Stripe\Communication\Plugin\Oms\Command\StripeCancelCommandPlugin;
+use SprykerEco\Zed\Stripe\Communication\Plugin\Oms\Command\StripeCaptureCommandPlugin;
+use SprykerEco\Zed\Stripe\Communication\Plugin\Oms\Command\StripeRefundCommandPlugin;
 use SprykerEco\Zed\Vertex\Communication\Plugin\Oms\Command\VertexSubmitPaymentTaxInvoicePlugin;
 use SprykerEco\Zed\Vertex\Communication\Plugin\Oms\VertexOrderRefundedEventListenerPlugin;
 use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\Oms\RestoreBudgetOmsCommandPlugin;
@@ -81,6 +95,19 @@ class OmsDependencyProvider extends SprykerOmsDependencyProvider
     {
         $container->extend(self::CONDITION_PLUGINS, function (ConditionCollectionInterface $conditionCollection) {
             $conditionCollection->add(new IsOrderPaidConditionPlugin(), 'MerchantSalesOrder/IsOrderPaid');
+
+            // ----- Payment conditions
+            $conditionCollection->add(new IsPaymentAppPaymentStatusAuthorizationFailedConditionPlugin(), 'Payment/IsAuthorizationFailed');
+            $conditionCollection->add(new IsPaymentAppPaymentStatusAuthorizedConditionPlugin(), 'Payment/IsAuthorized');
+            $conditionCollection->add(new IsPaymentAppPaymentStatusCanceledConditionPlugin(), 'Payment/IsCanceled');
+            $conditionCollection->add(new IsPaymentAppPaymentStatusCancellationFailedConditionPlugin(), 'Payment/IsCancellationFailed');
+            $conditionCollection->add(new IsPaymentAppPaymentStatusCapturedConditionPlugin(), 'Payment/IsCaptured');
+            $conditionCollection->add(new IsPaymentAppPaymentStatusCaptureFailedConditionPlugin(), 'Payment/IsCaptureFailed');
+            $conditionCollection->add(new IsPaymentAppPaymentStatusCaptureRequestedConditionPlugin(), 'Payment/IsCaptureRequested');
+            $conditionCollection->add(new IsPaymentAppPaymentStatusOverpaidConditionPlugin(), 'Payment/IsOverpaid');
+            $conditionCollection->add(new IsPaymentAppPaymentStatusUnderpaidConditionPlugin(), 'Payment/IsUnderpaid');
+            $conditionCollection->add(new IsPaymentAppPaymentStatusRefundedConditionPlugin(), 'Payment/IsRefunded');
+            $conditionCollection->add(new IsPaymentAppPaymentStatusRefundFailedConditionPlugin(), 'Payment/IsRefundFailed');
             $conditionCollection->add(new IsMerchantPaidOutConditionPlugin(), 'SalesPaymentMerchant/IsMerchantPaidOut');
             $conditionCollection->add(new IsMerchantPayoutReversedConditionPlugin(), 'SalesPaymentMerchant/IsMerchantPayoutReversed');
 
@@ -222,6 +249,9 @@ class OmsDependencyProvider extends SprykerOmsDependencyProvider
             $commandCollection->add(new SalesMerchantCommissionCalculationCommandByOrderPlugin(), 'MerchantCommission/Calculate');
             $commandCollection->add(new MerchantPayoutCommandByOrderPlugin(), 'SalesPaymentMerchant/Payout');
             $commandCollection->add(new MerchantPayoutReverseCommandByOrderPlugin(), 'SalesPaymentMerchant/ReversePayout');
+            $commandCollection->add(new StripeCaptureCommandPlugin(), 'Stripe/Capture');
+            $commandCollection->add(new StripeRefundCommandPlugin(), 'Stripe/Refund');
+            $commandCollection->add(new StripeCancelCommandPlugin(), 'Stripe/Cancel');
             $commandCollection->add(new UpdateDeletedItemReservationCommandByOrderPlugin(), 'OrderAmendment/UnreserveDeletedItems');
             $commandCollection->add(new DeleteOrderAmendmentQuoteCommandByOrderPlugin(), 'OrderAmendment/StartGracePeriod');
             $commandCollection->add(new RestoreBudgetOmsCommandPlugin(), 'CostCenter/RestoreBudget');

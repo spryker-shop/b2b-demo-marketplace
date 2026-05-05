@@ -21,41 +21,35 @@
         }
 
         &__close {
-            right: 0;
-            top: rem(5);
+            position: absolute;
+            right: var(--scale-8);
+            top: var(--scale-8);
             left: auto;
-            color: $setting-color-white;
-        }
-
-        &__account {
+            z-index: 1;
             display: flex;
             align-items: center;
-            padding: rem(16) rem(50) rem(16) rem(24);
-            color: $setting-color-white;
-            background: $setting-color-blue-1;
-            flex-shrink: 0;
+            justify-content: center;
+            width: rem(32);
+            height: rem(32);
+            padding: 0;
+            border: none;
+            background: transparent;
+            color: var(--icon-secondary);
+            cursor: pointer;
+            border-radius: var(--radius-sm);
 
-            &--company {
-                background: $setting-color-main;
+            &:hover {
+                background-color: var(--background-subtle);
+                color: var(--text-primary);
             }
 
-            &-icon {
-                flex-shrink: 0;
-                margin-right: rem(30);
-            }
-
-            &-text {
-                font-size: rem(14);
-                line-height: rem(14);
-                font-weight: fw(medium);
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                overflow: hidden;
+            .material-symbols-outlined {
+                font-size: rem(20);
             }
         }
 
-        &__holder {
-            padding: 0 rem(20);
+        &__menu {
+            padding: rem(40) 0 0;
         }
 
         @content;

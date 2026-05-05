@@ -1,234 +1,188 @@
 @mixin shop-ui-product-item($name: '.product-item') {
     #{$name} {
-        padding: 0 0 rem(30);
-
-        &--equal-height {
-            height: auto;
-        }
-
-        &--full-height {
-            height: 100%;
-        }
-
-        &--catalog {
-            @include helper-breakpoint-media-min($lg) {
-                padding-bottom: rem(20);
-            }
-        }
-
-        &__colors {
-            @include helper-breakpoint-media-min($xl) {
-                @include helper-effect-transition(opacity);
-
-                &:not(:has(:focus-visible)) {
-                    opacity: 0;
-                }
-            }
-
-            &--category {
-                position: relative;
-            }
-        }
+        height: 100%;
 
         &__container {
-            padding: rem(5);
-            height: 100%;
-            position: relative;
-            border: rem(1) solid $setting-color-gray-6;
             display: flex;
             flex-direction: column;
-
-            @include helper-breakpoint-media-min($lg) {
-                padding: rem(8) rem(10) rem(15);
-            }
-
-            @include helper-breakpoint-media-min($xl) {
-                padding: rem(8) rem(28) rem(40);
-            }
+            height: 100%;
+            background: var(--background-page);
+            border: var(--stroke-sm) solid var(--border-default);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            position: relative;
 
             &:hover {
-                @include helper-breakpoint-media-min($xl) {
-                    #{$name}__image-wrap--catalog::before {
-                        background-color: $setting-color-transparent;
-                    }
-
-                    #{$name}__overlay {
-                        color: $setting-color-gray-4;
-
-                        &::before {
-                            box-shadow:
-                                0 rem(18) rem(18) 0 $setting-color-shadow-1,
-                                0 rem(3) rem(3) 0 $setting-color-shadow-1;
-                            background-color: $setting-color-transparent;
-                        }
-                    }
-
-                    #{$name}__colors {
-                        opacity: 1;
-                    }
-                }
-            }
-
-            &--catalog {
-                @include helper-breakpoint-media-min($lg) {
-                    padding-top: 0;
-                }
-
-                @include helper-breakpoint-media-min($xl) {
-                    padding: 0 rem(14) rem(15);
-                }
-            }
-
-            &--product-set {
-                padding: 0;
-
-                @include helper-breakpoint-media-min($lg) {
-                    padding: 0 rem(14) rem(26);
-                }
-            }
-
-            &--sets {
-                padding-bottom: rem(66);
+                border-color: var(--border-strong);
             }
         }
 
         &__image-wrap {
             position: relative;
-            padding: rem(12) 0;
-            margin: rem(-5) rem(-5) rem(17);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: rem(180);
+            flex-shrink: 0;
+            overflow: hidden;
 
-            @include helper-breakpoint-media-min($lg) {
-                padding: rem(12) rem(10);
-                margin: 0 rem(-10) rem(17);
+            a,
+            .lazy-image {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                height: 100%;
             }
 
-            @include helper-breakpoint-media-min($xl) {
-                margin: 0 rem(-14) rem(15);
-                padding: rem(8) rem(14);
-            }
-
-            &::before {
-                @include helper-effect-transition(background-color box-shadow);
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background-color: $setting-color-alpha-2;
-                z-index: $setting-zi-element;
-
-                @include helper-breakpoint-media-min($lg) {
-                    display: none;
-                }
-            }
-
-            &--product-set {
-                max-height: rem(243);
-            }
-
-            &--catalog {
-                &::before {
-                    @include helper-effect-transition(background-color box-shadow);
-                    content: '';
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    right: 0;
-                    bottom: 0;
-                    background-color: $setting-color-alpha-2;
-                    z-index: $setting-zi-element;
-
-                    @include helper-breakpoint-media-min($lg) {
-                        display: block;
-                    }
-                }
-            }
-
-            &--stretch {
-                margin-left: 0;
-                margin-right: 0;
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
             }
         }
 
-        &__overlay {
-            @include helper-font-size(small);
-            color: $setting-color-gray-4;
-            font-weight: fw(medium);
-            flex-grow: 1;
-            overflow: hidden;
-            /* stylelint-disable */
+        &__badge {
+            position: absolute;
+            top: var(--scale-12);
+            left: var(--scale-12);
+            padding: var(--scale-2) var(--scale-8);
+            background: var(--background-muted);
+            border-radius: var(--radius-sm);
+            font-size: var(--label-sm-size);
+            font-weight: var(--label-sm-weight);
+            line-height: var(--label-sm-line-height);
+            color: var(--text-primary);
+            z-index: 1;
+        }
+
+        &__content {
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-12);
+            padding: var(--scale-12) var(--scale-16) var(--scale-16);
+            flex: 1;
+        }
+
+        &__top {
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-6);
+        }
+
+        &__name {
+            font-size: var(--heading-sm-size);
+            font-weight: var(--heading-sm-weight);
+            line-height: var(--heading-sm-line-height);
+            color: var(--text-primary);
+            text-decoration: none;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             line-clamp: 2;
             -webkit-box-orient: vertical;
-            /* stylelint-enable */
+            overflow: hidden;
 
             &::before {
                 content: '';
-                position: absolute;
-                top: 0;
+                height: 13.75rem;
                 left: 0;
+                position: absolute;
                 right: 0;
-                height: rem(220);
-                z-index: $setting-zi-element;
+                top: 0;
+                z-index: 1;
             }
+        }
 
-            &--category {
-                &::before {
-                    height: rem(164);
-                }
+        &__attributes {
+            font-size: var(--label-sm-semibold-size);
+            font-weight: var(--label-sm-semibold-weight);
+            line-height: var(--label-sm-semibold-line-height);
+            color: var(--text-secondary);
+        }
+
+        &__sku-info {
+            font-size: var(--label-sm-size);
+            font-weight: var(--label-sm-weight);
+            line-height: var(--label-sm-line-height);
+            color: var(--text-secondary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        &__category {
+            font-size: var(--label-sm-regular-size);
+            font-weight: var(--label-sm-regular-weight);
+            line-height: var(--label-sm-regular-line-height);
+            color: var(--text-secondary);
+        }
+
+        &__rating {
+            display: flex;
+            align-items: center;
+            gap: var(--scale-6);
+            font-size: var(--label-sm-regular-size);
+            font-weight: var(--label-sm-regular-weight);
+            line-height: var(--label-sm-regular-line-height);
+            color: var(--text-secondary);
+        }
+
+        &__bottom {
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-6);
+
+            &:empty {
+                display: none;
             }
+        }
 
-            @include helper-breakpoint-media-min($lg) {
-                @include helper-font-size(big);
-                /* stylelint-disable */
-                -webkit-line-clamp: 3;
-                line-clamp: 3;
-                /* stylelint-enable */
+        &__price {
+            font-size: var(--price-md-size);
+            font-weight: var(--price-md-weight);
+            line-height: var(--price-md-line-height);
+            letter-spacing: var(--price-md-letter-spacing);
+            color: var(--text-primary);
+        }
 
-                &::before {
-                    @include helper-effect-transition(background-color box-shadow);
-                    height: 100%;
-                }
-            }
+        &__price-discount {
+            font-size: var(--body-sm-size);
+            font-weight: var(--body-sm-weight);
+            line-height: var(--body-sm-line-height);
+            color: var(--text-secondary);
+        }
 
-            @include helper-breakpoint-media-min($xl) {
-                letter-spacing: rem(0.2);
-            }
+        &__availability {
+            display: flex;
+            align-items: center;
+            gap: var(--scale-4);
+            font-size: var(--body-sm-size);
+            font-weight: var(--body-sm-weight);
+            line-height: var(--body-sm-line-height);
+            color: var(--text-tertiary);
+        }
 
-            &--catalog {
-                color: $setting-color-gray-5;
+        &__availability-dot {
+            width: rem(6);
+            height: rem(6);
+            border-radius: 50%;
+            background: var(--background-state-success-bold);
+            flex-shrink: 0;
+        }
 
-                @include helper-breakpoint-media-min($lg) {
-                    @include helper-font-size(default);
-                }
+        &__actions {
+            padding: 0 var(--scale-16) var(--scale-16);
+            margin-top: auto;
+        }
 
-                &::before {
-                    background-color: $setting-color-transparent;
-                }
-            }
+        &__actions-row {
+            display: flex;
+            width: 100%;
+        }
 
-            &--product-set {
-                @include helper-breakpoint-media-min($lg) {
-                    @include helper-font-size(default);
-                    height: rem(61);
-                    line-height: normal;
-                }
-            }
-
-            &:hover {
-                @include helper-breakpoint-media-min($xl) {
-                    color: $setting-color-gray-4;
-
-                    &::before {
-                        box-shadow:
-                            0 rem(18) rem(18) 0 $setting-color-shadow-1,
-                            0 rem(3) rem(3) 0 $setting-color-shadow-1;
-                        background-color: $setting-color-transparent;
-                    }
-                }
-            }
+        &__colors {
+            display: flex;
+            padding: var(--scale-4) 0;
         }
 
         &__info {
@@ -236,59 +190,17 @@
         }
 
         &__variant {
-            margin: rem(8) 0 rem(10);
+            margin: var(--scale-8) 0;
             position: relative;
-            z-index: $setting-zi-element + 2;
-
-            @include helper-breakpoint-media-min($lg) {
-                margin-bottom: rem(24);
-            }
+            z-index: 2;
         }
 
-        &__category {
-            @include helper-font-size(small);
-            display: block;
-            line-height: rem(16);
-            letter-spacing: rem(0.2);
-            font-weight: fw(regular);
-            color: $setting-color-gray-5;
-            margin-top: rem(3);
-
-            @include helper-breakpoint-media-min($lg) {
-                @include helper-font-size(default);
-                line-height: rem(20);
-            }
+        &--equal-height {
+            height: auto;
         }
 
-        &__rating {
-            margin-top: rem(4);
-        }
-
-        &__price {
-            margin-top: rem(4);
-        }
-
-        &__actions {
-            position: relative;
-            z-index: $setting-zi-element + 1;
-
-            &--sticky-bottom {
-                position: absolute;
-                left: 0;
-                right: 0;
-                bottom: rem(26);
-
-                @include helper-breakpoint-media-min($xl) {
-                    left: rem(14);
-                    right: rem(14);
-                }
-            }
-        }
-
-        &__actions-row {
-            margin-top: rem(10);
-            display: flex;
-            width: 100%;
+        &--full-height {
+            height: 100%;
         }
 
         @content;

@@ -1,5 +1,23 @@
 {% extends template('page-blank', '@SprykerShop:ShopUi') %}
 
+{% block themeStyles %}
+    <style>
+        :root {
+            {% for key, value in configurationValues('theme:storefront:colors') %}
+                {% if value is not empty %}
+                    --{{ key | replace({'_': '-'}) }}: {{ value | raw }};
+                {% endif %}
+            {% endfor %}
+        }
+    </style>
+
+    {% set customCss = configurationValue('theme:storefront:custom_css:yves_custom_css') %}
+
+    {% if customCss is not empty %}
+        <style>{{ customCss | raw }}</style>
+    {% endif %}
+{% endblock %}
+
 {% block template %}
     {% set isCssLazyLoadSupported = true %}
     {% set viewportUserScaleable = 'yes' %}

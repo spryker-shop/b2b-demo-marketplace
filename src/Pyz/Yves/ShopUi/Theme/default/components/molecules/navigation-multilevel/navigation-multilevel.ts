@@ -6,7 +6,6 @@ import {
 } from 'ShopUi/components/molecules/main-overlay/main-overlay';
 
 export default class NavigationMultilevel extends Component {
-    protected overlay: HTMLElement;
     protected triggers: HTMLElement[];
     protected touchTriggers: HTMLElement[];
     protected eventShowOverlay: CustomEvent<OverlayEventDetail>;
@@ -21,15 +20,16 @@ export default class NavigationMultilevel extends Component {
 
         this.mapEvents();
         this.addReverseClassToDropDownMenu();
+        this.moveNavPanelsToDrawer();
     }
 
     protected mapEvents(): void {
         this.triggers.forEach((trigger: HTMLElement) => {
-            trigger.addEventListener('mouseover', (event: Event) => this.onTriggerOver(event));
+            trigger.addEventListener('mouseenter', (event: Event) => this.onTriggerOver(event));
             trigger.addEventListener('focusin', (event: Event) => this.onTriggerOver(event));
         });
         this.triggers.forEach((trigger: HTMLElement) => {
-            trigger.addEventListener('mouseout', (event: Event) => this.onTriggerOut(event));
+            trigger.addEventListener('mouseleave', (event: Event) => this.onTriggerOut(event));
             trigger.addEventListener('focusout', (event: Event) => this.onTriggerOut(event));
         });
         this.touchTriggers.forEach((trigger: HTMLElement) => {
@@ -56,8 +56,12 @@ export default class NavigationMultilevel extends Component {
         if (this.isWidthMoreThanAvailableBreakpoint()) {
             const trigger = <HTMLElement>event.currentTarget;
             event.preventDefault();
-            this.toggleOverlay(true);
+
             trigger.classList.add(this.classToToggle);
+
+            if (trigger.querySelector('.menu-wrapper--lvl-1')) {
+                this.toggleOverlay(true);
+            }
         }
     }
 
@@ -65,8 +69,11 @@ export default class NavigationMultilevel extends Component {
         if (this.isWidthMoreThanAvailableBreakpoint()) {
             const trigger = <HTMLElement>event.currentTarget;
             event.preventDefault();
-            this.toggleOverlay(false);
+
             trigger.classList.remove(this.classToToggle);
+            if (trigger.querySelector('.menu-wrapper--lvl-1')) {
+                this.toggleOverlay(false);
+            }
         }
     }
 
@@ -114,6 +121,24 @@ export default class NavigationMultilevel extends Component {
 
     protected getDataAttribute(block: HTMLElement, attr: string): string {
         return block.getAttribute(attr);
+    }
+
+    protected moveNavPanelsToDrawer(): void {
+        if (!this.closest('.side-drawer')) {
+            return;
+        }
+
+        const navPanels = <HTMLElement[]>Array.from(this.querySelectorAll('.navigation-multilevel__nav-panel'));
+        if (!navPanels.length) {
+            return;
+        }
+
+        const sideDrawerPanels = <HTMLElement>document.querySelector('.side-drawer__panels');
+        if (!sideDrawerPanels) {
+            return;
+        }
+
+        navPanels.forEach((panel: HTMLElement) => sideDrawerPanels.appendChild(panel));
     }
 
     protected get classToToggle(): string {

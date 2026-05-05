@@ -7,48 +7,50 @@
 
 {% block requestList %}
     <ul class="menu menu--inline">
-        <li class="menu__item menu__item--has-children-dropdown">
+        <li class="menu__item menu__item--lvl-0 menu__item--has-children-dropdown">
             {% include atom('request-button', 'QuoteRequestAgentWidget') with {
                 data: {
                     url: path('agent/quote-request'),
                 },
             } %}
 
-            <ul class="menu menu--wider text-left">
-                {% if data.quoteRequestOverviewCollection.quoteRequests | length %}
-                    {% for quoteRequest in data.quoteRequestOverviewCollection.quoteRequests %}
+            <div class="menu-wrapper--lvl-1 menu-wrapper--narrow">
+                <ul class="spacing-x--bigger">
+                    {% if data.quoteRequestOverviewCollection.quoteRequests | length %}
+                        {% for quoteRequest in data.quoteRequestOverviewCollection.quoteRequests %}
+                            <li class="menu__item">
+                                {% include molecule('quote-request-detail', 'QuoteRequestAgentWidget') with {
+                                    data: {
+                                        quoteRequest: quoteRequest,
+                                    },
+                                } only %}
+                            </li>
+                            <li class="menu__separator menu__separator--horizontal-line"></li>
+                        {% endfor %}
+                    {% else %}
                         <li class="menu__item">
-                            {% include molecule('quote-request-detail', 'QuoteRequestAgentWidget') with {
-                                data: {
-                                    quoteRequest: quoteRequest,
-                                },
-                            } only %}
+                            <span class="no-items no-quote-requests">
+                                {{ 'quote_request_agent_widget.no_request_created' | trans }}
+                            </span>
                         </li>
-                        <li class="menu__separator menu__separator--horizontal-line"></li>
-                    {% endfor %}
-                {% else %}
-                    <li class="menu__item">
-                        <span class="no-items no-quote-requests">
-                            {{ 'quote_request_agent_widget.no_request_created' | trans }}
-                        </span>
-                    </li>
-                {% endif %}
+                    {% endif %}
 
-                <li class="menu__item">
-                    <div class="grid grid--justify spacing-y spacing-y--inner">
-                        <div class="col">
-                            <a href="{{ path('agent/quote-request') }}" class="button button--hollow" title="{{ 'quote_request_agent_widget.view_all_requests' | trans }}">
-                                {{ 'quote_request_agent_widget.view_all_requests' | trans }}
-                            </a>
+                    <li class="menu__item">
+                        <div class="grid grid--justify spacing-y spacing-y--inner">
+                            <div class="col">
+                                <a href="{{ path('agent/quote-request') }}" class="button button--hollow" title="{{ 'quote_request_agent_widget.view_all_requests' | trans }}">
+                                    {{ 'quote_request_agent_widget.view_all_requests' | trans }}
+                                </a>
+                            </div>
+                            <div class="col">
+                                <a href="{{ path('agent/quote-request/create') }}" class="button button--success" title="{{ 'quote_request_agent_widget.create_new_request' | trans }}" data-init-single-click>
+                                    {{ 'quote_request_agent_widget.create_new_request' | trans }}
+                                </a>
+                            </div>
                         </div>
-                        <div class="col">
-                            <a href="{{ path('agent/quote-request/create') }}" class="button button--success" title="{{ 'quote_request_agent_widget.create_new_request' | trans }}" data-init-single-click>
-                                {{ 'quote_request_agent_widget.create_new_request' | trans }}
-                            </a>
-                        </div>
-                    </div>
-                </li>
-            </ul>
+                    </li>
+                </ul>
+            </div> 
         </li>
     </ul>
 {% endblock %}

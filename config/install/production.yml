@@ -33,6 +33,8 @@ sections:
     data-import:
         glossary:
             command: 'vendor/bin/console data:import:glossary -vvv --no-ansi'
+        stripe:
+            command: 'vendor/bin/console data:import --config=vendor/spryker-eco/stripe/data/import/stripe.yml -vvv --no-ansi'
     acl:
         acl-entity-synchronize:
             command: 'vendor/bin/console acl-entity:synchronize -vvv --no-ansi'

@@ -1,11 +1,155 @@
 @mixin shop-ui-section($name: '.section') {
     #{$name} {
-        padding: rem(22) 0;
+        padding: var(--scale-32) 0;
 
-        @include helper-breakpoint-media-min($lg) {
-            padding: rem(48) 0;
+        &--secondary {
+            padding: var(--scale-32) 0;
         }
 
+        &--bg-dark {
+            padding: var(--scale-40) 0;
+            background-color: var(--background-subtle);
+
+            @include helper-breakpoint-media-min($lg) {
+                padding: var(--scale-48) 0;
+            }
+        }
+
+        &--no-bottom-indent {
+            padding-bottom: 0;
+        }
+
+        &--highlight-bg {
+            background-color: var(--background-highlight);
+            padding: var(--scale-48) var(--scale-20);
+
+            @include helper-breakpoint-media-min($lg) {
+                padding: rem(90) 0;
+            }
+
+            #{$name}__inner {
+                max-width: $setting-grid-max-width;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            #{$name} {
+                padding: 0;
+            }
+
+            #{$name}__title {
+                margin-bottom: var(--scale-16);
+            }
+
+            #{$name}__text {
+                margin-bottom: var(--scale-24);
+
+                @include helper-breakpoint-media-min($lg) {
+                    margin-bottom: var(--scale-32);
+                }
+            }
+
+            .grid--gap {
+                --grid-gap: var(--scale-24);
+            }
+        }
+
+        &--full-width {
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        &--no-mobile-bottom-indent {
+            padding-bottom: 0;
+
+            @include helper-breakpoint-media-min($lg) {
+                padding-bottom: var(--scale-32);
+            }
+        }
+
+        &__inner {
+            display: block;
+        }
+
+        &__title {
+            display: block;
+            font-family: var(--heading-sm-family);
+            font-weight: var(--heading-sm-weight);
+            font-size: var(--heading-sm-size);
+            line-height: var(--heading-sm-line-height);
+            letter-spacing: var(--heading-sm-letter-spacing);
+            color: var(--text-primary);
+            text-align: left;
+            margin: 0 0 var(--scale-8);
+
+            @include helper-breakpoint-media-min($lg) {
+                font-family: var(--heading-md-family);
+                font-weight: var(--heading-md-weight);
+                font-size: var(--heading-md-size);
+                line-height: var(--heading-md-line-height);
+                letter-spacing: var(--heading-md-letter-spacing);
+            }
+        }
+
+        &__sub-title {
+            font-family: var(--body-sm-family);
+            font-weight: var(--body-sm-weight);
+            font-size: var(--body-sm-size);
+            line-height: var(--body-sm-line-height);
+            letter-spacing: var(--body-sm-letter-spacing);
+            color: var(--text-secondary);
+            text-align: left;
+            margin: 0 0 var(--scale-24);
+            max-width: none;
+
+            @include helper-breakpoint-media-min($lg) {
+                font-family: var(--body-lg-family);
+                font-weight: var(--body-lg-weight);
+                font-size: var(--body-lg-size);
+                line-height: var(--body-lg-line-height);
+                letter-spacing: var(--body-lg-letter-spacing);
+                margin-bottom: var(--scale-40);
+            }
+        }
+
+        &__text {
+            font-family: var(--body-md-family);
+            font-weight: var(--body-md-weight);
+            font-size: var(--body-md-size);
+            line-height: var(--body-md-line-height);
+            letter-spacing: var(--body-md-letter-spacing);
+            color: var(--text-primary);
+            text-align: left;
+            max-width: none;
+            margin: 0 0 var(--scale-16);
+
+            @include helper-breakpoint-media-min($lg) {
+                font-family: var(--body-lg-family);
+                font-size: var(--body-lg-size);
+                line-height: var(--body-lg-line-height);
+            }
+
+            &--full-width {
+                max-width: none;
+            }
+        }
+
+        &__sub-heading {
+            display: block;
+            font-family: var(--label-md-semibold-family);
+            font-weight: var(--label-md-semibold-weight);
+            font-size: var(--label-md-semibold-size);
+            line-height: var(--label-md-semibold-line-height);
+            letter-spacing: var(--label-md-semibold-letter-spacing);
+            color: var(--text-primary);
+            margin: 0 0 var(--scale-6);
+
+            @include helper-breakpoint-media-min($lg) {
+                margin-bottom: var(--scale-12);
+            }
+        }
+
+        // LEGACY — kept for non-redesigned pages; do not reuse for new work.
         &--center {
             display: flex;
             width: 100%;
@@ -25,124 +169,13 @@
             }
         }
 
-        &--secondary {
-            padding: rem(32) 0 rem(16);
-
-            @include helper-breakpoint-media-min($lg) {
-                padding-top: rem(50);
-            }
-
-            @include helper-breakpoint-media-min($xl) {
-                padding-top: rem(70);
-            }
-        }
-
-        &--bg-dark {
-            padding: rem(22) 0 rem(19);
-            background-color: $setting-color-gray-7;
-
-            @include helper-breakpoint-media-min($lg) {
-                padding: rem(50) 0 rem(80);
-
-                .product-card__container {
-                    background-color: $setting-color-white;
-                }
-            }
-
-            .product-card {
-                padding-bottom: rem(15);
-
-                @include helper-breakpoint-media-min($lg) {
-                    padding-bottom: rem(30);
-                }
-            }
-
-            .product-card__image-wrap {
-                background-color: $setting-color-white;
-
-                &::before {
-                    background: transparent;
-                }
-            }
-
-            .product-card__overlay::before {
-                background-color: $setting-color-transparent;
-            }
-        }
-
-        &--full-width {
-            margin-left: -$setting-grid-space;
-            margin-right: -$setting-grid-space;
-        }
-
-        &--no-mobile-bottom-indent {
-            padding-bottom: 0;
-
-            @include helper-breakpoint-media-min($lg) {
-                padding-bottom: rem(16);
-            }
-        }
-
         &__title {
-            font-weight: fw(medium);
-            font-size: rem(28);
-            margin-bottom: rem(16);
-
-            @include helper-breakpoint-media-min($lg) {
-                font-size: rem(30);
-            }
-
-            @include helper-breakpoint-media-min($xl) {
-                font-size: rem(32);
-                margin-bottom: rem(24);
-            }
-
-            &--secondary {
-                color: $setting-color-gray-4;
-                text-align: center;
-            }
-
             &--mobile-center {
                 text-align: center;
 
                 @include helper-breakpoint-media-min($lg) {
                     text-align: left;
                 }
-            }
-        }
-
-        &__sub-title,
-        &__text {
-            text-align: center;
-            line-height: normal;
-            margin-bottom: rem(26);
-
-            @include helper-breakpoint-media-min($lg) {
-                margin-bottom: rem(40);
-            }
-        }
-
-        &__sub-title {
-            font-size: map_get($setting-font-size, default);
-
-            @include helper-breakpoint-media-min($lg) {
-                font-size: map_get($setting-font-size, big);
-            }
-        }
-
-        &__text {
-            font-size: rem(15);
-            line-height: 1.61;
-            max-width: rem(970);
-            margin-left: auto;
-            margin-right: auto;
-
-            &--full-width {
-                max-width: none;
-            }
-
-            @include helper-breakpoint-media-min($lg) {
-                font-size: map_get($setting-font-size, big);
             }
         }
     }

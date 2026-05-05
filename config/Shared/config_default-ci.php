@@ -177,7 +177,7 @@ $config[SecurityBlockerConstants::SECURITY_BLOCKER_REDIS_PORT] = 6379;
 $config[SecurityBlockerConstants::SECURITY_BLOCKER_REDIS_PASSWORD] = false;
 $config[SecurityBlockerConstants::SECURITY_BLOCKER_REDIS_DATABASE] = 7;
 
-$config[SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_TTL] = 600;
+$config[SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_TTL] = 1200;
 $config[SecurityBlockerConstants::SECURITY_BLOCKER_BLOCK_FOR] = 300;
 $config[SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_NUMBER_OF_ATTEMPTS] = 1000;
 
@@ -214,14 +214,11 @@ foreach ($config[RabbitMqEnv::RABBITMQ_CONNECTIONS] as $connection) {
         continue;
     }
 
-    $config[SymfonyMessengerConstants::QUEUE_DSN] = sprintf(
-        'amqp://%s:%s@%s:%s/%s',
-        $connection[RabbitMqEnv::RABBITMQ_USERNAME],
-        $connection[RabbitMqEnv::RABBITMQ_PASSWORD],
-        $connection[RabbitMqEnv::RABBITMQ_HOST],
-        $connection[RabbitMqEnv::RABBITMQ_PORT],
-        $connection[RabbitMqEnv::RABBITMQ_VIRTUAL_HOST],
-    );
+    $config[SymfonyMessengerConstants::QUEUE_AMQP_HOST] = $connection[RabbitMqEnv::RABBITMQ_HOST];
+    $config[SymfonyMessengerConstants::QUEUE_AMQP_PORT] = $connection[RabbitMqEnv::RABBITMQ_PORT];
+    $config[SymfonyMessengerConstants::QUEUE_AMQP_USERNAME] = $connection[RabbitMqEnv::RABBITMQ_USERNAME];
+    $config[SymfonyMessengerConstants::QUEUE_AMQP_PASSWORD] = $connection[RabbitMqEnv::RABBITMQ_PASSWORD];
+    $config[SymfonyMessengerConstants::QUEUE_AMQP_VIRTUAL_HOST] = $connection[RabbitMqEnv::RABBITMQ_VIRTUAL_HOST];
 }
 
 // ---------- LOGGER
@@ -388,5 +385,15 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
         'root' => '/data',
         'path' => '/data/ssp-model-image',
+    ],
+    'product-experience-management-imports' => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/data',
+        'path' => '/data/pim-imports',
+    ],
+    'product-experience-management-exports' => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/data',
+        'path' => '/data/pim-exports',
     ],
 ];
