@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fef807873c7356e11fddb2db8cb52643",
+    "content-hash": "9a16af12a766e6e6a33fd6a4fbea08d4",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -65881,16 +65881,16 @@
         },
         {
             "name": "spryker/rabbit-mq",
-            "version": "2.23.1",
+            "version": "2.24.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/rabbit-mq.git",
-                "reference": "ae7ef64e154aa8edbd050671da914962f89ceea7"
+                "reference": "2b9b1494f17783375d93d2844a59ae63fb7f08b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/rabbit-mq/zipball/ae7ef64e154aa8edbd050671da914962f89ceea7",
-                "reference": "ae7ef64e154aa8edbd050671da914962f89ceea7",
+                "url": "https://api.github.com/repos/spryker/rabbit-mq/zipball/2b9b1494f17783375d93d2844a59ae63fb7f08b5",
+                "reference": "2b9b1494f17783375d93d2844a59ae63fb7f08b5",
                 "shasum": ""
             },
             "require": {
@@ -65948,7 +65948,7 @@
             "support": {
                 "source": "https://github.com/spryker/rabbit-mq"
             },
-            "time": "2026-04-02T13:04:19+00:00"
+            "time": "2026-04-29T10:26:59+00:00"
         },
         {
             "name": "spryker/ramsey-uuid",
@@ -92214,7 +92214,14 @@
             "time": "2025-12-08T11:19:18+00:00"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "package": "spryker-feature/product-experience-management",
+            "version": "9999999-dev",
+            "alias": "202604.0",
+            "alias_normalized": "202604.0"
+        }
+    ],
     "minimum-stability": "dev",
     "stability-flags": {
         "spryker-feature/product-experience-management": 20,
@@ -92236,9 +92243,9 @@
         "ext-readline": "*",
         "ext-redis": "*"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "platform-overrides": {
         "php": "8.3.13"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
