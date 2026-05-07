@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fef807873c7356e11fddb2db8cb52643",
+    "content-hash": "9a16af12a766e6e6a33fd6a4fbea08d4",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -75335,16 +75335,16 @@
         },
         {
             "name": "spryker/symfony-messenger",
-            "version": "1.4.0",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/symfony-messenger.git",
-                "reference": "46d837709d4b6b734fea6ece8531fc11df02302a"
+                "reference": "2d8d121b846d300c0a593cd2238186f4ea3db207"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/symfony-messenger/zipball/46d837709d4b6b734fea6ece8531fc11df02302a",
-                "reference": "46d837709d4b6b734fea6ece8531fc11df02302a",
+                "url": "https://api.github.com/repos/spryker/symfony-messenger/zipball/2d8d121b846d300c0a593cd2238186f4ea3db207",
+                "reference": "2d8d121b846d300c0a593cd2238186f4ea3db207",
                 "shasum": ""
             },
             "require": {
@@ -75357,7 +75357,7 @@
                 "spryker/symfony": "^3.19.0",
                 "spryker/symfony-messenger-extension": "^1.0.0",
                 "spryker/transfer": "^3.27.0",
-                "symfony/amqp-messenger": "^6.4.0"
+                "symfony/amqp-messenger": "^6.4.4"
             },
             "require-dev": {
                 "spryker/code-sniffer": "*",
@@ -75380,9 +75380,9 @@
             ],
             "description": "SymfonyMessenger module",
             "support": {
-                "source": "https://github.com/spryker/symfony-messenger/tree/1.4.0"
+                "source": "https://github.com/spryker/symfony-messenger/tree/1.5.0"
             },
-            "time": "2026-04-26T21:23:19+00:00"
+            "time": "2026-05-07T11:50:01+00:00"
         },
         {
             "name": "spryker/symfony-messenger-extension",
@@ -92214,7 +92214,14 @@
             "time": "2025-12-08T11:19:18+00:00"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "package": "spryker-feature/product-experience-management",
+            "version": "9999999-dev",
+            "alias": "202604.0",
+            "alias_normalized": "202604.0"
+        }
+    ],
     "minimum-stability": "dev",
     "stability-flags": {
         "spryker-feature/product-experience-management": 20,
@@ -92236,9 +92243,9 @@
         "ext-readline": "*",
         "ext-redis": "*"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "platform-overrides": {
         "php": "8.3.13"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
