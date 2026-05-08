@@ -36,6 +36,7 @@ use Spryker\Glue\Log\Plugin\GlueLoggerConfigPlugin;
 use Spryker\Glue\Log\Plugin\Log\GlueBackendSecurityAuditLoggerConfigPlugin;
 use Spryker\Glue\Log\Plugin\Log\GlueSecurityAuditLoggerConfigPlugin;
 use Spryker\Service\FlysystemAws3v3FileSystem\Plugin\Flysystem\Aws3v3FilesystemBuilderPlugin;
+use Spryker\Service\FlysystemAws3v3FileSystem\Plugin\Flysystem\IamAws3v3FilesystemBuilderPlugin;
 use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
 use Spryker\Shared\Acl\AclConstants;
 use Spryker\Shared\Agent\AgentConstants;
@@ -774,32 +775,26 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'path' => '',
     ],
     'backoffice-media' => [
-        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
-        'key' => getenv('SPRYKER_S3_PUBLIC_ASSETS_KEY') ?: '',
+        'sprykerAdapterClass' => IamAws3v3FilesystemBuilderPlugin::class,
         'bucket' => getenv('SPRYKER_S3_PUBLIC_ASSETS_BUCKET') ?: '',
-        'secret' => getenv('SPRYKER_S3_PUBLIC_ASSETS_SECRET') ?: '',
-        'root' => '/backoffice-media',
-        'path' => '/',
+        'root' => '',
+        'path' => '/backoffice-media',
         'version' => 'latest',
         'region' => getenv('AWS_REGION'),
     ],
     'storefront-media' => [
-        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
-        'key' => getenv('SPRYKER_S3_PUBLIC_ASSETS_KEY') ?: '',
+        'sprykerAdapterClass' => IamAws3v3FilesystemBuilderPlugin::class,
         'bucket' => getenv('SPRYKER_S3_PUBLIC_ASSETS_BUCKET') ?: '',
-        'secret' => getenv('SPRYKER_S3_PUBLIC_ASSETS_SECRET') ?: '',
-        'root' => '/storefront-media',
-        'path' => '',
+        'root' => '',
+        'path' => '/storefront-media',
         'version' => 'latest',
         'region' => getenv('AWS_REGION'),
     ],
     'merchant-portal-media' => [
-        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
-        'key' => getenv('SPRYKER_S3_PUBLIC_ASSETS_KEY') ?: '',
+        'sprykerAdapterClass' => IamAws3v3FilesystemBuilderPlugin::class,
         'bucket' => getenv('SPRYKER_S3_PUBLIC_ASSETS_BUCKET') ?: '',
-        'secret' => getenv('SPRYKER_S3_PUBLIC_ASSETS_SECRET') ?: '',
-        'root' => '/merchant-portal-media',
-        'path' => '',
+        'root' => '',
+        'path' => '/merchant-portal-media',
         'version' => 'latest',
         'region' => getenv('AWS_REGION'),
     ],
