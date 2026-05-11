@@ -101,7 +101,7 @@ regions:
             broker:
                 namespace: eu-docker
             key_value_store:
-                namespace: 11
+                namespace: 1
             search:
                 namespace: eu_search
 
@@ -118,7 +118,7 @@ groups:
                         primal: true
                         services:
                             session:
-                                namespace: 17
+                                namespace: 2
             yves:
                 application: yves
                 endpoints:
@@ -128,7 +128,7 @@ groups:
                         region: EU
                         services:
                             session:
-                                namespace: 11
+                                namespace: 3
                 http:
                     max-request-body-size: 100M
             boffice:
@@ -139,7 +139,7 @@ groups:
                         primal: true
                         services:
                             session:
-                                namespace: 13
+                                namespace: 4
                 http:
                     max-request-body-size: 100M
             backgw:
@@ -148,12 +148,18 @@ groups:
                     backend-gateway.demo-02.se.demo-spryker.com:
                         region: EU
                         primal: true
+                        services:
+                            session:
+                                namespace: 5
             glue:
                 application: glue
                 endpoints:
                     glue.demo-02.se.demo-spryker.com:
                         cors-allow-origin: '*'
                         region: EU
+                        services:
+                            session:
+                                namespace: 6
             gluebackend:
                 application: glue-backend
                 limits:
@@ -164,6 +170,9 @@ groups:
                     glue-backend.demo-02.se.demo-spryker.com:
                         region: EU
                         cors-allow-origin: '*'
+                        services:
+                            session:
+                                namespace: 7
 services:
     database:
         engine: mysql
