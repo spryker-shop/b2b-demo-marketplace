@@ -55,8 +55,8 @@ image:
         SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR: '0c1ffefeebdab4a3d839d0e52590c9a2'
         SPRYKER_CONFIGURATION_ENCRYPTION_KEY: '2a190556e7758fb56e9215f4fe218f9570575e4e576b7cf8cd27c7a477cebe51'
         SPRYKER_CONFIGURATION_ENCRYPTION_INIT_VECTOR: '3990b519a547cdadb9542f50dcf87f9c'
-        SPRYKER_YVES_HOST_EU: yves.eu.demo-06.se.demo-spryker.com
-        SPRYKER_YVES_HOST_US: yves.us.demo-06.se.demo-spryker.com
+        SPRYKER_YVES_HOST_EU: www.demo-06.se.demo-spryker.com
+        SPRYKER_YVES_HOST_US: www.us.demo-06.se.demo-spryker.com
         SPRYKER_DYNAMIC_STORE_MODE: true
     php:
         enabled-extensions:
@@ -112,7 +112,7 @@ groups:
             mportal:
                 application: merchant-portal
                 endpoints:
-                    mp.eu.demo-06.se.demo-spryker.com:
+                    mp.demo-06.se.demo-spryker.com:
                         entry-point: MerchantPortal
                         region: EU
                         primal: true
@@ -122,9 +122,9 @@ groups:
             yves:
                 application: yves
                 endpoints:
-                    demo-date-time-configurator.eu.demo-06.se.demo-spryker.com:
+                    demo-date-time-configurator.demo-06.se.demo-spryker.com:
                         entry-point: Configurator
-                    yves.eu.demo-06.se.demo-spryker.com:
+                    www.demo-06.se.demo-spryker.com:
                         region: EU
                         services:
                             session:
@@ -134,7 +134,7 @@ groups:
             boffice:
                 application: backoffice
                 endpoints:
-                    backoffice.eu.demo-06.se.demo-spryker.com:
+                    backoffice.demo-06.se.demo-spryker.com:
                         region: EU
                         primal: true
                         services:
@@ -145,13 +145,13 @@ groups:
             backgw:
                 application: backend-gateway
                 endpoints:
-                    backend-gateway.eu.demo-06.se.demo-spryker.com:
+                    backend-gateway.demo-06.se.demo-spryker.com:
                         region: EU
                         primal: true
             glue:
                 application: glue
                 endpoints:
-                    glue.eu.demo-06.se.demo-spryker.com:
+                    glue.demo-06.se.demo-spryker.com:
                         cors-allow-origin: '*'
                         region: EU
             gluebackend:
@@ -161,7 +161,7 @@ groups:
                 http:
                     timeout: 5m
                 endpoints:
-                    glue-backend.eu.demo-06.se.demo-spryker.com:
+                    glue-backend.demo-06.se.demo-spryker.com:
                         region: EU
                         cors-allow-origin: '*'
 services:
