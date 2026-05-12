@@ -298,7 +298,7 @@ $config[StorageConstants::STORAGE_KV_SOURCE] = strtolower(getenv('SPRYKER_KEY_VA
  */
 //$config[StorageRedisConstants::STORAGE_REDIS_DATA_SOURCE_NAMES] = [];
 
-$namespaceKey = defined('APPLICATION_REGION') ? APPLICATION_REGION : APPLICATION_STORE;
+$namespaceKey = (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE') ? getenv('SPRYKER_CURRENT_REGION') : getenv('APPLICATION_STORE');
 $config[StorageRedisConstants::STORAGE_REDIS_HOST] = getenv('SPRYKER_KEY_VALUE_STORE_HOST');
 $config[StorageRedisConstants::STORAGE_REDIS_PORT] = getenv('SPRYKER_KEY_VALUE_STORE_PORT');
 $config[StorageRedisConstants::STORAGE_REDIS_DATABASE] = $keyValueRegionNamespaces[$namespaceKey]['namespace'] ?? getenv('SPRYKER_KEY_VALUE_STORE_NAMESPACE') ?: 1;
