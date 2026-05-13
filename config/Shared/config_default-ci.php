@@ -192,6 +192,7 @@ $config[SchedulerConstants::ENABLED_SCHEDULERS] = [];
 
 $config[EventConstants::EVENT_CHUNK] = 5000;
 $config[QueueConstants::QUEUE_ADAPTER_CONFIGURATION][EventConstants::EVENT_QUEUE][QueueConfig::CONFIG_MAX_WORKER_NUMBER] = 1;
+$config[QueueConstants::QUEUE_WORKER_MAX_WAITING_SECONDS] = 1;
 
 $config[EventBehaviorConstants::EVENT_BEHAVIOR_TRIGGERING_ACTIVE] = getenv('TEST_GROUP') === 'acceptance';
 
