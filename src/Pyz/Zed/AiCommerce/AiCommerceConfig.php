@@ -14,23 +14,55 @@ use SprykerFeature\Zed\AiCommerce\AiCommerceConfig as SprykerAiCommerceConfig;
 
 class AiCommerceConfig extends SprykerAiCommerceConfig
 {
-    public function getContentImproverAiConfigurationName(): ?string
-    {
-        return AiCommerceConstants::AI_CONFIGURATION_SMART_PIM_OPENAI;
-    }
-
-    public function getImageAltTextAiConfigurationName(): ?string
-    {
-        return AiCommerceConstants::AI_CONFIGURATION_SMART_PIM_OPENAI;
-    }
-
+    /**
+     * Specification:
+     * - Returns the AI configuration name used for the category suggestion feature.
+     *
+     * @api
+     */
     public function getCategorySuggestionAiConfigurationName(): ?string
     {
-        return AiCommerceConstants::AI_CONFIGURATION_SMART_PIM_OPENAI;
+        return $this->getSmartPimAiConfigurationName();
     }
 
+    /**
+     * Specification:
+     * - Returns the AI configuration name used for the translation feature.
+     *
+     * @api
+     */
     public function getTranslationAiConfigurationName(): ?string
     {
-        return AiCommerceConstants::AI_CONFIGURATION_SMART_PIM_OPENAI;
+        return $this->getSmartPimAiConfigurationName();
+    }
+
+    /**
+     * Specification:
+     * - Returns the AI configuration name used for the image alt text feature.
+     *
+     * @api
+     */
+    public function getImageAltTextAiConfigurationName(): ?string
+    {
+        return $this->getSmartPimAiConfigurationName();
+    }
+
+    /**
+     * Specification:
+     * - Returns the AI configuration name used for the content improver feature.
+     *
+     * @api
+     */
+    public function getContentImproverAiConfigurationName(): ?string
+    {
+        return $this->getSmartPimAiConfigurationName();
+    }
+
+    protected function getSmartPimAiConfigurationName(): ?string
+    {
+        return $this->getModuleConfig(
+            AiCommerceConstants::CONFIGURATION_KEY_SMART_PIM_AI_CONFIGURATION,
+            AiCommerceConstants::AI_CONFIGURATION_SMART_PIM_OPENAI,
+        );
     }
 }
