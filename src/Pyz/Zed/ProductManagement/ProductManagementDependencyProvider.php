@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\ProductManagement;
 
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductManagement\ShipmentTypeProductConcreteEditFormExpanderPlugin;
 use Spryker\Zed\CmsBlockProductConnector\Communication\Plugin\CmsBlockProductAbstractBlockListViewPlugin;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Container;
@@ -120,6 +121,7 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
         return [
             new DiscontinuedProductConcreteEditFormExpanderPlugin(), #ProductDiscontinuedFeature
             new ProductConcreteEditFormExpanderPlugin(), #ProductAlternativeFeature
+            new ShipmentTypeProductConcreteEditFormExpanderPlugin(),
         ];
     }
 
