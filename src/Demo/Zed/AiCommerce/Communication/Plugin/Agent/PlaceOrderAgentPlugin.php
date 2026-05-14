@@ -9,7 +9,6 @@ declare(strict_types = 1);
 
 namespace Demo\Zed\AiCommerce\Communication\Plugin\Agent;
 
-use Demo\Shared\AiCommerce\AiCommerceConstants;
 use Exception;
 use Generated\Shared\Transfer\BackofficeAssistantPromptRequestTransfer;
 use Generated\Shared\Transfer\BackofficeAssistantPromptResponseTransfer;
@@ -96,8 +95,11 @@ class PlaceOrderAgentPlugin extends AbstractPlugin implements BackofficeAssistan
     public function executeAgent(
         BackofficeAssistantPromptRequestTransfer $backofficeAssistantPromptRequest,
     ): BackofficeAssistantPromptResponseTransfer {
+        /** @var \Demo\Zed\AiCommerce\AiCommerceConfig $config */
+        $config = $this->getConfig();
+
         $promptRequest = (new PromptRequestTransfer())
-            ->setAiConfigurationName(AiCommerceConstants::AI_CONFIGURATION_PLACE_ORDER)
+            ->setAiConfigurationName($config->getPlaceOrderAgentAiConfigurationName())
             ->setConversationReference($backofficeAssistantPromptRequest->getConversationReference())
             ->setStructuredMessage(new PlaceOrderAgentResponseTransfer())
             ->addToolSetName(static::TOOL_SET_PLACE_ORDER)

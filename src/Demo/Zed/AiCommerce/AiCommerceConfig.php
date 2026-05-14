@@ -10,9 +10,9 @@ declare(strict_types = 1);
 namespace Demo\Zed\AiCommerce;
 
 use Demo\Shared\AiCommerce\AiCommerceConstants;
-use SprykerFeature\Zed\AiCommerce\AiCommerceConfig as SprykerFeatureAiCommerceConfig;
+use Pyz\Zed\AiCommerce\AiCommerceConfig as PyzAiCommerceConfig;
 
-class AiCommerceConfig extends SprykerFeatureAiCommerceConfig
+class AiCommerceConfig extends PyzAiCommerceConfig
 {
     /**
      * Specification:
@@ -29,6 +29,21 @@ class AiCommerceConfig extends SprykerFeatureAiCommerceConfig
     }
 
     /**
+     * Specification:
+     * - Returns the AI configuration name used by the Place Order agent, resolved via the Backoffice Assistant vendor radio.
+     *
+     * @api
+     */
+    public function getPlaceOrderAgentAiConfigurationName(): ?string
+    {
+        return $this->resolveBackofficeAssistantAgentAiConfigurationName(
+            AiCommerceConstants::AI_CONFIGURATION_PLACE_ORDER_OPENAI,
+            AiCommerceConstants::AI_CONFIGURATION_PLACE_ORDER_AWS,
+            AiCommerceConstants::AI_CONFIGURATION_PLACE_ORDER_ANTHROPIC,
+        );
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @return array<string>
@@ -36,7 +51,7 @@ class AiCommerceConfig extends SprykerFeatureAiCommerceConfig
     public function getBackofficeAssistantSseAiConfigurationNames(): array
     {
         return array_merge(parent::getBackofficeAssistantSseAiConfigurationNames(), [
-            AiCommerceConstants::AI_CONFIGURATION_PLACE_ORDER,
+            $this->getPlaceOrderAgentAiConfigurationName(),
         ]);
     }
 }

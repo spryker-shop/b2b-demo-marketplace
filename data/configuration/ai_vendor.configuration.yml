@@ -1,0 +1,90 @@
+# yaml-language-server: $schema=../../../../Spryker/Configuration/resources/configuration/configuration-schema-v1.json
+features:
+    - key: ai_vendor
+      name: AI Vendor
+      description: AI provider credentials and default models. Selected per AI configuration in the AI Configurations feature.
+      enabled: true
+      order: 1
+      tabs:
+          - key: openai
+            name: OpenAI
+            description: OpenAI provider credentials and default models.
+            enabled: true
+            order: 0
+            groups:
+                - key: general
+                  name: General
+                  description: General settings for the OpenAI provider.
+                  enabled: true
+                  order: 0
+                  scopes:
+                      - global
+                  settings:
+                      - key: api_token
+                        name: OpenAI API Token
+                        description: The API token used to authenticate requests to the OpenAI service.
+                        type: string
+                        default_value: ''
+                        enabled: true
+                        secret: true
+                        storefront: false
+                        scopes:
+                            - global
+          - key: anthropic
+            name: Anthropic
+            description: Anthropic provider credentials and default models.
+            enabled: true
+            order: 1
+            groups:
+                - key: general
+                  name: General
+                  description: General settings for the Anthropic provider.
+                  enabled: true
+                  order: 0
+                  scopes:
+                      - global
+                  settings:
+                      - key: api_token
+                        name: Anthropic API Key
+                        description: The API key used to authenticate requests to the Anthropic service.
+                        type: string
+                        default_value: ''
+                        enabled: true
+                        secret: true
+                        storefront: false
+                        scopes:
+                            - global
+          - key: aws
+            name: AWS Bedrock
+            description: AWS Bedrock provider credentials and default models.
+            enabled: true
+            order: 2
+            groups:
+                - key: general
+                  name: General
+                  description: General settings for the AWS Bedrock provider.
+                  enabled: true
+                  order: 0
+                  scopes:
+                      - global
+                  settings:
+                      - key: api_token
+                        name: AWS Bedrock API Token
+                        description: The API token used to authenticate requests to the AWS Bedrock service.
+                        type: string
+                        default_value: ''
+                        enabled: true
+                        secret: true
+                        storefront: false
+                        scopes:
+                            - global
+                      - key: region
+                        name: AWS Region
+                        description: The AWS region used for AWS Bedrock requests. Shared across all features that use AWS Bedrock.
+                        type: string
+                        default_value: 'eu-central-1'
+                        enabled: true
+                        secret: false
+                        storefront: false
+                        scopes:
+                            - global

@@ -7,7 +7,7 @@ command-timeout: 7200
 sections:
     scheduler-clean:
         scheduler-clean:
-            command: 'vendor/bin/console scheduler:clean -vvv --no-ansi || true'
+            command: 'vendor/bin/console scheduler:clean -vvv --no-ansi'
 
     clean-storage:
         clean-storage:
@@ -74,4 +74,4 @@ sections:
         trigger-events:
             command: 'vendor/bin/console publish:trigger-events'
         scheduler-setup:
-            command: 'vendor/bin/console scheduler:setup -vvv --no-ansi || true'
+            command: 'vendor/bin/console scheduler:setup -vvv --no-ansi'

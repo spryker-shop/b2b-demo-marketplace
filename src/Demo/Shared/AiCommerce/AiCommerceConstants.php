@@ -14,13 +14,6 @@ use Pyz\Shared\AiCommerce\AiCommerceConstants as PyzFeatureAiCommerceConstants;
 interface AiCommerceConstants extends PyzFeatureAiCommerceConstants
 {
     /**
-     * Configuration key for the fast non-reasoning OpenAI model used for agent operations.
-     *
-     * @api
-     */
-    public const string CONFIGURATION_KEY_OPENAI_SMART_MODEL = 'ai_commerce:open_ai:general:openai_smart_model';
-
-    /**
      * Tool set name that groups all place order tools available to the place order agent.
      *
      * @api
@@ -33,13 +26,6 @@ interface AiCommerceConstants extends PyzFeatureAiCommerceConstants
      * @api
      */
     public const string TOOL_SET_ORDER_DETAILS = 'order_details_tools';
-
-    /**
-     * AI configuration name used by the place order agent for handling order placement queries and actions.
-     *
-     * @api
-     */
-    public const string AI_CONFIGURATION_PLACE_ORDER = 'AI_CONFIGURATION_PLACE_ORDER';
 
     /**
      * Configuration key for the place order agent system prompt.
@@ -56,16 +42,23 @@ interface AiCommerceConstants extends PyzFeatureAiCommerceConstants
     public const string CONFIGURATION_KEY_PLACE_ORDER_AGENT_IS_ENABLED = 'ai_commerce:backoffice_assistant:general:is_place_order_agent_enabled';
 
     /**
-     * AI configuration name via OpenAI used by the search-by-image feature.
+     * AI configuration name used by the place order agent backed by OpenAI.
      *
      * @api
      */
-    public const string AI_CONFIGURATION_SEARCH_BY_IMAGE_OPENAI = 'AI_COMMERCE:AI_CONFIGURATION_SEARCH_BY_IMAGE_OPENAI';
+    public const string AI_CONFIGURATION_PLACE_ORDER_OPENAI = 'AI_COMMERCE:AI_CONFIGURATION_PLACE_ORDER_OPENAI';
 
     /**
-     * AI configuration name via OpenAI used by the quick order image-to-cart feature.
+     * AI configuration name used by the place order agent backed by AWS Bedrock.
      *
      * @api
      */
-    public const string AI_CONFIGURATION_QUICK_ORDER_IMAGE_TO_CART_OPENAI = 'AI_COMMERCE:AI_CONFIGURATION_QUICK_ORDER_IMAGE_TO_CART_OPENAI';
+    public const string AI_CONFIGURATION_PLACE_ORDER_AWS = 'AI_COMMERCE:AI_CONFIGURATION_PLACE_ORDER_AWS';
+
+    /**
+     * AI configuration name used by the place order agent backed by Anthropic.
+     *
+     * @api
+     */
+    public const string AI_CONFIGURATION_PLACE_ORDER_ANTHROPIC = 'AI_COMMERCE:AI_CONFIGURATION_PLACE_ORDER_ANTHROPIC';
 }
