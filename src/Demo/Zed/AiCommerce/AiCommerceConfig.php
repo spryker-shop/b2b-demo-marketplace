@@ -34,7 +34,7 @@ class AiCommerceConfig extends PyzAiCommerceConfig
      *
      * @api
      */
-    public function getPlaceOrderAgentAiConfigurationName(): ?string
+    public function getPlaceOrderAgentAiConfigurationName(): string
     {
         return $this->resolveBackofficeAssistantAgentAiConfigurationName(
             AiCommerceConstants::AI_CONFIGURATION_PLACE_ORDER_OPENAI,
