@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3cf0d4605c071dac621432b779a2b9b1",
+    "content-hash": "8f8334d8de6cf448c5c0b93e2453e3ab",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -56133,6 +56133,59 @@
                 "source": "https://github.com/spryker/product-attributes-backend-api/tree/1.3.0"
             },
             "time": "2026-05-04T09:37:55+00:00"
+        },
+        {
+            "name": "spryker/product-attributes-rest-api",
+            "version": "1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/product-attributes-rest-api.git",
+                "reference": "a181c68cee2de403bbb7a97d4b1f201ddebc4077"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/product-attributes-rest-api/zipball/a181c68cee2de403bbb7a97d4b1f201ddebc4077",
+                "reference": "a181c68cee2de403bbb7a97d4b1f201ddebc4077",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.3",
+                "spryker/glue-application": "^1.0.0",
+                "spryker/glue-application-extension": "^1.0.0",
+                "spryker/kernel": "^3.33.0",
+                "spryker/product-attribute": "^1.8.0",
+                "spryker/products-rest-api-extension": "^1.1.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/transfer": "^3.42.0"
+            },
+            "require-dev": {
+                "spryker/api-platform": "*",
+                "spryker/code-sniffer": "*"
+            },
+            "suggest": {
+                "spryker/api-platform": "Use this package when you want to use the API Platform code."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ProductAttributesRestApi module",
+            "support": {
+                "issues": "https://github.com/spryker/product-attributes-rest-api/issues",
+                "source": "https://github.com/spryker/product-attributes-rest-api/tree/1.3.0"
+            },
+            "time": "2026-05-05T19:15:45+00:00"
         },
         {
             "name": "spryker/product-availabilities-rest-api",
