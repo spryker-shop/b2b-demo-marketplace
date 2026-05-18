@@ -14414,16 +14414,16 @@
         },
         {
             "name": "spryker-feature/self-service-portal",
-            "version": "202604.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/self-service-portal.git",
-                "reference": "d0abdd987b662155e99a6569575bf4d69198b10f"
+                "reference": "ddb5c5c7581b8f527bcbf0cd3ba40dc17aa773dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/self-service-portal/zipball/d0abdd987b662155e99a6569575bf4d69198b10f",
-                "reference": "d0abdd987b662155e99a6569575bf4d69198b10f",
+                "url": "https://api.github.com/repos/spryker-feature/self-service-portal/zipball/ddb5c5c7581b8f527bcbf0cd3ba40dc17aa773dd",
+                "reference": "ddb5c5c7581b8f527bcbf0cd3ba40dc17aa773dd",
                 "shasum": ""
             },
             "require": {
@@ -14474,7 +14474,8 @@
                 "spryker/product-offer-availability-storage": "^1.2.0",
                 "spryker/product-offer-gui-extension": "^1.0.0",
                 "spryker/product-offer-sales": "^1.0.0",
-                "spryker/product-offer-shipment-type": "^1.0.0",
+                "spryker/product-offer-shipment-type": "^1.4.0",
+                "spryker/product-offer-shipment-type-data-import": "^0.4.3",
                 "spryker/product-offer-storage": "^1.11.0",
                 "spryker/product-offer-storage-extension": "^1.1.0",
                 "spryker/product-page-search": "^3.30.0",
@@ -14549,6 +14550,7 @@
                 "spryker/catalog": "If you want to use the product class catalog feature, you need to install this module.",
                 "spryker/container": "Add this module when you want to use the Container."
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -14567,9 +14569,9 @@
             ],
             "description": "SelfServicePortal module",
             "support": {
-                "source": "https://github.com/spryker-feature/self-service-portal/tree/202604.0"
+                "source": "https://github.com/spryker-feature/self-service-portal/tree/master"
             },
-            "time": "2026-04-14T11:45:07+00:00"
+            "time": "2026-05-14T15:07:11+00:00"
         },
         {
             "name": "spryker-feature/service-points",
@@ -61604,20 +61606,20 @@
         },
         {
             "name": "spryker/product-offer-shipment-type",
-            "version": "1.3.0",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-offer-shipment-type.git",
-                "reference": "df1e721d076b166bdf88119ffcfc613c6b16e05a"
+                "reference": "2838ab37bc5256368915502f82a7e60f3e5e2171"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-offer-shipment-type/zipball/df1e721d076b166bdf88119ffcfc613c6b16e05a",
-                "reference": "df1e721d076b166bdf88119ffcfc613c6b16e05a",
+                "url": "https://api.github.com/repos/spryker/product-offer-shipment-type/zipball/2838ab37bc5256368915502f82a7e60f3e5e2171",
+                "reference": "2838ab37bc5256368915502f82a7e60f3e5e2171",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/acl-merchant-portal-extension": "^1.0.0",
                 "spryker/kernel": "^3.30.0",
                 "spryker/product-offer": "^1.10.0",
@@ -61650,9 +61652,9 @@
             ],
             "description": "ProductOfferShipmentType module",
             "support": {
-                "source": "https://github.com/spryker/product-offer-shipment-type/tree/1.3.0"
+                "source": "https://github.com/spryker/product-offer-shipment-type/tree/1.4.0"
             },
-            "time": "2025-05-14T11:04:37+00:00"
+            "time": "2026-05-14T15:07:11+00:00"
         },
         {
             "name": "spryker/product-offer-shipment-type-availability",
@@ -61753,16 +61755,16 @@
         },
         {
             "name": "spryker/product-offer-shipment-type-data-import",
-            "version": "0.4.2",
+            "version": "0.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-offer-shipment-type-data-import.git",
-                "reference": "1b7dae62c562e34d14dc97c1ba1e793413ef9a35"
+                "reference": "569ec18a48bba5fc57446f1e3af9944ca6efb87a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-offer-shipment-type-data-import/zipball/1b7dae62c562e34d14dc97c1ba1e793413ef9a35",
-                "reference": "1b7dae62c562e34d14dc97c1ba1e793413ef9a35",
+                "url": "https://api.github.com/repos/spryker/product-offer-shipment-type-data-import/zipball/569ec18a48bba5fc57446f1e3af9944ca6efb87a",
+                "reference": "569ec18a48bba5fc57446f1e3af9944ca6efb87a",
                 "shasum": ""
             },
             "require": {
@@ -61798,9 +61800,9 @@
             ],
             "description": "ProductOfferShipmentTypeDataImport module",
             "support": {
-                "source": "https://github.com/spryker/product-offer-shipment-type-data-import/tree/0.4.2"
+                "source": "https://github.com/spryker/product-offer-shipment-type-data-import/tree/0.4.3"
             },
-            "time": "2025-10-14T13:32:53+00:00"
+            "time": "2026-05-14T15:07:11+00:00"
         },
         {
             "name": "spryker/product-offer-shipment-type-gui",
@@ -92664,12 +92666,19 @@
             "version": "9999999-dev",
             "alias": "202604.0",
             "alias_normalized": "202604.0"
+        },
+        {
+            "package": "spryker-feature/self-service-portal",
+            "version": "9999999-dev",
+            "alias": "202604.0",
+            "alias_normalized": "202604.0"
         }
     ],
     "minimum-stability": "dev",
     "stability-flags": {
         "spryker-feature/ai-commerce": 20,
         "spryker-feature/product-experience-management": 20,
+        "spryker-feature/self-service-portal": 20,
         "spryker/cypress-tests": 20,
         "spryker/robotframework-suite-tests": 20
     },
