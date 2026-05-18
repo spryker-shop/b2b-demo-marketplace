@@ -134,7 +134,7 @@ class DeleteMethodRestApiCest
         // Assert
         $i->seeResponseCodeIs(HttpCode::FORBIDDEN);
         $i->seeResponseIsJson();
-        $i->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $i->seeResponseErrorsHaveCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_UNAUTHORIZED);
         $i->seeResponseErrorsHaveStatus(HttpCode::FORBIDDEN);
