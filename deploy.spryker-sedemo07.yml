@@ -115,6 +115,7 @@ groups:
                     mp.demo-07.se.demo-spryker.com:
                         entry-point: MerchantPortal
                         region: EU
+                        <<: *frontend-auth
                         primal: true
                         services:
                             session:
@@ -126,6 +127,7 @@ groups:
                         entry-point: Configurator
                     www.demo-07.se.demo-spryker.com:
                         region: EU
+                        <<: *frontend-auth
                         services:
                             session:
                                 namespace: 461
@@ -136,6 +138,7 @@ groups:
                 endpoints:
                     backoffice.demo-07.se.demo-spryker.com:
                         region: EU
+                        <<: *frontend-auth
                         primal: true
                         services:
                             session:
