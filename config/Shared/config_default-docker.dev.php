@@ -262,7 +262,7 @@ if (!getenv('SPRYKER_S3_PEM_IMPORT_BUCKET')) {
     ];
 }
 
-if (!getenv('SPRYKER_S3_SSP_ASSETS_BUCKET')) {
+if (!getenv('SPRYKER_S3_SSP_ASSET_IMAGES_BUCKET')) {
     $config[FileSystemConstants::FILESYSTEM_SERVICE]['ssp-inquiry'] = [
         'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
         'root' => '/data',
