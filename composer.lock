@@ -33646,20 +33646,20 @@
         },
         {
             "name": "spryker/company-business-unit-addresses-rest-api",
-            "version": "1.3.0",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/company-business-unit-addresses-rest-api.git",
-                "reference": "abb9884aa449fe95b7a22492dfb4e688ae3a56f7"
+                "reference": "4265f6bce41f38609906cd45ab7ed4ba0a833004"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/company-business-unit-addresses-rest-api/zipball/abb9884aa449fe95b7a22492dfb4e688ae3a56f7",
-                "reference": "abb9884aa449fe95b7a22492dfb4e688ae3a56f7",
+                "url": "https://api.github.com/repos/spryker/company-business-unit-addresses-rest-api/zipball/4265f6bce41f38609906cd45ab7ed4ba0a833004",
+                "reference": "4265f6bce41f38609906cd45ab7ed4ba0a833004",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/checkout-rest-api-extension": "^1.5.0",
                 "spryker/company-business-units-rest-api-extension": "^1.0.0",
                 "spryker/company-unit-address": "^1.8.0",
@@ -33672,11 +33672,13 @@
                 "spryker/uuid-behavior": "^1.0.0"
             },
             "require-dev": {
+                "spryker/api-platform": "*",
                 "spryker/code-sniffer": "*",
                 "spryker/container": "*",
                 "spryker/testify": "*"
             },
             "suggest": {
+                "spryker/api-platform": "If you want to expose CompanyBusinessUnitAddressesRestApi resources through the API Platform stack.",
                 "spryker/auth-rest-api": "If you want to authorize and authenticate customers via access tokens."
             },
             "type": "library",
@@ -33696,9 +33698,9 @@
             ],
             "description": "CompanyBusinessUnitAddressesRestApi module",
             "support": {
-                "source": "https://github.com/spryker/company-business-unit-addresses-rest-api/tree/1.3.0"
+                "source": "https://github.com/spryker/company-business-unit-addresses-rest-api/tree/1.4.0"
             },
-            "time": "2025-08-04T08:52:14+00:00"
+            "time": "2026-05-15T15:04:51+00:00"
         },
         {
             "name": "spryker/company-business-unit-data-import",
@@ -34008,22 +34010,22 @@
         },
         {
             "name": "spryker/company-business-units-rest-api",
-            "version": "1.5.0",
+            "version": "1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/company-business-units-rest-api.git",
-                "reference": "7eaa74ba523d984b1472515657a00bd84a5d7c06"
+                "reference": "db00c32e416dd1f917a0c5233607e67c9b811bab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/company-business-units-rest-api/zipball/7eaa74ba523d984b1472515657a00bd84a5d7c06",
-                "reference": "7eaa74ba523d984b1472515657a00bd84a5d7c06",
+                "url": "https://api.github.com/repos/spryker/company-business-units-rest-api/zipball/db00c32e416dd1f917a0c5233607e67c9b811bab",
+                "reference": "db00c32e416dd1f917a0c5233607e67c9b811bab",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.3",
                 "spryker/cart-reorder-rest-api-extension": "^1.1.0",
-                "spryker/company-business-unit": "^2.10.0",
+                "spryker/company-business-unit": "^2.21.0",
                 "spryker/company-business-units-rest-api-extension": "^1.0.0",
                 "spryker/customers-rest-api-extension": "^1.1.0",
                 "spryker/glue-application": "^1.15.0",
@@ -34034,10 +34036,12 @@
                 "spryker/uuid-behavior": "^1.0.0"
             },
             "require-dev": {
+                "spryker/api-platform": "^1.0.0",
                 "spryker/code-sniffer": "*",
                 "spryker/testify": "*"
             },
             "suggest": {
+                "spryker/api-platform": "Required when the API Platform want to be used",
                 "spryker/auth-rest-api": "If you want to authorize and authenticate customers via access tokens."
             },
             "type": "library",
@@ -34057,9 +34061,9 @@
             ],
             "description": "CompanyBusinessUnitsRestApi module",
             "support": {
-                "source": "https://github.com/spryker/company-business-units-rest-api/tree/1.5.0"
+                "source": "https://github.com/spryker/company-business-units-rest-api/tree/1.7.0"
             },
-            "time": "2025-10-06T10:45:32+00:00"
+            "time": "2026-05-15T15:04:51+00:00"
         },
         {
             "name": "spryker/company-business-units-rest-api-extension",
@@ -34590,21 +34594,21 @@
         },
         {
             "name": "spryker/company-roles-rest-api",
-            "version": "1.2.0",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/company-roles-rest-api.git",
-                "reference": "5a48b7abbf743cb7d95afcebef3463ded3c6975f"
+                "reference": "a6e2546e09d315e3a8fad291ec1d0ce2a461d009"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/company-roles-rest-api/zipball/5a48b7abbf743cb7d95afcebef3463ded3c6975f",
-                "reference": "5a48b7abbf743cb7d95afcebef3463ded3c6975f",
+                "url": "https://api.github.com/repos/spryker/company-roles-rest-api/zipball/a6e2546e09d315e3a8fad291ec1d0ce2a461d009",
+                "reference": "a6e2546e09d315e3a8fad291ec1d0ce2a461d009",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
-                "spryker/company-role": "^1.5.0",
+                "php": ">=8.3",
+                "spryker/company-role": "^1.13.0",
                 "spryker/glue-application": "^1.15.0",
                 "spryker/glue-application-extension": "^1.0.0",
                 "spryker/kernel": "^3.30.0",
@@ -34613,9 +34617,11 @@
                 "spryker/uuid-behavior": "^1.0.0"
             },
             "require-dev": {
+                "spryker/api-platform": "^1.0.0",
                 "spryker/code-sniffer": "*"
             },
             "suggest": {
+                "spryker/api-platform": "If you want to expose CompanyRolesRestApi resources through the API Platform stack.",
                 "spryker/auth-rest-api": "If you want to authorize and authenticate customers via access tokens."
             },
             "type": "library",
@@ -34635,9 +34641,9 @@
             ],
             "description": "CompanyRolesRestApi module",
             "support": {
-                "source": "https://github.com/spryker/company-roles-rest-api/tree/1.2.0"
+                "source": "https://github.com/spryker/company-roles-rest-api/tree/1.3.0"
             },
-            "time": "2025-08-04T08:52:14+00:00"
+            "time": "2026-05-15T15:04:51+00:00"
         },
         {
             "name": "spryker/company-sales-connector",
@@ -44481,16 +44487,16 @@
         },
         {
             "name": "spryker/merchant-categories-rest-api",
-            "version": "1.1.1",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/merchant-categories-rest-api.git",
-                "reference": "ec8a177ad2f8324c871af8cdd899215265b68fb2"
+                "reference": "be1010fbcd6a20a2a0519a541756574688d10368"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/merchant-categories-rest-api/zipball/ec8a177ad2f8324c871af8cdd899215265b68fb2",
-                "reference": "ec8a177ad2f8324c871af8cdd899215265b68fb2",
+                "url": "https://api.github.com/repos/spryker/merchant-categories-rest-api/zipball/be1010fbcd6a20a2a0519a541756574688d10368",
+                "reference": "be1010fbcd6a20a2a0519a541756574688d10368",
                 "shasum": ""
             },
             "require": {
@@ -44503,6 +44509,9 @@
             },
             "require-dev": {
                 "spryker/code-sniffer": "*"
+            },
+            "suggest": {
+                "spryker/api-platform": "Required to expose API Platform resources."
             },
             "type": "library",
             "extra": {
@@ -44521,9 +44530,9 @@
             ],
             "description": "MerchantCategoriesRestApi module",
             "support": {
-                "source": "https://github.com/spryker/merchant-categories-rest-api/tree/1.1.1"
+                "source": "https://github.com/spryker/merchant-categories-rest-api/tree/1.2.0"
             },
-            "time": "2026-04-27T13:13:39+00:00"
+            "time": "2026-05-08T10:23:27+00:00"
         },
         {
             "name": "spryker/merchant-category",
