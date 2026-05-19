@@ -1,5 +1,7 @@
 import { renderMolecule } from 'storybook-helpers/render-twig';
-import { componentDocs, sectionFull, Meta, StoryObj } from 'storybook-helpers/docs';
+import { componentDocs, figmaLink, sectionFull, Meta, StoryObj } from 'storybook-helpers/docs';
+
+const FIGMA_URL = 'https://www.figma.com/design/6kdOU2Ez2KVChX26VSMPe7/Demo-DS-master?node-id=895-15987&p=f&m=dev';
 
 const docs = componentDocs({
     name: 'jumbotron',
@@ -24,9 +26,11 @@ export default meta;
 
 export const Overview: StoryObj = {
     render: () => {
-        return sectionFull(
-            'Container mode with all props',
-            renderMolecule('jumbotron', {
+        return (
+            figmaLink(FIGMA_URL) +
+            sectionFull(
+                'Container mode with all props',
+                renderMolecule('jumbotron', {
                 data: {
                     headline: 'B2B Marketplace',
                     subHeadline: 'Everything for your business in one place',
@@ -37,6 +41,7 @@ export const Overview: StoryObj = {
                     containerMode: true,
                 },
             }),
+            )
         );
     },
 };

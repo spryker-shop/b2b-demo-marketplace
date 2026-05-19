@@ -1,5 +1,7 @@
 import { renderMolecule } from 'storybook-helpers/render-twig';
-import { componentDocs, sectionFull, Meta, StoryObj } from 'storybook-helpers/docs';
+import { componentDocs, figmaLink, sectionFull, Meta, StoryObj } from 'storybook-helpers/docs';
+
+const FIGMA_URL = 'https://www.figma.com/design/6kdOU2Ez2KVChX26VSMPe7/Demo-DS-master?node-id=218-11428&p=f&m=dev';
 
 const docs = componentDocs({
     name: 'pagination',
@@ -33,6 +35,7 @@ export const Overview: StoryObj = {
     },
     render: () => {
         return (
+            figmaLink(FIGMA_URL) +
             sectionFull(
                 'Middle page (3 of 10)',
                 renderMolecule('pagination', {

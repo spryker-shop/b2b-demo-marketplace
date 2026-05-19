@@ -1,4 +1,6 @@
-import { componentDocs, section, Meta, StoryObj } from 'storybook-helpers/docs';
+import { componentDocs, figmaLink, section, Meta, StoryObj } from 'storybook-helpers/docs';
+
+const FIGMA_URL = 'https://www.figma.com/design/6kdOU2Ez2KVChX26VSMPe7/Demo-DS-master?node-id=144-1671&p=f&m=dev';
 
 const docs = componentDocs({
     name: 'input',
@@ -17,6 +19,7 @@ export default meta;
 export const Overview: StoryObj = {
     render: () => {
         return (
+            figmaLink(FIGMA_URL) +
             section('Default', '<input class="input" type="text" placeholder="Default input">') +
             section('Error', '<input class="input input--error" type="text" placeholder="Error state">') +
             section('Disabled', '<input class="input" type="text" placeholder="Disabled" disabled>') +

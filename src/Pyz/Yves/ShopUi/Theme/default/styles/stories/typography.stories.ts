@@ -1,7 +1,9 @@
-import type { Meta, StoryObj } from 'storybook-helpers/docs';
+import { figmaLink, Meta, StoryObj } from 'storybook-helpers/docs';
 
 const meta: Meta = { title: 'Basic/Typography' };
 export default meta;
+
+const FIGMA_URL = 'https://www.figma.com/design/6kdOU2Ez2KVChX26VSMPe7/Demo-DS-master?node-id=39-176&p=f&m=dev';
 
 const sectionStyle =
     'margin: 0 0 32px; padding: 20px; background: #fafbfc; border: 1px solid #e8e8e8; border-radius: 8px;';
@@ -28,6 +30,7 @@ const headingRow = (tag, sample) => `
 export const Overview: StoryObj = {
     render: () => `
         <div style="font-family: 'Inter', sans-serif;">
+            ${figmaLink(FIGMA_URL)}
             <div style="${sectionStyle}">
                 <h3 style="${headStyle}">Font sizes &amp; line heights</h3>
                 ${fontSizeRow('12 / 16', '--font-size-12', '--font-line-height-16')}

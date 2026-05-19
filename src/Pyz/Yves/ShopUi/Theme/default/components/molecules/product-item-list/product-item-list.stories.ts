@@ -1,5 +1,7 @@
 import { renderMolecule } from 'storybook-helpers/render-twig';
-import { componentDocs, sectionFull, Meta, StoryObj } from 'storybook-helpers/docs';
+import { componentDocs, figmaLink, sectionFull, Meta, StoryObj } from 'storybook-helpers/docs';
+
+const FIGMA_URL = 'https://www.figma.com/design/6kdOU2Ez2KVChX26VSMPe7/Demo-DS-master?node-id=476-7860&p=f&m=dev';
 
 const docs = componentDocs({
     name: 'product-item-list',
@@ -30,9 +32,11 @@ export const Overview: StoryObj = {
         'product.color-selector': 'Available Colors',
     },
     render: () => {
-        return sectionFull(
-            'Product Item List',
-            renderMolecule('product-item-list', {
+        return (
+            figmaLink(FIGMA_URL) +
+            sectionFull(
+                'Product Item List',
+                renderMolecule('product-item-list', {
                 data: {
                     product: {
                         name: 'Ergonomic Monitor Arm',
@@ -125,6 +129,7 @@ export const Overview: StoryObj = {
                     },
                 },
             }),
+            )
         );
     },
 };

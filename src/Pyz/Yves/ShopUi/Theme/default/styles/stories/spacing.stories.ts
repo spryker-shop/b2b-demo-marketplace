@@ -1,7 +1,12 @@
-import type { Meta, StoryObj } from 'storybook-helpers/docs';
+import { figmaLink, Meta, StoryObj } from 'storybook-helpers/docs';
 
 const meta: Meta = { title: 'Basic/Spacing' };
 export default meta;
+
+const FIGMA_URLS = [
+    'https://www.figma.com/design/6kdOU2Ez2KVChX26VSMPe7/Demo-DS-master?node-id=129-475&p=f&m=dev',
+    'https://www.figma.com/design/6kdOU2Ez2KVChX26VSMPe7/Demo-DS-master?node-id=98-437&p=f&m=dev',
+];
 
 const sectionStyle =
     'margin: 0 0 32px; padding: 20px; background: #fafbfc; border: 1px solid #e8e8e8; border-radius: 8px;';
@@ -30,6 +35,7 @@ const radiusSwatch = (token, px) => `
 export const Overview: StoryObj = {
     render: () => `
         <div style="font-family: 'Inter', sans-serif;">
+            ${figmaLink(FIGMA_URLS, ['Spacing tokens', 'Radius & stroke'])}
             <div style="${sectionStyle}">
                 <h3 style="${headStyle}">Scale tokens (--scale-*)</h3>
                 ${scaleRow('--scale-2', '2px')}

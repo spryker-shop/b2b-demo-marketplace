@@ -1,5 +1,7 @@
 import { renderMolecule } from 'storybook-helpers/render-twig';
-import { componentDocs, sectionFull, Meta, StoryObj } from 'storybook-helpers/docs';
+import { componentDocs, figmaLink, sectionFull, Meta, StoryObj } from 'storybook-helpers/docs';
+
+const FIGMA_URL = 'https://www.figma.com/design/6kdOU2Ez2KVChX26VSMPe7/Demo-DS-master?node-id=218-11484&p=f&m=dev';
 
 const docs = componentDocs({
     name: 'main-popup',
@@ -104,6 +106,7 @@ export const Overview: StoryObj = {
         });
 
         return (
+            figmaLink(FIGMA_URL) +
             showcaseStyles +
             '<main-overlay class="main-overlay" data-qa="component main-overlay"></main-overlay>' +
             sectionFull(

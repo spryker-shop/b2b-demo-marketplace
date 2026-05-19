@@ -1,6 +1,8 @@
 /* eslint-disable camelcase */
 import { renderMolecule, renderTemplateById } from 'storybook-helpers/render-twig';
-import { componentDocs, sectionFull, Meta, StoryObj } from 'storybook-helpers/docs';
+import { componentDocs, figmaLink, sectionFull, Meta, StoryObj } from 'storybook-helpers/docs';
+
+const FIGMA_URL = 'https://www.figma.com/design/6kdOU2Ez2KVChX26VSMPe7/Demo-DS-master?node-id=560-18873&p=f&m=dev';
 
 const docs = componentDocs({
     name: 'search-form',
@@ -145,14 +147,17 @@ export const Overview: StoryObj = {
             completion: 'heavy duty industrial bolt set',
         });
 
-        return sectionFull(
-            'Search form with populated suggestions',
-            `<div style="max-width: 600px; min-height: 720px; padding-top: 8px;">` +
-                renderMolecule('search-form', {
-                    data: { searchUrl: SUGGEST_URL },
-                    modifiers: ['main-search'],
-                }) +
-                `</div>`,
+        return (
+            figmaLink(FIGMA_URL) +
+            sectionFull(
+                'Search form with populated suggestions',
+                `<div style="max-width: 600px; min-height: 720px; padding-top: 8px;">` +
+                    renderMolecule('search-form', {
+                        data: { searchUrl: SUGGEST_URL },
+                        modifiers: ['main-search'],
+                    }) +
+                    `</div>`,
+            )
         );
     },
 };

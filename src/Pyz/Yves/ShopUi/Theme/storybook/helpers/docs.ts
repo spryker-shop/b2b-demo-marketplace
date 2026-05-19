@@ -96,3 +96,18 @@ export function section(title: string, html: string): string {
 export function sectionFull(title: string, html: string): string {
     return `<div ${sectionWrapStyle}><h3 ${sectionHeadStyle}>${title}</h3>${html}</div>`;
 }
+
+export function figmaLink(url: string | string[], label: string | string[] = 'View in Figma'): string {
+    const urls = Array.isArray(url) ? url : [url];
+    const labels = Array.isArray(label) ? label : urls.map(() => label);
+    const icon = `<svg width="14" height="14" viewBox="0 0 38 57" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0Z" fill="#1ABCFE"/><path d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0Z" fill="#0ACF83"/><path d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19Z" fill="#FF7262"/><path d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5Z" fill="#F24E1E"/><path d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5Z" fill="#A259FF"/></svg>`;
+    const linkStyle =
+        'display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; background: #fff; border: 1px solid #e8e8e8; border-radius: 6px; color: #1a1a1a; text-decoration: none; font-family: Inter, sans-serif; font-size: 12px; line-height: 1;';
+    const links = urls
+        .map((u, i) => {
+            const text = labels[i] ?? labels[0] ?? 'View in Figma';
+            return `<a href="${u}" target="_blank" rel="noopener noreferrer" style="${linkStyle}">${icon}<span>${text} →</span></a>`;
+        })
+        .join('');
+    return `<div style="display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 16px;">${links}</div>`;
+}

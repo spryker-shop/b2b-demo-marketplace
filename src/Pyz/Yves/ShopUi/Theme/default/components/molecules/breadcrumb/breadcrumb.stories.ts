@@ -1,5 +1,7 @@
 import { renderMolecule } from 'storybook-helpers/render-twig';
-import { componentDocs, section, sectionFull, Meta, StoryObj } from 'storybook-helpers/docs';
+import { componentDocs, figmaLink, section, sectionFull, Meta, StoryObj } from 'storybook-helpers/docs';
+
+const FIGMA_URL = 'https://www.figma.com/design/6kdOU2Ez2KVChX26VSMPe7/Demo-DS-master?node-id=450-516&p=f&m=dev';
 
 const docs = componentDocs({
     name: 'breadcrumb',
@@ -31,6 +33,7 @@ export const Overview: StoryObj = {
         const steps = [{ label: 'Category', url: '#' }, { label: 'Subcategory', url: '#' }, { label: 'Current Page' }];
 
         return (
+            figmaLink(FIGMA_URL) +
             sectionFull(
                 'With home and steps',
                 renderMolecule('breadcrumb', {

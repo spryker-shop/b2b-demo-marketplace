@@ -1,5 +1,7 @@
 import { renderMolecule } from 'storybook-helpers/render-twig';
-import { componentDocs, section, Meta, StoryObj } from 'storybook-helpers/docs';
+import { componentDocs, figmaLink, section, Meta, StoryObj } from 'storybook-helpers/docs';
+
+const FIGMA_URL = 'https://www.figma.com/design/6kdOU2Ez2KVChX26VSMPe7/Demo-DS-master?node-id=437-804&p=f&m=dev';
 
 const docs = componentDocs({
     name: 'status',
@@ -60,6 +62,7 @@ export const Overview: StoryObj = {
         ];
 
         return (
+            figmaLink(FIGMA_URL) +
             section(
                 'Subtle (default)',
                 statuses

@@ -1,5 +1,7 @@
 import { renderAtom } from 'storybook-helpers/render-twig';
-import { componentDocs, section, Meta, StoryObj } from 'storybook-helpers/docs';
+import { componentDocs, figmaLink, section, Meta, StoryObj } from 'storybook-helpers/docs';
+
+const FIGMA_URL = 'https://www.figma.com/design/6kdOU2Ez2KVChX26VSMPe7/Demo-DS-master?node-id=193-275&p=f&m=dev';
 
 const docs = componentDocs({
     name: 'select',
@@ -46,6 +48,7 @@ export const Overview: StoryObj = {
         };
 
         return (
+            figmaLink(FIGMA_URL) +
             section('Default options', renderAtom('select', { data: { options } })) +
             section('Selected', renderAtom('select', { data: { options: selectedOptions } })) +
             section('Grouped', renderAtom('select', { data: { options: groupedOptions, isGrouped: true } }))

@@ -1,7 +1,9 @@
-import type { Meta, StoryObj } from 'storybook-helpers/docs';
+import { figmaLink, Meta, StoryObj } from 'storybook-helpers/docs';
 
 const meta: Meta = { title: 'Basic/Colors' };
 export default meta;
+
+const FIGMA_URL = 'https://www.figma.com/design/6kdOU2Ez2KVChX26VSMPe7/Demo-DS-master?node-id=20-70&p=f&m=dev';
 
 const sectionStyle =
     'margin: 0 0 32px; padding: 20px; background: #fafbfc; border: 1px solid #e8e8e8; border-radius: 8px;';
@@ -53,6 +55,7 @@ const colorSteps = ['25', '50', '100', '200', '300', '400', '500', '600', '700',
 export const Overview: StoryObj = {
     render: () => `
         <div style="font-family: 'Inter', sans-serif;">
+            ${figmaLink(FIGMA_URL)}
             <div style="${sectionStyle}">
                 ${semantic('Surfaces &amp; backgrounds', [
                     '--background-page',

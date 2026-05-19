@@ -166,7 +166,16 @@ export const parameters = {
     },
     options: {
         storySort: {
-            order: ['Basic', 'Atoms', 'Molecules', 'Organisms', 'Templates', 'Views'],
+            order: [
+                'Introduction',
+                'Basic',
+                ['Colors', 'Typography', 'Spacing', 'Grid'],
+                'Atoms',
+                'Molecules',
+                'Organisms',
+                'Templates',
+                'Views',
+            ],
         },
     },
 };

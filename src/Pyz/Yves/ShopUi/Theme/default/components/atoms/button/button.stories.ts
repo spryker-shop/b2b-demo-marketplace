@@ -1,4 +1,4 @@
-import { componentDocs, section, Meta, StoryObj } from 'storybook-helpers/docs';
+import { componentDocs, figmaLink, section, Meta, StoryObj } from 'storybook-helpers/docs';
 
 const docs = componentDocs({
     name: 'button',
@@ -7,12 +7,15 @@ const docs = componentDocs({
     notes: 'CSS-only component — no Twig template. Apply classes directly to HTML.',
 });
 
+const FIGMA_URL = 'https://www.figma.com/design/6kdOU2Ez2KVChX26VSMPe7/Demo-DS-master?node-id=205-1772&p=f&m=dev';
+
 const meta: Meta = { title: 'Atoms/Button' };
 export default meta;
 
 export const Overview: StoryObj = {
     render: () => {
         return (
+            figmaLink(FIGMA_URL) +
             section(
                 'Types',
                 '<button class="button">Primary</button>' +

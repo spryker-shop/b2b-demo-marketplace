@@ -1,5 +1,7 @@
 import { renderMolecule } from 'storybook-helpers/render-twig';
-import { componentDocs, sectionFull, Meta, StoryObj } from 'storybook-helpers/docs';
+import { componentDocs, figmaLink, sectionFull, Meta, StoryObj } from 'storybook-helpers/docs';
+
+const FIGMA_URL = 'https://www.figma.com/design/6kdOU2Ez2KVChX26VSMPe7/Demo-DS-master?node-id=545-2635&p=f&m=dev';
 
 const docs = componentDocs({
     name: 'header-dropdown',
@@ -61,6 +63,7 @@ export const Overview: StoryObj = {
     },
     render: () => {
         return (
+            figmaLink(FIGMA_URL) +
             sectionFull(
                 'User Account preset',
                 renderMolecule('header-dropdown', {
@@ -79,25 +82,6 @@ export const Overview: StoryObj = {
                         userName: 'John Doe',
                         companyName: 'Spryker Systems GmbH',
                         panelOnly: true,
-                    },
-                }),
-            ) +
-            sectionFull(
-                'Self-Service preset',
-                renderMolecule('header-dropdown', {
-                    data: {
-                        preset: 'self-service',
-                    },
-                }),
-            ) +
-            sectionFull(
-                'Drawer mode (user-account)',
-                renderMolecule('header-dropdown', {
-                    data: {
-                        preset: 'user-account',
-                        userName: 'Jane Smith',
-                        companyName: 'Acme Corp',
-                        isDrawer: true,
                     },
                 }),
             )

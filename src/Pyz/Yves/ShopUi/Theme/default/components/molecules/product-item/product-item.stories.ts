@@ -1,5 +1,7 @@
 import { renderMolecule } from 'storybook-helpers/render-twig';
-import { componentDocs, sectionFull, Meta, StoryObj } from 'storybook-helpers/docs';
+import { componentDocs, figmaLink, sectionFull, Meta, StoryObj } from 'storybook-helpers/docs';
+
+const FIGMA_URL = 'https://www.figma.com/design/6kdOU2Ez2KVChX26VSMPe7/Demo-DS-master?node-id=476-7860&p=f&m=dev';
 
 const docs = componentDocs({
     name: 'product-item',
@@ -27,8 +29,10 @@ export const Overview: StoryObj = {
     render: () => {
         const wrap = (html) => `<div style="max-width: 300px;">${html}</div>`;
 
-        return sectionFull(
-            'Product Item',
+        return (
+            figmaLink(FIGMA_URL) +
+            sectionFull(
+                'Product Item',
             wrap(
                 renderMolecule('product-item', {
                     data: {
@@ -125,7 +129,8 @@ export const Overview: StoryObj = {
                         },
                     },
                 }),
-            ),
+            )
+            )
         );
     },
 };

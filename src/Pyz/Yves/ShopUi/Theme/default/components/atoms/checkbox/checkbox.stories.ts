@@ -1,5 +1,7 @@
 import { renderAtom } from 'storybook-helpers/render-twig';
-import { componentDocs, section, Meta, StoryObj } from 'storybook-helpers/docs';
+import { componentDocs, figmaLink, section, Meta, StoryObj } from 'storybook-helpers/docs';
+
+const FIGMA_URL = 'https://www.figma.com/design/6kdOU2Ez2KVChX26VSMPe7/Demo-DS-master?node-id=218-10700&p=f&m=dev';
 
 const docs = componentDocs({
     name: 'checkbox',
@@ -23,6 +25,7 @@ export default meta;
 export const Overview: StoryObj = {
     render: () => {
         return (
+            figmaLink(FIGMA_URL) +
             section('Unchecked', renderAtom('checkbox', { data: { label: 'Unchecked option' } })) +
             section('Checked', renderAtom('checkbox', { data: { label: 'Checked option', isChecked: true } })) +
             section(

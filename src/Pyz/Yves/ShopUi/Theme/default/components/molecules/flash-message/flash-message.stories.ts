@@ -1,5 +1,7 @@
 import { renderMolecule } from 'storybook-helpers/render-twig';
-import { componentDocs, section, sectionFull, Meta, StoryObj } from 'storybook-helpers/docs';
+import { componentDocs, figmaLink, section, sectionFull, Meta, StoryObj } from 'storybook-helpers/docs';
+
+const FIGMA_URL = 'https://www.figma.com/design/6kdOU2Ez2KVChX26VSMPe7/Demo-DS-master?node-id=218-11344&p=f&m=dev';
 
 const docs = componentDocs({
     name: 'flash-message',
@@ -30,6 +32,7 @@ export default meta;
 export const Overview: StoryObj = {
     render: () => {
         return (
+            figmaLink(FIGMA_URL) +
             sectionFull(
                 'Success',
                 renderMolecule('flash-message', {
