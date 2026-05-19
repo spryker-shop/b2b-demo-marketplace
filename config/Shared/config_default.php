@@ -719,7 +719,7 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
     ],
     'ssp-inquiry' => [
         'sprykerAdapterClass' => IamAws3v3FilesystemBuilderPlugin::class,
-        'bucket' => getenv('SPRYKER_S3_SSP_CLAIM_BUCKET') ?: '',
+        'bucket' => getenv('SPRYKER_S3_SSP_INQUIRIES_BUCKET') ?: '',
         'region' => getenv('AWS_REGION') ?: 'eu-central-1',
         'version' => 'latest',
         'root' => '',
