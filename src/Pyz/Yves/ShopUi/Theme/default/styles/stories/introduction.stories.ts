@@ -6,8 +6,7 @@ export default meta;
 const FIGMA_LIBRARY_URL = 'https://www.figma.com/design/6kdOU2Ez2KVChX26VSMPe7/Demo-DS-master';
 const SPRYKER_DOCS_URL = 'https://docs.spryker.com/docs/dg/dev/frontend-development/latest/design-tokens#how-it-works';
 
-const wrapStyle =
-    'font-family: Inter, sans-serif; color: #1a1a1a; max-width: 900px; line-height: 1.6;';
+const wrapStyle = 'font-family: Inter, sans-serif; color: #1a1a1a; max-width: 900px; line-height: 1.6;';
 const heroStyle =
     'margin: 0 0 32px; padding: 32px; background: linear-gradient(135deg, var(--background-brand-subtle), var(--background-accent-subtle)); border-radius: 12px; border: 1px solid var(--border-default);';
 const heroTitleStyle = 'margin: 0 0 12px; font-size: 32px; font-weight: 700; color: var(--text-primary);';
@@ -16,11 +15,14 @@ const sectionStyle =
     'margin: 0 0 24px; padding: 24px; background: #fafbfc; border: 1px solid #e8e8e8; border-radius: 8px;';
 const h2Style = 'margin: 0 0 12px; font-size: 20px; font-weight: 600; color: var(--text-primary);';
 const pStyle = 'margin: 0 0 12px; font-size: 14px; color: var(--text-secondary);';
-const codeStyle = 'font-family: ui-monospace, monospace; font-size: 12px; background: #eef1f5; padding: 2px 6px; border-radius: 3px; color: #333;';
-const tokenGridStyle = 'display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin: 16px 0 0;';
+const codeStyle =
+    'font-family: ui-monospace, monospace; font-size: 12px; background: #eef1f5; padding: 2px 6px; border-radius: 3px; color: #333;';
+const tokenGridStyle =
+    'display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin: 16px 0 0;';
 const tokenCardStyle =
     'padding: 12px; background: #fff; border: 1px solid #e8e8e8; border-radius: 6px; text-align: center;';
-const navGridStyle = 'display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; margin: 16px 0 0;';
+const navGridStyle =
+    'display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; margin: 16px 0 0;';
 const navCardStyle =
     'display: block; padding: 16px; background: #fff; border: 1px solid #e8e8e8; border-radius: 8px; text-decoration: none; color: inherit; transition: border-color 0.15s;';
 const navTitleStyle = 'margin: 0 0 4px; font-size: 14px; font-weight: 600; color: var(--text-primary);';

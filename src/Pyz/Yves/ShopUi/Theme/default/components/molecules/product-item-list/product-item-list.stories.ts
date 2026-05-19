@@ -37,98 +37,98 @@ export const Overview: StoryObj = {
             sectionFull(
                 'Product Item List',
                 renderMolecule('product-item-list', {
-                data: {
-                    product: {
-                        name: 'Ergonomic Monitor Arm',
-                        url: '#',
-                        sku: 'SKU-101',
-                        abstractSku: 'AS-101',
-                        idProductAbstract: 101,
-                        images: [{ externalUrlSmall: 'https://placehold.co/200x200/e8e8e8/666?text=Arm' }],
-                        prices: { DEFAULT: 5999, ORIGINAL: 7999 },
+                    data: {
+                        product: {
+                            name: 'Ergonomic Monitor Arm',
+                            url: '#',
+                            sku: 'SKU-101',
+                            abstractSku: 'AS-101',
+                            idProductAbstract: 101,
+                            images: [{ externalUrlSmall: 'https://placehold.co/200x200/e8e8e8/666?text=Arm' }],
+                            prices: { DEFAULT: 5999, ORIGINAL: 7999 },
+                        },
                     },
-                },
-                widgets: {
-                    DisplayProductAbstractReviewWidget: {
-                        productReviewStorageTransfer: { averageRating: 4.0, reviewCount: 8 },
-                        maximumRating: 5,
+                    widgets: {
+                        DisplayProductAbstractReviewWidget: {
+                            productReviewStorageTransfer: { averageRating: 4.0, reviewCount: 8 },
+                            maximumRating: 5,
+                        },
+                        ProductAbstractLabelWidget: {
+                            productLabelDictionaryItemTransfers: [
+                                { name: 'New', frontEndReference: 'success', key: 'new' },
+                                { name: 'Sale', frontEndReference: 'sale', key: 'sale' },
+                            ],
+                        },
+                        ProductGroupColorWidget: {
+                            productGroupItems: [
+                                {
+                                    colorCode: '#1f1f1f',
+                                    name: 'Ergonomic Monitor Arm — Black',
+                                    sku: 'AS-101-blk',
+                                    abstractSku: 'AS-101',
+                                    url: '#',
+                                    available: true,
+                                    idProductConcrete: 1,
+                                    attributes: { color: 'Black', farbe: 'black' },
+                                    images: [
+                                        {
+                                            externalUrlSmall: 'https://placehold.co/200x200/1f1f1f/fff?text=Black',
+                                            altText: 'Black variant',
+                                        },
+                                    ],
+                                    labels: [
+                                        { key: 'NEW', frontEndReference: 'success' },
+                                        { key: 'BESTSELLER', frontEndReference: 'info' },
+                                        { key: 'SALE', frontEndReference: 'sale' },
+                                    ],
+                                    rating: { averageRating: 4.5 },
+                                    prices: { DEFAULT: 5999, ORIGINAL: 7999 },
+                                },
+                                {
+                                    colorCode: '#c62828',
+                                    name: 'Ergonomic Monitor Arm — Red',
+                                    sku: 'AS-101-red',
+                                    abstractSku: 'AS-101',
+                                    url: '#',
+                                    available: true,
+                                    idProductConcrete: 2,
+                                    attributes: { color: 'Red', farbe: 'red' },
+                                    images: [
+                                        {
+                                            externalUrlSmall: 'https://placehold.co/200x200/c62828/fff?text=Red',
+                                            altText: 'Red variant',
+                                        },
+                                    ],
+                                    labels: [
+                                        { key: 'TOP', frontEndReference: 'info' },
+                                        { key: 'SALE', frontEndReference: 'sale' },
+                                    ],
+                                    rating: { averageRating: 4.0 },
+                                    prices: { DEFAULT: 5999, ORIGINAL: 7999 },
+                                },
+                                {
+                                    colorCode: '#1565c0',
+                                    name: 'Ergonomic Monitor Arm — Blue',
+                                    sku: 'AS-101-blu',
+                                    abstractSku: 'AS-101',
+                                    url: '#',
+                                    available: true,
+                                    idProductConcrete: 3,
+                                    attributes: { color: 'Blue', farbe: 'blue' },
+                                    images: [
+                                        {
+                                            externalUrlSmall: 'https://placehold.co/200x200/1565c0/fff?text=Blue',
+                                            altText: 'Blue variant',
+                                        },
+                                    ],
+                                    labels: [{ key: 'BESTSELLER', frontEndReference: 'info' }],
+                                    rating: { averageRating: 5.0 },
+                                    prices: { DEFAULT: 5999 },
+                                },
+                            ],
+                        },
                     },
-                    ProductAbstractLabelWidget: {
-                        productLabelDictionaryItemTransfers: [
-                            { name: 'New', frontEndReference: 'success', key: 'new' },
-                            { name: 'Sale', frontEndReference: 'sale', key: 'sale' },
-                        ],
-                    },
-                    ProductGroupColorWidget: {
-                        productGroupItems: [
-                            {
-                                colorCode: '#1f1f1f',
-                                name: 'Ergonomic Monitor Arm — Black',
-                                sku: 'AS-101-blk',
-                                abstractSku: 'AS-101',
-                                url: '#',
-                                available: true,
-                                idProductConcrete: 1,
-                                attributes: { color: 'Black', farbe: 'black' },
-                                images: [
-                                    {
-                                        externalUrlSmall: 'https://placehold.co/200x200/1f1f1f/fff?text=Black',
-                                        altText: 'Black variant',
-                                    },
-                                ],
-                                labels: [
-                                    { key: 'NEW', frontEndReference: 'success' },
-                                    { key: 'BESTSELLER', frontEndReference: 'info' },
-                                    { key: 'SALE', frontEndReference: 'sale' },
-                                ],
-                                rating: { averageRating: 4.5 },
-                                prices: { DEFAULT: 5999, ORIGINAL: 7999 },
-                            },
-                            {
-                                colorCode: '#c62828',
-                                name: 'Ergonomic Monitor Arm — Red',
-                                sku: 'AS-101-red',
-                                abstractSku: 'AS-101',
-                                url: '#',
-                                available: true,
-                                idProductConcrete: 2,
-                                attributes: { color: 'Red', farbe: 'red' },
-                                images: [
-                                    {
-                                        externalUrlSmall: 'https://placehold.co/200x200/c62828/fff?text=Red',
-                                        altText: 'Red variant',
-                                    },
-                                ],
-                                labels: [
-                                    { key: 'TOP', frontEndReference: 'info' },
-                                    { key: 'SALE', frontEndReference: 'sale' },
-                                ],
-                                rating: { averageRating: 4.0 },
-                                prices: { DEFAULT: 5999, ORIGINAL: 7999 },
-                            },
-                            {
-                                colorCode: '#1565c0',
-                                name: 'Ergonomic Monitor Arm — Blue',
-                                sku: 'AS-101-blu',
-                                abstractSku: 'AS-101',
-                                url: '#',
-                                available: true,
-                                idProductConcrete: 3,
-                                attributes: { color: 'Blue', farbe: 'blue' },
-                                images: [
-                                    {
-                                        externalUrlSmall: 'https://placehold.co/200x200/1565c0/fff?text=Blue',
-                                        altText: 'Blue variant',
-                                    },
-                                ],
-                                labels: [{ key: 'BESTSELLER', frontEndReference: 'info' }],
-                                rating: { averageRating: 5.0 },
-                                prices: { DEFAULT: 5999 },
-                            },
-                        ],
-                    },
-                },
-            }),
+                }),
             )
         );
     },

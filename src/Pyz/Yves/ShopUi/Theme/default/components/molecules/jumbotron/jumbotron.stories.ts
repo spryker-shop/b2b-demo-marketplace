@@ -31,16 +31,16 @@ export const Overview: StoryObj = {
             sectionFull(
                 'Container mode with all props',
                 renderMolecule('jumbotron', {
-                data: {
-                    headline: 'B2B Marketplace',
-                    subHeadline: 'Everything for your business in one place',
-                    imageUrl: 'https://placehold.co/1200x500/0a1f44/ffffff?text=Hero+Banner',
-                    btnTitle: 'Explore',
-                    link: '#',
-                    label: 'Featured',
-                    containerMode: true,
-                },
-            }),
+                    data: {
+                        headline: 'B2B Marketplace',
+                        subHeadline: 'Everything for your business in one place',
+                        imageUrl: 'https://placehold.co/1200x500/0a1f44/ffffff?text=Hero+Banner',
+                        btnTitle: 'Explore',
+                        link: '#',
+                        label: 'Featured',
+                        containerMode: true,
+                    },
+                }),
             )
         );
     },
