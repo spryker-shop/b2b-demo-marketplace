@@ -735,7 +735,7 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
     ],
     'ssp-asset-image' => [
         'sprykerAdapterClass' => IamAws3v3FilesystemBuilderPlugin::class,
-        'bucket' => getenv('SPRYKER_S3_SSP_ASSETS_BUCKET') ?: '',
+        'bucket' => getenv('SPRYKER_S3_SSP_ASSET_IMAGES_BUCKET') ?: '',
         'region' => getenv('AWS_REGION') ?: 'eu-central-1',
         'version' => 'latest',
         'root' => '',
@@ -743,7 +743,7 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
     ],
     'ssp-model-image' => [
         'sprykerAdapterClass' => IamAws3v3FilesystemBuilderPlugin::class,
-        'bucket' => getenv('SPRYKER_S3_SSP_MODELS_BUCKET') ?: '',
+        'bucket' => getenv('SPRYKER_S3_SSP_MODEL_IMAGES_BUCKET') ?: '',
         'region' => getenv('AWS_REGION') ?: 'eu-central-1',
         'version' => 'latest',
         'root' => '',
