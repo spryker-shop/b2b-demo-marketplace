@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "65607526d6c30a96712fc55f52dd59c8",
+    "content-hash": "6381cb2ed4cd0458d1fed888af239243",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -121,22 +121,22 @@
         },
         {
             "name": "api-platform/doctrine-common",
-            "version": "v4.3.3",
+            "version": "v4.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/api-platform/doctrine-common.git",
-                "reference": "0b0e9328e08f38ff381afd7cba68976ed1dc714a"
+                "reference": "089b196c2f8e4d14333aaa3c6db33356e8fd8be0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/api-platform/doctrine-common/zipball/0b0e9328e08f38ff381afd7cba68976ed1dc714a",
-                "reference": "0b0e9328e08f38ff381afd7cba68976ed1dc714a",
+                "url": "https://api.github.com/repos/api-platform/doctrine-common/zipball/089b196c2f8e4d14333aaa3c6db33356e8fd8be0",
+                "reference": "089b196c2f8e4d14333aaa3c6db33356e8fd8be0",
                 "shasum": ""
             },
             "require": {
                 "api-platform/metadata": "^4.2.6",
                 "api-platform/state": "^4.2.4",
-                "doctrine/collections": "^2.1",
+                "doctrine/collections": "^2.1 || ^3.0",
                 "doctrine/common": "^3.2.2",
                 "doctrine/persistence": "^3.2 || ^4.0",
                 "php": ">=8.2"
@@ -148,7 +148,7 @@
                 "doctrine/mongodb-odm": "^2.10",
                 "doctrine/orm": "^2.17 || ^3.0",
                 "phpspec/prophecy-phpunit": "^2.2",
-                "phpunit/phpunit": "^12.2",
+                "phpunit/phpunit": "^11.5 || ^12.2",
                 "symfony/type-info": "^7.3 || ^8.0"
             },
             "suggest": {
@@ -205,9 +205,9 @@
                 "rest"
             ],
             "support": {
-                "source": "https://github.com/api-platform/doctrine-common/tree/v4.3.3"
+                "source": "https://github.com/api-platform/doctrine-common/tree/v4.3.5"
             },
-            "time": "2026-03-27T06:51:10+00:00"
+            "time": "2026-05-04T13:25:58+00:00"
         },
         {
             "name": "api-platform/doctrine-orm",
@@ -300,16 +300,16 @@
         },
         {
             "name": "api-platform/documentation",
-            "version": "v4.3.3",
+            "version": "v4.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/api-platform/documentation.git",
-                "reference": "a63a3a7f020b6a001b1228c5bd916e1a76887d1d"
+                "reference": "f07b444aef1f75bb07beb9f8d799213f05070e5f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/api-platform/documentation/zipball/a63a3a7f020b6a001b1228c5bd916e1a76887d1d",
-                "reference": "a63a3a7f020b6a001b1228c5bd916e1a76887d1d",
+                "url": "https://api.github.com/repos/api-platform/documentation/zipball/f07b444aef1f75bb07beb9f8d799213f05070e5f",
+                "reference": "f07b444aef1f75bb07beb9f8d799213f05070e5f",
                 "shasum": ""
             },
             "require": {
@@ -317,7 +317,7 @@
                 "php": ">=8.2"
             },
             "require-dev": {
-                "phpunit/phpunit": "^12.2"
+                "phpunit/phpunit": "^11.5 || ^12.2"
             },
             "type": "project",
             "extra": {
@@ -357,9 +357,9 @@
             ],
             "description": "API Platform documentation controller.",
             "support": {
-                "source": "https://github.com/api-platform/documentation/tree/v4.3.3"
+                "source": "https://github.com/api-platform/documentation/tree/v4.3.5"
             },
-            "time": "2026-03-06T15:07:49+00:00"
+            "time": "2026-04-30T12:21:24+00:00"
         },
         {
             "name": "api-platform/hal",
@@ -441,16 +441,16 @@
         },
         {
             "name": "api-platform/http-cache",
-            "version": "v4.3.3",
+            "version": "v4.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/api-platform/http-cache.git",
-                "reference": "9ffbe58f8872932ed7c2afca8207c2d68629e037"
+                "reference": "dd7c092b9abee06e72fd58544fe714b6c2a61efa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/api-platform/http-cache/zipball/9ffbe58f8872932ed7c2afca8207c2d68629e037",
-                "reference": "9ffbe58f8872932ed7c2afca8207c2d68629e037",
+                "url": "https://api.github.com/repos/api-platform/http-cache/zipball/dd7c092b9abee06e72fd58544fe714b6c2a61efa",
+                "reference": "dd7c092b9abee06e72fd58544fe714b6c2a61efa",
                 "shasum": ""
             },
             "require": {
@@ -462,7 +462,7 @@
             "require-dev": {
                 "guzzlehttp/guzzle": "^6.0 || ^7.0 || ^8.0",
                 "phpspec/prophecy-phpunit": "^2.2",
-                "phpunit/phpunit": "^12.2",
+                "phpunit/phpunit": "^11.5 || ^12.2",
                 "symfony/dependency-injection": "^6.4 || ^7.0 || ^8.0",
                 "symfony/http-client": "^6.4 || ^7.0 || ^8.0",
                 "symfony/type-info": "^7.3 || ^8.0"
@@ -515,22 +515,22 @@
                 "rest"
             ],
             "support": {
-                "source": "https://github.com/api-platform/http-cache/tree/v4.3.3"
+                "source": "https://github.com/api-platform/http-cache/tree/v4.3.5"
             },
-            "time": "2026-03-06T15:07:49+00:00"
+            "time": "2026-04-30T12:21:24+00:00"
         },
         {
             "name": "api-platform/hydra",
-            "version": "v4.3.3",
+            "version": "v4.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/api-platform/hydra.git",
-                "reference": "bb9f7107a0bbfbe6e7b93130bde9829f0cc71529"
+                "reference": "317a696e396b80ba87de2560679c362923ef0a14"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/api-platform/hydra/zipball/bb9f7107a0bbfbe6e7b93130bde9829f0cc71529",
-                "reference": "bb9f7107a0bbfbe6e7b93130bde9829f0cc71529",
+                "url": "https://api.github.com/repos/api-platform/hydra/zipball/317a696e396b80ba87de2560679c362923ef0a14",
+                "reference": "317a696e396b80ba87de2560679c362923ef0a14",
                 "shasum": ""
             },
             "require": {
@@ -550,7 +550,7 @@
                 "api-platform/doctrine-orm": "^4.3",
                 "phpspec/prophecy": "^1.19",
                 "phpspec/prophecy-phpunit": "^2.2",
-                "phpunit/phpunit": "^12.2"
+                "phpunit/phpunit": "^11.5 || ^12.2"
             },
             "type": "library",
             "extra": {
@@ -602,9 +602,9 @@
                 "rest"
             ],
             "support": {
-                "source": "https://github.com/api-platform/hydra/tree/v4.3.3"
+                "source": "https://github.com/api-platform/hydra/tree/v4.3.5"
             },
-            "time": "2026-03-20T09:00:10+00:00"
+            "time": "2026-05-11T11:50:19+00:00"
         },
         {
             "name": "api-platform/json-api",
@@ -690,16 +690,16 @@
         },
         {
             "name": "api-platform/json-schema",
-            "version": "v4.3.3",
+            "version": "v4.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/api-platform/json-schema.git",
-                "reference": "0f66e93719fd65938528aeff900737471acb515a"
+                "reference": "23dc2c388a08f2006b9189a0883a08f8837d7249"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/api-platform/json-schema/zipball/0f66e93719fd65938528aeff900737471acb515a",
-                "reference": "0f66e93719fd65938528aeff900737471acb515a",
+                "url": "https://api.github.com/repos/api-platform/json-schema/zipball/23dc2c388a08f2006b9189a0883a08f8837d7249",
+                "reference": "23dc2c388a08f2006b9189a0883a08f8837d7249",
                 "shasum": ""
             },
             "require": {
@@ -713,7 +713,7 @@
             },
             "require-dev": {
                 "phpspec/prophecy-phpunit": "^2.2",
-                "phpunit/phpunit": "^12.2"
+                "phpunit/phpunit": "^11.5 || ^12.2"
             },
             "type": "library",
             "extra": {
@@ -765,22 +765,22 @@
                 "swagger"
             ],
             "support": {
-                "source": "https://github.com/api-platform/json-schema/tree/v4.3.3"
+                "source": "https://github.com/api-platform/json-schema/tree/v4.3.5"
             },
-            "time": "2026-03-06T15:07:49+00:00"
+            "time": "2026-04-30T12:21:24+00:00"
         },
         {
             "name": "api-platform/jsonld",
-            "version": "v4.3.3",
+            "version": "v4.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/api-platform/jsonld.git",
-                "reference": "64bd84ac44d6c6c51142a26bfa7d4c6237d20593"
+                "reference": "20ca6d7b5c11674c3046d710aaa0c9bc1795e54b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/api-platform/jsonld/zipball/64bd84ac44d6c6c51142a26bfa7d4c6237d20593",
-                "reference": "64bd84ac44d6c6c51142a26bfa7d4c6237d20593",
+                "url": "https://api.github.com/repos/api-platform/jsonld/zipball/20ca6d7b5c11674c3046d710aaa0c9bc1795e54b",
+                "reference": "20ca6d7b5c11674c3046d710aaa0c9bc1795e54b",
                 "shasum": ""
             },
             "require": {
@@ -790,7 +790,7 @@
                 "php": ">=8.2"
             },
             "require-dev": {
-                "phpunit/phpunit": "^12.2",
+                "phpunit/phpunit": "^11.5 || ^12.2",
                 "symfony/type-info": "^7.3 || ^8.0"
             },
             "type": "library",
@@ -845,9 +845,9 @@
                 "rest"
             ],
             "support": {
-                "source": "https://github.com/api-platform/jsonld/tree/v4.3.3"
+                "source": "https://github.com/api-platform/jsonld/tree/v4.3.5"
             },
-            "time": "2026-03-13T08:23:46+00:00"
+            "time": "2026-04-30T12:21:24+00:00"
         },
         {
             "name": "api-platform/metadata",
@@ -949,16 +949,16 @@
         },
         {
             "name": "api-platform/openapi",
-            "version": "v4.3.3",
+            "version": "v4.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/api-platform/openapi.git",
-                "reference": "6ae725b4d2cee60972c18c4bd6148b63ccf16785"
+                "reference": "1562617e7500a50c2b6e6f43a0fb29a6a47e83a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/api-platform/openapi/zipball/6ae725b4d2cee60972c18c4bd6148b63ccf16785",
-                "reference": "6ae725b4d2cee60972c18c4bd6148b63ccf16785",
+                "url": "https://api.github.com/repos/api-platform/openapi/zipball/1562617e7500a50c2b6e6f43a0fb29a6a47e83a2",
+                "reference": "1562617e7500a50c2b6e6f43a0fb29a6a47e83a2",
                 "shasum": ""
             },
             "require": {
@@ -978,7 +978,7 @@
                 "api-platform/doctrine-orm": "^4.3",
                 "api-platform/serializer": "^4.3",
                 "phpspec/prophecy-phpunit": "^2.2",
-                "phpunit/phpunit": "^12.2",
+                "phpunit/phpunit": "^11.5 || ^12.2",
                 "symfony/type-info": "^7.3 || ^8.0"
             },
             "type": "library",
@@ -1034,22 +1034,22 @@
                 "swagger"
             ],
             "support": {
-                "source": "https://github.com/api-platform/openapi/tree/v4.3.3"
+                "source": "https://github.com/api-platform/openapi/tree/v4.3.5"
             },
-            "time": "2026-03-29T07:20:23+00:00"
+            "time": "2026-04-30T12:21:24+00:00"
         },
         {
             "name": "api-platform/serializer",
-            "version": "v4.3.3",
+            "version": "v4.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/api-platform/serializer.git",
-                "reference": "c8a62096d277b89b0f146aa90c65eeaeb1412900"
+                "reference": "bd7c26cc8e6858abc9661d677c15eaf4c61e08e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/api-platform/serializer/zipball/c8a62096d277b89b0f146aa90c65eeaeb1412900",
-                "reference": "c8a62096d277b89b0f146aa90c65eeaeb1412900",
+                "url": "https://api.github.com/repos/api-platform/serializer/zipball/bd7c26cc8e6858abc9661d677c15eaf4c61e08e3",
+                "reference": "bd7c26cc8e6858abc9661d677c15eaf4c61e08e3",
                 "shasum": ""
             },
             "require": {
@@ -1069,7 +1069,7 @@
                 "api-platform/openapi": "^4.3",
                 "doctrine/collections": "^2.1",
                 "phpspec/prophecy-phpunit": "^2.2",
-                "phpunit/phpunit": "^12.2",
+                "phpunit/phpunit": "^11.5 || ^12.2",
                 "sebastian/exporter": "^6.3.2 || ^7.0.2",
                 "symfony/mercure-bundle": "*",
                 "symfony/type-info": "^7.3 || ^8.0",
@@ -1128,9 +1128,9 @@
                 "serializer"
             ],
             "support": {
-                "source": "https://github.com/api-platform/serializer/tree/v4.3.3"
+                "source": "https://github.com/api-platform/serializer/tree/v4.3.5"
             },
-            "time": "2026-03-27T06:51:10+00:00"
+            "time": "2026-04-30T12:21:24+00:00"
         },
         {
             "name": "api-platform/state",
@@ -1359,22 +1359,22 @@
         },
         {
             "name": "api-platform/validator",
-            "version": "v4.3.3",
+            "version": "v4.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/api-platform/validator.git",
-                "reference": "3c0d486a12d7ab9b8fcfb727437b5322dc619663"
+                "reference": "6df6804799f8831469d2602d0845a0316e81fbab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/api-platform/validator/zipball/3c0d486a12d7ab9b8fcfb727437b5322dc619663",
-                "reference": "3c0d486a12d7ab9b8fcfb727437b5322dc619663",
+                "url": "https://api.github.com/repos/api-platform/validator/zipball/6df6804799f8831469d2602d0845a0316e81fbab",
+                "reference": "6df6804799f8831469d2602d0845a0316e81fbab",
                 "shasum": ""
             },
             "require": {
                 "api-platform/metadata": "^4.3",
                 "php": ">=8.2",
-                "symfony/http-kernel": "^6.4 || ^7.1 || ^8.0",
+                "symfony/http-kernel": "^6.4.13 || ^7.1 || ^8.0",
                 "symfony/serializer": "^6.4 || ^7.1 || ^8.0",
                 "symfony/type-info": "^7.3 || ^8.0",
                 "symfony/validator": "^6.4.11 || ^7.1 || ^8.0",
@@ -1382,7 +1382,7 @@
             },
             "require-dev": {
                 "phpspec/prophecy-phpunit": "^2.2",
-                "phpunit/phpunit": "^12.2"
+                "phpunit/phpunit": "^11.5 || ^12.2"
             },
             "type": "library",
             "extra": {
@@ -1429,9 +1429,9 @@
                 "validator"
             ],
             "support": {
-                "source": "https://github.com/api-platform/validator/tree/v4.3.3"
+                "source": "https://github.com/api-platform/validator/tree/v4.3.5"
             },
-            "time": "2026-03-17T15:23:21+00:00"
+            "time": "2026-05-07T11:45:31+00:00"
         },
         {
             "name": "async-aws/core",
@@ -3190,16 +3190,16 @@
         },
         {
             "name": "doctrine/orm",
-            "version": "2.20.10",
+            "version": "2.20.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/orm.git",
-                "reference": "9fe8ce4bf75fbb7342f35835d9a90640902164db"
+                "reference": "5fc5b1991d6a4301cbab8ee4d47e90401235be09"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/orm/zipball/9fe8ce4bf75fbb7342f35835d9a90640902164db",
-                "reference": "9fe8ce4bf75fbb7342f35835d9a90640902164db",
+                "url": "https://api.github.com/repos/doctrine/orm/zipball/5fc5b1991d6a4301cbab8ee4d47e90401235be09",
+                "reference": "5fc5b1991d6a4301cbab8ee4d47e90401235be09",
                 "shasum": ""
             },
             "require": {
@@ -3285,9 +3285,9 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/orm/issues",
-                "source": "https://github.com/doctrine/orm/tree/2.20.10"
+                "source": "https://github.com/doctrine/orm/tree/2.20.12"
             },
-            "time": "2026-04-02T06:18:54+00:00"
+            "time": "2026-05-08T11:18:45+00:00"
         },
         {
             "name": "doctrine/persistence",
@@ -4619,16 +4619,16 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "7.10.0",
+            "version": "7.10.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "b51ac707cfa420b7bfd4e4d5e510ba8008e822b4"
+                "reference": "b777df1776c667e287664dda75b0298ad8ae3a14"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/b51ac707cfa420b7bfd4e4d5e510ba8008e822b4",
-                "reference": "b51ac707cfa420b7bfd4e4d5e510ba8008e822b4",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/b777df1776c667e287664dda75b0298ad8ae3a14",
+                "reference": "b777df1776c667e287664dda75b0298ad8ae3a14",
                 "shasum": ""
             },
             "require": {
@@ -4646,8 +4646,9 @@
                 "bamarni/composer-bin-plugin": "^1.8.2",
                 "ext-curl": "*",
                 "guzzle/client-integration-tests": "3.0.2",
+                "guzzlehttp/test-server": "^0.3.2",
                 "php-http/message-factory": "^1.1",
-                "phpunit/phpunit": "^8.5.39 || ^9.6.20",
+                "phpunit/phpunit": "^8.5.52 || ^9.6.34",
                 "psr/log": "^1.1 || ^2.0 || ^3.0"
             },
             "suggest": {
@@ -4725,7 +4726,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/guzzle/issues",
-                "source": "https://github.com/guzzle/guzzle/tree/7.10.0"
+                "source": "https://github.com/guzzle/guzzle/tree/7.10.1"
             },
             "funding": [
                 {
@@ -4741,20 +4742,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-08-23T22:36:01+00:00"
+            "time": "2026-05-19T18:01:31+00:00"
         },
         {
             "name": "guzzlehttp/promises",
-            "version": "2.3.0",
+            "version": "2.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/promises.git",
-                "reference": "481557b130ef3790cf82b713667b43030dc9c957"
+                "reference": "d2d8dfae4757f384d630fdffc2d8d6618d8f4c5e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/promises/zipball/481557b130ef3790cf82b713667b43030dc9c957",
-                "reference": "481557b130ef3790cf82b713667b43030dc9c957",
+                "url": "https://api.github.com/repos/guzzle/promises/zipball/d2d8dfae4757f384d630fdffc2d8d6618d8f4c5e",
+                "reference": "d2d8dfae4757f384d630fdffc2d8d6618d8f4c5e",
                 "shasum": ""
             },
             "require": {
@@ -4762,7 +4763,7 @@
             },
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.8.2",
-                "phpunit/phpunit": "^8.5.44 || ^9.6.25"
+                "phpunit/phpunit": "^8.5.52 || ^9.6.34"
             },
             "type": "library",
             "extra": {
@@ -4808,7 +4809,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/promises/issues",
-                "source": "https://github.com/guzzle/promises/tree/2.3.0"
+                "source": "https://github.com/guzzle/promises/tree/2.3.1"
             },
             "funding": [
                 {
@@ -4824,20 +4825,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-08-22T14:34:08+00:00"
+            "time": "2026-05-19T18:30:48+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "2.9.0",
+            "version": "2.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "7d0ed42f28e42d61352a7a79de682e5e67fec884"
+                "reference": "d5ddaf5743c42a61cb6100f83dc9d5a2bafe75ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/7d0ed42f28e42d61352a7a79de682e5e67fec884",
-                "reference": "7d0ed42f28e42d61352a7a79de682e5e67fec884",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/d5ddaf5743c42a61cb6100f83dc9d5a2bafe75ca",
+                "reference": "d5ddaf5743c42a61cb6100f83dc9d5a2bafe75ca",
                 "shasum": ""
             },
             "require": {
@@ -4852,9 +4853,9 @@
             },
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.8.2",
-                "http-interop/http-factory-tests": "0.9.0",
+                "http-interop/http-factory-tests": "1.1.0",
                 "jshttp/mime-db": "1.54.0.1",
-                "phpunit/phpunit": "^8.5.44 || ^9.6.25"
+                "phpunit/phpunit": "^8.5.52 || ^9.6.34"
             },
             "suggest": {
                 "laminas/laminas-httphandlerrunner": "Emit PSR-7 responses"
@@ -4925,7 +4926,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
-                "source": "https://github.com/guzzle/psr7/tree/2.9.0"
+                "source": "https://github.com/guzzle/psr7/tree/2.10.0"
             },
             "funding": [
                 {
@@ -4941,7 +4942,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-03-10T16:41:02+00:00"
+            "time": "2026-05-19T17:32:11+00:00"
         },
         {
             "name": "hidehalo/nanoid-php",
@@ -25138,20 +25139,20 @@
         },
         {
             "name": "spryker/agent-auth-rest-api",
-            "version": "1.2.0",
+            "version": "1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/agent-auth-rest-api.git",
-                "reference": "cef680f7cba5f340d4788a014cb129002b73f933"
+                "reference": "02f38fe32aba38b6a53f1465048d41774d7c5a2c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/agent-auth-rest-api/zipball/cef680f7cba5f340d4788a014cb129002b73f933",
-                "reference": "cef680f7cba5f340d4788a014cb129002b73f933",
+                "url": "https://api.github.com/repos/spryker/agent-auth-rest-api/zipball/02f38fe32aba38b6a53f1465048d41774d7c5a2c",
+                "reference": "02f38fe32aba38b6a53f1465048d41774d7c5a2c",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/agent": "^1.3.0",
                 "spryker/auth-rest-api-extension": "^1.1.0",
                 "spryker/glue-application": "^1.9.0",
@@ -25164,8 +25165,12 @@
                 "spryker/util-encoding": "^2.0.0"
             },
             "require-dev": {
+                "spryker/api-platform": "*",
                 "spryker/code-sniffer": "*",
                 "spryker/testify": "*"
+            },
+            "suggest": {
+                "spryker/api-platform": "Use this package when you want to use the API Platform code."
             },
             "type": "library",
             "extra": {
@@ -25184,9 +25189,9 @@
             ],
             "description": "AgentAuthRestApi module",
             "support": {
-                "source": "https://github.com/spryker/agent-auth-rest-api/tree/1.2.0"
+                "source": "https://github.com/spryker/agent-auth-rest-api/tree/1.3.1"
             },
-            "time": "2025-08-04T08:52:14+00:00"
+            "time": "2026-05-08T10:23:27+00:00"
         },
         {
             "name": "spryker/agent-dashboard-merchant-portal-gui",
@@ -25881,16 +25886,16 @@
         },
         {
             "name": "spryker/api-platform",
-            "version": "1.2.0",
+            "version": "1.10.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/api-platform.git",
-                "reference": "77818ae940384b518bdc357f3a20e376bd3fe1db"
+                "reference": "efd8ba44f1df4b7eb71cff21cedd9d0c1f78544f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/api-platform/zipball/77818ae940384b518bdc357f3a20e376bd3fe1db",
-                "reference": "77818ae940384b518bdc357f3a20e376bd3fe1db",
+                "url": "https://api.github.com/repos/spryker/api-platform/zipball/efd8ba44f1df4b7eb71cff21cedd9d0c1f78544f",
+                "reference": "efd8ba44f1df4b7eb71cff21cedd9d0c1f78544f",
                 "shasum": ""
             },
             "require": {
@@ -25912,6 +25917,7 @@
                 "api-platform/validator": "^4.2.0",
                 "friendsofcxml/cxml-php": "^2.0.0",
                 "php": ">=8.3",
+                "spryker/entity-tag": "^1.0.0",
                 "spryker/glossary-storage": "^1.0.0",
                 "spryker/kernel": "^3.48.0",
                 "spryker/locale": "^4.0.0",
@@ -25959,9 +25965,9 @@
                 "spryker"
             ],
             "support": {
-                "source": "https://github.com/spryker/api-platform/tree/1.2.0"
+                "source": "https://github.com/spryker/api-platform/tree/1.10.1"
             },
-            "time": "2026-04-27T11:13:35+00:00"
+            "time": "2026-05-19T16:40:58+00:00"
         },
         {
             "name": "spryker/app-catalog-gui",
@@ -26296,16 +26302,16 @@
         },
         {
             "name": "spryker/auth-rest-api",
-            "version": "2.16.1",
+            "version": "2.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/auth-rest-api.git",
-                "reference": "8268467a002616cff6e39f4fc8e39d35810327a8"
+                "reference": "db82f5e7766279a0b6f148da2d0f82e9db7e1a22"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/auth-rest-api/zipball/8268467a002616cff6e39f4fc8e39d35810327a8",
-                "reference": "8268467a002616cff6e39f4fc8e39d35810327a8",
+                "url": "https://api.github.com/repos/spryker/auth-rest-api/zipball/db82f5e7766279a0b6f148da2d0f82e9db7e1a22",
+                "reference": "db82f5e7766279a0b6f148da2d0f82e9db7e1a22",
                 "shasum": ""
             },
             "require": {
@@ -26322,6 +26328,7 @@
                 "spryker/zed-request": "^3.0.0"
             },
             "require-dev": {
+                "spryker/api-platform": "*",
                 "spryker/code-sniffer": "*",
                 "spryker/container": "*",
                 "spryker/customer": "*",
@@ -26331,6 +26338,7 @@
                 "spryker/testify": "*"
             },
             "suggest": {
+                "spryker/api-platform": "Use this package when you want to use the API Platform code.",
                 "spryker/oauth-customer-connector": "If you want to authorize customers via Oauth module.",
                 "spryker/rest-request-validator": "If you want to use rest request validation."
             },
@@ -26352,9 +26360,9 @@
             ],
             "description": "AuthRestApi module",
             "support": {
-                "source": "https://github.com/spryker/auth-rest-api/tree/2.16.1"
+                "source": "https://github.com/spryker/auth-rest-api/tree/2.17.0"
             },
-            "time": "2026-04-22T14:13:05+00:00"
+            "time": "2026-05-04T18:35:46+00:00"
         },
         {
             "name": "spryker/auth-rest-api-extension",
@@ -27964,20 +27972,20 @@
         },
         {
             "name": "spryker/cart-codes-rest-api",
-            "version": "1.6.0",
+            "version": "1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/cart-codes-rest-api.git",
-                "reference": "75553b7de708d0def3d53249b273228c3da8f039"
+                "reference": "06fe0c5633fe6ee5034a67a516a69171a4a92c67"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/cart-codes-rest-api/zipball/75553b7de708d0def3d53249b273228c3da8f039",
-                "reference": "75553b7de708d0def3d53249b273228c3da8f039",
+                "url": "https://api.github.com/repos/spryker/cart-codes-rest-api/zipball/06fe0c5633fe6ee5034a67a516a69171a4a92c67",
+                "reference": "06fe0c5633fe6ee5034a67a516a69171a4a92c67",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/cart-code": "^1.1.0",
                 "spryker/cart-codes-rest-api-extension": "^1.0.0",
                 "spryker/carts-rest-api": "^5.7.0",
@@ -27989,6 +27997,7 @@
                 "spryker/zed-request": "^3.0.0"
             },
             "require-dev": {
+                "spryker/api-platform": "^1.0.0",
                 "spryker/code-sniffer": "*",
                 "spryker/container": "*",
                 "spryker/customer": "*",
@@ -27997,6 +28006,9 @@
                 "spryker/quote": "*",
                 "spryker/store": "*",
                 "spryker/testify": "*"
+            },
+            "suggest": {
+                "spryker/api-platform": "If you want to expose CartCodesRestApi resources through the API Platform stack."
             },
             "type": "library",
             "extra": {
@@ -28015,9 +28027,9 @@
             ],
             "description": "CartCodesRestApi module",
             "support": {
-                "source": "https://github.com/spryker/cart-codes-rest-api/tree/1.6.0"
+                "source": "https://github.com/spryker/cart-codes-rest-api/tree/1.7.0"
             },
-            "time": "2025-08-04T08:52:14+00:00"
+            "time": "2026-05-11T09:24:54+00:00"
         },
         {
             "name": "spryker/cart-codes-rest-api-extension",
@@ -28381,20 +28393,20 @@
         },
         {
             "name": "spryker/cart-permission-groups-rest-api",
-            "version": "1.3.0",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/cart-permission-groups-rest-api.git",
-                "reference": "4d1a15f34e7dda86009dd72d77dfd19623f4d9ed"
+                "reference": "ff5d51cfda25fbc303988f7576b33ac4a984d376"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/cart-permission-groups-rest-api/zipball/4d1a15f34e7dda86009dd72d77dfd19623f4d9ed",
-                "reference": "4d1a15f34e7dda86009dd72d77dfd19623f4d9ed",
+                "url": "https://api.github.com/repos/spryker/cart-permission-groups-rest-api/zipball/ff5d51cfda25fbc303988f7576b33ac4a984d376",
+                "reference": "ff5d51cfda25fbc303988f7576b33ac4a984d376",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/glue-application": "^1.15.0",
                 "spryker/glue-application-extension": "^1.0.0",
                 "spryker/kernel": "^3.30.0",
@@ -28403,7 +28415,11 @@
                 "spryker/transfer": "^3.42.0"
             },
             "require-dev": {
+                "spryker/api-platform": "^1.0.0",
                 "spryker/code-sniffer": "*"
+            },
+            "suggest": {
+                "spryker/api-platform": "If you want to expose CartPermissionGroupsRestApi resources through the API Platform stack."
             },
             "type": "library",
             "extra": {
@@ -28422,9 +28438,9 @@
             ],
             "description": "CartPermissionGroupsRestApi module",
             "support": {
-                "source": "https://github.com/spryker/cart-permission-groups-rest-api/tree/1.3.0"
+                "source": "https://github.com/spryker/cart-permission-groups-rest-api/tree/1.4.0"
             },
-            "time": "2025-08-04T08:52:14+00:00"
+            "time": "2026-05-11T09:24:54+00:00"
         },
         {
             "name": "spryker/cart-reorder",
@@ -28527,16 +28543,16 @@
         },
         {
             "name": "spryker/cart-reorder-rest-api",
-            "version": "1.2.0",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/cart-reorder-rest-api.git",
-                "reference": "5ff5ed16c72a36e1f8ca379978bf72ba7ab3870b"
+                "reference": "512e41dafb5a568caa5e279e0cb1b9d80d0b8abd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/cart-reorder-rest-api/zipball/5ff5ed16c72a36e1f8ca379978bf72ba7ab3870b",
-                "reference": "5ff5ed16c72a36e1f8ca379978bf72ba7ab3870b",
+                "url": "https://api.github.com/repos/spryker/cart-reorder-rest-api/zipball/512e41dafb5a568caa5e279e0cb1b9d80d0b8abd",
+                "reference": "512e41dafb5a568caa5e279e0cb1b9d80d0b8abd",
                 "shasum": ""
             },
             "require": {
@@ -28544,6 +28560,7 @@
                 "spryker/cart-reorder": "^1.0.0",
                 "spryker/cart-reorder-rest-api-extension": "^1.1.0",
                 "spryker/carts-rest-api": "^5.18.0",
+                "spryker/container": "^1.10.0",
                 "spryker/glossary-storage": "^1.0.0",
                 "spryker/glue-application": "^1.47.0",
                 "spryker/glue-application-extension": "^1.0.0",
@@ -28552,9 +28569,11 @@
                 "spryker/transfer": "^3.42.0"
             },
             "require-dev": {
+                "spryker/api-platform": "^1.0.0",
                 "spryker/code-sniffer": "*"
             },
             "suggest": {
+                "spryker/api-platform": "If you want to expose CartReorderRestApi resources through the API Platform stack.",
                 "spryker/auth-rest-api": "If you want to authorize and authenticate customers via access tokens.",
                 "spryker/authorization": "If you want to use multiple authorization strategies, minimum required version: 1.2.0.",
                 "spryker/rest-request-validator": "If you want to use rest request validation."
@@ -28576,9 +28595,9 @@
             ],
             "description": "CartReorderRestApi module",
             "support": {
-                "source": "https://github.com/spryker/cart-reorder-rest-api/tree/1.2.0"
+                "source": "https://github.com/spryker/cart-reorder-rest-api/tree/1.3.0"
             },
-            "time": "2025-10-06T10:45:32+00:00"
+            "time": "2026-05-11T09:24:54+00:00"
         },
         {
             "name": "spryker/cart-reorder-rest-api-extension",
@@ -28669,16 +28688,16 @@
         },
         {
             "name": "spryker/carts-rest-api",
-            "version": "5.24.0",
+            "version": "5.27.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/carts-rest-api.git",
-                "reference": "26ffdb055d443df9331c97a7fca9e3e523002165"
+                "reference": "761e87aae8b2e9c938d18bf133b88a121d265534"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/carts-rest-api/zipball/26ffdb055d443df9331c97a7fca9e3e523002165",
-                "reference": "26ffdb055d443df9331c97a7fca9e3e523002165",
+                "url": "https://api.github.com/repos/spryker/carts-rest-api/zipball/761e87aae8b2e9c938d18bf133b88a121d265534",
+                "reference": "761e87aae8b2e9c938d18bf133b88a121d265534",
                 "shasum": ""
             },
             "require": {
@@ -28701,6 +28720,7 @@
                 "spryker/zed-request": "^3.6.0"
             },
             "require-dev": {
+                "spryker/api-platform": "^1.0.0",
                 "spryker/calculation": "*",
                 "spryker/code-sniffer": "*",
                 "spryker/container": "*",
@@ -28714,6 +28734,7 @@
                 "spryker/testify": "*"
             },
             "suggest": {
+                "spryker/api-platform": "If you want to expose CartsRestApi resources through the API Platform stack.",
                 "spryker/auth-rest-api": "If you want to authorize and authenticate customers via access tokens.",
                 "spryker/authorization": "If you want to use multiple authorization strategies, minimum required version: 1.2.0.",
                 "spryker/rest-request-validator": "If you want to use rest request validation.",
@@ -28736,9 +28757,9 @@
             ],
             "description": "CartsRestApi module",
             "support": {
-                "source": "https://github.com/spryker/carts-rest-api/tree/5.24.0"
+                "source": "https://github.com/spryker/carts-rest-api/tree/5.27.1"
             },
-            "time": "2026-01-20T08:43:52+00:00"
+            "time": "2026-05-19T21:00:52+00:00"
         },
         {
             "name": "spryker/carts-rest-api-extension",
@@ -28987,20 +29008,20 @@
         },
         {
             "name": "spryker/catalog-search-rest-api",
-            "version": "2.12.0",
+            "version": "2.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/catalog-search-rest-api.git",
-                "reference": "4b00754427e5ed15bfc44412456603f0a947942a"
+                "reference": "70c774d05def83fc633951fb072e9e4419f0d733"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/catalog-search-rest-api/zipball/4b00754427e5ed15bfc44412456603f0a947942a",
-                "reference": "4b00754427e5ed15bfc44412456603f0a947942a",
+                "url": "https://api.github.com/repos/spryker/catalog-search-rest-api/zipball/70c774d05def83fc633951fb072e9e4419f0d733",
+                "reference": "70c774d05def83fc633951fb072e9e4419f0d733",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/catalog": "^5.2.0",
                 "spryker/currency": "^3.14.0 || ^4.0.0",
                 "spryker/glossary-storage": "^1.0.0",
@@ -29012,11 +29033,15 @@
                 "spryker/transfer": "^3.42.0"
             },
             "require-dev": {
+                "spryker/api-platform": "*",
                 "spryker/code-sniffer": "*",
                 "spryker/product-label-storage": "*",
                 "spryker/product-review": "*",
                 "spryker/propel": "*",
                 "spryker/testify": "*"
+            },
+            "suggest": {
+                "spryker/api-platform": "If you want to use API Platform for REST API endpoints."
             },
             "type": "library",
             "extra": {
@@ -29035,22 +29060,22 @@
             ],
             "description": "CatalogSearchRestApi module",
             "support": {
-                "source": "https://github.com/spryker/catalog-search-rest-api/tree/2.12.0"
+                "source": "https://github.com/spryker/catalog-search-rest-api/tree/2.13.0"
             },
-            "time": "2025-08-04T08:52:14+00:00"
+            "time": "2026-05-05T17:28:09+00:00"
         },
         {
             "name": "spryker/categories-rest-api",
-            "version": "1.9.0",
+            "version": "1.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/categories-rest-api.git",
-                "reference": "475fd45ec996a85b795c3bab12003ab3ab18c886"
+                "reference": "2a52cac1683bf87f494c77f05f16925594cd4997"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/categories-rest-api/zipball/475fd45ec996a85b795c3bab12003ab3ab18c886",
-                "reference": "475fd45ec996a85b795c3bab12003ab3ab18c886",
+                "url": "https://api.github.com/repos/spryker/categories-rest-api/zipball/2a52cac1683bf87f494c77f05f16925594cd4997",
+                "reference": "2a52cac1683bf87f494c77f05f16925594cd4997",
                 "shasum": ""
             },
             "require": {
@@ -29091,9 +29116,9 @@
             ],
             "description": "CategoriesRestApi module",
             "support": {
-                "source": "https://github.com/spryker/categories-rest-api/tree/1.9.0"
+                "source": "https://github.com/spryker/categories-rest-api/tree/1.10.0"
             },
-            "time": "2026-04-24T12:37:46+00:00"
+            "time": "2026-05-05T12:31:55+00:00"
         },
         {
             "name": "spryker/category",
@@ -30197,16 +30222,16 @@
         },
         {
             "name": "spryker/checkout-rest-api",
-            "version": "3.13.1",
+            "version": "3.15.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/checkout-rest-api.git",
-                "reference": "553f607ecd82a439c5d7bfabf3c5634f8766b519"
+                "reference": "4b597d5b3d5cf715b93f93bdd1d51acde1930528"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/checkout-rest-api/zipball/553f607ecd82a439c5d7bfabf3c5634f8766b519",
-                "reference": "553f607ecd82a439c5d7bfabf3c5634f8766b519",
+                "url": "https://api.github.com/repos/spryker/checkout-rest-api/zipball/4b597d5b3d5cf715b93f93bdd1d51acde1930528",
+                "reference": "4b597d5b3d5cf715b93f93bdd1d51acde1930528",
                 "shasum": ""
             },
             "require": {
@@ -30217,6 +30242,7 @@
                 "spryker/checkout": "^4.0.0 || ^6.0.0",
                 "spryker/checkout-extension": "^1.5.0",
                 "spryker/checkout-rest-api-extension": "^1.5.0",
+                "spryker/container": "^1.10.0",
                 "spryker/customer": "^7.11.0",
                 "spryker/glossary-storage": "^1.0.0",
                 "spryker/glue-application": "^1.2.0",
@@ -30231,11 +30257,15 @@
                 "spryker/zed-request": "^3.0.0"
             },
             "require-dev": {
+                "spryker/api-platform": "*",
                 "spryker/code-sniffer": "*",
                 "spryker/product": "*",
                 "spryker/propel": "*",
                 "spryker/stock": "*",
                 "spryker/testify": "*"
+            },
+            "suggest": {
+                "spryker/api-platform": "Required to expose API Platform resources."
             },
             "type": "library",
             "extra": {
@@ -30254,9 +30284,9 @@
             ],
             "description": "CheckoutRestApi module",
             "support": {
-                "source": "https://github.com/spryker/checkout-rest-api/tree/3.13.1"
+                "source": "https://github.com/spryker/checkout-rest-api/tree/3.15.1"
             },
-            "time": "2025-11-11T16:30:09+00:00"
+            "time": "2026-05-19T16:40:58+00:00"
         },
         {
             "name": "spryker/checkout-rest-api-extension",
@@ -33451,22 +33481,22 @@
         },
         {
             "name": "spryker/companies-rest-api",
-            "version": "1.4.0",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/companies-rest-api.git",
-                "reference": "0dcab21712744d86de454abbf638732f2cbf0eeb"
+                "reference": "6959feb00b0ac63482f8b0f3fe23dcd05751132a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/companies-rest-api/zipball/0dcab21712744d86de454abbf638732f2cbf0eeb",
-                "reference": "0dcab21712744d86de454abbf638732f2cbf0eeb",
+                "url": "https://api.github.com/repos/spryker/companies-rest-api/zipball/6959feb00b0ac63482f8b0f3fe23dcd05751132a",
+                "reference": "6959feb00b0ac63482f8b0f3fe23dcd05751132a",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.3",
                 "spryker/cart-reorder-rest-api-extension": "^1.1.0",
-                "spryker/company": "^1.4.0",
+                "spryker/company": "^1.9.0",
                 "spryker/glue-application": "^1.15.0",
                 "spryker/glue-application-extension": "^1.0.0",
                 "spryker/kernel": "^3.30.0",
@@ -33475,10 +33505,12 @@
                 "spryker/uuid-behavior": "^1.0.0"
             },
             "require-dev": {
+                "spryker/api-platform": "*",
                 "spryker/code-sniffer": "*",
                 "spryker/testify": "*"
             },
             "suggest": {
+                "spryker/api-platform": "Use this package when you want to use the API Platform code.",
                 "spryker/auth-rest-api": "If you want to authorize and authenticate customers via access tokens."
             },
             "type": "library",
@@ -33498,26 +33530,26 @@
             ],
             "description": "CompaniesRestApi module",
             "support": {
-                "source": "https://github.com/spryker/companies-rest-api/tree/1.4.0"
+                "source": "https://github.com/spryker/companies-rest-api/tree/1.6.0"
             },
-            "time": "2025-10-06T10:45:32+00:00"
+            "time": "2026-05-15T15:04:51+00:00"
         },
         {
             "name": "spryker/company",
-            "version": "1.8.1",
+            "version": "1.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/company.git",
-                "reference": "bca64bb1b2a37967d40590baa9af12966f6d1a5c"
+                "reference": "1a537afc2ecf7ab9a071b47f05e14aae9e714e33"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/company/zipball/bca64bb1b2a37967d40590baa9af12966f6d1a5c",
-                "reference": "bca64bb1b2a37967d40590baa9af12966f6d1a5c",
+                "url": "https://api.github.com/repos/spryker/company/zipball/1a537afc2ecf7ab9a071b47f05e14aae9e714e33",
+                "reference": "1a537afc2ecf7ab9a071b47f05e14aae9e714e33",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/company-extension": "^1.0.0",
                 "spryker/kernel": "^3.30.0",
                 "spryker/propel-orm": "^1.13.0",
@@ -33552,22 +33584,22 @@
             ],
             "description": "Company module",
             "support": {
-                "source": "https://github.com/spryker/company/tree/1.8.1"
+                "source": "https://github.com/spryker/company/tree/1.9.0"
             },
-            "time": "2025-10-02T07:51:37+00:00"
+            "time": "2026-05-15T15:04:51+00:00"
         },
         {
             "name": "spryker/company-business-unit",
-            "version": "2.20.0",
+            "version": "2.21.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/company-business-unit.git",
-                "reference": "cb3f075980dea53b41f82c8d00404143cdbe2c60"
+                "reference": "8e8eceb16ca19bac928ed0355104ce03eed75e55"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/company-business-unit/zipball/cb3f075980dea53b41f82c8d00404143cdbe2c60",
-                "reference": "cb3f075980dea53b41f82c8d00404143cdbe2c60",
+                "url": "https://api.github.com/repos/spryker/company-business-unit/zipball/8e8eceb16ca19bac928ed0355104ce03eed75e55",
+                "reference": "8e8eceb16ca19bac928ed0355104ce03eed75e55",
                 "shasum": ""
             },
             "require": {
@@ -33609,26 +33641,26 @@
             ],
             "description": "CompanyBusinessUnit module",
             "support": {
-                "source": "https://github.com/spryker/company-business-unit/tree/2.20.0"
+                "source": "https://github.com/spryker/company-business-unit/tree/2.21.0"
             },
-            "time": "2025-12-22T14:09:03+00:00"
+            "time": "2026-05-15T15:04:51+00:00"
         },
         {
             "name": "spryker/company-business-unit-addresses-rest-api",
-            "version": "1.3.0",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/company-business-unit-addresses-rest-api.git",
-                "reference": "abb9884aa449fe95b7a22492dfb4e688ae3a56f7"
+                "reference": "4265f6bce41f38609906cd45ab7ed4ba0a833004"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/company-business-unit-addresses-rest-api/zipball/abb9884aa449fe95b7a22492dfb4e688ae3a56f7",
-                "reference": "abb9884aa449fe95b7a22492dfb4e688ae3a56f7",
+                "url": "https://api.github.com/repos/spryker/company-business-unit-addresses-rest-api/zipball/4265f6bce41f38609906cd45ab7ed4ba0a833004",
+                "reference": "4265f6bce41f38609906cd45ab7ed4ba0a833004",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/checkout-rest-api-extension": "^1.5.0",
                 "spryker/company-business-units-rest-api-extension": "^1.0.0",
                 "spryker/company-unit-address": "^1.8.0",
@@ -33641,11 +33673,13 @@
                 "spryker/uuid-behavior": "^1.0.0"
             },
             "require-dev": {
+                "spryker/api-platform": "*",
                 "spryker/code-sniffer": "*",
                 "spryker/container": "*",
                 "spryker/testify": "*"
             },
             "suggest": {
+                "spryker/api-platform": "If you want to expose CompanyBusinessUnitAddressesRestApi resources through the API Platform stack.",
                 "spryker/auth-rest-api": "If you want to authorize and authenticate customers via access tokens."
             },
             "type": "library",
@@ -33665,9 +33699,9 @@
             ],
             "description": "CompanyBusinessUnitAddressesRestApi module",
             "support": {
-                "source": "https://github.com/spryker/company-business-unit-addresses-rest-api/tree/1.3.0"
+                "source": "https://github.com/spryker/company-business-unit-addresses-rest-api/tree/1.4.0"
             },
-            "time": "2025-08-04T08:52:14+00:00"
+            "time": "2026-05-15T15:04:51+00:00"
         },
         {
             "name": "spryker/company-business-unit-data-import",
@@ -33977,22 +34011,22 @@
         },
         {
             "name": "spryker/company-business-units-rest-api",
-            "version": "1.5.0",
+            "version": "1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/company-business-units-rest-api.git",
-                "reference": "7eaa74ba523d984b1472515657a00bd84a5d7c06"
+                "reference": "db00c32e416dd1f917a0c5233607e67c9b811bab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/company-business-units-rest-api/zipball/7eaa74ba523d984b1472515657a00bd84a5d7c06",
-                "reference": "7eaa74ba523d984b1472515657a00bd84a5d7c06",
+                "url": "https://api.github.com/repos/spryker/company-business-units-rest-api/zipball/db00c32e416dd1f917a0c5233607e67c9b811bab",
+                "reference": "db00c32e416dd1f917a0c5233607e67c9b811bab",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.3",
                 "spryker/cart-reorder-rest-api-extension": "^1.1.0",
-                "spryker/company-business-unit": "^2.10.0",
+                "spryker/company-business-unit": "^2.21.0",
                 "spryker/company-business-units-rest-api-extension": "^1.0.0",
                 "spryker/customers-rest-api-extension": "^1.1.0",
                 "spryker/glue-application": "^1.15.0",
@@ -34003,10 +34037,12 @@
                 "spryker/uuid-behavior": "^1.0.0"
             },
             "require-dev": {
+                "spryker/api-platform": "^1.0.0",
                 "spryker/code-sniffer": "*",
                 "spryker/testify": "*"
             },
             "suggest": {
+                "spryker/api-platform": "Required when the API Platform want to be used",
                 "spryker/auth-rest-api": "If you want to authorize and authenticate customers via access tokens."
             },
             "type": "library",
@@ -34026,9 +34062,9 @@
             ],
             "description": "CompanyBusinessUnitsRestApi module",
             "support": {
-                "source": "https://github.com/spryker/company-business-units-rest-api/tree/1.5.0"
+                "source": "https://github.com/spryker/company-business-units-rest-api/tree/1.7.0"
             },
-            "time": "2025-10-06T10:45:32+00:00"
+            "time": "2026-05-15T15:04:51+00:00"
         },
         {
             "name": "spryker/company-business-units-rest-api-extension",
@@ -34310,16 +34346,16 @@
         },
         {
             "name": "spryker/company-role",
-            "version": "1.12.0",
+            "version": "1.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/company-role.git",
-                "reference": "1c8540723880c598947d534fe2e6ec2ff54c831b"
+                "reference": "48216e22e7cae56f700522c84f5750fe425820eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/company-role/zipball/1c8540723880c598947d534fe2e6ec2ff54c831b",
-                "reference": "1c8540723880c598947d534fe2e6ec2ff54c831b",
+                "url": "https://api.github.com/repos/spryker/company-role/zipball/48216e22e7cae56f700522c84f5750fe425820eb",
+                "reference": "48216e22e7cae56f700522c84f5750fe425820eb",
                 "shasum": ""
             },
             "require": {
@@ -34361,9 +34397,9 @@
             ],
             "description": "CompanyRole module",
             "support": {
-                "source": "https://github.com/spryker/company-role/tree/1.12.0"
+                "source": "https://github.com/spryker/company-role/tree/1.13.0"
             },
-            "time": "2025-12-22T14:09:03+00:00"
+            "time": "2026-05-15T15:04:51+00:00"
         },
         {
             "name": "spryker/company-role-data-import",
@@ -34559,21 +34595,21 @@
         },
         {
             "name": "spryker/company-roles-rest-api",
-            "version": "1.2.0",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/company-roles-rest-api.git",
-                "reference": "5a48b7abbf743cb7d95afcebef3463ded3c6975f"
+                "reference": "a6e2546e09d315e3a8fad291ec1d0ce2a461d009"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/company-roles-rest-api/zipball/5a48b7abbf743cb7d95afcebef3463ded3c6975f",
-                "reference": "5a48b7abbf743cb7d95afcebef3463ded3c6975f",
+                "url": "https://api.github.com/repos/spryker/company-roles-rest-api/zipball/a6e2546e09d315e3a8fad291ec1d0ce2a461d009",
+                "reference": "a6e2546e09d315e3a8fad291ec1d0ce2a461d009",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
-                "spryker/company-role": "^1.5.0",
+                "php": ">=8.3",
+                "spryker/company-role": "^1.13.0",
                 "spryker/glue-application": "^1.15.0",
                 "spryker/glue-application-extension": "^1.0.0",
                 "spryker/kernel": "^3.30.0",
@@ -34582,9 +34618,11 @@
                 "spryker/uuid-behavior": "^1.0.0"
             },
             "require-dev": {
+                "spryker/api-platform": "^1.0.0",
                 "spryker/code-sniffer": "*"
             },
             "suggest": {
+                "spryker/api-platform": "If you want to expose CompanyRolesRestApi resources through the API Platform stack.",
                 "spryker/auth-rest-api": "If you want to authorize and authenticate customers via access tokens."
             },
             "type": "library",
@@ -34604,9 +34642,9 @@
             ],
             "description": "CompanyRolesRestApi module",
             "support": {
-                "source": "https://github.com/spryker/company-roles-rest-api/tree/1.2.0"
+                "source": "https://github.com/spryker/company-roles-rest-api/tree/1.3.0"
             },
-            "time": "2025-08-04T08:52:14+00:00"
+            "time": "2026-05-15T15:04:51+00:00"
         },
         {
             "name": "spryker/company-sales-connector",
@@ -35180,20 +35218,20 @@
         },
         {
             "name": "spryker/company-user-auth-rest-api",
-            "version": "2.2.0",
+            "version": "2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/company-user-auth-rest-api.git",
-                "reference": "c548562f9cce430e848e4a4cfe4fde11e6b7e530"
+                "reference": "abe2ed1df0d8834434ffd96924397897c01dd984"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/company-user-auth-rest-api/zipball/c548562f9cce430e848e4a4cfe4fde11e6b7e530",
-                "reference": "c548562f9cce430e848e4a4cfe4fde11e6b7e530",
+                "url": "https://api.github.com/repos/spryker/company-user-auth-rest-api/zipball/abe2ed1df0d8834434ffd96924397897c01dd984",
+                "reference": "abe2ed1df0d8834434ffd96924397897c01dd984",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/auth-rest-api-extension": "^1.0.0",
                 "spryker/company-user-storage": "^1.0.0",
                 "spryker/glue-application": "^1.15.0",
@@ -35203,7 +35241,11 @@
                 "spryker/symfony": "^3.0.0"
             },
             "require-dev": {
+                "spryker/api-platform": "*",
                 "spryker/code-sniffer": "*"
+            },
+            "suggest": {
+                "spryker/api-platform": "Required to expose API Platform resources."
             },
             "type": "library",
             "extra": {
@@ -35222,9 +35264,9 @@
             ],
             "description": "CompanyUserAuthRestApi module",
             "support": {
-                "source": "https://github.com/spryker/company-user-auth-rest-api/tree/2.2.0"
+                "source": "https://github.com/spryker/company-user-auth-rest-api/tree/2.3.0"
             },
-            "time": "2025-08-04T10:29:10+00:00"
+            "time": "2026-05-07T08:02:58+00:00"
         },
         {
             "name": "spryker/company-user-data-import",
@@ -35594,20 +35636,20 @@
         },
         {
             "name": "spryker/company-users-rest-api",
-            "version": "2.8.0",
+            "version": "2.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/company-users-rest-api.git",
-                "reference": "f8f824ab743aff708704895d1e7e661f955c448f"
+                "reference": "455b2df2b82676d715b4b0933ca8f8153c1d227c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/company-users-rest-api/zipball/f8f824ab743aff708704895d1e7e661f955c448f",
-                "reference": "f8f824ab743aff708704895d1e7e661f955c448f",
+                "url": "https://api.github.com/repos/spryker/company-users-rest-api/zipball/455b2df2b82676d715b4b0933ca8f8153c1d227c",
+                "reference": "455b2df2b82676d715b4b0933ca8f8153c1d227c",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/carts-rest-api-extension": "^1.2.0",
                 "spryker/checkout-rest-api-extension": "^1.4.0",
                 "spryker/company": "^1.0.0",
@@ -35623,15 +35665,20 @@
                 "spryker/oauth-customer-connector-extension": "^1.0.0",
                 "spryker/propel-orm": "^1.0.0",
                 "spryker/symfony": "^3.0.0",
+                "spryker/transfer": "^3.25.0",
                 "spryker/uuid-behavior": "^1.0.0",
                 "spryker/zed-request": "^3.0.0"
             },
             "require-dev": {
+                "spryker/api-platform": "*",
                 "spryker/code-sniffer": "*",
                 "spryker/container": "*",
                 "spryker/propel": "*",
                 "spryker/store": "*",
                 "spryker/testify": "*"
+            },
+            "suggest": {
+                "spryker/api-platform": "Required when the API Platform want to be used"
             },
             "type": "library",
             "extra": {
@@ -35650,9 +35697,9 @@
             ],
             "description": "CompanyUsersRestApi module",
             "support": {
-                "source": "https://github.com/spryker/company-users-rest-api/tree/2.8.0"
+                "source": "https://github.com/spryker/company-users-rest-api/tree/2.12.0"
             },
-            "time": "2025-08-04T10:29:10+00:00"
+            "time": "2026-05-15T15:04:51+00:00"
         },
         {
             "name": "spryker/composer-autoload-plugin",
@@ -38292,20 +38339,20 @@
         },
         {
             "name": "spryker/customer-access-rest-api",
-            "version": "1.2.0",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/customer-access-rest-api.git",
-                "reference": "853c50a0ef0f4a3cdb164244f73db9cc3ec3fc7c"
+                "reference": "9838cdb2ddcfd0d07525482f0ae1f459f70c3b65"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/customer-access-rest-api/zipball/853c50a0ef0f4a3cdb164244f73db9cc3ec3fc7c",
-                "reference": "853c50a0ef0f4a3cdb164244f73db9cc3ec3fc7c",
+                "url": "https://api.github.com/repos/spryker/customer-access-rest-api/zipball/9838cdb2ddcfd0d07525482f0ae1f459f70c3b65",
+                "reference": "9838cdb2ddcfd0d07525482f0ae1f459f70c3b65",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/customer-access-storage": "^1.0.0",
                 "spryker/glue-application": "^1.9.0",
                 "spryker/glue-application-extension": "^1.1.0",
@@ -38313,7 +38360,11 @@
                 "spryker/symfony": "^3.0.0"
             },
             "require-dev": {
+                "spryker/api-platform": "*",
                 "spryker/code-sniffer": "*"
+            },
+            "suggest": {
+                "spryker/api-platform": "Required to expose API Platform resources."
             },
             "type": "library",
             "extra": {
@@ -38332,9 +38383,9 @@
             ],
             "description": "CustomerAccessRestApi module",
             "support": {
-                "source": "https://github.com/spryker/customer-access-rest-api/tree/1.2.0"
+                "source": "https://github.com/spryker/customer-access-rest-api/tree/1.4.0"
             },
-            "time": "2025-08-04T10:29:10+00:00"
+            "time": "2026-05-19T16:40:58+00:00"
         },
         {
             "name": "spryker/customer-access-storage",
@@ -38983,20 +39034,20 @@
         },
         {
             "name": "spryker/customers-rest-api",
-            "version": "1.26.0",
+            "version": "1.30.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/customers-rest-api.git",
-                "reference": "86714f1fdf6fe90ee1b67b2f9d34e2085e18321c"
+                "reference": "9adbf50e2c211ffbd819ec2ee955929f2007790b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/customers-rest-api/zipball/86714f1fdf6fe90ee1b67b2f9d34e2085e18321c",
-                "reference": "86714f1fdf6fe90ee1b67b2f9d34e2085e18321c",
+                "url": "https://api.github.com/repos/spryker/customers-rest-api/zipball/9adbf50e2c211ffbd819ec2ee955929f2007790b",
+                "reference": "9adbf50e2c211ffbd819ec2ee955929f2007790b",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/checkout-rest-api-extension": "^1.5.0",
                 "spryker/customer": "^7.30.0",
                 "spryker/customers-rest-api-extension": "^1.1.0",
@@ -39008,15 +39059,18 @@
                 "spryker/session": "^3.2.0 || ^4.0.0",
                 "spryker/shipments-rest-api-extension": "^1.0.0",
                 "spryker/symfony": "^3.0.0",
+                "spryker/transfer": "^3.42.0",
                 "spryker/util-text": "^1.1.0",
                 "spryker/uuid-behavior": "^1.0.0"
             },
             "require-dev": {
+                "spryker/api-platform": "*",
                 "spryker/code-sniffer": "*",
                 "spryker/container": "*",
                 "spryker/testify": "*"
             },
             "suggest": {
+                "spryker/api-platform": "ADD SUGGEST DESCRIPTION",
                 "spryker/auth-rest-api": "If you want to authorize and authenticate customers via access tokens.",
                 "spryker/authorization": "If you want to use multiple authorization strategies, minimum required version: 1.2.0.",
                 "spryker/rest-request-validator": "If you want to use rest request validation.",
@@ -39039,9 +39093,9 @@
             ],
             "description": "CustomersRestApi module",
             "support": {
-                "source": "https://github.com/spryker/customers-rest-api/tree/1.26.0"
+                "source": "https://github.com/spryker/customers-rest-api/tree/1.30.1"
             },
-            "time": "2025-08-04T10:29:10+00:00"
+            "time": "2026-05-19T16:40:58+00:00"
         },
         {
             "name": "spryker/customers-rest-api-extension",
@@ -39972,20 +40026,20 @@
         },
         {
             "name": "spryker/discount-promotions-rest-api",
-            "version": "1.5.0",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/discount-promotions-rest-api.git",
-                "reference": "87134e2afb3e552373795f49c749f383bb1b3ff2"
+                "reference": "fea68e30f247c8d7e2a1efeeec1441e66ea30d45"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/discount-promotions-rest-api/zipball/87134e2afb3e552373795f49c749f383bb1b3ff2",
-                "reference": "87134e2afb3e552373795f49c749f383bb1b3ff2",
+                "url": "https://api.github.com/repos/spryker/discount-promotions-rest-api/zipball/fea68e30f247c8d7e2a1efeeec1441e66ea30d45",
+                "reference": "fea68e30f247c8d7e2a1efeeec1441e66ea30d45",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/cart-codes-rest-api-extension": "^1.0.0",
                 "spryker/carts-rest-api-extension": "^1.5.0",
                 "spryker/discount-promotion": "^4.4.0",
@@ -39996,10 +40050,14 @@
                 "spryker/uuid-behavior": "^1.0.0"
             },
             "require-dev": {
+                "spryker/api-platform": "^1.0.0",
                 "spryker/code-sniffer": "*",
                 "spryker/discount": "*",
                 "spryker/propel": "*",
                 "spryker/testify": "*"
+            },
+            "suggest": {
+                "spryker/api-platform": "If you want to expose DiscountPromotionsRestApi resources through the API Platform stack."
             },
             "type": "library",
             "extra": {
@@ -40018,9 +40076,9 @@
             ],
             "description": "DiscountPromotionsRestApi module",
             "support": {
-                "source": "https://github.com/spryker/discount-promotions-rest-api/tree/1.5.0"
+                "source": "https://github.com/spryker/discount-promotions-rest-api/tree/1.6.0"
             },
-            "time": "2025-08-04T10:29:10+00:00"
+            "time": "2026-05-11T09:24:54+00:00"
         },
         {
             "name": "spryker/doctrine-inflector",
@@ -40240,20 +40298,20 @@
         },
         {
             "name": "spryker/documentation-generator-rest-api",
-            "version": "1.19.0",
+            "version": "1.19.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/documentation-generator-rest-api.git",
-                "reference": "3678c44b3223d1875afd7664a27ce245c33a79d1"
+                "reference": "08574c9620f61d9cfcd7a14c1ba8fde39d50cd6d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/documentation-generator-rest-api/zipball/3678c44b3223d1875afd7664a27ce245c33a79d1",
-                "reference": "3678c44b3223d1875afd7664a27ce245c33a79d1",
+                "url": "https://api.github.com/repos/spryker/documentation-generator-rest-api/zipball/08574c9620f61d9cfcd7a14c1ba8fde39d50cd6d",
+                "reference": "08574c9620f61d9cfcd7a14c1ba8fde39d50cd6d",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/doctrine-inflector": "^1.0.0 || ^2.0.0",
                 "spryker/documentation-generator-rest-api-extension": "^1.0.0",
                 "spryker/glue-application": "^1.3.0",
@@ -40284,9 +40342,9 @@
             ],
             "description": "DocumentationGeneratorRestApi module",
             "support": {
-                "source": "https://github.com/spryker/documentation-generator-rest-api/tree/1.19.0"
+                "source": "https://github.com/spryker/documentation-generator-rest-api/tree/1.19.1"
             },
-            "time": "2025-08-04T04:29:14+00:00"
+            "time": "2026-05-06T11:38:01+00:00"
         },
         {
             "name": "spryker/documentation-generator-rest-api-extension",
@@ -41970,16 +42028,16 @@
         },
         {
             "name": "spryker/glue-application",
-            "version": "1.73.2",
+            "version": "1.75.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/glue-application.git",
-                "reference": "a84692b20391efb2748f8b3249fcd0c8ff2f3097"
+                "reference": "9252084b8e0092cedc7f9e0617f6913452d88bcb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/glue-application/zipball/a84692b20391efb2748f8b3249fcd0c8ff2f3097",
-                "reference": "a84692b20391efb2748f8b3249fcd0c8ff2f3097",
+                "url": "https://api.github.com/repos/spryker/glue-application/zipball/9252084b8e0092cedc7f9e0617f6913452d88bcb",
+                "reference": "9252084b8e0092cedc7f9e0617f6913452d88bcb",
                 "shasum": ""
             },
             "require": {
@@ -42003,6 +42061,7 @@
                 "symfony/framework-bundle": "^6.0.0 || ^7.0.0"
             },
             "require-dev": {
+                "spryker/api-platform": "^1.0.0",
                 "spryker/code-sniffer": "*",
                 "spryker/config": "*",
                 "spryker/event-dispatcher": "*",
@@ -42010,6 +42069,7 @@
                 "spryker/testify": "*"
             },
             "suggest": {
+                "spryker/api-platform": "If you want migrated endpoints to replay legacy ControllerBeforeAction and RestUserValidator plugin chains via the API Platform compatibility bridge.",
                 "spryker/config": "If you want to use Config.",
                 "spryker/event-dispatcher": "If you want to use the EventDispatcher plugin.",
                 "spryker/silex": "If you want to use ServiceProvider."
@@ -42032,9 +42092,9 @@
             ],
             "description": "GlueApplication module",
             "support": {
-                "source": "https://github.com/spryker/glue-application/tree/1.73.2"
+                "source": "https://github.com/spryker/glue-application/tree/1.75.1"
             },
-            "time": "2026-05-04T09:37:55+00:00"
+            "time": "2026-05-18T09:43:37+00:00"
         },
         {
             "name": "spryker/glue-application-authorization-connector",
@@ -44428,16 +44488,16 @@
         },
         {
             "name": "spryker/merchant-categories-rest-api",
-            "version": "1.1.1",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/merchant-categories-rest-api.git",
-                "reference": "ec8a177ad2f8324c871af8cdd899215265b68fb2"
+                "reference": "be1010fbcd6a20a2a0519a541756574688d10368"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/merchant-categories-rest-api/zipball/ec8a177ad2f8324c871af8cdd899215265b68fb2",
-                "reference": "ec8a177ad2f8324c871af8cdd899215265b68fb2",
+                "url": "https://api.github.com/repos/spryker/merchant-categories-rest-api/zipball/be1010fbcd6a20a2a0519a541756574688d10368",
+                "reference": "be1010fbcd6a20a2a0519a541756574688d10368",
                 "shasum": ""
             },
             "require": {
@@ -44450,6 +44510,9 @@
             },
             "require-dev": {
                 "spryker/code-sniffer": "*"
+            },
+            "suggest": {
+                "spryker/api-platform": "Required to expose API Platform resources."
             },
             "type": "library",
             "extra": {
@@ -44468,9 +44531,9 @@
             ],
             "description": "MerchantCategoriesRestApi module",
             "support": {
-                "source": "https://github.com/spryker/merchant-categories-rest-api/tree/1.1.1"
+                "source": "https://github.com/spryker/merchant-categories-rest-api/tree/1.2.0"
             },
-            "time": "2026-04-27T13:13:39+00:00"
+            "time": "2026-05-08T10:23:27+00:00"
         },
         {
             "name": "spryker/merchant-category",
@@ -45411,16 +45474,16 @@
         },
         {
             "name": "spryker/merchant-opening-hours-rest-api",
-            "version": "1.2.1",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/merchant-opening-hours-rest-api.git",
-                "reference": "dc0975fc99bf6849c3cfbdf604766dc2b5ebfcb0"
+                "reference": "b5a05a49a2e2940f9bbfbc13bbab11a8bed181af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/merchant-opening-hours-rest-api/zipball/dc0975fc99bf6849c3cfbdf604766dc2b5ebfcb0",
-                "reference": "dc0975fc99bf6849c3cfbdf604766dc2b5ebfcb0",
+                "url": "https://api.github.com/repos/spryker/merchant-opening-hours-rest-api/zipball/b5a05a49a2e2940f9bbfbc13bbab11a8bed181af",
+                "reference": "b5a05a49a2e2940f9bbfbc13bbab11a8bed181af",
                 "shasum": ""
             },
             "require": {
@@ -45458,9 +45521,9 @@
             ],
             "description": "MerchantOpeningHoursRestApi module",
             "support": {
-                "source": "https://github.com/spryker/merchant-opening-hours-rest-api/tree/1.2.1"
+                "source": "https://github.com/spryker/merchant-opening-hours-rest-api/tree/1.3.0"
             },
-            "time": "2026-04-27T16:26:51+00:00"
+            "time": "2026-05-06T11:23:13+00:00"
         },
         {
             "name": "spryker/merchant-opening-hours-storage",
@@ -49160,16 +49223,16 @@
         },
         {
             "name": "spryker/merchants-rest-api",
-            "version": "1.2.0",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/merchants-rest-api.git",
-                "reference": "db6c650b37fbd3a5f8ff6c425a7d2aea866a007e"
+                "reference": "5c884c0c272142154ad73b5eb743f0896a0ee256"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/merchants-rest-api/zipball/db6c650b37fbd3a5f8ff6c425a7d2aea866a007e",
-                "reference": "db6c650b37fbd3a5f8ff6c425a7d2aea866a007e",
+                "url": "https://api.github.com/repos/spryker/merchants-rest-api/zipball/5c884c0c272142154ad73b5eb743f0896a0ee256",
+                "reference": "5c884c0c272142154ad73b5eb743f0896a0ee256",
                 "shasum": ""
             },
             "require": {
@@ -49210,9 +49273,9 @@
             ],
             "description": "MerchantsRestApi module",
             "support": {
-                "source": "https://github.com/spryker/merchants-rest-api/tree/1.2.0"
+                "source": "https://github.com/spryker/merchants-rest-api/tree/1.4.0"
             },
-            "time": "2026-04-24T12:37:46+00:00"
+            "time": "2026-05-19T16:40:58+00:00"
         },
         {
             "name": "spryker/merchants-rest-api-extension",
@@ -50403,20 +50466,20 @@
         },
         {
             "name": "spryker/navigations-rest-api",
-            "version": "2.2.0",
+            "version": "2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/navigations-rest-api.git",
-                "reference": "a4212c4d3ed67af1c3f4af2007577bbc7fe93f6f"
+                "reference": "fa793e714ad4168cde806bf6e663eb2177449c30"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/navigations-rest-api/zipball/a4212c4d3ed67af1c3f4af2007577bbc7fe93f6f",
-                "reference": "a4212c4d3ed67af1c3f4af2007577bbc7fe93f6f",
+                "url": "https://api.github.com/repos/spryker/navigations-rest-api/zipball/fa793e714ad4168cde806bf6e663eb2177449c30",
+                "reference": "fa793e714ad4168cde806bf6e663eb2177449c30",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/glue-application": "^1.9.0",
                 "spryker/glue-application-extension": "^1.0.0",
                 "spryker/kernel": "^3.30.0",
@@ -50426,7 +50489,11 @@
                 "spryker/url-storage": "^1.9.0"
             },
             "require-dev": {
+                "spryker/api-platform": "*",
                 "spryker/code-sniffer": "*"
+            },
+            "suggest": {
+                "spryker/api-platform": "If you want to use API Platform for REST API endpoints."
             },
             "type": "library",
             "extra": {
@@ -50445,9 +50512,9 @@
             ],
             "description": "NavigationsRestApi module",
             "support": {
-                "source": "https://github.com/spryker/navigations-rest-api/tree/2.2.0"
+                "source": "https://github.com/spryker/navigations-rest-api/tree/2.3.0"
             },
-            "time": "2025-08-04T10:53:26+00:00"
+            "time": "2026-05-05T12:31:55+00:00"
         },
         {
             "name": "spryker/newsletter",
@@ -52071,20 +52138,20 @@
         },
         {
             "name": "spryker/order-amendments-rest-api",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/order-amendments-rest-api.git",
-                "reference": "7df0f1f70a09e0585c8679fd874b05480808ce36"
+                "reference": "6ac3272d55609cffc1992d79d563ad3cb9b0bc89"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/order-amendments-rest-api/zipball/7df0f1f70a09e0585c8679fd874b05480808ce36",
-                "reference": "7df0f1f70a09e0585c8679fd874b05480808ce36",
+                "url": "https://api.github.com/repos/spryker/order-amendments-rest-api/zipball/6ac3272d55609cffc1992d79d563ad3cb9b0bc89",
+                "reference": "6ac3272d55609cffc1992d79d563ad3cb9b0bc89",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/cart-reorder-rest-api-extension": "^1.0.0",
                 "spryker/carts-rest-api-extension": "^1.7.0",
                 "spryker/glue-application": "^1.0.0",
@@ -52094,11 +52161,13 @@
                 "spryker/transfer": "^3.42.0"
             },
             "require-dev": {
+                "spryker/api-platform": "^1.0.0",
                 "spryker/code-sniffer": "*",
                 "spryker/container": "*",
                 "spryker/testify": "*"
             },
             "suggest": {
+                "spryker/api-platform": "Required to expose API Platform resources.",
                 "spryker/auth-rest-api": "If you want to authorize and authenticate customers via access tokens.",
                 "spryker/authorization": "If you want to use multiple authorization strategies, minimum required version: 1.2.0.",
                 "spryker/rest-request-validator": "If you want to use rest request validation."
@@ -52120,9 +52189,9 @@
             ],
             "description": "OrderAmendmentsRestApi module",
             "support": {
-                "source": "https://github.com/spryker/order-amendments-rest-api/tree/1.1.0"
+                "source": "https://github.com/spryker/order-amendments-rest-api/tree/1.2.0"
             },
-            "time": "2025-08-04T11:20:12+00:00"
+            "time": "2026-05-14T13:58:00+00:00"
         },
         {
             "name": "spryker/order-custom-reference",
@@ -52321,20 +52390,20 @@
         },
         {
             "name": "spryker/order-payments-rest-api",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/order-payments-rest-api.git",
-                "reference": "79749d1a8e684db2400b062a598ce4dcaf9a82de"
+                "reference": "e08d7b9d47878efe4d250eaa44aec3d5a3596c93"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/order-payments-rest-api/zipball/79749d1a8e684db2400b062a598ce4dcaf9a82de",
-                "reference": "79749d1a8e684db2400b062a598ce4dcaf9a82de",
+                "url": "https://api.github.com/repos/spryker/order-payments-rest-api/zipball/e08d7b9d47878efe4d250eaa44aec3d5a3596c93",
+                "reference": "e08d7b9d47878efe4d250eaa44aec3d5a3596c93",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/glue-application": "^1.9.0",
                 "spryker/glue-application-extension": "^1.0.0",
                 "spryker/kernel": "^3.30.0",
@@ -52344,7 +52413,11 @@
                 "spryker/zed-request": "^3.6.0"
             },
             "require-dev": {
+                "spryker/api-platform": "*",
                 "spryker/code-sniffer": "*"
+            },
+            "suggest": {
+                "spryker/api-platform": "Required to expose API Platform resources."
             },
             "type": "library",
             "extra": {
@@ -52363,9 +52436,9 @@
             ],
             "description": "OrderPaymentsRestApi module",
             "support": {
-                "source": "https://github.com/spryker/order-payments-rest-api/tree/1.1.0"
+                "source": "https://github.com/spryker/order-payments-rest-api/tree/1.2.0"
             },
-            "time": "2025-08-04T11:20:12+00:00"
+            "time": "2026-05-05T14:25:34+00:00"
         },
         {
             "name": "spryker/order-payments-rest-api-extension",
@@ -52411,20 +52484,21 @@
         },
         {
             "name": "spryker/orders-rest-api",
-            "version": "4.13.0",
+            "version": "4.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/orders-rest-api.git",
-                "reference": "c10c8373cdeec8b8a3e19061710b48ff10cdb5fd"
+                "reference": "fec835c6db25e706db5a276544fc3b5d32d98ba5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/orders-rest-api/zipball/c10c8373cdeec8b8a3e19061710b48ff10cdb5fd",
-                "reference": "c10c8373cdeec8b8a3e19061710b48ff10cdb5fd",
+                "url": "https://api.github.com/repos/spryker/orders-rest-api/zipball/fec835c6db25e706db5a276544fc3b5d32d98ba5",
+                "reference": "fec835c6db25e706db5a276544fc3b5d32d98ba5",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
+                "spryker/container": "^1.10.0",
                 "spryker/glue-application": "^1.0.0",
                 "spryker/glue-application-authorization-connector-extension": "^1.0.0",
                 "spryker/glue-application-extension": "^1.0.0",
@@ -52435,9 +52509,11 @@
                 "spryker/transfer": "^3.42.0"
             },
             "require-dev": {
+                "spryker/api-platform": "^1.0.0",
                 "spryker/code-sniffer": "*"
             },
             "suggest": {
+                "spryker/api-platform": "Required to expose API Platform resources.",
                 "spryker/auth-rest-api": "If you want to authorize and authenticate customers via access tokens.",
                 "spryker/authorization": "If you want to use multiple authorization strategies, minimum required version: 1.2.0."
             },
@@ -52458,9 +52534,9 @@
             ],
             "description": "OrdersRestApi module",
             "support": {
-                "source": "https://github.com/spryker/orders-rest-api/tree/4.13.0"
+                "source": "https://github.com/spryker/orders-rest-api/tree/4.16.0"
             },
-            "time": "2025-08-04T11:20:12+00:00"
+            "time": "2026-05-19T16:40:58+00:00"
         },
         {
             "name": "spryker/orders-rest-api-extension",
@@ -52916,20 +52992,20 @@
         },
         {
             "name": "spryker/payments-rest-api",
-            "version": "1.6.0",
+            "version": "1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/payments-rest-api.git",
-                "reference": "9ccc9b54340843a57667a2a9566ceda618c0fc90"
+                "reference": "a490ea042e1ac9e65d6039fd7bf5a267029638dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/payments-rest-api/zipball/9ccc9b54340843a57667a2a9566ceda618c0fc90",
-                "reference": "9ccc9b54340843a57667a2a9566ceda618c0fc90",
+                "url": "https://api.github.com/repos/spryker/payments-rest-api/zipball/a490ea042e1ac9e65d6039fd7bf5a267029638dd",
+                "reference": "a490ea042e1ac9e65d6039fd7bf5a267029638dd",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/checkout-rest-api-extension": "^1.3.0",
                 "spryker/glue-application": "^1.0.0",
                 "spryker/glue-application-extension": "^1.0.0",
@@ -52940,9 +53016,13 @@
                 "spryker/transfer": "^3.42.0"
             },
             "require-dev": {
+                "spryker/api-platform": "*",
                 "spryker/code-sniffer": "*",
                 "spryker/container": "*",
                 "spryker/testify": "*"
+            },
+            "suggest": {
+                "spryker/api-platform": "Required to expose API Platform resources."
             },
             "type": "library",
             "extra": {
@@ -52961,9 +53041,9 @@
             ],
             "description": "PaymentsRestApi module",
             "support": {
-                "source": "https://github.com/spryker/payments-rest-api/tree/1.6.0"
+                "source": "https://github.com/spryker/payments-rest-api/tree/1.7.0"
             },
-            "time": "2025-08-04T11:20:12+00:00"
+            "time": "2026-05-05T10:56:16+00:00"
         },
         {
             "name": "spryker/permission",
@@ -56004,17 +56084,69 @@
             "time": "2026-04-07T09:30:41+00:00"
         },
         {
-            "name": "spryker/product-attributes-rest-api",
-            "version": "1.2.1",
+            "name": "spryker/product-attributes-backend-api",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/spryker/product-attributes-rest-api.git",
-                "reference": "0a81c1520ec2dbd6873a72aa1b93eecb7393c4a1"
+                "url": "https://github.com/spryker/product-attributes-backend-api.git",
+                "reference": "fdb28c3da6f5ae17899d5175a115ad605c4011e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-attributes-rest-api/zipball/0a81c1520ec2dbd6873a72aa1b93eecb7393c4a1",
-                "reference": "0a81c1520ec2dbd6873a72aa1b93eecb7393c4a1",
+                "url": "https://api.github.com/repos/spryker/product-attributes-backend-api/zipball/fdb28c3da6f5ae17899d5175a115ad605c4011e2",
+                "reference": "fdb28c3da6f5ae17899d5175a115ad605c4011e2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.3",
+                "spryker/glue-json-api-convention-extension": "^1.0.0",
+                "spryker/kernel": "^3.66.0",
+                "spryker/locale": "^3.0.0 || ^4.0.0",
+                "spryker/product-attribute": "^1.11.0",
+                "spryker/symfony": "^3.5.0",
+                "spryker/transfer": "^3.42.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/glue-application": "*",
+                "spryker/testify": "*"
+            },
+            "suggest": {
+                "spryker/glue-application": "If you want to use glue application plugins"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ProductAttributesBackendApi module",
+            "support": {
+                "source": "https://github.com/spryker/product-attributes-backend-api/tree/1.3.0"
+            },
+            "time": "2026-05-04T09:37:55+00:00"
+        },
+        {
+            "name": "spryker/product-attributes-rest-api",
+            "version": "1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/product-attributes-rest-api.git",
+                "reference": "a181c68cee2de403bbb7a97d4b1f201ddebc4077"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/product-attributes-rest-api/zipball/a181c68cee2de403bbb7a97d4b1f201ddebc4077",
+                "reference": "a181c68cee2de403bbb7a97d4b1f201ddebc4077",
                 "shasum": ""
             },
             "require": {
@@ -56028,7 +56160,11 @@
                 "spryker/transfer": "^3.42.0"
             },
             "require-dev": {
+                "spryker/api-platform": "*",
                 "spryker/code-sniffer": "*"
+            },
+            "suggest": {
+                "spryker/api-platform": "Use this package when you want to use the API Platform code."
             },
             "type": "library",
             "extra": {
@@ -56048,22 +56184,22 @@
             "description": "ProductAttributesRestApi module",
             "support": {
                 "issues": "https://github.com/spryker/product-attributes-rest-api/issues",
-                "source": "https://github.com/spryker/product-attributes-rest-api/tree/1.2.1"
+                "source": "https://github.com/spryker/product-attributes-rest-api/tree/1.3.0"
             },
-            "time": "2026-04-27T13:13:39+00:00"
+            "time": "2026-05-05T19:15:45+00:00"
         },
         {
             "name": "spryker/product-availabilities-rest-api",
-            "version": "4.4.0",
+            "version": "4.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-availabilities-rest-api.git",
-                "reference": "467c966fb9aa7b99a8d6cdef1f9efa05758ba83a"
+                "reference": "b3f146d9fd457d74c86cf1a9c9d0ebd57a646f2a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-availabilities-rest-api/zipball/467c966fb9aa7b99a8d6cdef1f9efa05758ba83a",
-                "reference": "467c966fb9aa7b99a8d6cdef1f9efa05758ba83a",
+                "url": "https://api.github.com/repos/spryker/product-availabilities-rest-api/zipball/b3f146d9fd457d74c86cf1a9c9d0ebd57a646f2a",
+                "reference": "b3f146d9fd457d74c86cf1a9c9d0ebd57a646f2a",
                 "shasum": ""
             },
             "require": {
@@ -56105,9 +56241,9 @@
             ],
             "description": "ProductAvailabilitiesRestApi module",
             "support": {
-                "source": "https://github.com/spryker/product-availabilities-rest-api/tree/4.4.0"
+                "source": "https://github.com/spryker/product-availabilities-rest-api/tree/4.5.0"
             },
-            "time": "2026-04-24T12:37:46+00:00"
+            "time": "2026-05-05T19:15:45+00:00"
         },
         {
             "name": "spryker/product-barcode",
@@ -56289,16 +56425,16 @@
         },
         {
             "name": "spryker/product-bundle-carts-rest-api",
-            "version": "1.3.0",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-bundle-carts-rest-api.git",
-                "reference": "c8b230f8531dad0ef0a713b137862c080cddd659"
+                "reference": "29cdee24f4b1e3ceef861ce15b663e6be5684119"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-bundle-carts-rest-api/zipball/c8b230f8531dad0ef0a713b137862c080cddd659",
-                "reference": "c8b230f8531dad0ef0a713b137862c080cddd659",
+                "url": "https://api.github.com/repos/spryker/product-bundle-carts-rest-api/zipball/29cdee24f4b1e3ceef861ce15b663e6be5684119",
+                "reference": "29cdee24f4b1e3ceef861ce15b663e6be5684119",
                 "shasum": ""
             },
             "require": {
@@ -56313,9 +56449,13 @@
                 "spryker/transfer": "^3.42.0"
             },
             "require-dev": {
+                "spryker/api-platform": "^1.0.0",
                 "spryker/code-sniffer": "*",
                 "spryker/container": "*",
                 "spryker/testify": "*"
+            },
+            "suggest": {
+                "spryker/api-platform": "If you want to expose ProductBundleCartsRestApi resources through the API Platform stack."
             },
             "type": "library",
             "extra": {
@@ -56334,9 +56474,9 @@
             ],
             "description": "ProductBundleCartsRestApi module",
             "support": {
-                "source": "https://github.com/spryker/product-bundle-carts-rest-api/tree/1.3.0"
+                "source": "https://github.com/spryker/product-bundle-carts-rest-api/tree/1.4.0"
             },
-            "time": "2026-01-20T08:43:52+00:00"
+            "time": "2026-05-11T09:24:54+00:00"
         },
         {
             "name": "spryker/product-bundle-discount-connector",
@@ -56510,16 +56650,16 @@
         },
         {
             "name": "spryker/product-bundles-rest-api",
-            "version": "1.2.0",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-bundles-rest-api.git",
-                "reference": "60a675b1229a22dae8ea26c3c4257ae471a55e20"
+                "reference": "3b483705001d1f8e5a5052415a4236f0687a587a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-bundles-rest-api/zipball/60a675b1229a22dae8ea26c3c4257ae471a55e20",
-                "reference": "60a675b1229a22dae8ea26c3c4257ae471a55e20",
+                "url": "https://api.github.com/repos/spryker/product-bundles-rest-api/zipball/3b483705001d1f8e5a5052415a4236f0687a587a",
+                "reference": "3b483705001d1f8e5a5052415a4236f0687a587a",
                 "shasum": ""
             },
             "require": {
@@ -56559,9 +56699,9 @@
             ],
             "description": "ProductBundlesRestApi module",
             "support": {
-                "source": "https://github.com/spryker/product-bundles-rest-api/tree/1.2.0"
+                "source": "https://github.com/spryker/product-bundles-rest-api/tree/1.3.0"
             },
-            "time": "2026-04-24T12:37:46+00:00"
+            "time": "2026-05-14T13:58:00+00:00"
         },
         {
             "name": "spryker/product-cart-connector",
@@ -57685,16 +57825,16 @@
         },
         {
             "name": "spryker/product-configurations-rest-api",
-            "version": "1.1.1",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-configurations-rest-api.git",
-                "reference": "d7ae13369f9fef6c871a7cf75f3ae47a148bd3ab"
+                "reference": "f3926946e08a30f0316f87f873561d1d146214d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-configurations-rest-api/zipball/d7ae13369f9fef6c871a7cf75f3ae47a148bd3ab",
-                "reference": "d7ae13369f9fef6c871a7cf75f3ae47a148bd3ab",
+                "url": "https://api.github.com/repos/spryker/product-configurations-rest-api/zipball/f3926946e08a30f0316f87f873561d1d146214d9",
+                "reference": "f3926946e08a30f0316f87f873561d1d146214d9",
                 "shasum": ""
             },
             "require": {
@@ -57715,6 +57855,7 @@
                 "spryker/testify": "*"
             },
             "suggest": {
+                "spryker/api-platform": "If you want to extend cart-items / guest-cart-items validation with productConfigurationInstance constraints under the API Platform stack.",
                 "spryker/carts-rest-api": "If you want to use plugins with CartsRestApi module.",
                 "spryker/products-rest-api": "If you want to use plugins with ProductsRestApi module."
             },
@@ -57735,9 +57876,9 @@
             ],
             "description": "ProductConfigurationsRestApi module",
             "support": {
-                "source": "https://github.com/spryker/product-configurations-rest-api/tree/1.1.1"
+                "source": "https://github.com/spryker/product-configurations-rest-api/tree/1.2.0"
             },
-            "time": "2026-04-27T13:13:39+00:00"
+            "time": "2026-05-11T09:24:54+00:00"
         },
         {
             "name": "spryker/product-configurations-rest-api-extension",
@@ -58675,16 +58816,16 @@
         },
         {
             "name": "spryker/product-image-sets-rest-api",
-            "version": "1.3.0",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-image-sets-rest-api.git",
-                "reference": "c4c5fe889fcb0e677c45b789da67afc113d36e64"
+                "reference": "a93ef63c9dc473af40c62ad4923f03ab61aef15c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-image-sets-rest-api/zipball/c4c5fe889fcb0e677c45b789da67afc113d36e64",
-                "reference": "c4c5fe889fcb0e677c45b789da67afc113d36e64",
+                "url": "https://api.github.com/repos/spryker/product-image-sets-rest-api/zipball/a93ef63c9dc473af40c62ad4923f03ab61aef15c",
+                "reference": "a93ef63c9dc473af40c62ad4923f03ab61aef15c",
                 "shasum": ""
             },
             "require": {
@@ -58722,9 +58863,9 @@
             ],
             "description": "ProductImageSetsRestApi module",
             "support": {
-                "source": "https://github.com/spryker/product-image-sets-rest-api/tree/1.3.0"
+                "source": "https://github.com/spryker/product-image-sets-rest-api/tree/1.4.0"
             },
-            "time": "2026-04-24T12:37:46+00:00"
+            "time": "2026-05-05T19:15:45+00:00"
         },
         {
             "name": "spryker/product-image-storage",
@@ -59149,16 +59290,16 @@
         },
         {
             "name": "spryker/product-labels-rest-api",
-            "version": "1.5.0",
+            "version": "1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-labels-rest-api.git",
-                "reference": "862dfa43e850057137d060d304a55e2038686fbc"
+                "reference": "15dc6e9b6ac0a5edf40a4933c649591e191b1262"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-labels-rest-api/zipball/862dfa43e850057137d060d304a55e2038686fbc",
-                "reference": "862dfa43e850057137d060d304a55e2038686fbc",
+                "url": "https://api.github.com/repos/spryker/product-labels-rest-api/zipball/15dc6e9b6ac0a5edf40a4933c649591e191b1262",
+                "reference": "15dc6e9b6ac0a5edf40a4933c649591e191b1262",
                 "shasum": ""
             },
             "require": {
@@ -59197,9 +59338,9 @@
             ],
             "description": "ProductLabelsRestApi module",
             "support": {
-                "source": "https://github.com/spryker/product-labels-rest-api/tree/1.5.0"
+                "source": "https://github.com/spryker/product-labels-rest-api/tree/1.7.0"
             },
-            "time": "2026-04-24T12:37:46+00:00"
+            "time": "2026-05-14T14:26:35+00:00"
         },
         {
             "name": "spryker/product-list",
@@ -59939,16 +60080,16 @@
         },
         {
             "name": "spryker/product-measurement-units-rest-api",
-            "version": "1.3.0",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-measurement-units-rest-api.git",
-                "reference": "7554cd15234cb6c5c47fd9798121c9178daa50ea"
+                "reference": "34bab40391a1eba946ff614d68c99728fc8b2007"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-measurement-units-rest-api/zipball/7554cd15234cb6c5c47fd9798121c9178daa50ea",
-                "reference": "7554cd15234cb6c5c47fd9798121c9178daa50ea",
+                "url": "https://api.github.com/repos/spryker/product-measurement-units-rest-api/zipball/34bab40391a1eba946ff614d68c99728fc8b2007",
+                "reference": "34bab40391a1eba946ff614d68c99728fc8b2007",
                 "shasum": ""
             },
             "require": {
@@ -59993,9 +60134,9 @@
             ],
             "description": "ProductMeasurementUnitsRestApi module",
             "support": {
-                "source": "https://github.com/spryker/product-measurement-units-rest-api/tree/1.3.0"
+                "source": "https://github.com/spryker/product-measurement-units-rest-api/tree/1.5.0"
             },
-            "time": "2026-04-24T12:37:46+00:00"
+            "time": "2026-05-19T21:00:52+00:00"
         },
         {
             "name": "spryker/product-merchant-commission-connector",
@@ -63433,20 +63574,21 @@
         },
         {
             "name": "spryker/product-prices-rest-api",
-            "version": "1.12.0",
+            "version": "1.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-prices-rest-api.git",
-                "reference": "07ebcf537de7252b489132fc2cde6e73e672590a"
+                "reference": "e9c0694decc4118d9e767e7de96c37342c17b497"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-prices-rest-api/zipball/07ebcf537de7252b489132fc2cde6e73e672590a",
-                "reference": "07ebcf537de7252b489132fc2cde6e73e672590a",
+                "url": "https://api.github.com/repos/spryker/product-prices-rest-api/zipball/e9c0694decc4118d9e767e7de96c37342c17b497",
+                "reference": "e9c0694decc4118d9e767e7de96c37342c17b497",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.3",
+                "spryker/container": "^1.0.0",
                 "spryker/currency": "^3.14.0 || ^4.0.0",
                 "spryker/glue-application": "^1.8.0",
                 "spryker/glue-application-extension": "^1.0.0",
@@ -63486,9 +63628,9 @@
             ],
             "description": "ProductPricesRestApi module",
             "support": {
-                "source": "https://github.com/spryker/product-prices-rest-api/tree/1.12.0"
+                "source": "https://github.com/spryker/product-prices-rest-api/tree/1.13.1"
             },
-            "time": "2026-04-24T12:37:46+00:00"
+            "time": "2026-05-19T16:40:58+00:00"
         },
         {
             "name": "spryker/product-prices-rest-api-extension",
@@ -64250,16 +64392,16 @@
         },
         {
             "name": "spryker/product-reviews-rest-api",
-            "version": "1.3.1",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-reviews-rest-api.git",
-                "reference": "edb7ce98d4cf126dfba1e3f339929f3846204419"
+                "reference": "32e2c20864766b77c9d749e6026bdc6c00fe53d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-reviews-rest-api/zipball/edb7ce98d4cf126dfba1e3f339929f3846204419",
-                "reference": "edb7ce98d4cf126dfba1e3f339929f3846204419",
+                "url": "https://api.github.com/repos/spryker/product-reviews-rest-api/zipball/32e2c20864766b77c9d749e6026bdc6c00fe53d0",
+                "reference": "32e2c20864766b77c9d749e6026bdc6c00fe53d0",
                 "shasum": ""
             },
             "require": {
@@ -64300,9 +64442,9 @@
             ],
             "description": "ProductReviewsRestApi module",
             "support": {
-                "source": "https://github.com/spryker/product-reviews-rest-api/tree/1.3.1"
+                "source": "https://github.com/spryker/product-reviews-rest-api/tree/1.4.0"
             },
-            "time": "2026-04-27T13:13:39+00:00"
+            "time": "2026-05-05T19:15:45+00:00"
         },
         {
             "name": "spryker/product-search",
@@ -64907,16 +65049,16 @@
         },
         {
             "name": "spryker/products-categories-resource-relationship",
-            "version": "1.5.0",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/products-categories-resource-relationship.git",
-                "reference": "9390348d989c62c50fa3cf7ca4267cb3a8f6c50f"
+                "reference": "01c96c997edf8b3d1210c415aac9b0afebab3380"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/products-categories-resource-relationship/zipball/9390348d989c62c50fa3cf7ca4267cb3a8f6c50f",
-                "reference": "9390348d989c62c50fa3cf7ca4267cb3a8f6c50f",
+                "url": "https://api.github.com/repos/spryker/products-categories-resource-relationship/zipball/01c96c997edf8b3d1210c415aac9b0afebab3380",
+                "reference": "01c96c997edf8b3d1210c415aac9b0afebab3380",
                 "shasum": ""
             },
             "require": {
@@ -64955,22 +65097,22 @@
             ],
             "description": "ProductsCategoriesResourceRelationship module",
             "support": {
-                "source": "https://github.com/spryker/products-categories-resource-relationship/tree/1.5.0"
+                "source": "https://github.com/spryker/products-categories-resource-relationship/tree/1.6.0"
             },
-            "time": "2026-04-24T12:37:46+00:00"
+            "time": "2026-05-05T12:31:55+00:00"
         },
         {
             "name": "spryker/products-rest-api",
-            "version": "2.17.1",
+            "version": "2.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/products-rest-api.git",
-                "reference": "b105909c3068f551490794980dc8e8a44b37b861"
+                "reference": "f66e71e74ec2307499e031dc8a11bfc01bf037d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/products-rest-api/zipball/b105909c3068f551490794980dc8e8a44b37b861",
-                "reference": "b105909c3068f551490794980dc8e8a44b37b861",
+                "url": "https://api.github.com/repos/spryker/products-rest-api/zipball/f66e71e74ec2307499e031dc8a11bfc01bf037d3",
+                "reference": "f66e71e74ec2307499e031dc8a11bfc01bf037d3",
                 "shasum": ""
             },
             "require": {
@@ -65012,9 +65154,9 @@
             ],
             "description": "ProductsRestApi module",
             "support": {
-                "source": "https://github.com/spryker/products-rest-api/tree/2.17.1"
+                "source": "https://github.com/spryker/products-rest-api/tree/2.20.0"
             },
-            "time": "2026-04-27T13:13:39+00:00"
+            "time": "2026-05-19T16:40:58+00:00"
         },
         {
             "name": "spryker/products-rest-api-extension",
@@ -71703,20 +71845,20 @@
         },
         {
             "name": "spryker/service-points-rest-api",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/service-points-rest-api.git",
-                "reference": "f6142117fbe34ccadd7a7027038ed58c40d37fd7"
+                "reference": "09402a01f34d300102947764324d8adad6a24ef4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/service-points-rest-api/zipball/f6142117fbe34ccadd7a7027038ed58c40d37fd7",
-                "reference": "f6142117fbe34ccadd7a7027038ed58c40d37fd7",
+                "url": "https://api.github.com/repos/spryker/service-points-rest-api/zipball/09402a01f34d300102947764324d8adad6a24ef4",
+                "reference": "09402a01f34d300102947764324d8adad6a24ef4",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/checkout-rest-api-extension": "^1.5.0",
                 "spryker/glossary-storage": "^1.5.0",
                 "spryker/glue-application": "^1.8.0",
@@ -71753,9 +71895,9 @@
             ],
             "description": "ServicePointsRestApi module",
             "support": {
-                "source": "https://github.com/spryker/service-points-rest-api/tree/1.1.0"
+                "source": "https://github.com/spryker/service-points-rest-api/tree/1.2.0"
             },
-            "time": "2025-08-15T12:11:43+00:00"
+            "time": "2026-05-19T07:16:05+00:00"
         },
         {
             "name": "spryker/session",
@@ -72369,20 +72511,20 @@
         },
         {
             "name": "spryker/shared-carts-rest-api",
-            "version": "1.3.0",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/shared-carts-rest-api.git",
-                "reference": "67383c695a0eb869bf31a0bbe85ace9fa7239c8b"
+                "reference": "a87779b40ba591c9b1cc4119366b70a11dec90d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/shared-carts-rest-api/zipball/67383c695a0eb869bf31a0bbe85ace9fa7239c8b",
-                "reference": "67383c695a0eb869bf31a0bbe85ace9fa7239c8b",
+                "url": "https://api.github.com/repos/spryker/shared-carts-rest-api/zipball/a87779b40ba591c9b1cc4119366b70a11dec90d2",
+                "reference": "a87779b40ba591c9b1cc4119366b70a11dec90d2",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/carts-rest-api-extension": "^1.4.0",
                 "spryker/glue-application": "^1.9.0",
                 "spryker/glue-application-extension": "^1.0.0",
@@ -72396,6 +72538,7 @@
                 "spryker/zed-request": "^3.7.0"
             },
             "require-dev": {
+                "spryker/api-platform": "^1.0.0",
                 "spryker/code-sniffer": "*",
                 "spryker/company": "*",
                 "spryker/company-business-unit": "*",
@@ -72406,6 +72549,9 @@
                 "spryker/propel": "*",
                 "spryker/store": "*",
                 "spryker/testify": "*"
+            },
+            "suggest": {
+                "spryker/api-platform": "If you want to expose SharedCartsRestApi resources through the API Platform stack."
             },
             "type": "library",
             "extra": {
@@ -72424,9 +72570,9 @@
             ],
             "description": "SharedCartsRestApi module",
             "support": {
-                "source": "https://github.com/spryker/shared-carts-rest-api/tree/1.3.0"
+                "source": "https://github.com/spryker/shared-carts-rest-api/tree/1.4.0"
             },
-            "time": "2025-08-15T12:11:43+00:00"
+            "time": "2026-05-11T09:24:54+00:00"
         },
         {
             "name": "spryker/shared-carts-rest-api-extension",
@@ -73360,20 +73506,20 @@
         },
         {
             "name": "spryker/shipment-types-rest-api",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/shipment-types-rest-api.git",
-                "reference": "9255d9a0c9af2eaccfb1e446bf074fcf728897bd"
+                "reference": "520688be4428aef6a6d030b77ffe0c83b63611b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/shipment-types-rest-api/zipball/9255d9a0c9af2eaccfb1e446bf074fcf728897bd",
-                "reference": "9255d9a0c9af2eaccfb1e446bf074fcf728897bd",
+                "url": "https://api.github.com/repos/spryker/shipment-types-rest-api/zipball/520688be4428aef6a6d030b77ffe0c83b63611b9",
+                "reference": "520688be4428aef6a6d030b77ffe0c83b63611b9",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/checkout-rest-api-extension": "^1.3.0",
                 "spryker/glossary-storage": "^1.5.0",
                 "spryker/glue-application": "^1.8.0",
@@ -73410,26 +73556,26 @@
             ],
             "description": "ShipmentTypesRestApi module",
             "support": {
-                "source": "https://github.com/spryker/shipment-types-rest-api/tree/1.1.0"
+                "source": "https://github.com/spryker/shipment-types-rest-api/tree/1.2.0"
             },
-            "time": "2025-08-15T12:11:43+00:00"
+            "time": "2026-05-18T09:43:37+00:00"
         },
         {
             "name": "spryker/shipments-rest-api",
-            "version": "1.15.0",
+            "version": "1.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/shipments-rest-api.git",
-                "reference": "ae2081b5e2e9d69c7588c5b45a6573dfa036fdfb"
+                "reference": "e6ef12b378f13c5e7d3e125173d44f129f8e7c75"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/shipments-rest-api/zipball/ae2081b5e2e9d69c7588c5b45a6573dfa036fdfb",
-                "reference": "ae2081b5e2e9d69c7588c5b45a6573dfa036fdfb",
+                "url": "https://api.github.com/repos/spryker/shipments-rest-api/zipball/e6ef12b378f13c5e7d3e125173d44f129f8e7c75",
+                "reference": "e6ef12b378f13c5e7d3e125173d44f129f8e7c75",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/checkout-rest-api-extension": "^1.5.0",
                 "spryker/glue-application": "^1.0.0",
                 "spryker/glue-application-extension": "^1.0.0",
@@ -73442,11 +73588,15 @@
                 "spryker/transfer": "^3.42.0"
             },
             "require-dev": {
+                "spryker/api-platform": "^1.0.0",
                 "spryker/code-sniffer": "*",
                 "spryker/container": "*",
                 "spryker/propel": "*",
                 "spryker/store": "*",
                 "spryker/testify": "*"
+            },
+            "suggest": {
+                "spryker/api-platform": "Required to expose API Platform resources."
             },
             "type": "library",
             "extra": {
@@ -73465,9 +73615,9 @@
             ],
             "description": "ShipmentsRestApi module",
             "support": {
-                "source": "https://github.com/spryker/shipments-rest-api/tree/1.15.0"
+                "source": "https://github.com/spryker/shipments-rest-api/tree/1.17.0"
             },
-            "time": "2025-08-15T12:11:43+00:00"
+            "time": "2026-05-18T09:43:37+00:00"
         },
         {
             "name": "spryker/shipments-rest-api-extension",
@@ -79309,16 +79459,16 @@
         },
         {
             "name": "symfony/amqp-messenger",
-            "version": "v6.4.34",
+            "version": "v6.4.39",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/amqp-messenger.git",
-                "reference": "abddf1e497dadb8bb7e980b60eb8e43356dcfd70"
+                "reference": "4272fd2d009562cdbf7ff53117792ed870b69199"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/amqp-messenger/zipball/abddf1e497dadb8bb7e980b60eb8e43356dcfd70",
-                "reference": "abddf1e497dadb8bb7e980b60eb8e43356dcfd70",
+                "url": "https://api.github.com/repos/symfony/amqp-messenger/zipball/4272fd2d009562cdbf7ff53117792ed870b69199",
+                "reference": "4272fd2d009562cdbf7ff53117792ed870b69199",
                 "shasum": ""
             },
             "require": {
@@ -79358,7 +79508,7 @@
             "description": "Symfony AMQP extension Messenger Bridge",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/amqp-messenger/tree/v6.4.34"
+                "source": "https://github.com/symfony/amqp-messenger/tree/v6.4.39"
             },
             "funding": [
                 {
@@ -79378,7 +79528,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-02-24T16:36:13+00:00"
+            "time": "2026-05-12T12:12:29+00:00"
         },
         {
             "name": "symfony/asset",
@@ -79455,16 +79605,16 @@
         },
         {
             "name": "symfony/cache",
-            "version": "v7.4.8",
+            "version": "v7.4.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/cache.git",
-                "reference": "467464da294734b0fb17e853e5712abc8470f819"
+                "reference": "8c5fbb4b5bc7a878f7ce66f1b7e29653c404984b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/cache/zipball/467464da294734b0fb17e853e5712abc8470f819",
-                "reference": "467464da294734b0fb17e853e5712abc8470f819",
+                "url": "https://api.github.com/repos/symfony/cache/zipball/8c5fbb4b5bc7a878f7ce66f1b7e29653c404984b",
+                "reference": "8c5fbb4b5bc7a878f7ce66f1b7e29653c404984b",
                 "shasum": ""
             },
             "require": {
@@ -79535,7 +79685,7 @@
                 "psr6"
             ],
             "support": {
-                "source": "https://github.com/symfony/cache/tree/v7.4.8"
+                "source": "https://github.com/symfony/cache/tree/v7.4.10"
             },
             "funding": [
                 {
@@ -79555,20 +79705,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-03-30T15:15:47+00:00"
+            "time": "2026-05-05T08:23:16+00:00"
         },
         {
             "name": "symfony/cache-contracts",
-            "version": "v3.6.0",
+            "version": "v3.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/cache-contracts.git",
-                "reference": "5d68a57d66910405e5c0b63d6f0af941e66fc868"
+                "reference": "225e8a254166bd3442e370c6f50145465db63831"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/cache-contracts/zipball/5d68a57d66910405e5c0b63d6f0af941e66fc868",
-                "reference": "5d68a57d66910405e5c0b63d6f0af941e66fc868",
+                "url": "https://api.github.com/repos/symfony/cache-contracts/zipball/225e8a254166bd3442e370c6f50145465db63831",
+                "reference": "225e8a254166bd3442e370c6f50145465db63831",
                 "shasum": ""
             },
             "require": {
@@ -79582,7 +79732,7 @@
                     "name": "symfony/contracts"
                 },
                 "branch-alias": {
-                    "dev-main": "3.6-dev"
+                    "dev-main": "3.7-dev"
                 }
             },
             "autoload": {
@@ -79615,7 +79765,7 @@
                 "standards"
             ],
             "support": {
-                "source": "https://github.com/symfony/cache-contracts/tree/v3.6.0"
+                "source": "https://github.com/symfony/cache-contracts/tree/v3.7.0"
             },
             "funding": [
                 {
@@ -79627,11 +79777,15 @@
                     "type": "github"
                 },
                 {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
                     "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-03-13T15:25:07+00:00"
+            "time": "2026-05-05T15:33:14+00:00"
         },
         {
             "name": "symfony/clock",
@@ -79713,16 +79867,16 @@
         },
         {
             "name": "symfony/config",
-            "version": "v6.4.34",
+            "version": "v6.4.37",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
-                "reference": "ce9cb0c0d281aaf188b802d4968e42bfb60701e9"
+                "reference": "ee615e8352db9c5f0b7b149154a3f654dc72042b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/config/zipball/ce9cb0c0d281aaf188b802d4968e42bfb60701e9",
-                "reference": "ce9cb0c0d281aaf188b802d4968e42bfb60701e9",
+                "url": "https://api.github.com/repos/symfony/config/zipball/ee615e8352db9c5f0b7b149154a3f654dc72042b",
+                "reference": "ee615e8352db9c5f0b7b149154a3f654dc72042b",
                 "shasum": ""
             },
             "require": {
@@ -79768,7 +79922,7 @@
             "description": "Helps you find, load, combine, autofill and validate configuration values of any kind",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/config/tree/v6.4.34"
+                "source": "https://github.com/symfony/config/tree/v6.4.37"
             },
             "funding": [
                 {
@@ -79788,20 +79942,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-02-24T17:34:50+00:00"
+            "time": "2026-04-29T10:19:30+00:00"
         },
         {
             "name": "symfony/console",
-            "version": "v6.4.36",
+            "version": "v6.4.39",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "9f481cfb580db8bcecc9b2d4c63f3e13df022ad5"
+                "reference": "c132f1215fe4aa45b70173cc00ce9a755dd31ec5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/9f481cfb580db8bcecc9b2d4c63f3e13df022ad5",
-                "reference": "9f481cfb580db8bcecc9b2d4c63f3e13df022ad5",
+                "url": "https://api.github.com/repos/symfony/console/zipball/c132f1215fe4aa45b70173cc00ce9a755dd31ec5",
+                "reference": "c132f1215fe4aa45b70173cc00ce9a755dd31ec5",
                 "shasum": ""
             },
             "require": {
@@ -79866,7 +80020,7 @@
                 "terminal"
             ],
             "support": {
-                "source": "https://github.com/symfony/console/tree/v6.4.36"
+                "source": "https://github.com/symfony/console/tree/v6.4.39"
             },
             "funding": [
                 {
@@ -79886,7 +80040,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-03-27T15:30:51+00:00"
+            "time": "2026-05-12T06:50:03+00:00"
         },
         {
             "name": "symfony/debug",
@@ -80043,16 +80197,16 @@
         },
         {
             "name": "symfony/deprecation-contracts",
-            "version": "v3.6.0",
+            "version": "v3.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/deprecation-contracts.git",
-                "reference": "63afe740e99a13ba87ec199bb07bbdee937a5b62"
+                "reference": "50f59d1f3ca46d41ac911f97a78626b6756af35b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/deprecation-contracts/zipball/63afe740e99a13ba87ec199bb07bbdee937a5b62",
-                "reference": "63afe740e99a13ba87ec199bb07bbdee937a5b62",
+                "url": "https://api.github.com/repos/symfony/deprecation-contracts/zipball/50f59d1f3ca46d41ac911f97a78626b6756af35b",
+                "reference": "50f59d1f3ca46d41ac911f97a78626b6756af35b",
                 "shasum": ""
             },
             "require": {
@@ -80065,7 +80219,7 @@
                     "name": "symfony/contracts"
                 },
                 "branch-alias": {
-                    "dev-main": "3.6-dev"
+                    "dev-main": "3.7-dev"
                 }
             },
             "autoload": {
@@ -80090,7 +80244,7 @@
             "description": "A generic function and convention to trigger deprecation notices",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/deprecation-contracts/tree/v3.6.0"
+                "source": "https://github.com/symfony/deprecation-contracts/tree/v3.7.0"
             },
             "funding": [
                 {
@@ -80102,11 +80256,15 @@
                     "type": "github"
                 },
                 {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
                     "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-09-25T14:21:43+00:00"
+            "time": "2026-04-13T15:52:40+00:00"
         },
         {
             "name": "symfony/doctrine-bridge",
@@ -80223,16 +80381,16 @@
         },
         {
             "name": "symfony/dotenv",
-            "version": "v6.4.36",
+            "version": "v6.4.39",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dotenv.git",
-                "reference": "cae019cc92a46fe9e498ea011107f26bdf5d897f"
+                "reference": "e25b00497fe75e318c01a72ea24c0a9c2837cd62"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dotenv/zipball/cae019cc92a46fe9e498ea011107f26bdf5d897f",
-                "reference": "cae019cc92a46fe9e498ea011107f26bdf5d897f",
+                "url": "https://api.github.com/repos/symfony/dotenv/zipball/e25b00497fe75e318c01a72ea24c0a9c2837cd62",
+                "reference": "e25b00497fe75e318c01a72ea24c0a9c2837cd62",
                 "shasum": ""
             },
             "require": {
@@ -80277,7 +80435,7 @@
                 "environment"
             ],
             "support": {
-                "source": "https://github.com/symfony/dotenv/tree/v6.4.36"
+                "source": "https://github.com/symfony/dotenv/tree/v6.4.39"
             },
             "funding": [
                 {
@@ -80297,7 +80455,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-03-30T07:25:04+00:00"
+            "time": "2026-05-06T14:07:03+00:00"
         },
         {
             "name": "symfony/error-handler",
@@ -80380,16 +80538,16 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v6.4.36",
+            "version": "v6.4.37",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
-                "reference": "fc828863e26ceec86e2513b5e46aa0b149d76b69"
+                "reference": "2e3bf817ba9347341ab15926700fb6320367c0e1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/fc828863e26ceec86e2513b5e46aa0b149d76b69",
-                "reference": "fc828863e26ceec86e2513b5e46aa0b149d76b69",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/2e3bf817ba9347341ab15926700fb6320367c0e1",
+                "reference": "2e3bf817ba9347341ab15926700fb6320367c0e1",
                 "shasum": ""
             },
             "require": {
@@ -80440,7 +80598,7 @@
             "description": "Provides tools that allow your application components to communicate with each other by dispatching events and listening to them",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/event-dispatcher/tree/v6.4.36"
+                "source": "https://github.com/symfony/event-dispatcher/tree/v6.4.37"
             },
             "funding": [
                 {
@@ -80460,20 +80618,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-03-30T11:18:01+00:00"
+            "time": "2026-04-13T14:11:12+00:00"
         },
         {
             "name": "symfony/event-dispatcher-contracts",
-            "version": "v3.6.0",
+            "version": "v3.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher-contracts.git",
-                "reference": "59eb412e93815df44f05f342958efa9f46b1e586"
+                "reference": "ccba7060602b7fed0b03c85bf025257f76d9ef32"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher-contracts/zipball/59eb412e93815df44f05f342958efa9f46b1e586",
-                "reference": "59eb412e93815df44f05f342958efa9f46b1e586",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher-contracts/zipball/ccba7060602b7fed0b03c85bf025257f76d9ef32",
+                "reference": "ccba7060602b7fed0b03c85bf025257f76d9ef32",
                 "shasum": ""
             },
             "require": {
@@ -80487,7 +80645,7 @@
                     "name": "symfony/contracts"
                 },
                 "branch-alias": {
-                    "dev-main": "3.6-dev"
+                    "dev-main": "3.7-dev"
                 }
             },
             "autoload": {
@@ -80520,7 +80678,7 @@
                 "standards"
             ],
             "support": {
-                "source": "https://github.com/symfony/event-dispatcher-contracts/tree/v3.6.0"
+                "source": "https://github.com/symfony/event-dispatcher-contracts/tree/v3.7.0"
             },
             "funding": [
                 {
@@ -80532,11 +80690,15 @@
                     "type": "github"
                 },
                 {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
                     "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-09-25T14:21:43+00:00"
+            "time": "2026-01-05T13:30:16+00:00"
         },
         {
             "name": "symfony/expression-language",
@@ -80608,16 +80770,16 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v6.4.34",
+            "version": "v6.4.39",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "01ffe0411b842f93c571e5c391f289c3fdd498c3"
+                "reference": "c507b077756b4e3e09adbbe7975fac81cd3722ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/01ffe0411b842f93c571e5c391f289c3fdd498c3",
-                "reference": "01ffe0411b842f93c571e5c391f289c3fdd498c3",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/c507b077756b4e3e09adbbe7975fac81cd3722ca",
+                "reference": "c507b077756b4e3e09adbbe7975fac81cd3722ca",
                 "shasum": ""
             },
             "require": {
@@ -80654,7 +80816,7 @@
             "description": "Provides basic utilities for the filesystem",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/filesystem/tree/v6.4.34"
+                "source": "https://github.com/symfony/filesystem/tree/v6.4.39"
             },
             "funding": [
                 {
@@ -80674,7 +80836,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-02-24T17:51:06+00:00"
+            "time": "2026-05-07T13:11:42+00:00"
         },
         {
             "name": "symfony/finder",
@@ -81141,16 +81303,16 @@
         },
         {
             "name": "symfony/http-client",
-            "version": "v6.4.36",
+            "version": "v6.4.37",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-client.git",
-                "reference": "1baea3a592ec5ee1f58de6548a034268d4946db6"
+                "reference": "d40d3ac56e549056fedfb257fa58395b74cf964d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-client/zipball/1baea3a592ec5ee1f58de6548a034268d4946db6",
-                "reference": "1baea3a592ec5ee1f58de6548a034268d4946db6",
+                "url": "https://api.github.com/repos/symfony/http-client/zipball/d40d3ac56e549056fedfb257fa58395b74cf964d",
+                "reference": "d40d3ac56e549056fedfb257fa58395b74cf964d",
                 "shasum": ""
             },
             "require": {
@@ -81215,7 +81377,7 @@
                 "http"
             ],
             "support": {
-                "source": "https://github.com/symfony/http-client/tree/v6.4.36"
+                "source": "https://github.com/symfony/http-client/tree/v6.4.37"
             },
             "funding": [
                 {
@@ -81235,20 +81397,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-03-23T20:48:09+00:00"
+            "time": "2026-04-29T06:37:06+00:00"
         },
         {
             "name": "symfony/http-client-contracts",
-            "version": "v3.6.0",
+            "version": "v3.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-client-contracts.git",
-                "reference": "75d7043853a42837e68111812f4d964b01e5101c"
+                "reference": "4a2d00c37651c0bdc2b9e1c773487a8bf4edb12d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-client-contracts/zipball/75d7043853a42837e68111812f4d964b01e5101c",
-                "reference": "75d7043853a42837e68111812f4d964b01e5101c",
+                "url": "https://api.github.com/repos/symfony/http-client-contracts/zipball/4a2d00c37651c0bdc2b9e1c773487a8bf4edb12d",
+                "reference": "4a2d00c37651c0bdc2b9e1c773487a8bf4edb12d",
                 "shasum": ""
             },
             "require": {
@@ -81261,7 +81423,7 @@
                     "name": "symfony/contracts"
                 },
                 "branch-alias": {
-                    "dev-main": "3.6-dev"
+                    "dev-main": "3.7-dev"
                 }
             },
             "autoload": {
@@ -81297,7 +81459,7 @@
                 "standards"
             ],
             "support": {
-                "source": "https://github.com/symfony/http-client-contracts/tree/v3.6.0"
+                "source": "https://github.com/symfony/http-client-contracts/tree/v3.7.0"
             },
             "funding": [
                 {
@@ -81309,11 +81471,15 @@
                     "type": "github"
                 },
                 {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
                     "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-04-29T11:18:49+00:00"
+            "time": "2026-03-06T13:17:50+00:00"
         },
         {
             "name": "symfony/http-foundation",
@@ -81603,16 +81769,16 @@
         },
         {
             "name": "symfony/lock",
-            "version": "v6.4.34",
+            "version": "v6.4.37",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/lock.git",
-                "reference": "e6459b9f9dea091eb67b070246b630e9f5b71516"
+                "reference": "fea3da8b58667d406bc253f1fce3166bc58b8a34"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/lock/zipball/e6459b9f9dea091eb67b070246b630e9f5b71516",
-                "reference": "e6459b9f9dea091eb67b070246b630e9f5b71516",
+                "url": "https://api.github.com/repos/symfony/lock/zipball/fea3da8b58667d406bc253f1fce3166bc58b8a34",
+                "reference": "fea3da8b58667d406bc253f1fce3166bc58b8a34",
                 "shasum": ""
             },
             "require": {
@@ -81662,7 +81828,7 @@
                 "semaphore"
             ],
             "support": {
-                "source": "https://github.com/symfony/lock/tree/v6.4.34"
+                "source": "https://github.com/symfony/lock/tree/v6.4.37"
             },
             "funding": [
                 {
@@ -81682,7 +81848,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-02-16T20:44:03+00:00"
+            "time": "2026-04-29T06:44:44+00:00"
         },
         {
             "name": "symfony/mailer",
@@ -81770,16 +81936,16 @@
         },
         {
             "name": "symfony/messenger",
-            "version": "v6.4.36",
+            "version": "v6.4.39",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/messenger.git",
-                "reference": "03e10c683a28b9580b0b025dc8f1094d9c3a11ec"
+                "reference": "c96b8feaeedd0b19a104e08e953e6068a35ce553"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/messenger/zipball/03e10c683a28b9580b0b025dc8f1094d9c3a11ec",
-                "reference": "03e10c683a28b9580b0b025dc8f1094d9c3a11ec",
+                "url": "https://api.github.com/repos/symfony/messenger/zipball/c96b8feaeedd0b19a104e08e953e6068a35ce553",
+                "reference": "c96b8feaeedd0b19a104e08e953e6068a35ce553",
                 "shasum": ""
             },
             "require": {
@@ -81837,7 +82003,7 @@
             "description": "Helps applications send and receive messages to/from other applications or via message queues",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/messenger/tree/v6.4.36"
+                "source": "https://github.com/symfony/messenger/tree/v6.4.39"
             },
             "funding": [
                 {
@@ -81857,20 +82023,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-03-19T04:54:44+00:00"
+            "time": "2026-05-11T12:57:53+00:00"
         },
         {
             "name": "symfony/mime",
-            "version": "v6.4.36",
+            "version": "v6.4.37",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/mime.git",
-                "reference": "9c31726137c70798f815fb98293ffb8a2a47694c"
+                "reference": "330077bc7fbe314758aff62834b758d06ac6d260"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/mime/zipball/9c31726137c70798f815fb98293ffb8a2a47694c",
-                "reference": "9c31726137c70798f815fb98293ffb8a2a47694c",
+                "url": "https://api.github.com/repos/symfony/mime/zipball/330077bc7fbe314758aff62834b758d06ac6d260",
+                "reference": "330077bc7fbe314758aff62834b758d06ac6d260",
                 "shasum": ""
             },
             "require": {
@@ -81926,7 +82092,7 @@
                 "mime-type"
             ],
             "support": {
-                "source": "https://github.com/symfony/mime/tree/v6.4.36"
+                "source": "https://github.com/symfony/mime/tree/v6.4.37"
             },
             "funding": [
                 {
@@ -81946,20 +82112,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-03-30T09:31:23+00:00"
+            "time": "2026-04-29T09:53:28+00:00"
         },
         {
             "name": "symfony/monolog-bridge",
-            "version": "v6.4.36",
+            "version": "v6.4.37",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/monolog-bridge.git",
-                "reference": "f517ebb675534e0f018708e00037867b268ad5b6"
+                "reference": "690d3d19bb1855c01a4227c8afc02e7c99de3f34"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/monolog-bridge/zipball/f517ebb675534e0f018708e00037867b268ad5b6",
-                "reference": "f517ebb675534e0f018708e00037867b268ad5b6",
+                "url": "https://api.github.com/repos/symfony/monolog-bridge/zipball/690d3d19bb1855c01a4227c8afc02e7c99de3f34",
+                "reference": "690d3d19bb1855c01a4227c8afc02e7c99de3f34",
                 "shasum": ""
             },
             "require": {
@@ -82009,7 +82175,7 @@
             "description": "Provides integration for Monolog with various Symfony components",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/monolog-bridge/tree/v6.4.36"
+                "source": "https://github.com/symfony/monolog-bridge/tree/v6.4.37"
             },
             "funding": [
                 {
@@ -82029,7 +82195,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-03-30T12:54:10+00:00"
+            "time": "2026-04-29T07:07:43+00:00"
         },
         {
             "name": "symfony/monolog-bundle",
@@ -83226,16 +83392,16 @@
         },
         {
             "name": "symfony/process",
-            "version": "v6.4.33",
+            "version": "v6.4.39",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "c46e854e79b52d07666e43924a20cb6dc546644e"
+                "reference": "6c93071cb8c91dce5a41960d125e019e64ef6cb5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/c46e854e79b52d07666e43924a20cb6dc546644e",
-                "reference": "c46e854e79b52d07666e43924a20cb6dc546644e",
+                "url": "https://api.github.com/repos/symfony/process/zipball/6c93071cb8c91dce5a41960d125e019e64ef6cb5",
+                "reference": "6c93071cb8c91dce5a41960d125e019e64ef6cb5",
                 "shasum": ""
             },
             "require": {
@@ -83267,7 +83433,7 @@
             "description": "Executes commands in sub-processes",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/process/tree/v6.4.33"
+                "source": "https://github.com/symfony/process/tree/v6.4.39"
             },
             "funding": [
                 {
@@ -83287,7 +83453,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-01-23T16:02:12+00:00"
+            "time": "2026-05-11T16:53:15+00:00"
         },
         {
             "name": "symfony/property-access",
@@ -83462,16 +83628,16 @@
         },
         {
             "name": "symfony/routing",
-            "version": "v6.4.34",
+            "version": "v6.4.37",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/routing.git",
-                "reference": "5ab3a3e1a03535ec5ca6ce2d39e4369a1096ae47"
+                "reference": "48035d186798d27d375d95aad37db8fe097e4048"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/routing/zipball/5ab3a3e1a03535ec5ca6ce2d39e4369a1096ae47",
-                "reference": "5ab3a3e1a03535ec5ca6ce2d39e4369a1096ae47",
+                "url": "https://api.github.com/repos/symfony/routing/zipball/48035d186798d27d375d95aad37db8fe097e4048",
+                "reference": "48035d186798d27d375d95aad37db8fe097e4048",
                 "shasum": ""
             },
             "require": {
@@ -83525,7 +83691,7 @@
                 "url"
             ],
             "support": {
-                "source": "https://github.com/symfony/routing/tree/v6.4.34"
+                "source": "https://github.com/symfony/routing/tree/v6.4.37"
             },
             "funding": [
                 {
@@ -83545,7 +83711,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-02-24T17:34:50+00:00"
+            "time": "2026-04-18T13:45:55+00:00"
         },
         {
             "name": "symfony/runtime",
@@ -83632,16 +83798,16 @@
         },
         {
             "name": "symfony/scheduler",
-            "version": "v6.4.32",
+            "version": "v6.4.39",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/scheduler.git",
-                "reference": "237fea46ee7f5cd92ac38ef528939dab8495b56d"
+                "reference": "430350aedd61781ae1392150cb6859337b4d1f07"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/scheduler/zipball/237fea46ee7f5cd92ac38ef528939dab8495b56d",
-                "reference": "237fea46ee7f5cd92ac38ef528939dab8495b56d",
+                "url": "https://api.github.com/repos/symfony/scheduler/zipball/430350aedd61781ae1392150cb6859337b4d1f07",
+                "reference": "430350aedd61781ae1392150cb6859337b4d1f07",
                 "shasum": ""
             },
             "require": {
@@ -83650,7 +83816,7 @@
             },
             "require-dev": {
                 "dragonmantank/cron-expression": "^3.1",
-                "symfony/cache": "^5.4|^6.0|^7.0",
+                "symfony/cache": "^6.4.36|^7.4.8",
                 "symfony/console": "^5.4|^6.0|^7.0",
                 "symfony/dependency-injection": "^5.4|^6.0|^7.0",
                 "symfony/event-dispatcher": "^5.4|^6.0|^7.0",
@@ -83692,7 +83858,7 @@
                 "scheduler"
             ],
             "support": {
-                "source": "https://github.com/symfony/scheduler/tree/v6.4.32"
+                "source": "https://github.com/symfony/scheduler/tree/v6.4.39"
             },
             "funding": [
                 {
@@ -83712,7 +83878,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-01-19T10:15:20+00:00"
+            "time": "2026-05-11T12:57:53+00:00"
         },
         {
             "name": "symfony/security-bundle",
@@ -83827,16 +83993,16 @@
         },
         {
             "name": "symfony/security-core",
-            "version": "v6.4.36",
+            "version": "v6.4.39",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/security-core.git",
-                "reference": "1b7db28bcc3655543abfe58764025aef563705cd"
+                "reference": "66517b3235ea8ceddc772d9dede40a83c7684a6b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/security-core/zipball/1b7db28bcc3655543abfe58764025aef563705cd",
-                "reference": "1b7db28bcc3655543abfe58764025aef563705cd",
+                "url": "https://api.github.com/repos/symfony/security-core/zipball/66517b3235ea8ceddc772d9dede40a83c7684a6b",
+                "reference": "66517b3235ea8ceddc772d9dede40a83c7684a6b",
                 "shasum": ""
             },
             "require": {
@@ -83893,7 +84059,7 @@
             "description": "Symfony Security Component - Core Library",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/security-core/tree/v6.4.36"
+                "source": "https://github.com/symfony/security-core/tree/v6.4.39"
             },
             "funding": [
                 {
@@ -83913,7 +84079,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-03-31T01:40:43+00:00"
+            "time": "2026-05-13T08:35:02+00:00"
         },
         {
             "name": "symfony/security-csrf",
@@ -84057,16 +84223,16 @@
         },
         {
             "name": "symfony/security-http",
-            "version": "v6.4.34",
+            "version": "v6.4.39",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/security-http.git",
-                "reference": "894bb42b39bfb240a1f82c9a46a1ce9402a31a6f"
+                "reference": "fc64f2f7cf591db8821bf097e886255da6098a5a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/security-http/zipball/894bb42b39bfb240a1f82c9a46a1ce9402a31a6f",
-                "reference": "894bb42b39bfb240a1f82c9a46a1ce9402a31a6f",
+                "url": "https://api.github.com/repos/symfony/security-http/zipball/fc64f2f7cf591db8821bf097e886255da6098a5a",
+                "reference": "fc64f2f7cf591db8821bf097e886255da6098a5a",
                 "shasum": ""
             },
             "require": {
@@ -84125,7 +84291,7 @@
             "description": "Symfony Security Component - HTTP Integration",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/security-http/tree/v6.4.34"
+                "source": "https://github.com/symfony/security-http/tree/v6.4.39"
             },
             "funding": [
                 {
@@ -84145,7 +84311,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-02-16T20:44:03+00:00"
+            "time": "2026-05-12T06:36:26+00:00"
         },
         {
             "name": "symfony/serializer",
@@ -84302,16 +84468,16 @@
         },
         {
             "name": "symfony/service-contracts",
-            "version": "v3.6.1",
+            "version": "v3.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/service-contracts.git",
-                "reference": "45112560a3ba2d715666a509a0bc9521d10b6c43"
+                "reference": "d25d82433a80eba6aa0e6c24b61d7370d99e444a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/service-contracts/zipball/45112560a3ba2d715666a509a0bc9521d10b6c43",
-                "reference": "45112560a3ba2d715666a509a0bc9521d10b6c43",
+                "url": "https://api.github.com/repos/symfony/service-contracts/zipball/d25d82433a80eba6aa0e6c24b61d7370d99e444a",
+                "reference": "d25d82433a80eba6aa0e6c24b61d7370d99e444a",
                 "shasum": ""
             },
             "require": {
@@ -84329,7 +84495,7 @@
                     "name": "symfony/contracts"
                 },
                 "branch-alias": {
-                    "dev-main": "3.6-dev"
+                    "dev-main": "3.7-dev"
                 }
             },
             "autoload": {
@@ -84365,7 +84531,7 @@
                 "standards"
             ],
             "support": {
-                "source": "https://github.com/symfony/service-contracts/tree/v3.6.1"
+                "source": "https://github.com/symfony/service-contracts/tree/v3.7.0"
             },
             "funding": [
                 {
@@ -84385,7 +84551,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-07-15T11:30:57+00:00"
+            "time": "2026-03-28T09:44:51+00:00"
         },
         {
             "name": "symfony/stopwatch",
@@ -84455,16 +84621,16 @@
         },
         {
             "name": "symfony/string",
-            "version": "v7.4.8",
+            "version": "v7.4.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/string.git",
-                "reference": "114ac57257d75df748eda23dd003878080b8e688"
+                "reference": "965f7306a43383d02c6aca1e3f3bd2f0ea5dee15"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/string/zipball/114ac57257d75df748eda23dd003878080b8e688",
-                "reference": "114ac57257d75df748eda23dd003878080b8e688",
+                "url": "https://api.github.com/repos/symfony/string/zipball/965f7306a43383d02c6aca1e3f3bd2f0ea5dee15",
+                "reference": "965f7306a43383d02c6aca1e3f3bd2f0ea5dee15",
                 "shasum": ""
             },
             "require": {
@@ -84522,7 +84688,7 @@
                 "utf8"
             ],
             "support": {
-                "source": "https://github.com/symfony/string/tree/v7.4.8"
+                "source": "https://github.com/symfony/string/tree/v7.4.11"
             },
             "funding": [
                 {
@@ -84542,20 +84708,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-03-24T13:12:05+00:00"
+            "time": "2026-05-13T12:04:42+00:00"
         },
         {
             "name": "symfony/translation",
-            "version": "v6.4.34",
+            "version": "v6.4.38",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "d07d117db41341511671b0a1a2be48f2772189ce"
+                "reference": "afaa31b0c12d9a659eed1ea97f268a614cc1299c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/d07d117db41341511671b0a1a2be48f2772189ce",
-                "reference": "d07d117db41341511671b0a1a2be48f2772189ce",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/afaa31b0c12d9a659eed1ea97f268a614cc1299c",
+                "reference": "afaa31b0c12d9a659eed1ea97f268a614cc1299c",
                 "shasum": ""
             },
             "require": {
@@ -84621,7 +84787,7 @@
             "description": "Provides tools to internationalize your application",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/translation/tree/v6.4.34"
+                "source": "https://github.com/symfony/translation/tree/v6.4.38"
             },
             "funding": [
                 {
@@ -84641,20 +84807,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-02-16T20:44:03+00:00"
+            "time": "2026-05-06T08:55:54+00:00"
         },
         {
             "name": "symfony/translation-contracts",
-            "version": "v3.6.1",
+            "version": "v3.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation-contracts.git",
-                "reference": "65a8bc82080447fae78373aa10f8d13b38338977"
+                "reference": "0ab302977a952b42fd51475c4ebac81f8da0a95d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation-contracts/zipball/65a8bc82080447fae78373aa10f8d13b38338977",
-                "reference": "65a8bc82080447fae78373aa10f8d13b38338977",
+                "url": "https://api.github.com/repos/symfony/translation-contracts/zipball/0ab302977a952b42fd51475c4ebac81f8da0a95d",
+                "reference": "0ab302977a952b42fd51475c4ebac81f8da0a95d",
                 "shasum": ""
             },
             "require": {
@@ -84667,7 +84833,7 @@
                     "name": "symfony/contracts"
                 },
                 "branch-alias": {
-                    "dev-main": "3.6-dev"
+                    "dev-main": "3.7-dev"
                 }
             },
             "autoload": {
@@ -84703,7 +84869,7 @@
                 "standards"
             ],
             "support": {
-                "source": "https://github.com/symfony/translation-contracts/tree/v3.6.1"
+                "source": "https://github.com/symfony/translation-contracts/tree/v3.7.0"
             },
             "funding": [
                 {
@@ -84723,7 +84889,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-07-15T13:41:35+00:00"
+            "time": "2026-01-05T13:30:16+00:00"
         },
         {
             "name": "symfony/twig-bridge",
@@ -85277,16 +85443,16 @@
         },
         {
             "name": "symfony/var-exporter",
-            "version": "v7.4.8",
+            "version": "v7.4.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-exporter.git",
-                "reference": "398907e89a2a56fe426f7955c6fa943ec0c77225"
+                "reference": "22e03a49c95ef054a43601cd159b222bfab1c701"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-exporter/zipball/398907e89a2a56fe426f7955c6fa943ec0c77225",
-                "reference": "398907e89a2a56fe426f7955c6fa943ec0c77225",
+                "url": "https://api.github.com/repos/symfony/var-exporter/zipball/22e03a49c95ef054a43601cd159b222bfab1c701",
+                "reference": "22e03a49c95ef054a43601cd159b222bfab1c701",
                 "shasum": ""
             },
             "require": {
@@ -85334,7 +85500,7 @@
                 "serialize"
             ],
             "support": {
-                "source": "https://github.com/symfony/var-exporter/tree/v7.4.8"
+                "source": "https://github.com/symfony/var-exporter/tree/v7.4.9"
             },
             "funding": [
                 {
@@ -85354,7 +85520,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-03-24T13:12:05+00:00"
+            "time": "2026-04-18T13:18:21+00:00"
         },
         {
             "name": "symfony/web-link",
@@ -85445,16 +85611,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v6.4.34",
+            "version": "v6.4.39",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "7bca30dabed7900a08c5ad4f1d6483f881a64d0f"
+                "reference": "e4fb993188404155c2660c2f33be52c22e2de3ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/7bca30dabed7900a08c5ad4f1d6483f881a64d0f",
-                "reference": "7bca30dabed7900a08c5ad4f1d6483f881a64d0f",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/e4fb993188404155c2660c2f33be52c22e2de3ab",
+                "reference": "e4fb993188404155c2660c2f33be52c22e2de3ab",
                 "shasum": ""
             },
             "require": {
@@ -85497,7 +85663,7 @@
             "description": "Loads and dumps YAML files",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/yaml/tree/v6.4.34"
+                "source": "https://github.com/symfony/yaml/tree/v6.4.39"
             },
             "funding": [
                 {
@@ -85517,7 +85683,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-02-06T18:32:11+00:00"
+            "time": "2026-05-13T08:26:06+00:00"
         },
         {
             "name": "tbachert/spi",
@@ -85573,16 +85739,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v3.24.0",
+            "version": "v3.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "a6769aefb305efef849dc25c9fd1653358c148f0"
+                "reference": "0dade995be754556af4dcbf8721d45cb3271f9b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/a6769aefb305efef849dc25c9fd1653358c148f0",
-                "reference": "a6769aefb305efef849dc25c9fd1653358c148f0",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/0dade995be754556af4dcbf8721d45cb3271f9b4",
+                "reference": "0dade995be754556af4dcbf8721d45cb3271f9b4",
                 "shasum": ""
             },
             "require": {
@@ -85637,7 +85803,7 @@
             ],
             "support": {
                 "issues": "https://github.com/twigphp/Twig/issues",
-                "source": "https://github.com/twigphp/Twig/tree/v3.24.0"
+                "source": "https://github.com/twigphp/Twig/tree/v3.25.0"
             },
             "funding": [
                 {
@@ -85649,7 +85815,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-03-17T21:31:11+00:00"
+            "time": "2026-05-17T07:41:26+00:00"
         },
         {
             "name": "voku/anti-xss",
@@ -92384,16 +92550,16 @@
         },
         {
             "name": "symfony/css-selector",
-            "version": "v7.4.8",
+            "version": "v7.4.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
-                "reference": "b055f228a4178a1d6774909903905e3475f3eac8"
+                "reference": "b75663ed96cf4756e28e3105476f220f92886cc4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/css-selector/zipball/b055f228a4178a1d6774909903905e3475f3eac8",
-                "reference": "b055f228a4178a1d6774909903905e3475f3eac8",
+                "url": "https://api.github.com/repos/symfony/css-selector/zipball/b75663ed96cf4756e28e3105476f220f92886cc4",
+                "reference": "b75663ed96cf4756e28e3105476f220f92886cc4",
                 "shasum": ""
             },
             "require": {
@@ -92429,7 +92595,7 @@
             "description": "Converts CSS selectors to XPath expressions",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/css-selector/tree/v7.4.8"
+                "source": "https://github.com/symfony/css-selector/tree/v7.4.9"
             },
             "funding": [
                 {
@@ -92449,7 +92615,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-03-24T13:12:05+00:00"
+            "time": "2026-04-18T13:18:21+00:00"
         },
         {
             "name": "symfony/dom-crawler",
@@ -92701,5 +92867,5 @@
     "platform-overrides": {
         "php": "8.3.13"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
