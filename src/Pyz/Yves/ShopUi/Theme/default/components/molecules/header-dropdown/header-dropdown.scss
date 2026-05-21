@@ -1,5 +1,6 @@
 @mixin shop-ui-header-dropdown($name: '.header-dropdown') {
     #{$name} {
+        display: inline-flex;
         position: relative;
 
         &::after {

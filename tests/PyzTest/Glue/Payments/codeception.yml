@@ -1,0 +1,31 @@
+namespace: PyzTest\Glue\Payments
+
+paths:
+    tests: .
+    data: _data
+    support: _support
+    output: _output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    RestApi:
+        actor: PaymentsApiTester
+        modules:
+            enabled:
+                - Asserts
+                - \PyzTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper:
+                      projectNamespaces: ['Pyz']
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Glue\Testify\Helper\GlueRest
+                - \SprykerTest\Glue\Testify\Helper\JsonPath
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
+            config:
+                \SprykerTest\Glue\Testify\Helper\GlueRest:
+                    depends: PhpBrowser
+                    part: Json
