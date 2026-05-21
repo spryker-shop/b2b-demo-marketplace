@@ -85,11 +85,11 @@ class SymfonySchedulerConfig extends SprykerSymfonySchedulerConfigAlias
             ],
             'glue-api-generate-documentation' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/glue api:generate:documentation --invalidated-after-interval 90sec',
-                'schedule' => '*/1 * * * *',
+                'schedule' => '* * * * *',
             ],
             'sync-order-matrix' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/console order-matrix:sync',
-                'schedule' => '*/1 * * * *',
+                'schedule' => '* * * * *',
             ],
             'generate-sitemap-files' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/console sitemap:generate',
@@ -97,7 +97,11 @@ class SymfonySchedulerConfig extends SprykerSymfonySchedulerConfigAlias
             ],
             'data-import-merchant-import' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/console data-import:merchant-import',
-                'schedule' => '0 0 * * *',
+                'schedule' => '* * * * *',
+            ],
+            'import-job-run' => [
+                'command' => $logger . '$PHP_BIN vendor/bin/console import:job:run',
+                'schedule' => '* * * * *',
             ],
         ];
 

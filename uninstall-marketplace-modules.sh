@@ -77,6 +77,7 @@ MARKETPLACE_CORE_MODULES=(
     "spryker/sales-merchant-portal-gui"
     "spryker/security-blocker-merchant-portal-gui"
     "spryker/tax-merchant-portal-gui"
+    "spryker/security-oauth-knpu"
 )
 
 echo "Step 1: Removing Marketplace Features..."
@@ -113,14 +114,14 @@ def remove_use_statement(content, class_name):
 
 def remove_plugin_from_array(content, plugin_class_name):
     """Remove plugin instantiation from array."""
-    keyed_array_pattern = rf'\s*\$\w+\[[^\]]+\]\s*=\s*new\s+{re.escape(plugin_class_name)}\s*\([^)]*\);\s*'
-    content = re.sub(keyed_array_pattern, '', content)
-    array_push_pattern = rf'\s*\$\w+\[\]\s*=\s*new\s+{re.escape(plugin_class_name)}\s*\([^)]*\);\s*'
-    content = re.sub(array_push_pattern, '', content)
-    class_pattern = rf'\s*{re.escape(plugin_class_name)}::class,?\s*'
-    content = re.sub(class_pattern, '', content)
-    pattern = rf'\s*new\s+{re.escape(plugin_class_name)}\s*\([^)]*\),?\s*'
-    content = re.sub(pattern, '', content)
+    keyed_array_pattern = rf'^[ \t]*\$\w+\[[^\]]+\]\s*=\s*new\s+{re.escape(plugin_class_name)}\s*\([^)]*\);[ \t]*(?:#[^\n]*)?\n'
+    content = re.sub(keyed_array_pattern, '', content, flags=re.MULTILINE)
+    array_push_pattern = rf'^[ \t]*\$\w+\[\]\s*=\s*new\s+{re.escape(plugin_class_name)}\s*\([^)]*\);[ \t]*(?:#[^\n]*)?\n'
+    content = re.sub(array_push_pattern, '', content, flags=re.MULTILINE)
+    class_pattern = rf'^[ \t]*{re.escape(plugin_class_name)}::class,?[ \t]*\n'
+    content = re.sub(class_pattern, '', content, flags=re.MULTILINE)
+    pattern = rf'^[ \t]*new\s+{re.escape(plugin_class_name)}\s*\([^)]*\),?[ \t]*(?:#[^\n]*)?\n'
+    content = re.sub(pattern, '', content, flags=re.MULTILINE)
     return content
 
 def remove_event_subscriber(content, subscriber_class_name):

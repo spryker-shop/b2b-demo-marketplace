@@ -271,14 +271,11 @@ foreach ($rabbitConnections as $key => $connection) {
         continue;
     }
 
-    $config[SymfonyMessengerConstants::QUEUE_DSN] = sprintf(
-        'amqp://%s:%s@%s:%s/%s',
-        $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_USERNAME] ?? $defaultConnection[RabbitMqEnv::RABBITMQ_USERNAME],
-        $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_PASSWORD] ?? $defaultConnection[RabbitMqEnv::RABBITMQ_PASSWORD],
-        $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_HOST] ?? $defaultConnection[RabbitMqEnv::RABBITMQ_HOST],
-        $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_PORT] ?? $defaultConnection[RabbitMqEnv::RABBITMQ_PORT],
-        $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_VIRTUAL_HOST],
-    );
+    $config[SymfonyMessengerConstants::QUEUE_AMQP_HOST] = $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_HOST];
+    $config[SymfonyMessengerConstants::QUEUE_AMQP_PORT] = $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_PORT];
+    $config[SymfonyMessengerConstants::QUEUE_AMQP_USERNAME] = $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_USERNAME];
+    $config[SymfonyMessengerConstants::QUEUE_AMQP_PASSWORD] = $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_PASSWORD];
+    $config[SymfonyMessengerConstants::QUEUE_AMQP_VIRTUAL_HOST] = $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_VIRTUAL_HOST];
 }
 /* End Broker */
 
@@ -301,9 +298,10 @@ $config[StorageConstants::STORAGE_KV_SOURCE] = strtolower(getenv('SPRYKER_KEY_VA
  */
 //$config[StorageRedisConstants::STORAGE_REDIS_DATA_SOURCE_NAMES] = [];
 
+$namespaceKey = (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE') ? getenv('SPRYKER_CURRENT_REGION') : getenv('APPLICATION_STORE');
 $config[StorageRedisConstants::STORAGE_REDIS_HOST] = getenv('SPRYKER_KEY_VALUE_STORE_HOST');
 $config[StorageRedisConstants::STORAGE_REDIS_PORT] = getenv('SPRYKER_KEY_VALUE_STORE_PORT');
-$config[StorageRedisConstants::STORAGE_REDIS_DATABASE] = getenv('SPRYKER_KEY_VALUE_STORE_NAMESPACE') ?: 1;
+$config[StorageRedisConstants::STORAGE_REDIS_DATABASE] = $keyValueRegionNamespaces[$namespaceKey]['namespace'] ?? getenv('SPRYKER_KEY_VALUE_STORE_NAMESPACE') ?: 1;
 
 $config[SessionRedisConstants::YVES_SESSION_REDIS_PROTOCOL] = 'tcp';
 $config[SessionRedisConstants::YVES_SESSION_REDIS_HOST] = getenv('SPRYKER_SESSION_FE_HOST');

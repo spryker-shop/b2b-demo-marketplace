@@ -13,7 +13,12 @@ use Spryker\Zed\AclMerchantPortal\Communication\Plugin\SecurityMerchantPortalGui
 use Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Plugin\SecurityMerchantPortalGui\AgentMerchantUserCriteriaExpanderPlugin;
 use Spryker\Zed\MultiFactorAuthMerchantPortal\Communication\Plugin\AuthenticationHandler\MerchantUser\MerchantUserMultiFactorAuthenticationHandlerPlugin;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Plugin\Security\Handler\LastVisitedPageMerchantPortalUserRedirectStrategyPlugin;
+use Spryker\Zed\SecurityMerchantPortalGui\Communication\Plugin\SecurityMerchantPortalGui\ExistingMerchantUserAuthenticationStrategyPlugin;
 use Spryker\Zed\SecurityMerchantPortalGui\SecurityMerchantPortalGuiDependencyProvider as SprykerSecurityMerchantPortalGuiDependencyProvider;
+use Spryker\Zed\SecurityOauthKnpu\Communication\Plugin\SecurityMerchantPortalGui\KnpuOauthMerchantUserAuthenticationLinkPlugin;
+use Spryker\Zed\SecurityOauthKnpu\Communication\Plugin\SecurityOauthMerchantPortal\KnpuOauthMerchantUserClientStrategyPlugin;
+use Spryker\Zed\SecurityOauthKnpu\Communication\Plugin\SecurityOauthMerchantPortal\KnpuOauthMerchantUserIdentityPersistencePlugin;
+use Spryker\Zed\SecurityOauthKnpu\Communication\Plugin\SecurityOauthMerchantPortal\KnpuOauthMerchantUserIdentityStrategyPlugin;
 
 class SecurityMerchantPortalGuiDependencyProvider extends SprykerSecurityMerchantPortalGuiDependencyProvider
 {
@@ -54,6 +59,49 @@ class SecurityMerchantPortalGuiDependencyProvider extends SprykerSecurityMerchan
     {
         return [
             new LastVisitedPageMerchantPortalUserRedirectStrategyPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\SecurityMerchantPortalGuiExtension\Dependency\Plugin\MerchantUserAuthenticationLinkPluginInterface>
+     */
+    protected function getMerchantPortalAuthenticationLinkPlugins(): array
+    {
+        return [
+            new KnpuOauthMerchantUserAuthenticationLinkPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\SecurityMerchantPortalGuiExtension\Dependency\Plugin\OauthMerchantUserClientStrategyPluginInterface>
+     */
+    protected function getOauthMerchantUserClientStrategyPlugins(): array
+    {
+        return [
+            new KnpuOauthMerchantUserClientStrategyPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\SecurityMerchantPortalGuiExtension\Dependency\Plugin\OauthMerchantUserAuthenticationStrategyPluginInterface>
+     */
+    protected function getOauthMerchantUserAuthenticationStrategyPlugins(): array
+    {
+        return [
+            // Knpu identity lookup first (fast path for returning users)
+            new KnpuOauthMerchantUserIdentityStrategyPlugin(),
+            // Email-based lookup last (first-login path for pre-existing merchant users)
+            new ExistingMerchantUserAuthenticationStrategyPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\SecurityMerchantPortalGuiExtension\Dependency\Plugin\OauthMerchantUserPostResolvePluginInterface>
+     */
+    protected function getOauthMerchantUserPostResolvePlugins(): array
+    {
+        return [
+            new KnpuOauthMerchantUserIdentityPersistencePlugin(),
         ];
     }
 }

@@ -191,6 +191,9 @@ use SprykerEco\Zed\Algolia\Communication\Plugin\Publisher\CmsPage\AlgoliaCmsPage
 use SprykerEco\Zed\Algolia\Communication\Plugin\Publisher\Product\AlgoliaProductAbstractPublisherPlugin;
 use SprykerEco\Zed\Algolia\Communication\Plugin\Publisher\Product\AlgoliaProductConcreteDeletePublisherPlugin;
 use SprykerEco\Zed\Algolia\Communication\Plugin\Publisher\Product\AlgoliaProductConcretePublisherPlugin;
+use SprykerFeature\Shared\ProductExperienceManagement\ProductExperienceManagementConfig;
+use SprykerFeature\Zed\ProductExperienceManagement\Communication\Plugin\Publisher\ProductAttributePublisherTriggerPlugin;
+use SprykerFeature\Zed\ProductExperienceManagement\Communication\Plugin\Publisher\ProductAttributeWritePublisherPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Publisher\SspAsset\Search\SspAssetToCompanyBusinessUnitWritePublisherPlugin as SearchSspAssetToCompanyBusinessUnitWritePublisherPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Publisher\SspAsset\Search\SspAssetToModelWritePublisherPlugin as SearchSspAssetToModelWritePublisherPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Publisher\SspAsset\Search\SspAssetWritePublisherPlugin as SearchSspAssetWritePublisherPlugin;
@@ -254,6 +257,7 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
             $this->getProductOfferServicePointStoragePlugins(),
             $this->getProductOfferShipmentTypeStoragePlugins(),
             $this->getAlgoliaPlugins(),
+            $this->getProductAttributeStoragePlugins(),
             $this->getConfigurationStoragePlugins(),
         );
     }
@@ -319,6 +323,19 @@ class PublisherDependencyProvider extends SprykerPublisherDependencyProvider
             new ProductOfferServicePublisherTriggerPlugin(),
             new ProductOfferShipmentTypePublisherTriggerPlugin(),
             new ProductSearchPublisherTriggerPlugin(),
+            new ProductAttributePublisherTriggerPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<string, list<\Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface>>
+     */
+    protected function getProductAttributeStoragePlugins(): array
+    {
+        return [
+            ProductExperienceManagementConfig::PUBLISH_PRODUCT_ATTRIBUTE => [
+                new ProductAttributeWritePublisherPlugin(),
+            ],
         ];
     }
 

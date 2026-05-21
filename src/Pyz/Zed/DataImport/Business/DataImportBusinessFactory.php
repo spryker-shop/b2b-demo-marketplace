@@ -123,6 +123,7 @@ use Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface;
 use Spryker\Zed\Stock\Business\StockFacadeInterface;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
+use SprykerFeature\Zed\ProductExperienceManagement\Business\ProductExperienceManagementFacadeInterface;
 
 /**
  * @method \Pyz\Zed\DataImport\DataImportConfig getConfig()
@@ -809,7 +810,9 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
             ->addStep($this->createAddLocalesStep())
             ->addStep($this->createAddProductAttributeKeysStep())
             ->addStep($this->createProductManagementLocalizedAttributesExtractorStep())
-            ->addStep(new ProductManagementAttributeWriter());
+            ->addStep(new ProductManagementAttributeWriter(
+                $this->getProductExperienceManagementFacade(),
+            ));
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
 
@@ -822,6 +825,14 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
     public function createProductManagementLocalizedAttributesExtractorStep(): ProductManagementLocalizedAttributesExtractorStep
     {
         return new ProductManagementLocalizedAttributesExtractorStep();
+    }
+
+    /**
+     * @return \SprykerFeature\Zed\ProductExperienceManagement\Business\ProductExperienceManagementFacadeInterface
+     */
+    protected function getProductExperienceManagementFacade(): ProductExperienceManagementFacadeInterface
+    {
+        return $this->getProvidedDependency(DataImportDependencyProvider::FACADE_PRODUCT_EXPERIENCE_MANAGEMENT);
     }
 
     /**

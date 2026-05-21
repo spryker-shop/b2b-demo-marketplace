@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\DataImport;
 
+use Spryker\Zed\Configuration\ConfigurationConfig;
 use Spryker\Zed\DataImport\DataImportConfig as SprykerDataImportConfig;
 use Spryker\Zed\MerchantProductApprovalDataImport\MerchantProductApprovalDataImportConfig;
 use Spryker\Zed\ProductApprovalDataImport\ProductApprovalDataImportConfig;
@@ -249,6 +250,7 @@ class DataImportConfig extends SprykerDataImportConfig
             SelfServicePortalConfig::IMPORT_TYPE_SSP_INQUIRY,
             SelfServicePortalConfig::IMPORT_TYPE_PRODUCT_SHIPMENT_TYPE,
             ProductOfferShoppingListDataImportConfig::IMPORT_TYPE_PRODUCT_OFFER_SHOPPING_LIST_ITEM,
+            ConfigurationConfig::IMPORT_TYPE_CONFIGURATION_VALUE,
         ];
 
         return array_merge(parent::getFullImportTypes(), $customImportTypes);

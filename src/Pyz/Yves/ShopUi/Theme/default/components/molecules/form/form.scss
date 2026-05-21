@@ -12,6 +12,10 @@ $address-form-width: rem(710);
             margin-top: rem(48);
             width: 100%;
         }
+
+        .list__item {
+            font-size: var(--body-sm-size);
+        }
     }
 
     &__actions {
@@ -118,80 +122,6 @@ $address-form-width: rem(710);
         }
     }
 
-    &--subscription {
-        padding-bottom: rem(32);
-
-        @include helper-breakpoint-media-min($md) {
-            padding-bottom: 0;
-        }
-
-        #{$name}__container {
-            position: relative;
-        }
-
-        #{$name}__fields,
-        #{$name}__actions,
-        #{$name}__action {
-            margin: 0;
-        }
-
-        #{$name}__field {
-            padding: 0;
-        }
-
-        #{$name}__actions {
-            position: absolute;
-            right: 0;
-            bottom: 0;
-        }
-
-        .label {
-            display: none;
-        }
-
-        .input {
-            border-radius: 0;
-            border: none;
-            border-bottom: 2px solid $setting-color-gray-4;
-            background-color: $setting-color-transparent;
-            font-size: rem(16);
-            line-height: rem(20);
-            letter-spacing: rem(0.2);
-            color: $setting-color-gray-4;
-            padding: rem(10) rem(36) rem(10) 0;
-
-            &::placeholder {
-                color: $setting-color-gray-4;
-                opacity: 1;
-            }
-
-            @include helper-breakpoint-media-min($lg) {
-                font-size: rem(18);
-                line-height: rem(23);
-                letter-spacing: rem(0.27);
-                padding: rem(13) rem(46) rem(16) 0;
-            }
-        }
-
-        .button {
-            color: $setting-color-gray-4;
-            min-height: rem(42);
-            padding-right: rem(10);
-            padding-bottom: rem(10);
-
-            &:hover,
-            &:focus {
-                color: $setting-color-gray-3;
-            }
-
-            @include helper-breakpoint-media-min($lg) {
-                min-height: rem(54);
-                padding-right: rem(22);
-                padding-bottom: rem(10);
-            }
-        }
-    }
-
     &--browse-file {
         #{$name}__field:not(:first-of-type),
         #{$name}__actions,
@@ -274,50 +204,9 @@ $address-form-width: rem(710);
     }
 
     &--discount-voucher {
-        #{$name}__container {
-            position: relative;
-        }
-
-        #{$name}__actions {
-            position: absolute;
-            top: rem(8);
-            bottom: rem(8);
-            right: 0;
-            margin-top: 0;
-        }
-
         #{$name}__action {
-            @include helper-effect-transition(color);
             margin: 0;
-            display: flex;
-            align-items: center;
-            height: 100%;
-            font-size: rem(12);
-            font-weight: fw(bold);
-            color: $setting-color-gray-5;
-
-            &:hover,
-            &:focus {
-                color: $setting-color-gray-3;
-            }
-        }
-
-        .input {
-            padding-left: rem(20);
-            padding-right: rem(90);
-            border-radius: $setting-border-radius;
-            border: none;
-            box-shadow:
-                0 rem(10) rem(10) 0 $setting-color-shadow-1,
-                0 rem(3) rem(3) 0 $setting-color-shadow-1;
-
-            @include helper-breakpoint-media-min($lg) {
-                padding-left: rem(12);
-            }
-        }
-
-        .label {
-            display: none;
+            width: 100%;
         }
     }
 

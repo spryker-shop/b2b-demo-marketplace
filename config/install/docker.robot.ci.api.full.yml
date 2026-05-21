@@ -4,6 +4,9 @@ env:
 
 sections:
     build:
+        cache-class-resolver-build:
+            command: 'vendor/bin/console cache:class-resolver:build'
+
         generate-transfers:
             command: 'vendor/bin/console transfer:generate'
 
@@ -37,9 +40,6 @@ sections:
         translator-generate-cache:
             command: 'vendor/bin/console translator:generate-cache'
 
-        cache-class-resolver-build:
-            command: 'vendor/bin/console cache:class-resolver:build'
-
         generate-scope-collection-file:
             command: 'vendor/bin/console oauth:scope-collection-file:generate'
 
@@ -48,6 +48,9 @@ sections:
 
         provider-processor-glue-backend:
             command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue api:generate'
+
+        provider-processor-glue-storefront:
+            command: 'GLUE_APPLICATION=GLUE_STOREFRONT vendor/bin/glue api:generate'
 
         configuration-sync:
             command: 'vendor/bin/console configuration:sync'

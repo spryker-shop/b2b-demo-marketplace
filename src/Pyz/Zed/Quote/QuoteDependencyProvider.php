@@ -37,6 +37,9 @@ use Spryker\Zed\SharedCart\Communication\Plugin\RemoveSharedQuoteBeforeQuoteDele
 use Spryker\Zed\SharedCart\Communication\Plugin\SharedQuoteSetDefaultBeforeQuoteSavePlugin;
 use Spryker\Zed\SharedCart\Communication\Plugin\UpdateShareDetailsQuoteAfterSavePlugin;
 use Spryker\Zed\Store\Communication\Plugin\Quote\QuoteStoreValidatorPlugin;
+use SprykerEco\Zed\PunchoutGateway\Communication\Plugin\Quote\PunchoutSessionQuoteExpanderPlugin;
+use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\Quote\CostCenterQuoteExpanderPlugin;
+use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\Quote\CostCenterQuoteFieldsAllowedForSavingProviderPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Quote\ServicePointQuoteExpanderPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Quote\SspShipmentTypeQuoteExpanderPlugin;
 
@@ -83,12 +86,14 @@ class QuoteDependencyProvider extends SprykerQuoteDependencyProvider
     protected function getQuoteExpanderPlugins(): array
     {
         return [
+            new CostCenterQuoteExpanderPlugin(),
             new QuoteApprovalExpanderPlugin(), #QuoteApprovalFeature
             new CommentThreadQuoteExpanderPlugin(),
             new ShareDetailsQuoteExpanderPlugin(),
             new MerchantShipmentQuoteExpanderPlugin(),
             new SspShipmentTypeQuoteExpanderPlugin(),
             new ServicePointQuoteExpanderPlugin(),
+            new PunchoutSessionQuoteExpanderPlugin(),
         ];
     }
 
@@ -161,6 +166,7 @@ class QuoteDependencyProvider extends SprykerQuoteDependencyProvider
             new QuoteApprovalQuoteFieldsAllowedForSavingProviderPlugin(),
             new QuoteApprovalShipmentQuoteFieldsAllowedForSavingProviderPlugin(),
             new OrderCustomReferenceQuoteFieldsAllowedForSavingProviderPlugin(),
+            new CostCenterQuoteFieldsAllowedForSavingProviderPlugin(),
         ];
     }
 

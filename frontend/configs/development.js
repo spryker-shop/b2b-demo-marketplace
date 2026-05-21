@@ -1,7 +1,9 @@
+/* eslint-disable max-lines */
 const { join } = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const filePathFilter = require('@jsdevtools/file-path-filter');
+const { buildDesignTokens } = require('../libs/design-tokens');
 const { findComponentEntryPoints, findComponentStyles, findAppEntryPoint } = require('../libs/finder');
 const { getAliasList } = require('../libs/alias');
 const { getAssetsConfig } = require('../libs/assets-configurator');
@@ -27,6 +29,8 @@ try {
 }
 
 const getConfiguration = async (appSettings) => {
+    const designTokens = await buildDesignTokens(appSettings);
+
     const componentEntryPointsPromise = findComponentEntryPoints(appSettings.find.componentEntryPoints);
     const stylesPromise = findComponentStyles(appSettings.find.componentStyles);
     const [componentEntryPoints, styles] = await Promise.all([componentEntryPointsPromise, stylesPromise]);
@@ -79,13 +83,14 @@ const getConfiguration = async (appSettings) => {
                 chunkModules: false,
                 chunkOrigins: false,
                 modules: false,
+                warnings: false,
                 entrypoints: false,
             },
 
             entry: {
                 vendor: vendorTs,
                 app: [appTs, ...componentEntryPoints],
-                critical: [basicScss, ...criticalEntryPoints],
+                critical: [designTokens, basicScss, ...criticalEntryPoints],
                 'non-critical': [...nonCriticalEntryPoints, utilScss],
                 util: utilScss,
             },
@@ -157,6 +162,7 @@ const getConfiguration = async (appSettings) => {
                                 loader: 'sass-loader',
                                 options: {
                                     implementation: require('sass'),
+                                    api: 'legacy',
                                     additionalData: (content, loaderContext) => {
                                         const currentFilePath = loaderContext.resourcePath;
                                         const allResources = [sharedScss, ...styles].filter(Boolean);

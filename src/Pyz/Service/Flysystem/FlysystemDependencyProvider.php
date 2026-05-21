@@ -11,6 +11,7 @@ namespace Pyz\Service\Flysystem;
 
 use Spryker\Service\Flysystem\FlysystemDependencyProvider as SprykerFlysystemDependencyProvider;
 use Spryker\Service\FlysystemAws3v3FileSystem\Plugin\Flysystem\Aws3v3FilesystemBuilderPlugin;
+use Spryker\Service\FlysystemAws3v3FileSystem\Plugin\Flysystem\IamAws3v3FilesystemBuilderPlugin;
 use Spryker\Service\FlysystemFtpFileSystem\Plugin\Flysystem\FtpFilesystemBuilderPlugin;
 use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
 
@@ -25,6 +26,7 @@ class FlysystemDependencyProvider extends SprykerFlysystemDependencyProvider
             new FtpFilesystemBuilderPlugin(),
             new LocalFilesystemBuilderPlugin(),
             new Aws3v3FilesystemBuilderPlugin(),
+            new IamAws3v3FilesystemBuilderPlugin(),
         ];
     }
 }

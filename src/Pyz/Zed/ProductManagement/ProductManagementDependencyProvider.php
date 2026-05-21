@@ -48,6 +48,7 @@ use Spryker\Zed\ProductAttachment\Communication\Plugin\ProductManagement\Product
 use Spryker\Zed\ProductAttachment\Communication\Plugin\ProductManagement\ProductAttachmentProductAbstractFormDataProviderExpanderPlugin;
 use Spryker\Zed\ProductAttachment\Communication\Plugin\ProductManagement\ProductAttachmentProductAbstractFormExpanderPlugin;
 use Spryker\Zed\ProductAttachment\Communication\Plugin\ProductManagement\ProductAttachmentProductAbstractTransferMapperPlugin;
+use Spryker\Zed\ProductCategory\Communication\Plugin\ProductManagement\ProductCategoryAbstractFormExpanderPlugin;
 use Spryker\Zed\ProductConfigurationGui\Communication\Plugin\ProductManagement\ProductConfigurationProductTableDataBulkExpanderPlugin;
 use Spryker\Zed\ProductDiscontinuedGui\Communication\Plugin\DiscontinuedNotesProductFormTransferMapperExpanderPlugin;
 use Spryker\Zed\ProductDiscontinuedGui\Communication\Plugin\DiscontinuedProductConcreteEditFormExpanderPlugin;
@@ -61,9 +62,11 @@ use Spryker\Zed\ProductStorage\Communication\Plugin\ProductManagement\StoragePro
 use Spryker\Zed\ProductStorage\Communication\Plugin\ProductManagement\StorageTableProductAbstractReadinessProviderPlugin;
 use Spryker\Zed\ProductStorage\Communication\Plugin\ProductManagement\StorageTableProductConcreteReadinessProviderPlugin;
 use Spryker\Zed\Store\Communication\Plugin\Form\StoreRelationToggleFormTypePlugin;
+use SprykerFeature\Zed\AiCommerce\Communication\Plugin\ProductManagement\ProductManagementAiProductAbstractFormTabContentProviderWithPriorityPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductManagement\ProductClassFormExpanderPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductManagement\ProductClassProductConcreteFormEditDataProviderExpanderPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductManagement\ProductClassProductConcreteTransferMapperPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductManagement\ShipmentTypeProductConcreteEditFormExpanderPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductManagement\ShipmentTypeProductConcreteFormEditDataProviderExpanderPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductManagement\ShipmentTypeProductConcreteFormExpanderPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductManagement\ShipmentTypeProductFormTransferMapperExpanderPlugin;
@@ -118,6 +121,7 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
         return [
             new DiscontinuedProductConcreteEditFormExpanderPlugin(), #ProductDiscontinuedFeature
             new ProductConcreteEditFormExpanderPlugin(), #ProductAlternativeFeature
+            new ShipmentTypeProductConcreteEditFormExpanderPlugin(),
         ];
     }
 
@@ -156,6 +160,7 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
             new MerchantRelationshipProductAbstractFormExpanderPlugin(),
             new ProductAttachmentProductAbstractFormExpanderPlugin(),
             new MerchantProductAbstractFormExpanderPlugin(),
+            new ProductCategoryAbstractFormExpanderPlugin(),
         ];
     }
 
@@ -339,6 +344,7 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
         return [
             new ProductAttachmentImageTabContentProviderWithPriorityPlugin(),
             new MerchantProductAbstractGeneralTabContentProviderPlugin(),
+            new ProductManagementAiProductAbstractFormTabContentProviderWithPriorityPlugin(),
         ];
     }
 }

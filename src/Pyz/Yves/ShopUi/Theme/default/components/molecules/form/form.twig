@@ -19,7 +19,11 @@
         {% endblock %}
 
         {% block fieldset %}
-            {{ parent() }}
+            <div class="{{config.name}}__fields grid grid--bottom grid--gap-smaller">
+                {% block fields %}
+                    {{ parent() }}
+                {% endblock %}
+            </div>
         {% endblock %}
 
         {% block message %}
@@ -44,7 +48,7 @@
 
 {% block submit %}
     <button type="submit"
-            class="{{config.name}}__action {{data.submit.class}}"
+            class="{{ config.name }}__action {{data.submit.class}}"
         {{ data.submit.isSingleClickEnforcerEnabled ? 'data-init-single-click' }}
         {{ data.submit.attributes }}
         {{qa(data.submit.qa)}}>
@@ -56,7 +60,17 @@
                 }
             } only %}
         {% endif %}
+
         {{data.submit.text}}
+
+        {% if data.submit.postIcon | default('') is not empty %}
+            {% include atom('font-icon') with {
+                modifiers: ['big'],
+                data: {
+                    name: data.submit.postIcon
+                }
+            } only %}
+        {% endif %}
     </button>
 {% endblock %}
 

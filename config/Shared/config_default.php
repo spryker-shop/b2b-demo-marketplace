@@ -36,6 +36,7 @@ use Spryker\Glue\Log\Plugin\GlueLoggerConfigPlugin;
 use Spryker\Glue\Log\Plugin\Log\GlueBackendSecurityAuditLoggerConfigPlugin;
 use Spryker\Glue\Log\Plugin\Log\GlueSecurityAuditLoggerConfigPlugin;
 use Spryker\Service\FlysystemAws3v3FileSystem\Plugin\Flysystem\Aws3v3FilesystemBuilderPlugin;
+use Spryker\Service\FlysystemAws3v3FileSystem\Plugin\Flysystem\IamAws3v3FilesystemBuilderPlugin;
 use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
 use Spryker\Shared\Acl\AclConstants;
 use Spryker\Shared\Agent\AgentConstants;
@@ -128,13 +129,15 @@ use Spryker\Yves\Log\Plugin\Log\YvesSecurityAuditLoggerConfigPlugin;
 use Spryker\Yves\Log\Plugin\YvesLoggerConfigPlugin;
 use Spryker\Zed\Log\Communication\Plugin\Log\MerchantPortalSecurityAuditLoggerConfigPlugin;
 use Spryker\Zed\Log\Communication\Plugin\Log\ZedSecurityAuditLoggerConfigPlugin;
+use Spryker\Zed\Log\Communication\Plugin\ZedCliLoggerConfigPlugin;
 use Spryker\Zed\Log\Communication\Plugin\ZedLoggerConfigPlugin;
 use Spryker\Zed\MessageBrokerAws\MessageBrokerAwsConfig;
 use Spryker\Zed\OauthAuth0\OauthAuth0Config;
 use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Payment\PaymentConfig;
 use Spryker\Zed\Propel\PropelConfig;
-use SprykerEco\Shared\Algolia\AlgoliaConstants;
+use SprykerEco\Shared\PunchoutGateway\PunchoutGatewayConstants;
+use SprykerEco\Shared\Stripe\StripeConfig;
 use SprykerEco\Shared\Vertex\VertexConstants;
 use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConstants;
 use SprykerShop\Shared\AgentPage\AgentPageConstants;
@@ -382,6 +385,12 @@ $config[AclConstants::ACL_DEFAULT_RULES] = [
         'action' => '*',
         'type' => 'allow',
     ],
+    [
+        'bundle' => 'security-oauth-knpu',
+        'controller' => '*',
+        'action' => '*',
+        'type' => 'allow',
+    ],
 ];
 // ACL: Allow or disallow of urls for Zed Admin GUI
 $config[AclConstants::ACL_USER_RULE_WHITELIST] = [
@@ -425,14 +434,15 @@ $config[SearchElasticsearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE] = 3;
 
 // >>> STORAGE
 
-$keyValueRegionNamespaces = json_decode(getenv('SPRYKER_KEY_VALUE_REGION_NAMESPACES') ?: '[]', true);
+$keyValueRegionNamespaces = json_decode(getenv('SPRYKER_KEY_VALUE_STORE_CONNECTIONS') ?: '[]', true);
+$namespaceKey = (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE') ? getenv('SPRYKER_CURRENT_REGION') : getenv('APPLICATION_STORE');
 $config[StorageConstants::STORAGE_KV_SOURCE] = getenv('SPRYKER_KEY_VALUE_STORE_ENGINE') ? strtolower(getenv('SPRYKER_KEY_VALUE_STORE_ENGINE')) : 'redis';
 $config[StorageRedisConstants::STORAGE_REDIS_PERSISTENT_CONNECTION] = true;
 $config[StorageRedisConstants::STORAGE_REDIS_SCHEME] = getenv('SPRYKER_KEY_VALUE_STORE_PROTOCOL') ?: 'tcp';
 $config[StorageRedisConstants::STORAGE_REDIS_HOST] = getenv('SPRYKER_KEY_VALUE_STORE_HOST');
 $config[StorageRedisConstants::STORAGE_REDIS_PORT] = getenv('SPRYKER_KEY_VALUE_STORE_PORT');
 $config[StorageRedisConstants::STORAGE_REDIS_PASSWORD] = getenv('SPRYKER_KEY_VALUE_STORE_PASSWORD');
-$config[StorageRedisConstants::STORAGE_REDIS_DATABASE] = getenv('SPRYKER_KEY_VALUE_STORE_NAMESPACE') ?: $keyValueRegionNamespaces[APPLICATION_CODE_BUCKET] ?? 1;
+$config[StorageRedisConstants::STORAGE_REDIS_DATABASE] = $keyValueRegionNamespaces[$namespaceKey]['namespace'] ?? getenv('SPRYKER_KEY_VALUE_STORE_NAMESPACE') ?: 1;
 $config[StorageRedisConstants::STORAGE_REDIS_DATA_SOURCE_NAMES] = json_decode(getenv('SPRYKER_KEY_VALUE_STORE_SOURCE_NAMES') ?: '[]', true) ?: [];
 $config[StorageRedisConstants::STORAGE_REDIS_CONNECTION_OPTIONS] = json_decode(getenv('SPRYKER_KEY_VALUE_STORE_CONNECTION_OPTIONS') ?: '[]', true) ?: [];
 
@@ -524,6 +534,7 @@ $config[ErrorHandlerConstants::ERROR_LEVEL_LOG_ONLY] = E_DEPRECATED | E_USER_DEP
 
 $config[LogConstants::LOGGER_CONFIG] = SprykerLoggerConfig::class;
 $config[LogConstants::LOGGER_CONFIG_ZED] = ZedLoggerConfigPlugin::class;
+$config[LogConstants::LOGGER_CONFIG_ZED_CLI] = ZedCliLoggerConfigPlugin::class;
 $config[LogConstants::LOGGER_CONFIG_YVES] = YvesLoggerConfigPlugin::class;
 $config[LogConstants::LOGGER_CONFIG_GLUE] = GlueLoggerConfigPlugin::class;
 
@@ -563,15 +574,16 @@ $config[LogConstants::EXCEPTION_LOG_FILE_PATH_YVES]
 
 // >>> QUEUE
 
+$config[QueueConstants::QUEUE_WORKER_WAIT_LIMIT_ENABLED] = true;
 $config[QueueConstants::RESOURCE_AWARE_QUEUE_WORKER_ENABLED] = (bool)getenv('RESOURCE_AWARE_QUEUE_WORKER_ENABLED') ?? false;
 $config[QueueConstants::QUEUE_WORKER_FREE_MEMORY_BUFFER] = (int)getenv('QUEUE_WORKER_FREE_MEMORY_BUFFER') ?: 750;
 $config[QueueConstants::QUEUE_WORKER_MEMORY_READ_PROCESS_TIMEOUT] = (int)getenv('QUEUE_WORKER_MEMORY_READ_PROCESS_TIMEOUT') ?: 5;
 
 $config[EventBehaviorConstants::EVENT_BEHAVIOR_TRIGGERING_ACTIVE] = true;
 
-$config[EventConstants::MAX_RETRY_ON_FAIL] = 5;
+$config[EventConstants::MAX_RETRY_ON_FAIL] = 2;
 $config[QueueConstants::QUEUE_WORKER_MAX_PROCESSES] = 5;
-$config[QueueConstants::QUEUE_WORKER_DELAY_WHEN_NOT_EMPTY_MILLISECONDS] = 1000;
+$config[QueueConstants::QUEUE_WORKER_DELAY_WHEN_NOT_EMPTY_MILLISECONDS] = 500;
 $config[QueueConstants::QUEUE_PROCESS_TRIGGER_INTERVAL_MICROSECONDS] = 1001;
 $config[QueueConstants::QUEUE_MESSAGE_CHUNK_SIZE_MAP] = json_decode(getenv('QUEUE_MESSAGE_CHUNK_SIZE_MAP') ?: '[]', true);
 $config[QueueConstants::RESOURCE_AWARE_QUEUE_WORKER_ENABLED] = (bool)getenv('RESOURCE_AWARE_QUEUE_WORKER_ENABLED') ?? false;
@@ -626,14 +638,11 @@ foreach ($rabbitConnections as $key => $connection) {
         continue;
     }
 
-    $config[SymfonyMessengerConstants::QUEUE_DSN] = sprintf(
-        'amqp://%s:%s@%s:%s/%s',
-        $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_USERNAME] ?? $defaultConnection[RabbitMqEnv::RABBITMQ_USERNAME],
-        $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_PASSWORD] ?? $defaultConnection[RabbitMqEnv::RABBITMQ_PASSWORD],
-        $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_HOST] ?? $defaultConnection[RabbitMqEnv::RABBITMQ_HOST],
-        $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_PORT] ?? $defaultConnection[RabbitMqEnv::RABBITMQ_PORT],
-        $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_VIRTUAL_HOST],
-    );
+    $config[SymfonyMessengerConstants::QUEUE_AMQP_HOST] = $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_HOST];
+    $config[SymfonyMessengerConstants::QUEUE_AMQP_PORT] = $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_PORT];
+    $config[SymfonyMessengerConstants::QUEUE_AMQP_USERNAME] = $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_USERNAME];
+    $config[SymfonyMessengerConstants::QUEUE_AMQP_PASSWORD] = $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_PASSWORD];
+    $config[SymfonyMessengerConstants::QUEUE_AMQP_VIRTUAL_HOST] = $config[RabbitMqEnv::RABBITMQ_CONNECTIONS][$key][RabbitMqEnv::RABBITMQ_VIRTUAL_HOST];
 }
 
 // >>> SYNCHRONIZATION
@@ -760,32 +769,46 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'path' => '',
     ],
     'backoffice-media' => [
-        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
-        'key' => getenv('SPRYKER_S3_PUBLIC_ASSETS_KEY') ?: '',
+        'sprykerAdapterClass' => IamAws3v3FilesystemBuilderPlugin::class,
         'bucket' => getenv('SPRYKER_S3_PUBLIC_ASSETS_BUCKET') ?: '',
-        'secret' => getenv('SPRYKER_S3_PUBLIC_ASSETS_SECRET') ?: '',
-        'root' => '/backoffice-media',
-        'path' => '/',
+        'root' => '',
+        'path' => '/backoffice-media',
         'version' => 'latest',
         'region' => getenv('AWS_REGION'),
     ],
     'storefront-media' => [
-        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
-        'key' => getenv('SPRYKER_S3_PUBLIC_ASSETS_KEY') ?: '',
+        'sprykerAdapterClass' => IamAws3v3FilesystemBuilderPlugin::class,
         'bucket' => getenv('SPRYKER_S3_PUBLIC_ASSETS_BUCKET') ?: '',
-        'secret' => getenv('SPRYKER_S3_PUBLIC_ASSETS_SECRET') ?: '',
-        'root' => '/storefront-media',
-        'path' => '',
+        'root' => '',
+        'path' => '/storefront-media',
         'version' => 'latest',
         'region' => getenv('AWS_REGION'),
     ],
     'merchant-portal-media' => [
-        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
-        'key' => getenv('SPRYKER_S3_PUBLIC_ASSETS_KEY') ?: '',
+        'sprykerAdapterClass' => IamAws3v3FilesystemBuilderPlugin::class,
         'bucket' => getenv('SPRYKER_S3_PUBLIC_ASSETS_BUCKET') ?: '',
-        'secret' => getenv('SPRYKER_S3_PUBLIC_ASSETS_SECRET') ?: '',
-        'root' => '/merchant-portal-media',
-        'path' => '',
+        'root' => '',
+        'path' => '/merchant-portal-media',
+        'version' => 'latest',
+        'region' => getenv('AWS_REGION'),
+    ],
+    'product-experience-management-imports' => [
+        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
+        'key' => getenv('SPRYKER_S3_PEM_IMPORT_KEY') ?: '',
+        'bucket' => getenv('SPRYKER_S3_PEM_IMPORT_BUCKET') ?: '',
+        'secret' => getenv('SPRYKER_S3_PEM_IMPORT_SECRET') ?: '',
+        'root' => '/',
+        'path' => '/',
+        'version' => 'latest',
+        'region' => getenv('AWS_REGION'),
+    ],
+    'product-experience-management-exports' => [
+        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
+        'key' => getenv('SPRYKER_S3_PEM_EXPORT_KEY') ?: '',
+        'bucket' => getenv('SPRYKER_S3_PEM_EXPORT_BUCKET') ?: '',
+        'secret' => getenv('SPRYKER_S3_PEM_EXPORT_SECRET') ?: '',
+        'root' => '/',
+        'path' => '/',
         'version' => 'latest',
         'region' => getenv('AWS_REGION'),
     ],
@@ -906,16 +929,19 @@ $config[GlueApplicationConstants::GLUE_APPLICATION_CORS_ALLOW_ORIGIN] = getenv('
 $config[OmsConstants::ACTIVE_PROCESSES] = [
     'MarketplacePayment01',
     'ForeignPaymentStateMachine01',
+    'StripeManualMarketplace01',
 ];
 
 $config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = [
     DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE => 'MarketplacePayment01',
     PaymentConfig::PAYMENT_FOREIGN_PROVIDER => 'ForeignPaymentStateMachine01',
+    StripeConfig::PAYMENT_METHOD_NAME => 'StripeManualMarketplace01',
 ];
 
 $config[OmsConstants::PROCESS_LOCATION] = [
     OmsConfig::DEFAULT_PROCESS_LOCATION,
     APPLICATION_ROOT_DIR . '/vendor/spryker/sales-payment/config/Zed/Oms',
+    APPLICATION_ROOT_DIR . '/vendor/spryker-eco/stripe/config/Zed/oms',
 ];
 
 // ----------------------------------------------------------------------------
@@ -1125,12 +1151,6 @@ $config[SelfServicePortalConstants::DEFAULT_TOTAL_FILE_MAX_SIZE] = getenv('SPRYK
 $config[SelfServicePortalConstants::DEFAULT_FILE_MAX_SIZE] = getenv('SPRYKER_SSP_DEFAULT_FILE_MAX_SIZE') ?: '10M';
 $config[SelfServicePortalConstants::GOOGLE_MAPS_API_KEY] = getenv('SPRYKER_GOOGLE_MAPS_API_KEY') ?: '';
 
-// Algolia
-$config[AlgoliaConstants::APPLICATION_ID] = getenv('ALGOLIA_APPLICATION_ID');
-$config[AlgoliaConstants::ADMIN_API_KEY] = getenv('ALGOLIA_WRITE_API_KEY');
-$config[AlgoliaConstants::SEARCH_ONLY_API_KEY] = getenv('ALGOLIA_SEARCH_API_KEY');
-$config[AlgoliaConstants::IS_ACTIVE] = $config[AlgoliaConstants::APPLICATION_ID] && $config[AlgoliaConstants::ADMIN_API_KEY] && $config[AlgoliaConstants::SEARCH_ONLY_API_KEY];
-
 // Vertex
 $config[VertexConstants::IS_ACTIVE] = getenv('VERTEX_IS_ACTIVE') ?: null;
 $config[VertexConstants::CLIENT_ID] = getenv('VERTEX_CLIENT_ID') ?: null;
@@ -1141,3 +1161,7 @@ $config[VertexConstants::TAXAMO_API_URL] = getenv('TAXAMO_API_URL') ?: null;
 $config[VertexConstants::TAXAMO_TOKEN] = getenv('TAXAMO_TOKEN') ?: null;
 
 $config[ContentNavigationWidgetConstants::NAVIGATION_REVALIDATION_TIME_IN_SECONDS] = 3600;
+
+$config[PunchoutGatewayConstants::ENABLE_LOGGING] = getenv('PUNCHOUT_GATEWAY_ENABLE_LOGGING') ?? false;
+
+require 'config_ai.php';

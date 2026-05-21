@@ -1,0 +1,108 @@
+{% extends template('widget') %}
+
+{% define data = {
+    costCenters: _widget.costCenters,
+    selectedCostCenter: _widget.selectedCostCenter,
+    budgets: _widget.budgets,
+    selectedBudget: _widget.selectedBudget,
+    quote: _widget.quote,
+    isLocked: _widget.isLocked,
+} %}
+
+{% block body %}
+    {% if data.costCenters|length > 0 %}
+        <div class="cost-center-selector spacing-y--bigger">
+            {% if data.isLocked %}
+                {# Quote is pending approval — cost center and budget selection is read-only #}
+                {% if data.selectedCostCenter %}
+                    <div class="cost-center-selector__field spacing-bottom">
+                        <label>{{ 'purchasing_control.selector.label' | trans }}:</label>
+                        <span class="cost-center-selector__value">{{ data.selectedCostCenter.name }}</span>
+                    </div>
+                {% endif %}
+
+                {% if data.selectedBudget %}
+                    <div class="cost-center-selector__field spacing-bottom">
+                        <label>{{ 'purchasing_control.budget.selector.label' | trans }}:</label>
+                        <span class="cost-center-selector__value">{{ data.selectedBudget.name }}</span>
+                    </div>
+                    <div class="cost-center-selector__remaining spacing-bottom">
+                        {{ 'purchasing_control.budget.remaining' | trans }}:
+                        <strong>{{ data.selectedBudget.remainingAmount | money(true, data.quote.currency.code) }}</strong>
+                    </div>
+                {% endif %}
+            {% else %}
+                <form method="post" action="{{ '/cost-center/update-quote' }}">
+                    {% if data.costCenters|length > 1 %}
+                        <div class="cost-center-selector__field spacing-bottom">
+                            <label class="label">{{ 'purchasing_control.selector.label' | trans }}</label>
+                            {% embed molecule('custom-select') with {
+                                modifiers: ['full-width', 'smaller'],
+                                attributes: {
+                                    name: 'idCostCenter',
+                                    'config-width': '100%',
+                                    'data-form-submitter': true,
+                                },
+                                embed: {
+                                    costCenters: data.costCenters,
+                                    selectedCostCenter: data.selectedCostCenter,
+                                },
+                            } only %}
+                                {% block options %}
+                                    {% for costCenter in embed.costCenters %}
+                                        <option value="{{ costCenter.idCostCenter }}"
+                                            {% if embed.selectedCostCenter and embed.selectedCostCenter.idCostCenter == costCenter.idCostCenter %}selected{% endif %}>
+                                            {{ costCenter.name }}
+                                        </option>
+                                    {% endfor %}
+                                {% endblock %}
+                            {% endembed %}
+                        </div>
+                    {% else %}
+                        {# Single cost center — pre-selected, hidden from buyer #}
+                        <input type="hidden" name="idCostCenter" value="{{ data.costCenters[0].idCostCenter }}">
+                    {% endif %}
+
+                    {% if data.selectedCostCenter %}
+                        {% if data.budgets|length > 1 %}
+                            <div class="cost-center-selector__field spacing-bottom">
+                                <label class="label">{{ 'purchasing_control.budget.selector.label' | trans }}</label>
+                                {% embed molecule('custom-select') with {
+                                    modifiers: ['full-width', 'smaller'],
+                                    attributes: {
+                                        name: 'idBudget',
+                                        'config-width': '100%',
+                                        'data-form-submitter': true,
+                                    },
+                                    embed: {
+                                        budgets: data.budgets,
+                                        selectedBudget: data.selectedBudget,
+                                    },
+                                } only %}
+                                    {% block options %}
+                                        {% for budget in embed.budgets %}
+                                            <option value="{{ budget.idBudget }}"
+                                                {% if embed.selectedBudget ? embed.selectedBudget.idBudget == budget.idBudget : loop.first %}selected{% endif %}>
+                                                {{ budget.name }}
+                                            </option>
+                                        {% endfor %}
+                                    {% endblock %}
+                                {% endembed %}
+                            </div>
+                        {% elseif data.budgets|length == 1 %}
+                            {# Single budget — auto-selected, hidden from buyer #}
+                            <input type="hidden" name="idBudget" value="{{ data.budgets[0].idBudget }}">
+                        {% endif %}
+
+                        {% if data.selectedBudget %}
+                            <div class="cost-center-selector__remaining">
+                                {{ 'purchasing_control.budget.remaining' | trans }}:
+                                <strong>{{ data.selectedBudget.remainingAmount | money(true, data.quote.currency.code) }}</strong>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                </form>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endblock %}

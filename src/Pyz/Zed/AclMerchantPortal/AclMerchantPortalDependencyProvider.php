@@ -103,6 +103,8 @@ use Spryker\Zed\SalesMerchantPortalGui\Communication\Plugin\AclMerchantPortal\Sa
 use Spryker\Zed\SalesOrderThreshold\Communication\Plugin\AclMerchantPortal\SalesOrderThresholdAclEntityConfigurationExpanderPlugin;
 use Spryker\Zed\SalesPaymentMerchant\Communication\Plugin\AclMerchantPortal\SalesPaymentMerchantAclEntityConfigurationExpanderPlugin;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Plugin\AclMerchantPortal\SecurityMerchantPortalGuiMerchantUserAclRuleExpanderPlugin;
+use Spryker\Zed\SecurityOauthKnpu\Communication\Plugin\AclMerchantPortal\SecurityOauthKnpuMerchantUserAclEntityConfigurationExpanderPlugin;
+use Spryker\Zed\SecurityOauthKnpu\Communication\Plugin\AclMerchantPortal\SecurityOauthKnpuMerchantUserAclEntityRuleExpanderPlugin;
 use Spryker\Zed\ServicePoint\Communication\Plugin\AclMerchantPortal\ServiceAclEntityConfigurationExpanderPlugin;
 use Spryker\Zed\Shipment\Communication\Plugin\AclMerchantPortal\ShipmentAclEntityConfigurationExpanderPlugin;
 use Spryker\Zed\ShipmentType\Communication\Plugin\AclMerchantPortal\ShipmentTypeAclEntityConfigurationExpanderPlugin;
@@ -115,6 +117,8 @@ use Spryker\Zed\Url\Communication\Plugin\AclMerchantPortal\UrlAclEntityConfigura
 use Spryker\Zed\Url\Communication\Plugin\AclMerchantPortal\UrlMerchantAclEntityRuleExpanderPlugin;
 use Spryker\Zed\UserMerchantPortalGui\Communication\Plugin\AclMerchantPortal\UserMerchantPortalGuiMerchantUserAclRuleExpanderPlugin;
 use Spryker\Zed\UserPasswordReset\Communication\Plugin\AclMerchantPortal\UserPasswordResetAclEntityConfigurationExpanderPlugin;
+use SprykerEco\Zed\Stripe\Communication\Plugin\AclMerchantPortal\StripeAclEntityConfigurationExpanderPlugin;
+use SprykerEco\Zed\Stripe\Communication\Plugin\AclMerchantPortal\StripeMerchantAclRuleExpanderPlugin;
 
 class AclMerchantPortalDependencyProvider extends SprykerAclMerchantPortalDependencyProvider
 {
@@ -136,6 +140,7 @@ class AclMerchantPortalDependencyProvider extends SprykerAclMerchantPortalDepend
             new MerchantAppMerchantPortalGuiMerchantAclRuleExpanderPlugin(),
             new DataImportMerchantPortalGuiMerchantAclRuleExpanderPlugin(),
             new ProductOfferServicePointMerchantPortalGuiMerchantAclRuleExpanderPlugin(),
+            new StripeMerchantAclRuleExpanderPlugin(),
         ];
     }
 
@@ -170,6 +175,7 @@ class AclMerchantPortalDependencyProvider extends SprykerAclMerchantPortalDepend
             new CompanyBusinessUnitMerchantAclEntityRuleExpanderPlugin(),
             new SalesMerchantCommissionMerchantAclEntityRuleExpanderPlugin(),
             new ConfigurationValueMerchantAclEntityRuleExpanderPlugin(),
+            new SecurityOauthKnpuMerchantUserAclEntityRuleExpanderPlugin(),
         ];
     }
 
@@ -266,6 +272,8 @@ class AclMerchantPortalDependencyProvider extends SprykerAclMerchantPortalDepend
             new ProductOfferShipmentTypeAclEntityConfigurationExpanderPlugin(),
             new ShipmentTypeAclEntityConfigurationExpanderPlugin(),
             new ConfigurationValueAclEntityConfigurationExpanderPlugin(),
+            new StripeAclEntityConfigurationExpanderPlugin(),
+            new SecurityOauthKnpuMerchantUserAclEntityConfigurationExpanderPlugin(),
         ];
     }
 }

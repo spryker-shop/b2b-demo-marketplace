@@ -1,23 +1,19 @@
 @include product-label-widget-label-group {
     line-height: 0;
-    padding: rem(20) 0;
     display: flex;
     gap: rem(4);
     vertical-align: top;
     justify-content: flex-end;
     pointer-events: auto;
-    left: auto;
     margin-bottom: rem(8);
+    right: auto;
+    padding: rem(6);
 
     &:hover {
         .label-group__all-labels-wrapper {
             opacity: 1;
             pointer-events: auto;
         }
-    }
-
-    &--reduced-spaces {
-        padding: rem(6);
     }
 
     &__label-flag {
@@ -28,71 +24,30 @@
     }
 
     &__text {
-        display: block;
-        font-size: rem(12);
-        line-height: rem(20);
-        background-color: $setting-color-alt;
-        color: $setting-color-white;
-        padding: 0 rem(6);
-        border-radius: $setting-border-radius-2;
+        @include helper-badge-chip;
 
-        &--top {
-            background-color: $setting-color-blue-1;
+        &--service,
+        &--spare-parts,
+        &--top,
+        &--info {
+            @include helper-badge-semantic-subtle(info);
         }
 
-        &--new {
-            background-color: $setting-color-main;
+        &--scheduled,
+        &--success {
+            @include helper-badge-semantic-subtle(success);
         }
 
-        &--sale {
-            background-color: $setting-color-alt;
-        }
-
-        &--alternative {
-            border: 1px solid $setting-color-main;
-            background-color: $setting-color-white;
-            color: $setting-color-main;
-        }
-
-        &--discontinued {
-            border: 1px solid $setting-color-alt;
-            background-color: $setting-color-white;
-            color: $setting-color-alt;
-        }
-
-        &--pdp {
-            display: inline-block;
-            vertical-align: top;
-            margin: 0 rem(4) rem(4) 0;
-        }
-
-        &--spare-parts {
-            background: lighten($setting-color-main, 75%);
-            color: darken($setting-color-main, 5%);
+        &--discontinued,
+        &--warning {
+            @include helper-badge-semantic-subtle(warning);
         }
 
         &-regected,
-        &--not-compatible {
-            background: lighten($setting-color-alt, 50%);
-            color: darken($setting-color-alt, 27%);
-        }
-
-        &--service {
-            background: lighten($setting-color-blue-1, 63%);
-            color: $setting-color-blue-1;
-        }
-
-        &--scheduled {
-            background: lighten($setting-color-yellow-1, 47%);
-            color: $setting-color-gray-5;
-        }
-    }
-
-    &--sets {
-        padding-left: 0;
-
-        @include helper-breakpoint-media-min($lg) {
-            padding-left: rem(14);
+        &--not-compatible,
+        &--sale,
+        &--error {
+            @include helper-badge-semantic-subtle(error);
         }
     }
 
@@ -117,6 +72,7 @@
     }
 
     &__counter {
+        @include helper-badge-chip;
         display: inline-block;
         font-size: rem(12);
         line-height: rem(20);
@@ -134,6 +90,7 @@
         @include helper-effect-transition(opacity);
         display: flex;
         flex-direction: column;
+        align-items: flex-end;
         gap: rem(4);
         position: absolute;
         right: rem(4);

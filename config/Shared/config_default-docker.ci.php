@@ -98,6 +98,16 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'root' => APPLICATION_ROOT_DIR . '/data/DE/media/',
         'path' => 'files/',
     ],
+    'product-experience-management-imports' => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/data',
+        'path' => '/data/pim-imports',
+    ],
+    'product-experience-management-exports' => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/data',
+        'path' => '/data/pim-exports',
+    ],
     'backoffice-media' => $localMediaFileSystemConfig,
     'storefront-media' => $localMediaFileSystemConfig,
     'merchant-portal-media' => $localMediaFileSystemConfig,

@@ -285,6 +285,8 @@ actions:
     source: data/import/b2b_common/common/marketplace/product_offer_validity.csv
   - data_entity: product-offer-stock
     source: data/import/b2b_common/common/marketplace/product_offer_stock.csv
+  - data_entity: product-shipment-type
+    source: data/import/b2b_common/common/product_shipment_type.csv
   - data_entity: product-offer-shipment-type
     source: data/import/b2b_common/common/product_offer_shipment_type.csv
   - data_entity: product-price-merchant-relationship
@@ -340,13 +342,9 @@ actions:
   - data_entity: service-point-store
     source: data/import/b2b_common/AT/service_point_store.csv
 
-# Product Shipment Type import
-  - data_entity: product-shipment-type
-    source: data/import/b2b_common/common/product_shipment_type.csv
-
   # SelfServicePortal
   - data_entity: ssp-inquiry
-    source: data/import/b2b_common/EU/ssp_inquiry.csv
+    source: data/import/b2b_common/common/ssp_inquiry.csv
   - data_entity: product-class
     source: data/import/b2b_common/common/product_class.csv
   - data_entity: product-to-product-class

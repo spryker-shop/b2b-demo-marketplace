@@ -1,78 +1,79 @@
 @mixin catalog-page-suggestion-product($name: '.suggestion-product') {
     #{$name} {
-        padding-bottom: rem(10);
-
-        &__title {
-            font-size: rem(17);
-            font-weight: fw(regular);
-            line-height: normal;
-            letter-spacing: rem(0.2);
-            padding-bottom: rem(16);
-            padding-top: rem(26);
-            color: $setting-color-gray-4;
-        }
-
         &__link {
-            @include helper-effect-transition(color);
+            @include helper-effect-transition(background-color color);
             display: flex;
             align-items: center;
-            color: $setting-color-gray-4;
+            min-height: rem(60);
+            gap: var(--scale-12);
+            padding: var(--scale-6) var(--scale-16);
+            color: var(--text-primary);
 
             &:hover {
-                color: $setting-color-gray-5;
+                color: var(--text-brand);
+                background-color: var(--background-subtle);
             }
         }
 
         &__thumbnail {
             min-width: rem(52);
             width: rem(52);
+            height: rem(52);
 
             @include helper-breakpoint-media-min($lg) {
-                min-width: rem(42);
-                width: rem(42);
+                min-width: rem(44);
+                width: rem(44);
+                height: rem(44);
+                border-radius: var(--radius-md);
+                overflow: hidden;
+
+                lazy-image {
+                    display: block;
+                    width: rem(44);
+                    height: rem(44);
+                }
+            }
+
+            img {
+                @include helper-breakpoint-media-min($lg) {
+                    width: 100%;
+                    height: 100%;
+                    min-height: 100%;
+                    object-fit: cover;
+                }
             }
         }
 
         &__name {
             flex-grow: 1;
-            padding-left: rem(14);
-            font-size: rem(12);
-            font-weight: fw(medium);
-            line-height: rem(14);
-            letter-spacing: rem(0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--scale-6);
+        }
 
-            @include helper-breakpoint-media-min($lg) {
-                font-size: rem(13);
-            }
+        &__content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        &__title {
+            font-family: var(--body-sm-family);
+            font-size: var(--body-sm-size);
+            font-weight: var(--body-sm-weight);
+            line-height: var(--body-sm-line-height);
+            color: var(--text-primary);
+        }
+
+        &__sku {
+            font-size: var(--caption-size);
+            font-weight: var(--caption-weight);
+            line-height: var(--caption-line-height);
+            color: var(--text-secondary);
         }
 
         &__price {
-            display: block;
-            padding-top: 3px;
-
-            .price__amount {
-                color: $setting-color-gray-3;
-                font-size: rem(13);
-                font-weight: fw(bold);
-
-                &--alt {
-                    color: $setting-color-alt;
-                }
-
-                &--original {
-                    font-size: rem(13);
-                    font-weight: fw(regular);
-                    text-decoration: line-through;
-                }
-            }
-
-            .price__mode {
-                display: none;
-
-                @include helper-breakpoint-media-min($lg) {
-                    display: block;
-                }
-            }
+            text-align: right;
         }
 
         @content;
