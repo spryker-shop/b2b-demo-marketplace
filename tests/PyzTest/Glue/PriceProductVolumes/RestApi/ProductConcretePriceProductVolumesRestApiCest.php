@@ -71,7 +71,7 @@ class ProductConcretePriceProductVolumesRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->amSure('Returned resource is of type concrete-product-prices')
             ->whenI()
