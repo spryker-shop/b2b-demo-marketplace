@@ -18,5 +18,6 @@
 }
 
 @mixin helper-badge-semantic-bold-background($state) {
+    color: var(--text-inverse);
     background: var(--background-state-#{$state}-bold);
 }

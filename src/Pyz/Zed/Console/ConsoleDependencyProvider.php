@@ -212,7 +212,6 @@ use SprykerEco\Zed\PunchoutGateway\Communication\Console\PunchoutOciDemoConnecti
 use SprykerFeature\Zed\ProductExperienceManagement\Communication\Console\ImportJobRunConsole;
 use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 use SprykerSdk\Zed\AiDev\Communication\Console\AiToolSetupConsole;
-use SprykerSdk\Zed\AiDev\Communication\Console\GeneratePromptsConsole;
 use SprykerSdk\Zed\AiDev\Communication\Console\McpServerConsole;
 use SprykerShop\Zed\DateTimeConfiguratorPageExample\Communication\Console\DateTimeProductConfiguratorBuildFrontendConsole;
 
@@ -519,7 +518,6 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
 
             if (class_exists(McpServerConsole::class)) {
                 $commands[] = new McpServerConsole();
-                $commands[] = new GeneratePromptsConsole();
             }
 
             if (class_exists(AiToolSetupConsole::class)) {

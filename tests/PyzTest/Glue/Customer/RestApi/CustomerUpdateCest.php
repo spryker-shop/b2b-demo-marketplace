@@ -101,7 +101,7 @@ class CustomerUpdateCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->seeSingleResourceHasSelfLink(
             $I->formatFullUrl(
@@ -171,7 +171,7 @@ class CustomerUpdateCest
         // Assert
         $I->seeResponseCodeIs(Response::HTTP_UNPROCESSABLE_ENTITY);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->seeResponseErrorsHaveCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_ALREADY_EXISTS);
         $I->seeResponseErrorsHaveStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
@@ -219,7 +219,7 @@ class CustomerUpdateCest
         // Assert
         $I->seeResponseCodeIs(Response::HTTP_FORBIDDEN);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->seeResponseErrorsHaveCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_UNAUTHORIZED);
         $I->seeResponseErrorsHaveStatus(Response::HTTP_FORBIDDEN);
@@ -302,7 +302,7 @@ class CustomerUpdateCest
         // Assert
         $I->seeResponseCodeIs(Response::HTTP_UNPROCESSABLE_ENTITY);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->seeResponseErrorsHaveCode(CustomersRestApiConfig::RESPONSE_CODE_PASSWORDS_DONT_MATCH);
         $I->seeResponseErrorsHaveStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
@@ -344,7 +344,7 @@ class CustomerUpdateCest
         // Assert
         $I->seeResponseCodeIs($example[RestErrorMessageTransfer::STATUS]);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         foreach ($example['errors'] as $index => $error) {
             $I->seeResponseErrorsHaveCode($error[RestErrorMessageTransfer::CODE], (string)$index);
