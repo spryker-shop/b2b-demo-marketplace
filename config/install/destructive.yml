@@ -46,8 +46,10 @@ sections:
             command: 'vendor/bin/console queue:setup'
 
     setup-minimal-data:
-        import-demodata:
-            command: 'vendor/bin/console data:import --config=data/import/local/store_${SPRYKER_CURRENT_REGION}.yml'
+        import-eu-demodata:
+            command: 'vendor/bin/console data:import --config=data/import/local/store_EU.yml'
+        import-us-demodata:
+            command: 'vendor/bin/console data:import --config=data/import/local/store_US.yml'
 
     clear-and-init-search:
         clean-search:
@@ -56,8 +58,10 @@ sections:
             command: 'vendor/bin/console search:setup:sources -vvv --no-ansi'
 
     demodata:
-        import-demodata:
-            command: 'vendor/bin/console data:import --config=data/import/local/full_${SPRYKER_CURRENT_REGION}.yml'
+        import-eu-demodata:
+            command: 'vendor/bin/console data:import --config=data/import/local/full_EU.yml'
+        import-us-demodata:
+            command: 'vendor/bin/console data:import --config=data/import/local/full_US.yml'
 
         update-product-labels:
             command: 'vendor/bin/console product-label:relations:update -vvv --no-ansi'
