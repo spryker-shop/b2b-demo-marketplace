@@ -5,6 +5,6 @@
           namespace="Orm\Zed\CmsBlock\Persistence"
           package="src.Orm.Zed.CmsBlock.Persistence">
     <table name="spy_cms_block" identifierQuoting="true">
-        <column name="is_restricted" type="BOOLEAN" required="false" default="false" description="Project-level flag indicating that the CMS block is restricted to logged-in customers (optionally filtered by customer group)."/>
+        <column name="is_restricted" type="BOOLEAN" required="false" default="false" description="Flag indicating that the CMS block is restricted to logged-in customers (optionally filtered by customer group)."/>
     </table>
 </database>

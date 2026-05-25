@@ -21,11 +21,6 @@ class CmsBlockCustomerGroupWriter
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
-     *
-     * @return void
-     */
     public function saveCmsBlockCustomerGroups(CmsBlockTransfer $cmsBlockTransfer): void
     {
         $idCmsBlock = (int)$cmsBlockTransfer->getIdCmsBlockOrFail();

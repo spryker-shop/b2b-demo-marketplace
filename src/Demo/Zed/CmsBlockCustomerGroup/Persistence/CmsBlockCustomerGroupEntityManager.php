@@ -10,7 +10,6 @@ declare(strict_types = 1);
 namespace Demo\Zed\CmsBlockCustomerGroup\Persistence;
 
 use Orm\Zed\CmsBlockCustomerGroup\Persistence\PyzCmsBlockCustomerGroup;
-use Orm\Zed\CmsBlockCustomerGroup\Persistence\PyzCmsBlockCustomerGroupQuery;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
@@ -58,7 +57,8 @@ class CmsBlockCustomerGroupEntityManager extends AbstractEntityManager implement
             return;
         }
 
-        PyzCmsBlockCustomerGroupQuery::create()
+        $this->getFactory()
+            ->createCmsBlockCustomerGroupQuery()
             ->filterByFkCmsBlock($idCmsBlock)
             ->filterByFkCustomerGroup_In($customerGroupIds)
             ->delete();

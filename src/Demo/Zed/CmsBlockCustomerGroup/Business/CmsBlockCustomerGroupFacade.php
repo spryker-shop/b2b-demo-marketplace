@@ -22,11 +22,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class CmsBlockCustomerGroupFacade extends AbstractFacade implements CmsBlockCustomerGroupFacadeInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
-     *
-     * @return void
-     */
     public function saveCmsBlockCustomerGroups(CmsBlockTransfer $cmsBlockTransfer): void
     {
         $this->getFactory()

@@ -60,11 +60,6 @@ class EditBlockController extends SprykerEditBlockController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormInterface $cmsBlockForm
-     *
-     * @return void
-     */
     protected function saveCmsBlockCustomerGroups(FormInterface $cmsBlockForm): void
     {
         $this->getFactory()
