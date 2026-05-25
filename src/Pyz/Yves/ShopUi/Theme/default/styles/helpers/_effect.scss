@@ -1,0 +1,18 @@
+@use '../settings/effect' as *;
+
+@mixin helper-effect-transition(
+    $props: opacity visibility,
+    $duration: $setting-effect-default-duration,
+    $ease: $setting-effect-default-ease
+) {
+    $transition: null;
+
+    @each $prop in $props {
+        $transition:
+            $prop $duration $ease,
+            $transition;
+    }
+    transition: $transition;
+
+    @content;
+}

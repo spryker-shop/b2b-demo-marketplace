@@ -1,0 +1,5 @@
+@use '../settings/grid' as *;
+
+@function helper-grid-span($column, $columns: $setting-grid-columns) {
+    @return calc((100% / #{$columns}) * #{$column});
+}

@@ -1,3 +1,25 @@
+@use 'sass:map';
+@use '../settings/font' as *;
+
+@mixin helper-font-size($size) {
+    font-size: map.get($setting-font-size, $size);
+
+    @content;
+}
+
+@mixin helper-font-weight($weight) {
+    font-weight: map.get($setting-font-weight, $weight);
+
+    @content;
+}
+
+@mixin helper-font-line-height($height) {
+    line-height: map.get($setting-font-line-height, $height);
+
+    @content;
+}
+
+// Legacy shorthand kept for backward compatibility with project components
 @function fw($weight) {
-    @return map-get($setting-font-weight, $weight);
+    @return map.get($setting-font-weight, $weight);
 }

@@ -20,19 +20,46 @@ const globAsync = async (patterns, rootConfiguration) => {
     }
 };
 
+/**
+ * Resolve globDirs entries that may contain wildcards (*, ?, [], {}, **)
+ * into a concrete list of existing directories.
+ */
+const resolveDirs = async (globDirs) => {
+    const hasMagic = (p) => /[*?[\]{}()]/.test(p);
+    const sets = await Promise.all(
+        globDirs.map(async (d) => {
+            if (!hasMagic(d)) {
+                // No wildcard: verify with fast-glob (returns [] if not a dir)
+                const exact = await glob(d, { onlyDirectories: true, absolute: true, unique: true });
+                return exact;
+            }
+            // Wildcard path: expand to all matching directories
+            return await glob(d, { onlyDirectories: true, absolute: true, unique: true });
+        }),
+    );
+
+    // Flatten + dedupe
+    const all = [].concat(...sets);
+    return Array.from(new Set(all));
+};
+
 const findFiles = (globDirs, globPatterns, globSettings) =>
-    globDirs.reduce(async (resultsPromise, dir) => {
-        const rootConfiguration = {
-            ...defaultGlobSettings,
-            ...globSettings,
-            cwd: dir,
-        };
+    (async () => {
+        const resolvedDirs = await resolveDirs(globDirs);
 
-        const results = await resultsPromise;
-        const globPath = await globAsync(globPatterns, rootConfiguration);
+        return resolvedDirs.reduce(async (resultsPromise, dir) => {
+            const rootConfiguration = {
+                ...defaultGlobSettings,
+                ...globSettings,
+                cwd: dir,
+            };
 
-        return results.concat(globPath);
-    }, Promise.resolve([]));
+            const results = await resultsPromise;
+            const globPath = await globAsync(globPatterns, rootConfiguration);
+
+            return results.concat(globPath);
+        }, Promise.resolve([]));
+    })();
 
 const find = async (globDirs, globPatterns, globFallbackPatterns, globSettings = {}) => {
     const customThemeFiles = await findFiles(globDirs, globPatterns, globSettings);
@@ -67,6 +94,21 @@ const findComponentEntryPoints = async (settings) => await findEntryPoints(setti
 // find component styles
 const findComponentStyles = async (settings) => await find(settings.dirs, settings.patterns, [], settings.globSettings);
 
+// filter blacklisted files (styles or entry points) by glob patterns
+const filterBlacklistedFiles = (files, blacklistPatterns = []) => {
+    if (!blacklistPatterns || blacklistPatterns.length === 0) {
+        return files;
+    }
+
+    const { minimatch: matcher } = require('minimatch');
+
+    return files.filter((file) => {
+        return !blacklistPatterns.some((pattern) => matcher(file, pattern, { matchBase: true }));
+    });
+};
+
+const filterBlacklistedStyles = filterBlacklistedFiles;
+
 // find application entry points
 const findAppEntryPoint = async (settings, file) => {
     const config = Object.assign({}, settings);
@@ -83,4 +125,7 @@ module.exports = {
     findComponentEntryPoints,
     findComponentStyles,
     findAppEntryPoint,
+    findFiles,
+    filterBlacklistedFiles,
+    filterBlacklistedStyles,
 };

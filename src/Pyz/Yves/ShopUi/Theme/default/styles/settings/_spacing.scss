@@ -1,10 +1,12 @@
-$setting-spacing: (
-    large: var(--scale-32),
-    medium: var(--scale-20),
-    biggest: var(--scale-12),
-    bigger: var(--scale-8),
-    big: var(--scale-6),
-    default: var(--scale-4),
-    small: var(--scale-2),
-    reset: var(--scale-0),
+@forward '~ShopUi/styles/settings/spacing' with (
+    $setting-spacing: (
+        large: var(--scale-32),
+        medium: var(--scale-20),
+        biggest: var(--scale-12),
+        bigger: var(--scale-8),
+        big: var(--scale-6),
+        default: var(--scale-4),
+        small: var(--scale-2),
+        reset: var(--scale-0),
+    ),
 );

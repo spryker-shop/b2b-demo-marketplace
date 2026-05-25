@@ -1,17 +1,35 @@
-@import '~ShopUi/styles/shared';
+// Settings: src versions forward vendor internally with project overrides applied via `with (...)`
+@forward 'settings/breakpoint';
+@forward 'settings/color';
+@forward 'settings/effect';
+@forward 'settings/font';
+@forward 'settings/grid';
+@forward 'settings/radius';
+@forward 'settings/spacing';
+@forward 'settings/z-index';
 
-@import 'helpers/reset';
-@import 'helpers/calc-rem';
-@import 'helpers/badge-chip';
-@import 'helpers/font';
-@import 'helpers/color-selector';
-@import 'helpers/outline';
+// Vendor-only settings with no src override
+@forward '~ShopUi/styles/settings/import';
+@forward '~ShopUi/styles/settings/icons';
 
-@import 'settings/breakpoint';
-@import 'settings/color';
-@import 'settings/effect';
-@import 'settings/font';
-@import 'settings/grid';
-@import 'settings/radius';
-@import 'settings/spacing';
-@import 'settings/z-index';
+// Helpers: src versions forward vendor internally where they overlap
+@forward 'helpers/reset';
+@forward 'helpers/font';
+
+// Src-only helpers not present in vendor
+@forward 'helpers/calc-rem';
+@forward 'helpers/badge-chip';
+@forward 'helpers/color-selector';
+@forward 'helpers/outline';
+
+// Vendor helpers with no $setting dependencies (safe to forward directly)
+@forward '~ShopUi/styles/helpers/color';
+@forward '~ShopUi/styles/helpers/visibility';
+
+// Src wrappers for vendor helpers that reference $setting variables
+@forward 'helpers/effect';
+@forward 'helpers/spacing';
+@forward 'helpers/breakpoint';
+@forward 'helpers/grid';
+@forward 'helpers/ui';
+@forward 'helpers/import';

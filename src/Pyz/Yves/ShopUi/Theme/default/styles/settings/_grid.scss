@@ -1,3 +1,7 @@
-$setting-grid-max-width: 1200px;
+@forward '~ShopUi/styles/settings/grid' with (
+    $setting-grid-max-width: 1200px,
+);
+
+// Project-only variables not present in the vendor file
 $setting-grid-space: 10px;
 $setting-grid-space-mobile: 9px;

@@ -1,5 +1,6 @@
+@use '../settings/color' as *;
+
 @mixin helper-reset {
-    // https://www.paulirish.com/2012/box-sizing-border-box-ftw/
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -7,4 +8,6 @@
     font: inherit;
     color: inherit;
     -webkit-tap-highlight-color: rgba($setting-color-white, 0);
+
+    @content;
 }

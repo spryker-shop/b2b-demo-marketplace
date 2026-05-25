@@ -1,10 +1,16 @@
 /* eslint-disable max-lines */
-const { join } = require('path');
+const { join, relative } = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const filePathFilter = require('@jsdevtools/file-path-filter');
 const { buildDesignTokens } = require('../libs/design-tokens');
-const { findComponentEntryPoints, findComponentStyles, findAppEntryPoint } = require('../libs/finder');
+const {
+    findComponentEntryPoints,
+    findComponentStyles,
+    findAppEntryPoint,
+    filterBlacklistedFiles,
+    filterBlacklistedStyles,
+} = require('../libs/finder');
 const { getAliasList } = require('../libs/alias');
 const { getAssetsConfig } = require('../libs/assets-configurator');
 const cleanDirs = require('../libs/clean-dirs');
@@ -33,7 +39,9 @@ const getConfiguration = async (appSettings) => {
 
     const componentEntryPointsPromise = findComponentEntryPoints(appSettings.find.componentEntryPoints);
     const stylesPromise = findComponentStyles(appSettings.find.componentStyles);
-    const [componentEntryPoints, styles] = await Promise.all([componentEntryPointsPromise, stylesPromise]);
+    const [allComponentEntryPoints, allStyles] = await Promise.all([componentEntryPointsPromise, stylesPromise]);
+    const componentEntryPoints = filterBlacklistedFiles(allComponentEntryPoints, appSettings.styleBlacklist);
+    const styles = filterBlacklistedStyles(allStyles, appSettings.styleBlacklist);
     const alias = getAliasList(appSettings);
 
     if (isExtractIconSpritesEnabled) {
@@ -171,6 +179,16 @@ const getConfiguration = async (appSettings) => {
                                             return content;
                                         }
 
+                                        // Check if file uses @use/@forward (modern approach)
+                                        const hasModernDirectives = /@use\s|@forward\s/.test(content);
+
+                                        if (hasModernDirectives) {
+                                            // For modern @use/@forward files, don't inject anything
+                                            // These files should explicitly @use the resources they need
+                                            return content;
+                                        }
+
+                                        // Legacy @import approach: inject at the beginning
                                         const imports = allResources
                                             .map((resource) => {
                                                 if (currentFilePath === resource) {
@@ -180,6 +198,7 @@ const getConfiguration = async (appSettings) => {
                                                 return `@import "${resource}";`;
                                             })
                                             .join('\n');
+
                                         return `${imports}\n${content}`;
                                     },
                                 },

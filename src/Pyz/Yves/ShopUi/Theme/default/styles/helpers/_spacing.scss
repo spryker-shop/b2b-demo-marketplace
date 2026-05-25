@@ -1,0 +1,66 @@
+@use '../settings/spacing' as *;
+
+@mixin helper-spacing($name, $sides: []) {
+    @include helper-spacing-outer($name, $sides);
+    @include helper-spacing-inner($name, $sides);
+}
+
+@mixin helper-spacing-outer($name, $sides) {
+    #{$name} {
+        @each $spacing-name, $spacing-value in $setting-spacing {
+            @if $spacing-name == 'default' {
+                @if length($sides) == 0 {
+                    margin: $spacing-value;
+                } @else {
+                    @each $side in $sides {
+                        margin-#{$side}: $spacing-value;
+                    }
+                }
+            } @else {
+                &--#{$spacing-name} {
+                    @if length($sides) == 0 {
+                        margin: $spacing-value;
+                    } @else {
+                        @each $side in $sides {
+                            margin-#{$side}: $spacing-value;
+                        }
+                    }
+                }
+            }
+        }
+
+        @content;
+    }
+}
+
+@mixin helper-spacing-inner($name, $sides) {
+    #{$name}--inner {
+        @each $spacing-name, $spacing-value in $setting-spacing {
+            @if $spacing-name == 'default' {
+                @if length($sides) == 0 {
+                    margin: 0;
+                    padding: $spacing-value;
+                } @else {
+                    @each $side in $sides {
+                        margin-#{$side}: 0;
+                        padding-#{$side}: $spacing-value;
+                    }
+                }
+            } @else {
+                @at-root #{$name}--inner#{$name}--#{$spacing-name} {
+                    @if length($sides) == 0 {
+                        margin: 0;
+                        padding: $spacing-value;
+                    } @else {
+                        @each $side in $sides {
+                            margin-#{$side}: 0;
+                            padding-#{$side}: $spacing-value;
+                        }
+                    }
+                }
+            }
+        }
+
+        @content;
+    }
+}

@@ -1,20 +1,20 @@
-$setting-font-family: var(--font-family-sans);
-
-$setting-font-size: (
-    1: 50px,
-    2: var(--heading-xl-size),
-    3: var(--heading-md-size),
-    4: var(--font-size-18),
-    5: var(--body-lg-size),
-    6: var(--body-md-size),
-    big: var(--font-size-18),
-    default: var(--body-lg-size),
-    small: var(--body-md-size),
-    tiny: var(--body-sm-size),
-);
-
-$setting-font-weight: (
-    regular: 400,
-    medium: 500,
-    bold: 700,
+@forward '~ShopUi/styles/settings/font' with (
+    $setting-font-family: var(--font-family-sans),
+    $setting-font-size: (
+        1: 50px,
+        2: var(--heading-xl-size),
+        3: var(--heading-md-size),
+        4: var(--font-size-18),
+        5: var(--body-lg-size),
+        6: var(--body-md-size),
+        big: var(--font-size-18),
+        default: var(--body-lg-size),
+        small: var(--body-md-size),
+        tiny: var(--body-sm-size),
+    ),
+    $setting-font-weight: (
+        regular: 400,
+        medium: 500,
+        bold: 700,
+    ),
 );

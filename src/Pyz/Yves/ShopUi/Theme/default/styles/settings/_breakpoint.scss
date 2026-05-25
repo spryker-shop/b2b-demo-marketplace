@@ -1,28 +1,18 @@
+@forward '~ShopUi/styles/settings/breakpoint' with (
+    $setting-breakpoints: (
+        sm: (0, 549px),
+        md: (550px, 767px),
+        lg: (768px, 1023px),
+        xl: (1024px, 1199px),
+        xxl: (1200px, 1399px),
+        xxxl: (1400px),
+    ),
+);
+
+// Shorthand variables used directly in project components
 $sm: 0;
 $md: 550px;
 $lg: 768px;
 $xl: 1024px;
 $xxl: 1200px;
 $xxxl: 1400px;
-
-$setting-breakpoints: (
-    sm: (
-        $sm,
-        $md - 1,
-    ),
-    md: (
-        $md,
-        $lg - 1,
-    ),
-    lg: (
-        $lg,
-        $xl - 1,
-    ),
-    xl: (
-        $xl,
-        $xxl - 1,
-    ),
-    xxl: (
-        $xxl,
-    ),
-);

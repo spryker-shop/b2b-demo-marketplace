@@ -1,9 +1,28 @@
-$setting-color-main: #08493d;
-$setting-color-alt: #e01a00;
+@forward '~ShopUi/styles/settings/color' with (
+    $setting-color-main: #08493d,
+    $setting-color-alt: #e01a00,
 
-$setting-color-white: #fff;
-$setting-color-black: #000;
+    $setting-color-white: #fff,
+    $setting-color-black: #000,
 
+    $setting-color-dark: #4c4c4c,
+    $setting-color-darker: #333,
+    $setting-color-darkest: #202020,
+
+    $setting-color-light: #dce0e5,
+    $setting-color-lighter: #e7eaee,
+    $setting-color-lightest: #f6f6f6,
+
+    $setting-color-bg: #fff,
+
+    $setting-color-actions: (
+        success: #08493d,
+        warning: #d88d00,
+        alert: #e01a00,
+    ),
+);
+
+// Project-only variables not present in the vendor file
 $setting-color-gray-1: #dce0e5;
 $setting-color-gray-2: #b2b2b2;
 $setting-color-gray-3: var(--grey-60);
@@ -17,31 +36,21 @@ $setting-color-blue-1: #005ba1;
 
 $setting-color-yellow-1: #d88d00;
 
-$setting-color-alpha-1: rgba($setting-color-black, 0.1);
-$setting-color-alpha-2: rgba($setting-color-black, 0.05);
-$setting-color-alpha-3: rgba($setting-color-gray-2, 0.3);
-$setting-color-alpha-4: rgba($setting-color-white, 0.6);
-$setting-color-alpha-5: rgba($setting-color-alt, 0.1);
-$setting-color-alpha-6: rgba($setting-color-black, 0.2);
-$setting-color-alpha-7: rgba($setting-color-gray-5, 0.8);
-$setting-color-alpha-8: rgba($setting-color-yellow-1, 0.2);
-$setting-color-alpha-9: rgba($setting-color-main, 0.15);
+$setting-color-alpha-1: rgba(#000, 0.1);
+$setting-color-alpha-2: rgba(#000, 0.05);
+$setting-color-alpha-3: rgba(#b2b2b2, 0.3);
+$setting-color-alpha-4: rgba(#fff, 0.6);
+$setting-color-alpha-5: rgba(#e01a00, 0.1);
+$setting-color-alpha-6: rgba(#000, 0.2);
+$setting-color-alpha-7: rgba(#333, 0.8);
+$setting-color-alpha-8: rgba(#d88d00, 0.2);
+$setting-color-alpha-9: rgba(#08493d, 0.15);
 
-$setting-color-overlay: rgba($setting-color-gray-5, 0.4);
+$setting-color-overlay: rgba(#333, 0.4);
 
-$setting-color-bg: $setting-color-white;
-$setting-color-text: $setting-color-gray-8;
-$setting-color-input-border: $setting-color-gray-1;
-$setting-color-input-border-focus: $setting-color-gray-3;
+$setting-color-input-border: #dce0e5;
+$setting-color-input-border-focus: var(--grey-60);
 
-$setting-color-shadow: $setting-color-alpha-1;
-$setting-color-shadow-1: $setting-color-alpha-2;
-$setting-color-shadow-2: $setting-color-alpha-6;
-
-$setting-color-dark: $setting-color-gray-4;
-
-$setting-color-actions: (
-    success: #08493d,
-    warning: #d88d00,
-    alert: #e01a00,
-);
+$setting-color-shadow: rgba(#000, 0.1);
+$setting-color-shadow-1: rgba(#000, 0.05);
+$setting-color-shadow-2: rgba(#000, 0.2);
