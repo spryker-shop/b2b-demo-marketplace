@@ -53,11 +53,9 @@ export default class AgentControl extends Component {
 
     protected populateSwitchPopupName(newCustomerLabel: string): void {
         const newName = newCustomerLabel.split(':')[0].trim();
-        document
-            .querySelectorAll<HTMLElement>(`.${this.jsName}__switch-customer-new-name`)
-            .forEach((placeholder) => {
-                placeholder.textContent = newName;
-            });
+        document.querySelectorAll<HTMLElement>(`.${this.jsName}__switch-customer-new-name`).forEach((placeholder) => {
+            placeholder.textContent = newName;
+        });
     }
 
     protected onConfirmClick(event: MouseEvent): void {
