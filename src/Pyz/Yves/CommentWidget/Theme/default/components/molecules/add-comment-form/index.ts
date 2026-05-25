@@ -1,1 +1,1 @@
-import './add-comment-form.scss';
+import './style.scss';

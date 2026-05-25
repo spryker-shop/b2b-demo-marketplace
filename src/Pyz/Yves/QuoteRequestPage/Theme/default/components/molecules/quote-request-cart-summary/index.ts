@@ -1,1 +1,1 @@
-import './quote-request-cart-summary.scss';
+import './style.scss';

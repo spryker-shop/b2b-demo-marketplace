@@ -1,1 +1,1 @@
-import './shopping-list-overview-table.scss';
+import './style.scss';

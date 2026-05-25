@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin quick-order-page-quick-order-row-partial($name: '.quick-order-row-partial') {
     #{$name} {
         &__holder-quantity {
@@ -115,5 +116,3 @@
         @content;
     }
 }
-
-@include quick-order-page-quick-order-row-partial();

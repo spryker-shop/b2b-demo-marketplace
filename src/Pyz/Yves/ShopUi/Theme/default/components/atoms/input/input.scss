@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin shop-ui-input-extended($name: '.input') {
     #{$name} {
         @include helper-effect-transition(background-color border-color box-shadow color);
@@ -71,5 +72,3 @@
         @content;
     }
 }
-
-@include shop-ui-input-extended();

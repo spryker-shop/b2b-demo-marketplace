@@ -1,1 +1,1 @@
-import './customer-list';
+import './style.scss';

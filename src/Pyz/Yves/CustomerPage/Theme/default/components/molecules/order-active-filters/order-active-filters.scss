@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin customer-page-order-active-filters($name: '.order-active-filters') {
     #{$name} {
         display: flex;
@@ -70,5 +71,3 @@
         @content;
     }
 }
-
-@include customer-page-order-active-filters();

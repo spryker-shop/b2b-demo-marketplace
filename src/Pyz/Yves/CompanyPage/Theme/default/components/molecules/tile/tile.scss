@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin shop-ui-tile($name: '.tile') {
     #{$name} {
         display: flex;
@@ -60,5 +61,3 @@
         }
     }
 }
-
-@include shop-ui-tile();

@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin comment-widget-add-comment-form($name: '.add-comment-form') {
     #{$name} {
         position: relative;
@@ -37,5 +38,3 @@
         }
     }
 }
-
-@include comment-widget-add-comment-form();

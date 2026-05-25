@@ -1,4 +1,4 @@
-import './shopping-list-note-toggler.scss';
+import './style.scss';
 import register from 'ShopUi/app/registry';
 export default register(
     'shopping-list-note-toggler',

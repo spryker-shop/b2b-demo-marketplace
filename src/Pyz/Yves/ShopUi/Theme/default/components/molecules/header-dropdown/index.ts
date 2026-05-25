@@ -1,4 +1,4 @@
-import './header-dropdown.scss';
+import './style.scss';
 import register from 'ShopUi/app/registry';
 export default register(
     'header-dropdown',

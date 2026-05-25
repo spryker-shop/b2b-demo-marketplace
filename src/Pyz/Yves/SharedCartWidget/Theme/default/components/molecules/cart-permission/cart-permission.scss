@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin share-cart-widget-cart-permission($name: '.cart-permission') {
     #{$name} {
         &--widget {
@@ -15,5 +16,3 @@
         @content;
     }
 }
-
-@include share-cart-widget-cart-permission();

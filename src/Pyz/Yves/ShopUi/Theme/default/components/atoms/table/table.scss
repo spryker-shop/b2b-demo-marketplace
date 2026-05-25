@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin shop-ui-table($name: '.table') {
     #{$name} {
         thead {
@@ -175,5 +176,3 @@
         @content;
     }
 }
-
-@include shop-ui-table();

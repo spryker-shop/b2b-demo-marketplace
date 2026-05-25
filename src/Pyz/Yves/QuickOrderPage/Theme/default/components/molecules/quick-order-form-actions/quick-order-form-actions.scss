@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin quick-order-page-quick-order-form-actions($name: '.quick-order-form-actions') {
     #{$name} {
         &__clear-all-trigger,
@@ -44,5 +45,3 @@
         @content;
     }
 }
-
-@include quick-order-page-quick-order-form-actions;

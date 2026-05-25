@@ -1,1 +1,1 @@
-import './cart-permission';
+import './style.scss';

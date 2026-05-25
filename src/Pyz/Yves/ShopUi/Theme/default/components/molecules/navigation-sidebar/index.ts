@@ -1,1 +1,1 @@
-import './navigation-sidebar';
+import './style.scss';

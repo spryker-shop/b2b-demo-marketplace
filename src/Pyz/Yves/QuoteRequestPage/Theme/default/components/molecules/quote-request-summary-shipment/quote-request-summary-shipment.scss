@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin quote-request-page-quote-request-summary-shipment($name: '.quote-request-summary-shipment') {
     #{$name} {
         font-size: rem(12);
@@ -24,5 +25,3 @@
         @content;
     }
 }
-
-@include quote-request-page-quote-request-summary-shipment();

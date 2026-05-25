@@ -1,4 +1,4 @@
-import './source-price-form.scss';
+import './style.scss';
 import register from 'ShopUi/app/registry';
 export default register(
     'source-price-form',

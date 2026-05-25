@@ -1,3 +1,5 @@
+@use 'src/ShopUi/styles/shared' as *;
+@use 'ShopUi/components/molecules/lazy-image/lazy-image' as *;
 @include shop-ui-lazy-image {
     &--smaller {
         height: rem(52);

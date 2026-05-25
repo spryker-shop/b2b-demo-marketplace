@@ -1,1 +1,1 @@
-import './agent-control-item';
+import './style.scss';

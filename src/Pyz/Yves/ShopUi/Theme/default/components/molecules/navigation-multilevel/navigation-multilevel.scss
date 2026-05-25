@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin shop-ui-navigation-multilevel($name: '.navigation-multilevel') {
     #{$name} {
         @include helper-breakpoint-media-min($xl) {
@@ -94,5 +95,3 @@
         @content;
     }
 }
-
-@include shop-ui-navigation-multilevel();

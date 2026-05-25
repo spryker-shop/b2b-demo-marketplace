@@ -1,1 +1,1 @@
-import './date-information-item.scss';
+import './style.scss';

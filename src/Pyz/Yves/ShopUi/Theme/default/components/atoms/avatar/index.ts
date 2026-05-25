@@ -1,1 +1,1 @@
-import './avatar';
+import './style.scss';

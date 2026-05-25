@@ -1,1 +1,1 @@
-import './label';
+import './style.scss';

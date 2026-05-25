@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin product-detail-page-product-configurator($name: '.product-configurator') {
     #{$name} {
         padding: 0 rem(15) rem(14);
@@ -63,5 +64,3 @@
         @content;
     }
 }
-
-@include product-detail-page-product-configurator;

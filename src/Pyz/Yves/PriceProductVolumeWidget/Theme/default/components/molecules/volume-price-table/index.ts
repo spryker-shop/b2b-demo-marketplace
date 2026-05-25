@@ -1,1 +1,1 @@
-import './volume-price-table';
+import './style.scss';

@@ -1,1 +1,1 @@
-import './panel-info-item';
+import './style.scss';

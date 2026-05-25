@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin catalog-page-filter-section($name: '.filter-section') {
     #{$name} {
         position: fixed;
@@ -137,5 +138,3 @@
         @content;
     }
 }
-
-@include catalog-page-filter-section();

@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin shop-ui-table-action-list($name: '.table-action-list') {
     #{$name} {
         display: flex;
@@ -39,5 +40,3 @@
         @content;
     }
 }
-
-@include shop-ui-table-action-list();

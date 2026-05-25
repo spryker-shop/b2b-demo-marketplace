@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin sales-return-page-return-total($name: '.return-total') {
     #{$name} {
         background-color: $setting-color-gray-7;
@@ -26,5 +27,3 @@
         @content;
     }
 }
-
-@include sales-return-page-return-total();

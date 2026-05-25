@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin product-discontinued-note($name: '.product-discontinued-note') {
     #{$name} {
         &__title {
@@ -17,5 +18,3 @@
         @content;
     }
 }
-
-@include product-discontinued-note();

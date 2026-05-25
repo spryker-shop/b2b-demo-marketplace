@@ -1,3 +1,5 @@
+@use 'src/ShopUi/styles/shared' as *;
+@use 'ShopUi/components/molecules/navigation-icon-list/navigation-icon-list' as *;
 @include shop-ui-navigation-icon-list {
     &__icon {
         color: var(--text-primary);

@@ -1,1 +1,1 @@
-import './new-review-form.scss';
+import './style.scss';

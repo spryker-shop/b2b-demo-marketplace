@@ -1,4 +1,4 @@
-import './cart-item-note.scss';
+import './style.scss';
 import register from 'ShopUi/app/registry';
 export default register(
     'cart-item-note',

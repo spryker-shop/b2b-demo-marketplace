@@ -1,1 +1,1 @@
-import './category-card.scss';
+import './style.scss';

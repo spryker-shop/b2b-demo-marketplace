@@ -1,4 +1,4 @@
-import './spr-tabs.scss';
+import './style.scss';
 import register from 'ShopUi/app/registry';
 export default register(
     'spr-tabs',

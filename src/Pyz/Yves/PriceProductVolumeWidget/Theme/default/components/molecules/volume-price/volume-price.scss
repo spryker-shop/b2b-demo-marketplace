@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin price-product-volume-widget-volume-price($name: '.volume-price') {
     #{$name} {
         margin-bottom: rem(12);
@@ -75,7 +76,6 @@
     }
 }
 
-@include price-product-volume-widget-volume-price();
 
 @keyframes priceHighlight {
     0% {

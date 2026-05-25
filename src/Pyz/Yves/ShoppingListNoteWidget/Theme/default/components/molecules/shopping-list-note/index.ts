@@ -1,1 +1,1 @@
-import './shopping-list-note';
+import './style.scss';

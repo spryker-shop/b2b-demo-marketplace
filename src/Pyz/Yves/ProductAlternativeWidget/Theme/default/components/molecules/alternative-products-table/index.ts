@@ -1,1 +1,1 @@
-import './alternative-products-table';
+import './style.scss';

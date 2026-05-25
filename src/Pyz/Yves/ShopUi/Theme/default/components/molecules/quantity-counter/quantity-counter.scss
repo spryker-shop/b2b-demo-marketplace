@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin shop-ui-quantity-counter($name: '.quantity-counter') {
     #{$name} {
         padding: rem(8) rem(10);
@@ -112,5 +113,3 @@
         }
     }
 }
-
-@include shop-ui-quantity-counter();

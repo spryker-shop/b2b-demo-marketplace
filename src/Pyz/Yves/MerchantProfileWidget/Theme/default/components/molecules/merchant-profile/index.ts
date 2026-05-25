@@ -1,1 +1,1 @@
-import './merchant-profile.scss';
+import './style.scss';

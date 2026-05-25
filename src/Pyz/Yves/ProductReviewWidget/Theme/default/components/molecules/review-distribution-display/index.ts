@@ -1,1 +1,1 @@
-import './review-distribution-display.scss';
+import './style.scss';

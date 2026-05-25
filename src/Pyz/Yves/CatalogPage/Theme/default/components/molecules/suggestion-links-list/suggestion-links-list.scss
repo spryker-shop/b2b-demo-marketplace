@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin catalog-page-suggestion-links-list($name: '.suggestion-links-list') {
     #{$name} {
         &__title {
@@ -49,5 +50,3 @@
         @content;
     }
 }
-
-@include catalog-page-suggestion-links-list();

@@ -1,4 +1,4 @@
-import './quick-order-form.scss';
+import './style.scss';
 import register from 'ShopUi/app/registry';
 export default register(
     'quick-order-form',

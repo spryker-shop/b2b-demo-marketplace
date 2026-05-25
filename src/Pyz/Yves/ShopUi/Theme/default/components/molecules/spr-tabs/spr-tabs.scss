@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin shop-ui-spr-tabs($name: '.spr-tabs') {
     #{$name} {
         &__nav {
@@ -77,5 +78,3 @@
         @content;
     }
 }
-
-@include shop-ui-spr-tabs();

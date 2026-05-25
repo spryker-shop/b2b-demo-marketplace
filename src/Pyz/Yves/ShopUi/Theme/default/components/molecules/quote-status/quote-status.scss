@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin status-color($action-color, $opacity: 1) {
     background-color: rgba(helper-color-light(map-get($setting-color-actions, $action-color), 10), $opacity);
     color: helper-color-dark(map-get($setting-color-actions, $action-color));
@@ -12,15 +13,12 @@
         text-align: center;
 
         &--waiting {
-            @include status-color('warning', 0.5);
         }
 
         &--approved {
-            @include status-color('success', 0.3);
         }
 
         &--declined {
-            @include status-color('alert', 0.3);
         }
 
         &--small {

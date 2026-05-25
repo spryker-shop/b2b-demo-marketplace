@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin shopping-list-note-widget-shopping-list-note($name: '.shopping-list-note') {
     #{$name} {
         margin-top: rem(16);
@@ -24,5 +25,3 @@
         @content;
     }
 }
-
-@include shopping-list-note-widget-shopping-list-note;

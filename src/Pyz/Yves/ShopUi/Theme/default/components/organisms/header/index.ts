@@ -1,1 +1,1 @@
-import './header';
+import './style.scss';

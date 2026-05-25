@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin shop-ui-navigation-sidebar-item($name: '.navigation-sidebar-item') {
     #{$name} {
         &--active {
@@ -50,5 +51,3 @@
         }
     }
 }
-
-@include shop-ui-navigation-sidebar-item();

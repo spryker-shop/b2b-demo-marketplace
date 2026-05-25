@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin shop-ui-font-icon($name: '.font-icon') {
     #{$name} {
         display: inline-flex;
@@ -22,5 +23,3 @@
         @content;
     }
 }
-
-@include shop-ui-font-icon();

@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 $cart-locking-info-padding: rem(52);
 
 @mixin cart-page-cart-locking($name: '.cart-locking') {
@@ -39,5 +40,3 @@ $cart-locking-info-padding: rem(52);
         @content;
     }
 }
-
-@include cart-page-cart-locking();

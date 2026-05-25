@@ -1,1 +1,1 @@
-import './product-quick-add-form.scss';
+import './style.scss';

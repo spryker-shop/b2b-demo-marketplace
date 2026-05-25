@@ -1,1 +1,1 @@
-import './active-filters.scss';
+import './style.scss';

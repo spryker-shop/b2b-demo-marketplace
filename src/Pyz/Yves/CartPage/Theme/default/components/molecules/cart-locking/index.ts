@@ -1,1 +1,1 @@
-import './cart-locking.scss';
+import './style.scss';

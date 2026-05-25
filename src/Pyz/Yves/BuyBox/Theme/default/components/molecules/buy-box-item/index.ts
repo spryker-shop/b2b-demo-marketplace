@@ -1,1 +1,1 @@
-import './buy-box-item.scss';
+import './style.scss';

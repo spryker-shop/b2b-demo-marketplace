@@ -1,1 +1,1 @@
-import './action-bar';
+import './style.scss';

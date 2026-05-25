@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin agent-widget-agent-control-bar($name: '.agent-control-bar') {
     $column-spacing: rem(12);
     $column-spacing-desktop: rem(28);
@@ -137,5 +138,3 @@
         @content;
     }
 }
-
-@include agent-widget-agent-control-bar();

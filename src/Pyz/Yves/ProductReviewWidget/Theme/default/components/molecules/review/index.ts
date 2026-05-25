@@ -1,1 +1,1 @@
-import './review.scss';
+import './style.scss';

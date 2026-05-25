@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin shop-ui-product-item-options($name: '.product-item-options') {
     #{$name} {
         margin: rem(8) 0;
@@ -29,5 +30,3 @@
         @content;
     }
 }
-
-@include shop-ui-product-item-options();

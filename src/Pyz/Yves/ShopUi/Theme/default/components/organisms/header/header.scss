@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin shop-ui-header($name: '.header') {
     #{$name} {
         position: relative;
@@ -239,5 +240,3 @@
         @content;
     }
 }
-
-@include shop-ui-header();

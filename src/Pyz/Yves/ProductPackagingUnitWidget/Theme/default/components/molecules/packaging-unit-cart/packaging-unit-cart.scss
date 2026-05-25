@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin product-packaging-unit-packaging-unit-cart($name: '.packaging-unit-cart') {
     #{$name} {
         margin-top: rem(13);
@@ -11,5 +12,3 @@
         @content;
     }
 }
-
-@include product-packaging-unit-packaging-unit-cart;

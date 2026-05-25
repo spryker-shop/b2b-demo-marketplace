@@ -1,1 +1,1 @@
-import './product-set-cms.scss';
+import './style.scss';

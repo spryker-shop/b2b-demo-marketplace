@@ -1,1 +1,1 @@
-import './navigation-footer-item';
+import './style.scss';

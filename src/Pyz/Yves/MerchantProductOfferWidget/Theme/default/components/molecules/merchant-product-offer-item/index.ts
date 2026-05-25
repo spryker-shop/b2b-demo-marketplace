@@ -1,1 +1,1 @@
-import './merchant-product-offer-item.scss';
+import './style.scss';

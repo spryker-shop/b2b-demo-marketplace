@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin shop-ui-product-item-variant-selector($name: '.product-item-variant-selector') {
     #{$name} {
         &__label {
@@ -22,5 +23,3 @@
         @content;
     }
 }
-
-@include shop-ui-product-item-variant-selector();

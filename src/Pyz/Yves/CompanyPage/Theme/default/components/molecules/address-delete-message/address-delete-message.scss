@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin company-page-address-delete-message($name: '.address-delete-message') {
     #{$name} {
         &__delete-message {
@@ -34,5 +35,3 @@
         @content;
     }
 }
-
-@include company-page-address-delete-message;

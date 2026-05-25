@@ -1,1 +1,1 @@
-import './quick-order-form-actions.scss';
+import './style.scss';
