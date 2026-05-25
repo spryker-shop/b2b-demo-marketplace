@@ -23,7 +23,7 @@ use Spryker\Zed\AiFoundation\Dependency\Tools\ToolPluginInterface;
 use SprykerFeature\Zed\AiCommerce\Communication\AiCommerceCommunicationFactory as SprykerFeatureAiCommerceCommunicationFactory;
 
 /**
- * @method \Pyz\Zed\AiCommerce\AiCommerceConfig getConfig()
+ * @method \Demo\Zed\AiCommerce\AiCommerceConfig getConfig()
  * @method \SprykerFeature\Zed\AiCommerce\Business\AiCommerceFacadeInterface getFacade()
  * @method \SprykerFeature\Zed\AiCommerce\Persistence\AiCommerceEntityManagerInterface getEntityManager()
  * @method \SprykerFeature\Zed\AiCommerce\Persistence\AiCommerceRepositoryInterface getRepository()

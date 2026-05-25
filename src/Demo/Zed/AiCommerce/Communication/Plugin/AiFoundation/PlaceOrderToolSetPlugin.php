@@ -13,8 +13,8 @@ use Spryker\Zed\AiFoundation\Dependency\Tools\ToolSetPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \SprykerFeature\Zed\AiCommerce\Communication\AiCommerceCommunicationFactory getFactory()
- * @method \Pyz\Zed\AiCommerce\AiCommerceConfig getConfig()
+ * @method \Demo\Zed\AiCommerce\Communication\AiCommerceCommunicationFactory getFactory()
+ * @method \Demo\Zed\AiCommerce\AiCommerceConfig getConfig()
  * @method \SprykerFeature\Zed\AiCommerce\Business\AiCommerceFacadeInterface getFacade()
  */
 class PlaceOrderToolSetPlugin extends AbstractPlugin implements ToolSetPluginInterface
