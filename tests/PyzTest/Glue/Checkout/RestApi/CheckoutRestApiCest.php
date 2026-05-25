@@ -95,7 +95,7 @@ class CheckoutRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::UNPROCESSABLE_ENTITY);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $errors = $I->getDataFromResponseByJsonPath('$.errors[0]');
         $I->assertEquals($errors[RestCheckoutErrorTransfer::CODE], static::RESPONSE_CODE_CART_IS_EMPTY);
@@ -144,7 +144,7 @@ class CheckoutRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::CREATED);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->assertCheckoutResponseResourceHasCorrectData();
 
@@ -194,7 +194,7 @@ class CheckoutRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::CREATED);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->assertCheckoutResponseResourceHasCorrectData();
 
@@ -245,7 +245,7 @@ class CheckoutRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::CREATED);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->assertCheckoutResponseResourceHasCorrectData();
         $I->assertShipmentExpensesHaveCorrectPrice(
@@ -296,7 +296,7 @@ class CheckoutRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::CREATED);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->assertCheckoutResponseResourceHasCorrectData();
         $I->assertShipmentExpensesHaveCorrectPrice(
@@ -345,7 +345,7 @@ class CheckoutRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::CREATED);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->assertCheckoutResponseResourceHasCorrectData();
         $I->assertShipmentExpensesHaveCorrectPrice(
@@ -395,7 +395,7 @@ class CheckoutRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::CREATED);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->assertCheckoutResponseResourceHasCorrectData();
         $I->assertShipmentExpensesHaveCorrectPrice(

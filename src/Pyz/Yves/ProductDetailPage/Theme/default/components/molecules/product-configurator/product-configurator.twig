@@ -79,9 +79,7 @@
             {% endif %}
 
             {% if can('SeeAddToCartPermissionPlugin') %}
-                {% if data.isService %}
-                    {% widget shipmentTypeServicePointSelectorWidget only %}{% endwidget %}
-                {% endif %}
+                {% widget shipmentTypeServicePointSelectorWidget only %}{% endwidget %}
 
                 {% widget 'SspItemAssetSelectorWidget' args [data.product, data.isDisabled] only %}{% endwidget %}
 

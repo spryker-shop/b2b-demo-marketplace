@@ -91,7 +91,7 @@ class OrderAmendmentsRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::UNPROCESSABLE_ENTITY);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $errors = $I->getDataFromResponseByJsonPath('$.errors[0]');
         $I->assertEquals($errors[RestCheckoutErrorTransfer::CODE], static::RESPONSE_CODE_ORDER_IS_NOT_AMENDABLE);
@@ -125,7 +125,7 @@ class OrderAmendmentsRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::UNPROCESSABLE_ENTITY);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $errors = $I->getDataFromResponseByJsonPath('$.errors[0]');
         $I->assertEquals($errors[RestCheckoutErrorTransfer::CODE], static::RESPONSE_CODE_PARAMETER_IS_AMENDABLE_INVALID);
@@ -159,7 +159,7 @@ class OrderAmendmentsRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::CREATED);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->amSure('The returned resource is of correct type')
             ->whenI()

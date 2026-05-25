@@ -4,6 +4,9 @@ env:
 
 sections:
     build:
+        cache-class-resolver-build:
+            command: 'vendor/bin/console cache:class-resolver:build'
+
         generate-transfers:
             command: 'vendor/bin/console transfer:generate'
 
@@ -36,9 +39,6 @@ sections:
 
         translator-generate-cache:
             command: 'vendor/bin/console translator:generate-cache'
-
-        cache-class-resolver-build:
-            command: 'vendor/bin/console cache:class-resolver:build'
 
         generate-scope-collection-file:
             command: 'vendor/bin/console oauth:scope-collection-file:generate'
