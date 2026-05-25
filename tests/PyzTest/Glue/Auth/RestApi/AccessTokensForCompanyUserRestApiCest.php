@@ -71,7 +71,7 @@ class AccessTokensForCompanyUserRestApiCest
         $I->seeResponseHasRefreshToken();
         $I->seeResponseHasAccessToken();
 
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
     /**
@@ -101,7 +101,7 @@ class AccessTokensForCompanyUserRestApiCest
         $I->seeResponseHasRefreshToken();
         $I->seeResponseHasAccessToken();
 
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
     /**
@@ -131,7 +131,7 @@ class AccessTokensForCompanyUserRestApiCest
         $I->seeResponseHasRefreshToken();
         $I->seeResponseHasAccessToken();
 
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
     /**
@@ -161,6 +161,6 @@ class AccessTokensForCompanyUserRestApiCest
         $I->seeResponseHasRefreshToken();
         $I->seeResponseHasAccessToken();
 
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 }

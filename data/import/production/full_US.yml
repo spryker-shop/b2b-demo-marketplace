@@ -238,6 +238,8 @@ actions:
       source: data/import/common/common/marketplace/product_stock.csv
     - data_entity: product-offer-stock
       source: data/import/common/common/marketplace/product_offer_stock.csv
+    - data_entity: product-shipment-type
+      source: data/import/common/common/product_shipment_type.csv
     - data_entity: product-offer-shipment-type
       source: data/import/common/common/product_offer_shipment_type.csv
     - data_entity: merchant-profile
@@ -321,10 +323,6 @@ actions:
       source: data/import/common/common/shipment_type_service_type.csv
     - data_entity: product-offer-service
       source: data/import/common/common/product_offer_service.csv
-
-    # Product Shipment Type import
-    - data_entity: product-shipment-type
-      source: data/import/common/common/product_shipment_type.csv
 
     # Store relation
     - data_entity: service-point-store
