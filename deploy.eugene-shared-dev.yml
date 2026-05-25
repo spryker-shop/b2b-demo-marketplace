@@ -138,8 +138,11 @@ groups:
           backend-gateway.eu.eugene-dev.cloud.spryker.toys:
             region: EU
             primal: true
-
-
+      gluestorefront:
+        application: glue-storefront
+        endpoints:
+            glue-storefront.eu.eugene-dev.cloud.spryker.toys:
+                region: EU
       gluebackend:
         application: glue-backend
         endpoints:
