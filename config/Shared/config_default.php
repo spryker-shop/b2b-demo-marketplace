@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 use Generated\Shared\Transfer\AddPaymentMethodTransfer;
 use Generated\Shared\Transfer\AddReviewsTransfer;
@@ -181,20 +181,14 @@ $config[RouterConstants::ZED_SSL_EXCLUDED_ROUTE_NAMES] = [
     'healthCheck' => 'health-check/index',
 ];
 
-$config[RouterConstants::IS_STORE_ROUTING_ENABLED] = $config[StoreWidgetConstants::IS_STORE_ROUTING_ENABLED] = $config[
-    StorageRouterConstants::IS_STORE_ROUTING_ENABLED
-] = $config[ShopUiConstants::IS_STORE_ROUTING_ENABLED] = $config[
-    CustomerPageConstants::IS_STORE_ROUTING_ENABLED
-] = $config[AgentPageConstants::IS_STORE_ROUTING_ENABLED] = $config[
-    SecurityBlockerPageConstants::IS_STORE_ROUTING_ENABLED
-] = $config[LocaleConstants::IS_STORE_ROUTING_ENABLED] = (bool) getenv('SPRYKER_DYNAMIC_STORE_MODE');
+$config[RouterConstants::IS_STORE_ROUTING_ENABLED] = $config[StoreWidgetConstants::IS_STORE_ROUTING_ENABLED] = $config[StorageRouterConstants::IS_STORE_ROUTING_ENABLED] = $config[ShopUiConstants::IS_STORE_ROUTING_ENABLED] = $config[CustomerPageConstants::IS_STORE_ROUTING_ENABLED] = $config[AgentPageConstants::IS_STORE_ROUTING_ENABLED] = $config[SecurityBlockerPageConstants::IS_STORE_ROUTING_ENABLED] = $config[LocaleConstants::IS_STORE_ROUTING_ENABLED] = (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
 
 // >>> AI FOUNDATION
 require 'config_ai.php';
 
 // >>> DEV TOOLS
 
-$config[ConsoleConstants::ENABLE_DEVELOPMENT_CONSOLE_COMMANDS] = (bool) getenv('DEVELOPMENT_CONSOLE_COMMANDS');
+$config[ConsoleConstants::ENABLE_DEVELOPMENT_CONSOLE_COMMANDS] = (bool)getenv('DEVELOPMENT_CONSOLE_COMMANDS');
 $config[DocumentationGeneratorRestApiConstants::ENABLE_REST_API_DOCUMENTATION_GENERATION] = true;
 
 // >>> ERROR HANDLING
@@ -245,12 +239,8 @@ $config[KernelConstants::DOMAIN_WHITELIST] = array_merge($trustedHosts, [
 ]);
 $config[KernelConstants::STRICT_DOMAIN_REDIRECT] = true;
 
-$config[HttpConstants::ZED_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED] = $config[
-    HttpConstants::YVES_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED
-] = $config[HttpConstants::GLUE_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED] = true;
-$config[HttpConstants::ZED_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG] = $config[
-    HttpConstants::YVES_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG
-] = $config[HttpConstants::GLUE_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG] = [
+$config[HttpConstants::ZED_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED] = $config[HttpConstants::YVES_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED] = $config[HttpConstants::GLUE_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED] = true;
+$config[HttpConstants::ZED_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG] = $config[HttpConstants::YVES_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG] = $config[HttpConstants::GLUE_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG] = [
     'max_age' => 31536000,
     'include_sub_domains' => true,
     'preload' => true,
@@ -414,7 +404,7 @@ $config[SearchElasticsearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE] = 3;
 // >>> STORAGE
 
 $keyValueRegionNamespaces = json_decode(getenv('SPRYKER_KEY_VALUE_STORE_CONNECTIONS') ?: '[]', true);
-$namespaceKey = (bool) getenv('SPRYKER_DYNAMIC_STORE_MODE')
+$namespaceKey = (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE')
     ? getenv('SPRYKER_CURRENT_REGION')
     : getenv('APPLICATION_STORE');
 $config[StorageConstants::STORAGE_KV_SOURCE] = getenv('SPRYKER_KEY_VALUE_STORE_ENGINE')
@@ -441,9 +431,7 @@ $config[SessionRedisConstants::LOCKING_LOCK_TTL_MILLISECONDS] = 0;
 
 // >>> SESSION FRONTEND
 
-$config[SessionConstants::YVES_SESSION_COOKIE_NAME] = $config[
-    SessionConstants::YVES_SESSION_COOKIE_DOMAIN
-] = $sprykerFrontendHost;
+$config[SessionConstants::YVES_SESSION_COOKIE_NAME] = $config[SessionConstants::YVES_SESSION_COOKIE_DOMAIN] = $sprykerFrontendHost;
 $config[SessionConstants::YVES_SESSION_SAVE_HANDLER] = SessionRedisConfig::SESSION_HANDLER_CONFIGURABLE_REDIS_LOCKING;
 $config[SessionRedisConstants::YVES_SESSION_REDIS_SCHEME] = getenv('SPRYKER_SESSION_FE_PROTOCOL') ?: 'tcp';
 $config[SessionRedisConstants::YVES_SESSION_REDIS_HOST] = getenv('SPRYKER_SESSION_FE_HOST');
@@ -454,17 +442,13 @@ $config[SessionRedisConstants::YVES_SESSION_REDIS_DATABASE] = getenv('SPRYKER_SE
 $config[SessionConstants::YVES_SESSION_TIME_TO_LIVE] = $config[SessionRedisConstants::YVES_SESSION_TIME_TO_LIVE] =
     SessionConfig::SESSION_LIFETIME_1_HOUR;
 $config[SessionConstants::YVES_SESSION_COOKIE_TIME_TO_LIVE] = SessionConfig::SESSION_LIFETIME_0_5_HOUR;
-$config[SessionConstants::YVES_SESSION_PERSISTENT_CONNECTION] = $config[
-    SessionConstants::ZED_SESSION_PERSISTENT_CONNECTION
-] = true;
+$config[SessionConstants::YVES_SESSION_PERSISTENT_CONNECTION] = $config[SessionConstants::ZED_SESSION_PERSISTENT_CONNECTION] = true;
 $config[SessionConstants::YVES_SESSION_COOKIE_SAMESITE] =
     getenv('SPRYKER_YVES_SESSION_COOKIE_SAMESITE') ?: Cookie::SAMESITE_LAX;
 
 // >>> SESSION BACKOFFICE
 
-$config[SessionConstants::ZED_SESSION_COOKIE_NAME] = $config[
-    SessionConstants::ZED_SESSION_COOKIE_DOMAIN
-] = $sprykerBackendHost;
+$config[SessionConstants::ZED_SESSION_COOKIE_NAME] = $config[SessionConstants::ZED_SESSION_COOKIE_DOMAIN] = $sprykerBackendHost;
 $config[SessionConstants::ZED_SESSION_SAVE_HANDLER] = SessionRedisConfig::SESSION_HANDLER_REDIS;
 $config[SessionRedisConstants::ZED_SESSION_REDIS_SCHEME] = getenv('SPRYKER_SESSION_BE_PROTOCOL') ?: 'tcp';
 $config[SessionRedisConstants::ZED_SESSION_REDIS_HOST] = getenv('SPRYKER_SESSION_BE_HOST');
@@ -540,23 +524,17 @@ $config[LogConstants::LOG_QUEUE_NAME] = 'log-queue';
 $config[LogConstants::LOG_ERROR_QUEUE_NAME] = 'error-log-queue';
 
 $config[LogConstants::LOG_LEVEL] = Logger::ERROR;
-$config[PropelConstants::LOG_FILE_PATH] = $config[EventConstants::LOG_FILE_PATH] = $config[
-    LogConstants::LOG_FILE_PATH_YVES
-] = $config[LogConstants::LOG_FILE_PATH_ZED] = $config[LogConstants::LOG_FILE_PATH_GLUE] = $config[
-    LogConstants::LOG_FILE_PATH
-] = $config[QueueConstants::QUEUE_WORKER_OUTPUT_FILE_NAME] = getenv('SPRYKER_LOG_STDOUT') ?: 'php://stderr';
-$config[LogConstants::EXCEPTION_LOG_FILE_PATH_YVES] = $config[LogConstants::EXCEPTION_LOG_FILE_PATH_ZED] = $config[
-    LogConstants::EXCEPTION_LOG_FILE_PATH_GLUE
-] = $config[LogConstants::EXCEPTION_LOG_FILE_PATH] = getenv('SPRYKER_LOG_STDERR') ?: 'php://stderr';
+$config[PropelConstants::LOG_FILE_PATH] = $config[EventConstants::LOG_FILE_PATH] = $config[LogConstants::LOG_FILE_PATH_YVES] = $config[LogConstants::LOG_FILE_PATH_ZED] = $config[LogConstants::LOG_FILE_PATH_GLUE] = $config[LogConstants::LOG_FILE_PATH] = $config[QueueConstants::QUEUE_WORKER_OUTPUT_FILE_NAME] = getenv('SPRYKER_LOG_STDOUT') ?: 'php://stderr';
+$config[LogConstants::EXCEPTION_LOG_FILE_PATH_YVES] = $config[LogConstants::EXCEPTION_LOG_FILE_PATH_ZED] = $config[LogConstants::EXCEPTION_LOG_FILE_PATH_GLUE] = $config[LogConstants::EXCEPTION_LOG_FILE_PATH] = getenv('SPRYKER_LOG_STDERR') ?: 'php://stderr';
 
 // >>> QUEUE
 
 $config[QueueConstants::QUEUE_WORKER_WAIT_LIMIT_ENABLED] = true;
 $config[QueueConstants::RESOURCE_AWARE_QUEUE_WORKER_ENABLED] =
-    (bool) getenv('RESOURCE_AWARE_QUEUE_WORKER_ENABLED') ?? false;
-$config[QueueConstants::QUEUE_WORKER_FREE_MEMORY_BUFFER] = (int) getenv('QUEUE_WORKER_FREE_MEMORY_BUFFER') ?: 750;
+    (bool)getenv('RESOURCE_AWARE_QUEUE_WORKER_ENABLED') ?? false;
+$config[QueueConstants::QUEUE_WORKER_FREE_MEMORY_BUFFER] = (int)getenv('QUEUE_WORKER_FREE_MEMORY_BUFFER') ?: 750;
 $config[QueueConstants::QUEUE_WORKER_MEMORY_READ_PROCESS_TIMEOUT] =
-    (int) getenv('QUEUE_WORKER_MEMORY_READ_PROCESS_TIMEOUT') ?: 5;
+    (int)getenv('QUEUE_WORKER_MEMORY_READ_PROCESS_TIMEOUT') ?: 5;
 
 $config[EventBehaviorConstants::EVENT_BEHAVIOR_TRIGGERING_ACTIVE] = true;
 
@@ -569,10 +547,10 @@ $config[QueueConstants::QUEUE_MESSAGE_CHUNK_SIZE_MAP] = json_decode(
     true,
 );
 $config[QueueConstants::RESOURCE_AWARE_QUEUE_WORKER_ENABLED] =
-    (bool) getenv('RESOURCE_AWARE_QUEUE_WORKER_ENABLED') ?? false;
-$config[QueueConstants::QUEUE_WORKER_FREE_MEMORY_BUFFER] = (int) getenv('QUEUE_WORKER_FREE_MEMORY_BUFFER') ?: 750;
+    (bool)getenv('RESOURCE_AWARE_QUEUE_WORKER_ENABLED') ?? false;
+$config[QueueConstants::QUEUE_WORKER_FREE_MEMORY_BUFFER] = (int)getenv('QUEUE_WORKER_FREE_MEMORY_BUFFER') ?: 750;
 $config[QueueConstants::QUEUE_WORKER_MEMORY_READ_PROCESS_TIMEOUT] =
-    (int) getenv('QUEUE_WORKER_MEMORY_READ_PROCESS_TIMEOUT') ?: 5;
+    (int)getenv('QUEUE_WORKER_MEMORY_READ_PROCESS_TIMEOUT') ?: 5;
 $config[QueueConstants::QUEUE_ADAPTER_CONFIGURATION] = [
     EventConstants::EVENT_QUEUE => [
         QueueConfig::CONFIG_QUEUE_ADAPTER => SymfonyMessengerQueueAdapter::class,
@@ -606,7 +584,7 @@ $defaultKey = reset($connectionKeys);
 if (getenv('SPRYKER_CURRENT_REGION')) {
     $defaultKey = getenv('SPRYKER_CURRENT_REGION');
 }
-if (getenv('APPLICATION_STORE') && (bool) getenv('SPRYKER_DYNAMIC_STORE_MODE') === false) {
+if (getenv('APPLICATION_STORE') && (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE') === false) {
     $defaultKey = getenv('APPLICATION_STORE');
 }
 foreach ($rabbitConnections as $key => $connection) {
@@ -647,7 +625,7 @@ $config[SchedulerJenkinsConstants::JENKINS_CONFIGURATION] = [
             getenv('SPRYKER_SCHEDULER_HOST'),
             getenv('SPRYKER_SCHEDULER_PORT'),
         ),
-        SchedulerJenkinsConfig::SCHEDULER_JENKINS_CSRF_ENABLED => (bool) getenv(
+        SchedulerJenkinsConfig::SCHEDULER_JENKINS_CSRF_ENABLED => (bool)getenv(
             'SPRYKER_JENKINS_CSRF_PROTECTION_ENABLED',
         ),
     ],
@@ -803,9 +781,9 @@ $config[FileManagerGuiConstants::DEFAULT_FILE_MAX_SIZE] = '10M';
 // ------------------------------ ZED -----------------------------------------
 // ----------------------------------------------------------------------------
 
-$config[ZedRequestConstants::ZED_API_SSL_ENABLED] = (bool) getenv('SPRYKER_ZED_SSL_ENABLED');
+$config[ZedRequestConstants::ZED_API_SSL_ENABLED] = (bool)getenv('SPRYKER_ZED_SSL_ENABLED');
 $backofficeDefaultPort = $config[ZedRequestConstants::ZED_API_SSL_ENABLED] ? 443 : 80;
-$zedPort = ((int) getenv('SPRYKER_ZED_PORT')) ?: $backofficeDefaultPort;
+$zedPort = ((int)getenv('SPRYKER_ZED_PORT')) ?: $backofficeDefaultPort;
 $config[ZedRequestConstants::HOST_ZED_API] = sprintf(
     '%s%s',
     getenv('SPRYKER_ZED_HOST') ?: 'not-configured-host',
@@ -818,7 +796,7 @@ $config[ZedRequestConstants::BASE_URL_SSL_ZED_API] = sprintf('https://%s', $conf
 // ------------------------------ BACKOFFICE ----------------------------------
 // ----------------------------------------------------------------------------
 
-$backofficePort = (int) getenv('SPRYKER_BE_PORT') ?: 443;
+$backofficePort = (int)getenv('SPRYKER_BE_PORT') ?: 443;
 $config[ApplicationConstants::BASE_URL_ZED] = sprintf(
     'https://%s%s',
     $sprykerBackendHost,
@@ -829,7 +807,7 @@ $config[ApplicationConstants::BASE_URL_ZED] = sprintf(
 // ------------------------------ MERCHANT PORTAL -----------------------------
 // ----------------------------------------------------------------------------
 
-$merchantPortalPort = (int) getenv('SPRYKER_MP_PORT') ?: 443;
+$merchantPortalPort = (int)getenv('SPRYKER_MP_PORT') ?: 443;
 $config[MerchantPortalConstants::BASE_URL_MP] = sprintf(
     'http://%s%s',
     getenv('SPRYKER_MP_HOST'),
@@ -841,13 +819,9 @@ $config[MerchantPortalConstants::BASE_URL_MP] = sprintf(
 // ----------------------------------------------------------------------------
 
 $yvesHost = $config[ApplicationConstants::HOST_YVES] = $sprykerFrontendHost;
-$yvesPort = (int) getenv('SPRYKER_FE_PORT') ?: 443;
+$yvesPort = (int)getenv('SPRYKER_FE_PORT') ?: 443;
 
-$config[ApplicationConstants::BASE_URL_YVES] = $config[CustomerConstants::BASE_URL_YVES] = $config[
-    ProductManagementConstants::BASE_URL_YVES
-] = $config[NewsletterConstants::BASE_URL_YVES] = $config[MerchantRelationshipConstants::BASE_URL_YVES] = $config[
-    MerchantRelationRequestConstants::BASE_URL_YVES
-] = $config[SelfServicePortalConstants::BASE_URL_YVES] = sprintf(
+$config[ApplicationConstants::BASE_URL_YVES] = $config[CustomerConstants::BASE_URL_YVES] = $config[ProductManagementConstants::BASE_URL_YVES] = $config[NewsletterConstants::BASE_URL_YVES] = $config[MerchantRelationshipConstants::BASE_URL_YVES] = $config[MerchantRelationRequestConstants::BASE_URL_YVES] = $config[SelfServicePortalConstants::BASE_URL_YVES] = sprintf(
     'https://%s%s',
     $yvesHost,
     $yvesPort !== 443 ? ':' . $yvesPort : '',
@@ -857,19 +831,13 @@ $config[ShopUiConstants::YVES_ASSETS_URL_PATTERN] =
     '/assets/' . (getenv('SPRYKER_BUILD_HASH') ?: 'current') . '/%theme%/';
 
 // >>> Availability Notification
-$config[AvailabilityNotificationConstants::BASE_URL_YVES_PORT] = $config[
-    SitemapConstants::BASE_URL_YVES_PORT
-] = $yvesPort;
-$config[AvailabilityNotificationConstants::STORE_TO_YVES_HOST_MAPPING] = $config[
-    SitemapConstants::STORE_TO_YVES_HOST_MAPPING
-] = [
+$config[AvailabilityNotificationConstants::BASE_URL_YVES_PORT] = $config[SitemapConstants::BASE_URL_YVES_PORT] = $yvesPort;
+$config[AvailabilityNotificationConstants::STORE_TO_YVES_HOST_MAPPING] = $config[SitemapConstants::STORE_TO_YVES_HOST_MAPPING] = [
     'DE' => getenv('SPRYKER_YVES_HOST_DE'),
     'AT' => getenv('SPRYKER_YVES_HOST_AT'),
     'US' => getenv('SPRYKER_YVES_HOST_US'),
 ];
-$config[AvailabilityNotificationConstants::REGION_TO_YVES_HOST_MAPPING] = $config[
-    SitemapConstants::REGION_TO_YVES_HOST_MAPPING
-] = [
+$config[AvailabilityNotificationConstants::REGION_TO_YVES_HOST_MAPPING] = $config[SitemapConstants::REGION_TO_YVES_HOST_MAPPING] = [
     'EU' => getenv('SPRYKER_YVES_HOST_EU'),
     'US' => getenv('SPRYKER_YVES_HOST_US'),
 ];
@@ -879,7 +847,7 @@ $config[AvailabilityNotificationConstants::REGION_TO_YVES_HOST_MAPPING] = $confi
 // ----------------------------------------------------------------------------
 
 $glueHost = getenv('SPRYKER_API_HOST') ?: 'localhost';
-$gluePort = (int) getenv('SPRYKER_API_PORT') ?: 443;
+$gluePort = (int)getenv('SPRYKER_API_PORT') ?: 443;
 $config[GlueApplicationConstants::GLUE_APPLICATION_DOMAIN] = sprintf(
     'https://%s%s',
     $glueHost,
@@ -950,7 +918,7 @@ $config[CartsRestApiConstants::IS_QUOTE_RELOAD_ENABLED] = true;
 // ------------------------------ ACP -----------------------------------------
 // ----------------------------------------------------------------------------
 
-$aopApplicationConfiguration = json_decode(html_entity_decode((string) getenv('SPRYKER_AOP_APPLICATION')), true);
+$aopApplicationConfiguration = json_decode(html_entity_decode((string)getenv('SPRYKER_AOP_APPLICATION')), true);
 $config[KernelConstants::DOMAIN_WHITELIST] = array_merge(
     $config[KernelConstants::DOMAIN_WHITELIST],
     $aopApplicationConfiguration['APP_DOMAINS'] ?? [],
@@ -960,18 +928,12 @@ $config[KernelConstants::DOMAIN_WHITELIST][] = '*.bazaarvoice.com';
 
 $config[AppCatalogGuiConstants::APP_CATALOG_SCRIPT_URL] = $aopApplicationConfiguration['APP_CATALOG_SCRIPT_URL'] ?? '';
 
-$aopAuthenticationConfiguration = json_decode(html_entity_decode((string) getenv('SPRYKER_AOP_AUTHENTICATION')), true);
+$aopAuthenticationConfiguration = json_decode(html_entity_decode((string)getenv('SPRYKER_AOP_AUTHENTICATION')), true);
 $config[OauthAuth0Constants::AUTH0_CUSTOM_DOMAIN] = $aopAuthenticationConfiguration['AUTH0_CUSTOM_DOMAIN'] ?? '';
 $config[OauthAuth0Constants::AUTH0_CLIENT_ID] = $aopAuthenticationConfiguration['AUTH0_CLIENT_ID'] ?? '';
 $config[OauthAuth0Constants::AUTH0_CLIENT_SECRET] = $aopAuthenticationConfiguration['AUTH0_CLIENT_SECRET'] ?? '';
 
-$config[SearchHttpConstants::TENANT_IDENTIFIER] = $config[KernelAppConstants::TENANT_IDENTIFIER] = $config[
-    ProductConstants::TENANT_IDENTIFIER
-] = $config[MessageBrokerConstants::TENANT_IDENTIFIER] = $config[MessageBrokerAwsConstants::CONSUMER_ID] = $config[
-    OauthClientConstants::TENANT_IDENTIFIER
-] = $config[PaymentConstants::TENANT_IDENTIFIER] = $config[AppCatalogGuiConstants::TENANT_IDENTIFIER] = $config[
-    CmsConstants::TENANT_IDENTIFIER
-] = getenv('SPRYKER_TENANT_IDENTIFIER') ?: '';
+$config[SearchHttpConstants::TENANT_IDENTIFIER] = $config[KernelAppConstants::TENANT_IDENTIFIER] = $config[ProductConstants::TENANT_IDENTIFIER] = $config[MessageBrokerConstants::TENANT_IDENTIFIER] = $config[MessageBrokerAwsConstants::CONSUMER_ID] = $config[OauthClientConstants::TENANT_IDENTIFIER] = $config[PaymentConstants::TENANT_IDENTIFIER] = $config[AppCatalogGuiConstants::TENANT_IDENTIFIER] = $config[CmsConstants::TENANT_IDENTIFIER] = getenv('SPRYKER_TENANT_IDENTIFIER') ?: '';
 
 $config[MessageBrokerConstants::MESSAGE_TO_CHANNEL_MAP] = $config[MessageBrokerAwsConstants::MESSAGE_TO_CHANNEL_MAP] = [
     AppConfigUpdatedTransfer::class => 'app-events',
@@ -1035,24 +997,16 @@ $config[OauthClientConstants::OAUTH_PROVIDER_NAME_FOR_MESSAGE_BROKER] = OauthAut
 $config[OauthClientConstants::OAUTH_GRANT_TYPE_FOR_MESSAGE_BROKER] = OauthAuth0Config::GRANT_TYPE_CLIENT_CREDENTIALS;
 $config[OauthClientConstants::OAUTH_OPTION_AUDIENCE_FOR_MESSAGE_BROKER] = 'aop-event-platform';
 
-$config[AppCatalogGuiConstants::OAUTH_PROVIDER_NAME] = $config[
-    OauthClientConstants::OAUTH_PROVIDER_NAME_FOR_ACP
-] = $config[OauthClientConstants::OAUTH_PROVIDER_NAME_FOR_MESSAGE_BROKER] = $config[
-    OauthClientConstants::OAUTH_PROVIDER_NAME_FOR_PAYMENT_AUTHORIZE
-] = OauthAuth0Config::PROVIDER_NAME;
+$config[AppCatalogGuiConstants::OAUTH_PROVIDER_NAME] = $config[OauthClientConstants::OAUTH_PROVIDER_NAME_FOR_ACP] = $config[OauthClientConstants::OAUTH_PROVIDER_NAME_FOR_MESSAGE_BROKER] = $config[OauthClientConstants::OAUTH_PROVIDER_NAME_FOR_PAYMENT_AUTHORIZE] = OauthAuth0Config::PROVIDER_NAME;
 
-$config[AppCatalogGuiConstants::OAUTH_GRANT_TYPE] = $config[OauthClientConstants::OAUTH_GRANT_TYPE_FOR_ACP] = $config[
-    OauthClientConstants::OAUTH_GRANT_TYPE_FOR_MESSAGE_BROKER
-] = $config[OauthClientConstants::OAUTH_GRANT_TYPE_FOR_PAYMENT_AUTHORIZE] =
+$config[AppCatalogGuiConstants::OAUTH_GRANT_TYPE] = $config[OauthClientConstants::OAUTH_GRANT_TYPE_FOR_ACP] = $config[OauthClientConstants::OAUTH_GRANT_TYPE_FOR_MESSAGE_BROKER] = $config[OauthClientConstants::OAUTH_GRANT_TYPE_FOR_PAYMENT_AUTHORIZE] =
     OauthAuth0Config::GRANT_TYPE_CLIENT_CREDENTIALS;
 
 $config[AppCatalogGuiConstants::OAUTH_OPTION_AUDIENCE] = 'aop-atrs';
 
 $config[OauthClientConstants::OAUTH_PROVIDER_NAME_FOR_PAYMENT_AUTHORIZE] = OauthAuth0Config::PROVIDER_NAME;
 $config[OauthClientConstants::OAUTH_GRANT_TYPE_FOR_PAYMENT_AUTHORIZE] = OauthAuth0Config::GRANT_TYPE_CLIENT_CREDENTIALS;
-$config[OauthClientConstants::OAUTH_OPTION_AUDIENCE_FOR_ACP] = $config[
-    OauthClientConstants::OAUTH_OPTION_AUDIENCE_FOR_PAYMENT_AUTHORIZE
-] = 'aop-app';
+$config[OauthClientConstants::OAUTH_OPTION_AUDIENCE_FOR_ACP] = $config[OauthClientConstants::OAUTH_OPTION_AUDIENCE_FOR_PAYMENT_AUTHORIZE] = 'aop-app';
 
 // ----------------------------------------------------------------------------
 // -------------------------- Product Configuration ---------------------------
@@ -1068,7 +1022,7 @@ $config[KernelConstants::DOMAIN_WHITELIST][] = getenv('SPRYKER_PRODUCT_CONFIGURA
 // ------------------------------ Glue Backend API -------------------------------
 // ----------------------------------------------------------------------------
 $sprykerGlueBackendHost = getenv('SPRYKER_GLUE_BACKEND_HOST');
-$sprykerGlueBackendPort = (int) getenv('SPRYKER_GLUE_BACKEND_PORT') ?: 443;
+$sprykerGlueBackendPort = (int)getenv('SPRYKER_GLUE_BACKEND_PORT') ?: 443;
 $config[GlueBackendApiApplicationConstants::GLUE_BACKEND_API_HOST] = $sprykerGlueBackendHost;
 $config[GlueBackendApiApplicationConstants::PROJECT_NAMESPACES] = ['Demo', 'Pyz'];
 $config[GlueBackendApiApplicationConstants::GLUE_BACKEND_CORS_ALLOW_ORIGIN] =
@@ -1089,7 +1043,7 @@ if ($isTestifyConstantsClassExists) {
 // ----------------------------------------------------------------------------
 $sprykerGlueStorefrontHost = getenv('SPRYKER_GLUE_STOREFRONT_HOST');
 $config[GlueStorefrontApiApplicationConstants::GLUE_STOREFRONT_API_HOST] = $sprykerGlueStorefrontHost;
-$gluePort = (int) getenv('SPRYKER_API_PORT') ?: 443;
+$gluePort = (int)getenv('SPRYKER_API_PORT') ?: 443;
 $protocol = $gluePort === 443 ? 'https' : 'http';
 
 $config[GlueJsonApiConventionConstants::GLUE_DOMAIN] = sprintf(
