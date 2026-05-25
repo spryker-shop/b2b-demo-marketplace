@@ -197,7 +197,7 @@ $config[RouterConstants::IS_STORE_ROUTING_ENABLED]
 
 // >>> DEV TOOLS
 
-$config[ConsoleConstants::ENABLE_DEVELOPMENT_CONSOLE_COMMANDS] = /*(bool)getenv('DEVELOPMENT_CONSOLE_COMMANDS')*/false;
+$config[ConsoleConstants::ENABLE_DEVELOPMENT_CONSOLE_COMMANDS] = (bool)getenv('DEVELOPMENT_CONSOLE_COMMANDS');
 $config[DocumentationGeneratorRestApiConstants::ENABLE_REST_API_DOCUMENTATION_GENERATION] = true;
 
 // >>> ERROR HANDLING

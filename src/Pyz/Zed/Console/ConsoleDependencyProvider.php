@@ -479,7 +479,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             $commands[] = new CodeTestConsole();
             $commands[] = new CodeStyleSnifferConsole();
             $commands[] = new CodeArchitectureSnifferConsole();
-            //$commands[] = new AcceptanceCodeTestConsole();
+            $commands[] = new AcceptanceCodeTestConsole();
             $commands[] = new FunctionalCodeTestConsole();
             $commands[] = new ApiCodeTestConsole();
             $commands[] = new CodeFixturesConsole();

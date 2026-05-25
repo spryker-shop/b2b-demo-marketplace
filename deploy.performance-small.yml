@@ -49,10 +49,9 @@ image:
         SPRYKER_HOOK_INSTALL: 'vendor/bin/install -r production --no-ansi -vvv'
         SPRYKER_HOOK_DESTRUCTIVE_INSTALL: 'vendor/bin/install -r destructive --no-ansi -vvv'
         SPRYKER_DYNAMIC_STORE_MODE: true
-        SPRYKER_DEBUG_ENABLED: false
+        SPRYKER_DEBUG_ENABLED: true
         SPRYKER_YVES_HOST_EU: yves.eu.small.cloud.spryker.toys
         AWS_REGION: 'eu-west-1'
-        DEVELOPMENT_CONSOLE_COMMANDS: false
     node:
         version: 24
         npm: 10
@@ -64,7 +63,7 @@ image:
             - amqp
 
 composer:
-    mode: --no-dev
+#    mode: --no-dev
     autoload: --classmap-authoritative
 
 assets:
