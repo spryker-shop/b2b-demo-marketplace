@@ -5,9 +5,22 @@
         <label>Analytics</label>
         <title>Analytics</title>
         <icon>bar_chart_4_bars</icon>
-        <bundle>analytics-gui</bundle>
-        <controller>analytics</controller>
-        <action>index</action>
+        <pages>
+            <analytics>
+                <label>Analytics</label>
+                <title>Analytics</title>
+                <bundle>analytics-gui</bundle>
+                <controller>analytics</controller>
+                <action>index</action>
+            </analytics>
+            <google-analytics>
+                <label>Search Statistics</label>
+                <title>Search Statistics</title>
+                <bundle>google-analytics</bundle>
+                <controller>search-statistics</controller>
+                <action>index</action>
+            </google-analytics>
+        </pages>
     </analytics>
     <ai-foundation>
         <label>Intelligence</label>
