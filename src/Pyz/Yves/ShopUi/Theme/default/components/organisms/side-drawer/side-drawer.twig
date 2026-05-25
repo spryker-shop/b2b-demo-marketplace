@@ -37,7 +37,7 @@
                     } only %}
                     {% endwidget %}
                 </div>
-            {% else %}
+            {% elseif not is_granted('ROLE_AGENT') %}
                 <a href="{{ url('login', { redirectUri: app.request.uri }) }}"
                    class="button {{ config.name }}__header-sign-in">
                     {{ 'customer.please_login' | trans }}
@@ -58,8 +58,18 @@
                         {% endembed %}
                     </div>
 
+                    {% block agentZone %}
+                        {% if is_granted('ROLE_AGENT') or is_granted('ROLE_PREVIOUS_ADMIN') %}
+                            <div class="{{ config.name }}__zone-agent">
+                                {% widget 'AgentControlBarWidget' with {
+                                    data: { isChipOnly: true, drillDownTarget: 'agent-panel' },
+                                } only %}{% endwidget %}
+                            </div>
+                        {% endif %}
+                    {% endblock %}
+
                     <div class="{{ config.name }}__zone-account">
-                        {% if is_granted('ROLE_USER') %}
+                        {% if is_granted('ROLE_USER') and not is_granted('ROLE_PREVIOUS_ADMIN') %}
                             {% set customerFullNameWidget = findWidget('CustomerFullNameWidget') %}
                             {% set customerFullName = customerFullNameWidget.customerFullName | default('') %}
 
@@ -191,6 +201,18 @@
                     </div>
                 </div>
             {% endif %}
+
+            {% block agentPanel %}
+                {% if is_granted('ROLE_AGENT') or is_granted('ROLE_PREVIOUS_ADMIN') %}
+                    <div class="{{ config.name }}__panel {{ config.jsName }}__panel" data-panel-id="agent-panel">
+                        <div class="{{ config.name }}__content">
+                            <div class="{{ config.name }}__panel-body {{ config.name }}__zone-agent">
+                                {% widget 'AgentControlBarWidget' with { data: { isInline: true } } only %}{% endwidget %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endblock %}
 
             <div class="{{ config.name }}__panel {{ config.jsName }}__panel" data-panel-id="cart-panel">
                 <div class="{{ config.name }}__content">

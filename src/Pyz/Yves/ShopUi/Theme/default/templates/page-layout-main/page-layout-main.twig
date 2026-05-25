@@ -16,8 +16,6 @@
 
 {% block viewport %}
     <div class="page-layout page-layout--preload">
-        {% widget 'AgentControlBarWidget' only %}{% endwidget %}
-
         {% block sidebar %}
             {% embed organism('side-drawer') with {
                 data: {

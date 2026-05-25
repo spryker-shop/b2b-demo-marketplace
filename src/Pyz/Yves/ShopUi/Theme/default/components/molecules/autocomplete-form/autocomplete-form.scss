@@ -12,13 +12,18 @@
             border: none;
             font-size: rem(15);
             font-weight: fw(regular);
-            border-radius: $setting-border-radius;
-            box-shadow:
-                0 18px 18px 0 $setting-color-shadow-1,
-                0 3px 3px 0 $setting-color-shadow-1;
+            border: rem(1) solid var(--input-border-default);
+            border-radius: var(--radius-md);
 
             &--active {
                 border-radius: $setting-border-radius $setting-border-radius 0 0;
+            }
+
+            &:focus,
+            &:focus-visible {
+                box-shadow: none;
+                outline: none;
+                border-color: var(--text-primary);
             }
         }
 
@@ -54,18 +59,50 @@
         }
 
         &--small {
+            #{$name}__field {
+                display: flex;
+                align-items: center;
+            }
+
             #{$name}__input {
                 @include helper-font-size(small);
                 padding: rem(11) rem(40) rem(11) rem(14);
                 line-height: rem(14);
             }
 
+            #{$name}__suggestion {
+                position: static;
+                top: auto;
+                left: auto;
+                right: auto;
+                padding: 0;
+                border-radius: 0;
+                box-shadow: none;
+                background: transparent;
+                line-height: normal;
+                max-height: rem(280);
+                overflow-y: auto;
+            }
+
             #{$name}__clean-button {
-                padding-right: rem(14);
+                top: 50%;
+                bottom: auto;
+                right: rem(4);
+                transform: translateY(-50%);
+                width: rem(28);
+                height: rem(28);
+                min-height: 0;
+                padding: 0;
+                background: transparent;
+                border-radius: var(--radius-sm);
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
                 color: $setting-color-gray-2;
 
                 &:hover,
                 &:focus {
+                    background: transparent;
                     color: $setting-color-gray-4;
                 }
             }
