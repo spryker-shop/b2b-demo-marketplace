@@ -23,9 +23,9 @@ interface SetupFrontendFacadeInterface extends SprykerSetupFrontendFacadeInterfa
      * @api
      *
      * @param \Psr\Log\LoggerInterface $logger
-     * @param \Generated\Shared\Transfer\SetupFrontendConfigurationTransfer|null $setupFrontendConfigurationTransfer
+     * @param \Generated\Shared\Transfer\SetupFrontendConfigurationTransfer $setupFrontendConfigurationTransfer
      *
      * @return bool
      */
-    public function buildStorybookFrontend(LoggerInterface $logger, ?SetupFrontendConfigurationTransfer $setupFrontendConfigurationTransfer = null): bool;
+    public function buildStorybookFrontend(LoggerInterface $logger, SetupFrontendConfigurationTransfer $setupFrontendConfigurationTransfer): bool;
 }
