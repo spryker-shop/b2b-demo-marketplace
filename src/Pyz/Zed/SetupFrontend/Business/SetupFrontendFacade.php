@@ -24,16 +24,12 @@ class SetupFrontendFacade extends SprykerSetupFrontendFacade implements SetupFro
      * @api
      *
      * @param \Psr\Log\LoggerInterface $logger
-     * @param \Generated\Shared\Transfer\SetupFrontendConfigurationTransfer|null $setupFrontendConfigurationTransfer
+     * @param \Generated\Shared\Transfer\SetupFrontendConfigurationTransfer $setupFrontendConfigurationTransfer
      *
      * @return bool
      */
-    public function buildStorybookFrontend(LoggerInterface $logger, ?SetupFrontendConfigurationTransfer $setupFrontendConfigurationTransfer = null): bool
+    public function buildStorybookFrontend(LoggerInterface $logger, SetupFrontendConfigurationTransfer $setupFrontendConfigurationTransfer): bool
     {
-        if ($setupFrontendConfigurationTransfer === null) {
-            $setupFrontendConfigurationTransfer = new SetupFrontendConfigurationTransfer();
-        }
-
         return $this->getFactory()->createStorybookBuilder()->build($logger, $setupFrontendConfigurationTransfer);
     }
 }
