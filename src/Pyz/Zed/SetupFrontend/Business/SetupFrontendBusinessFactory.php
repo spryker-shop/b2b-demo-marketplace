@@ -3,9 +3,6 @@
 /**
  * This file is part of the Spryker Commerce OS.
  * For full license information, please view the LICENSE file that was distributed with this source code.
- * 
- * @disclaimer This class is a prototype implementation.
- * It will be moved to the core module spryker/setup-frontend after the prototype confirmation.
  */
 
 declare(strict_types = 1);
