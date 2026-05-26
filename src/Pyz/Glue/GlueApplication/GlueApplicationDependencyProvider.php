@@ -187,15 +187,10 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
     protected function getResourceRoutePlugins(): array
     {
         return [
-            new CompanyUsersResourceRoutePlugin(),
             new RelatedProductsResourceRoutePlugin(),
             new CartUpSellingProductsResourceRoutePlugin(),
             new AbstractAlternativeProductsResourceRoutePlugin(),
             new ConcreteAlternativeProductsResourceRoutePlugin(),
-            new ProductLabelsResourceRoutePlugin(),
-            new CompanyBusinessUnitsResourcePlugin(),
-            new CompanyBusinessUnitAddressesResourcePlugin(),
-            new CompanyRolesResourcePlugin(),
             new CartPermissionGroupsResourceRoutePlugin(),
             new SharedCartsResourceRoutePlugin(),
             new ContentBannerResourceRoutePlugin(),
@@ -204,8 +199,6 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
             new HealthCheckResourceRoutePlugin(),
             new ShoppingListsResourcePlugin(),
             new ShoppingListItemsResourcePlugin(),
-            new ProductMeasurementUnitsResourceRoutePlugin(),
-            new SalesUnitsResourceRoutePlugin(),
             new ReturnReasonsResourceRoutePlugin(),
             new ReturnsResourceRoutePlugin(),
             new CmsPagesResourceRoutePlugin(),
@@ -216,11 +209,6 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
             new ConfigurableBundleTemplatesResourceRoutePlugin(),
             new ConfiguredBundlesResourceRoutePlugin(),
             new VertexTaxValidateIdResourceRoutePlugin(),
-            new MultiFactorAuthTypesResourcePlugin(),
-            new MultiFactorAuthTriggerResourcePlugin(),
-            new MultiFactorAuthActivateResourcePlugin(),
-            new MultiFactorAuthTypeVerifyResourcePlugin(),
-            new MultiFactorAuthTypeDeactivateResourcePlugin(),
             new SspAssetsResourceRoutePlugin(),
             new SspInquiriesResourceRoutePlugin(),
             new SspServicesResourceRoutePlugin(),
@@ -363,25 +351,6 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
     protected function getResourceRelationshipPlugins(
         ResourceRelationshipCollectionInterface $resourceRelationshipCollection,
     ): ResourceRelationshipCollectionInterface {
-        $resourceRelationshipCollection->addRelationship(
-            CompanyUsersRestApiConfig::RESOURCE_COMPANY_USERS,
-            new CompanyByCompanyUserResourceRelationshipPlugin(),
-        );
-
-        $resourceRelationshipCollection->addRelationship(
-            CompanyUsersRestApiConfig::RESOURCE_COMPANY_USERS,
-            new CompanyBusinessUnitByCompanyUserResourceRelationshipPlugin(),
-        );
-
-        $resourceRelationshipCollection->addRelationship(
-            CompanyUsersRestApiConfig::RESOURCE_COMPANY_USERS,
-            new CompanyRoleByCompanyUserResourceRelationshipPlugin(),
-        );
-
-        $resourceRelationshipCollection->addRelationship(
-            CompanyUsersRestApiConfig::RESOURCE_COMPANY_USERS,
-            new CustomerByCompanyUserResourceRelationshipPlugin(),
-        );
 
         $resourceRelationshipCollection->addRelationship(
             ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
@@ -430,18 +399,6 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
         $resourceRelationshipCollection->addRelationship(
             CheckoutRestApiConfig::RESOURCE_CHECKOUT,
             new OrderRelationshipByOrderReferencePlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            CompanyRolesRestApiConfig::RESOURCE_COMPANY_ROLES,
-            new CompanyByCompanyRoleResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            CompanyBusinessUnitsRestApiConfig::RESOURCE_COMPANY_BUSINESS_UNITS,
-            new CompanyByCompanyBusinessUnitResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            CompanyBusinessUnitsRestApiConfig::RESOURCE_COMPANY_BUSINESS_UNITS,
-            new CompanyBusinessUnitAddressesByCompanyBusinessUnitResourceRelationshipPlugin(),
         );
         $resourceRelationshipCollection->addRelationship(
             ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
@@ -505,14 +462,6 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
         );
         $resourceRelationshipCollection->addRelationship(
             CheckoutRestApiConfig::RESOURCE_CHECKOUT_DATA,
-            new ShipmentsByCheckoutDataResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            ShipmentsRestApiConfig::RESOURCE_SHIPMENTS,
-            new ShipmentMethodsByShipmentResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            CheckoutRestApiConfig::RESOURCE_CHECKOUT_DATA,
             new PaymentMethodsByCheckoutDataResourceRelationshipPlugin(),
         );
         $resourceRelationshipCollection->addRelationship(
@@ -530,18 +479,6 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
         $resourceRelationshipCollection->addRelationship(
             CheckoutRestApiConfig::RESOURCE_CHECKOUT_DATA,
             new GuestCartByRestCheckoutDataResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
-            new ProductMeasurementUnitsByProductConcreteResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
-            new SalesUnitsByProductConcreteResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            ProductMeasurementUnitsRestApiConfig::RESOURCE_SALES_UNITS,
-            new ProductMeasurementUnitsBySalesUnitResourceRelationshipPlugin(),
         );
         $resourceRelationshipCollection->addRelationship(
             SalesReturnsRestApiConfig::RESOURCE_RETURNS,
