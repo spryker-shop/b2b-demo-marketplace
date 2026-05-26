@@ -179,6 +179,10 @@
 
         {% block outside %}{% endblock %}
 
+        {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+            {% widget 'QuoteRequestAgentOverviewWidget' only %}{% endwidget %}
+        {% endif %}
+
         {% block header %}
             {% embed organism('header') with {
                 data: {
