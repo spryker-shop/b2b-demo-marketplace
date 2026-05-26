@@ -124,6 +124,8 @@
     {% endblock %}
 
     {% block orderDetails %}
+        {% widget 'CostCenterOrderDetailWidget' args [data.order] only %}{% endwidget %}
+
         {% include molecule('order-detail-table', 'CustomerPage') with {
             data: {
                 shipmentGroups: data.shipmentGroups,
