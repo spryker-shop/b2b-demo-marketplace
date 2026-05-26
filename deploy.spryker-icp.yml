@@ -162,6 +162,12 @@ groups:
                     glue-backend.eu.icp.cloud.spryker.toys:
                         region: EU
                         cors-allow-origin: '*'
+            storybook:
+                application: static
+                endpoints:
+                    storybook.eu.icp.cloud.spryker.toys:
+                        entry-point: Storybook/assets
+                        region: EU
 services:
     database:
         engine: mysql
