@@ -10,8 +10,8 @@ declare(strict_types = 1);
 namespace Demo\Zed\CmsBlockGui;
 
 use Demo\Zed\CmsBlockCustomerGroup\Business\CmsBlockCustomerGroupFacadeInterface;
+use Demo\Zed\CustomerGroup\Business\CustomerGroupFacadeInterface;
 use Pyz\Zed\CmsBlockGui\CmsBlockGuiDependencyProvider as PyzCmsBlockGuiDependencyProvider;
-use Spryker\Zed\CustomerGroup\Business\CustomerGroupFacadeInterface;
 use Spryker\Zed\Kernel\Container;
 
 class CmsBlockGuiDependencyProvider extends PyzCmsBlockGuiDependencyProvider
@@ -32,7 +32,10 @@ class CmsBlockGuiDependencyProvider extends PyzCmsBlockGuiDependencyProvider
     protected function addCustomerGroupFacade(Container $container): Container
     {
         $container->set(static::FACADE_CUSTOMER_GROUP, function (Container $container): CustomerGroupFacadeInterface {
-            return $container->getLocator()->customerGroup()->facade();
+            /** @var \Demo\Zed\CustomerGroup\Business\CustomerGroupFacadeInterface $customerGroupFacade */
+            $customerGroupFacade = $container->getLocator()->customerGroup()->facade();
+
+            return $customerGroupFacade;
         });
 
         return $container;

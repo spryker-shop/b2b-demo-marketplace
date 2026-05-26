@@ -11,7 +11,7 @@ namespace Demo\Zed\CmsBlockGui\Communication\Form\DataProvider;
 
 use Demo\Zed\CmsBlockCustomerGroup\Business\CmsBlockCustomerGroupFacadeInterface;
 use Demo\Zed\CmsBlockGui\Communication\Form\Block\CmsBlockForm;
-use Demo\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCustomerGroupFacadeInterface;
+use Demo\Zed\CustomerGroup\Business\CustomerGroupFacadeInterface;
 use Generated\Shared\Transfer\CustomerGroupCollectionTransfer;
 use Spryker\Zed\CmsBlockGui\Communication\Form\DataProvider\CmsBlockFormDataProvider as SprykerCmsBlockFormDataProvider;
 use Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCmsBlockInterface;
@@ -24,7 +24,7 @@ class CmsBlockFormDataProvider extends SprykerCmsBlockFormDataProvider
         CmsBlockGuiToCmsBlockQueryContainerInterface $cmsBlockQueryContainer,
         CmsBlockGuiToCmsBlockInterface $cmsBlockFacade,
         CmsBlockGuiToLocaleInterface $localeFacade,
-        protected CmsBlockGuiToCustomerGroupFacadeInterface $customerGroupFacade,
+        protected CustomerGroupFacadeInterface $customerGroupFacade,
         protected CmsBlockCustomerGroupFacadeInterface $cmsBlockCustomerGroupFacade,
     ) {
         parent::__construct($cmsBlockQueryContainer, $cmsBlockFacade, $localeFacade);

@@ -15,7 +15,7 @@ use Demo\Zed\CmsBlockGui\Communication\Form\Block\CmsBlockForm;
 use Demo\Zed\CmsBlockGui\Communication\Form\DataProvider\CmsBlockFormDataProvider;
 use Demo\Zed\CmsBlockGui\Communication\Tabs\CmsBlockFormAddTabs;
 use Demo\Zed\CmsBlockGui\Communication\Tabs\CmsBlockFormEditTabs;
-use Demo\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCustomerGroupFacadeInterface;
+use Demo\Zed\CustomerGroup\Business\CustomerGroupFacadeInterface;
 use Spryker\Zed\CmsBlockGui\Communication\CmsBlockGuiCommunicationFactory as SprykerCmsBlockGuiCommunicationFactory;
 use Spryker\Zed\CmsBlockGui\Communication\Form\DataProvider\CmsBlockFormDataProvider as SprykerCmsBlockFormDataProvider;
 use Spryker\Zed\Gui\Communication\Tabs\TabsInterface;
@@ -64,7 +64,7 @@ class CmsBlockGuiCommunicationFactory extends SprykerCmsBlockGuiCommunicationFac
         return new CmsBlockFormEditTabs();
     }
 
-    public function getCustomerGroupFacade(): CmsBlockGuiToCustomerGroupFacadeInterface
+    public function getCustomerGroupFacade(): CustomerGroupFacadeInterface
     {
         return $this->getProvidedDependency(CmsBlockGuiDependencyProvider::FACADE_CUSTOMER_GROUP);
     }

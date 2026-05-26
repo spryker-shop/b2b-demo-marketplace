@@ -21,6 +21,13 @@ class CmsBlockCustomerGroupStub implements CmsBlockCustomerGroupStubInterface
     {
     }
 
+    /**
+     * @see \Demo\Zed\CmsBlockCustomerGroup\Communication\Controller\GatewayController::checkCmsBlockValidityAction()
+     *
+     * @param \Generated\Shared\Transfer\CmsBlockValidationRequestTransfer $cmsBlockValidationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsBlockValidationResponseTransfer
+     */
     public function checkCmsBlockValidity(
         CmsBlockValidationRequestTransfer $cmsBlockValidationRequestTransfer,
     ): CmsBlockValidationResponseTransfer {

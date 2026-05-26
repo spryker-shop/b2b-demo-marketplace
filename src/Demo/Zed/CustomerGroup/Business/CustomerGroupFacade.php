@@ -9,7 +9,6 @@ declare(strict_types = 1);
 
 namespace Demo\Zed\CustomerGroup\Business;
 
-use Demo\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCustomerGroupFacadeInterface;
 use Generated\Shared\Transfer\CustomerGroupCollectionTransfer;
 use Spryker\Zed\CustomerGroup\Business\CustomerGroupFacade as SprykerCustomerGroupFacade;
 
@@ -17,7 +16,7 @@ use Spryker\Zed\CustomerGroup\Business\CustomerGroupFacade as SprykerCustomerGro
  * @method \Demo\Zed\CustomerGroup\Business\CustomerGroupBusinessFactory getFactory()
  * @method \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupRepositoryInterface getRepository()
  */
-class CustomerGroupFacade extends SprykerCustomerGroupFacade implements CustomerGroupFacadeInterface, CmsBlockGuiToCustomerGroupFacadeInterface
+class CustomerGroupFacade extends SprykerCustomerGroupFacade implements CustomerGroupFacadeInterface
 {
     public function getCustomerGroupCollection(): CustomerGroupCollectionTransfer
     {
