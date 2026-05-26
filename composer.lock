@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "60b58489254a8aba47cf89cd2e971937",
+    "content-hash": "a418de368b43349db09d9390a6388eb8",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -76896,16 +76896,16 @@
         },
         {
             "name": "spryker/twig",
-            "version": "3.30.0",
+            "version": "3.31.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/twig.git",
-                "reference": "a30f5cdee22cd4c99785d11c4f573716a84455d8"
+                "reference": "0cf53ad55cf065e700d97f2017a52da3c479af6b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/twig/zipball/a30f5cdee22cd4c99785d11c4f573716a84455d8",
-                "reference": "a30f5cdee22cd4c99785d11c4f573716a84455d8",
+                "url": "https://api.github.com/repos/spryker/twig/zipball/0cf53ad55cf065e700d97f2017a52da3c479af6b",
+                "reference": "0cf53ad55cf065e700d97f2017a52da3c479af6b",
                 "shasum": ""
             },
             "require": {
@@ -76945,15 +76945,27 @@
                     "SprykerTest\\Zed\\Twig\\Helper\\": "tests/SprykerTest/Zed/Twig/_support/Helper/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "SprykerTest\\": "tests/SprykerTest/"
+                }
+            },
+            "scripts": {
+                "cs-check": [
+                    "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+                ],
+                "cs-fix": [
+                    "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+                ]
+            },
             "license": [
                 "proprietary"
             ],
             "description": "Twig module",
             "support": {
-                "source": "https://github.com/spryker/twig/tree/3.30.0"
+                "source": "https://github.com/spryker/twig/tree/3.31.0"
             },
-            "time": "2026-04-02T14:44:32+00:00"
+            "time": "2026-05-20T13:29:28+00:00"
         },
         {
             "name": "spryker/twig-extension",
