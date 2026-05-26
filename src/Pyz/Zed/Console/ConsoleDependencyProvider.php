@@ -168,6 +168,7 @@ use Spryker\Zed\Session\Communication\Console\SessionRemoveLockConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\CleanUpDependenciesConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\InstallPackageManagerConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\InstallProjectDependenciesConsole;
+use Pyz\Zed\SetupFrontend\Communication\Console\StorybookBuildFrontendConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\MerchantPortalBuildFrontendConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\Npm\RunnerConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\YvesBuildFrontendConsole;
@@ -404,6 +405,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new YvesBuildFrontendConsole(),
             new ZedBuildFrontendConsole(),
             new MerchantPortalBuildFrontendConsole(),
+            new StorybookBuildFrontendConsole(),
 
             new DeleteAllQueuesConsole(),
             new PurgeAllQueuesConsole(),
