@@ -1,0 +1,68 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'source-price-form',
+    tag: 'source-price-form',
+} %}
+
+{% define data = {
+    priceForm: null,
+    checkboxName: required,
+    checkboxValue: required,
+    isChecked: required,
+    checkboxLabel: required,
+    unitCostPrice: null,
+    grossMargin: null,
+    currencyIsoCode: null,
+} %}
+
+{% define attributes = {
+    price: required,
+} %}
+
+{% block body %}
+    <div class="row">
+        <div class="col col--sm-12 col--xl-12">
+            {% embed atom('checkbox') with {
+                attributes: {
+                    name: data.checkboxName,
+                    value: data.checkboxValue,
+                    checked: data.isChecked,
+                    disabled: data.priceForm.vars.disabled,
+                },
+                data: {
+                    label: data.checkboxLabel,
+                },
+                embed: {
+                    inputClass: config.jsName ~ '__checkbox-container',
+                },
+            } only %}
+                {% block inputClass %}{{ embed.inputClass }}{% endblock %}
+            {% endembed %}
+        </div>
+        <div class="col col--sm-12 col--xl-10">
+            {{ form_row(data.priceForm, {
+                attr: {
+                    class: config.jsName ~ '__input-container is-hidden spacing-top spacing-top--small',
+                },
+                hiddenInputClass: config.jsName ~ '__hidden-input',
+            }) }}
+        </div>
+        {% if is_granted('ROLE_AGENT') or is_granted('ROLE_PREVIOUS_ADMIN') %}
+            <div class="col col--sm-12 col--xl-12">
+                {% include molecule('cost-price', 'QuoteRequestPage') with {
+                    data: {
+                        priceToPay: attributes.price,
+                        costPrice: data.unitCostPrice,
+                        currencyCode: data.currencyIsoCode,
+                    },
+                    attributes: {
+                        'original-price': attributes.price,
+                        'cost-price': data.unitCostPrice,
+                        'cost-price-formatted': data.unitCostPrice is not null and data.currencyIsoCode is not null ? data.unitCostPrice | money(true, data.currencyIsoCode) : '',
+                    },
+                } only %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
