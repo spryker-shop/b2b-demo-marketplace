@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Demo\Yves\ShopApplication;
 
+use Demo\Yves\ProductGrossMarginWidget\Widget\ProductGrossMarginWidget;
 use Pyz\Yves\ShopApplication\ShopApplicationDependencyProvider as PyzShopApplicationDependencyProvider;
 use SprykerFeature\Yves\AiCommerce\SearchByImage\Widget\ImageSearchAiWidget;
 
@@ -21,6 +22,7 @@ class ShopApplicationDependencyProvider extends PyzShopApplicationDependencyProv
     {
         return array_merge(parent::getGlobalWidgets(), [
             ImageSearchAiWidget::class,
+            ProductGrossMarginWidget::class,
         ]);
     }
 }

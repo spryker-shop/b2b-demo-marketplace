@@ -33,6 +33,18 @@ return static function (ContainerConfigurator $configurator): void {
         'UrlStorage' => true,
         'DocumentationGeneratorRestApi' => true,
         'WebProfiler' => true,
+        'PriceCartConnector' => true,
+        'PriceProduct' => true,
+        'PriceProductSchedule' => true,
+        'PriceProductOffer' => true,
+        'PriceProductOfferGui' => true,
+        'PriceProductVolumeGui' => true,
+        'PriceProductDataImport' => true,
+        'PriceProductScheduleDataImport' => true,
+        'Price' => true,
+        'ProductManagement' => true,
+        'ProductCreationWizardGui' => true,
+        'ProductMerchantPortalGui' => true,
     ];
 
     /**

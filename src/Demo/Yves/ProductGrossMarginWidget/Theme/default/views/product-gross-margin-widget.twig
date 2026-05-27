@@ -1,0 +1,13 @@
+{% extends template('widget') %}
+
+{% define data = {
+    grossMargin: _widget.grossMargin | default(0),
+    htmlContainer: _widget.htmlContainer,
+    isGrossMarginVisible: _widget.isGrossMarginVisible,
+} %}
+
+{% block body %}
+    {% if data.isGrossMarginVisible %}
+        <span class="{{ data.htmlContainer }}__gross-margin">{{ 'gross.margin' | trans({'%value%': data.grossMargin}) }}</span>
+    {% endif %}
+{% endblock %}

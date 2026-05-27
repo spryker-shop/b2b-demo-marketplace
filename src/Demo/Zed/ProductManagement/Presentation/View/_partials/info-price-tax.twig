@@ -1,0 +1,32 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Price & Taxes' } %}
+    {% block widget_content %}
+
+        <div class="row">
+            <div class="col-xs-6">
+                {% for price in currentProduct.prices %}
+                    <div class="row">
+                        <div class="col-xs-4"><b>{{ 'Net price' | trans }} ({{ price.price_type_name }}):</b></div>
+                        <div class="col-xs-8">{{ price.money_value.net_amount | default(0) | money(true, price.money_value.currency.code) }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4"><b>{{ 'Gross price' | trans }} ({{ price.price_type_name }}):</b></div>
+                        <div class="col-xs-8">{{ price.money_value.gross_amount | default(0) | money(true, price.money_value.currency.code) }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4"><b>{{ 'Cost price' | trans }} ({{ price.price_type_name }}):</b></div>
+                        <div class="col-xs-8">{{ price.money_value.cost_amount | default(0) | money(true, price.money_value.currency.code) }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="col-xs-6">
+                {% if taxSet %}
+                    <div class="row">
+                        <div class="col-xs-4"><b>{{ 'Tax Set' | trans }}:</b></div>
+                        <div class="col-xs-8">{{ taxSet.name }}</div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+    {% endblock %}
+{% endembed %}

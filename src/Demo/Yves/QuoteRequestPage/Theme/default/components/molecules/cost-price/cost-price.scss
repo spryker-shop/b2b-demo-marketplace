@@ -1,0 +1,66 @@
+@mixin quote-request-page-cost-price($name: '.cost-price') {
+    #{$name} {
+        border: rem(1) solid $setting-color-gray-1;
+        padding: rem(8) rem(13);
+        border-radius: $setting-border-radius-1;
+        margin-bottom: rem(6);
+
+        &__list {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            font-size: rem(14);
+        }
+
+        &__title {
+            width: 60%;
+            flex-grow: 0;
+            flex-shrink: 0;
+            color: $setting-color-gray-3;
+            text-align: left;
+
+            &:not(:last-of-type) {
+                margin: 0 0 rem(10);
+            }
+        }
+
+        &__value {
+            width: 40%;
+            flex-grow: 0;
+            flex-shrink: 0;
+            font-size: rem(16);
+
+            &:not(:last-of-type) {
+                margin: 0 0 rem(10);
+            }
+        }
+
+        &__gross-margin {
+            display: inline-block;
+            vertical-align: top;
+            background: $setting-color-gray-4;
+            border-radius: $setting-border-radius;
+            padding: 0 rem(7);
+            line-height: rem(22);
+            color: $setting-color-white;
+            font-size: rem(14);
+        }
+
+        &__gross-margin--unavailable {
+            background: $setting-color-white;
+            color: $setting-color-dark;
+            padding: 0;
+        }
+
+        .font-icon--cost-price-warning {
+            color: map-get($setting-color-actions, warning);
+            vertical-align: middle;
+            margin-left: rem(6);
+            cursor: help;
+        }
+    }
+
+    @content;
+}
+
+@include quote-request-page-cost-price();
