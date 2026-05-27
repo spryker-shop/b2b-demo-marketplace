@@ -39,22 +39,9 @@ use Spryker\Glue\CmsPagesContentBannersResourceRelationship\Plugin\GlueApplicati
 use Spryker\Glue\CmsPagesContentProductAbstractListsResourceRelationship\Plugin\GlueApplication\ContentProductAbstractListByCmsPageResourceRelationshipPlugin;
 use Spryker\Glue\CmsPagesRestApi\CmsPagesRestApiConfig;
 use Spryker\Glue\CmsPagesRestApi\Plugin\GlueApplication\CmsPagesResourceRoutePlugin;
-use Spryker\Glue\CompaniesRestApi\Plugin\GlueApplication\CompanyByCompanyBusinessUnitResourceRelationshipPlugin;
-use Spryker\Glue\CompaniesRestApi\Plugin\GlueApplication\CompanyByCompanyRoleResourceRelationshipPlugin;
-use Spryker\Glue\CompaniesRestApi\Plugin\GlueApplication\CompanyByCompanyUserResourceRelationshipPlugin;
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Plugin\GlueApplication\CompanyBusinessUnitAddressByCheckoutDataResourceRelationshipPlugin;
-use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Plugin\GlueApplication\CompanyBusinessUnitAddressesByCompanyBusinessUnitResourceRelationshipPlugin;
-use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Plugin\GlueApplication\CompanyBusinessUnitAddressesResourcePlugin;
-use Spryker\Glue\CompanyBusinessUnitsRestApi\CompanyBusinessUnitsRestApiConfig;
-use Spryker\Glue\CompanyBusinessUnitsRestApi\Plugin\GlueApplication\CompanyBusinessUnitByCompanyUserResourceRelationshipPlugin;
-use Spryker\Glue\CompanyBusinessUnitsRestApi\Plugin\GlueApplication\CompanyBusinessUnitsResourcePlugin;
-use Spryker\Glue\CompanyRolesRestApi\CompanyRolesRestApiConfig;
-use Spryker\Glue\CompanyRolesRestApi\Plugin\GlueApplication\CompanyRoleByCompanyUserResourceRelationshipPlugin;
-use Spryker\Glue\CompanyRolesRestApi\Plugin\GlueApplication\CompanyRolesResourcePlugin;
-use Spryker\Glue\CompanyUsersRestApi\CompanyUsersRestApiConfig;
 use Spryker\Glue\CompanyUsersRestApi\Plugin\GlueApplication\CompanyUserByShareDetailResourceRelationshipPlugin;
 use Spryker\Glue\CompanyUsersRestApi\Plugin\GlueApplication\CompanyUserRestUserValidatorPlugin;
-use Spryker\Glue\CompanyUsersRestApi\Plugin\GlueApplication\CompanyUsersResourceRoutePlugin;
 use Spryker\Glue\ConfigurableBundleCartsRestApi\Plugin\GlueApplication\ConfiguredBundlesResourceRoutePlugin;
 use Spryker\Glue\ConfigurableBundlesProductsResourceRelationship\ConfigurableBundlesProductsResourceRelationshipConfig;
 use Spryker\Glue\ConfigurableBundlesProductsResourceRelationship\Plugin\GlueApplication\ProductConcreteByConfigurableBundleTemplateSlotResourceRelationshipPlugin;
@@ -67,7 +54,6 @@ use Spryker\Glue\ContentProductAbstractListsRestApi\ContentProductAbstractListsR
 use Spryker\Glue\ContentProductAbstractListsRestApi\Plugin\GlueApplication\ProductAbstractByContentProductAbstractListResourceRelationshipPlugin;
 use Spryker\Glue\CustomerAccessRestApi\Plugin\GlueApplication\CustomerAccessFormatRequestPlugin;
 use Spryker\Glue\CustomersRestApi\Plugin\GlueApplication\AddressByCheckoutDataResourceRelationshipPlugin;
-use Spryker\Glue\CustomersRestApi\Plugin\GlueApplication\CustomerByCompanyUserResourceRelationshipPlugin;
 use Spryker\Glue\CustomersRestApi\Plugin\SetCustomerBeforeActionPlugin;
 use Spryker\Glue\DiscountPromotionsRestApi\Plugin\GlueApplication\PromotionItemByQuoteTransferResourceRelationshipPlugin;
 use Spryker\Glue\EntityTagsRestApi\Plugin\GlueApplication\EntityTagFormatResponseHeadersPlugin;
@@ -95,12 +81,7 @@ use Spryker\Glue\MerchantProductOffersRestApi\MerchantProductOffersRestApiConfig
 use Spryker\Glue\MerchantProductOffersRestApi\Plugin\GlueApplication\ProductOffersByProductConcreteSkuResourceRelationshipPlugin;
 use Spryker\Glue\MerchantsRestApi\Plugin\GlueApplication\MerchantByMerchantReferenceResourceRelationshipPlugin;
 use Spryker\Glue\MerchantsRestApi\Plugin\GlueApplication\MerchantsByOrderResourceRelationshipPlugin;
-use Spryker\Glue\MultiFactorAuth\Plugin\GlueApplication\RestApi\MultiFactorAuthActivateResourcePlugin;
 use Spryker\Glue\MultiFactorAuth\Plugin\GlueApplication\RestApi\MultiFactorAuthRestUserValidatorPlugin;
-use Spryker\Glue\MultiFactorAuth\Plugin\GlueApplication\RestApi\MultiFactorAuthTriggerResourcePlugin;
-use Spryker\Glue\MultiFactorAuth\Plugin\GlueApplication\RestApi\MultiFactorAuthTypeDeactivateResourcePlugin;
-use Spryker\Glue\MultiFactorAuth\Plugin\GlueApplication\RestApi\MultiFactorAuthTypesResourcePlugin;
-use Spryker\Glue\MultiFactorAuth\Plugin\GlueApplication\RestApi\MultiFactorAuthTypeVerifyResourcePlugin;
 use Spryker\Glue\NavigationsCategoryNodesResourceRelationship\Plugin\GlueApplication\CategoryNodeByResourceIdResourceRelationshipPlugin;
 use Spryker\Glue\NavigationsRestApi\NavigationsRestApiConfig;
 use Spryker\Glue\OrdersRestApi\OrdersRestApiConfig;
@@ -120,13 +101,6 @@ use Spryker\Glue\ProductImageSetsRestApi\Plugin\Relationship\AbstractProductsPro
 use Spryker\Glue\ProductImageSetsRestApi\Plugin\Relationship\ConcreteProductsProductImageSetsResourceRelationshipPlugin;
 use Spryker\Glue\ProductLabelsRestApi\Plugin\GlueApplication\ProductLabelByProductConcreteSkuResourceRelationshipPlugin;
 use Spryker\Glue\ProductLabelsRestApi\Plugin\GlueApplication\ProductLabelsRelationshipByResourceIdPlugin;
-use Spryker\Glue\ProductLabelsRestApi\Plugin\GlueApplication\ProductLabelsResourceRoutePlugin;
-use Spryker\Glue\ProductMeasurementUnitsRestApi\Plugin\GlueApplication\ProductMeasurementUnitsByProductConcreteResourceRelationshipPlugin;
-use Spryker\Glue\ProductMeasurementUnitsRestApi\Plugin\GlueApplication\ProductMeasurementUnitsBySalesUnitResourceRelationshipPlugin;
-use Spryker\Glue\ProductMeasurementUnitsRestApi\Plugin\GlueApplication\ProductMeasurementUnitsResourceRoutePlugin;
-use Spryker\Glue\ProductMeasurementUnitsRestApi\Plugin\GlueApplication\SalesUnitsByProductConcreteResourceRelationshipPlugin;
-use Spryker\Glue\ProductMeasurementUnitsRestApi\Plugin\GlueApplication\SalesUnitsResourceRoutePlugin;
-use Spryker\Glue\ProductMeasurementUnitsRestApi\ProductMeasurementUnitsRestApiConfig;
 use Spryker\Glue\ProductOfferAvailabilitiesRestApi\Plugin\GlueApplication\ProductOfferAvailabilitiesByProductOfferReferenceResourceRelationshipPlugin;
 use Spryker\Glue\ProductOfferPricesRestApi\Plugin\GlueApplication\ProductOfferPriceByProductOfferReferenceResourceRelationshipPlugin;
 use Spryker\Glue\ProductOffersRestApi\Plugin\GlueApplication\ProductOffersByProductOfferReferenceResourceRelationshipPlugin;
@@ -161,9 +135,6 @@ use Spryker\Glue\Session\Plugin\Application\SessionApplicationPlugin;
 use Spryker\Glue\SharedCartsRestApi\Plugin\GlueApplication\SharedCartByCartIdResourceRelationshipPlugin;
 use Spryker\Glue\SharedCartsRestApi\Plugin\GlueApplication\SharedCartsResourceRoutePlugin;
 use Spryker\Glue\SharedCartsRestApi\SharedCartsRestApiConfig;
-use Spryker\Glue\ShipmentsRestApi\Plugin\GlueApplication\ShipmentMethodsByShipmentResourceRelationshipPlugin;
-use Spryker\Glue\ShipmentsRestApi\Plugin\GlueApplication\ShipmentsByCheckoutDataResourceRelationshipPlugin;
-use Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiConfig;
 use Spryker\Glue\ShoppingListsRestApi\Plugin\GlueApplication\ShoppingListItemByShoppingListResourceRelationshipPlugin;
 use Spryker\Glue\ShoppingListsRestApi\Plugin\GlueApplication\ShoppingListItemsResourcePlugin;
 use Spryker\Glue\ShoppingListsRestApi\Plugin\GlueApplication\ShoppingListsResourcePlugin;
@@ -187,15 +158,10 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
     protected function getResourceRoutePlugins(): array
     {
         return [
-            new CompanyUsersResourceRoutePlugin(),
             new RelatedProductsResourceRoutePlugin(),
             new CartUpSellingProductsResourceRoutePlugin(),
             new AbstractAlternativeProductsResourceRoutePlugin(),
             new ConcreteAlternativeProductsResourceRoutePlugin(),
-            new ProductLabelsResourceRoutePlugin(),
-            new CompanyBusinessUnitsResourcePlugin(),
-            new CompanyBusinessUnitAddressesResourcePlugin(),
-            new CompanyRolesResourcePlugin(),
             new CartPermissionGroupsResourceRoutePlugin(),
             new SharedCartsResourceRoutePlugin(),
             new ContentBannerResourceRoutePlugin(),
@@ -204,8 +170,6 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
             new HealthCheckResourceRoutePlugin(),
             new ShoppingListsResourcePlugin(),
             new ShoppingListItemsResourcePlugin(),
-            new ProductMeasurementUnitsResourceRoutePlugin(),
-            new SalesUnitsResourceRoutePlugin(),
             new ReturnReasonsResourceRoutePlugin(),
             new ReturnsResourceRoutePlugin(),
             new CmsPagesResourceRoutePlugin(),
@@ -216,11 +180,6 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
             new ConfigurableBundleTemplatesResourceRoutePlugin(),
             new ConfiguredBundlesResourceRoutePlugin(),
             new VertexTaxValidateIdResourceRoutePlugin(),
-            new MultiFactorAuthTypesResourcePlugin(),
-            new MultiFactorAuthTriggerResourcePlugin(),
-            new MultiFactorAuthActivateResourcePlugin(),
-            new MultiFactorAuthTypeVerifyResourcePlugin(),
-            new MultiFactorAuthTypeDeactivateResourcePlugin(),
             new SspAssetsResourceRoutePlugin(),
             new SspInquiriesResourceRoutePlugin(),
             new SspServicesResourceRoutePlugin(),
@@ -364,26 +323,6 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
         ResourceRelationshipCollectionInterface $resourceRelationshipCollection,
     ): ResourceRelationshipCollectionInterface {
         $resourceRelationshipCollection->addRelationship(
-            CompanyUsersRestApiConfig::RESOURCE_COMPANY_USERS,
-            new CompanyByCompanyUserResourceRelationshipPlugin(),
-        );
-
-        $resourceRelationshipCollection->addRelationship(
-            CompanyUsersRestApiConfig::RESOURCE_COMPANY_USERS,
-            new CompanyBusinessUnitByCompanyUserResourceRelationshipPlugin(),
-        );
-
-        $resourceRelationshipCollection->addRelationship(
-            CompanyUsersRestApiConfig::RESOURCE_COMPANY_USERS,
-            new CompanyRoleByCompanyUserResourceRelationshipPlugin(),
-        );
-
-        $resourceRelationshipCollection->addRelationship(
-            CompanyUsersRestApiConfig::RESOURCE_COMPANY_USERS,
-            new CustomerByCompanyUserResourceRelationshipPlugin(),
-        );
-
-        $resourceRelationshipCollection->addRelationship(
             ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
             new AbstractProductPricesByResourceIdResourceRelationshipPlugin(),
         );
@@ -430,18 +369,6 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
         $resourceRelationshipCollection->addRelationship(
             CheckoutRestApiConfig::RESOURCE_CHECKOUT,
             new OrderRelationshipByOrderReferencePlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            CompanyRolesRestApiConfig::RESOURCE_COMPANY_ROLES,
-            new CompanyByCompanyRoleResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            CompanyBusinessUnitsRestApiConfig::RESOURCE_COMPANY_BUSINESS_UNITS,
-            new CompanyByCompanyBusinessUnitResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            CompanyBusinessUnitsRestApiConfig::RESOURCE_COMPANY_BUSINESS_UNITS,
-            new CompanyBusinessUnitAddressesByCompanyBusinessUnitResourceRelationshipPlugin(),
         );
         $resourceRelationshipCollection->addRelationship(
             ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
@@ -505,14 +432,6 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
         );
         $resourceRelationshipCollection->addRelationship(
             CheckoutRestApiConfig::RESOURCE_CHECKOUT_DATA,
-            new ShipmentsByCheckoutDataResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            ShipmentsRestApiConfig::RESOURCE_SHIPMENTS,
-            new ShipmentMethodsByShipmentResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            CheckoutRestApiConfig::RESOURCE_CHECKOUT_DATA,
             new PaymentMethodsByCheckoutDataResourceRelationshipPlugin(),
         );
         $resourceRelationshipCollection->addRelationship(
@@ -530,18 +449,6 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
         $resourceRelationshipCollection->addRelationship(
             CheckoutRestApiConfig::RESOURCE_CHECKOUT_DATA,
             new GuestCartByRestCheckoutDataResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
-            new ProductMeasurementUnitsByProductConcreteResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
-            new SalesUnitsByProductConcreteResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            ProductMeasurementUnitsRestApiConfig::RESOURCE_SALES_UNITS,
-            new ProductMeasurementUnitsBySalesUnitResourceRelationshipPlugin(),
         );
         $resourceRelationshipCollection->addRelationship(
             SalesReturnsRestApiConfig::RESOURCE_RETURNS,
