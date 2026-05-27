@@ -1,1 +1,0 @@
-import './active-filters.scss';
