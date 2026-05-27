@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a7a01baa543657e602f0c75f1532b295",
+    "content-hash": "30f6f35f6bfdf7b1e7206f086a59ca01",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -9809,24 +9809,26 @@
         },
         {
             "name": "spryker-eco/google-analytics",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-eco/google-analytics.git",
-                "reference": "edd1ad9e6895895ebb000467686150a76361c21e"
+                "reference": "ba2a216ac7b9d3b96a868132f709a187ffb835b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-eco/google-analytics/zipball/edd1ad9e6895895ebb000467686150a76361c21e",
-                "reference": "edd1ad9e6895895ebb000467686150a76361c21e",
+                "url": "https://api.github.com/repos/spryker-eco/google-analytics/zipball/ba2a216ac7b9d3b96a868132f709a187ffb835b8",
+                "reference": "ba2a216ac7b9d3b96a868132f709a187ffb835b8",
                 "shasum": ""
             },
             "require": {
                 "google/analytics-data": "^0.22",
+                "google/gax": "^1.0.0",
                 "php": ">=8.3",
                 "spryker/gui": "^5.0.0",
                 "spryker/kernel": "^3.46.0",
                 "spryker/locale": "^4.0.0",
+                "spryker/log": "^3.0.0",
                 "spryker/store": "^1.28.0",
                 "spryker/symfony": "^3.0.0",
                 "spryker/util-text": "^1.1.0"
@@ -9854,9 +9856,9 @@
             "description": "GoogleAnalytics module",
             "support": {
                 "issues": "https://github.com/spryker-eco/google-analytics/issues",
-                "source": "https://github.com/spryker-eco/google-analytics/tree/1.1.0"
+                "source": "https://github.com/spryker-eco/google-analytics/tree/1.2.0"
             },
-            "time": "2026-05-13T09:23:43+00:00"
+            "time": "2026-05-25T14:26:12+00:00"
         },
         {
             "name": "spryker-eco/loggly",
@@ -23947,16 +23949,16 @@
         },
         {
             "name": "spryker-shop/shop-ui",
-            "version": "1.107.1",
+            "version": "1.108.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-shop/shop-ui.git",
-                "reference": "32ee336c4539b2b71fe8cb6fcec65300bcf889af"
+                "reference": "8a6a158bd327e520861e43fa80e3157f7967795a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-shop/shop-ui/zipball/32ee336c4539b2b71fe8cb6fcec65300bcf889af",
-                "reference": "32ee336c4539b2b71fe8cb6fcec65300bcf889af",
+                "url": "https://api.github.com/repos/spryker-shop/shop-ui/zipball/8a6a158bd327e520861e43fa80e3157f7967795a",
+                "reference": "8a6a158bd327e520861e43fa80e3157f7967795a",
                 "shasum": ""
             },
             "require": {
@@ -23973,6 +23975,7 @@
             },
             "require-dev": {
                 "spryker-eco/google-analytics": "*",
+                "spryker-shop/customer-page": "*",
                 "spryker-shop/newsletter-widget": "*",
                 "spryker-shop/product-group-widget": "*",
                 "spryker/code-sniffer": "*",
@@ -23983,6 +23986,7 @@
             "suggest": {
                 "spryker-eco/google-analytics": "If you want to use the traceable-events-google-analytics molecule for GA4 storefront tracking.",
                 "spryker-shop/asset-widget": "If you want to use components from module AssetWidget",
+                "spryker-shop/customer-page": "If you want to use the form-sort-submitter molecule from CustomerPage in the advanced-table molecule.",
                 "spryker-shop/money-widget": "If you want to use widgets from module MoneyWidget",
                 "spryker-shop/newsletter-widget": "If you want to use components from module NewsletterWidget.",
                 "spryker-shop/product-group-widget": "If you want to use components from module ProductGroupColorWidget or ProductGroupWidget",
@@ -24006,9 +24010,9 @@
             ],
             "description": "ShopUi module",
             "support": {
-                "source": "https://github.com/spryker-shop/shop-ui/tree/1.107.1"
+                "source": "https://github.com/spryker-shop/shop-ui/tree/1.108.0"
             },
-            "time": "2026-05-13T09:30:46+00:00"
+            "time": "2026-05-25T17:56:56+00:00"
         },
         {
             "name": "spryker-shop/shopping-list-note-widget",
@@ -92082,13 +92086,12 @@
         },
         {
             "name": "spryker/robotframework-suite-tests",
-            "version": "dev-master",
+            "version": "dev-bugfix/cc-38846/fix-api-tests",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/robotframework-suite-tests.git",
-                "reference": "3f3cdf48d569b3b6fb48639aba910dabdeddde84"
+                "reference": "a1c2416c19fab191426781de0059a5b9d8b5e675"
             },
-            "default-branch": true,
             "bin": [
                 "bin/run-robot-suite-tests.sh"
             ],
@@ -92097,7 +92100,7 @@
                 "MIT"
             ],
             "description": "Automated tests for the Robot Framework",
-            "time": "2026-05-26T13:01:16+00:00"
+            "time": "2026-05-27T12:48:31+00:00"
         },
         {
             "name": "spryker/testify",
