@@ -1,0 +1,41 @@
+{% extends view('list-cost-center', 'SprykerFeature:PurchasingControl') %}
+
+{% block companyContent %}
+    {% set searchForm = data.searchForm %}
+
+        {% block costCenterHeader %}
+            {% include molecule('action-bar', 'ShopUi') with {
+                data: {
+                    title: 'purchasing_control.cost_center.list.title' | trans,
+                    actions: (can('ManageCostCentersPermissionPlugin') ? [
+                        {
+                            title: 'purchasing_control.cost_center.create.title' | trans,
+                            url: url('company/cost-center/create'),
+                            primary: true,
+                            qa: 'create-cost-center-button',
+                        }
+                    ] : [])
+                }
+            } only %}
+        {% endblock %}
+
+        {% block formStart %}
+            {{ parent() }}
+        {% endblock %}
+
+        {% block filtersSection %}
+            {{ parent() }}
+        {% endblock %}
+
+        {% block activeFilters %}
+            {{ parent() }}
+        {% endblock %}
+
+        {% block costCenterList %}
+            {{ parent() }}
+        {% endblock %}
+
+        {% block formEnd %}
+            {{ parent() }}
+        {% endblock %}
+{% endblock %}
