@@ -58,13 +58,15 @@
 
 {% set numberFormatConfig = {'watch-external-changes': true} | merge(data.numberFormatConfig) %}
 
-{% macro button(configName, buttonType, iconName, isDisabled) %}
+{% macro button(configName, buttonType, iconName, isEditable) %}
     <button class="{{ configName }}__button
-        {% if isDisabled %}
+        {% if not isEditable %}
             {{ configName }}__button--disabled
         {% endif %}
         js-{{ configName }}__button-{{ buttonType }}
-        {{ configName }}__button--{{ buttonType }}">
+        {{ configName }}__button--{{ buttonType }}"
+        {{ qa(configName ~ '__button--' ~ buttonType) }}
+        >
             {% include atom('icon') with {
                 data: {
                     name: iconName,
@@ -74,7 +76,7 @@
 {% endmacro %}
 
 {% block body %}
-    {{ component.button(config.name, 'decrement', 'minus', (data.isDisabled or data.isReadOnly)) }}
+    {{ component.button(config.name, 'decrement', 'minus', isEditable) }}
 
     {% block quantityField %}
         {% include molecule('formatted-number-input') with {
@@ -93,5 +95,5 @@
         } only %}
     {% endblock %}
 
-    {{ component.button(config.name, 'increment', 'plus', (data.isDisabled or data.isReadOnly)) }}
+    {{ component.button(config.name, 'increment', 'plus', isEditable) }}
 {% endblock %}
