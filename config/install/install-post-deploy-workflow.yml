@@ -1,4 +1,8 @@
 sections:
+  queue-demodata:
+    run-worker:
+      command: 'vendor/bin/console queue:worker:start --stop-when-empty'
+      timeout: 2000
   download-cypress-tests-package:
     download:
       command: 'mkdir -p ./data/tmp && cd ./data/tmp && composer require spryker/cypress-tests:dev-master'
