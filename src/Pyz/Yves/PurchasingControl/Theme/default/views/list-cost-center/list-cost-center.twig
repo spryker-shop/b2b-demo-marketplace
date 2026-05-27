@@ -3,39 +3,83 @@
 {% block companyContent %}
     {% set searchForm = data.searchForm %}
 
-        {% block costCenterHeader %}
-            {% include molecule('action-bar', 'ShopUi') with {
-                data: {
-                    title: 'purchasing_control.cost_center.list.title' | trans,
-                    actions: (can('ManageCostCentersPermissionPlugin') ? [
-                        {
-                            title: 'purchasing_control.cost_center.create.title' | trans,
-                            url: url('company/cost-center/create'),
-                            primary: true,
-                            qa: 'create-cost-center-button',
-                        }
-                    ] : [])
-                }
-            } only %}
-        {% endblock %}
+    {% block costCenterHeader %}
+        {% include molecule('action-bar', 'ShopUi') with {
+            data: {
+                title: 'purchasing_control.cost_center.list.title' | trans,
+                actions: (can('ManageCostCentersPermissionPlugin') ? [
+                    {
+                        title: 'purchasing_control.cost_center.create.title' | trans,
+                        url: url('company/cost-center/create'),
+                        primary: true,
+                        qa: 'create-cost-center-button',
+                    }
+                ] : [])
+            }
+        } only %}
+    {% endblock %}
 
-        {% block formStart %}
-            {{ parent() }}
-        {% endblock %}
+    {% block formStart %}
+        {{ parent() }}
+    {% endblock %}
 
-        {% block filtersSection %}
-            {{ parent() }}
-        {% endblock %}
+    {% block filtersSection %}
+        {{ parent() }}
+    {% endblock %}
 
-        {% block activeFilters %}
-            {{ parent() }}
-        {% endblock %}
+    {% block activeFilters %}
+        {{ parent() }}
+    {% endblock %}
 
-        {% block costCenterList %}
-            {{ parent() }}
-        {% endblock %}
+    {% block costCenterList %}
+        {% set columns = [
+            { id: 'spy_cost_center.name', title: 'purchasing_control.cost_center.form.name', sortable: true },
+            { id: 'businessUnits', title: 'purchasing_control.cost_center.form.business_unit' },
+            { id: 'spy_cost_center.is_active', title: 'purchasing_control.cost_center.list.status', sortable: true },
+            { id: 'actions', title: 'purchasing_control.cost_center.list.actions', type: 'actions' },
+        ] %}
 
-        {% block formEnd %}
-            {{ parent() }}
-        {% endblock %}
+        {% set rows = data.costCenters | map(costCenter => {
+            'spy_cost_center.name': costCenter.name,
+            businessUnits: costCenter.companyBusinessUnits | length > 3
+                ? costCenter.companyBusinessUnits | slice(0, 3) | map(bu => bu.name) | join(', ') ~ ' <span title="' ~ (costCenter.companyBusinessUnits | slice(3) | map(bu => bu.name) | join(', ')) ~ '">+' ~ (costCenter.companyBusinessUnits | length - 3) ~ ' ' ~ ('purchasing_control.cost_center.business_units.more' | trans) ~ '</span>'
+                : costCenter.companyBusinessUnits | map(bu => bu.name) | join(', '),
+            'spy_cost_center.is_active': costCenter.isActive
+                ? '<span class="label label--success">' ~ ('purchasing_control.cost_center.status.active' | trans) ~ '</span>'
+                : '<span class="label label--danger">' ~ ('purchasing_control.cost_center.status.inactive' | trans) ~ '</span>',
+            actions: [{
+                url:url('company/cost-center/update', { costCenterUuid: costCenter.uuid }),
+                title: 'purchasing_control.cost_center.action.edit',
+                icon: 'edit',
+                qa: 'cost-center-edit-button',
+            },
+            {
+                url:url('company/cost-center/budget', { costCenterUuid: costCenter.uuid }),
+                title: 'purchasing_control.cost_center.action.budgets',
+                icon: 'finance',
+                qa: 'cost-center-budgets-button',
+            }],
+        }) %}
+
+        {% include molecule('advanced-table') with {
+            data: {
+                columns: columns,
+                rows: rows,
+                emptyText: 'purchasing_control.cost_center.list.empty',
+                sortableForm: searchForm,
+                sortableFormClass: formClass,
+                pagination: {
+                    parameters: app.request.query.all,
+                    currentPage: data.pagination.page,
+                    paginationPath: 'company/cost-center',
+                    maxPage: data.pagination.lastPage,
+                    showAlwaysFirstAndLast: true,
+                },
+            },
+        } only %}
+    {% endblock %}
+
+    {% block formEnd %}
+        {{ parent() }}
+    {% endblock %}
 {% endblock %}
