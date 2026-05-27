@@ -1,0 +1,98 @@
+{% extends view('list-budget', 'SprykerFeature:PurchasingControl') %}
+
+{% block companyContent %}
+    {% block budgetHeader %}
+        {% include molecule('action-bar', 'ShopUi') with {
+            data: {
+                title: 'purchasing_control.budget.list.title' | trans,
+                actions: (can('ManageCostCentersPermissionPlugin') ? [
+                    {
+                        title: 'purchasing_control.cost_center.list.title' | trans,
+                        url: url('company/cost-center'),
+                        primary: false,
+                        qa: 'cost-center-button',
+                    },
+                    {
+                        title: 'purchasing_control.budget.create.title' | trans,
+                        url: url('company/cost-center/budget/create', { costCenterUuid: data.costCenter.uuid }),
+                        primary: true,
+                        qa: 'create-budget-button',
+                    }
+                ] : [])
+            }
+        } only %}
+    {% endblock %}
+
+    {% block formStart %}
+        {{ parent() }}
+    {% endblock %}
+
+    {% block filtersSection %}
+        {{ parent() }}
+    {% endblock %}
+
+    {% block activeFilters %}
+        {{ parent() }}
+    {% endblock %}
+
+    {% block budgetList %}
+        {% set today = 'now' | date('Y-m-d') %}
+
+        {% set columns = [
+            { id: 'spy_budget.name', title: 'purchasing_control.budget.form.name', sortable: true },
+            { id: 'spy_budget.amount', title: 'purchasing_control.budget.list.column.amount', sortable: true },
+            { id: 'ConsumedAmount', title: 'purchasing_control.budget.list.column.consumed', sortable: true },
+            { id: 'RemainingAmount', title: 'purchasing_control.budget.list.column.remaining', sortable: true },
+            { id: 'spy_budget.starts_at', title: 'purchasing_control.budget.list.column.period', sortable: true },
+            { id: 'spy_budget.enforcement_rule', title: 'purchasing_control.budget.list.column.enforcement_rule', sortable: true },
+            { id: 'spy_budget.is_active', title: 'purchasing_control.budget.list.column.status', sortable: true },
+            { id: 'actions', title: 'purchasing_control.budget.list.column.actions', type: 'actions' },
+        ] %}
+
+        {% set rows = data.budgets | map(budget => {
+            'spy_budget.name': budget.name,
+            'spy_budget.amount': budget.amount | default(0) | money(true, budget.currencyIsoCode),
+            ConsumedAmount: budget.consumedAmount | default(0) | money(true, budget.currencyIsoCode),
+            RemainingAmount: (budget.amount - budget.consumedAmount) | default(0) | money(true, budget.currencyIsoCode),
+            'spy_budget.starts_at': budget.startsAt | formatDate ~ ' – ' ~ budget.endsAt | formatDate,
+            'spy_budget.enforcement_rule': budget.enforcementRule == 'block'
+                ? '<span class="label label--danger">' ~ ('purchasing_control.budget.form.enforcement_rule.block' | trans) ~ '</span>'
+                : (budget.enforcementRule == 'warn'
+                    ? '<span class="label label--warning">' ~ ('purchasing_control.budget.form.enforcement_rule.warn' | trans) ~ '</span>'
+                    : '<span class="label label--info">' ~ ('purchasing_control.budget.form.enforcement_rule.require_approval' | trans) ~ '</span>'),
+            'spy_budget.is_active': budget.endsAt < today
+                ? '<span class="label">' ~ ('purchasing_control.budget.status.archived' | trans) ~ '</span>'
+                : (budget.isActive
+                    ? '<span class="label label--success">' ~ ('purchasing_control.budget.status.active' | trans) ~ '</span>'
+                    : '<span class="label label--danger">' ~ ('purchasing_control.budget.status.inactive' | trans) ~ '</span>'),
+            actions: [{
+                url:url('company/cost-center/budget/update', { budgetUuid: budget.uuid, costCenterUuid: data.costCenter.uuid }),
+                title: 'purchasing_control.budget.action.edit',
+                icon: 'edit',
+                qa: 'budget-edit-button',
+            }],
+        }) %}
+
+        {% include molecule('advanced-table') with {
+            data: {
+                columns: columns,
+                rows: rows,
+                emptyText: 'purchasing_control.budget.list.empty',
+                sortableForm: data.searchForm,
+                sortableFormClass: formClass,
+                pagination: {
+                    parameters: app.request.query.all,
+                    currentPage: data.pagination.page,
+                    paginationPath: 'company/cost-center/budget',
+                    paginationPathParameters: { costCenterUuid: data.costCenter.uuid },
+                    maxPage: data.pagination.lastPage,
+                    showAlwaysFirstAndLast: true,
+                },
+            },
+        } only %}
+    {% endblock %}
+
+    {% block formEnd %}
+        {{ parent() }}
+    {% endblock %}
+{% endblock %}
