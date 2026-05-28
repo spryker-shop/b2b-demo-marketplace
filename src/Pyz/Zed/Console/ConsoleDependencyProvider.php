@@ -13,6 +13,7 @@ use Pyz\Zed\DataImport\DataImportConfig;
 use Pyz\Zed\Development\Communication\Console\AcceptanceCodeTestConsole;
 use Pyz\Zed\Development\Communication\Console\ApiCodeTestConsole;
 use Pyz\Zed\Development\Communication\Console\FunctionalCodeTestConsole;
+use Pyz\Zed\SetupFrontend\Communication\Console\StorybookBuildFrontendConsole;
 use SecurityChecker\Command\SecurityCheckerCommand;
 use Spryker\Zed\AclEntity\Communication\Console\AclEntityMetadataConfigValidateConsole;
 use Spryker\Zed\AclMerchantPortal\Communication\Console\AclEntitySynchronizeConsole;
@@ -404,6 +405,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new YvesBuildFrontendConsole(),
             new ZedBuildFrontendConsole(),
             new MerchantPortalBuildFrontendConsole(),
+            new StorybookBuildFrontendConsole(),
 
             new DeleteAllQueuesConsole(),
             new PurgeAllQueuesConsole(),

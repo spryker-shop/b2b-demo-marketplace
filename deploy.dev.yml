@@ -103,6 +103,12 @@ groups:
                     backend-gateway.eu.spryker.local:
                         region: EU
                         primal: true
+            storybook_eu:
+                application: static
+                endpoints:
+                    storybook.spryker.local:
+                        entry-point: Storybook/assets
+                        region: EU
 services:
     database:
         engine: mysql
