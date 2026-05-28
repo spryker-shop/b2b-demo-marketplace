@@ -32,7 +32,7 @@ export default class DateTimePicker extends Component {
     protected datePickerInit(): void {
         const config: Options = {
             locale: this.language === 'de' ? German : 'default',
-            enableTime: true,
+            enableTime: this.enableTime,
             ...this.config,
             onChange: (selectedDates, dateStr) => {
                 this.dateInput.value = dateStr;
@@ -66,5 +66,9 @@ export default class DateTimePicker extends Component {
 
     protected get language(): string {
         return this.getAttribute('language');
+    }
+
+    protected get enableTime(): boolean {
+        return Boolean(this.getAttribute('enable-time'));
     }
 }

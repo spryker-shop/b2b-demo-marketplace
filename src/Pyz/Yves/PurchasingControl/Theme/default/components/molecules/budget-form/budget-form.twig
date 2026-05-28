@@ -36,7 +36,27 @@
         },
     } only %}
         {% block field %}
-            {{ parent() }}
+            {% if field.vars.type is defined and field.vars.type === "date" %}
+                <div class="col col--sm-12 col--md-6">
+                    {% include molecule('date-time-picker') with {
+                        data: {
+                            field: field,
+                        },
+                        attributes: {
+                            language: app.locale | slice(0,2),
+                            config: '{
+                                "format": "Y-m-d"
+                            }',
+                            'formatted-date-time': field.vars.value | date('Y-m-d'),
+                            'date-from-id': data.form.vars.name ~ "_startsAt",
+                            'date-to-id': data.form.vars.name ~ "_endsAt",
+                            'enable-time': false,
+                        },
+                    } only %}
+                </div>
+            {% else %}
+                {{ parent() }}
+            {% endif %}
             
             {% if fieldName == 'enforcementRule' %}
                 {% set enforcementRules = ['block', 'warn', 'require_approval'] %}

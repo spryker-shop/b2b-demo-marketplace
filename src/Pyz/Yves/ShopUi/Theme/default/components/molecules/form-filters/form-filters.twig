@@ -3,46 +3,37 @@
 {% block separator %}{% endblock %}
 
 {% block filter %}
-    {% set isDate = 'dateTo' in filter.row.vars.id or 'dateFrom' in filter.row.vars.id %}
+    {% set isDateTo = 'dateTo' in filter.row.vars.id or 'endsAt' in filter.row.vars.id %}
+    {% set isDateFrom = 'dateFrom' in filter.row.vars.id or 'startsAt' in filter.row.vars.id %}
+    {% set isDate = isDateTo or isDateFrom %}
 
     {% if isDate %}
-        {% set dateFromId = 'dateTo' in filter.row.vars.id
-            ? (data.filters | find(_filter => 'dateFrom' in _filter.row.vars.id)).row.vars.id
+        {% set dateFromId = isDateTo
+            ? (data.filters | find(_filter => 'dateFrom' in _filter.row.vars.id or 'startsAt' in _filter.row.vars.id)).row.vars.id
             : false
         %}
-        {% set dateToId = 'dateFrom' in filter.row.vars.id
-            ? (data.filters | find(_filter => 'dateTo' in _filter.row.vars.id)).row.vars.id
+        {% set dateToId = isDateFrom
+            ? (data.filters | find(_filter => 'dateTo' in _filter.row.vars.id or 'endsAt' in _filter.row.vars.id)).row.vars.id
             : false
         %}
 
-        {% widget 'LanguageSwitcherWidget' args [app.request.pathInfo, app.request.queryString, app.request.requestUri] with {
+        {% set config = {
+            dateFormat: 'Y-m-d',
+        } %}
+
+        {% include molecule('date-time-picker') with {
             data: {
                 field: filter.row,
             },
-            embed: {
-                dateFromId: dateFromId,
-                dateToId: dateToId,
+            attributes: {
+                language: app.locale | slice(0, 2),
+                config: config | json_encode,
+                'formatted-date-time': filter.row.vars.value | date(config.dateFormat),
+                'date-from-id': dateFromId,
+                'date-to-id': dateToId,
+                'enable-time': false,
             },
         } only %}
-            {% block body %}
-                {% set config = {
-                    dateFormat: 'Y-m-d H:i',
-                } %}
-
-                {% include molecule('date-time-picker') with {
-                    data: {
-                        field: data.field,
-                    },
-                    attributes: {
-                        language: data.currentLanguage,
-                        config: config | json_encode,
-                        'formatted-date-time': data.field.vars.value | date(config.dateFormat),
-                        'date-from-id': embed.dateFromId,
-                        'date-to-id': embed.dateToId,
-                    },
-                } only %}
-            {% endblock %}
-        {% endwidget %}
     {% else %}
         {% set isSelect = filter.row.vars.choices | default([]) | length %}
 
