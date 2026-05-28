@@ -1,8 +1,7 @@
 @mixin shop-ui-quantity-counter($name: '.quantity-counter') {
     #{$name} {
-        --borderColor: var(--border-default);
         display: flex;
-        border: rem(1) solid var(--borderColor);
+        border: rem(1) solid var(--border-default);
         border-radius: var(--radius-sm);
         background: var(--background-page);
         height: var(--scale-40);
@@ -14,17 +13,17 @@
         }
 
         &--disabled {
-            --borderColor: var(--border-disabled);
+            border-color: var(--border-disabled);
             background: var(--background-subtle);
             cursor: not-allowed;
         }
 
         &:focus-within {
-            --borderColor: var(--border-brand);
+            border-color: var(--border-brand);
         }
 
         &--error {
-            --borderColor: var(--border-state-error);
+            border-color: var(--border-state-error);
         }
 
         &__input {
