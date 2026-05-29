@@ -53,14 +53,14 @@
                         actions: [{
                             iconModifier: 'big',
                             url: attachment.url,
-                            title: 'self_service_portal.company_file.table.actions.download',
+                            label: 'self_service_portal.company_file.table.actions.download',
                             icon: 'download',
                             target: '_blank',
                         }],
                     }]) %}
                 {% endfor %}
 
-                {% include molecule('advanced-table', 'SelfServicePortal') with {
+                {% include molecule('advanced-table') with {
                     class: 'js-pdp-section__target-attachments is-hidden-sm-md',
                     data: {
                         columns: columns,

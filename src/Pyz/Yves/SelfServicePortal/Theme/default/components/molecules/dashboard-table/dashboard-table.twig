@@ -12,7 +12,7 @@
     <div class="{{ config.name }}__content">
         {% set emptyClass = data.rows | length ? '' : "#{config.name}__table--empty" %}
 
-        {% include molecule('advanced-table', 'SelfServicePortal') with {
+        {% include molecule('advanced-table') with {
             class: "#{config.name}__table #{emptyClass}",
             data: {
                 columns: data.columns,

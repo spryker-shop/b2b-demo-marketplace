@@ -1,4 +1,4 @@
-@mixin self-service-portal-active-filters($name: '.active-filters') {
+@mixin shop-ui-form-active-filters($name: '.form-active-filters') {
     #{$name} {
         display: flex;
         flex-wrap: wrap;
@@ -71,4 +71,4 @@
     }
 }
 
-@include self-service-portal-active-filters();
+@include shop-ui-form-active-filters();

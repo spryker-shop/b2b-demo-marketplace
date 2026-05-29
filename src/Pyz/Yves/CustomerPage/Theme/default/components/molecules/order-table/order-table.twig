@@ -146,6 +146,7 @@
                     {% endif %}
                     <th>{{ 'customer.order.total' | trans }}</th>
                     <th>{{ 'customer.order.items_state' | trans }}</th>
+                    {% include molecule('order-table-cost-center-header', 'PurchasingControl') ignore missing only %}
                     <th></th>
                 </tr>
             </thead>
@@ -182,6 +183,7 @@
                         <td class="transform-cell spacing-bottom spacing-bottom--inner spacing-bottom--big" data-content="{{ 'customer.order.items_state' | trans }}">
                             <div>{{ block('stateWrapper') }}</div>
                         </td>
+                        {% include molecule('order-table-cost-center-columns', 'PurchasingControl') ignore missing with { data: { order: order } } only %}
                         <td class="table__actions">
                             {% include molecule('table-action-list') with {
                                 data: {

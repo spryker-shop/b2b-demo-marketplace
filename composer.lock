@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "51665c7730bfd24f50e7413438eb26ed",
+    "content-hash": "ebc60f6b12535c783917a90818b7f2a2",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -14007,48 +14007,67 @@
         },
         {
             "name": "spryker-feature/purchasing-control",
-            "version": "202604.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/purchasing-control.git",
-                "reference": "f64ab334e2bdeb458750740e3b3fbe4d44c9a5eb"
+                "reference": "59c954ca7909b12768fd0f85329e54665d540c6b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/purchasing-control/zipball/f64ab334e2bdeb458750740e3b3fbe4d44c9a5eb",
-                "reference": "f64ab334e2bdeb458750740e3b3fbe4d44c9a5eb",
+                "url": "https://api.github.com/repos/spryker-feature/purchasing-control/zipball/59c954ca7909b12768fd0f85329e54665d540c6b",
+                "reference": "59c954ca7909b12768fd0f85329e54665d540c6b",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.3",
+                "spryker-shop/customer-page-extension": "^1.4.0",
+                "spryker-shop/shop-ui": "^1.108.0",
+                "spryker/application": "^3.46.0",
                 "spryker/checkout-extension": "^1.3.0",
+                "spryker/company": "^1.4.0",
                 "spryker/company-business-unit": "^2.0.0",
+                "spryker/company-user": "^2.0.0",
                 "spryker/currency": "^4.0.0",
                 "spryker/customer": "^7.0.0",
+                "spryker/data-import": "^1.0.0",
+                "spryker/glossary": "^3.16.0",
                 "spryker/gui": "^5.0.0",
                 "spryker/kernel": "^3.30.0",
+                "spryker/locale": "^4.0.0",
+                "spryker/money": "^2.0.0",
+                "spryker/permission-extension": "^1.0.0",
                 "spryker/propel-orm": "^1.0.0",
                 "spryker/quote": "^2.0.0",
                 "spryker/quote-approval": "^1.5.0",
                 "spryker/quote-extension": "^1.0.0",
-                "spryker/sales": "^11.0.0",
+                "spryker/sales": "^11.83.0",
+                "spryker/sales-extension": "^1.15.0",
+                "spryker/store": "^1.35.0",
                 "spryker/symfony": "^3.0.0",
+                "spryker/transfer": "^3.27.0",
                 "spryker/util-date-time": "^1.6.0",
+                "spryker/util-text": "^1.1.0",
                 "spryker/uuid-behavior": "^1.3.0",
                 "spryker/zed-request": "^3.0.0"
             },
             "require-dev": {
+                "spryker-shop/company-page": "*",
                 "spryker/code-sniffer": "*",
                 "spryker/country": "*",
                 "spryker/oms": "*",
                 "spryker/propel": "*",
                 "spryker/router": "*",
+                "spryker/shipment": "*",
                 "spryker/testify": "*"
             },
             "suggest": {
+                "spryker-shop/company-page": "Use this module if you want to display company information on the storefront.",
+                "spryker-shop/customer-page": "Use this module if you want to display customer information on the storefront.",
                 "spryker/oms": "Use OMS to manage order states and processes.",
                 "spryker/router": "Use Router when the storefront needs to be able to route to the purchasing control module."
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -14057,7 +14076,8 @@
             },
             "autoload": {
                 "psr-4": {
-                    "SprykerFeature\\": "src/SprykerFeature/"
+                    "SprykerFeature\\": "src/SprykerFeature/",
+                    "SprykerFeatureTest\\Shared\\PurchasingControl\\Helper\\": "tests/SprykerFeatureTest/Shared/PurchasingControl/_support/Helper/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -14066,9 +14086,9 @@
             ],
             "description": "PurchasingControl module",
             "support": {
-                "source": "https://github.com/spryker-feature/purchasing-control/tree/202604.0"
+                "source": "https://github.com/spryker-feature/purchasing-control/tree/master"
             },
-            "time": "2026-04-13T13:09:39+00:00"
+            "time": "2026-05-25T17:56:56+00:00"
         },
         {
             "name": "spryker-feature/quick-add-to-cart",
@@ -14422,12 +14442,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/self-service-portal.git",
-                "reference": "ddb5c5c7581b8f527bcbf0cd3ba40dc17aa773dd"
+                "reference": "28981bab01f29b53afc85dc6c5eb83287c6dc7c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/self-service-portal/zipball/ddb5c5c7581b8f527bcbf0cd3ba40dc17aa773dd",
-                "reference": "ddb5c5c7581b8f527bcbf0cd3ba40dc17aa773dd",
+                "url": "https://api.github.com/repos/spryker-feature/self-service-portal/zipball/28981bab01f29b53afc85dc6c5eb83287c6dc7c5",
+                "reference": "28981bab01f29b53afc85dc6c5eb83287c6dc7c5",
                 "shasum": ""
             },
             "require": {
@@ -14437,7 +14457,7 @@
                 "spryker-shop/customer-page-extension": "^1.6.0",
                 "spryker-shop/shop-application": "^1.0.0",
                 "spryker-shop/shop-application-extension": "^1.2.0",
-                "spryker-shop/shop-ui": "^1.100.1",
+                "spryker-shop/shop-ui": "^1.108.0",
                 "spryker/availability-storage-extension": "^1.0.0",
                 "spryker/cart-extension": "^4.2.0",
                 "spryker/cms-block-storage-extension": "^1.0.0",
@@ -14575,7 +14595,7 @@
             "support": {
                 "source": "https://github.com/spryker-feature/self-service-portal/tree/master"
             },
-            "time": "2026-05-14T15:07:11+00:00"
+            "time": "2026-05-25T17:56:56+00:00"
         },
         {
             "name": "spryker-feature/service-points",
@@ -17051,20 +17071,20 @@
         },
         {
             "name": "spryker-shop/company-page",
-            "version": "2.35.2",
+            "version": "2.36.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-shop/company-page.git",
-                "reference": "500d5e40474737d87af8eab6083ae078d8294271"
+                "reference": "1836389a1813a7e55756cee3f1d815402dee16cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-shop/company-page/zipball/500d5e40474737d87af8eab6083ae078d8294271",
-                "reference": "500d5e40474737d87af8eab6083ae078d8294271",
+                "url": "https://api.github.com/repos/spryker-shop/company-page/zipball/1836389a1813a7e55756cee3f1d815402dee16cb",
+                "reference": "1836389a1813a7e55756cee3f1d815402dee16cb",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker-shop/checkout-page-extension": "^1.0.0",
                 "spryker-shop/customer-page-extension": "^1.5.0",
                 "spryker-shop/shop-application": "^1.0.0",
@@ -17124,9 +17144,9 @@
             ],
             "description": "CompanyPage module",
             "support": {
-                "source": "https://github.com/spryker-shop/company-page/tree/2.35.2"
+                "source": "https://github.com/spryker-shop/company-page/tree/2.36.0"
             },
-            "time": "2025-04-02T14:09:35+00:00"
+            "time": "2026-05-25T17:56:56+00:00"
         },
         {
             "name": "spryker-shop/company-user-agent-widget",
@@ -17787,16 +17807,16 @@
         },
         {
             "name": "spryker-shop/customer-page",
-            "version": "2.76.0",
+            "version": "2.77.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-shop/customer-page.git",
-                "reference": "576cfae14b86bc6ac594742009433f45c1f9aead"
+                "reference": "4d42dd1b0ce849bda29670712ab06336cc38831a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-shop/customer-page/zipball/576cfae14b86bc6ac594742009433f45c1f9aead",
-                "reference": "576cfae14b86bc6ac594742009433f45c1f9aead",
+                "url": "https://api.github.com/repos/spryker-shop/customer-page/zipball/4d42dd1b0ce849bda29670712ab06336cc38831a",
+                "reference": "4d42dd1b0ce849bda29670712ab06336cc38831a",
                 "shasum": ""
             },
             "require": {
@@ -17832,6 +17852,7 @@
                 "spryker/validator": "^1.6.0"
             },
             "require-dev": {
+                "spryker-feature/purchasing-control": "*",
                 "spryker-shop/business-on-behalf-widget": "*",
                 "spryker-shop/cart-note-widget": "*",
                 "spryker-shop/customer-reorder-widget": "*",
@@ -17851,6 +17872,7 @@
                 "spryker/zed-request": "*"
             },
             "suggest": {
+                "spryker-feature/purchasing-control": "Add the module if you want to display cost center and budget information on the order detail page and to enable cost center and budget filters on the order history page.",
                 "spryker-shop/business-on-behalf-widget": "If you want to use BusinessOnBehalfWidget or MenuItemBusinessOnBehalfWidgetPlugin.",
                 "spryker-shop/cart-note-widget": "If you want to use components from module CartNoteWidget or CartNoteOrderNoteWidgetPlugin.",
                 "spryker-shop/cart-reorder-page": "If you want to use CartReorderItemCheckboxWidget or CartReorderWidget.",
@@ -17886,9 +17908,9 @@
             ],
             "description": "CustomerPage module",
             "support": {
-                "source": "https://github.com/spryker-shop/customer-page/tree/2.76.0"
+                "source": "https://github.com/spryker-shop/customer-page/tree/2.77.0"
             },
-            "time": "2026-05-11T14:53:10+00:00"
+            "time": "2026-05-25T17:56:56+00:00"
         },
         {
             "name": "spryker-shop/customer-page-extension",
@@ -23951,16 +23973,16 @@
         },
         {
             "name": "spryker-shop/shop-ui",
-            "version": "1.107.1",
+            "version": "1.108.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-shop/shop-ui.git",
-                "reference": "32ee336c4539b2b71fe8cb6fcec65300bcf889af"
+                "reference": "8a6a158bd327e520861e43fa80e3157f7967795a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-shop/shop-ui/zipball/32ee336c4539b2b71fe8cb6fcec65300bcf889af",
-                "reference": "32ee336c4539b2b71fe8cb6fcec65300bcf889af",
+                "url": "https://api.github.com/repos/spryker-shop/shop-ui/zipball/8a6a158bd327e520861e43fa80e3157f7967795a",
+                "reference": "8a6a158bd327e520861e43fa80e3157f7967795a",
                 "shasum": ""
             },
             "require": {
@@ -23977,6 +23999,7 @@
             },
             "require-dev": {
                 "spryker-eco/google-analytics": "*",
+                "spryker-shop/customer-page": "*",
                 "spryker-shop/newsletter-widget": "*",
                 "spryker-shop/product-group-widget": "*",
                 "spryker/code-sniffer": "*",
@@ -23987,6 +24010,7 @@
             "suggest": {
                 "spryker-eco/google-analytics": "If you want to use the traceable-events-google-analytics molecule for GA4 storefront tracking.",
                 "spryker-shop/asset-widget": "If you want to use components from module AssetWidget",
+                "spryker-shop/customer-page": "If you want to use the form-sort-submitter molecule from CustomerPage in the advanced-table molecule.",
                 "spryker-shop/money-widget": "If you want to use widgets from module MoneyWidget",
                 "spryker-shop/newsletter-widget": "If you want to use components from module NewsletterWidget.",
                 "spryker-shop/product-group-widget": "If you want to use components from module ProductGroupColorWidget or ProductGroupWidget",
@@ -24010,9 +24034,9 @@
             ],
             "description": "ShopUi module",
             "support": {
-                "source": "https://github.com/spryker-shop/shop-ui/tree/1.107.1"
+                "source": "https://github.com/spryker-shop/shop-ui/tree/1.108.0"
             },
-            "time": "2026-05-13T09:30:46+00:00"
+            "time": "2026-05-25T17:56:56+00:00"
         },
         {
             "name": "spryker-shop/shopping-list-note-widget",
@@ -91992,7 +92016,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/cypress-tests.git",
-                "reference": "e26e185e7c8fcd13f133c246792ede180b928df2"
+                "reference": "4044c6ee5e7d0470d6a0294855c27199dd6b7d3a"
             },
             "default-branch": true,
             "type": "spryker-test",
@@ -92000,7 +92024,7 @@
                 "MIT"
             ],
             "description": "This repository is dedicated to housing an extensive collection of UI end-to-end tests, meticulously crafted using Cypress for Spryker applications. These tests are designed to thoroughly evaluate the user interface, ensuring that all interactions and visual elements function as intended in real-world scenarios. By leveraging Cypress's advanced browser automation capabilities, this suite provides an efficient and effective means of validating the user experience, confirming the seamless operation and aesthetic integrity of Spryker's front-end components. Our commitment to rigorous UI testing helps maintain the high standard of quality and reliability that Spryker users expect.",
-            "time": "2026-04-30T14:50:13+00:00"
+            "time": "2026-05-28T13:04:07+00:00"
         },
         {
             "name": "spryker/development",
@@ -92879,6 +92903,12 @@
             "alias_normalized": "202604.0"
         },
         {
+            "package": "spryker-feature/purchasing-control",
+            "version": "9999999-dev",
+            "alias": "202604.0",
+            "alias_normalized": "202604.0"
+        },
+        {
             "package": "spryker-feature/self-service-portal",
             "version": "9999999-dev",
             "alias": "202604.0",
@@ -92889,6 +92919,7 @@
     "stability-flags": {
         "spryker-feature/ai-commerce": 20,
         "spryker-feature/product-experience-management": 20,
+        "spryker-feature/purchasing-control": 20,
         "spryker-feature/self-service-portal": 20,
         "spryker/cypress-tests": 20,
         "spryker/robotframework-suite-tests": 20
@@ -92908,9 +92939,9 @@
         "ext-readline": "*",
         "ext-redis": "*"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "platform-overrides": {
         "php": "8.3.13"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
