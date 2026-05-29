@@ -13,6 +13,9 @@ use Demo\Zed\PriceProductVolumeGui\Communication\Form\PriceVolumeCollectionFormT
 use Spryker\Zed\PriceProductVolumeGui\Communication\PriceProductVolumeGuiCommunicationFactory as SprykerPriceProductVolumeGuiCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 
+/**
+ * @method \Spryker\Zed\PriceProductVolumeGui\PriceProductVolumeGuiConfig getConfig()
+ */
 class PriceProductVolumeGuiCommunicationFactory extends SprykerPriceProductVolumeGuiCommunicationFactory
 {
     /**
