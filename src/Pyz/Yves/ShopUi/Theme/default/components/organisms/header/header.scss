@@ -109,6 +109,14 @@
             }
         }
 
+        &__agent-pill-desktop {
+            display: none;
+
+            @include helper-breakpoint-media-min($xl) {
+                display: block;
+            }
+        }
+
         &__nav-bar {
             display: none;
             position: relative;

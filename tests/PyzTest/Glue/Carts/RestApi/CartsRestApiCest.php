@@ -73,7 +73,7 @@ class CartsRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->amSure('Response data contains resource collection')
             ->whenI()
@@ -114,7 +114,7 @@ class CartsRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->amSure('The returned resource is of correct type')
             ->whenI()
@@ -155,7 +155,7 @@ class CartsRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->amSure('The returned resource has relationship')
             ->whenI()
@@ -214,7 +214,7 @@ class CartsRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->amSure('The included resource has a relationship')
             ->whenI()
@@ -260,7 +260,7 @@ class CartsRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
     /**
@@ -293,7 +293,7 @@ class CartsRestApiCest
 
         // Assert
         $I->seeResponseCodeIs(HttpCode::CREATED);
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->seeSingleResourceHasSelfLink(
             $I->formatFullUrl(
@@ -337,7 +337,7 @@ class CartsRestApiCest
 
         // Assert
         $I->seeResponseCodeIs(HttpCode::FORBIDDEN);
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
     /**
@@ -369,7 +369,7 @@ class CartsRestApiCest
 
         // Assert
         $I->seeResponseCodeIs(HttpCode::UNPROCESSABLE_ENTITY);
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
     /**
@@ -401,7 +401,7 @@ class CartsRestApiCest
 
         // Assert
         $I->seeResponseCodeIs(HttpCode::UNPROCESSABLE_ENTITY);
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
     /**
@@ -452,7 +452,7 @@ class CartsRestApiCest
 
         // Assert
         $I->seeResponseCodeIs(HttpCode::OK);
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->amSure('Returned resource has correct id')
             ->whenI()
@@ -521,7 +521,7 @@ class CartsRestApiCest
 
         // Assert
         $I->seeResponseCodeIs(HttpCode::UNPROCESSABLE_ENTITY);
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
     /**
@@ -604,7 +604,7 @@ class CartsRestApiCest
 
         // Assert
         $I->seeResponseCodeIs(HttpCode::FORBIDDEN);
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
     /**
@@ -650,7 +650,7 @@ class CartsRestApiCest
 
         // Assert
         $I->seeResponseCodeIs(HttpCode::CREATED);
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->amSure('Returned resource has correct id')
             ->whenI()
@@ -717,7 +717,7 @@ class CartsRestApiCest
 
         // Assert
         $I->seeResponseCodeIs(HttpCode::FORBIDDEN);
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
     /**
@@ -759,7 +759,7 @@ class CartsRestApiCest
 
         // Assert
         $I->seeResponseCodeIs(HttpCode::UNPROCESSABLE_ENTITY);
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
     /**
@@ -801,7 +801,7 @@ class CartsRestApiCest
 
         // Assert
         $I->seeResponseCodeIs(HttpCode::UNPROCESSABLE_ENTITY);
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
     /**
@@ -847,7 +847,7 @@ class CartsRestApiCest
 
         // Assert
         $I->seeResponseCodeIs(HttpCode::OK);
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->amSure(sprintf('Returned resource is of type %s', CartsRestApiConfig::RESOURCE_CARTS))
             ->whenI()
@@ -894,7 +894,7 @@ class CartsRestApiCest
 
         // Assert
         $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
     /**
@@ -936,7 +936,7 @@ class CartsRestApiCest
 
         // Assert
         $I->seeResponseCodeIs(HttpCode::FORBIDDEN);
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
     /**
@@ -978,7 +978,7 @@ class CartsRestApiCest
 
         // Assert
         $I->seeResponseCodeIs(HttpCode::UNPROCESSABLE_ENTITY);
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
     /**
@@ -1083,7 +1083,7 @@ class CartsRestApiCest
 
         // Assert
         $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
     /**
@@ -1117,7 +1117,7 @@ class CartsRestApiCest
 
         // Assert
         $I->seeResponseCodeIs(HttpCode::FORBIDDEN);
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
     /**
@@ -1226,7 +1226,7 @@ class CartsRestApiCest
 
         // Assert
         $I->seeResponseCodeIs(HttpCode::FORBIDDEN);
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
     /**
@@ -1255,7 +1255,7 @@ class CartsRestApiCest
 
         // Assert
         $I->seeResponseCodeIs(HttpCode::OK);
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
     /**
@@ -1284,7 +1284,7 @@ class CartsRestApiCest
 
         // Assert
         $I->seeResponseCodeIs(HttpCode::FORBIDDEN);
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
     /**

@@ -27,6 +27,7 @@ use Spryker\Yves\SecurityOauthKnpu\Plugin\Router\SecurityOauthKnpuRouteProviderP
 use Spryker\Yves\Sitemap\Plugin\Router\SitemapRouteProviderPlugin;
 use SprykerEco\Yves\PunchoutGateway\Plugin\Router\PunchoutGatewayRouteProviderPlugin;
 use SprykerEco\Yves\Stripe\Plugin\Router\StripeRouteProviderPlugin;
+use SprykerFeature\Yves\PurchasingControl\Plugin\Router\BudgetRouteProviderPlugin; #PurchasingControlFeature
 use SprykerFeature\Yves\PurchasingControl\Plugin\Router\CostCenterRouteProviderPlugin;
 use SprykerFeature\Yves\SelfServicePortal\Plugin\Router\SelfServicePortalPageRouteProviderPlugin;
 use SprykerShop\Yves\AgentPage\Plugin\Router\AgentPageRouteProviderPlugin;
@@ -194,6 +195,7 @@ class RouterDependencyProvider extends SprykerRouterDependencyProvider
             new SelfServicePortalPageRouteProviderPlugin(),
             new MerchantRegistrationRequestPageRouteProviderPlugin(),
             new CostCenterRouteProviderPlugin(),
+            new BudgetRouteProviderPlugin(), #PurchasingControlFeature
             new PunchoutGatewayRouteProviderPlugin(),
             new SecurityOauthKnpuRouteProviderPlugin(),
         ];

@@ -13,6 +13,7 @@ use Pyz\Zed\DataImport\DataImportConfig;
 use Pyz\Zed\Development\Communication\Console\AcceptanceCodeTestConsole;
 use Pyz\Zed\Development\Communication\Console\ApiCodeTestConsole;
 use Pyz\Zed\Development\Communication\Console\FunctionalCodeTestConsole;
+use Pyz\Zed\SetupFrontend\Communication\Console\StorybookBuildFrontendConsole;
 use SecurityChecker\Command\SecurityCheckerCommand;
 use Spryker\Zed\AclEntity\Communication\Console\AclEntityMetadataConfigValidateConsole;
 use Spryker\Zed\AclMerchantPortal\Communication\Console\AclEntitySynchronizeConsole;
@@ -212,7 +213,6 @@ use SprykerEco\Zed\PunchoutGateway\Communication\Console\PunchoutOciDemoConnecti
 use SprykerFeature\Zed\ProductExperienceManagement\Communication\Console\ImportJobRunConsole;
 use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 use SprykerSdk\Zed\AiDev\Communication\Console\AiToolSetupConsole;
-use SprykerSdk\Zed\AiDev\Communication\Console\GeneratePromptsConsole;
 use SprykerSdk\Zed\AiDev\Communication\Console\McpServerConsole;
 use SprykerShop\Zed\DateTimeConfiguratorPageExample\Communication\Console\DateTimeProductConfiguratorBuildFrontendConsole;
 
@@ -405,6 +405,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new YvesBuildFrontendConsole(),
             new ZedBuildFrontendConsole(),
             new MerchantPortalBuildFrontendConsole(),
+            new StorybookBuildFrontendConsole(),
 
             new DeleteAllQueuesConsole(),
             new PurgeAllQueuesConsole(),
@@ -519,7 +520,6 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
 
             if (class_exists(McpServerConsole::class)) {
                 $commands[] = new McpServerConsole();
-                $commands[] = new GeneratePromptsConsole();
             }
 
             if (class_exists(AiToolSetupConsole::class)) {

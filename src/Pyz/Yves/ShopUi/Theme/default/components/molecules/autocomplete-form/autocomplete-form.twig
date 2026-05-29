@@ -34,6 +34,7 @@
 
     {% include molecule('ajax-loader') with {
         attributes: {
+            'parent-class-name': config.name,
             'provider-class-name': config.jsName ~ '__provider-' ~ data.id,
         },
     } only %}
@@ -67,6 +68,7 @@
         <div class="is-hidden {{ config.name }}__suggestion {{ config.jsName }}__container">
             {% include molecule('ajax-renderer') with {
                 attributes: {
+                    'parent-class-name': config.name,
                     'provider-class-name': config.jsName ~ '__provider-' ~ data.id,
                     'target-class-name': config.jsName ~ '__suggestions-' ~ data.id,
                     'render-if-response-is-empty': true,
