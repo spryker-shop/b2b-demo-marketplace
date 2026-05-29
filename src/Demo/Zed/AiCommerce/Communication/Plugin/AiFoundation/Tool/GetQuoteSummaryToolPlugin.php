@@ -15,9 +15,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Demo\Zed\AiCommerce\Business\AiCommerceBusinessFactory getBusinessFactory()
- * @method \Pyz\Zed\AiCommerce\AiCommerceConfig getConfig()
+ * @method \Demo\Zed\AiCommerce\AiCommerceConfig getConfig()
  * @method \SprykerFeature\Zed\AiCommerce\Business\AiCommerceFacadeInterface getFacade()
- * @method \SprykerFeature\Zed\AiCommerce\Communication\AiCommerceCommunicationFactory getFactory()
+ * @method \Demo\Zed\AiCommerce\Communication\AiCommerceCommunicationFactory getFactory()
  */
 class GetQuoteSummaryToolPlugin extends AbstractPlugin implements ToolPluginInterface
 {

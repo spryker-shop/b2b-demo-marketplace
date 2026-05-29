@@ -21,9 +21,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\AiCommerce\Dependency\BackofficeAssistant\BackofficeAssistantAgentPluginInterface;
 
 /**
- * @method \SprykerFeature\Zed\AiCommerce\Communication\AiCommerceCommunicationFactory getFactory()
+ * @method \Demo\Zed\AiCommerce\Communication\AiCommerceCommunicationFactory getFactory()
  * @method \SprykerFeature\Zed\AiCommerce\Business\AiCommerceFacadeInterface getFacade()
- * @method \Pyz\Zed\AiCommerce\AiCommerceConfig getConfig()
+ * @method \Demo\Zed\AiCommerce\AiCommerceConfig getConfig()
  */
 class PlaceOrderAgentPlugin extends AbstractPlugin implements BackofficeAssistantAgentPluginInterface
 {
