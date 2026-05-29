@@ -27,16 +27,13 @@
     min: 1,
     step: 1,
     disabled: data.isDisabled or data.isReadOnly,
+    'aria-disabled': isEditable ? 'false' : 'true',
 } %}
 
 {% block extraClass %}
     {% if not isEditable %}
         {{ config.name }}--disabled
     {% endif %}    
-{% endblock %}
-
-{% block attributes %}
-    {% if not isEditable %}aria-disabled="true"{% endif %}
 {% endblock %}
 
 {% set inputAttributes = attributes | merge(data.ajaxTriggerAttribute ? { 'data-ajax-mode': data.ajaxTriggerAttribute,  (data.ajaxTriggerAttribute): 'change', } : {}) %}
@@ -58,14 +55,14 @@
 
 {% set numberFormatConfig = {'watch-external-changes': true} | merge(data.numberFormatConfig) %}
 
-{% macro button(configName, buttonType, iconName, isEditable) %}
+{% macro button(buttonType, iconName, isEditable, configName, configJsName) %}
     <button class="{{ configName }}__button
         {% if not isEditable %}
             {{ configName }}__button--disabled
         {% endif %}
-        js-{{ configName }}__button-{{ buttonType }}
+        {{ configJsName }}__button-{{ buttonType }}
         {{ configName }}__button--{{ buttonType }}"
-        {{ qa(configName ~ '__button--' ~ buttonType) }}
+        {{ qa("#{configName}__button--#{buttonType}") }}
         >
             {% include atom('icon') with {
                 data: {
@@ -76,7 +73,7 @@
 {% endmacro %}
 
 {% block body %}
-    {{ component.button(config.name, 'decrement', 'minus', isEditable) }}
+    {{ component.button('decrement', 'minus', isEditable, config.name, config.jsName) }}
 
     {% block quantityField %}
         {% include molecule('formatted-number-input') with {
@@ -95,5 +92,5 @@
         } only %}
     {% endblock %}
 
-    {{ component.button(config.name, 'increment', 'plus', isEditable) }}
+    {{ component.button('increment', 'plus', isEditable, config.name, config.jsName) }}
 {% endblock %}
