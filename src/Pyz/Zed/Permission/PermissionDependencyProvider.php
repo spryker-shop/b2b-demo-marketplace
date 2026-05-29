@@ -28,6 +28,7 @@ use Spryker\Zed\SharedCart\Communication\Plugin\WriteSharedCartPermissionPlugin;
 use Spryker\Zed\ShoppingList\Communication\Plugin\ReadShoppingListPermissionPlugin;
 use Spryker\Zed\ShoppingList\Communication\Plugin\ShoppingListPermissionStoragePlugin;
 use Spryker\Zed\ShoppingList\Communication\Plugin\WriteShoppingListPermissionPlugin;
+use SprykerFeature\Shared\PurchasingControl\Plugin\Permission\ManageCostCentersPermissionPlugin; #PurchasingControlFeature
 use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\CreateSspAssetPermissionPlugin;
 use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\CreateSspInquiryPermissionPlugin;
 use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\UnassignSspAssetPermissionPlugin;
@@ -92,6 +93,7 @@ class PermissionDependencyProvider extends SprykerPermissionDependencyProvider
             new UpdateSspAssetPermissionPlugin(),
             new UnassignSspAssetPermissionPlugin(),
             new CreateSspAssetPermissionPlugin(),
+            new ManageCostCentersPermissionPlugin(), #PurchasingControlFeature
         ];
     }
 }

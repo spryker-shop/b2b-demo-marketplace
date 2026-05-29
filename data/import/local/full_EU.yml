@@ -412,3 +412,11 @@ actions:
     source: data/import/common/common/ssp_model_asset.csv
   - data_entity: ssp-model-product-list
     source: data/import/common/common/ssp_model_product_list.csv
+
+    # PurchasingControl
+  - data_entity: purchasing-control-cost-center
+    source: data/import/common/common/cost_center.csv
+  - data_entity: purchasing-control-budget
+    source: data/import/common/common/budget.csv
+  - data_entity: purchasing-control-cost-center-to-company-business-unit
+    source: data/import/common/common/cost_center_company_business_unit.csv

@@ -1,0 +1,204 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'agent-control',
+    tag: 'agent-control',
+} %}
+
+{% define data = {
+    agent: {},
+    customer: {},
+    isInline: false,
+    isChipOnly: false,
+    drillDownTarget: '',
+} %}
+
+{% set locale = app.locale | slice(0, 2) %}
+{% set isCustomerSelected = is_granted('ROLE_PREVIOUS_ADMIN') %}
+{% set firstName = isCustomerSelected ? data.customer.firstName : data.agent.firstName %}
+{% set lastName = isCustomerSelected ? data.customer.lastName : data.agent.lastName %}
+{% set companyName = isCustomerSelected ? (data.customer.companyName | default('')) : '' %}
+{% set customerFullName = (firstName ~ ' ' ~ lastName) | trim %}
+{% set endSessionUrl = '/' ~ locale ~ '?_switch_user=_exit' %}
+{% set autocompleteUrl = path('agent-widget/customer-autocomplete') %}
+{% set quoteRequestsUrl = path('agent/quote-request') %}
+{% set quoteRequestCount = findWidget('QuoteRequestAgentOverviewWidget').quoteRequestOverviewCollection.quoteRequests | default([]) | length %}
+{% set popupTriggerClass = 'js-' ~ config.name ~ '__end-session-trigger' %}
+
+{% block body %}
+    <div class="{{ config.name }}__chip-wrap">
+        <button
+            type="button"
+            class="{{ config.name }}__chip {{ config.name }}__chip--{{ isCustomerSelected ? 'active' : 'default' }}{% if data.drillDownTarget %} js-side-drawer__drill-down-trigger{% endif %}"
+            {% if data.drillDownTarget %}data-target-panel="{{ data.drillDownTarget }}"{% endif %}
+            aria-haspopup="{{ data.drillDownTarget ? 'true' : 'menu' }}"
+        >
+            <span class="{{ config.name }}__dot" aria-hidden="true"></span>
+            <span class="{{ config.name }}__mode-label">{{ 'agent.control_bar.agent_mode' | trans }}</span>
+            <span class="{{ config.name }}__separator" aria-hidden="true"></span>
+            <span class="{{ config.name }}__customer-name">
+                {{- isCustomerSelected ? customerFullName : ('agent.control_bar.select_customer' | trans) -}}
+            </span>
+            <span class="{{ config.name }}__chevron">
+                {% include atom('font-icon') with {
+                    modifiers: ['size-inherit'],
+                    data: { name: data.drillDownTarget ? 'chevron_right' : 'keyboard_arrow_down' },
+                } only %}
+            </span>
+        </button>
+
+        {% if not data.isChipOnly %}
+            <div class="{{ config.name }}__popover {{ config.jsName }}__popover" role="menu">
+                <div class="{{ config.name }}__panel-header">
+                    {{ (isCustomerSelected ? 'agent.control_bar.agent_mode_active' : 'agent.control_bar.start_customer_session') | trans }}
+                </div>
+                <div class="{{ config.name }}__divider" aria-hidden="true"></div>
+
+                <div class="{{ config.name }}__search-wrap">
+                    <form method="GET" action="/{{ locale }}" class="{{ config.name }}__search-form">
+                        {% include molecule('autocomplete-form') with {
+                            class: config.name ~ '__search',
+                            modifiers: ['overlap', 'small'],
+                            attributes: {
+                                'suggestion-url': autocompleteUrl,
+                                'selected-value-key': '_switch_user',
+                                'item-class-name': 'js-customer-list__container-item',
+                                'show-clean-button': true,
+                            },
+                        } only %}
+                    </form>
+                </div>
+
+                {% if isCustomerSelected %}
+                    <div class="{{ config.name }}__active-row">
+                        {% include atom('avatar') with {
+                            class: config.name ~ '__avatar',
+                            modifiers: ['sm'],
+                            data: {
+                                placeholder: (firstName | first | upper) ~ (lastName | first | upper),
+                            },
+                        } only %}
+                        <div class="{{ config.name }}__active-info">
+                            <span class="{{ config.name }}__active-name">{{ customerFullName }}</span>
+                            {% if companyName %}
+                                <span class="{{ config.name }}__active-company">{{ companyName }}</span>
+                            {% endif %}
+                        </div>
+                        <span class="{{ config.name }}__badge {{ config.name }}__badge--assisting">
+                            {{ 'agent.control_bar.assisting' | trans }}
+                        </span>
+                    </div>
+                {% endif %}
+
+                <a href="{{ quoteRequestsUrl }}" class="{{ config.name }}__menu-row" role="menuitem">
+                    <span class="{{ config.name }}__menu-icon">
+                        {% include atom('font-icon') with {
+                            modifiers: ['size-inherit'],
+                            data: { name: 'request_quote' },
+                        } only %}
+                    </span>
+                    <span class="{{ config.name }}__menu-label">
+                        {{ 'agent.control_bar.quote_requests' | trans }}
+                    </span>
+                    <span class="{{ config.name }}__badge">{{ quoteRequestCount }}</span>
+                </a>
+
+                <button
+                    type="button"
+                    class="{{ config.name }}__menu-row {{ config.name }}__menu-row--danger {{ popupTriggerClass }}"
+                    role="menuitem"
+                    aria-haspopup="dialog"
+                >
+                    <span class="{{ config.name }}__menu-icon">
+                        {% include atom('font-icon') with {
+                            modifiers: ['size-inherit'],
+                            data: { name: 'power_settings_new' },
+                        } only %}
+                    </span>
+                    <span class="{{ config.name }}__menu-label">
+                        {{ 'agent.control_bar.end_agent_session' | trans }}
+                    </span>
+                </button>
+            </div>
+        {% endif %}
+    </div>
+
+    {% if not data.isChipOnly %}
+        {% include molecule('main-popup') with {
+            class: config.name ~ '__end-session-popup',
+            data: {
+                title: 'agent.control_bar.end_agent_session_confirm_title' | trans,
+                content: block('endSessionContent'),
+            },
+            attributes: {
+                'content-id': config.name ~ '-end-session-popup',
+                'trigger-class-name': popupTriggerClass,
+            },
+        } only %}
+
+        {% if isCustomerSelected %}
+            <button
+                type="button"
+                class="{{ config.jsName }}__switch-customer-trigger"
+                hidden
+                aria-hidden="true"
+            ></button>
+
+            {% include molecule('main-popup') with {
+                class: config.name ~ '__switch-customer-popup',
+                data: {
+                    title: 'agent.control_bar.switch_customer_confirm_title' | trans,
+                    content: block('switchCustomerContent'),
+                },
+                attributes: {
+                    'content-id': config.name ~ '-switch-customer-popup',
+                    'trigger-class-name': config.jsName ~ '__switch-customer-trigger',
+                },
+            } only %}
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block endSessionContent %}
+    <div class="spacing-x">
+        <p>{{ 'agent.control_bar.end_agent_session_confirm_body' | trans }}</p>
+
+        <div class="spacing-top--inner grid grid--right">
+            <div class="col spacing-right">
+                <button type="button" class="button button--hollow js-main-popup-close">
+                    {{ 'agent.control_bar.cancel' | trans }}
+                </button>
+            </div>
+            <div class="col">
+                <a href="{{ endSessionUrl }}" class="button button--alert">
+                    {{ 'agent.control_bar.end_agent_session' | trans }}
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block switchCustomerContent %}
+    <div class="spacing-x">
+        <p>
+            {{ 'agent.control_bar.switch_customer_confirm_body' | trans({
+                '%currentName%': customerFullName,
+            }) | replace({
+                '%newName%': '<strong class="js-' ~ config.name ~ '__switch-customer-new-name"></strong>',
+            }) | raw }}
+        </p>
+
+        <div class="spacing-top--inner grid grid--right">
+            <div class="col spacing-right">
+                <button type="button" class="button button--hollow js-main-popup-close">
+                    {{ 'agent.control_bar.cancel' | trans }}
+                </button>
+            </div>
+            <div class="col">
+                <button type="button" class="button button--success js-main-popup-close {{ config.jsName }}__switch-confirm-trigger">
+                    {{ 'agent.control_bar.switch_customer' | trans }}
+                </button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
