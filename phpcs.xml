@@ -45,6 +45,37 @@
         </properties>
     </rule>
 
+    <rule ref="Spryker.MethodAnnotation.FactoryMethodAnnotation">
+        <properties>
+            <property name="namespaces" type="string" value="Demo,Pyz,SprykerEco,SprykerMiddleware,SprykerSdk,Spryker,SprykerFeature"/>
+        </properties>
+    </rule>
+    <rule ref="Spryker.MethodAnnotation.ConfigMethodAnnotation">
+        <properties>
+            <property name="namespaces" type="string" value="Demo,Pyz,SprykerEco,SprykerMiddleware,SprykerSdk,Spryker,SprykerFeature"/>
+        </properties>
+    </rule>
+    <rule ref="Spryker.MethodAnnotation.FacadeMethodAnnotation">
+        <properties>
+            <property name="namespaces" type="string" value="Demo,Pyz,SprykerEco,SprykerMiddleware,SprykerSdk,Spryker,SprykerFeature"/>
+        </properties>
+    </rule>
+    <rule ref="Spryker.MethodAnnotation.RepositoryMethodAnnotation">
+        <properties>
+            <property name="namespaces" type="string" value="Demo,Pyz,SprykerEco,SprykerMiddleware,SprykerSdk,Spryker,SprykerFeature"/>
+        </properties>
+    </rule>
+    <rule ref="Spryker.MethodAnnotation.EntityManagerMethodAnnotation">
+        <properties>
+            <property name="namespaces" type="string" value="Demo,Pyz,SprykerEco,SprykerMiddleware,SprykerSdk,Spryker,SprykerFeature"/>
+        </properties>
+    </rule>
+    <rule ref="Spryker.MethodAnnotation.QueryContainerMethodAnnotation">
+        <properties>
+            <property name="namespaces" type="string" value="Demo,Pyz,SprykerEco,SprykerMiddleware,SprykerSdk,Spryker,SprykerFeature"/>
+        </properties>
+    </rule>
+
     <rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInDeclaration"/>
     <rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInClosureUse"/>
 

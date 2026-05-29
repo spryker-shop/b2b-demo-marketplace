@@ -1,0 +1,11 @@
+<h4>{{ 'Define the visibility of the CMS Block' | trans }}</h4>
+
+<p>
+    {{ 'Content visibility can be restricted. By default, it is shown to guests as well as logged-in customers. By selecting different customer groups, you can restrict which customer groups get to see your CMS Block. Alternatively, the content can be restricted to only logged-in customers.' | trans }}
+</p>
+
+<h4>{{ 'Content Visibility:' | trans }}</h4>
+{{ form_row(cmsBlockForm.isRestricted) }}
+
+<h4>{{ 'Restrict content by Customer Group:' | trans }}</h4>
+{{ form_row(cmsBlockForm.customerGroups) }}

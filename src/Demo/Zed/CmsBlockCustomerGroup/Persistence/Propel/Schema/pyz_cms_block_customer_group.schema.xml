@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          name="zed"
+          xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+          namespace="Orm\Zed\CmsBlockCustomerGroup\Persistence"
+          package="src.Orm.Zed.CmsBlockCustomerGroup.Persistence">
+    <table name="pyz_cms_block_customer_group">
+        <column name="id_cms_block_customer_group" required="true" primaryKey="true" autoIncrement="true"
+                type="INTEGER"/>
+        <column name="fk_cms_block" required="true" type="INTEGER"/>
+        <column name="fk_customer_group" required="true" type="INTEGER"/>
+
+        <foreign-key name="pyz_cms_block_customer_group-fk_cms_block" foreignTable="spy_cms_block" onDelete="CASCADE" onUpdate="CASCADE">
+            <reference local="fk_cms_block" foreign="id_cms_block"/>
+        </foreign-key>
+
+        <foreign-key name="pyz_cms_block_customer_group-fk_customer_group" foreignTable="spy_customer_group" onDelete="CASCADE" onUpdate="CASCADE">
+            <reference local="fk_customer_group" foreign="id_customer_group"/>
+        </foreign-key>
+
+        <unique name="pyz_cms_block_customer_group-unique-fk_cms_block_fk_customer_group">
+            <unique-column name="fk_cms_block"/>
+            <unique-column name="fk_customer_group"/>
+        </unique>
+
+        <index name="idx_pyz_cms_block_customer_group_fk_customer_group">
+            <index-column name="fk_customer_group"/>
+        </index>
+    </table>
+</database>

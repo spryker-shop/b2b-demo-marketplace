@@ -1,0 +1,15 @@
+{{ form_row(cmsBlockForm.storeRelation) }}
+{{ form_row(cmsBlockForm.fkTemplate) }}
+{{ form_row(cmsBlockForm.name) }}
+
+<div class="form-group {% if cmsBlockForm.validFrom.vars.errors|length > 0 %}has-error{% endif %}">
+    {{ form_label(cmsBlockForm.validFrom) }}
+    {{ form_widget(cmsBlockForm.validFrom) }}
+    {{ form_errors(cmsBlockForm.validFrom) }}
+</div>
+
+<div class="form-group {% if cmsBlockForm.validTo.vars.errors|length > 0 %}has-error{% endif %}">
+    {{ form_label(cmsBlockForm.validTo) }}
+    {{ form_widget(cmsBlockForm.validTo) }}
+    {{ form_errors(cmsBlockForm.validTo) }}
+</div>
