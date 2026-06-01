@@ -219,6 +219,7 @@ foreach ($config[RabbitMqEnv::RABBITMQ_CONNECTIONS] as $connection) {
     $config[SymfonyMessengerConstants::QUEUE_AMQP_USERNAME] = $connection[RabbitMqEnv::RABBITMQ_USERNAME];
     $config[SymfonyMessengerConstants::QUEUE_AMQP_PASSWORD] = $connection[RabbitMqEnv::RABBITMQ_PASSWORD];
     $config[SymfonyMessengerConstants::QUEUE_AMQP_VIRTUAL_HOST] = $connection[RabbitMqEnv::RABBITMQ_VIRTUAL_HOST];
+    $config[SymfonyMessengerConstants::QUEUE_AMQP_PROTOCOL] = getenv('SPRYKER_BROKER_PROTOCOL') ?: null;
 }
 
 // ---------- LOGGER
