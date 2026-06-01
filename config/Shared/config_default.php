@@ -89,6 +89,7 @@ use Spryker\Shared\Product\ProductConstants;
 use Spryker\Shared\ProductConfiguration\ProductConfigurationConstants;
 use Spryker\Shared\ProductLabel\ProductLabelConstants;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
+use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
 use Spryker\Shared\ProductRelation\ProductRelationConstants;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
@@ -1162,5 +1163,7 @@ $config[VertexConstants::TAXAMO_TOKEN] = getenv('TAXAMO_TOKEN') ?: null;
 $config[ContentNavigationWidgetConstants::NAVIGATION_REVALIDATION_TIME_IN_SECONDS] = 3600;
 
 $config[PunchoutGatewayConstants::ENABLE_LOGGING] = getenv('PUNCHOUT_GATEWAY_ENABLE_LOGGING') ?? false;
+
+$config[ProductPageSearchConstants::PRODUCT_CONCRETE_SEARCH_IN_STORAGE_ENABLED] = true;
 
 require 'config_ai.php';
