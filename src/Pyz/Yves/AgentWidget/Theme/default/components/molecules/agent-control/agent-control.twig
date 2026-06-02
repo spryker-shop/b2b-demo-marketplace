@@ -23,7 +23,9 @@
 {% set autocompleteUrl = path('agent-widget/customer-autocomplete') %}
 {% set quoteRequestsUrl = path('agent/quote-request') %}
 {% set quoteRequestCount = findWidget('QuoteRequestAgentOverviewWidget').quoteRequestOverviewCollection.quoteRequests | default([]) | length %}
-{% set popupTriggerClass = 'js-' ~ config.name ~ '__end-session-trigger' %}
+{% set instanceId = random() %}
+{% set popupTriggerClass = 'js-' ~ config.name ~ '__end-session-trigger-' ~ instanceId %}
+{% set switchTriggerClass = 'js-' ~ config.name ~ '__switch-customer-trigger-' ~ instanceId %}
 
 {% block body %}
     <div class="{{ config.name }}__chip-wrap">
@@ -131,7 +133,7 @@
                 content: block('endSessionContent'),
             },
             attributes: {
-                'content-id': config.name ~ '-end-session-popup',
+                'content-id': config.name ~ '-end-session-popup-' ~ instanceId,
                 'trigger-class-name': popupTriggerClass,
             },
         } only %}
@@ -139,7 +141,7 @@
         {% if isCustomerSelected %}
             <button
                 type="button"
-                class="{{ config.jsName }}__switch-customer-trigger"
+                class="{{ config.jsName }}__switch-customer-trigger {{ switchTriggerClass }}"
                 hidden
                 aria-hidden="true"
             ></button>
@@ -151,8 +153,8 @@
                     content: block('switchCustomerContent'),
                 },
                 attributes: {
-                    'content-id': config.name ~ '-switch-customer-popup',
-                    'trigger-class-name': config.jsName ~ '__switch-customer-trigger',
+                    'content-id': config.name ~ '-switch-customer-popup-' ~ instanceId,
+                    'trigger-class-name': switchTriggerClass,
                 },
             } only %}
         {% endif %}
