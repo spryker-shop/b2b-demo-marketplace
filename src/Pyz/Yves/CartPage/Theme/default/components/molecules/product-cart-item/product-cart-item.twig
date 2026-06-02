@@ -8,8 +8,6 @@
 {% define data = {
     priceModifiers: ['block'],
     imageModifiers: ['cart'],
-    stockStatus: null,
-    isExpandedByDefault: false,
 } %}
 
 {% set listItem = data.listItem %}
@@ -24,20 +22,6 @@
         price: can('SeePricePermissionPlugin') ? price | default : null,
     } | json_encode,
 } %}
-
-{% set stockStatus = data.stockStatus %}
-{% if stockStatus is null %}
-    {% set itemAvailability = listItem.availability is defined ? listItem.availability : null %}
-    {% set stockStatus = (itemAvailability is not null and itemAvailability <= 0) ? 'out-of-stock' : 'in-stock' %}
-{% endif %}
-
-{% set stockMap = {
-    'in-stock': { modifier: 'success', label: 'In stock' },
-    'out-of-stock': { modifier: 'error', label: 'Out of stock' },
-    'backorder': { modifier: 'warning', label: 'Backorder' },
-    'limited': { modifier: 'warning', label: 'Limited stock' },
-} %}
-{% set stock = stockMap[stockStatus] | default(stockMap['in-stock']) %}
 
 {% set hasNote = listItem.cartNote is defined and listItem.cartNote is not empty %}
 {% set assignedAsset = listItem.sspAsset is defined ? listItem.sspAsset : null %}
@@ -68,11 +52,9 @@
                                 {% endif %}
                             {% endblock %}
 
-                            {% block metaStock %}
-                                <span class="badge badge--{{ stock.modifier }} {{ config.name }}__stock" data-qa="cart-item-stock" data-stock-status="{{ stockStatus }}">
-                                    {{ stock.label | trans }}
-                                </span>
-                            {% endblock %}
+                            <span class="{{ config.name }}__stock" data-qa="cart-item-stock">
+                                {{ block('availability') }}
+                            </span>
                         </div>
                     {% endblock %}
 
@@ -124,7 +106,7 @@
                         <button
                             type="button"
                             class="{{ config.name }}__toggle"
-                            aria-expanded="{{ data.isExpandedByDefault ? 'true' : 'false' }}"
+                            aria-expanded="false"
                             data-qa="cart-item-details-toggle"
                         >
                             <span class="{{ config.name }}__toggle-label {{ config.name }}__toggle-label--show">{{ 'Show details' | trans }}</span>
