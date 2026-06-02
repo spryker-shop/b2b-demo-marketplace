@@ -4,7 +4,7 @@ export default class AgentControl extends Component {
     protected popoverEl: HTMLElement;
     protected pendingForm: HTMLFormElement | null = null;
 
-    protected readyCallback(): void {}
+    protected readyCallback(): void { }
 
     protected init(): void {
         this.popoverEl = this.querySelector<HTMLElement>(`.${this.jsName}__popover`);
@@ -17,12 +17,20 @@ export default class AgentControl extends Component {
     }
 
     protected mapEvents(): void {
+        this.popoverEl.addEventListener('mousedown', (event: MouseEvent) => this.onSuggestionMousedown(event));
         this.popoverEl.addEventListener('click', (event: MouseEvent) => this.onPopoverClick(event));
         this.popoverEl.addEventListener('showOverlay', (event: Event) => event.stopPropagation());
         this.popoverEl.addEventListener('hideOverlay', (event: Event) => event.stopPropagation());
         this.addEventListener('mouseleave', () => this.resetSearch());
         this.addEventListener('focusout', (event: FocusEvent) => this.onFocusOut(event));
         document.addEventListener('click', (event: MouseEvent) => this.onConfirmClick(event));
+    }
+
+    protected onSuggestionMousedown(event: MouseEvent): void {
+        const target = event.target as HTMLElement;
+        if (target.closest('.js-customer-list__container-item')) {
+            event.preventDefault();
+        }
     }
 
     protected onPopoverClick(event: MouseEvent): void {
@@ -69,12 +77,17 @@ export default class AgentControl extends Component {
 
     protected onFocusOut(event: FocusEvent): void {
         const relatedTarget = event.relatedTarget as HTMLElement | null;
-        if (!relatedTarget || !this.contains(relatedTarget)) {
-            this.resetSearch();
+        if (relatedTarget && this.contains(relatedTarget)) {
+            return;
         }
+        this.resetSearch();
     }
 
     protected resetSearch(): void {
+        if (this.pendingForm) {
+            return;
+        }
+
         const input = this.popoverEl.querySelector<HTMLInputElement>('.js-autocomplete-form__input');
         const hidden = this.popoverEl.querySelector<HTMLInputElement>('.js-autocomplete-form__input-hidden');
         const suggestions = this.popoverEl.querySelector<HTMLElement>('.js-autocomplete-form__container');
