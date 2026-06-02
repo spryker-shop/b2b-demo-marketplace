@@ -315,6 +315,10 @@
             grid-template-rows: 1fr;
             border-top-width: rem(var(--stroke-sm));
         }
+
+        &__col--description:has(&__toggle[aria-expanded='true']) &__panel-inner {
+            overflow: visible;
+        }
     }
 }
 
