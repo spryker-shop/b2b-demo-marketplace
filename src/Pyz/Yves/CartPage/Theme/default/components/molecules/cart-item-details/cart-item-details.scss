@@ -1,0 +1,52 @@
+@mixin cart-page-cart-item-details($name: '.cart-item-details') {
+    #{$name}__section {
+        padding-top: rem(var(--scale-16));
+    }
+
+    #{$name}__section + #{$name}__section {
+        margin-top: rem(var(--scale-12));
+    }
+
+    #{$name}__section-label {
+        margin: 0 0 rem(var(--scale-8));
+        color: var(--text-secondary);
+        font-family: var(--label-sm-family);
+        font-size: rem(var(--label-sm-size));
+        font-weight: var(--label-sm-weight);
+        line-height: rem(var(--label-sm-line-height));
+        text-transform: none;
+    }
+
+    #{$name}__comments .form {
+        margin: 0;
+    }
+
+    #{$name}__comments textarea,
+    #{$name}__comments input[type='text'] {
+        width: 100%;
+        padding: rem(var(--scale-8)) rem(var(--scale-12));
+        color: var(--text-primary);
+        font-family: var(--body-md-family);
+        font-size: rem(var(--body-md-size));
+        line-height: rem(var(--body-md-line-height));
+        background: var(--background-surface);
+        border: rem(var(--stroke-sm)) dashed var(--border-default);
+        border-radius: rem(var(--radius-sm));
+    }
+
+    #{$name}__comments textarea:focus,
+    #{$name}__comments input[type='text']:focus {
+        border-style: solid;
+        border-color: var(--border-brand, var(--text-brand));
+        outline: none;
+    }
+
+    #{$name}__asset {
+        color: var(--text-secondary);
+        font-family: var(--body-sm-family);
+        font-size: rem(var(--body-sm-size));
+        line-height: rem(var(--body-sm-line-height));
+    }
+}
+
+@include cart-page-cart-item-details();

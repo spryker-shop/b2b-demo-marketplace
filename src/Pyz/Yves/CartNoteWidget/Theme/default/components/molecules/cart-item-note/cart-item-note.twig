@@ -37,20 +37,15 @@
                     <div class="{{ config.name }}__text">{{ note | nl2br }}</div>
 
                     {% if data.canWrite %}
-                        {% include molecule('cart-item-note-actions', 'CartNoteWidget') with {
-                            data: {
-                                buttons: [{
-                                    class: 'link link--icon ' ~ config.jsName ~ '__edit',
-                                    icon: 'edit',
-                                    text: 'customer.profile.address.edit' | trans
-                                },
-                                {
-                                    class: 'link link--icon ' ~ config.jsName ~ '__remove',
-                                    icon: 'delete',
-                                    text: 'cart.delete.item' | trans
-                                }]
-                            }
-                        } only %}
+                        <details class="{{ config.name }}__menu">
+                            <summary class="{{ config.name }}__menu-trigger" aria-label="{{ 'Comment actions' | trans }}">
+                                <span></span>
+                            </summary>
+                            <div class="{{ config.name }}__menu-list">
+                                <button type="button" class="{{ config.name }}__menu-item {{ config.jsName }}__edit">{{ 'Edit' | trans }}</button>
+                                <button type="button" class="{{ config.name }}__menu-item {{ config.jsName }}__remove">{{ 'Delete' | trans }}</button>
+                            </div>
+                        </details>
                     {% endif %}
                 </div>
             {% endif %}

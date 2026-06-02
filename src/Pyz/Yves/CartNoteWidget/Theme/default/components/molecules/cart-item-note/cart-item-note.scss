@@ -82,6 +82,85 @@
 
         @content;
     }
+
+    #{$name}__text-wrap {
+        position: relative;
+    }
+
+    #{$name}__menu {
+        position: absolute;
+        top: rem(-20);
+        left: 100%;
+        margin-left: rem(-5);
+    }
+
+    #{$name}__menu-trigger {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: rem(var(--scale-20));
+        height: rem(var(--scale-20));
+        padding: 0;
+        background: none;
+        border: 0;
+        cursor: pointer;
+        list-style: none;
+    }
+
+    #{$name}__menu-trigger::-webkit-details-marker {
+        display: none;
+    }
+
+    #{$name}__menu-trigger span,
+    #{$name}__menu-trigger::before,
+    #{$name}__menu-trigger::after {
+        display: block;
+        width: rem(3);
+        height: rem(3);
+        background: var(--icon-secondary);
+        border-radius: var(--radius-full);
+    }
+
+    #{$name}__menu-trigger::before,
+    #{$name}__menu-trigger::after {
+        content: '';
+    }
+
+    #{$name}__menu-trigger span {
+        margin: rem(2) 0;
+    }
+
+    #{$name}__menu-list {
+        position: absolute;
+        top: calc(100% + #{rem(var(--scale-4))});
+        right: 0;
+        z-index: 3;
+        min-width: rem(120);
+        padding: rem(var(--scale-4));
+        background: var(--background-page);
+        border: rem(var(--stroke-sm)) solid var(--border-default);
+        border-radius: rem(var(--radius-sm));
+        box-shadow: var(--shadow-md);
+    }
+
+    #{$name}__menu-item {
+        display: block;
+        width: 100%;
+        padding: rem(var(--scale-4)) rem(var(--scale-8));
+        color: var(--text-primary);
+        font-family: var(--body-md-family);
+        font-size: rem(var(--body-md-size));
+        text-align: left;
+        background: none;
+        border: 0;
+        border-radius: rem(var(--radius-sm));
+        cursor: pointer;
+    }
+
+    #{$name}__menu-item:hover {
+        background: var(--background-surface);
+    }
 }
 
 @include cart-note-widget-cart-item-note();

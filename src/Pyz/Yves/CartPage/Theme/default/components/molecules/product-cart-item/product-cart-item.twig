@@ -2,6 +2,7 @@
 
 {% define config = {
     name: 'product-cart-item',
+    tag: 'product-cart-item',
 } %}
 
 {% define data = {
@@ -38,237 +39,199 @@
 } %}
 {% set stock = stockMap[stockStatus] | default(stockMap['in-stock']) %}
 
+{% set hasNote = listItem.cartNote is defined and listItem.cartNote is not empty %}
+{% set assignedAsset = listItem.sspAsset is defined ? listItem.sspAsset : null %}
+
 {% block extraClass %}
     {{ config.jsName }}
 {% endblock %}
 
 {% block productDescription %}
     <div class="{{ config.name }}__col {{ config.name }}__col--description col">
-        <cart-item-details
-            class="{{ config.name }}__details js-cart-item-details{% if data.isExpandedByDefault %} {{ config.name }}__details--expanded{% endif %}"
-            edit-label="{{ 'Edit' | trans }}"
-            delete-label="{{ 'Delete' | trans }}"
-            data-cart-item-id="{{ listItem.groupKey ?? listItem.sku }}"
-            data-init-cart-item-details
-        >
-            <div class="{{ config.name }}__header grid grid--gap">
-                <div class="{{ config.name }}__col {{ config.name }}__col--content col col--expand">
-                    {% block header %}
-                        {{ block('title') }}
+            <div class="{{ config.name }}__col {{ config.name }}__col--content col col--expand">
+                {% block header %}
+                    {{ block('title') }}
 
-                        {% block meta %}
-                            <div class="{{ config.name }}__meta">
-                                <span class="{{ config.name }}__meta-item" data-qa="cart-item-sku">
-                                    {{ 'cart.item.sku' | trans }}: <span itemprop="sku">{{ listItem.sku }}</span>
-                                </span>
+                    {% block meta %}
+                        <div class="{{ config.name }}__meta">
+                            <span class="{{ config.name }}__meta-item" data-qa="cart-item-sku">
+                                {{ 'cart.item.sku' | trans }}: <span itemprop="sku">{{ listItem.sku }}</span>
+                            </span>
 
-                                {% block metaSoldBy %}
-                                    {% set soldByMerchant = findWidget('SoldByMerchantWidget', [listItem]) %}
-                                    {% if soldByMerchant %}
-                                        <span class="{{ config.name }}__meta-sep" aria-hidden="true">&middot;</span>
-                                        <span class="{{ config.name }}__meta-item {{ config.name }}__meta-item--merchant">
-                                            {{ block('soldBy') }}
-                                        </span>
-                                    {% endif %}
-                                {% endblock %}
-
-                                {% block metaStock %}
-                                    <span class="badge badge--{{ stock.modifier }} {{ config.name }}__stock" data-qa="cart-item-stock" data-stock-status="{{ stockStatus }}">
-                                        {{ stock.label | trans }}
+                            {% block metaSoldBy %}
+                                {% set soldByMerchant = findWidget('SoldByMerchantWidget', [listItem]) %}
+                                {% if soldByMerchant %}
+                                    <span class="{{ config.name }}__meta-sep" aria-hidden="true">&middot;</span>
+                                    <span class="{{ config.name }}__meta-item {{ config.name }}__meta-item--merchant">
+                                        {{ block('soldBy') }}
                                     </span>
-                                {% endblock %}
-                            </div>
-                        {% endblock %}
-
-                        {% block productConfiguration %}
-                            {% widget 'ProductConfigurationCartItemDisplayWidget' args [listItem] only %}{% endwidget %}
-
-                            {% if data.canEdit %}
-                                {% widget 'ProductConfigurationCartPageButtonWidget' args [listItem] only %}{% endwidget %}
-                            {% endif %}
-                        {% endblock %}
-
-                        {{ block('itemAttributes') }}
-
-                        {% widget 'ProductAttributeVisibilityCartWidget' args [data.list is iterable ? null : data.list, data.listItem.idProductAbstract, data.listItem.id] only %}
-                            {% block body %}
-                                {% set attributesBadgeClassName = "badge spacing-right--small spacing-bottom--small" %}
-                                {{ parent() }}
+                                {% endif %}
                             {% endblock %}
-                        {% nowidget %}
-                        {% endwidget %}
 
-                        {% block contextStrip %}
-                            <div class="{{ config.name }}__context" data-qa="cart-item-context">
-                                <button
-                                    type="button"
-                                    class="{{ config.name }}__context-item js-cart-item-details__context js-cart-item-details__context--asset"
-                                    data-context="asset"
-                                    data-empty-label="{{ 'Add asset' | trans }}"
-                                >
-                                    {% include atom('icon') with { class: config.name ~ '__context-glyph', data: { name: 'assets' } } only %}
-                                    <span class="{{ config.name }}__context-text">{{ 'Add asset' | trans }}</span>
-                                </button>
-
-                                <button
-                                    type="button"
-                                    class="{{ config.name }}__context-item js-cart-item-details__context js-cart-item-details__context--comment"
-                                    data-context="comment"
-                                    data-empty-label="{{ 'Add comment' | trans }}"
-                                    data-comment-singular="{{ 'Comment' | trans }}"
-                                    data-comment-plural="{{ 'Comments' | trans }}"
-                                >
-                                    {% include atom('icon') with { class: config.name ~ '__context-glyph', data: { name: 'message' } } only %}
-                                    <span class="{{ config.name }}__context-text">{{ 'Add comment' | trans }}</span>
-                                </button>
-                            </div>
-                        {% endblock %}
-
-                        {% block detailsToggle %}
-                            <button
-                                type="button"
-                                class="{{ config.name }}__toggle js-cart-item-details__toggle"
-                                aria-expanded="{{ data.isExpandedByDefault ? 'true' : 'false' }}"
-                                data-qa="cart-item-details-toggle"
-                            >
-                                <span class="{{ config.name }}__toggle-label {{ config.name }}__toggle-label--show">{{ 'Show details' | trans }}</span>
-                                <span class="{{ config.name }}__toggle-label {{ config.name }}__toggle-label--hide">{{ 'Hide details' | trans }}</span>
-                                {% include atom('icon') with {
-                                    class: config.name ~ '__toggle-chevron',
-                                    data: { name: 'caret-down' },
-                                } only %}
-                            </button>
-                        {% endblock %}
-
-                        <div class="{{ config.name }}__panel js-cart-item-details__panel" data-qa="cart-item-panel">
-                            <div class="{{ config.name }}__panel-inner">
-                            {% block panel %}
-                                {% block panelComments %}
-                                    <section class="{{ config.name }}__section {{ config.name }}__section--comments">
-                                        <h4 class="{{ config.name }}__section-label">{{ 'Comments' | trans }}</h4>
-                                        <div class="{{ config.name }}__comments">
-                                            {% block note %}
-                                                {% widget 'CartItemNoteFormWidget' args [listItem, data.list] with {
-                                                    data: {
-                                                        isTitleVisible: false,
-                                                        ajaxTriggerAttribute: data.ajaxTriggerAttribute,
-                                                    },
-                                                } only %}
-                                                {% endwidget %}
-                                            {% endblock %}
-                                        </div>
-                                    </section>
-                                {% endblock %}
-
-                                {% block panelAsset %}
-                                    <section class="{{ config.name }}__section {{ config.name }}__section--asset">
-                                        <h4 class="{{ config.name }}__section-label">{{ 'Assigned asset' | trans }}</h4>
-                                        <div class="{{ config.name }}__asset">
-                                            {% block serviceInformation %}
-                                                {% if data.canEdit %}
-                                                    {% widget 'SspCartItemAssetSelectorWidget' args [listItem, false] with {
-                                                        ajaxTriggerAttribute: data.ajaxTriggerAttribute
-                                                    } only %}{% endwidget %}
-                                                {% else %}
-                                                    {% widget 'SspAssetInfoForItemWidget' args [listItem] only %}{% endwidget %}
-                                                {% endif %}
-
-                                                {% widget 'SspServicePointNameForItemWidget' args [listItem] only %}
-                                                    {% elsewidget 'ServicePointNameForItemWidget' args [listItem] only %}
-                                                {% endwidget %}
-                                            {% endblock %}
-                                        </div>
-                                    </section>
-                                {% endblock %}
-
-                                {% block panelExtras %}
-                                    {% block productOptions %}
-                                        {% if listItem.productOptions ?? false %}
-                                            {% include molecule('product-item-options') with {
-                                                modifiers: modifiers,
-                                                data: { productItem: listItem },
-                                            } only %}
-                                        {% endif %}
-
-                                        {% if data.options %}
-                                            {% include molecule('product-item-options') with {
-                                                data: { options: data.options },
-                                            } only %}
-                                        {% endif %}
-                                    {% endblock %}
-
-                                    {% block bundle %}
-                                        {% widget 'ProductBundleCartItemsListWidget' args [listItem, data.list] only %}{% endwidget %}
-                                    {% endblock %}
-                                {% endblock %}
+                            {% block metaStock %}
+                                <span class="badge badge--{{ stock.modifier }} {{ config.name }}__stock" data-qa="cart-item-stock" data-stock-status="{{ stockStatus }}">
+                                    {{ stock.label | trans }}
+                                </span>
                             {% endblock %}
-                            </div>
                         </div>
                     {% endblock %}
-                </div>
 
-                <div class="{{ config.name }}__col {{ config.name }}__col--rail col">
-                    {% block rail %}
-                        {% block railQuantity %}
-                            {% set isAmountSalesUnitEmpty = (listItem.amountSalesUnit ?? null) is empty and (listItem.quantitySalesUnit ?? null) is empty and data.quantity is empty %}
-                            {% if isAmountSalesUnitEmpty %}
-                                <div class="{{ config.name }}__quantity-holder">
-                                    {% include molecule('product-item-quantity') with {
-                                        data: {
-                                            productItem: listItem,
-                                            isDisabled: not data.canEdit,
-                                            ajaxTriggerAttribute: data.ajaxTriggerAttribute,
-                                        },
-                                    } only %}
-                                </div>
-                            {% endif %}
+                    {% block productConfiguration %}
+                        {% widget 'ProductConfigurationCartItemDisplayWidget' args [listItem] only %}{% endwidget %}
+
+                        {% if data.canEdit %}
+                            {% widget 'ProductConfigurationCartPageButtonWidget' args [listItem] only %}{% endwidget %}
+                        {% endif %}
+                    {% endblock %}
+
+                    {{ block('itemAttributes') }}
+
+                    {% widget 'ProductAttributeVisibilityCartWidget' args [data.list is iterable ? null : data.list, data.listItem.idProductAbstract, data.listItem.id] only %}
+                        {% block body %}
+                            {% set attributesBadgeClassName = "badge spacing-right--small spacing-bottom--small" %}
+                            {{ parent() }}
                         {% endblock %}
+                    {% nowidget %}
+                    {% endwidget %}
 
-                        {% block priceZone %}
-                            {% if can('SeePricePermissionPlugin') %}
-                                {% set totalPrice = listItem.unitPrice is defined ? listItem.sumSubtotalAggregation : listItem.price %}
-                                <div class="{{ config.name }}__price-zone" data-qa="cart-item-summary">
-                                    {% include molecule('money-price') with {
-                                        modifiers: data.priceModifiers,
-                                        data: {
-                                            amount: totalPrice,
-                                            currencyIsoCode: data.currencyIsoCode,
-                                        },
-                                    } only %}
-                                </div>
-                            {% endif %}
-                        {% endblock %}
+                    {% block contextStrip %}
+                        <div class="{{ config.name }}__context" data-qa="cart-item-context">
+                            <span class="{{ config.name }}__context-item{% if assignedAsset %} {{ config.name }}__context-item--filled{% endif %}">
+                                {% include atom('icon') with { class: config.name ~ '__context-glyph', data: { name: 'assets' } } only %}
+                                <span class="{{ config.name }}__context-text">
+                                    {% if assignedAsset %}
+                                        {{ assignedAsset.name }}
+                                    {% else %}
+                                        {{ 'Add asset' | trans }}
+                                    {% endif %}
+                                </span>
+                            </span>
 
-                        {% block deleteButton %}
-                            {% if data.canRemove %}
-                                {% widget 'RemoveFromCartFormWidget' args [listItem] with {
+                            <span class="{{ config.name }}__context-item{% if hasNote %} {{ config.name }}__context-item--filled{% endif %}">
+                                {% include atom('icon') with { class: config.name ~ '__context-glyph', data: { name: 'message' } } only %}
+                                <span class="{{ config.name }}__context-text">
+                                    {% if hasNote %}
+                                        1 {{ 'Comment' | trans }}
+                                    {% else %}
+                                        {{ 'Add comment' | trans }}
+                                    {% endif %}
+                                </span>
+                            </span>
+                        </div>
+                    {% endblock %}
+
+                    {% block detailsToggle %}
+                        <button
+                            type="button"
+                            class="{{ config.name }}__toggle"
+                            aria-expanded="{{ data.isExpandedByDefault ? 'true' : 'false' }}"
+                            data-qa="cart-item-details-toggle"
+                        >
+                            <span class="{{ config.name }}__toggle-label {{ config.name }}__toggle-label--show">{{ 'Show details' | trans }}</span>
+                            <span class="{{ config.name }}__toggle-label {{ config.name }}__toggle-label--hide">{{ 'Hide details' | trans }}</span>
+                            {% include atom('icon') with {
+                                class: config.name ~ '__toggle-chevron',
+                                data: { name: 'caret-down' },
+                            } only %}
+                        </button>
+                    {% endblock %}
+                {% endblock %}
+            </div>
+
+            <div class="{{ config.name }}__col {{ config.name }}__col--rail col">
+                {% block rail %}
+                    {% block railQuantity %}
+                        {% set isAmountSalesUnitEmpty = (listItem.amountSalesUnit ?? null) is empty and (listItem.quantitySalesUnit ?? null) is empty and data.quantity is empty %}
+                        {% if isAmountSalesUnitEmpty %}
+                            <div class="{{ config.name }}__quantity-holder">
+                                {% include molecule('product-item-quantity') with {
                                     data: {
+                                        productItem: listItem,
+                                        isDisabled: not data.canEdit,
                                         ajaxTriggerAttribute: data.ajaxTriggerAttribute,
                                     },
-                                    embed: {
-                                        configName: config.name,
+                                } only %}
+                            </div>
+                        {% endif %}
+                    {% endblock %}
+
+                    {% block priceZone %}
+                        {% if can('SeePricePermissionPlugin') %}
+                            {% set totalPrice = listItem.unitPrice is defined ? listItem.sumSubtotalAggregation : listItem.price %}
+                            <div class="{{ config.name }}__price-zone" data-qa="cart-item-summary">
+                                {% include molecule('money-price') with {
+                                    modifiers: data.priceModifiers,
+                                    data: {
+                                        amount: totalPrice,
+                                        currencyIsoCode: data.currencyIsoCode,
                                     },
                                 } only %}
-                                    {% block embeddedData %}
-                                        <button
-                                            {{ data.ajaxTriggerAttribute }}
-                                            type="submit"
-                                            class="{{ embed.configName }}__remove"
-                                            aria-label="{{ 'Remove item from cart' | trans }}"
-                                            data-init-single-click
-                                            data-qa="cart-item-remove"
-                                        >
-                                            {% include atom('icon') with { data: { name: 'delete' } } only %}
-                                            <span class="{{ embed.configName }}__remove-tooltip" role="tooltip" aria-hidden="true">{{ 'Remove item from cart' | trans }}</span>
-                                        </button>
-                                    {% endblock %}
-                                {% endwidget %}
+                            </div>
+                        {% endif %}
+                    {% endblock %}
+
+                    {% block deleteButton %}
+                        {% if data.canRemove %}
+                            {% widget 'RemoveFromCartFormWidget' args [listItem] with {
+                                data: {
+                                    ajaxTriggerAttribute: data.ajaxTriggerAttribute,
+                                },
+                                embed: {
+                                    configName: config.name,
+                                },
+                            } only %}
+                                {% block embeddedData %}
+                                    <button
+                                        {{ data.ajaxTriggerAttribute }}
+                                        type="submit"
+                                        class="{{ embed.configName }}__remove"
+                                        aria-label="{{ 'Remove item from cart' | trans }}"
+                                        data-init-single-click
+                                        data-qa="cart-item-remove"
+                                    >
+                                        {% include atom('icon') with { data: { name: 'delete' } } only %}
+                                        <span class="{{ embed.configName }}__remove-tooltip" role="tooltip" aria-hidden="true">{{ 'Remove item from cart' | trans }}</span>
+                                    </button>
+                                {% endblock %}
+                            {% endwidget %}
+                        {% endif %}
+                    {% endblock %}
+                {% endblock %}
+            </div>
+
+            <div class="{{ config.name }}__panel" data-qa="cart-item-panel">
+                <div class="{{ config.name }}__panel-inner">
+                    {% include molecule('cart-item-details', '@Pyz:CartPage') with {
+                        data: {
+                            listItem: listItem,
+                            list: data.list,
+                            canEdit: data.canEdit,
+                            ajaxTriggerAttribute: data.ajaxTriggerAttribute,
+                        },
+                    } only %}
+
+                    {% block panelExtras %}
+                        {% block productOptions %}
+                            {% if listItem.productOptions ?? false %}
+                                {% include molecule('product-item-options') with {
+                                    modifiers: modifiers,
+                                    data: { productItem: listItem },
+                                } only %}
                             {% endif %}
+
+                            {% if data.options %}
+                                {% include molecule('product-item-options') with {
+                                    data: { options: data.options },
+                                } only %}
+                            {% endif %}
+                        {% endblock %}
+
+                        {% block bundle %}
+                            {% widget 'ProductBundleCartItemsListWidget' args [listItem, data.list] only %}{% endwidget %}
                         {% endblock %}
                     {% endblock %}
                 </div>
             </div>
-        </cart-item-details>
     </div>
 {% endblock %}
 

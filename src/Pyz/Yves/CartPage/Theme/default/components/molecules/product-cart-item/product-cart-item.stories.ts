@@ -102,34 +102,32 @@ function cartItem(o: CartItemOptions = {}): string {
                 <img src="${PRODUCT.image}" alt="${PRODUCT.title}" style="width:100%;border-radius:4px" />
             </div>
             <div class="${ROOT}__col ${ROOT}__col--description col">
-                <div class="${ROOT}__details${o.expanded ? ` ${ROOT}__details--expanded` : ''}">
-                    <div class="${ROOT}__header grid grid--gap">
-                        <div class="${ROOT}__col ${ROOT}__col--content col col--expand">
-                            <a class="${ROOT}__title" href="#">${PRODUCT.title}</a>
-                            <div class="${ROOT}__meta">
-                                <span class="${ROOT}__meta-item">SKU: ${PRODUCT.sku}</span>
-                                <span class="${ROOT}__meta-sep" aria-hidden="true">&middot;</span>
-                                <span class="${ROOT}__meta-item ${ROOT}__meta-item--merchant"><p>By: <a href="#">${PRODUCT.merchant}</a></p></span>
-                                <span class="badge badge--${stock.mod} ${ROOT}__stock">${stock.label}</span>
-                            </div>
-                            ${contextStrip(o)}
-                            <button type="button" class="${ROOT}__toggle">
-                                <span class="${ROOT}__toggle-label ${ROOT}__toggle-label--show">Show details</span>
-                                <span class="${ROOT}__toggle-label ${ROOT}__toggle-label--hide">Hide details</span>
-                                ${icon('caret-down', `${ROOT}__toggle-chevron`)}
-                            </button>
-                            <div class="${ROOT}__panel">
-                                <div class="${ROOT}__panel-inner">
-                                    ${commentsSection(o)}
-                                    ${assetSection(o)}
-                                </div>
+                <div class="${ROOT}__header grid grid--gap">
+                    <div class="${ROOT}__col ${ROOT}__col--content col col--expand">
+                        <a class="${ROOT}__title" href="#">${PRODUCT.title}</a>
+                        <div class="${ROOT}__meta">
+                            <span class="${ROOT}__meta-item">SKU: ${PRODUCT.sku}</span>
+                            <span class="${ROOT}__meta-sep" aria-hidden="true">&middot;</span>
+                            <span class="${ROOT}__meta-item ${ROOT}__meta-item--merchant"><p>By: <a href="#">${PRODUCT.merchant}</a></p></span>
+                            <span class="badge badge--${stock.mod} ${ROOT}__stock">${stock.label}</span>
+                        </div>
+                        ${contextStrip(o)}
+                        <button type="button" class="${ROOT}__toggle" aria-expanded="${o.expanded ? 'true' : 'false'}">
+                            <span class="${ROOT}__toggle-label ${ROOT}__toggle-label--show">Show details</span>
+                            <span class="${ROOT}__toggle-label ${ROOT}__toggle-label--hide">Hide details</span>
+                            ${icon('caret-down', `${ROOT}__toggle-chevron`)}
+                        </button>
+                        <div class="${ROOT}__panel">
+                            <div class="${ROOT}__panel-inner">
+                                ${commentsSection(o)}
+                                ${assetSection(o)}
                             </div>
                         </div>
-                        <div class="${ROOT}__col ${ROOT}__col--rail col">
-                            <div class="${ROOT}__quantity-holder">${quantity}</div>
-                            <div class="${ROOT}__price-zone"><span>$60.00</span><span>Incl. VAT</span></div>
-                            <button type="button" class="${ROOT}__remove">${icon('delete')}<span class="${ROOT}__remove-tooltip" role="tooltip">Remove item from cart</span></button>
-                        </div>
+                    </div>
+                    <div class="${ROOT}__col ${ROOT}__col--rail col">
+                        <div class="${ROOT}__quantity-holder">${quantity}</div>
+                        <div class="${ROOT}__price-zone"><span>$60.00</span><span>Incl. VAT</span></div>
+                        <button type="button" class="${ROOT}__remove">${icon('delete')}<span class="${ROOT}__remove-tooltip" role="tooltip">Remove item from cart</span></button>
                     </div>
                 </div>
             </div>

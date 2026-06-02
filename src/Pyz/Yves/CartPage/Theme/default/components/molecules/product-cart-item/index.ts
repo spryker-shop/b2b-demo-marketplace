@@ -2,11 +2,11 @@ import './product-cart-item.scss';
 import register from 'ShopUi/app/registry';
 
 export default register(
-    'cart-item-details',
+    'product-cart-item',
     () =>
         import(
             /* webpackMode: "lazy" */
-            /* webpackChunkName: "cart-item-details" */
-            './cart-item-details'
+            /* webpackChunkName: "product-cart-item" */
+            './product-cart-item'
         ),
 );
