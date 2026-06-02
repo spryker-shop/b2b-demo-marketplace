@@ -1,0 +1,76 @@
+{% extends molecule('budget-form', 'SprykerFeature:PurchasingControl') %}
+
+{% block body %}
+    {% include molecule('action-bar', 'ShopUi') with {
+        data: {
+            title: 'purchasing_control.budget.update.title' | trans,
+        }
+    } only %}
+
+    {% embed molecule('form') with {
+        data: {
+            form: data.form,
+            options: {
+                action: data.formAction,
+                method: 'post',
+            },
+            layout: {
+                name: 'col col--sm-12 ',
+                amount: 'col col--sm-12 col--md-6',
+                currencyIsoCode: 'col col--sm-12 col--md-6',
+                startsAt: 'col col--sm-12 col--md-6',
+                endsAt: 'col col--sm-12 col--md-6',
+                enforcementRule: 'col col--sm-12',
+                isActive: 'col col--sm-12',
+            },
+            submit: {
+                enable: true,
+                text: 'purchasing_control.budget.action.save' | trans,
+            },
+            cancel: {
+                enable: true,
+                url: url('company/cost-center/budget', { costCenterUuid: data.costCenterUuid }),
+                text: 'purchasing_control.budget.action.cancel' | trans,
+                class: 'button button--hollow',
+            },
+        },
+    } only %}
+        {% block field %}
+            {% if field.vars.type is defined and field.vars.type === "date" %}
+                <div class="col col--sm-12 col--md-6">
+                    {% include molecule('date-time-picker') with {
+                        data: {
+                            field: field,
+                        },
+                        attributes: {
+                            language: app.locale | slice(0,2),
+                            config: '{
+                                "format": "Y-m-d"
+                            }',
+                            'formatted-date-time': field.vars.value | date('Y-m-d'),
+                            'date-from-id': data.form.vars.name ~ "_startsAt",
+                            'date-to-id': data.form.vars.name ~ "_endsAt",
+                            'enable-time': false,
+                        },
+                    } only %}
+                </div>
+            {% else %}
+                {{ parent() }}
+            {% endif %}
+            
+            {% if fieldName == 'enforcementRule' %}
+                {% set enforcementRules = ['block', 'warn', 'require_approval'] %}
+                <div class="form__field col col--sm-12">
+                    <ul class="list">
+                        {% for rule in enforcementRules %}
+                            <li class="list__item">
+                                <strong>{{ ('purchasing_control.budget.form.enforcement_rule.' ~ rule) | trans }}</strong>:
+                                {{ ('purchasing_control.budget.enforcement_rule.tooltip.' ~ rule) | trans }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

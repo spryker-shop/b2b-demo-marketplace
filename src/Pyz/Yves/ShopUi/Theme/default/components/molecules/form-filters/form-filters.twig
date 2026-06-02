@@ -1,0 +1,44 @@
+{% extends molecule('form-filters', '@SprykerShop:ShopUi') %}
+
+{% block separator %}{% endblock %}
+
+{% block filter %}
+    {% set isDateTo = 'dateTo' in filter.row.vars.id or 'endsAt' in filter.row.vars.id %}
+    {% set isDateFrom = 'dateFrom' in filter.row.vars.id or 'startsAt' in filter.row.vars.id %}
+    {% set isDate = isDateTo or isDateFrom %}
+
+    {% if isDate %}
+        {% set dateFromId = isDateTo
+            ? (data.filters | find(_filter => 'dateFrom' in _filter.row.vars.id or 'startsAt' in _filter.row.vars.id)).row.vars.id
+            : false
+        %}
+        {% set dateToId = isDateFrom
+            ? (data.filters | find(_filter => 'dateTo' in _filter.row.vars.id or 'endsAt' in _filter.row.vars.id)).row.vars.id
+            : false
+        %}
+
+        {% set config = {
+            dateFormat: 'Y-m-d',
+        } %}
+
+        {% include molecule('date-time-picker') with {
+            data: {
+                field: filter.row,
+            },
+            attributes: {
+                language: app.locale | slice(0, 2),
+                config: config | json_encode,
+                'formatted-date-time': filter.row.vars.value | date(config.dateFormat),
+                'date-from-id': dateFromId,
+                'date-to-id': dateToId,
+                'enable-time': false,
+            },
+        } only %}
+    {% else %}
+        {% set isSelect = filter.row.vars.choices | default([]) | length %}
+
+        {{ form_row(filter.row, { attr: (filter.attr | default({})) | merge({
+            class: isSelect ? 'light',
+        }) }) }}
+    {% endif %}
+{% endblock %}

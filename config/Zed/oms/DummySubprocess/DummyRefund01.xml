@@ -8,24 +8,32 @@
     <process name="DummyRefund">
         <states>
             <state name="refunded" display="oms.state.refunded"/>
+            <state name="refund pending" display="oms.state.refunded"/>
         </states>
 
         <transitions>
             <transition>
                 <source>delivered</source>
-                <target>refunded</target>
+                <target>refund pending</target>
                 <event>refund</event>
             </transition>
 
             <transition>
                 <source>returned</source>
-                <target>refunded</target>
+                <target>refund pending</target>
                 <event>refund</event>
+            </transition>
+
+            <transition happy="true">
+                <source>refund pending</source>
+                <target>refunded</target>
+                <event>restore budget</event>
             </transition>
         </transitions>
 
         <events>
             <event name="refund" manual="true" command="DummyPayment/Refund"/>
+            <event name="restore budget" onEnter="true" command="CostCenter/RestoreBudgetOnRefund"/>
         </events>
     </process>
 

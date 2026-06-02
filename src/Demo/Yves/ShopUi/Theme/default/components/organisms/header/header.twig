@@ -92,14 +92,26 @@
                                 {% set customerFullNameWidget = findWidget('CustomerFullNameWidget') %}
                                 {% set menuItemCompanyWidget = findWidget('MenuItemCompanyWidget') %}
 
-                                <div class="{{ config.name }}__account-pill-desktop">
-                                    {% include molecule('header-dropdown') with {
-                                        data: {
-                                            preset: 'user-account',
-                                            userName: customerFullNameWidget.customerFullName | default(''),
-                                            companyName: menuItemCompanyWidget.companyName | default(''),
-                                        },
-                                    } only %}
+                                {% if is_granted('ROLE_AGENT') or is_granted('ROLE_PREVIOUS_ADMIN') %}
+                                    <div class="{{ config.name }}__agent-pill-desktop">
+                                        {% widget 'AgentControlBarWidget' only %}{% endwidget %}
+                                    </div>
+                                {% else %}
+                                    <div class="{{ config.name }}__account-pill-desktop">
+                                        {% include molecule('header-dropdown') with {
+                                            data: {
+                                                preset: 'user-account',
+                                                userName: customerFullNameWidget.customerFullName | default(''),
+                                                companyName: menuItemCompanyWidget.companyName | default(''),
+                                            },
+                                        } only %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% elseif is_granted('ROLE_AGENT') %}
+                            <div class="{{ config.name }}__actions-pills">
+                                <div class="{{ config.name }}__agent-pill-desktop">
+                                    {% widget 'AgentControlBarWidget' only %}{% endwidget %}
                                 </div>
                             </div>
                         {% else %}

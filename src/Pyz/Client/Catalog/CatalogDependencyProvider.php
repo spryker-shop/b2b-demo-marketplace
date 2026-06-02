@@ -37,6 +37,8 @@ use Spryker\Client\ProductLabelStorage\Plugin\ProductLabelFacetConfigTransferBui
 use Spryker\Client\ProductListSearch\Plugin\Search\ProductListQueryExpanderPlugin as ProductListSearchProductListQueryExpanderPlugin;
 use Spryker\Client\ProductReview\Plugin\RatingFacetConfigTransferBuilderPlugin;
 use Spryker\Client\ProductReview\Plugin\RatingSortConfigTransferBuilderPlugin;
+use Spryker\Client\ProductStorage\Plugin\Catalog\ProductConcreteStorageSearchPlugin;
+use Spryker\Client\ProductStorage\Plugin\Catalog\ProductConcreteSuggestionEnricherPlugin;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\CompletionQueryExpanderPlugin;
 use Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\FacetQueryExpanderPlugin;
@@ -128,6 +130,7 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
             new IsActiveQueryExpanderPlugin(),
             new IsActiveInDateRangeQueryExpanderPlugin(),
             new CustomerCatalogProductListQueryExpanderPlugin(),
+            new ProductListSearchProductListQueryExpanderPlugin(),
             new MerchantReferenceQueryExpanderPlugin(),
             new SspAssetQueryExpanderPlugin(),
 
@@ -368,6 +371,26 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
     {
         return [
             new SearchHttpSearchResultCountPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Client\CatalogExtension\Dependency\Plugin\ProductConcreteSuggestionEnricherPluginInterface>
+     */
+    protected function getProductConcreteSuggestionEnricherPlugins(): array
+    {
+        return [
+            new ProductConcreteSuggestionEnricherPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Client\CatalogExtension\Dependency\Plugin\ProductConcreteStorageSearchPluginInterface>
+     */
+    protected function getProductConcreteStorageSearchPlugins(): array
+    {
+        return [
+            new ProductConcreteStorageSearchPlugin(),
         ];
     }
 }

@@ -121,6 +121,10 @@ sections:
             command: 'vendor/bin/console frontend:mp:build -e production'
             timeout: 1600
 
+        storybook-build-frontend:
+            command: 'vendor/bin/console frontend:storybook:build'
+            timeout: 1600
+
         date-time-product-configurator:
             command: 'vendor/bin/console frontend:date-time-product-configurator:build'
 
@@ -133,6 +137,10 @@ sections:
 
         merchant-portal-build-frontend:
             command: 'vendor/bin/console frontend:mp:build'
+            timeout: 1600
+
+        storybook-build-frontend:
+            command: 'vendor/bin/console frontend:storybook:build'
             timeout: 1600
 
         date-time-product-configurator:
@@ -159,6 +167,9 @@ sections:
             command: 'vendor/bin/console search:setup:sources'
 
     init-storages-per-region:
+        queue-setup:
+            command: 'vendor/bin/console queue:setup'
+
         propel-copy-schema:
             command: 'vendor/bin/console propel:schema:copy'
 
@@ -184,9 +195,6 @@ sections:
             command: 'vendor/bin/console setup:init-db'
 
     demodata:
-        queue-setup:
-            command: 'vendor/bin/console queue:setup'
-
         import-demodata:
             command: 'vendor/bin/console data:import --config=data/import/local/full_${SPRYKER_REGION}.yml'
 
