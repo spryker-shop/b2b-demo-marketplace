@@ -167,6 +167,9 @@ sections:
             command: 'vendor/bin/console search:setup:sources'
 
     init-storages-per-region:
+        queue-setup:
+            command: 'vendor/bin/console queue:setup'
+
         propel-copy-schema:
             command: 'vendor/bin/console propel:schema:copy'
 
@@ -192,9 +195,6 @@ sections:
             command: 'vendor/bin/console setup:init-db'
 
     demodata:
-        queue-setup:
-            command: 'vendor/bin/console queue:setup'
-
         import-demodata:
             command: 'vendor/bin/console data:import --config=data/import/local/full_${SPRYKER_REGION}.yml'
 

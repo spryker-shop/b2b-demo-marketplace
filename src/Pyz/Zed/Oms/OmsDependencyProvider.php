@@ -63,7 +63,8 @@ use SprykerEco\Zed\Stripe\Communication\Plugin\Oms\Command\StripeCaptureCommandP
 use SprykerEco\Zed\Stripe\Communication\Plugin\Oms\Command\StripeRefundCommandPlugin;
 use SprykerEco\Zed\Vertex\Communication\Plugin\Oms\Command\VertexSubmitPaymentTaxInvoicePlugin;
 use SprykerEco\Zed\Vertex\Communication\Plugin\Oms\VertexOrderRefundedEventListenerPlugin;
-use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\Oms\RestoreBudgetOmsCommandPlugin;
+use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\Oms\RestoreBudgetOnCancelOmsCommandPlugin; #PurchasingControlFeature
+use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\Oms\RestoreBudgetOnRefundOmsCommandPlugin; #PurchasingControlFeature
 
 class OmsDependencyProvider extends SprykerOmsDependencyProvider
 {
@@ -254,7 +255,8 @@ class OmsDependencyProvider extends SprykerOmsDependencyProvider
             $commandCollection->add(new StripeCancelCommandPlugin(), 'Stripe/Cancel');
             $commandCollection->add(new UpdateDeletedItemReservationCommandByOrderPlugin(), 'OrderAmendment/UnreserveDeletedItems');
             $commandCollection->add(new DeleteOrderAmendmentQuoteCommandByOrderPlugin(), 'OrderAmendment/StartGracePeriod');
-            $commandCollection->add(new RestoreBudgetOmsCommandPlugin(), 'CostCenter/RestoreBudget');
+            $commandCollection->add(new RestoreBudgetOnCancelOmsCommandPlugin(), 'CostCenter/RestoreBudgetOnCancel'); #PurchasingControlFeature
+            $commandCollection->add(new RestoreBudgetOnRefundOmsCommandPlugin(), 'CostCenter/RestoreBudgetOnRefund'); #PurchasingControlFeature
 
             return $commandCollection;
         });
