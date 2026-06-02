@@ -19,7 +19,7 @@
 {% set lastName = isCustomerSelected ? data.customer.lastName : data.agent.lastName %}
 {% set companyName = isCustomerSelected ? (data.customer.companyName | default('')) : '' %}
 {% set customerFullName = (firstName ~ ' ' ~ lastName) | trim %}
-{% set endSessionUrl = '/' ~ locale ~ '?_switch_user=_exit' %}
+{% set endSessionUrl = path('agent_logout') %}
 {% set autocompleteUrl = path('agent-widget/customer-autocomplete') %}
 {% set quoteRequestsUrl = path('agent/quote-request') %}
 {% set quoteRequestCount = findWidget('QuoteRequestAgentOverviewWidget').quoteRequestOverviewCollection.quoteRequests | default([]) | length %}
