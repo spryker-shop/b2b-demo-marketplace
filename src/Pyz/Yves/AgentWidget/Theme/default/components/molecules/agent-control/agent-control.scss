@@ -303,6 +303,11 @@
             }
         }
 
+        &__end-session-popup,
+        &__switch-customer-popup {
+            z-index: $setting-zi-side-drawer + 10;
+        }
+
         &--inline {
             display: block;
             width: 100%;
