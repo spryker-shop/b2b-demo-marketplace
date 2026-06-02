@@ -23,7 +23,7 @@
             grid-template-columns: 1fr;
             row-gap: rem(var(--scale-12));
 
-            @include helper-breakpoint-media-min($md) {
+            @include helper-breakpoint-media-min($lg) {
                 grid-template-columns: 1fr auto;
                 column-gap: rem(var(--scale-12));
                 align-items: center;
@@ -34,7 +34,7 @@
             min-width: 0;
             grid-column: 1;
 
-            @include helper-breakpoint-media-min($md) {
+            @include helper-breakpoint-media-min($lg) {
                 grid-row: 1;
             }
         }
@@ -45,11 +45,24 @@
             align-items: center;
             gap: rem(var(--scale-12));
             grid-column: 1;
+            grid-row: 3;
+            margin-left: rem(-96);
+            width: calc(100% + #{rem(96)});
 
-            @include helper-breakpoint-media-min($md) {
+            #{$name}__price-zone {
+                margin-left: auto;
+            }
+
+            @include helper-breakpoint-media-min($lg) {
                 grid-column: 2;
                 grid-row: 1;
                 align-self: center;
+                margin-left: 0;
+                width: auto;
+
+                #{$name}__price-zone {
+                    margin-left: 0;
+                }
             }
         }
 
@@ -317,10 +330,7 @@
                 grid-template-rows 200ms ease,
                 margin-top 200ms ease;
             grid-column: 1;
-
-            @include helper-breakpoint-media-min($md) {
-                grid-row: 2;
-            }
+            grid-row: 2;
         }
 
         &__panel-inner {

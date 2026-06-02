@@ -14,7 +14,9 @@ export default class ProductCartItem extends Component {
             this.toggle?.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
         });
 
-        this.contextItems = Array.from(this.querySelectorAll<HTMLElement>(`.${this.jsName}__context-item[data-trigger-target]`));
+        this.contextItems = Array.from(
+            this.querySelectorAll<HTMLElement>(`.${this.jsName}__context-item[data-trigger-target]`),
+        );
         this.contextItems.forEach((item) => {
             item.addEventListener('click', (event: Event) => this.onContextItemClick(event, item));
         });
@@ -34,7 +36,6 @@ export default class ProductCartItem extends Component {
             return;
         }
 
-        target.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
         target.click();
     }
 
