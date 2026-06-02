@@ -100,8 +100,7 @@
                             <button
                                 type="button"
                                 class="{{ config.name }}__context-item {{ config.jsName }}__context-item{% if hasNote %} {{ config.name }}__context-item--filled{% endif %}"
-                                data-trigger-target=".js-cart-item-note__trigger, .js-cart-item-note__text-wrap"
-                                data-qa="component cart-item-note"
+                                data-trigger-target=".js-cart-item-note__edit, .js-cart-item-note__trigger"
                             >
                                 {% include atom('icon') with { class: config.name ~ '__context-glyph', data: { name: 'message' } } only %}
                                 <span class="{{ config.name }}__context-text">
