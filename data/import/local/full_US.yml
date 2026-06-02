@@ -335,3 +335,11 @@ actions:
       source: data/import/common/common/product_class.csv
     - data_entity: product-to-product-class
       source: data/import/common/common/product_to_product_class.csv
+
+    # PurchasingControl
+    - data_entity: purchasing-control-cost-center
+      source: data/import/common/common/cost_center.csv
+    - data_entity: purchasing-control-budget
+      source: data/import/common/common/budget.csv
+    - data_entity: purchasing-control-cost-center-to-company-business-unit
+      source: data/import/common/common/cost_center_company_business_unit.csv

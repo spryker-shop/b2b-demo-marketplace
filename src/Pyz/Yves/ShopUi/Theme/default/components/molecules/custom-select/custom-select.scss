@@ -303,6 +303,10 @@
                 cursor: pointer;
             }
 
+            &[aria-disabled] {
+                display: none;
+            }
+
             &:not(:has(.select2-results__group)):hover {
                 background: var(--background-subtle);
             }

@@ -113,6 +113,14 @@ use Spryker\Zed\Shipment\Communication\Plugin\Sales\ShipmentOrderItemExpanderPlu
 use Spryker\Zed\Shipment\Communication\Plugin\ShipmentOrderHydratePlugin;
 use Spryker\Zed\ShipmentGui\Communication\Plugin\Sales\ShipmentExpensesSalesOrderDetailDataExpanderPlugin;
 use Spryker\Zed\ShipmentGui\Communication\Plugin\Sales\ShipmentSalesOrderDetailDataExpanderPlugin;
+use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\Sales\CostCenterOrderExpanderPlugin; #PurchasingControlFeature
+use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\Sales\CostCenterOrderSearchQueryExpanderPlugin; #PurchasingControlFeature
+use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\Sales\CostCenterOrdersTableCriteriaFilterExpanderPlugin; #PurchasingControlFeature
+use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\Sales\CostCenterOrdersTableFilterFormExpanderPlugin; #PurchasingControlFeature
+use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\Sales\CostCenterOrdersTableHeaderExpanderPlugin; #PurchasingControlFeature
+use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\Sales\CostCenterOrdersTableQueryExpanderPlugin; #PurchasingControlFeature
+use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\Sales\CostCenterSalesTablePlugin; #PurchasingControlFeature
+use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\Sales\CostCenterSearchOrderExpanderPlugin; #PurchasingControlFeature
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Sales\ProductClassOrderExpanderPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Sales\ProductClassOrderItemsPostSavePlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Sales\ScheduleTimeOrderItemExpanderPreSavePlugin;
@@ -167,6 +175,7 @@ class SalesDependencyProvider extends SprykerSalesDependencyProvider
             new SspAssetOrderExpanderPlugin(),
             new ProductClassOrderExpanderPlugin(),
             new SspServiceReschedulableOrderExpanderPlugin(),
+            new CostCenterOrderExpanderPlugin(), #PurchasingControlFeature
         ];
     }
 
@@ -205,6 +214,7 @@ class SalesDependencyProvider extends SprykerSalesDependencyProvider
     {
         return [
             new ReclamationSalesTablePlugin(),
+            new CostCenterSalesTablePlugin(), #PurchasingControlFeature
         ];
     }
 
@@ -294,6 +304,7 @@ class SalesDependencyProvider extends SprykerSalesDependencyProvider
             new OrderAggregatedItemStateSearchOrderExpanderPlugin(),
             new IsCancellableSearchOrderExpanderPlugin(),
             new IsAmendableOrderSearchOrderExpanderPlugin(),
+            new CostCenterSearchOrderExpanderPlugin(), #PurchasingControlFeature
         ];
     }
 
@@ -309,6 +320,7 @@ class SalesDependencyProvider extends SprykerSalesDependencyProvider
             new CompanyBusinessUnitCustomerSortingOrderSearchQueryExpanderPlugin(),
             new CompanyCustomerFilterOrderSearchQueryExpanderPlugin(),
             new CompanyCustomerSortingOrderSearchQueryExpanderPlugin(),
+            new CostCenterOrderSearchQueryExpanderPlugin(), #PurchasingControlFeature
         ];
     }
 
@@ -448,6 +460,46 @@ class SalesDependencyProvider extends SprykerSalesDependencyProvider
             new SalesPaymentDetailListBlockRendererPlugin(),
             new RefundSalesListBlockRendererPlugin(),
             new SelfServicePortalOrderInquiryListBlockRendererPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrdersTableQueryExpanderPluginInterface>
+     */
+    protected function getOrdersTableQueryExpanderPlugins(): array
+    {
+        return [
+            new CostCenterOrdersTableQueryExpanderPlugin(), #PurchasingControlFeature
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrdersTableHeaderExpanderPluginInterface>
+     */
+    protected function getOrdersTableHeaderExpanderPlugins(): array
+    {
+        return [
+            new CostCenterOrdersTableHeaderExpanderPlugin(), #PurchasingControlFeature
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrdersTableFilterFormExpanderPluginInterface>
+     */
+    protected function getOrdersTableFilterFormExpanderPlugins(): array
+    {
+        return [
+            new CostCenterOrdersTableFilterFormExpanderPlugin(), #PurchasingControlFeature
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrdersTableCriteriaFilterExpanderPluginInterface>
+     */
+    protected function getOrdersTableCriteriaFilterExpanderPlugins(): array
+    {
+        return [
+            new CostCenterOrdersTableCriteriaFilterExpanderPlugin(), #PurchasingControlFeature
         ];
     }
 }
