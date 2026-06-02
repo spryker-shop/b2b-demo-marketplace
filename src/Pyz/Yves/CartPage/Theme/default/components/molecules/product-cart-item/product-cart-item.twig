@@ -6,7 +6,7 @@
 } %}
 
 {% define data = {
-    priceModifiers: ['block'],
+    priceModifiers: ['cart', 'block'],
     imageModifiers: ['cart'],
 } %}
 
@@ -101,6 +101,7 @@
                                 type="button"
                                 class="{{ config.name }}__context-item {{ config.jsName }}__context-item{% if hasNote %} {{ config.name }}__context-item--filled{% endif %}"
                                 data-trigger-target=".js-cart-item-note__trigger, .js-cart-item-note__text-wrap"
+                                data-qa="component cart-item-note"
                             >
                                 {% include atom('icon') with { class: config.name ~ '__context-glyph', data: { name: 'message' } } only %}
                                 <span class="{{ config.name }}__context-text">
@@ -179,7 +180,10 @@
                                         data-init-single-click
                                         data-qa="cart-item-remove"
                                     >
-                                        {% include atom('icon') with { data: { name: 'delete' } } only %}
+                                        {% include atom('font-icon') with {
+                                            modifiers: ['size-inherit'],
+                                            data: { name: 'delete' },
+                                        } only %}
                                         <span class="{{ embed.configName }}__remove-tooltip" role="tooltip" aria-hidden="true">{{ 'Remove item from cart' | trans }}</span>
                                     </button>
                                 {% endblock %}

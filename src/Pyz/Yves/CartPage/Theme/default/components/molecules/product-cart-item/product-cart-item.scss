@@ -108,22 +108,22 @@
             text-overflow: ellipsis;
             white-space: nowrap;
 
-            p {
-                display: inline;
-                margin: 0;
-            }
-
-            a {
-                color: var(--text-brand);
-                text-decoration: none;
-
-                &:hover {
-                    text-decoration: underline;
-                }
-            }
-
             &--merchant {
                 color: var(--text-brand);
+
+                .sold-by-merchant {
+                    display: inline;
+                    margin: 0;
+                }
+
+                .sold-by-merchant__link {
+                    color: var(--text-brand);
+                    text-decoration: none;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
             }
         }
 
@@ -239,16 +239,6 @@
         &__quantity-holder {
             display: flex;
             justify-content: flex-end;
-            width: rem(100);
-
-            .quantity-counter,
-            quantity-counter {
-                width: 100%;
-            }
-
-            input {
-                min-width: 0;
-            }
         }
 
         &__price-zone {
@@ -256,20 +246,6 @@
             flex-direction: column;
             align-items: flex-end;
             white-space: nowrap;
-
-            .money-price__amount {
-                color: var(--text-primary);
-                font-size: rem(var(--font-size-16));
-                font-weight: var(--font-weight-semibold);
-                letter-spacing: var(--font-letter-spacing-tight);
-            }
-
-            .money-price__mode {
-                color: var(--text-tertiary);
-                font-family: var(--body-sm-family);
-                font-size: rem(var(--body-sm-size));
-                line-height: rem(var(--body-sm-line-height));
-            }
         }
 
         &__remove {
@@ -281,6 +257,8 @@
             height: rem(var(--scale-32));
             padding: 0;
             color: var(--icon-secondary);
+            font-size: rem(var(--scale-20));
+            line-height: 1;
             background: none;
             border: 0;
             border-radius: rem(var(--radius-sm));
@@ -289,11 +267,6 @@
             &:hover {
                 color: var(--text-state-error);
                 background: var(--background-surface);
-            }
-
-            .icon {
-                width: rem(var(--scale-20));
-                height: rem(var(--scale-20));
             }
 
             &:hover &-tooltip,

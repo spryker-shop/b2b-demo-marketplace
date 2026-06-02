@@ -37,10 +37,7 @@ const shopUiVendor = path.resolve(projectRoot, 'vendor/spryker-shop/shop-ui/src/
 const shopUiPyz = path.resolve(projectRoot, 'src/Pyz/Yves/ShopUi/Theme/default');
 
 export default {
-    stories: [
-        path.join(projectRoot, 'src/Pyz/Yves/ShopUi/Theme/default/**/*.stories.{js,ts}'),
-        path.join(projectRoot, 'src/Pyz/Yves/CartPage/Theme/default/**/*.stories.{js,ts}'),
-    ],
+    stories: [path.join(projectRoot, 'src/Pyz/Yves/ShopUi/Theme/default/**/*.stories.{js,ts}')],
 
     framework: '@storybook/html-webpack5',
 
