@@ -44,8 +44,7 @@
 
                             {% block metaSoldBy %}
                                 {% set soldByMerchant = findWidget('SoldByMerchantWidget', [listItem]) %}
-                                {% if soldByMerchant %}
-                                    <span class="{{ config.name }}__meta-sep" aria-hidden="true">&middot;</span>
+                                {% if soldByMerchant and soldByMerchant.merchant %}
                                     <span class="{{ config.name }}__meta-item {{ config.name }}__meta-item--merchant">
                                         {{ block('soldBy') }}
                                     </span>
@@ -77,35 +76,44 @@
                     {% endwidget %}
 
                     {% block contextStrip %}
+                        {% set sspAssetWidget = findWidget('SspCartItemAssetSelectorWidget', [listItem]) %}
+                        {% set fullAsset = sspAssetWidget ? sspAssetWidget.asset : null %}
+                        {% set assetLabel = (fullAsset.name is defined and fullAsset.name is not empty)
+                            ? fullAsset.name
+                            : ((assignedAsset.name is defined and assignedAsset.name is not empty)
+                                ? assignedAsset.name
+                                : '') %}
+                        {% set hasAssetLabel = assetLabel is not empty %}
+
                         <div class="{{ config.name }}__context" data-qa="cart-item-context">
-                            <span class="{{ config.name }}__context-item{% if assignedAsset %} {{ config.name }}__context-item--filled{% endif %}">
+                            <button
+                                type="button"
+                                class="{{ config.name }}__context-item {{ config.jsName }}__context-item{% if hasAssetLabel %} {{ config.name }}__context-item--filled{% endif %}"
+                                data-trigger-target='asset-selector [class*="js-asset-selector__trigger"]'
+                            >
                                 {% include atom('icon') with { class: config.name ~ '__context-glyph', data: { name: 'assets' } } only %}
                                 <span class="{{ config.name }}__context-text">
-                                    {% if assignedAsset %}
-                                        {{ assignedAsset.name }}
-                                    {% else %}
-                                        {{ 'Add asset' | trans }}
-                                    {% endif %}
+                                    {{ hasAssetLabel ? assetLabel : ('Add asset' | trans) }}
                                 </span>
-                            </span>
+                            </button>
 
-                            <span class="{{ config.name }}__context-item{% if hasNote %} {{ config.name }}__context-item--filled{% endif %}">
+                            <button
+                                type="button"
+                                class="{{ config.name }}__context-item {{ config.jsName }}__context-item{% if hasNote %} {{ config.name }}__context-item--filled{% endif %}"
+                                data-trigger-target=".js-cart-item-note__trigger, .js-cart-item-note__text-wrap"
+                            >
                                 {% include atom('icon') with { class: config.name ~ '__context-glyph', data: { name: 'message' } } only %}
                                 <span class="{{ config.name }}__context-text">
-                                    {% if hasNote %}
-                                        1 {{ 'Comment' | trans }}
-                                    {% else %}
-                                        {{ 'Add comment' | trans }}
-                                    {% endif %}
+                                    {{ hasNote ? ('1 ' ~ ('Comment' | trans)) : ('Add comment' | trans) }}
                                 </span>
-                            </span>
+                            </button>
                         </div>
                     {% endblock %}
 
                     {% block detailsToggle %}
                         <button
                             type="button"
-                            class="{{ config.name }}__toggle"
+                            class="{{ config.name }}__toggle {{ config.jsName }}__toggle"
                             aria-expanded="false"
                             data-qa="cart-item-details-toggle"
                         >
@@ -220,6 +228,7 @@
 {% block itemAttributes %}
     {% if data.attributes is not empty %}
         {% embed molecule('product-item-variant-selector') with {
+            class: config.name ~ '__variant-selector',
             data: {
                 productItem: listItem,
                 productItemAttributes: data.attributes,

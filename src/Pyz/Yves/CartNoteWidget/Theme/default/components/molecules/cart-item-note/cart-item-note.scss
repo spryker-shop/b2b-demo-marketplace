@@ -3,9 +3,6 @@
         margin-top: rem(var(--scale-8));
 
         &__container {
-            display: flex;
-            flex-direction: column;
-            gap: rem(10);
             padding: rem(var(--scale-12)) rem(var(--scale-4)) rem(var(--scale-12)) rem(var(--scale-12));
             background-color: var(--background-surface);
             border-radius: rem(var(--radius-sm));
@@ -32,12 +29,83 @@
             margin-top: rem(var(--scale-12));
         }
 
+        &__text-wrap {
+            display: flex;
+            align-items: flex-start;
+            gap: rem(10);
+        }
+
         &__text {
+            flex: 1 1 auto;
+            min-width: 0;
             color: var(--text-secondary);
             font-family: var(--body-sm-family);
             font-size: rem(var(--body-sm-size));
             font-weight: var(--font-weight-regular);
             line-height: rem(var(--body-sm-line-height));
+        }
+
+        &__menu {
+            display: flex;
+            flex-shrink: 0;
+            align-self: flex-start;
+        }
+
+        &__menu-trigger {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: rem(16);
+            height: rem(16);
+            padding: 0;
+            color: var(--icon-secondary);
+            background: none;
+            border: 0;
+            border-radius: rem(var(--radius-sm));
+            cursor: pointer;
+            font-size: rem(12);
+            line-height: 1;
+
+            &:hover {
+                color: var(--text-primary);
+                background: var(--background-surface);
+            }
+        }
+
+        &__menu-list[popover] {
+            position: fixed;
+            inset: auto;
+            top: anchor(bottom, 100%);
+            right: anchor(right, 0);
+            margin: rem(var(--scale-4)) 0 0;
+            min-width: rem(120);
+            padding: rem(var(--scale-4));
+            background: var(--background-page);
+            border: rem(var(--stroke-sm)) solid var(--border-default);
+            border-radius: rem(var(--radius-sm));
+            box-shadow: var(--shadow-md);
+        }
+
+        &__menu-list[popover]:not(:popover-open) {
+            display: none;
+        }
+
+        &__menu-item {
+            display: block;
+            width: 100%;
+            padding: rem(var(--scale-4)) rem(var(--scale-8));
+            color: var(--text-primary);
+            font-family: var(--body-md-family);
+            font-size: rem(var(--body-md-size));
+            text-align: left;
+            background: none;
+            border: 0;
+            border-radius: rem(var(--radius-sm));
+            cursor: pointer;
+
+            &:hover {
+                background: var(--background-surface);
+            }
         }
 
         .form__field {
@@ -79,85 +147,6 @@
                 font-size: rem(13);
                 padding: rem(15) rem(20);
                 min-height: rem(86);
-            }
-        }
-
-        &__text-wrap {
-            position: relative;
-        }
-
-        &__menu {
-            position: absolute;
-            top: rem(-20);
-            left: 100%;
-            margin-left: rem(-5);
-        }
-
-        &__menu-trigger {
-            display: inline-flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: rem(var(--scale-20));
-            height: rem(var(--scale-20));
-            padding: 0;
-            background: none;
-            border: 0;
-            cursor: pointer;
-            list-style: none;
-        }
-
-        &__menu-trigger::-webkit-details-marker {
-            display: none;
-        }
-
-        &__menu-trigger span,
-        &__menu-trigger::before,
-        &__menu-trigger::after {
-            display: block;
-            width: rem(3);
-            height: rem(3);
-            background: var(--icon-secondary);
-            border-radius: var(--radius-full);
-        }
-
-        &__menu-trigger::before,
-        &__menu-trigger::after {
-            content: '';
-        }
-
-        &__menu-trigger span {
-            margin: rem(2) 0;
-        }
-
-        &__menu-list {
-            position: absolute;
-            top: calc(100% + #{rem(var(--scale-4))});
-            right: 0;
-            z-index: 3;
-            min-width: rem(120);
-            padding: rem(var(--scale-4));
-            background: var(--background-page);
-            border: rem(var(--stroke-sm)) solid var(--border-default);
-            border-radius: rem(var(--radius-sm));
-            box-shadow: var(--shadow-md);
-        }
-
-        &__menu-item {
-            display: block;
-            width: 100%;
-            padding: rem(var(--scale-4)) rem(var(--scale-8));
-            color: var(--text-primary);
-            font-family: var(--body-md-family);
-            font-size: rem(var(--body-md-size));
-            text-align: left;
-            background: none;
-            border: 0;
-            border-radius: rem(var(--radius-sm));
-            cursor: pointer;
-
-            &:hover {
-                background: var(--background-surface);
             }
         }
 

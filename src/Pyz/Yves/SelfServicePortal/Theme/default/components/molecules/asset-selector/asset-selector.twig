@@ -21,9 +21,12 @@
     <button
         type="button"
         class="link link--additional {{ config.name }}__action {{ config.name }}__action--change {{ popupTriggerClass }}"
+        aria-label="{{ 'self_service_portal.asset.selector.change' | trans }}"
         {{ qa('asset-selector-change') }}
     >
-        {{ 'self_service_portal.asset.selector.change' | trans }}
+        {% include atom('font-icon') with {
+            data: { name: 'edit' },
+        } only %}
     </button>
 {% endblock %}
 
@@ -31,8 +34,11 @@
     <button
         type="button"
         class="link link--additional {{ config.name }}__action {{ config.name }}__action--clear {{ config.jsName }}__clear"
+        aria-label="{{ 'self_service_portal.asset_filter.clear' | trans }}"
         {{ qa('asset-selector-clear') }}
     >
-        {{ 'self_service_portal.asset_filter.clear' | trans }}
+        {% include atom('font-icon') with {
+            data: { name: 'close' },
+        } only %}
     </button>
 {% endblock %}

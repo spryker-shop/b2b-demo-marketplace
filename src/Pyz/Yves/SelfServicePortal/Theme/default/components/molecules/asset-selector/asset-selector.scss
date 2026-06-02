@@ -16,10 +16,6 @@
         color: $setting-color-gray-8;
     }
 
-    &--cart &__subtitle {
-        padding-bottom: 0;
-    }
-
     &__data-row {
         display: flex;
         gap: rem(5);
@@ -27,17 +23,21 @@
         align-items: center;
     }
 
-    &--cart:not(.is-selected) &__container--selected {
-        display: none;
+    &--cart &__subtitle {
+        padding-bottom: 0;
     }
 
-    &--cart.is-selected &__container--select {
-        display: none;
+    &--cart &__subtitle--name {
+        color: var(--text-secondary);
+        font-family: var(--body-sm-family);
+        font-size: rem(var(--body-sm-size));
+        font-weight: var(--font-weight-regular);
+        line-height: rem(var(--body-sm-line-height));
+        text-decoration: none;
     }
 
-    &--cart &__container--select &__subtitle,
-    &--cart &__container--selected &__data--actions &__subtitle {
-        display: none;
+    &--cart &__asset-text {
+        color: var(--text-primary);
     }
 
     &--cart &__container--select {
@@ -61,29 +61,32 @@
         cursor: pointer;
     }
 
+    &--cart &__data--actions .link--additional {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: rem(var(--scale-20));
+        height: rem(var(--scale-20));
+        padding: 0;
+        color: var(--icon-secondary);
+        background: none;
+        border: 0;
+        border-radius: rem(var(--radius-sm));
+        cursor: pointer;
+    }
+
     &--cart &__container--select .link--additional:hover {
         background: var(--background-surface);
     }
 
-    &--cart.is-selected &__container--selected {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        align-items: flex-start;
-        gap: rem(var(--scale-8)) rem(var(--scale-12));
+    &--cart &__data--actions .link--additional:hover {
+        color: var(--text-primary);
+        background: var(--background-surface);
     }
 
-    &--cart &__data-row > strong {
+    &--cart &__container--select &__subtitle,
+    &--cart &__data--actions &__subtitle {
         display: none;
-    }
-
-    &--cart.is-selected &__container--selected > &__content {
-        flex: 1 1 0;
-        min-width: 0;
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: rem(var(--scale-4)) 0;
     }
 
     &--cart &__data-row {
@@ -98,23 +101,34 @@
         color: var(--text-secondary);
     }
 
-    &--cart &__data-row + &__data-row::before {
+    &--cart &__data-row > strong {
+        display: none;
+    }
+
+    &--cart &__data-row:not(:last-child)::after {
         content: '\00B7';
         margin: 0 rem(var(--scale-8));
         color: var(--text-tertiary);
     }
 
-    &--cart &__subtitle--name {
-        color: var(--text-secondary);
-        font-family: var(--body-sm-family);
-        font-size: rem(var(--body-sm-size));
-        font-weight: var(--font-weight-regular);
-        line-height: rem(var(--body-sm-line-height));
-        text-decoration: none;
+    &--cart &__data--actions &__content {
+        display: none;
     }
 
-    &--cart &__asset-text {
-        color: var(--text-primary);
+    &--cart:not(.is-selected) &__container--selected {
+        display: none;
+    }
+
+    &--cart.is-selected &__container--select {
+        display: none;
+    }
+
+    &--cart.is-selected &__container--selected {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: flex-start;
+        gap: rem(var(--scale-8)) rem(var(--scale-12));
     }
 
     &--cart.is-selected &__data--actions {
@@ -126,38 +140,12 @@
         white-space: nowrap;
     }
 
-    &--cart &__data--actions &__content {
-        display: none;
-    }
-
-    &--cart &__data--actions .link--additional {
-        display: inline-flex;
+    &--cart.is-selected &__content {
+        flex: 1 1 0;
+        min-width: 0;
+        display: flex;
+        flex-wrap: wrap;
         align-items: center;
-        justify-content: center;
-        width: rem(var(--scale-20));
-        height: rem(var(--scale-20));
-        padding: 0;
-        color: var(--icon-secondary);
-        font-size: 0;
-        line-height: 1;
-        background: none;
-        border: 0;
-        border-radius: rem(var(--radius-sm));
-        cursor: pointer;
-    }
-
-    &--cart &__data--actions .link--additional:hover {
-        color: var(--text-primary);
-        background: var(--background-surface);
-    }
-
-    &--cart &__data--actions &__action--change::before {
-        content: '\270E';
-        font-size: rem(var(--font-size-14));
-    }
-
-    &--cart &__data--actions &__action--clear::before {
-        content: '\00D7';
-        font-size: rem(var(--font-size-18));
+        gap: rem(var(--scale-4)) 0;
     }
 }

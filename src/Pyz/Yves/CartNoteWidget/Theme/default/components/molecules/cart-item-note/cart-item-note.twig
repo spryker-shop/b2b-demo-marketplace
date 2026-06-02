@@ -24,6 +24,7 @@
     {% set title = data.label is not empty ? data.label : 'cart_note.form.comment' %}
     {% set note = data.note is not empty ? data.note : data.form.vars.value.cartNote %}
     {% set isNoteNotEmpty = data.isNoteNotEmpty is not null ? data.isNoteNotEmpty : (data.form.vars.value.cartNote is not null and data.form.vars.value.cartNote is not empty) %}
+    {% set menuAnchorId = "#{config.jsName}-menu-#{random()}" %}
 
     {% if data.canWrite or isNoteNotEmpty %}
         {% if isNoteNotEmpty and data.isTitleVisible %}
@@ -37,15 +38,29 @@
                     <div class="{{ config.name }}__text">{{ note | nl2br }}</div>
 
                     {% if data.canWrite %}
-                        <details class="{{ config.name }}__menu">
-                            <summary class="{{ config.name }}__menu-trigger" aria-label="{{ 'Comment actions' | trans }}">
-                                <span></span>
-                            </summary>
-                            <div class="{{ config.name }}__menu-list">
+                        <div class="{{ config.name }}__menu">
+                            <button
+                                type="button"
+                                class="{{ config.name }}__menu-trigger"
+                                popovertarget="{{ menuAnchorId }}"
+                                style="anchor-name: --{{ menuAnchorId }}"
+                                aria-label="{{ 'Comment actions' | trans }}"
+                            >
+                                {% include atom('font-icon') with {
+                                    modifiers: ['size-inherit'],
+                                    data: { name: 'more_vert' },
+                                } only %}
+                            </button>
+                            <div
+                                id="{{ menuAnchorId }}"
+                                popover="auto"
+                                class="{{ config.name }}__menu-list"
+                                style="position-anchor: --{{ menuAnchorId }}"
+                            >
                                 <button type="button" class="{{ config.name }}__menu-item {{ config.jsName }}__edit">{{ 'Edit' | trans }}</button>
                                 <button type="button" class="{{ config.name }}__menu-item {{ config.jsName }}__remove">{{ 'Delete' | trans }}</button>
                             </div>
-                        </details>
+                        </div>
                     {% endif %}
                 </div>
             {% endif %}
