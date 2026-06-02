@@ -1,3 +1,38 @@
 {% extends molecule('asset-selector', '@SprykerFeature:SelfServicePortal') %}
 
 {% block separator %}{% endblock %}
+
+{% block name %}
+    {% set tag = attributes['asset-link-base'] ? 'a' : 'strong' %}
+    {% set reference = data.asset is not empty ? data.asset.reference %}
+
+    <{{ tag }}
+        {% if attributes['asset-link-base'] %}
+            href="{{ "#{attributes['asset-link-base']}#{reference}" }}"
+        {% endif %}
+        class="{{ config.name }}__subtitle {{ config.name }}__subtitle--name {{ config.jsName }}__asset-name"
+        {{ qa('asset-selector-name') }}
+    >
+        {{ data.asset is not empty ? data.asset.name }}
+    </{{ tag }}>
+{% endblock %}
+
+{% block change %}
+    <button
+        type="button"
+        class="link link--additional {{ config.name }}__action {{ config.name }}__action--change {{ popupTriggerClass }}"
+        {{ qa('asset-selector-change') }}
+    >
+        {{ 'self_service_portal.asset.selector.change' | trans }}
+    </button>
+{% endblock %}
+
+{% block clear %}
+    <button
+        type="button"
+        class="link link--additional {{ config.name }}__action {{ config.name }}__action--clear {{ config.jsName }}__clear"
+        {{ qa('asset-selector-clear') }}
+    >
+        {{ 'self_service_portal.asset_filter.clear' | trans }}
+    </button>
+{% endblock %}

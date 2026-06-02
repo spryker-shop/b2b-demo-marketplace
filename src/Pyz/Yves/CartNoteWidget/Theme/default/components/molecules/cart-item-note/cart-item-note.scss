@@ -1,41 +1,43 @@
 @mixin cart-note-widget-cart-item-note($name: '.cart-item-note') {
     #{$name} {
-        margin-top: rem(8);
+        margin-top: rem(var(--scale-8));
 
         &__container {
-            background-color: $setting-color-gray-7;
-            padding: rem(13) rem(20);
-
-            @include helper-breakpoint-media-min($lg) {
-                padding-top: rem(17);
-                padding-bottom: rem(17);
-            }
+            display: flex;
+            flex-direction: column;
+            gap: rem(10);
+            padding: rem(var(--scale-12)) rem(var(--scale-4)) rem(var(--scale-12)) rem(var(--scale-12));
+            background-color: var(--background-surface);
+            border-radius: rem(var(--radius-sm));
         }
 
         &__title {
-            font-size: rem(13);
-            font-weight: fw(medium);
-            margin-bottom: rem(7);
-
-            @include helper-breakpoint-media-min($lg) {
-                font-size: rem(14);
-            }
+            margin: 0 0 rem(var(--scale-6));
+            color: var(--text-tertiary);
+            font-family: var(--body-sm-family);
+            font-size: rem(var(--body-sm-size));
+            font-weight: var(--font-weight-semibold);
+            line-height: rem(var(--body-sm-line-height));
         }
 
         &__label {
-            font-size: rem(12);
-
-            @include helper-breakpoint-media-min($lg) {
-                font-size: rem(14);
-            }
+            color: var(--text-tertiary);
+            font-family: var(--body-sm-family);
+            font-size: rem(var(--body-sm-size));
+            font-weight: var(--font-weight-semibold);
+            line-height: rem(var(--body-sm-line-height));
         }
 
         &__content {
-            margin-top: rem(17);
+            margin-top: rem(var(--scale-12));
         }
 
         &__text {
-            font-size: rem(13);
+            color: var(--text-secondary);
+            font-family: var(--body-sm-family);
+            font-size: rem(var(--body-sm-size));
+            font-weight: var(--font-weight-regular);
+            line-height: rem(var(--body-sm-line-height));
         }
 
         .form__field {
