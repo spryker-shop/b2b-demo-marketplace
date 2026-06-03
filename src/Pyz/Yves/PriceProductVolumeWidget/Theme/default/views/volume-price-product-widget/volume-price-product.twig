@@ -4,6 +4,7 @@
     amount: _widget.product.price,
     originalAmount: _widget.product.prices.ORIGINAL | default,
     volumeProductPrices: _widget.volumeProductPrices,
+    grossMargin: _widget.product.grossMargin,
 } %}
 
 {% block body %}
@@ -42,4 +43,5 @@
             {{ 'customer.access.cannot_see_price' | trans }}
         {% endblock %}
     {% endif %}
+    {% widget 'ProductGrossMarginWidget' args [data.grossMargin ?? 0, 'volume-price'] %}{% endwidget %}
 {% endblock %}

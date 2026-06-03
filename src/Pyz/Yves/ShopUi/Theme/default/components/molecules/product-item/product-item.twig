@@ -66,6 +66,7 @@
                                 </div>
                             {% endif %}
                         {% endblock %}
+                        {% widget 'ProductGrossMarginWidget' args [data.product.grossMargin ?? 0, config.name] %}{% endwidget %}
                     {% endblock %}
                 </div>
             {% endblock %}

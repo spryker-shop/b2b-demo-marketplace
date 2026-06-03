@@ -93,6 +93,22 @@
 
                 {% endblock %}
 
+                {% if is_granted('ROLE_AGENT') %}
+                    {% set costPriceOriginUnitPrice = (data.priceMode == 'GROSS_MODE') ? data.cartItem.originUnitGrossPrice : data.cartItem.originUnitNetPrice %}
+                    {% include molecule('cost-price', 'quote-request-page') with {
+                        data: {
+                            priceToPay: data.cartItem.unitPrice,
+                            costPrice: data.cartItem.unitCostPrice,
+                            currencyCode: data.currency.code,
+                        },
+                        attributes: {
+                            'original-price': costPriceOriginUnitPrice,
+                            'cost-price': data.cartItem.unitCostPrice,
+                            'cost-price-formatted': data.cartItem.unitCostPrice | money(true, data.currency.code),
+                        },
+                    } only %}
+                {% endif %}
+
                 <div><strong class="text-right">{{ 'cart.item.item_total' | trans }}</strong></div>
 
                 {% include molecule('money-price') with {

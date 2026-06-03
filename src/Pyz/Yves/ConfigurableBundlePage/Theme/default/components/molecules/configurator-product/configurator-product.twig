@@ -46,6 +46,7 @@
                                     currencyIsoCode: embed.currencyIsoCode,
                                 },
                             } only %}
+                            {% widget 'ProductGrossMarginWidget' args [data.currentProductPrice.grossMargin ?? 0, 'volume-price'] %}{% endwidget %}
                         {% endif %}
                     {% endblock %}
                 {% endwidget %}

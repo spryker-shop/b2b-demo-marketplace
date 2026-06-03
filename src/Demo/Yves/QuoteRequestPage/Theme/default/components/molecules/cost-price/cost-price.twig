@@ -1,0 +1,45 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'cost-price',
+    tag: 'cost-price',
+} %}
+
+{% define data = {
+    priceToPay: required,
+    costPrice: required,
+    currencyCode: '',
+} %}
+
+{% set hasCostPrice = data.costPrice is not null and data.costPrice > 0 %}
+{% set unavailableLabel = '—' %}
+
+{% block body %}
+    <dl class="{{ config.name }}__list">
+        <dt class="{{ config.name }}__title">{{ 'cart.item.cost_price' | trans }}:</dt>
+        <dd class="{{ config.name }}__value {{ config.jsName }}__cost-price-value" data-has-cost-price="{{ hasCostPrice ? '1' : '0' }}" data-unavailable-label="{{ unavailableLabel }}">
+            {% if hasCostPrice %}
+                {{ data.costPrice | money(true, data.currencyCode) }}
+            {% else %}
+                {{ unavailableLabel }}
+            {% endif %}
+        </dd>
+        <dt class="{{ config.name }}__title">{{ 'cart.item.gross_margin' | trans }}</dt>
+        <dd class="{{ config.name }}__value">
+            {% if not hasCostPrice %}
+                {% include atom('font-icon') with {
+                    modifiers: ['cost-price-warning'],
+                    data: { name: 'warning' },
+                    attributes: { title: 'Cost price not available. Margin cannot be calculated.' | trans },
+                } only %}
+            {% endif %}
+            <span class="{{ config.name }}__gross-margin {{ config.jsName }}__gross-margin {{ not hasCostPrice ? config.name ~ '__gross-margin--unavailable' }}" data-unavailable-label="{{ unavailableLabel }}">
+                {% if hasCostPrice %}
+                    {{ (((data.priceToPay - data.costPrice) / data.priceToPay) * 100) | round(0, 'floor') }} %
+                {% else %}
+                    {{ unavailableLabel }}
+                {% endif %}
+            </span>
+        </dd>
+    </dl>
+{% endblock %}
