@@ -281,10 +281,8 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
             new IsSearchableForLocaleAbstractProductReadinessProviderPlugin(),
             new StoreRelationAbstractProductReadinessProviderPlugin(),
             new StorageTableProductAbstractReadinessProviderPlugin(),
-            new StorageProductAbstractReadinessProviderPlugin(),
             new PageSearchProductAbstractReadinessProviderPlugin(),
             new StorageTablePriceProductAbstractReadinessProviderPlugin(),
-            new StoragePriceProductAbstractReadinessProviderPlugin(),
         ];
     }
 
