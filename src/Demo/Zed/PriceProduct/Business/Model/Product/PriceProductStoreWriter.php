@@ -29,6 +29,7 @@ class PriceProductStoreWriter extends SprykerPriceProductStoreWriter
             $moneyValueTransfer,
         );
 
+        $priceProductStoreEntity->fromArray($moneyValueTransfer->toArray());
         $priceProductStoreEntity
             ->setGrossPrice($moneyValueTransfer->getGrossAmount())
             ->setNetPrice($moneyValueTransfer->getNetAmount())
