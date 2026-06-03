@@ -89,6 +89,13 @@
         &--block {
             display: block;
         }
+
+        &--cart {
+            color: var(--text-primary);
+            font-size: rem(var(--font-size-16));
+            font-weight: var(--font-weight-semibold);
+            letter-spacing: var(--font-letter-spacing-tight);
+        }
     }
 
     &__mode {
@@ -105,6 +112,13 @@
 
         &--block {
             display: block;
+        }
+
+        &--cart {
+            color: var(--text-tertiary);
+            font-family: var(--body-sm-family);
+            font-size: rem(var(--body-sm-size));
+            line-height: rem(var(--body-sm-line-height));
         }
     }
 }
