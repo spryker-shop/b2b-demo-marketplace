@@ -98,6 +98,7 @@
                                     } only %}
                                 {% endif %}
                             {% endblock %}
+                            {% widget 'ProductGrossMarginWidget' args [listItem.grossMargin ?? 0, 'volume-price'] %}{% endwidget %}
                         </div>
                     </div>
 
