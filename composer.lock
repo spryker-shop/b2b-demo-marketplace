@@ -76928,16 +76928,16 @@
         },
         {
             "name": "spryker/twig",
-            "version": "3.31.0",
+            "version": "3.32.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/twig.git",
-                "reference": "0cf53ad55cf065e700d97f2017a52da3c479af6b"
+                "reference": "d26bfbeb8614100b9ca1bffe625c41be3aac805e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/twig/zipball/0cf53ad55cf065e700d97f2017a52da3c479af6b",
-                "reference": "0cf53ad55cf065e700d97f2017a52da3c479af6b",
+                "url": "https://api.github.com/repos/spryker/twig/zipball/d26bfbeb8614100b9ca1bffe625c41be3aac805e",
+                "reference": "d26bfbeb8614100b9ca1bffe625c41be3aac805e",
                 "shasum": ""
             },
             "require": {
@@ -76977,27 +76977,15 @@
                     "SprykerTest\\Zed\\Twig\\Helper\\": "tests/SprykerTest/Zed/Twig/_support/Helper/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "SprykerTest\\": "tests/SprykerTest/"
-                }
-            },
-            "scripts": {
-                "cs-check": [
-                    "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
-                ],
-                "cs-fix": [
-                    "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "proprietary"
             ],
             "description": "Twig module",
             "support": {
-                "source": "https://github.com/spryker/twig/tree/3.31.0"
+                "source": "https://github.com/spryker/twig/tree/3.32.0"
             },
-            "time": "2026-05-20T13:29:28+00:00"
+            "time": "2026-06-04T08:28:12+00:00"
         },
         {
             "name": "spryker/twig-extension",
