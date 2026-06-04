@@ -21,7 +21,7 @@ return static function (SprykerApiPlatformConfig $sprykerApiPlatform): void {
         'vendor/spryker',
         'vendor/spryker-shop',
         'vendor/spryker-feature',
-        'vendor/spryker-eco'
+        'vendor/spryker-eco',
     ]);
 
     // Keep these modules on the legacy Glue REST stack by hiding their API Platform schemas from the generator.
