@@ -92,6 +92,9 @@ jobs:
             -   name: Run Architecture rules
                 run: vendor/bin/phpmd src/ text vendor/spryker/architecture-sniffer/src/ruleset.xml --minimumpriority 2
 
+            -   name: Generate rest API documentation
+                run: vendor/bin/console rest-api:generate:documentation
+
             -  name: Generate API
                run: |
                    echo "vendor/bin/glue api:generate" && vendor/bin/glue api:generate --quiet-meta --keep-existing
@@ -106,9 +109,6 @@ jobs:
 
             -   name: Run Evaluator for all branches
                 run: vendor/bin/evaluator evaluate --exclude-checkers=SPRYKER_DEV_PACKAGES_CHECKER --format=compact
-
-            -   name: Generate rest API dcoumentation
-                run: vendor/bin/console rest-api:generate:documentation
 
             -   uses: actions/setup-node@v4
                 with:
