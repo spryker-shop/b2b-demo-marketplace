@@ -274,6 +274,9 @@ features:
                                       - setting: ai_commerce:quick_order:ai_vendor:ai_configuration
                                         operator: equals
                                         value: 'AI_COMMERCE:AI_CONFIGURATION_QUICK_ORDER_IMAGE_TO_CART_ANTHROPIC'
+          - key: search_by_image
+            enabled: true
+            groups:
                 - key: ai_vendor
                   name: AI Vendor
                   description: AI configuration and vendor model used for the Search by Image feature. Only the model field matching the selected AI Configuration is shown.
