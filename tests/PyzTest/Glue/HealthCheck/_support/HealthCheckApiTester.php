@@ -32,11 +32,6 @@ class HealthCheckApiTester extends ApiEndToEndTester
     use _generated\HealthCheckApiTesterActions;
 
     /**
-     * Returns the value of a single property under `data.attributes`, transparently handling the
-     * shape difference between the legacy Glue REST response (`data: [{attributes: …}]`, array
-     * wrapper) and the API Platform response (`data: {attributes: …}`, single object). Uses a
-     * JSONPath recursive descent so the same test code works for both flavors.
-     *
      * @param string $attributeKey
      *
      * @return mixed

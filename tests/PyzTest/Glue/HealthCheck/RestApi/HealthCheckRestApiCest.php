@@ -42,11 +42,6 @@ class HealthCheckRestApiCest
     protected const UNKNOWN_SERVICE_NAME = 'unknown-service';
 
     /**
-     * In the test environment `HealthCheckConfig::isHealthCheckEnabled()` resolves to `false`, so a
-     * plain `GET /health-check` must surface that state through the JSON:API body with HTTP 403. The
-     * assertions go through the tester's cross-shape helper so the same test stays green once the
-     * legacy `HealthCheckResourceRoutePlugin` is unwired and API Platform handles the route.
-     *
      * @param \PyzTest\Glue\HealthCheck\HealthCheckApiTester $I
      *
      * @return void
