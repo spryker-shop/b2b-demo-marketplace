@@ -56,26 +56,9 @@ use Spryker\Glue\SecurityBlockerRestApi\Plugin\GlueApplication\SecurityBlockerCu
 use Spryker\Glue\Session\Plugin\Application\SessionApplicationPlugin;
 use Spryker\Glue\StoresApi\Plugin\GlueStorefrontApiApplication\StoreApplicationPlugin;
 use Spryker\Glue\WebProfiler\Plugin\Application\WebProfilerApplicationPlugin;
-use SprykerFeature\Glue\SelfServicePortal\Plugin\GlueApplication\SspAssetsResourceRoutePlugin;
-use SprykerFeature\Glue\SelfServicePortal\Plugin\GlueApplication\SspInquiriesResourceRoutePlugin;
-use SprykerFeature\Glue\SelfServicePortal\Plugin\GlueApplication\SspServicesResourceRoutePlugin;
 
 class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependencyProvider
 {
-    /**
-     * {@inheritDoc}
-     *
-     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface>
-     */
-    protected function getResourceRoutePlugins(): array
-    {
-        return [
-            new SspAssetsResourceRoutePlugin(),
-            new SspInquiriesResourceRoutePlugin(),
-            new SspServicesResourceRoutePlugin(),
-        ];
-    }
-
     /**
      * {@inheritDoc}
      *
