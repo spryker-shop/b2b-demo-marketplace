@@ -1,14 +1,93 @@
 @mixin agent-widget-customer-list($name: '.customer-list') {
     #{$name} {
+        margin: var(--scale-8) 0 0;
+        padding: 0;
+        list-style: none;
+
         &__container-item {
+            @include helper-effect-transition(background-color);
+            display: flex;
+            align-items: center;
+            gap: var(--scale-12);
+            padding: var(--scale-8) 0;
             cursor: pointer;
-            padding: 0;
-            font-size: rem(14);
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
 
             &:hover {
-                color: $setting-color-alt;
-                text-decoration: underline;
+                background-color: var(--background-subtle);
             }
+        }
+
+        &__avatar {
+            flex-shrink: 0;
+        }
+
+        &__info {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: rem(2);
+            overflow: hidden;
+        }
+
+        &__name {
+            font-family: var(--body-md-family);
+            font-size: var(--body-md-size);
+            line-height: var(--body-md-line-height);
+            color: var(--text-primary);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        &__email {
+            font-family: var(--body-sm-family);
+            font-size: var(--body-sm-size);
+            line-height: var(--body-sm-line-height);
+            color: var(--text-secondary);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        &--empty {
+            display: flex;
+            align-items: center;
+            gap: var(--scale-12);
+            padding: var(--scale-12) var(--scale-4);
+            color: var(--text-secondary);
+            font-family: var(--body-sm-family);
+            font-size: var(--body-sm-size);
+            line-height: var(--body-sm-line-height);
+        }
+
+        &--error {
+            color: var(--text-state-error);
+
+            #{$name}__icon {
+                background-color: var(--background-state-error-subtle);
+                color: var(--icon-state-error);
+            }
+        }
+
+        &__icon {
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: rem(24);
+            height: rem(24);
+            border-radius: var(--radius-lg);
+            background-color: var(--background-subtle);
+            color: var(--icon-secondary);
+            font-size: rem(16);
+        }
+
+        &__message {
+            flex: 1;
+            min-width: 0;
         }
 
         @content;

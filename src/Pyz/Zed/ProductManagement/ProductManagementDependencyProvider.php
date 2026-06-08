@@ -28,7 +28,6 @@ use Spryker\Zed\PriceProductScheduleGui\Communication\Plugin\ProductManagement\S
 use Spryker\Zed\PriceProductScheduleGui\Communication\Plugin\ProductManagement\ScheduledPriceProductAbstractFormEditTabsExpanderPlugin;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Plugin\ProductManagement\ScheduledPriceProductConcreteEditViewExpanderPlugin;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Plugin\ProductManagement\ScheduledPriceProductConcreteFormEditTabsExpanderPlugin;
-use Spryker\Zed\PriceProductStorage\Communication\Plugin\ProductManagement\StoragePriceProductAbstractReadinessProviderPlugin;
 use Spryker\Zed\PriceProductStorage\Communication\Plugin\ProductManagement\StorageTablePriceProductAbstractReadinessProviderPlugin;
 use Spryker\Zed\PriceProductStorage\Communication\Plugin\ProductManagement\StorageTablePriceProductConcreteReadinessProviderPlugin;
 use Spryker\Zed\Product\Communication\Plugin\ProductManagement\IsActiveAbstractProductReadinessProviderPlugin;
@@ -58,7 +57,6 @@ use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider as Spryker
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\ProductManagement\PageSearchProductAbstractReadinessProviderPlugin;
 use Spryker\Zed\ProductSearch\Communication\Plugin\ProductManagement\IsSearchableForLocaleAbstractProductReadinessProviderPlugin;
 use Spryker\Zed\ProductSearch\Communication\Plugin\ProductManagement\IsSearchableForLocaleConcreteProductReadinessProviderPlugin;
-use Spryker\Zed\ProductStorage\Communication\Plugin\ProductManagement\StorageProductAbstractReadinessProviderPlugin;
 use Spryker\Zed\ProductStorage\Communication\Plugin\ProductManagement\StorageTableProductAbstractReadinessProviderPlugin;
 use Spryker\Zed\ProductStorage\Communication\Plugin\ProductManagement\StorageTableProductConcreteReadinessProviderPlugin;
 use Spryker\Zed\Store\Communication\Plugin\Form\StoreRelationToggleFormTypePlugin;
@@ -66,6 +64,7 @@ use SprykerFeature\Zed\AiCommerce\Communication\Plugin\ProductManagement\Product
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductManagement\ProductClassFormExpanderPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductManagement\ProductClassProductConcreteFormEditDataProviderExpanderPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductManagement\ProductClassProductConcreteTransferMapperPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductManagement\ShipmentTypeProductConcreteEditFormExpanderPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductManagement\ShipmentTypeProductConcreteFormEditDataProviderExpanderPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductManagement\ShipmentTypeProductConcreteFormExpanderPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductManagement\ShipmentTypeProductFormTransferMapperExpanderPlugin;
@@ -120,6 +119,7 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
         return [
             new DiscontinuedProductConcreteEditFormExpanderPlugin(), #ProductDiscontinuedFeature
             new ProductConcreteEditFormExpanderPlugin(), #ProductAlternativeFeature
+            new ShipmentTypeProductConcreteEditFormExpanderPlugin(),
         ];
     }
 
@@ -279,10 +279,8 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
             new IsSearchableForLocaleAbstractProductReadinessProviderPlugin(),
             new StoreRelationAbstractProductReadinessProviderPlugin(),
             new StorageTableProductAbstractReadinessProviderPlugin(),
-            new StorageProductAbstractReadinessProviderPlugin(),
             new PageSearchProductAbstractReadinessProviderPlugin(),
             new StorageTablePriceProductAbstractReadinessProviderPlugin(),
-            new StoragePriceProductAbstractReadinessProviderPlugin(),
         ];
     }
 

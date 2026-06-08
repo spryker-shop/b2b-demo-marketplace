@@ -8,6 +8,7 @@
         display: none;
     }
 
+    &--availability,
     &--shipped,
     &--in-stock,
     &--never-out-of-stock,
@@ -18,7 +19,7 @@
     &--delivered {
         @include helper-badge-semantic-subtle(success);
 
-        #{$name}--sold {
+        &#{$name}--solid {
             @include helper-badge-semantic-bold-background(success);
         }
     }
@@ -30,7 +31,7 @@
     &--return-canceled {
         @include helper-badge-semantic-subtle(warning);
 
-        #{$name}--sold {
+        &#{$name}--solid {
             @include helper-badge-semantic-bold-background(warning);
         }
     }
@@ -40,16 +41,15 @@
     &--not-configured {
         @include helper-badge-semantic-subtle(error);
 
-        #{$name}--sold {
+        &#{$name}--solid {
             @include helper-badge-semantic-bold-background(error);
         }
     }
 
-    &--info,
-    &--availability {
+    &--info {
         @include helper-badge-semantic-subtle(info);
 
-        #{$name}--sold {
+        &#{$name}--solid {
             @include helper-badge-semantic-bold-background(info);
         }
     }

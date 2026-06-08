@@ -38,7 +38,7 @@ class CustomerAccessRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->amSure('Returned collection of resources with type of type customer-access and size 1')
             ->whenI()

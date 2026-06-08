@@ -1,0 +1,20 @@
+{% extends template('widget') %}
+
+{% define data = {
+    isActivePage: _widget.isActivePage,
+    canManage: can('ManageCostCentersPermissionPlugin'),
+} %}
+
+{% block body %}
+    {% if data.canManage %}
+        {% include molecule('navigation-sidebar-item') with {
+            data: {
+                url: path('company/cost-center'),
+                fontIcon: 'account_balance_wallet',
+                label: 'purchasing_control.cost_center.menu_item' | trans,
+                name: 'cost-center',
+            },
+            modifiers: data.isActivePage ? ['active'] : [],
+        } only %}
+    {% endif %}
+{% endblock %}

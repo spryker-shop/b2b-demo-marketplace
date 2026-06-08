@@ -2,7 +2,7 @@
     #{$name} {
         @include helper-effect-transition(background-color border-color box-shadow color);
         display: inline-flex;
-        height: rem(32);
+        height: rem(36);
         padding: 0 var(--scale-16);
         align-items: center;
         gap: var(--scale-8);
@@ -11,10 +11,10 @@
         border: var(--stroke-sm) solid var(--input-border-default);
         background: var(--input-background-default);
         color: var(--input-text-value);
-        font-size: var(--font-size-14);
-        font-weight: var(--font-weight-medium);
-        line-height: var(--body-sm-line-height);
-        letter-spacing: var(--body-sm-letter-spacing);
+        font-size: var(--label-md-size);
+        font-weight: var(--label-md-weight);
+        line-height: var(--label-md-line-height);
+        letter-spacing: var(--label-md-letter-spacing);
 
         ::placeholder {
             color: var(--input-text-placeholder);
@@ -62,7 +62,10 @@
 
         &--sm {
             height: rem(32);
-            font-size: var(--body-sm-size);
+            font-size: var(--label-sm-size);
+            font-weight: var(--label-sm-weight);
+            line-height: var(--label-sm-line-height);
+            letter-spacing: var(--label-sm-letter-spacing);
         }
 
         @content;

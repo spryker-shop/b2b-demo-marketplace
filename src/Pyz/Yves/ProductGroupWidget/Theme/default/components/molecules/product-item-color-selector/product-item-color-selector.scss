@@ -12,24 +12,11 @@ $name: '.product-item-color-selector';
     flex-wrap: wrap;
 
     &--product-list {
-        opacity: 1;
+        margin: 0.625rem 0;
         position: relative;
-        bottom: 0;
-        margin: rem(10) 0;
-
-        @include helper-breakpoint-media-min($lg) {
-            position: absolute;
-            left: rem(20);
-            bottom: rem(30);
-            margin: 0;
-        }
-
-        #{$name}__items-title {
-            @include helper-font-size(small);
-            color: $setting-color-gray-3;
-            margin-right: rem(9);
-            display: inline;
-        }
+        z-index: $setting-zi-element + 5;
+        transform: none;
+        left: unset;
     }
 
     &__items-title {

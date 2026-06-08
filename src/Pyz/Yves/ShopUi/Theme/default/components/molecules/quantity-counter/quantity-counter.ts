@@ -45,7 +45,7 @@ export default class QuantityCounter extends Component {
         const step = this.step * this.precision;
         const calculatedValue = type === 'increase' ? value * this.precision + step : value * this.precision - step;
         const potentialValue = Number((calculatedValue / this.precision).toFixed(this.numberOfDecimalPlaces));
-        const shouldUpdate = value < this.maxQuantity || potentialValue >= this.minQuantity;
+        const shouldUpdate = potentialValue <= this.maxQuantity && potentialValue >= this.minQuantity;
 
         if (!shouldUpdate) {
             return;
