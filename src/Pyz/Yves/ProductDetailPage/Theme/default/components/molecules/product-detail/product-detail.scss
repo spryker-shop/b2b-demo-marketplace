@@ -1,75 +1,98 @@
 @mixin product-detail-page-product-configurator($name: '.product-detail') {
     #{$name} {
-        padding: rem(47) 0 0;
+        display: block;
+        padding-top: var(--scale-32);
 
         @include helper-breakpoint-media-min($lg) {
-            padding: rem(43) 0 rem(100);
+            padding-top: var(--scale-48);
+            padding-bottom: var(--scale-64);
         }
 
-        &__title {
-            font-weight: fw(medium);
-            line-height: normal;
-            color: $setting-color-gray-5;
-            margin-bottom: 17px;
+        &__tabs {
+            display: block;
+            width: 100%;
         }
 
         &__description {
-            font-size: rem(16);
-            font-weight: fw(regular);
-            line-height: rem(29);
-            padding-bottom: rem(35);
-            color: $setting-color-gray-4;
+            font-family: var(--body-md-family);
+            font-size: var(--body-md-size);
+            font-weight: var(--body-md-weight);
+            line-height: var(--body-md-line-height);
+            letter-spacing: var(--body-md-letter-spacing);
+            color: var(--text-secondary);
 
-            @include helper-breakpoint-media-min($lg) {
-                padding-bottom: 0;
+            p {
+                margin: 0 0 var(--scale-16);
 
-                &--with-attachments {
-                    padding-bottom: rem(40);
+                &:last-child {
+                    margin-bottom: 0;
                 }
             }
         }
 
+        &__details {
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-20);
+            margin-top: var(--scale-32);
+        }
+
+        &__details-title {
+            margin: 0;
+            font-family: var(--label-md-semibold-family);
+            font-size: var(--label-md-semibold-size);
+            font-weight: var(--label-md-semibold-weight);
+            line-height: var(--label-md-semibold-line-height);
+            color: var(--text-primary);
+        }
+
         &__detail-list {
-            border-radius: $setting-border-radius;
-            background-color: $setting-color-gray-7;
-            padding: 0 rem(10) rem(23) rem(20);
-            margin-bottom: rem(40);
-            color: $setting-color-gray-5;
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-8);
+        }
 
-            @include helper-breakpoint-media-min($xl) {
-                padding: rem(4) rem(40) rem(36);
-                margin-bottom: 0;
-            }
+        &__detail-list-item {
+            margin: 0;
+            font-family: var(--body-md-family);
+            font-size: var(--body-md-size);
+            font-weight: var(--body-md-weight);
+            line-height: var(--body-md-line-height);
+            color: var(--text-secondary);
+        }
 
-            &-item {
-                &:nth-child(odd) {
-                    padding-right: 5px;
-                }
+        &__detail-list-key {
+            font-weight: var(--font-weight-semibold);
+            color: var(--text-secondary);
+        }
 
-                &:nth-child(even) {
-                    padding-left: 5px;
-                }
-            }
+        &__detail-list-value {
+            color: var(--text-secondary);
+        }
 
-            &-key {
-                font-size: rem(14);
-                font-weight: fw(bold);
-                padding-top: rem(23);
+        &__downloads {
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-8);
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
 
-                @include helper-breakpoint-media-min($xl) {
-                    font-size: rem(16);
-                    padding-top: rem(31);
-                }
-            }
+        &__download-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--scale-8);
+            font-family: var(--label-md-family);
+            font-size: var(--label-md-size);
+            font-weight: var(--label-md-weight);
+            line-height: var(--label-md-line-height);
+            color: var(--text-brand);
 
-            &-value {
-                font-size: rem(13);
-                font-weight: fw(regular);
-                color: $setting-color-gray-4;
-
-                @include helper-breakpoint-media-min($xl) {
-                    font-size: rem(15);
-                }
+            &:hover,
+            &:focus {
+                color: var(--text-brand);
+                text-decoration: underline;
             }
         }
 

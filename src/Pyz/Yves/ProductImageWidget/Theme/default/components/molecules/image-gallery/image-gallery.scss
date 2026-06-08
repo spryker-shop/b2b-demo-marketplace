@@ -9,25 +9,17 @@
             height: rem(289);
             position: relative;
             z-index: $setting-zi-element;
-            background: $setting-color-white;
-
-            &::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: $setting-color-alpha-2;
-                z-index: $setting-zi-element;
-            }
+            background: var(--background-surface);
+            border: var(--stroke-sm) solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            overflow: hidden;
 
             @include helper-breakpoint-media-min($lg) {
                 height: rem(420);
             }
 
             @include helper-breakpoint-media-min($xl) {
-                height: rem(570);
+                height: rem(540);
             }
         }
 
@@ -36,7 +28,7 @@
             position: absolute;
             left: 0;
             top: 0;
-            padding: rem(10);
+            padding: var(--scale-16);
             width: 100%;
             height: rem(289);
             display: flex;
@@ -46,7 +38,7 @@
             z-index: $setting-zi-element - 1;
 
             &--left-indent {
-                padding-left: rem(73);
+                padding-left: rem(96);
             }
 
             &--active,
@@ -55,12 +47,16 @@
             }
 
             @include helper-breakpoint-media-min($lg) {
-                padding: rem(37);
+                padding: var(--scale-32);
                 height: rem(420);
+
+                &--left-indent {
+                    padding-left: rem(112);
+                }
             }
 
             @include helper-breakpoint-media-min($xl) {
-                height: rem(570);
+                height: rem(540);
             }
         }
 
@@ -82,15 +78,15 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                margin-top: rem(18);
+                margin-top: var(--scale-16);
 
                 li {
                     display: block;
-                    margin: 0 0.5rem;
-                    width: rem(5);
-                    height: rem(5);
-                    background: $setting-color-light;
-                    border-radius: 50%;
+                    margin: 0 var(--scale-4);
+                    width: rem(6);
+                    height: rem(6);
+                    background: var(--border-default);
+                    border-radius: var(--radius-full);
                     font-size: 0;
 
                     &:hover {
@@ -98,26 +94,25 @@
                     }
 
                     &.slick-active {
-                        width: rem(10);
-                        height: rem(10);
-                        background: $setting-color-transparent;
-                        border: 2px solid $setting-color-gray-4;
+                        width: rem(8);
+                        height: rem(8);
+                        background: var(--background-brand-primary);
                     }
                 }
             }
 
             @include helper-breakpoint-media-min($lg) {
                 position: absolute;
-                top: rem(20);
-                left: rem(20);
+                top: var(--scale-16);
+                left: var(--scale-16);
                 z-index: $setting-zi-element + 1;
-                width: rem(40);
+                width: rem(64);
                 max-height: rem(424);
                 overflow: hidden;
 
                 .thumb-prev,
                 .thumb-next {
-                    padding: rem(5) 0 0;
+                    padding: var(--scale-4) 0 0;
                     text-align: center;
                     cursor: pointer;
                     display: block;
@@ -125,7 +120,7 @@
                     svg {
                         display: block;
                         width: 100%;
-                        color: $setting-color-gray-4;
+                        color: var(--icon-secondary);
                     }
 
                     &[aria-disabled='true'] {
@@ -133,13 +128,14 @@
                         pointer-events: none;
 
                         svg {
-                            color: $setting-color-transparent;
+                            color: var(--icon-disabled);
+                            opacity: 0.4;
                         }
                     }
                 }
 
                 .thumb-prev {
-                    padding: 0 0 rem(5);
+                    padding: 0 0 var(--scale-4);
 
                     svg {
                         transform: rotate(180deg);
@@ -150,45 +146,38 @@
                     border: none;
                 }
 
-                .slick-current #{$name}__thumbnail-item::before {
-                    background: $setting-color-transparent;
+                // Active thumbnail (slick current) gets a brand border.
+                .slick-current #{$name}__thumbnail-item {
+                    border-color: var(--border-brand);
                 }
             }
 
             @include helper-breakpoint-media-min($xl) {
-                left: rem(30);
-                width: rem(70);
+                width: rem(72);
             }
         }
 
         &__thumbnail-item {
-            background: $setting-color-white;
+            background: var(--background-surface);
             position: relative;
             height: rem(255);
             overflow: hidden;
+            border: var(--stroke-sm) solid var(--border-default);
+            border-radius: var(--radius-sm);
 
-            &::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                z-index: $setting-zi-element;
-                background: $setting-color-alpha-2;
-            }
+            @include helper-effect-transition(border-color);
 
             @include helper-breakpoint-media-min($lg) {
-                width: rem(40);
-                height: rem(40);
+                width: rem(64);
+                height: rem(64);
                 position: relative;
-                margin: rem(10) 0;
+                margin: var(--scale-8) 0;
                 cursor: pointer;
             }
 
             @include helper-breakpoint-media-min($xl) {
-                width: rem(70);
-                height: rem(70);
+                width: rem(72);
+                height: rem(72);
             }
         }
 
@@ -199,8 +188,8 @@
             transform: translate(-50%, -50%);
 
             @include helper-breakpoint-media-min($lg) {
-                max-width: calc(100% - 10px);
-                max-height: calc(100% - 10px);
+                max-width: calc(100% - #{rem(12)});
+                max-height: calc(100% - #{rem(12)});
             }
         }
 

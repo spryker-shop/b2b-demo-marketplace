@@ -1,43 +1,82 @@
 {% extends view('merchant-product-offer-widget', '@SprykerShop:MerchantProductOfferWidget') %}
 
 {% block content %}
-    {% set priceMode = data.productView.currentProductPrice.priceMode | default %}
+    {% if data.productOffers is not empty %}
+        {% set selectedReference = data.productView.productOfferReference | default %}
+        {% set selectedOffer = null %}
+        {% for productOffer in data.productOffers %}
+            {% if selectedReference and selectedReference is same as(productOffer.productOfferReference) %}
+                {% set selectedOffer = productOffer %}
+            {% endif %}
+        {% endfor %}
+        {% set selectedOffer = selectedOffer ?? (data.productOffers | first) %}
+        {% set hasMultipleOffers = data.productOffers | length > 1 %}
+        {% set popupContentId = 'compare-sellers-' ~ (selectedOffer.productOfferReference | default('offer')) %}
+        {% set popupTriggerClass = 'js-compare-sellers__trigger-' ~ (selectedOffer.productOfferReference | default('offer')) %}
 
-    {% if data.isTitleVisible %}
-        <div class="title title--product-sold-by grid grid--justify grid--baseline">
-            <div class="col col--expand col--reset-min-width">
-                {{ 'merchant_product.sold_by' | trans }}
-            </div>
-            {% if priceMode %}
-                <div class="title title--price-mode col col--reset-min-width is-hidden-lg-xxl">
-                    {% if priceMode == 'GROSS_MODE' %}
-                        {{ 'price.mode.incl_vat' | trans }}
+        {% if data.isTitleVisible %}
+            <p class="title title--product-sold-by">{{ 'merchant_product.sold_by' | trans }}</p>
+        {% endif %}
+
+        {% block selectedSeller %}
+            <div class="sold-by">
+                <span class="sold-by__name">{{ selectedOffer.merchantStorage.name | default }}</span>
+
+                <div class="sold-by__links">
+                    {% if selectedOffer.merchantStorage.merchantUrl is defined %}
+                        <a class="sold-by__link" href="{{ functionExists('generatePath') ? generatePath(selectedOffer.merchantStorage.merchantUrl) : selectedOffer.merchantStorage.merchantUrl }}">
+                            {{ 'merchant_product_offer.view_seller' | trans }}
+                        </a>
                     {% endif %}
 
-                    {% if priceMode == 'NET_MODE' %}
-                        {{ 'price.mode.excl_vat' | trans }}
+                    {% if selectedOffer.merchantReference is defined and selectedOffer.merchantReference %}
+                        {% widget 'MerchantRelationRequestCreateLinkWidget' args [selectedOffer.merchantReference] only %}{% endwidget %}
+                    {% endif %}
+
+                    {% if hasMultipleOffers %}
+                        <button type="button" class="sold-by__change {{ popupTriggerClass }}" {{ qa('compare-sellers-trigger') }}>
+                            {{ 'merchant_product_offer.change' | trans }}
+                        </button>
                     {% endif %}
                 </div>
-            {% endif %}
-        </div>
-    {% endif %}
+            </div>
+        {% endblock %}
 
-    {% for productOffer in data.productOffers %}
-        {% include molecule('merchant-product-offer-item', 'MerchantProductOfferWidget') with {
-            class: 'box box--smaller',
-            data: {
-                isChecked: data.productView.productOfferReference is same as(productOffer.productOfferReference),
-                radioGroupName: 'product_offer_reference',
-                productOfferReference: productOffer.productOfferReference | default,
-                merchantName: productOffer.merchantStorage.name | default,
-                merchantUrl: productOffer.merchantStorage.merchantUrl | default,
-                price: productOffer.price.price | default(null),
-                currencyIsoCode: productOffer.price.currency.code | default(null),
-                isRadioButtonVisible: isRadioButtonVisible,
-                currentProductPrice: productOffer.price,
-                merchantReference: productOffer.merchantReference | default,
-                pageReload: data.pageReload,
-            },
-        } only %}
-    {% endfor %}
+        {% if hasMultipleOffers %}
+            {% set sellerListContent %}
+                {% for productOffer in data.productOffers %}
+                    {% set isOfferSelected = data.productView.productOfferReference is same as(productOffer.productOfferReference) %}
+                    {% include molecule('merchant-product-offer-item', 'MerchantProductOfferWidget') with {
+                        class: 'box box--smaller sold-by__popup-item' ~ (isOfferSelected ? ' is-selected' : ''),
+                        data: {
+                            isChecked: isOfferSelected,
+                            radioGroupName: 'product_offer_reference',
+                            productOfferReference: productOffer.productOfferReference | default,
+                            merchantName: productOffer.merchantStorage.name | default,
+                            merchantUrl: productOffer.merchantStorage.merchantUrl | default,
+                            price: productOffer.price.price | default(null),
+                            currencyIsoCode: productOffer.price.currency.code | default(null),
+                            isRadioButtonVisible: true,
+                            currentProductPrice: productOffer.price,
+                            merchantReference: productOffer.merchantReference | default,
+                            pageReload: true,
+                        },
+                    } only %}
+                {% endfor %}
+            {% endset %}
+
+            {% include molecule('main-popup') with {
+                class: 'sold-by__popup',
+                data: {
+                    title: 'merchant_product_offer.compare_sellers' | trans,
+                    content: sellerListContent,
+                },
+                attributes: {
+                    'content-id': popupContentId,
+                    'trigger-class-name': popupTriggerClass,
+                    'has-content-mount': true,
+                },
+            } only %}
+        {% endif %}
+    {% endif %}
 {% endblock %}

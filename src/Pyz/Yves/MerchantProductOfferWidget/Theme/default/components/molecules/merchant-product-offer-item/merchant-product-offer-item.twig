@@ -24,20 +24,19 @@
             <div class="{{ config.name }}__name">{{ data.merchantName }}</div>
         {% endblock %}
 
-        {% block merchantLink %}
-            <a class="{{ config.name }}__link" href="{{ functionExists('generatePath') ? generatePath(data.merchantUrl) : data.merchantUrl }}">
-                {{ 'merchant_product_offer.view_seller' | trans }}
-            </a>
-        {% endblock %}
+        <div class="{{ config.name }}__links">
+            {% block merchantLink %}
+                <a class="{{ config.name }}__link" href="{{ functionExists('generatePath') ? generatePath(data.merchantUrl) : data.merchantUrl }}">
+                    {{ 'merchant_product_offer.view_seller' | trans }}
+                </a>
+            {% endblock %}
 
-        {% block merchantRelationRequestCreateButton %}
-            <div>
+            {% block merchantRelationRequestCreateButton %}
                 {% if data.merchantReference is not null %}
-                    {% widget 'MerchantRelationRequestCreateLinkWidget' args [data.merchantReference] only %}
-                    {% endwidget %}
+                    {% widget 'MerchantRelationRequestCreateLinkWidget' args [data.merchantReference] only %}{% endwidget %}
                 {% endif %}
-            </div>
-        {% endblock %}
+            {% endblock %}
+        </div>
     </div>
 {% endblock %}
 

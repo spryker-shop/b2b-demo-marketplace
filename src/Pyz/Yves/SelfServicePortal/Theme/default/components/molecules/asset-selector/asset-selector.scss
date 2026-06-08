@@ -1,9 +1,10 @@
 @include self-service-portal-asset-selector($name: '.asset-selector') {
     &__container {
-        padding: rem(14) rem(20);
-        background-color: $setting-color-gray-7;
-        color: $setting-color-gray-3;
-        gap: rem(8);
+        padding: var(--scale-16) var(--scale-20);
+        background-color: var(--background-surface);
+        color: var(--text-primary);
+        border-radius: var(--radius-sm);
+        gap: var(--scale-8);
     }
 
     &__container--cart,
@@ -12,8 +13,24 @@
         padding: 0;
     }
 
+    // PDP asset box (base): label + "Assign/Select asset" link in design-system tokens.
+    // The more specific `--cart` / `--filter` rules below override this for those contexts.
+    &__container .link--additional {
+        color: var(--text-brand);
+        font-family: var(--label-sm-family);
+        font-size: rem(var(--label-sm-size));
+        font-weight: var(--label-sm-weight);
+        line-height: rem(var(--label-sm-line-height));
+        text-decoration: none;
+        cursor: pointer;
+    }
+
     &__subtitle {
-        color: $setting-color-gray-8;
+        color: var(--text-primary);
+        font-family: var(--label-sm-family);
+        font-size: rem(var(--label-sm-size));
+        font-weight: var(--label-sm-weight);
+        line-height: rem(var(--label-sm-line-height));
     }
 
     &__data-row {

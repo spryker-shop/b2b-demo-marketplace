@@ -1,19 +1,56 @@
 @mixin merchant-product-offer-widget-merchant-product-offer-item($name: '.merchant-product-offer-item') {
     #{$name} {
-        border-bottom: rem(1) solid $setting-color-gray-1;
-        line-height: rem(20);
+        line-height: var(--label-sm-line-height);
 
-        &__name {
-            font-size: rem(16);
-            margin-bottom: rem(7);
-            overflow: hidden;
-            text-overflow: ellipsis;
-            color: $setting-color-gray-5;
+        // Override the `box box--smaller` utility with the design-system "Sold by" seller row.
+        &.box {
+            margin: 0 0 var(--scale-8);
+            padding: var(--scale-8) var(--scale-16);
+            background-color: var(--background-surface);
+            border: 0;
+            border-radius: var(--radius-md);
         }
 
-        &__link {
-            font-size: rem(12);
-            color: $setting-color-main;
+        &.box:last-child {
+            margin-bottom: 0;
+        }
+
+        &__name {
+            margin-bottom: var(--scale-2);
+            overflow: hidden;
+            color: var(--text-primary);
+            font-family: var(--label-sm-semibold-family);
+            font-size: rem(var(--label-sm-semibold-size));
+            font-weight: var(--label-sm-semibold-weight);
+            line-height: rem(var(--label-sm-semibold-line-height));
+            text-overflow: ellipsis;
+        }
+
+        // "View Seller" + "Relation Request" on one line, identical styling.
+        &__links {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: var(--scale-4) var(--scale-12);
+        }
+
+        &__link,
+        &__links .link {
+            color: var(--text-brand);
+            font-family: var(--label-sm-family);
+            font-size: rem(var(--label-sm-size));
+            font-weight: var(--label-sm-weight);
+            line-height: rem(var(--label-sm-line-height));
+            text-decoration: none;
+        }
+
+        // Price (rendered by the volume price widget) reads as a compact semibold label.
+        .money-price__amount {
+            color: var(--text-primary);
+            font-family: var(--label-sm-semibold-family);
+            font-size: rem(var(--label-sm-semibold-size));
+            font-weight: var(--label-sm-semibold-weight);
+            line-height: rem(var(--label-sm-semibold-line-height));
         }
 
         @content;
@@ -21,3 +58,54 @@
 }
 
 @include merchant-product-offer-widget-merchant-product-offer-item();
+
+// Compact "Sold by" box: shows only the selected seller; "Change" opens the compare-sellers modal.
+.sold-by {
+    display: flex;
+    flex-direction: column;
+    gap: var(--scale-2);
+    padding: var(--scale-8) var(--scale-16);
+    background-color: var(--background-surface);
+    border-radius: var(--radius-md);
+
+    &__name {
+        color: var(--text-primary);
+        font-family: var(--label-sm-semibold-family);
+        font-size: rem(var(--label-sm-semibold-size));
+        font-weight: var(--label-sm-semibold-weight);
+        line-height: rem(var(--label-sm-semibold-line-height));
+    }
+
+    &__links {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--scale-4) var(--scale-12);
+    }
+
+    &__links a,
+    &__links .link,
+    &__link,
+    &__change {
+        padding: 0;
+        background: none;
+        border: 0;
+        color: var(--text-brand);
+        font-family: var(--label-sm-family);
+        font-size: rem(var(--label-sm-size));
+        font-weight: var(--label-sm-weight);
+        line-height: rem(var(--label-sm-line-height));
+        text-decoration: none;
+        cursor: pointer;
+    }
+}
+
+// Compare-sellers modal rows: non-selected sit on white, the selected one is highlighted.
+.sold-by__popup-item.box {
+    margin-bottom: var(--scale-4);
+    background-color: transparent;
+}
+
+.sold-by__popup-item.is-selected {
+    background-color: var(--background-surface);
+}
