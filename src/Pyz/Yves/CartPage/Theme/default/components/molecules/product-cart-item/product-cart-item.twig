@@ -158,6 +158,7 @@
                                 } only %}
                             </div>
                         {% endif %}
+                        {% widget 'ProductGrossMarginWidget' args [listItem.grossMargin ?? 0, 'volume-price'] %}{% endwidget %}
                     {% endblock %}
 
                     {% block deleteButton %}
