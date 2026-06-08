@@ -9,12 +9,43 @@
     list: null,
     canEdit: false,
     ajaxTriggerAttribute: null,
+    currencyIsoCode: null,
 } %}
 
 {% set listItem = data.listItem %}
 
 {% block body %}
     <div class="{{ config.name }}__inner">
+        {% block panelMargin %}
+            {% if can('SeePricePermissionPlugin') %}
+                {% set marginUnitPrice = listItem.unitPrice is defined ? listItem.unitPrice : listItem.price %}
+                {% set marginTotalPrice = listItem.unitPrice is defined ? listItem.sumSubtotalAggregation : listItem.price %}
+
+                <section class="{{ config.name }}__section {{ config.name }}__section--margin">
+                    <div class="{{ config.name }}__margin" data-qa="cart-item-margin-summary">
+                        <div class="{{ config.name }}__margin-total">
+                            <span class="{{ config.name }}__margin-label">{{ 'cart.item.item_total' | trans }}</span>
+                            <span class="{{ config.name }}__margin-breakdown">
+                                {{ listItem.quantity | executeFilterIfExists('formatInt', app.locale) }} &times; {{ marginUnitPrice | money(true, data.currencyIsoCode) }}
+                            </span>
+                        </div>
+
+                        <div class="{{ config.name }}__margin-price">
+                            {% include molecule('money-price') with {
+                                class: config.name ~ '__margin-money',
+                                data: {
+                                    amount: marginTotalPrice,
+                                    currencyIsoCode: data.currencyIsoCode,
+                                },
+                            } only %}
+
+                            {% widget 'ProductGrossMarginWidget' args [listItem.grossMargin ?? 0, config.name] %}{% endwidget %}
+                        </div>
+                    </div>
+                </section>
+            {% endif %}
+        {% endblock %}
+
         {% block panelComments %}
             <section class="{{ config.name }}__section {{ config.name }}__section--comments">
                 <h4 class="{{ config.name }}__section-label">{{ 'Comments' | trans }}</h4>
