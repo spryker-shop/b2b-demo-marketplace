@@ -29,7 +29,7 @@
     {% set submitterValue = data.ajaxTriggerAttribute ? 'change' : true %}
 
     <form method="POST" action="{{ path(data.ajaxTriggerAttribute ? 'cart/async/update' : 'cart/update', {'sku': data.productItem.sku }) }}">
-        <ul class="list spacing-y">
+        <ul class="{{ config.name }}__list">
             {% for attributeName, attributeOptions in data.productItemAttributes %}
                 {% set options = [] %}
 
@@ -42,12 +42,10 @@
                     }]) %}
                 {% endfor %}
 
-                <li class="list__item spacing-y">
-                    <label class="grid grid--middle">
-                        <div class="col">
-                            <span class="{{ config.name }}__label">{{ ('product.attribute.' ~ attributeName) | trans }}:</span>
-                        </div>
-                        <div class="col col--expand {{ config.name }}__select">
+                <li class="{{ config.name }}__item">
+                    <label class="{{ config.name }}__row">
+                        <span class="{{ config.name }}__label">{{ ('product.attribute.' ~ attributeName) | trans }}:</span>
+                        <span class="{{ config.name }}__select">
                             {% block variantSelector %}
                                 {% include molecule('custom-select') with {
                                     modifiers: ['small', 'mobile-expand', 'mobile-xs'],
@@ -63,7 +61,7 @@
                                     },
                                 } only %}
                             {% endblock %}
-                        </div>
+                        </span>
                     </label>
                     <input name="selectedAttributes[{{ attributeName }}]" type="hidden" />
                 </li>
