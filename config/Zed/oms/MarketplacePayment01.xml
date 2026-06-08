@@ -20,6 +20,7 @@
             </state>
             <state name="paid"  display="oms.state.paid"/>
             <state name="cancelled" display="oms.state.canceled"/>
+            <state name="refund pending" display="oms.state.refunded"/>
             <state name="refunded" display="oms.state.refunded"/>
             <state name="merchant split pending"  display="oms.state.merchant-split-pending"/>
             <state name="tax invoice submitted"  display="oms.state.paid"/>
@@ -84,8 +85,14 @@
 
             <transition condition="MerchantSalesOrder/IsOrderPaid">
                 <source>cancelled</source>
-                <target>refunded</target>
+                <target>refund pending</target>
                 <event>refund</event>
+            </transition>
+
+            <transition happy="true">
+                <source>refund pending</source>
+                <target>refunded</target>
+                <event>restore budget</event>
             </transition>
 
             <transition>
@@ -117,8 +124,9 @@
         <events>
             <event name="skip grace period" manual="true" timeout="2 hour"/>
             <event name="pay" manual="true" command="Order/RequestProductReviews"/>
-            <event name="cancel" manual="true"/>
+            <event name="cancel" manual="true" command="CostCenter/RestoreBudgetOnCancel"/>
             <event name="refund" manual="true"/>
+            <event name="restore budget" onEnter="true" command="CostCenter/RestoreBudgetOnRefund"/>
             <event name="send to merchant" onEnter="true" command="MerchantSalesOrder/CreateOrders"/>
             <event name="submit tax invoice" onEnter="true" command="Vertex/SubmitPaymentTaxInvoice"/>
             <event name="ship by merchant"/>

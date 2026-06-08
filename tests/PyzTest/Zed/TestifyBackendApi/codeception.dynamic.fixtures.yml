@@ -77,6 +77,7 @@ suites:
                 - \SprykerTest\Shared\Shipment\Helper\ShipmentMethodDataHelper
                 - \SprykerTest\Shared\FileManager\Helper\FileManagerHelper
                 - \SprykerFeatureTest\Shared\SelfServicePortal\Helper\SspModelHelper
+                - \SprykerFeatureTest\Shared\PurchasingControl\Helper\PurchasingControlHelper
                 - \SprykerTest\Shared\ServicePoint\Helper\ServicePointHelper
                 - \SprykerTest\Zed\ProductList\Helper\ProductListHelper
                 - \SprykerTest\Shared\ProductOfferShipmentType\Helper\ProductOfferShipmentTypeHelper
@@ -98,4 +99,3 @@ suites:
                     cleanup: false
                 \SprykerTest\Shared\Customer\Helper\CustomerDataHelper:
                     isMailFacadeMockEnabled: false
-                    

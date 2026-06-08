@@ -12,50 +12,17 @@ namespace Pyz\Glue\GlueApplication;
 use Spryker\Glue\AgentAuthRestApi\Plugin\GlueApplication\AgentAccessTokenRestRequestValidatorPlugin;
 use Spryker\Glue\AgentAuthRestApi\Plugin\GlueApplication\AgentAccessTokenRestUserFinderPlugin;
 use Spryker\Glue\AgentAuthRestApi\Plugin\GlueApplication\AgentRestUserValidatorPlugin;
-use Spryker\Glue\AlternativeProductsRestApi\Plugin\GlueApplication\AbstractAlternativeProductsResourceRoutePlugin;
-use Spryker\Glue\AlternativeProductsRestApi\Plugin\GlueApplication\ConcreteAlternativeProductsResourceRoutePlugin;
 use Spryker\Glue\AuthRestApi\Plugin\FormatAuthenticationErrorResponseHeadersPlugin;
 use Spryker\Glue\AuthRestApi\Plugin\GlueApplication\AccessTokenRestRequestValidatorPlugin;
 use Spryker\Glue\AuthRestApi\Plugin\GlueApplication\FormattedControllerBeforeActionValidateAccessTokenPlugin;
 use Spryker\Glue\AuthRestApi\Plugin\GlueApplication\SimultaneousAuthenticationRestRequestValidatorPlugin;
 use Spryker\Glue\AuthRestApi\Plugin\RestUserFinderByAccessTokenPlugin;
-use Spryker\Glue\AvailabilityNotificationsRestApi\Plugin\GlueApplication\AvailabilityNotificationsResourceRoutePlugin;
-use Spryker\Glue\AvailabilityNotificationsRestApi\Plugin\GlueApplication\CustomerAvailabilityNotificationsResourceRoutePlugin;
-use Spryker\Glue\AvailabilityNotificationsRestApi\Plugin\GlueApplication\MyAvailabilityNotificationsResourceRoutePlugin;
-use Spryker\Glue\CartCodesRestApi\Plugin\GlueApplication\CartRuleByQuoteResourceRelationshipPlugin;
-use Spryker\Glue\CartCodesRestApi\Plugin\GlueApplication\VoucherByQuoteResourceRelationshipPlugin;
-use Spryker\Glue\CartPermissionGroupsRestApi\Plugin\GlueApplication\CartPermissionGroupByQuoteResourceRelationshipPlugin;
-use Spryker\Glue\CartPermissionGroupsRestApi\Plugin\GlueApplication\CartPermissionGroupByShareDetailResourceRelationshipPlugin;
-use Spryker\Glue\CartPermissionGroupsRestApi\Plugin\GlueApplication\CartPermissionGroupsResourceRoutePlugin;
-use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\CartsRestApi\Plugin\ControllerBeforeAction\SetAnonymousCustomerIdControllerBeforeActionPlugin;
-use Spryker\Glue\CartsRestApi\Plugin\GlueApplication\CartByRestCheckoutDataResourceRelationshipPlugin;
-use Spryker\Glue\CartsRestApi\Plugin\GlueApplication\CartItemsByQuoteResourceRelationshipPlugin;
-use Spryker\Glue\CartsRestApi\Plugin\GlueApplication\GuestCartByRestCheckoutDataResourceRelationshipPlugin;
 use Spryker\Glue\CartsRestApi\Plugin\Validator\AnonymousCustomerUniqueIdValidatorPlugin;
 use Spryker\Glue\CatalogSearchRestApi\Plugin\CatalogSearchRequestParametersIntegerRestRequestValidatorPlugin;
-use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
-use Spryker\Glue\CmsPagesContentBannersResourceRelationship\Plugin\GlueApplication\ContentBannerByCmsPageResourceRelationshipPlugin;
-use Spryker\Glue\CmsPagesContentProductAbstractListsResourceRelationship\Plugin\GlueApplication\ContentProductAbstractListByCmsPageResourceRelationshipPlugin;
-use Spryker\Glue\CmsPagesRestApi\CmsPagesRestApiConfig;
-use Spryker\Glue\CmsPagesRestApi\Plugin\GlueApplication\CmsPagesResourceRoutePlugin;
-use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Plugin\GlueApplication\CompanyBusinessUnitAddressByCheckoutDataResourceRelationshipPlugin;
-use Spryker\Glue\CompanyUsersRestApi\Plugin\GlueApplication\CompanyUserByShareDetailResourceRelationshipPlugin;
 use Spryker\Glue\CompanyUsersRestApi\Plugin\GlueApplication\CompanyUserRestUserValidatorPlugin;
-use Spryker\Glue\ConfigurableBundleCartsRestApi\Plugin\GlueApplication\ConfiguredBundlesResourceRoutePlugin;
-use Spryker\Glue\ConfigurableBundlesProductsResourceRelationship\ConfigurableBundlesProductsResourceRelationshipConfig;
-use Spryker\Glue\ConfigurableBundlesProductsResourceRelationship\Plugin\GlueApplication\ProductConcreteByConfigurableBundleTemplateSlotResourceRelationshipPlugin;
-use Spryker\Glue\ConfigurableBundlesRestApi\ConfigurableBundlesRestApiConfig;
-use Spryker\Glue\ConfigurableBundlesRestApi\Plugin\GlueApplication\ConfigurableBundleTemplateImageSetByConfigurableBundleTemplateResourceRelationshipPlugin;
-use Spryker\Glue\ConfigurableBundlesRestApi\Plugin\GlueApplication\ConfigurableBundleTemplateSlotByConfigurableBundleTemplateResourceRelationshipPlugin;
-use Spryker\Glue\ConfigurableBundlesRestApi\Plugin\GlueApplication\ConfigurableBundleTemplatesResourceRoutePlugin;
-use Spryker\Glue\ContentBannersRestApi\Plugin\ContentBannerResourceRoutePlugin;
-use Spryker\Glue\ContentProductAbstractListsRestApi\ContentProductAbstractListsRestApiConfig;
-use Spryker\Glue\ContentProductAbstractListsRestApi\Plugin\GlueApplication\ProductAbstractByContentProductAbstractListResourceRelationshipPlugin;
 use Spryker\Glue\CustomerAccessRestApi\Plugin\GlueApplication\CustomerAccessFormatRequestPlugin;
-use Spryker\Glue\CustomersRestApi\Plugin\GlueApplication\AddressByCheckoutDataResourceRelationshipPlugin;
 use Spryker\Glue\CustomersRestApi\Plugin\SetCustomerBeforeActionPlugin;
-use Spryker\Glue\DiscountPromotionsRestApi\Plugin\GlueApplication\PromotionItemByQuoteTransferResourceRelationshipPlugin;
 use Spryker\Glue\EntityTagsRestApi\Plugin\GlueApplication\EntityTagFormatResponseHeadersPlugin;
 use Spryker\Glue\EntityTagsRestApi\Plugin\GlueApplication\EntityTagRestRequestValidatorPlugin;
 use Spryker\Glue\EventDispatcher\Plugin\Application\EventDispatcherApplicationPlugin;
@@ -66,7 +33,6 @@ use Spryker\Glue\GlueApplication\Plugin\GlueApplication\HeadersValidateHttpReque
 use Spryker\Glue\GlueApplication\Plugin\GlueApplication\PaginationParametersValidateHttpRequestPlugin;
 use Spryker\Glue\GlueApplicationAuthorizationConnector\Plugin\GlueApplication\AuthorizationRestUserValidatorPlugin;
 use Spryker\Glue\GlueApplicationAuthorizationConnector\Plugin\GlueApplication\AuthorizationRouterParameterExpanderPlugin;
-use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface;
 use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\BackendApiGlueApplicationBootstrapPlugin;
 use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\BackendRouterProviderPlugin;
 use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\ControllerConfigurationCacheCollectorPlugin as BackendControllerConfigurationCacheCollectorPlugin;
@@ -74,118 +40,25 @@ use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\CustomRouteRou
 use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\ResourcesProviderPlugin as BackendResourcesProviderPlugin;
 use Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\Plugin\GlueApplication\IsProtectedTableColumnExpanderPlugin as BackendIsProtectedTableColumnExpanderPlugin;
 use Spryker\Glue\GlueJsonApiConvention\Plugin\GlueApplication\JsonApiConventionPlugin;
-use Spryker\Glue\HealthCheck\Plugin\HealthCheckResourceRoutePlugin;
 use Spryker\Glue\Http\Plugin\Application\HttpApplicationPlugin;
 use Spryker\Glue\Locale\Plugin\Application\LocaleApplicationPlugin;
-use Spryker\Glue\MerchantProductOffersRestApi\MerchantProductOffersRestApiConfig;
-use Spryker\Glue\MerchantProductOffersRestApi\Plugin\GlueApplication\ProductOffersByProductConcreteSkuResourceRelationshipPlugin;
-use Spryker\Glue\MerchantsRestApi\Plugin\GlueApplication\MerchantByMerchantReferenceResourceRelationshipPlugin;
-use Spryker\Glue\MerchantsRestApi\Plugin\GlueApplication\MerchantsByOrderResourceRelationshipPlugin;
 use Spryker\Glue\MultiFactorAuth\Plugin\GlueApplication\RestApi\MultiFactorAuthRestUserValidatorPlugin;
-use Spryker\Glue\NavigationsCategoryNodesResourceRelationship\Plugin\GlueApplication\CategoryNodeByResourceIdResourceRelationshipPlugin;
-use Spryker\Glue\NavigationsRestApi\NavigationsRestApiConfig;
-use Spryker\Glue\OrdersRestApi\OrdersRestApiConfig;
-use Spryker\Glue\OrdersRestApi\Plugin\OrderItemByResourceIdResourceRelationshipPlugin;
-use Spryker\Glue\OrdersRestApi\Plugin\OrderRelationshipByOrderReferencePlugin;
-use Spryker\Glue\PaymentsRestApi\Plugin\GlueApplication\PaymentMethodsByCheckoutDataResourceRelationshipPlugin;
-use Spryker\Glue\ProductAvailabilitiesRestApi\Plugin\GlueApplication\AbstractProductAvailabilitiesByResourceIdResourceRelationshipPlugin;
-use Spryker\Glue\ProductAvailabilitiesRestApi\Plugin\GlueApplication\ConcreteProductAvailabilitiesByResourceIdResourceRelationshipPlugin;
-use Spryker\Glue\ProductBundleCartsRestApi\Plugin\GlueApplication\BundledItemByQuoteResourceRelationshipPlugin;
-use Spryker\Glue\ProductBundleCartsRestApi\Plugin\GlueApplication\BundleItemByQuoteResourceRelationshipPlugin;
-use Spryker\Glue\ProductBundleCartsRestApi\ProductBundleCartsRestApiConfig;
-use Spryker\Glue\ProductBundlesRestApi\Plugin\GlueApplication\BundledProductByProductConcreteSkuResourceRelationshipPlugin;
-use Spryker\Glue\ProductBundlesRestApi\Plugin\GlueApplication\ConcreteProductsBundledProductsResourceRoutePlugin;
-use Spryker\Glue\ProductBundlesRestApi\ProductBundlesRestApiConfig;
 use Spryker\Glue\ProductConfigurationsRestApi\Plugin\GlueApplication\CartItemProductConfigurationRestRequestValidatorPlugin;
-use Spryker\Glue\ProductImageSetsRestApi\Plugin\Relationship\AbstractProductsProductImageSetsResourceRelationshipPlugin;
-use Spryker\Glue\ProductImageSetsRestApi\Plugin\Relationship\ConcreteProductsProductImageSetsResourceRelationshipPlugin;
-use Spryker\Glue\ProductLabelsRestApi\Plugin\GlueApplication\ProductLabelByProductConcreteSkuResourceRelationshipPlugin;
-use Spryker\Glue\ProductLabelsRestApi\Plugin\GlueApplication\ProductLabelsRelationshipByResourceIdPlugin;
-use Spryker\Glue\ProductOfferAvailabilitiesRestApi\Plugin\GlueApplication\ProductOfferAvailabilitiesByProductOfferReferenceResourceRelationshipPlugin;
-use Spryker\Glue\ProductOfferPricesRestApi\Plugin\GlueApplication\ProductOfferPriceByProductOfferReferenceResourceRelationshipPlugin;
-use Spryker\Glue\ProductOffersRestApi\Plugin\GlueApplication\ProductOffersByProductOfferReferenceResourceRelationshipPlugin;
-use Spryker\Glue\ProductOptionsRestApi\Plugin\GlueApplication\ProductOptionsByProductAbstractSkuResourceRelationshipPlugin;
-use Spryker\Glue\ProductOptionsRestApi\Plugin\GlueApplication\ProductOptionsByProductConcreteSkuResourceRelationshipPlugin;
-use Spryker\Glue\ProductPricesRestApi\Plugin\GlueApplication\AbstractProductPricesByResourceIdResourceRelationshipPlugin;
-use Spryker\Glue\ProductPricesRestApi\Plugin\GlueApplication\ConcreteProductPricesByResourceIdResourceRelationshipPlugin;
 use Spryker\Glue\ProductPricesRestApi\Plugin\GlueApplication\CurrencyParameterValidatorPlugin;
 use Spryker\Glue\ProductPricesRestApi\Plugin\GlueApplication\PriceModeParameterValidatorPlugin;
 use Spryker\Glue\ProductPricesRestApi\Plugin\GlueApplication\SetPriceModeBeforeActionPlugin;
-use Spryker\Glue\ProductReviewsRestApi\Plugin\GlueApplication\AbstractProductsProductReviewsResourceRoutePlugin;
-use Spryker\Glue\ProductReviewsRestApi\Plugin\GlueApplication\ProductReviewsRelationshipByProductAbstractSkuPlugin;
-use Spryker\Glue\ProductReviewsRestApi\Plugin\GlueApplication\ProductReviewsRelationshipByProductConcreteSkuPlugin;
-use Spryker\Glue\ProductsCategoriesResourceRelationship\Plugin\AbstractProductsCategoriesResourceRelationshipPlugin;
-use Spryker\Glue\ProductsRestApi\Plugin\GlueApplication\ConcreteProductBySkuResourceRelationshipPlugin;
-use Spryker\Glue\ProductsRestApi\Plugin\GlueApplication\ConcreteProductsByProductConcreteIdsResourceRelationshipPlugin;
-use Spryker\Glue\ProductsRestApi\Plugin\GlueApplication\ProductAbstractByProductAbstractSkuResourceRelationshipPlugin;
-use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
-use Spryker\Glue\ProductTaxSetsRestApi\Plugin\GlueApplication\ProductTaxSetByProductAbstractSkuResourceRelationshipPlugin;
-use Spryker\Glue\RelatedProductsRestApi\Plugin\GlueApplication\RelatedProductsResourceRoutePlugin;
 use Spryker\Glue\RestRequestValidator\Plugin\ValidateRestRequestAttributesPlugin;
 use Spryker\Glue\Router\Plugin\Application\RouterApplicationPlugin;
-use Spryker\Glue\SalesReturnsRestApi\Plugin\ReturnItemByReturnResourceRelationshipPlugin;
-use Spryker\Glue\SalesReturnsRestApi\Plugin\ReturnReasonsResourceRoutePlugin;
-use Spryker\Glue\SalesReturnsRestApi\Plugin\ReturnsResourceRoutePlugin;
-use Spryker\Glue\SalesReturnsRestApi\SalesReturnsRestApiConfig;
 use Spryker\Glue\SecurityBlockerRestApi\Plugin\GlueApplication\SecurityBlockerAgentControllerAfterActionPlugin;
 use Spryker\Glue\SecurityBlockerRestApi\Plugin\GlueApplication\SecurityBlockerAgentRestRequestValidatorPlugin;
 use Spryker\Glue\SecurityBlockerRestApi\Plugin\GlueApplication\SecurityBlockerCustomerControllerAfterActionPlugin;
 use Spryker\Glue\SecurityBlockerRestApi\Plugin\GlueApplication\SecurityBlockerCustomerRestRequestValidatorPlugin;
 use Spryker\Glue\Session\Plugin\Application\SessionApplicationPlugin;
-use Spryker\Glue\SharedCartsRestApi\Plugin\GlueApplication\SharedCartByCartIdResourceRelationshipPlugin;
-use Spryker\Glue\SharedCartsRestApi\Plugin\GlueApplication\SharedCartsResourceRoutePlugin;
-use Spryker\Glue\SharedCartsRestApi\SharedCartsRestApiConfig;
-use Spryker\Glue\ShoppingListsRestApi\Plugin\GlueApplication\ShoppingListItemByShoppingListResourceRelationshipPlugin;
-use Spryker\Glue\ShoppingListsRestApi\Plugin\GlueApplication\ShoppingListItemsResourcePlugin;
-use Spryker\Glue\ShoppingListsRestApi\Plugin\GlueApplication\ShoppingListsResourcePlugin;
-use Spryker\Glue\ShoppingListsRestApi\ShoppingListsRestApiConfig;
 use Spryker\Glue\StoresApi\Plugin\GlueStorefrontApiApplication\StoreApplicationPlugin;
-use Spryker\Glue\UpSellingProductsRestApi\Plugin\GlueApplication\CartUpSellingProductsResourceRoutePlugin;
-use Spryker\Glue\UrlsRestApi\Plugin\GlueApplication\UrlResolverResourceRoutePlugin;
 use Spryker\Glue\WebProfiler\Plugin\Application\WebProfilerApplicationPlugin;
-use SprykerEco\Glue\Vertex\Plugin\VertexTaxValidateIdResourceRoutePlugin;
-use SprykerFeature\Glue\SelfServicePortal\Plugin\GlueApplication\SspAssetsResourceRoutePlugin;
-use SprykerFeature\Glue\SelfServicePortal\Plugin\GlueApplication\SspInquiriesResourceRoutePlugin;
-use SprykerFeature\Glue\SelfServicePortal\Plugin\GlueApplication\SspServicesResourceRoutePlugin;
 
 class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependencyProvider
 {
-    /**
-     * {@inheritDoc}
-     *
-     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface>
-     */
-    protected function getResourceRoutePlugins(): array
-    {
-        return [
-            new RelatedProductsResourceRoutePlugin(),
-            new CartUpSellingProductsResourceRoutePlugin(),
-            new AbstractAlternativeProductsResourceRoutePlugin(),
-            new ConcreteAlternativeProductsResourceRoutePlugin(),
-            new CartPermissionGroupsResourceRoutePlugin(),
-            new SharedCartsResourceRoutePlugin(),
-            new ContentBannerResourceRoutePlugin(),
-            new UrlResolverResourceRoutePlugin(),
-            new AbstractProductsProductReviewsResourceRoutePlugin(),
-            new HealthCheckResourceRoutePlugin(),
-            new ShoppingListsResourcePlugin(),
-            new ShoppingListItemsResourcePlugin(),
-            new ReturnReasonsResourceRoutePlugin(),
-            new ReturnsResourceRoutePlugin(),
-            new CmsPagesResourceRoutePlugin(),
-            new ConcreteProductsBundledProductsResourceRoutePlugin(),
-            new AvailabilityNotificationsResourceRoutePlugin(),
-            new CustomerAvailabilityNotificationsResourceRoutePlugin(),
-            new MyAvailabilityNotificationsResourceRoutePlugin(),
-            new ConfigurableBundleTemplatesResourceRoutePlugin(),
-            new ConfiguredBundlesResourceRoutePlugin(),
-            new VertexTaxValidateIdResourceRoutePlugin(),
-            new SspAssetsResourceRoutePlugin(),
-            new SspInquiriesResourceRoutePlugin(),
-            new SspServicesResourceRoutePlugin(),
-        ];
-    }
-
     /**
      * {@inheritDoc}
      *
@@ -310,265 +183,6 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
             new SetAnonymousCustomerIdControllerBeforeActionPlugin(),
             new SetPriceModeBeforeActionPlugin(),
         ];
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface $resourceRelationshipCollection
-     *
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface
-     */
-    protected function getResourceRelationshipPlugins(
-        ResourceRelationshipCollectionInterface $resourceRelationshipCollection,
-    ): ResourceRelationshipCollectionInterface {
-        $resourceRelationshipCollection->addRelationship(
-            ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
-            new AbstractProductPricesByResourceIdResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
-            new ConcreteProductPricesByResourceIdResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
-            new AbstractProductsProductImageSetsResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
-            new ConcreteProductsByProductConcreteIdsResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
-            new ConcreteProductsProductImageSetsResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
-            new AbstractProductAvailabilitiesByResourceIdResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
-            new ConcreteProductAvailabilitiesByResourceIdResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            CartsRestApiConfig::RESOURCE_CART_ITEMS,
-            new ConcreteProductBySkuResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
-            new ProductLabelsRelationshipByResourceIdPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            NavigationsRestApiConfig::RESOURCE_NAVIGATIONS,
-            new CategoryNodeByResourceIdResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
-            new ProductLabelByProductConcreteSkuResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            CheckoutRestApiConfig::RESOURCE_CHECKOUT,
-            new OrderRelationshipByOrderReferencePlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
-            new ProductTaxSetByProductAbstractSkuResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            CartsRestApiConfig::RESOURCE_CARTS,
-            new CartPermissionGroupByQuoteResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            CartsRestApiConfig::RESOURCE_CARTS,
-            new SharedCartByCartIdResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            SharedCartsRestApiConfig::RESOURCE_SHARED_CARTS,
-            new CartPermissionGroupByShareDetailResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            SharedCartsRestApiConfig::RESOURCE_SHARED_CARTS,
-            new CompanyUserByShareDetailResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
-            new ProductOptionsByProductAbstractSkuResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
-            new ProductOptionsByProductConcreteSkuResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
-            new ProductReviewsRelationshipByProductAbstractSkuPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
-            new ProductReviewsRelationshipByProductConcreteSkuPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            CartsRestApiConfig::RESOURCE_CARTS,
-            new VoucherByQuoteResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            CartsRestApiConfig::RESOURCE_CARTS,
-            new CartRuleByQuoteResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            CartsRestApiConfig::RESOURCE_CARTS,
-            new CartItemsByQuoteResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            ShoppingListsRestApiConfig::RESOURCE_SHOPPING_LIST_ITEMS,
-            new ConcreteProductBySkuResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            ShoppingListsRestApiConfig::RESOURCE_SHOPPING_LISTS,
-            new ShoppingListItemByShoppingListResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            CartsRestApiConfig::RESOURCE_CARTS,
-            new PromotionItemByQuoteTransferResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            CheckoutRestApiConfig::RESOURCE_CHECKOUT_DATA,
-            new PaymentMethodsByCheckoutDataResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            CheckoutRestApiConfig::RESOURCE_CHECKOUT_DATA,
-            new CompanyBusinessUnitAddressByCheckoutDataResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            CheckoutRestApiConfig::RESOURCE_CHECKOUT_DATA,
-            new AddressByCheckoutDataResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            CheckoutRestApiConfig::RESOURCE_CHECKOUT_DATA,
-            new CartByRestCheckoutDataResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            CheckoutRestApiConfig::RESOURCE_CHECKOUT_DATA,
-            new GuestCartByRestCheckoutDataResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            SalesReturnsRestApiConfig::RESOURCE_RETURNS,
-            new ReturnItemByReturnResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            SalesReturnsRestApiConfig::RESOURCE_RETURN_ITEMS,
-            new OrderItemByResourceIdResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            CmsPagesRestApiConfig::RESOURCE_CMS_PAGES,
-            new ContentBannerByCmsPageResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            CmsPagesRestApiConfig::RESOURCE_CMS_PAGES,
-            new ContentProductAbstractListByCmsPageResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            ContentProductAbstractListsRestApiConfig::RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS,
-            new ProductAbstractByContentProductAbstractListResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
-            new ProductAbstractByProductAbstractSkuResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            ProductBundlesRestApiConfig::RESOURCE_BUNDLED_PRODUCTS,
-            new ConcreteProductBySkuResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
-            new BundledProductByProductConcreteSkuResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            CartsRestApiConfig::RESOURCE_CARTS,
-            new BundleItemByQuoteResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            ProductBundleCartsRestApiConfig::RESOURCE_BUNDLE_ITEMS,
-            new BundledItemByQuoteResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            ProductBundleCartsRestApiConfig::RESOURCE_BUNDLE_ITEMS,
-            new ConcreteProductBySkuResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            ProductBundleCartsRestApiConfig::RESOURCE_BUNDLED_ITEMS,
-            new ConcreteProductBySkuResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
-            new AbstractProductsCategoriesResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            OrdersRestApiConfig::RESOURCE_ORDERS,
-            new MerchantsByOrderResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
-            new MerchantByMerchantReferenceResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
-            new ProductOffersByProductConcreteSkuResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            MerchantProductOffersRestApiConfig::RESOURCE_PRODUCT_OFFERS,
-            new MerchantByMerchantReferenceResourceRelationshipPlugin(),
-        );
-        $resourceRelationshipCollection->addRelationship(
-            MerchantProductOffersRestApiConfig::RESOURCE_PRODUCT_OFFERS,
-            new ProductOfferPriceByProductOfferReferenceResourceRelationshipPlugin(),
-        );
-
-        $resourceRelationshipCollection->addRelationship(
-            SalesReturnsRestApiConfig::RESOURCE_RETURNS,
-            new MerchantByMerchantReferenceResourceRelationshipPlugin(),
-        );
-
-        $resourceRelationshipCollection->addRelationship(
-            ShoppingListsRestApiConfig::RESOURCE_SHOPPING_LIST_ITEMS,
-            new MerchantByMerchantReferenceResourceRelationshipPlugin(),
-        );
-
-        $resourceRelationshipCollection->addRelationship(
-            MerchantProductOffersRestApiConfig::RESOURCE_PRODUCT_OFFERS,
-            new ProductOfferAvailabilitiesByProductOfferReferenceResourceRelationshipPlugin(),
-        );
-
-        $resourceRelationshipCollection->addRelationship(
-            ShoppingListsRestApiConfig::RESOURCE_SHOPPING_LIST_ITEMS,
-            new ProductOfferAvailabilitiesByProductOfferReferenceResourceRelationshipPlugin(),
-        );
-
-        $resourceRelationshipCollection->addRelationship(
-            ShoppingListsRestApiConfig::RESOURCE_SHOPPING_LIST_ITEMS,
-            new ProductOffersByProductOfferReferenceResourceRelationshipPlugin(),
-        );
-
-        $resourceRelationshipCollection->addRelationship(
-            ShoppingListsRestApiConfig::RESOURCE_SHOPPING_LIST_ITEMS,
-            new ProductOfferPriceByProductOfferReferenceResourceRelationshipPlugin(),
-        );
-
-        $resourceRelationshipCollection->addRelationship(
-            ConfigurableBundlesRestApiConfig::RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATES,
-            new ConfigurableBundleTemplateSlotByConfigurableBundleTemplateResourceRelationshipPlugin(),
-        );
-
-        $resourceRelationshipCollection->addRelationship(
-            ConfigurableBundlesRestApiConfig::RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATES,
-            new ConfigurableBundleTemplateImageSetByConfigurableBundleTemplateResourceRelationshipPlugin(),
-        );
-
-        $resourceRelationshipCollection->addRelationship(
-            ConfigurableBundlesProductsResourceRelationshipConfig::RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATE_SLOTS,
-            new ProductConcreteByConfigurableBundleTemplateSlotResourceRelationshipPlugin(),
-        );
-
-        return $resourceRelationshipCollection;
     }
 
     /**

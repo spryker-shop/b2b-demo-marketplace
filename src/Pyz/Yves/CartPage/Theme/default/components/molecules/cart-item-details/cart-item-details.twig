@@ -1,0 +1,52 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'cart-item-details',
+} %}
+
+{% define data = {
+    listItem: required,
+    list: null,
+    canEdit: false,
+    ajaxTriggerAttribute: null,
+} %}
+
+{% set listItem = data.listItem %}
+
+{% block body %}
+    <div class="{{ config.name }}__inner">
+        {% block panelComments %}
+            <section class="{{ config.name }}__section {{ config.name }}__section--comments">
+                <h4 class="{{ config.name }}__section-label">{{ 'Comments' | trans }}</h4>
+                <div class="{{ config.name }}__comments">
+                    {% widget 'CartItemNoteFormWidget' args [listItem, data.list] with {
+                        data: {
+                            isTitleVisible: false,
+                            ajaxTriggerAttribute: data.ajaxTriggerAttribute,
+                        },
+                    } only %}
+                    {% endwidget %}
+                </div>
+            </section>
+        {% endblock %}
+
+        {% block panelAsset %}
+            <section class="{{ config.name }}__section {{ config.name }}__section--asset">
+                <h4 class="{{ config.name }}__section-label">{{ 'Assigned asset' | trans }}</h4>
+                <div class="{{ config.name }}__asset">
+                    {% if data.canEdit %}
+                        {% widget 'SspCartItemAssetSelectorWidget' args [listItem, false] with {
+                            ajaxTriggerAttribute: data.ajaxTriggerAttribute
+                        } only %}{% endwidget %}
+                    {% else %}
+                        {% widget 'SspAssetInfoForItemWidget' args [listItem] only %}{% endwidget %}
+                    {% endif %}
+
+                    {% widget 'SspServicePointNameForItemWidget' args [listItem] only %}
+                        {% elsewidget 'ServicePointNameForItemWidget' args [listItem] only %}
+                    {% endwidget %}
+                </div>
+            </section>
+        {% endblock %}
+    </div>
+{% endblock %}
