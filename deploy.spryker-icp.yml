@@ -120,13 +120,13 @@ groups:
             yves:
                 application: yves
                 endpoints:
-                    demo-date-time-configurator.icp.cloud.spryker.toys:
-                        entry-point: Configurator
                     yves.eu.icp.cloud.spryker.toys:
                         region: EU
                         services:
                             session:
                                 namespace: 1
+                    demo-date-time-configurator.icp.cloud.spryker.toys:
+                        entry-point: Configurator
                 http:
                     max-request-body-size: 100M
             boffice:
