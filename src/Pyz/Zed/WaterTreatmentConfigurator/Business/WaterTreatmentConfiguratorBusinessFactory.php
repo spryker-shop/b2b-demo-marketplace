@@ -25,8 +25,16 @@ class WaterTreatmentConfiguratorBusinessFactory extends AbstractBusinessFactory
     public function createProductConfiguratorFrontendBuilder(): FrontendBuilderInterface
     {
         return new FrontendBuilder(
-            new Filesystem(),
+            $this->createFilesystem(),
             $this->getConfig(),
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Filesystem\Filesystem
+     */
+    public function createFilesystem(): Filesystem
+    {
+        return new Filesystem();
     }
 }
