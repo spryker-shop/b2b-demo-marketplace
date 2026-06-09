@@ -60,7 +60,7 @@ class ConfiguratorPage
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\JsonResponse|string
+     * @return \Symfony\Component\HttpFoundation\Response|string
      */
     public function render()
     {
@@ -147,11 +147,11 @@ class ConfiguratorPage
     }
 
     /**
-     * @return array
+     * @return array<int|string, mixed>
      */
     protected function getDataFromSession(): array
     {
-        $this->session->setId($this->request->get(static::REQUEST_PARAMETER_GET_CONFIGURATION_BY_TOKEN));
+        $this->session->setId((string)$this->request->query->get(static::REQUEST_PARAMETER_GET_CONFIGURATION_BY_TOKEN));
         $this->session->start();
 
         return $this->session->get(static::CONFIGURATOR_SESSION_KEY, []);
