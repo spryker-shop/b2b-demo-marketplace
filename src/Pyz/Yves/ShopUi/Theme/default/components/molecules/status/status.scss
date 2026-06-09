@@ -8,6 +8,7 @@
         display: none;
     }
 
+    &--availability,
     &--shipped,
     &--in-stock,
     &--never-out-of-stock,
@@ -45,8 +46,7 @@
         }
     }
 
-    &--info,
-    &--availability {
+    &--info {
         @include helper-badge-semantic-subtle(info);
 
         &#{$name}--solid {

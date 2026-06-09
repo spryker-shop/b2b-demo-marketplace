@@ -1,47 +1,42 @@
 import Component from 'ShopUi/models/component';
 
 export default class CartItemNote extends Component {
-    protected editButton: HTMLButtonElement;
-    protected removeButton: HTMLButtonElement;
-    protected formTarget: HTMLElement;
-    protected textTarget: HTMLElement;
-
     protected readyCallback(): void {}
 
     protected init(): void {
-        this.editButton = <HTMLButtonElement>this.getElementsByClassName(`${this.jsName}__edit`)[0];
-        this.removeButton = <HTMLButtonElement>this.getElementsByClassName(`${this.jsName}__remove`)[0];
-        this.formTarget = <HTMLElement>this.getElementsByClassName(`${this.jsName}__form`)[0];
-        this.textTarget = <HTMLElement>this.getElementsByClassName(`${this.jsName}__text-wrap`)[0];
-
-        this.mapEvents();
-    }
-
-    protected mapEvents(): void {
         this.addEventListener('click', (event: Event) => this.onTriggerClick(event));
     }
 
     protected onTriggerClick(event: Event): void {
-        let target = <HTMLElement>event.target;
+        const target = event.target as HTMLElement | null;
+        if (!target) {
+            return;
+        }
 
-        while (target !== this) {
-            if (target === this.editButton) {
-                event.preventDefault();
-                this.classToggle(this.formTarget);
-                this.classToggle(this.textTarget);
+        if (target.closest(`.${this.jsName}__edit`)) {
+            event.preventDefault();
+            const formTarget = this.querySelector<HTMLElement>(`.${this.jsName}__form`);
+            const textTarget = this.querySelector<HTMLElement>(`.${this.jsName}__text-wrap`);
+            if (formTarget) this.classToggle(formTarget);
+            if (textTarget) this.classToggle(textTarget);
+            return;
+        }
 
+        if (target.closest(`.${this.jsName}__remove`)) {
+            event.preventDefault();
+            const formTarget = this.querySelector<HTMLElement>(`.${this.jsName}__form`);
+            if (!formTarget) {
                 return;
             }
-            if (target === this.removeButton) {
-                event.preventDefault();
-                const form = <HTMLFormElement>this.formTarget.getElementsByTagName('form')[0];
-                const textarea = <HTMLTextAreaElement>form.getElementsByTagName('textarea')[0];
+            const form = formTarget.getElementsByTagName('form')[0] as HTMLFormElement | undefined;
+            if (!form) {
+                return;
+            }
+            const textarea = form.getElementsByTagName('textarea')[0] as HTMLTextAreaElement | undefined;
+            if (textarea) {
                 textarea.value = '';
-                form.querySelector<HTMLButtonElement>('button[type="submit"]').click();
-
-                return;
             }
-            target = <HTMLElement>target.parentNode;
+            form.querySelector<HTMLButtonElement>('button[type="submit"]')?.click();
         }
     }
 

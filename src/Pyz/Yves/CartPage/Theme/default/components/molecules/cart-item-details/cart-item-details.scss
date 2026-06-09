@@ -1,0 +1,128 @@
+@mixin cart-page-cart-item-details($name: '.cart-item-details') {
+    #{$name} {
+        &__section {
+            padding-top: rem(var(--scale-16));
+        }
+
+        &__section + &__section {
+            margin-top: rem(var(--scale-12));
+        }
+
+        &__section-label {
+            margin: 0 0 rem(var(--scale-8));
+            color: var(--text-secondary);
+            font-family: var(--label-sm-family);
+            font-size: rem(var(--label-sm-size));
+            font-weight: var(--label-sm-weight);
+            line-height: rem(var(--label-sm-line-height));
+            text-transform: none;
+        }
+
+        &__comments .form {
+            margin: 0;
+        }
+
+        &__comments textarea,
+        &__comments input[type='text'] {
+            width: 100%;
+            padding: rem(var(--scale-8)) rem(var(--scale-12));
+            color: var(--text-primary);
+            font-family: var(--body-md-family);
+            font-size: rem(var(--body-md-size));
+            line-height: rem(var(--body-md-line-height));
+            background: var(--background-surface);
+            border: rem(var(--stroke-sm)) dashed var(--border-default);
+            border-radius: rem(var(--radius-sm));
+        }
+
+        &__comments textarea:focus,
+        &__comments input[type='text']:focus {
+            border-style: solid;
+            border-color: var(--border-brand, var(--text-brand));
+            outline: none;
+        }
+
+        &__asset {
+            color: var(--text-secondary);
+            font-family: var(--body-sm-family);
+            font-size: rem(var(--body-sm-size));
+            line-height: rem(var(--body-sm-line-height));
+        }
+
+        &__margin {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: rem(var(--scale-4)) rem(var(--scale-12));
+        }
+
+        &__margin-total {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: rem(var(--scale-12));
+        }
+
+        &__margin-label {
+            color: var(--text-secondary);
+            font-family: var(--label-sm-semibold-family);
+            font-size: rem(var(--label-sm-semibold-size));
+            font-weight: var(--label-sm-semibold-weight);
+            line-height: rem(var(--label-sm-semibold-line-height));
+        }
+
+        &__margin-breakdown {
+            color: var(--text-tertiary);
+            font-family: var(--caption-family);
+            font-size: rem(var(--caption-size));
+            font-weight: var(--caption-weight);
+            line-height: rem(var(--caption-line-height));
+        }
+
+        &__margin-price {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: rem(var(--scale-4));
+        }
+
+        &__margin-money {
+            display: inline-flex;
+            align-items: center;
+            gap: rem(var(--scale-4));
+
+            .money-price__amount {
+                color: var(--text-secondary);
+                font-family: var(--label-md-family);
+                font-size: rem(var(--label-md-size));
+                font-weight: var(--label-md-weight);
+                line-height: rem(var(--label-md-line-height));
+            }
+
+            .money-price__mode {
+                color: var(--text-tertiary);
+                font-family: var(--body-sm-family);
+                font-size: rem(var(--body-sm-size));
+                font-weight: var(--body-sm-weight);
+                line-height: rem(var(--body-sm-line-height));
+            }
+        }
+
+        &__gross-margin {
+            color: var(--text-tertiary);
+            font-family: var(--body-sm-family);
+            font-size: rem(var(--body-sm-size));
+            font-weight: var(--body-sm-weight);
+            line-height: rem(var(--body-sm-line-height));
+
+            &::before {
+                content: '\00B7';
+                margin-right: rem(var(--scale-4));
+                color: var(--text-secondary);
+            }
+        }
+    }
+}
+
+@include cart-page-cart-item-details();
