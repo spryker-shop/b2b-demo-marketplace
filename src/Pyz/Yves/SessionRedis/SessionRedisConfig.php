@@ -47,6 +47,8 @@ class SessionRedisConfig extends SprykerSessionRedisConfig
             '/^.*\/price\/mode-switch/',
             // Customer account — all routes under /customer/
             '/^.*\/customer\//',
+            // Company account — all routes under /company/
+            '/^.*\/company\//',
         ];
     }
 }
