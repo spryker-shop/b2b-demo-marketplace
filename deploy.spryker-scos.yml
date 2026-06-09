@@ -50,6 +50,8 @@ image:
         SPRYKER_HOOK_DESTRUCTIVE_INSTALL: 'vendor/bin/install -r destructive --no-ansi -vvv'
         SPRYKER_PRODUCT_CONFIGURATOR_HOST: demo-date-time-configurator.scos.sh01.demo-spryker.com
         SPRYKER_PRODUCT_CONFIGURATOR_PORT: 443
+        SPRYKER_WATER_TREATMENT_CONFIGURATOR_HOST: demo-water-treatment-configurator.scos.sh01.demo-spryker.com
+        SPRYKER_WATER_TREATMENT_CONFIGURATOR_PORT: 443
         SPRYKER_PRODUCT_CONFIGURATOR_ENCRYPTION_KEY: 'change123'
         SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR: '0c1ffefeebdab4a3d839d0e52590c9a2'
         SPRYKER_PUSH_NOTIFICATION_WEB_PUSH_PHP_VAPID_SUBJECT: 'https://spryker.com'
@@ -120,6 +122,8 @@ groups:
                 endpoints:
                     demo-date-time-configurator.scos.sh01.demo-spryker.com:
                         entry-point: Configurator
+                    demo-water-treatment-configurator.scos.sh01.demo-spryker.com:
+                        entry-point: WaterTreatmentConfigurator
                     yves.eu.scos.sh01.demo-spryker.com:
                         region: EU
                         services:

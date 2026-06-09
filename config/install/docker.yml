@@ -128,6 +128,9 @@ sections:
         date-time-product-configurator:
             command: 'vendor/bin/console frontend:date-time-product-configurator:build'
 
+        water-treatment-product-configurator:
+            command: 'vendor/bin/console frontend:water-treatment-product-configurator:build'
+
     build-static-development:
         yves-build-frontend:
             command: 'vendor/bin/console frontend:yves:build'
@@ -145,6 +148,9 @@ sections:
 
         date-time-product-configurator:
             command: 'vendor/bin/console frontend:date-time-product-configurator:build'
+
+        water-treatment-product-configurator:
+            command: 'vendor/bin/console frontend:water-treatment-product-configurator:build'
 
     scheduler-setup:
         jenkins-setup:

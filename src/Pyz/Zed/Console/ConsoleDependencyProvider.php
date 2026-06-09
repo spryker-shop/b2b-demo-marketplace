@@ -214,6 +214,7 @@ use SprykerFeature\Zed\ProductExperienceManagement\Communication\Console\ImportJ
 use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 use SprykerSdk\Zed\AiDev\Communication\Console\AiToolSetupConsole;
 use SprykerSdk\Zed\AiDev\Communication\Console\McpServerConsole;
+use Pyz\Zed\WaterTreatmentConfigurator\Communication\Console\WaterTreatmentProductConfiguratorBuildFrontendConsole;
 use SprykerShop\Zed\DateTimeConfiguratorPageExample\Communication\Console\DateTimeProductConfiguratorBuildFrontendConsole;
 
 /**
@@ -455,6 +456,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new MessageBrokerWorkerConsole(),
             new ScopeCacheCollectorConsole(),
             new DateTimeProductConfiguratorBuildFrontendConsole(),
+            new WaterTreatmentProductConfiguratorBuildFrontendConsole(),
             new OrderMatrixConsole(),
             new AclEntitySynchronizeConsole(),
             new AclEntityMetadataConfigValidateConsole(),

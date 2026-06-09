@@ -1095,6 +1095,9 @@ $config[ProductConfigurationConstants::SPRYKER_PRODUCT_CONFIGURATOR_ENCRYPTION_K
 $config[ProductConfigurationConstants::SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR] = getenv('SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR') ?: '0c1ffefeebdab4a3d839d0e52590c9a2';
 $config[KernelConstants::DOMAIN_WHITELIST][] = getenv('SPRYKER_PRODUCT_CONFIGURATOR_HOST');
 
+// Water Treatment configurator (IWT-SYSTEM) — dedicated configurator host
+$config[KernelConstants::DOMAIN_WHITELIST][] = getenv('SPRYKER_WATER_TREATMENT_CONFIGURATOR_HOST');
+
 // ----------------------------------------------------------------------------
 // ------------------------------ Glue Backend API -------------------------------
 // ----------------------------------------------------------------------------
