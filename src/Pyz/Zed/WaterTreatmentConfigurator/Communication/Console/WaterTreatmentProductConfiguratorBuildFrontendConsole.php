@@ -45,7 +45,7 @@ class WaterTreatmentProductConfiguratorBuildFrontendConsole extends Console
      *
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    protected function execute(InputInterface $input, OutputInterface $output): int // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
         $this->info('Build Water Treatment Product Configurator frontend');
 

@@ -30,7 +30,7 @@ class ConfiguratorKeyProductConfiguratorRequestExpanderPlugin extends AbstractPl
      * @return \Generated\Shared\Transfer\ProductConfiguratorRequestTransfer
      */
     public function expand(
-        ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
+        ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer,
     ): ProductConfiguratorRequestTransfer {
         $configuratorKey = $productConfiguratorRequestTransfer
             ->getProductConfiguratorRequestDataOrFail()

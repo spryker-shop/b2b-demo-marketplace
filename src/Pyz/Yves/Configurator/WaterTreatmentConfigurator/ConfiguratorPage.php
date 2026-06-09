@@ -3,10 +3,6 @@
 /**
  * This file is part of the Spryker Commerce OS.
  * For full license information, please view the LICENSE file that was distributed with this source code.
- *
- * NOTE: Placeholder configurator page cloned from the vendor DateTimeConfigurator example
- * purely to enable local testing of the IWT-SYSTEM configurable product. The frontend
- * (Angular app under Theme/ + public/WaterTreatmentConfigurator) will be replaced by the FE team.
  */
 
 declare(strict_types = 1);
