@@ -1,0 +1,20 @@
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+        "sourceMap": true,
+        "declaration": false,
+        "downlevelIteration": true,
+        "experimentalDecorators": true,
+        "importHelpers": true,
+        "removeComments": true,
+        "useDefineForClassFields": false,
+        "baseUrl": "./",
+        "outDir": "./dist/out-tsc",
+        "moduleResolution": "node",
+        "target": "ES2022",
+        "module": "esnext",
+        "typeRoots": ["node_modules/@types"],
+        "lib": ["dom", "esnext"]
+    },
+    "files": ["src/main.ts", "src/polyfills.ts"]
+}

@@ -1,0 +1,123 @@
+:host {
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    &__top {
+        padding: 7px 0;
+        background: #e7eaee;
+    }
+
+    &__row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__col {
+        flex: 1;
+
+        &--aux {
+            display: none;
+
+            @media (width > 768px) {
+                display: block;
+            }
+        }
+    }
+
+    &__title {
+        text-align: center;
+    }
+
+    &__heading {
+        background: #f5f5f5;
+        padding: 25px 0;
+    }
+
+    &__back {
+        display: flex;
+        color: #71747c;
+        font-size: 13px;
+        font-weight: 500;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 11px;
+    }
+
+    &__logo {
+        width: 150px;
+        height: 50px;
+    }
+
+    &__bottom {
+        border-top: 2px solid #e3e3e3;
+        background: #f5f5f5;
+        margin-bottom: 13px;
+    }
+
+    &__info-item {
+        display: flex;
+        align-items: center;
+        padding: 8px 0;
+
+        @media (width > 1024px) {
+            display: inline-flex;
+            flex-wrap: nowrap;
+            padding: 16px 20px;
+            border-right: 2px solid #e3e3e3;
+
+            &:first-child {
+                border-left: 2px solid #e3e3e3;
+            }
+        }
+    }
+
+    &__info-title {
+        text-transform: uppercase;
+        margin-right: 10px;
+        font-weight: 700;
+        color: #000;
+    }
+}
+
+.guard {
+    background: rgba(18, 18, 18, 0.15);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+
+    &__modal {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 10px;
+        background: #fff;
+        box-shadow: 0 1px 3px 0 rgba(18, 18, 18, 0.15);
+        padding: 18px 0 14px;
+        color: #4c4c4c;
+        font-size: 14px;
+        width: 400px;
+    }
+
+    &__title {
+        padding: 0 30px 17px;
+        border-bottom: 1px solid #dbdbdb;
+    }
+
+    &__body {
+        padding: 17px 30px 35px;
+    }
+
+    &__actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        padding: 0 30px;
+    }
+}

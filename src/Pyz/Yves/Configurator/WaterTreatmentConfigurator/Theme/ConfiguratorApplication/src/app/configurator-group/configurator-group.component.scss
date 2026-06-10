@@ -1,0 +1,35 @@
+:host {
+    display: block;
+    width: 100%;
+    padding-bottom: 30px;
+}
+
+.group {
+    &__heading {
+        display: flex;
+        color: #8f8f8f;
+        gap: 6px;
+        align-items: center;
+        padding-bottom: 12px;
+    }
+
+    &__section {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 -10px;
+        row-gap: 20px;
+    }
+
+    &__item {
+        padding: 0 10px;
+        width: 50%;
+
+        @media (width > 1024px) {
+            width: 33.333%;
+        }
+
+        @media (width > 1200px) {
+            width: 25%;
+        }
+    }
+}
