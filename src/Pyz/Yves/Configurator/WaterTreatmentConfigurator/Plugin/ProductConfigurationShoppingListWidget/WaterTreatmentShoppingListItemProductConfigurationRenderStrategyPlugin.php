@@ -7,15 +7,15 @@
 
 declare(strict_types = 1);
 
-namespace Pyz\Yves\Configurator\WaterTreatmentConfigurator\Plugin\ProductConfigurationWidget;
+namespace Pyz\Yves\Configurator\WaterTreatmentConfigurator\Plugin\ProductConfigurationShoppingListWidget;
 
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\ProductConfigurationTemplateTransfer;
 use Pyz\Yves\Configurator\WaterTreatmentConfigurator\Plugin\WaterTreatmentRenderTemplateTrait;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\ProductConfigurationWidgetExtension\Dependency\Plugin\ProductConfigurationRenderStrategyPluginInterface;
+use SprykerShop\Yves\ProductConfigurationShoppingListWidgetExtension\Dependency\Plugin\ShoppingListItemProductConfigurationRenderStrategyPluginInterface;
 
-class WaterTreatmentProductConfigurationRenderStrategyPlugin extends AbstractPlugin implements ProductConfigurationRenderStrategyPluginInterface
+class WaterTreatmentShoppingListItemProductConfigurationRenderStrategyPlugin extends AbstractPlugin implements ShoppingListItemProductConfigurationRenderStrategyPluginInterface
 {
     use WaterTreatmentRenderTemplateTrait;
 
