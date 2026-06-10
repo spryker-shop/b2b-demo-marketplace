@@ -61,4 +61,53 @@ interface AiCommerceConstants extends PyzFeatureAiCommerceConstants
      * @api
      */
     public const string AI_CONFIGURATION_PLACE_ORDER_ANTHROPIC = 'AI_COMMERCE:AI_CONFIGURATION_PLACE_ORDER_ANTHROPIC';
+
+    /**
+     * Configuration key for the Smart CMS AI configuration name.
+     *
+     * @api
+     */
+    public const string CONFIGURATION_KEY_SMART_CMS_AI_CONFIGURATION = 'ai_commerce:smart_cms:ai_vendor:ai_configuration';
+
+    /**
+     * Configuration key for the model used by the Smart CMS (OpenAI) AI configuration.
+     *
+     * @api
+     */
+    public const string CONFIGURATION_KEY_SMART_CMS_OPENAI_MODEL = 'ai_commerce:smart_cms:ai_vendor:openai_model';
+
+    /**
+     * Configuration key for the model used by the Smart CMS (AWS Bedrock) AI configuration.
+     *
+     * @api
+     */
+    public const string CONFIGURATION_KEY_SMART_CMS_AWS_MODEL = 'ai_commerce:smart_cms:ai_vendor:aws_model';
+
+    /**
+     * Configuration key for the model used by the Smart CMS (Anthropic) AI configuration.
+     *
+     * @api
+     */
+    public const string CONFIGURATION_KEY_SMART_CMS_ANTHROPIC_MODEL = 'ai_commerce:smart_cms:ai_vendor:anthropic_model';
+
+    /**
+     * AI configuration name used by the Smart CMS feature backed by OpenAI.
+     *
+     * @api
+     */
+    public const string AI_CONFIGURATION_SMART_CMS_OPENAI = 'AI_COMMERCE:AI_CONFIGURATION_SMART_CMS_OPENAI';
+
+    /**
+     * AI configuration name used by the Smart CMS feature backed by AWS Bedrock.
+     *
+     * @api
+     */
+    public const string AI_CONFIGURATION_SMART_CMS_AWS = 'AI_COMMERCE:AI_CONFIGURATION_SMART_CMS_AWS';
+
+    /**
+     * AI configuration name used by the Smart CMS feature backed by Anthropic.
+     *
+     * @api
+     */
+    public const string AI_CONFIGURATION_SMART_CMS_ANTHROPIC = 'AI_COMMERCE:AI_CONFIGURATION_SMART_CMS_ANTHROPIC';
 }

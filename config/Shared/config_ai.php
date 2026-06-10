@@ -237,4 +237,31 @@ $config[AiFoundationConstants::AI_CONFIGURATIONS] = [
         ],
         'system_prompt' => AiFoundationConstants::CONFIGURATION_REFERENCE_PREFIX . AiCommerceConstants::CONFIGURATION_KEY_PLACE_ORDER_SYSTEM_PROMPT,
     ],
+    AiCommerceConstants::AI_CONFIGURATION_SMART_CMS_OPENAI => [
+        'provider_name' => AiFoundationConstants::PROVIDER_OPENAI,
+        'provider_config' => [
+            'key' => AiFoundationConstants::CONFIGURATION_REFERENCE_PREFIX . AiCommerceConstants::CONFIGURATION_KEY_OPENAI_API_TOKEN,
+            'model' => AiFoundationConstants::CONFIGURATION_REFERENCE_PREFIX . AiCommerceConstants::CONFIGURATION_KEY_SMART_CMS_OPENAI_MODEL,
+        ],
+        'system_prompt' => AiFoundationConstants::CONFIGURATION_REFERENCE_PREFIX . AiCommerceConstants::CONFIGURATION_KEY_SMART_CMS_SYSTEM_PROMPT,
+    ],
+    AiCommerceConstants::AI_CONFIGURATION_SMART_CMS_AWS => [
+        'provider_name' => AiFoundationConstants::PROVIDER_BEDROCK,
+        'provider_config' => [
+            'model' => AiFoundationConstants::CONFIGURATION_REFERENCE_PREFIX . AiCommerceConstants::CONFIGURATION_KEY_SMART_CMS_AWS_MODEL,
+            'bedrockRuntimeClient' => [
+                'region' => AiFoundationConstants::CONFIGURATION_REFERENCE_PREFIX . AiCommerceConstants::CONFIGURATION_KEY_AWS_REGION,
+                'token' => AiFoundationConstants::CONFIGURATION_REFERENCE_PREFIX . AiCommerceConstants::CONFIGURATION_KEY_AWS_API_TOKEN,
+            ],
+        ],
+        'system_prompt' => AiFoundationConstants::CONFIGURATION_REFERENCE_PREFIX . AiCommerceConstants::CONFIGURATION_KEY_SMART_CMS_SYSTEM_PROMPT,
+    ],
+    AiCommerceConstants::AI_CONFIGURATION_SMART_CMS_ANTHROPIC => [
+        'provider_name' => AiFoundationConstants::PROVIDER_ANTHROPIC,
+        'provider_config' => [
+            'key' => AiFoundationConstants::CONFIGURATION_REFERENCE_PREFIX . AiCommerceConstants::CONFIGURATION_KEY_ANTHROPIC_API_TOKEN,
+            'model' => AiFoundationConstants::CONFIGURATION_REFERENCE_PREFIX . AiCommerceConstants::CONFIGURATION_KEY_SMART_CMS_ANTHROPIC_MODEL,
+        ],
+        'system_prompt' => AiFoundationConstants::CONFIGURATION_REFERENCE_PREFIX . AiCommerceConstants::CONFIGURATION_KEY_SMART_CMS_SYSTEM_PROMPT,
+    ],
 ];
