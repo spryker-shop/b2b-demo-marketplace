@@ -13,16 +13,14 @@
         padding: 0;
     }
 
-    // PDP asset box (base): label + "Assign/Select asset" link in design-system tokens.
-    // The more specific `--cart` / `--filter` rules below override this for those contexts.
-    &__container .link--additional {
-        color: var(--text-brand);
+    &__trigger {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--scale-4);
         font-family: var(--label-sm-family);
         font-size: rem(var(--label-sm-size));
         font-weight: var(--label-sm-weight);
         line-height: rem(var(--label-sm-line-height));
-        text-decoration: none;
-        cursor: pointer;
     }
 
     &__subtitle {
@@ -31,6 +29,64 @@
         font-size: rem(var(--label-sm-size));
         font-weight: var(--label-sm-weight);
         line-height: rem(var(--label-sm-line-height));
+        padding-bottom: 0;
+    }
+
+    &__container--select {
+        align-items: center;
+        flex-wrap: wrap;
+        gap: var(--scale-8);
+    }
+
+    &__container--selected {
+        flex-direction: column;
+        gap: var(--scale-4);
+    }
+
+    &__data--actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--scale-8);
+        margin-bottom: 0;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        gap: var(--scale-4);
+    }
+
+    &__subtitle--name {
+        color: var(--text-secondary);
+        font-family: var(--body-sm-family);
+        font-size: rem(var(--body-sm-size));
+        font-weight: var(--font-weight-regular);
+        line-height: rem(var(--body-sm-line-height));
+        text-decoration: none;
+    }
+
+    &__data {
+        display: flex;
+        align-items: center;
+        gap: var(--scale-8);
+    }
+
+    &__information {
+        color: var(--text-secondary);
+        font-family: var(--body-sm-family);
+        font-size: rem(var(--body-sm-size));
+        line-height: rem(var(--body-sm-line-height));
+    }
+
+    &__asset-text {
+        color: var(--text-secondary);
+    }
+
+    &__action {
+        width: rem(16);
+        height: rem(16);
+        color: var(--icon-secondary);
     }
 
     &__data-row {
@@ -40,29 +96,15 @@
         align-items: center;
     }
 
-    &--cart &__subtitle {
-        padding-bottom: 0;
-    }
-
-    &--cart &__subtitle--name {
-        color: var(--text-secondary);
-        font-family: var(--body-sm-family);
-        font-size: rem(var(--body-sm-size));
-        font-weight: var(--font-weight-regular);
-        line-height: rem(var(--body-sm-line-height));
-        text-decoration: none;
-    }
-
     &--cart &__asset-text {
         color: var(--text-primary);
     }
 
     &--cart &__container--select {
         display: inline-flex;
-        align-items: center;
     }
 
-    &--cart &__container--select .link--additional {
+    &--cart &__select-link {
         display: inline-flex;
         align-items: center;
         gap: rem(var(--scale-4));
@@ -78,7 +120,7 @@
         cursor: pointer;
     }
 
-    &--cart &__data--actions .link--additional {
+    &--cart &__data-link {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -92,11 +134,11 @@
         cursor: pointer;
     }
 
-    &--cart &__container--select .link--additional:hover {
+    &--cart &__select-link:hover {
         background: var(--background-surface);
     }
 
-    &--cart &__data--actions .link--additional:hover {
+    &--cart &__data-link:hover {
         color: var(--text-primary);
         background: var(--background-surface);
     }
@@ -152,7 +194,6 @@
         order: 99;
         flex: 0 0 auto;
         display: inline-flex;
-        align-items: center;
         gap: rem(var(--scale-4));
         white-space: nowrap;
     }

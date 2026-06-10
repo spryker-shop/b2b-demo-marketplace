@@ -52,17 +52,13 @@
     }
 
     &--pdp {
-        order: 2;
         position: static;
-        padding: rem(10) 0 0;
+        padding: 0 0 rem(4);
         display: block;
         flex-wrap: wrap;
+        justify-content: flex-start;
         font-size: 0;
         line-height: 0;
-
-        @include helper-breakpoint-media-min($lg) {
-            padding: 0;
-        }
     }
 
     &--bottom-right {

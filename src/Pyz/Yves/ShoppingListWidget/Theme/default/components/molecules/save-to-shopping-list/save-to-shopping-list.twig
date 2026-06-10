@@ -1,0 +1,97 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'save-to-shopping-list',
+} %}
+
+{% define data = {
+    sku: required,
+    isDisabled: false,
+    product: null,
+    shoppingListOptions: [],
+} %}
+
+{% block body %}
+    {% set triggerClass = config.jsName ~ '__trigger-' ~ data.sku %}
+    {% set contentId = config.name ~ '-' ~ data.sku %}
+
+    <button
+        type="button"
+        class="button button--hollow button--bigger button--expand button--no-horizontal-padding {{ triggerClass }}"
+        {{ data.isDisabled ? 'disabled' }}
+        {{ qa('save-to-shopping-list-trigger') }}
+    >
+        {{ 'shopping_list_widget.save_to_shopping_list' | trans }}
+    </button>
+
+    {% set popupContent %}
+        <form class="{{ config.name }}__form js-shopping-list__form" method="POST" action="{{ path('shopping-list/add-item') }}">
+            <div class="{{ config.name }}__quantity-panel">
+                 <div class="{{ config.name }}__quantity-counter">
+                    <span class="{{ config.name }}__field-label">{{ 'cart.item_quantity' | trans }}</span>
+                    {% include molecule('quantity-counter') only %}
+                </div>
+            </div>
+
+            <input type="hidden" name="sku" value="{{ data.sku }}">
+            <input type="hidden" name="_token" value="{{ csrf_token('shopping_list_add_item_form') }}">
+
+            {% if data.product is not empty %}
+                {% widget 'ProductOfferShoppingListWidget' args [data.product] only %}{% endwidget %}
+            {% endif %}
+
+            {% include molecule('form-data-injector', 'ShoppingListWidget') with {
+                class: 'is-hidden',
+                attributes: {
+                    'destination-form-class-name': 'js-shopping-list__form',
+                    'fields-selector': '.js-product-configurator__form-add-to-cart .js-custom-select:not([name="quantity"]):not([name="id_quote"])',
+                },
+            } only %}
+
+            {% if data.shoppingListOptions is not empty %}
+                <div class="{{ config.name }}__list-field">
+                    <span class="{{ config.name }}__field-label">{{ 'shopping_list_widget.shopping_list_label' | trans }}</span>
+                    {% include molecule('custom-select') with {
+                        modifiers: ['full-width'],
+                        attributes: {
+                            name: 'idShoppingList',
+                            'config-width': '100%',
+                        },
+                        data: {
+                            options: data.shoppingListOptions,
+                        },
+                    } only %}
+                </div>
+            {% endif %}
+
+            <div class="{{ config.name }}__actions">
+                <button type="button" class="button button--hollow {{ config.name }}__cancel">
+                    {{ 'general.cancel.button' | trans }}
+                </button>
+                <button
+                    type="submit"
+                    class="button js-add-to-shopping-list"
+                    {{ data.isDisabled ? 'disabled' }}
+                    {{ qa('add-to-shopping-list-button') }}
+                >
+                    {{ 'general.save.button' | trans }}
+                </button>
+            </div>
+        </form>
+    {% endset %}
+
+    {% include molecule('main-popup') with {
+        class: config.name ~ '__popup',
+        data: {
+            title: 'shopping_list_widget.save_to_shopping_list' | trans,
+            subtitle: 'shopping_list_widget.save_popup_description' | trans,
+            content: popupContent,
+        },
+        attributes: {
+            'content-id': contentId,
+            'trigger-class-name': triggerClass,
+            'has-content-mount': true,
+            'close-popup-selector': '.' ~ config.name ~ '__cancel',
+        },
+    } only %}
+{% endblock %}

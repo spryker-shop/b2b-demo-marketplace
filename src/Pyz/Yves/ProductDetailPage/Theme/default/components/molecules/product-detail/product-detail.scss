@@ -73,21 +73,43 @@
         &__downloads {
             display: flex;
             flex-direction: column;
-            gap: var(--scale-8);
             margin: 0;
             padding: 0;
             list-style: none;
         }
 
+        &__downloads-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--scale-16);
+            padding: var(--scale-12) 0;
+            border-bottom: var(--stroke-sm) solid var(--border-subtle);
+
+            &:last-child {
+                border-bottom: none;
+            }
+        }
+
+        &__downloads-name {
+            color: var(--text-secondary);
+            font-family: var(--body-md-family);
+            font-size: var(--body-md-size);
+            line-height: var(--body-md-line-height);
+            overflow-wrap: break-word;
+        }
+
         &__download-link {
             display: inline-flex;
+            flex-shrink: 0;
             align-items: center;
             gap: var(--scale-8);
+            white-space: nowrap;
+            color: var(--text-brand);
             font-family: var(--label-md-family);
             font-size: var(--label-md-size);
             font-weight: var(--label-md-weight);
             line-height: var(--label-md-line-height);
-            color: var(--text-brand);
 
             &:hover,
             &:focus {

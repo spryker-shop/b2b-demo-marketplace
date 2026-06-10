@@ -13,7 +13,6 @@
 } %}
 
 {% block body %}
-    {# Product details rows (rendered inside the Description tab, gated by the attribute-visibility widget). #}
     {% set detailsList %}
         {% if data.attributes | length %}
             <div class="{{ config.name }}__details">
@@ -32,7 +31,6 @@
         {% endif %}
     {% endset %}
 
-    {# Description tab: long description + product details. #}
     {% set descriptionContent %}
         {% if data.description %}
             <div itemprop="description" class="{{ config.name }}__description">
@@ -49,26 +47,25 @@
         {% endif %}
     {% endset %}
 
-    {# Downloads tab: attachments as download links. #}
     {% set downloadsContent %}
         <ul class="{{ config.name }}__downloads">
             {% for attachment in data.attachments %}
                 <li class="{{ config.name }}__downloads-item">
+                    <span class="{{ config.name }}__downloads-name">{{ attachment.label }}</span>
                     <a href="{{ attachment.url }}" target="_blank" rel="noopener noreferrer" class="{{ config.name }}__download-link">
+                        {{ 'product.attachments.download.col' | trans }}
                         {% include atom('icon') with {
                             modifiers: ['download'],
                             data: {
                                 name: 'download',
                             },
                         } only %}
-                        <span>{{ attachment.label }}</span>
                     </a>
                 </li>
             {% endfor %}
         </ul>
     {% endset %}
 
-    {# Reviews tab: full review list + add-review form. #}
     {% set reviewsContent %}
         {% widget 'ProductDetailPageReviewWidget' args [data.product.idProductAbstract] only %}{% endwidget %}
     {% endset %}

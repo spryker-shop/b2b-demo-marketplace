@@ -1,9 +1,44 @@
 @mixin buy-box-buy-box-item($name: '.buy-box-item') {
     #{$name} {
-        background-color: $setting-color-gray-7;
-        border-bottom: rem(1) solid $setting-color-gray-1;
-        margin: 0;
-        padding: rem(16) rem(20);
+        margin: 0 0 var(--scale-8);
+        padding: var(--scale-8) var(--scale-16);
+        border-radius: var(--radius-md);
+        line-height: var(--label-sm-line-height);
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        &__name {
+            margin-bottom: var(--scale-2);
+            overflow: hidden;
+            color: var(--text-primary);
+            font-family: var(--label-sm-semibold-family);
+            font-size: rem(var(--label-sm-semibold-size));
+            font-weight: var(--label-sm-semibold-weight);
+            line-height: rem(var(--label-sm-semibold-line-height));
+            text-overflow: ellipsis;
+        }
+
+        &__links {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: var(--scale-4) var(--scale-12);
+        }
+
+        &__link {
+            color: var(--text-brand);
+        }
+
+        &__link,
+        &__links .link {
+            font-family: var(--label-sm-family);
+            font-size: rem(var(--label-sm-size));
+            font-weight: var(--label-sm-weight);
+            line-height: rem(var(--label-sm-line-height));
+            text-decoration: none;
+        }
 
         @content;
     }

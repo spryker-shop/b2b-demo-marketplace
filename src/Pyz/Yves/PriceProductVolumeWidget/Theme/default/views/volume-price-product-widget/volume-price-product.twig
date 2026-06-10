@@ -28,6 +28,7 @@
     {% if can('SeePricePermissionPlugin') %}
         {% block price %}
             {% include molecule('volume-price', 'PriceProductVolumeWidget') with {
+                modifiers: ['detail'],
                 attributes: {
                     'data-json': jsonVolumeProductPrices | json_encode(),
                 },

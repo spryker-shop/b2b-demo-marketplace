@@ -20,48 +20,12 @@
 {% endif %}
 
 {% block body %}
-    <form class="js-shopping-list__form" method="POST" action="{{ path('shopping-list/add-item') }}">
-
-        <div class="grid grid--stretch grid--nowrap grid--justify spacing-y--bigger">
-            {% include molecule('quantity-counter') with {
-                modifiers: ['right-space']
-            } only %}
-
-            <div class="col col--expand">
-                <input type="hidden" name="sku" value="{{ data.sku }}" />
-                <input type="hidden" name="_token" value="{{ csrf_token('shopping_list_add_item_form') }}">
-                {% if data.product is not empty %}
-                    {% widget 'ProductOfferShoppingListWidget' args [data.product] only %}{% endwidget %}
-                {% endif %}
-
-                {% include molecule('form-data-injector', 'ShoppingListWidget') with {
-                    class: "is-hidden",
-                    attributes: {
-                        'destination-form-class-name': 'js-shopping-list__form',
-                        'fields-selector': '.js-product-configurator__form-add-to-cart .js-custom-select:not([name="quantity"]):not([name="id_quote"])'
-                    }
-                } only %}
-
-                <button type="submit"
-                        class="button button--hollow button--bigger button--expand button--no-horizontal-padding js-add-to-shopping-list"
-                        {{ qa('add-to-shopping-list-button') }}
-                        {{ data.isDisabled ? 'disabled' : '' }}>
-                    {{ 'page.detail.add-to-shopping-list' | trans }}
-                </button>
-            </div>
-        </div>
-
-        {% if shoppingListOptions is not empty %}
-            {% include molecule('custom-select') with {
-                modifiers: ['full-width', 'shopping-list'],
-                attributes: {
-                    name: 'idShoppingList',
-                    'config-width': '100%'
-                },
-                data: {
-                    options: shoppingListOptions
-                }
-            } only %}
-        {% endif %}
-    </form>
+    {% include molecule('save-to-shopping-list', 'ShoppingListWidget') with {
+        data: {
+            sku: data.sku,
+            isDisabled: data.isDisabled,
+            product: data.product,
+            shoppingListOptions: shoppingListOptions,
+        },
+    } only %}
 {% endblock %}

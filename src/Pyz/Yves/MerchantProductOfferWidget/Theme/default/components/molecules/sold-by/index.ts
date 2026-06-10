@@ -1,0 +1,1 @@
+import './sold-by.scss';

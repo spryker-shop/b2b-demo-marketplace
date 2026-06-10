@@ -1,0 +1,79 @@
+@mixin merchant-product-offer-widget-seller-list($name: '.seller-list') {
+    #{$name} {
+        display: block;
+
+        &__details {
+            display: block;
+        }
+
+        &__toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--scale-4);
+            margin-bottom: var(--scale-8);
+            color: var(--text-secondary);
+            font-family: var(--label-sm-family);
+            font-size: rem(var(--label-sm-size));
+            font-weight: var(--label-sm-weight);
+            line-height: rem(var(--label-sm-line-height));
+            cursor: pointer;
+            list-style: none;
+
+            &::-webkit-details-marker {
+                display: none;
+            }
+        }
+
+        &__toggle-icon {
+            width: rem(var(--scale-16));
+            height: rem(var(--scale-16));
+            color: var(--icon-secondary);
+        }
+
+        &__toggle-label--expand {
+            display: none;
+        }
+
+        &__body {
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-12);
+        }
+
+        &__items {
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-2);
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        &__view-all {
+            align-self: flex-start;
+            padding: 0;
+            background: none;
+            border: 0;
+            color: var(--text-secondary);
+            font-family: var(--label-sm-family);
+            font-size: rem(var(--label-sm-size));
+            font-weight: var(--label-sm-weight);
+            line-height: rem(var(--label-sm-line-height));
+            cursor: pointer;
+        }
+
+        &__details:not([open]) &__body {
+            display: none;
+        }
+
+        &__details:not([open]) &__toggle-label--collapse {
+            display: none;
+        }
+
+        &__details:not([open]) &__toggle-label--expand {
+            display: inline;
+        }
+    }
+}
+
+@include merchant-product-offer-widget-seller-list();

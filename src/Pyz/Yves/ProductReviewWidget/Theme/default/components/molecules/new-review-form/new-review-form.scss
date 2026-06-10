@@ -1,9 +1,17 @@
 @mixin product-review-new-review-form($name: '.new-review-form') {
     #{$name} {
+        &__card {
+            padding: var(--scale-24);
+            background: var(--background-page);
+            border: var(--stroke-sm) solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+        }
+
         &__actions {
             display: flex;
             flex-direction: column-reverse;
             width: 100%;
+            gap: var(--scale-16);
 
             @include helper-breakpoint-media-min($md) {
                 flex-direction: row;
@@ -16,9 +24,10 @@
             display: flex;
             flex-flow: column-reverse;
             width: 100%;
+            gap: var(--scale-12);
 
             @include helper-breakpoint-media-min($md) {
-                flex-flow: row-reverse nowrap;
+                flex-flow: row nowrap;
                 width: auto;
             }
         }

@@ -1,0 +1,72 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'seller-list-item',
+    tag: 'seller-list-item',
+} %}
+
+{% define data = {
+    isChecked: false,
+    radioGroupName: 'product_offer_reference',
+    productOfferReference: required,
+    merchantName: required,
+    merchantUrl: null,
+    merchantReference: null,
+    price: null,
+    product: null,
+} %}
+
+{% define attributes = {
+    'offer-reference': data.productOfferReference,
+} %}
+
+{% block body %}
+    <label class="{{ config.name }}__option">
+        {% include atom('radio') with {
+            class: config.name ~ '__radio',
+            attributes: {
+                checked: data.isChecked,
+                name: data.radioGroupName,
+                value: data.productOfferReference,
+            },
+        } only %}
+
+        <span class="{{ config.name }}__name">{{ data.merchantName }}</span>
+
+        {% if data.price %}
+            <span class="{{ config.name }}__price">
+                {% widget 'CurrentProductPriceVolumeWidget' args [data.price] only %}
+                    {% block priceTable %}{% endblock %}
+                {% endwidget %}
+            </span>
+        {% endif %}
+    </label>
+
+    {% set relationLink %}
+        {% if data.merchantReference is not null %}
+            {% widget 'MerchantRelationRequestCreateLinkWidget' args [data.merchantReference] with {
+                class: config.name ~ '__menu-option',
+            } only %}{% endwidget %}
+        {% endif %}
+    {% endset %}
+
+    {% if data.merchantUrl or (relationLink | trim is not empty) %}
+        <details class="{{ config.name }}__menu {{ config.jsName }}__menu">
+            <summary class="{{ config.name }}__menu-trigger" aria-label="{{ 'merchant_product_offer.compare_sellers' | trans }}">
+                <span class="{{ config.name }}__menu-dots"></span>
+            </summary>
+
+            <div class="{{ config.name }}__menu-panel">
+                {% if data.merchantUrl %}
+                    <a class="{{ config.name }}__menu-option" href="{{ functionExists('generatePath') ? generatePath(data.merchantUrl) : data.merchantUrl }}">
+                        {{ 'merchant_product_offer.view_seller' | trans }}
+                    </a>
+                {% endif %}
+
+                {% if relationLink | trim is not empty %}
+                    {{ relationLink | raw }}
+                {% endif %}
+            </div>
+        </details>
+    {% endif %}
+{% endblock %}

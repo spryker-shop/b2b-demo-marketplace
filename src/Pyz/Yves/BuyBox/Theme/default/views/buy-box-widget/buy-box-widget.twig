@@ -2,45 +2,66 @@
 
 {% block template %}
     {% if data.products %}
-        {% set firstProduct = data.products | first %}
-        {% set priceMode = firstProduct.price.priceMode | default %}
-
-        <div class="title title--product-sold-by grid grid--justify grid--baseline">
-            <div class="col col--expand col--reset-min-width">
-                {{ 'buy_box.sold_by' | trans }}
-            </div>
-            {% if priceMode %}
-                <div class="title title--price-mode col col--reset-min-width is-hidden-lg-xxl">
-                    {% if priceMode == 'GROSS_MODE' %}
-                        {{ 'price.mode.incl_vat' | trans }}
-                    {% endif %}
-
-                    {% if priceMode == 'NET_MODE' %}
-                        {{ 'price.mode.excl_vat' | trans }}
-                    {% endif %}
-                </div>
-            {% endif %}
-        </div>
-
+        {% set selectedReference = data.productView.productOfferReference | default %}
+        {% set selectedProduct = null %}
         {% for product in data.products %}
-            {% block buyBoxProduct %}
-                {% set merchant = product.merchant %}
-
-                {% include molecule('buy-box-item', 'BuyBox') with {
-                    data: {
-                        isChecked: data.productView.productOfferReference is same as(product.productOfferReference),
-                        radioGroupName: 'product_offer_reference',
-                        productOfferReference: product.productOfferReference | default,
-                        merchantName: merchant.name | default,
-                        merchantUrl: merchant.merchantUrl | default,
-                        merchantReference: merchant.merchantReference | default(null),
-                        price: product.price | default(null),
-                        currencyIsoCode: product.price.currency.code | default(null),
-                        isRadioButtonVisible: data.products | length > 1,
-                        product: product,
-                    },
-                } only %}
-            {% endblock %}
+            {% if selectedReference and selectedReference is same as(product.productOfferReference) %}
+                {% set selectedProduct = product %}
+            {% endif %}
         {% endfor %}
+        {% set selectedProduct = selectedProduct ?? (data.products | first) %}
+        {% set selectedMerchant = selectedProduct.merchant %}
+        {% set hasMultipleOffers = data.products | length > 1 %}
+        {% set popupContentId = 'compare-sellers-' ~ (selectedProduct.productOfferReference | default('offer')) %}
+        {% set popupTriggerClass = 'js-compare-sellers__trigger-' ~ (selectedProduct.productOfferReference | default('offer')) %}
+
+        <p class="title title--product-sold-by">{{ 'buy_box.sold_by' | trans }}</p>
+
+        {% include molecule('sold-by', 'MerchantProductOfferWidget') with {
+            data: {
+                merchantName: selectedMerchant.name | default,
+                merchantUrl: selectedMerchant.merchantUrl | default(null),
+                merchantReference: selectedMerchant.merchantReference | default(null),
+                hasMultipleOffers: hasMultipleOffers,
+                compareTriggerClass: popupTriggerClass,
+            },
+        } only %}
+
+        {% if hasMultipleOffers %}
+            {% set sellerListContent %}
+                <ul class="seller-list">
+                    {% for product in data.products %}
+                        {% set isOfferSelected = data.productView.productOfferReference is same as(product.productOfferReference) %}
+                        {% set merchant = product.merchant %}
+                        {% include molecule('seller-list-item', 'MerchantProductOfferWidget') with {
+                            class: 'seller-list__item' ~ (isOfferSelected ? ' is-selected' : ''),
+                            data: {
+                                isChecked: isOfferSelected,
+                                radioGroupName: 'product_offer_reference',
+                                productOfferReference: product.productOfferReference | default,
+                                merchantName: merchant.name | default,
+                                merchantUrl: merchant.merchantUrl | default,
+                                merchantReference: merchant.merchantReference | default(null),
+                                price: product.price | default(null),
+                                product: product,
+                            },
+                        } only %}
+                    {% endfor %}
+                </ul>
+            {% endset %}
+
+            {% include molecule('main-popup') with {
+                class: 'compare-sellers',
+                data: {
+                    title: 'merchant_product_offer.compare_sellers' | trans,
+                    content: sellerListContent,
+                },
+                attributes: {
+                    'content-id': popupContentId,
+                    'trigger-class-name': popupTriggerClass,
+                    'has-content-mount': true,
+                },
+            } only %}
+        {% endif %}
     {% endif %}
 {% endblock %}

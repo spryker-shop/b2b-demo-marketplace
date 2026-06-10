@@ -20,11 +20,14 @@
             }
         }
 
-        // Rating summary sits on the page background (no legacy gray box).
         &__rating-box {
-            margin: 0;
-            padding: 0;
-            background: none;
+            padding: var(--scale-24);
+            background: var(--background-highlight);
+            border-radius: var(--radius-sm);
+
+            @include helper-breakpoint-media-min($lg) {
+                margin-right: var(--scale-48);
+            }
         }
 
         &__sub-title {

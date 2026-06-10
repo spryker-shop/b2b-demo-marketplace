@@ -1,19 +1,4 @@
 @mixin product-detail-page-product-configurator($name: '.product-configurator') {
-    // Buy box card wrapper (see pdp.twig). Holds the product title, labels and the configurator.
-    .product-buy-box {
-        display: flex;
-        flex-direction: column;
-        gap: var(--scale-16);
-        padding: var(--scale-24);
-        background: var(--background-page);
-        border: var(--stroke-sm) solid var(--border-default);
-        border-radius: var(--radius-lg);
-
-        @include helper-breakpoint-media-min($lg) {
-            padding: var(--scale-32) var(--scale-24);
-        }
-    }
-
     #{$name} {
         display: flex;
         flex-direction: column;
@@ -48,7 +33,6 @@
             white-space: nowrap;
 
             &--in-stock {
-                // --green-900 (not --text-state-success/green-800) to reach WCAG AA 4.5:1 on the green-50 tint.
                 color: var(--green-900);
                 background: var(--background-state-success-subtle);
             }
@@ -57,12 +41,6 @@
                 color: var(--text-state-error);
                 background: var(--background-state-error-subtle);
             }
-        }
-
-        &__brand-sku-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: var(--scale-2);
         }
 
         &__brand-name {
@@ -81,39 +59,8 @@
             color: var(--text-tertiary);
         }
 
-        // Price block — scoped typography so any money-price rendered by the price
-        // widgets inside the buy box gets the design-system price-lg role.
         &__price-block {
             color: var(--text-primary);
-
-            .money-price {
-                &__amount {
-                    font-family: var(--price-lg-family);
-                    font-size: var(--price-lg-size);
-                    font-weight: var(--price-lg-weight);
-                    line-height: var(--price-lg-line-height);
-                    letter-spacing: var(--price-lg-letter-spacing);
-                    color: var(--text-primary);
-
-                    &--original {
-                        font-family: var(--caption-family);
-                        font-size: var(--caption-size);
-                        font-weight: var(--caption-weight);
-                        line-height: var(--caption-line-height);
-                        letter-spacing: var(--caption-letter-spacing);
-                        color: var(--text-tertiary);
-                        text-decoration: line-through;
-                    }
-                }
-
-                &__mode {
-                    font-family: var(--body-sm-family);
-                    font-size: var(--body-sm-size);
-                    font-weight: var(--body-sm-weight);
-                    line-height: var(--body-sm-line-height);
-                    color: var(--text-tertiary);
-                }
-            }
         }
 
         &__section-title {
@@ -131,14 +78,6 @@
             gap: var(--scale-8);
         }
 
-        // Scope the variant-configurator wrapper layout to the buy box (avoids leaking
-        // flex layout to product-set / promotion contexts that reuse this component).
-        .variant-configurator {
-            display: flex;
-            flex-direction: column;
-            gap: var(--scale-8);
-        }
-
         &__field-label {
             display: block;
             margin: 0 0 var(--scale-8);
@@ -149,8 +88,7 @@
             color: var(--text-primary);
         }
 
-        // The add-to-cart form (rendered by AddToCartFormWidget) becomes a vertical stack.
-        .js-product-configurator__form-add-to-cart {
+        &__form {
             display: flex;
             flex-direction: column;
             gap: var(--scale-12);
@@ -175,25 +113,6 @@
         &__add-to-cart-button {
             flex: 1 1 0;
             min-width: 0;
-        }
-
-        // Save to shopping list: the widget already renders a hollow (outline) full-width
-        // button; just neutralise its legacy vertical spacing so the card gap controls rhythm.
-        &__save-to-list {
-            .spacing-y--bigger {
-                margin-top: 0;
-                margin-bottom: 0;
-            }
-
-            // Spacing between the shopping-list dropdown and the quantity/button row above it.
-            .custom-select--shopping-list {
-                margin-top: var(--scale-12);
-            }
-        }
-
-        // "Add as separate item" checkbox — left aligned per design (vendor floats it right).
-        .grid--right {
-            justify-content: flex-start;
         }
     }
 }
