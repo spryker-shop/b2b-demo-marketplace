@@ -4,7 +4,7 @@ export default class VariantConfigurator extends Component {
     protected cartForm: HTMLFormElement;
     protected notify: HTMLElement;
 
-    protected readyCallback(): void { }
+    protected readyCallback(): void {}
 
     protected init(): void {
         this.cartForm = <HTMLFormElement>document.querySelector(this.cartFormSelector);

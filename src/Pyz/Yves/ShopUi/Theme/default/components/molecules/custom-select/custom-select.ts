@@ -85,9 +85,7 @@ export default class CustomSelect extends Component {
     }
 
     protected removeStaleDropdowns(): void {
-        Array.from(this.getElementsByClassName('select2-container')).forEach((dropdown: Element) =>
-            dropdown.remove(),
-        );
+        Array.from(this.getElementsByClassName('select2-container')).forEach((dropdown: Element) => dropdown.remove());
     }
 
     protected get configWidth(): string {

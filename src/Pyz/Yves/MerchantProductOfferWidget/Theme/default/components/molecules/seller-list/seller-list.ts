@@ -35,9 +35,7 @@ export default class SellerList extends Component {
             return;
         }
 
-        const modalRadio = <HTMLInputElement>(
-            document.querySelector(`input[name="${SellerList.MODAL_GROUP}"]:checked`)
-        );
+        const modalRadio = <HTMLInputElement>document.querySelector(`input[name="${SellerList.MODAL_GROUP}"]:checked`);
 
         if (modalRadio) {
             this.applyOffer(modalRadio.value);
@@ -91,9 +89,7 @@ export default class SellerList extends Component {
     }
 
     protected updatePrice(reference: string): void {
-        const priceContainers = <HTMLElement[]>(
-            Array.from(document.querySelectorAll(`[${this.priceOfferAttribute}]`))
-        );
+        const priceContainers = <HTMLElement[]>Array.from(document.querySelectorAll(`[${this.priceOfferAttribute}]`));
 
         if (!priceContainers.length) {
             return;
