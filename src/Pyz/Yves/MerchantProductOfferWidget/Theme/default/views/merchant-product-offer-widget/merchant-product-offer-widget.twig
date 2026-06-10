@@ -10,7 +10,6 @@
             {% endif %}
         {% endfor %}
         {% set selectedOffer = selectedOffer ?? (data.productOffers | first) %}
-        {% set hasMultipleOffers = data.productOffers | length > 1 %}
         {% set popupContentId = 'compare-sellers-' ~ (selectedOffer.productOfferReference | default('offer')) %}
         {% set popupTriggerClass = 'js-compare-sellers__trigger-' ~ (selectedOffer.productOfferReference | default('offer')) %}
         {% set visibleCount = 4 %}
@@ -19,19 +18,18 @@
             <p class="title title--product-sold-by">{{ 'merchant_product.sold_by' | trans }}</p>
         {% endif %}
 
-        {% if hasMultipleOffers %}
-            {% block sellerList %}
-                {% include molecule('seller-list', 'MerchantProductOfferWidget') with {
-                    data: {
-                        offers: data.productOffers,
-                        selectedReference: data.productView.productOfferReference | default,
-                        visibleCount: visibleCount,
-                        compareTriggerClass: popupTriggerClass,
-                    },
-                } only %}
-            {% endblock %}
+        {% block sellerList %}
+            {% include molecule('seller-list', 'MerchantProductOfferWidget') with {
+                data: {
+                    offers: data.productOffers,
+                    selectedReference: data.productView.productOfferReference | default(selectedOffer.productOfferReference),
+                    visibleCount: visibleCount,
+                    compareTriggerClass: popupTriggerClass,
+                },
+            } only %}
+        {% endblock %}
 
-            {% if data.productOffers | length > visibleCount %}
+        {% if data.productOffers | length > visibleCount %}
                 {% set sellerListContent %}
                     <ul class="seller-list__items">
                         {% for productOffer in data.productOffers %}
@@ -72,18 +70,6 @@
                         'has-content-mount': true,
                     },
                 } only %}
-            {% endif %}
-        {% else %}
-            {% block selectedSeller %}
-                {% include molecule('sold-by', 'MerchantProductOfferWidget') with {
-                    data: {
-                        merchantName: selectedOffer.merchantStorage.name | default,
-                        merchantUrl: selectedOffer.merchantStorage.merchantUrl | default(null),
-                        merchantReference: selectedOffer.merchantReference | default(null),
-                        hasMultipleOffers: false,
-                    },
-                } only %}
-            {% endblock %}
         {% endif %}
     {% endif %}
 {% endblock %}
