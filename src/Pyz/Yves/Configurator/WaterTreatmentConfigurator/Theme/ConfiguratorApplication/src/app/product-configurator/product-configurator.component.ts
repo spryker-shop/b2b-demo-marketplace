@@ -35,7 +35,7 @@ export class ProductConfiguratorComponent implements OnInit {
     destroy$ = new Subject<void>();
     submitForm$ = this.metaData$.pipe(
         takeUntil(this.destroy$),
-        delay(0),
+        delay(50),
         tap(() => this.form.nativeElement.submit()),
     );
 
