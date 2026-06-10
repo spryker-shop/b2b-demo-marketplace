@@ -1,20 +1,33 @@
 {
     "compileOnSave": false,
     "compilerOptions": {
+        "ignoreDeprecations": "6.0",
         "sourceMap": true,
         "declaration": false,
         "downlevelIteration": true,
         "experimentalDecorators": true,
         "importHelpers": true,
         "removeComments": true,
-        "useDefineForClassFields": false,
         "baseUrl": "./",
+        "rootDir": "./src",
         "outDir": "./dist/out-tsc",
-        "moduleResolution": "node",
+        "moduleResolution": "bundler",
         "target": "ES2022",
         "module": "esnext",
+        "useDefineForClassFields": false,
         "typeRoots": ["node_modules/@types"],
-        "lib": ["dom", "esnext"]
+        "lib": ["dom", "esnext"],
+        "strict": false,
+        "noImplicitOverride": true,
+        "noPropertyAccessFromIndexSignature": false,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true
     },
-    "files": ["src/main.ts", "src/polyfills.ts"]
+    "files": ["src/main.ts"],
+    "angularCompilerOptions": {
+        "enableI18nLegacyMessageIdFormat": false,
+        "strictInjectionParameters": true,
+        "strictInputAccessModifiers": true,
+        "strictTemplates": false
+    }
 }

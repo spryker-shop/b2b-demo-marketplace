@@ -1,11 +1,15 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MockData, MockDataItem } from 'src/services/types';
+import { ConfiguratorItemComponent } from '../configurator-item/configurator-item.component';
 
 @Component({
     selector: 'app-configurator-group',
     templateUrl: './configurator-group.component.html',
-    styleUrls: ['./configurator-group.component.scss'],
+    styleUrl: './configurator-group.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [TranslatePipe, ConfiguratorItemComponent],
 })
 export class ConfiguratorGroupComponent {
     @Input() currency: string;

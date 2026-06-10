@@ -1,17 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 import { catchError, map, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { environment } from '../environments/environment';
 import { ProductData, ProductMetaData } from './types';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
-    constructor(private http: HttpClient, private translate: TranslateService) {
-        translate.addLangs(['en_US', 'de_DE']);
-        translate.setDefaultLang('en_US');
-    }
+    constructor(private http: HttpClient, private translate: TranslateService) {}
 
     private token = this.getToken();
 
@@ -25,7 +22,7 @@ export class ProductService {
                 : tap(),
             switchMap((response) => {
                 if (!response) {
-                    return;
+                    return EMPTY;
                 }
 
                 return this.translate.use(response.data.locale_name).pipe(map(() => response.data));
@@ -48,5 +45,4 @@ export class ProductService {
 
         return locationSearchArr[locationSearchArr.length - 1];
     }
-    /* tslint:enable */
 }

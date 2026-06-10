@@ -1,13 +1,17 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
 import { map, Subject, withLatestFrom } from 'rxjs';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ConfiguratorService } from 'src/services/configurator.service';
 import { ProductService } from 'src/services/product.service';
 
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
-    styleUrls: ['./header.component.scss'],
+    styleUrl: './header.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [AsyncPipe, TranslatePipe],
 })
 export class HeaderComponent {
     constructor(protected data: ProductService, protected configuration: ConfiguratorService) {}
