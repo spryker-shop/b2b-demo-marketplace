@@ -146,6 +146,45 @@
                 ]
             },
             {
+                "name": "productAbstractUrls",
+                "isEditable": true,
+                "childDynamicEntityConfiguration": {
+                    "tableAlias": "urls"
+                },
+                "relationFieldMappings": [
+                    {
+                        "childFieldName": "fk_resource_product_abstract",
+                        "parentFieldName": "id_product_abstract"
+                    }
+                ]
+            },
+            {
+                "name": "abstractProductMeasurementBaseUnits",
+                "isEditable": true,
+                "relationFieldMappings": [
+                    {
+                        "childFieldName": "fk_product_abstract",
+                        "parentFieldName": "id_product_abstract"
+                    }
+                ],
+                "childDynamicEntityConfiguration": {
+                    "tableAlias": "product-measurement-base-units"
+                }
+            },
+            {
+                "name": "abstractProductAlternatives",
+                "isEditable": true,
+                "relationFieldMappings": [
+                    {
+                        "childFieldName": "fk_product_abstract_alternative",
+                        "parentFieldName": "id_product_abstract"
+                    }
+                ],
+                "childDynamicEntityConfiguration": {
+                    "tableAlias": "product-alternatives"
+                }
+            },
+            {
                 "name": "productAbstractStores",
                 "isEditable": true,
                 "childDynamicEntityConfiguration": {
@@ -784,6 +823,18 @@
                     },
                     "examples": [true],
                     "description": "A flag indicating if a category should appear in the menu."
+                },
+                {
+                    "fieldName": "is_active",
+                    "fieldVisibleName": "is_active",
+                    "isCreatable": true,
+                    "isEditable": true,
+                    "type": "boolean",
+                    "validation": {
+                        "isRequired": false
+                    },
+                    "examples": [true],
+                    "description": "Boolean flag indicating if category is active and available."
                 },
                 {
                     "fieldName": "is_searchable",
@@ -3002,22 +3053,7 @@
                     "description": "A Universally Unique Identifier for an entity."
                 }
             ]
-        },
-        "childRelations": [
-            {
-                "name": "companyPriceProducts",
-                "isEditable": true,
-                "childDynamicEntityConfiguration": {
-                    "tableAlias": "price-products"
-                },
-                "relationFieldMappings": [
-                    {
-                        "childFieldName": "fk_company",
-                        "parentFieldName": "id_company"
-                    }
-                ]
-            }
-        ]
+        }
     },
     {
         "tableName": "spy_company_type",
@@ -3052,22 +3088,7 @@
                     "description": "Company type name for categorizing businesses by industry or function (e.g., 'manufacturer', 'retailer', 'distributor')."
                 }
             ]
-        },
-        "childRelations": [
-            {
-                "name": "companyTypeCompanies",
-                "isEditable": true,
-                "childDynamicEntityConfiguration": {
-                    "tableAlias": "companies"
-                },
-                "relationFieldMappings": [
-                    {
-                        "childFieldName": "fk_company_type",
-                        "parentFieldName": "id_company_type"
-                    }
-                ]
-            }
-        ]
+        }
     },
     {
         "tableName": "spy_price_product_store",
