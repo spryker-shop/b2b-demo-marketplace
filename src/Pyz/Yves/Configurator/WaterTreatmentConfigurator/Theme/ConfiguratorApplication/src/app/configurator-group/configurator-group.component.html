@@ -1,5 +1,5 @@
 <div class="group__heading">
-    <h3 data-qa="configurator-group-heading">{{ group.label }}</h3>
+    <h3 data-qa="configurator-group-heading">{{ group.label | translate }}</h3>
 
     @if (group.tooltip) {
     <div data-qa="configurator-group-tooltip" class="tooltip">
@@ -14,7 +14,7 @@
         </svg>
 
         <div class="tooltip__content">
-            {{ group.tooltip }}
+            {{ group.tooltip | translate }}
         </div>
     </div>
     }
@@ -32,7 +32,7 @@
         [checked]="isChecked(item)"
         (onChange)="this.onChange.emit($event)"
     >
-        {{ item.title }}
+        {{ item.title | translate }}
     </app-configurator-item>
     }
 </div>
