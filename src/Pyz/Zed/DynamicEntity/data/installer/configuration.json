@@ -146,45 +146,6 @@
                 ]
             },
             {
-                "name": "productAbstractUrls",
-                "isEditable": true,
-                "childDynamicEntityConfiguration": {
-                    "tableAlias": "urls"
-                },
-                "relationFieldMappings": [
-                    {
-                        "childFieldName": "fk_resource_product_abstract",
-                        "parentFieldName": "id_product_abstract"
-                    }
-                ]
-            },
-            {
-                "name": "abstractProductMeasurementBaseUnits",
-                "isEditable": true,
-                "relationFieldMappings": [
-                    {
-                        "childFieldName": "fk_product_abstract",
-                        "parentFieldName": "id_product_abstract"
-                    }
-                ],
-                "childDynamicEntityConfiguration": {
-                    "tableAlias": "product-measurement-base-units"
-                }
-            },
-            {
-                "name": "abstractProductAlternatives",
-                "isEditable": true,
-                "relationFieldMappings": [
-                    {
-                        "childFieldName": "fk_product_abstract_alternative",
-                        "parentFieldName": "id_product_abstract"
-                    }
-                ],
-                "childDynamicEntityConfiguration": {
-                    "tableAlias": "product-alternatives"
-                }
-            },
-            {
                 "name": "productAbstractStores",
                 "isEditable": true,
                 "childDynamicEntityConfiguration": {
@@ -198,7 +159,7 @@
                 ]
             },
             {
-                "name": "productImageSets",
+                "name": "productAbstractImageSets",
                 "isEditable": true,
                 "childDynamicEntityConfiguration": {
                     "tableAlias": "product-image-sets"
@@ -263,7 +224,7 @@
                 ]
             },
             {
-                "name": "productRelationProductAbstracts",
+                "name": "productAbstractsProductRelation",
                 "isEditable": false,
                 "childDynamicEntityConfiguration": {
                     "tableAlias": "product-relations-product-abstract"
@@ -276,7 +237,7 @@
                 ]
             },
             {
-                "name": "productLabelProductAbstracts",
+                "name": "productAbstractsProductLabel",
                 "isEditable": true,
                 "childDynamicEntityConfiguration": {
                     "tableAlias": "product-label-product-abstracts"
@@ -326,6 +287,32 @@
                         "parentFieldName": "id_product_abstract"
                     }
                 ]
+            },
+            {
+                "name": "abstractProductMeasurementBaseUnits",
+                "isEditable": true,
+                "relationFieldMappings": [
+                    {
+                        "childFieldName": "fk_product_abstract",
+                        "parentFieldName": "id_product_abstract"
+                    }
+                ],
+                "childDynamicEntityConfiguration": {
+                    "tableAlias": "product-measurement-base-units"
+                }
+            },
+            {
+                "name": "abstractProductAlternatives",
+                "isEditable": true,
+                "relationFieldMappings": [
+                    {
+                        "childFieldName": "fk_product_abstract_alternative",
+                        "parentFieldName": "id_product_abstract"
+                    }
+                ],
+                "childDynamicEntityConfiguration": {
+                    "tableAlias": "product-alternatives"
+                }
             }
         ]
     },
@@ -374,6 +361,18 @@
                     "description": "JSON string containing NON-LOCALIZED concrete product attributes as key-value pairs. Use English keys and values that don't need translation (technical specs, SKUs, measurements). For translated attributes use localized_attributes table. Super attributes distinguish product variants. Boolean values: 0/1 format."
                 },
                 {
+                    "fieldName": "discount",
+                    "fieldVisibleName": "discount",
+                    "isCreatable": true,
+                    "isEditable": true,
+                    "type": "integer",
+                    "validation": {
+                        "isRequired": false
+                    },
+                    "examples": ["10"],
+                    "description": "A discount applied to a product or order."
+                },
+                {
                     "fieldName": "is_active",
                     "fieldVisibleName": "is_active",
                     "isVisible": true,
@@ -409,6 +408,18 @@
                     },
                     "description": "The Stock Keeping Unit, a unique identifier for a concrete product.",
                     "examples": ["001_25904006"]
+                },
+                {
+                    "fieldName": "warehouses",
+                    "fieldVisibleName": "warehouses",
+                    "isCreatable": true,
+                    "isEditable": true,
+                    "type": "string",
+                    "validation": {
+                        "isRequired": false
+                    },
+                    "examples": ["ware_house_1"],
+                    "description": "The warehouses associated with a product."
                 }
             ]
         },
@@ -773,18 +784,6 @@
                     },
                     "examples": [true],
                     "description": "A flag indicating if a category should appear in the menu."
-                },
-                {
-                    "fieldName": "is_active",
-                    "fieldVisibleName": "is_active",
-                    "isCreatable": true,
-                    "isEditable": true,
-                    "type": "boolean",
-                    "validation": {
-                        "isRequired": false
-                    },
-                    "examples": [true],
-                    "description": "Boolean flag indicating if category is active and available."
                 },
                 {
                     "fieldName": "is_searchable",
@@ -1887,7 +1886,7 @@
         },
         "childRelations": [
             {
-                "name": "productImageSetToProductImages",
+                "name": "productImagesToProductImageSet",
                 "isEditable": true,
                 "childDynamicEntityConfiguration": {
                     "tableAlias": "product-image-set-to-product-images"
@@ -2931,6 +2930,18 @@
                     "description": "Unique identifier for the company record."
                 },
                 {
+                    "fieldName": "fk_company_type",
+                    "fieldVisibleName": "fk_company_type",
+                    "isCreatable": true,
+                    "isEditable": true,
+                    "type": "integer",
+                    "validation": {
+                        "isRequired": false
+                    },
+                    "examples": ["1"],
+                    "description": "Foreign key to company type table. Defines the type of company."
+                },
+                {
                     "fieldName": "is_active",
                     "fieldVisibleName": "is_active",
                     "isCreatable": true,
@@ -2991,7 +3002,72 @@
                     "description": "A Universally Unique Identifier for an entity."
                 }
             ]
-        }
+        },
+        "childRelations": [
+            {
+                "name": "companyPriceProducts",
+                "isEditable": true,
+                "childDynamicEntityConfiguration": {
+                    "tableAlias": "price-products"
+                },
+                "relationFieldMappings": [
+                    {
+                        "childFieldName": "fk_company",
+                        "parentFieldName": "id_company"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "tableName": "spy_company_type",
+        "tableAlias": "company-types",
+        "isActive": true,
+        "definition": {
+            "identifier": "id_company_type",
+            "isDeletable": false,
+            "fields": [
+                {
+                    "fieldName": "id_company_type",
+                    "fieldVisibleName": "id_company_type",
+                    "isCreatable": true,
+                    "isEditable": true,
+                    "type": "integer",
+                    "validation": {
+                        "isRequired": false
+                    },
+                    "examples": ["1"],
+                    "description": "Unique identifier for the company type record."
+                },
+                {
+                    "fieldName": "name",
+                    "fieldVisibleName": "name",
+                    "isCreatable": true,
+                    "isEditable": true,
+                    "type": "string",
+                    "validation": {
+                        "isRequired": true
+                    },
+                    "examples": ["woodworker"],
+                    "description": "Company type name for categorizing businesses by industry or function (e.g., 'manufacturer', 'retailer', 'distributor')."
+                }
+            ]
+        },
+        "childRelations": [
+            {
+                "name": "companyTypeCompanies",
+                "isEditable": true,
+                "childDynamicEntityConfiguration": {
+                    "tableAlias": "companies"
+                },
+                "relationFieldMappings": [
+                    {
+                        "childFieldName": "fk_company_type",
+                        "parentFieldName": "id_company_type"
+                    }
+                ]
+            }
+        ]
     },
     {
         "tableName": "spy_price_product_store",
@@ -3687,6 +3763,18 @@
                     },
                     "description": "Stock name for identifying inventory location or warehouse (e.g., 'Warehouse A', 'Main Stock', 'EU Distribution Center').",
                     "examples": ["default"]
+                },
+                {
+                    "fieldName": "uuid",
+                    "fieldVisibleName": "uuid",
+                    "isCreatable": false,
+                    "isEditable": false,
+                    "type": "string",
+                    "validation": {
+                        "isRequired": false
+                    },
+                    "description": "A Universally Unique Identifier for an entity.",
+                    "examples": ["ebe6ac77-9673-4945-9160-30d819c29ee0"]
                 }
             ]
         },
@@ -5156,7 +5244,7 @@
                     "isEditable": false,
                     "type": "integer",
                     "validation": {
-                        "isRequired": false
+                        "isRequired": true
                     },
                     "examples": ["1"],
                     "description": "Foreign key to sales order address table. Links to billing address for the order."
@@ -5842,8 +5930,8 @@
                     "validation": {
                         "isRequired": false
                     },
-                    "type": "integer",
-                    "examples": ["1"],
+                    "type": "float",
+                    "examples": ["0.5"],
                     "description": "Step interval for measurable product amounts in packaging units. Defines increment/decrement steps for 'amount' (measurable quantities like 2.5kg, 1.5L) vs 'quantity' (discrete countable units like 3 boxes, 5 items). Example: interval=0.5 allows amounts like 1.0, 1.5, 2.0 kg. Used in frontend quantity selectors and cart validation."
                 },
                 {
@@ -5854,8 +5942,8 @@
                     "validation": {
                         "isRequired": false
                     },
-                    "type": "integer",
-                    "examples": ["10"],
+                    "type": "float",
+                    "examples": ["10.5"],
                     "description": "Maximum measurable amount allowed for packaging unit. Represents upper limit for 'amount' (measurable quantities like 5.0kg, 10.5L) vs 'quantity' (discrete countable units). Used for products sold by weight, volume, or other measurements rather than individual pieces."
                 },
                 {
@@ -5866,8 +5954,8 @@
                     "validation": {
                         "isRequired": false
                     },
-                    "type": "integer",
-                    "examples": ["1"],
+                    "type": "float",
+                    "examples": ["0.5"],
                     "description": "Minimum measurable amount required for packaging unit. Represents lower limit for 'amount' (measurable quantities like 3.0kg, 2.5L) vs 'quantity' (discrete countable units). Used for products sold by weight, volume, or other measurements with minimum purchase requirements."
                 },
                 {
@@ -5878,8 +5966,8 @@
                     "validation": {
                         "isRequired": true
                     },
-                    "type": "integer",
-                    "examples": ["2"],
+                    "type": "float",
+                    "examples": ["2.5"],
                     "description": "Default measurable amount for packaging unit when customer doesn't specify custom amount. Represents preset 'amount' (measurable quantities like 5.0kg, 2.5L) vs 'quantity' (discrete countable units). Used as starting value for products sold by weight, volume, or other measurements."
                 },
                 {
@@ -6083,8 +6171,8 @@
                     "validation": {
                         "isRequired": false
                     },
-                    "type": "integer",
-                    "examples": ["1000"],
+                    "type": "float",
+                    "examples": ["1000.0"],
                     "description": "Conversion factor from sales unit to base unit. Multiplier used to convert sales unit amounts to base unit amounts for calculations. Example: sales_unit='grams', base_unit='kg', conversion=1000.0 means 1000g = 1kg. Can be fractional for smaller units: conversion=0.001 for mg→g. Used in pricing, inventory, and order calculations."
                 },
                 {
