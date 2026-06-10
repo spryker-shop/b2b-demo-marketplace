@@ -181,6 +181,8 @@ export class ConfiguratorService {
         volumePrices?: MockVolumePricesConfig[],
     ): void {
         if (!volumePrices) {
+            configurator.volume_prices = null;
+
             return;
         }
 
