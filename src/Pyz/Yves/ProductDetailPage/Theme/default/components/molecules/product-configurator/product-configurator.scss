@@ -4,8 +4,14 @@
         flex-direction: column;
         gap: var(--scale-16);
         margin: 0;
-        padding: 0;
-        border: 0;
+        padding: var(--scale-24);
+        background: var(--background-page);
+        border: var(--stroke-sm) solid var(--border-default);
+        border-radius: var(--radius-lg);
+
+        @include helper-breakpoint-media-min($lg) {
+            padding: var(--scale-32) var(--scale-24);
+        }
 
         &__top-block {
             display: flex;

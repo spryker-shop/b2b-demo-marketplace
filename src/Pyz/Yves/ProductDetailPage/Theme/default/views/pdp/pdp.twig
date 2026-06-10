@@ -48,26 +48,11 @@
             </div>
 
             <div class="col col--sm-12 col--lg-5">
-                <div class="product-buy-box">
-                    <h1 itemprop="name" class="title title--h4">{{ data.product.name }}</h1>
-                    {% widget 'ProductAbstractLabelWidget' args [data.product.idProductAbstract] only %}
-                        {% block body %}
-                            {% if labels | length %}
-                                {% include molecule('label-group', 'ProductLabelWidget') with {
-                                    modifiers: ['pdp'],
-                                    data: {
-                                        labels: labels
-                                    }
-                                } only %}
-                            {% endif %}
-                        {% endblock %}
-                    {% endwidget %}
-                    {% include molecule('product-configurator', 'ProductDetailPage') with {
-                        data: {
-                            product: data.product,
-                        },
-                    } only %}
-                </div>
+                {% include molecule('product-configurator', 'ProductDetailPage') with {
+                    data: {
+                        product: data.product,
+                    },
+                } only %}
             </div>
         </div>
 

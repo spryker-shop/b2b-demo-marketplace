@@ -9,6 +9,21 @@
 {% set hasConfigurableAttributes = data.product.attributeMap.superAttributes is defined and data.product.attributeMap.superAttributes is not empty %}
 
 {% block body %}
+    <h1 itemprop="name" class="title title--h4">{{ data.product.name }}</h1>
+
+    {% widget 'ProductAbstractLabelWidget' args [data.product.idProductAbstract] only %}
+        {% block body %}
+            {% if labels | length %}
+                {% include molecule('label-group', 'ProductLabelWidget') with {
+                    modifiers: ['pdp'],
+                    data: {
+                        labels: labels,
+                    },
+                } only %}
+            {% endif %}
+        {% endblock %}
+    {% endwidget %}
+
     <div class="{{ config.name }}__top-block">
         {% if brand is not empty %}
             <span itemprop="brand" class="{{ config.name }}__brand-name">{{ brand }}</span>
