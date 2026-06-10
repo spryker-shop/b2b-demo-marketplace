@@ -141,10 +141,9 @@
                                     {{ embed.isAddToCartDisabled ? 'disabled' : 'data-init-single-click' }}
                                     {{ qa('add-to-cart-button') }}
                                 >
-                                    {% include atom('icon') with {
-                                        modifiers: ['cart-plus'],
+                                    {% include atom('font-icon') with {
                                         data: {
-                                            name: 'cart-plus',
+                                            name: 'shopping_cart',
                                         },
                                     } only %}
                                     {{ 'page.detail.add-to-cart' | trans }}

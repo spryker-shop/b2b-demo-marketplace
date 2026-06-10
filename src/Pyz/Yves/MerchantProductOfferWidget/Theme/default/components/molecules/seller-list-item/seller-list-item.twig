@@ -35,7 +35,11 @@
 
         {% if data.price %}
             <span class="{{ config.name }}__price">
-                {% widget 'CurrentProductPriceVolumeWidget' args [data.price] only %}
+                {% widget 'CurrentProductPriceVolumeWidget' args [data.price] with {
+                    data: {
+                        priceModifiers: ['seller'],
+                    },
+                } only %}
                     {% block priceTable %}{% endblock %}
                 {% endwidget %}
             </span>

@@ -16,7 +16,7 @@
 
         <div class="{{ config.name }}__links">
             {% block merchantLink %}
-                <a class="{{ config.name }}__link" href="{{ functionExists('generatePath') ? generatePath(data.merchantUrl) : data.merchantUrl }}">
+                <a class="link link--font-inherit link--no-decoration" href="{{ functionExists('generatePath') ? generatePath(data.merchantUrl) : data.merchantUrl }}">
                     {{ 'buy_box.view_merchant' | trans }}
                 </a>
             {% endblock %}

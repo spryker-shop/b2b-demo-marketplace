@@ -25,19 +25,10 @@
             flex-wrap: wrap;
             align-items: center;
             gap: var(--scale-4) var(--scale-12);
-        }
-
-        &__link {
-            color: var(--text-brand);
-        }
-
-        &__link,
-        &__links .link {
             font-family: var(--label-sm-family);
             font-size: rem(var(--label-sm-size));
             font-weight: var(--label-sm-weight);
             line-height: rem(var(--label-sm-line-height));
-            text-decoration: none;
         }
 
         @content;

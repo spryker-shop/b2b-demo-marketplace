@@ -42,31 +42,6 @@
             white-space: nowrap;
         }
 
-        &__price .volume-price {
-            display: inline-flex;
-            flex-direction: row-reverse;
-            align-items: baseline;
-            gap: var(--scale-4);
-            margin: 0;
-        }
-
-        &__price .volume-price__amount,
-        &__price .volume-price__price {
-            color: var(--text-primary);
-            font-family: var(--label-sm-semibold-family);
-            font-size: rem(var(--label-sm-semibold-size));
-            font-weight: var(--label-sm-semibold-weight);
-            line-height: rem(var(--label-sm-semibold-line-height));
-        }
-
-        &__price .volume-price__mode {
-            color: var(--text-secondary);
-            font-family: var(--body-sm-family);
-            font-size: rem(var(--body-sm-size));
-            font-weight: var(--font-weight-regular);
-            line-height: rem(var(--body-sm-line-height));
-        }
-
         &__menu {
             position: relative;
             flex: 0 0 auto;
@@ -129,7 +104,7 @@
             position: absolute;
             top: calc(100% + var(--scale-4));
             right: 0;
-            z-index: 2;
+            z-index: $setting-zi-menu;
             display: flex;
             flex-direction: column;
             min-width: rem(160);
