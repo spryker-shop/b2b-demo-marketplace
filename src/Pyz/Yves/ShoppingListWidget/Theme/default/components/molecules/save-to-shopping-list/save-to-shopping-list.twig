@@ -9,20 +9,12 @@
     isDisabled: false,
     product: null,
     shoppingListOptions: [],
+    triggerClass: null,
 } %}
 
 {% block body %}
-    {% set triggerClass = config.jsName ~ '__trigger-' ~ data.sku %}
+    {% set triggerClass = data.triggerClass ?? (config.jsName ~ '__trigger-' ~ data.sku) %}
     {% set contentId = config.name ~ '-' ~ data.sku %}
-
-    <button
-        type="button"
-        class="button button--hollow button--bigger button--expand button--no-horizontal-padding {{ triggerClass }}"
-        {{ data.isDisabled ? 'disabled' }}
-        {{ qa('save-to-shopping-list-trigger') }}
-    >
-        {{ 'shopping_list_widget.save_to_shopping_list' | trans }}
-    </button>
 
     {% set popupContent %}
         <form class="{{ config.name }}__form js-shopping-list__form" method="POST" action="{{ path('shopping-list/add-item') }}">

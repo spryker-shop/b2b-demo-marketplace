@@ -13,10 +13,20 @@
             padding: var(--scale-32) var(--scale-24);
         }
 
+        &__top {
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-12);
+        }
+
         &__top-block {
             display: flex;
             flex-direction: column;
             gap: var(--scale-6);
+        }
+
+        &__title {
+            margin-bottom: var(--scale-6);
         }
 
         &__meta-row {
@@ -103,6 +113,10 @@
         &__add-to-cart {
             display: flex;
             flex-direction: column;
+        }
+
+        &__save-to-list {
+            margin-top: var(--scale-12);
         }
 
         &__cta-row {

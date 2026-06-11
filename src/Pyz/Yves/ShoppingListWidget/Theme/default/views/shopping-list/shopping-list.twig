@@ -5,6 +5,7 @@
     shoppingListCollection: _widget.shoppingListCollection,
     sku: _widget.sku,
     isDisabled: _widget.isDisabled,
+    triggerClass: triggerClass ?? null,
     maxQuantity: 10,
     labels: {
         shoppingListNameLabel: 'customer.account.shopping_list.overview.name' | trans
@@ -26,6 +27,7 @@
             isDisabled: data.isDisabled,
             product: data.product,
             shoppingListOptions: shoppingListOptions,
+            triggerClass: data.triggerClass,
         },
     } only %}
 {% endblock %}

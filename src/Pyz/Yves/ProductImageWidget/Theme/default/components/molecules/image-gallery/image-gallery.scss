@@ -2,6 +2,12 @@
     #{$name} {
         position: relative;
 
+        @include helper-breakpoint-media-min($lg) {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--scale-20);
+        }
+
         &__container {
             display: block;
             height: rem(289);
@@ -13,6 +19,8 @@
             overflow: hidden;
 
             @include helper-breakpoint-media-min($lg) {
+                flex: 1 1 auto;
+                min-width: 0;
                 height: rem(420);
             }
 
@@ -35,10 +43,6 @@
             opacity: 0;
             z-index: $setting-zi-element - 1;
 
-            &--left-indent {
-                padding-left: rem(96);
-            }
-
             &--active,
             &--color-active {
                 opacity: 1;
@@ -47,10 +51,6 @@
             @include helper-breakpoint-media-min($lg) {
                 padding: var(--scale-32);
                 height: rem(420);
-
-                &--left-indent {
-                    padding-left: rem(112);
-                }
             }
 
             @include helper-breakpoint-media-min($xl) {
@@ -98,10 +98,7 @@
             }
 
             @include helper-breakpoint-media-min($lg) {
-                position: absolute;
-                top: var(--scale-16);
-                left: var(--scale-16);
-                z-index: $setting-zi-element + 1;
+                flex: 0 0 auto;
                 width: rem(64);
                 max-height: rem(424);
                 overflow: hidden;
