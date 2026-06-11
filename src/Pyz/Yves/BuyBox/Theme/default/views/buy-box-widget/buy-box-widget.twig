@@ -12,6 +12,7 @@
                 },
                 merchantReference: product.merchant.merchantReference | default(null),
                 price: product.price | default(null),
+                availabilityProduct: product,
             }]) %}
         {% endfor %}
 

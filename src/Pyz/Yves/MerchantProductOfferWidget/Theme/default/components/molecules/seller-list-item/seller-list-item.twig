@@ -13,6 +13,7 @@
     merchantUrl: null,
     merchantReference: null,
     price: null,
+    availabilityProduct: null,
     product: null,
 } %}
 
@@ -33,15 +34,28 @@
 
         <span class="{{ config.name }}__name">{{ data.merchantName }}</span>
 
-        {% if data.price %}
-            <span class="{{ config.name }}__price">
-                {% widget 'CurrentProductPriceVolumeWidget' args [data.price] with {
-                    data: {
-                        priceModifiers: ['seller'],
-                    },
-                } only %}
-                    {% block priceTable %}{% endblock %}
-                {% endwidget %}
+        {% if data.price or data.availabilityProduct %}
+            <span class="{{ config.name }}__meta">
+                {% if data.price %}
+                    <span class="{{ config.name }}__price">
+                        {% widget 'CurrentProductPriceVolumeWidget' args [data.price] with {
+                            data: {
+                                priceModifiers: ['seller'],
+                            },
+                        } only %}
+                            {% block priceTable %}{% endblock %}
+                        {% endwidget %}
+                    </span>
+                {% endif %}
+
+                {% if data.availabilityProduct %}
+                    {% set productAvailabilityWidget = findWidget('ProductAvailabilityWidget', [data.availabilityProduct]) %}
+                    {% if productAvailabilityWidget %}
+                        <span class="{{ config.name }}__availability">
+                            {% widget productAvailabilityWidget only %}{% endwidget %}
+                        </span>
+                    {% endif %}
+                {% endif %}
             </span>
         {% endif %}
     </label>

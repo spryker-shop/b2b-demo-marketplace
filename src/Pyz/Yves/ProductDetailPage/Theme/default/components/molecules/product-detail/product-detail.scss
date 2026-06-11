@@ -1,11 +1,10 @@
 @mixin product-detail-page-product-configurator($name: '.product-detail') {
     #{$name} {
         display: block;
-        padding-top: var(--scale-32);
+        padding: var(--scale-32) 0;
 
         @include helper-breakpoint-media-min($lg) {
-            padding-top: var(--scale-48);
-            padding-bottom: var(--scale-64);
+            padding: var(--scale-48) 0 var(--scale-64);
         }
 
         &__tabs {
