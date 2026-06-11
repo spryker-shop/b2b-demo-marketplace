@@ -7,10 +7,10 @@
 
 declare(strict_types = 1);
 
-namespace Pyz\Zed\WaterTreatmentConfigurator\Business\Builder;
+namespace Pyz\Zed\WaterTreatmentConfiguratorPageExample\Business\Builder;
 
 use Psr\Log\LoggerInterface;
-use Pyz\Zed\WaterTreatmentConfigurator\WaterTreatmentConfiguratorConfig;
+use Pyz\Zed\WaterTreatmentConfiguratorPageExample\WaterTreatmentConfiguratorPageExampleConfig;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -22,15 +22,15 @@ class FrontendBuilder implements FrontendBuilderInterface
     protected $filesystem;
 
     /**
-     * @var \Pyz\Zed\WaterTreatmentConfigurator\WaterTreatmentConfiguratorConfig
+     * @var \Pyz\Zed\WaterTreatmentConfiguratorPageExample\WaterTreatmentConfiguratorPageExampleConfig
      */
     protected $config;
 
     /**
      * @param \Symfony\Component\Filesystem\Filesystem $filesystem
-     * @param \Pyz\Zed\WaterTreatmentConfigurator\WaterTreatmentConfiguratorConfig $config
+     * @param \Pyz\Zed\WaterTreatmentConfiguratorPageExample\WaterTreatmentConfiguratorPageExampleConfig $config
      */
-    public function __construct(Filesystem $filesystem, WaterTreatmentConfiguratorConfig $config)
+    public function __construct(Filesystem $filesystem, WaterTreatmentConfiguratorPageExampleConfig $config)
     {
         $this->filesystem = $filesystem;
         $this->config = $config;

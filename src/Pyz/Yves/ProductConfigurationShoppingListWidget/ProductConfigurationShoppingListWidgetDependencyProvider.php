@@ -9,8 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Yves\ProductConfigurationShoppingListWidget;
 
-use Pyz\Yves\Configurator\WaterTreatmentConfigurator\Plugin\ProductConfigurationShoppingListWidget\WaterTreatmentShoppingListItemProductConfigurationRenderStrategyPlugin;
-use SprykerShop\Yves\DateTimeConfiguratorPageExample\Plugin\ProductConfigurationShoppingListWidget\ExampleDateTimeShoppingListItemProductConfigurationRenderStrategyPlugin;
+use Pyz\Yves\Configurator\WaterTreatmentConfiguratorPageExample\Plugin\ProductConfigurationShoppingListWidget\ExampleWaterTreatmentShoppingListItemProductConfigurationRenderStrategyPlugin;
 use SprykerShop\Yves\ProductConfigurationShoppingListWidget\ProductConfigurationShoppingListWidgetDependencyProvider as SprykerProductConfigurationShoppingListWidgetDependencyProvider;
 
 class ProductConfigurationShoppingListWidgetDependencyProvider extends SprykerProductConfigurationShoppingListWidgetDependencyProvider
@@ -21,8 +20,7 @@ class ProductConfigurationShoppingListWidgetDependencyProvider extends SprykerPr
     protected function getShoppingListItemProductConfigurationRenderStrategyPlugins(): array
     {
         return [
-            new ExampleDateTimeShoppingListItemProductConfigurationRenderStrategyPlugin(),
-            new WaterTreatmentShoppingListItemProductConfigurationRenderStrategyPlugin(),
+            new ExampleWaterTreatmentShoppingListItemProductConfigurationRenderStrategyPlugin(),
         ];
     }
 }

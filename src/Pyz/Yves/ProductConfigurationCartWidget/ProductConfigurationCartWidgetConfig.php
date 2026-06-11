@@ -16,7 +16,7 @@ class ProductConfigurationCartWidgetConfig extends SprykerProductConfigurationCa
     /**
      * @var string
      *
-     * @uses \Pyz\Shared\WaterTreatmentConfigurator\WaterTreatmentConfiguratorConfig::WATER_TREATMENT_CONFIGURATOR_KEY
+     * @uses \Pyz\Shared\WaterTreatmentConfiguratorPageExample\WaterTreatmentConfiguratorPageExampleConfig::WATER_TREATMENT_CONFIGURATOR_KEY
      */
     protected const WATER_TREATMENT_CONFIGURATOR_KEY = 'WATER_TREATMENT_CONFIGURATOR';
 
@@ -27,8 +27,8 @@ class ProductConfigurationCartWidgetConfig extends SprykerProductConfigurationCa
      */
     public function getSupportedConfiguratorKeys(): array
     {
-        return array_merge(parent::getSupportedConfiguratorKeys(), [
+        return [
             static::WATER_TREATMENT_CONFIGURATOR_KEY,
-        ]);
+        ];
     }
 }

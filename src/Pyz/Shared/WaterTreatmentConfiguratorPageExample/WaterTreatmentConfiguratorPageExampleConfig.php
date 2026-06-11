@@ -7,11 +7,11 @@
 
 declare(strict_types = 1);
 
-namespace Pyz\Shared\WaterTreatmentConfigurator;
+namespace Pyz\Shared\WaterTreatmentConfiguratorPageExample;
 
 use Spryker\Shared\Kernel\AbstractSharedConfig;
 
-class WaterTreatmentConfiguratorConfig extends AbstractSharedConfig
+class WaterTreatmentConfiguratorPageExampleConfig extends AbstractSharedConfig
 {
     /**
      * @var string

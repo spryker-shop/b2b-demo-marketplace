@@ -7,7 +7,7 @@
 
 declare(strict_types = 1);
 
-namespace Pyz\Zed\WaterTreatmentConfigurator\Business\Builder;
+namespace Pyz\Zed\WaterTreatmentConfiguratorPageExample\Business\Builder;
 
 use Psr\Log\LoggerInterface;
 

@@ -9,8 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Yves\SalesProductConfigurationWidget;
 
-use Pyz\Yves\Configurator\WaterTreatmentConfigurator\Plugin\SalesProductConfigurationWidget\WaterTreatmentSalesProductConfigurationRenderStrategyPlugin;
-use SprykerShop\Yves\DateTimeConfiguratorPageExample\Plugin\SalesProductConfigurationWidget\ExampleDateTimeSalesProductConfigurationRenderStrategyPlugin;
+use Pyz\Yves\Configurator\WaterTreatmentConfiguratorPageExample\Plugin\SalesProductConfigurationWidget\ExampleWaterTreatmentSalesProductConfigurationRenderStrategyPlugin;
 use SprykerShop\Yves\SalesProductConfigurationWidget\SalesProductConfigurationWidgetDependencyProvider as SprykerSalesProductConfigurationWidgetDependencyProvider;
 
 class SalesProductConfigurationWidgetDependencyProvider extends SprykerSalesProductConfigurationWidgetDependencyProvider
@@ -21,8 +20,7 @@ class SalesProductConfigurationWidgetDependencyProvider extends SprykerSalesProd
     protected function getSalesProductConfigurationRenderStrategyPlugins(): array
     {
         return [
-            new ExampleDateTimeSalesProductConfigurationRenderStrategyPlugin(),
-            new WaterTreatmentSalesProductConfigurationRenderStrategyPlugin(),
+            new ExampleWaterTreatmentSalesProductConfigurationRenderStrategyPlugin(),
         ];
     }
 }

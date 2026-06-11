@@ -7,20 +7,20 @@
 
 declare(strict_types = 1);
 
-namespace Pyz\Zed\WaterTreatmentConfigurator\Business;
+namespace Pyz\Zed\WaterTreatmentConfiguratorPageExample\Business;
 
-use Pyz\Zed\WaterTreatmentConfigurator\Business\Builder\FrontendBuilder;
-use Pyz\Zed\WaterTreatmentConfigurator\Business\Builder\FrontendBuilderInterface;
+use Pyz\Zed\WaterTreatmentConfiguratorPageExample\Business\Builder\FrontendBuilder;
+use Pyz\Zed\WaterTreatmentConfiguratorPageExample\Business\Builder\FrontendBuilderInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
- * @method \Pyz\Zed\WaterTreatmentConfigurator\WaterTreatmentConfiguratorConfig getConfig()
+ * @method \Pyz\Zed\WaterTreatmentConfiguratorPageExample\WaterTreatmentConfiguratorPageExampleConfig getConfig()
  */
-class WaterTreatmentConfiguratorBusinessFactory extends AbstractBusinessFactory
+class WaterTreatmentConfiguratorPageExampleBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Pyz\Zed\WaterTreatmentConfigurator\Business\Builder\FrontendBuilderInterface
+     * @return \Pyz\Zed\WaterTreatmentConfiguratorPageExample\Business\Builder\FrontendBuilderInterface
      */
     public function createProductConfiguratorFrontendBuilder(): FrontendBuilderInterface
     {

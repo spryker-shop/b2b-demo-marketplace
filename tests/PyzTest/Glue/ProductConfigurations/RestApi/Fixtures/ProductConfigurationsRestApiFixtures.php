@@ -85,7 +85,7 @@ class ProductConfigurationsRestApiFixtures implements FixturesBuilderInterface, 
     /**
      * @var string
      */
-    protected const TEST_CONFIGURATOR_KEY = 'DATE_TIME_CONFIGURATOR';
+    protected const TEST_CONFIGURATOR_KEY = 'WATER_TREATMENT_CONFIGURATOR';
 
     /**
      * @var string

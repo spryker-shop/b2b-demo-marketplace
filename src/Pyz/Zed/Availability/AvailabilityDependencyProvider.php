@@ -17,7 +17,6 @@ use Spryker\Zed\ProductOfferAvailability\Communication\Plugin\Availability\Produ
 use Spryker\Zed\ProductOfferServicePointAvailability\Communication\Plugin\Availability\ProductOfferServicePointBatchAvailabilityStrategyPlugin;
 use Spryker\Zed\ProductOfferShipmentTypeAvailability\Communication\Plugin\Availability\ProductOfferShipmentTypeBatchAvailabilityStrategyPlugin;
 use Spryker\Zed\SalesOrderAmendment\Communication\Plugin\Availability\OrderAmendmentQuantityBatchAvailabilityStrategyPlugin;
-use SprykerShop\Zed\DateTimeConfiguratorPageExample\Communication\Plugin\Availability\ExampleDateTimeConfiguratorAvailabilityStrategyPlugin;
 
 class AvailabilityDependencyProvider extends SprykerAvailabilityDependencyProvider
 {
@@ -47,7 +46,6 @@ class AvailabilityDependencyProvider extends SprykerAvailabilityDependencyProvid
     {
         return [
             new ProductOfferAvailabilityStrategyPlugin(),
-            new ExampleDateTimeConfiguratorAvailabilityStrategyPlugin(),
         ];
     }
 

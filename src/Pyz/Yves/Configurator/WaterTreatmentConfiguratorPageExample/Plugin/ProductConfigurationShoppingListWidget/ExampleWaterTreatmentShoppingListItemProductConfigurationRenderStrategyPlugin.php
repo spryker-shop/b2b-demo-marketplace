@@ -7,18 +7,16 @@
 
 declare(strict_types = 1);
 
-namespace Pyz\Yves\Configurator\WaterTreatmentConfigurator\Plugin\ProductConfigurationShoppingListWidget;
+namespace Pyz\Yves\Configurator\WaterTreatmentConfiguratorPageExample\Plugin\ProductConfigurationShoppingListWidget;
 
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\ProductConfigurationTemplateTransfer;
-use Pyz\Yves\Configurator\WaterTreatmentConfigurator\Plugin\WaterTreatmentRenderTemplateTrait;
+use Pyz\Shared\WaterTreatmentConfiguratorPageExample\WaterTreatmentConfiguratorPageExampleConfig;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\ProductConfigurationShoppingListWidgetExtension\Dependency\Plugin\ShoppingListItemProductConfigurationRenderStrategyPluginInterface;
 
-class WaterTreatmentShoppingListItemProductConfigurationRenderStrategyPlugin extends AbstractPlugin implements ShoppingListItemProductConfigurationRenderStrategyPluginInterface
+class ExampleWaterTreatmentShoppingListItemProductConfigurationRenderStrategyPlugin extends AbstractPlugin implements ShoppingListItemProductConfigurationRenderStrategyPluginInterface
 {
-    use WaterTreatmentRenderTemplateTrait;
-
     /**
      * {@inheritDoc}
      * - Applicable to items configured with the Water Treatment configurator.
@@ -31,7 +29,8 @@ class WaterTreatmentShoppingListItemProductConfigurationRenderStrategyPlugin ext
      */
     public function isApplicable(ProductConfigurationInstanceTransfer $productConfigurationInstance): bool
     {
-        return $this->isWaterTreatmentConfigurator($productConfigurationInstance->getConfiguratorKey());
+        return $productConfigurationInstance->getConfiguratorKey()
+            === WaterTreatmentConfiguratorPageExampleConfig::WATER_TREATMENT_CONFIGURATOR_KEY;
     }
 
     /**
@@ -46,6 +45,10 @@ class WaterTreatmentShoppingListItemProductConfigurationRenderStrategyPlugin ext
      */
     public function getTemplate(ProductConfigurationInstanceTransfer $productConfigurationInstance): ProductConfigurationTemplateTransfer
     {
-        return $this->createWaterTreatmentTemplate($productConfigurationInstance->getDisplayDataOrFail());
+        return (new ProductConfigurationTemplateTransfer())
+            ->setData(json_decode($productConfigurationInstance->getDisplayDataOrFail(), true) ?? [])
+            ->setModuleName('DateTimeConfiguratorPageExample')
+            ->setTemplateType('view')
+            ->setTemplateName('options-list');
     }
 }

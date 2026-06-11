@@ -7,11 +7,11 @@
 
 declare(strict_types = 1);
 
-namespace Pyz\Zed\WaterTreatmentConfigurator\Business;
+namespace Pyz\Zed\WaterTreatmentConfiguratorPageExample\Business;
 
 use Psr\Log\LoggerInterface;
 
-interface WaterTreatmentConfiguratorFacadeInterface
+interface WaterTreatmentConfiguratorPageExampleFacadeInterface
 {
     /**
      * Specification:

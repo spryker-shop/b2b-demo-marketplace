@@ -7,15 +7,15 @@
 
 declare(strict_types = 1);
 
-namespace Pyz\Zed\WaterTreatmentConfigurator\Business;
+namespace Pyz\Zed\WaterTreatmentConfiguratorPageExample\Business;
 
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method \Pyz\Zed\WaterTreatmentConfigurator\Business\WaterTreatmentConfiguratorBusinessFactory getFactory()
+ * @method \Pyz\Zed\WaterTreatmentConfiguratorPageExample\Business\WaterTreatmentConfiguratorPageExampleBusinessFactory getFactory()
  */
-class WaterTreatmentConfiguratorFacade extends AbstractFacade implements WaterTreatmentConfiguratorFacadeInterface
+class WaterTreatmentConfiguratorPageExampleFacade extends AbstractFacade implements WaterTreatmentConfiguratorPageExampleFacadeInterface
 {
     /**
      * {@inheritDoc}

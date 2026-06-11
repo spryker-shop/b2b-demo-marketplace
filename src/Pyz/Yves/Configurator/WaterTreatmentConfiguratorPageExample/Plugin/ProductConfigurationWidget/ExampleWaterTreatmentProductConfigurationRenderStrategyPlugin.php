@@ -7,18 +7,16 @@
 
 declare(strict_types = 1);
 
-namespace Pyz\Yves\Configurator\WaterTreatmentConfigurator\Plugin\ProductConfigurationWidget;
+namespace Pyz\Yves\Configurator\WaterTreatmentConfiguratorPageExample\Plugin\ProductConfigurationWidget;
 
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\ProductConfigurationTemplateTransfer;
-use Pyz\Yves\Configurator\WaterTreatmentConfigurator\Plugin\WaterTreatmentRenderTemplateTrait;
+use Pyz\Shared\WaterTreatmentConfiguratorPageExample\WaterTreatmentConfiguratorPageExampleConfig;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\ProductConfigurationWidgetExtension\Dependency\Plugin\ProductConfigurationRenderStrategyPluginInterface;
 
-class WaterTreatmentProductConfigurationRenderStrategyPlugin extends AbstractPlugin implements ProductConfigurationRenderStrategyPluginInterface
+class ExampleWaterTreatmentProductConfigurationRenderStrategyPlugin extends AbstractPlugin implements ProductConfigurationRenderStrategyPluginInterface
 {
-    use WaterTreatmentRenderTemplateTrait;
-
     /**
      * {@inheritDoc}
      * - Applicable to items configured with the Water Treatment configurator.
@@ -31,12 +29,14 @@ class WaterTreatmentProductConfigurationRenderStrategyPlugin extends AbstractPlu
      */
     public function isApplicable(ProductConfigurationInstanceTransfer $productConfigurationInstance): bool
     {
-        return $this->isWaterTreatmentConfigurator($productConfigurationInstance->getConfiguratorKey());
+        return $productConfigurationInstance->getConfiguratorKey()
+            === WaterTreatmentConfiguratorPageExampleConfig::WATER_TREATMENT_CONFIGURATOR_KEY;
     }
 
     /**
      * {@inheritDoc}
-     * - Decodes the flat display data ({label: value}) for the reused `options-list` view template.
+     * - Decodes the flat display data ({label: value}); the widget wraps it into `listItems`
+     *   for the reused `options-list` view template.
      *
      * @api
      *
@@ -46,6 +46,10 @@ class WaterTreatmentProductConfigurationRenderStrategyPlugin extends AbstractPlu
      */
     public function getTemplate(ProductConfigurationInstanceTransfer $productConfigurationInstance): ProductConfigurationTemplateTransfer
     {
-        return $this->createWaterTreatmentTemplate($productConfigurationInstance->getDisplayDataOrFail());
+        return (new ProductConfigurationTemplateTransfer())
+            ->setData(json_decode($productConfigurationInstance->getDisplayDataOrFail(), true) ?? [])
+            ->setModuleName('DateTimeConfiguratorPageExample')
+            ->setTemplateType('view')
+            ->setTemplateName('options-list');
     }
 }

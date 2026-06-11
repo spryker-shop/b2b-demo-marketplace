@@ -7,19 +7,19 @@
 
 declare(strict_types = 1);
 
-namespace Pyz\Zed\WaterTreatmentConfigurator\Communication\Plugin\SalesProductConfigurationGui;
+namespace Pyz\Zed\WaterTreatmentConfiguratorPageExample\Communication\Plugin\SalesProductConfigurationGui;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\SalesProductConfigurationTemplateTransfer;
-use Pyz\Shared\WaterTreatmentConfigurator\WaterTreatmentConfiguratorConfig;
+use Pyz\Shared\WaterTreatmentConfiguratorPageExample\WaterTreatmentConfiguratorPageExampleConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SalesProductConfigurationGuiExtension\Dependency\Plugin\ProductConfigurationRenderStrategyPluginInterface;
 
 /**
- * @method \Pyz\Zed\WaterTreatmentConfigurator\Business\WaterTreatmentConfiguratorFacadeInterface getFacade()
- * @method \Pyz\Zed\WaterTreatmentConfigurator\WaterTreatmentConfiguratorConfig getConfig()
+ * @method \Pyz\Zed\WaterTreatmentConfiguratorPageExample\Business\WaterTreatmentConfiguratorPageExampleFacadeInterface getFacade()
+ * @method \Pyz\Zed\WaterTreatmentConfiguratorPageExample\WaterTreatmentConfiguratorPageExampleConfig getConfig()
  */
-class WaterTreatmentProductConfigurationRenderStrategyPlugin extends AbstractPlugin implements ProductConfigurationRenderStrategyPluginInterface
+class ExampleWaterTreatmentProductConfigurationRenderStrategyPlugin extends AbstractPlugin implements ProductConfigurationRenderStrategyPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -35,7 +35,7 @@ class WaterTreatmentProductConfigurationRenderStrategyPlugin extends AbstractPlu
     {
         return $itemTransfer->getSalesOrderItemConfiguration()
             && $itemTransfer->getSalesOrderItemConfigurationOrFail()->getConfiguratorKey()
-                === WaterTreatmentConfiguratorConfig::WATER_TREATMENT_CONFIGURATOR_KEY;
+                === WaterTreatmentConfiguratorPageExampleConfig::WATER_TREATMENT_CONFIGURATOR_KEY;
     }
 
     /**

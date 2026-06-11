@@ -7,14 +7,14 @@
 
 declare(strict_types = 1);
 
-namespace Pyz\Zed\WaterTreatmentConfigurator\Communication\Console;
+namespace Pyz\Zed\WaterTreatmentConfiguratorPageExample\Communication\Console;
 
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Pyz\Zed\WaterTreatmentConfigurator\Business\WaterTreatmentConfiguratorFacadeInterface getFacade()
+ * @method \Pyz\Zed\WaterTreatmentConfiguratorPageExample\Business\WaterTreatmentConfiguratorPageExampleFacadeInterface getFacade()
  */
 class WaterTreatmentProductConfiguratorBuildFrontendConsole extends Console
 {

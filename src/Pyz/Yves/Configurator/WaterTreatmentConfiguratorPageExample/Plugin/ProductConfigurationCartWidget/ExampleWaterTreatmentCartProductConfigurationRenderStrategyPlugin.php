@@ -7,18 +7,16 @@
 
 declare(strict_types = 1);
 
-namespace Pyz\Yves\Configurator\WaterTreatmentConfigurator\Plugin\ProductConfigurationCartWidget;
+namespace Pyz\Yves\Configurator\WaterTreatmentConfiguratorPageExample\Plugin\ProductConfigurationCartWidget;
 
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\ProductConfigurationTemplateTransfer;
-use Pyz\Yves\Configurator\WaterTreatmentConfigurator\Plugin\WaterTreatmentRenderTemplateTrait;
+use Pyz\Shared\WaterTreatmentConfiguratorPageExample\WaterTreatmentConfiguratorPageExampleConfig;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\ProductConfigurationCartWidgetExtension\Dependency\Plugin\CartProductConfigurationRenderStrategyPluginInterface;
 
-class WaterTreatmentCartProductConfigurationRenderStrategyPlugin extends AbstractPlugin implements CartProductConfigurationRenderStrategyPluginInterface
+class ExampleWaterTreatmentCartProductConfigurationRenderStrategyPlugin extends AbstractPlugin implements CartProductConfigurationRenderStrategyPluginInterface
 {
-    use WaterTreatmentRenderTemplateTrait;
-
     /**
      * {@inheritDoc}
      * - Applicable to items configured with the Water Treatment configurator.
@@ -31,7 +29,8 @@ class WaterTreatmentCartProductConfigurationRenderStrategyPlugin extends Abstrac
      */
     public function isApplicable(ProductConfigurationInstanceTransfer $productConfigurationInstance): bool
     {
-        return $this->isWaterTreatmentConfigurator($productConfigurationInstance->getConfiguratorKey());
+        return $productConfigurationInstance->getConfiguratorKey()
+            === WaterTreatmentConfiguratorPageExampleConfig::WATER_TREATMENT_CONFIGURATOR_KEY;
     }
 
     /**
@@ -46,6 +45,10 @@ class WaterTreatmentCartProductConfigurationRenderStrategyPlugin extends Abstrac
      */
     public function getTemplate(ProductConfigurationInstanceTransfer $productConfigurationInstance): ProductConfigurationTemplateTransfer
     {
-        return $this->createWaterTreatmentTemplate($productConfigurationInstance->getDisplayDataOrFail());
+        return (new ProductConfigurationTemplateTransfer())
+            ->setData(json_decode($productConfigurationInstance->getDisplayDataOrFail(), true) ?? [])
+            ->setModuleName('DateTimeConfiguratorPageExample')
+            ->setTemplateType('view')
+            ->setTemplateName('options-list');
     }
 }

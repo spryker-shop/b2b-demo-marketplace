@@ -10,7 +10,7 @@ declare(strict_types = 1);
 namespace Pyz\Client\ProductConfiguration\Plugin;
 
 use Generated\Shared\Transfer\ProductConfiguratorRequestTransfer;
-use Pyz\Shared\WaterTreatmentConfigurator\WaterTreatmentConfiguratorConfig;
+use Pyz\Shared\WaterTreatmentConfiguratorPageExample\WaterTreatmentConfiguratorPageExampleConfig;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestExpanderPluginInterface;
 
@@ -19,11 +19,6 @@ use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfig
  */
 class ConfiguratorKeyProductConfiguratorRequestExpanderPlugin extends AbstractPlugin implements ProductConfiguratorRequestExpanderPluginInterface
 {
-    /**
-     * @var string
-     */
-    protected const DATE_TIME_CONFIGURATOR_KEY = 'DATE_TIME_CONFIGURATOR';
-
     /**
      * @param \Generated\Shared\Transfer\ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
      *
@@ -66,11 +61,7 @@ class ConfiguratorKeyProductConfiguratorRequestExpanderPlugin extends AbstractPl
     protected function getConfiguratorKeyToHostMap(): array
     {
         return [
-            static::DATE_TIME_CONFIGURATOR_KEY => [
-                'host' => getenv('SPRYKER_PRODUCT_CONFIGURATOR_HOST') ?: '',
-                'port' => (string)(getenv('SPRYKER_PRODUCT_CONFIGURATOR_PORT') ?: ''),
-            ],
-            WaterTreatmentConfiguratorConfig::WATER_TREATMENT_CONFIGURATOR_KEY => [
+            WaterTreatmentConfiguratorPageExampleConfig::WATER_TREATMENT_CONFIGURATOR_KEY => [
                 'host' => getenv('SPRYKER_WATER_TREATMENT_CONFIGURATOR_HOST') ?: '',
                 'port' => (string)(getenv('SPRYKER_WATER_TREATMENT_CONFIGURATOR_PORT') ?: ''),
             ],
