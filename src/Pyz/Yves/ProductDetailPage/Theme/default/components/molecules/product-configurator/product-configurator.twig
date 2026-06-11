@@ -49,6 +49,14 @@
         <div class="{{ config.name }}__price-block">
             {% if (sspServiceDetectorWidget and sspServiceDetectorWidget.isService) %}
                 {% widget 'SspProductOfferPriceWidget' args [data.product] only %}{% endwidget %}
+            {% elseif productOffersCount %}
+                {% set selectedOfferReference = data.product.productOfferReference | default %}
+                {% for offerProduct in buyBoxWidget.products %}
+                    {% set offerReference = offerProduct.productOfferReference | default %}
+                    <div data-product-price-offer="{{ offerReference }}"{{ offerReference is same as(selectedOfferReference) ? '' : ' class="is-hidden"' }}>
+                        {% widget 'CurrentProductPriceVolumeWidget' args [offerProduct.price] only %}{% endwidget %}
+                    </div>
+                {% endfor %}
             {% else %}
                 {% widget 'CurrentProductPriceVolumeWidget' args [data.product.currentProductPrice] only %}
                 {% elsewidget 'ProductPriceVolumeWidget' args [data.product] only %} {# @deprecated Use CurrentProductPriceVolumeWidget instead. #}
