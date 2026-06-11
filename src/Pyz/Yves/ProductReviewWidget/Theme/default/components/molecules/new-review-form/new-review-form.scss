@@ -13,7 +13,7 @@
             width: 100%;
             gap: var(--scale-16);
 
-            @include helper-breakpoint-media-min($md) {
+            @include helper-breakpoint-media-min($lg) {
                 flex-direction: row;
                 justify-content: space-between;
                 align-items: center;
@@ -26,7 +26,7 @@
             width: 100%;
             gap: var(--scale-12);
 
-            @include helper-breakpoint-media-min($md) {
+            @include helper-breakpoint-media-min($lg) {
                 flex-flow: row nowrap;
                 width: auto;
             }

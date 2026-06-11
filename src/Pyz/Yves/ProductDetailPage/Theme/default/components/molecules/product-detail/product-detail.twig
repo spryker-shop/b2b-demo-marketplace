@@ -13,24 +13,6 @@
 } %}
 
 {% block body %}
-    {% set detailsList %}
-        {% if data.attributes | length %}
-            <div class="{{ config.name }}__details">
-                <h2 class="{{ config.name }}__details-title">{{ 'page.product.details' | trans }}</h2>
-                <div class="{{ config.name }}__detail-list">
-                    {% for name, value in data.attributes %}
-                        {% if name %}
-                            <p class="{{ config.name }}__detail-list-item" itemprop="additionalProperty" itemscope itemtype="https://schema.org/PropertyValue">
-                                <span class="{{ config.name }}__detail-list-key" itemprop="name">{{ ('product.attribute.' ~ name) | trans }}:</span>
-                                <span class="{{ config.name }}__detail-list-value" itemprop="value">{{ value | join(', ') }}</span>
-                            </p>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-            </div>
-        {% endif %}
-    {% endset %}
-
     {% set descriptionContent %}
         {% if data.description %}
             <div itemprop="description" class="{{ config.name }}__description">
@@ -39,27 +21,42 @@
         {% endif %}
 
         {% if data.attributes | length %}
-            {% widget 'ProductAttributeVisibilityPdpWidget' args [data.product.idProductAbstract, data.product.idProductConcrete | default(null)] with { detailsList: detailsList } only %}
-                {% block body %}{{ detailsList }}{% endblock %}
-            {% nowidget %}
-                {{ detailsList }}
+            {% widget 'ProductAttributeVisibilityPdpWidget' args [data.product.idProductAbstract, data.product.idProductConcrete | default(null)] only %}
+                {% block body %}
+                    <div class="product-detail__details">
+                        <h2 class="product-detail__details-title">{{ 'page.product.details' | trans }}</h2>
+                        <div class="product-detail__detail-list">
+                            {% for name, value in data.attributes %}
+                                {% if name %}
+                                    <p class="product-detail__detail-list-item" itemprop="additionalProperty" itemscope itemtype="https://schema.org/PropertyValue">
+                                        <span class="product-detail__detail-list-key" itemprop="name">{{ ('product.attribute.' ~ name) | trans }}:</span>
+                                        <span class="product-detail__detail-list-value" itemprop="value">{{ value is iterable ? value | join(', ') : value }}</span>
+                                    </p>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endblock %}
             {% endwidget %}
         {% endif %}
     {% endset %}
 
     {% set downloadsContent %}
-        <ul class="{{ config.name }}__downloads">
+        <ul class="{{ config.name }}__downloads" {{ qa('attachments-list') }}>
             {% for attachment in data.attachments %}
                 <li class="{{ config.name }}__downloads-item">
-                    <span class="{{ config.name }}__downloads-name">{{ attachment.label }}</span>
-                    <a href="{{ attachment.url }}" target="_blank" rel="noopener noreferrer" class="{{ config.name }}__download-link">
-                        {{ 'product.attachments.download.col' | trans }}
-                        {% include atom('icon') with {
-                            modifiers: ['download'],
-                            data: {
-                                name: 'download',
-                            },
-                        } only %}
+                    <a href="{{ attachment.url }}" target="_blank" rel="noopener noreferrer" class="{{ config.name }}__downloads-link link--font-inherit" {{ qa('attachment-item') }}>
+                        <span class="{{ config.name }}__downloads-name">{{ attachment.label }}</span>
+
+                        <span class="{{ config.name }}__downloads-aux">
+                            {{ 'product.attachments.download.col' | trans }}
+                            {% include atom('icon') with {
+                                modifiers: ['download'],
+                                data: {
+                                    name: 'download',
+                                },
+                            } only %}
+                        </span>
                     </a>
                 </li>
             {% endfor %}

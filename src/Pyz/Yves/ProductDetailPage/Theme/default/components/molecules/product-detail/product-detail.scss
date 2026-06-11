@@ -70,11 +70,10 @@
         }
 
         &__downloads-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: var(--scale-16);
             padding: var(--scale-12) 0;
+            font-family: var(--body-md-family);
+            font-size: var(--body-md-size);
+            line-height: var(--body-md-line-height);
             border-bottom: var(--stroke-sm) solid var(--border-subtle);
 
             &:last-child {
@@ -82,31 +81,20 @@
             }
         }
 
+        &__downloads-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--scale-16);
+        }
+
         &__downloads-name {
             color: var(--text-secondary);
-            font-family: var(--body-md-family);
-            font-size: var(--body-md-size);
-            line-height: var(--body-md-line-height);
             overflow-wrap: break-word;
         }
 
-        &__download-link {
-            display: inline-flex;
-            flex-shrink: 0;
-            align-items: center;
-            gap: var(--scale-8);
+        &__downloads-aux {
             white-space: nowrap;
-            color: var(--text-brand);
-            font-family: var(--label-md-family);
-            font-size: var(--label-md-size);
-            font-weight: var(--label-md-weight);
-            line-height: var(--label-md-line-height);
-
-            &:hover,
-            &:focus {
-                color: var(--text-brand);
-                text-decoration: underline;
-            }
         }
 
         @content;
