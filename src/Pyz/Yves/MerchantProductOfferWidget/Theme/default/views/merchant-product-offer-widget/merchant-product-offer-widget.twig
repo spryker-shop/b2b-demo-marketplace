@@ -2,74 +2,12 @@
 
 {% block content %}
     {% if data.productOffers is not empty %}
-        {% set selectedReference = data.productView.productOfferReference | default %}
-        {% set selectedOffer = null %}
-        {% for productOffer in data.productOffers %}
-            {% if selectedReference and selectedReference is same as(productOffer.productOfferReference) %}
-                {% set selectedOffer = productOffer %}
-            {% endif %}
-        {% endfor %}
-        {% set selectedOffer = selectedOffer ?? (data.productOffers | first) %}
-        {% set popupContentId = 'compare-sellers-' ~ (selectedOffer.productOfferReference | default('offer')) %}
-        {% set popupTriggerClass = 'js-compare-sellers__trigger-' ~ (selectedOffer.productOfferReference | default('offer')) %}
-        {% set visibleCount = 4 %}
-
-        {% if data.isTitleVisible %}
-            <p class="title title--product-sold-by">{{ 'merchant_product.sold_by' | trans }}</p>
-        {% endif %}
-
-        {% block sellerList %}
-            {% include molecule('seller-list', 'MerchantProductOfferWidget') with {
-                data: {
-                    offers: data.productOffers,
-                    selectedReference: data.productView.productOfferReference | default(selectedOffer.productOfferReference),
-                    visibleCount: visibleCount,
-                    compareTriggerClass: popupTriggerClass,
-                },
-            } only %}
-        {% endblock %}
-
-        {% if data.productOffers | length > visibleCount %}
-                {% set sellerListContent %}
-                    <ul class="seller-list__items">
-                        {% for productOffer in data.productOffers %}
-                            {% include molecule('seller-list-item', 'MerchantProductOfferWidget') with {
-                                class: 'seller-list__item',
-                                data: {
-                                    isChecked: data.productView.productOfferReference is same as(productOffer.productOfferReference),
-                                    radioGroupName: 'product_offer_reference_modal',
-                                    productOfferReference: productOffer.productOfferReference | default,
-                                    merchantName: productOffer.merchantStorage.name | default,
-                                    merchantUrl: productOffer.merchantStorage.merchantUrl | default,
-                                    merchantReference: productOffer.merchantReference | default(null),
-                                    price: productOffer.price | default(null),
-                                    product: productOffer,
-                                },
-                            } only %}
-                        {% endfor %}
-                    </ul>
-                {% endset %}
-
-                {% set sellerListFooter %}
-                    <button type="button" class="button button--expand js-seller-list__apply" {{ qa('use-selected-seller') }}>
-                        {{ 'merchant_product_offer.use_selected_seller' | trans }}
-                    </button>
-                {% endset %}
-
-                {% include molecule('main-popup') with {
-                    class: 'compare-sellers',
-                    data: {
-                        title: 'merchant_product_offer.compare_sellers' | trans,
-                        subtitle: 'merchant_product_offer.offers_count' | trans({ '%count%': data.productOffers | length }),
-                        content: sellerListContent,
-                        footer: sellerListFooter,
-                    },
-                    attributes: {
-                        'content-id': popupContentId,
-                        'trigger-class-name': popupTriggerClass,
-                        'has-content-mount': true,
-                    },
-                } only %}
-        {% endif %}
+        {% include molecule('seller-offers', 'MerchantProductOfferWidget') with {
+            data: {
+                offers: data.productOffers,
+                selectedReference: data.productView.productOfferReference | default,
+                title: data.isTitleVisible ? 'merchant_product.sold_by' | trans : null,
+            },
+        } only %}
     {% endif %}
 {% endblock %}

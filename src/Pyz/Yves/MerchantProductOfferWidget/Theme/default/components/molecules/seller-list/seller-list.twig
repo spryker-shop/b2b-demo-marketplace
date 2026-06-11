@@ -8,50 +8,69 @@
 {% define data = {
     offers: required,
     selectedReference: null,
-    visibleCount: 4,
+    visibleCount: null,
+    radioGroupName: 'product_offer_reference',
+    isCollapsible: true,
+    hasApplyButton: false,
     compareTriggerClass: '',
 } %}
 
 {% block body %}
-    <details class="{{ config.name }}__details" open>
-        <summary class="{{ config.name }}__toggle">
-            {% include atom('icon') with {
-                class: config.name ~ '__toggle-icon',
-                data: { name: 'double-chevrons' },
-            } only %}
+    {% if data.isCollapsible %}
+        <details class="{{ config.name }}__details" open>
+            <summary class="{{ config.name }}__toggle">
+                {% include atom('icon') with {
+                    class: config.name ~ '__toggle-icon',
+                    data: { name: 'double-chevrons' },
+                } only %}
 
-            <span class="{{ config.name }}__toggle-label {{ config.name }}__toggle-label--collapse">
-                {{ 'merchant_product_offer.hide_sellers' | trans }}
-            </span>
-            <span class="{{ config.name }}__toggle-label {{ config.name }}__toggle-label--expand">
-                {{ 'merchant_product_offer.show_all_sellers' | trans }}
-            </span>
-        </summary>
+                <span class="{{ config.name }}__toggle-label {{ config.name }}__toggle-label--collapse">
+                    {{ 'merchant_product_offer.hide_sellers' | trans }}
+                </span>
+                <span class="{{ config.name }}__toggle-label {{ config.name }}__toggle-label--expand">
+                    {{ 'merchant_product_offer.show_all_sellers' | trans }}
+                </span>
+            </summary>
 
-        <div class="{{ config.name }}__body">
-            <ul class="{{ config.name }}__items">
-                {% for offer in data.offers | slice(0, data.visibleCount) %}
-                    {% include molecule('seller-list-item', 'MerchantProductOfferWidget') with {
-                        class: config.name ~ '__item',
-                        data: {
-                            isChecked: data.selectedReference is same as(offer.productOfferReference),
-                            radioGroupName: 'product_offer_reference',
-                            productOfferReference: offer.productOfferReference | default,
-                            merchantName: offer.merchantStorage.name | default,
-                            merchantUrl: offer.merchantStorage.merchantUrl | default,
-                            merchantReference: offer.merchantReference | default(null),
-                            price: offer.price | default(null),
-                            product: offer,
-                        },
-                    } only %}
-                {% endfor %}
-            </ul>
+            {{ block('list') }}
+        </details>
+    {% else %}
+        {{ block('list') }}
+    {% endif %}
+{% endblock %}
 
-            {% if data.offers | length > data.visibleCount %}
-                <button type="button" class="{{ config.name }}__view-all {{ config.jsName }}__view-all {{ data.compareTriggerClass }}" {{ qa('seller-list-view-all') }}>
-                    {{ 'merchant_product_offer.view_all_sellers' | trans({ '%count%': data.offers | length }) }}
-                </button>
-            {% endif %}
-        </div>
-    </details>
+{% block list %}
+    {% set visibleCount = data.visibleCount ?? data.offers | length %}
+
+    <div class="{{ config.name }}__body">
+        <ul class="{{ config.name }}__items">
+            {% for offer in data.offers | slice(0, visibleCount) %}
+                {% include molecule('seller-list-item', 'MerchantProductOfferWidget') with {
+                    class: config.name ~ '__item',
+                    data: {
+                        isChecked: data.selectedReference is same as(offer.productOfferReference),
+                        radioGroupName: data.radioGroupName,
+                        productOfferReference: offer.productOfferReference | default,
+                        merchantName: offer.merchantStorage.name | default,
+                        merchantUrl: offer.merchantStorage.merchantUrl | default,
+                        merchantReference: offer.merchantReference | default(null),
+                        price: offer.price | default(null),
+                        product: offer,
+                    },
+                } only %}
+            {% endfor %}
+        </ul>
+
+        {% if data.compareTriggerClass and data.offers | length > visibleCount %}
+            <button type="button" class="{{ config.name }}__view-all {{ config.jsName }}__view-all {{ data.compareTriggerClass }}" {{ qa('seller-list-view-all') }}>
+                {{ 'merchant_product_offer.view_all_sellers' | trans({ '%count%': data.offers | length }) }}
+            </button>
+        {% endif %}
+
+        {% if data.hasApplyButton %}
+            <button type="button" class="button button--expand {{ config.name }}__apply {{ config.jsName }}__apply" {{ qa('use-selected-seller') }}>
+                {{ 'merchant_product_offer.use_selected_seller' | trans }}
+            </button>
+        {% endif %}
+    </div>
 {% endblock %}

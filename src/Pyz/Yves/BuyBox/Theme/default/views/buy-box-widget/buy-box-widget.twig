@@ -2,18 +2,6 @@
 
 {% block template %}
     {% if data.products %}
-        {% set selectedReference = data.productView.productOfferReference | default %}
-        {% set selectedProduct = null %}
-        {% for product in data.products %}
-            {% if selectedReference and selectedReference is same as(product.productOfferReference) %}
-                {% set selectedProduct = product %}
-            {% endif %}
-        {% endfor %}
-        {% set selectedProduct = selectedProduct ?? (data.products | first) %}
-        {% set popupContentId = 'compare-sellers-' ~ (selectedProduct.productOfferReference | default('offer')) %}
-        {% set popupTriggerClass = 'js-compare-sellers__trigger-' ~ (selectedProduct.productOfferReference | default('offer')) %}
-        {% set visibleCount = 4 %}
-
         {% set offers = [] %}
         {% for product in data.products %}
             {% set offers = offers | merge([{
@@ -27,60 +15,12 @@
             }]) %}
         {% endfor %}
 
-        <p class="title title--product-sold-by">{{ 'buy_box.sold_by' | trans }}</p>
-
-        {% block sellerList %}
-            {% include molecule('seller-list', 'MerchantProductOfferWidget') with {
-                data: {
-                    offers: offers,
-                    selectedReference: data.productView.productOfferReference | default(selectedProduct.productOfferReference | default),
-                    visibleCount: visibleCount,
-                    compareTriggerClass: popupTriggerClass,
-                },
-            } only %}
-        {% endblock %}
-
-        {% if offers | length > visibleCount %}
-            {% set sellerListContent %}
-                <ul class="seller-list__items">
-                    {% for offer in offers %}
-                        {% include molecule('seller-list-item', 'MerchantProductOfferWidget') with {
-                            class: 'seller-list__item',
-                            data: {
-                                isChecked: data.productView.productOfferReference is same as(offer.productOfferReference),
-                                radioGroupName: 'product_offer_reference_modal',
-                                productOfferReference: offer.productOfferReference,
-                                merchantName: offer.merchantStorage.name,
-                                merchantUrl: offer.merchantStorage.merchantUrl,
-                                merchantReference: offer.merchantReference,
-                                price: offer.price,
-                                product: offer,
-                            },
-                        } only %}
-                    {% endfor %}
-                </ul>
-            {% endset %}
-
-            {% set sellerListFooter %}
-                <button type="button" class="button button--expand js-seller-list__apply" {{ qa('use-selected-seller') }}>
-                    {{ 'merchant_product_offer.use_selected_seller' | trans }}
-                </button>
-            {% endset %}
-
-            {% include molecule('main-popup') with {
-                class: 'compare-sellers',
-                data: {
-                    title: 'merchant_product_offer.compare_sellers' | trans,
-                    subtitle: 'merchant_product_offer.offers_count' | trans({ '%count%': offers | length }),
-                    content: sellerListContent,
-                    footer: sellerListFooter,
-                },
-                attributes: {
-                    'content-id': popupContentId,
-                    'trigger-class-name': popupTriggerClass,
-                    'has-content-mount': true,
-                },
-            } only %}
-        {% endif %}
+        {% include molecule('seller-offers', 'MerchantProductOfferWidget') with {
+            data: {
+                offers: offers,
+                selectedReference: data.productView.productOfferReference | default,
+                title: 'buy_box.sold_by' | trans,
+            },
+        } only %}
     {% endif %}
 {% endblock %}
