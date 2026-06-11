@@ -26,7 +26,7 @@ class ExampleWaterTreatmentProductConfiguratorRequestExpanderPlugin extends Abst
      * @return \Generated\Shared\Transfer\ProductConfiguratorRequestTransfer
      */
     public function expand(
-        ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
+        ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer,
     ): ProductConfiguratorRequestTransfer {
         return $productConfiguratorRequestTransfer->setAccessTokenRequestUrl($this->createConfiguratorUrl());
     }
