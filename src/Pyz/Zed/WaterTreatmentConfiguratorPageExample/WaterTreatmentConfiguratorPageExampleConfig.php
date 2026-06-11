@@ -21,7 +21,7 @@ class WaterTreatmentConfiguratorPageExampleConfig extends AbstractBundleConfig
     /**
      * @var string
      */
-    protected const FRONTEND_ORIGIN_PATH = '../../Yves/Configurator/WaterTreatmentConfiguratorPageExample/Theme/ConfiguratorApplication/dist';
+    protected const FRONTEND_ORIGIN_PATH = '../../Yves/WaterTreatmentConfiguratorPageExample/Theme/ConfiguratorApplication/dist';
 
     /**
      * Path to the built configurator frontend directory.

@@ -7,7 +7,7 @@
 
 declare(strict_types = 1);
 
-namespace Pyz\Yves\Configurator\WaterTreatmentConfiguratorPageExample\Plugin\ProductConfigurationCartWidget;
+namespace Pyz\Yves\WaterTreatmentConfiguratorPageExample\Plugin\ProductConfigurationCartWidget;
 
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\ProductConfigurationTemplateTransfer;

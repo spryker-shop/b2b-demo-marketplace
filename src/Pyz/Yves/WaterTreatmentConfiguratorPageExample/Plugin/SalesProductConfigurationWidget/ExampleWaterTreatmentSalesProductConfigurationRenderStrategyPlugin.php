@@ -7,7 +7,7 @@
 
 declare(strict_types = 1);
 
-namespace Pyz\Yves\Configurator\WaterTreatmentConfiguratorPageExample\Plugin\SalesProductConfigurationWidget;
+namespace Pyz\Yves\WaterTreatmentConfiguratorPageExample\Plugin\SalesProductConfigurationWidget;
 
 use Generated\Shared\Transfer\ProductConfigurationTemplateTransfer;
 use Generated\Shared\Transfer\SalesOrderItemConfigurationTransfer;

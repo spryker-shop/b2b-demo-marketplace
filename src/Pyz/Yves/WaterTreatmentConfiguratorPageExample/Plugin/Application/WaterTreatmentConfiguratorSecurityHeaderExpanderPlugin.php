@@ -7,7 +7,7 @@
 
 declare(strict_types = 1);
 
-namespace Pyz\Yves\Configurator\WaterTreatmentConfiguratorPageExample\Plugin\Application;
+namespace Pyz\Yves\WaterTreatmentConfiguratorPageExample\Plugin\Application;
 
 use Spryker\Yves\ApplicationExtension\Dependency\Plugin\SecurityHeaderExpanderPluginInterface;
 

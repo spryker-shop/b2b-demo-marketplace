@@ -7,15 +7,15 @@
 
 declare(strict_types = 1);
 
-namespace Pyz\Yves\Configurator\WaterTreatmentConfiguratorPageExample\Plugin\ProductConfigurationWidget;
+namespace Pyz\Yves\WaterTreatmentConfiguratorPageExample\Plugin\ProductConfigurationShoppingListWidget;
 
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\ProductConfigurationTemplateTransfer;
 use Pyz\Shared\WaterTreatmentConfiguratorPageExample\WaterTreatmentConfiguratorPageExampleConfig;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\ProductConfigurationWidgetExtension\Dependency\Plugin\ProductConfigurationRenderStrategyPluginInterface;
+use SprykerShop\Yves\ProductConfigurationShoppingListWidgetExtension\Dependency\Plugin\ShoppingListItemProductConfigurationRenderStrategyPluginInterface;
 
-class ExampleWaterTreatmentProductConfigurationRenderStrategyPlugin extends AbstractPlugin implements ProductConfigurationRenderStrategyPluginInterface
+class ExampleWaterTreatmentShoppingListItemProductConfigurationRenderStrategyPlugin extends AbstractPlugin implements ShoppingListItemProductConfigurationRenderStrategyPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -35,8 +35,7 @@ class ExampleWaterTreatmentProductConfigurationRenderStrategyPlugin extends Abst
 
     /**
      * {@inheritDoc}
-     * - Decodes the flat display data ({label: value}); the widget wraps it into `listItems`
-     *   for the reused `options-list` view template.
+     * - Decodes the flat display data ({label: value}) for the reused `options-list` view template.
      *
      * @api
      *

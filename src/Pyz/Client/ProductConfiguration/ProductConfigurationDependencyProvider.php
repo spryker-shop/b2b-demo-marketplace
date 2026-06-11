@@ -9,7 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Client\ProductConfiguration;
 
-use Pyz\Client\ProductConfiguration\Plugin\ConfiguratorKeyProductConfiguratorRequestExpanderPlugin;
+use Pyz\Client\WaterTreatmentConfiguratorPageExample\Plugin\ProductConfiguration\ExampleWaterTreatmentProductConfiguratorRequestExpanderPlugin;
 use Spryker\Client\ProductConfiguration\Plugin\PriceProductVolumeProductConfigurationPriceExtractorPlugin;
 use Spryker\Client\ProductConfiguration\ProductConfigurationDependencyProvider as SprykerProductConfigurationDependencyProvider;
 
@@ -24,7 +24,7 @@ class ProductConfigurationDependencyProvider extends SprykerProductConfiguration
     protected function getProductConfigurationRequestExpanderPlugins(): array
     {
         return [
-            new ConfiguratorKeyProductConfiguratorRequestExpanderPlugin(),
+            new ExampleWaterTreatmentProductConfiguratorRequestExpanderPlugin(),
         ];
     }
 

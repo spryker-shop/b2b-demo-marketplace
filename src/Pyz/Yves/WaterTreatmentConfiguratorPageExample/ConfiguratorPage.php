@@ -7,7 +7,7 @@
 
 declare(strict_types = 1);
 
-namespace Pyz\Yves\Configurator\WaterTreatmentConfiguratorPageExample;
+namespace Pyz\Yves\WaterTreatmentConfiguratorPageExample;
 
 use Generated\Shared\Transfer\ProductConfiguratorPageResponseTransfer;
 use Spryker\ChecksumGenerator\Checksum\CrcOpenSslChecksumGenerator;

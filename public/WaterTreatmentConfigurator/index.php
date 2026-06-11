@@ -1,6 +1,6 @@
 <?php
 
-use Pyz\Yves\Configurator\WaterTreatmentConfiguratorPageExample\ConfiguratorPage;
+use Pyz\Yves\WaterTreatmentConfiguratorPageExample\ConfiguratorPage;
 use Symfony\Component\HttpFoundation\Response;
 
 define('APPLICATION', 'CONFIGURATOR');
