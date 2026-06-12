@@ -69994,16 +69994,16 @@
         },
         {
             "name": "spryker/search",
-            "version": "8.27.0",
+            "version": "8.28.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/search.git",
-                "reference": "8d96d3ad4c84590d86d7ab2d507345f7147caf60"
+                "reference": "50f7fc0025b86e89dd38e0c2d8ed0d5c86cb047f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/search/zipball/8d96d3ad4c84590d86d7ab2d507345f7147caf60",
-                "reference": "8d96d3ad4c84590d86d7ab2d507345f7147caf60",
+                "url": "https://api.github.com/repos/spryker/search/zipball/50f7fc0025b86e89dd38e0c2d8ed0d5c86cb047f",
+                "reference": "50f7fc0025b86e89dd38e0c2d8ed0d5c86cb047f",
                 "shasum": ""
             },
             "require": {
@@ -70056,22 +70056,22 @@
             ],
             "description": "Search module",
             "support": {
-                "source": "https://github.com/spryker/search/tree/8.27.0"
+                "source": "https://github.com/spryker/search/tree/8.28.0"
             },
-            "time": "2026-03-30T08:09:17+00:00"
+            "time": "2026-06-12T13:53:24+00:00"
         },
         {
             "name": "spryker/search-elasticsearch",
-            "version": "1.22.0",
+            "version": "1.23.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/search-elasticsearch.git",
-                "reference": "1e9638f13b320a7545b750edbc6bb0e19e2799c4"
+                "reference": "75d154c6ad39658677177250f0bdd3d9f93bc0aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/search-elasticsearch/zipball/1e9638f13b320a7545b750edbc6bb0e19e2799c4",
-                "reference": "1e9638f13b320a7545b750edbc6bb0e19e2799c4",
+                "url": "https://api.github.com/repos/spryker/search-elasticsearch/zipball/75d154c6ad39658677177250f0bdd3d9f93bc0aa",
+                "reference": "75d154c6ad39658677177250f0bdd3d9f93bc0aa",
                 "shasum": ""
             },
             "require": {
@@ -70095,6 +70095,7 @@
                 "spryker/code-sniffer": "*",
                 "spryker/container": "*",
                 "spryker/propel": "*",
+                "spryker/search": "*",
                 "spryker/session": "*",
                 "spryker/storage": "*",
                 "spryker/testify": "*"
@@ -70120,9 +70121,9 @@
             ],
             "description": "SearchElasticsearch module",
             "support": {
-                "source": "https://github.com/spryker/search-elasticsearch/tree/1.22.0"
+                "source": "https://github.com/spryker/search-elasticsearch/tree/1.23.0"
             },
-            "time": "2026-03-30T08:09:17+00:00"
+            "time": "2026-06-12T13:53:24+00:00"
         },
         {
             "name": "spryker/search-elasticsearch-gui",
@@ -93004,9 +93005,9 @@
         "ext-readline": "*",
         "ext-redis": "*"
     },
-    "platform-dev": {},
+    "platform-dev": [],
     "platform-overrides": {
         "php": "8.3.13"
     },
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.6.0"
 }
