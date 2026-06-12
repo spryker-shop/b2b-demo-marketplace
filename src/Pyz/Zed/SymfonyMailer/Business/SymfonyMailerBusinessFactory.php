@@ -13,6 +13,9 @@ use Pyz\Zed\SymfonyMailer\Dependency\External\SymfonyMailerToSymfonyMailerAdapte
 use Spryker\Zed\SymfonyMailer\Business\SymfonyMailerBusinessFactory as SprykerSymfonyMailerBusinessFactory;
 use Spryker\Zed\SymfonyMailer\Dependency\External\SymfonyMailerToMailerInterface;
 
+/**
+ * @method \Spryker\Zed\SymfonyMailer\SymfonyMailerConfig getConfig()
+ */
 class SymfonyMailerBusinessFactory extends SprykerSymfonyMailerBusinessFactory
 {
     /**
