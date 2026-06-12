@@ -1,0 +1,491 @@
+---
+name: upmerge-master-to-demo
+description: Run the recurring "upmerge master → master-demo" workflow for the b2b-demo-marketplace repo. Use this skill whenever the user mentions an upmerge task, pastes a JIRA upmerge ticket URL (e.g. CC-XXXXX on board 2237), says "upmerge", "merge master to master-demo", "do the weekly upmerge", "update master-demo from master", or references the recurring task of bringing master changes into master-demo. The skill handles the whole loop: find the JIRA ticket, prepare branches, merge, resolve conflicts, refresh composer.lock, reconcile Pyz overrides with the incoming changes (especially Twig templates in src/Pyz that shadow changed core templates), smoke-test login locally, push, open the PR, transition the ticket to IN CR, then poll the pipeline starting at the 2h mark and try to auto-fix common failures before reporting back.
+allowed-tools: Bash, Read, Edit, Write, Skill, ScheduleWakeup, AskUserQuestion, mcp__mcp-atlassian__*, mcp__chrome-devtools__*
+user-invocable: true
+---
+
+# Upmerge master → master-demo
+
+This skill automates the recurring upmerge task in `b2b-demo-marketplace`: bringing `master` into `master-demo` through a feature branch, opening a PR, and shepherding it through CI.
+
+It is a destructive, multi-step workflow that touches the local working copy, the GitHub remote, JIRA, and the local Spryker stack. Pause and confirm with the user any time something is ambiguous — the cost of one extra question is far less than a bad force-push or a mis-resolved conflict.
+
+## When to use this skill
+
+Use it whenever the user:
+
+- Pastes a JIRA URL pointing at a CC upmerge ticket (board 2237)
+- Says "upmerge", "do the upmerge", "merge master to master-demo", or similar
+- Asks about the recurring task of updating `master-demo` from `master`
+
+If the user only asks for *part* of the flow (e.g. "just open the PR for me"), don't run the whole skill — do the requested step and skip the rest.
+
+## High-level flow
+
+1. Find the JIRA ticket
+2. Sync `master` and `master-demo` from origin
+3. Create a feature branch off `master-demo`
+4. Merge `master` into it, resolve conflicts
+5. Refresh `composer.lock` and run `composer install` locally
+6. Reconcile Pyz overrides with the incoming changes (esp. Twig templates)
+7. Smoke-test Yves and Backoffice login via the `login-chrome` skill
+8. Push and open a PR targeting `master-demo`
+9. Move the JIRA ticket to **IN CR**
+10. Ask the user to review, then poll the GitHub Actions pipeline starting at +2h
+11. Auto-fix common pipeline failures; surface unknowns to the user
+12. Report success when the pipeline is green
+
+Each step is described below with the exact commands.
+
+---
+
+## Step 1 — Find the JIRA ticket
+
+The user may paste the ticket URL/key directly. Use it as-is.
+
+If they don't, search the CC board for an open upmerge ticket:
+
+```
+mcp__mcp-atlassian__jira_search with jql:
+  project = CC AND status != Done AND summary ~ "upmerge" ORDER BY created DESC
+```
+
+Show the candidates to the user and confirm which one. Extract:
+
+- Ticket key (e.g. `CC-38849`) — used for the branch name and PR title
+- Ticket URL — used in the PR body
+
+If nothing matches, ask the user for the ticket key. Don't invent one.
+
+## Step 2 — Sync master and master-demo
+
+Before touching anything, make sure the working tree is clean:
+
+```bash
+git status --short
+```
+
+If there are uncommitted changes, stop and ask the user what to do. Don't stash silently — the user's in-progress work is more important than this automation.
+
+Then update both base branches from origin. Do NOT use `git pull` on a checked-out branch that isn't the target — use fetch + fast-forward refspecs so we don't bounce HEAD around:
+
+```bash
+git fetch origin master:master master-demo:master-demo
+```
+
+If a fast-forward isn't possible (because the local branch has diverged from origin), surface that to the user — they may have unpushed work on `master` or `master-demo` that we shouldn't discard.
+
+## Step 3 — Create the feature branch
+
+Branch off `master-demo`:
+
+```bash
+git checkout master-demo
+git checkout -b feature/<ticket-lower>/upmerge-latest-master
+```
+
+Where `<ticket-lower>` is the JIRA key lowercased (e.g. `CC-38849` → `cc-38849`).
+
+If a local branch with the same name already exists from a previous attempt, ask the user whether to reuse it, recreate it, or pick a different suffix.
+
+## Step 4 — Merge master in and resolve conflicts
+
+```bash
+git merge master --no-ff -m "Merge master into master-demo for upmerge <TICKET>"
+```
+
+### Conflict resolution policy
+
+- **`composer.lock` conflicts**: always resolve by regenerating in Step 5 — `git checkout --theirs composer.lock` (taking the master-demo version as a base), then refresh below. The regeneration is what matters; the merged content is a throwaway.
+- **`composer.json` conflicts**: usually `master` wins on package versions, but `master-demo` may have demo-only additions. Read both sides, prefer the union (highest versions, both demo and core additions), and surface the result to the user if it isn't obvious.
+- **Source code / config conflicts**: try a structural resolution — keep both changes when they're additive (e.g. both sides added different plugins to a Dependency Provider list). When the conflict is a real overlap, pause and ask the user.
+
+After resolving, stage and continue the merge:
+
+```bash
+git add -A
+git commit --no-edit
+```
+
+## Step 5 — Refresh composer.lock and install locally
+
+**Core principle**: the final `composer.lock` on the upmerge branch MUST have the same package versions as `master`'s lock, plus only the demo-only packages that exist in `master-demo`'s lock but not in `master`'s. We bring master's package set into master-demo verbatim — no unrelated version bumps.
+
+### Step 5a — Inspect what differs between the two locks
+
+Find which packages exist on each side. Demo-only packages are the ones we need to layer onto master's lock.
+
+```bash
+git show master:composer.lock | python3 -c "import json,sys; d=json.load(sys.stdin); print('\n'.join(sorted(p['name'] for p in d['packages']+d['packages-dev'])))" > /tmp/master-lock-pkgs.txt
+git show master-demo:composer.lock | python3 -c "import json,sys; d=json.load(sys.stdin); print('\n'.join(sorted(p['name'] for p in d['packages']+d['packages-dev'])))" > /tmp/demo-lock-pkgs.txt
+
+echo "--- on master but not on master-demo (should be empty) ---"
+comm -23 /tmp/master-lock-pkgs.txt /tmp/demo-lock-pkgs.txt
+
+echo "--- demo-only packages to layer in ---"
+comm -13 /tmp/master-lock-pkgs.txt /tmp/demo-lock-pkgs.txt
+```
+
+If "on master but not on master-demo" is non-empty, surface that to the user — it usually means master added a package and master-demo's lock hasn't caught up, which the merge alone should handle, but worth double-checking the merged `composer.json` requires it.
+
+Also sanity-check the merged `composer.json` matches: it should have all of master's requires plus only those demo-only packages:
+
+```bash
+git show master:composer.json | python3 -c "import json,sys; d=json.load(sys.stdin); reqs=list(d.get('require',{}).keys())+list(d.get('require-dev',{}).keys()); print('\n'.join(sorted(reqs)))" > /tmp/master-json.txt
+python3 -c "import json; d=json.load(open('composer.json')); reqs=list(d.get('require',{}).keys())+list(d.get('require-dev',{}).keys()); print('\n'.join(sorted(reqs)))" > /tmp/merged-json.txt
+diff /tmp/master-json.txt /tmp/merged-json.txt
+```
+
+### Step 5b — Reconstruct composer.lock = master's lock + demo-only entries
+
+Take master's lock verbatim and splice in each demo-only package entry. This guarantees zero unintended version bumps.
+
+```bash
+git show master:composer.lock > /tmp/master.lock
+git show master-demo:composer.lock > /tmp/demo.lock
+
+python3 <<'PYEOF'
+import json
+master = json.load(open('/tmp/master.lock'))
+demo = json.load(open('/tmp/demo.lock'))
+
+demo_only = ['spryker-eco/amazon-quicksight']  # <-- replace with the list from Step 5a
+
+for name in demo_only:
+    pkg = next((p for p in demo['packages'] if p['name'] == name), None)
+    dev = pkg is None
+    if dev:
+        pkg = next(p for p in demo.get('packages-dev', []) if p['name'] == name)
+    target = master['packages-dev' if dev else 'packages']
+    # Insert preserving alphabetical order (composer convention)
+    inserted = False
+    for i, p in enumerate(target):
+        if p['name'] > name:
+            target.insert(i, pkg)
+            inserted = True
+            break
+    if not inserted:
+        target.append(pkg)
+
+# CRITICAL: ensure_ascii=False so non-ASCII chars (e.g. "Kévin Dunglas") stay as
+# raw UTF-8 the way composer writes them — otherwise the diff against master
+# explodes with hundreds of lines of \uXXXX-escape noise.
+with open('composer.lock', 'w', encoding='utf-8') as f:
+    json.dump(master, f, indent=4, ensure_ascii=False)
+    f.write('\n')
+print('reconstructed composer.lock')
+PYEOF
+```
+
+### Step 5c — Refresh content-hash and verify
+
+The content-hash now needs to match the merged `composer.json`. `composer update --lock --no-install` only updates the lockfile metadata (hash + any new required entries) — it does NOT touch package versions when the existing entries already satisfy constraints.
+
+```bash
+composer update --lock --no-install --ignore-platform-reqs
+composer install --ignore-platform-reqs
+```
+
+**Watch out for `plugin-api-version`.** Composer rewrites this field based on the *local* composer binary version, not the project. Master's lock has whatever `plugin-api-version` was current when master was last regenerated — usually higher than what your local composer writes. After Step 5c, restore master's value:
+
+```bash
+python3 <<'PYEOF'
+import json
+current = json.load(open('composer.lock'))
+master = json.load(open('/tmp/master.lock'))
+if current.get('plugin-api-version') != master.get('plugin-api-version'):
+    print(f'restoring plugin-api-version: {current.get("plugin-api-version")} -> {master.get("plugin-api-version")}')
+    current['plugin-api-version'] = master['plugin-api-version']
+    with open('composer.lock', 'w') as f:
+        json.dump(current, f, indent=4)
+        f.write('\n')
+else:
+    print('plugin-api-version already matches master')
+PYEOF
+```
+
+After installing, verify the lockfile has zero version diffs against master (apart from the deliberate demo-only adds):
+
+```bash
+python3 <<'PYEOF'
+import json
+master = json.load(open('/tmp/master.lock'))
+current = json.load(open('composer.lock'))
+
+def pkg_versions(lock):
+    return {p['name']: p['version'] for p in lock['packages'] + lock.get('packages-dev', [])}
+
+m = pkg_versions(master); c = pkg_versions(current)
+diffs = [(n, m.get(n), c.get(n)) for n in sorted(set(m)|set(c)) if m.get(n) != c.get(n)]
+print(f'{len(diffs)} version diffs vs master:')
+for n, mv, cv in diffs[:30]:
+    print(f'  {n}: master={mv} current={cv}')
+PYEOF
+```
+
+The only diffs should be `master=None current=<version>` rows for the demo-only packages you intentionally added. Any other diff means something went wrong — stop and reconcile before committing.
+
+### Step 5d — Commit
+
+```bash
+git add composer.lock
+git commit -m "chore(composer): refresh lockfile after upmerge"
+```
+
+(Skip the commit if `git status` shows no changes — it can happen if the merge already produced a clean lock.)
+
+### What NOT to do
+
+- **Never run a bare `composer update`** (without `--lock`) — that resolves the whole dependency graph fresh and bumps unrelated packages beyond what master has. The PR would contain hundreds of unrelated version bumps.
+- **Don't trust `composer update --lock` alone after a merge with new requires.** It refuses to add missing entries for packages that aren't in the current lock — that's why Step 5b splices them in manually first.
+- **Don't take master-demo's lock as the base.** It may have versions older than master's. We want master's bumps applied to master-demo, not the other way around.
+
+## Step 6 — Reconcile Pyz overrides with the incoming changes
+
+The merge brings two kinds of change into `master-demo` that Demo's project-level code in `src/Pyz/` may need to stay in sync with. Neither is caught by `git merge` conflict markers, because the override files and the changed upstream files live at *different paths* — git sees no overlap, so the divergence is silent. This step makes it explicit.
+
+> **Why this matters for Demo specifically.** A file at `src/Pyz/{Layer}/{Module}/...path...` *shadows* the core template/class at `vendor/spryker*/.../src/{Org}/{Layer}/{Module}/...path...`. When `master` updates the core file (via a `composer.lock` bump) or updates a `Pyz` file, the Demo override does **not** inherit that change — it keeps rendering its old copy. Twig overrides are the most common and most visible case (636 in `src/Pyz/.../Presentation/`, 577 under `src/Pyz/Yves/.../Theme/`), so give them special attention.
+
+### Step 6a — Pyz changes that arrived via the merge
+
+List every `src/Pyz/` file the merge touched, Twig first:
+
+```bash
+echo "--- Pyz files changed by the merge (Twig first) ---"
+git diff --name-status master-demo...HEAD -- 'src/Pyz/**/*.twig'
+echo "--- other Pyz files changed by the merge ---"
+git diff --name-status master-demo...HEAD -- 'src/Pyz' ':(exclude)src/Pyz/**/*.twig'
+```
+
+For each changed Pyz file, decide whether the change belongs in Demo:
+
+- **Keep** if it's a generic core/Pyz improvement that Demo should track.
+- **Adapt or revert** if Demo intentionally diverges here (demo-only copy, marketplace-specific markup, branded content). Demo overrides often differ from `master`'s Pyz on purpose — don't blindly accept master's version. When unsure whether a Pyz divergence is intentional, **pause and ask the user** rather than silently overwriting.
+
+### Step 6b — Core (vendor) Twig changes shadowed by a Pyz override
+
+This is the case the merge can never surface on its own: `master` bumped a vendor package whose **core Twig template changed**, and Demo has a `Pyz` Twig override of that exact template. The override silently keeps the old markup.
+
+**`vendor/` is git-ignored in this repo** (`/vendor/` in `.gitignore`), so you can't `git diff` vendor templates directly. Instead work from the lockfile: find which packages changed version in the upmerge, map each to its module, and intersect with the modules that have a Pyz Twig override. (Validated against the latest upmerge — this is the reliable path here.)
+
+Run this AFTER Step 5 (so `composer.lock` reflects the merged set):
+
+```bash
+python3 - <<'PYEOF'
+import json, re, subprocess
+
+# Packages whose VERSION changed between the pre-merge lock and the merged lock.
+before = json.load(open('/tmp/demo.lock'))      # master-demo's lock, saved in Step 5b
+after  = json.load(open('composer.lock'))        # the merged/refreshed lock
+def vers(l): return {p['name']: p['version'] for p in l['packages'] + l.get('packages-dev', [])}
+vb, va = vers(before), vers(after)
+changed = {n: (vb.get(n), va.get(n)) for n in sorted(set(vb) | set(va)) if vb.get(n) != va.get(n)}
+
+# package "spryker/cms-slot-block-gui" -> module "CmsSlotBlockGui"
+def module_of(pkg):
+    return ''.join(w.capitalize() for w in pkg.split('/', 1)[1].split('-'))
+changed_modules = {module_of(p): p for p in changed}
+
+# Pyz Twig overrides, grouped by the module they live under.
+def module_from_pyz(path):
+    m = re.search(r'/(?:Zed|Yves|Glue|Client|Service)/([^/]+)/', path)
+    return m.group(1) if m else None
+pyz_twigs = [p for p in subprocess.run(['git','ls-files','src/Pyz'],
+             capture_output=True, text=True).stdout.splitlines() if p.endswith('.twig')]
+
+hits = [(module_from_pyz(p), changed_modules[module_from_pyz(p)], p)
+        for p in pyz_twigs if module_from_pyz(p) in changed_modules]
+
+if not hits:
+    print(f"{len(changed)} packages changed version; none has a Pyz Twig override. "
+          "Nothing to align in Step 6b.")
+else:
+    print("Pyz Twig overrides whose CORE package changed in this upmerge — review & align:")
+    for mod, pkg, p in hits:
+        o, n = changed[pkg]
+        print(f"  [{pkg} {o}->{n}]  OVERRIDE: {p}")
+PYEOF
+```
+
+For each hit, diff the Pyz override against the freshly-installed core template to see what upstream changed, then port the relevant markup/logic into the override:
+
+```bash
+# {Layer}/{Module}/<...> after src/Pyz mirrors the vendor path after src/<Org>.
+diff <pyz-override-path> \
+     vendor/<vendor-package>/src/<Org>/<Layer>/<Module>/<...>/<name>.twig
+# e.g.
+# diff src/Pyz/Zed/ProductManagement/Presentation/Add/index.twig \
+#      vendor/spryker/product-management/src/Spryker/Zed/ProductManagement/Presentation/Add/index.twig
+```
+
+If a change is large or its intent is unclear, **surface the list to the user and ask** which overrides to update — don't guess at branded/demo-specific markup.
+
+> If a future checkout ever *does* track `vendor/`, you can instead intersect changed vendor `.twig` paths with Pyz overrides by their `{Layer}/{Module}/<rest>` path-signature — same idea at file granularity instead of module granularity.
+
+### Step 6c — Record what you reconciled
+
+In the PR body (Step 8) list the Pyz files you kept, adapted, or aligned, so the reviewer can see the override reconciliation was done deliberately and not skipped.
+
+## Step 7 — Smoke-test Yves and Backoffice login
+
+Invoke the `login-chrome` skill to verify the local stack still works after the merge. The smoke test scope is:
+
+- Log into Yves at `http://yves.eu.spryker.local/DE/en/login` with `sonia@spryker.com` / `change123`
+- Verify the customer overview page (`/DE/en/customer/overview`) renders without errors
+- Log into Backoffice at `http://backoffice.eu.spryker.local/security-gui/login` with `admin@spryker.com` / `change123`
+- Verify the Backoffice dashboard renders without errors
+
+Use `Skill(login-chrome)` (or `/login-chrome`) to drive the browser. If a login or page fails, capture the console errors and surface them — that's a real regression we should not push.
+
+If your environment doesn't have the local Spryker stack running, ask the user whether to skip the smoke test (don't silently skip — they may want to start docker first).
+
+## Step 8 — Push and open the PR
+
+```bash
+git push -u origin feature/<ticket-lower>/upmerge-latest-master
+```
+
+Then create the PR with `gh`:
+
+```bash
+gh pr create \
+  --base master-demo \
+  --title "<TICKET>: Upmerge master to master-demo" \
+  --body "$(cat <<'EOF'
+## Summary
+Routine upmerge bringing the latest `master` changes into `master-demo`.
+
+JIRA: <TICKET-URL>
+
+## Test plan
+- [x] Pyz override reconciliation (incl. Twig templates shadowing changed core)
+- [x] Local smoke test: Yves storefront login + customer overview
+- [x] Local smoke test: Backoffice login + dashboard
+- [ ] CI pipeline green
+
+## Pyz override reconciliation
+<!-- List Pyz files kept / adapted / aligned from Step 6. Note "none" if the merge touched no Pyz files and no core-template overrides were affected. -->
+EOF
+)"
+```
+
+Capture the PR URL from `gh pr create`'s output — you'll need it for the JIRA transition and the final report.
+
+## Step 9 — Move the JIRA ticket to code review
+
+```
+mcp__mcp-atlassian__jira_get_issue with issue_key=<TICKET>  expand=transitions
+# discover available transitions
+```
+
+The exact transition name varies by workflow. On the CC board the code-review transition is usually called **"Start CR"** (not "IN CR" — that's the *status name*, not the transition).
+
+**MCP gotcha**: `jira_update_issue` with `fields={"status": "<status name>"}` is rejected ("Could not find transition to status X"). Instead pass the *transition name* via the `transition` key:
+
+```
+mcp__mcp-atlassian__jira_update_issue with
+  issue_key=<TICKET>
+  fields={"transition": "Start CR"}
+```
+
+Then re-fetch the issue to verify the status actually changed — the MCP returns "Issue updated successfully" even when the transition silently fails. If status didn't change, surface the failure to the user with the available-transitions list and ask which to apply.
+
+If a target transition isn't in the available list (e.g. the ticket was already closed and reopened to a non-default status), list what *is* available and ask the user which to pick. Don't invent a transition.
+
+Also add a comment to the ticket linking the PR:
+
+```
+mcp__mcp-atlassian__jira_add_comment with
+  issue_key=<TICKET>
+  comment="PR opened: <PR-URL>"
+```
+
+## Step 10 — Hand off to the user for review
+
+Tell the user:
+
+> PR opened: `<PR-URL>` and JIRA moved to IN CR. Please review the merge resolution when you have a moment. I'll check the pipeline in 2 hours.
+
+Then schedule the pipeline check. Use `ScheduleWakeup` with the max delay of 3600s (1 hour — the runtime clamps anything higher), and pass the PR number + ticket key so the wake-up has everything it needs:
+
+```
+ScheduleWakeup with
+  delaySeconds=3600
+  reason="Initial pipeline check for upmerge PR <PR-NUMBER>"
+  prompt="/upmerge poll PR <PR-NUMBER> ticket <TICKET>"
+```
+
+(The skill *wants* a 2-hour first check, but `ScheduleWakeup` caps at 3600s. If the pipeline is still running on first poll, the polling-mode invocation reschedules itself for another 1200s, which gets us to a similar place in practice.)
+
+## Step 11 — Pipeline polling and auto-fix
+
+On wake-up (or when the user comes back and asks about the pipeline), check the PR's checks:
+
+```bash
+gh pr checks <PR-NUMBER> --json name,status,conclusion,detailsUrl
+```
+
+Three outcomes:
+
+### Still running
+Schedule another wake-up at 20 minutes (1200s):
+
+```
+ScheduleWakeup with
+  delaySeconds=1200
+  reason="Re-check pipeline for upmerge PR <PR-NUMBER>, still running"
+  prompt="/upmerge poll PR <PR-NUMBER> ticket <TICKET>"
+```
+
+### All green
+Report success to the user (Step 12).
+
+### One or more checks failed
+
+Get the logs for the failing check:
+
+```bash
+gh run view <RUN-ID> --log-failed
+# or: gh pr checks <PR-NUMBER> --watch  to find the run id
+```
+
+Then try to auto-fix common, deterministic failures:
+
+| Failure pattern | Auto-fix |
+|---|---|
+| `phpcs` / code style violations | `vendor/bin/phpcbf` on flagged files, commit, push |
+| `transfer:generate` related failures | `docker/sdk cli console transfer:generate`, commit any generated files |
+| `propel:install` schema diff | `docker/sdk cli console propel:install`, commit, push |
+| `composer.lock` out of sync warning | `composer update --lock --ignore-platform-reqs`, commit, push |
+| Cache-related failures | `docker/sdk cli console cache:empty-all` is local-only — for CI, check whether the failure is genuine before pushing |
+
+For anything else — phpstan errors, broken tests, unexpected runtime errors — **stop and surface the failure to the user with the relevant log excerpt**. Don't try to fix code logic in CI without a human in the loop.
+
+After a fix push, schedule a 20-minute wake-up to re-check.
+
+## Step 12 — Final report
+
+When the pipeline is green:
+
+- Add a JIRA comment: `Pipeline green, ready for review/merge: <PR-URL>`
+- Tell the user: `Upmerge PR <PR-URL> is green and ready for review.`
+
+Don't merge the PR — that's the user's call.
+
+---
+
+## Common pitfalls
+
+- **Don't `git pull` on the wrong branch.** Use `git fetch origin master:master master-demo:master-demo` so HEAD stays put.
+- **Don't silently stash.** If the working tree is dirty, ask the user.
+- **Don't force-push to a PR branch without telling the user.** Normal pushes are fine; force-pushes need a heads-up.
+- **Never run a bare `composer update` in Step 5.** It would bump unrelated package versions beyond what master has. The final lock must equal master's lock + demo-only entries only. If `composer update --lock` complains about a missing package, splice that package's entry in from master-demo's lock by hand (see Step 5b) — don't fall back to a bare update.
+- **Don't skip the smoke test silently.** If you can't run it (stack down, no chrome), ask the user.
+- **Don't treat a clean merge as "no Pyz work."** `git merge` only flags overlapping line edits. A core Twig template changing while Demo's `src/Pyz` override shadows it produces ZERO conflict markers but a stale override — Step 6 exists to catch exactly this. Always run Step 6's checks even when the merge applied cleanly.
+- **Don't blindly accept master's Pyz over Demo's.** Demo intentionally diverges in some Pyz files (branded/marketplace markup). When a divergence's intent is unclear, ask the user rather than overwriting.
+- **Pipeline polling is best-effort.** If the wake-up doesn't fire for any reason, the user can re-invoke the skill with `/upmerge poll PR <N> ticket <KEY>` and it'll resume from the polling step.
+
+## Polling-only invocation
+
+When invoked as `/upmerge poll PR <N> ticket <KEY>` (from a `ScheduleWakeup` callback or directly by the user), skip Steps 1–10 and jump straight to Step 11.
