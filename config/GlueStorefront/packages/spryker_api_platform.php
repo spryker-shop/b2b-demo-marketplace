@@ -20,6 +20,7 @@ return static function (SprykerApiPlatformConfig $sprykerApiPlatform): void {
         'vendor/spryker',
         'vendor/spryker-shop',
         'vendor/spryker-feature',
+        'vendor/spryker-eco',
     ]);
 
     $sprykerApiPlatform->excludedPathFragments([
