@@ -30,6 +30,29 @@ features:
                         storefront: false
                         scopes:
                             - global
+                      - key: model_prices
+                        name: OpenAI Model Token Prices (USD per 1M tokens)
+                        description: >-
+                            Token prices per OpenAI model, used to estimate the cost of AI interactions in the Audit Logs.
+                            A JSON object keyed by the model identifier, each holding an "input" and "output" price per
+                            1,000,000 tokens, plus an optional "currency" code (e.g. "USD") shown next to the cost. Add any
+                            model by adding its key. Models not listed here are shown as "N/A" (unpriced) and excluded from
+                            cost totals. Costs are estimates and may overestimate non-Anthropic spend, because cached input
+                            tokens are not reported separately by the AI library.
+                        help_text: 'Example: {"gpt-4.1": {"input": 2.50, "output": 10.00, "currency": "USD"}, "gpt-4o-mini": {"input": 0.15, "output": 0.60}}'
+                        type: json
+                        default_value:
+                            {
+                                'gpt-4.1': { 'input': 2.00, 'output': 8.00, 'currency': 'USD' },
+                                'gpt-4.1-mini': { 'input': 0.40, 'output': 1.60, 'currency': 'USD' },
+                                'gpt-4o': { 'input': 2.50, 'output': 10.00, 'currency': 'USD' },
+                                'gpt-4o-mini': { 'input': 0.15, 'output': 0.60, 'currency': 'USD' },
+                            }
+                        enabled: true
+                        secret: false
+                        storefront: false
+                        scopes:
+                            - global
           - key: anthropic
             name: Anthropic
             description: Anthropic provider credentials and default models.
@@ -51,6 +74,28 @@ features:
                         default_value: ''
                         enabled: true
                         secret: true
+                        storefront: false
+                        scopes:
+                            - global
+                      # Placeholder prices - verify against current Anthropic pricing before production use
+                      - key: model_prices
+                        name: Anthropic Model Token Prices (USD per 1M tokens)
+                        description: >-
+                            Token prices per Anthropic model, used to estimate the cost of AI interactions in the Audit Logs.
+                            A JSON object keyed by the model identifier, each holding an "input" and "output" price per
+                            1,000,000 tokens, plus an optional "currency" code (e.g. "USD") shown next to the cost. Add any
+                            model by adding its key. Models not listed here are shown as "N/A" (unpriced) and excluded from
+                            cost totals.
+                        help_text: 'Example: {"claude-sonnet-4-5": {"input": 3.00, "output": 15.00, "currency": "USD"}, "claude-haiku-4-5": {"input": 1.00, "output": 5.00}}'
+                        type: json
+                        default_value:
+                            {
+                                'claude-opus-4': { 'input': 15.00, 'output': 75.00, 'currency': 'USD' },
+                                'claude-sonnet-4-5': { 'input': 3.00, 'output': 15.00, 'currency': 'USD' },
+                                'claude-haiku-4-5': { 'input': 1.00, 'output': 5.00, 'currency': 'USD' },
+                            }
+                        enabled: true
+                        secret: false
                         storefront: false
                         scopes:
                             - global
@@ -83,6 +128,28 @@ features:
                         description: The AWS region used for AWS Bedrock requests. Shared across all features that use AWS Bedrock.
                         type: string
                         default_value: 'eu-central-1'
+                        enabled: true
+                        secret: false
+                        storefront: false
+                        scopes:
+                            - global
+                      - key: model_prices
+                        name: AWS Bedrock Model Token Prices (USD per 1M tokens)
+                        description: >-
+                            Token prices per AWS Bedrock model, used to estimate the cost of AI interactions in the Audit Logs.
+                            A JSON object keyed by the full Bedrock model identifier (as logged), each holding an "input" and
+                            "output" price per 1,000,000 tokens, plus an optional "currency" code (e.g. "USD") shown next to
+                            the cost. Add any model by adding its key. Models not listed here are shown as "N/A" (unpriced)
+                            and excluded from cost totals.
+                        help_text: 'Example: {"eu.anthropic.claude-sonnet-4-5-20250929-v1:0": {"input": 3.00, "output": 15.00, "currency": "USD"}}'
+                        type: json
+                        default_value:
+                            {
+                                'eu.anthropic.claude-sonnet-4-5-20250929-v1:0':
+                                    { 'input': 3.00, 'output': 15.00, 'currency': 'USD' },
+                                'eu.anthropic.claude-haiku-4-5-20251001-v1:0':
+                                    { 'input': 1.00, 'output': 5.00, 'currency': 'USD' },
+                            }
                         enabled: true
                         secret: false
                         storefront: false
