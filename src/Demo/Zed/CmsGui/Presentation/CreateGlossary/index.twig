@@ -1,0 +1,49 @@
+{% extends '@Spryker:CmsGui/CreateGlossary/index.twig' %}
+
+{% block content %}
+    {% if isSmartCmsEnabled() %}
+        {% set smartCmsPageMeta = [] %}
+        {% for pageAttribute in cmsPage.pageAttributes %}
+            {% set smartCmsLocaleMetaAttribute = null %}
+            {% for metaAttribute in cmsPage.metaAttributes %}
+                {% if metaAttribute.localeName == pageAttribute.localeName %}
+                    {% set smartCmsLocaleMetaAttribute = metaAttribute %}
+                {% endif %}
+            {% endfor %}
+            {% set smartCmsPageMeta = smartCmsPageMeta|merge([{
+                'localeName': pageAttribute.localeName,
+                'name': pageAttribute.name,
+                'url': pageAttribute.url,
+                'metaTitle': smartCmsLocaleMetaAttribute ? smartCmsLocaleMetaAttribute.metaTitle : null,
+                'metaKeywords': smartCmsLocaleMetaAttribute ? smartCmsLocaleMetaAttribute.metaKeywords : null,
+                'metaDescription': smartCmsLocaleMetaAttribute ? smartCmsLocaleMetaAttribute.metaDescription : null,
+            }]) %}
+        {% endfor %}
+        {% set smartCmsStores = [] %}
+        {% if cmsPage.storeRelation is not null %}
+            {% for store in cmsPage.storeRelation.stores %}
+                {% set smartCmsStores = smartCmsStores|merge([store.name]) %}
+            {% endfor %}
+        {% endif %}
+        {% set smartCmsEntityContext = {
+            'name': cmsPage.pageAttributes is not empty ? cmsPage.pageAttributes|first.name : null,
+            'templateName': cmsPage.templateName,
+            'urlSlug': cmsPage.pageAttributes is not empty ? cmsPage.pageAttributes|first.url : null,
+            'key': null,
+            'attributes': {
+                'isActive': cmsPage.isActive,
+                'isSearchable': cmsPage.isSearchable,
+                'validFrom': cmsPage.validFrom,
+                'validTo': cmsPage.validTo,
+                'stores': smartCmsStores,
+                'localizedAttributes': smartCmsPageMeta,
+            }|json_encode,
+        } %}
+        {% include '@AiCommerce/Partials/smart-cms-glossary-panel.twig' ignore missing with {
+            'smartCmsEntityType': 'cms_page',
+            'smartCmsIdEntity': idCmsPage,
+            'smartCmsEntityContext': smartCmsEntityContext,
+        } %}
+    {% endif %}
+    {{ parent() }}
+{% endblock %}

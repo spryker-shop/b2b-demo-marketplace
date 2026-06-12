@@ -44,6 +44,20 @@ class AiCommerceConfig extends PyzAiCommerceConfig
     }
 
     /**
+     * Specification:
+     * - Returns the AI configuration name used for the Smart CMS feature, based on the selected provider.
+     *
+     * @api
+     */
+    public function getSmartCmsAiConfigurationName(): string
+    {
+        return (string)$this->getModuleConfig(
+            AiCommerceConstants::CONFIGURATION_KEY_SMART_CMS_AI_CONFIGURATION,
+            AiCommerceConstants::AI_CONFIGURATION_SMART_CMS_OPENAI,
+        );
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @return array<string>

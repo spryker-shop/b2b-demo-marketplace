@@ -1,0 +1,30 @@
+{% extends '@Spryker:CmsBlockGui/EditGlossary/index.twig' %}
+
+{% block content %}
+    {% if isSmartCmsEnabled() %}
+        {% set smartCmsStores = [] %}
+        {% if cmsBlock.storeRelation is not null %}
+            {% for store in cmsBlock.storeRelation.stores %}
+                {% set smartCmsStores = smartCmsStores|merge([store.name]) %}
+            {% endfor %}
+        {% endif %}
+        {% set smartCmsEntityContext = {
+            'name': cmsBlock.name,
+            'templateName': cmsBlock.templateName,
+            'urlSlug': null,
+            'key': cmsBlock.key,
+            'attributes': {
+                'isActive': cmsBlock.isActive,
+                'validFrom': cmsBlock.validFrom,
+                'validTo': cmsBlock.validTo,
+                'stores': smartCmsStores,
+            }|json_encode,
+        } %}
+        {% include '@AiCommerce/Partials/smart-cms-glossary-panel.twig' ignore missing with {
+            'smartCmsEntityType': 'cms_block',
+            'smartCmsIdEntity': idCmsBlock,
+            'smartCmsEntityContext': smartCmsEntityContext,
+        } %}
+    {% endif %}
+    {{ parent() }}
+{% endblock %}
