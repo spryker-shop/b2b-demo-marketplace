@@ -5,7 +5,7 @@ export default class SaveToShoppingList extends Component {
     protected static readonly OFFER_INPUT_SELECTOR = '.js-shopping-list__form input[name="productOfferReference"]';
     protected static readonly TRIGGER_SELECTOR = '[data-qa="save-to-shopping-list-trigger"]';
 
-    protected readyCallback(): void { }
+    protected readyCallback(): void {}
 
     protected init(): void {
         document.addEventListener(
