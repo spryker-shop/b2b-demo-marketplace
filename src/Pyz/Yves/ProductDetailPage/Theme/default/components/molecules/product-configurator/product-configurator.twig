@@ -166,7 +166,7 @@
                         {% if can('SeeShoppingListPermissionPlugin') %}
                             <button
                                 type="button"
-                                class="button button--hollow button--expand {{ data.config.name }}__save-to-list {{ embed.saveToListTriggerClass }}"
+                                class="button button--hollow button--expand {{ data.config.name }}__save-to-list js-save-to-shopping-list__trigger {{ embed.saveToListTriggerClass }}"
                                 {{ embed.isAddToCartDisabled ? 'disabled' }}
                                 {{ qa('save-to-shopping-list-trigger') }}
                             >
