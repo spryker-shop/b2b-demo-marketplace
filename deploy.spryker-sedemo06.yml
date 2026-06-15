@@ -123,14 +123,14 @@ groups:
             yves:
                 application: yves
                 endpoints:
-                    demo-date-time-configurator.demo-06.se.demo-spryker.com:
-                        entry-point: Configurator
                     www.demo-06.se.demo-spryker.com:
                         region: EU
                         <<: *frontend-auth
                         services:
                             session:
                                 namespace: 3
+                    demo-date-time-configurator.demo-06.se.demo-spryker.com:
+                        entry-point: Configurator
                 http:
                     max-request-body-size: 100M
             boffice:
