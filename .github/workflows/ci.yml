@@ -370,7 +370,7 @@ jobs:
             -   name: Install Project
                 run: |
                     git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
-                    composer require --dev spryker/robotframework-suite-tests:"dev-feature/cc-38992/removed-configured-product-tests-b2b" --ignore-platform-reqs
+                    composer require --dev spryker/robotframework-suite-tests:"dev-b2b-icp-starting-point" --ignore-platform-reqs
                     ./uninstall-frontend-marketplace.sh
                     ./uninstall-marketplace-modules.sh
                     docker/sdk boot .github/deploy/deploy.ci.api.mariadb.robot.yml
