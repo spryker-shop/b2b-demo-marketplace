@@ -1,55 +1,22 @@
 @mixin product-option-widget-product-options($name: '.product-options') {
     #{$name} {
-        @include helper-breakpoint-media-min($lg) {
-            border-top: solid rem(1) $setting-color-gray-6;
-        }
-
-        &--no-border {
-            border-bottom: none;
-            border-top: none;
-        }
+        display: flex;
+        flex-direction: column;
+        gap: var(--scale-8);
 
         &__item {
-            border-bottom: solid 1px $setting-color-gray-6;
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-8);
         }
 
         &__title {
-            font-size: rem(15);
-            font-weight: fw(medium);
-            line-height: rem(54);
-            color: $setting-color-gray-5;
-            position: relative;
-            cursor: pointer;
-            user-select: none;
-
-            @include helper-breakpoint-media-min($lg) {
-                font-size: rem(16);
-            }
-
-            &::before,
-            &::after {
-                content: '';
-                background: $setting-color-gray-5;
-                position: absolute;
-                top: 50%;
-                transform: translateY(-50%);
-            }
-
-            &::before {
-                width: 10px;
-                height: 2px;
-                right: 18px;
-            }
-
-            &::after {
-                width: 2px;
-                height: 10px;
-                right: 22px;
-            }
-
-            &.active::after {
-                display: none;
-            }
+            color: var(--text-primary);
+            font-family: var(--label-sm-semibold-family);
+            font-size: rem(var(--label-sm-semibold-size));
+            font-weight: var(--label-sm-semibold-weight);
+            line-height: rem(var(--label-sm-semibold-line-height));
+            letter-spacing: var(--label-sm-semibold-letter-spacing);
         }
 
         @content;

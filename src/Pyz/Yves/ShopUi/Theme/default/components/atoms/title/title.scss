@@ -84,15 +84,13 @@
     }
 
     &--product-sold-by {
-        color: $setting-color-gray-5;
-        font-size: rem(var(--fontsize-3));
-        font-weight: fw(regular);
-        padding: rem(var(--scale-6)) 0 rem(14);
-        border-bottom: rem(var(--stroke-sm)) solid $setting-color-gray-1;
-
-        @include helper-breakpoint-media-min($lg) {
-            font-size: rem(22);
-        }
+        margin-bottom: var(--scale-8);
+        padding: 0;
+        color: var(--text-tertiary);
+        font-family: var(--label-sm-family);
+        font-size: rem(var(--label-sm-size));
+        font-weight: var(--label-sm-weight);
+        line-height: rem(var(--label-sm-line-height));
     }
 
     &--price-mode {

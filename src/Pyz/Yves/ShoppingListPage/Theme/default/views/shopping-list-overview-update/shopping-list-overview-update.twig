@@ -162,7 +162,6 @@
 
                             {% block quantity %}
                                 {% include molecule('quantity-counter') with {
-                                    modifiers: ['shopping-list'],
                                     attributes: {
                                         readonly: not embed.isItemAvailable,
                                         name: data.form.items[embed.key].quantity.vars.full_name,

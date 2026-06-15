@@ -1,63 +1,138 @@
 @mixin product-detail-page-product-configurator($name: '.product-configurator') {
     #{$name} {
-        padding: 0 rem(15) rem(14);
-        margin: 0 rem(-15);
-        border-bottom: solid 1px $setting-color-gray-6;
+        display: flex;
+        flex-direction: column;
+        gap: var(--scale-16);
+        margin: 0;
+        padding: var(--scale-24);
+        background: var(--background-page);
+        border: var(--stroke-sm) solid var(--border-default);
+        border-radius: var(--radius-lg);
 
         @include helper-breakpoint-media-min($lg) {
-            border-bottom: 0;
+            padding: var(--scale-32) var(--scale-24);
+        }
+
+        &__top {
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-12);
         }
 
         &__top-block {
-            @include helper-breakpoint-media-max($lg - 1) {
-                background: $setting-color-gray-6;
-                padding: rem(15);
-                margin: 0 rem(-15);
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-6);
+        }
+
+        &__title {
+            margin-bottom: var(--scale-6);
+        }
+
+        &__meta-row {
+            display: flex;
+            align-items: center;
+            gap: var(--scale-12);
+            flex-wrap: wrap;
+        }
+
+        &__stock-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: var(--scale-2) var(--scale-8);
+            border-radius: var(--radius-sm);
+            font-family: var(--label-sm-family);
+            font-size: var(--label-sm-size);
+            font-weight: var(--label-sm-weight);
+            line-height: var(--label-sm-line-height);
+            letter-spacing: var(--label-sm-letter-spacing);
+            white-space: nowrap;
+
+            &--in-stock {
+                color: var(--green-900);
+                background: var(--background-state-success-subtle);
+            }
+
+            &--out-of-stock {
+                color: var(--text-state-error);
+                background: var(--background-state-error-subtle);
             }
         }
 
         &__brand-name {
-            font-size: rem(16);
-            font-weight: fw(medium);
-            line-height: rem(23);
-            color: $setting-color-gray-5;
-            text-align: right;
-
-            @include helper-breakpoint-media-min($lg) {
-                font-size: rem(18);
-                margin-bottom: rem(3);
-                text-align: left;
-            }
+            font-family: var(--label-sm-semibold-family);
+            font-size: var(--label-sm-semibold-size);
+            font-weight: var(--label-sm-semibold-weight);
+            line-height: var(--label-sm-semibold-line-height);
+            color: var(--text-secondary);
         }
 
         &__sku {
-            font-size: rem(13);
-            font-weight: fw(regular);
-            line-height: normal;
-            color: $setting-color-gray-4;
-            text-align: right;
-
-            @include helper-breakpoint-media-min($lg) {
-                font-size: rem(14);
-                margin-bottom: rem(12);
-                text-align: left;
-            }
+            font-family: var(--label-sm-family);
+            font-size: var(--label-sm-size);
+            font-weight: var(--label-sm-weight);
+            line-height: var(--label-sm-line-height);
+            color: var(--text-tertiary);
         }
 
-        &__bundle {
-            margin-bottom: -1px;
+        &__price-block {
+            color: var(--text-primary);
+        }
+
+        &__section-title {
+            margin: 0;
+            font-family: var(--label-sm-family);
+            font-size: var(--label-sm-size);
+            font-weight: var(--label-sm-weight);
+            line-height: var(--label-sm-line-height);
+            color: var(--text-tertiary);
+        }
+
+        &__config {
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-8);
+        }
+
+        &__field-label {
+            display: block;
+            margin: 0 0 var(--scale-8);
+            font-family: var(--label-sm-semibold-family);
+            font-size: var(--label-sm-semibold-size);
+            font-weight: var(--label-sm-semibold-weight);
+            line-height: var(--label-sm-semibold-line-height);
+            color: var(--text-primary);
+        }
+
+        &__form {
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-12);
         }
 
         &__add-to-cart {
-            padding-top: rem(21);
-            padding-bottom: rem(15);
+            display: flex;
+            flex-direction: column;
+        }
 
-            @include helper-breakpoint-media-min($lg) {
-                padding-bottom: rem(10);
+        &__save-to-list {
+            margin-top: var(--scale-12);
+        }
+
+        &__cta-row {
+            display: flex;
+            align-items: stretch;
+            gap: var(--scale-12);
+
+            .quantity-counter {
+                flex: 1 1 0;
+                min-width: 0;
             }
+        }
+
+        &__add-to-cart-button {
+            flex: 1 1 0;
+            min-width: 0;
         }
 
         @content;

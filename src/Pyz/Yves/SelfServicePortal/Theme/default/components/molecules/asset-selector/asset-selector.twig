@@ -2,6 +2,16 @@
 
 {% block separator %}{% endblock %}
 
+{% block trigger %}
+    <button type="button" class="link link--no-decoration {{ config.name }}__trigger {{ config.name }}__select-link {{ popupTriggerClass }}" {{ qa('asset-selector-trigger') }}>
+        {% include atom('font-icon') with {
+            modifiers: ['size-inherit'],
+            data: { name: 'link' },
+        } only %}
+        {{ data.buttonLabel | trans }}
+    </button>
+{% endblock %}
+
 {% block name %}
     {% set tag = attributes['asset-link-base'] ? 'a' : 'strong' %}
     {% set reference = data.asset is not empty ? data.asset.reference %}
@@ -20,7 +30,7 @@
 {% block change %}
     <button
         type="button"
-        class="link link--additional {{ config.name }}__action {{ config.name }}__action--change {{ popupTriggerClass }}"
+        class="link link--no-decoration {{ config.name }}__action {{ config.name }}__action--change {{ config.name }}__data-link {{ popupTriggerClass }}"
         aria-label="{{ 'self_service_portal.asset.selector.change' | trans }}"
         {{ qa('asset-selector-change') }}
     >
@@ -33,7 +43,7 @@
 {% block clear %}
     <button
         type="button"
-        class="link link--additional {{ config.name }}__action {{ config.name }}__action--clear {{ config.jsName }}__clear"
+        class="link link--no-decoration {{ config.name }}__action {{ config.name }}__action--clear {{ config.name }}__data-link {{ config.jsName }}__clear"
         aria-label="{{ 'self_service_portal.asset_filter.clear' | trans }}"
         {{ qa('asset-selector-clear') }}
     >
