@@ -16,7 +16,7 @@
             }]) %}
         {% endfor %}
 
-        {% include molecule('seller-offers', 'MerchantProductOfferWidget') with {
+        {% include molecule('seller-offers', 'BuyBox') with {
             data: {
                 offers: offers,
                 selectedReference: data.productView.productOfferReference | default,

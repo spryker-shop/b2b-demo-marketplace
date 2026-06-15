@@ -2,7 +2,7 @@
 
 {% block content %}
     {% if data.productOffers is not empty %}
-        {% include molecule('seller-offers', 'MerchantProductOfferWidget') with {
+        {% include molecule('seller-offers', 'BuyBox') with {
             data: {
                 offers: data.productOffers,
                 selectedReference: data.productView.productOfferReference | default,
