@@ -1,57 +1,52 @@
 @mixin product-detail-page-variant-configurator($name: '.variant') {
     #{$name} {
-        border-top: solid rem(1) $setting-color-gray-6;
-
-        &:last-child {
-            border-bottom: solid rem(1) $setting-color-gray-6;
-            margin-bottom: rem(-1);
-        }
+        display: flex;
+        flex-direction: column;
+        gap: var(--scale-8);
 
         &--promotion {
             position: relative;
             z-index: $setting-zi-element + 1;
-            border: none;
-
-            &:last-child {
-                margin-bottom: 0;
-                border-bottom: none;
-            }
         }
 
         &--product-set {
-            border: none;
-            margin-bottom: rem(8);
-
-            &:last-child {
-                border: none;
-                margin-bottom: 0;
-            }
+            margin-bottom: var(--scale-8);
         }
 
         &__title {
-            font-size: rem(16);
-            font-weight: fw(medium);
-            line-height: rem(54);
-            color: $setting-color-gray-5;
-            position: relative;
+            font-family: var(--label-sm-semibold-family);
+            font-size: var(--label-sm-semibold-size);
+            font-weight: var(--label-sm-semibold-weight);
+            line-height: var(--label-sm-semibold-line-height);
+            letter-spacing: var(--label-sm-semibold-letter-spacing);
+            color: var(--text-primary);
 
             &--product-set {
-                font-size: rem(14);
-                line-height: rem(28);
-
-                @include helper-breakpoint-media-min($lg) {
-                    font-size: rem(16);
-                    line-height: rem(32);
-                }
+                font-family: var(--label-md-semibold-family);
+                font-size: var(--label-md-semibold-size);
+                line-height: var(--label-md-semibold-line-height);
             }
         }
 
         &__selected-value {
-            font-size: rem(14);
-            font-weight: fw(regular);
-            line-height: normal;
-            color: $setting-color-gray-3;
-            margin: rem(-5) 0 rem(15);
+            display: flex;
+            align-items: center;
+            gap: var(--scale-8);
+            font-family: var(--body-md-family);
+            font-size: var(--body-md-size);
+            font-weight: var(--body-md-weight);
+            line-height: var(--body-md-line-height);
+            color: var(--text-secondary);
+
+            a {
+                color: var(--text-brand);
+
+                &:hover,
+                &:focus {
+                    color: var(--text-brand);
+                    text-decoration: underline;
+                }
+            }
         }
     }
 }

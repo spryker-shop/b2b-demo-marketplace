@@ -239,6 +239,7 @@
         &__quantity-holder {
             display: flex;
             justify-content: flex-end;
+            max-width: rem(125);
         }
 
         &__price-zone {
@@ -299,9 +300,6 @@
             grid-template-rows: 0fr;
             margin-top: 0;
             border-top: 0 solid var(--border-subtle);
-            transition:
-                grid-template-rows 200ms ease,
-                margin-top 200ms ease;
             grid-column: 1;
             grid-row: 2;
         }

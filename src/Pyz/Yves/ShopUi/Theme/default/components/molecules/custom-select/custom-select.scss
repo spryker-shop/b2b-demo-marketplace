@@ -15,6 +15,10 @@
             min-width: rem(70);
         }
 
+        &__select--error + .select2-container .select2-selection__rendered {
+            border-color: var(--input-border-error);
+        }
+
         &__caret {
             position: absolute;
             z-index: $setting-zi-custom-select + 1;
