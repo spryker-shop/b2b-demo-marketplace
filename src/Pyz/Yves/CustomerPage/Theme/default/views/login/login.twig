@@ -1,50 +1,68 @@
-{% extends template('page-layout-main') %}
-
-{% block pageInfo %}
-    <div class="page-info">
-        <div class="container">
-            {% block breadcrumbs %}
-                {% include molecule('breadcrumb') with {
-                    data: {
-                        steps: [{
-                            label: 'customer.login' | trans
-                        }],
-                    },
-                } only %}
-            {% endblock %}
-        </div>
-    </div>
-{% endblock %}
+{% extends template('page-layout-auth') %}
 
 {% block content %}
-    {% embed organism('section') with {
+    {% embed molecule('auth-layout', 'CustomerPage') with {
         data: {
-            title: 'customer.login.title' | trans,
-            innerClass: 'col col--sm-12 col--md-9 col--lg-8 col--xl-6',
+            heading: 'customer.login.welcome_back' | trans,
+            subtitle: 'customer.login.subtitle' | trans,
         },
-        modifiers: ['center', 'last', 'mobile-center'],
     } only %}
-        {% block inner %}
-            {% include molecule('form') with {
-                class: 'box',
-                data: {
-                    form: _view.loginForm,
-                    shouldRequireMessage: true,
-                    submit: {
-                        enable: true,
-                        class: 'button button--big',
-                        text: 'forms.submit.login' | trans,
-                    },
-                    cancel: {
-                        enable: true,
-                        url: url('password/forgotten'),
-                        text: 'forms.forgot-password' | trans,
-                        icon: null,
-                        class: 'link link--action form__action--link',
-                        qa: 'customer-forgot-password-link',
-                    },
+        {% block card %}
+            {{ form_start(_view.loginForm, {
+                attr: {
+                    class: config.name ~ '__form',
+                    novalidate: 'novalidate',
                 },
-            } only %}
+            }) }}
+                {{ form_errors(_view.loginForm) }}
+
+                <div class="{{ config.name }}__fields">
+                    <div class="{{ config.name }}__field">
+                        <label for="{{ _view.loginForm.email.vars.id }}" class="{{ config.name }}__label">
+                            {{- 'customer.login.email' | trans -}}
+                        </label>
+                        {{ form_widget(_view.loginForm.email, {
+                            attr: {
+                                autocomplete: 'email',
+                            },
+                        }) }}
+                        {{ form_errors(_view.loginForm.email) }}
+                    </div>
+
+                    <div class="{{ config.name }}__field">
+                        <div class="{{ config.name }}__label-row">
+                            <label for="{{ _view.loginForm.password.vars.id }}" class="{{ config.name }}__label">
+                                {{- 'customer.login.password' | trans -}}
+                            </label>
+                            <a
+                                href="{{ url('password/forgotten') }}"
+                                class="{{ config.name }}__forgot"
+                                {{ qa('customer-forgot-password-link') }}
+                            >
+                                {{- 'forms.forgot-password' | trans -}}
+                            </a>
+                        </div>
+                        {{ form_widget(_view.loginForm.password) }}
+                        {{ form_errors(_view.loginForm.password) }}
+                    </div>
+                </div>
+
+                <button
+                    type="submit"
+                    class="button {{ config.name }}__submit"
+                    data-init-single-click
+                    {{ qa('submit-button') }}
+                >
+                    {{- 'customer.login.submit' | trans -}}
+                </button>
+
+                {% if _view.loginForm.remember_me is defined %}
+                    <div class="{{ config.name }}__hidden" hidden>
+                        {{ form_row(_view.loginForm.remember_me) }}
+                    </div>
+                {% endif %}
+
+                {{ form_end(_view.loginForm) }}
         {% endblock %}
     {% endembed %}
 

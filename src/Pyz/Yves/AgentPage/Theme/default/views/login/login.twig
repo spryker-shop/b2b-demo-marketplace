@@ -1,63 +1,62 @@
-{% extends template('page-layout-main') %}
-
-{% define data = {
-    forms: {
-        login: _view.loginForm
-    }
-} %}
-
-{% block pageInfo %}
-    <div class="page-info">
-        <div class="container">
-            {% block breadcrumbs %}
-                {% include molecule('breadcrumb') with {
-                    data: {
-                        steps: [{
-                            label: 'agent.login' | trans
-                        }]
-                    }
-                } only %}
-            {% endblock %}
-        </div>
-    </div>
-{% endblock %}
+{% extends template('page-layout-auth') %}
 
 {% block content %}
-    {% embed organism('section') with {
+    {% embed molecule('auth-layout', 'CustomerPage') with {
         data: {
-            title: 'agent.login.title' | trans,
-            innerClass: 'col col--sm-12 col--md-9 col--lg-6'
+            heading: 'customer.login.welcome_back' | trans,
+            subtitle: 'agent.login' | trans,
         },
-        modifiers: ['center', 'last'],
-        embed: {
-            form: data.forms.login
-        }
     } only %}
-        {% block inner %}
-            {% include molecule('form') with {
-                class: 'box',
-                data: {
-                    form: embed.form,
-                    submit: {
-                        enable: true,
-                        class: 'button button--big form__action--primary',
-                        text: 'forms.submit.login' | trans
-                    },
-                    options: {
-                        attr: {
-                            'data-qa': 'agent-login-form',
-                        },
-                    },
-                }
-            } only %}
+        {% block card %}
+            {{ form_start(_view.loginForm, {
+                attr: {
+                    class: config.name ~ '__form',
+                    novalidate: 'novalidate',
+                    'data-qa': 'agent-login-form',
+                },
+            }) }}
+                {{ form_errors(_view.loginForm) }}
+
+                <div class="{{ config.name }}__fields">
+                    <div class="{{ config.name }}__field">
+                        <label for="{{ _view.loginForm.email.vars.id }}" class="{{ config.name }}__label">
+                            {{- 'customer.login.email' | trans -}}
+                        </label>
+                        {{ form_widget(_view.loginForm.email, {
+                            attr: {
+                                autocomplete: 'email',
+                            },
+                        }) }}
+                        {{ form_errors(_view.loginForm.email) }}
+                    </div>
+
+                    <div class="{{ config.name }}__field">
+                        <label for="{{ _view.loginForm.password.vars.id }}" class="{{ config.name }}__label">
+                            {{- 'customer.login.password' | trans -}}
+                        </label>
+                        {{ form_widget(_view.loginForm.password) }}
+                        {{ form_errors(_view.loginForm.password) }}
+                    </div>
+                </div>
+
+                <button
+                    type="submit"
+                    class="button {{ config.name }}__submit"
+                    data-init-single-click
+                    {{ qa('submit-button') }}
+                >
+                    {{- 'customer.login.submit' | trans -}}
+                </button>
+
+                {{ form_end(_view.loginForm) }}
         {% endblock %}
     {% endembed %}
 
     {% widget 'MultiFactorAuthHandlerWidget' with {
         data: {
-            id: data.forms.login.vars.name,
+            id: _view.loginForm.vars.name,
             url: 'multiFactorAuth/getUserEnabledTypes',
-            formSelector: '[name="' ~ data.forms.login.vars.name ~ '"]',
+            formSelector: '[name="' ~ _view.loginForm.vars.name ~ '"]',
             isLoginFlow: 'true',
             isJsEnabledHandler: 'true',
         }

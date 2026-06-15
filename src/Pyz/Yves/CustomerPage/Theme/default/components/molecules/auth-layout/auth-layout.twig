@@ -1,0 +1,48 @@
+{% extends model('component') %}
+{% import _self as component %}
+
+{% define config = {
+    name: 'auth-layout',
+    tag: 'div',
+} %}
+
+{% define data = {
+    heading: '',
+    subtitle: '',
+    showFooterLinks: true,
+} %}
+
+{% block body %}
+    <div class="{{ component.renderClass(config.name ~ '__inner', modifiers) }}">
+        <div class="{{ config.name }}__card">
+            <span class="{{ config.name }}__logo">
+                {% include molecule('logo') only %}
+            </span>
+
+            <div class="{{ config.name }}__body">
+                {% if data.heading %}
+                    <div class="{{ config.name }}__head">
+                        <h1 class="{{ config.name }}__title">{{ data.heading }}</h1>
+                        {% if data.subtitle %}
+                            <p class="{{ config.name }}__subtitle">{{ data.subtitle }}</p>
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+                {% block card %}{% endblock %}
+            </div>
+        </div>
+
+        {% if data.showFooterLinks %}
+            <nav class="{{ config.name }}__footer" aria-label="{{ 'global.privacy_nav.data_privacy' | trans }}">
+                <a href="{{ 'page.terms.url' | trans }}" class="{{ config.name }}__footer-link">
+                    {{- 'customer.login.terms' | trans -}}
+                </a>
+                <span class="{{ config.name }}__footer-separator" aria-hidden="true">·</span>
+                <a href="{{ 'page.privacy.url' | trans }}" class="{{ config.name }}__footer-link">
+                    {{- 'page.privacy.title' | trans -}}
+                </a>
+            </nav>
+        {% endif %}
+    </div>
+{% endblock %}
