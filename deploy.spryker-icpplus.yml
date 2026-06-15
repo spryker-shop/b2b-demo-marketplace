@@ -122,13 +122,13 @@ groups:
             yves:
                 application: yves
                 endpoints:
-                    demo-date-time-configurator.eu.icp-plus.sh01.demo-spryker.com:
-                        entry-point: Configurator
                     yves.eu.icp-plus.sh01.demo-spryker.com:
                         region: EU
                         services:
                             session:
                                 namespace: 11
+                    demo-date-time-configurator.eu.icp-plus.sh01.demo-spryker.com:
+                        entry-point: Configurator
                 http:
                     max-request-body-size: 100M
             boffice:
