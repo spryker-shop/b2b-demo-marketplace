@@ -47,7 +47,7 @@ class ExampleWaterTreatmentCartProductConfigurationRenderStrategyPlugin extends 
     {
         return (new ProductConfigurationTemplateTransfer())
             ->setData(json_decode($productConfigurationInstance->getDisplayDataOrFail(), true) ?? [])
-            ->setModuleName('DateTimeConfiguratorPageExample')
+            ->setModuleName('WaterTreatmentConfiguratorPageExample')
             ->setTemplateType('view')
             ->setTemplateName('options-list');
     }

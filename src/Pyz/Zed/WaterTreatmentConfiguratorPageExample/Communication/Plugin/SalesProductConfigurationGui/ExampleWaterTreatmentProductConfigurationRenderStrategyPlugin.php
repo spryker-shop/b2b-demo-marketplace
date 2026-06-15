@@ -53,6 +53,6 @@ class ExampleWaterTreatmentProductConfigurationRenderStrategyPlugin extends Abst
     {
         return (new SalesProductConfigurationTemplateTransfer())
             ->setData(json_decode($itemTransfer->getSalesOrderItemConfigurationOrFail()->getDisplayDataOrFail(), true) ?? [])
-            ->setTemplatePath('@DateTimeConfiguratorPageExample/_partials/order-item-configuration.twig');
+            ->setTemplatePath('@WaterTreatmentConfiguratorPageExample/_partials/order-item-configuration.twig');
     }
 }
