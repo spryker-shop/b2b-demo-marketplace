@@ -221,7 +221,8 @@ echo "✓ Dependencies updated"
 echo ""
 
 echo "Step 6: Installing required Babel packages..."
-npm install --save-dev @babel/core @babel/runtime
+# Pin to Babel 7.x to match @babel/preset-env ~7.28.x; unpinned install pulls @babel/core 8 and breaks the Yves build.
+npm install --save-dev @babel/core@^7.28.6 @babel/runtime@^7.28.6
 echo "✓ Babel packages installed"
 echo ""
 
