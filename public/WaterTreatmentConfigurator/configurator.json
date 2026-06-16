@@ -1,0 +1,522 @@
+{
+    "data": {
+        "name": "Industrial Water Treatment System",
+        "image": "https://spryker.s3.eu-central-1.amazonaws.com/image/industrial-water-treatment-system.webp",
+        "logo": "./logo.svg",
+        "defaultPrice": {
+            "EUR": 1245000,
+            "CHF": 1189000,
+            "USD": 1350000
+        }
+    },
+    "configuration": [
+        {
+            "id": "flowRate",
+            "label": "Flow Rate (m³/h)",
+            "tooltip": "Select the required flow rate",
+            "data": [
+                {
+                    "value": "5",
+                    "title": "5 m³/h",
+                    "price": { "EUR": 0, "CHF": 0, "USD": 0 },
+                    "disabled": {
+                        "tank": {
+                            "condition": ["duplex", "titanium"],
+                            "tooltip": "Not available with Duplex Steel or Titanium tank"
+                        },
+                        "control": { "condition": ["scada"], "tooltip": "Not available with SCADA-Integrated control" },
+                        "inlet": {
+                            "condition": ["DN150", "DN200", "DN250", "DN300"],
+                            "tooltip": "Not available with DN150-DN300 inlet"
+                        }
+                    }
+                },
+                {
+                    "value": "10",
+                    "title": "10 m³/h",
+                    "price": { "EUR": 0, "CHF": 0, "USD": 0 },
+                    "disabled": {
+                        "tank": {
+                            "condition": ["duplex", "titanium"],
+                            "tooltip": "Not available with Duplex Steel or Titanium tank"
+                        },
+                        "control": { "condition": ["scada"], "tooltip": "Not available with SCADA-Integrated control" },
+                        "inlet": {
+                            "condition": ["DN150", "DN200", "DN250", "DN300"],
+                            "tooltip": "Not available with DN150-DN300 inlet"
+                        }
+                    }
+                },
+                {
+                    "value": "15",
+                    "title": "15 m³/h",
+                    "price": { "EUR": 0, "CHF": 0, "USD": 0 },
+                    "disabled": {
+                        "tank": {
+                            "condition": ["duplex", "titanium"],
+                            "tooltip": "Not available with Duplex Steel or Titanium tank"
+                        },
+                        "control": { "condition": ["scada"], "tooltip": "Not available with SCADA-Integrated control" },
+                        "inlet": {
+                            "condition": ["DN150", "DN200", "DN250", "DN300"],
+                            "tooltip": "Not available with DN150-DN300 inlet"
+                        }
+                    }
+                },
+                { "value": "20", "title": "20 m³/h", "price": { "EUR": 0, "CHF": 0, "USD": 0 } },
+                { "value": "25", "title": "25 m³/h", "price": { "EUR": 0, "CHF": 0, "USD": 0 } },
+                { "value": "30", "title": "30 m³/h", "price": { "EUR": 0, "CHF": 0, "USD": 0 } },
+                { "value": "40", "title": "40 m³/h", "price": { "EUR": 0, "CHF": 0, "USD": 0 } },
+                { "value": "50", "title": "50 m³/h", "price": { "EUR": 0, "CHF": 0, "USD": 0 } },
+                { "value": "60", "title": "60 m³/h", "price": { "EUR": 0, "CHF": 0, "USD": 0 } },
+                { "value": "75", "title": "75 m³/h", "price": { "EUR": 0, "CHF": 0, "USD": 0 } },
+                { "value": "80", "title": "80 m³/h", "price": { "EUR": 0, "CHF": 0, "USD": 0 } },
+                {
+                    "value": "100",
+                    "title": "100 m³/h",
+                    "price": { "EUR": 0, "CHF": 0, "USD": 0 },
+                    "disabled": {
+                        "control": { "condition": ["manual"], "tooltip": "Not available with Manual control" }
+                    }
+                },
+                {
+                    "value": "120",
+                    "title": "120 m³/h",
+                    "price": { "EUR": 0, "CHF": 0, "USD": 0 },
+                    "disabled": {
+                        "control": { "condition": ["manual"], "tooltip": "Not available with Manual control" }
+                    }
+                },
+                {
+                    "value": "150",
+                    "title": "150 m³/h",
+                    "price": { "EUR": 0, "CHF": 0, "USD": 0 },
+                    "disabled": {
+                        "control": { "condition": ["manual"], "tooltip": "Not available with Manual control" }
+                    }
+                },
+                {
+                    "value": "175",
+                    "title": "175 m³/h",
+                    "price": { "EUR": 0, "CHF": 0, "USD": 0 },
+                    "disabled": {
+                        "control": { "condition": ["manual"], "tooltip": "Not available with Manual control" }
+                    }
+                },
+                {
+                    "value": "200",
+                    "title": "200 m³/h",
+                    "price": { "EUR": 600000, "CHF": 573000, "USD": 651000 },
+                    "disabled": {
+                        "control": { "condition": ["manual"], "tooltip": "Not available with Manual control" },
+                        "tank": { "condition": ["frp"], "tooltip": "Not available with FRP (Fiberglass) tank" },
+                        "inlet": {
+                            "condition": ["DN25", "DN32", "DN40", "DN50"],
+                            "tooltip": "Not available with DN25-DN50 inlet"
+                        }
+                    }
+                },
+                {
+                    "value": "250",
+                    "title": "250 m³/h",
+                    "price": { "EUR": 600000, "CHF": 573000, "USD": 651000 },
+                    "disabled": {
+                        "control": { "condition": ["manual"], "tooltip": "Not available with Manual control" },
+                        "tank": { "condition": ["frp"], "tooltip": "Not available with FRP (Fiberglass) tank" },
+                        "inlet": {
+                            "condition": ["DN25", "DN32", "DN40", "DN50"],
+                            "tooltip": "Not available with DN25-DN50 inlet"
+                        }
+                    }
+                },
+                {
+                    "value": "300",
+                    "title": "300 m³/h",
+                    "price": { "EUR": 600000, "CHF": 573000, "USD": 651000 },
+                    "disabled": {
+                        "control": { "condition": ["manual"], "tooltip": "Not available with Manual control" },
+                        "tank": { "condition": ["frp"], "tooltip": "Not available with FRP (Fiberglass) tank" },
+                        "inlet": {
+                            "condition": ["DN25", "DN32", "DN40", "DN50"],
+                            "tooltip": "Not available with DN25-DN50 inlet"
+                        }
+                    }
+                },
+                {
+                    "value": "350",
+                    "title": "350 m³/h",
+                    "price": { "EUR": 600000, "CHF": 573000, "USD": 651000 },
+                    "disabled": {
+                        "control": { "condition": ["manual"], "tooltip": "Not available with Manual control" },
+                        "tank": { "condition": ["frp"], "tooltip": "Not available with FRP (Fiberglass) tank" },
+                        "inlet": {
+                            "condition": ["DN25", "DN32", "DN40", "DN50"],
+                            "tooltip": "Not available with DN25-DN50 inlet"
+                        }
+                    }
+                },
+                {
+                    "value": "400",
+                    "title": "400 m³/h",
+                    "price": { "EUR": 600000, "CHF": 573000, "USD": 651000 },
+                    "disabled": {
+                        "control": { "condition": ["manual"], "tooltip": "Not available with Manual control" },
+                        "tank": { "condition": ["frp"], "tooltip": "Not available with FRP (Fiberglass) tank" },
+                        "inlet": {
+                            "condition": ["DN25", "DN32", "DN40", "DN50"],
+                            "tooltip": "Not available with DN25-DN50 inlet"
+                        }
+                    }
+                },
+                {
+                    "value": "450",
+                    "title": "450 m³/h",
+                    "price": { "EUR": 600000, "CHF": 573000, "USD": 651000 },
+                    "disabled": {
+                        "control": { "condition": ["manual"], "tooltip": "Not available with Manual control" },
+                        "tank": { "condition": ["frp"], "tooltip": "Not available with FRP (Fiberglass) tank" },
+                        "inlet": {
+                            "condition": ["DN25", "DN32", "DN40", "DN50"],
+                            "tooltip": "Not available with DN25-DN50 inlet"
+                        }
+                    }
+                },
+                {
+                    "value": "500",
+                    "title": "500 m³/h",
+                    "price": { "EUR": 600000, "CHF": 573000, "USD": 651000 },
+                    "disabled": {
+                        "control": { "condition": ["manual"], "tooltip": "Not available with Manual control" },
+                        "tank": { "condition": ["frp"], "tooltip": "Not available with FRP (Fiberglass) tank" },
+                        "inlet": {
+                            "condition": ["DN25", "DN32", "DN40", "DN50"],
+                            "tooltip": "Not available with DN25-DN50 inlet"
+                        }
+                    }
+                },
+                {
+                    "value": "600",
+                    "title": "600 m³/h",
+                    "price": { "EUR": 600000, "CHF": 573000, "USD": 651000 },
+                    "disabled": {
+                        "control": { "condition": ["manual"], "tooltip": "Not available with Manual control" },
+                        "tank": { "condition": ["frp"], "tooltip": "Not available with FRP (Fiberglass) tank" },
+                        "inlet": {
+                            "condition": ["DN25", "DN32", "DN40", "DN50"],
+                            "tooltip": "Not available with DN25-DN50 inlet"
+                        }
+                    }
+                },
+                {
+                    "value": "750",
+                    "title": "750 m³/h",
+                    "price": { "EUR": 600000, "CHF": 573000, "USD": 651000 },
+                    "disabled": {
+                        "control": { "condition": ["manual"], "tooltip": "Not available with Manual control" },
+                        "tank": { "condition": ["frp"], "tooltip": "Not available with FRP (Fiberglass) tank" },
+                        "inlet": {
+                            "condition": ["DN25", "DN32", "DN40", "DN50"],
+                            "tooltip": "Not available with DN25-DN50 inlet"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "id": "filtration",
+            "label": "Filtration Type",
+            "tooltip": "Select the filtration technology",
+            "data": [
+                { "value": "sediment", "title": "Sediment", "price": { "EUR": 0, "CHF": 0, "USD": 0 } },
+                { "value": "activated_carbon", "title": "Activated Carbon", "price": { "EUR": 0, "CHF": 0, "USD": 0 } },
+                {
+                    "value": "reverse_osmosis",
+                    "title": "Reverse Osmosis",
+                    "price": { "EUR": 320000, "CHF": 305000, "USD": 347000 },
+                    "disabled": {
+                        "tank": {
+                            "condition": ["carbon_steel_lined"],
+                            "tooltip": "Not available with Carbon Steel Lined tank"
+                        },
+                        "control": { "condition": ["manual"], "tooltip": "Not available with Manual control" }
+                    }
+                },
+                { "value": "ultrafiltration", "title": "Ultrafiltration", "price": { "EUR": 0, "CHF": 0, "USD": 0 } },
+                { "value": "ion_exchange", "title": "Ion Exchange", "price": { "EUR": 0, "CHF": 0, "USD": 0 } },
+                {
+                    "value": "nanofiltration",
+                    "title": "Nanofiltration",
+                    "price": { "EUR": 280000, "CHF": 267000, "USD": 304000 },
+                    "disabled": {
+                        "tank": { "condition": ["frp"], "tooltip": "Not available with FRP (Fiberglass) tank" },
+                        "control": {
+                            "condition": ["manual", "semi_automatic"],
+                            "tooltip": "Not available with Manual or Semi-Automatic control"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "id": "tank",
+            "label": "Tank Material",
+            "tooltip": "Select the tank material",
+            "data": [
+                { "value": "ss304", "title": "Stainless Steel 304", "price": { "EUR": 0, "CHF": 0, "USD": 0 } },
+                {
+                    "value": "ss316l",
+                    "title": "Stainless Steel 316L",
+                    "price": { "EUR": 150000, "CHF": 143000, "USD": 163000 }
+                },
+                {
+                    "value": "frp",
+                    "title": "FRP (Fiberglass)",
+                    "price": { "EUR": 0, "CHF": 0, "USD": 0 },
+                    "disabled": {
+                        "flowRate": {
+                            "condition": ["200", "250", "300", "350", "400", "450", "500", "600", "750"],
+                            "tooltip": "Not available for flow rate ≥ 200 m³/h"
+                        },
+                        "filtration": {
+                            "condition": ["nanofiltration"],
+                            "tooltip": "Not available with Nanofiltration"
+                        }
+                    }
+                },
+                {
+                    "value": "carbon_steel_lined",
+                    "title": "Carbon Steel Lined",
+                    "price": { "EUR": 0, "CHF": 0, "USD": 0 },
+                    "disabled": {
+                        "filtration": {
+                            "condition": ["reverse_osmosis"],
+                            "tooltip": "Not available with Reverse Osmosis"
+                        }
+                    }
+                },
+                {
+                    "value": "duplex",
+                    "title": "Duplex Steel",
+                    "price": { "EUR": 420000, "CHF": 401000, "USD": 456000 },
+                    "disabled": {
+                        "flowRate": {
+                            "condition": ["5", "10", "15"],
+                            "tooltip": "Not available for flow rate ≤ 15 m³/h"
+                        }
+                    }
+                },
+                {
+                    "value": "titanium",
+                    "title": "Titanium",
+                    "price": { "EUR": 890000, "CHF": 850000, "USD": 966000 },
+                    "disabled": {
+                        "flowRate": {
+                            "condition": ["5", "10", "15"],
+                            "tooltip": "Not available for flow rate ≤ 15 m³/h"
+                        },
+                        "power": {
+                            "condition": ["230v"],
+                            "tooltip": "Not available with 230V / 50Hz power supply"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "id": "control",
+            "label": "Control System",
+            "tooltip": "Select the control system",
+            "data": [
+                {
+                    "value": "manual",
+                    "title": "Manual",
+                    "price": { "EUR": 0, "CHF": 0, "USD": 0 },
+                    "disabled": {
+                        "flowRate": {
+                            "condition": ["200", "250", "300", "350", "400", "450", "500", "600", "750"],
+                            "tooltip": "Not available for flow rate ≥ 200 m³/h"
+                        },
+                        "filtration": {
+                            "condition": ["reverse_osmosis", "nanofiltration"],
+                            "tooltip": "Not available with Reverse Osmosis or Nanofiltration"
+                        },
+                        "power": {
+                            "condition": ["690v"],
+                            "tooltip": "Not available with 690V / 50Hz power supply"
+                        }
+                    }
+                },
+                {
+                    "value": "semi_automatic",
+                    "title": "Semi-Automatic",
+                    "price": { "EUR": 0, "CHF": 0, "USD": 0 },
+                    "disabled": {
+                        "filtration": {
+                            "condition": ["nanofiltration"],
+                            "tooltip": "Not available with Nanofiltration"
+                        },
+                        "power": {
+                            "condition": ["690v"],
+                            "tooltip": "Not available with 690V / 50Hz power supply"
+                        }
+                    }
+                },
+                { "value": "fully_automatic", "title": "Fully Automatic", "price": { "EUR": 0, "CHF": 0, "USD": 0 } },
+                {
+                    "value": "plc_hmi",
+                    "title": "PLC with HMI",
+                    "price": { "EUR": 210000, "CHF": 200500, "USD": 228000 }
+                },
+                {
+                    "value": "scada",
+                    "title": "SCADA-Integrated",
+                    "price": { "EUR": 560000, "CHF": 534500, "USD": 607500 },
+                    "disabled": {
+                        "flowRate": {
+                            "condition": ["5", "10", "15"],
+                            "tooltip": "Not available for flow rate ≤ 15 m³/h"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "id": "inlet",
+            "label": "Inlet Connection (DN)",
+            "tooltip": "Select the inlet connection size",
+            "data": [
+                {
+                    "value": "DN25",
+                    "title": "DN25",
+                    "price": { "EUR": 0, "CHF": 0, "USD": 0 },
+                    "disabled": {
+                        "flowRate": {
+                            "condition": ["200", "250", "300", "350", "400", "450", "500", "600", "750"],
+                            "tooltip": "Not available for flow rate ≥ 200 m³/h"
+                        }
+                    }
+                },
+                {
+                    "value": "DN32",
+                    "title": "DN32",
+                    "price": { "EUR": 0, "CHF": 0, "USD": 0 },
+                    "disabled": {
+                        "flowRate": {
+                            "condition": ["200", "250", "300", "350", "400", "450", "500", "600", "750"],
+                            "tooltip": "Not available for flow rate ≥ 200 m³/h"
+                        }
+                    }
+                },
+                {
+                    "value": "DN40",
+                    "title": "DN40",
+                    "price": { "EUR": 0, "CHF": 0, "USD": 0 },
+                    "disabled": {
+                        "flowRate": {
+                            "condition": ["200", "250", "300", "350", "400", "450", "500", "600", "750"],
+                            "tooltip": "Not available for flow rate ≥ 200 m³/h"
+                        }
+                    }
+                },
+                {
+                    "value": "DN50",
+                    "title": "DN50",
+                    "price": { "EUR": 0, "CHF": 0, "USD": 0 },
+                    "disabled": {
+                        "flowRate": {
+                            "condition": ["200", "250", "300", "350", "400", "450", "500", "600", "750"],
+                            "tooltip": "Not available for flow rate ≥ 200 m³/h"
+                        }
+                    }
+                },
+                { "value": "DN65", "title": "DN65", "price": { "EUR": 0, "CHF": 0, "USD": 0 } },
+                { "value": "DN80", "title": "DN80", "price": { "EUR": 0, "CHF": 0, "USD": 0 } },
+                { "value": "DN100", "title": "DN100", "price": { "EUR": 0, "CHF": 0, "USD": 0 } },
+                { "value": "DN125", "title": "DN125", "price": { "EUR": 0, "CHF": 0, "USD": 0 } },
+                {
+                    "value": "DN150",
+                    "title": "DN150",
+                    "price": { "EUR": 0, "CHF": 0, "USD": 0 },
+                    "disabled": {
+                        "flowRate": {
+                            "condition": ["5", "10", "15"],
+                            "tooltip": "Not available for flow rate ≤ 15 m³/h"
+                        }
+                    }
+                },
+                {
+                    "value": "DN200",
+                    "title": "DN200",
+                    "price": { "EUR": 0, "CHF": 0, "USD": 0 },
+                    "disabled": {
+                        "flowRate": {
+                            "condition": ["5", "10", "15"],
+                            "tooltip": "Not available for flow rate ≤ 15 m³/h"
+                        }
+                    }
+                },
+                {
+                    "value": "DN250",
+                    "title": "DN250",
+                    "price": { "EUR": 0, "CHF": 0, "USD": 0 },
+                    "disabled": {
+                        "flowRate": {
+                            "condition": ["5", "10", "15"],
+                            "tooltip": "Not available for flow rate ≤ 15 m³/h"
+                        }
+                    }
+                },
+                {
+                    "value": "DN300",
+                    "title": "DN300",
+                    "price": { "EUR": 0, "CHF": 0, "USD": 0 },
+                    "disabled": {
+                        "flowRate": {
+                            "condition": ["5", "10", "15"],
+                            "tooltip": "Not available for flow rate ≤ 15 m³/h"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "id": "power",
+            "label": "Power Supply",
+            "tooltip": "Select the power supply",
+            "data": [
+                {
+                    "value": "230v",
+                    "title": "230V / 50Hz",
+                    "price": { "EUR": 0, "CHF": 0, "USD": 0 },
+                    "disabled": {
+                        "tank": {
+                            "condition": ["titanium"],
+                            "tooltip": "Not available with Titanium tank"
+                        }
+                    }
+                },
+                { "value": "400v", "title": "400V / 50Hz", "price": { "EUR": 0, "CHF": 0, "USD": 0 } },
+                { "value": "480v", "title": "480V / 60Hz", "price": { "EUR": 0, "CHF": 0, "USD": 0 } },
+                {
+                    "value": "690v",
+                    "title": "690V / 50Hz",
+                    "price": { "EUR": 0, "CHF": 0, "USD": 0 },
+                    "disabled": {
+                        "control": {
+                            "condition": ["manual", "semi_automatic"],
+                            "tooltip": "Not available with Manual or Semi-Automatic control"
+                        }
+                    }
+                }
+            ]
+        }
+    ],
+    "defaults": {
+        "flowRate": "5",
+        "filtration": "sediment",
+        "tank": "ss304",
+        "control": "manual",
+        "inlet": "DN25",
+        "power": "230v"
+    }
+}
