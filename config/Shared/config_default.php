@@ -709,7 +709,7 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'key' => '',
         'secret' => '',
         'bucket' => '',
-        'region' => 'eu-central-1',
+        'region' => $awsRegion,
     ],
     'files-import' => [
         'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
@@ -744,7 +744,7 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'key' => getenv('SPRYKER_S3_SSP_CLAIM_KEY') ?: '',
         'secret' => getenv('SPRYKER_S3_SSP_CLAIM_SECRET') ?: '',
         'bucket' => getenv('SPRYKER_S3_SSP_CLAIM_BUCKET') ?: '',
-        'region' => getenv('AWS_REGION') ?: 'eu-central-1',
+        'region' => $awsRegion,
         'version' => 'latest',
         'root' => '/ssp-inquiry',
         'path' => '',
@@ -754,7 +754,7 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'key' => getenv('SPRYKER_S3_SSP_FILES_KEY') ?: '',
         'secret' => getenv('SPRYKER_S3_SSP_FILES_SECRET') ?: '',
         'bucket' => getenv('SPRYKER_S3_SSP_FILES_BUCKET') ?: '',
-        'region' => getenv('AWS_REGION') ?: 'eu-central-1',
+        'region' => $awsRegion,
         'version' => 'latest',
         'root' => '/files',
         'path' => '',
@@ -764,7 +764,7 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'key' => getenv('SPRYKER_S3_SSP_ASSETS_KEY') ?: '',
         'secret' => getenv('SPRYKER_S3_SSP_ASSETS_SECRET') ?: '',
         'bucket' => getenv('SPRYKER_S3_SSP_ASSETS_BUCKET') ?: '',
-        'region' => getenv('AWS_REGION') ?: 'eu-central-1',
+        'region' => $awsRegion,
         'version' => 'latest',
         'root' => '/ssp-asset-image',
         'path' => '',
@@ -774,7 +774,7 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'key' => getenv('SPRYKER_S3_SSP_MODELS_KEY') ?: '',
         'secret' => getenv('SPRYKER_S3_SSP_MODELS_SECRET') ?: '',
         'bucket' => getenv('SPRYKER_S3_SSP_MODELS_BUCKET') ?: '',
-        'region' => getenv('AWS_REGION') ?: 'eu-central-1',
+        'region' => $awsRegion,
         'version' => 'latest',
         'root' => '/ssp-model-image',
         'path' => '',
@@ -785,7 +785,7 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'root' => '',
         'path' => '/backoffice-media',
         'version' => 'latest',
-        'region' => getenv('AWS_REGION'),
+        'region' => $awsRegion,
     ],
     'storefront-media' => [
         'sprykerAdapterClass' => IamAws3v3FilesystemBuilderPlugin::class,
@@ -793,7 +793,7 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'root' => '',
         'path' => '/storefront-media',
         'version' => 'latest',
-        'region' => getenv('AWS_REGION'),
+        'region' => $awsRegion,
     ],
     'merchant-portal-media' => [
         'sprykerAdapterClass' => IamAws3v3FilesystemBuilderPlugin::class,
@@ -801,7 +801,7 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'root' => '',
         'path' => '/merchant-portal-media',
         'version' => 'latest',
-        'region' => getenv('AWS_REGION'),
+        'region' => $awsRegion,
     ],
     'product-experience-management-imports' => [
         'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
@@ -811,7 +811,7 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'root' => '/',
         'path' => '/',
         'version' => 'latest',
-        'region' => getenv('AWS_REGION'),
+        'region' => $awsRegion,
     ],
     'product-experience-management-exports' => [
         'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
@@ -821,7 +821,7 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'root' => '/',
         'path' => '/',
         'version' => 'latest',
-        'region' => getenv('AWS_REGION'),
+        'region' => $awsRegion,
     ],
 ];
 $config[FileManagerConstants::STORAGE_NAME] = 'files';
@@ -1104,7 +1104,7 @@ $config[OauthClientConstants::OAUTH_OPTION_AUDIENCE_FOR_ACP]
 
 $config[ProductConfigurationConstants::SPRYKER_PRODUCT_CONFIGURATOR_ENCRYPTION_KEY] = getenv('SPRYKER_PRODUCT_CONFIGURATOR_ENCRYPTION_KEY') ?: 'change123';
 $config[ProductConfigurationConstants::SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR] = getenv('SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR') ?: '0c1ffefeebdab4a3d839d0e52590c9a2';
-$config[KernelConstants::DOMAIN_WHITELIST][] = getenv('SPRYKER_PRODUCT_CONFIGURATOR_HOST');
+$config[KernelConstants::DOMAIN_WHITELIST][] = getenv('SPRYKER_WATER_TREATMENT_CONFIGURATOR_HOST');
 
 // ----------------------------------------------------------------------------
 // ------------------------------ Glue Backend API -------------------------------
