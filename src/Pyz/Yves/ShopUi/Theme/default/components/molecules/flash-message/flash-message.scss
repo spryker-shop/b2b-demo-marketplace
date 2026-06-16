@@ -4,6 +4,7 @@
         --notification-border: var(--background-state-info-bold);
         --notification-background: var(--background-state-info-subtle);
         --notification-icon: var(--icon-state-info);
+        --notification-text: var(--text-state-info);
         display: flex;
         align-items: flex-start;
         max-width: rem(630);
@@ -28,6 +29,34 @@
             max-height: 100vh;
             margin-top: var(--scale-12);
             padding: var(--scale-16) var(--scale-40) var(--scale-16) var(--scale-20);
+        }
+
+        &--static {
+            pointer-events: all;
+            translate: 0 0;
+            opacity: 1;
+            max-width: none;
+            max-height: none;
+            padding: var(--scale-12) var(--scale-16);
+        }
+
+        &--notification {
+            justify-content: center;
+            border-left: none;
+            text-align: center;
+
+            #{$name}__icon {
+                display: none;
+            }
+
+            #{$name}__content {
+                flex-grow: 0;
+            }
+
+            #{$name}__text {
+                margin-top: 0;
+                color: var(--notification-text);
+            }
         }
 
         &__content {
@@ -63,18 +92,21 @@
             --notification-border: var(--background-state-success-bold);
             --notification-background: var(--background-state-success-subtle);
             --notification-icon: var(--icon-state-success);
+            --notification-text: var(--text-state-success);
         }
 
         &--warning {
             --notification-border: var(--background-state-warning-bold);
             --notification-background: var(--background-state-warning-subtle);
             --notification-icon: var(--icon-state-warning);
+            --notification-text: var(--text-state-warning);
         }
 
         &--alert {
             --notification-border: var(--background-state-error-bold);
             --notification-background: var(--background-state-error-subtle);
             --notification-icon: var(--icon-state-error);
+            --notification-text: var(--text-state-error);
         }
 
         @content;
