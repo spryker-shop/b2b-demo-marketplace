@@ -1,0 +1,179 @@
+{% extends model('component') %}
+{% import _self as component %}
+
+{% define config = {
+    name: 'auth-recovery',
+    tag: 'div',
+} %}
+
+{% define data = {
+    step: 'request',
+    form: null,
+    email: '',
+    hasError: false,
+} %}
+
+{% block body %}
+    {% embed molecule('auth-layout', 'CustomerPage') with {
+        data: {
+            logoLarge: true,
+        },
+        step: data.step,
+        recoveryForm: data.form,
+        recoveryEmail: data.email,
+        hasError: data.hasError,
+    } only %}
+        {% block card %}
+            {% if step == 'request' %}
+                {{ form_start(recoveryForm, {
+                    attr: {
+                        class: config.name ~ '__form' ~ (hasError ? ' ' ~ config.name ~ '__form--error' : ''),
+                        novalidate: 'novalidate',
+                    },
+                }) }}
+                    <div class="{{ config.name }}__head">
+                        <h1 class="{{ config.name }}__title">{{ 'customer.recovery.request.title' | trans }}</h1>
+                        <p class="{{ config.name }}__subtitle {{ config.name }}__subtitle--md">
+                            {{- 'customer.recovery.request.subtitle' | trans -}}
+                        </p>
+                    </div>
+
+                    <div class="{{ config.name }}__fields">
+                        <div class="{{ config.name }}__field">
+                            <label for="{{ recoveryForm.email.vars.id }}" class="{{ config.name }}__label">
+                                {{- 'customer.recovery.email_label' | trans -}}
+                            </label>
+                            {{ form_widget(recoveryForm.email, {
+                                attr: { autocomplete: 'email', class: hasError ? 'input--error ' : '' },
+                            }) }}
+                        </div>
+
+                        {% if hasError %}
+                            {% set errorText %}
+                                {%- for error in recoveryForm.vars.errors %}{{ error.message | trans }} {% endfor -%}
+                                {%- for error in recoveryForm.email.vars.errors %}{{ error.message | trans }} {% endfor -%}
+                            {% endset %}
+                            {% include molecule('flash-message') with {
+                                modifiers: ['alert', 'notification'],
+                                data: { isStatic: true, text: errorText | trim },
+                            } only %}
+                        {% endif %}
+                    </div>
+
+                    <div class="{{ config.name }}__center">
+                        <button type="submit" class="button button--lg button--expand" data-init-single-click {{ qa('submit-button') }}>
+                            {{- 'customer.recovery.request.submit' | trans -}}
+                        </button>
+                        <a href="{{ url('login') }}" class="{{ config.name }}__back" {{ qa('back-to-sign-in-link') }}>
+                            {{- 'customer.recovery.back_to_sign_in' | trans -}}
+                        </a>
+                    </div>
+                {{ form_end(recoveryForm) }}
+
+            {% elseif step == 'sent' %}
+                <div class="{{ config.name }}__center">
+                    <span class="{{ config.name }}__icon {{ config.name }}__icon--brand">
+                        {% include atom('font-icon') with {
+                            modifiers: ['filled'],
+                            class: config.name ~ '__icon-glyph',
+                            data: { name: 'mark_email_read' },
+                        } only %}
+                    </span>
+                    <div class="{{ config.name }}__head {{ config.name }}__head--center">
+                        <h1 class="{{ config.name }}__title">{{ 'customer.recovery.sent.title' | trans }}</h1>
+                        <p class="{{ config.name }}__subtitle {{ config.name }}__subtitle--md">
+                            {{- 'customer.recovery.sent.text' | trans({'%email%': recoveryEmail}) -}}
+                        </p>
+                    </div>
+                    <a href="{{ url('password/forgotten') }}" class="button button--secondary button--lg {{ config.name }}__action" {{ qa('resend-email') }}>
+                        {{- 'customer.recovery.sent.resend' | trans -}}
+                    </a>
+                    <a href="{{ url('login') }}" class="{{ config.name }}__back" {{ qa('back-to-sign-in-link') }}>
+                        {{- 'customer.recovery.back_to_sign_in' | trans -}}
+                    </a>
+                </div>
+
+            {% elseif step == 'reset' %}
+                {{ form_start(recoveryForm, {
+                    attr: {
+                        class: config.name ~ '__form' ~ (hasError ? ' ' ~ config.name ~ '__form--error' : ''),
+                        novalidate: 'novalidate',
+                    },
+                }) }}
+                    {{ form_widget(recoveryForm.restore_password_key) }}
+
+                    <div class="{{ config.name }}__head">
+                        <h1 class="{{ config.name }}__title">{{ 'customer.recovery.reset.title' | trans }}</h1>
+                        <p class="{{ config.name }}__subtitle {{ config.name }}__subtitle--md">
+                            {{- 'customer.recovery.reset.subtitle' | trans -}}
+                        </p>
+                    </div>
+
+                    <div class="{{ config.name }}__fields">
+                        <div class="{{ config.name }}__field">
+                            <label for="{{ recoveryForm.password.pass.vars.id }}" class="{{ config.name }}__label">
+                                {{- 'customer.recovery.reset.new_label' | trans -}}
+                            </label>
+                            {{ form_widget(recoveryForm.password.pass, {
+                                attr: { class: hasError ? 'input--error ' : '' },
+                            }) }}
+                        </div>
+
+                        <div class="{{ config.name }}__field">
+                            <label for="{{ recoveryForm.password.confirm.vars.id }}" class="{{ config.name }}__label">
+                                {{- 'customer.recovery.reset.confirm_label' | trans -}}
+                            </label>
+                            {{ form_widget(recoveryForm.password.confirm, {
+                                attr: { class: hasError ? 'input--error ' : '' },
+                            }) }}
+                        </div>
+
+                        {% if hasError %}
+                            {% set errorText %}
+                                {%- for error in recoveryForm.vars.errors %}{{ error.message | trans }} {% endfor -%}
+                                {%- for error in recoveryForm.password.vars.errors %}{{ error.message | trans }} {% endfor -%}
+                                {%- for error in recoveryForm.password.pass.vars.errors %}{{ error.message | trans }} {% endfor -%}
+                                {%- for error in recoveryForm.password.confirm.vars.errors %}{{ error.message | trans }} {% endfor -%}
+                            {% endset %}
+                            {% include molecule('flash-message') with {
+                                modifiers: ['alert', 'notification'],
+                                data: { isStatic: true, text: errorText | trim },
+                            } only %}
+                        {% else %}
+                            <p class="{{ config.name }}__hint">{{ 'customer.recovery.reset.hint' | trans }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="{{ config.name }}__center">
+                        <button type="submit" class="button button--lg button--expand" data-init-single-click {{ qa('submit-button') }}>
+                            {{- 'customer.recovery.reset.submit' | trans -}}
+                        </button>
+                        <a href="{{ url('login') }}" class="{{ config.name }}__back" {{ qa('back-to-sign-in-link') }}>
+                            {{- 'customer.recovery.back_to_sign_in' | trans -}}
+                        </a>
+                    </div>
+                {{ form_end(recoveryForm) }}
+
+            {% elseif step == 'success' %}
+                <div class="{{ config.name }}__center">
+                    <span class="{{ config.name }}__icon {{ config.name }}__icon--success">
+                        {% include atom('font-icon') with {
+                            modifiers: ['filled'],
+                            class: config.name ~ '__icon-glyph',
+                            data: { name: 'check_circle' },
+                        } only %}
+                    </span>
+                    <div class="{{ config.name }}__head {{ config.name }}__head--center">
+                        <h1 class="{{ config.name }}__title">{{ 'customer.recovery.success.title' | trans }}</h1>
+                        <p class="{{ config.name }}__subtitle {{ config.name }}__subtitle--md">
+                            {{- 'customer.recovery.success.text' | trans -}}
+                        </p>
+                    </div>
+                    <a href="{{ url('login') }}" class="button button--lg button--expand" {{ qa('back-to-sign-in-link') }}>
+                        {{- 'customer.recovery.back_to_sign_in' | trans -}}
+                    </a>
+                </div>
+            {% endif %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

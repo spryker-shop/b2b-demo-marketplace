@@ -34,16 +34,6 @@
             }
         }
 
-        &__logo {
-            display: inline-flex;
-
-            img {
-                display: block;
-                width: auto;
-                height: rem(40);
-            }
-        }
-
         &__body {
             display: flex;
             flex-direction: column;
@@ -67,6 +57,61 @@
         }
 
         &__subtitle {
+            margin: 0;
+            font-family: var(--body-sm-family);
+            font-weight: var(--body-sm-weight);
+            font-size: var(--body-sm-size);
+            line-height: var(--body-sm-line-height);
+            color: var(--text-tertiary);
+
+            &--md {
+                font-family: var(--body-md-family);
+                font-size: var(--body-md-size);
+                line-height: var(--body-md-line-height);
+                color: var(--text-secondary);
+            }
+        }
+
+        &__center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--scale-20);
+            width: 100%;
+            text-align: center;
+        }
+
+        &__head--center {
+            align-items: center;
+            gap: var(--scale-8);
+            text-align: center;
+        }
+
+        &__icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            width: rem(56);
+            height: rem(56);
+            border-radius: var(--radius-full);
+
+            &--brand {
+                background: var(--background-brand-subtle);
+                color: var(--icon-brand);
+            }
+
+            &--success {
+                background: var(--background-state-success-subtle);
+                color: var(--icon-state-success);
+            }
+        }
+
+        &__icon-glyph {
+            font-size: rem(28);
+        }
+
+        &__hint {
             margin: 0;
             font-family: var(--body-sm-family);
             font-weight: var(--body-sm-weight);

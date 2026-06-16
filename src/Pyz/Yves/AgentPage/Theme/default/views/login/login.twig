@@ -1,6 +1,6 @@
 {% extends template('page-layout-auth') %}
 
-{% set authErrors = app.session.flashbag.get('flash.messages.error') %}
+{% set authErrors = app.session.flashbag.peek('flash.messages.error') %}
 
 {% block content %}
     {% include molecule('auth-login', 'CustomerPage') with {
