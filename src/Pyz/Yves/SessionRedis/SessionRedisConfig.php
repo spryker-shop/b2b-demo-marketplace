@@ -5,7 +5,7 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Pyz\Yves\SessionRedis;
 
@@ -39,8 +39,6 @@ class SessionRedisConfig extends SprykerSessionRedisConfig
             '/^.*\/(login|logout|register)($|\/)/',
             // Multi-factor authentication
             '/^.*\/multi-factor-auth\//',
-            // Agent impersonation — ?_switch_user= writes/clears the switched-user security token (switch-in and _exit)
-            '/[?&]_switch_user=/',
             // Store switch — triggered via ?_store= query parameter on any URL
             '/[?&]_store=/',
             // Currency switch — writes selected currency to the session
