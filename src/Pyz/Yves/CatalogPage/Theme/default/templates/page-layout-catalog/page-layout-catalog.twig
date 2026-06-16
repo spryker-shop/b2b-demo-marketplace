@@ -2,6 +2,14 @@
 
 {% block contentClass %}page-layout-main page-layout-main--catalog-page{% endblock %}
 
+{% block pageInfo %}
+    <div class="page-info">
+        <div class="container">
+            {{ block('breadcrumbs') }}
+        </div>
+    </div>
+{% endblock %}
+
 {% block content %}
     {% include molecule('skip-link') with {
         data: {
@@ -30,21 +38,27 @@
                 },
             } only %}
 
+            <button type="submit" class="is-hidden" tabindex="-1" aria-hidden="true"></button>
+
+            {% include molecule('form-submitter') with {
+                class: 'is-hidden',
+                attributes: {
+                    'trigger-selector': '.filter-section .checkbox__input, .filter-section .radio__input, .filter-section .js-rating-selector__input',
+                    event: 'change',
+                },
+            } only %}
+
             <div class="col col--sm-12 col--lg-4 col--xl-3">
                 {% block filterBar %}
-                    {% include molecule('view-mode-switch', 'CatalogPage') with {
-                        class: 'is-hidden-sm-md',
-                        data: {
-                            viewMode: data.viewMode,
-                        },
-                    } only %}
+                    {% block filterBarAsset %}
+                        {% widget 'SspAssetFilterWidget' only %}{% endwidget %}
+                    {% endblock %}
 
-                    <button class="button button--justify js-catalog-filters-trigger is-hidden-lg-xxl spacing-bottom spacing-bottom--big">
+                    <button class="button button--justify catalog-filter-trigger js-catalog-filters-trigger is-hidden-lg-xxl spacing-bottom spacing-bottom--big">
                         {{ 'catalog.filter.and.sorting.button' | trans }}
-                        {% include atom('icon') with {
-                            modifiers: ['filter'],
+                        {% include atom('font-icon') with {
                             data: {
-                                name: 'filter',
+                                name: 'tune',
                             },
                         } only %}
                     </button>
@@ -64,6 +78,16 @@
                         },
                     } only %}
 
+                    {% block filterBarActiveFilters %}
+                        {% include organism('active-filter-section', 'CatalogPage') with {
+                            data: {
+                                facets: data.facets,
+                                filteredFacets: data.filteredFacets,
+                                numFound: data.pagination.numFound | default(0),
+                            },
+                        } only %}
+                    {% endblock %}
+
                     {% include organism('filter-section', 'CatalogPage') with {
                         class: 'is-hidden-sm-md',
                         data: {
@@ -80,37 +104,34 @@
             </div>
 
             <div class="col col--sm-12 col--lg-8 col--xl-9" id="{{ catalogProductListId }}">
-                <div class="grid grid--column-mob-reverse">
-                    <div class="col col--sm-12">
-                        <div class="grid grid--justify grid--nowrap">
-                            <div class="col col--lg-12">
-                                {% include molecule('sort', 'CatalogPage') with {
-                                    data: {
-                                        pagination: data.pagination,
-                                        sort: data.sort,
-                                        parentJsName: catalogJsName,
-                                    },
-                                } only %}
-                            </div>
-                            <div class="col">
-                                {% include molecule('view-mode-switch', 'CatalogPage') with {
-                                    class: 'is-hidden-lg-xxl',
-                                    data: {
-                                        viewMode: data.viewMode,
-                                    },
-                                } only %}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col col--sm-12">
-                        {% include organism('active-filter-section', 'CatalogPage') with {
-                            data: {
-                                facets: data.facets,
-                                filteredFacets: data.filteredFacets,
-                            },
-                        } only %}
-                    </div>
-                </div>
+                {% block resultHeader %}
+                    {% embed molecule('catalog-header', 'CatalogPage') with {
+                        data: {
+                            title: data.title,
+                            numFound: data.pagination.numFound | default(0),
+                            pagination: data.pagination,
+                            sort: data.sort,
+                            viewMode: data.viewMode,
+                            parentJsName: catalogJsName,
+                        },
+                    } only %}
+                        {% block controls %}
+                            {% include molecule('sort', 'CatalogPage') with {
+                                data: {
+                                    pagination: data.pagination,
+                                    sort: data.sort,
+                                    parentJsName: data.parentJsName,
+                                },
+                            } only %}
+
+                            {% include molecule('view-mode-switch', 'CatalogPage') with {
+                                data: {
+                                    viewMode: data.viewMode,
+                                },
+                            } only %}
+                        {% endblock %}
+                    {% endembed %}
+                {% endblock %}
 
                 <div class="grid grid--stretch grid--gap-small">
                     {% if data.products %}
@@ -123,7 +144,24 @@
                             {% endwidget %}
                         {% endfor %}
                     {% else %}
-                        {% block noResults %}{{ parent() }}{% endblock %}
+                        {% block noResults %}
+                            {% set hasSuggestion = data.suggestion is defined and data.suggestion is not empty %}
+
+                            <div class="col col--sm-12">
+                                {% include molecule('empty-state', 'CatalogPage') with {
+                                    data: {
+                                        heading: 'catalog.no-results.title' | trans,
+                                        message: 'catalog.no-results.message' | trans,
+                                        suggestionLabel: hasSuggestion ? 'global.search.spellingSuggestion' | trans : '',
+                                        suggestionTerm: hasSuggestion ? data.suggestion : '',
+                                        suggestionUrl: hasSuggestion ? path('search', { q: data.suggestion }) : '',
+                                        ctaLabel: hasSuggestion ? ('catalog.no-results.search-for' | trans) ~ ' "' ~ data.suggestion ~ '"' : '',
+                                        ctaUrl: hasSuggestion ? path('search', { q: data.suggestion }) : '',
+                                        tip: 'catalog.no-results.tip' | trans,
+                                    },
+                                } only %}
+                            </div>
+                        {% endblock %}
                     {% endif %}
                 </div>
 

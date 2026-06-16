@@ -1,0 +1,40 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'catalog-header',
+    tag: 'div',
+} %}
+
+{% define data = {
+    title: '',
+    numFound: 0,
+} %}
+
+{% block body %}
+    <div class="{{ config.name }}__info">
+        {% block info %}
+            {% if data.title is not empty %}
+                <h1 class="{{ config.name }}__title">{{ data.title }}</h1>
+            {% endif %}
+
+            <p class="{{ config.name }}__count">
+                {% block count %}
+                    {% widget 'SspAssetFilterNameWidget' args [data.numFound] with {
+                        defaultCount: data.numFound,
+                    } only %}
+                    {% nowidget %}
+                        {{ data.numFound | executeFilterIfExists('formatInt', app.locale) }} {{ 'catalog.itemsFound' | trans }}
+                    {% endwidget %}
+                {% endblock %}
+            </p>
+        {% endblock %}
+    </div>
+
+    {% if data.numFound > 0 %}
+        <div class="{{ config.name }}__controls">
+            <span class="{{ config.name }}__filter-by">{{ 'catalog.filter.by' | trans }}</span>
+
+            {% block controls %}{% endblock %}
+        </div>
+    {% endif %}
+{% endblock %}

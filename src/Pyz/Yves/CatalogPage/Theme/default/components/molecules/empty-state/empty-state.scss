@@ -1,0 +1,73 @@
+@mixin catalog-page-empty-state($name: '.empty-state') {
+    #{$name} {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: var(--scale-24);
+        padding: var(--scale-64) var(--scale-16);
+        background: var(--background-surface);
+        border-radius: var(--radius-md);
+        text-align: center;
+
+        &__content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--scale-16);
+        }
+
+        &__message {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--scale-8);
+        }
+
+        &__heading {
+            margin: 0;
+            font-family: var(--font-family-sans);
+            font-size: var(--font-size-18);
+            font-weight: var(--font-weight-semibold);
+            line-height: var(--font-line-height-28);
+            color: var(--text-primary);
+        }
+
+        &__text {
+            margin: 0;
+            font-size: var(--font-size-14);
+            font-weight: var(--font-weight-regular);
+            line-height: var(--font-line-height-20);
+            color: var(--text-primary);
+        }
+
+        &__suggestion {
+            margin: 0;
+            font-size: var(--font-size-14);
+            line-height: var(--font-line-height-20);
+            color: var(--text-primary);
+        }
+
+        &__suggestion-link {
+            font-weight: var(--font-weight-semibold);
+            color: var(--text-brand);
+            text-decoration: none;
+
+            &:hover,
+            &:focus {
+                text-decoration: underline;
+            }
+        }
+
+        &__tip {
+            margin: 0;
+            font-size: var(--font-size-12);
+            line-height: var(--font-line-height-16);
+            color: var(--text-secondary);
+        }
+
+        @content;
+    }
+}
+
+@include catalog-page-empty-state();

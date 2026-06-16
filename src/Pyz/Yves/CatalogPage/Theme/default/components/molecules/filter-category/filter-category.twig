@@ -62,10 +62,10 @@
                             <div>
                                 {% block categoryItemTogglerIcon %}
                                     <button type="button" class="{{ toggleButtonClassName }} {{ triggerClassName }} {{ targetTogglerClassName }}">
-                                        {% include atom('icon') with {
+                                        {% include atom('font-icon') with {
                                             class: config.name ~ '__category-toggle-button-icon',
                                             data: {
-                                                name: 'caret-down',
+                                                name: 'expand_more',
                                             },
                                         } only %}
                                     </button>

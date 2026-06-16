@@ -1,0 +1,20 @@
+@mixin catalog-page-filter-search($name: '.filter-search') {
+    #{$name} {
+        position: relative;
+        display: block;
+
+        &__icon {
+            position: absolute;
+            top: 50%;
+            right: var(--scale-12);
+            transform: translateY(-50%);
+            font-size: rem(20);
+            color: var(--icon-secondary);
+            pointer-events: none;
+        }
+
+        @content;
+    }
+}
+
+@include catalog-page-filter-search();

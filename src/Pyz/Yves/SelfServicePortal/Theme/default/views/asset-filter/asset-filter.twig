@@ -2,10 +2,12 @@
 
 {% block body %}
     {% if not data.isDisabled %}
-        <div class="spacing-bottom--biggest">
-            <div data-qa="component asset-list" class="filter-section__item">
-                {{ block('information') }}
-            </div>
+        <div data-qa="component asset-filter" class="catalog-asset-filter">
+            {{ block('information') }}
         </div>
     {% endif %}
+{% endblock %}
+
+{% block title %}
+    <h3 class="catalog-asset-filter__title">{{ 'self_service_portal.asset_filter.title' | trans }}</h3>
 {% endblock %}

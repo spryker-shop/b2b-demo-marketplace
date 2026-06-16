@@ -1,0 +1,34 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'filter-search',
+    tag: 'filter-search',
+} %}
+
+{% define data = {
+    sectionSelector: '.filter-section',
+    groupSelector: '.filter-section .filter-section__item',
+    rowSelector: '.menu__item--filter-enumeration, .filter-category__menu-item',
+} %}
+
+{% define attributes = {
+    'section-selector': data.sectionSelector,
+    'group-selector': data.groupSelector,
+    'row-selector': data.rowSelector,
+} %}
+
+{% block body %}
+    <input type="text"
+        class="input input--expand {{ config.name }}__input"
+        placeholder="{{ 'catalog.filter.search.placeholder' | trans }}"
+        aria-label="{{ 'catalog.filter.search.placeholder' | trans }}"
+        autocomplete="off">
+
+    <span class="{{ config.name }}__icon" aria-hidden="true">
+        {% include atom('font-icon') with {
+            data: {
+                name: 'search',
+            },
+        } only %}
+    </span>
+{% endblock %}

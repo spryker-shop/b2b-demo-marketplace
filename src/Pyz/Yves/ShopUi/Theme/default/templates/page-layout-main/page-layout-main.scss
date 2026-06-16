@@ -30,6 +30,10 @@
 
             @include helper-breakpoint-media-min($lg) {
                 padding-bottom: rem(70);
+
+                &.grid--gap {
+                    --grid-gap: #{$setting-grid-space * 3};
+                }
             }
         }
 

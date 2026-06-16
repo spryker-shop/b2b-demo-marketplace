@@ -1,0 +1,60 @@
+@mixin catalog-page-catalog-header($name: '.catalog-header') {
+    #{$name} {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--scale-12);
+        margin-bottom: var(--scale-16);
+
+        @include helper-breakpoint-media-min($lg) {
+            flex-wrap: nowrap;
+            margin-bottom: var(--scale-24);
+        }
+
+        &__info {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: var(--scale-4) var(--scale-8);
+            min-width: 0;
+        }
+
+        &__title {
+            margin: 0;
+            font-family: var(--heading-md-family);
+            font-weight: var(--heading-md-weight);
+            font-size: var(--heading-md-size);
+            line-height: var(--heading-md-line-height);
+            letter-spacing: var(--heading-md-letter-spacing);
+            color: var(--text-primary);
+        }
+
+        &__count {
+            margin: 0;
+            font-size: var(--body-sm-size);
+            line-height: var(--body-sm-line-height);
+            color: var(--text-secondary);
+        }
+
+        &__controls {
+            display: flex;
+            align-items: center;
+            gap: var(--scale-8);
+            flex-shrink: 0;
+        }
+
+        &__filter-by {
+            font-size: var(--font-size-12);
+            font-weight: var(--font-weight-regular);
+            line-height: var(--font-line-height-16);
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
+
+        @content;
+    }
+}
+
+@include catalog-page-catalog-header();

@@ -2,7 +2,7 @@
     &__menu {
         &--lvl-1,
         &--lvl-2 {
-            padding-left: rem(10);
+            padding-left: var(--scale-8);
 
             @include helper-breakpoint-media-min($lg) {
                 padding-left: 0;
@@ -11,7 +11,7 @@
 
         &--lvl-3 {
             @include helper-breakpoint-media-min($lg) {
-                padding-left: rem(10);
+                padding-left: var(--scale-8);
             }
         }
     }
@@ -19,11 +19,11 @@
     &__menu-item {
         display: flex;
         flex-grow: 1;
-        color: $setting-color-gray-4;
+        color: var(--text-secondary);
 
         &--lvl-2 {
             &:first-child {
-                padding-top: rem(5);
+                padding-top: var(--scale-4);
 
                 @include helper-breakpoint-media-min($lg) {
                     padding-top: 0;
@@ -31,7 +31,7 @@
             }
 
             &:last-child {
-                padding-bottom: rem(5);
+                padding-bottom: var(--scale-4);
 
                 @include helper-breakpoint-media-min($lg) {
                     padding-bottom: 0;
@@ -44,7 +44,7 @@
         flex-grow: 1;
 
         &--no-children {
-            margin-left: rem(16);
+            margin-left: var(--scale-16);
         }
     }
 
@@ -64,11 +64,11 @@
 
     &__category-toggle-button {
         @include helper-effect-transition(transform);
-        color: $setting-color-gray-4;
-        margin-right: rem(5);
-        background-color: $setting-color-transparent;
+        color: var(--icon-secondary);
+        margin-right: var(--scale-4);
+        background-color: transparent;
         cursor: pointer;
-        width: rem(20);
+        width: var(--scale-20);
 
         @include helper-breakpoint-media-max($lg) {
             display: inline-block;
@@ -85,47 +85,41 @@
         @include helper-effect-transition(color);
         display: flex;
         justify-content: space-between;
+        align-items: center;
         width: 100%;
-        margin-bottom: rem(13);
-        color: $setting-color-gray-4;
+        margin-bottom: var(--scale-8);
+        color: var(--text-primary);
         cursor: pointer;
-        background-color: $setting-color-transparent;
-        font: fw(regular) rem(13) / rem(16) $setting-font-family;
-        gap: rem(var(--scale-2));
-
-        @include helper-breakpoint-media-min($lg) {
-            margin-bottom: rem(11);
-            font-size: rem(15);
-            line-height: rem(23);
-        }
+        background-color: transparent;
+        gap: var(--scale-8);
+        font-family: var(--font-family-sans);
+        font-size: var(--font-size-14);
+        font-weight: var(--font-weight-regular);
+        line-height: var(--font-line-height-20);
 
         &--lvl-1 {
-            font-size: var(--font-size-16);
-            font-weight: fw(medium);
-        }
-
-        &--lvl-2 {
-            font-size: var(--font-size-16);
+            font-weight: var(--font-weight-medium);
         }
 
         &--lvl-3 {
-            font-size: var(--font-size-14);
+            font-size: var(--font-size-12);
+            line-height: var(--font-line-height-16);
         }
 
         &:hover,
         &:focus {
-            color: $setting-color-text;
+            color: var(--text-primary);
             text-decoration: none;
         }
 
         &[disabled] {
             pointer-events: none;
-            color: $setting-color-gray-3;
+            color: var(--text-disabled);
         }
 
         &--active {
-            font-weight: fw(bold);
-            color: $setting-color-text;
+            font-weight: var(--font-weight-semibold);
+            color: var(--text-primary);
         }
     }
 
@@ -138,6 +132,9 @@
     }
 
     &__counter {
-        @include helper-font-size(medium);
+        flex-shrink: 0;
+        font-size: var(--font-size-12);
+        line-height: var(--font-line-height-16);
+        color: var(--text-secondary);
     }
 }
