@@ -13,23 +13,23 @@
     {% endblock %}
 
     {% if not salesUnitCount %}
-        <div class="grid grid--stretch grid--justify">
-            {% include molecule('quantity-counter') with {
-                modifiers: ['right-space'],
-                data: {
-                    numberFormatConfig: data.numberFormatConfig,
-                    inputExtraClasses: 'js-volume-price__quantity',
-                },
-            } only %}
+        <div class="grid grid--gap grid--nowrap grid--stretch grid--justify">
+            <div class="col col--sm-6">
+                {% include molecule('quantity-counter') with {
+                    data: {
+                        numberFormatConfig: data.numberFormatConfig,
+                        inputExtraClasses: 'js-volume-price__quantity',
+                    },
+                } only %}
+            </div>
 
-            <div class="col col--expand">
+            <div class="col col--sm-6">
                 {% block addToCartButton %}
                     <button type="submit" class="{{ config.jsName }}__add-to-cart-button button button--big button--expand button--no-horizontal-padding"
                             data-init-single-click {{ isAddToCartDisabled }} {{ qa('add-to-cart-button') }}>
-                        {% include atom('icon') with {
-                            modifiers: ['cart-plus'],
+                        {% include atom('font-icon') with {
                             data: {
-                                name: 'cart-plus',
+                                name: 'shopping_cart',
                             },
                         } only %}
                         {{ 'page.detail.add-to-cart' | trans }}
@@ -49,7 +49,6 @@
                     <div class="{{ config.name }}__unit-field-label">{{ 'packaging_units.pdp.quantity' | trans }}:</div>
                     <div class="{{ config.name }}__unit-field-value">
                         {% include molecule('quantity-counter') with {
-                            modifiers: ['right-space'],
                             attributes: {
                                 value: data.minQuantityInSalesUnits,
                                 name: 'sales-unit-quantity',
@@ -136,7 +135,6 @@
                         <div class="{{ config.name }}__unit-field-label">{{ 'packaging_units.pdp.amount' | trans }}:</div>
                         <div class="{{ config.name }}__unit-field-value">
                             {% include molecule('quantity-counter') with {
-                                modifiers: ['right-space'],
                                 data: {
                                     isDisabled: not data.packagingUnitIsAmountVariable,
                                     formattedNumberExtraClasses: config.jsName ~ '__formatted-user-amount',

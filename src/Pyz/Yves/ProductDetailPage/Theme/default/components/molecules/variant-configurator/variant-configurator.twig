@@ -1,5 +1,9 @@
 {% extends molecule('variant-configurator', '@SprykerShop:ProductDetailPage') %}
 
+{% define config = {
+    tag: 'variant-configurator',
+} %}
+
 {% block variants %}
     {% for name, values in data.superAttributes %}
         {% set selectedValue = data.selectedAttributes[name] | default %}
@@ -28,6 +32,10 @@
 
         {{ block('variant') }}
     {% endfor %}
+
+    <div class="{{ config.name }}__notify {{ config.jsName }}__notify is-hidden" role="alert">
+        {{ 'product.detail.select_options_notification' | trans }}
+    </div>
 {% endblock %}
 
 {% block variant %}

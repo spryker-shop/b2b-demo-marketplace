@@ -18,7 +18,6 @@
     } only %}
         {% block embeddedData %}
             {% include molecule('quantity-counter') with {
-                modifiers: ['cart'],
                 data: {
                     isDisabled: data.readOnly,
                     autoUpdate: true,
