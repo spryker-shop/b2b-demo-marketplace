@@ -1,7 +1,9 @@
 {% extends template('page-layout-main') %}
 
 {% block viewport %}
-    <main id="main-content">
-        {% block content %}{% endblock %}
-    </main>
+    <div class="page-layout page-layout--preload">
+        <main id="main-content">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
 {% endblock %}
