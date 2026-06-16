@@ -1,65 +1,15 @@
 {% extends template('page-layout-auth') %}
 
+{% set authErrors = app.session.flashbag.get('flash.messages.error') %}
+
 {% block content %}
-    {% embed molecule('auth-layout', 'CustomerPage') with {
+    {% include molecule('auth-login', 'CustomerPage') with {
         data: {
-            heading: 'customer.login.welcome_back' | trans,
-            subtitle: 'agent.login' | trans,
+            form: _view.loginForm,
+            subtitle: 'agent.login',
+            formQa: 'agent-login-form',
+            hasFlashError: authErrors is not empty,
+            mfaUrl: 'multiFactorAuth/getUserEnabledTypes',
         },
     } only %}
-        {% block card %}
-            {{ form_start(_view.loginForm, {
-                attr: {
-                    class: config.name ~ '__form',
-                    novalidate: 'novalidate',
-                    'data-qa': 'agent-login-form',
-                },
-            }) }}
-                {{ form_errors(_view.loginForm) }}
-
-                <div class="{{ config.name }}__fields">
-                    <div class="{{ config.name }}__field">
-                        <label for="{{ _view.loginForm.email.vars.id }}" class="{{ config.name }}__label">
-                            {{- 'customer.login.email' | trans -}}
-                        </label>
-                        {{ form_widget(_view.loginForm.email, {
-                            attr: {
-                                autocomplete: 'email',
-                            },
-                        }) }}
-                        {{ form_errors(_view.loginForm.email) }}
-                    </div>
-
-                    <div class="{{ config.name }}__field">
-                        <label for="{{ _view.loginForm.password.vars.id }}" class="{{ config.name }}__label">
-                            {{- 'customer.login.password' | trans -}}
-                        </label>
-                        {{ form_widget(_view.loginForm.password) }}
-                        {{ form_errors(_view.loginForm.password) }}
-                    </div>
-                </div>
-
-                <button
-                    type="submit"
-                    class="button {{ config.name }}__submit"
-                    data-init-single-click
-                    {{ qa('submit-button') }}
-                >
-                    {{- 'customer.login.submit' | trans -}}
-                </button>
-
-                {{ form_end(_view.loginForm) }}
-        {% endblock %}
-    {% endembed %}
-
-    {% widget 'MultiFactorAuthHandlerWidget' with {
-        data: {
-            id: _view.loginForm.vars.name,
-            url: 'multiFactorAuth/getUserEnabledTypes',
-            formSelector: '[name="' ~ _view.loginForm.vars.name ~ '"]',
-            isLoginFlow: 'true',
-            isJsEnabledHandler: 'true',
-        }
-    } only %}
-    {% endwidget %}
 {% endblock %}

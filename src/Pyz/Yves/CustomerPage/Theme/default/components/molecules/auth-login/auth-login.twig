@@ -1,0 +1,134 @@
+{% extends model('component') %}
+{% import _self as component %}
+
+{% define config = {
+    name: 'auth-login',
+    tag: 'div',
+} %}
+
+{% define data = {
+    form: required,
+    heading: 'customer.login.welcome_back',
+    subtitle: '',
+    formQa: null,
+    showForgotPassword: false,
+    hasFlashError: false,
+    errorText: 'customer.login.error',
+    mfaUrl: '',
+} %}
+
+{% block body %}
+    {% set hasError = data.hasFlashError
+        or data.form.vars.errors | length > 0
+        or data.form.email.vars.errors | length > 0
+        or data.form.password.vars.errors | length > 0 %}
+
+    {% embed molecule('auth-layout', 'CustomerPage') with {
+        data: {
+            heading: data.heading | trans,
+            subtitle: data.subtitle | trans,
+        },
+        loginForm: data.form,
+        formQa: data.formQa,
+        showForgotPassword: data.showForgotPassword,
+        hasError: hasError,
+        errorText: data.errorText,
+    } only %}
+        {% block card %}
+            {% set formAttr = {
+                class: config.name ~ '__form' ~ (hasError ? ' ' ~ config.name ~ '__form--error' : ''),
+                novalidate: 'novalidate',
+            } %}
+            {% if formQa %}
+                {% set formAttr = formAttr | merge({ 'data-qa': formQa }) %}
+            {% endif %}
+
+            {{ form_start(loginForm, { attr: formAttr }) }}
+                <div class="{{ config.name }}__fields">
+                    <div class="{{ config.name }}__field">
+                        <label for="{{ loginForm.email.vars.id }}" class="{{ config.name }}__label">
+                            {{- 'customer.login.email' | trans -}}
+                        </label>
+                        {{ form_widget(loginForm.email, {
+                            attr: {
+                                autocomplete: 'email',
+                                class: hasError ? 'input--error ' : '',
+                            },
+                        }) }}
+                    </div>
+
+                    <div class="{{ config.name }}__field">
+                        <div class="{{ config.name }}__label-row">
+                            <label for="{{ loginForm.password.vars.id }}" class="{{ config.name }}__label">
+                                {{- 'customer.login.password' | trans -}}
+                            </label>
+                            {% if showForgotPassword %}
+                                <a
+                                    href="{{ url('password/forgotten') }}"
+                                    class="{{ config.name }}__forgot"
+                                    {{ qa('customer-forgot-password-link') }}
+                                >
+                                    {{- 'forms.forgot-password' | trans -}}
+                                </a>
+                            {% endif %}
+                        </div>
+                        {{ form_widget(loginForm.password, {
+                            attr: {
+                                class: hasError ? 'input--error ' : '',
+                            },
+                        }) }}
+                    </div>
+
+                    {% if hasError %}
+                        {% include molecule('flash-message') with {
+                            modifiers: ['alert', 'notification'],
+                            data: {
+                                isStatic: true,
+                                text: errorText | trans,
+                            },
+                        } only %}
+                    {% endif %}
+                </div>
+
+                <button
+                    type="submit"
+                    class="button {{ config.name }}__submit"
+                    data-init-single-click
+                    {{ qa('submit-button') }}
+                >
+                    {{- 'customer.login.submit' | trans -}}
+                </button>
+
+                <a
+                    href="{{ url('home') }}"
+                    class="link link--subtle link--no-decoration link--sm {{ config.name }}__guest"
+                    {{ qa('continue-as-guest-link') }}
+                >
+                    {{- 'customer.login.continue_as_guest' | trans -}}
+                    {% include atom('font-icon') with {
+                        class: config.name ~ '__guest-icon',
+                        data: { name: 'arrow_forward' },
+                    } only %}
+                </a>
+
+                {% if loginForm.remember_me is defined %}
+                    <div class="{{ config.name }}__hidden" hidden>
+                        {{ form_row(loginForm.remember_me) }}
+                    </div>
+                {% endif %}
+
+                {{ form_end(loginForm) }}
+        {% endblock %}
+    {% endembed %}
+
+    {% widget 'MultiFactorAuthHandlerWidget' with {
+        data: {
+            id: data.form.vars.name,
+            url: data.mfaUrl,
+            formSelector: '[name="' ~ data.form.vars.name ~ '"]',
+            isLoginFlow: 'true',
+            isJsEnabledHandler: 'true',
+        }
+    } only %}
+    {% endwidget %}
+{% endblock %}
