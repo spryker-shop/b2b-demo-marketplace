@@ -36,14 +36,56 @@ Before doing anything, determine what the user wants. Ask if not clear from cont
 
 ## Dataset Architecture
 
-The demoshop uses two parallel import datasets with identical file structures:
+The demoshop has **four** product-data directories, consumed by **five** import configs.
+Same file structure across all of them, but they are NOT independent — some configs mix
+directories (see the critical warning below).
 
-| Dataset | Import config | Use case |
-|---------|--------------|----------|
-| `data/import/common/` | `local/full_EU.yml`, `local/full_US.yml` | Standard full demo |
-| `data/import/b2b_common/` | `local/b2b_full_EU.yml` | B2B-specific full demo |
+| Import config | product abstract/concrete from | measurement / special-type files from | Stores |
+|---------------|-------------------------------|----------------------------------------|--------|
+| `local/full_EU.yml` | `common/` | `common/` | DE, AT |
+| `local/full_US.yml` | `common/` | `common/` | US |
+| `local/full_ROBOT.yml` | **`robot/`** | **`common/`** ⚠️ | DE, AT |
+| `local/b2b_full_EU.yml` | `b2b_common/` | `b2b_common/` | DE, AT |
+| `local/b2b_full_ROBOT.yml` | `b2b_robot/` | `b2b_robot/` | DE, AT |
 
-**Default: work in `common` only.** Ask if the user also needs `b2b_common`.
+**Default: add the product to `common`** (covers full_EU + full_US). Then decide the others:
+
+### ⚠️ CRITICAL: the ROBOT config mixes datasets
+
+`full_ROBOT.yml` (used by the **CI acceptance/robot tests**) imports `product-abstract` and
+`product-concrete` from `data/import/robot/common/` — a **separate, smaller test catalog** —
+but imports the measurement / packaging files from the shared `data/import/common/common/`.
+
+So a measurement-unit product added only to `common` produces this CI failure:
+
+```
+product-measurement-base-unit  → Product abstract with SKU "X" was not found during import.
+product-measurement-sales-unit → Product concrete with SKU "X-1" was not found during import.
+```
+
+…because the measurement CSV (from `common/`) references a product the robot catalog never
+created. `full_EU.yml`/`full_US.yml` pass (abstract + measurement both from `common/`), so this
+only shows up in the **robot CI job**.
+
+**Rule:** if a product has **measurement units** (or packaging units) and lives in `common/`,
+you MUST also add it to the **`robot/` catalog**, or the robot CI import fails. Files to add it
+to (robot is **EU-only**, DE/AT):
+
+- `robot/common/product_abstract.csv` — use a category that exists in `robot/common/category.csv`
+  (e.g. `cables`; the common categories like `components_accessories` do NOT exist in robot)
+- `robot/common/product_concrete.csv`
+- `robot/common/product_abstract_approval_status.csv`
+- `robot/common/product_image.csv`
+- `robot/common/marketplace/product_stock.csv` — robot stock lives here (`robot/common/product_stock.csv` is header-only); warehouse name `Spryker MER000008 Warehouse 1`
+- `robot/DE/product_abstract_store.csv`, `robot/AT/product_abstract_store.csv`
+- `robot/DE/product_price.csv`, `robot/AT/product_price.csv` (EUR + CHF)
+- measurement sales-unit-store is shared from `common/DE` + `common/AT` — already covered
+
+The robot abstract/concrete headers are identical to `common` (67 / 23 cols), so you can copy the
+`common` rows verbatim and only change `category_key`.
+
+`b2b_*` configs are self-consistent (abstract + measurement from the same dataset), so they only
+need changes if you explicitly target the B2B demo.
 
 ---
 
@@ -526,6 +568,80 @@ Files modified:
 
 ---
 
+## Step 9 — Run the Import (and troubleshoot)
+
+The CSVs are data only — they take effect when the importer runs:
+
+```bash
+vendor/bin/console data:import --config=data/import/local/full_EU.yml      # common dataset, DE/AT
+vendor/bin/console data:import --config=data/import/local/full_US.yml      # common dataset, US
+vendor/bin/console data:import --config=data/import/local/b2b_full_EU.yml  # b2b_common dataset
+```
+
+(The standard install uses `full_${SPRYKER_CURRENT_REGION}.yml`, resolving to `full_EU` / `full_US`.)
+
+### CRITICAL: import order dependency
+
+The measurement-unit importers (`product-measurement-base-unit`,
+`product-measurement-sales-unit`) and packaging/marketplace importers look up the product
+**from the database by SKU at the moment they run**. The product abstract/concrete must
+already be imported, or you get:
+
+```
+Product abstract with SKU "..." was not found during import.
+Product concrete with SKU "..." was not found during import.
+```
+
+A full `full_EU.yml` run handles this automatically — `product-abstract` (early in the file)
+runs before `product-measurement-*` (later). **This error only appears when the steps are run
+separately or out of order** (e.g. running the special-product-types / measurement section
+standalone before the catalog/product import).
+
+**Fix:** run the catalog/product import first (or just run the whole `full_EU.yml` end to end),
+then re-run. Re-running is safe — importers upsert by key. Once the product exists in the DB,
+the measurement import succeeds on the next run.
+
+### Verify the import landed (DB check)
+
+Use these read-only queries (via the project DB tooling) to confirm:
+
+```sql
+-- Product exists?
+SELECT id_product_abstract, sku FROM spy_product_abstract WHERE sku = '{abstract_sku}';
+SELECT id_product, sku, fk_product_abstract FROM spy_product WHERE sku = '{concrete_sku}';
+
+-- Measurement base unit linked?
+SELECT b.id_product_measurement_base_unit, u.code
+FROM spy_product_measurement_base_unit b
+JOIN spy_product_abstract a ON a.id_product_abstract = b.fk_product_abstract
+JOIN spy_product_measurement_unit u ON u.id_product_measurement_unit = b.fk_product_measurement_unit
+WHERE a.sku = '{abstract_sku}';
+
+-- Sales units linked?
+SELECT u.code, s.fk_product
+FROM spy_product_measurement_sales_unit s
+JOIN spy_product p ON p.id_product = s.fk_product
+JOIN spy_product_measurement_unit u ON u.id_product_measurement_unit = s.fk_product_measurement_unit
+WHERE p.sku = '{concrete_sku}';
+```
+
+If the product rows exist but measurement rows are missing → re-run the import (ordering issue,
+not a data problem). If the product rows are missing too → the catalog import didn't run or the
+abstract row is malformed (check column count and `category_key` validity).
+
+### "Product abstract/concrete not found" — but ONLY in the robot/CI job
+
+If `full_EU.yml`/`full_US.yml` pass but the **robot** job (`full_ROBOT.yml`) fails on
+`product-measurement-base-unit` / `product-measurement-sales-unit`, this is the dataset-mismatch
+described in **Dataset Architecture**: the robot config imports the product catalog from
+`robot/` but the measurement files from `common/`. The product exists in `common/` but not in the
+robot catalog. **Fix:** add the product to `robot/common/product_abstract.csv` +
+`product_concrete.csv` (+ supporting robot files), using a category that exists in
+`robot/common/category.csv`. Confirm which config CI runs — the import header prints
+`Starting import with data/import/local/full_ROBOT.yml`.
+
+---
+
 # REFERENCE
 
 ## Import file map
@@ -572,11 +688,21 @@ Files modified:
 
 ## Import configs
 
-| Config file | Dataset used | Stores |
-|-------------|-------------|--------|
-| `data/import/local/full_EU.yml` | `common/` | DE, AT |
-| `data/import/local/full_US.yml` | `common/` | US |
-| `data/import/local/b2b_full_EU.yml` | `b2b_common/` | DE, AT |
+| Config file | Products from | Measurement from | Stores |
+|-------------|--------------|------------------|--------|
+| `data/import/local/full_EU.yml` | `common/` | `common/` | DE, AT |
+| `data/import/local/full_US.yml` | `common/` | `common/` | US |
+| `data/import/local/full_ROBOT.yml` | `robot/` | `common/` ⚠️ mixed | DE, AT |
+| `data/import/local/b2b_full_EU.yml` | `b2b_common/` | `b2b_common/` | DE, AT |
+| `data/import/local/b2b_full_ROBOT.yml` | `b2b_robot/` | `b2b_robot/` | DE, AT |
+
+⚠️ `full_ROBOT.yml` mixes datasets — a measurement product in `common/` must also be added to the
+`robot/` catalog or the robot CI import fails. See **Dataset Architecture**.
+
+## Checklist addition for measurement-unit products
+
+- [ ] Added to `common/` (full_EU + full_US)
+- [ ] **Added to `robot/` catalog** (full_ROBOT shares `common/` measurement files) — robot category, DE/AT only
 
 ## Price format
 
