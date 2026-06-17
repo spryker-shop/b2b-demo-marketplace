@@ -53,9 +53,29 @@ export default class SellerList extends Component {
         this.syncRadios(reference);
         this.notifyOfferChange(reference);
         this.updatePrice(reference);
+        this.resetQuantities();
         this.updateOfferInputs(reference);
         this.updateLocation(reference);
         this.isApplying = false;
+    }
+
+    protected resetQuantities(): void {
+        const scope = document.querySelector(this.cartFormSelector) ?? document;
+        const inputs = <HTMLInputElement[]>(
+            Array.from(scope.querySelectorAll('quantity-counter input:not([type="hidden"])'))
+        );
+
+        inputs.forEach((input) => {
+            const defaultValue = input.defaultValue || input.getAttribute('min') || '1';
+
+            if (Number(input.value) === Number(defaultValue)) {
+                return;
+            }
+
+            input.value = defaultValue;
+            input.dispatchEvent(new Event('input', { bubbles: true }));
+            input.dispatchEvent(new Event('change', { bubbles: true }));
+        });
     }
 
     protected notifyOfferChange(reference: string): void {

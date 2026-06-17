@@ -14,7 +14,7 @@
 
     {% if data.quantity is not empty %}
         <li class="spacing-top">
-            {{ 'packaging_units.cart.quantity' | trans }}: {{ data.quantity | executeFilterIfExists('formatInt', app.locale) }}
+            {{ 'packaging_units.cart.quantity' | trans }}: <strong>{{ data.quantity | executeFilterIfExists('formatInt', app.locale) }}</strong>
 
             {% if quantitySalesUnit %}
                 {% include atom('quantity-option') with {
@@ -55,7 +55,7 @@
     {% if data.amount is not empty %}
         <li class="spacing-top">
             {% set amountPerQuantityValue = data.hasAmountPerQuantity ? amountPerQuantity.toFloat() : data.amount.toFloat() %}
-            {{ 'packaging_units.cart.amount' | trans }}: {{ amountPerQuantityValue | executeFilterIfExists('formatFloat', app.locale) }}
+            {{ 'packaging_units.cart.amount' | trans }}: <strong>{{ amountPerQuantityValue | executeFilterIfExists('formatFloat', app.locale) }}</strong>
         </li>
     {% endif %}
 {% endblock %}

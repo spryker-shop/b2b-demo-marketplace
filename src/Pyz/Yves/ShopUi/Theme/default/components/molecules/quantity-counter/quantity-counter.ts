@@ -22,16 +22,56 @@ export default class QuantityCounter extends Component {
         );
         this.value = this.getValue;
         this.mapEvents();
+        this.updateDecrementState();
     }
 
     protected mapEvents(): void {
         this.decrementButton.addEventListener('click', (event) => this.onChangeQuantity(event, 'decrease'));
         this.incrementButton.addEventListener('click', (event) => this.onChangeQuantity(event, 'increase'));
         this.input?.addEventListener('keydown', (event: KeyboardEvent) => this.onKeyDown(event));
+        this.input?.addEventListener('change', () => this.onManualChange());
 
         if (this.autoUpdate) {
             this.input.addEventListener('change', () => this.delayToSubmit());
         }
+    }
+
+    protected onManualChange(): void {
+        if (!this.isAvailable) {
+            return;
+        }
+
+        const currentValue = this.currentValue;
+
+        if (!Number.isFinite(currentValue) || currentValue < this.minQuantity) {
+            this.input.value = this.minQuantity.toString();
+            this.input.dispatchEvent(new Event('change'));
+            this.input.dispatchEvent(new Event('input'));
+        }
+
+        this.updateDecrementState();
+    }
+
+    protected updateDecrementState(): void {
+        const currentValue = this.currentValue;
+        const shouldDisable = !Number.isFinite(currentValue) || currentValue <= this.minQuantity;
+
+        this.decrementButton.disabled = shouldDisable;
+        this.decrementButton.classList.toggle(`${this.name}__button--disabled`, shouldDisable);
+    }
+
+    protected get currentValue(): number {
+        try {
+            const formattedValue = this.formattedNumberInput?.unformattedValue;
+
+            if (Number.isFinite(formattedValue)) {
+                return formattedValue;
+            }
+        } catch {
+            return Number(this.input.value);
+        }
+
+        return Number(this.input.value);
     }
 
     protected onChangeQuantity(event: Event, type: 'decrease' | 'increase'): void {
@@ -52,6 +92,7 @@ export default class QuantityCounter extends Component {
         }
 
         this.input.value = potentialValue.toString();
+        this.updateDecrementState();
 
         if (this.isAjaxMode) {
             this.delayToSubmit(true);

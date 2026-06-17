@@ -36,7 +36,8 @@
 
         &__meta {
             display: flex;
-            flex: 0 0 auto;
+            flex: 0 1 auto;
+            min-width: 0;
             flex-direction: column;
             align-items: flex-end;
             gap: var(--scale-2);
@@ -44,23 +45,30 @@
 
         &__price {
             display: inline-flex;
-            flex: 0 0 auto;
+            flex: 0 1 auto;
             align-items: baseline;
             gap: var(--scale-4);
-            white-space: nowrap;
+            font-family: var(--label-sm-semibold-family);
+            font-size: rem(var(--label-sm-semibold-size));
+            font-weight: var(--label-sm-semibold-weight);
+            line-height: rem(var(--label-sm-semibold-line-height));
+            text-align: right;
         }
 
         &__menu {
             position: relative;
             flex: 0 0 auto;
+            align-self: center;
+            display: flex;
+            align-items: center;
         }
 
         &__menu-trigger {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: rem(var(--scale-20));
-            height: rem(var(--scale-20));
+            width: var(--scale-20);
+            height: var(--scale-20);
             padding: 0;
             background: none;
             border: 0;

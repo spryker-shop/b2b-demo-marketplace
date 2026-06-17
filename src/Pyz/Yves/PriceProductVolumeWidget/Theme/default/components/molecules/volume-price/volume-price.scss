@@ -2,6 +2,10 @@
     #{$name} {
         margin-bottom: rem(12);
 
+        &:has(+ *) {
+            padding-bottom: var(--scale-16);
+        }
+
         &__amount {
             font-size: rem(24);
             font-weight: fw(bold);
@@ -79,6 +83,7 @@
             align-items: baseline;
             gap: var(--scale-4);
             margin: 0;
+            padding-bottom: 0;
 
             #{$name}__amount {
                 margin: 0;

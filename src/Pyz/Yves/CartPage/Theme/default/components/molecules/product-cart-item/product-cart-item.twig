@@ -132,6 +132,7 @@
                 {% block rail %}
                     {% block railQuantity %}
                         {% set isAmountSalesUnitEmpty = (listItem.amountSalesUnit ?? null) is empty and (listItem.quantitySalesUnit ?? null) is empty and data.quantity is empty %}
+
                         {% if isAmountSalesUnitEmpty %}
                             <div class="{{ config.name }}__quantity-holder">
                                 {% include molecule('product-item-quantity') with {
@@ -142,6 +143,26 @@
                                     },
                                 } only %}
                             </div>
+                        {% elseif widgetExists('CartProductPackagingUnitWidgetPlugin') %}
+                            <ul class="{{ config.name }}__packaging-unit">
+                                {{ widget('CartProductPackagingUnitWidgetPlugin', listItem) }}
+                            </ul>
+                        {% elseif listItem.amountSalesUnit is not empty %}
+                            <ul class="{{ config.name }}__packaging-unit">
+                                {% include molecule('packaging-unit-cart', 'ProductPackagingUnitWidget') ignore missing with {
+                                    data: {
+                                        amount: listItem.amount,
+                                        quantity: listItem.quantity,
+                                        quantitySalesUnit: listItem.quantitySalesUnit,
+                                        quantityConversion: listItem.quantitySalesUnit.conversion,
+                                        quantityProductMeasurementUnit: listItem.quantitySalesUnit.productMeasurementUnit,
+                                        amountSalesUnit: listItem.amountSalesUnit,
+                                        amountConversion: listItem.amountSalesUnit.conversion,
+                                        amountProductMeasurementUnit: listItem.amountSalesUnit.productMeasurementUnit,
+                                        amountValue: listItem.amountSalesUnit.value,
+                                    },
+                                } only %}
+                            </ul>
                         {% endif %}
                     {% endblock %}
 

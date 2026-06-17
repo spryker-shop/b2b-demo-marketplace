@@ -13,29 +13,27 @@
     {% endblock %}
 
     {% if not salesUnitCount %}
-        <div class="grid grid--gap grid--nowrap grid--stretch grid--justify">
-            <div class="col col--sm-6">
-                {% include molecule('quantity-counter') with {
-                    data: {
-                        numberFormatConfig: data.numberFormatConfig,
-                        inputExtraClasses: 'js-volume-price__quantity',
-                    },
-                } only %}
-            </div>
+        <p class="{{ config.name }}__quantity-label">{{ 'cart.item_quantity' | trans }}</p>
+        <div class="{{ config.name }}__cta-row">
+            {% include molecule('quantity-counter') with {
+                class: config.name ~ '__counter',
+                data: {
+                    numberFormatConfig: data.numberFormatConfig,
+                    inputExtraClasses: 'js-volume-price__quantity',
+                },
+            } only %}
 
-            <div class="col col--sm-6">
-                {% block addToCartButton %}
-                    <button type="submit" class="{{ config.jsName }}__add-to-cart-button button button--big button--expand button--no-horizontal-padding"
-                            data-init-single-click {{ isAddToCartDisabled }} {{ qa('add-to-cart-button') }}>
-                        {% include atom('font-icon') with {
-                            data: {
-                                name: 'shopping_cart',
-                            },
-                        } only %}
-                        {{ 'page.detail.add-to-cart' | trans }}
-                    </button>
-                {% endblock %}
-            </div>
+            {% block addToCartButton %}
+                <button type="submit" class="{{ config.jsName }}__add-to-cart-button button button--expand {{ config.name }}__add-to-cart-button"
+                        data-init-single-click {{ isAddToCartDisabled }} {{ qa('add-to-cart-button') }}>
+                    {% include atom('font-icon') with {
+                        data: {
+                            name: 'shopping_cart',
+                        },
+                    } only %}
+                    {{ 'page.detail.add-to-cart' | trans }}
+                </button>
+            {% endblock %}
         </div>
     {% endif %}
 
@@ -44,7 +42,7 @@
         {% set isSingleMeasurementUnit = salesUnitCount == 1 and data.packagingUnitIsSelfLead == false %}
 
         {% block measurementUnitSelector %}
-            <div class="grid grid--middle {{ isMultipleMeasurementUnits ? 'grid--justify' }}">
+            <div class="grid grid--nowrap grid--middle {{ isMultipleMeasurementUnits ? 'grid--justify' }}">
                 <div class="col {{ config.name }}__unit-field">
                     <div class="{{ config.name }}__unit-field-label">{{ 'packaging_units.pdp.quantity' | trans }}:</div>
                     <div class="{{ config.name }}__unit-field-value">
@@ -130,7 +128,7 @@
                     data.productPackagingUnit.defaultAmount %}
                 {% set isAmountRowJustify = data.leadProductSalesUnits | length > 1 ? 'grid--justify' %}
 
-                <div class="grid grid--middle {{ isAmountRowJustify }}">
+                <div class="grid grid--nowrap grid--middle {{ isAmountRowJustify }}">
                     <div class="col {{ config.name }}__unit-field">
                         <div class="{{ config.name }}__unit-field-label">{{ 'packaging_units.pdp.amount' | trans }}:</div>
                         <div class="{{ config.name }}__unit-field-value">
