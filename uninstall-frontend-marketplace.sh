@@ -220,13 +220,7 @@ npm install
 echo "✓ Dependencies updated"
 echo ""
 
-echo "Step 6: Installing required Babel packages..."
-# Pin to Babel 7.x to match @babel/preset-env ~7.28.x; unpinned install pulls @babel/core 8 and breaks the Yves build.
-npm install --save-dev @babel/core@^7.28.6 @babel/runtime@^7.28.6
-echo "✓ Babel packages installed"
-echo ""
-
-echo "Step 7: Cleaning npm cache..."
+echo "Step 6: Cleaning npm cache..."
 rm -rf node_modules/.cache
 echo "✓ Cache cleaned"
 echo ""
@@ -241,7 +235,6 @@ echo "  - Removed ${#FRONTEND_DIRECTORIES[@]} directories"
 echo "  - Cleaned Merchant Portal blocks from eslint.config.mjs"
 echo "  - Cleaned Merchant Portal scripts and dependencies from package.json"
 echo "  - Updated npm dependencies"
-echo "  - Installed @babel/core and @babel/runtime"
 echo "  - Cleaned npm cache"
 echo ""
 echo "Next steps:"
