@@ -10,6 +10,11 @@ declare(strict_types = 1);
 namespace Demo\Zed\AiCommerce;
 
 use Demo\Zed\AiCommerce\Communication\Plugin\Agent\PlaceOrderAgentPlugin;
+use Spryker\Zed\ContentBannerGui\Communication\Plugin\ContentGui\ContentBannerContentGuiEditorPlugin;
+use Spryker\Zed\ContentFileGui\Communication\Plugin\ContentGui\ContentFileListContentGuiEditorPlugin;
+use Spryker\Zed\ContentNavigationGui\Communication\Plugin\ContentGui\ContentNavigationContentGuiEditorPlugin;
+use Spryker\Zed\ContentProductGui\Communication\Plugin\ContentGui\ContentProductContentGuiEditorPlugin;
+use Spryker\Zed\ContentProductSetGui\Communication\Plugin\ContentGui\ContentProductSetGuiEditorPlugin;
 use Spryker\Zed\Kernel\Container;
 use SprykerFeature\Zed\AiCommerce\AiCommerceDependencyProvider as SprykerFeatureAiCommerceDependencyProvider;
 use SprykerFeature\Zed\AiCommerce\Communication\Plugin\Agent\DiscountManagementAgentPlugin;
@@ -146,6 +151,20 @@ class AiCommerceDependencyProvider extends SprykerFeatureAiCommerceDependencyPro
             new DiscountManagementAgentPlugin(),
             new FormFillAgentPlugin(),
             new PlaceOrderAgentPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentGuiEditorPluginInterface>
+     */
+    protected function getContentGuiEditorPlugins(): array
+    {
+        return [
+            new ContentBannerContentGuiEditorPlugin(),
+            new ContentProductContentGuiEditorPlugin(),
+            new ContentProductSetGuiEditorPlugin(),
+            new ContentFileListContentGuiEditorPlugin(),
+            new ContentNavigationContentGuiEditorPlugin(),
         ];
     }
 }

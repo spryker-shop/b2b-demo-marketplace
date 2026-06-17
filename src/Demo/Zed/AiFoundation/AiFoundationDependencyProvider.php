@@ -21,6 +21,7 @@ use SprykerFeature\Zed\AiCommerce\Communication\Plugin\AiFoundation\FormFillTool
 use SprykerFeature\Zed\AiCommerce\Communication\Plugin\AiFoundation\NavigationToolSetPlugin;
 use SprykerFeature\Zed\AiCommerce\Communication\Plugin\AiFoundation\OrderDetailsToolSetPlugin;
 use SprykerFeature\Zed\AiCommerce\Communication\Plugin\AiFoundation\OrderManagementToolSetPlugin;
+use SprykerFeature\Zed\AiCommerce\Communication\Plugin\AiFoundation\SmartCmsContentToolSetPlugin;
 
 class AiFoundationDependencyProvider extends SprykerAiFoundationDependencyProvider
 {
@@ -77,6 +78,7 @@ class AiFoundationDependencyProvider extends SprykerAiFoundationDependencyProvid
             new DiscountManagementToolSetPlugin(),
             new FormFillToolSetPlugin(),
             new PlaceOrderToolSetPlugin(),
+            new SmartCmsContentToolSetPlugin(),
         ];
     }
 }
