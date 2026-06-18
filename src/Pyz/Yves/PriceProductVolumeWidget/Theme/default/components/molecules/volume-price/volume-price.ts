@@ -61,7 +61,7 @@ export default class VolumePrice extends Component {
 
     public changePrice(price: string): void {
         if (this.amountValueElement.innerText.trim() !== price.trim()) {
-            this.amountValueElement.innerHTML = price;
+            this.amountValueElement.textContent = price;
             this.highlight();
         }
     }
