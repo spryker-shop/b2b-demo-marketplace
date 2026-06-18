@@ -36,53 +36,15 @@ Before doing anything, determine what the user wants. Ask if not clear from cont
 
 ## Dataset Architecture
 
-The demoshop has **four** product-data directories, consumed by **five** import configs.
-Same file structure across all of them, but they are NOT independent — some configs mix
-directories (see the critical warning below).
+The demoshop has **two** product-data directories, consumed by **three** import configs.
 
 | Import config | product abstract/concrete from | measurement / special-type files from | Stores |
 |---------------|-------------------------------|----------------------------------------|--------|
 | `local/full_EU.yml` | `common/` | `common/` | DE, AT |
 | `local/full_US.yml` | `common/` | `common/` | US |
-| `local/full_ROBOT.yml` | **`robot/`** | **`common/`** ⚠️ | DE, AT |
 | `local/b2b_full_EU.yml` | `b2b_common/` | `b2b_common/` | DE, AT |
-| `local/b2b_full_ROBOT.yml` | `b2b_robot/` | `b2b_robot/` | DE, AT |
 
 **Default: add the product to `common`** (covers full_EU + full_US). Then decide the others:
-
-### ⚠️ CRITICAL: the ROBOT config mixes datasets
-
-`full_ROBOT.yml` (used by the **CI acceptance/robot tests**) imports `product-abstract` and
-`product-concrete` from `data/import/robot/common/` — a **separate, smaller test catalog** —
-but imports the measurement / packaging files from the shared `data/import/common/common/`.
-
-So a measurement-unit product added only to `common` produces this CI failure:
-
-```
-product-measurement-base-unit  → Product abstract with SKU "X" was not found during import.
-product-measurement-sales-unit → Product concrete with SKU "X-1" was not found during import.
-```
-
-…because the measurement CSV (from `common/`) references a product the robot catalog never
-created. `full_EU.yml`/`full_US.yml` pass (abstract + measurement both from `common/`), so this
-only shows up in the **robot CI job**.
-
-**Rule:** if a product has **measurement units** (or packaging units) and lives in `common/`,
-you MUST also add it to the **`robot/` catalog**, or the robot CI import fails. Files to add it
-to (robot is **EU-only**, DE/AT):
-
-- `robot/common/product_abstract.csv` — use a category that exists in `robot/common/category.csv`
-  (e.g. `cables`; the common categories like `components_accessories` do NOT exist in robot)
-- `robot/common/product_concrete.csv`
-- `robot/common/product_abstract_approval_status.csv`
-- `robot/common/product_image.csv`
-- `robot/common/marketplace/product_stock.csv` — robot stock lives here (`robot/common/product_stock.csv` is header-only); warehouse name `Spryker MER000008 Warehouse 1`
-- `robot/DE/product_abstract_store.csv`, `robot/AT/product_abstract_store.csv`
-- `robot/DE/product_price.csv`, `robot/AT/product_price.csv` (EUR + CHF)
-- measurement sales-unit-store is shared from `common/DE` + `common/AT` — already covered
-
-The robot abstract/concrete headers are identical to `common` (67 / 23 cols), so you can copy the
-`common` rows verbatim and only change `category_key`.
 
 `b2b_*` configs are self-consistent (abstract + measurement from the same dataset), so they only
 need changes if you explicitly target the B2B demo.
@@ -101,17 +63,17 @@ Check the conversation for answers already provided. Ask only for what is still 
 
 | Field | Key | Example |
 |-------|-----|---------|
-| Abstract SKU | `abstract_sku` | `CBL-3X15-SHIELD` |
-| Concrete SKU(s) | `concrete_sku` | `CBL-3X15-SHIELD-1` (append `-1` to abstract if single variant) |
+| Abstract SKU | `abstract_sku` | `MY-PRODUCT-001` |
+| Concrete SKU(s) | `concrete_sku` | `MY-PRODUCT-001-1` (append `-1` to abstract if single variant) |
 | Category key | `category_key` | `components_accessories` |
 | Tax set | `tax_set_name` | `Standard Tax` |
-| Name (DE) | `name.de_DE` | `"Geschirmtes Steuerkabel 3×1,5 mm²"` |
-| Name (EN) | `name.en_US` | `"Shielded Control Cable 3×1.5mm²"` |
+| Name (DE) | `name.de_DE` | `"Mein Produkt 001"` |
+| Name (EN) | `name.en_US` | `"My Product 001"` |
 | Description (DE) | `description.de_DE` | Long text |
 | Description (EN) | `description.en_US` | Long text |
-| URL slug (DE) | `url.de_DE` | `/de/geschirmtes-steuerkabel` |
-| URL slug (EN) | `url.en_US` | `/en/shielded-control-cable` |
-| Brand | attribute | `brennenstuhl` (or empty) |
+| URL slug (DE) | `url.de_DE` | `/de/mein-produkt-001` |
+| URL slug (EN) | `url.en_US` | `/en/my-product-001` |
+| Brand | attribute | `my-brand` (or empty) |
 
 ### Pricing (always required)
 
@@ -294,21 +256,21 @@ grep ",{CODE}," data/import/common/common/product_measurement_unit.csv
 
 ### 4b. Base Unit (`common/common/product_measurement_base_unit.csv`)
 
-Format: `code,abstract_sku` — e.g. `ITEM,CBL-3X15-SHIELD`
+Format: `code,abstract_sku` — e.g. `ITEM,MY-PRODUCT-001`
 
 ### 4c. Sales Units (`common/common/product_measurement_sales_unit.csv`)
 
 Header: `sales_unit_key,concrete_sku,code,conversion,precision,is_displayed,is_default`
 
-Use slug-based keys: `sales_unit_{product-slug}-{unit}` (e.g. `sales_unit_cbl-meter`).
+Use slug-based keys: `sales_unit_{product-slug}-{unit}` (e.g. `sales_unit_my-product-meter`).
 Do NOT use numeric sequential keys — they cause conflicts.
 
 Only ONE sales unit per concrete SKU may have `is_default=1`.
 
-Example (3m segment cable):
+Example (product sold in 3m segments, ordered by meter):
 ```
-sales_unit_cbl-meter,CBL-3X15-SHIELD-1,METR,0.33333333,10,1,1
-sales_unit_cbl-item,CBL-3X15-SHIELD-1,ITEM,1,1,1,0
+sales_unit_my-product-meter,MY-PRODUCT-001-1,METR,0.33333333,10,1,1
+sales_unit_my-product-item,MY-PRODUCT-001-1,ITEM,1,1,1,0
 ```
 
 ### 4d. Sales Unit Store (`common/{STORE}/product_measurement_sales_unit_store.csv`)
@@ -321,7 +283,7 @@ Format: `sales_unit_key,store_name` — add one row per sales unit per store.
 
 ### 5a. Merchant Product (`common/common/marketplace/merchant_product.csv`)
 
-Format: `sku,merchant_reference,is_shared` — e.g. `CBL-3X15-SHIELD,MER000008,1`
+Format: `sku,merchant_reference,is_shared` — e.g. `MY-PRODUCT-001,MER000008,1`
 
 Common merchants: `MER000001` (Spryker Systems), `MER000008` (industrial/components).
 
@@ -356,13 +318,13 @@ Map the requested change to the relevant file(s) using the Reference table at th
 
 ```bash
 # Find the product in a specific file
-grep "CBL-3X15-SHIELD" data/import/common/common/product_abstract.csv
+grep "MY-PRODUCT-001" data/import/common/common/product_abstract.csv
 
 # Find price rows for a SKU
-grep "CBL-3X15-SHIELD" data/import/common/DE/product_price.csv
+grep "MY-PRODUCT-001" data/import/common/DE/product_price.csv
 
 # Find all files that reference this SKU
-grep -rl "CBL-3X15-SHIELD" data/import/common/ 2>/dev/null
+grep -rl "MY-PRODUCT-001" data/import/common/ 2>/dev/null
 ```
 
 Show the user the current values before making any changes.
@@ -398,12 +360,12 @@ def update_csv_rows(filepath, match_col, match_val, updates):
     return updated
 ```
 
-**Example — update price for CBL-3X15-SHIELD in DE EUR:**
+**Example — update price for MY-PRODUCT-001 in DE EUR:**
 ```python
 update_csv_rows(
     'data/import/common/DE/product_price.csv',
     match_col='abstract_sku',
-    match_val='CBL-3X15-SHIELD',
+    match_val='MY-PRODUCT-001',
     updates={'value_net': '1200', 'value_gross': '1428'}
 )
 ```
@@ -413,7 +375,7 @@ update_csv_rows(
 update_csv_rows(
     'data/import/common/common/product_stock.csv',
     match_col='concrete_sku',
-    match_val='CBL-3X15-SHIELD-1',
+    match_val='MY-PRODUCT-001-1',
     updates={'quantity': '500'}
 )
 ```
@@ -423,7 +385,7 @@ update_csv_rows(
 update_csv_rows(
     'data/import/common/common/product_abstract.csv',
     match_col='abstract_sku',
-    match_val='CBL-3X15-SHIELD',
+    match_val='MY-PRODUCT-001',
     updates={'name.en_US': 'New English Name', 'name.de_DE': 'Neuer Deutscher Name'}
 )
 ```
@@ -440,7 +402,7 @@ If a product already has measurement units and you need to change conversions or
 update_csv_rows(
     'data/import/common/common/product_measurement_sales_unit.csv',
     match_col='sales_unit_key',
-    match_val='sales_unit_cbl-meter',
+    match_val='sales_unit_my-product-meter',
     updates={'conversion': '0.5', 'precision': '1'}
 )
 ```
@@ -459,15 +421,15 @@ If the abstract already exists but you're adding a new variant (new concrete SKU
 Before writing any changes, show the user what will change:
 
 ```
-Update preview for CBL-3X15-SHIELD
+Update preview for MY-PRODUCT-001
 ────────────────────────────────────
 File: common/DE/product_price.csv
-  Before: CBL-3X15-SHIELD,,DEFAULT,DE,EUR,1035,1230,
-  After:  CBL-3X15-SHIELD,,DEFAULT,DE,EUR,1200,1428,
+  Before: MY-PRODUCT-001,,DEFAULT,DE,EUR,1035,1230,
+  After:  MY-PRODUCT-001,,DEFAULT,DE,EUR,1200,1428,
 
 File: common/common/product_stock.csv
-  Before: CBL-3X15-SHIELD-1,Warehouse1,200,0,0
-  After:  CBL-3X15-SHIELD-1,Warehouse1,500,0,0
+  Before: MY-PRODUCT-001-1,Warehouse1,200,0,0
+  After:  MY-PRODUCT-001-1,Warehouse1,500,0,0
 ```
 
 Ask: **"Does this look correct? Shall I apply these changes?"**
@@ -629,17 +591,6 @@ If the product rows exist but measurement rows are missing → re-run the import
 not a data problem). If the product rows are missing too → the catalog import didn't run or the
 abstract row is malformed (check column count and `category_key` validity).
 
-### "Product abstract/concrete not found" — but ONLY in the robot/CI job
-
-If `full_EU.yml`/`full_US.yml` pass but the **robot** job (`full_ROBOT.yml`) fails on
-`product-measurement-base-unit` / `product-measurement-sales-unit`, this is the dataset-mismatch
-described in **Dataset Architecture**: the robot config imports the product catalog from
-`robot/` but the measurement files from `common/`. The product exists in `common/` but not in the
-robot catalog. **Fix:** add the product to `robot/common/product_abstract.csv` +
-`product_concrete.csv` (+ supporting robot files), using a category that exists in
-`robot/common/category.csv`. Confirm which config CI runs — the import header prints
-`Starting import with data/import/local/full_ROBOT.yml`.
-
 ---
 
 # REFERENCE
@@ -692,17 +643,7 @@ robot catalog. **Fix:** add the product to `robot/common/product_abstract.csv` +
 |-------------|--------------|------------------|--------|
 | `data/import/local/full_EU.yml` | `common/` | `common/` | DE, AT |
 | `data/import/local/full_US.yml` | `common/` | `common/` | US |
-| `data/import/local/full_ROBOT.yml` | `robot/` | `common/` ⚠️ mixed | DE, AT |
 | `data/import/local/b2b_full_EU.yml` | `b2b_common/` | `b2b_common/` | DE, AT |
-| `data/import/local/b2b_full_ROBOT.yml` | `b2b_robot/` | `b2b_robot/` | DE, AT |
-
-⚠️ `full_ROBOT.yml` mixes datasets — a measurement product in `common/` must also be added to the
-`robot/` catalog or the robot CI import fails. See **Dataset Architecture**.
-
-## Checklist addition for measurement-unit products
-
-- [ ] Added to `common/` (full_EU + full_US)
-- [ ] **Added to `robot/` catalog** (full_ROBOT shares `common/` measurement files) — robot category, DE/AT only
 
 ## Price format
 
