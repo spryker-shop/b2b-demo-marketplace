@@ -1,4 +1,5 @@
 @use 'src/ShopUi/styles/shared' as *;
+@use 'SelfServicePortal/components/molecules/google-map/google-map' as *;
 @include self-service-portal-google-map($name: '.google-map') {
     .gm-style-iw-c {
         padding-top: rem(12) !important;

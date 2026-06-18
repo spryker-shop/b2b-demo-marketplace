@@ -171,36 +171,6 @@ const getConfiguration = async (appSettings) => {
                                 options: {
                                     implementation: require('sass'),
                                     api: 'legacy',
-                                    additionalData: (content, loaderContext) => {
-                                        const currentFilePath = loaderContext.resourcePath;
-                                        const allResources = [sharedScss, ...styles].filter(Boolean);
-
-                                        if (allResources.length === 0) {
-                                            return content;
-                                        }
-
-                                        // Check if file uses @use/@forward (modern approach)
-                                        const hasModernDirectives = /@use\s|@forward\s/.test(content);
-
-                                        if (hasModernDirectives) {
-                                            // For modern @use/@forward files, don't inject anything
-                                            // These files should explicitly @use the resources they need
-                                            return content;
-                                        }
-
-                                        // Legacy @import approach: inject at the beginning
-                                        const imports = allResources
-                                            .map((resource) => {
-                                                if (currentFilePath === resource) {
-                                                    return;
-                                                }
-
-                                                return `@import "${resource}";`;
-                                            })
-                                            .join('\n');
-
-                                        return `${imports}\n${content}`;
-                                    },
                                 },
                             },
                         ],

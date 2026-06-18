@@ -1,4 +1,5 @@
 @use 'src/ShopUi/styles/shared' as *;
+@use 'SelfServicePortal/components/molecules/asset-selector/asset-selector' as *;
 @include self-service-portal-asset-selector($name: '.asset-selector') {
     &__container {
         padding: rem(14) rem(20);
