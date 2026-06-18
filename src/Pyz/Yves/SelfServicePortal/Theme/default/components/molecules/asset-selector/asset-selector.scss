@@ -1,9 +1,10 @@
 @include self-service-portal-asset-selector($name: '.asset-selector') {
     &__container {
-        padding: rem(14) rem(20);
-        background-color: $setting-color-gray-7;
-        color: $setting-color-gray-3;
-        gap: rem(8);
+        padding: var(--scale-16) var(--scale-20);
+        background-color: var(--background-surface);
+        color: var(--text-primary);
+        border-radius: var(--radius-sm);
+        gap: var(--scale-8);
     }
 
     &__container--cart,
@@ -12,8 +13,80 @@
         padding: 0;
     }
 
+    &__trigger {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--scale-4);
+        font-family: var(--label-sm-family);
+        font-size: rem(var(--label-sm-size));
+        font-weight: var(--label-sm-weight);
+        line-height: rem(var(--label-sm-line-height));
+    }
+
     &__subtitle {
-        color: $setting-color-gray-8;
+        color: var(--text-primary);
+        font-family: var(--label-sm-family);
+        font-size: rem(var(--label-sm-size));
+        font-weight: var(--label-sm-weight);
+        line-height: rem(var(--label-sm-line-height));
+        padding-bottom: 0;
+    }
+
+    &__container--select {
+        align-items: center;
+        flex-wrap: wrap;
+        gap: var(--scale-8);
+    }
+
+    &__container--selected {
+        flex-direction: column;
+        gap: var(--scale-4);
+    }
+
+    &__data--actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--scale-8);
+        margin-bottom: 0;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        gap: var(--scale-4);
+    }
+
+    &__subtitle--name {
+        color: var(--text-secondary);
+        font-family: var(--body-sm-family);
+        font-size: rem(var(--body-sm-size));
+        font-weight: var(--font-weight-regular);
+        line-height: rem(var(--body-sm-line-height));
+        text-decoration: none;
+    }
+
+    &__data {
+        display: flex;
+        align-items: center;
+        gap: var(--scale-8);
+    }
+
+    &__information {
+        color: var(--text-secondary);
+        font-family: var(--body-sm-family);
+        font-size: rem(var(--body-sm-size));
+        line-height: rem(var(--body-sm-line-height));
+    }
+
+    &__asset-text {
+        color: var(--text-secondary);
+    }
+
+    &__action {
+        width: rem(16);
+        height: rem(16);
+        color: var(--icon-secondary);
     }
 
     &__data-row {
@@ -23,29 +96,15 @@
         align-items: center;
     }
 
-    &--cart &__subtitle {
-        padding-bottom: 0;
-    }
-
-    &--cart &__subtitle--name {
-        color: var(--text-secondary);
-        font-family: var(--body-sm-family);
-        font-size: rem(var(--body-sm-size));
-        font-weight: var(--font-weight-regular);
-        line-height: rem(var(--body-sm-line-height));
-        text-decoration: none;
-    }
-
     &--cart &__asset-text {
         color: var(--text-primary);
     }
 
     &--cart &__container--select {
         display: inline-flex;
-        align-items: center;
     }
 
-    &--cart &__container--select .link--additional {
+    &--cart &__select-link {
         display: inline-flex;
         align-items: center;
         gap: rem(var(--scale-4));
@@ -61,7 +120,7 @@
         cursor: pointer;
     }
 
-    &--cart &__data--actions .link--additional {
+    &--cart &__data-link {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -75,11 +134,11 @@
         cursor: pointer;
     }
 
-    &--cart &__container--select .link--additional:hover {
+    &--cart &__select-link:hover {
         background: var(--background-surface);
     }
 
-    &--cart &__data--actions .link--additional:hover {
+    &--cart &__data-link:hover {
         color: var(--text-primary);
         background: var(--background-surface);
     }
@@ -135,7 +194,6 @@
         order: 99;
         flex: 0 0 auto;
         display: inline-flex;
-        align-items: center;
         gap: rem(var(--scale-4));
         white-space: nowrap;
     }

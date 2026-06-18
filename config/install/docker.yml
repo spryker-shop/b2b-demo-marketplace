@@ -125,8 +125,8 @@ sections:
             command: 'vendor/bin/console frontend:storybook:build'
             timeout: 1600
 
-        date-time-product-configurator:
-            command: 'vendor/bin/console frontend:date-time-product-configurator:build'
+        water-treatment-product-configurator:
+            command: 'vendor/bin/console frontend:water-treatment-product-configurator:build'
 
     build-static-development:
         yves-build-frontend:
@@ -143,8 +143,8 @@ sections:
             command: 'vendor/bin/console frontend:storybook:build'
             timeout: 1600
 
-        date-time-product-configurator:
-            command: 'vendor/bin/console frontend:date-time-product-configurator:build'
+        water-treatment-product-configurator:
+            command: 'vendor/bin/console frontend:water-treatment-product-configurator:build'
 
     scheduler-setup:
         jenkins-setup:

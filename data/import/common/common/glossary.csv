@@ -505,6 +505,18 @@ customer.login.password,Password,en_US
 customer.login.password,Passwort,de_DE
 customer.login.title,Access your account,en_US
 customer.login.title,Ich bin bereits Kunde,de_DE
+customer.login.welcome_back,Welcome back,en_US
+customer.login.welcome_back,Willkommen zurück,de_DE
+customer.login.subtitle,Sign in to manage your orders and account,en_US
+customer.login.subtitle,"Melden Sie sich an, um Ihre Bestellungen und Ihr Konto zu verwalten",de_DE
+customer.login.submit,Sign in,en_US
+customer.login.submit,Anmelden,de_DE
+customer.login.terms,Terms,en_US
+customer.login.terms,AGB,de_DE
+customer.login.error,The email or password you entered is incorrect.,en_US
+customer.login.error,Die eingegebene E-Mail-Adresse oder das Passwort ist falsch.,de_DE
+customer.login.continue_as_guest,Continue as a guest,en_US
+customer.login.continue_as_guest,Als Gast fortfahren,de_DE
 customer.registration.title,Create account,en_US
 customer.registration.title,Ich bin Neukunde,de_DE
 customer.account.no_order,No orders at the moment,en_US
@@ -609,8 +621,6 @@ customer.password.invalid_password,Current password is wrong,en_US
 customer.password.invalid_password,Aktuelles Passwort ist falsch,de_DE
 customer.password.invalid,Password is invalid,en_US
 customer.password.invalid,Passwort ist ungültig,de_DE
-customer.password.restore,Set a new password,en_US
-customer.password.restore,Neues Passwort erstellen,de_DE
 customer.password.changed,Your password was changed successfully,en_US
 customer.password.changed,Ihr Passwort wurde erfolgreich geändert,de_DE
 customer.token.invalid,Token is invalid,en_US
@@ -621,6 +631,38 @@ customer.forgotten_password.email,Email Address,en_US
 customer.forgotten_password.email,E-Mail Adresse,de_DE
 customer.forgotten-password.title,Recover my password,en_US
 customer.forgotten-password.title,Passwort vergessen,de_DE
+customer.recovery.request.title,Forgot password?,en_US
+customer.recovery.request.title,Passwort vergessen?,de_DE
+customer.recovery.request.subtitle,Enter your work email and we'll send you a link to reset your password.,en_US
+customer.recovery.request.subtitle,"Geben Sie Ihre geschäftliche E-Mail-Adresse ein, und wir senden Ihnen einen Link zum Zurücksetzen Ihres Passworts.",de_DE
+customer.recovery.email_label,Work email,en_US
+customer.recovery.email_label,Geschäftliche E-Mail,de_DE
+customer.recovery.request.submit,Send reset link,en_US
+customer.recovery.request.submit,Link zum Zurücksetzen senden,de_DE
+customer.recovery.back_to_sign_in,Back to sign in,en_US
+customer.recovery.back_to_sign_in,Zurück zur Anmeldung,de_DE
+customer.recovery.sent.title,Check your email,en_US
+customer.recovery.sent.title,Überprüfen Sie Ihre E-Mail,de_DE
+customer.recovery.sent.text,"If an account exists for %email%, we've sent a link to reset your password.",en_US
+customer.recovery.sent.text,"Wenn ein Konto für %email% existiert, haben wir einen Link zum Zurücksetzen Ihres Passworts gesendet.",de_DE
+customer.recovery.sent.resend,Resend email,en_US
+customer.recovery.sent.resend,E-Mail erneut senden,de_DE
+customer.recovery.reset.title,Set a new password,en_US
+customer.recovery.reset.title,Neues Passwort erstellen,de_DE
+customer.recovery.reset.subtitle,Your new password must be different from previously used passwords.,en_US
+customer.recovery.reset.subtitle,Ihr neues Passwort muss sich von zuvor verwendeten Passwörtern unterscheiden.,de_DE
+customer.recovery.reset.new_label,New password,en_US
+customer.recovery.reset.new_label,Neues Passwort,de_DE
+customer.recovery.reset.confirm_label,Confirm password,en_US
+customer.recovery.reset.confirm_label,Passwort bestätigen,de_DE
+customer.recovery.reset.hint,"At least 8 characters, including a number and an uppercase letter.",en_US
+customer.recovery.reset.hint,"Mindestens 8 Zeichen, einschließlich einer Zahl und eines Großbuchstabens.",de_DE
+customer.recovery.reset.submit,Save password,en_US
+customer.recovery.reset.submit,Passwort speichern,de_DE
+customer.recovery.success.title,Password updated,en_US
+customer.recovery.success.title,Passwort aktualisiert,de_DE
+customer.recovery.success.text,Your password has been changed successfully. You can now sign in with your new password.,en_US
+customer.recovery.success.text,Ihr Passwort wurde erfolgreich geändert. Sie können sich jetzt mit Ihrem neuen Passwort anmelden.,de_DE
 customer.order.order_id,Order Id,en_US
 customer.order.order_id,Bestellnummer,de_DE
 customer.order.view_all,View All,en_US
@@ -1327,6 +1369,8 @@ product_review.product_ratings,Product Ratings,en_US
 product_review.product_ratings,Bewertungen,de_DE
 product_review.product_reviews,Product Reviews,en_US
 product_review.product_reviews,Rezensionen,de_DE
+product_review.reviews,Reviews,en_US
+product_review.reviews,Bewertungen,de_DE
 product_review.on,on,en_US
 product_review.on,am,de_DE
 product_review.summary.star,star,en_US
@@ -4109,8 +4153,6 @@ product_configurator_gateway_page.shopping_list_item_uuid_required,"Shopping Lis
 product_configurator_gateway_page.shopping_list_item_uuid_required,"Die Artikel-ID der Einkaufsliste ist ein erforderlicher Parameter.",de_DE
 product_configurator_gateway_page.configurator_key_is_not_supported,"Configurator key is not supported.",en_US
 product_configurator_gateway_page.configurator_key_is_not_supported,"Konfiguratorschlüssel wird nicht unterstützt.",de_DE
-demo_date_time_configurator_page.checkout.validation.error.price_is_not_valid,"Product configuration price is not valid",en_US
-demo_date_time_configurator_page.checkout.validation.error.price_is_not_valid,"Der Produktkonfigurationspreis ist ungültig",de_DE
 permission.name.SeeCompanyUsersPermissionPlugin,View company users,en_US
 permission.name.SeeCompanyUsersPermissionPlugin,Firmenbenutzer anzeigen,de_DE
 store_widget.switcher.store,Store:,en_US
@@ -4159,8 +4201,8 @@ comment.validation.error.customer_not_found,Customer not found.,en_US
 comment.validation.error.customer_not_found,Kunde nicht gefunden.,de_DE
 permission.name.CreateMerchantRelationRequestPermissionPlugin,Send Merchant Relation Request,en_US
 permission.name.CreateMerchantRelationRequestPermissionPlugin,Händlerbeziehungsanfrage senden,de_DE
-merchant_relation_request_widget.request_for_relation.link,Merchant Relation Request,en_US
-merchant_relation_request_widget.request_for_relation.link,Händlerbeziehungsanfrage,de_DE
+merchant_relation_request_widget.request_for_relation.link,Relation Request,en_US
+merchant_relation_request_widget.request_for_relation.link,Beziehungsanfrage,de_DE
 merchant_relation_request_widget.request_for_relation.button,Send Request,en_US
 merchant_relation_request_widget.request_for_relation.button,Anfrage senden,de_DE
 merchant_relation_request_widget.request_for_relation.details,Contact Details,en_US
@@ -6944,3 +6986,33 @@ Cost price not available. Margin cannot be calculated.,Cost price not available.
 Cost price not available. Margin cannot be calculated.,Kostenpreis nicht verfügbar. Marge kann nicht berechnet werden.,de_DE
 Cost price,Cost price,en_US
 Cost price,Kostenpreis,de_DE
+product.detail.in_stock,In stock,en_US
+product.detail.in_stock,Auf Lager,de_DE
+product.detail.out_of_stock_label,Out of stock,en_US
+product.detail.out_of_stock_label,Nicht auf Lager,de_DE
+product.detail.configure_product,Configure product,en_US
+product.detail.configure_product,Produkt konfigurieren,de_DE
+merchant_product_offer.change,Change,en_US
+merchant_product_offer.change,Ändern,de_DE
+merchant_product_offer.compare_sellers,Compare sellers,en_US
+merchant_product_offer.compare_sellers,Anbieter vergleichen,de_DE
+merchant_product_offer.hide_sellers,Hide sellers,en_US
+merchant_product_offer.hide_sellers,Verkäufer ausblenden,de_DE
+merchant_product_offer.show_all_sellers,Show all sellers,en_US
+merchant_product_offer.show_all_sellers,Alle Verkäufer anzeigen,de_DE
+merchant_product_offer.view_all_sellers,View all %count% sellers,en_US
+merchant_product_offer.view_all_sellers,Alle %count% Verkäufer anzeigen,de_DE
+merchant_product_offer.use_selected_seller,Use selected seller,en_US
+merchant_product_offer.use_selected_seller,Ausgewählten Verkäufer verwenden,de_DE
+merchant_product_offer.offers_count,%count% offers for this product,en_US
+merchant_product_offer.offers_count,%count% Angebote für dieses Produkt,de_DE
+shopping_list_widget.save_to_shopping_list,Save to shopping list,en_US
+shopping_list_widget.save_to_shopping_list,In Einkaufsliste speichern,de_DE
+shopping_list_widget.save_popup_description,Please select the shopping list and quantity to proceed,en_US
+shopping_list_widget.save_popup_description,"Bitte wählen Sie Einkaufsliste und Menge aus, um fortzufahren",de_DE
+shopping_list_widget.shopping_list_label,Shopping list,en_US
+shopping_list_widget.shopping_list_label,Einkaufsliste,de_DE
+general.save.button,Save,en_US
+general.save.button,Speichern,de_DE
+product.detail.select_options_notification,Please select relevant options before adding to cart!,en_US
+product.detail.select_options_notification,"Bitte wählen Sie die erforderlichen Optionen aus, bevor Sie den Artikel in den Warenkorb legen!",de_DE

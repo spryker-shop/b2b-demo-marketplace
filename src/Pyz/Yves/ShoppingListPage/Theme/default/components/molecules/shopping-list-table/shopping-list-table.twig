@@ -130,7 +130,6 @@
 
             {% block quantity %}
                 {% include molecule('quantity-counter') with {
-                    modifiers: ['shopping-list'],
                     data: {
                         isDisabled: not embed.isItemAvailable,
                         numberFormatConfig: embed.numberFormatConfig,

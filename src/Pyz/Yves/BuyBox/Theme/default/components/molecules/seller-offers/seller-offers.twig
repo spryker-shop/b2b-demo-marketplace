@@ -1,0 +1,60 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'seller-offers',
+} %}
+
+{% define data = {
+    offers: required,
+    selectedReference: null,
+    title: null,
+    visibleCount: 4,
+} %}
+
+{% block body %}
+    {% set firstOffer = data.offers | first %}
+    {% set selectedReference = data.selectedReference | default(firstOffer.productOfferReference | default) %}
+    {% set popupContentId = 'compare-sellers-' ~ (selectedReference | default('offer')) %}
+    {% set popupTriggerClass = 'js-compare-sellers__trigger-' ~ (selectedReference | default('offer')) %}
+
+    {% if data.title %}
+        <p class="title title--product-sold-by">{{ data.title }}</p>
+    {% endif %}
+
+    {% include molecule('seller-list', 'BuyBox') with {
+        data: {
+            offers: data.offers,
+            selectedReference: selectedReference,
+            visibleCount: data.visibleCount,
+            compareTriggerClass: popupTriggerClass,
+        },
+    } only %}
+
+    {% if data.offers | length > data.visibleCount %}
+        {% set sellerListContent %}
+            {% include molecule('seller-list', 'BuyBox') with {
+                data: {
+                    offers: data.offers,
+                    selectedReference: selectedReference,
+                    radioGroupName: 'product_offer_reference_modal',
+                    isCollapsible: false,
+                    hasApplyButton: true,
+                },
+            } only %}
+        {% endset %}
+
+        {% include molecule('main-popup') with {
+            class: 'compare-sellers',
+            data: {
+                title: 'merchant_product_offer.compare_sellers' | trans,
+                subtitle: 'merchant_product_offer.offers_count' | trans({ '%count%': data.offers | length }),
+                content: sellerListContent,
+            },
+            attributes: {
+                'content-id': popupContentId,
+                'trigger-class-name': popupTriggerClass,
+                'has-content-mount': true,
+            },
+        } only %}
+    {% endif %}
+{% endblock %}
