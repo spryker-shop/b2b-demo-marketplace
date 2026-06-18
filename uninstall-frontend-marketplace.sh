@@ -221,7 +221,7 @@ echo "✓ Dependencies updated"
 echo ""
 
 echo "Step 6: Installing required Babel packages..."
-npm install --save-dev @babel/core @babel/runtime
+npm install --save-dev @babel/core@^7.0.0 @babel/runtime@^7.0.0
 echo "✓ Babel packages installed"
 echo ""
 
