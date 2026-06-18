@@ -115,9 +115,13 @@ jobs:
                 id: run_tests
                 continue-on-error: true
                 if: env.CORE_SPECS != ''
+                # retries=2: a test that passes on retry is a flake (shard goes green,
+                # cypress logs it as "flaky"); one that fails all retries is a real
+                # failure (shard stays red). Classifies sharding-exposed flakes vs hard
+                # failures — mirrors robot-ui's rerun-failed pass.
                 run: |
                     docker/sdk exec --env "ENV_REPOSITORY_ID=${{ matrix.repository_id }}" --env "ENV_IS_SSP_ENABLED=true" cypress-tests \
-                        npx cypress run --headless --browser chrome --spec "$CORE_SPECS"
+                        npx cypress run --headless --browser chrome --config retries=2 --spec "$CORE_SPECS"
 
             -   name: Upload Screenshots
                 if: steps.run_tests.outcome == 'failure'
