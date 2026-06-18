@@ -5,11 +5,13 @@
         border-radius: var(--radius-sm);
         background: var(--background-page);
         height: var(--scale-40);
-        width: rem(112);
+        min-width: rem(112);
+        width: 100%;
+        justify-content: space-between;
 
         &--sm {
             height: var(--scale-32);
-            width: rem(96);
+            min-width: rem(96);
         }
 
         &--disabled {
@@ -63,10 +65,6 @@
                 color: var(--text-disabled);
                 pointer-events: none;
             }
-        }
-
-        &--right-space {
-            margin-right: var(--scale-12);
         }
     }
 }

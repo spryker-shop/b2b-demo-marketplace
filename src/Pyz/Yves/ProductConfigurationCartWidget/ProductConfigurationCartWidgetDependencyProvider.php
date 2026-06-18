@@ -9,7 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Yves\ProductConfigurationCartWidget;
 
-use SprykerShop\Yves\DateTimeConfiguratorPageExample\Plugin\ProductConfigurationCartWidget\ExampleDateTimeCartProductConfigurationRenderStrategyPlugin;
+use Pyz\Yves\WaterTreatmentConfiguratorPageExample\Plugin\ProductConfigurationCartWidget\ExampleWaterTreatmentCartProductConfigurationRenderStrategyPlugin;
 use SprykerShop\Yves\ProductConfigurationCartWidget\ProductConfigurationCartWidgetDependencyProvider as SprykerProductConfigurationCartWidgetDependencyProvider;
 
 class ProductConfigurationCartWidgetDependencyProvider extends SprykerProductConfigurationCartWidgetDependencyProvider
@@ -20,7 +20,7 @@ class ProductConfigurationCartWidgetDependencyProvider extends SprykerProductCon
     protected function getCartProductConfigurationRenderStrategyPlugins(): array
     {
         return [
-            new ExampleDateTimeCartProductConfigurationRenderStrategyPlugin(),
+            new ExampleWaterTreatmentCartProductConfigurationRenderStrategyPlugin(),
         ];
     }
 }
