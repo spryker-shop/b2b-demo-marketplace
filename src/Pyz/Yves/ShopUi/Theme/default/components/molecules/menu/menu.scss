@@ -109,6 +109,7 @@
             top: calc(100% + var(--scale-8));
             left: 0;
             transform: translateY(rem(-4));
+            transition-delay: 0.15s;
 
             @include helper-breakpoint-media-max($xl - 1) {
                 display: none;

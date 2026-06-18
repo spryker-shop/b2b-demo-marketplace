@@ -91,7 +91,7 @@
                                 class="{{ config.name }}__context-item {{ config.jsName }}__context-item{% if hasAssetLabel %} {{ config.name }}__context-item--filled{% endif %}"
                                 data-trigger-target='asset-selector [class*="js-asset-selector__trigger"]'
                             >
-                                {% include atom('icon') with { class: config.name ~ '__context-glyph', data: { name: 'assets' } } only %}
+                                {% include atom('font-icon') with { class: config.name ~ '__context-glyph', data: { name: 'link' } } only %}
                                 <span class="{{ config.name }}__context-text">
                                     {{ hasAssetLabel ? assetLabel : ('Add asset' | trans) }}
                                 </span>
@@ -102,7 +102,7 @@
                                 class="{{ config.name }}__context-item {{ config.jsName }}__context-item{% if hasNote %} {{ config.name }}__context-item--filled{% endif %}"
                                 data-trigger-target=".js-cart-item-note__edit, .js-cart-item-note__trigger"
                             >
-                                {% include atom('icon') with { class: config.name ~ '__context-glyph', data: { name: 'message' } } only %}
+                                {% include atom('font-icon') with { class: config.name ~ '__context-glyph', data: { name: 'mode_comment' } } only %}
                                 <span class="{{ config.name }}__context-text">
                                     {{ hasNote ? ('1 ' ~ ('Comment' | trans)) : ('Add comment' | trans) }}
                                 </span>

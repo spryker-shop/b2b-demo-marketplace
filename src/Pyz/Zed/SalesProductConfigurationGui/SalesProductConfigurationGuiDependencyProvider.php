@@ -9,8 +9,8 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\SalesProductConfigurationGui;
 
+use Pyz\Zed\WaterTreatmentConfiguratorPageExample\Communication\Plugin\SalesProductConfigurationGui\ExampleWaterTreatmentProductConfigurationRenderStrategyPlugin;
 use Spryker\Zed\SalesProductConfigurationGui\SalesProductConfigurationGuiDependencyProvider as SprykerSalesProductConfigurationGuiDependencyProvider;
-use SprykerShop\Zed\DateTimeConfiguratorPageExample\Communication\Plugin\SalesProductConfigurationGui\ExampleDateTimeProductConfigurationRenderStrategyPlugin;
 
 class SalesProductConfigurationGuiDependencyProvider extends SprykerSalesProductConfigurationGuiDependencyProvider
 {
@@ -20,7 +20,7 @@ class SalesProductConfigurationGuiDependencyProvider extends SprykerSalesProduct
     protected function getProductConfigurationRenderStrategyPlugins(): array
     {
         return [
-            new ExampleDateTimeProductConfigurationRenderStrategyPlugin(),
+            new ExampleWaterTreatmentProductConfigurationRenderStrategyPlugin(),
         ];
     }
 }
