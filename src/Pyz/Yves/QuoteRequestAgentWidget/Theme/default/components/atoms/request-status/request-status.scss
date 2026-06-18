@@ -1,4 +1,5 @@
 @use 'src/ShopUi/styles/shared' as *;
+@use 'ShopUi/components/atoms/badge/badge' as *;
 @mixin quote-request-agent-widget-request-status($name: '.request-status') {
     @include shop-ui-badge($name) {
         &--in-progress {

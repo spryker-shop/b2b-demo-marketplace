@@ -1,4 +1,6 @@
 @use 'src/ShopUi/styles/shared' as *;
+@use 'ShopUi/components/atoms/button/button' as *;
+@use 'ConfigurableBundlePage/components/molecules/configurator-button/configurator-button' as *;
 @mixin configurable-bundle-page-configurator-button($name: '.configurator-button') {
     @include shop-ui-button($name) {
         &--hollow {
