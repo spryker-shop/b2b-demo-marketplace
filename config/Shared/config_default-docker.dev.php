@@ -249,31 +249,23 @@ if (!getenv('SPRYKER_S3_MERCHANT_PRODUCT_DATA_IMPORT_FILES_BUCKET')) {
     ];
 }
 
-if (getenv('DATA_IMPORT_S3_BUCKET')) {
-    // should be fixed here CC-38218
-    $config[FileSystemConstants::FILESYSTEM_SERVICE]['product-experience-management-imports'] = [
-        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
-        'key' => getenv('DATA_IMPORT_S3_KEY') ?: '',
-        'bucket' => getenv('DATA_IMPORT_S3_BUCKET') ?: '',
-        'secret' => getenv('DATA_IMPORT_S3_SECRET') ?: '',
-        'root' => '/',
-        'path' => '/',
-        'version' => 'latest',
-        'region' => getenv('AWS_REGION'),
-    ];
-    $config[FileSystemConstants::FILESYSTEM_SERVICE]['product-experience-management-exports'] = [
-        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
-        'key' => getenv('DATA_IMPORT_S3_KEY') ?: '',
-        'bucket' => getenv('DATA_IMPORT_S3_BUCKET') ?: '',
-        'secret' => getenv('DATA_IMPORT_S3_SECRET') ?: '',
-        'root' => '/',
-        'path' => '/',
-        'version' => 'latest',
-        'region' => getenv('AWS_REGION'),
-    ];
+if (!getenv('SPRYKER_S3_PEM_IMPORT_BUCKET')) {
+      $config[FileSystemConstants::FILESYSTEM_SERVICE]['product-experience-management-imports'] = [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/data',
+        'path' => '/data/pim-imports',
+      ];
 }
 
-if (!getenv('SPRYKER_S3_SSP_ASSETS_BUCKET')) {
+if (!getenv('SPRYKER_S3_PEM_EXPORT_BUCKET')) {
+      $config[FileSystemConstants::FILESYSTEM_SERVICE]['product-experience-management-exports'] = [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => '/data',
+        'path' => '/data/pim-exports',
+      ];
+}
+
+if (!getenv('SPRYKER_S3_SSP_ASSET_IMAGES_BUCKET')) {
     $config[FileSystemConstants::FILESYSTEM_SERVICE]['ssp-inquiry'] = [
         'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
         'root' => '/data',
