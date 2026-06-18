@@ -11,12 +11,7 @@ namespace Pyz\Yves\SelfServicePortal;
 
 use Pyz\Yves\SelfServicePortal\Service\Handler\SingleAddressPerShipmentTypePreSubmitHandler;
 use SprykerFeature\Yves\SelfServicePortal\SelfServicePortalFactory as SprykerFeatureSelfServicePortalFactory;
-use SprykerFeature\Yves\SelfServicePortal\Service\Handler\SingleAddressPerShipmentTypePreSubmitHandlerInterface;
 
 class SelfServicePortalFactory extends SprykerFeatureSelfServicePortalFactory
 {
-    public function createSingleAddressPerShipmentTypePreSubmitHandler(): SingleAddressPerShipmentTypePreSubmitHandlerInterface
-    {
-        return new SingleAddressPerShipmentTypePreSubmitHandler($this->createAddressFormChecker());
-    }
 }
