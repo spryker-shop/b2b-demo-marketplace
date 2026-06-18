@@ -1,4 +1,5 @@
 @use 'src/ShopUi/styles/shared' as *;
+@use 'ConfigurableBundlePage/components/molecules/configurator-message/configurator-message' as *;
 @include configurable-bundle-page-configurator-message {
     margin: map-get($setting-spacing, 'default');
     border: none;
