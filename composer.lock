@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "975008cc24026a7498071721b65819fd",
+    "content-hash": "0f12f22d1aa6c8b653b5c1dd12ac8fb0",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -10514,16 +10514,16 @@
         },
         {
             "name": "spryker-feature/buy-box",
-            "version": "202604.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/buy-box.git",
-                "reference": "13b768479f3b579db54c990ac746e4fdbeba91da"
+                "reference": "b3eb54420863c634ca9356d7d6dbd126ad5190ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/buy-box/zipball/13b768479f3b579db54c990ac746e4fdbeba91da",
-                "reference": "13b768479f3b579db54c990ac746e4fdbeba91da",
+                "url": "https://api.github.com/repos/spryker-feature/buy-box/zipball/b3eb54420863c634ca9356d7d6dbd126ad5190ae",
+                "reference": "b3eb54420863c634ca9356d7d6dbd126ad5190ae",
                 "shasum": ""
             },
             "require": {
@@ -10548,6 +10548,7 @@
                 "spryker-shop/merchant-relation-request-widget": "Add the module if you want to use MerchantRelationRequestCreateLinkWidget.",
                 "spryker-shop/price-product-volume-widget": "Add the module if you want to use CurrentProductPriceVolumeWidget."
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -10565,9 +10566,9 @@
             ],
             "description": "BuyBox module",
             "support": {
-                "source": "https://github.com/spryker-feature/buy-box/tree/202604.0"
+                "source": "https://github.com/spryker-feature/buy-box/tree/master"
             },
-            "time": "2026-03-12T12:11:14+00:00"
+            "time": "2026-06-18T11:20:45+00:00"
         },
         {
             "name": "spryker-feature/cart",
@@ -92970,6 +92971,12 @@
             "alias_normalized": "202604.0"
         },
         {
+            "package": "spryker-feature/buy-box",
+            "version": "9999999-dev",
+            "alias": "202604.0",
+            "alias_normalized": "202604.0"
+        },
+        {
             "package": "spryker-feature/product-experience-management",
             "version": "9999999-dev",
             "alias": "202604.0",
@@ -92985,6 +92992,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "spryker-feature/ai-commerce": 20,
+        "spryker-feature/buy-box": 20,
         "spryker-feature/product-experience-management": 20,
         "spryker-feature/purchasing-control": 20,
         "spryker/cypress-tests": 20,
