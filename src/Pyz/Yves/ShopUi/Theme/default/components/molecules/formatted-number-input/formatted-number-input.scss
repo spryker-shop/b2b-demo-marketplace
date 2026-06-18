@@ -1,8 +1,9 @@
-@use 'src/ShopUi/styles/shared' as *;
-@import '../../atoms/input/input';
-
 @mixin shop-ui-formatted-number-input($name: '.formatted-number-input') {
     #{$name} {
-        @include shop-ui-input-extended(#{$name}__input);
+        min-width: rem(1);
+
+        &__input {
+            border: none;
+        }
     }
 }

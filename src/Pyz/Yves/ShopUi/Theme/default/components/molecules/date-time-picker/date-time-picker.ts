@@ -19,6 +19,7 @@ export default class DateTimePicker extends Component {
         this.calendarButton = this.querySelector<HTMLButtonElement>(`.${this.name}__calendar-button`);
         this.dateFromPicker = document.querySelector(`[data-id="${this.dateFromId}"]`);
         this.dateToPicker = document.querySelector(`[data-id="${this.dateToId}"]`);
+        console.log('enableTime', this.enableTime, this.getAttribute('enable-time'));
 
         this.mountEvents();
         this.datePickerInit();
@@ -32,7 +33,7 @@ export default class DateTimePicker extends Component {
     protected datePickerInit(): void {
         const config: Options = {
             locale: this.language === 'de' ? German : 'default',
-            enableTime: true,
+            enableTime: this.enableTime,
             ...this.config,
             onChange: (selectedDates, dateStr) => {
                 this.dateInput.value = dateStr;
@@ -66,5 +67,9 @@ export default class DateTimePicker extends Component {
 
     protected get language(): string {
         return this.getAttribute('language');
+    }
+
+    protected get enableTime(): boolean {
+        return this.hasAttribute('enable-time');
     }
 }

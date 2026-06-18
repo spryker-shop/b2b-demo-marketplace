@@ -10,6 +10,10 @@ export default class FlashMessage extends Component {
     protected readyCallback(): void {}
 
     protected init(): void {
+        if (this.classList.contains(`${this.name}--static`)) {
+            return;
+        }
+
         this.mapEvents();
         this.updateVisibleLimitFromDataset();
         FlashMessage.enqueue(this);

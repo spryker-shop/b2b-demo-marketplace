@@ -2,23 +2,23 @@
 @mixin product-review-average-review($name: '.review-average-display') {
     #{$name} {
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
         align-items: center;
-        color: $setting-color-gray-5;
-
-        @include helper-breakpoint-media-min($md) {
-            display: block;
-            max-width: rem(110);
-        }
+        gap: var(--scale-8);
+        max-width: rem(120);
+        margin: 0 auto;
+        text-align: center;
 
         @include helper-breakpoint-media-min($xl) {
-            max-width: rem(140);
+            margin-right: rem(var(--scale-64));
         }
 
         &__average-rating {
-            text-align: center;
-            font-size: rem(42);
-            font-weight: fw(bold);
+            color: var(--text-primary);
+            font-family: var(--heading-xl-family);
+            font-size: rem(var(--heading-xl-size));
+            font-weight: var(--heading-xl-weight);
+            line-height: rem(var(--heading-xl-line-height));
         }
 
         &__rating-selector {
@@ -27,14 +27,11 @@
         }
 
         &__total-review {
-            text-align: center;
-            font-size: rem(13);
-            font-weight: fw(regular);
-            white-space: nowrap;
-
-            @include helper-breakpoint-media-min($md) {
-                white-space: normal;
-            }
+            color: var(--text-secondary);
+            font-family: var(--body-sm-family);
+            font-size: rem(var(--body-sm-size));
+            font-weight: var(--body-sm-weight);
+            line-height: rem(var(--body-sm-line-height));
         }
     }
 }

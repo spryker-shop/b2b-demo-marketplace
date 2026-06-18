@@ -40,22 +40,23 @@ x-frontend-auth: &frontend-auth
 namespace: spryker-cloud
 tag: '1.0'
 
-environment: docker.dev
+environment: docker.prod
 image:
     tag: spryker/php:8.4
     environment:
-        SPRYKER_DNS_RESOLVER_IP: '10.105.0.2'
-        SPRYKER_HOOK_BEFORE_DEPLOY: 'vendor/bin/install -r EU/pre-deploy -vvv'
+        SPRYKER_HOOK_BEFORE_DEPLOY: 'vendor/bin/install -r pre-deploy -vvv'
         SPRYKER_HOOK_AFTER_DEPLOY: 'true'
-        SPRYKER_HOOK_INSTALL: 'vendor/bin/install -r EU/production --no-ansi -vvv'
+        SPRYKER_HOOK_INSTALL: 'vendor/bin/install -r production --no-ansi -vvv'
         SPRYKER_HOOK_DESTRUCTIVE_INSTALL: 'vendor/bin/install -r destructive --no-ansi -vvv'
-        SPRYKER_PRODUCT_CONFIGURATOR_HOST: demo-date-time-configurator.sns.sh01.demo-spryker.com
-        SPRYKER_PRODUCT_CONFIGURATOR_PORT: 443
+        SPRYKER_WATER_TREATMENT_CONFIGURATOR_HOST: demo-water-treatment-configurator.sns.sh01.demo-spryker.com
+        SPRYKER_WATER_TREATMENT_CONFIGURATOR_PORT: 443
         SPRYKER_PRODUCT_CONFIGURATOR_ENCRYPTION_KEY: 'change123'
         SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR: '0c1ffefeebdab4a3d839d0e52590c9a2'
+        SPRYKER_PUSH_NOTIFICATION_WEB_PUSH_PHP_VAPID_SUBJECT: 'https://spryker.com'
         SPRYKER_YVES_HOST_EU: yves.eu.sns.sh01.demo-spryker.com
-        SPRYKER_YVES_HOST_US: yves.us.sns.sh01.demo-spryker.com
         SPRYKER_DYNAMIC_STORE_MODE: true
+        SPRYKER_DEBUG_ENABLED: false
+        AWS_REGION: eu-central-1
     php:
         enabled-extensions:
             - otel
@@ -64,15 +65,9 @@ image:
             'opcache.revalidate_freq': 0
             'opcache.enable_cli': 0
             'opcache.enable': 0
-            'max_execution_time': 300
-            'request_terminate_timeout': 300
-            'upload_max_filesize': '100M'
-            'post_max_size': '100M'
-
     node:
         version: 24
         npm: 10
-
 composer:
     mode: --no-dev
     autoload: --classmap-authoritative
@@ -82,10 +77,7 @@ assets:
     mode: production
     compression:
         brotli:
-            static: true
-            level: 5
-        gzip:
-            static: true
+            static: on
             level: 5
 
 regions:
@@ -100,12 +92,11 @@ regions:
                 username: spryker
                 password: secret
             broker:
-                namespace: eu-docker
+                namespace: eu-docker-sns
             key_value_store:
-                namespace: 1
+                namespace: 10
             search:
-                namespace: eu_search
-
+                namespace: eu_search_sns
 groups:
     EU:
         region: EU
@@ -119,17 +110,17 @@ groups:
                         primal: true
                         services:
                             session:
-                                namespace: 7
+                                namespace: 11
             yves:
                 application: yves
                 endpoints:
-                    demo-date-time-configurator.sns.sh01.demo-spryker.com:
-                        entry-point: Configurator
+                    demo-water-treatment-configurator.sns.sh01.demo-spryker.com:
+                        entry-point: WaterTreatmentConfigurator
                     yves.eu.sns.sh01.demo-spryker.com:
                         region: EU
                         services:
                             session:
-                                namespace: 1
+                                namespace: 12
                 http:
                     max-request-body-size: 100M
             boffice:
@@ -140,7 +131,7 @@ groups:
                         primal: true
                         services:
                             session:
-                                namespace: 3
+                                namespace: 13
                 http:
                     max-request-body-size: 100M
             backgw:

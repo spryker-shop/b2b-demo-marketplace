@@ -13,6 +13,8 @@ use Pyz\Zed\DataImport\DataImportConfig;
 use Pyz\Zed\Development\Communication\Console\AcceptanceCodeTestConsole;
 use Pyz\Zed\Development\Communication\Console\ApiCodeTestConsole;
 use Pyz\Zed\Development\Communication\Console\FunctionalCodeTestConsole;
+use Pyz\Zed\SetupFrontend\Communication\Console\StorybookBuildFrontendConsole;
+use Pyz\Zed\WaterTreatmentConfiguratorPageExample\Communication\Console\WaterTreatmentProductConfiguratorBuildFrontendConsole;
 use SecurityChecker\Command\SecurityCheckerCommand;
 use Spryker\Zed\AclEntity\Communication\Console\AclEntityMetadataConfigValidateConsole;
 use Spryker\Zed\AclMerchantPortal\Communication\Console\AclEntitySynchronizeConsole;
@@ -213,7 +215,6 @@ use SprykerFeature\Zed\ProductExperienceManagement\Communication\Console\ImportJ
 use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 use SprykerSdk\Zed\AiDev\Communication\Console\AiToolSetupConsole;
 use SprykerSdk\Zed\AiDev\Communication\Console\McpServerConsole;
-use SprykerShop\Zed\DateTimeConfiguratorPageExample\Communication\Console\DateTimeProductConfiguratorBuildFrontendConsole;
 
 /**
  * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
@@ -404,6 +405,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new YvesBuildFrontendConsole(),
             new ZedBuildFrontendConsole(),
             new MerchantPortalBuildFrontendConsole(),
+            new StorybookBuildFrontendConsole(),
 
             new DeleteAllQueuesConsole(),
             new PurgeAllQueuesConsole(),
@@ -452,7 +454,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
 
             new MessageBrokerWorkerConsole(),
             new ScopeCacheCollectorConsole(),
-            new DateTimeProductConfiguratorBuildFrontendConsole(),
+            new WaterTreatmentProductConfiguratorBuildFrontendConsole(),
             new OrderMatrixConsole(),
             new AclEntitySynchronizeConsole(),
             new AclEntityMetadataConfigValidateConsole(),

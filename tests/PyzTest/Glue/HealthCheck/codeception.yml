@@ -1,0 +1,29 @@
+namespace: PyzTest\Glue\HealthCheck
+
+paths:
+    tests: .
+    data: _data
+    support: _support
+    output: _output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    RestApi:
+        actor: HealthCheckApiTester
+        modules:
+            enabled:
+                - Asserts
+                - \PyzTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper:
+                      projectNamespaces: ['Pyz']
+                - \SprykerTest\Glue\Testify\Helper\GlueRest
+                - \SprykerTest\Glue\Testify\Helper\JsonPath
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+            config:
+                \SprykerTest\Glue\Testify\Helper\GlueRest:
+                    depends: PhpBrowser
+                    part: Json

@@ -1,23 +1,42 @@
 @use 'src/ShopUi/styles/shared' as *;
 @mixin shop-ui-product-item-variant-selector($name: '.product-item-variant-selector') {
     #{$name} {
-        &__label {
-            font-size: rem(13);
-            font-weight: fw(medium);
-            line-height: normal;
-            color: $setting-color-gray-5;
-            margin-right: rem(6);
+        &__list {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: var(--scale-4) var(--scale-16);
+            padding: var(--scale-4) 0;
+            margin: 0;
+            list-style: none;
+        }
 
-            @include helper-breakpoint-media-min($lg) {
-                margin-right: rem(24);
-                font-size: rem(14);
-            }
+        &__item {
+            list-style: none;
+            margin: 0;
+        }
+
+        &__row {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--scale-8);
+            margin: 0;
+            cursor: pointer;
+        }
+
+        &__label {
+            font-family: var(--body-sm-family);
+            font-size: var(--body-sm-size);
+            font-weight: var(--font-weight-regular);
+            line-height: var(--body-sm-line-height);
+            color: var(--text-tertiary);
+            letter-spacing: var(--font-letter-spacing-normal);
+            margin: 0;
+            white-space: nowrap;
         }
 
         &__select {
-            @include helper-breakpoint-media-min($md) {
-                flex-grow: 0;
-            }
+            flex: 0 0 auto;
         }
 
         @content;

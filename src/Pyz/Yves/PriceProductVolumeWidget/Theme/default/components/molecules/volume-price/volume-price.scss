@@ -50,11 +50,13 @@
 
             #{$name}__amount {
                 display: block;
-                font-size: rem(16);
-                font-weight: fw(regular);
+                font-family: var(--label-sm-semibold-family);
+                font-size: rem(var(--label-sm-semibold-size));
+                font-weight: var(--label-sm-semibold-weight);
+                line-height: rem(var(--label-sm-semibold-line-height));
                 margin: 0;
                 padding-left: rem(10);
-                color: $setting-color-gray-5;
+                color: var(--text-primary);
 
                 &--original {
                     font-size: rem(14);
@@ -62,13 +64,79 @@
                 }
 
                 &--text-alt {
-                    color: $setting-color-alt;
+                    color: var(--text-primary);
                 }
             }
 
             #{$name}__mode {
                 font-size: rem(12);
                 line-height: rem(18);
+            }
+        }
+
+        &--seller {
+            display: inline-flex;
+            flex-direction: row-reverse;
+            align-items: baseline;
+            gap: var(--scale-4);
+            margin: 0;
+
+            #{$name}__amount {
+                margin: 0;
+                color: var(--text-primary);
+                font-family: var(--label-sm-semibold-family);
+                font-size: rem(var(--label-sm-semibold-size));
+                font-weight: var(--label-sm-semibold-weight);
+                line-height: rem(var(--label-sm-semibold-line-height));
+
+                &--original {
+                    color: var(--text-tertiary);
+                    font-weight: var(--font-weight-regular);
+                    text-decoration: line-through;
+                }
+            }
+
+            #{$name}__mode {
+                color: var(--text-secondary);
+                font-family: var(--body-sm-family);
+                font-size: rem(var(--body-sm-size));
+                font-weight: var(--font-weight-regular);
+                line-height: rem(var(--body-sm-line-height));
+            }
+        }
+
+        &--detail {
+            margin: 0;
+
+            #{$name}__amount {
+                font-family: var(--price-lg-family);
+                font-size: var(--price-lg-size);
+                font-weight: var(--price-lg-weight);
+                line-height: var(--price-lg-line-height);
+                letter-spacing: var(--price-lg-letter-spacing);
+                color: var(--text-primary);
+
+                &--text-alt {
+                    color: var(--text-primary);
+                }
+
+                &--original {
+                    font-family: var(--caption-family);
+                    font-size: var(--caption-size);
+                    font-weight: var(--caption-weight);
+                    line-height: var(--caption-line-height);
+                    letter-spacing: var(--caption-letter-spacing);
+                    color: var(--text-tertiary);
+                    text-decoration: line-through;
+                }
+            }
+
+            #{$name}__mode {
+                font-family: var(--body-sm-family);
+                font-size: var(--body-sm-size);
+                font-weight: var(--body-sm-weight);
+                line-height: var(--body-sm-line-height);
+                color: var(--text-tertiary);
             }
         }
 

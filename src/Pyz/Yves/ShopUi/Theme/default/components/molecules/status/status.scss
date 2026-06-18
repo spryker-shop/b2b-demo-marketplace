@@ -10,14 +10,16 @@
         display: none;
     }
 
+    &--availability,
     &--shipped,
     &--in-stock,
     &--never-out-of-stock,
     &--available,
     &--approved,
     &--ready,
-    &--paid,
-    &--delivered {
+    &--delivered,
+    &--refunded,
+    &--completed {
         @include helper-badge-semantic-subtle(success);
 
         &#{$name}--solid {
@@ -25,11 +27,26 @@
         }
     }
 
-    &--cancelled,
+    &--info,
+    &--commission-calculated,
+    &--paid,
+    &--processing,
+    &--in-progress,
+    &--confirmed,
+    &--pending-approval {
+        @include helper-badge-semantic-subtle(info);
+
+        &#{$name}--solid {
+            @include helper-badge-semantic-bold-background(info);
+        }
+    }
+
     &--ready-for-return,
     &--returned,
     &--waiting-for-return,
-    &--return-canceled {
+    &--return-canceled,
+    &--partially-fulfilled,
+    &--needs-attention {
         @include helper-badge-semantic-subtle(warning);
 
         &#{$name}--solid {
@@ -39,20 +56,13 @@
 
     &--out-of-stock,
     &--rejected,
-    &--not-configured {
+    &--not-configured,
+    &--cancelled,
+    &--failed {
         @include helper-badge-semantic-subtle(error);
 
         &#{$name}--solid {
             @include helper-badge-semantic-bold-background(error);
-        }
-    }
-
-    &--info,
-    &--availability {
-        @include helper-badge-semantic-subtle(info);
-
-        &#{$name}--solid {
-            @include helper-badge-semantic-bold-background(info);
         }
     }
 }

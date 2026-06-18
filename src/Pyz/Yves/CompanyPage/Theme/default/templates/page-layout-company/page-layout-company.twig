@@ -87,6 +87,7 @@
                             {% block postContent %}
                                  {% widget 'MerchantRelationshipMenuItemWidget' args [data.activePage] only %}{% endwidget %}
                                  {% widget 'MerchantRelationRequestMenuItemWidget' args [data.activePage] only %}{% endwidget %}
+                                 {% widget 'CostCenterMenuItemWidget' args [data.activePage] only %}{% endwidget %}
                             {% endblock %}
                         {% endembed %}
                     {% endblock %}
