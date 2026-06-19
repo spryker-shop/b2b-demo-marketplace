@@ -44,12 +44,18 @@ export default class QuantityCounter extends Component {
         const currentValue = this.currentValue;
 
         if (!Number.isFinite(currentValue) || currentValue < this.minQuantity) {
-            this.input.value = this.minQuantity.toString();
-            this.input.dispatchEvent(new Event('change'));
-            this.input.dispatchEvent(new Event('input'));
+            this.setValue(this.minQuantity);
+        } else if (currentValue > this.maxQuantity) {
+            this.setValue(this.maxQuantity);
         }
 
         this.updateDecrementState();
+    }
+
+    protected setValue(value: number): void {
+        this.input.value = value.toString();
+        this.input.dispatchEvent(new Event('change'));
+        this.input.dispatchEvent(new Event('input'));
     }
 
     protected updateDecrementState(): void {

@@ -1,0 +1,44 @@
+@mixin product-packaging-unit-widget-packaging-unit-cart($name: '.packaging-unit-cart') {
+    #{$name} {
+        &__list {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: var(--scale-4) var(--scale-16);
+            padding: var(--scale-4) 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        &__item {
+            list-style: none;
+            margin: 0;
+        }
+
+        &__row {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--scale-8);
+            margin: 0;
+        }
+
+        &__label {
+            font-family: var(--body-sm-family);
+            font-size: var(--body-sm-size);
+            font-weight: var(--font-weight-regular);
+            line-height: var(--body-sm-line-height);
+            color: var(--text-tertiary);
+            letter-spacing: var(--font-letter-spacing-normal);
+            margin: 0;
+            white-space: nowrap;
+        }
+
+        &__select {
+            flex: 0 0 auto;
+        }
+
+        @content;
+    }
+}
+
+@include product-packaging-unit-widget-packaging-unit-cart();

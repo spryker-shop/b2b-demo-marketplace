@@ -2,7 +2,7 @@
     #{$name} {
         margin-bottom: rem(12);
 
-        &:has(+ *) {
+        &:not(:last-child) {
             padding-bottom: var(--scale-16);
         }
 

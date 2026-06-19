@@ -6,8 +6,7 @@
 {% set productOffersCount = buyBoxWidget.products | length %}
 {% set showProductAvailability = isProductConcrete and productOffersCount == 0 %}
 {% set isAvailable = isProductConcrete and (data.product.available or productOffersCount) %}
-{% set isProductAbstract = not isProductConcrete %}
-{% set showAvailabilityNotification = (not isAvailable or not data.product.available) and not isProductAbstract %}
+{% set showAvailabilityNotification = (not isAvailable or not data.product.available) and isProductConcrete %}
 {% set hasConfigurableAttributes = data.product.attributeMap.superAttributes is defined and data.product.attributeMap.superAttributes is not empty %}
 
 {% block body %}

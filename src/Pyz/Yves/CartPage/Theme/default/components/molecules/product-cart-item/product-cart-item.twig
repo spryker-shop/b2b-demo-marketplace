@@ -67,6 +67,26 @@
 
                     {{ block('itemAttributes') }}
 
+                    {% block packagingUnit %}
+                        {% if (listItem.amountSalesUnit ?? null) is not empty or (listItem.quantitySalesUnit ?? null) is not empty %}
+                            <div class="{{ config.name }}__packaging-unit">
+                                {% include molecule('packaging-unit-cart', 'ProductPackagingUnitWidget') ignore missing with {
+                                    data: {
+                                        amount: listItem.amount,
+                                        quantity: listItem.quantity,
+                                        quantitySalesUnit: listItem.quantitySalesUnit,
+                                        quantityConversion: listItem.quantitySalesUnit ? listItem.quantitySalesUnit.conversion : null,
+                                        quantityProductMeasurementUnit: listItem.quantitySalesUnit ? listItem.quantitySalesUnit.productMeasurementUnit : null,
+                                        amountSalesUnit: listItem.amountSalesUnit,
+                                        amountConversion: listItem.amountSalesUnit ? listItem.amountSalesUnit.conversion : null,
+                                        amountProductMeasurementUnit: listItem.amountSalesUnit ? listItem.amountSalesUnit.productMeasurementUnit : null,
+                                        amountValue: listItem.amountSalesUnit ? listItem.amountSalesUnit.value : null,
+                                    },
+                                } only %}
+                            </div>
+                        {% endif %}
+                    {% endblock %}
+
                     {% widget 'ProductAttributeVisibilityCartWidget' args [data.list is iterable ? null : data.list, data.listItem.idProductAbstract, data.listItem.id] only %}
                         {% block body %}
                             {% set attributesBadgeClassName = "badge spacing-right--small spacing-bottom--small" %}
@@ -131,39 +151,17 @@
             <div class="{{ config.name }}__col {{ config.name }}__col--rail col">
                 {% block rail %}
                     {% block railQuantity %}
-                        {% set isAmountSalesUnitEmpty = (listItem.amountSalesUnit ?? null) is empty and (listItem.quantitySalesUnit ?? null) is empty and data.quantity is empty %}
+                        {% set hasSalesUnit = (listItem.amountSalesUnit ?? null) is not empty or (listItem.quantitySalesUnit ?? null) is not empty %}
 
-                        {% if isAmountSalesUnitEmpty %}
-                            <div class="{{ config.name }}__quantity-holder">
-                                {% include molecule('product-item-quantity') with {
-                                    data: {
-                                        productItem: listItem,
-                                        isDisabled: not data.canEdit,
-                                        ajaxTriggerAttribute: data.ajaxTriggerAttribute,
-                                    },
-                                } only %}
-                            </div>
-                        {% elseif widgetExists('CartProductPackagingUnitWidgetPlugin') %}
-                            <ul class="{{ config.name }}__packaging-unit">
-                                {{ widget('CartProductPackagingUnitWidgetPlugin', listItem) }}
-                            </ul>
-                        {% elseif listItem.amountSalesUnit is not empty %}
-                            <ul class="{{ config.name }}__packaging-unit">
-                                {% include molecule('packaging-unit-cart', 'ProductPackagingUnitWidget') ignore missing with {
-                                    data: {
-                                        amount: listItem.amount,
-                                        quantity: listItem.quantity,
-                                        quantitySalesUnit: listItem.quantitySalesUnit,
-                                        quantityConversion: listItem.quantitySalesUnit.conversion,
-                                        quantityProductMeasurementUnit: listItem.quantitySalesUnit.productMeasurementUnit,
-                                        amountSalesUnit: listItem.amountSalesUnit,
-                                        amountConversion: listItem.amountSalesUnit.conversion,
-                                        amountProductMeasurementUnit: listItem.amountSalesUnit.productMeasurementUnit,
-                                        amountValue: listItem.amountSalesUnit.value,
-                                    },
-                                } only %}
-                            </ul>
-                        {% endif %}
+                        <div class="{{ config.name }}__quantity-holder">
+                            {% include molecule('product-item-quantity') with {
+                                data: {
+                                    productItem: listItem,
+                                    isDisabled: not data.canEdit or hasSalesUnit,
+                                    ajaxTriggerAttribute: data.ajaxTriggerAttribute,
+                                },
+                            } only %}
+                        </div>
                     {% endblock %}
 
                     {% block priceZone %}
