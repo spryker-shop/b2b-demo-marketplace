@@ -97,13 +97,26 @@ jobs:
                     ./uninstall-frontend-marketplace.sh
                     ./uninstall-marketplace-modules.sh
 
+            -   uses: actions/download-artifact@v6
+                with:
+                    name: spryker-app-db
+
             -   name: Run project in Docker
+                # Build-once: restore the shared spryker-app-db dump (full_EU) instead of
+                # importing demodata per shard. ci.restore-db.stage2 rebuilds the codebase in
+                # the container and loads eu-docker.sql + publish/sync. Removes the per-shard
+                # publish race that left store-storage incomplete (defaultLocaleIsoCode null ->
+                # 500 in the StoreSwitcher widget); validate-sync-completeness makes any
+                # remaining incompleteness a hard build failure rather than a flaky test.
                 run: |
                     git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
                     docker/sdk boot .github/deploy/deploy.ci.acceptance.mariadb.cypress.yml
                     sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local' >> /etc/hosts"
-                    docker/sdk up -t
+                    SPRYKER_PIPELINE=ci.restore-db.stage2 docker/sdk up -t
                     docker/sdk cli composer dump-autoload -o -a --apcu -q
+
+            -   name: Validate sync completeness
+                uses: ./.github/actions/validate-sync-completeness
 
             -   name: Install Cypress
                 run: |
@@ -196,13 +209,26 @@ jobs:
                     sudo sysctl -w vm.max_map_count=262144
                     ulimit -n 65536
 
+            -   uses: actions/download-artifact@v6
+                with:
+                    name: spryker-app-db
+
             -   name: Run project in Docker
+                # Build-once: restore the shared spryker-app-db dump (full_EU) instead of
+                # importing demodata per shard. ci.restore-db.stage2 rebuilds the codebase in
+                # the container and loads eu-docker.sql + publish/sync. Removes the per-shard
+                # publish race that left store-storage incomplete (defaultLocaleIsoCode null ->
+                # 500 in the StoreSwitcher widget); validate-sync-completeness makes any
+                # remaining incompleteness a hard build failure rather than a flaky test.
                 run: |
                     git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
                     docker/sdk boot .github/deploy/deploy.ci.acceptance.mariadb.cypress.yml
                     sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local' >> /etc/hosts"
-                    docker/sdk up -t
+                    SPRYKER_PIPELINE=ci.restore-db.stage2 docker/sdk up -t
                     docker/sdk cli composer dump-autoload -o -a --apcu -q
+
+            -   name: Validate sync completeness
+                uses: ./.github/actions/validate-sync-completeness
 
             -   name: Install Cypress
                 run: |
