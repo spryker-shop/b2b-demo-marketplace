@@ -14418,12 +14418,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/self-service-portal.git",
-                "reference": "ddb5c5c7581b8f527bcbf0cd3ba40dc17aa773dd"
+                "reference": "a672a131b69711d5817882b96ff2ac4a187dc435"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/self-service-portal/zipball/ddb5c5c7581b8f527bcbf0cd3ba40dc17aa773dd",
-                "reference": "ddb5c5c7581b8f527bcbf0cd3ba40dc17aa773dd",
+                "url": "https://api.github.com/repos/spryker-feature/self-service-portal/zipball/a672a131b69711d5817882b96ff2ac4a187dc435",
+                "reference": "a672a131b69711d5817882b96ff2ac4a187dc435",
                 "shasum": ""
             },
             "require": {
@@ -14433,7 +14433,7 @@
                 "spryker-shop/customer-page-extension": "^1.6.0",
                 "spryker-shop/shop-application": "^1.0.0",
                 "spryker-shop/shop-application-extension": "^1.2.0",
-                "spryker-shop/shop-ui": "^1.100.1",
+                "spryker-shop/shop-ui": "^1.108.0",
                 "spryker/availability-storage-extension": "^1.0.0",
                 "spryker/cart-extension": "^4.2.0",
                 "spryker/cms-block-storage-extension": "^1.0.0",
@@ -14521,6 +14521,7 @@
             },
             "require-dev": {
                 "spryker-shop/service-point-widget": "*",
+                "spryker/api-platform": "*",
                 "spryker/catalog": "*",
                 "spryker/cms-block": "*",
                 "spryker/code-sniffer": "*",
@@ -14547,6 +14548,7 @@
             },
             "suggest": {
                 "spryker-shop/service-point-widget": "If you want to use the service point geo coordinates functionality, you need to install this module.",
+                "spryker/api-platform": "Required to expose SSP assets, inquiries, and booked services via the API Platform (storefront and backend REST endpoints).",
                 "spryker/catalog": "If you want to use the product class catalog feature, you need to install this module.",
                 "spryker/container": "Add this module when you want to use the Container."
             },
@@ -14571,7 +14573,7 @@
             "support": {
                 "source": "https://github.com/spryker-feature/self-service-portal/tree/master"
             },
-            "time": "2026-05-14T15:07:11+00:00"
+            "time": "2026-06-19T08:16:54+00:00"
         },
         {
             "name": "spryker-feature/service-points",
@@ -17776,16 +17778,16 @@
         },
         {
             "name": "spryker-shop/customer-page",
-            "version": "2.76.0",
+            "version": "2.80.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-shop/customer-page.git",
-                "reference": "576cfae14b86bc6ac594742009433f45c1f9aead"
+                "reference": "d6f6251eb2d28c1854a2fb6ee27b3df7b76d69b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-shop/customer-page/zipball/576cfae14b86bc6ac594742009433f45c1f9aead",
-                "reference": "576cfae14b86bc6ac594742009433f45c1f9aead",
+                "url": "https://api.github.com/repos/spryker-shop/customer-page/zipball/d6f6251eb2d28c1854a2fb6ee27b3df7b76d69b8",
+                "reference": "d6f6251eb2d28c1854a2fb6ee27b3df7b76d69b8",
                 "shasum": ""
             },
             "require": {
@@ -17821,6 +17823,7 @@
                 "spryker/validator": "^1.6.0"
             },
             "require-dev": {
+                "spryker-feature/purchasing-control": "*",
                 "spryker-shop/business-on-behalf-widget": "*",
                 "spryker-shop/cart-note-widget": "*",
                 "spryker-shop/customer-reorder-widget": "*",
@@ -17840,6 +17843,7 @@
                 "spryker/zed-request": "*"
             },
             "suggest": {
+                "spryker-feature/purchasing-control": "Add the module if you want to display cost center and budget information on the order detail page and to enable cost center and budget filters on the order history page.",
                 "spryker-shop/business-on-behalf-widget": "If you want to use BusinessOnBehalfWidget or MenuItemBusinessOnBehalfWidgetPlugin.",
                 "spryker-shop/cart-note-widget": "If you want to use components from module CartNoteWidget or CartNoteOrderNoteWidgetPlugin.",
                 "spryker-shop/cart-reorder-page": "If you want to use CartReorderItemCheckboxWidget or CartReorderWidget.",
@@ -17875,9 +17879,9 @@
             ],
             "description": "CustomerPage module",
             "support": {
-                "source": "https://github.com/spryker-shop/customer-page/tree/2.76.0"
+                "source": "https://github.com/spryker-shop/customer-page/tree/2.80.0"
             },
-            "time": "2026-05-11T14:53:10+00:00"
+            "time": "2026-06-19T11:20:50+00:00"
         },
         {
             "name": "spryker-shop/customer-page-extension",
@@ -23940,16 +23944,16 @@
         },
         {
             "name": "spryker-shop/shop-ui",
-            "version": "1.107.1",
+            "version": "1.109.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-shop/shop-ui.git",
-                "reference": "32ee336c4539b2b71fe8cb6fcec65300bcf889af"
+                "reference": "a6d60ec4b5a6913540000a82a2f680ebc5709aa1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-shop/shop-ui/zipball/32ee336c4539b2b71fe8cb6fcec65300bcf889af",
-                "reference": "32ee336c4539b2b71fe8cb6fcec65300bcf889af",
+                "url": "https://api.github.com/repos/spryker-shop/shop-ui/zipball/a6d60ec4b5a6913540000a82a2f680ebc5709aa1",
+                "reference": "a6d60ec4b5a6913540000a82a2f680ebc5709aa1",
                 "shasum": ""
             },
             "require": {
@@ -23966,6 +23970,7 @@
             },
             "require-dev": {
                 "spryker-eco/google-analytics": "*",
+                "spryker-shop/customer-page": "*",
                 "spryker-shop/newsletter-widget": "*",
                 "spryker-shop/product-group-widget": "*",
                 "spryker/code-sniffer": "*",
@@ -23976,6 +23981,7 @@
             "suggest": {
                 "spryker-eco/google-analytics": "If you want to use the traceable-events-google-analytics molecule for GA4 storefront tracking.",
                 "spryker-shop/asset-widget": "If you want to use components from module AssetWidget",
+                "spryker-shop/customer-page": "If you want to use the form-sort-submitter molecule from CustomerPage in the advanced-table molecule.",
                 "spryker-shop/money-widget": "If you want to use widgets from module MoneyWidget",
                 "spryker-shop/newsletter-widget": "If you want to use components from module NewsletterWidget.",
                 "spryker-shop/product-group-widget": "If you want to use components from module ProductGroupColorWidget or ProductGroupWidget",
@@ -23999,9 +24005,9 @@
             ],
             "description": "ShopUi module",
             "support": {
-                "source": "https://github.com/spryker-shop/shop-ui/tree/1.107.1"
+                "source": "https://github.com/spryker-shop/shop-ui/tree/1.109.1"
             },
-            "time": "2026-05-13T09:30:46+00:00"
+            "time": "2026-06-19T11:20:50+00:00"
         },
         {
             "name": "spryker-shop/shopping-list-note-widget",
@@ -78865,16 +78871,16 @@
         },
         {
             "name": "spryker/zed-request",
-            "version": "3.26.0",
+            "version": "3.27.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/zed-request.git",
-                "reference": "86e92f1d433c0ef9bb33d2f726944b83a7a6ddc9"
+                "reference": "0fa2a9f5f908da7bbf92091c4710d146a96ceae7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/zed-request/zipball/86e92f1d433c0ef9bb33d2f726944b83a7a6ddc9",
-                "reference": "86e92f1d433c0ef9bb33d2f726944b83a7a6ddc9",
+                "url": "https://api.github.com/repos/spryker/zed-request/zipball/0fa2a9f5f908da7bbf92091c4710d146a96ceae7",
+                "reference": "0fa2a9f5f908da7bbf92091c4710d146a96ceae7",
                 "shasum": ""
             },
             "require": {
@@ -78932,9 +78938,9 @@
             ],
             "description": "ZedRequest module",
             "support": {
-                "source": "https://github.com/spryker/zed-request/tree/3.26.0"
+                "source": "https://github.com/spryker/zed-request/tree/3.27.0"
             },
-            "time": "2026-02-24T16:46:56+00:00"
+            "time": "2026-06-19T14:13:28+00:00"
         },
         {
             "name": "spryker/zed-request-extension",
