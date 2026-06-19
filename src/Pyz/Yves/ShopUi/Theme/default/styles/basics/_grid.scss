@@ -1,4 +1,8 @@
 @use 'sass:math';
+@use '../settings/grid' as *;
+@use '../settings/breakpoint' as *;
+@use '../helpers/calc-rem' as *;
+@use '../helpers/breakpoint' as *;
 
 @mixin basic-grid() {
     .container {

@@ -1,20 +1,23 @@
-@forward '~ShopUi/styles/settings/z-index' with (
-    $setting-zi-element: 1,
-    $setting-zi-overlay: 650,
-    $setting-zi-header: 1160,
-    $setting-zi-side-drawer: 1200,
-    $setting-zi-notification-area: 1250,
-    $setting-zi-skip-link: 2000,
-);
+$setting-zi-element: 1;
+$setting-zi-ajax-dynamic-loader: 300;
+$setting-zi-element-floating: 350;
+$setting-zi-ajax-loader: 750;
+$setting-zi-navigation-top: 800;
+$setting-zi-popup: 550;
+$setting-zi-search-suggestions: 700;
+$setting-zi-under-layer: -1;
+$setting-zi-overlay: 650;
+$setting-zi-header: 1160;
+$setting-zi-side-drawer: 1200;
+$setting-zi-notification-area: 1250;
+$setting-zi-skip-link: 2000;
 
-// Project-only z-index variables not present in the vendor file
+// Project-only z-index variables
 $setting-zi-substrate: -1;
 $setting-zi-icon: 3;
 $setting-zi-company-menu: 10;
 $setting-zi-menu: 10;
-$setting-zi-overlay: 650;
 $setting-zi-dropdown: 1000;
 $setting-zi-custom-select: 1200;
-$setting-zi-header: 1160;
 $setting-zi-header-switcher: 1170;
 $setting-zi-header-overlay: 1170;

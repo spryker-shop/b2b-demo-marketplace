@@ -1,4 +1,7 @@
-@use 'src/ShopUi/styles/shared' as *;
+@use 'src/ShopUi/styles/settings/breakpoint' as *;
+@use '~ShopUi/styles/helpers/breakpoint' as *;
+@use '~ShopUi/styles/helpers/visibility' as *;
+
 @mixin util-visibility() {
     .is-hidden {
         display: none;

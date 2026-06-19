@@ -1,3 +1,6 @@
+@use '../helpers/ui' as *;
+@use '../helpers/calc-rem' as *;
+
 @mixin basic-typography() {
     html {
         font-size: var(--body-lg-size);

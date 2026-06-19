@@ -1,4 +1,4 @@
-// Settings: src versions forward vendor internally with project overrides applied via `with (...)`
+// Settings: project overrides defined as standalone variables (not @forward ... with, to avoid conflicts with legacy @import in basic.scss)
 @forward 'settings/breakpoint';
 @forward 'settings/color';
 @forward 'settings/effect';
