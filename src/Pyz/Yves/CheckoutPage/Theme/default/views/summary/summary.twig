@@ -184,7 +184,13 @@
     <div class="spacing-top--biggest">
         {% widget 'CostCenterSelectorWidget' args [data.cart] only %}{% endwidget %}
     </div>
-    
+
+    {% set recurringOrderSelectorWidget = findWidget('RecurringOrderSelectorWidget', [data.cart]) %}
+    {% if recurringOrderSelectorWidget and recurringOrderSelectorWidget.isVisible %}
+        <div class="spacing-top--biggest">
+            {% widget 'RecurringOrderSelectorWidget' args [data.cart] only %}{% endwidget %}
+        </div>
+    {% endif %}
 
     {% embed molecule('form') with {
         modifiers: ['checkout-form'],
