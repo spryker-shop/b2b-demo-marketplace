@@ -8,54 +8,55 @@
 } %}
 
 {% block body %}
-    {% set amountPerQuantity = data.amount.divide(data.quantity, data.countOfDecimalsInAmount).trim %}
-    {% set salesUnitName = data.quantitySalesUnit.productMeasurementUnit.name | default %}
-    {% set quantitySalesUnit = data.hasSubQuantity and salesUnitName is not empty and data.amount is empty %}
+    {% set quantityUnitName = data.quantitySalesUnit ? (data.quantitySalesUnit.productMeasurementUnit.name | default) : '' %}
+    {% set amountUnitName = data.amountSalesUnit ? (data.amountSalesUnit.productMeasurementUnit.name | default) : '' %}
 
-    {% if data.quantity is not empty %}
-        <li class="spacing-top">
-            {{ 'packaging_units.cart.quantity' | trans }}: {{ data.quantity | executeFilterIfExists('formatInt', app.locale) }}
-
-            {% if quantitySalesUnit %}
-                {% include atom('quantity-option') with {
-                    class: 'spacing-left',
-                    data: {
-                        value: data.quantity,
-                        precision: data.quantitySalesUnit.conversion,
-                        optionName: salesUnitName | trans,
-                    },
-                } only %}
-            {% endif %}
-
-            {% if data.hasSubQuantity and data.amount is not empty %}
-                {% set amountSalesUnitName = data.amountSalesUnit.productMeasurementUnit.name | default %}
-
-                {% embed atom('quantity-option') with {
-                    class: 'spacing-left',
-                    data: {
-                        value: data.amount,
-                        precision: data.quantity,
-                        optionName: amountSalesUnitName | trans,
-                    },
-                    embed: {
-                        countOfDecimalsInAmount: data.countOfDecimalsInAmount,
-                    },
-                } only %}
-                    {% block body %}
-                        {{ 'quantity_option.amount' | trans({
-                            '%value%': data.value.divide(data.precision, embed.countOfDecimalsInAmount).trim,
-                            '%name%': data.optionName,
-                        }) }}
-                    {% endblock %}
-                {% endembed %}
-            {% endif %}
-        </li>
-    {% endif %}
-
-    {% if data.amount is not empty %}
-        <li class="spacing-top">
-            {% set amountPerQuantityValue = data.hasAmountPerQuantity ? amountPerQuantity.toFloat() : data.amount.toFloat() %}
-            {{ 'packaging_units.cart.amount' | trans }}: {{ amountPerQuantityValue | executeFilterIfExists('formatFloat', app.locale) }}
-        </li>
-    {% endif %}
+    <ul class="{{ config.name }}__list">
+        {% if data.amount is not empty %}
+            {% set amountValue = data.amount.toFloat() | executeFilterIfExists('formatFloat', app.locale) %}
+            <li class="{{ config.name }}__item">
+                <div class="{{ config.name }}__row">
+                    <span class="{{ config.name }}__label">{{ 'packaging_units.cart.amount' | trans }}:</span>
+                    <span class="{{ config.name }}__field">
+                        <input type="text" class="input {{ config.name }}__amount-input"
+                               value="{{ amountValue }}" aria-label="{{ 'packaging_units.cart.amount' | trans }}" disabled>
+                    </span>
+                    {% if amountUnitName is not empty %}
+                        <span class="{{ config.name }}__field">
+                            {% include molecule('custom-select') with {
+                                modifiers: ['small', 'mobile-expand', 'mobile-xs'],
+                                data: {
+                                    label: amountUnitName | trans,
+                                    options: [{ label: amountUnitName | trans, value: amountUnitName, selected: true }],
+                                },
+                                attributes: {
+                                    disabled: true,
+                                    'config-theme': 'small',
+                                },
+                            } only %}
+                        </span>
+                    {% endif %}
+                </div>
+            </li>
+        {% elseif quantityUnitName is not empty %}
+            <li class="{{ config.name }}__item">
+                <div class="{{ config.name }}__row">
+                    <span class="{{ config.name }}__label">{{ 'packaging_units.cart.units' | trans }}:</span>
+                    <span class="{{ config.name }}__field">
+                        {% include molecule('custom-select') with {
+                            modifiers: ['small', 'mobile-expand', 'mobile-xs'],
+                            data: {
+                                label: quantityUnitName | trans,
+                                options: [{ label: quantityUnitName | trans, value: quantityUnitName, selected: true }],
+                            },
+                            attributes: {
+                                disabled: true,
+                                'config-theme': 'small',
+                            },
+                        } only %}
+                    </span>
+                </div>
+            </li>
+        {% endif %}
+    </ul>
 {% endblock %}

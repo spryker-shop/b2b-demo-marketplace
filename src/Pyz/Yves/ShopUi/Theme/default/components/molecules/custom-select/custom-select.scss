@@ -35,6 +35,11 @@
             color: var(--icon-primary);
         }
 
+        &:has(.select2-container--disabled) &__caret,
+        &:has(.custom-select__select[disabled]) &__caret {
+            color: var(--icon-disabled);
+        }
+
         &__icon {
             flex-shrink: 0;
             pointer-events: none;
@@ -245,10 +250,17 @@
 
             &--disabled {
                 cursor: not-allowed;
+
+                .select2-selection__rendered {
+                    color: var(--input-text-disabled);
+                    border-color: var(--input-border-disabled);
+                    background: var(--input-background-disabled);
+                    cursor: not-allowed;
+                }
             }
 
             &--open {
-                z-index: $setting-zi-side-drawer;
+                z-index: $setting-zi-side-drawer + 3;
             }
         }
 

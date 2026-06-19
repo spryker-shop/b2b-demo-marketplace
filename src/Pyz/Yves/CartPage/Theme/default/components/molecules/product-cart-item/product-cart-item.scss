@@ -98,8 +98,13 @@
             margin-bottom: rem(var(--scale-6));
         }
 
+        &__packaging-unit,
         &__variant-selector {
-            margin-bottom: rem(var(--scale-6));
+            margin-bottom: var(--scale-4);
+
+            &:last-child {
+                margin-bottom: var(--scale-8);
+            }
         }
 
         &__meta-item {

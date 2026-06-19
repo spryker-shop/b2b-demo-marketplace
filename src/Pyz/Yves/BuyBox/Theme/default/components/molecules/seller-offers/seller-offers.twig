@@ -7,7 +7,6 @@
 {% define data = {
     offers: required,
     selectedReference: null,
-    title: null,
     visibleCount: 4,
 } %}
 
@@ -16,10 +15,6 @@
     {% set selectedReference = data.selectedReference | default(firstOffer.productOfferReference | default) %}
     {% set popupContentId = 'compare-sellers-' ~ (selectedReference | default('offer')) %}
     {% set popupTriggerClass = 'js-compare-sellers__trigger-' ~ (selectedReference | default('offer')) %}
-
-    {% if data.title %}
-        <p class="title title--product-sold-by">{{ data.title }}</p>
-    {% endif %}
 
     {% include molecule('seller-list', 'BuyBox') with {
         data: {
