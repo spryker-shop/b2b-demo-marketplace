@@ -37,7 +37,7 @@
 
         <meta itemprop="inProductGroupWithID" content="{{ data.product.idProductAbstract }}">
 
-        <div class="grid grid--gap grid--justify">
+        <div class="grid grid--justify">
             <div class="page-layout-main__pdp-gallery">
                 {% include molecule('image-gallery', 'ProductImageWidget') ignore missing with {
                     data: {
@@ -47,48 +47,21 @@
                 } only %}
             </div>
 
-            <div class="col col--sm-12 col--lg-5">
-                <h1 itemprop="name" class="page-info__title title title--h3">{{ data.product.name }}</h1>
-                {% widget 'ProductAbstractLabelWidget' args [data.product.idProductAbstract] only %}
-                    {% block body %}
-                        {% if labels | length %}
-                            {% include molecule('label-group', 'ProductLabelWidget') with {
-                                modifiers: ['pdp'],
-                                data: {
-                                    labels: labels
-                                }
-                            } only %}
-                        {% endif %}
-                    {% endblock %}
-                {% endwidget %}
-                {% include molecule('product-configurator', 'ProductDetailPage') with {
-                    data: {
-                        product: data.product,
-                    },
-                } only %}
-            </div>
+            {% include molecule('product-configurator', 'ProductDetailPage') with {
+                data: {
+                    product: data.product,
+                },
+            } only %}
         </div>
 
         {% widget 'ProductAlternativeListWidget' args [data.product] only %}{% endwidget %}
 
-        <div class="js-pdp-section">
-            {% include molecule('product-detail', 'ProductDetailPage') with {
-                data: {
-                    description: data.product.description,
-                    attributes: data.product.attributes,
-                    attachments: data.product.attachments | default([]),
-                    product: data.product,
-                },
-            } only %}
-
-            {% widget 'ProductDetailPageReviewWidget' args [data.product.idProductAbstract] only %}{% endwidget %}
-        </div>
-
-        {% include molecule('toggler-accordion') with {
-            attributes: {
-                'wrap-class-name': 'js-pdp-section',
-                'trigger-class-name': 'js-pdp-section__trigger',
-                'class-to-toggle': 'is-hidden-sm-md',
+        {% include molecule('product-detail', 'ProductDetailPage') with {
+            data: {
+                description: data.product.description,
+                attributes: data.product.attributes,
+                attachments: data.product.attachments | default([]),
+                product: data.product,
             },
         } only %}
 

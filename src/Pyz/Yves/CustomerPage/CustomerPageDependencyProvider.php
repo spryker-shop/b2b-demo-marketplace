@@ -14,6 +14,8 @@ use Spryker\Yves\MerchantShipment\Plugin\CustomerPage\MerchantShipmentCheckoutAd
 use Spryker\Yves\MultiFactorAuth\Plugin\AuthenticationHandler\Customer\CustomerMultiFactorAuthenticationHandlerPlugin;
 use Spryker\Yves\SecurityOauthKnpu\Plugin\CustomerPage\KnpuCustomerAuthenticationLinkPlugin;
 use Spryker\Yves\SecurityOauthKnpu\Plugin\CustomerPage\KnpuOauthCustomerClientStrategyPlugin;
+use SprykerFeature\Yves\PurchasingControl\Plugin\CustomerPage\CostCenterOrderSearchFormExpanderPlugin; #PurchasingControlFeature
+use SprykerFeature\Yves\PurchasingControl\Plugin\CustomerPage\CostCenterOrderSearchFormHandlerPlugin; #PurchasingControlFeature
 use SprykerFeature\Yves\SelfServicePortal\Plugin\CustomerPage\SingleAddressPerShipmentTypeCheckoutMultiShippingAddressesFormExpanderPlugin;
 use SprykerShop\Yves\AgentPage\Plugin\Security\UpdateAgentTokenAfterCustomerAuthenticationSuccessPlugin;
 use SprykerShop\Yves\ClickAndCollectPageExample\Plugin\CustomerPage\ClickAndCollectServiceTypeCheckoutAddressCollectionFormExpanderPlugin;
@@ -109,6 +111,7 @@ class CustomerPageDependencyProvider extends SprykerShopCustomerPageDependencyPr
     {
         return [
             new CompanyBusinessUnitOrderSearchFormExpanderPlugin(),
+            new CostCenterOrderSearchFormExpanderPlugin(), #PurchasingControlFeature
         ];
     }
 
@@ -119,6 +122,7 @@ class CustomerPageDependencyProvider extends SprykerShopCustomerPageDependencyPr
     {
         return [
             new CompanyBusinessUnitOrderSearchFormHandlerPlugin(),
+            new CostCenterOrderSearchFormHandlerPlugin(), #PurchasingControlFeature
         ];
     }
 

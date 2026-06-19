@@ -6,39 +6,74 @@
 {% set productOffersCount = buyBoxWidget.products | length %}
 {% set showProductAvailability = isProductConcrete and productOffersCount == 0 %}
 {% set isAvailable = isProductConcrete and (data.product.available or productOffersCount) %}
+{% set showAvailabilityNotification = (not isAvailable or not data.product.available) and isProductConcrete %}
+{% set hasConfigurableAttributes = data.product.attributeMap.superAttributes is defined and data.product.attributeMap.superAttributes is not empty %}
 
 {% block body %}
-    <div class="{{ config.name }}__top-block">
-        {% widget 'ProductDetailPageReviewWidget' args [data.product.idProductAbstract] use view('pdp-review-rating', 'ProductReviewWidget') only %}{% endwidget %}
-        <div class="{{ config.name }}__brand-sku-wrapper">
-            {% if brand is not empty %}
-                <div itemprop="brand" class="{{ config.name }}__brand-name">{{ brand }}</div>
-            {% endif %}
-            <div class="{{ config.name }}__sku">{{ 'product.attribute.sku' | trans }}: <span itemprop="sku">{{ sku }}</span></div>
-        </div>
-    </div>
-
     {% set isDisabled = isDisabled or not data.product.available %}
-    {% if showProductAvailability %}
-        {% widget 'ProductAvailabilityWidget' args [data.product] only %}{% endwidget %}
-    {% endif %}
-    {% if can('SeePricePermissionPlugin') %}
-        {% if (sspServiceDetectorWidget and sspServiceDetectorWidget.isService) %}
-            {% widget 'SspProductOfferPriceWidget' args [data.product] only %}{% endwidget %}
-        {% else %}
-            {% widget 'CurrentProductPriceVolumeWidget' args [data.product.currentProductPrice] only %}
-            {% elsewidget 'ProductPriceVolumeWidget' args [data.product] only %} {# @deprecated Use CurrentProductPriceVolumeWidget instead. #}
-            {% nowidget %}
-                {% include molecule('money-price') with {
-                    modifiers: ['big'],
-                    data: {
-                        amount: data.product.price,
-                        originalAmount: data.product.prices.ORIGINAL ?? null,
-                    },
-                } only %}
+    {% set isAddToCartDisabled = isProductConcrete and isDisabled %}
+    {% set saveToListTriggerClass = config.jsName ~ '__save-to-list-trigger-' ~ data.product.sku %}
+
+    <div class="{{ config.name }}__top">
+        <div class="{{ config.name }}__top-block">
+            <h1 itemprop="name" class="{{ config.name }}__title title title--h4">{{ data.product.name }}</h1>
+
+            {% widget 'ProductAbstractLabelWidget' args [data.product.idProductAbstract] only %}
+                {% block body %}
+                    {% if labels | length %}
+                        {% include molecule('label-group', 'ProductLabelWidget') with {
+                            modifiers: ['pdp'],
+                            data: {
+                                labels: labels,
+                            },
+                        } only %}
+                    {% endif %}
+                {% endblock %}
             {% endwidget %}
+
+            {% if brand is not empty %}
+                <span itemprop="brand" class="{{ config.name }}__brand-name">{{ brand }}</span>
+            {% endif %}
+
+            <div class="{{ config.name }}__meta-row">
+                <span class="{{ config.name }}__sku">{{ 'product.attribute.sku' | trans }}: <span itemprop="sku">{{ sku }}</span></span>
+
+                {% widget 'ProductDetailPageReviewWidget' args [data.product.idProductAbstract] use view('pdp-review-rating', 'ProductReviewWidget') only %}{% endwidget %}
+
+                {% if showProductAvailability %}
+                    {% widget 'ProductAvailabilityWidget' args [data.product] only %}{% endwidget %}
+                {% endif %}
+            </div>
+        </div>
+
+        {% if can('SeePricePermissionPlugin') %}
+            <div class="{{ config.name }}__price-block">
+                {% if (sspServiceDetectorWidget and sspServiceDetectorWidget.isService) %}
+                    {% widget 'SspProductOfferPriceWidget' args [data.product] only %}{% endwidget %}
+                {% elseif productOffersCount %}
+                    {% set selectedOfferReference = data.product.productOfferReference | default %}
+                    {% for offerProduct in buyBoxWidget.products %}
+                        {% set offerReference = offerProduct.productOfferReference | default %}
+                        <div data-product-price-offer="{{ offerReference }}"{{ offerReference is same as(selectedOfferReference) ? '' : ' class="is-hidden"' }}>
+                            {% widget 'CurrentProductPriceVolumeWidget' args [offerProduct.price] only %}{% endwidget %}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    {% widget 'CurrentProductPriceVolumeWidget' args [data.product.currentProductPrice] only %}
+                    {% elsewidget 'ProductPriceVolumeWidget' args [data.product] only %} {# @deprecated Use CurrentProductPriceVolumeWidget instead. #}
+                    {% nowidget %}
+                        {% include molecule('money-price') with {
+                            modifiers: ['row', 'big', 'detail'],
+                            data: {
+                                amount: data.product.price,
+                                originalAmount: data.product.prices.ORIGINAL ?? null,
+                            },
+                        } only %}
+                    {% endwidget %}
+                {% endif %}
+            </div>
         {% endif %}
-    {% endif %}
+    </div>
 
     {% block bundleProducts %}
         {% widget 'ProductBundleProductDetailPageItemsListWidget' args [data.product] only %}{% endwidget %}
@@ -48,17 +83,21 @@
         {% widget 'ProductGroupColorWidget' args [data.product.idProductAbstract, data.product.selectedAttributes ?? []] use view('product-detail-color-selector', 'ProductGroupWidget') only %}{% endwidget %}
     {% endblock %}
 
-    {% include molecule('variant-configurator', 'ProductDetailPage') with {
-        data: {
-            superAttributes: data.product.attributeMap.superAttributes,
-            selectedAttributes: data.product.selectedAttributes,
-            availableAttributes: data.product.availableAttributes,
-        },
-    } only %}
+    {% if hasConfigurableAttributes %}
+        <p class="{{ config.name }}__section-title">{{ 'product.detail.configure_product' | trans }}</p>
+        <div class="{{ config.name }}__config">
+            {% include molecule('variant-configurator', 'ProductDetailPage') with {
+                data: {
+                    superAttributes: data.product.attributeMap.superAttributes,
+                    selectedAttributes: data.product.selectedAttributes,
+                    availableAttributes: data.product.availableAttributes,
+                },
+            } only %}
+        </div>
+    {% endif %}
 
     {% widget 'ProductConfigurationProductViewDisplayWidget' args [data.product] only %}{% endwidget %}
     {% widget 'ProductConfigurationProductDetailPageButtonWidget' args [data.product] only %}{% endwidget %}
-
 
     {% widget 'AddToCartFormWidget' args [config, data.product, isDisabled, options] with {
         data: {
@@ -68,75 +107,95 @@
         embed: {
             showProductAvailability: showProductAvailability,
             buyBoxWidget: buyBoxWidget,
+            isAddToCartDisabled: isAddToCartDisabled,
+            saveToListTriggerClass: saveToListTriggerClass,
+            showAvailabilityNotification: showAvailabilityNotification,
         },
     } only %}
         {% block embeddedData %}
-            {% widget 'ProductOptionConfiguratorWidget' args [data.product] only %}{% endwidget %}
             {% set shipmentTypeServicePointSelectorWidget = findWidget('SspShipmentTypeServicePointSelectorWidget', [data.product, data.isDisabled]) %}
 
             {% if not shipmentTypeServicePointSelectorWidget %}
                 {% set shipmentTypeServicePointSelectorWidget = findWidget('ShipmentTypeServicePointSelectorWidget', [data.product, data.isDisabled]) %}
             {% endif %}
 
-            {% if can('SeeAddToCartPermissionPlugin') %}
-                {% widget shipmentTypeServicePointSelectorWidget only %}{% endwidget %}
+            <div class="{{ data.config.name }}__form">
+                {% widget 'ProductOptionConfiguratorWidget' args [data.product] only %}{% endwidget %}
 
-                {% widget 'SspItemAssetSelectorWidget' args [data.product, data.isDisabled] only %}{% endwidget %}
+                {% if not shipmentTypeServicePointSelectorWidget or not shipmentTypeServicePointSelectorWidget.hasShipmentTypeWithRequiredLocation %}
+                    {% widget embed.buyBoxWidget only %}{% endwidget %}
+                {% endif %}
 
-                <div class="{{ data.config.name }}__add-to-cart">
-                    {% widget 'ProductPackagingUnitWidget' args [data.product, data.isDisabled, data.options] only %}
-                    {% elsewidget 'ManageProductMeasurementUnitWidget' args [data.product, data.isDisabled, data.options] only %}
-                    {% nowidget %}
-                        <div class="grid grid--stretch grid--justify">
-                            {% include molecule('quantity-counter') with {
-                                modifiers: ['right-space'],
-                                data: {
-                                    isDisabled: data.isDisabled,
-                                },
-                            } only %}
+                {% if can('SeeAddToCartPermissionPlugin') %}
+                    {% widget shipmentTypeServicePointSelectorWidget only %}{% endwidget %}
 
-                            <div class="col">
+                    <div class="{{ data.config.name }}__add-to-cart">
+                        {% widget 'ProductPackagingUnitWidget' args [data.product, embed.isAddToCartDisabled, data.options] only %}
+                        {% elsewidget 'ManageProductMeasurementUnitWidget' args [data.product, embed.isAddToCartDisabled, data.options] only %}
+                        {% nowidget %}
+                            <p class="product-configurator__field-label">{{ 'cart.item_quantity' | trans }}</p>
+                            <div class="product-configurator__cta-row">
+                                {% include molecule('quantity-counter') with {
+                                    data: {
+                                        isDisabled: embed.isAddToCartDisabled,
+                                        inputExtraClasses: 'js-volume-price__quantity',
+                                    },
+                                } only %}
+
                                 <button
-                                    class="button button--alternative button--big button--expand button--no-horizontal-padding"
-                                    {{ data.isDisabled ? 'disabled' : 'data-init-single-click' }}
+                                    type="submit"
+                                    class="button button--lg button--expand product-configurator__add-to-cart-button"
+                                    data-init-single-click
                                     {{ qa('add-to-cart-button') }}
                                 >
-                                    {% include atom('icon') with {
-                                        modifiers: ['cart-plus'],
+                                    {% include atom('font-icon') with {
                                         data: {
-                                            name: 'cart-plus',
+                                            name: 'shopping_cart',
                                         },
                                     } only %}
                                     {{ 'page.detail.add-to-cart' | trans }}
                                 </button>
                             </div>
-                        </div>
-                    {% endwidget %}
-                </div>
+                        {% endwidget %}
 
-                {% widget 'AddToMultiCartWidget' args [data.isDisabled] only %}{% endwidget %}
+                        {% if can('SeeShoppingListPermissionPlugin') %}
+                            <button
+                                type="button"
+                                class="button button--hollow button--expand {{ data.config.name }}__save-to-list js-save-to-shopping-list__trigger {{ embed.saveToListTriggerClass }}"
+                                {{ qa('save-to-shopping-list-trigger') }}
+                            >
+                                {{ 'shopping_list_widget.save_to_shopping_list' | trans }}
+                            </button>
+                        {% endif %}
+                    </div>
 
-                {% widget 'CartAddProductAsSeparateItemWidget' only %}{% endwidget %}
-            {% endif %}
+                    {% widget 'AddToMultiCartWidget' args [data.isDisabled] only %}{% endwidget %}
 
+                    {% widget 'CartAddProductAsSeparateItemWidget' only %}{% endwidget %}
+                {% elseif not is_granted('ROLE_USER') and not embed.showAvailabilityNotification %}
+                    <a
+                        href="{{ url('login') }}"
+                        class="button button--hollow button--expand {{ data.config.name }}__sign-in"
+                    >
+                        {{ 'product.detail.sign_in_to_see_prices' | trans }}
+                    </a>
+                {% endif %}
 
-            {% if not shipmentTypeServicePointSelectorWidget or not shipmentTypeServicePointSelectorWidget.hasShipmentTypeWithRequiredLocation %}
-                <div class="spacing-bottom spacing-bottom--bigger">
-                    {% widget embed.buyBoxWidget only %}{% endwidget %}
-                </div>
-            {% endif %}
+                {% if can('SeeAddToCartPermissionPlugin') %}
+                    {% widget 'SspItemAssetSelectorWidget' args [data.product, data.isDisabled] only %}{% endwidget %}
+                {% endif %}
+            </div>
         {% endblock %}
     {% endwidget %}
 
 
-    {% if (not isAvailable or not data.product.available) and not isProductAbstract %}
+    {% if showAvailabilityNotification %}
         {% widget 'AvailabilityNotificationSubscriptionWidget' args [data.product] only %}{% endwidget %}
     {% endif %}
 
     {% if can('SeeShoppingListPermissionPlugin') %}
-        {% widget 'AddToShoppingListWidget' args [sku, isDisabled, data.product] only %}{% endwidget %}
+        {% widget 'AddToShoppingListWidget' args [sku, isDisabled, data.product] with { triggerClass: saveToListTriggerClass } only %}{% endwidget %}
     {% endif %}
 
     {% widget 'ProductDiscontinuedNoteWidget' args [sku] only %}{% endwidget %}
-
 {% endblock %}

@@ -3899,8 +3899,6 @@ product_configuration.validation.error.expired_timestamp,"Expired timestamp was 
 product_configuration.validation.error.expired_timestamp,"Der abgelaufene Zeitstempel wurde bereitgestellt",de_DE
 product_configuration_storage.validation.error.group_key_is_not_provided,"Group key must be provided",en_US
 product_configuration_storage.validation.error.group_key_is_not_provided,"Gruppenschlüssel muss angegeben werden",de_DE
-demo_date_time_configurator_page.checkout.validation.error.price_is_not_valid,"Product configuration price is not valid",en_US
-demo_date_time_configurator_page.checkout.validation.error.price_is_not_valid,"Der Produktkonfigurationspreis ist ungültig",de_DE
 product_configuration.access_token.request.error.can_not_obtain_access_token,"Can not obtain access token",en_US
 product_configuration.access_token.request.error.can_not_obtain_access_token,"Zugriffstoken kann nicht abgerufen werden",de_DE
 product_configuration.error.configured_item_not_found_in_cart,Configured product '%sku%' was not found.,en_US
@@ -5368,3 +5366,249 @@ purchasing_control.validation.require-approval,This order exceeds the budget. Pl
 purchasing_control.validation.require-approval,Diese Bestellung überschreitet das Budget. Bitte senden Sie sie zur Genehmigung.,de_DE
 purchasing_control.validation.required,Please select a cost center and budget before placing your order.,en_US
 purchasing_control.validation.required,Bitte wählen Sie vor der Bestellung eine Kostenstelle und ein Budget aus.,de_DE
+purchasing_control.budget.apply_warning,Please apply the budget.,en_US
+purchasing_control.budget.apply_warning,Bitte Budget anwenden.,de_DE
+permission.name.ManageCostCentersPermissionPlugin,Manage cost centers,en_US
+permission.name.ManageCostCentersPermissionPlugin,Kostenstellen verwalten,de_DE
+purchasing_control.validation.inactive-cost-center,The selected cost center is no longer active. Please select another cost center or contact your manager.,en_US
+purchasing_control.validation.inactive-cost-center,Die ausgewählte Kostenstelle ist nicht mehr aktiv. Bitte wählen Sie eine andere Kostenstelle oder kontaktieren Sie Ihren Manager.,de_DE
+purchasing_control.budget.no_budgets_found,No budgets available for the selected cost center.,en_US
+purchasing_control.budget.no_budgets_found,Keine Budgets für die ausgewählte Kostenstelle verfügbar.,de_DE
+purchasing_control.budget.apply,Apply,en_US
+purchasing_control.budget.apply,Übernehmen,de_DE
+purchasing_control.summary.no_budget_warning,No budget assigned — checkout is blocked.,en_US
+purchasing_control.summary.no_budget_warning,Kein Budget zugewiesen — Bestellung ist gesperrt.,de_DE
+purchasing_control.error.quote_not_found,The quote could not be found.,en_US
+purchasing_control.error.quote_not_found,Der Warenkorb wurde nicht gefunden.,de_DE
+purchasing_control.error.not_company_user,Cost center selection is only available for company users.,en_US
+purchasing_control.error.not_company_user,Die Kostenstelle kann nur von Firmenbenutzern ausgewählt werden.,de_DE
+purchasing_control.error.cost_center_access_denied,The selected cost center is not available for your business unit.,en_US
+purchasing_control.error.cost_center_access_denied,Die ausgewählte Kostenstelle ist für Ihre Geschäftseinheit nicht verfügbar.,de_DE
+purchasing_control.error.budget_access_denied,The selected budget does not belong to the chosen cost center.,en_US
+purchasing_control.error.budget_access_denied,Das ausgewählte Budget gehört nicht zur gewählten Kostenstelle.,de_DE
+purchasing_control.error.quote_approved,Cost center and budget cannot be changed after the quote has been approved.,en_US
+purchasing_control.error.quote_approved,Kostenstelle und Budget können nach der Genehmigung nicht mehr geändert werden.,de_DE
+purchasing_control.title,Cost Center Control,en_US
+purchasing_control.title,Kostenstellen-Verwaltung,de_DE
+purchasing_control.budget.validation.access_denied,You do not have permission to manage this budget.,en_US
+purchasing_control.budget.validation.access_denied,"Sie haben keine Berechtigung, dieses Budget zu verwalten.",de_DE
+purchasing_control.budget.validation.amount_invalid,Budget amount must be greater than zero.,en_US
+purchasing_control.budget.validation.amount_invalid,Der Budgetbetrag muss größer als Null sein.,de_DE
+purchasing_control.budget.validation.amount_too_large,Budget amount exceeds the maximum allowed value.,en_US
+purchasing_control.budget.validation.amount_too_large,Der Budgetbetrag überschreitet den maximal zulässigen Wert.,de_DE
+purchasing_control.budget.validation.date_range_invalid,Budget start date must be before end date.,en_US
+purchasing_control.budget.validation.date_range_invalid,Das Startdatum des Budgets muss vor dem Enddatum liegen.,de_DE
+purchasing_control.budget.validation.currency_invalid,Budget currency must be a 3-character ISO code.,en_US
+purchasing_control.budget.validation.currency_invalid,Die Budgetwährung muss ein 3-stelliger ISO-Code sein.,de_DE
+purchasing_control.budget.validation.currency_changed,Budget currency cannot be changed.,en_US
+purchasing_control.budget.validation.currency_changed,Die Budgetwährung kann nicht geändert werden.,de_DE
+purchasing_control.budget.validation.name_too_long,Budget name must not exceed 100 characters.,en_US
+purchasing_control.budget.validation.name_too_long,Der Budgetname darf nicht mehr als 100 Zeichen enthalten.,de_DE
+purchasing_control.cost_center.validation.name_too_long,Cost center name must not exceed 100 characters.,en_US
+purchasing_control.cost_center.validation.name_too_long,Der Name der Kostenstelle darf nicht mehr als 100 Zeichen enthalten.,de_DE
+purchasing_control.cost_center.validation.name_empty,Cost center name must not be empty.,en_US
+purchasing_control.cost_center.validation.name_empty,Der Name der Kostenstelle darf nicht leer sein.,de_DE
+purchasing_control.cost_center.validation.business_unit_empty,At least one business unit must be assigned to a cost center.,en_US
+purchasing_control.cost_center.validation.business_unit_empty,Der Kostenstelle muss mindestens eine Geschäftseinheit zugewiesen sein.,de_DE
+purchasing_control.cost_center.validation.access_denied,You do not have access to this cost center.,en_US
+purchasing_control.cost_center.validation.access_denied,Sie haben keinen Zugriff auf diese Kostenstelle.,de_DE
+purchasing_control.cost_center.validation.business_unit_not_in_company,Selected business units do not belong to your company.,en_US
+purchasing_control.cost_center.validation.business_unit_not_in_company,Die ausgewählten Geschäftseinheiten gehören nicht zu Ihrem Unternehmen.,de_DE
+purchasing_control.cost_center.menu_item,Cost Centers,en_US
+purchasing_control.cost_center.menu_item,Kostenstellen,de_DE
+purchasing_control.cost_center.list.title,Cost Centers,en_US
+purchasing_control.cost_center.list.title,Kostenstellen,de_DE
+purchasing_control.cost_center.list.empty,No cost centers found.,en_US
+purchasing_control.cost_center.list.empty,Keine Kostenstellen gefunden.,de_DE
+purchasing_control.cost_center.list.status,Status,en_US
+purchasing_control.cost_center.list.status,Status,de_DE
+purchasing_control.cost_center.list.actions,Actions,en_US
+purchasing_control.cost_center.list.actions,Aktionen,de_DE
+purchasing_control.cost_center.create.title,Create Cost Center,en_US
+purchasing_control.cost_center.create.title,Kostenstelle erstellen,de_DE
+purchasing_control.cost_center.update.title,Edit Cost Center,en_US
+purchasing_control.cost_center.update.title,Kostenstelle bearbeiten,de_DE
+purchasing_control.cost_center.form.name,Name,en_US
+purchasing_control.cost_center.form.name,Name,de_DE
+purchasing_control.cost_center.form.description,Description,en_US
+purchasing_control.cost_center.form.description,Beschreibung,de_DE
+purchasing_control.cost_center.form.business_unit,Business Unit,en_US
+purchasing_control.cost_center.form.business_unit,Geschäftseinheit,de_DE
+purchasing_control.cost_center.form.is_active,Cost Center is active,en_US
+purchasing_control.cost_center.form.is_active,Kostenstelle ist aktiv,de_DE
+purchasing_control.cost_center.success.created,Cost center created successfully.,en_US
+purchasing_control.cost_center.success.created,Kostenstelle erfolgreich erstellt.,de_DE
+purchasing_control.cost_center.success.updated,Cost center updated successfully.,en_US
+purchasing_control.cost_center.success.updated,Kostenstelle erfolgreich aktualisiert.,de_DE
+purchasing_control.cost_center.success.activated,Cost center activated successfully.,en_US
+purchasing_control.cost_center.success.activated,Kostenstelle erfolgreich aktiviert.,de_DE
+purchasing_control.cost_center.success.deactivated,Cost center deactivated successfully.,en_US
+purchasing_control.cost_center.success.deactivated,Kostenstelle erfolgreich deaktiviert.,de_DE
+purchasing_control.cost_center.status.active,Active,en_US
+purchasing_control.cost_center.status.active,Aktiv,de_DE
+purchasing_control.cost_center.status.inactive,Inactive,en_US
+purchasing_control.cost_center.status.inactive,Inaktiv,de_DE
+purchasing_control.cost_center.action.edit,Edit,en_US
+purchasing_control.cost_center.action.edit,Bearbeiten,de_DE
+purchasing_control.cost_center.action.activate,Activate,en_US
+purchasing_control.cost_center.action.activate,Aktivieren,de_DE
+purchasing_control.cost_center.action.deactivate,Deactivate,en_US
+purchasing_control.cost_center.action.deactivate,Deaktivieren,de_DE
+purchasing_control.cost_center.action.save,Save,en_US
+purchasing_control.cost_center.action.save,Speichern,de_DE
+purchasing_control.cost_center.action.cancel,Cancel,en_US
+purchasing_control.cost_center.action.cancel,Abbrechen,de_DE
+purchasing_control.cost_center.error.company_user_not_found,Company user not found.,en_US
+purchasing_control.cost_center.error.company_user_not_found,Unternehmensbenutzer nicht gefunden.,de_DE
+purchasing_control.cost_center.error.not_found,Cost center not found.,en_US
+purchasing_control.cost_center.error.not_found,Kostenstelle nicht gefunden.,de_DE
+purchasing_control.cost_center.search.name_placeholder,Search by name...,en_US
+purchasing_control.cost_center.search.name_placeholder,Nach Name suchen...,de_DE
+purchasing_control.cost_center.search.all_business_units,All Business Units,en_US
+purchasing_control.cost_center.search.all_business_units,Alle Geschäftseinheiten,de_DE
+purchasing_control.cost_center.search.status.all,All,en_US
+purchasing_control.cost_center.search.status.all,Alle,de_DE
+purchasing_control.cost_center.search.status.active,Active,en_US
+purchasing_control.cost_center.search.status.active,Aktiv,de_DE
+purchasing_control.cost_center.search.status.inactive,Inactive,en_US
+purchasing_control.cost_center.search.status.inactive,Inaktiv,de_DE
+purchasing_control.cost_center.search.active_filters,Active filters:,en_US
+purchasing_control.cost_center.search.active_filters,Aktive Filter:,de_DE
+purchasing_control.cost_center.search.reset_all,Reset all,en_US
+purchasing_control.cost_center.search.reset_all,Alle zurücksetzen,de_DE
+purchasing_control.cost_center.action.budgets,Budgets,en_US
+purchasing_control.cost_center.action.budgets,Budgets,de_DE
+purchasing_control.cost_center.business_units.more,more,en_US
+purchasing_control.cost_center.business_units.more,weitere,de_DE
+purchasing_control.budget.list.title,Budgets,en_US
+purchasing_control.budget.list.title,Budgets,de_DE
+purchasing_control.budget.list.empty,No budgets found for this cost center.,en_US
+purchasing_control.budget.list.empty,Keine Budgets für diese Kostenstelle gefunden.,de_DE
+purchasing_control.budget.create.title,Create Budget,en_US
+purchasing_control.budget.create.title,Budget erstellen,de_DE
+purchasing_control.budget.update.title,Edit Budget,en_US
+purchasing_control.budget.update.title,Budget bearbeiten,de_DE
+purchasing_control.budget.success.created,Budget created successfully.,en_US
+purchasing_control.budget.success.created,Budget erfolgreich erstellt.,de_DE
+purchasing_control.budget.success.updated,Budget updated successfully.,en_US
+purchasing_control.budget.success.updated,Budget erfolgreich aktualisiert.,de_DE
+purchasing_control.budget.success.deactivated,Budget deactivated successfully.,en_US
+purchasing_control.budget.success.deactivated,Budget erfolgreich deaktiviert.,de_DE
+purchasing_control.budget.success.reactivated,Budget reactivated successfully.,en_US
+purchasing_control.budget.success.reactivated,Budget erfolgreich reaktiviert.,de_DE
+purchasing_control.budget.error.not_found,Budget not found.,en_US
+purchasing_control.budget.error.not_found,Budget nicht gefunden.,de_DE
+purchasing_control.budget.error.cost_center_not_found,Cost center not found.,en_US
+purchasing_control.budget.error.cost_center_not_found,Kostenstelle nicht gefunden.,de_DE
+purchasing_control.budget.form.name,Name,en_US
+purchasing_control.budget.form.name,Name,de_DE
+purchasing_control.budget.form.amount,Total Amount,en_US
+purchasing_control.budget.form.amount,Gesamtbetrag,de_DE
+purchasing_control.budget.form.currency,Currency,en_US
+purchasing_control.budget.form.currency,Währung,de_DE
+purchasing_control.budget.form.starts_at,Start date,en_US
+purchasing_control.budget.form.starts_at,Startdatum,de_DE
+purchasing_control.budget.form.ends_at,End date,en_US
+purchasing_control.budget.form.ends_at,Enddatum,de_DE
+purchasing_control.budget.form.enforcement_rule,Enforcement Rule,en_US
+purchasing_control.budget.form.enforcement_rule,Durchsetzungsregel,de_DE
+purchasing_control.budget.form.enforcement_rule.block,Block,en_US
+purchasing_control.budget.form.enforcement_rule.block,Blockieren,de_DE
+purchasing_control.budget.form.enforcement_rule.warn,Display warning,en_US
+purchasing_control.budget.form.enforcement_rule.warn,Warnung anzeigen,de_DE
+purchasing_control.budget.form.enforcement_rule.require_approval,Require Approval,en_US
+purchasing_control.budget.form.enforcement_rule.require_approval,Genehmigung erforderlich,de_DE
+purchasing_control.budget.form.is_active,Budget is active,en_US
+purchasing_control.budget.form.is_active,Kostenstelle ist aktiv,de_DE
+purchasing_control.budget.action.save,Save,en_US
+purchasing_control.budget.action.save,Speichern,de_DE
+purchasing_control.budget.action.cancel,Cancel,en_US
+purchasing_control.budget.action.cancel,Abbrechen,de_DE
+purchasing_control.budget.action.edit,Edit,en_US
+purchasing_control.budget.action.edit,Bearbeiten,de_DE
+purchasing_control.budget.action.deactivate,Deactivate,en_US
+purchasing_control.budget.action.deactivate,Deaktivieren,de_DE
+purchasing_control.budget.action.reactivate,Reactivate,en_US
+purchasing_control.budget.action.reactivate,Reaktivieren,de_DE
+purchasing_control.budget.status.active,Active,en_US
+purchasing_control.budget.status.active,Aktiv,de_DE
+purchasing_control.budget.status.inactive,Inactive,en_US
+purchasing_control.budget.status.inactive,Inaktiv,de_DE
+purchasing_control.budget.status.archived,Archived,en_US
+purchasing_control.budget.status.archived,Archiviert,de_DE
+purchasing_control.budget.list.column.amount,Amount,en_US
+purchasing_control.budget.list.column.amount,Betrag,de_DE
+purchasing_control.budget.list.column.consumed,Consumed,en_US
+purchasing_control.budget.list.column.consumed,Verbraucht,de_DE
+purchasing_control.budget.list.column.remaining,Remaining,en_US
+purchasing_control.budget.list.column.remaining,Verbleibend,de_DE
+purchasing_control.budget.list.column.currency,Currency,en_US
+purchasing_control.budget.list.column.currency,Währung,de_DE
+purchasing_control.budget.list.column.period,Period,en_US
+purchasing_control.budget.list.column.period,Zeitraum,de_DE
+purchasing_control.budget.list.column.enforcement_rule,Rule,en_US
+purchasing_control.budget.list.column.enforcement_rule,Regel,de_DE
+purchasing_control.budget.list.column.status,Status,en_US
+purchasing_control.budget.list.column.status,Status,de_DE
+purchasing_control.budget.list.column.actions,Actions,en_US
+purchasing_control.budget.list.column.actions,Aktionen,de_DE
+purchasing_control.budget.enforcement_rule.tooltip.block,Orders exceeding this budget will be blocked. Checkout is not permitted.,en_US
+purchasing_control.budget.enforcement_rule.tooltip.warn,A warning is displayed when the order exceeds this budget. The order proceeds but may require approval.,en_US
+purchasing_control.budget.enforcement_rule.tooltip.require_approval,Orders exceeding this budget are automatically routed for approval.,en_US
+purchasing_control.budget.enforcement_rule.tooltip.require_approval,Bestellungen die dieses Budget überschreiten werden automatisch zur Genehmigung weitergeleitet.,de_DE
+purchasing_control.budget.search.name_placeholder,Search by name...,en_US
+purchasing_control.budget.search.name_placeholder,Nach Name suchen...,de_DE
+purchasing_control.budget.search.status.all,All,en_US
+purchasing_control.budget.search.status.all,Alle,de_DE
+purchasing_control.budget.search.status.active,Active,en_US
+purchasing_control.budget.search.status.active,Aktiv,de_DE
+purchasing_control.budget.search.status.inactive,Inactive,en_US
+purchasing_control.budget.search.status.inactive,Inaktiv,de_DE
+purchasing_control.budget.search.status.archived,Archived,en_US
+purchasing_control.budget.search.status.archived,Archiviert,de_DE
+purchasing_control.budget.search.all_currencies,All Currencies,en_US
+purchasing_control.budget.search.all_currencies,Alle Währungen,de_DE
+purchasing_control.budget.search.all_enforcement_rules,All Rules,en_US
+purchasing_control.budget.search.all_enforcement_rules,Alle Regeln,de_DE
+purchasing_control.budget.search.starts_at,Start date,en_US
+purchasing_control.budget.search.starts_at,Startdatum,de_DE
+purchasing_control.budget.search.ends_at,End date,en_US
+purchasing_control.budget.search.ends_at,Enddatum,de_DE
+purchasing_control.budget.search.active_filters,Active filters:,en_US
+purchasing_control.budget.search.active_filters,Aktive Filter:,de_DE
+purchasing_control.budget.search.reset_all,Reset all,en_US
+purchasing_control.budget.search.reset_all,Alle zurücksetzen,de_DE
+purchasing_control.cost_center.access.denied,You do not have access to manage cost centers. Please contact your administrator.,en_US
+purchasing_control.cost_center.access.denied,Sie haben keinen Zugriff auf die Verwaltung von Kostenstellen. Bitte wenden Sie sich an Ihren Administrator.,de_DE
+purchasing_control.order.detail.title,Cost Center & Budget,en_US
+purchasing_control.order.detail.title,Kostenstelle & Budget,de_DE
+purchasing_control.order.detail.not_available,N/A,en_US
+purchasing_control.order.detail.not_available,N/A,de_DE
+purchasing_control.summary.active_cost_centers,Active Cost Centers,en_US
+purchasing_control.summary.active_cost_centers,Aktive Kostenstellen,de_DE
+purchasing_control.summary.total_budget,Total Budget Allocated,en_US
+purchasing_control.summary.total_budget,Gesamtbudget,de_DE
+purchasing_control.summary.consumed_budget,Total Spent,en_US
+purchasing_control.summary.consumed_budget,Verbrauchtes Budget,de_DE
+purchasing_control.summary.remaining_budget,Total Remaining,en_US
+purchasing_control.summary.remaining_budget,Verbleibendes Budget,de_DE
+purchasing_control.summary.title,Budget & Cost Center Overview,en_US
+purchasing_control.summary.title,Budget- & Kostenstellenübersicht,de_DE
+purchasing_control.summary.dashboard_title,Budget Dashboard,en_US
+purchasing_control.summary.dashboard_title,Budget-Dashboard,de_DE
+purchasing_control.summary.no_budgets_assigned,No budgets assigned,en_US
+purchasing_control.summary.no_budgets_assigned,Keine Budgets zugewiesen,de_DE
+purchasing_control.summary.column_budget_name,Budget Name,en_US
+purchasing_control.summary.column_budget_name,Budgetname,de_DE
+purchasing_control.summary.column_total,Total,en_US
+purchasing_control.summary.column_total,Gesamt,de_DE
+purchasing_control.summary.column_consumed,Consumed,en_US
+purchasing_control.summary.column_consumed,Verbraucht,de_DE
+purchasing_control.summary.column_remaining,Remaining,en_US
+purchasing_control.summary.column_remaining,Verbleibend,de_DE
+purchasing_control.order.table.cost_center,Cost Center,en_US
+purchasing_control.order.table.cost_center,Kostenstelle,de_DE
+purchasing_control.order.table.budget,Budget,en_US
+purchasing_control.order.table.budget,Budget,de_DE
+purchasing_control.budget.validation.end_date_in_past,End date cannot be in the past.,en_US
+purchasing_control.budget.validation.end_date_in_past,Das Enddatum darf nicht in der Vergangenheit liegen.,de_DE

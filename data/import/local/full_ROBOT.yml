@@ -114,17 +114,17 @@ actions:
   - data_entity: product-measurement-unit
     source: data/import/common/common/product_measurement_unit.csv
   - data_entity: product-measurement-base-unit
-    source: data/import/common/common/product_measurement_base_unit.csv
+    source: data/import/robot/common/product_measurement_base_unit.csv
   - data_entity: product-measurement-sales-unit
-    source: data/import/common/common/product_measurement_sales_unit.csv
+    source: data/import/robot/common/product_measurement_sales_unit.csv
   - data_entity: product-packaging-unit-type
     source: data/import/common/common/product_packaging_unit_type.csv
   - data_entity: product-packaging-unit
-    source: data/import/common/common/product_packaging_unit.csv
+    source: data/import/robot/common/product_packaging_unit.csv
   - data_entity: product-list
     source: data/import/common/common/product_list.csv
   - data_entity: product-list-category
-    source: data/import/common/common/product_list_to_category.csv
+    source: data/import/robot/common/product_list_to_category.csv
   - data_entity: product-list-product-concrete
     source: data/import/robot/common/product_list_to_concrete_product.csv
   - data_entity: configurable-bundle-template
@@ -135,13 +135,11 @@ actions:
     source: data/import/common/common/configurable_bundle_template_image.csv
   - data_entity: product-approval-status
     source: data/import/robot/common/product_abstract_approval_status.csv
-  - data_entity: product-configuration
-    source: data/import/common/common/product_configuration.csv
   # Store relation
   - data_entity: product-measurement-sales-unit-store
-    source: data/import/common/DE/product_measurement_sales_unit_store.csv
+    source: data/import/robot/DE/product_measurement_sales_unit_store.csv
   - data_entity: product-measurement-sales-unit-store
-    source: data/import/common/AT/product_measurement_sales_unit_store.csv
+    source: data/import/robot/AT/product_measurement_sales_unit_store.csv
 
 
 #4. Merchandising Setup import
@@ -168,9 +166,9 @@ actions:
   - data_entity: discount-amount
     source: data/import/common/AT/discount_amount.csv
   - data_entity: product-discontinued
-    source: data/import/common/common/product_discontinued.csv
+    source: data/import/robot/common/product_discontinued.csv
   - data_entity: product-alternative
-    source: data/import/common/common/product_alternative.csv
+    source: data/import/robot/common/product_alternative.csv
   - data_entity: product-quantity
     source: data/import/common/common/product_quantity.csv
   # Store relation
@@ -277,7 +275,7 @@ actions:
   - data_entity: stock-store
     source: data/import/common/AT/marketplace/warehouse_store.csv
   - data_entity: product-stock
-    source: data/import/common/common/marketplace/product_stock.csv
+    source: data/import/robot/common/marketplace/product_stock.csv
   - data_entity: product-offer-stock
     source: data/import/robot/common/marketplace/product_offer_stock.csv
   - data_entity: merchant-profile
@@ -287,15 +285,15 @@ actions:
   - data_entity: merchant-relationship
     source : data/import/common/common/merchant_relationship.csv
   - data_entity: merchant-relationship-product-list
-    source : data/import/common/common/merchant_relation_to_product_list.csv
+    source : data/import/robot/common/merchant_relation_to_product_list.csv
   - data_entity: merchant-relationship-sales-order-threshold
     source: data/import/common/DE/sales_order_threshold_per_merchant_relationship.csv
   - data_entity: merchant-relationship-sales-order-threshold
     source: data/import/common/AT/sales_order_threshold_per_merchant_relationship.csv
   - data_entity: product-price-merchant-relationship
-    source: data/import/common/DE/price_product_merchant_relationship.csv
+    source: data/import/robot/DE/price_product_merchant_relationship.csv
   - data_entity: product-price-merchant-relationship
-    source: data/import/common/AT/price_product_merchant_relationship.csv
+    source: data/import/robot/AT/price_product_merchant_relationship.csv
   - data_entity: shopping-list
     source: data/import/common/common/shopping_list.csv
   - data_entity: shopping-list-item
@@ -335,7 +333,7 @@ actions:
   - data_entity: merchant-product-option-group
     source: data/import/common/common/marketplace/merchant_product_option_group.csv
   - data_entity: merchant-product
-    source: data/import/common/common/marketplace/merchant_product.csv
+    source: data/import/robot/common/marketplace/merchant_product.csv
   - data_entity: product-offer-shopping-list-item
     source: data/import/common/common/marketplace/product_offer_shopping_list_item.csv
   - data_entity: merchant-product-approval-status-default

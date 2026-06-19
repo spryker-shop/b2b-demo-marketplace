@@ -14,7 +14,7 @@ $logger = '';
 
 $jobs[] = [
     'name' => 'consume-queue',
-    'command' => $logger . '$PHP_BIN vendor/bin/console symfonymessenger:consume compiled-cron-scheduler --time-limit=900',
+    'command' => $logger . '$PHP_BIN vendor/bin/console symfonymessenger:consume queue-worker-start --time-limit=900',
     'schedule' => '* * * * *',
     'enable' => true,
 ];

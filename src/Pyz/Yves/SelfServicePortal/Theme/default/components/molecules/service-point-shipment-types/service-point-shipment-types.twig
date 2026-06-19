@@ -1,5 +1,7 @@
 {% extends molecule('service-point-shipment-types', '@SprykerFeature:SelfServicePortal') %}
 
+{% block extraClass %} {% if data.shipmentTypes | length or data.isConcreteProduct %}spacing-bottom--big{% else %}is-hidden{% endif %}{% endblock %}
+
 {% block ajax %}
     {% set dynamicParams = {
         'service-type-key': {
@@ -61,13 +63,25 @@
     } only %}
 {% endblock %}
 
-    {% block render %}
-        <div class="{{ ajaxContainerClass }} spacing-bottom"></div>
-    {% endblock %}
+{% block render %}
+    <div class="{{ ajaxContainerClass }} spacing-bottom"></div>
+{% endblock %}
+
+{% block types %}
+    <div class="spacing-bottom--biggest {% if not requiredServicePoint and shipmentTypeLength == 1 %}is-hidden{% endif %}">
+        <div class="label spacing-bottom--big">{{ 'self_service_portal.service.product.shipment_types' | trans }}</div>
+
+        <div class="grid">
+            {% for shipmentType in data.shipmentTypes %}
+                {{ block('type') }}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
 
 {% block datepicker %}
     {% if data.isServiceDateTimeFieldVisible %}
-        <div class="spacing-bottom--big">
+        <div class="spacing-bottom--biggest">
             {% widget 'LanguageSwitcherWidget' args [app.request.pathInfo, app.request.queryString, app.request.requestUri] with {
                 embed: {
                     input: {

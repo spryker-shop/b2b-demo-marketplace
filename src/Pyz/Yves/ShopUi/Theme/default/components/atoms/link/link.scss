@@ -36,17 +36,14 @@
 
     &--no-decoration {
         text-decoration: none;
+        border: 0;
 
         &:hover {
             text-decoration: none;
         }
     }
 
-    &--footer {
-        color: var(--icon-secondary);
-
-        &:hover {
-            color: var(--icon-primary);
-        }
+    &--font-inherit {
+        font: inherit;
     }
 }

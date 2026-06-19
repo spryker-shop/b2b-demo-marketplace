@@ -114,7 +114,10 @@ export default class AutocompleteForm extends Component {
     }
 
     protected onItemClick(event: Event): void {
-        const dataTarget = <HTMLElement>event.target;
+        const dataTarget = (<HTMLElement>event.target).closest<HTMLElement>(`[${this.valueDataAttribute}]`);
+        if (!dataTarget) {
+            return;
+        }
         const data = dataTarget.getAttribute(this.valueDataAttribute);
         const text = dataTarget.textContent.trim();
 

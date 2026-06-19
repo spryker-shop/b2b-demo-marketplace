@@ -1,48 +1,60 @@
 @mixin product-review-review-summary($name: '.review-summary') {
     #{$name} {
+        display: block;
         margin-bottom: rem(45);
 
         @include helper-breakpoint-media-min($lg) {
             margin-bottom: rem(90);
         }
 
-        &__title {
-            margin-bottom: rem(24);
-            font-weight: fw(medium);
-            line-height: normal;
-            color: $setting-color-gray-5;
+        &__top {
+            margin: 0;
+        }
+
+        &__summary-col,
+        &__form-col {
+            margin-bottom: var(--scale-24);
+
+            @include helper-breakpoint-media-min($lg) {
+                margin-bottom: 0;
+            }
         }
 
         &__rating-box {
-            border-radius: $setting-border-radius;
-            background-color: $setting-color-gray-7;
-            padding: rem(22) rem(38) rem(40);
-            margin-bottom: rem(21);
-
-            @include helper-breakpoint-media-min($lg) {
-                padding: rem(30) rem(20) rem(37);
-                margin-bottom: 0;
-            }
+            padding: var(--scale-24);
+            background: var(--background-highlight);
+            border-radius: var(--radius-sm);
 
             @include helper-breakpoint-media-min($xl) {
-                padding: rem(37) rem(40);
+                margin-right: var(--scale-48);
             }
+        }
+
+        &__sub-title {
+            margin: 0 0 var(--scale-16);
+            color: var(--text-primary);
+            font-family: var(--label-md-semibold-family);
+            font-size: rem(var(--label-md-semibold-size));
+            font-weight: var(--label-md-semibold-weight);
+            line-height: rem(var(--label-md-semibold-line-height));
         }
 
         &__no-review {
-            text-align: center;
-            margin: rem(8) 0;
-
-            @include helper-breakpoint-media-min($lg) {
-                text-align: left;
-            }
+            color: var(--text-tertiary);
+            font-family: var(--body-md-family);
+            font-size: rem(var(--body-md-size));
+            line-height: rem(var(--body-md-line-height));
         }
 
         &__new-review-form {
-            padding-bottom: rem(20);
+            padding: 0;
+        }
+
+        &__list {
+            margin-top: var(--scale-32);
 
             @include helper-breakpoint-media-min($lg) {
-                padding-bottom: 0;
+                margin-top: var(--scale-48);
             }
         }
     }

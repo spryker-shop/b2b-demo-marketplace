@@ -82,7 +82,7 @@ class ShoppingListProductConfigurationRestApiCest
 
         // Assert
         $I->seeResponseCodeIs(HttpCode::OK);
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->amSure('Returned resource contains `productConfiguration` attribute')
             ->whenI()
@@ -126,7 +126,7 @@ class ShoppingListProductConfigurationRestApiCest
 
         // Assert
         $I->seeResponseCodeIs(HttpCode::OK);
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->assertNull($I->grabDataFromResponseByJsonPath('$.data.attributes.productConfigurationInstance')[0]);
     }
@@ -167,7 +167,7 @@ class ShoppingListProductConfigurationRestApiCest
 
         // Assert
         $I->seeResponseCodeIs(HttpCode::CREATED);
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->amSure('Returned resource contains `productConfiguration` attribute')
             ->whenI()

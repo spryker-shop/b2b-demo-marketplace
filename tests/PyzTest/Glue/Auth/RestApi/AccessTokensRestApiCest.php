@@ -69,7 +69,7 @@ class AccessTokensRestApiCest
 
         $I->seeResponseHasAccessToken();
         $I->seeResponseHasRefreshToken();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
     /**
@@ -96,7 +96,7 @@ class AccessTokensRestApiCest
         $I->seeResponseCodeIs(HttpCode::UNAUTHORIZED);
         $I->dontSeeResponseHasAccessToken();
         $I->dontSeeResponseHasRefreshToken();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
     /**
@@ -123,7 +123,7 @@ class AccessTokensRestApiCest
         $I->seeResponseCodeIs(HttpCode::UNAUTHORIZED);
         $I->dontSeeResponseHasAccessToken();
         $I->dontSeeResponseHasRefreshToken();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
     /**
@@ -150,7 +150,7 @@ class AccessTokensRestApiCest
         $I->seeResponseCodeIs(HttpCode::UNPROCESSABLE_ENTITY);
         $I->dontSeeResponseHasAccessToken();
         $I->dontSeeResponseHasRefreshToken();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
     /**
@@ -177,7 +177,7 @@ class AccessTokensRestApiCest
         $I->seeResponseCodeIs(HttpCode::UNPROCESSABLE_ENTITY);
         $I->dontSeeResponseHasAccessToken();
         $I->dontSeeResponseHasRefreshToken();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
     /**
@@ -202,7 +202,7 @@ class AccessTokensRestApiCest
         $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
         $I->dontSeeResponseHasAccessToken();
         $I->dontSeeResponseHasRefreshToken();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
     /**
@@ -229,6 +229,6 @@ class AccessTokensRestApiCest
         $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
         $I->dontSeeResponseHasAccessToken();
         $I->dontSeeResponseHasRefreshToken();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 }

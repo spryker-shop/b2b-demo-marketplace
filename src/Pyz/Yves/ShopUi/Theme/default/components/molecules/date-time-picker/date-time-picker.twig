@@ -19,6 +19,7 @@
     'formatted-date-time': '',
     'date-from-id': false,
     'date-to-id': false,
+    'enable-time': true,
 } %}
 
 {% block body %}
@@ -34,7 +35,9 @@
                 }) }}
             {% else %}
                 {% if data.input.label %}
-                    <label {% if data.input.attrs.id %}for="{{ data.input.attrs.id }}"{% endif %} class="label">{{ data.input.label | trans }}</label>
+                    <div class="spacing-bottom--big">
+                        <label {% if data.input.attrs.id %}for="{{ data.input.attrs.id }}"{% endif %} class="label">{{ data.input.label | trans }}</label>
+                    </div>
                 {% endif %}
 
                 <input type="text" class="input input--expand {{ class }}" {{ _self.renderAttributes(data.input.attrs) }}>

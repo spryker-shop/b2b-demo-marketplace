@@ -11,7 +11,13 @@
     isGrouped: false
 } %}
 
-{% block attributes %}{% endblock %}
+{% block attributes %}
+    {%- for attrname, attrvalue in attr | default({}) -%}
+        {%- if attrvalue is same as(true) -%} {{ attrname }}="{{ attrname }}"
+        {%- elseif attrvalue is not same as(false) -%} {{ attrname }}="{{ attrvalue }}"
+        {%- endif -%}
+    {%- endfor -%}
+{% endblock %}
 
 {% block option %}
     {% set isSelected = option.selected | default(false) %}
