@@ -1,0 +1,164 @@
+# CC-39284 — build-once restore pipeline (stage 2).
+#
+# Consumed via `SPRYKER_PIPELINE=ci.restore-db.stage2 docker/sdk up -t`. Stage 1
+# (the _build-db.yml job) boots the normal docker.ci.acceptance pipeline, imports
+# full_EU unchanged, and dumps the DB to eu-docker.sql (schema + data). This stage
+# rebuilds the codebase in the container and restores that dump instead of
+# re-importing demodata.
+#
+# Build / build-static sections are b2b's own (from docker.ci.acceptance.yml) —
+# b2b has no separate _build-frontend artifact, so frontend is built here.
+# The demodata section mirrors suite's ci.restore-db.stage2.yml: load the dump,
+# fix auth/permissions, recreate search sources, sync storage from DB, then drain
+# the publish queue. NO data:import. NO cost-center hack — full_EU data is real.
+
+env:
+    NEW_RELIC_ENABLED: 0
+    SPRYKER_LOG_STDOUT: /dev/null
+
+sections:
+    build:
+        generate-transfers:
+            command: 'vendor/bin/console transfer:generate'
+
+        router-cache-warmup-yves:
+            command: 'vendor/bin/yves router:cache:warm-up'
+
+        router-cache-warmup-backoffice:
+            command: 'vendor/bin/console router:cache:warm-up:backoffice'
+
+        oms-process-cache-warmup:
+            command: 'vendor/bin/console oms:process-cache:warm-up'
+
+        router-cache-warmup-backend-gateway:
+            command: 'vendor/bin/console router:cache:warm-up:backend-gateway'
+
+        router-cache-warmup-merchant-portal:
+            command: 'vendor/bin/console router:cache:warm-up:merchant-portal'
+
+        twig-cache-warmup:
+            command: 'vendor/bin/console twig:cache:warmer'
+
+        navigation-cache-warmup:
+            command: 'vendor/bin/console navigation:build-cache'
+
+        rest-request-validation-cache-warmup:
+            command: 'vendor/bin/console rest-api:build-request-validation-cache'
+
+        propel-copy-schema:
+            command: 'vendor/bin/console propel:schema:copy'
+
+        propel-build:
+            command: 'vendor/bin/console propel:model:build'
+
+        acl-entity-metadata-validate:
+            command: 'vendor/bin/console acl-entity:metadata:validate'
+
+        generate-entity-transfer:
+            command: 'vendor/bin/console transfer:entity:generate'
+
+        generate-page-source-map:
+            command: 'vendor/bin/console search:setup:source-map'
+
+        translator-generate-cache:
+            command: 'vendor/bin/console translator:generate-cache'
+
+        cache-class-resolver-build:
+            command: 'vendor/bin/console cache:class-resolver:build'
+
+        generate-scope-collection-file:
+            command: 'vendor/bin/console oauth:scope-collection-file:generate'
+
+        provider-processor-glue:
+            command: 'vendor/bin/glue api:generate'
+
+        provider-processor-glue-backend:
+            command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue api:generate'
+
+        provider-processor-glue-storefront:
+            command: 'GLUE_APPLICATION=GLUE_STOREFRONT vendor/bin/glue api:generate'
+
+        configuration-sync:
+            command: 'vendor/bin/console configuration:sync'
+
+    build-development:
+        generate-transfers:
+            command: 'vendor/bin/console transfer:generate'
+
+        generate-transfer-databuilders:
+            command: 'vendor/bin/console transfer:databuilder:generate'
+
+        rest-api-generate-documentation:
+            command: 'vendor/bin/console rest-api:generate:documentation'
+
+    build-static:
+        dependencies-install:
+            command: 'vendor/bin/console frontend:project:install-dependencies'
+
+    build-static-production:
+        excluded: true
+        yves-build-frontend:
+            command: 'vendor/bin/console frontend:yves:build -e production'
+
+        zed-build-frontend:
+            command: 'vendor/bin/console frontend:zed:build -e production'
+
+        merchant-portal-build-frontend:
+            command: 'vendor/bin/console frontend:mp:build -e production'
+            timeout: 1600
+
+        water-treatment-product-configurator:
+            command: 'vendor/bin/console frontend:water-treatment-product-configurator:build'
+
+    build-static-development:
+        yves-build-frontend:
+            command: 'vendor/bin/console frontend:yves:build'
+
+        zed-build-frontend:
+            command: 'vendor/bin/console frontend:zed:build'
+
+        merchant-portal-build-frontend:
+            command: 'vendor/bin/console frontend:mp:build'
+            timeout: 1600
+
+        water-treatment-product-configurator:
+            command: 'vendor/bin/console frontend:water-treatment-product-configurator:build'
+
+    init-storages-per-store:
+        queue-setup:
+            command: 'vendor/bin/console queue:setup'
+        setup-search-create-sources:
+            command: 'vendor/bin/console search:setup:sources'
+
+    # Schema is restored from eu-docker.sql (the --no-data dump carries DDL), so the
+    # propel migrate/diff chain from docker.ci.acceptance.yml is dropped here, mirroring
+    # suite's restore stage2 (queue-setup only).
+    init-storages-per-region:
+        queue-setup:
+            command: 'vendor/bin/console queue:setup'
+
+    demodata:
+        load-from-file:
+            command: 'mariadb --ssl=false -h $SPRYKER_DB_HOST -u $SPRYKER_DB_USERNAME -p$SPRYKER_DB_PASSWORD  $SPRYKER_DB_DATABASE < eu-docker.sql'
+
+        fix-auth-permissions:
+            command: 'vendor/bin/console setup:init-db'
+
+        # requires `spy_store` table
+        setup-search-create-sources:
+            command: 'vendor/bin/console search:setup:sources'
+
+        sync-data-from-db:
+            command: 'vendor/bin/console sync:data'
+
+        publish-and-sync:
+            command: 'vendor/bin/console queue:worker:start --stop-when-empty'
+            timeout: 2000
+
+        # requires DB
+        controller-cache-warmup:
+            command: 'vendor/bin/glue glue-api:controller:cache:warm-up'
+
+        # requires DB
+        api-generate-documentation:
+            command: 'vendor/bin/glue api:generate:documentation'

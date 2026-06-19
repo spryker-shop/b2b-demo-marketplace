@@ -1,0 +1,89 @@
+name: _build-robot-db
+
+# CC-39284 — build-once ROBOT dump.
+#
+# Boots the EXISTING robot-api pipeline (deploy.ci.api.mariadb.robot.yml ->
+# docker.robot.ci.api.full, mount:baked) and runs `docker/sdk up -t`, so full_ROBOT is
+# imported byte-identically to a normal robot-api boot. Then snapshots the DB to
+# eu-docker.sql and publishes it as the `spryker-robot-db` artifact for the robot-api /
+# robot-ui shards to restore (SPRYKER_PIPELINE=ci.restore-db.stage2).
+#
+# Marketplace stays installed here (the mp_b2b install path) — the b2b variant's
+# uninstall-marketplace divergence is handled at consumer-rewire time (Step 2).
+# Inert until ci.yml / ci-focused.yml wire it as a dependency (Step 3).
+
+on:
+    workflow_call:
+
+env:
+    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+    WEEKLY_CI_SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
+    JIRA_TICKET_SLACK_USER_GROUP_MAPPING: ${{ secrets.JIRA_TICKET_SLACK_USER_GROUP_MAPPING }}
+
+jobs:
+    build-robot-db:
+        name: "Build DB (ROBOT)"
+        timeout-minutes: 60
+        runs-on: ubuntu-latest
+        env:
+            PROGRESS_TYPE: plain
+            SPRYKER_PLATFORM_IMAGE: spryker/php:8.4
+            TRAVIS: 1
+            SPRYKER_CURRENT_REGION: EU
+            DYNAMIC_STORE_MODE: true
+        steps:
+            -   uses: actions/checkout@v4
+
+            #  needed for mount:baked — bakes the robot suite tests into the image
+            -   name: Install robotframework-suite-tests folder
+                run: |
+                    cd data
+                    VERSION=$(php -r "echo json_decode(file_get_contents('../composer.json'), true)['require-dev']['spryker/robotframework-suite-tests'] ?? 'dev-master';")
+                    composer require "spryker/robotframework-suite-tests:$VERSION" --dev --no-interaction --ignore-platform-reqs
+                    mv vendor ../
+
+            -   name: Configure sysctl limits
+                run: |
+                    sudo sysctl -w vm.swappiness=10
+                    sudo sysctl -w fs.file-max=262144
+                    sudo sysctl -w vm.max_map_count=262144
+                    ulimit -n 65536
+
+            -   name: Install Project
+                run: |
+                    git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
+                    docker/sdk boot .github/deploy/deploy.ci.api.mariadb.robot.yml
+                    docker/sdk up -t
+
+            -   name: Dump details
+                run: |
+                    query() { docker/sdk cli "mariadb --ssl=false -h \$SPRYKER_DB_HOST -u \$SPRYKER_DB_USERNAME -p\$SPRYKER_DB_PASSWORD \$SPRYKER_DB_DATABASE -sNe '$1'"; }
+                    echo "spy_product_abstract:                          $(query 'SELECT COUNT(*) FROM spy_product_abstract')"
+                    echo "spy_product:                                   $(query 'SELECT COUNT(*) FROM spy_product')"
+                    echo "spy_product_abstract_page_search (total keys): $(query 'SELECT COUNT(*) FROM spy_product_abstract_page_search')"
+                    echo "spy_product_concrete_storage (total keys):     $(query 'SELECT COUNT(*) FROM spy_product_concrete_storage')"
+
+            -   name: Create database dump
+                # Two-step dump matches suite: schema (--no-data) then data (--no-create-info),
+                # excluding oauth/token-cache tables that the restore re-initialises via setup:init-db.
+                # `\$` keeps expansion inside the container. RISK (open question): `docker/sdk cli`
+                # may allocate a TTY and pollute the redirected stdout; if eu-docker.sql shows CR/log
+                # noise on CI, fall back to `docker compose ... exec -T database mariadb-dump > file`.
+                run: |
+                    docker/sdk cli "mariadb-dump --ssl=false -h \$SPRYKER_DB_HOST -u \$SPRYKER_DB_USERNAME -p\$SPRYKER_DB_PASSWORD \$SPRYKER_DB_DATABASE --no-data" > eu-docker.sql
+                    docker/sdk cli "mariadb-dump --ssl=false -h \$SPRYKER_DB_HOST -u \$SPRYKER_DB_USERNAME -p\$SPRYKER_DB_PASSWORD \$SPRYKER_DB_DATABASE --no-create-info --ignore-table=\$SPRYKER_DB_DATABASE.spy_oauth_client --ignore-table=\$SPRYKER_DB_DATABASE.spy_unauthenticated_customer_access --ignore-table=\$SPRYKER_DB_DATABASE.spy_oauth_client_access_token_cache" >> eu-docker.sql
+                    echo "eu-docker.sql size: $(wc -c < eu-docker.sql) bytes"
+
+            -   name: Save project artifacts
+                uses: actions/upload-artifact@v6
+                with:
+                    name: spryker-robot-db
+                    retention-days: 1
+                    overwrite: true
+                    path: |
+                        eu-docker.sql
+                    compression-level: 6 # 0: No compression, 1: Best speed, 6: Default compression (same as GNU Gzip), 9: Best compression
+
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
