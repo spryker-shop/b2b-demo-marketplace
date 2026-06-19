@@ -28,7 +28,7 @@ If the user only asks for *part* of the flow (e.g. "just open the PR for me"), d
 3. Create a feature branch off `master-demo`
 4. Merge `master` into it, resolve conflicts
 5. Refresh `composer.lock` and run `composer install` locally
-6. Reconcile Pyz overrides with the incoming changes (esp. Twig templates)
+6. Reconcile Pyz overrides with the incoming changes (esp. Twig templates), then audit `deploy.spryker-icpplus.yml` against the sibling deploy files
 7. Smoke-test Yves and Backoffice login via the `login-chrome` skill
 8. Push and open a PR targeting `master-demo`
 9. Move the JIRA ticket to **IN CR**
@@ -327,11 +327,52 @@ If a change is large or its intent is unclear, **surface the list to the user an
 
 In the PR body (Step 8) list the Pyz files you kept, adapted, or aligned, so the reviewer can see the override reconciliation was done deliberately and not skipped.
 
+### Step 6d — Audit `deploy.spryker-icpplus.yml` against the other deploy files
+
+Same silent-divergence trap as Pyz overrides, one level up: the merge can introduce a feature that needs a **deploy-level** entry (a Yves endpoint with an `entry-point`, a `SPRYKER_*_HOST` env var, a `DOMAIN_WHITELIST` host, an install/post-deploy step), but `git merge` never flags it because the deploy files are environment-specific and weren't part of the diff. `deploy.spryker-icpplus.yml` is the one we actively maintain — so after every upmerge, **diff it against its sibling deploy files** and against what the merged code now expects.
+
+The sibling files are the source of truth for the convention (there is usually no existing entry for a brand-new feature in *any* of them yet, so "do it like the others" means *follow the same shape*, not copy a line that doesn't exist). Good reference siblings: `deploy.spryker-scos.yml`, `deploy.spryker-sedemo15.yml`.
+
+Run these three checks:
+
+```bash
+# (1) Feature endpoints / entry-points: what hosts+entry-points do siblings define that icpplus doesn't?
+for f in deploy.spryker-scos.yml deploy.spryker-sedemo15.yml; do
+  echo "=== entry-points in $f ==="; grep -nE 'entry-point:' "$f"
+done
+echo "=== entry-points in deploy.spryker-icpplus.yml ==="; grep -nE 'entry-point:' deploy.spryker-icpplus.yml
+
+# (2) environment: env-var keys present in a sibling but MISSING from icpplus
+extract() { awk '/^[[:space:]]*environment:/{f=1;next} f&&/^[[:space:]]{4,}[A-Z0-9_]+:/{gsub(/[: ]/,"");print} f&&/^[a-z]/{f=0}' "$1" 2>/dev/null | sort -u; }
+echo "=== keys in scos NOT in icpplus ===";     comm -13 <(extract deploy.spryker-icpplus.yml) <(extract deploy.spryker-scos.yml)
+echo "=== keys in sedemo15 NOT in icpplus ==="; comm -13 <(extract deploy.spryker-icpplus.yml) <(extract deploy.spryker-sedemo15.yml)
+
+# (3) NEW host/whitelist/entry-point requirements the merged code introduced
+git diff master-demo..HEAD -- config/Shared/ | grep -iE "getenv\('SPRYKER_[A-Z_]*HOST'\)|DOMAIN_WHITELIST|ENTRY_POINT"
+```
+
+**Interpreting the diff — most keys that differ are NOT gaps.** Hostnames (`SPRYKER_YVES_HOST_*`, `*_CONFIGURATOR_HOST`), `AWS_REGION`, deploy-hook paths (`SPRYKER_HOOK_*`), and features another env happens to demo (e.g. scos's water-treatment configurator) are **environment-specific by design** — do not copy them into icpplus. A key is a genuine gap only when it is **required by a feature this upmerge introduced** and icpplus lacks it. Confirm with check (3): if the merged code reads a new `SPRYKER_FOO_HOST` / adds a `DOMAIN_WHITELIST` host / registers a new Yves `entry-point`, then icpplus needs the matching `environment:` var and/or endpoint, shaped like the existing `*-configurator` entry:
+
+```yaml
+            yves:
+                application: yves
+                endpoints:
+                    yves.eu.icp-plus.sh01.demo-spryker.com: { region: EU, services: { session: { namespace: 11 } } }
+                    <feature-host>.eu.icp-plus.sh01.demo-spryker.com:
+                        entry-point: <EntryPointName>   # only if the feature defines a separate Yves entry-point
+```
+
+> A feature that merely adds **routes to the existing Yves app** (e.g. PunchOut: `/punchout-cxml-setup`, `/punchout-gateway/oci/...` registered via a `RouteProviderPlugin` in `Pyz\Yves\Router`) needs **no** new endpoint or env var — it's already served by the main `yves.*` vhost. Only add a dedicated host/entry-point when the feature actually declares its own entry-point or reads its own `SPRYKER_*_HOST`. When unsure whether something needs a deploy entry, **surface checks (1)–(3) to the user and ask** rather than adding a vhost that has no DNS/cert backing it.
+
+Also confirm any **new install step** the merge added (e.g. a `punchout` block in `config/install/destructive.yml`) is present in the recipe icpplus's deploy hooks actually run (`SPRYKER_HOOK_*` → `config/install/*.yml`), if it's meant to run there. Demo-seed steps usually live only in `destructive.yml` and need no icpplus change — verify, don't assume.
+
+Record the outcome (changed / no change needed) in the PR body alongside the Pyz reconciliation.
+
 ## Step 7 — Smoke-test Yves and Backoffice login
 
 Invoke the `login-chrome` skill to verify the local stack still works after the merge. The smoke test scope is:
 
-- Log into Yves at `http://yves.eu.spryker.local/DE/en/login` with `sonia@spryker.com` / `change123`
+- Log into Yves at `http://yves.eu.spryker.local/DE/en/login` with `spencor.hopkin@acme.com` / `change123` (canonical B2B company user; `sonia@spryker.com` does NOT exist in this dataset — valid customers are `@acme.com`/`@ottom.de`. List them: `mariadb -h database -u spryker -psecret -D eu-docker -e "SELECT email FROM spy_customer WHERE registered IS NOT NULL LIMIT 15;"`)
 - Verify the customer overview page (`/DE/en/customer/overview`) renders without errors
 - Log into Backoffice at `http://backoffice.eu.spryker.local/security-gui/login` with `admin@spryker.com` / `change123`
 - Verify the Backoffice dashboard renders without errors
@@ -360,12 +401,16 @@ JIRA: <TICKET-URL>
 
 ## Test plan
 - [x] Pyz override reconciliation (incl. Twig templates shadowing changed core)
+- [x] deploy.spryker-icpplus.yml audited vs sibling deploy files
 - [x] Local smoke test: Yves storefront login + customer overview
 - [x] Local smoke test: Backoffice login + dashboard
 - [ ] CI pipeline green
 
 ## Pyz override reconciliation
 <!-- List Pyz files kept / adapted / aligned from Step 6. Note "none" if the merge touched no Pyz files and no core-template overrides were affected. -->
+
+## Deploy file audit (Step 6d)
+<!-- Result of diffing deploy.spryker-icpplus.yml vs siblings + merged-code host/entry-point requirements. Note "no change needed" if the new features only add routes to existing apps and define no new SPRYKER_*_HOST / entry-point. -->
 EOF
 )"
 ```
