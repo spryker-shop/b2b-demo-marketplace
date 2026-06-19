@@ -161,18 +161,66 @@ php -r "json_decode(file_get_contents('composer.json')); echo json_last_error() 
 
 ---
 
-## Step 5 — Run Composer Update
+## Step 5 — Run Composer Update (minimal, no opportunistic bumps)
 
-Run `composer update` for all resolved feature packages at once, including any exception packages
-that were added directly:
+**Goal: update ONLY the packages this integration actually changes.** The lock diff should
+ideally touch only the updated `spryker/*` package(s) plus the `dev-master` ref of their
+`spryker-feature/*` meta-package — nothing else.
+
+### 5a — Update the named packages together with their feature packages
+
+Run `composer update` listing **both** the concrete `spryker/*` package(s) the user named **and**
+their resolved `spryker-feature/*` package(s), plus any exception packages added directly.
+**Do NOT pass `--with-dependencies`** — it opportunistically upgrades unrelated transitive
+dependencies (e.g. `aws/aws-sdk-php`, `guzzlehttp/guzzle`, `neuron-core/neuron-ai`, symfony
+polyfills) and can remove packages, polluting the lock diff.
 
 ```bash
-composer update {space-separated list of all feature packages and direct exception packages} --with-dependencies --ignore-platform-req=ext-redis --ignore-platform-req=ext-grpc --ignore-platform-req=ext-amqp
+composer update {spryker/named-package(s)} {resolved spryker-feature/* package(s)} {direct exception packages} --ignore-platform-req=ext-redis --ignore-platform-req=ext-grpc --ignore-platform-req=ext-amqp
 ```
 
-**Example:**
+**Example** (updating `spryker/ai-foundation`, pulled in by `spryker-feature/ai-commerce`):
 ```bash
-composer update spryker-feature/spryker-core spryker-feature/merchant spryker/some-rest-api --with-dependencies --ignore-platform-req=ext-redis --ignore-platform-req=ext-grpc --ignore-platform-req=ext-amqp
+composer update spryker/ai-foundation spryker-feature/ai-commerce --ignore-platform-req=ext-redis --ignore-platform-req=ext-grpc --ignore-platform-req=ext-amqp
+```
+
+> **Only add `--with-dependencies` if the targeted update fails** because the new package
+> version genuinely requires bumped constraints (compare the package's `require` block in the
+> old vs new lock — if identical, the bumps are NOT needed and you must avoid the flag).
+
+### 5b — Verify the lock diff is minimal
+
+After the update, inspect which packages changed in the lock:
+
+```bash
+git diff composer.lock | grep '"name":' | sort -u
+```
+
+The output should list only the intended package(s). If unrelated packages (aws-sdk, guzzle,
+neuron-ai, polyfills, etc.) appear, you used `--with-dependencies` unnecessarily — revert and
+re-run the targeted command:
+
+```bash
+git checkout composer.lock
+composer update {spryker/named-package(s)} {resolved spryker-feature/* package(s)} --ignore-platform-req=ext-redis --ignore-platform-req=ext-grpc --ignore-platform-req=ext-amqp
+```
+
+### 5c — Guard `plugin-api-version` (do NOT let composer downgrade it)
+
+A locally-installed composer with an older plugin API can rewrite the final
+`"plugin-api-version"` line in `composer.lock` (e.g. `2.9.0 → 2.6.0`). This is an unwanted,
+unrelated change. After every `composer update`, check it and revert if it was lowered:
+
+```bash
+git diff composer.lock | grep 'plugin-api-version'
+```
+
+If the diff shows the value was lowered (a `-` line with the higher version, a `+` line with the
+lower), restore the original value by editing the last `"plugin-api-version"` line in
+`composer.lock` back to what was there before. Confirm the lock is still valid:
+
+```bash
+composer validate --no-check-all --no-check-publish
 ```
 
 If `composer update` fails, report the full error output to the user and stop.
@@ -363,7 +411,9 @@ directly to `require` rather than being resolved through a feature package.
 - [ ] Branch created with correct prefix and naming
 - [ ] All spryker packages resolved to feature packages (or added directly for exceptions)
 - [ ] `composer.json` updated with `dev-master as {tag}` for all feature packages
-- [ ] `composer update` ran successfully
+- [ ] `composer update` ran for ONLY the named packages + their feature packages (no `--with-dependencies` unless required)
+- [ ] Lock diff verified minimal (`git diff composer.lock | grep '"name":'` shows only intended packages)
+- [ ] `plugin-api-version` in `composer.lock` not downgraded (reverted if composer lowered it)
 - [ ] Suite PR diff fetched and applied (if project changes)
 - [ ] Conflicts documented and flagged
 - [ ] Summary confirmed by user
