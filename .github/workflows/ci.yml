@@ -167,27 +167,42 @@ jobs:
                 uses: ./.github/actions/job-slack-notifications
                 if: always()
 
-    codeception:
+    # BUILD-ONCE (CC-39284): build the EU dump once; codeception + cypress restore it.
+    # Not draft-tiered — codeception always runs, so its build-db dependency must too.
+    build-db:
+        needs: [js-validation]
+        uses: ./.github/workflows/_build-db.yml
+        secrets: inherit
+
+    # BUILD-ONCE (CC-39284): build the ROBOT dump once; robot-api + robot-ui restore it.
+    # Draft-tiered to match the robot consumers — no point building it when they skip.
+    build-robot-db:
         needs: [js-validation, validation]
+        if: ${{ github.event_name != 'pull_request' || github.event.pull_request.draft == false }}
+        uses: ./.github/workflows/_build-robot-db.yml
+        secrets: inherit
+
+    codeception:
+        needs: [js-validation, validation, build-db]
         uses: ./.github/workflows/_codeception.yml
         secrets: inherit
 
     robot-api:
-        needs: [validation]
+        needs: [validation, build-robot-db]
         # DRAFT_TIERING (FRW-11570): E2E tier skipped on draft PRs; runs on ready_for_review.
         if: ${{ github.event_name != 'pull_request' || github.event.pull_request.draft == false }}
         uses: ./.github/workflows/_robot-api.yml
         secrets: inherit
 
     robot-ui:
-        needs: [js-validation, validation]
+        needs: [js-validation, validation, build-robot-db]
         # DRAFT_TIERING (FRW-11570): E2E tier skipped on draft PRs; runs on ready_for_review.
         if: ${{ github.event_name != 'pull_request' || github.event.pull_request.draft == false }}
         uses: ./.github/workflows/_robot-ui.yml
         secrets: inherit
 
     cypress:
-        needs: [js-validation, validation]
+        needs: [js-validation, validation, build-db]
         # DRAFT_TIERING (FRW-11570): E2E tier skipped on draft PRs; runs on ready_for_review.
         if: ${{ github.event_name != 'pull_request' || github.event.pull_request.draft == false }}
         uses: ./.github/workflows/_cypress.yml
