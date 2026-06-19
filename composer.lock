@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b35b2d5d8b40a2d7b3a61f6080f34226",
+    "content-hash": "05c2d68002f0d2b695185b78d1b68b35",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -56885,6 +56885,65 @@
                 "source": "https://github.com/spryker/product-bundles-rest-api/tree/1.4.0"
             },
             "time": "2026-06-01T17:06:17+00:00"
+        },
+        {
+            "name": "spryker/product-cart-connector",
+            "version": "4.15.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/product-cart-connector.git",
+                "reference": "c3c6ec4bfbc898d1f73d64cf1d7668d3e84e39db"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/product-cart-connector/zipball/c3c6ec4bfbc898d1f73d64cf1d7668d3e84e39db",
+                "reference": "c3c6ec4bfbc898d1f73d64cf1d7668d3e84e39db",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.3",
+                "spryker/cart-extension": "^4.0.0",
+                "spryker/cart-reorder-extension": "^1.0.0",
+                "spryker/checkout-extension": "^1.2.0",
+                "spryker/kernel": "^3.76.0",
+                "spryker/locale": "^3.0.0 || ^4.0.0",
+                "spryker/messenger": "^3.0.0",
+                "spryker/product": "^6.49.0",
+                "spryker/store": "^1.0.0",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/cart": "*",
+                "spryker/code-sniffer": "*",
+                "spryker/container": "*",
+                "spryker/propel": "*",
+                "spryker/tax": "*",
+                "spryker/testify": "*",
+                "spryker/url": "*"
+            },
+            "suggest": {
+                "spryker/cart": "If you want to use Cart plugins. Must be >= 4.0.2!"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ProductCartConnector module",
+            "support": {
+                "source": "https://github.com/spryker/product-cart-connector/tree/4.15.0"
+            },
+            "time": "2026-06-19T11:20:50+00:00"
         },
         {
             "name": "spryker/product-category",
