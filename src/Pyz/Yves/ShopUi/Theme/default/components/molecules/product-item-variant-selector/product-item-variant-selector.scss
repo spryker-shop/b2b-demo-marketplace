@@ -2,10 +2,10 @@
     #{$name} {
         &__list {
             display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: var(--scale-4) var(--scale-16);
-            padding: var(--scale-4) 0;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: var(--scale-4);
+            padding: 0;
             margin: 0;
             list-style: none;
         }
@@ -24,6 +24,8 @@
         }
 
         &__label {
+            flex: 0 0 auto;
+            min-width: rem(96);
             font-family: var(--body-sm-family);
             font-size: var(--body-sm-size);
             font-weight: var(--font-weight-regular);

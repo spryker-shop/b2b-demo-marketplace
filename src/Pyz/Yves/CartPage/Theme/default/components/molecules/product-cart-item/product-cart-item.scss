@@ -98,18 +98,13 @@
             margin-bottom: rem(var(--scale-6));
         }
 
+        &__packaging-unit,
         &__variant-selector {
-            margin-bottom: rem(var(--scale-6));
-        }
+            margin-bottom: var(--scale-4);
 
-        &__packaging-unit {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-            color: var(--text-secondary);
-            font-family: var(--body-sm-family);
-            font-size: rem(var(--body-sm-size));
-            line-height: rem(var(--body-sm-line-height));
+            &:last-child {
+                margin-bottom: var(--scale-8);
+            }
         }
 
         &__meta-item {

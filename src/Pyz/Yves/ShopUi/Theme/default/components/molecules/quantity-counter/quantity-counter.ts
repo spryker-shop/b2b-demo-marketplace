@@ -22,7 +22,7 @@ export default class QuantityCounter extends Component {
         );
         this.value = this.getValue;
         this.mapEvents();
-        this.updateDecrementState();
+        this.updateButtonsState();
     }
 
     protected mapEvents(): void {
@@ -49,7 +49,7 @@ export default class QuantityCounter extends Component {
             this.setValue(this.maxQuantity);
         }
 
-        this.updateDecrementState();
+        this.updateButtonsState();
     }
 
     protected setValue(value: number): void {
@@ -58,12 +58,25 @@ export default class QuantityCounter extends Component {
         this.input.dispatchEvent(new Event('input'));
     }
 
+    protected updateButtonsState(): void {
+        this.updateDecrementState();
+        this.updateIncrementState();
+    }
+
     protected updateDecrementState(): void {
         const currentValue = this.currentValue;
         const shouldDisable = !Number.isFinite(currentValue) || currentValue <= this.minQuantity;
 
         this.decrementButton.disabled = shouldDisable;
         this.decrementButton.classList.toggle(`${this.name}__button--disabled`, shouldDisable);
+    }
+
+    protected updateIncrementState(): void {
+        const currentValue = this.currentValue;
+        const shouldDisable = Number.isFinite(currentValue) && currentValue >= this.maxQuantity;
+
+        this.incrementButton.disabled = shouldDisable;
+        this.incrementButton.classList.toggle(`${this.name}__button--disabled`, shouldDisable);
     }
 
     protected get currentValue(): number {
@@ -98,7 +111,7 @@ export default class QuantityCounter extends Component {
         }
 
         this.input.value = potentialValue.toString();
-        this.updateDecrementState();
+        this.updateButtonsState();
 
         if (this.isAjaxMode) {
             this.delayToSubmit(true);

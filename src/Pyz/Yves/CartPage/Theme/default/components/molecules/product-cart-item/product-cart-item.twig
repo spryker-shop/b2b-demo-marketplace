@@ -65,27 +65,29 @@
                         {% endif %}
                     {% endblock %}
 
-                    {{ block('itemAttributes') }}
+                    <div>
+                        {{ block('itemAttributes') }}
 
-                    {% block packagingUnit %}
-                        {% if (listItem.amountSalesUnit ?? null) is not empty or (listItem.quantitySalesUnit ?? null) is not empty %}
-                            <div class="{{ config.name }}__packaging-unit">
-                                {% include molecule('packaging-unit-cart', 'ProductPackagingUnitWidget') ignore missing with {
-                                    data: {
-                                        amount: listItem.amount,
-                                        quantity: listItem.quantity,
-                                        quantitySalesUnit: listItem.quantitySalesUnit,
-                                        quantityConversion: listItem.quantitySalesUnit ? listItem.quantitySalesUnit.conversion : null,
-                                        quantityProductMeasurementUnit: listItem.quantitySalesUnit ? listItem.quantitySalesUnit.productMeasurementUnit : null,
-                                        amountSalesUnit: listItem.amountSalesUnit,
-                                        amountConversion: listItem.amountSalesUnit ? listItem.amountSalesUnit.conversion : null,
-                                        amountProductMeasurementUnit: listItem.amountSalesUnit ? listItem.amountSalesUnit.productMeasurementUnit : null,
-                                        amountValue: listItem.amountSalesUnit ? listItem.amountSalesUnit.value : null,
-                                    },
-                                } only %}
-                            </div>
-                        {% endif %}
-                    {% endblock %}
+                        {% block packagingUnit %}
+                            {% if (listItem.amountSalesUnit ?? null) is not empty or (listItem.quantitySalesUnit ?? null) is not empty %}
+                                <div class="{{ config.name }}__variant-selector">
+                                    {% include molecule('packaging-unit-cart', 'ProductPackagingUnitWidget') ignore missing with {
+                                        data: {
+                                            amount: listItem.amount,
+                                            quantity: listItem.quantity,
+                                            quantitySalesUnit: listItem.quantitySalesUnit,
+                                            quantityConversion: listItem.quantitySalesUnit ? listItem.quantitySalesUnit.conversion : null,
+                                            quantityProductMeasurementUnit: listItem.quantitySalesUnit ? listItem.quantitySalesUnit.productMeasurementUnit : null,
+                                            amountSalesUnit: listItem.amountSalesUnit,
+                                            amountConversion: listItem.amountSalesUnit ? listItem.amountSalesUnit.conversion : null,
+                                            amountProductMeasurementUnit: listItem.amountSalesUnit ? listItem.amountSalesUnit.productMeasurementUnit : null,
+                                            amountValue: listItem.amountSalesUnit ? listItem.amountSalesUnit.value : null,
+                                        },
+                                    } only %}
+                                </div>
+                            {% endif %}
+                        {% endblock %}
+                    </div>
 
                     {% widget 'ProductAttributeVisibilityCartWidget' args [data.list is iterable ? null : data.list, data.listItem.idProductAbstract, data.listItem.id] only %}
                         {% block body %}
