@@ -148,10 +148,23 @@ sections:
         setup-search-create-sources:
             command: 'vendor/bin/console search:setup:sources'
 
+        # The restored dump carries the SOURCE tables + the (complete) storage/search
+        # tables, but ES/Redis are NOT in the dump and start empty. sync:data alone does
+        # not fully rebuild them for b2b's data (product_abstract page collapsed 1800 DB
+        # rows -> 984 ES docs; sync.storage.product_offer left 1637 unacked). Re-publish
+        # from source the same way the original import does (publish -> drain), THEN bulk
+        # sync:data as a backstop, THEN drain again so no sync.* queue is left pending.
+        trigger-publish-events:
+            command: 'vendor/bin/console publish:trigger-events'
+
+        publish-and-sync:
+            command: 'vendor/bin/console queue:worker:start --stop-when-empty'
+            timeout: 2000
+
         sync-data-from-db:
             command: 'vendor/bin/console sync:data'
 
-        publish-and-sync:
+        sync-data-drain:
             command: 'vendor/bin/console queue:worker:start --stop-when-empty'
             timeout: 2000
 
