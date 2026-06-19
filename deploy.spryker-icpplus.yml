@@ -49,7 +49,7 @@ image:
         SPRYKER_HOOK_AFTER_DEPLOY: "vendor/bin/install -r install-post-deploy-workflow-icpplus.yml -vvv"
         SPRYKER_HOOK_INSTALL: 'vendor/bin/install -r production --no-ansi -vvv'
         SPRYKER_HOOK_DESTRUCTIVE_INSTALL: 'vendor/bin/install -r destructive --no-ansi -vvv'
-        SPRYKER_WATER_TREATMENT_CONFIGURATOR_HOST: demo-water-treatment-configurator.sns.sh01.demo-spryker.com
+        SPRYKER_WATER_TREATMENT_CONFIGURATOR_HOST: demo-water-treatment-configurator.icp-plus.sh01.demo-spryker.com
         SPRYKER_WATER_TREATMENT_CONFIGURATOR_PORT: 443
         SPRYKER_PRODUCT_CONFIGURATOR_ENCRYPTION_KEY: 'change123'
         SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR: '0c1ffefeebdab4a3d839d0e52590c9a2'
@@ -127,7 +127,7 @@ groups:
                         services:
                             session:
                                 namespace: 11
-                    demo-water-treatment-configurator.sns.sh01.demo-spryker.com:
+                    demo-water-treatment-configurator.icp-plus.sh01.demo-spryker.com:
                         entry-point: WaterTreatmentConfigurator
                 http:
                     max-request-body-size: 100M
