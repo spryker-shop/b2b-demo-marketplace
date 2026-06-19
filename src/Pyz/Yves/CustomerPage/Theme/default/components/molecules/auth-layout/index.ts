@@ -1,1 +1,1 @@
-import './auth-layout.scss';
+import './style.scss';

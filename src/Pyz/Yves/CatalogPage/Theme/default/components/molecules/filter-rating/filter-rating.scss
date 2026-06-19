@@ -1,13 +1,17 @@
 @use 'src/ShopUi/styles/shared' as *;
-.filter-rating {
-    font-size: rem(14);
-    padding-left: rem(10);
+@mixin catalog-page-filter-rating($name: '.filter-rating') {
+    #{$name} {
+        font-size: rem(14);
+        padding-left: rem(10);
 
-    @include helper-breakpoint-media-min($lg) {
-        padding-left: 0;
-    }
+        @include helper-breakpoint-media-min($lg) {
+            padding-left: 0;
+        }
 
-    &__text {
-        vertical-align: middle;
+        &__text {
+            vertical-align: middle;
+        }
+
+        @content;
     }
 }

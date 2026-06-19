@@ -1,4 +1,4 @@
-import './seller-list.scss';
+import './style.scss';
 import register from 'ShopUi/app/registry';
 
 export default register(

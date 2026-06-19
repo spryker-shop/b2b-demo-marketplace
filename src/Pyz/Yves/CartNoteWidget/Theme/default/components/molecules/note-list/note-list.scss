@@ -1,14 +1,18 @@
 @use 'src/ShopUi/styles/shared' as *;
-.note-list {
-    width: 100%;
+@mixin cart-note-widget-note-list($name: '.note-list') {
+    #{$name} {
+        width: 100%;
 
-    &__title {
-        color: $setting-color-gray-4;
-        font-weight: fw(medium);
+        &__title {
+            color: $setting-color-gray-4;
+            font-weight: fw(medium);
 
-        &--order-detail {
-            font-weight: fw(bold);
-            text-transform: uppercase;
+            &--order-detail {
+                font-weight: fw(bold);
+                text-transform: uppercase;
+            }
         }
+
+        @content;
     }
 }

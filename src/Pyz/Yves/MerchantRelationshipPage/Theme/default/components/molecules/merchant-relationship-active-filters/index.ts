@@ -1,1 +1,1 @@
-import './merchant-relationship-active-filters.scss';
+import './style.scss';

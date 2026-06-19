@@ -1,1 +1,1 @@
-import './error-block.scss';
+import './style.scss';

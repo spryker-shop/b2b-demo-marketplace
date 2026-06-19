@@ -1,1 +1,1 @@
-import './view-mode-switch';
+import './style.scss';

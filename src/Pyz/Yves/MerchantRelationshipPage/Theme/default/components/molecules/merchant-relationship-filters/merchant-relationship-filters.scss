@@ -1,16 +1,20 @@
 @use 'src/ShopUi/styles/shared' as *;
-.merchant-relationship-filters {
-    background: $setting-color-gray-7;
-    padding: rem(15);
-    margin-bottom: rem(20);
-    overflow: hidden;
+@mixin merchant-request-relation-page-merchant-relationship-filters($name: '.merchant-relationship-filters') {
+    #{$name} {
+        background: $setting-color-gray-7;
+        padding: rem(15);
+        margin-bottom: rem(20);
+        overflow: hidden;
 
-    @include helper-breakpoint-media-min($lg) {
-        padding: rem(20);
-    }
+        @include helper-breakpoint-media-min($lg) {
+            padding: rem(20);
+        }
 
-    .select2-selection__rendered,
-    .custom-select__select {
-        background: $setting-color-white;
+        .select2-selection__rendered,
+        .custom-select__select {
+            background: $setting-color-white;
+        }
+
+        @content;
     }
 }

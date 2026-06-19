@@ -25,8 +25,8 @@
         }
 
         &__toggle-icon {
-            width: rem(var(--scale-16));
-            height: rem(var(--scale-16));
+            width: var(--scale-16);
+            height: var(--scale-16);
             color: var(--icon-secondary);
         }
 
@@ -79,5 +79,3 @@
         }
     }
 }
-
-@include merchant-product-offer-widget-seller-list();

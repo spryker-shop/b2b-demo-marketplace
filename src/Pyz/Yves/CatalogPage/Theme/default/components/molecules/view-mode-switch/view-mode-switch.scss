@@ -1,51 +1,55 @@
 @use 'src/ShopUi/styles/shared' as *;
-.view-mode-switch {
-    display: flex;
-    margin: rem(3) rem(-8) 0;
-
-    @include helper-breakpoint-media-min($lg) {
-        width: 100%;
-        border: 1px solid $setting-color-gray-1;
-        border-radius: $setting-border-radius;
-        margin: 0;
-    }
-
-    &__link {
-        padding: 0 rem(8);
-        font-size: 0;
-        color: $setting-color-gray-5;
+@mixin catalog-page-view-mode-switch($name: '.view-mode-switch') {
+    #{$name} {
+        display: flex;
+        margin: rem(3) rem(-8) 0;
 
         @include helper-breakpoint-media-min($lg) {
-            @include helper-effect-transition(color);
-            display: flex;
-            width: 50%;
-            flex-shrink: 0;
-            justify-content: center;
-            padding: rem(12) rem(20) rem(10);
-            font-size: rem(14);
-            line-height: rem(18);
+            width: 100%;
+            border: 1px solid $setting-color-gray-1;
+            border-radius: $setting-border-radius;
+            margin: 0;
+        }
 
-            &:not(:first-child) {
-                border-left: 1px solid $setting-color-gray-1;
-            }
+        &__link {
+            padding: 0 rem(8);
+            font-size: 0;
+            color: $setting-color-gray-5;
 
-            &:first-child {
-                padding-left: rem(21);
-            }
+            @include helper-breakpoint-media-min($lg) {
+                @include helper-effect-transition(color);
+                display: flex;
+                width: 50%;
+                flex-shrink: 0;
+                justify-content: center;
+                padding: rem(12) rem(20) rem(10);
+                font-size: rem(14);
+                line-height: rem(18);
 
-            &:hover,
-            &:focus {
-                color: $setting-color-gray-4;
+                &:not(:first-child) {
+                    border-left: 1px solid $setting-color-gray-1;
+                }
+
+                &:first-child {
+                    padding-left: rem(21);
+                }
+
+                &:hover,
+                &:focus {
+                    color: $setting-color-gray-4;
+                }
             }
         }
-    }
 
-    &__link--active {
-        color: $setting-color-gray-4;
+        &__link--active {
+            color: $setting-color-gray-4;
 
-        @include helper-breakpoint-media-min($lg) {
-            background-color: $setting-color-gray-7;
-            font-weight: fw(bold);
+            @include helper-breakpoint-media-min($lg) {
+                background-color: $setting-color-gray-7;
+                font-weight: fw(bold);
+            }
         }
+
+        @content;
     }
 }

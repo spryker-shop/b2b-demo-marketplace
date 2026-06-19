@@ -1,1 +1,1 @@
-import './filter-rating';
+import './style.scss';

@@ -1,144 +1,148 @@
 @use 'src/ShopUi/styles/shared' as *;
-.filter-category {
-    &__menu {
-        &--lvl-1,
-        &--lvl-2 {
-            padding-left: rem(10);
-
-            @include helper-breakpoint-media-min($lg) {
-                padding-left: 0;
-            }
-        }
-
-        &--lvl-3 {
-            @include helper-breakpoint-media-min($lg) {
+@mixin catalog-page-filter-category($name: '.filter-category') {
+    #{$name} {
+        &__menu {
+            &--lvl-1,
+            &--lvl-2 {
                 padding-left: rem(10);
-            }
-        }
-    }
-
-    &__menu-item {
-        display: flex;
-        flex-grow: 1;
-        color: $setting-color-gray-4;
-
-        &--lvl-2 {
-            &:first-child {
-                padding-top: rem(5);
 
                 @include helper-breakpoint-media-min($lg) {
-                    padding-top: 0;
+                    padding-left: 0;
                 }
             }
 
-            &:last-child {
-                padding-bottom: rem(5);
-
+            &--lvl-3 {
                 @include helper-breakpoint-media-min($lg) {
-                    padding-bottom: 0;
+                    padding-left: rem(10);
                 }
             }
         }
-    }
 
-    &__category-row {
-        flex-grow: 1;
+        &__menu-item {
+            display: flex;
+            flex-grow: 1;
+            color: $setting-color-gray-4;
 
-        &--no-children {
-            margin-left: rem(16);
-        }
-    }
+            &--lvl-2 {
+                &:first-child {
+                    padding-top: rem(5);
 
-    &__category-target {
-        @include helper-effect-transition(grid-template-rows);
-        display: grid;
-        grid-template-rows: 1fr;
+                    @include helper-breakpoint-media-min($lg) {
+                        padding-top: 0;
+                    }
+                }
 
-        &--hidden {
-            grid-template-rows: 0fr;
-        }
-    }
+                &:last-child {
+                    padding-bottom: rem(5);
 
-    &__category-target-inner {
-        overflow: hidden;
-    }
-
-    &__category-toggle-button {
-        @include helper-effect-transition(transform);
-        color: $setting-color-gray-4;
-        margin-right: rem(5);
-        background-color: $setting-color-transparent;
-        cursor: pointer;
-        width: rem(20);
-
-        @include helper-breakpoint-media-max($lg) {
-            display: inline-block;
-            vertical-align: top;
-            margin-top: rem(-5);
+                    @include helper-breakpoint-media-min($lg) {
+                        padding-bottom: 0;
+                    }
+                }
+            }
         }
 
-        &--collapsed {
-            transform: rotate(-90deg);
-        }
-    }
+        &__category-row {
+            flex-grow: 1;
 
-    &__menu-link {
-        @include helper-effect-transition(color);
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        margin-bottom: rem(13);
-        color: $setting-color-gray-4;
-        cursor: pointer;
-        background-color: $setting-color-transparent;
-        font: fw(regular) rem(13) / rem(16) $setting-font-family;
-        gap: rem(var(--scale-2));
-
-        @include helper-breakpoint-media-min($lg) {
-            margin-bottom: rem(11);
-            font-size: rem(15);
-            line-height: rem(23);
+            &--no-children {
+                margin-left: rem(16);
+            }
         }
 
-        &--lvl-1 {
-            font-size: var(--font-size-16);
-            font-weight: fw(medium);
+        &__category-target {
+            @include helper-effect-transition(grid-template-rows);
+            display: grid;
+            grid-template-rows: 1fr;
+
+            &--hidden {
+                grid-template-rows: 0fr;
+            }
         }
 
-        &--lvl-2 {
-            font-size: var(--font-size-16);
+        &__category-target-inner {
+            overflow: hidden;
         }
 
-        &--lvl-3 {
-            font-size: var(--font-size-14);
+        &__category-toggle-button {
+            @include helper-effect-transition(transform);
+            color: $setting-color-gray-4;
+            margin-right: rem(5);
+            background-color: $setting-color-transparent;
+            cursor: pointer;
+            width: rem(20);
+
+            @include helper-breakpoint-media-max($lg) {
+                display: inline-block;
+                vertical-align: top;
+                margin-top: rem(-5);
+            }
+
+            &--collapsed {
+                transform: rotate(-90deg);
+            }
         }
 
-        &:hover,
-        &:focus {
-            color: $setting-color-text;
-            text-decoration: none;
+        &__menu-link {
+            @include helper-effect-transition(color);
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: rem(13);
+            color: $setting-color-gray-4;
+            cursor: pointer;
+            background-color: $setting-color-transparent;
+            font: fw(regular) rem(13) / rem(16) $setting-font-family;
+            gap: rem(var(--scale-2));
+
+            @include helper-breakpoint-media-min($lg) {
+                margin-bottom: rem(11);
+                font-size: rem(15);
+                line-height: rem(23);
+            }
+
+            &--lvl-1 {
+                font-size: var(--font-size-16);
+                font-weight: fw(medium);
+            }
+
+            &--lvl-2 {
+                font-size: var(--font-size-16);
+            }
+
+            &--lvl-3 {
+                font-size: var(--font-size-14);
+            }
+
+            &:hover,
+            &:focus {
+                color: $setting-color-text;
+                text-decoration: none;
+            }
+
+            &[disabled] {
+                pointer-events: none;
+                color: $setting-color-gray-3;
+            }
+
+            &--active {
+                font-weight: fw(bold);
+                color: $setting-color-text;
+            }
         }
 
-        &[disabled] {
-            pointer-events: none;
-            color: $setting-color-gray-3;
+        &__link-text {
+            text-align: left;
+
+            &--active {
+                text-decoration: underline;
+            }
         }
 
-        &--active {
-            font-weight: fw(bold);
-            color: $setting-color-text;
+        &__counter {
+            @include helper-font-size(medium);
         }
-    }
 
-    &__link-text {
-        text-align: left;
-
-        &--active {
-            text-decoration: underline;
-        }
-    }
-
-    &__counter {
-        @include helper-font-size(medium);
+        @content;
     }
 }

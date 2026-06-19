@@ -1,1 +1,1 @@
-import './catalog-cms-block';
+import './style.scss';

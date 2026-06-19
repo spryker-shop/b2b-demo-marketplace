@@ -1,29 +1,33 @@
 @use 'src/ShopUi/styles/shared' as *;
-.cart-bottom {
-    padding: rem(10) 0 rem(20);
+@mixin cart-page-cart-bottom($name: '.cart-bottom') {
+    #{$name} {
+        padding: rem(10) 0 rem(20);
 
-    @include helper-breakpoint-media-min($lg) {
-        padding-top: 0;
-    }
-
-    @include helper-breakpoint-media-min($xxl) {
-        padding: 0 $setting-grid-space * 2 0 0;
-    }
-
-    &__button {
-        width: 100%;
-        padding: rem(11);
-        font-size: rem(14);
-        justify-content: center;
-        border-radius: $setting-border-radius;
-        border: rem(1) solid $setting-color-gray-1;
-
-        @include helper-breakpoint-media-min($xl) {
-            width: auto;
-            border: 0;
-            justify-content: flex-start;
-            padding: 0;
-            font-size: rem(13);
+        @include helper-breakpoint-media-min($lg) {
+            padding-top: 0;
         }
+
+        @include helper-breakpoint-media-min($xxl) {
+            padding: 0 $setting-grid-space * 2 0 0;
+        }
+
+        &__button {
+            width: 100%;
+            padding: rem(11);
+            font-size: rem(14);
+            justify-content: center;
+            border-radius: $setting-border-radius;
+            border: rem(1) solid $setting-color-gray-1;
+
+            @include helper-breakpoint-media-min($xl) {
+                width: auto;
+                border: 0;
+                justify-content: flex-start;
+                padding: 0;
+                font-size: rem(13);
+            }
+        }
+
+        @content;
     }
 }
