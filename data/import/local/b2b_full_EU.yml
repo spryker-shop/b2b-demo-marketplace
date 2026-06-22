@@ -100,47 +100,47 @@ actions:
   - data_entity: category-template
     source: data/import/common/common/category_template.csv
   - data_entity: category
-    source: data/import/b2b_common/common/category.csv # update
+    source: data/import/common/common/category.csv # update +
   - data_entity: category-store
-    source: data/import/b2b_common/DE/category_store.csv # update
+    source: data/import/common/DE/category_store.csv # update
   - data_entity: category-store
-    source: data/import/b2b_common/AT/category_store.csv # update
+    source: data/import/common/AT/category_store.csv # update
   - data_entity: category-store
-    source: data/import/b2b_common/US/category_store.csv # update
+    source: data/import/common/US/category_store.csv # update
   - data_entity: product-attribute-key
-    source: data/import/b2b_common/common/product_attribute_key.csv # update
+    source: data/import/common/common/product_attribute_key.csv # update
   - data_entity: product-management-attribute
-    source: data/import/b2b_common/common/product_management_attribute.csv # update
+    source: data/import/common/common/product_management_attribute.csv # update
   - data_entity: product-abstract
-    source: data/import/b2b_common/common/product_abstract.csv # update
+    source: data/import/common/common/product_abstract.csv # update
   - data_entity: product-concrete
-    source: data/import/b2b_common/common/product_concrete.csv # update
+    source: data/import/b2b_common/common/product_concrete.csv # update +
   - data_entity: product-image
-    source: data/import/b2b_common/common/product_image.csv # update
+    source: data/import/common/common/product_image.csv # update
 
   - data_entity: product-price
-    source: data/import/b2b_common/DE/product_price.csv # update
+    source: data/import/common/DE/product_price.csv # update
   - data_entity: product-price
-    source: data/import/b2b_common/AT/product_price.csv # update
+    source: data/import/common/AT/product_price.csv # update
   - data_entity: product-price
-    source: data/import/b2b_common/US/product_price.csv # update
+    source: data/import/common/US/product_price.csv # update
   - data_entity: product-price-schedule
-    source: data/import/b2b_common/DE/product_price_schedule.csv # update
+    source: data/import/common/DE/product_price_schedule.csv # update
   - data_entity: product-price-schedule
-    source: data/import/b2b_common/AT/product_price_schedule.csv # update
+    source: data/import/common/AT/product_price_schedule.csv # update
   - data_entity: product-price-schedule
-    source: data/import/b2b_common/US/product_price_schedule.csv # update
+    source: data/import/common/US/product_price_schedule.csv # update
   - data_entity: product-stock
-    source: data/import/b2b_common/common/product_stock.csv # update
+    source: data/import/common/common/product_stock.csv # update
   - data_entity: product-configuration
     source: data/import/common/common/product_configuration.csv
   # Store relation
   - data_entity: product-abstract-store
-    source: data/import/b2b_common/DE/product_abstract_store.csv
+    source: data/import/common/DE/product_abstract_store.csv
   - data_entity: product-abstract-store
-    source: data/import/b2b_common/AT/product_abstract_store.csv
+    source: data/import/common/AT/product_abstract_store.csv
   - data_entity: product-abstract-store
-    source: data/import/b2b_common/US/product_abstract_store.csv
+    source: data/import/common/US/product_abstract_store.csv
 
 
 #3. Special Product Types Setup import - Special Product Types category includes sub-categories: Product Options, Measurements, Product Bundles, Gift Cards
@@ -155,13 +155,13 @@ actions:
   - data_entity: product-measurement-unit
     source: data/import/common/common/product_measurement_unit.csv
   - data_entity: product-measurement-base-unit
-    source: data/import/b2b_common/common/product_measurement_base_unit.csv
+    source: data/import/common/common/product_measurement_base_unit.csv
   - data_entity: product-measurement-sales-unit
-    source: data/import/b2b_common/common/product_measurement_sales_unit.csv
+    source: data/import/common/common/product_measurement_sales_unit.csv
   - data_entity: product-packaging-unit-type
     source: data/import/common/common/product_packaging_unit_type.csv
   - data_entity: product-packaging-unit
-    source: data/import/b2b_common/common/product_packaging_unit.csv
+    source: data/import/common/common/product_packaging_unit.csv
   - data_entity: product-list
     source: data/import/common/common/product_list.csv
   - data_entity: product-list-category
@@ -176,11 +176,11 @@ actions:
     source: data/import/common/common/configurable_bundle_template_image.csv
   # Store relation
   - data_entity: product-measurement-sales-unit-store
-    source: data/import/b2b_common/DE/product_measurement_sales_unit_store.csv
+    source: data/import/common/DE/product_measurement_sales_unit_store.csv
   - data_entity: product-measurement-sales-unit-store
-    source: data/import/b2b_common/AT/product_measurement_sales_unit_store.csv
+    source: data/import/common/AT/product_measurement_sales_unit_store.csv
   - data_entity: product-measurement-sales-unit-store
-    source: data/import/b2b_common/US/product_measurement_sales_unit_store.csv
+    source: data/import/common/US/product_measurement_sales_unit_store.csv
 
 
 #4. Merchandising Setup import
@@ -247,7 +247,7 @@ actions:
   - data_entity: content-navigation
     source: data/import/common/common/content_navigation.csv
   - data_entity: content-product-abstract-list
-    source: data/import/b2b_common/common/content_product_abstract_list.csv
+    source: data/import/common/common/content_product_abstract_list.csv
   - data_entity: content-product-set
     source: data/import/common/common/content_product_set.csv
   - data_entity: cms-page
@@ -341,19 +341,19 @@ actions:
   - data_entity: product-offer-stock
     source: data/import/b2b_common/common/marketplace/product_offer_stock.csv
   - data_entity: product-shipment-type
-    source: data/import/b2b_common/common/product_shipment_type.csv
+    source: data/import/common/common/product_shipment_type.csv
   - data_entity: product-offer-shipment-type
     source: data/import/b2b_common/common/product_offer_shipment_type.csv
   - data_entity: product-price-merchant-relationship
-    source: data/import/b2b_common/DE/price_product_merchant_relationship.csv
+    source: data/import/common/DE/price_product_merchant_relationship.csv
   - data_entity: product-price-merchant-relationship
-    source: data/import/b2b_common/AT/price_product_merchant_relationship.csv
+    source: data/import/common/AT/price_product_merchant_relationship.csv
   - data_entity: product-price-merchant-relationship
-    source: data/import/b2b_common/US/price_product_merchant_relationship.csv
+    source: data/import/common/US/price_product_merchant_relationship.csv
   - data_entity: shopping-list
     source: data/import/common/common/shopping_list.csv
   - data_entity: shopping-list-item
-    source: data/import/b2b_common/common/shopping_list_item.csv
+    source: data/import/common/common/shopping_list_item.csv
   - data_entity: shopping-list-company-user
     source: data/import/common/common/shopping_list_company_user.csv
   - data_entity: shopping-list-company-business-unit
