@@ -3,7 +3,7 @@
 {% block noLocation %}
     {% if not data.servicePoint %}
         <div class="{{ config.jsName }}__no-location {{ config.name }}__location-container">
-            <button type="button" class="link link--additional {{ attributes['trigger-class-name'] }}">
+            <button type="button" class="link link--font-inherit link--no-decoration {{ attributes['trigger-class-name'] }}">
                 {{ 'service_point_widget.select_location_action' | trans }}
             </button>
         </div>
@@ -16,7 +16,7 @@
         <span class="{{ config.jsName }}__location">{{ block('address') }}</span>
 
         <div>
-            <button type="button" class="link link--additional {{ attributes['trigger-class-name'] }}">
+            <button type="button" class="link link--font-inherit link--no-decoration {{ attributes['trigger-class-name'] }}">
                 {{ 'service_point_widget.change_action' | trans }}
             </button>
         </div>

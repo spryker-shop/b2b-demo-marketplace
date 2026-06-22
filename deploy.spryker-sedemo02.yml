@@ -49,8 +49,8 @@ image:
         SPRYKER_HOOK_AFTER_DEPLOY: "vendor/bin/install -r install-post-deploy-workflow-sedemo02.yml -vvv"
         SPRYKER_HOOK_INSTALL: 'vendor/bin/install -r production --no-ansi -vvv'
         SPRYKER_HOOK_DESTRUCTIVE_INSTALL: 'vendor/bin/install -r destructive --no-ansi -vvv'
-        SPRYKER_PRODUCT_CONFIGURATOR_HOST: demo-date-time-configurator.demo-02.se.demo-spryker.com
-        SPRYKER_PRODUCT_CONFIGURATOR_PORT: 443
+        SPRYKER_WATER_TREATMENT_CONFIGURATOR_HOST: demo-water-treatment-configurator.demo-02.se.demo-spryker.com
+        SPRYKER_WATER_TREATMENT_CONFIGURATOR_PORT: 443
         SPRYKER_PRODUCT_CONFIGURATOR_ENCRYPTION_KEY: 'change123'
         SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR: '0c1ffefeebdab4a3d839d0e52590c9a2'
         SPRYKER_CONFIGURATION_ENCRYPTION_KEY: '2a190556e7758fb56e9215f4fe218f9570575e4e576b7cf8cd27c7a477cebe51'
@@ -129,8 +129,8 @@ groups:
                         services:
                             session:
                                 namespace: 3
-                    demo-date-time-configurator.demo-02.se.demo-spryker.com:
-                        entry-point: Configurator
+                    demo-water-treatment-configurator.demo-02.se.demo-spryker.com:
+                        entry-point: WaterTreatmentConfigurator
                 http:
                     max-request-body-size: 100M
             boffice:

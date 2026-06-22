@@ -5,7 +5,6 @@
 {% block form %}
     <form method="POST" action="{{ path(data.ajaxTriggerAttribute? 'cart/configured-bundle/async/change' : 'cart/configured-bundle/change', {'configuredBundleGroupKey': data.configuredBundle.groupKey }) }}">
         {% include molecule('quantity-counter') with {
-            modifiers: ['cart', 'secondary'],
             data: {
                 autoUpdate: true,
                 numberFormatConfig: data.numberFormatConfig,

@@ -10,6 +10,8 @@ export default class NavigationMultilevel extends Component {
     protected touchTriggers: HTMLElement[];
     protected eventShowOverlay: CustomEvent<OverlayEventDetail>;
     protected eventHideOverlay: CustomEvent<OverlayEventDetail>;
+    protected overlayHideTimeoutId: number;
+    protected readonly overlayHideDelay = 150;
 
     protected readyCallback(): void {}
 
@@ -60,6 +62,7 @@ export default class NavigationMultilevel extends Component {
             trigger.classList.add(this.classToToggle);
 
             if (trigger.querySelector('.menu-wrapper--lvl-1')) {
+                this.cancelOverlayHide();
                 this.toggleOverlay(true);
             }
         }
@@ -72,8 +75,20 @@ export default class NavigationMultilevel extends Component {
 
             trigger.classList.remove(this.classToToggle);
             if (trigger.querySelector('.menu-wrapper--lvl-1')) {
-                this.toggleOverlay(false);
+                this.scheduleOverlayHide();
             }
+        }
+    }
+
+    protected scheduleOverlayHide(): void {
+        this.cancelOverlayHide();
+        this.overlayHideTimeoutId = window.setTimeout(() => this.toggleOverlay(false), this.overlayHideDelay);
+    }
+
+    protected cancelOverlayHide(): void {
+        if (this.overlayHideTimeoutId) {
+            window.clearTimeout(this.overlayHideTimeoutId);
+            this.overlayHideTimeoutId = null;
         }
     }
 

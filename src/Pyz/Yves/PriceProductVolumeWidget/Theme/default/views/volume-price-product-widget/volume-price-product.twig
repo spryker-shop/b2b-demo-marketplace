@@ -5,6 +5,7 @@
     originalAmount: _widget.product.prices.ORIGINAL | default,
     volumeProductPrices: _widget.volumeProductPrices,
     grossMargin: _widget.product.grossMargin,
+    priceModifiers: ['detail'],
 } %}
 
 {% block body %}
@@ -29,6 +30,7 @@
     {% if can('SeePricePermissionPlugin') %}
         {% block price %}
             {% include molecule('volume-price', 'PriceProductVolumeWidget') with {
+                modifiers: data.priceModifiers,
                 attributes: {
                     'data-json': jsonVolumeProductPrices | json_encode(),
                 },

@@ -253,7 +253,9 @@ if (!getenv('SPRYKER_S3_PEM_IMPORT_BUCKET')) {
         'root' => '/data',
         'path' => '/data/pim-imports',
       ];
+}
 
+if (!getenv('SPRYKER_S3_PEM_EXPORT_BUCKET')) {
       $config[FileSystemConstants::FILESYSTEM_SERVICE]['product-experience-management-exports'] = [
         'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
         'root' => '/data',
