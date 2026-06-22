@@ -64,8 +64,6 @@ sections:
 
         check-product-validity:
             command: 'vendor/bin/console product:check-validity'
-        create-quicksight-users:
-            command: 'vendor/bin/console quicksight-user:sync:save'
 
         stripe:
             command: 'vendor/bin/console data:import --config=vendor/spryker-eco/stripe/data/import/stripe.yml -vvv --no-ansi'
