@@ -16,6 +16,7 @@
     {% include molecule('action-bar') with {
         data: {
             title: data.schedule.name,
+            titleQa: 'recurring-order-name',
             actions: [
                 { block: block('schedulePauseForm') },
                 { block: block('scheduleResumeForm') },
