@@ -81,6 +81,8 @@ use Spryker\Shared\UrlStorage\UrlStorageConfig;
 use Spryker\Shared\UrlStorage\UrlStorageConstants;
 use Spryker\Zed\Event\Communication\Plugin\Queue\EventQueueMessageProcessorPlugin;
 use Spryker\Zed\Kernel\Container;
+use Pyz\Shared\QueueTiming\QueueTimingConstants;
+use Pyz\Zed\Queue\Business\Timing\TimingQueueMessageProcessorPlugin;
 use Spryker\Zed\Queue\QueueDependencyProvider as SprykerDependencyProvider;
 use Spryker\Zed\RabbitMq\Communication\Plugin\Queue\RabbitMqQueueMessageCheckerPlugin;
 use Spryker\Zed\RabbitMq\Communication\Plugin\Queue\RabbitMqQueueMetricsReaderPlugin;
@@ -98,7 +100,7 @@ class QueueDependencyProvider extends SprykerDependencyProvider
      */
     protected function getProcessorMessagePlugins(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
-        return [
+        return $this->wrapWithTiming([
             EventConstants::EVENT_QUEUE => new EventQueueMessageProcessorPlugin(),
             EventConstants::EVENT_QUEUE_RETRY => new EventQueueMessageProcessorPlugin(),
             PublisherConfig::PUBLISH_QUEUE => new EventQueueMessageProcessorPlugin(),
@@ -190,7 +192,28 @@ class QueueDependencyProvider extends SprykerDependencyProvider
             ProductExperienceManagementConfig::PUBLISH_PRODUCT_ATTRIBUTE => new EventQueueMessageProcessorPlugin(),
             ProductExperienceManagementConfig::PRODUCT_ATTRIBUTE_SYNC_STORAGE_QUEUE => new SynchronizationStorageQueueMessageProcessorPlugin(),
             ConfigurationConstants::QUEUE_NAME_SYNC_CONFIGURATION => new SynchronizationStorageQueueMessageProcessorPlugin(),
-        ];
+        ]);
+    }
+
+    /**
+     * Perf-testing: wrap each processor in a timing decorator (no-op unless PS_QUEUE_TIMING=1).
+     *
+     * @param array<string, \Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface> $processorPlugins
+     *
+     * @return array<string, \Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface>
+     */
+    protected function wrapWithTiming(array $processorPlugins): array
+    {
+        if (!QueueTimingConstants::isEnabled()) {
+            return $processorPlugins;
+        }
+
+        $wrapped = [];
+        foreach ($processorPlugins as $queueName => $processorPlugin) {
+            $wrapped[$queueName] = new TimingQueueMessageProcessorPlugin($processorPlugin, $queueName);
+        }
+
+        return $wrapped;
     }
 
     /**
