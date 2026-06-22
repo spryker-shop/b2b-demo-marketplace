@@ -1,0 +1,34 @@
+{% extends molecule('recurring-order-list', '@SprykerFeature:OrderExperienceManagement') %}
+
+{% block wrapper %}
+    {% set wrapperClassName = '' %}
+
+    {% include molecule('action-bar') with {
+        data: {
+            title: 'recurring_orders.list.title' | trans,
+        },
+    } only %}
+
+    {{ parent() }}
+{% endblock %}
+
+{% block table %}
+    {% set rows = data.recurringSchedules | map(schedule => {
+        'spy_recurring_schedule.name': (schedule.name ?: schedule.uuid),
+        'spy_recurring_schedule.status': {
+            label: 'recurring_orders.status.' ~ schedule.status,
+            status: data.statusClassMap[schedule.status],
+        },
+        'spy_recurring_schedule.next_trigger_date': schedule.status == 'cancelled' ? '—' : schedule.nextTriggerDate,
+        'spy_recurring_schedule.cadence_type': ('recurring_orders.cadence.' ~ schedule.cadenceType) | trans
+        ~ (schedule.cadenceValue ? ' (' ~ schedule.cadenceValue ~ ')' : ''),
+        'spy_recurring_schedule.actions': [{
+            url: url('recurring-orders/detail', { uuid: schedule.uuid }),
+            title: 'recurring_orders.detail.history.view_order',
+            icon: 'eye',
+            qa: 'recurring-order-view-button',
+        }],
+    }) %}
+
+    {{ parent() }}
+{% endblock %}
