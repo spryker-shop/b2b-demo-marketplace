@@ -57,7 +57,11 @@ image:
     npm: 10
   php:
     ini:
-        max_execution_time: 60
+        # TEMP DIAGNOSTIC (revert to 60 after): let the checkout/address request run past the
+        # 60s FPM kill so it COMPLETES - a completed request flushes its full OTEL root span,
+        # exposing the ~50s that is currently hidden because the worker is killed mid-request.
+        max_execution_time: 300
+        request_terminate_timeout: 300
     enabled-extensions:
         - otel
         - amqp
