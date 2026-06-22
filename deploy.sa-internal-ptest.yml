@@ -52,6 +52,11 @@ image:
     SPRYKER_DEBUG_ENABLED: false
     SPRYKER_YVES_HOST_EU: yves.eu.ptest.cloud.spryker.toys
     AWS_REGION: "eu-west-1"
+    # TEMP DIAGNOSTIC (revert after): the FPM pool reads request_terminate_timeout from this env
+    # (worker.conf: request_terminate_timeout = ${PHP_FPM_REQUEST_TERMINATE_TIMEOUT}). Raise it so
+    # the checkout/address request runs to completion instead of being SIGTERM'd at ~60s, letting
+    # the OTEL root span flush and the CHKTRACE error_log lines all emit.
+    PHP_FPM_REQUEST_TERMINATE_TIMEOUT: 300
   node:
     version: 20
     npm: 10
