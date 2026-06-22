@@ -23,7 +23,6 @@ use Spryker\Yves\Router\Plugin\Router\YvesRouterPlugin;
 use Spryker\Yves\Router\Plugin\RouterEnhancer\LanguagePrefixRouterEnhancerPlugin;
 use Spryker\Yves\Router\Plugin\RouterEnhancer\StorePrefixRouterEnhancerPlugin;
 use Spryker\Yves\Router\RouterDependencyProvider as SprykerRouterDependencyProvider;
-use Spryker\Yves\SecurityOauthKnpu\Plugin\Router\SecurityOauthKnpuRouteProviderPlugin;
 use Spryker\Yves\Sitemap\Plugin\Router\SitemapRouteProviderPlugin;
 use SprykerEco\Yves\PunchoutGateway\Plugin\Router\PunchoutGatewayRouteProviderPlugin;
 use SprykerEco\Yves\Stripe\Plugin\Router\StripeRouteProviderPlugin;
@@ -63,7 +62,6 @@ use SprykerShop\Yves\ErrorPage\Plugin\Router\ErrorPageRouteProviderPlugin;
 use SprykerShop\Yves\FileManagerWidget\Plugin\Router\FileManagerWidgetRouteProviderPlugin;
 use SprykerShop\Yves\HomePage\Plugin\Router\HomePageRouteProviderPlugin;
 use SprykerShop\Yves\MerchantProductOfferWidget\Plugin\Router\MerchantProductOfferWidgetRouteProviderPlugin;
-use SprykerShop\Yves\MerchantRegistrationRequestPage\Plugin\Router\MerchantRegistrationRequestPageRouteProviderPlugin;
 use SprykerShop\Yves\MerchantRelationRequestPage\Plugin\Router\MerchantRelationRequestPageRouteProviderPlugin;
 use SprykerShop\Yves\MerchantRelationshipPage\Plugin\Router\MerchantRelationshipPageRouteProviderPlugin;
 use SprykerShop\Yves\MultiCartPage\Plugin\Router\MultiCartPageAsyncRouteProviderPlugin;
@@ -193,11 +191,9 @@ class RouterDependencyProvider extends SprykerRouterDependencyProvider
             new SalesOrderAmendmentWidgetRouteProviderPlugin(),
             new ServicePointWidgetRouteProviderPlugin(),
             new SelfServicePortalPageRouteProviderPlugin(),
-            new MerchantRegistrationRequestPageRouteProviderPlugin(),
             new CostCenterRouteProviderPlugin(),
             new BudgetRouteProviderPlugin(), #PurchasingControlFeature
             new PunchoutGatewayRouteProviderPlugin(),
-            new SecurityOauthKnpuRouteProviderPlugin(),
         ];
     }
 

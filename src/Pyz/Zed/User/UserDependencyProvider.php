@@ -15,10 +15,6 @@ use Spryker\Zed\AgentGui\Communication\Plugin\UserAgentTableConfigExpanderPlugin
 use Spryker\Zed\AgentGui\Communication\Plugin\UserAgentTableDataExpanderPlugin;
 use Spryker\Zed\CustomerUserConnectorGui\Communication\Plugin\UserTableActionExpanderPlugin;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\MerchantAgent\Communication\Plugin\User\MerchantAgentUserQueryCriteriaExpanderPlugin;
-use Spryker\Zed\MerchantAgentGui\Communication\Plugin\User\MerchantAgentUserFormExpanderPlugin;
-use Spryker\Zed\MerchantAgentGui\Communication\Plugin\User\MerchantAgentUserTableConfigExpanderPlugin;
-use Spryker\Zed\MerchantAgentGui\Communication\Plugin\User\MerchantAgentUserTableDataExpanderPlugin;
 use Spryker\Zed\User\UserDependencyProvider as SprykerUserDependencyProvider;
 use Spryker\Zed\UserLocale\Communication\Plugin\User\AssignUserLocalePreSavePlugin;
 use Spryker\Zed\UserLocale\Communication\Plugin\User\UserLocaleTransferExpanderPlugin;
@@ -60,7 +56,6 @@ class UserDependencyProvider extends SprykerUserDependencyProvider
         return [
             new UserAgentFormExpanderPlugin(),
             new UserLocaleFormExpanderPlugin(),
-            new MerchantAgentUserFormExpanderPlugin(),
         ];
     }
 
@@ -70,7 +65,6 @@ class UserDependencyProvider extends SprykerUserDependencyProvider
     protected function getUserTableConfigExpanderPlugins(): array
     {
         return [
-            new MerchantAgentUserTableConfigExpanderPlugin(),
             new UserAgentTableConfigExpanderPlugin(),
         ];
     }
@@ -82,7 +76,6 @@ class UserDependencyProvider extends SprykerUserDependencyProvider
     {
         return [
             new UserAgentTableDataExpanderPlugin(),
-            new MerchantAgentUserTableDataExpanderPlugin(),
         ];
     }
 
@@ -112,7 +105,6 @@ class UserDependencyProvider extends SprykerUserDependencyProvider
     protected function getUserQueryCriteriaExpanderPlugins(): array
     {
         return [
-            new MerchantAgentUserQueryCriteriaExpanderPlugin(),
         ];
     }
 

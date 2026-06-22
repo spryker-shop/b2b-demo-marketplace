@@ -10,14 +10,11 @@ declare(strict_types = 1);
 namespace Pyz\Zed\ProductOfferShipmentTypeDataImport;
 
 use Spryker\Zed\ProductOfferShipmentTypeDataImport\ProductOfferShipmentTypeDataImportDependencyProvider as SprykerProductOfferShipmentTypeDataImportDependencyProvider;
-use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductOfferShipmentTypeDataImport\ProductOfferConcreteShipmentTypeValidatorStepPlugin;
-
 class ProductOfferShipmentTypeDataImportDependencyProvider extends SprykerProductOfferShipmentTypeDataImportDependencyProvider
 {
     protected function getProductOfferShipmentTypeValidatorStepPlugins(): array
     {
         return [
-            new ProductOfferConcreteShipmentTypeValidatorStepPlugin(),
         ];
     }
 }

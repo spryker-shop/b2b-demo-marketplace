@@ -10,10 +10,7 @@ declare(strict_types = 1);
 namespace Pyz\Yves\CustomerPage;
 
 use Spryker\Yves\Kernel\Container;
-use Spryker\Yves\MerchantShipment\Plugin\CustomerPage\MerchantShipmentCheckoutAddressStepPreGroupItemsByShipmentPlugin;
 use Spryker\Yves\MultiFactorAuth\Plugin\AuthenticationHandler\Customer\CustomerMultiFactorAuthenticationHandlerPlugin;
-use Spryker\Yves\SecurityOauthKnpu\Plugin\CustomerPage\KnpuCustomerAuthenticationLinkPlugin;
-use Spryker\Yves\SecurityOauthKnpu\Plugin\CustomerPage\KnpuOauthCustomerClientStrategyPlugin;
 use SprykerFeature\Yves\PurchasingControl\Plugin\CustomerPage\CostCenterOrderSearchFormExpanderPlugin; #PurchasingControlFeature
 use SprykerFeature\Yves\PurchasingControl\Plugin\CustomerPage\CostCenterOrderSearchFormHandlerPlugin; #PurchasingControlFeature
 use SprykerFeature\Yves\SelfServicePortal\Plugin\CustomerPage\SingleAddressPerShipmentTypeCheckoutMultiShippingAddressesFormExpanderPlugin;
@@ -168,7 +165,6 @@ class CustomerPageDependencyProvider extends SprykerShopCustomerPageDependencyPr
     protected function getCheckoutAddressStepPreGroupItemsByShipmentPlugins(): array
     {
         return [
-            new MerchantShipmentCheckoutAddressStepPreGroupItemsByShipmentPlugin(),
             new ShipmentTypeCheckoutAddressStepPreGroupItemsByShipmentPlugin(),
         ];
     }
@@ -180,26 +176,6 @@ class CustomerPageDependencyProvider extends SprykerShopCustomerPageDependencyPr
     {
         return [
             new CustomerMultiFactorAuthenticationHandlerPlugin(),
-        ];
-    }
-
-    /**
-     * @return array<\SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\OauthCustomerClientStrategyPluginInterface>
-     */
-    protected function getOauthCustomerClientStrategyPlugins(): array
-    {
-        return [
-            new KnpuOauthCustomerClientStrategyPlugin(),
-        ];
-    }
-
-    /**
-     * @return array<\SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\CustomerAuthenticationLinkPluginInterface>
-     */
-    protected function getCustomerAuthenticationLinkPlugins(): array
-    {
-        return [
-            new KnpuCustomerAuthenticationLinkPlugin(),
         ];
     }
 }

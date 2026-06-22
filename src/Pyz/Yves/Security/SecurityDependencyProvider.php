@@ -13,7 +13,6 @@ use Spryker\Yves\Security\Plugin\Security\RememberMeSecurityPlugin;
 use Spryker\Yves\Security\SecurityDependencyProvider as SprykerSecurityDependencyProvider;
 use SprykerShop\Yves\AgentPage\Plugin\Security\YvesAgentPageSecurityPlugin;
 use SprykerShop\Yves\CustomerPage\Plugin\Security\CustomerRememberMeSecurityPlugin;
-use SprykerShop\Yves\CustomerPage\Plugin\Security\OauthCustomerSecurityPlugin;
 use SprykerShop\Yves\CustomerPage\Plugin\Security\YvesCustomerPageSecurityPlugin;
 use SprykerShop\Yves\SessionAgentValidation\Plugin\Security\SaveAgentSessionSecurityPlugin;
 use SprykerShop\Yves\SessionAgentValidation\Plugin\Security\SessionAgentValidationSecurityAuthenticationListenerFactoryTypeExpanderPlugin;
@@ -33,7 +32,6 @@ class SecurityDependencyProvider extends SprykerSecurityDependencyProvider
             new CustomerRememberMeSecurityPlugin(),
             new YvesAgentPageSecurityPlugin(),
             new YvesCustomerPageSecurityPlugin(),
-            new OauthCustomerSecurityPlugin(),
             new ValidateCustomerSessionSecurityPlugin(),
             new SaveCustomerSessionSecurityPlugin(),
             new ValidateAgentSessionSecurityPlugin(),

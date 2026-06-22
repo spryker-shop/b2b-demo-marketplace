@@ -8,9 +8,7 @@
         <subprocesses>
             <process>DummyRefund</process>
             <process>DummyReturn</process>
-            <process>DummyInvoice</process>
-            <process>DummyMerchantCommission</process>
-            <process>DummyOrderAmendment</process>
+            <process>DummyInvoice</process><process>DummyOrderAmendment</process>
         </subprocesses>
 
         <states>
@@ -86,6 +84,11 @@
                 <source>payment pending</source>
                 <target>paid</target>
                 <event>pay</event>
+            </transition>
+
+            <transition happy="true">
+                <source>paid</source>
+                <target>tax pending</target>
             </transition>
 
             <transition happy="true">
@@ -169,8 +172,6 @@
 
     <process name="DummyRefund" file="DummySubprocess/DummyRefund01.xml"/>
     <process name="DummyReturn" file="DummySubprocess/DummyReturn01.xml"/>
-    <process name="DummyInvoice" file="DummySubprocess/DummyInvoice01.xml"/>
-    <process name="DummyMerchantCommission" file="DummySubprocess/DummyMerchantCommission01.xml"/>
-    <process name="DummyOrderAmendment" file="DummySubprocess/DummyOrderAmendment01.xml"/>
+    <process name="DummyInvoice" file="DummySubprocess/DummyInvoice01.xml"/><process name="DummyOrderAmendment" file="DummySubprocess/DummyOrderAmendment01.xml"/>
 
 </statemachine>

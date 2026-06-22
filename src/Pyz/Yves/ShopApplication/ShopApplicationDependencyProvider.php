@@ -24,7 +24,6 @@ use Spryker\Yves\MultiFactorAuth\Widget\MultiFactorAuthHandlerWidget;
 use Spryker\Yves\MultiFactorAuth\Widget\SetMultiFactorAuthMenuItemWidget;
 use Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin;
 use Spryker\Yves\Security\Plugin\Application\YvesSecurityApplicationPlugin;
-use Spryker\Yves\SecurityOauthKnpu\Plugin\Application\OauthKnpuApplicationPlugin;
 use Spryker\Yves\Session\Plugin\Application\SessionApplicationPlugin;
 use Spryker\Yves\Sitemap\Widget\SitemapWidget;
 use Spryker\Yves\Translator\Plugin\Application\TranslatorApplicationPlugin;
@@ -109,12 +108,10 @@ use SprykerShop\Yves\ConfigurableBundleWidget\Widget\QuoteConfiguredBundleWidget
 use SprykerShop\Yves\CurrencyWidget\Widget\CurrencyWidget;
 use SprykerShop\Yves\CustomerPage\Plugin\Application\CustomerConfirmationUserCheckerApplicationPlugin;
 use SprykerShop\Yves\CustomerPage\Widget\CustomerNavigationWidget;
-use SprykerShop\Yves\CustomerPage\Widget\OauthAuthenticationLinksWidget;
 use SprykerShop\Yves\CustomerValidationPage\Plugin\ShopApplication\LogoutInvalidatedCustomerFilterControllerEventHandlerPlugin;
 use SprykerShop\Yves\DiscountPromotionWidget\Plugin\ShopApplication\CartDiscountPromotionProductListWidgetCacheKeyGeneratorStrategyPlugin;
 use SprykerShop\Yves\DiscountPromotionWidget\Widget\CartDiscountPromotionProductListWidget;
 use SprykerShop\Yves\LanguageSwitcherWidget\Widget\LanguageSwitcherWidget;
-use SprykerShop\Yves\MerchantOpeningHoursWidget\Widget\MerchantOpeningHoursWidget;
 use SprykerShop\Yves\MerchantProductOfferWidget\Widget\MerchantProductOffersSelectWidget;
 use SprykerShop\Yves\MerchantProductOfferWidget\Widget\MerchantProductOfferWidget;
 use SprykerShop\Yves\MerchantProductWidget\Widget\MerchantProductWidget;
@@ -123,13 +120,7 @@ use SprykerShop\Yves\MerchantRelationRequestWidget\Widget\MerchantRelationReques
 use SprykerShop\Yves\MerchantRelationRequestWidget\Widget\MerchantRelationRequestMenuItemWidget;
 use SprykerShop\Yves\MerchantRelationshipWidget\Widget\MerchantRelationshipLinkListWidget;
 use SprykerShop\Yves\MerchantRelationshipWidget\Widget\MerchantRelationshipMenuItemWidget;
-use SprykerShop\Yves\MerchantSalesOrderWidget\Widget\MerchantOrderReferenceForItemsWidget;
-use SprykerShop\Yves\MerchantSalesReturnWidget\Plugin\MerchantSalesReturnCreateFormWidgetCacheKeyGeneratorStrategyPlugin;
-use SprykerShop\Yves\MerchantSalesReturnWidget\Widget\MerchantSalesReturnCreateFormWidget;
-use SprykerShop\Yves\MerchantSearchWidget\Widget\MerchantSearchWidget;
 use SprykerShop\Yves\MerchantWidget\Plugin\ShopApplication\SoldByMerchantWidgetCacheKeyGeneratorStrategyPlugin;
-use SprykerShop\Yves\MerchantWidget\Widget\ShoppingListMerchantWidget;
-use SprykerShop\Yves\MerchantWidget\Widget\SoldByMerchantWidget;
 use SprykerShop\Yves\MoneyWidget\Widget\CurrencyIsoCodeWidget;
 use SprykerShop\Yves\MultiCartWidget\Widget\AddToMultiCartWidget;
 use SprykerShop\Yves\MultiCartWidget\Widget\CartOperationsWidget;
@@ -174,7 +165,6 @@ use SprykerShop\Yves\ProductMeasurementUnitWidget\Widget\CartProductMeasurementU
 use SprykerShop\Yves\ProductMeasurementUnitWidget\Widget\ManageProductMeasurementUnitWidget;
 use SprykerShop\Yves\ProductOfferServicePointAvailabilityWidget\Widget\ProductOfferServicePointAvailabilityDisplayWidget;
 use SprykerShop\Yves\ProductOfferServicePointAvailabilityWidget\Widget\ProductOfferServicePointAvailabilityWidget;
-use SprykerShop\Yves\ProductOfferShoppingListWidget\Widget\ProductOfferShoppingListWidget;
 use SprykerShop\Yves\ProductOfferWidget\Widget\ShoppingListProductOfferWidget;
 use SprykerShop\Yves\ProductOptionWidget\Widget\ProductOptionConfiguratorWidget;
 use SprykerShop\Yves\ProductPackagingUnitWidget\Widget\ProductPackagingUnitWidget;
@@ -362,18 +352,11 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             CustomerFullNameWidget::class,
             ProductSetIdsWidget::class,
             CartAddProductAsSeparateItemWidget::class,
-            SoldByMerchantWidget::class,
             MerchantProductWidget::class,
             MerchantProductOfferWidget::class,
-            MerchantOpeningHoursWidget::class,
-            MerchantOrderReferenceForItemsWidget::class,
-            MerchantSalesReturnCreateFormWidget::class,
-            ShoppingListMerchantWidget::class,
             ShoppingListProductOfferWidget::class,
             StoreSwitcherWidget::class,
-            ProductOfferShoppingListWidget::class,
             MerchantProductOffersSelectWidget::class,
-            MerchantSearchWidget::class,
             ProductSchemaOrgCategoryWidget::class,
             AssetWidget::class,
             ProductBundleProductDetailPageItemsListWidget::class,
@@ -450,7 +433,6 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             CostCenterBudgetFilterWidget::class, #PurchasingControlFeature
             CostCenterOrderDetailWidget::class, #PurchasingControlFeature
             PunchoutCartWidget::class,
-            OauthAuthenticationLinksWidget::class,
         ];
     }
 
@@ -465,7 +447,6 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             new QuoteApprovalWidgetCacheKeyGeneratorStrategyPlugin(),
             new CartDiscountPromotionProductListWidgetCacheKeyGeneratorStrategyPlugin(),
             new CartItemNoteFormWidgetCacheKeyGeneratorStrategyPlugin(),
-            new MerchantSalesReturnCreateFormWidgetCacheKeyGeneratorStrategyPlugin(),
             new SoldByMerchantWidgetCacheKeyGeneratorStrategyPlugin(),
             new ClickAndCollectServicePointAddressFormWidgetCacheKeyGeneratorStrategyPlugin(),
             new ShipmentTypeAddressFormWidgetCacheKeyGeneratorStrategyPlugin(),
@@ -511,7 +492,6 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             new ValidatorApplicationPlugin(),
             new YvesSecurityApplicationPlugin(),
             new CustomerConfirmationUserCheckerApplicationPlugin(),
-            new OauthKnpuApplicationPlugin(),
         ];
 
         if (class_exists(WebProfilerApplicationPlugin::class)) {

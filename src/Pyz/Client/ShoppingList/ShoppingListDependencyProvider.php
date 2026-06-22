@@ -9,7 +9,6 @@ declare(strict_types = 1);
 
 namespace Pyz\Client\ShoppingList;
 
-use Spryker\Client\Merchant\Plugin\ShoppingList\MerchantShoppingListItemToItemMapperPlugin;
 use Spryker\Client\ProductConfigurationShoppingList\Plugin\ShoppingList\ProductConfigurationShoppingListExpanderPlugin;
 use Spryker\Client\ProductConfigurationShoppingList\Plugin\ShoppingList\ProductConfigurationShoppingListItemMapperPlugin;
 use Spryker\Client\ProductConfigurationShoppingList\Plugin\ShoppingList\ProductConfigurationShoppingListItemToItemMapperPlugin;
@@ -44,7 +43,6 @@ class ShoppingListDependencyProvider extends SprykerShoppingListDependencyProvid
             new ShoppingListItemNoteToItemCartNoteMapperPlugin(),
             new ShoppingListItemProductOptionToItemProductOptionMapperPlugin(),
             new ProductOfferShoppingListItemToItemMapperPlugin(),
-            new MerchantShoppingListItemToItemMapperPlugin(),
             new ProductConfigurationShoppingListItemToItemMapperPlugin(),
         ];
     }

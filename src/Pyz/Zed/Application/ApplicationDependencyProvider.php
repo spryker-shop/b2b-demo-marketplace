@@ -18,7 +18,6 @@ use Spryker\Zed\EventDispatcher\Communication\Plugin\Application\BackendGatewayE
 use Spryker\Zed\EventDispatcher\Communication\Plugin\Application\BackofficeEventDispatcherApplicationPlugin;
 use Spryker\Zed\EventDispatcher\Communication\Plugin\Application\EventDispatcherApplicationPlugin;
 use Spryker\Zed\Form\Communication\Plugin\Application\FormApplicationPlugin;
-use Spryker\Zed\GuiTable\Communication\Plugin\Application\GuiTableApplicationPlugin;
 use Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin;
 use Spryker\Zed\Locale\Communication\Plugin\Application\LocaleApplicationPlugin;
 use Spryker\Zed\Locale\Communication\Plugin\Application\LocaleBackendGatewayApplicationPlugin;
@@ -29,7 +28,6 @@ use Spryker\Zed\Router\Communication\Plugin\Application\BackendGatewayRouterAppl
 use Spryker\Zed\Router\Communication\Plugin\Application\BackofficeRouterApplicationPlugin;
 use Spryker\Zed\Router\Communication\Plugin\Application\RouterApplicationPlugin;
 use Spryker\Zed\Security\Communication\Plugin\Application\ZedSecurityApplicationPlugin;
-use Spryker\Zed\SecurityOauthKnpu\Communication\Plugin\Application\OauthKnpuApplicationPlugin;
 use Spryker\Zed\Session\Communication\Plugin\Application\MockArraySessionApplicationPlugin;
 use Spryker\Zed\Session\Communication\Plugin\Application\SessionApplicationPlugin;
 use Spryker\Zed\Store\Communication\Plugin\Application\BackofficeStoreApplicationPlugin;
@@ -65,7 +63,6 @@ class ApplicationDependencyProvider extends SprykerApplicationDependencyProvider
             new ZedSecurityApplicationPlugin(),
             new NumberFormatterApplicationPlugin(),
             new BackofficeStoreApplicationPlugin(),
-            new OauthKnpuApplicationPlugin(),
         ];
 
         if (class_exists(WebProfilerApplicationPlugin::class)) {
@@ -94,11 +91,9 @@ class ApplicationDependencyProvider extends SprykerApplicationDependencyProvider
             new FormApplicationPlugin(),
             new ValidatorApplicationPlugin(),
             new ZedSecurityApplicationPlugin(),
-            new GuiTableApplicationPlugin(),
             new NumberFormatterApplicationPlugin(),
             new BackofficeStoreApplicationPlugin(),
             new ConfigurationApplicationPlugin(),
-            new OauthKnpuApplicationPlugin(),
         ];
 
         if (class_exists(WebProfilerApplicationPlugin::class)) {

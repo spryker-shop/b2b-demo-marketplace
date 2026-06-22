@@ -24,7 +24,6 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Mail\Business\Model\Provider\MailProviderCollectionAddInterface;
 use Spryker\Zed\Mail\MailConfig;
 use Spryker\Zed\Mail\MailDependencyProvider as SprykerMailDependencyProvider;
-use Spryker\Zed\MerchantUserPasswordResetMail\Communication\Plugin\Mail\MerchantUserPasswordResetMailTypeBuilderPlugin;
 use Spryker\Zed\MultiFactorAuth\Communication\Plugin\Mail\Customer\CustomerEmailMultiFactorAuthMailTypeBuilderPlugin;
 use Spryker\Zed\MultiFactorAuth\Communication\Plugin\Mail\User\UserEmailMultiFactorAuthMailTypeBuilderPlugin;
 use Spryker\Zed\Newsletter\Communication\Plugin\Mail\NewsletterSubscribedMailTypeBuilderPlugin;
@@ -92,7 +91,6 @@ class MailDependencyProvider extends SprykerMailDependencyProvider
             new AvailabilityNotificationUnsubscribedMailTypeBuilderPlugin(),
             new AvailabilityNotificationSubscriptionMailTypeBuilderPlugin(),
             new AvailabilityNotificationMailTypeBuilderPlugin(),
-            new MerchantUserPasswordResetMailTypeBuilderPlugin(),
             new OrderInvoiceMailTypeBuilderPlugin(),
             new CustomerEmailChangeVerificationMailTypePlugin(),
             new CustomerEmailChangeNotificationMailTypePlugin(),

@@ -52,16 +52,6 @@ groups:
     EU:
         region: EU
         applications:
-            mportal_eu: # custom name to differentiate between two applications, incorrect for the cloud usage
-                application: merchant-portal
-                endpoints:
-                    mp.eu.spryker.local:
-                        region: EU
-                        entry-point: MerchantPortal
-                        primal: true
-                        services:
-                            session:
-                                namespace: 1
             yves_eu: # custom name to differentiate between two applications, incorrect for the cloud usage
                 application: yves
                 endpoints:

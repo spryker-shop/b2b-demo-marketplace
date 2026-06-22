@@ -9,7 +9,6 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\Payment;
 
-use Spryker\Zed\DummyMarketplacePayment\Communication\Plugin\Payment\MerchantProductItemPaymentMethodFilterPlugin;
 use Spryker\Zed\Payment\PaymentDependencyProvider as SprykerPaymentDependencyProvider;
 use SprykerEco\Zed\Stripe\Communication\Plugin\Payment\StripePaymentMethodFilterPlugin;
 
@@ -21,7 +20,6 @@ class PaymentDependencyProvider extends SprykerPaymentDependencyProvider
     protected function getPaymentMethodFilterPlugins(): array
     {
         return [
-            new MerchantProductItemPaymentMethodFilterPlugin(),
             new StripePaymentMethodFilterPlugin(),
         ];
     }

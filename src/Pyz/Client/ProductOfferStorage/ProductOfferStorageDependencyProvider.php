@@ -9,7 +9,6 @@ declare(strict_types = 1);
 
 namespace Pyz\Client\ProductOfferStorage;
 
-use Spryker\Client\MerchantProductStorage\Plugin\ProductOfferStorage\MerchantProductProductOfferReferenceStrategyPlugin;
 use Spryker\Client\MerchantStorage\Plugin\ProductOfferStorage\MerchantProductOfferStorageExpanderPlugin;
 use Spryker\Client\PriceProductOfferStorage\Plugin\ProductOfferStorage\LowestPriceProductOfferStorageCollectionSorterPlugin;
 use Spryker\Client\PriceProductOfferStorage\Plugin\ProductOfferStorage\PriceProductOfferStorageExpanderPlugin;
@@ -31,7 +30,6 @@ class ProductOfferStorageDependencyProvider extends SprykerProductOfferStorageDe
     {
         return [
             new ProductOfferReferenceStrategyPlugin(),
-            new MerchantProductProductOfferReferenceStrategyPlugin(),
             new DefaultProductOfferReferenceStrategyPlugin(),
         ];
     }

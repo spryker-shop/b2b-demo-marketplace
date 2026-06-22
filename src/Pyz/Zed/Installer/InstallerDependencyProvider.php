@@ -32,8 +32,6 @@ use Spryker\Zed\SharedCart\Communication\Plugin\SharedCartPermissionInstallerPlu
 use Spryker\Zed\ShoppingList\Communication\Plugin\ShoppingListPermissionsInstallerPlugin;
 use Spryker\Zed\Translator\Communication\Plugin\TranslatorInstallerPlugin;
 use Spryker\Zed\User\Communication\Plugin\UserInstallerPlugin;
-use SprykerEco\Zed\Stripe\Communication\Plugin\Installer\StripeMarketplaceInstallerPlugin;
-
 class InstallerDependencyProvider extends SprykerInstallerDependencyProvider
 {
     /**
@@ -64,7 +62,6 @@ class InstallerDependencyProvider extends SprykerInstallerDependencyProvider
             new OauthCompanyUserInstallerPlugin(),
             new AgentOauthScopeInstallerPlugin(),
             new DynamicEntityInstallerPlugin(),
-            new StripeMarketplaceInstallerPlugin(),
         ];
     }
 }

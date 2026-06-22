@@ -40,7 +40,6 @@ use Spryker\Service\FlysystemAws3v3FileSystem\Plugin\Flysystem\IamAws3v3Filesyst
 use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
 use Spryker\Shared\Acl\AclConstants;
 use Spryker\Shared\Agent\AgentConstants;
-use Spryker\Shared\AgentSecurityBlockerMerchantPortal\AgentSecurityBlockerMerchantPortalConstants;
 use Spryker\Shared\AppCatalogGui\AppCatalogGuiConstants;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Application\Log\Config\SprykerLoggerConfig;
@@ -52,7 +51,6 @@ use Spryker\Shared\CmsGui\CmsGuiConstants;
 use Spryker\Shared\Configuration\ConfigurationConstants;
 use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Shared\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConstants;
-use Spryker\Shared\DummyMarketplacePayment\DummyMarketplacePaymentConfig;
 use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\WebHtmlErrorRenderer;
 use Spryker\Shared\Event\EventConstants;
@@ -70,9 +68,6 @@ use Spryker\Shared\KernelApp\KernelAppConstants;
 use Spryker\Shared\Locale\LocaleConstants;
 use Spryker\Shared\Log\LogConstants;
 use Spryker\Shared\Mail\MailConstants;
-use Spryker\Shared\MerchantPortalApplication\MerchantPortalConstants;
-use Spryker\Shared\MerchantProductDataImport\MerchantProductDataImportConstants;
-use Spryker\Shared\MerchantProductOfferDataImport\MerchantProductOfferDataImportConstants;
 use Spryker\Shared\MerchantRelationRequest\MerchantRelationRequestConstants;
 use Spryker\Shared\MerchantRelationship\MerchantRelationshipConstants;
 use Spryker\Shared\MessageBroker\MessageBrokerConstants;
@@ -107,7 +102,6 @@ use Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants;
 use Spryker\Shared\SearchHttp\SearchHttpConstants;
 use Spryker\Shared\SecurityBlocker\SecurityBlockerConstants;
 use Spryker\Shared\SecurityBlockerBackoffice\SecurityBlockerBackofficeConstants;
-use Spryker\Shared\SecurityBlockerMerchantPortal\SecurityBlockerMerchantPortalConstants;
 use Spryker\Shared\SecurityBlockerStorefrontAgent\SecurityBlockerStorefrontAgentConstants;
 use Spryker\Shared\SecurityBlockerStorefrontCustomer\SecurityBlockerStorefrontCustomerConstants;
 use Spryker\Shared\SecuritySystemUser\SecuritySystemUserConstants;
@@ -539,9 +533,7 @@ $config[SecurityBlockerBackofficeConstants::BACKOFFICE_USER_BLOCK_FOR_SECONDS] =
 $config[SecurityBlockerBackofficeConstants::BACKOFFICE_USER_BLOCKING_NUMBER_OF_ATTEMPTS] = 9;
 
 // >>> Security Blocker MerchantPortal user
-$config[SecurityBlockerMerchantPortalConstants::MERCHANT_PORTAL_USER_BLOCK_FOR_SECONDS] = 360;
-$config[SecurityBlockerMerchantPortalConstants::MERCHANT_PORTAL_USER_BLOCKING_TTL] = 900;
-$config[SecurityBlockerMerchantPortalConstants::MERCHANT_PORTAL_USER_BLOCKING_NUMBER_OF_ATTEMPTS] = 9;
+
 // >>> LOGGING
 
 // Due to some deprecation notices we silence all deprecations for the time being
@@ -729,26 +721,7 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
         'root' => APPLICATION_ROOT_DIR . '/data/DE/media/',
         'path' => 'files/',
-    ],
-    'merchant-product-data-import-files' => [
-        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
-        'key' => getenv('SPRYKER_S3_MERCHANT_PRODUCT_DATA_IMPORT_FILES_KEY') ?: '',
-        'bucket' => getenv('SPRYKER_S3_MERCHANT_PRODUCT_DATA_IMPORT_FILES_BUCKET') ?: '',
-        'secret' => getenv('SPRYKER_S3_MERCHANT_PRODUCT_DATA_IMPORT_FILES_SECRET') ?: '',
-        'path' => '/merchant-product-data-import-files',
-        'version' => 'latest',
-        'region' => $awsRegion,
-    ],
-    'merchant-product-offer-data-import-files' => [
-        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
-        'key' => getenv('SPRYKER_S3_MERCHANT_PRODUCT_DATA_IMPORT_FILES_KEY') ?: '',
-        'bucket' => getenv('SPRYKER_S3_MERCHANT_PRODUCT_DATA_IMPORT_FILES_BUCKET') ?: '',
-        'secret' => getenv('SPRYKER_S3_MERCHANT_PRODUCT_DATA_IMPORT_FILES_SECRET') ?: '',
-        'path' => '/merchant-product-offer-data-import-files',
-        'version' => 'latest',
-        'region' => $awsRegion,
-    ],
-    'ssp-inquiry' => [
+    ],'ssp-inquiry' => [
         'sprykerAdapterClass' => IamAws3v3FilesystemBuilderPlugin::class,
         'key' => getenv('SPRYKER_S3_SSP_INQUIRIES_KEY') ?: '',
         'secret' => getenv('SPRYKER_S3_SSP_INQUIRIES_SECRET') ?: '',
@@ -836,8 +809,7 @@ $config[SelfServicePortalConstants::STORAGE_NAME] = 'ssp-files';
 $config[SelfServicePortalConstants::INQUIRY_STORAGE_NAME] = 'ssp-inquiry';
 $config[SelfServicePortalConstants::ASSET_STORAGE_NAME] = 'ssp-asset-image';
 $config[SelfServicePortalConstants::SSP_MODEL_IMAGE_STORAGE_NAME] = 'ssp-model-image';
-$config[MerchantProductDataImportConstants::FILE_SYSTEM_NAME] = 'merchant-product-data-import-files';
-$config[MerchantProductOfferDataImportConstants::FILE_SYSTEM_NAME] = 'merchant-product-offer-data-import-files';
+
 $config[FileManagerGuiConstants::DEFAULT_FILE_MAX_SIZE] = '10M';
 
 // ----------------------------------------------------------------------------
@@ -873,15 +845,10 @@ $config[ApplicationConstants::BASE_URL_ZED] = sprintf(
 );
 
 // ----------------------------------------------------------------------------
-// ------------------------------ MERCHANT PORTAL -----------------------------
+
 // ----------------------------------------------------------------------------
 
 $merchantPortalPort = (int)(getenv('SPRYKER_MP_PORT')) ?: 443;
-$config[MerchantPortalConstants::BASE_URL_MP] = sprintf(
-    'http://%s%s',
-    getenv('SPRYKER_MP_HOST'),
-    $merchantPortalPort !== 80 ? ':' . $merchantPortalPort : '',
-);
 
 // ----------------------------------------------------------------------------
 // ------------------------------ FRONTEND ------------------------------------
@@ -944,16 +911,12 @@ $config[GlueApplicationConstants::GLUE_APPLICATION_CORS_ALLOW_ORIGIN] = getenv('
 // ------------------------------ OMS -----------------------------------------
 // ----------------------------------------------------------------------------
 
-$config[OmsConstants::ACTIVE_PROCESSES] = [
-    'MarketplacePayment01',
-    'ForeignPaymentStateMachine01',
-    'StripeManualMarketplace01',
+$config[OmsConstants::ACTIVE_PROCESSES] = ['ForeignPaymentStateMachine01',
+    'StripeManual01',
 ];
 
-$config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = [
-    DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE => 'MarketplacePayment01',
-    PaymentConfig::PAYMENT_FOREIGN_PROVIDER => 'ForeignPaymentStateMachine01',
-    StripeConfig::PAYMENT_METHOD_NAME => 'StripeManualMarketplace01',
+$config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = [PaymentConfig::PAYMENT_FOREIGN_PROVIDER => 'ForeignPaymentStateMachine01',
+    StripeConfig::PAYMENT_METHOD_NAME => 'StripeManual01',
 ];
 
 $config[OmsConstants::PROCESS_LOCATION] = [
@@ -980,9 +943,6 @@ $config[AgentConstants::AGENT_ALLOWED_SECURED_PATTERN_LIST] = [
 ];
 
 // >>> Security Blocker MerchantPortal agent
-$config[AgentSecurityBlockerMerchantPortalConstants::AGENT_MERCHANT_PORTAL_BLOCK_FOR_SECONDS] = 360;
-$config[AgentSecurityBlockerMerchantPortalConstants::AGENT_MERCHANT_PORTAL_BLOCKING_TTL] = 900;
-$config[AgentSecurityBlockerMerchantPortalConstants::AGENT_MERCHANT_PORTAL_BLOCKING_NUMBER_OF_ATTEMPTS] = 9;
 
 // >>> Product Label
 $config[ProductLabelConstants::PRODUCT_LABEL_TO_DE_ASSIGN_CHUNK_SIZE] = 1000;

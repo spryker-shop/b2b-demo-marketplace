@@ -9,13 +9,9 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\ShoppingList;
 
-use Spryker\Zed\MerchantProduct\Communication\Plugin\ShoppingList\MerchantProductAddItemPreCheckPlugin;
-use Spryker\Zed\MerchantProduct\Communication\Plugin\ShoppingList\MerchantProductShoppingListItemBulkPostSavePlugin;
-use Spryker\Zed\MerchantProduct\Communication\Plugin\ShoppingListExtension\MerchantProductShoppingListItemCollectionExpanderPlugin;
 use Spryker\Zed\MerchantProductOffer\Communication\Plugin\ShoppingList\MerchantProductOfferAddItemPreCheckPlugin;
 use Spryker\Zed\MerchantProductOffer\Communication\Plugin\ShoppingList\MerchantProductOfferShoppingListItemBulkPostSavePlugin;
 use Spryker\Zed\MerchantProductOffer\Communication\Plugin\ShoppingList\MerchantProductOfferShoppingListItemCollectionExpanderPlugin;
-use Spryker\Zed\ProductApproval\Communication\Plugin\ShoppingList\ProductApprovalAddItemPreCheckPlugin;
 use Spryker\Zed\ProductBundle\Communication\Plugin\ShoppingList\ReplaceBundledQuoteItemsPreConvertPlugin;
 use Spryker\Zed\ProductConfigurationShoppingList\Communication\Plugin\ShoppingList\ItemProductConfigurationItemToShoppingListItemMapperPlugin;
 use Spryker\Zed\ProductConfigurationShoppingList\Communication\Plugin\ShoppingList\ProductConfigurationShoppingListAddItemPreCheckPlugin;
@@ -46,10 +42,8 @@ class ShoppingListDependencyProvider extends SprykerShoppingListDependencyProvid
         return [
             new ProductDiscontinuedAddItemPreCheckPlugin(), #ProductDiscontinuedFeature
             new ShoppingListItemProductConcreteActiveAddItemPreCheckPlugin(),
-            new ProductApprovalAddItemPreCheckPlugin(),
             new ShoppingListItemProductConcreteHasValidStoreAddItemPreCheckPlugin(),
             new MerchantProductOfferAddItemPreCheckPlugin(),
-            new MerchantProductAddItemPreCheckPlugin(),
             new ProductOfferShoppingListAddItemPreCheckPlugin(),
             new ProductConfigurationShoppingListAddItemPreCheckPlugin(),
         ];
@@ -73,7 +67,6 @@ class ShoppingListDependencyProvider extends SprykerShoppingListDependencyProvid
         return [
             new ShoppingListItemNoteBulkPostSavePlugin(), #ShoppingListNoteFeature
             new ShoppingListItemProductOptionBulkPostSavePlugin(),
-            new MerchantProductShoppingListItemBulkPostSavePlugin(),
             new MerchantProductOfferShoppingListItemBulkPostSavePlugin(),
             new ProductConfigurationShoppingListItemBulkPostSavePlugin(),
         ];
@@ -99,7 +92,6 @@ class ShoppingListDependencyProvider extends SprykerShoppingListDependencyProvid
             new ShoppingListItemCollectionNoteExpanderPlugin(),
             new ShoppingListItemCollectionProductOptionExpanderPlugin(),
             new MerchantProductOfferShoppingListItemCollectionExpanderPlugin(),
-            new MerchantProductShoppingListItemCollectionExpanderPlugin(),
             new ProductConfigurationShoppingListItemCollectionExpanderPlugin(),
         ];
     }

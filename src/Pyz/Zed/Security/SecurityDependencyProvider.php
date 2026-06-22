@@ -9,14 +9,8 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\Security;
 
-use Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Plugin\MultiFactorAuth\MultiFactorAuthenticationAgentMerchantUserSecurityPlugin;
-use Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Plugin\Security\ZedAgentMerchantUserSecurityPlugin;
 use Spryker\Zed\Security\SecurityDependencyProvider as SprykerSecurityDependencyProvider;
 use Spryker\Zed\SecurityGui\Communication\Plugin\Security\ZedUserSecurityPlugin;
-use Spryker\Zed\SecurityMerchantPortalGui\Communication\Plugin\MultiFactorAuth\MultiFactorAuthenticationMerchantUserSecurityPlugin;
-use Spryker\Zed\SecurityMerchantPortalGui\Communication\Plugin\Security\ZedMerchantUserSecurityPlugin;
-use Spryker\Zed\SecurityMerchantPortalGui\Communication\Plugin\Security\ZedOauthMerchantPortalSecurityPlugin;
-use Spryker\Zed\SecurityOauthKnpu\Communication\Plugin\Security\ZedKnpuOauthUserSecurityPlugin;
 use Spryker\Zed\SecurityOauthUser\Communication\Plugin\Security\ZedOauthUserSecurityPlugin;
 use Spryker\Zed\SecuritySystemUser\Communication\Plugin\Security\ZedSystemUserSecurityPlugin;
 use Spryker\Zed\SessionUserValidation\Communication\Plugin\Security\SaveSessionUserSecurityPlugin;
@@ -33,12 +27,6 @@ class SecurityDependencyProvider extends SprykerSecurityDependencyProvider
         return [
             new ZedUserSessionHandlerSecurityPlugin(),
             new ZedSystemUserSecurityPlugin(),
-            new ZedAgentMerchantUserSecurityPlugin(),
-            new ZedMerchantUserSecurityPlugin(),
-            new ZedOauthMerchantPortalSecurityPlugin(),
-            new MultiFactorAuthenticationMerchantUserSecurityPlugin(),
-            new MultiFactorAuthenticationAgentMerchantUserSecurityPlugin(),
-            new ZedKnpuOauthUserSecurityPlugin(),
             new ZedUserSecurityPlugin(),
             new ZedOauthUserSecurityPlugin(),
             new ZedValidateSessionUserSecurityPlugin(),

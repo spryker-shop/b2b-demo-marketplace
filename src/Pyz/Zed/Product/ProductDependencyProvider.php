@@ -10,10 +10,6 @@ declare(strict_types = 1);
 namespace Pyz\Zed\Product;
 
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\MerchantProduct\Communication\Plugin\Product\MerchantProductProductAbstractAfterUpdatePlugin;
-use Spryker\Zed\MerchantProduct\Communication\Plugin\Product\MerchantProductProductAbstractExpanderPlugin;
-use Spryker\Zed\MerchantProduct\Communication\Plugin\Product\MerchantProductProductAbstractPostCreatePlugin;
-use Spryker\Zed\MerchantProductApproval\Communication\Plugin\Product\MerchantProductApprovalProductAbstractPreCreatePlugin;
 use Spryker\Zed\MerchantProductOffer\Communication\Plugin\Product\MerchantProductOfferProductConcreteExpanderPlugin;
 use Spryker\Zed\PriceProduct\Communication\Plugin\Product\PriceProductAbstractPostCreatePlugin;
 use Spryker\Zed\PriceProduct\Communication\Plugin\Product\PriceProductConcreteMergerPlugin;
@@ -24,8 +20,6 @@ use Spryker\Zed\PriceProduct\Communication\Plugin\ProductConcrete\PriceProductCo
 use Spryker\Zed\PriceProduct\Communication\Plugin\ProductConcrete\PriceProductConcreteAfterUpdatePlugin;
 use Spryker\Zed\Product\ProductDependencyProvider as SprykerProductDependencyProvider;
 use Spryker\Zed\ProductAlternativeGui\Communication\Plugin\Product\ProductConcretePluginUpdate as ProductAlternativeGuiProductConcretePluginUpdate;
-use Spryker\Zed\ProductApproval\Communication\Plugin\Product\ApprovalStatusProductConcreteMergerPlugin;
-use Spryker\Zed\ProductApproval\Communication\Plugin\Product\ProductApprovalProductAbstractPreCreatePlugin;
 use Spryker\Zed\ProductAttachment\Communication\Plugin\Product\ProductAttachmentProductAbstractAfterUpdatePlugin;
 use Spryker\Zed\ProductAttachment\Communication\Plugin\Product\ProductAttachmentProductAbstractPostCreatePlugin;
 use Spryker\Zed\ProductBundle\Communication\Plugin\Product\ProductBundleDeactivatorProductConcreteAfterUpdatePlugin;
@@ -74,7 +68,6 @@ class ProductDependencyProvider extends SprykerProductDependencyProvider
     protected function getProductAbstractPostCreatePlugins(): array
     {
         return [
-            new MerchantProductProductAbstractPostCreatePlugin(),
             new ImageSetProductAbstractPostCreatePlugin(),
             new TaxSetProductAbstractPostCreatePlugin(),
             new PriceProductAbstractPostCreatePlugin(),
@@ -115,7 +108,6 @@ class ProductDependencyProvider extends SprykerProductDependencyProvider
             new TaxSetProductAbstractAfterUpdatePlugin(),
             new PriceProductAbstractAfterUpdatePlugin(),
             new ProductAttachmentProductAbstractAfterUpdatePlugin(),
-            new MerchantProductProductAbstractAfterUpdatePlugin(),
             new ProductCategoryProductAbstractAfterUpdatePlugin(),
         ];
     }
@@ -182,8 +174,6 @@ class ProductDependencyProvider extends SprykerProductDependencyProvider
     protected function getProductAbstractPreCreatePlugins(): array
     {
         return [
-            new MerchantProductApprovalProductAbstractPreCreatePlugin(),
-            new ProductApprovalProductAbstractPreCreatePlugin(),
         ];
     }
 
@@ -198,7 +188,6 @@ class ProductDependencyProvider extends SprykerProductDependencyProvider
             new ProductImageProductAbstractExpanderPlugin(),
             new TaxSetProductAbstractExpanderPlugin(),
             new PriceProductProductAbstractExpanderPlugin(),
-            new MerchantProductProductAbstractExpanderPlugin(),
         ];
     }
 
@@ -231,7 +220,6 @@ class ProductDependencyProvider extends SprykerProductDependencyProvider
         return [
             new ImageSetProductConcreteMergerPlugin(),
             new PriceProductConcreteMergerPlugin(),
-            new ApprovalStatusProductConcreteMergerPlugin(),
         ];
     }
 }

@@ -9,10 +9,6 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\ProductStorage;
 
-use Spryker\Zed\MerchantProductStorage\Communication\Plugin\ProductStorage\MerchantProductAbstractStorageExpanderPlugin;
-use Spryker\Zed\MerchantProductStorage\Communication\Plugin\ProductStorage\MerchantProductConcreteStorageCollectionExpanderPlugin;
-use Spryker\Zed\ProductApproval\Communication\Plugin\ProductStorage\ProductApprovalProductAbstractStorageCollectionFilterPlugin;
-use Spryker\Zed\ProductApproval\Communication\Plugin\ProductStorage\ProductApprovalProductConcreteStorageCollectionFilterPlugin;
 use Spryker\Zed\ProductStorage\ProductStorageDependencyProvider as SprykerProductStorageDependencyProvider;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductStorage\ProductClassProductConcreteStorageCollectionExpanderPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\ProductStorage\ShipmentTypeProductConcreteStorageCollectionExpanderPlugin;
@@ -25,7 +21,6 @@ class ProductStorageDependencyProvider extends SprykerProductStorageDependencyPr
     protected function getProductAbstractStorageExpanderPlugins(): array
     {
         return [
-            new MerchantProductAbstractStorageExpanderPlugin(),
         ];
     }
 
@@ -35,7 +30,6 @@ class ProductStorageDependencyProvider extends SprykerProductStorageDependencyPr
     protected function getProductAbstractStorageCollectionFilterPlugins(): array
     {
         return [
-            new ProductApprovalProductAbstractStorageCollectionFilterPlugin(),
         ];
     }
 
@@ -45,7 +39,6 @@ class ProductStorageDependencyProvider extends SprykerProductStorageDependencyPr
     protected function getProductConcreteStorageCollectionFilterPlugins(): array
     {
         return [
-            new ProductApprovalProductConcreteStorageCollectionFilterPlugin(),
         ];
     }
 
@@ -55,7 +48,6 @@ class ProductStorageDependencyProvider extends SprykerProductStorageDependencyPr
     protected function getProductConcreteStorageCollectionExpanderPlugins(): array
     {
         return [
-            new MerchantProductConcreteStorageCollectionExpanderPlugin(),
             new ShipmentTypeProductConcreteStorageCollectionExpanderPlugin(),
             new ProductClassProductConcreteStorageCollectionExpanderPlugin(),
         ];

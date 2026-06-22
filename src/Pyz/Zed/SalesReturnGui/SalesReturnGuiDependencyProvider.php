@@ -9,7 +9,6 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\SalesReturnGui;
 
-use Spryker\Zed\MerchantSalesReturnGui\Communication\Plugin\SalesReturnGui\MerchantSalesReturnCreateFormHandlerPlugin;
 use Spryker\Zed\ProductBundle\Communication\Plugin\SalesReturnGui\ProductBundleReturnCreateFormHandlerPlugin;
 use Spryker\Zed\SalesReturnGui\SalesReturnGuiDependencyProvider as SprykerSalesReturnGuiDependencyProvider;
 
@@ -22,7 +21,6 @@ class SalesReturnGuiDependencyProvider extends SprykerSalesReturnGuiDependencyPr
     {
         return [
             new ProductBundleReturnCreateFormHandlerPlugin(),
-            new MerchantSalesReturnCreateFormHandlerPlugin(),
         ];
     }
 }

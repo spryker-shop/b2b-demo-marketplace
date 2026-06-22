@@ -43,11 +43,8 @@ use Spryker\Zed\Gui\Communication\Plugin\Twig\NumberFormatterTwigPlugin;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\TabsTwigPlugin;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlDecodeTwigPlugin;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlTwigPlugin;
-use Spryker\Zed\GuiTable\Communication\Plugin\Twig\GuiTableConfigurationTwigPlugin;
 use Spryker\Zed\Http\Communication\Plugin\Twig\HttpKernelTwigPlugin;
 use Spryker\Zed\Http\Communication\Plugin\Twig\RuntimeLoaderTwigPlugin;
-use Spryker\Zed\MerchantPortalApplication\Communication\Plugin\Twig\MerchantNavigationTypeTwigPlugin;
-use Spryker\Zed\MerchantUser\Communication\Plugin\Twig\MerchantUserTwigPlugin;
 use Spryker\Zed\Money\Communication\Plugin\Twig\MoneyTwigPlugin;
 use Spryker\Zed\Scheduler\Communication\Plugin\Twig\SchedulerTwigPlugin;
 use Spryker\Zed\Translator\Communication\Plugin\Twig\TranslatorTwigPlugin;
@@ -57,8 +54,6 @@ use Spryker\Zed\Twig\TwigDependencyProvider as SprykerTwigDependencyProvider;
 use Spryker\Zed\User\Communication\Plugin\Twig\UserTwigPlugin;
 use Spryker\Zed\WebProfiler\Communication\Plugin\Twig\WebProfilerTwigLoaderPlugin;
 use Spryker\Zed\ZedNavigation\Communication\Plugin\Twig\ZedNavigationTwigPlugin;
-use Spryker\Zed\ZedUi\Communication\Plugin\Twig\BooleanToStringTwigPlugin;
-use Spryker\Zed\ZedUi\Communication\Plugin\ZedUiNavigationTwigPlugin;
 use SprykerFeature\Zed\AiCommerce\Communication\Plugin\Twig\AiCommerceTwigPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Twig\SelfServicePortalTwigPlugin;
 
@@ -112,12 +107,7 @@ class TwigDependencyProvider extends SprykerTwigDependencyProvider
             new SubmitButtonTwigPlugin(),
             new GuiFilterTwigPlugin(),
 
-            new ZedUiNavigationTwigPlugin(),
-            new BooleanToStringTwigPlugin(),
-            new GuiTableConfigurationTwigPlugin(),
             new NumberFormatterTwigPlugin(),
-            new MerchantUserTwigPlugin(),
-            new MerchantNavigationTypeTwigPlugin(),
             new SelfServicePortalTwigPlugin(),
             new AiCommerceTwigPlugin(),
             new NavigationIconsTypeTwigPlugin(),
