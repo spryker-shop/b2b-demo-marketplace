@@ -22,7 +22,7 @@ suites:
                 - \SprykerTest\Zed\Testify\Helper\Communication\DependencyProviderHelper
                 - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
-                - \PyzTest\Shared\Customer\Helper\CustomerDataHelper
+                - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper
                 - \SprykerTest\Shared\MultiFactorAuth\Helper\MultiFactorAuthDataHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Glue\AuthRestApi\Helper\AuthRestApiHelper
@@ -103,5 +103,5 @@ suites:
             config:
                 \SprykerTest\Shared\Testify\Helper\DataCleanupHelper:
                     cleanup: false
-                \PyzTest\Shared\Customer\Helper\CustomerDataHelper:
+                \SprykerTest\Shared\Customer\Helper\CustomerDataHelper:
                     isMailFacadeMockEnabled: false
