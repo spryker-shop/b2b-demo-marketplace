@@ -87,3 +87,64 @@
         </div>
     </div>
 {% endblock %}
+
+{% block errorBanner %}
+    {% if data.schedule.status in data.errorBannerStatuses and data.schedule.status != data.statusReviewRequired %}
+        <div class="alert alert--warning spacing-bottom">
+            <div>
+                {% set failedItem = data.schedule.history | filter(h => h.eventType == data.historyEventTypeFailed and h.errors is not empty) | first %}
+                {% if failedItem %}
+                    {{ 'recurring_orders.detail.error.failed.title' | trans }}
+                    <ul class="list">
+                        {% for error in failedItem.errors %}
+                            <li class="list__item">{{ error.message | trans(error.parameters ?? {}) }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+
+                {% set scheduleRetryButtonClassName = 'button spacing-top' %}
+                {% block scheduleRetryForm %}
+                    {% if data.schedule.status == data.statusFailed %}
+                        {{ form_start(data.retryForm, {action: url('recurring-order/retry', {uuid: data.schedule.uuid}), attr: {class: 'inline-form'}}) }}
+                            <button type="submit" class="{{ scheduleRetryButtonClassName }}" data-qa="recurring-order-retry-button">
+                                {{ 'recurring_orders.detail.actions.retry' | trans }}
+                            </button>
+                        {{ form_end(data.retryForm) }}
+                    {% endif %}
+                {% endblock %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if data.schedule.status == data.statusReviewRequired %}
+        {% block reviewRequired %}
+            {% embed molecule('flash-message') with {
+                class: 'spacing-bottom--biggest',
+                modifiers: ['warning'],
+                data: {
+                    isStatic: true,
+                    icon: 'warning',
+                },
+                embed: {
+                    configName: config.name,
+                    schedule:  data.schedule,
+                }
+            } only %}
+                {% block content %}
+                    <div class="grid grid--expand grid--center grid--gap--smaller">
+                        <div class="col col--expand {{ embed.configName }}__flash-content">
+                            <h6 class="{{ config.name }}__title">{{ 'recurring_orders.detail.review_required.attention' | trans }}</h6>
+                        </div>
+                        <div class="col">
+                            <a href="{{ url('recurring-orders/review-required', {uuid: embed.schedule.uuid}) }}"
+                                class="button button--sm"
+                                data-qa="recurring-order-review-button">
+                                {{ 'recurring_orders.detail.actions.review' | trans }}
+                            </a>
+                        </div>
+                    </div>
+                {% endblock %}
+            {% endembed %}
+        {% endblock %}
+    {% endif %}
+{% endblock %}
