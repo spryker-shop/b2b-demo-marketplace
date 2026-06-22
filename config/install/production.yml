@@ -46,3 +46,13 @@ sections:
             command: 'GLUE_APPLICATION=GLUE_STOREFRONT vendor/bin/glue cache:warmup'
         backend:
             command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue cache:warmup'
+
+    cache-warmup:
+        # Warm Yves Twig templates at image-build time so the compiled cache is baked into the
+        # shared application image (all containers inherit it). Without this the heaviest page
+        # (checkout/address) compiles lazily on first request, exceeds max_execution_time (60s) and
+        # is killed by FPM before the cache is written -> permanent 504. See docs FINDING-checkout-504.
+        twig-template-warmup-yves:
+            command: 'vendor/bin/yves twig:template:warmer -vvv --no-ansi'
+        router-cache-warmup-yves:
+            command: 'vendor/bin/yves router:cache:warm-up -vvv --no-ansi'

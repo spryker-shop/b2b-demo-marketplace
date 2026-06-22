@@ -22,8 +22,7 @@ class SessionDependencyProvider extends SprykerSessionDependencyProvider
     protected function getSessionHandlerPlugins(): array
     {
         return [
-            new SessionHandlerRedisProviderPlugin(),
-            new SessionHandlerFileProviderPlugin(),
+//            new SessionHandlerRedisProviderPlugin(),
             new SessionHandlerConfigurableRedisLockingProviderPlugin(),
         ];
     }
