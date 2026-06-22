@@ -1,0 +1,19 @@
+@mixin order-experience-management-schedule-next-execution($name: '.schedule-next-execution') {
+    #{$name} {
+        &__label {
+            font-size: var(--font-size-12);
+        }
+
+        &__date {
+            font-size: var(--font-size-18);
+
+            @include helper-breakpoint(lg) {
+                font-size: var(--font-size-28);
+            }
+        }
+
+        @content;
+    }
+}
+
+@include order-experience-management-schedule-next-execution;
