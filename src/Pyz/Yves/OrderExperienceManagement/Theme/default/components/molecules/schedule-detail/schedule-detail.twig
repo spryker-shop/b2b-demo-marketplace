@@ -7,11 +7,36 @@
 {% set pauseModalTriggerClassName = 'js-pause-schedule-button' %}
 {% set resumeModalTriggerClassName = 'js-resume-schedule-button' %}
 
+{% block actionMenu %}
+    <div class="{{ config.name }}__menu">
+        <button
+            type="button"
+            class="{{ config.name }}__menu-trigger button button--hollow button--icon-only"
+            popovertarget="{{ data.schedule.uuid }}"
+            style="anchor-name: --{{ data.schedule.uuid }}"
+            aria-label="{{ 'Comment actions' | trans }}"
+        >
+            {% include atom('font-icon') with {
+                modifiers: ['size-inherit'],
+                data: { name: 'more_vert' },
+            } only %}
+        </button>
+        <div
+            id="{{ data.schedule.uuid }}"
+            popover="auto"
+            class="{{ config.name }}__menu-list"
+            style="position-anchor: --{{ data.schedule.uuid }}"
+        >
+            {{ block('scheduleCancelButton') }}
+        </div>
+    </div>
+{% endblock %}
+
 {% block recurringScheduleHeader %}
     {% set status = data.schedule.status %}
     {% set schedulePauseButtonClassName = 'button button--hollow spacing-left' %}
     {% set scheduleResumeButtonClassName = 'button spacing-left' %}
-    {% set scheduleCancelButtonClassName = 'button button--alert spacing-left' %}
+    {% set scheduleCancelButtonClassName = config.name ~ "__menu-item" %}
 
     {% include molecule('action-bar') with {
         data: {
@@ -20,111 +45,16 @@
             actions: [
                 { block: block('schedulePauseForm') },
                 { block: block('scheduleResumeForm') },
-                { block: block('scheduleCancelButton') }
+                { block: block('actionMenu') }
             ],
         },
     } only %}
 {% endblock %}
 
-{# {% block body %}
-    {% block recurringScheduleHeader %}
-        <div class="grid grid--justify">
-            {% set scheduleTitleClassName = 'title--h2' %}
-
-            {% set scheduleHeadingInfoColumnClassName = 'col col--expand' %}
-            {% set scheduleHeadingActionColumnClassName = 'col' %}
-            {% set scheduleOriginalOrderLinkClassName = 'link' %}
-
-            {% block scheduleHeading %}
-                <div class="{{ scheduleHeadingInfoColumnClassName }}">
-                    <h2 class="{{ scheduleTitleClassName }}" data-qa="recurring-order-name">{{ data.schedule.name }}</h2>
-                </div>
-            {% endblock %}
-
-            <div class="{{ scheduleHeadingActionColumnClassName }}">
-                {% set status = data.schedule.status %}
-
-                {% set schedulePauseButtonClassName = 'button button--hollow spacing-left' %}
-                {% block schedulePauseForm %}
-                    {% if status == data.statusActive %}
-                        <button class="{{ pauseModalTriggerClassName }} {{ schedulePauseButtonClassName }}" data-qa="recurring-order-pause-button">
-                            {{ 'recurring_orders.detail.actions.pause' | trans }}
-                        </button>
-                    {% endif %}
-                {% endblock %}
-
-                {% set scheduleResumeButtonClassName = 'button spacing-left' %}
-                {% block scheduleResumeForm %}
-                    {% if status == data.statusPaused %}
-                        <button class="{{ resumeModalTriggerClassName }} {{ scheduleResumeButtonClassName }}" data-qa="recurring-order-resume-button">
-                            {{ 'recurring_orders.detail.actions.resume' | trans }}
-                        </button>
-                    {% endif %}
-                {% endblock %}
-
-                {% set scheduleCancelButtonClassName = 'button button--danger spacing-left' %}
-                {% block scheduleCancelButton %}
-                    {% if status != data.statusCancelled %}
-                        <button class="{{ scheduleCancelButtonClassName }} {{ cancelModalTriggerClassName }}" data-qa="recurring-order-cancel-button">
-                            {{ 'recurring_orders.detail.actions.cancel' | trans }}
-                        </button>
-                    {% endif %}
-                {% endblock %}
-            </div>
-        </div>
-    {% endblock %}
-
-    {% block errorBanner %}
-        {% if data.schedule.status in data.errorBannerStatuses and data.schedule.status != data.statusReviewRequired %}
-            <div class="alert alert--warning spacing-bottom">
-                <div>
-                    {% set failedItem = data.schedule.history | filter(h => h.eventType == data.historyEventTypeFailed and h.errors is not empty) | first %}
-                    {% if failedItem %}
-                        {{ 'recurring_orders.detail.error.failed.title' | trans }}
-                        <ul class="list">
-                            {% for error in failedItem.errors %}
-                                <li class="list__item">{{ error.message | trans(error.parameters ?? {}) }}</li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-
-                    {% set scheduleRetryButtonClassName = 'button spacing-top' %}
-                    {% block scheduleRetryForm %}
-                        {% if data.schedule.status == data.statusFailed %}
-                            {{ form_start(data.retryForm, {action: url('recurring-order/retry', {uuid: data.schedule.uuid}), attr: {class: 'inline-form'}}) }}
-                                <button type="submit" class="{{ scheduleRetryButtonClassName }}" data-qa="recurring-order-retry-button">
-                                    {{ 'recurring_orders.detail.actions.retry' | trans }}
-                                </button>
-                            {{ form_end(data.retryForm) }}
-                        {% endif %}
-                    {% endblock %}
-                </div>
-            </div>
-        {% endif %}
-
-        {% if data.schedule.status == data.statusReviewRequired %}
-            {% block reviewRequired %}
-                <div class="alert alert--warning spacing-bottom">
-                    <div>
-                        {% set reviewRequiredButtonClassName = 'button' %}
-                        {% block reviewRequiredText %}
-                            <p>{{ 'recurring_orders.detail.review_required.attention' | trans }}</p>
-                        {% endblock %}
-
-                        {% block reviewRequiredButton %}
-                            <a href="{{ url('recurring-orders/review-required', {uuid: data.schedule.uuid}) }}" class="{{ reviewRequiredButtonClassName }}" data-qa="recurring-order-review-button">
-                                {{ 'recurring_orders.detail.actions.review' | trans }}
-                            </a>
-                        {% endblock %}
-                    </div>
-                </div>
-            {% endblock %}
-        {% endif %}
-    {% endblock %}
-
-    {% block grid %}
-        <div class="grid">
-            <div class="col col--sm-12 col--lg-8 spacing-bottom">
+{% block grid %}
+    <div class="grid grid--gap">
+        <div class="col col--sm-12 col--lg-8 spacing-bottom">
+            <div class="{{ config.name }}__order-info">
                 {% include molecule('schedule-next-execution', 'OrderExperienceManagement') with {
                     data: {
                         schedule: data.schedule,
@@ -143,42 +73,17 @@
                     }
                 } only %}
             </div>
-
-            <div class="col col--sm-12 col--lg-4 spacing-bottom">
-                {% include molecule('schedule-detail-sidebar', 'OrderExperienceManagement') with {
-                    data: {
-                        schedule: data.schedule,
-                        statusClassMap: data.statusClassMap,
-                        quote: data.quote,
-                    },
-                } only %}
-            </div>
+            
         </div>
-    {% endblock %}
 
-    {% include molecule('schedule-execution-history', 'OrderExperienceManagement') with {
-        data: {
-            history: data.schedule.history,
-            statusClassMap: data.statusClassMap,
-            pagination: data.schedule.historyPagination,
-            uuid: data.schedule.uuid,
-        },
-    } only %}
-
-    {% block modals %}
-        {% include molecule('schedule-action-modal', 'OrderExperienceManagement') with {
-            data: {
-                schedule: data.schedule,
-                skipForm: data.skipForm,
-                cancelForm: data.cancelForm,
-                pauseForm: data.pauseForm,
-                resumeForm: data.resumeForm,
-                resumeUrl: url('recurring-order/resume', {uuid: data.schedule.uuid}),
-                skipModalTriggerClassName: skipModalTriggerClassName,
-                cancelModalTriggerClassName: cancelModalTriggerClassName,
-                pauseModalTriggerClassName: pauseModalTriggerClassName,
-                resumeModalTriggerClassName: resumeModalTriggerClassName,
-            },
-        } only %}
-    {% endblock %}
-{% endblock %} #}
+        <div class="col col--sm-12 col--lg-4 spacing-bottom">
+            {% include molecule('schedule-detail-sidebar', 'OrderExperienceManagement') with {
+                data: {
+                    schedule: data.schedule,
+                    statusClassMap: data.statusClassMap,
+                    quote: data.quote,
+                },
+            } only %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,53 @@
+@mixin order-experience-management-schedule-detail($name: '.schedule-detail') {
+    #{$name} {
+        &__menu {
+            display: flex;
+            flex-shrink: 0;
+            align-self: flex-start;
+        }
+
+        &__menu-list[popover] {
+            position: fixed;
+            inset: auto;
+            top: anchor(bottom, 100%);
+            right: anchor(right, 0);
+            margin: rem(var(--scale-4)) 0 0;
+            min-width: rem(120);
+            padding: rem(var(--scale-4));
+            background: var(--background-page);
+            border: rem(var(--stroke-sm)) solid var(--border-default);
+            border-radius: rem(var(--radius-sm));
+            box-shadow: var(--shadow-md);
+        }
+
+        &__menu-list[popover]:not(:popover-open) {
+            display: none;
+        }
+
+        &__menu-item {
+            display: block;
+            width: 100%;
+            padding: rem(var(--scale-4)) rem(var(--scale-8));
+            color: var(--text-primary);
+            font-family: var(--body-md-family);
+            font-size: rem(var(--body-md-size));
+            text-align: left;
+            background: none;
+            border: 0;
+            border-radius: rem(var(--radius-sm));
+            cursor: pointer;
+
+            &:hover {
+                background: var(--background-surface);
+            }
+        }
+
+        &__order-info {
+            border: rem(1) solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: var(--scale-16);
+        }
+    }
+}
+
+@include order-experience-management-schedule-detail;

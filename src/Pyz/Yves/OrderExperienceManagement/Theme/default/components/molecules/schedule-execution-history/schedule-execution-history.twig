@@ -1,0 +1,90 @@
+{% extends molecule('schedule-execution-history', '@SprykerFeature:OrderExperienceManagement') %}
+
+{% block wrapper %}
+    {% set wrapperClass = "" %}
+    {{ parent() }}
+{% endblock %}
+
+{% block heading %}
+    {% set titleClass = config.name ~ '__title' %}
+    {% set contentClass = config.name ~ '__heading-content' %}
+
+    {{ parent() }}
+{% endblock %}
+
+{# {% block body %}
+    {% set wrapperClass = 'box' %}
+
+    {% block wrapper %}
+        <div class="{{ wrapperClass }}">
+            {% set titleClass = 'title--h6 spacing--reset' %}
+            {% set contentClass = 'spacing--reset' %}
+
+            {% block heading %}
+                <h4 class="{{ titleClass }}">{{ 'recurring_orders.detail.history.title' | trans }}</h4>
+                <p class="{{ contentClass }}">{{ 'recurring_orders.detail.history.description' | trans }}</p>
+            {% endblock %}
+
+            {% block tableWrapper %}
+                {% set columns = [
+                    { id: 'date', title: 'recurring_orders.detail.history.date' },
+                    { id: 'status', title: 'recurring_orders.detail.history.status' },
+                    { id: 'orderReference', title: 'recurring_orders.detail.history.order_reference' },
+                    { id: 'actions', title: 'recurring_orders.detail.history.actions', type: 'actions' },
+                ] %}
+
+                {% set rows = data.history | map(historyItem => {
+                    date: historyItem.createdAt | formatDate,
+                    status: _self.renderStatusCell(historyItem, data.statusClassMap),
+                    orderReference: historyItem.orderReference ?: '—',
+                    actions: historyItem.idSalesOrder ? [{
+                        url: url('customer/order/details', { id: historyItem.idSalesOrder }),
+                        label: 'recurring_orders.detail.history.view_order',
+                        qa: 'recurring-order-history-view-order',
+                    }] : [],
+                }) %}
+
+                {% set historyPagination = {} %}
+                {% if data.pagination and data.pagination.lastPage > 1 %}
+                    {% set historyPagination = {
+                        parameters: app.request.query.all | merge({ uuid: data.uuid }),
+                        currentPage: data.pagination.page,
+                        paginationPath: 'recurring-orders/detail',
+                        maxPage: data.pagination.lastPage,
+                        showAlwaysFirstAndLast: true,
+                    } %}
+                {% endif %}
+
+                {% block table %}
+                    {% include molecule('advanced-table') with {
+                        data: {
+                            columns: columns,
+                            rows: rows,
+                            emptyText: 'recurring_orders.detail.history.empty',
+                            pagination: historyPagination,
+                        },
+                    } only %}
+                {% endblock %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+{% endblock %}
+
+{% macro renderStatusCell(historyItem, statusClassMap) %}
+    {% include molecule('status') with {
+        data: {
+            label: ('recurring_orders.history.event.' ~ historyItem.eventType) | trans,
+            status: statusClassMap[historyItem.eventType] ?? 'success'
+        },
+    } only %}
+    
+    {% if historyItem.errors is defined and historyItem.errors | length %}
+        {% include molecule('schedule-error-popover','OrderExperienceManagement') with {
+            data: {
+                errors: historyItem.errors,
+                orderUid: 'order-uid-' ~ historyItem.orderReference ~ '_' ~ historyItem.idRecurringScheduleHistory,
+                createdAt: historyItem.createdAt,
+            },
+        } only %}
+    {% endif %}
+{% endmacro %} #}
