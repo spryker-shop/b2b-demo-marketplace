@@ -19,7 +19,7 @@ class OrderExperienceManagementConfig extends SprykerOrderExperienceManagementCo
      */
     public function getDefaultNotificationWindowHours(): int
     {
-        return 18;
+        return 24;
     }
 
     /**
