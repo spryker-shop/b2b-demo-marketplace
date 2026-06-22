@@ -15,6 +15,7 @@
             popovertarget="{{ data.schedule.uuid }}"
             style="anchor-name: --{{ data.schedule.uuid }}"
             aria-label="{{ 'Comment actions' | trans }}"
+            data-qa="recurring-order-action-menu-trigger"
         >
             {% include atom('font-icon') with {
                 modifiers: ['size-inherit'],
