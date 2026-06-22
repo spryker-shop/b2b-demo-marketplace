@@ -14,7 +14,7 @@
 
 {% block table %}
     {% set rows = data.recurringSchedules | map(schedule => {
-        'spy_recurring_schedule.name': (schedule.name ?: schedule.uuid),
+        'spy_recurring_schedule.name': (schedule.name ?: schedule.uuid) | e,
         'spy_recurring_schedule.status': {
             label: 'recurring_orders.status.' ~ schedule.status,
             status: data.statusClassMap[schedule.status],
