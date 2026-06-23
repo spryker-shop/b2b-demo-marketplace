@@ -56,6 +56,7 @@ image:
         SPRYKER_YVES_HOST_EU: yves.eu.icp.cloud.spryker.toys
         SPRYKER_YVES_HOST_US: yves.us.icp.cloud.spryker.toys
         SPRYKER_DYNAMIC_STORE_MODE: true
+        SPRYKER_WATER_TREATMENT_CONFIGURATOR_HOST: demo-water-treatment-configurator.icp.cloud.spryker.toys
     php:
         enabled-extensions:
             - otel
@@ -122,6 +123,8 @@ groups:
                 endpoints:
                     demo-date-time-configurator.icp.cloud.spryker.toys:
                         entry-point: Configurator
+                    demo-water-treatment-configurator.icp.cloud.spryker.toys:
+                        entry-point: WaterTreatmentConfigurator
                     yves.eu.icp.cloud.spryker.toys:
                         region: EU
                         services:
