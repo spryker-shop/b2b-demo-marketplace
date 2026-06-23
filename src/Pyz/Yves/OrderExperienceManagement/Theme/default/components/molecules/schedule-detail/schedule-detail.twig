@@ -7,37 +7,11 @@
 {% set pauseModalTriggerClassName = 'js-pause-schedule-button' %}
 {% set resumeModalTriggerClassName = 'js-resume-schedule-button' %}
 
-{% block actionMenu %}
-    <div class="{{ config.name }}__menu">
-        <button
-            type="button"
-            class="{{ config.name }}__menu-trigger button button--hollow button--icon-only"
-            popovertarget="{{ data.schedule.uuid }}"
-            style="anchor-name: --{{ data.schedule.uuid }}"
-            aria-label="{{ 'Comment actions' | trans }}"
-            data-qa="recurring-order-action-menu-trigger"
-        >
-            {% include atom('font-icon') with {
-                modifiers: ['size-inherit'],
-                data: { name: 'more_vert' },
-            } only %}
-        </button>
-        <div
-            id="{{ data.schedule.uuid }}"
-            popover="auto"
-            class="{{ config.name }}__menu-list"
-            style="position-anchor: --{{ data.schedule.uuid }}"
-        >
-            {{ block('scheduleCancelButton') }}
-        </div>
-    </div>
-{% endblock %}
-
 {% block recurringScheduleHeader %}
     {% set status = data.schedule.status %}
     {% set schedulePauseButtonClassName = 'button button--hollow spacing-left' %}
     {% set scheduleResumeButtonClassName = 'button spacing-left' %}
-    {% set scheduleCancelButtonClassName = config.name ~ "__menu-item" %}
+    {% set scheduleCancelButtonClassName = 'button button--alert' %}
 
     {% include molecule('action-bar') with {
         data: {
@@ -46,14 +20,14 @@
             actions: [
                 { block: block('schedulePauseForm') },
                 { block: block('scheduleResumeForm') },
-                { block: block('actionMenu') }
+                { block: block('scheduleCancelButton') }
             ],
         },
     } only %}
 {% endblock %}
 
 {% block grid %}
-    <div class="grid grid--gap">
+    <div class="{{ config.name }}__grid grid grid--gap">
         <div class="col col--sm-12 col--lg-8 spacing-bottom">
             <div class="{{ config.name }}__order-info">
                 {% include molecule('schedule-next-execution', 'OrderExperienceManagement') with {
