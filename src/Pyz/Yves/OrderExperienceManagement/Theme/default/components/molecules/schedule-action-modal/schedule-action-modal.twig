@@ -46,12 +46,12 @@
 {% endblock %}
 
 {% block skipFooter %}
-    <div class="grid grid--right spacing-top">
+    <div class="grid grid--right grid--gap-smaller">
         <button class="button button--hollow js-main-popup-close">
             {{ 'global.cancel' | trans }}
         </button>
         {{ form_start(data.skipForm, {action: url('recurring-order/skip', {uuid: data.schedule.uuid}), attr: {class: 'inline-form'}}) }}
-            <button type="submit" class="button button--warning spacing-left" data-qa="recurring-order-skip-confirm-button">
+            <button type="submit" class="button button--alert" data-qa="recurring-order-skip-confirm-button">
                 {{ 'recurring_orders.detail.skip.modal.confirm' | trans }}
             </button>
         {{ form_end(data.skipForm) }}
@@ -59,12 +59,12 @@
 {% endblock %}
 
 {% block cancelContent %}
-    <div class="grid grid--right spacing-top">
+    <div class="grid grid--right grid--gap-smaller">
         <button class="button button--hollow js-main-popup-close">
             {{ 'global.cancel' | trans }}
         </button>
         {{ form_start(data.cancelForm, {action: url('recurring-order/cancel', {uuid: data.schedule.uuid}), attr: {class: 'inline-form'}}) }}
-            <button type="submit" class="button button--danger spacing-left" data-qa="recurring-order-cancel-confirm-button">
+            <button type="submit" class="button button--alert" data-qa="recurring-order-cancel-confirm-button">
                 {{ 'recurring_orders.detail.actions.cancel' | trans }}
             </button>
         {{ form_end(data.cancelForm) }}
