@@ -18,17 +18,17 @@
         align-items: center;
         gap: var(--scale-4);
         font-family: var(--label-sm-family);
-        font-size: rem(var(--label-sm-size));
+        font-size: var(--label-sm-size);
         font-weight: var(--label-sm-weight);
-        line-height: rem(var(--label-sm-line-height));
+        line-height: var(--label-sm-line-height);
     }
 
     &__subtitle {
         color: var(--text-primary);
         font-family: var(--label-sm-family);
-        font-size: rem(var(--label-sm-size));
+        font-size: var(--label-sm-size);
         font-weight: var(--label-sm-weight);
-        line-height: rem(var(--label-sm-line-height));
+        line-height: var(--label-sm-line-height);
         padding-bottom: 0;
     }
 
@@ -60,9 +60,9 @@
     &__subtitle--name {
         color: var(--text-secondary);
         font-family: var(--body-sm-family);
-        font-size: rem(var(--body-sm-size));
+        font-size: var(--body-sm-size);
         font-weight: var(--font-weight-regular);
-        line-height: rem(var(--body-sm-line-height));
+        line-height: var(--body-sm-line-height);
         text-decoration: none;
     }
 
@@ -75,8 +75,8 @@
     &__information {
         color: var(--text-secondary);
         font-family: var(--body-sm-family);
-        font-size: rem(var(--body-sm-size));
-        line-height: rem(var(--body-sm-line-height));
+        font-size: var(--body-sm-size);
+        line-height: var(--body-sm-line-height);
     }
 
     &__asset-text {
@@ -96,8 +96,8 @@
         align-items: center;
     }
 
-    &--cart &__asset-text {
-        color: var(--text-primary);
+    &--cart {
+        min-width: 0;
     }
 
     &--cart &__container--select {
@@ -107,16 +107,16 @@
     &--cart &__select-link {
         display: inline-flex;
         align-items: center;
-        gap: rem(var(--scale-4));
-        padding: rem(var(--scale-6)) rem(var(--scale-12));
+        gap: var(--scale-4);
+        padding: var(--scale-6) var(--scale-12);
         color: var(--text-brand);
         font-family: var(--label-sm-family);
-        font-size: rem(var(--label-sm-size));
+        font-size: var(--label-sm-size);
         font-weight: var(--label-sm-weight);
         text-decoration: none;
         background: transparent;
-        border: rem(var(--stroke-sm)) dashed var(--border-default);
-        border-radius: rem(var(--radius-sm));
+        border: var(--stroke-sm) dashed var(--border-default);
+        border-radius: var(--radius-sm);
         cursor: pointer;
     }
 
@@ -124,14 +124,20 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: rem(var(--scale-20));
-        height: rem(var(--scale-20));
+        width: var(--scale-16);
+        height: var(--scale-16);
         padding: 0;
         color: var(--icon-secondary);
+        font-size: var(--scale-16);
         background: none;
         border: 0;
-        border-radius: rem(var(--radius-sm));
+        border-radius: var(--radius-sm);
         cursor: pointer;
+    }
+
+    &--cart &__asset-status {
+        flex: 0 0 auto;
+        white-space: nowrap;
     }
 
     &--cart &__select-link:hover {
@@ -148,29 +154,11 @@
         display: none;
     }
 
-    &--cart &__data-row {
-        display: inline-flex;
-        align-items: center;
-        min-width: 0;
-        gap: 0;
-        font-family: var(--body-sm-family);
-        font-size: rem(var(--body-sm-size));
-        font-weight: var(--font-weight-regular);
-        line-height: rem(var(--body-sm-line-height));
-        color: var(--text-secondary);
-    }
-
-    &--cart &__data-row > strong {
+    &--cart &__data--actions &__content {
         display: none;
     }
 
-    &--cart &__data-row:not(:last-child)::after {
-        content: '\00B7';
-        margin: 0 rem(var(--scale-8));
-        color: var(--text-tertiary);
-    }
-
-    &--cart &__data--actions &__content {
+    &--cart &__data-row > strong {
         display: none;
     }
 
@@ -187,23 +175,96 @@
         flex-direction: row;
         flex-wrap: nowrap;
         align-items: flex-start;
-        gap: rem(var(--scale-8)) rem(var(--scale-12));
+        justify-content: space-between;
+        gap: var(--scale-8);
+
+        @include helper-breakpoint-media-min($lg) {
+            align-items: center;
+            gap: var(--scale-12);
+        }
     }
 
     &--cart.is-selected &__data--actions {
         order: 99;
         flex: 0 0 auto;
         display: inline-flex;
-        gap: rem(var(--scale-4));
+        align-items: center;
+        gap: var(--scale-8);
         white-space: nowrap;
     }
 
-    &--cart.is-selected &__content {
+    &--cart.is-selected &__container--selected > &__content {
         flex: 1 1 0;
         min-width: 0;
         display: flex;
-        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--scale-4);
+
+        @include helper-breakpoint-media-min($lg) {
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-items: center;
+            gap: 0;
+        }
+    }
+
+    &--cart &__data-row {
+        display: flex;
+        flex-wrap: nowrap;
         align-items: center;
-        gap: rem(var(--scale-4)) 0;
+        min-width: 0;
+        gap: 0;
+        font-family: var(--body-sm-family);
+        font-size: var(--body-sm-size);
+        font-weight: var(--font-weight-regular);
+        line-height: var(--body-sm-line-height);
+        color: var(--text-secondary);
+    }
+
+    &--cart.is-selected &__content > &__data-row {
+        @include helper-breakpoint-media-min($lg) {
+            display: flex;
+            align-items: center;
+            flex: 0 1 auto;
+            min-width: 0;
+            overflow: hidden;
+        }
+    }
+
+    &--cart.is-selected &__content > &__data-row:last-child {
+        @include helper-breakpoint-media-min($lg) {
+            display: flex;
+            flex: 0 0 auto;
+            align-items: center;
+            overflow: visible;
+            margin-left: var(--scale-12);
+        }
+    }
+
+    &--cart &__information::before {
+        content: '\00B7';
+        display: none;
+        color: var(--text-tertiary);
+
+        @include helper-breakpoint-media-min($lg) {
+            display: inline;
+            margin: 0 var(--scale-4);
+        }
+    }
+
+    &--cart &__subtitle--name,
+    &--cart &__asset-text {
+        display: block;
+        min-width: 0;
+        max-width: 100%;
+        color: var(--text-secondary);
+        text-decoration: none;
+
+        @include helper-breakpoint-media-min($lg) {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
     }
 }
