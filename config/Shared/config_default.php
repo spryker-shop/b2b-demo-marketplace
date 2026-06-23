@@ -133,7 +133,6 @@ use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Payment\PaymentConfig;
 use Spryker\Zed\Propel\PropelConfig;
 use SprykerEco\Shared\Algolia\AlgoliaConstants;
-use SprykerEco\Shared\AmazonQuicksight\AmazonQuicksightConstants;
 use SprykerEco\Shared\PunchoutGateway\PunchoutGatewayConstants;
 use SprykerEco\Shared\Stripe\StripeConfig;
 use SprykerEco\Shared\Vertex\VertexConstants;
@@ -1136,22 +1135,6 @@ $config[AlgoliaConstants::IS_ACTIVE] =
     $config[AlgoliaConstants::APPLICATION_ID] &&
     $config[AlgoliaConstants::ADMIN_API_KEY] &&
     $config[AlgoliaConstants::SEARCH_ONLY_API_KEY];
-
-// -------------------------------- AWS QUICKSIGHT -------------------------------
-$config[AmazonQuicksightConstants::AWS_ACCOUNT_ID] = getenv('AWS_ACCOUNT_ID');
-$config[AmazonQuicksightConstants::AWS_REGION] = $awsRegion;
-$config[AmazonQuicksightConstants::AWS_QUICKSIGHT_NAMESPACE] = getenv('QUICKSIGHT_NAMESPACE');
-$config[AmazonQuicksightConstants::DEFAULT_DATA_SOURCE_USERNAME] = getenv('SPRYKER_BI_DB_USER') ?: getenv('SPRYKER_DB_USERNAME');
-$config[AmazonQuicksightConstants::DEFAULT_DATA_SOURCE_PASSWORD] = getenv('SPRYKER_BI_DB_PASSWORD') ?: getenv('SPRYKER_DB_PASSWORD');
-$config[AmazonQuicksightConstants::DEFAULT_DATA_SOURCE_DATABASE_NAME] = getenv('SPRYKER_DB_DATABASE');
-$config[AmazonQuicksightConstants::DEFAULT_DATA_SOURCE_DATABASE_HOST] = getenv('SPRYKER_DB_RO_REPLICA_HOST');
-$config[AmazonQuicksightConstants::DEFAULT_DATA_SOURCE_DATABASE_PORT] = getenv('SPRYKER_DB_PORT');
-$config[AmazonQuicksightConstants::DEFAULT_DATA_SOURCE_VPC_CONNECTION_ARN] = getenv('QUICKSIGHT_VPC_CONNECTION_ARN');
-$config[AmazonQuicksightConstants::GENERATE_EMBED_URL_ALLOWED_DOMAINS] = [
-    sprintf('https://%s', getenv('SPRYKER_BE_HOST')),
-];
-$config[AmazonQuicksightConstants::QUICKSIGHT_ASSUMED_ROLE_ARN] = getenv('QUICKSIGHT_ASSUMED_ROLE_ARN');
-
 // Vertex
 $config[VertexConstants::IS_ACTIVE] = getenv('VERTEX_IS_ACTIVE') ?: null;
 $config[VertexConstants::CLIENT_ID] = getenv('VERTEX_CLIENT_ID') ?: null;
