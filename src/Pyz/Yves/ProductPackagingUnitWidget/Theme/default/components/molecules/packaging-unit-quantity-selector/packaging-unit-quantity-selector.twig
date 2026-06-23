@@ -13,29 +13,27 @@
     {% endblock %}
 
     {% if not salesUnitCount %}
-        <div class="grid grid--gap grid--nowrap grid--stretch grid--justify">
-            <div class="col col--sm-6">
-                {% include molecule('quantity-counter') with {
-                    data: {
-                        numberFormatConfig: data.numberFormatConfig,
-                        inputExtraClasses: 'js-volume-price__quantity',
-                    },
-                } only %}
-            </div>
+        <p class="{{ config.name }}__quantity-label">{{ 'cart.item_quantity' | trans }}</p>
+        <div class="{{ config.name }}__cta-row">
+            {% include molecule('quantity-counter') with {
+                class: config.name ~ '__counter',
+                data: {
+                    numberFormatConfig: data.numberFormatConfig,
+                    inputExtraClasses: 'js-volume-price__quantity',
+                },
+            } only %}
 
-            <div class="col col--sm-6">
-                {% block addToCartButton %}
-                    <button type="submit" class="{{ config.jsName }}__add-to-cart-button button button--big button--expand button--no-horizontal-padding"
-                            data-init-single-click {{ isAddToCartDisabled }} {{ qa('add-to-cart-button') }}>
-                        {% include atom('font-icon') with {
-                            data: {
-                                name: 'shopping_cart',
-                            },
-                        } only %}
-                        {{ 'page.detail.add-to-cart' | trans }}
-                    </button>
-                {% endblock %}
-            </div>
+            {% block addToCartButton %}
+                <button type="submit" class="{{ config.jsName }}__add-to-cart-button button button--expand {{ config.name }}__add-to-cart-button"
+                        data-init-single-click {{ isAddToCartDisabled }} {{ qa('add-to-cart-button') }}>
+                    {% include atom('font-icon') with {
+                        data: {
+                            name: 'shopping_cart',
+                        },
+                    } only %}
+                    {{ 'page.detail.add-to-cart' | trans }}
+                </button>
+            {% endblock %}
         </div>
     {% endif %}
 
@@ -43,8 +41,31 @@
         {% set isMultipleMeasurementUnits = salesUnitCount > 1 and data.packagingUnitIsSelfLead == false %}
         {% set isSingleMeasurementUnit = salesUnitCount == 1 and data.packagingUnitIsSelfLead == false %}
 
+        {% block measurementUnitChoice %}
+            <div class="{{ config.name }}__unit-choice {{ config.jsName }}__measurement-unit-choice is-hidden">
+                <div class="{{ config.name }}__unit-notifications">
+                    <div class="{{ config.jsName }}__quantity-between-units is-hidden">
+                        <span>{{ 'measurement_units.recommendation.between-units-info' | trans }}
+                            (<span class="{{ config.jsName }}__current-choice"></span>)
+                        </span>
+                    </div>
+                    <div class="{{ config.jsName }}__minimum-quantity is-hidden">
+                        <span>{{ 'measurement_units.recommendation.min-violation' | trans }}</span>
+                    </div>
+                    <div class="{{ config.jsName }}__maximum-quantity is-hidden">
+                        <span>{{ 'measurement_units.recommendation.max-violation' | trans }}</span>
+                    </div>
+                </div>
+
+                <div class="{{ config.name }}__unit-suggestion {{ config.jsName }}__measurement-unit-choices">
+                    <span>{{ 'measurement_units.recommendation.suggestion' | trans }}:</span>
+                    <div class="{{ config.name }}__unit-choice-list {{ config.jsName }}__list"></div>
+                </div>
+            </div>
+        {% endblock %}
+
         {% block measurementUnitSelector %}
-            <div class="grid grid--middle {{ isMultipleMeasurementUnits ? 'grid--justify' }}">
+            <div class="grid grid--middle {{ isMultipleMeasurementUnits ? config.name ~ '__unit-fields--split' : 'grid--nowrap' }}">
                 <div class="col {{ config.name }}__unit-field">
                     <div class="{{ config.name }}__unit-field-label">{{ 'packaging_units.pdp.quantity' | trans }}:</div>
                     <div class="{{ config.name }}__unit-field-value">
@@ -100,24 +121,27 @@
             </div>
         {% endblock %}
 
-        {% block measurementUnitChoice %}
-            <div class="{{ config.name }}__unit-choice {{ config.jsName }}__measurement-unit-choice is-hidden">
+        {% block packagingUnitChoice %}
+            <div class="{{ config.name }}__unit-choice {{ config.jsName }}__packaging-unit-choice is-hidden">
                 <div class="{{ config.name }}__unit-notifications">
-                    <div class="{{ config.jsName }}__quantity-between-units is-hidden">
-                        <span>{{ 'measurement_units.recommendation.between-units-info' | trans }}
-                            (<span class="{{ config.jsName }}__current-choice"></span>)
+                    <div class="{{ config.jsName }}__amount-between-units is-hidden">
+                        <span>{{ 'packaging_units.recommendation.between-units-info' | trans }}
+                            (<span class="{{ config.jsName }}__amount-current-choice"></span>)
                         </span>
                     </div>
-                    <div class="{{ config.jsName }}__minimum-quantity is-hidden">
-                        <span>{{ 'measurement_units.recommendation.min-violation' | trans }}</span>
+                    <div class="{{ config.jsName }}__packaging-amount-min is-hidden">
+                        <span>{{ 'packaging-units.recommendation.amount-min-violation' | trans }}</span>
                     </div>
-                    <div class="{{ config.jsName }}__maximum-quantity is-hidden">
-                        <span>{{ 'measurement_units.recommendation.max-violation' | trans }}</span>
+                    <div class="{{ config.jsName }}__packaging-amount-max is-hidden">
+                        <span>{{ 'packaging-units.recommendation.amount-max-violation' | trans }}</span>
+                    </div>
+                    <div class="{{ config.jsName }}__packaging-amount-interval is-hidden">
+                        <span>{{ 'packaging-units.recommendation.amount-interval-violation' | trans }}</span>
                     </div>
                 </div>
 
-                <div class="{{ config.jsName }}__measurement-unit-choices">
-                    <span>{{ 'measurement_units.recommendation.suggestion' | trans }}:</span>
+                <div class="{{ config.name }}__unit-suggestion {{ config.jsName }}__packaging-unit-choices">
+                    <span>{{ 'packaging_units.recommendation.suggestion' | trans }}</span>
                     <div class="{{ config.name }}__unit-choice-list {{ config.jsName }}__list"></div>
                 </div>
             </div>
@@ -128,9 +152,9 @@
                 {% set defaultAmount = (data.productPackagingUnit.amountMin and data.productPackagingUnit.defaultAmount.toFloat() < data.productPackagingUnit.amountMin.toFloat()) ?
                     data.productPackagingUnit.amountMin :
                     data.productPackagingUnit.defaultAmount %}
-                {% set isAmountRowJustify = data.leadProductSalesUnits | length > 1 ? 'grid--justify' %}
+                {% set isMultipleLeadUnits = data.leadProductSalesUnits | length > 1 %}
 
-                <div class="grid grid--middle {{ isAmountRowJustify }}">
+                <div class="grid grid--middle {{ isMultipleLeadUnits ? config.name ~ '__unit-fields--split' : 'grid--nowrap' }}">
                     <div class="col {{ config.name }}__unit-field">
                         <div class="{{ config.name }}__unit-field-label">{{ 'packaging_units.pdp.amount' | trans }}:</div>
                         <div class="{{ config.name }}__unit-field-value">
@@ -193,32 +217,6 @@
                     {% endif %}
                 </div>
             {% endif %}
-        {% endblock %}
-
-        {% block packagingUnitChoice %}
-            <div class="{{ config.name }}__unit-choice {{ config.jsName }}__packaging-unit-choice is-hidden">
-                <div class="{{ config.name }}__unit-notifications">
-                    <div class="{{ config.jsName }}__amount-between-units is-hidden">
-                        <span>{{ 'packaging_units.recommendation.between-units-info' | trans }}
-                            (<span class="{{ config.jsName }}__amount-current-choice"></span>)
-                        </span>
-                    </div>
-                    <div class="{{ config.jsName }}__packaging-amount-min is-hidden">
-                        <span>{{ 'packaging-units.recommendation.amount-min-violation' | trans }}</span>
-                    </div>
-                    <div class="{{ config.jsName }}__packaging-amount-max is-hidden">
-                        <span>{{ 'packaging-units.recommendation.amount-max-violation' | trans }}</span>
-                    </div>
-                    <div class="{{ config.jsName }}__packaging-amount-interval is-hidden">
-                        <span>{{ 'packaging-units.recommendation.amount-interval-violation' | trans }}</span>
-                    </div>
-                </div>
-
-                <div class="{{ config.jsName }}__packaging-unit-choices">
-                    <span>{{ 'packaging_units.recommendation.suggestion' | trans }}</span>
-                    <div class="{{ config.name }}__unit-choice-list {{ config.jsName }}__list"></div>
-                </div>
-            </div>
         {% endblock %}
 
         {{ block('addToCartButton') }}

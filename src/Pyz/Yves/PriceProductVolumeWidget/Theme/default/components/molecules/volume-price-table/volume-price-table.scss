@@ -1,54 +1,75 @@
 @mixin shop-ui-volume-price-table($name: '.volume-price-table') {
     #{$name} {
-        margin-top: rem(21);
-        margin-bottom: rem(32);
+        display: flex;
+        flex-direction: column;
+        gap: var(--scale-8);
 
-        @include helper-breakpoint-media-min($lg) {
-            margin-top: 0;
+        &__label {
+            margin: 0;
+            font-family: var(--label-sm-family);
+            font-size: rem(var(--label-sm-size));
+            font-weight: var(--label-sm-weight);
+            line-height: rem(var(--label-sm-line-height));
+            color: var(--text-secondary);
         }
 
-        table {
-            text-align: center;
-            box-shadow:
-                0 10px 10px 0 $setting-color-alpha-1,
-                0 3px 3px 0 $setting-color-alpha-1;
-            width: 100%;
+        &__table {
+            display: flex;
+            flex-direction: column;
+            border: rem(1) solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
 
-            @include helper-breakpoint-media-min($md) {
-                width: auto;
+        &__row {
+            display: flex;
+            align-items: center;
+            gap: var(--scale-8);
+            padding: var(--scale-12) var(--scale-8);
+
+            & + & {
+                border-top: rem(1) solid var(--border-subtle);
             }
 
-            th {
-                padding: rem(13) rem(20) rem(11);
-                font-size: rem(12);
-                background: $setting-color-gray-7;
-                text-transform: uppercase;
+            &--head {
+                background: var(--background-surface);
 
-                @include helper-breakpoint-media-min($md) {
-                    &:first-child {
-                        text-align: center;
-                    }
-                }
-
-                &:last-child {
-                    padding-right: rem(50);
+                #{$name}__cell {
+                    color: var(--text-tertiary);
                 }
             }
 
-            td {
-                padding: rem(11) rem(20);
-                font-size: rem(13);
-                color: $setting-color-gray-3;
+            &--current {
+                background: var(--background-brand-subtle);
 
-                @include helper-breakpoint-media-min($md) {
-                    &:first-child {
-                        text-align: center;
-                    }
+                #{$name}__cell {
+                    font-weight: var(--font-weight-semibold);
                 }
+            }
+        }
 
-                &:last-child {
-                    padding-right: rem(50);
-                }
+        &__cell {
+            font-family: var(--label-sm-family);
+            font-size: rem(var(--label-sm-size));
+            font-weight: var(--label-sm-weight);
+            line-height: rem(var(--label-sm-line-height));
+            color: var(--text-primary);
+
+            &--quantity {
+                flex: 1 1 auto;
+                min-width: 0;
+                text-align: left;
+            }
+
+            &--price {
+                flex: 0 0 rem(86);
+                text-align: right;
+            }
+
+            &--saving {
+                flex: 0 0 rem(48);
+                text-align: right;
+                color: var(--text-state-success);
             }
         }
 

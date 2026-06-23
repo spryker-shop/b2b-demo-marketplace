@@ -1,19 +1,24 @@
 import Component from 'ShopUi/models/component';
 
 export default class VariantConfigurator extends Component {
-    protected cartForm: HTMLFormElement;
     protected notify: HTMLElement;
+    protected shoppingListNotify: HTMLElement;
 
     protected readyCallback(): void {}
 
     protected init(): void {
-        this.cartForm = <HTMLFormElement>document.querySelector(this.cartFormSelector);
         this.notify = <HTMLElement>this.getElementsByClassName(`${this.jsName}__notify`)[0];
+        this.shoppingListNotify = <HTMLElement>this.getElementsByClassName(`${this.jsName}__notify-shopping-list`)[0];
 
-        this.cartForm?.addEventListener('submit', (event: Event) => this.onCartFormSubmit(event));
+        document.addEventListener('submit', (event: Event) => this.onCartFormSubmit(event), true);
+        document.addEventListener('click', (event: Event) => this.onSaveToShoppingListClick(event), true);
     }
 
     protected onCartFormSubmit(event: Event): void {
+        if (!(<HTMLElement>event.target).closest(this.cartFormSelector)) {
+            return;
+        }
+
         const emptySelects = this.emptyVariantSelects;
 
         if (!emptySelects.length) {
@@ -23,11 +28,35 @@ export default class VariantConfigurator extends Component {
         event.preventDefault();
         event.stopImmediatePropagation();
         this.highlightEmptyVariants(emptySelects);
-        this.notify?.classList.remove(this.toggleClassName);
+        this.showNotify(this.notify);
+    }
+
+    protected onSaveToShoppingListClick(event: Event): void {
+        if (!(<HTMLElement>event.target).closest(`.${this.saveToShoppingListTriggerClassName}`)) {
+            return;
+        }
+
+        const emptySelects = this.emptyVariantSelects;
+
+        if (!emptySelects.length) {
+            return;
+        }
+
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        this.highlightEmptyVariants(emptySelects);
+        this.showNotify(this.shoppingListNotify);
     }
 
     protected highlightEmptyVariants(selects: HTMLSelectElement[]): void {
         selects.forEach((select) => select.classList.add(this.errorClassName));
+    }
+
+    protected showNotify(activeNotify: HTMLElement): void {
+        [this.notify, this.shoppingListNotify].forEach((notifyElement) =>
+            notifyElement?.classList.add(this.toggleClassName),
+        );
+        activeNotify?.classList.remove(this.toggleClassName);
     }
 
     protected get emptyVariantSelects(): HTMLSelectElement[] {
@@ -36,6 +65,10 @@ export default class VariantConfigurator extends Component {
 
     protected get cartFormSelector(): string {
         return this.getAttribute('cart-form-selector') || '.js-product-configurator__form-add-to-cart';
+    }
+
+    protected get saveToShoppingListTriggerClassName(): string {
+        return this.getAttribute('save-to-shopping-list-trigger-class-name') || 'js-save-to-shopping-list__trigger';
     }
 
     protected get errorClassName(): string {
