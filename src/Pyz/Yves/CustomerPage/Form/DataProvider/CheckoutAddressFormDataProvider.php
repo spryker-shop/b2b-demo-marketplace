@@ -47,6 +47,30 @@ class CheckoutAddressFormDataProvider extends SprykerCheckoutAddressFormDataProv
         return $result;
     }
 
+    /**
+     * TEMP DIAGNOSTIC (remove after): time each address-form expander plugin. If "expanders ENTER"
+     * never logs, the hang is earlier in getOptions (getAddressChoices / getAvailableCountries).
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param array<string, mixed> $options
+     *
+     * @return array<string, mixed>
+     */
+    protected function executeCheckoutAddressCollectionFormExpanderPlugins(QuoteTransfer $quoteTransfer, array $options): array
+    {
+        error_log(sprintf('[CHKTRACE] expanders ENTER count=%d', count($this->checkoutAddressCollectionFormExpanderPlugins)));
+        foreach ($this->checkoutAddressCollectionFormExpanderPlugins as $plugin) {
+            $cls = get_class($plugin);
+            $t = microtime(true);
+            error_log('[CHKTRACE] expander START ' . $cls);
+            $options = $plugin->expandOptions($quoteTransfer, $options);
+            error_log(sprintf('[CHKTRACE] expander DONE %s dt=%.3fs', $cls, microtime(true) - $t));
+        }
+        error_log('[CHKTRACE] expanders DONE');
+
+        return $options;
+    }
+
     protected function canDeliverToMultipleShippingAddresses(QuoteTransfer $quoteTransfer): bool
     {
         $t = microtime(true);
