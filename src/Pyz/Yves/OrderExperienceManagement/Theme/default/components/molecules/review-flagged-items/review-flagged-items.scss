@@ -1,0 +1,38 @@
+@mixin order-experience-management-review-flagged-items($name: '.review-flagged-items') {
+    #{$name} {
+        font-size: var(--font-size-12);
+
+        &__title {
+            font-size: var(--font-size-14);
+            margin: 0 0 var(--scale-12);
+            font-weight: normal;
+            line-height: 1.14;
+        }
+
+        &__box {
+            border: rem(1) solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--scale-24);
+        }
+
+        &__item {
+            padding: var(--scale-12) var(--scale-16);
+
+            &:not(:last-child) {
+                border-bottom: rem(1) solid var(--border-subtle);
+            }
+        }
+
+        &__item-name {
+            font-weight: var(--font-weight-semibold);
+        }
+
+        small {
+            font-size: var(--font-size-12);
+        }
+
+        @content;
+    }
+}
+
+@include order-experience-management-review-flagged-items;
