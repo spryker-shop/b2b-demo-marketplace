@@ -18,20 +18,20 @@
                 <div class="{{ config.name }}__row">
                     <span class="{{ config.name }}__label">{{ 'packaging_units.cart.amount' | trans }}:</span>
                     <span class="{{ config.name }}__field">
-                        <input type="text" class="input {{ config.name }}__amount-input"
+                        <input type="text" class="input input--xs {{ config.name }}__amount-input"
                                value="{{ amountValue }}" aria-label="{{ 'packaging_units.cart.amount' | trans }}" disabled>
                     </span>
                     {% if amountUnitName is not empty %}
                         <span class="{{ config.name }}__field">
                             {% include molecule('custom-select') with {
-                                modifiers: ['small', 'mobile-expand', 'mobile-xs'],
+                                modifiers: ['xs', 'mobile-expand', 'mobile-xs'],
                                 data: {
                                     label: amountUnitName | trans,
                                     options: [{ label: amountUnitName | trans, value: amountUnitName, selected: true }],
                                 },
                                 attributes: {
                                     disabled: true,
-                                    'config-theme': 'small',
+                                    'config-theme': 'xs',
                                 },
                             } only %}
                         </span>
@@ -51,7 +51,7 @@
                             },
                             attributes: {
                                 disabled: true,
-                                'config-theme': 'small',
+                                'config-theme': 'xs',
                             },
                         } only %}
                     </span>
