@@ -93,7 +93,7 @@
             cursor: pointer;
             background-color: $setting-color-transparent;
             font: fw(regular) rem(13) / rem(16) $setting-font-family;
-            gap: rem(var(--scale-2));
+            gap: var(--scale-2);
 
             @include helper-breakpoint-media-min($lg) {
                 margin-bottom: rem(11);

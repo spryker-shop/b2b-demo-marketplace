@@ -13,36 +13,36 @@
     }
 
     &--second {
-        font-size: rem(var(--fontsize-3));
+        font-size: var(--fontsize-3);
         margin-bottom: rem(14);
 
         @include helper-breakpoint-media-min($lg) {
-            font-size: rem(var(--fontsize-5));
+            font-size: var(--fontsize-5);
         }
     }
 
     &__index {
         color: $setting-color-main;
-        margin-right: rem(var(--scale-2));
+        margin-right: var(--scale-2);
 
         @include helper-breakpoint-media-min($lg) {
-            margin-right: rem(var(--scale-4));
+            margin-right: var(--scale-4);
         }
     }
 
     &--sub {
         color: $setting-color-gray-3;
         font-weight: fw(regular);
-        margin-bottom: rem(var(--scale-4));
+        margin-bottom: var(--scale-4);
     }
 
     &--error-page {
-        font: fw(bold) rem(var(--fontsize-6)) / rem(41) $setting-font-family;
+        font: fw(bold) var(--fontsize-6) / rem(41) $setting-font-family;
         margin-bottom: rem(7);
     }
 
     &--product-review {
-        margin: rem(36) 0 rem(var(--scale-7));
+        margin: rem(36) 0 var(--scale-7);
     }
 
     &--product-slider {
@@ -52,7 +52,7 @@
 
         @include helper-breakpoint-media-min($lg) {
             margin-bottom: rem(33);
-            font-size: rem(var(--fontsize-6));
+            font-size: var(--fontsize-6);
         }
     }
 
@@ -91,7 +91,7 @@
     }
 
     &--mobile-toggler-section {
-        margin-bottom: rem(var(--scale-7));
+        margin-bottom: var(--scale-7);
         font-weight: fw(medium);
         line-height: normal;
         color: $setting-color-gray-5;
@@ -109,7 +109,7 @@
                 top: 50%;
                 transform: translateY(-50%);
                 width: rem(10);
-                height: rem(var(--stroke-md));
+                height: var(--stroke-md);
                 background: $setting-color-gray-5;
             }
 
@@ -130,7 +130,7 @@
         font-weight: fw(medium);
 
         @include helper-breakpoint-media-min($lg) {
-            margin-left: rem(var(--scale-6));
+            margin-left: var(--scale-6);
         }
     }
 
@@ -138,17 +138,17 @@
         color: $setting-color-alt;
         line-height: rem(52);
         background-color: $setting-color-alpha-5;
-        margin: 0 rem(-15) rem(var(--scale-4));
+        margin: 0 rem(-15) var(--scale-4);
 
         @include helper-breakpoint-media-min($lg) {
-            font-size: rem(var(--fontsize-2));
-            margin: 0 0 rem(var(--scale-4));
+            font-size: var(--fontsize-2);
+            margin: 0 0 var(--scale-4);
         }
     }
 
     &--review-subtitle {
-        margin-bottom: rem(var(--scale-6));
-        font-size: rem(var(--fontsize-3));
+        margin-bottom: var(--scale-6);
+        font-size: var(--fontsize-3);
         font-weight: fw(medium);
         line-height: normal;
         color: $setting-color-gray-5;
@@ -156,7 +156,7 @@
 
         @include helper-breakpoint-media-min($lg) {
             text-align: left;
-            font-size: rem(var(--fontsize-5));
+            font-size: var(--fontsize-5);
         }
     }
 
@@ -166,8 +166,8 @@
         position: relative;
 
         @include helper-breakpoint-media-min($lg) {
-            padding-bottom: rem(var(--scale-6));
-            margin-bottom: rem(var(--scale-6));
+            padding-bottom: var(--scale-6);
+            margin-bottom: var(--scale-6);
         }
 
         &::after {
@@ -178,7 +178,7 @@
             right: rem(-15);
             bottom: 0;
             width: calc(100% + #{$setting-grid-space * 2});
-            height: rem(var(--stroke-sm));
+            height: var(--stroke-sm);
             background-color: $setting-color-gray-6;
 
             @include helper-breakpoint-media-min($lg) {

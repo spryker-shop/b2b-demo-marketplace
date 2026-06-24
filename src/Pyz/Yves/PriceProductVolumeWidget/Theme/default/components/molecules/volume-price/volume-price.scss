@@ -55,9 +55,9 @@
             #{$name}__amount {
                 display: block;
                 font-family: var(--label-sm-semibold-family);
-                font-size: rem(var(--label-sm-semibold-size));
+                font-size: var(--label-sm-semibold-size);
                 font-weight: var(--label-sm-semibold-weight);
-                line-height: rem(var(--label-sm-semibold-line-height));
+                line-height: var(--label-sm-semibold-line-height);
                 margin: 0;
                 padding-left: rem(10);
                 color: var(--text-primary);
@@ -90,9 +90,9 @@
                 margin: 0;
                 color: var(--text-primary);
                 font-family: var(--label-sm-semibold-family);
-                font-size: rem(var(--label-sm-semibold-size));
+                font-size: var(--label-sm-semibold-size);
                 font-weight: var(--label-sm-semibold-weight);
-                line-height: rem(var(--label-sm-semibold-line-height));
+                line-height: var(--label-sm-semibold-line-height);
 
                 &--original {
                     color: var(--text-tertiary);
@@ -104,9 +104,9 @@
             #{$name}__mode {
                 color: var(--text-secondary);
                 font-family: var(--body-sm-family);
-                font-size: rem(var(--body-sm-size));
+                font-size: var(--body-sm-size);
                 font-weight: var(--font-weight-regular);
-                line-height: rem(var(--body-sm-line-height));
+                line-height: var(--body-sm-line-height);
             }
         }
 

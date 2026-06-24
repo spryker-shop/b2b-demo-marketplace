@@ -26,6 +26,10 @@ const configurationProdMode = async (appSettings) =>
             ],
 
             optimization: {
+                // Enable scope hoisting for production bundles. It is disabled in
+                // development.js for faster rebuilds; production benefits from the
+                // smaller, faster output.
+                concatenateModules: true,
                 minimizer: [
                     new TerserPlugin({
                         parallel: true,
