@@ -129,6 +129,8 @@
         </article>
     {% endfor %}
 
+    {% widget 'RecurringOrderSelectorWidget' args [data.cart] only %}{% endwidget %}
+
     <div class="grid grid--gap">
         <div class="col col--sm-12 col--lg-6">
             {% include molecule('summary-item-box', 'CheckoutPage') with {
