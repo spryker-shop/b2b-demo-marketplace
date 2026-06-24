@@ -6,6 +6,7 @@
 {% set productOffersCount = buyBoxWidget.products | length %}
 {% set showProductAvailability = isProductConcrete and productOffersCount == 0 %}
 {% set isAvailable = isProductConcrete and (data.product.available or productOffersCount) %}
+{% set showAvailabilityNotification = (not isAvailable or not data.product.available) and isProductConcrete %}
 {% set hasConfigurableAttributes = data.product.attributeMap.superAttributes is defined and data.product.attributeMap.superAttributes is not empty %}
 
 {% block body %}
@@ -39,10 +40,8 @@
 
                 {% widget 'ProductDetailPageReviewWidget' args [data.product.idProductAbstract] use view('pdp-review-rating', 'ProductReviewWidget') only %}{% endwidget %}
 
-                {% if isProductConcrete and not isAvailable %}
-                    <span class="{{ config.name }}__stock-badge {{ config.name }}__stock-badge--out-of-stock" {{ qa('product-stock-badge') }}>
-                        {{ 'product.detail.out_of_stock_label' | trans }}
-                    </span>
+                {% if showProductAvailability %}
+                    {% widget 'ProductAvailabilityWidget' args [data.product] only %}{% endwidget %}
                 {% endif %}
             </div>
         </div>
@@ -75,12 +74,6 @@
             </div>
         {% endif %}
     </div>
-
-    {% if showProductAvailability %}
-        <div class="{{ config.name }}__availability">
-            {% widget 'ProductAvailabilityWidget' args [data.product] only %}{% endwidget %}
-        </div>
-    {% endif %}
 
     {% block bundleProducts %}
         {% widget 'ProductBundleProductDetailPageItemsListWidget' args [data.product] only %}{% endwidget %}
@@ -116,6 +109,7 @@
             buyBoxWidget: buyBoxWidget,
             isAddToCartDisabled: isAddToCartDisabled,
             saveToListTriggerClass: saveToListTriggerClass,
+            showAvailabilityNotification: showAvailabilityNotification,
         },
     } only %}
         {% block embeddedData %}
@@ -144,13 +138,14 @@
                                 {% include molecule('quantity-counter') with {
                                     data: {
                                         isDisabled: embed.isAddToCartDisabled,
+                                        inputExtraClasses: 'js-volume-price__quantity',
                                     },
                                 } only %}
 
                                 <button
                                     type="submit"
                                     class="button button--lg button--expand product-configurator__add-to-cart-button"
-                                    {{ embed.isAddToCartDisabled ? 'disabled' : 'data-init-single-click' }}
+                                    data-init-single-click
                                     {{ qa('add-to-cart-button') }}
                                 >
                                     {% include atom('font-icon') with {
@@ -167,7 +162,6 @@
                             <button
                                 type="button"
                                 class="button button--hollow button--expand {{ data.config.name }}__save-to-list js-save-to-shopping-list__trigger {{ embed.saveToListTriggerClass }}"
-                                {{ embed.isAddToCartDisabled ? 'disabled' }}
                                 {{ qa('save-to-shopping-list-trigger') }}
                             >
                                 {{ 'shopping_list_widget.save_to_shopping_list' | trans }}
@@ -178,6 +172,13 @@
                     {% widget 'AddToMultiCartWidget' args [data.isDisabled] only %}{% endwidget %}
 
                     {% widget 'CartAddProductAsSeparateItemWidget' only %}{% endwidget %}
+                {% elseif not is_granted('ROLE_USER') and not embed.showAvailabilityNotification %}
+                    <a
+                        href="{{ url('login') }}"
+                        class="button button--hollow button--expand {{ data.config.name }}__sign-in"
+                    >
+                        {{ 'product.detail.sign_in_to_see_prices' | trans }}
+                    </a>
                 {% endif %}
 
                 {% if can('SeeAddToCartPermissionPlugin') %}
@@ -188,7 +189,7 @@
     {% endwidget %}
 
 
-    {% if (not isAvailable or not data.product.available) and not isProductAbstract %}
+    {% if showAvailabilityNotification %}
         {% widget 'AvailabilityNotificationSubscriptionWidget' args [data.product] only %}{% endwidget %}
     {% endif %}
 

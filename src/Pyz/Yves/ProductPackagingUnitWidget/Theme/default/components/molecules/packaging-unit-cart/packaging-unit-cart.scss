@@ -1,15 +1,51 @@
-@mixin product-packaging-unit-packaging-unit-cart($name: '.packaging-unit-cart') {
+@mixin product-packaging-unit-widget-packaging-unit-cart($name: '.packaging-unit-cart') {
     #{$name} {
-        margin-top: rem(13);
-        font-size: rem(13);
-        color: $setting-color-gray-4;
+        &__list {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: var(--scale-4);
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
 
-        @include helper-breakpoint-media-min($lg) {
-            font-size: rem(14);
+        &__item {
+            list-style: none;
+            margin: 0;
+        }
+
+        &__row {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--scale-8);
+            margin: 0;
+        }
+
+        &__label {
+            flex: 0 0 auto;
+            min-width: rem(96);
+            font-family: var(--body-sm-family);
+            font-size: var(--body-sm-size);
+            font-weight: var(--font-weight-regular);
+            line-height: var(--body-sm-line-height);
+            color: var(--text-tertiary);
+            letter-spacing: var(--font-letter-spacing-normal);
+            margin: 0;
+            white-space: nowrap;
+        }
+
+        &__field {
+            flex: 0 0 auto;
+        }
+
+        &__amount-input {
+            width: rem(42);
+            text-align: right;
         }
 
         @content;
     }
 }
 
-@include product-packaging-unit-packaging-unit-cart;
+@include product-packaging-unit-widget-packaging-unit-cart();
