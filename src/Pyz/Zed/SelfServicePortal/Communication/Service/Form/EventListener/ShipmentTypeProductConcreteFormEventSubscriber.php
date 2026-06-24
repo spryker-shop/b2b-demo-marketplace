@@ -84,6 +84,7 @@ class ShipmentTypeProductConcreteFormEventSubscriber extends SprykerShipmentType
     }
 
     /**
+     * @param int $idProductConcrete
      *
      * @return list<int>
      */
