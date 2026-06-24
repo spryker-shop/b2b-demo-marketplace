@@ -169,8 +169,8 @@ const getConfiguration = async (appSettings) => {
                             {
                                 loader: 'sass-loader',
                                 options: {
-                                    implementation: require('sass'),
-                                    api: 'legacy',
+                                    implementation: require('sass-embedded'),
+                                    api: 'modern-compiler',
                                 },
                             },
                         ],
