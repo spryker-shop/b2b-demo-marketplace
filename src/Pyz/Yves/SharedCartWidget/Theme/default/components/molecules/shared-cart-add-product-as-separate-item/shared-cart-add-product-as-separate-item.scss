@@ -1,0 +1,11 @@
+@mixin share-cart-widget-shared-cart-add-product-as-separate-item($name: '.shared-cart-add-product-as-separate-item') {
+    #{$name} {
+        display: block;
+        line-height: 0;
+        padding-bottom: var(--scale-16);
+
+        @content;
+    }
+}
+
+@include share-cart-widget-shared-cart-add-product-as-separate-item();

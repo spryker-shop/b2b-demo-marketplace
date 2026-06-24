@@ -8,7 +8,12 @@
 
         @include helper-breakpoint-media-min($lg) {
             height: 100%;
-            padding: rem(36) rem(4) rem(28);
+            padding: 0;
+            margin-right: var(--scale-12);
+
+            &--cart {
+                margin-right: 0;
+            }
         }
 
         &__item {

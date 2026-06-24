@@ -1,11 +1,18 @@
 @use 'src/ShopUi/styles/shared' as *;
 @mixin merchant-widget-sold-by-merchant($name: '.sold-by-merchant') {
     #{$name} {
-        font-size: rem(14);
-        margin: rem(8) 0 rem(12);
+        font-size: var(--label-sm-regular-size);
+        line-height: var(--label-sm-regular-line-height);
+        color: var(--text-secondary);
+        margin: 0;
 
         &__link {
-            color: $setting-color-main;
+            color: var(--text-brand);
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
         }
 
         &--group {

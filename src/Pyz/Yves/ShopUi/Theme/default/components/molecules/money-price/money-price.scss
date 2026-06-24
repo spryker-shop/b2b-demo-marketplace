@@ -125,9 +125,11 @@
 
         &--cart {
             color: var(--text-primary);
-            font-size: rem(var(--font-size-16));
-            font-weight: var(--font-weight-semibold);
-            letter-spacing: var(--font-letter-spacing-tight);
+            font-family: var(--price-sm-family);
+            font-size: var(--price-sm-size);
+            font-weight: var(--price-sm-weight);
+            line-height: var(--price-sm-line-height);
+            letter-spacing: var(--price-sm-letter-spacing);
         }
     }
 
@@ -150,8 +152,9 @@
         &--cart {
             color: var(--text-tertiary);
             font-family: var(--body-sm-family);
-            font-size: rem(var(--body-sm-size));
-            line-height: rem(var(--body-sm-line-height));
+            font-size: var(--body-sm-size);
+            font-weight: var(--font-weight-regular);
+            line-height: var(--body-sm-line-height);
         }
     }
 }

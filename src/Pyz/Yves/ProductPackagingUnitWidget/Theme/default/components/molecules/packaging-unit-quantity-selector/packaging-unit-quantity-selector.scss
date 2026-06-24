@@ -1,84 +1,146 @@
 @use 'src/ShopUi/styles/shared' as *;
 @mixin product-packaging-unit-widget-packaging-unit-quantity-selector($name: '.packaging-unit-quantity-selector') {
     #{$name} {
+        &__quantity-label {
+            margin: 0 0 var(--scale-12);
+            font-family: var(--label-sm-semibold-family);
+            font-size: var(--label-sm-semibold-size);
+            font-weight: var(--label-sm-semibold-weight);
+            line-height: var(--label-sm-semibold-line-height);
+            letter-spacing: var(--label-sm-semibold-letter-spacing);
+            color: var(--text-primary);
+        }
+
+        &__cta-row {
+            display: flex;
+            align-items: stretch;
+            gap: var(--scale-12);
+        }
+
+        &__counter {
+            flex: 1 1 0;
+            min-width: 0;
+        }
+
+        &__add-to-cart-button {
+            flex: 1 1 0;
+            min-width: 0;
+        }
+
         &__new-price {
             display: flex;
             align-items: center;
-            margin-bottom: map-get($setting-spacing, big);
+            margin-bottom: var(--scale-6);
         }
 
         &__new-price-label {
-            margin-right: map-get($setting-spacing, default);
+            margin-right: var(--scale-4);
         }
 
         &__new-price-value {
-            @include helper-font-size(big);
+            font-size: var(--font-size-18);
         }
 
         &__unit-field {
             display: flex;
             align-items: center;
-            margin-bottom: map-get($setting-spacing, big);
+            flex-wrap: nowrap;
+            gap: var(--scale-8);
+            margin-bottom: var(--scale-12);
+            padding-right: var(--scale-12);
+        }
+
+        &__unit-field-label,
+        &__unit-field-value {
+            font-family: var(--label-sm-semibold-family);
+            font-size: var(--label-sm-semibold-size);
+            font-weight: var(--label-sm-semibold-weight);
+            line-height: var(--label-sm-semibold-line-height);
+            letter-spacing: var(--label-sm-semibold-letter-spacing);
+            color: var(--text-primary);
         }
 
         &__unit-field-label {
-            @include helper-font-size(small);
-            @include helper-font-weight(regular);
-            min-width: rem(92);
-            padding-right: map-get($setting-spacing, big);
-            color: $setting-color-gray-4;
+            flex-shrink: 0;
+            min-width: rem(72);
+            white-space: nowrap;
+        }
 
-            @include helper-breakpoint-media-min($md) {
+        &__unit-field-value {
+            display: flex;
+            align-items: center;
+            gap: var(--scale-8);
+        }
+
+        &__unit-fields--split {
+            display: flex;
+            gap: var(--scale-12);
+            margin: 0;
+            align-items: flex-start;
+
+            #{$name}__unit-field {
+                flex: 1 1 0;
                 min-width: 0;
+                flex-direction: column;
+                align-items: stretch;
+                gap: var(--scale-6);
+                margin-bottom: var(--scale-12);
+                padding: 0;
             }
 
-            @include helper-breakpoint-media-min($lg) {
-                min-width: rem(75);
+            #{$name}__unit-field-label {
+                min-width: 0;
             }
         }
 
         &__unit-choice {
-            @include helper-font-size(small);
-            @include helper-font-weight(regular);
-            border-radius: $setting-border-radius;
-            background: $setting-color-gray-7;
-            padding: map-get($setting-spacing, big) map-get($setting-spacing, big) rem(21);
-            margin-bottom: map-get($setting-spacing, big);
-            color: $setting-color-gray-3;
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-8);
+            margin-bottom: var(--scale-12);
+            padding: var(--scale-12);
+            border-radius: var(--radius-sm);
+            border: var(--stroke-sm) solid var(--border-default);
+            background: var(--background-surface);
+            font-size: var(--body-sm-size);
+            line-height: var(--body-sm-line-height);
+            color: var(--text-primary);
+        }
 
-            @include helper-breakpoint-media-min($lg) {
-                background-color: $setting-color-white;
-                box-shadow:
-                    0 rem(18) rem(18) 0 $setting-color-alpha-2,
-                    0 rem(3) rem(3) 0 $setting-color-alpha-2;
-            }
+        &__unit-notifications {
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-4);
+        }
+
+        &__unit-suggestion {
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-6);
         }
 
         &__unit-choice-list {
             display: flex;
             flex-wrap: wrap;
-            padding-top: map-get($setting-spacing, default);
+            gap: var(--scale-8);
 
             .link {
-                border-radius: $setting-border-radius;
-                background: $setting-color-white;
-                color: $setting-color-gray-4;
-                padding: rem(3) rem(13);
-                margin-top: map-get($setting-spacing, default);
-                margin-right: rem(10);
-                display: inline-block;
-                box-shadow:
-                    0 rem(18) rem(18) 0 $setting-color-alpha-2,
-                    0 rem(3) rem(3) 0 $setting-color-alpha-2;
-
-                @include helper-breakpoint-media-min($lg) {
-                    background: $setting-color-alpha-5;
-                    color: $setting-color-alt;
-                }
+                display: inline-flex;
+                align-items: center;
+                padding: var(--scale-6) var(--scale-12);
+                border-radius: var(--radius-sm);
+                border: var(--stroke-sm) solid var(--border-default);
+                background: var(--background-page);
+                color: var(--text-primary);
+                font-size: var(--label-sm-size);
+                font-weight: var(--label-sm-weight);
+                line-height: var(--label-sm-line-height);
+                text-decoration: none;
 
                 &:hover {
-                    background: $setting-color-alt;
-                    color: $setting-color-white;
+                    border-color: var(--border-brand);
+                    background: var(--background-brand-subtle);
+                    color: var(--text-brand);
                     text-decoration: none;
                 }
             }

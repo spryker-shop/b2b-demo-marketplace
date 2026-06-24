@@ -4,12 +4,8 @@ $color-selector-size-big: rem(24);
 $name: '.product-detail-color-selector';
 
 @include helper-color-selector($name) {
-    margin: rem(24) 0 rem(15);
+    margin: 0;
     display: flex;
-
-    @include helper-breakpoint-media-min($lg) {
-        margin: 0 0 rem(28);
-    }
 
     &__items-title,
     &__item-inner {

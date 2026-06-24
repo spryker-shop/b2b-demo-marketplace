@@ -1,7 +1,7 @@
 @use 'src/ShopUi/styles/shared' as *;
 @mixin shop-ui-product-item-options($name: '.product-item-options') {
     #{$name} {
-        margin: rem(8) 0;
+        padding-bottom: var(--scale-16);
 
         &--summary {
             margin-top: rem(4);
@@ -12,13 +12,13 @@
         }
 
         &__item {
-            font-size: rem(13);
-            color: $setting-color-gray-3;
             display: block;
-
-            @include helper-breakpoint-media-min($lg) {
-                font-size: rem(14);
-            }
+            color: var(--text-tertiary);
+            font-family: var(--label-sm-family);
+            font-size: var(--label-sm-size);
+            font-weight: var(--label-sm-weight);
+            line-height: var(--label-sm-line-height);
+            letter-spacing: var(--label-sm-letter-spacing);
         }
 
         &__total-price {
