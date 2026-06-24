@@ -183,22 +183,12 @@
         }) -%}
     {% endif %}
 
-    {% set inputComplexityJsCLass = 'js-password-complexity-indicator__' ~ attr.name %}
-
     {% include molecule('password-field') with {
         data: {
             inputAttributes: attr,
-            inputExtraClasses: ('input input--expand ' ~ (errors is not empty ? ' input--error ') ~ (attr.class | default) ~ inputComplexityJsCLass) | trim,
+            inputExtraClasses: ('input input--expand ' ~ (errors is not empty ? ' input--error ') ~ (attr.class | default)) | trim,
         },
     } only %}
-
-    {% if attr.password_complexity_indicator | default %}
-        {% include molecule('password-complexity-indicator') with {
-            attributes: {
-                'input-class-name': inputComplexityJsCLass,
-            },
-        } only %}
-    {% endif %}
 {%- endblock password_widget -%}
 
 {%- block formatted_integer_widget -%}

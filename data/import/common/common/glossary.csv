@@ -505,6 +505,18 @@ customer.login.password,Password,en_US
 customer.login.password,Passwort,de_DE
 customer.login.title,Access your account,en_US
 customer.login.title,Ich bin bereits Kunde,de_DE
+customer.login.welcome_back,Welcome back,en_US
+customer.login.welcome_back,Willkommen zurück,de_DE
+customer.login.subtitle,Sign in to manage your orders and account,en_US
+customer.login.subtitle,"Melden Sie sich an, um Ihre Bestellungen und Ihr Konto zu verwalten",de_DE
+customer.login.submit,Sign in,en_US
+customer.login.submit,Anmelden,de_DE
+customer.login.terms,Terms,en_US
+customer.login.terms,AGB,de_DE
+customer.login.error,The email or password you entered is incorrect.,en_US
+customer.login.error,Die eingegebene E-Mail-Adresse oder das Passwort ist falsch.,de_DE
+customer.login.continue_as_guest,Continue as a guest,en_US
+customer.login.continue_as_guest,Als Gast fortfahren,de_DE
 customer.registration.title,Create account,en_US
 customer.registration.title,Ich bin Neukunde,de_DE
 customer.account.no_order,No orders at the moment,en_US
@@ -609,8 +621,6 @@ customer.password.invalid_password,Current password is wrong,en_US
 customer.password.invalid_password,Aktuelles Passwort ist falsch,de_DE
 customer.password.invalid,Password is invalid,en_US
 customer.password.invalid,Passwort ist ungültig,de_DE
-customer.password.restore,Set a new password,en_US
-customer.password.restore,Neues Passwort erstellen,de_DE
 customer.password.changed,Your password was changed successfully,en_US
 customer.password.changed,Ihr Passwort wurde erfolgreich geändert,de_DE
 customer.token.invalid,Token is invalid,en_US
@@ -621,6 +631,38 @@ customer.forgotten_password.email,Email Address,en_US
 customer.forgotten_password.email,E-Mail Adresse,de_DE
 customer.forgotten-password.title,Recover my password,en_US
 customer.forgotten-password.title,Passwort vergessen,de_DE
+customer.recovery.request.title,Forgot password?,en_US
+customer.recovery.request.title,Passwort vergessen?,de_DE
+customer.recovery.request.subtitle,Enter your work email and we'll send you a link to reset your password.,en_US
+customer.recovery.request.subtitle,"Geben Sie Ihre geschäftliche E-Mail-Adresse ein, und wir senden Ihnen einen Link zum Zurücksetzen Ihres Passworts.",de_DE
+customer.recovery.email_label,Work email,en_US
+customer.recovery.email_label,Geschäftliche E-Mail,de_DE
+customer.recovery.request.submit,Send reset link,en_US
+customer.recovery.request.submit,Link zum Zurücksetzen senden,de_DE
+customer.recovery.back_to_sign_in,Back to sign in,en_US
+customer.recovery.back_to_sign_in,Zurück zur Anmeldung,de_DE
+customer.recovery.sent.title,Check your email,en_US
+customer.recovery.sent.title,Überprüfen Sie Ihre E-Mail,de_DE
+customer.recovery.sent.text,"If an account exists for %email%, we've sent a link to reset your password.",en_US
+customer.recovery.sent.text,"Wenn ein Konto für %email% existiert, haben wir einen Link zum Zurücksetzen Ihres Passworts gesendet.",de_DE
+customer.recovery.sent.resend,Resend email,en_US
+customer.recovery.sent.resend,E-Mail erneut senden,de_DE
+customer.recovery.reset.title,Set a new password,en_US
+customer.recovery.reset.title,Neues Passwort erstellen,de_DE
+customer.recovery.reset.subtitle,Your new password must be different from previously used passwords.,en_US
+customer.recovery.reset.subtitle,Ihr neues Passwort muss sich von zuvor verwendeten Passwörtern unterscheiden.,de_DE
+customer.recovery.reset.new_label,New password,en_US
+customer.recovery.reset.new_label,Neues Passwort,de_DE
+customer.recovery.reset.confirm_label,Confirm password,en_US
+customer.recovery.reset.confirm_label,Passwort bestätigen,de_DE
+customer.recovery.reset.hint,"At least 8 characters, including a number and an uppercase letter.",en_US
+customer.recovery.reset.hint,"Mindestens 8 Zeichen, einschließlich einer Zahl und eines Großbuchstabens.",de_DE
+customer.recovery.reset.submit,Save password,en_US
+customer.recovery.reset.submit,Passwort speichern,de_DE
+customer.recovery.success.title,Password updated,en_US
+customer.recovery.success.title,Passwort aktualisiert,de_DE
+customer.recovery.success.text,Your password has been changed successfully. You can now sign in with your new password.,en_US
+customer.recovery.success.text,Ihr Passwort wurde erfolgreich geändert. Sie können sich jetzt mit Ihrem neuen Passwort anmelden.,de_DE
 customer.order.order_id,Order Id,en_US
 customer.order.order_id,Bestellnummer,de_DE
 customer.order.view_all,View All,en_US
@@ -2485,6 +2527,10 @@ page.detail.volume_price.quantity,Quantity,en_US
 page.detail.volume_price.quantity,Anzahl,de_DE
 page.detail.volume_price.price,Price,en_US
 page.detail.volume_price.price,Preis,de_DE
+page.detail.volume_price,Volume pricing,en_US
+page.detail.volume_price,Mengenrabatt,de_DE
+page.detail.volume_price.saving,Saving,en_US
+page.detail.volume_price.saving,Ersparnis,de_DE
 customer.order.canceledTotal,Canceled amount,en_US
 customer.order.canceledTotal,Stornierter Betrag,de_DE
 customer.order.remunerationTotal,Remuneration Total,en_US
@@ -2505,6 +2551,8 @@ packaging_units.cart.quantity,Quantity,en_US
 packaging_units.cart.quantity,Anzahl,de_DE
 packaging_units.cart.amount,Amount,en_US
 packaging_units.cart.amount,Betrag,de_DE
+packaging_units.cart.units,Units,en_US
+packaging_units.cart.units,Einheiten,de_DE
 packaging_units.cart.item,Items,en_US
 packaging_units.cart.item,Artikel,de_DE
 packaging_units.pdp.quantity,Quantity,en_US
@@ -4111,8 +4159,6 @@ product_configurator_gateway_page.shopping_list_item_uuid_required,"Shopping Lis
 product_configurator_gateway_page.shopping_list_item_uuid_required,"Die Artikel-ID der Einkaufsliste ist ein erforderlicher Parameter.",de_DE
 product_configurator_gateway_page.configurator_key_is_not_supported,"Configurator key is not supported.",en_US
 product_configurator_gateway_page.configurator_key_is_not_supported,"Konfiguratorschlüssel wird nicht unterstützt.",de_DE
-demo_date_time_configurator_page.checkout.validation.error.price_is_not_valid,"Product configuration price is not valid",en_US
-demo_date_time_configurator_page.checkout.validation.error.price_is_not_valid,"Der Produktkonfigurationspreis ist ungültig",de_DE
 permission.name.SeeCompanyUsersPermissionPlugin,View company users,en_US
 permission.name.SeeCompanyUsersPermissionPlugin,Firmenbenutzer anzeigen,de_DE
 store_widget.switcher.store,Store:,en_US
@@ -5113,6 +5159,8 @@ ssp_dashboard.overview.not_applicable,n/a,en_US
 ssp_dashboard.overview.not_applicable,n/a,de_DE
 self_service_portal.asset.form.image.description,"Max up to %size%. Allowed file formats %format%",en_US
 self_service_portal.asset.form.image.description,"Maximal bis zu %size%. Erlaubte Dateiformate: %format%",de_DE
+self_service_portal.asset.form.name.validation.min,Name must be at least 3 characters long.,en_US
+self_service_portal.asset.form.name.validation.min,Der Name muss mindestens 3 Zeichen lang sein.,de_DE
 self_service_portal.asset.validation.name.not_set,Asset name must be provided,en_US
 self_service_portal.asset.validation.name.not_set,Der Name des Assets muss angegeben werden,de_DE
 self_service_portal.asset.validation.business_unit.not_set,Business unit must be provided,en_US
@@ -6936,3 +6984,11 @@ catalog.filter.search.placeholder,Search...,en_US
 catalog.filter.search.placeholder,Suchen...,de_DE
 catalog.filter.by,Filter by,en_US
 catalog.filter.by,Filtern nach,de_DE
+product.detail.select_options_shopping_list_notification,Please select relevant options before adding to the shopping list!,en_US
+product.detail.select_options_shopping_list_notification,"Bitte wählen Sie die erforderlichen Optionen aus, bevor Sie den Artikel zur Einkaufsliste hinzufügen!",de_DE
+product.detail.sign_in_to_see_prices,Sign in to see prices,en_US
+product.detail.sign_in_to_see_prices,"Anmelden, um Preise zu sehen",de_DE
+cart.item.variants.more,+%count% more,en_US
+cart.item.variants.more,+%count% weitere,de_DE
+cart.item.variants.less,Show less,en_US
+cart.item.variants.less,Weniger anzeigen,de_DE

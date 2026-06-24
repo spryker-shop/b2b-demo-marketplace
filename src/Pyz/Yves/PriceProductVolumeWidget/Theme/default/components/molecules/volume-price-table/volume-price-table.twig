@@ -2,32 +2,71 @@
 
 {% define config = {
     name: 'volume-price-table',
-    tag: 'div'
+    tag: 'volume-price-table',
 } %}
 
 {% define data = {
-    volumePrices: required
+    volumePrices: required,
+    basePrice: null,
+    currentQuantity: 1,
+} %}
+
+{% define attributes = {
+    'quantity-class-name': 'js-volume-price__quantity',
 } %}
 
 {% block body %}
-    <table class="table {{config.name}}__table">
-        <tr>
-            <th class="{{config.name}}__title">
-                {{ 'page.detail.volume_price.quantity'|trans }}
-            </th>
-            <th class="{{config.name}}__title">
-                {{ 'page.detail.volume_price.price'|trans }}
-            </th>
-        </tr>
-        {% for volumePrice in data.volumePrices %}
-            <tr>
-                <td class="{{config.name}}__cell">
-                    {{ volumePrice.quantity | executeFilterIfExists('formatInt', app.locale) }}
-                </td>
-                <td class="{{config.name}}__cell">
-                    {{ volumePrice.price|money }}
-                </td>
-            </tr>
+    {% set tiers = [{ quantity: 1, price: data.basePrice }] | merge(data.volumePrices) %}
+    {% set tierCount = tiers | length %}
+    {% set currentTierIndex = 0 %}
+
+    {% for index, tier in tiers %}
+        {% if data.currentQuantity >= tier.quantity %}
+            {% set currentTierIndex = index %}
+        {% endif %}
+    {% endfor %}
+
+    <p class="{{ config.name }}__label">{{ 'page.detail.volume_price' | trans }}</p>
+
+    <div class="{{ config.name }}__table">
+        <div class="{{ config.name }}__row {{ config.name }}__row--head">
+            <span class="{{ config.name }}__cell {{ config.name }}__cell--quantity">
+                {{ 'page.detail.volume_price.quantity' | trans }}
+            </span>
+            <span class="{{ config.name }}__cell {{ config.name }}__cell--price">
+                {{ 'page.detail.volume_price.price' | trans }}
+            </span>
+            <span class="{{ config.name }}__cell {{ config.name }}__cell--saving">
+                {{ 'page.detail.volume_price.saving' | trans }}
+            </span>
+        </div>
+
+        {% for index, tier in tiers %}
+            {% set minQuantity = tier.quantity %}
+            {% set maxQuantity = index + 1 < tierCount ? tiers[index + 1].quantity - 1 : null %}
+            {% set saving = (data.basePrice is not empty and data.basePrice > 0 and tier.price < data.basePrice)
+                ? ((tier.price - data.basePrice) / data.basePrice * 100) | round
+                : 0 %}
+            {% set rowModifier = index == currentTierIndex ? config.name ~ '__row--current' %}
+            {% set quantityLabel = maxQuantity is null
+                ? "#{minQuantity}+"
+                : (minQuantity == maxQuantity ? "#{minQuantity}" : "#{minQuantity}–#{maxQuantity}") %}
+
+            <div
+                class="{{ config.name }}__row {{ config.jsName }}__row {{ rowModifier }}"
+                data-min-quantity="{{ minQuantity }}"
+                {% if maxQuantity is not null %}data-max-quantity="{{ maxQuantity }}"{% endif %}
+            >
+                <span class="{{ config.name }}__cell {{ config.name }}__cell--quantity">
+                    {{ quantityLabel }}
+                </span>
+                <span class="{{ config.name }}__cell {{ config.name }}__cell--price">
+                    {{ tier.price | money }}
+                </span>
+                <span class="{{ config.name }}__cell {{ config.name }}__cell--saving">
+                    {% if saving < 0 %}{{ saving }}%{% endif %}
+                </span>
+            </div>
         {% endfor %}
-    </table>
+    </div>
 {% endblock %}

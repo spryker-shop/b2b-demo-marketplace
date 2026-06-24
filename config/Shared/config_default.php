@@ -476,8 +476,8 @@ $config[SessionConstants::YVES_SESSION_TIME_TO_LIVE]
     = $config[SessionRedisConstants::YVES_SESSION_TIME_TO_LIVE]
     = SessionConfig::SESSION_LIFETIME_1_HOUR;
 $config[SessionConstants::YVES_SESSION_COOKIE_TIME_TO_LIVE] = SessionConfig::SESSION_LIFETIME_0_5_HOUR;
-$config[SessionConstants::YVES_SESSION_PERSISTENT_CONNECTION]
-    = $config[SessionConstants::ZED_SESSION_PERSISTENT_CONNECTION]
+$config[SessionRedisConstants::YVES_SESSION_PERSISTENT_CONNECTION]
+    = $config[SessionRedisConstants::ZED_SESSION_PERSISTENT_CONNECTION]
     = true;
 $config[SessionConstants::YVES_SESSION_COOKIE_SAMESITE] = getenv('SPRYKER_YVES_SESSION_COOKIE_SAMESITE') ?: Cookie::SAMESITE_LAX;
 
@@ -740,17 +740,17 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'region' => $awsRegion,
     ],
     'ssp-inquiry' => [
-        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
-        'key' => getenv('SPRYKER_S3_SSP_CLAIM_KEY') ?: '',
-        'secret' => getenv('SPRYKER_S3_SSP_CLAIM_SECRET') ?: '',
-        'bucket' => getenv('SPRYKER_S3_SSP_CLAIM_BUCKET') ?: '',
+        'sprykerAdapterClass' => IamAws3v3FilesystemBuilderPlugin::class,
+        'key' => getenv('SPRYKER_S3_SSP_INQUIRIES_KEY') ?: '',
+        'secret' => getenv('SPRYKER_S3_SSP_INQUIRIES_SECRET') ?: '',
+        'bucket' => getenv('SPRYKER_S3_SSP_INQUIRIES_BUCKET') ?: '',
         'region' => $awsRegion,
         'version' => 'latest',
         'root' => '/ssp-inquiry',
         'path' => '',
     ],
     'ssp-files' => [
-        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
+        'sprykerAdapterClass' => IamAws3v3FilesystemBuilderPlugin::class,
         'key' => getenv('SPRYKER_S3_SSP_FILES_KEY') ?: '',
         'secret' => getenv('SPRYKER_S3_SSP_FILES_SECRET') ?: '',
         'bucket' => getenv('SPRYKER_S3_SSP_FILES_BUCKET') ?: '',
@@ -760,20 +760,20 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'path' => '',
     ],
     'ssp-asset-image' => [
-        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
-        'key' => getenv('SPRYKER_S3_SSP_ASSETS_KEY') ?: '',
-        'secret' => getenv('SPRYKER_S3_SSP_ASSETS_SECRET') ?: '',
-        'bucket' => getenv('SPRYKER_S3_SSP_ASSETS_BUCKET') ?: '',
+        'sprykerAdapterClass' => IamAws3v3FilesystemBuilderPlugin::class,
+        'key' => getenv('SPRYKER_S3_SSP_ASSET_IMAGES_KEY') ?: '',
+        'secret' => getenv('SPRYKER_S3_SSP_ASSET_IMAGES_SECRET') ?: '',
+        'bucket' => getenv('SPRYKER_S3_SSP_ASSET_IMAGES_BUCKET') ?: '',
         'region' => $awsRegion,
         'version' => 'latest',
         'root' => '/ssp-asset-image',
         'path' => '',
     ],
     'ssp-model-image' => [
-        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
-        'key' => getenv('SPRYKER_S3_SSP_MODELS_KEY') ?: '',
-        'secret' => getenv('SPRYKER_S3_SSP_MODELS_SECRET') ?: '',
-        'bucket' => getenv('SPRYKER_S3_SSP_MODELS_BUCKET') ?: '',
+        'sprykerAdapterClass' => IamAws3v3FilesystemBuilderPlugin::class,
+        'key' => getenv('SPRYKER_S3_SSP_MODEL_IMAGES_KEY') ?: '',
+        'secret' => getenv('SPRYKER_S3_SSP_MODEL_IMAGES_SECRET') ?: '',
+        'bucket' => getenv('SPRYKER_S3_SSP_MODEL_IMAGES_BUCKET') ?: '',
         'region' => $awsRegion,
         'version' => 'latest',
         'root' => '/ssp-model-image',
@@ -804,7 +804,7 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'region' => $awsRegion,
     ],
     'product-experience-management-imports' => [
-        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
+        'sprykerAdapterClass' => IamAws3v3FilesystemBuilderPlugin::class,
         'key' => getenv('SPRYKER_S3_PEM_IMPORT_KEY') ?: '',
         'bucket' => getenv('SPRYKER_S3_PEM_IMPORT_BUCKET') ?: '',
         'secret' => getenv('SPRYKER_S3_PEM_IMPORT_SECRET') ?: '',
@@ -814,7 +814,7 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'region' => $awsRegion,
     ],
     'product-experience-management-exports' => [
-        'sprykerAdapterClass' => Aws3v3FilesystemBuilderPlugin::class,
+        'sprykerAdapterClass' => IamAws3v3FilesystemBuilderPlugin::class,
         'key' => getenv('SPRYKER_S3_PEM_EXPORT_KEY') ?: '',
         'bucket' => getenv('SPRYKER_S3_PEM_EXPORT_BUCKET') ?: '',
         'secret' => getenv('SPRYKER_S3_PEM_EXPORT_SECRET') ?: '',
@@ -1104,7 +1104,7 @@ $config[OauthClientConstants::OAUTH_OPTION_AUDIENCE_FOR_ACP]
 
 $config[ProductConfigurationConstants::SPRYKER_PRODUCT_CONFIGURATOR_ENCRYPTION_KEY] = getenv('SPRYKER_PRODUCT_CONFIGURATOR_ENCRYPTION_KEY') ?: 'change123';
 $config[ProductConfigurationConstants::SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR] = getenv('SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR') ?: '0c1ffefeebdab4a3d839d0e52590c9a2';
-$config[KernelConstants::DOMAIN_WHITELIST][] = getenv('SPRYKER_PRODUCT_CONFIGURATOR_HOST');
+$config[KernelConstants::DOMAIN_WHITELIST][] = getenv('SPRYKER_WATER_TREATMENT_CONFIGURATOR_HOST');
 
 // ----------------------------------------------------------------------------
 // ------------------------------ Glue Backend API -------------------------------

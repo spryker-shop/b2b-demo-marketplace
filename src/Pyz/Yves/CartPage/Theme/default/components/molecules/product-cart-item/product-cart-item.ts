@@ -2,6 +2,7 @@ import Component from 'ShopUi/models/component';
 
 export default class ProductCartItem extends Component {
     protected toggle: HTMLButtonElement | null = null;
+    protected variantsMore: HTMLButtonElement | null = null;
     protected contextItems: HTMLElement[] = [];
 
     protected readyCallback(): void {}
@@ -12,6 +13,13 @@ export default class ProductCartItem extends Component {
             event.preventDefault();
             const isExpanded = this.toggle?.getAttribute('aria-expanded') === 'true';
             this.toggle?.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
+        });
+
+        this.variantsMore = this.querySelector<HTMLButtonElement>(`.${this.jsName}__variants-more`);
+        this.variantsMore?.addEventListener('click', (event: Event) => {
+            event.preventDefault();
+            const isExpanded = this.variantsMore?.getAttribute('aria-expanded') === 'true';
+            this.variantsMore?.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
         });
 
         this.contextItems = Array.from(

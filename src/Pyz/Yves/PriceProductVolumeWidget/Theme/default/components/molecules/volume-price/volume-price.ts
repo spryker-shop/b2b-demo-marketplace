@@ -7,6 +7,7 @@ interface VolumePricesData {
 
 export default class VolumePrice extends Component {
     protected productPriceElement: HTMLElement;
+    protected amountValueElement: HTMLElement;
     protected volumePricesData: VolumePricesData[];
     protected quantityElement: HTMLFormElement;
     protected highLightedClass: string;
@@ -17,6 +18,7 @@ export default class VolumePrice extends Component {
 
     protected init(): void {
         this.productPriceElement = <HTMLElement>this.getElementsByClassName(`${this.jsName}__price`)[0];
+        this.amountValueElement = <HTMLElement>this.getElementsByClassName(`${this.jsName}__amount-value`)[0];
         this.volumePricesData = <VolumePricesData[]>JSON.parse(this.dataset.json).reverse();
         this.quantityElement = <HTMLFormElement>document.getElementsByClassName(`${this.jsName}__quantity`)[0];
         this.highLightedClass = <string>`${this.name}__price--highlighted`;
@@ -53,9 +55,13 @@ export default class VolumePrice extends Component {
         return true;
     }
 
-    private changePrice(price: string): void {
-        if (this.productPriceElement.innerText.trim() !== price.trim()) {
-            this.productPriceElement.innerHTML = price;
+    public get originalPrice(): string {
+        return this.amountValueElement.dataset.originalPrice ?? this.amountValueElement.innerText;
+    }
+
+    public changePrice(price: string): void {
+        if (this.amountValueElement.innerText.trim() !== price.trim()) {
+            this.amountValueElement.textContent = price;
             this.highlight();
         }
     }
