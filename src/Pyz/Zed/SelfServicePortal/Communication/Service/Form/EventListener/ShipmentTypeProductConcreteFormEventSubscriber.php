@@ -84,7 +84,8 @@ class ShipmentTypeProductConcreteFormEventSubscriber extends SprykerShipmentType
     }
 
     /**
-     * @return array<int>
+     *
+     * @return list<int>
      */
     protected function getCurrentProductShipmentTypeIds(int $idProductConcrete): array
     {
