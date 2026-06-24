@@ -1,9 +1,6 @@
 {% extends molecule('schedule-execution-history', '@SprykerFeature:OrderExperienceManagement') %}
 
-{% block wrapper %}
-    {% set wrapperClass = "" %}
-    {{ parent() }}
-{% endblock %}
+{% block extraClass %}{% endblock %}
 
 {% block heading %}
     {% set titleClass = config.name ~ '__title' %}
@@ -34,22 +31,3 @@
         },
     } only %}
 {% endblock %}
-
-{% macro renderStatusCell(historyItem, statusClassMap) %}
-    {% include molecule('status') with {
-        data: {
-            label: ('recurring_orders.history.event.' ~ historyItem.eventType) | trans,
-            status: statusClassMap[historyItem.eventType] ?? 'default'
-        },
-    } only %}
-    
-    {% if historyItem.errors is defined and historyItem.errors | length %}
-        {% include molecule('schedule-error-popover','OrderExperienceManagement') with {
-            data: {
-                errors: historyItem.errors,
-                orderUid: 'order-uid-' ~ historyItem.orderReference ~ '_' ~ historyItem.idRecurringScheduleHistory,
-                createdAt: historyItem.createdAt,
-            },
-        } only %}
-    {% endif %}
-{% endmacro %}
