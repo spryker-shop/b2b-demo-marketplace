@@ -10,7 +10,7 @@
         <div class="{{ config.name }}__items">
             <div class="{{ config.name }}__main-info">
                 <strong class="{{ config.name }}__item-name">{{ item.productName }}</strong>
-                <span class="{{ config.name }}__item-sku">({{ item.sku }}}</span>
+                <span class="{{ config.name }}__item-sku">({{ item.sku }})</span>
             </div>
             <div class="{{ config.name }}__item-quantity">{{ item.quantity }} x {{ item.referenceGrossPrice | money(true, data.schedule.currencyIsoCode) }}</div>
             <div class="{{ config.name }}__item-total">{{ item.itemTotal | money(true, data.schedule.currencyIsoCode) }}</div>
@@ -25,6 +25,6 @@
         <div class="">{{ 'recurring_orders.detail.estimated_total.label' | trans }}</div>
         <div>{{ data.schedule.estimatedTotal | money(true, data.schedule.currencyIsoCode) }}</div>
     </div>
-    
+
     <small class="{{ config.name }}__note">{{ 'recurring_orders.detail.estimated_total.info' | trans }}</small>
 {% endblock %}
