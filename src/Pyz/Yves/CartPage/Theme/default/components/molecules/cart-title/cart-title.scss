@@ -1,6 +1,6 @@
 @use 'src/ShopUi/styles/shared' as *;
 @mixin cart-page-cart-title($name: '.cart-title') {
-    #{$name}{
+    #{$name} {
         margin-bottom: rem(11);
 
         @include helper-breakpoint-media-min($lg) {

@@ -1,5 +1,5 @@
 @use 'src/ShopUi/styles/shared' as *;
-@mixin catalog-page-catalog-cms-block($name:'.catalog-cms-block') {
+@mixin catalog-page-catalog-cms-block($name: '.catalog-cms-block') {
     #{$name} {
         margin-bottom: rem(20);
 
@@ -95,7 +95,7 @@
                 padding: rem(50) 0 rem(38);
             }
         }
-        
+
         @content;
     }
 }

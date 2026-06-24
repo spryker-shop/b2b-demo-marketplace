@@ -1,5 +1,7 @@
 @use 'src/ShopUi/styles/shared' as *;
-@mixin merchant-relation-request-page-merchant-relationship-active-filters($name: '.merchant-relationship-active-filters') {
+@mixin merchant-relation-request-page-merchant-relationship-active-filters(
+    $name: '.merchant-relationship-active-filters'
+) {
     #{$name} {
         display: flex;
         flex-wrap: wrap;
