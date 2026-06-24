@@ -31,8 +31,8 @@ x-frontend-auth: &frontend-auth
     auth:
         engine: basic
         users:
-            - username: demo-15
-              password: demo-15
+            - username: cloud
+              password: cloud
         exclude:
             - '${ALLOWED_IP}' # AWS gateway
             - 185.60.20.0/24 # PayOne
@@ -44,20 +44,19 @@ environment: docker.dev
 image:
     tag: spryker/php:8.4
     environment:
-        SPRYKER_DNS_RESOLVER_IP: '10.105.0.2'
-        SPRYKER_HOOK_BEFORE_DEPLOY: 'vendor/bin/install -r pre-deploy -vvv'
-        SPRYKER_HOOK_AFTER_DEPLOY: "vendor/bin/install -r install-post-deploy-workflow-sedemo15.yml -vvv"
-        SPRYKER_HOOK_INSTALL: 'vendor/bin/install -r production --no-ansi -vvv'
-        SPRYKER_HOOK_DESTRUCTIVE_INSTALL: 'vendor/bin/install -r destructive --no-ansi -vvv'
-        SPRYKER_WATER_TREATMENT_CONFIGURATOR_HOST: demo-water-treatment-configurator.demo-15.se.demo-spryker.com
-        SPRYKER_WATER_TREATMENT_CONFIGURATOR_PORT: 443
+        SPRYKER_DNS_RESOLVER_IP: "10.105.0.2"
+        SPRYKER_HOOK_BEFORE_DEPLOY: "vendor/bin/install -r EU/pre-deploy -vvv"
+        SPRYKER_HOOK_AFTER_DEPLOY: "true"
+        SPRYKER_HOOK_INSTALL: "vendor/bin/install -r EU/production --no-ansi -vvv"
+        SPRYKER_HOOK_DESTRUCTIVE_INSTALL: "vendor/bin/install -r destructive --no-ansi -vvv"
+        SPRYKER_PRODUCT_CONFIGURATOR_HOST: demo-date-time-configurator.icp.cloud.spryker.toys
+        SPRYKER_PRODUCT_CONFIGURATOR_PORT: 443
         SPRYKER_PRODUCT_CONFIGURATOR_ENCRYPTION_KEY: 'change123'
         SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR: '0c1ffefeebdab4a3d839d0e52590c9a2'
-        SPRYKER_CONFIGURATION_ENCRYPTION_KEY: '2a190556e7758fb56e9215f4fe218f9570575e4e576b7cf8cd27c7a477cebe51'
-        SPRYKER_CONFIGURATION_ENCRYPTION_INIT_VECTOR: '3990b519a547cdadb9542f50dcf87f9c'
-        SPRYKER_YVES_HOST_EU: www.demo-15.se.demo-spryker.com
-        SPRYKER_YVES_HOST_US: www.us.demo-15.se.demo-spryker.com
+        SPRYKER_YVES_HOST_EU: yves.eu.icp.cloud.spryker.toys
+        SPRYKER_YVES_HOST_US: yves.us.icp.cloud.spryker.toys
         SPRYKER_DYNAMIC_STORE_MODE: true
+        SPRYKER_WATER_TREATMENT_CONFIGURATOR_HOST: demo-water-treatment-configurator.icp.cloud.spryker.toys
     php:
         enabled-extensions:
             - otel
@@ -76,7 +75,7 @@ image:
         npm: 10
 
 composer:
-    mode: --no-dev
+    mode: --dev
     autoload: --classmap-authoritative
 
 assets:
@@ -93,9 +92,9 @@ regions:
             mail:
                 sender:
                     name: Spryker No-Reply
-                    email: no-reply@se.demo-spryker.com
+                    email: no-reply@icp.cloud.spryker.toys
             database:
-                database: spryker_sedemo15
+                database: spryker_icp
                 username: spryker
                 password: secret
             broker:
@@ -112,57 +111,50 @@ groups:
             mportal:
                 application: merchant-portal
                 endpoints:
-                    mp.demo-15.se.demo-spryker.com:
+                    mp.eu.icp.cloud.spryker.toys:
                         entry-point: MerchantPortal
                         region: EU
-                        <<: *frontend-auth
                         primal: true
                         services:
                             session:
-                                namespace: 2
+                                namespace: 7
             yves:
                 application: yves
                 endpoints:
-                    www.demo-15.se.demo-spryker.com:
+                    demo-date-time-configurator.icp.cloud.spryker.toys:
+                        entry-point: Configurator
+                    demo-water-treatment-configurator.icp.cloud.spryker.toys:
+                        entry-point: WaterTreatmentConfigurator
+                    yves.eu.icp.cloud.spryker.toys:
                         region: EU
-                        <<: *frontend-auth
                         services:
                             session:
-                                namespace: 3
-                    demo-water-treatment-configurator.demo-15.se.demo-spryker.com:
-                        entry-point: WaterTreatmentConfigurator
+                                namespace: 1
                 http:
                     max-request-body-size: 100M
             boffice:
                 application: backoffice
                 endpoints:
-                    backoffice.demo-15.se.demo-spryker.com:
+                    backoffice.eu.icp.cloud.spryker.toys:
                         region: EU
-                        <<: *frontend-auth
                         primal: true
                         services:
                             session:
-                                namespace: 4
+                                namespace: 3
                 http:
                     max-request-body-size: 100M
             backgw:
                 application: backend-gateway
                 endpoints:
-                    backend-gateway.demo-15.se.demo-spryker.com:
+                    backend-gateway.eu.icp.cloud.spryker.toys:
                         region: EU
                         primal: true
-                        services:
-                            session:
-                                namespace: 5
             glue:
                 application: glue
                 endpoints:
-                    glue.demo-15.se.demo-spryker.com:
+                    glue.eu.icp.cloud.spryker.toys:
                         cors-allow-origin: '*'
                         region: EU
-                        services:
-                            session:
-                                namespace: 6
             gluebackend:
                 application: glue-backend
                 limits:
@@ -170,12 +162,9 @@ groups:
                 http:
                     timeout: 5m
                 endpoints:
-                    glue-backend.demo-15.se.demo-spryker.com:
+                    glue-backend.eu.icp.cloud.spryker.toys:
                         region: EU
                         cors-allow-origin: '*'
-                        services:
-                            session:
-                                namespace: 7
 services:
     database:
         engine: mysql
@@ -193,7 +182,7 @@ services:
             username: 'spryker'
             password: 'secret'
         endpoints:
-            queue.demo-15.se.demo-spryker.com:
+            queue.icp.cloud.spryker.toys:
             localhost:5672:
                 protocol: tcp
     session:
@@ -212,13 +201,13 @@ services:
     scheduler:
         engine: jenkins
         version: '2.516.3'
-        csrf-protection-enabled: true
+        csrf-protection-enabled: false
         endpoints:
-            scheduler.demo-15.se.demo-spryker.com:
+            scheduler.icp.cloud.spryker.toys:
     mail_catcher:
         engine: mailpit
         endpoints:
-            mail.demo-15.se.demo-spryker.com:
+            mail.icp.cloud.spryker.toys:
     webdriver:
         engine: chromedriver
 
