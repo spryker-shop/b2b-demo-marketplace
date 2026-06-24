@@ -39,7 +39,7 @@
     {% include molecule('status') with {
         data: {
             label: ('recurring_orders.history.event.' ~ historyItem.eventType) | trans,
-            status: statusClassMap[historyItem.eventType] ?? 'default'
+            status: historyItem.eventType,
         },
     } only %}
     

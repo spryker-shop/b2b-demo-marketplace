@@ -18,7 +18,8 @@
     &--ready,
     &--delivered,
     &--refunded,
-    &--completed {
+    &--completed,
+    &--placed {
         @include helper-badge-semantic-subtle(success);
 
         &#{$name}--solid {
@@ -27,6 +28,8 @@
     }
 
     &--info,
+    &--paused,
+    &--resumed,
     &--commission-calculated,
     &--paid,
     &--processing,
@@ -41,6 +44,7 @@
     }
 
     &--warning,
+    &--skipped,
     &--ready-for-return,
     &--returned,
     &--waiting-for-return,
@@ -55,6 +59,8 @@
     }
 
     &--alert,
+    &--failed,
+    &--cancelled,
     &--out-of-stock,
     &--rejected,
     &--not-configured,
