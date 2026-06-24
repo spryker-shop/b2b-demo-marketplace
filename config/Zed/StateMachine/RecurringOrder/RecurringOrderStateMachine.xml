@@ -129,6 +129,12 @@
             </transition>
 
             <transition>
+                <source>pre_trigger_notified</source>
+                <target>paused</target>
+                <event>pause</event>
+            </transition>
+
+            <transition>
                 <source>paused</source>
                 <target>active</target>
                 <event>resume</event>
