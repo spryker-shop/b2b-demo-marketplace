@@ -5,6 +5,10 @@
         gap: var(--scale-8);
         padding-bottom: var(--scale-16);
 
+        &--no-spacing {
+            padding-bottom: 0;
+        }
+
         &__item {
             display: flex;
             flex-direction: column;
