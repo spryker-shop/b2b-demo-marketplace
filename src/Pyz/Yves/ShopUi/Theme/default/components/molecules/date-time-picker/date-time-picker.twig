@@ -10,6 +10,7 @@
     input: {},
     fieldClass: '',
     iconName: 'calendar',
+    inputQa: '',
 } %}
 
 {% define attributes = {
@@ -28,9 +29,11 @@
             {% set class = config.name ~ '__field' ~ (data.fieldClass ? ' ' ~ data.fieldClass) %}
 
             {% if data.field  %}
+                {% set resolvedQa = data.inputQa ?: (data.field.vars.attr['data-qa'] | default('')) %}
                 {{ form_row(data.field, {
                     attr: {
                         class: config.name ~ '__field' ~ (data.fieldClass ? ' ' ~ data.fieldClass),
+                        'data-qa': resolvedQa,
                     },
                 }) }}
             {% else %}

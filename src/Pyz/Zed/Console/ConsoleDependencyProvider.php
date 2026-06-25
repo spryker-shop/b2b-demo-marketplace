@@ -210,6 +210,7 @@ use Spryker\Zed\ZedNavigation\Communication\Console\BuildNavigationConsole;
 use Spryker\Zed\ZedNavigation\Communication\Console\RemoveNavigationCacheConsole;
 use SprykerEco\Zed\Algolia\Communication\Console\AlgoliaEntityExportConsole;
 use SprykerEco\Zed\NewRelic\Communication\Console\RecordDeploymentConsole;
+use SprykerFeature\Zed\OrderExperienceManagement\Communication\Console\RecurringOrderTriggerConsole;
 use SprykerFeature\Zed\ProductExperienceManagement\Communication\Console\ImportJobRunConsole;
 use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 use SprykerSdk\Zed\AiDev\Communication\Console\AiToolSetupConsole;
@@ -470,6 +471,8 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new SymfonyMessengerConsumeMessagesConsole(),
             new SchedulerListConsole(),
             new ConfigurationSyncConsole(),
+
+            new RecurringOrderTriggerConsole(),
         ];
 
         $propelCommands = $container->getLocator()->propel()->facade()->getConsoleCommands();

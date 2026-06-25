@@ -1,0 +1,17 @@
+{% extends molecule('review-footer', '@SprykerFeature:OrderExperienceManagement') %}
+
+{% block extraClass %}{% endblock %}
+
+{% block actions %}
+    <div class="col grid grid--gap-smaller">
+        {% block backButton %}
+            {% set backButtonClassName = 'button button--hollow' %}
+            {{ parent() }}
+        {% endblock %}
+
+        {% block acceptButton %}
+            {% set acceptButtonClassName = 'button' %}
+            {{ parent() }}
+        {% endblock %}
+    </div>
+{% endblock %}

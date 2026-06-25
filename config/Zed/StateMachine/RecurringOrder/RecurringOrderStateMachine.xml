@@ -1,0 +1,191 @@
+<?xml version="1.0"?>
+<statemachine xmlns="spryker:statemachine-01"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="spryker:statemachine-01 https://static.spryker.com/statemachine-01.xsd">
+
+    <process name="RecurringOrderStateMachine" main="true">
+
+        <states>
+            <state name="draft"/>
+            <state name="active"/>
+            <state name="review_required"/>
+            <state name="notifying"/>
+            <state name="pre_trigger_notified"/>
+            <state name="validation"/>
+            <state name="confirmed"/>
+            <state name="order_placed"/>
+            <state name="completing"/>
+            <state name="skipped"/>
+            <state name="paused"/>
+            <state name="failed"/>
+            <state name="cancelled"/>
+        </states>
+
+        <transitions>
+            <transition>
+                <source>draft</source>
+                <target>active</target>
+                <event>activate</event>
+            </transition>
+
+            <transition condition="RecurringOrders/IsScheduleDue">
+                <source>active</source>
+                <target>notifying</target>
+            </transition>
+
+            <transition>
+                <source>notifying</source>
+                <target>pre_trigger_notified</target>
+                <event>notify-buyer</event>
+            </transition>
+
+            <transition condition="RecurringOrders/IsPlacementDue">
+                <source>pre_trigger_notified</source>
+                <target>validation</target>
+            </transition>
+
+            <transition>
+                <source>active</source>
+                <target>skipped</target>
+                <event>skip</event>
+            </transition>
+
+            <transition>
+                <source>pre_trigger_notified</source>
+                <target>skipped</target>
+                <event>skip</event>
+            </transition>
+
+            <transition>
+                <source>pre_trigger_notified</source>
+                <target>cancelled</target>
+                <event>cancel</event>
+            </transition>
+
+            <transition condition="RecurringOrders/IsScheduleValid">
+                <source>validation</source>
+                <target>confirmed</target>
+                <event>validate</event>
+            </transition>
+
+            <transition>
+                <source>validation</source>
+                <target>review_required</target>
+                <event>validate</event>
+            </transition>
+
+            <transition>
+                <source>review_required</source>
+                <target>confirmed</target>
+                <event>confirm</event>
+            </transition>
+
+            <transition>
+                <source>review_required</source>
+                <target>skipped</target>
+                <event>skip</event>
+            </transition>
+
+            <transition>
+                <source>confirmed</source>
+                <target>order_placed</target>
+                <event>place-order</event>
+            </transition>
+
+            <transition condition="RecurringOrders/IsOrderPlaced">
+                <source>order_placed</source>
+                <target>completing</target>
+                <event>finalise-placement</event>
+            </transition>
+
+            <transition>
+                <source>order_placed</source>
+                <target>failed</target>
+                <event>finalise-placement</event>
+            </transition>
+
+            <transition>
+                <source>completing</source>
+                <target>active</target>
+                <event>complete-placement</event>
+            </transition>
+
+            <transition>
+                <source>failed</source>
+                <target>review_required</target>
+                <event>retry</event>
+            </transition>
+
+            <transition>
+                <source>failed</source>
+                <target>cancelled</target>
+                <event>cancel</event>
+            </transition>
+
+            <transition>
+                <source>active</source>
+                <target>paused</target>
+                <event>pause</event>
+            </transition>
+
+            <transition>
+                <source>pre_trigger_notified</source>
+                <target>paused</target>
+                <event>pause</event>
+            </transition>
+
+            <transition>
+                <source>paused</source>
+                <target>active</target>
+                <event>resume</event>
+            </transition>
+
+            <transition>
+                <source>paused</source>
+                <target>cancelled</target>
+                <event>cancel</event>
+            </transition>
+
+            <transition>
+                <source>skipped</source>
+                <target>active</target>
+                <event>advance-schedule</event>
+            </transition>
+
+            <transition>
+                <source>draft</source>
+                <target>cancelled</target>
+                <event>cancel</event>
+            </transition>
+
+            <transition>
+                <source>active</source>
+                <target>cancelled</target>
+                <event>cancel</event>
+            </transition>
+
+            <transition>
+                <source>review_required</source>
+                <target>cancelled</target>
+                <event>cancel</event>
+            </transition>
+        </transitions>
+
+        <events>
+            <event name="activate" manual="true"/>
+            <event name="notify-buyer" onEnter="true" command="RecurringOrders/NotifyBuyer"/>
+            <event name="confirm" manual="true"/>
+            <event name="skip" manual="true"/>
+            <event name="validate" onEnter="true"/>
+            <event name="place-order" onEnter="true" command="RecurringOrders/PlaceOrder"/>
+            <event name="finalise-placement" onEnter="true"/>
+            <event name="complete-placement" onEnter="true" command="RecurringOrders/CompletePlacement"/>
+            <event name="retry" manual="true"/>
+            <event name="pause" manual="true"/>
+            <event name="resume" manual="true"/>
+            <event name="cancel" manual="true"/>
+            <event name="advance-schedule" onEnter="true" command="RecurringOrders/AdvanceSchedule"/>
+        </events>
+
+    </process>
+</statemachine>
