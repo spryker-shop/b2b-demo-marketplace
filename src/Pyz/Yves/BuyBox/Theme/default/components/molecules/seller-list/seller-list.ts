@@ -5,8 +5,6 @@ export default class SellerList extends Component {
     protected static readonly MODAL_GROUP = 'product_offer_reference_modal';
     protected isApplying = false;
 
-    protected readyCallback(): void {}
-
     protected init(): void {
         this.mapEvents();
     }

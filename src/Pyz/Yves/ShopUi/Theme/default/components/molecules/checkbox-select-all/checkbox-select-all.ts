@@ -5,7 +5,6 @@ export default class CheckboxSelectAll extends Component {
     protected targets: HTMLInputElement[];
     protected eventChange: Event = new Event('change');
 
-    protected readyCallback(): void {}
 
     protected init(): void {
         this.trigger = <HTMLInputElement>this.getElementsByClassName(`${this.jsName}__input`)[0];

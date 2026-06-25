@@ -11,7 +11,6 @@ export default class QuantityCounter extends Component {
     protected numberOfDecimalPlaces = 10;
     protected formattedNumberInput: FormattedNumberInput;
 
-    protected readyCallback(): void {}
 
     protected init(): void {
         this.incrementButton = <HTMLButtonElement>this.getElementsByClassName(`${this.jsName}__button-increment`)[0];

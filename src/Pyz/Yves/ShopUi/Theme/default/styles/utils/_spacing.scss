@@ -1,0 +1,16 @@
+@use '../helpers/spacing' as *;
+
+/**
+ * Provides global class names for spacings using the project-level $setting-spacing map.
+ */
+@mixin util-spacing() {
+    @include helper-spacing('.spacing');
+    @include helper-spacing('.spacing-top', top);
+    @include helper-spacing('.spacing-bottom', bottom);
+    @include helper-spacing('.spacing-left', left);
+    @include helper-spacing('.spacing-right', right);
+    @include helper-spacing('.spacing-x', left right);
+    @include helper-spacing('.spacing-y', top bottom);
+
+    @content;
+}

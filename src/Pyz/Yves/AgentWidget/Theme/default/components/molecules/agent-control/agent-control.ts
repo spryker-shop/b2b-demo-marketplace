@@ -4,7 +4,6 @@ export default class AgentControl extends Component {
     protected popoverEl: HTMLElement;
     protected pendingForm: HTMLFormElement | null = null;
 
-    protected readyCallback(): void {}
 
     protected init(): void {
         this.popoverEl = this.querySelector<HTMLElement>(`.${this.jsName}__popover`);

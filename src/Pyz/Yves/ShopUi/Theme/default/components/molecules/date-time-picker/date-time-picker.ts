@@ -10,7 +10,6 @@ export default class DateTimePicker extends Component {
     protected dateToPicker: HTMLInputElement;
     protected calendarButton: HTMLButtonElement;
 
-    protected readyCallback(): void {}
 
     protected init(): void {
         this.dateInput = this.querySelector<HTMLInputElement>(`.${this.name}__field`);

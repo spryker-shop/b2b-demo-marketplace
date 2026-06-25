@@ -1,8 +1,9 @@
 @use '~ShopUi/styles/util' as *;
 
+@use './utils/spacing' as project-spacing;
 @use './utils/visibility' as project-utils;
 
-@include util-spacing;
+@include project-spacing.util-spacing;
 @include util-text;
 @include util-float;
 @include project-utils.util-visibility;

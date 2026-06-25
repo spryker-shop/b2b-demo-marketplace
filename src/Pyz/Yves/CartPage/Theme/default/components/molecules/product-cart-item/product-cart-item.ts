@@ -5,7 +5,6 @@ export default class ProductCartItem extends Component {
     protected variantsMore: HTMLButtonElement | null = null;
     protected contextItems: HTMLElement[] = [];
 
-    protected readyCallback(): void {}
 
     protected init(): void {
         this.toggle = this.querySelector<HTMLButtonElement>(`.${this.jsName}__toggle`);

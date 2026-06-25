@@ -5,7 +5,6 @@ export default class TogglerAccordion extends Component {
     protected triggers: HTMLElement[];
     protected isTouch: boolean;
 
-    protected readyCallback(): void {}
 
     protected init(): void {
         this.wrap = <HTMLElement>document.getElementsByClassName(this.wrapClassName)[0];

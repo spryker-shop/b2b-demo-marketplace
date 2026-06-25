@@ -13,7 +13,6 @@ export default class NavigationMultilevel extends Component {
     protected overlayHideTimeoutId: number;
     protected readonly overlayHideDelay = 150;
 
-    protected readyCallback(): void {}
 
     protected init(): void {
         this.overlay = <HTMLElement>document.getElementsByClassName(this.overlayBlockClassName)[0];

@@ -4,7 +4,6 @@ export default class VariantConfigurator extends Component {
     protected notify: HTMLElement;
     protected shoppingListNotify: HTMLElement;
 
-    protected readyCallback(): void {}
 
     protected init(): void {
         this.notify = <HTMLElement>this.getElementsByClassName(`${this.jsName}__notify`)[0];

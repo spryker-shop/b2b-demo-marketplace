@@ -5,7 +5,6 @@ export default class FilterCategory extends Component {
     protected visibleCategories: HTMLElement[];
     protected parent: HTMLElement;
 
-    protected readyCallback(): void {}
 
     protected init(): void {
         this.activeCategory = <HTMLElement>document.getElementsByClassName(this.activeCategoryClassName)[0];

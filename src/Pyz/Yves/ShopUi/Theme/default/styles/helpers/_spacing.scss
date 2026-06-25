@@ -1,3 +1,4 @@
+@use 'sass:list';
 @use '../settings/spacing' as *;
 
 @mixin helper-spacing($name, $sides: []) {
@@ -9,7 +10,7 @@
     #{$name} {
         @each $spacing-name, $spacing-value in $setting-spacing {
             @if $spacing-name == 'default' {
-                @if length($sides) == 0 {
+                @if list.length($sides) == 0 {
                     margin: $spacing-value;
                 } @else {
                     @each $side in $sides {
@@ -18,7 +19,7 @@
                 }
             } @else {
                 &--#{$spacing-name} {
-                    @if length($sides) == 0 {
+                    @if list.length($sides) == 0 {
                         margin: $spacing-value;
                     } @else {
                         @each $side in $sides {
@@ -37,7 +38,7 @@
     #{$name}--inner {
         @each $spacing-name, $spacing-value in $setting-spacing {
             @if $spacing-name == 'default' {
-                @if length($sides) == 0 {
+                @if list.length($sides) == 0 {
                     margin: 0;
                     padding: $spacing-value;
                 } @else {
@@ -48,7 +49,7 @@
                 }
             } @else {
                 @at-root #{$name}--inner#{$name}--#{$spacing-name} {
-                    @if length($sides) == 0 {
+                    @if list.length($sides) == 0 {
                         margin: 0;
                         padding: $spacing-value;
                     } @else {

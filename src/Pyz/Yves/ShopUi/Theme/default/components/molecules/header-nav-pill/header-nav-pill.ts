@@ -4,7 +4,6 @@ export default class HeaderNavPill extends Component {
     protected trigger: HTMLElement;
     protected dropdown: HTMLElement;
 
-    protected readyCallback(): void {}
 
     protected init(): void {
         this.trigger = this.querySelector<HTMLElement>(`.${this.jsName}__trigger`);

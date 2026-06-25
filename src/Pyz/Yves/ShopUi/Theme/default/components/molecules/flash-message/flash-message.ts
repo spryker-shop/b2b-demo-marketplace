@@ -7,7 +7,6 @@ export default class FlashMessage extends Component {
     durationTimeoutId: number;
     protected isVisible = false;
 
-    protected readyCallback(): void {}
 
     protected init(): void {
         if (this.classList.contains(`${this.name}--static`)) {
