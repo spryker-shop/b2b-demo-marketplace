@@ -1,0 +1,19 @@
+@mixin order-experience-management-schedule-detail($name: '.schedule-detail') {
+    #{$name} {
+        &__grid {
+            margin-bottom: var(--scale-24);
+        }
+
+        &__order-info {
+            border: rem(1) solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: var(--scale-16);
+        }
+
+        &__flash-content {
+            text-align: left;
+        }
+    }
+}
+
+@include order-experience-management-schedule-detail;
