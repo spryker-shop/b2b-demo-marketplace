@@ -21,6 +21,7 @@
             href="{{ "#{attributes['asset-link-base']}#{reference}" }}"
         {% endif %}
         class="{{ config.name }}__subtitle {{ config.name }}__subtitle--name {{ config.jsName }}__asset-name"
+        {% if data.asset is not empty %}title="{{ data.asset.name }}"{% endif %}
         {{ qa('asset-selector-name') }}
     >
         {{ data.asset is not empty ? data.asset.name }}

@@ -12,14 +12,6 @@
     {% set jsonVolumeProductPrices = [{ 'price': data.amount | money, 'count': 1 }] %}
 
     {% if data.volumeProductPrices.volumePrices is defined and data.volumeProductPrices.volumePrices is not empty %}
-        {% block priceTable %}
-            {% include molecule('volume-price-table', 'PriceProductVolumeWidget') with {
-                data: {
-                    volumePrices: data.volumeProductPrices.volumePrices,
-                },
-            } only %}
-        {% endblock %}
-
         {% for volumePrice in data.volumeProductPrices.volumePrices %}
             {% set jsonVolumeProductPrices = jsonVolumeProductPrices | merge(
                 [{ 'price': volumePrice.price | money, 'count': volumePrice.quantity }]
@@ -46,4 +38,16 @@
         {% endblock %}
     {% endif %}
     {% widget 'ProductGrossMarginWidget' args [data.grossMargin ?? 0, 'volume-price'] %}{% endwidget %}
+
+    {% if data.volumeProductPrices.volumePrices is defined and data.volumeProductPrices.volumePrices is not empty %}
+        {% block priceTable %}
+            {% include molecule('volume-price-table', 'PriceProductVolumeWidget') with {
+                data: {
+                    volumePrices: data.volumeProductPrices.volumePrices,
+                    basePrice: data.amount,
+                    currentQuantity: 1,
+                },
+            } only %}
+        {% endblock %}
+    {% endif %}
 {% endblock %}
