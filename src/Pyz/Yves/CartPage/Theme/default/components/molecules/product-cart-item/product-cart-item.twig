@@ -65,7 +65,44 @@
                         {% endif %}
                     {% endblock %}
 
-                    {{ block('itemAttributes') }}
+                    {% set maxVisibleVariants = 3 %}
+                    {% set hasPackagingRow = (listItem.amountSalesUnit ?? null) is not empty or (listItem.quantitySalesUnit ?? null) is not empty %}
+                    {% set variantRowCount = (data.attributes | length) + (hasPackagingRow ? 1 : 0) %}
+                    {% set variantsCollapsible = variantRowCount > maxVisibleVariants %}
+                    {% set hiddenVariantCount = variantsCollapsible ? variantRowCount - maxVisibleVariants : 0 %}
+
+                    {% if data.attributes is not empty or hasPackagingRow %}
+                        <div class="{{ config.name }}__variants{% if variantsCollapsible %} {{ config.name }}__variants--collapsible{% endif %}">
+                            {{ block('itemAttributes') }}
+
+                            {% block packagingUnit -%}
+                                {% if hasPackagingRow %}
+                                    <div class="{{ config.name }}__variant-selector{% if variantsCollapsible and (data.attributes | length) >= maxVisibleVariants %} {{ config.name }}__variant-selector--collapsed{% endif %}">
+                                        {% include molecule('packaging-unit-cart', 'ProductPackagingUnitWidget') ignore missing with {
+                                            data: {
+                                                amount: listItem.amount,
+                                                quantity: listItem.quantity,
+                                                quantitySalesUnit: listItem.quantitySalesUnit,
+                                                quantityConversion: listItem.quantitySalesUnit ? listItem.quantitySalesUnit.conversion : null,
+                                                quantityProductMeasurementUnit: listItem.quantitySalesUnit ? listItem.quantitySalesUnit.productMeasurementUnit : null,
+                                                amountSalesUnit: listItem.amountSalesUnit,
+                                                amountConversion: listItem.amountSalesUnit ? listItem.amountSalesUnit.conversion : null,
+                                                amountProductMeasurementUnit: listItem.amountSalesUnit ? listItem.amountSalesUnit.productMeasurementUnit : null,
+                                                amountValue: listItem.amountSalesUnit ? listItem.amountSalesUnit.value : null,
+                                            },
+                                        } only %}
+                                    </div>
+                                {% endif %}
+                            {%- endblock %}
+
+                            {% if variantsCollapsible %}
+                                <button type="button" class="{{ config.name }}__variants-more {{ config.jsName }}__variants-more" aria-expanded="false">
+                                    <span class="{{ config.name }}__variants-more-label {{ config.name }}__variants-more-label--more">{{ 'cart.item.variants.more' | trans({'%count%': hiddenVariantCount}) }}</span>
+                                    <span class="{{ config.name }}__variants-more-label {{ config.name }}__variants-more-label--less">{{ 'cart.item.variants.less' | trans }}</span>
+                                </button>
+                            {% endif %}
+                        </div>
+                    {% endif %}
 
                     {% widget 'ProductAttributeVisibilityCartWidget' args [data.list is iterable ? null : data.list, data.listItem.idProductAbstract, data.listItem.id] only %}
                         {% block body %}
@@ -131,18 +168,17 @@
             <div class="{{ config.name }}__col {{ config.name }}__col--rail col">
                 {% block rail %}
                     {% block railQuantity %}
-                        {% set isAmountSalesUnitEmpty = (listItem.amountSalesUnit ?? null) is empty and (listItem.quantitySalesUnit ?? null) is empty and data.quantity is empty %}
-                        {% if isAmountSalesUnitEmpty %}
-                            <div class="{{ config.name }}__quantity-holder">
-                                {% include molecule('product-item-quantity') with {
-                                    data: {
-                                        productItem: listItem,
-                                        isDisabled: not data.canEdit,
-                                        ajaxTriggerAttribute: data.ajaxTriggerAttribute,
-                                    },
-                                } only %}
-                            </div>
-                        {% endif %}
+                        {% set hasSalesUnit = (listItem.amountSalesUnit ?? null) is not empty or (listItem.quantitySalesUnit ?? null) is not empty %}
+
+                        <div class="{{ config.name }}__quantity-holder">
+                            {% include molecule('product-item-quantity') with {
+                                data: {
+                                    productItem: listItem,
+                                    isDisabled: not data.canEdit or hasSalesUnit,
+                                    ajaxTriggerAttribute: data.ajaxTriggerAttribute,
+                                },
+                            } only %}
+                        </div>
                     {% endblock %}
 
                     {% block priceZone %}
@@ -181,7 +217,7 @@
                                     >
                                         {% include atom('font-icon') with {
                                             modifiers: ['size-inherit'],
-                                            data: { name: 'delete' },
+                                            data: { name: 'delete_outline' },
                                         } only %}
                                         <span class="{{ embed.configName }}__remove-tooltip" role="tooltip" aria-hidden="true">{{ 'Remove item from cart' | trans }}</span>
                                     </button>
@@ -194,15 +230,6 @@
 
             <div class="{{ config.name }}__panel" data-qa="cart-item-panel">
                 <div class="{{ config.name }}__panel-inner">
-                    {% include molecule('cart-item-details', '@Pyz:CartPage') with {
-                        data: {
-                            listItem: listItem,
-                            list: data.list,
-                            canEdit: data.canEdit,
-                            ajaxTriggerAttribute: data.ajaxTriggerAttribute,
-                        },
-                    } only %}
-
                     {% block panelExtras %}
                         {% block productOptions %}
                             {% if listItem.productOptions ?? false %}
@@ -223,6 +250,15 @@
                             {% widget 'ProductBundleCartItemsListWidget' args [listItem, data.list] only %}{% endwidget %}
                         {% endblock %}
                     {% endblock %}
+
+                    {% include molecule('cart-item-details', 'CartPage') with {
+                        data: {
+                            listItem: listItem,
+                            list: data.list,
+                            canEdit: data.canEdit,
+                            ajaxTriggerAttribute: data.ajaxTriggerAttribute,
+                        },
+                    } only %}
                 </div>
             </div>
     </div>
@@ -241,7 +277,7 @@
         } only %}
             {% block variantSelector %}
                 {% include molecule('custom-select') with {
-                    modifiers: ['small', 'mobile-expand', 'mobile-xs'],
+                    modifiers: ['xs', 'mobile-expand', 'mobile-xs'],
                     data: {
                         label: ('product.attribute.' ~ attributeName) | trans,
                         options: options,
@@ -250,7 +286,7 @@
                         name: 'preselectedAttributes[' ~ attributeName ~ ']',
                         disabled: not data.canEdit or isProductSalesUnit,
                         (submitterKey): submitterValue,
-                        'config-theme': 'small',
+                        'config-theme': 'xs',
                     },
                 } only %}
             {% endblock %}

@@ -476,8 +476,8 @@ $config[SessionConstants::YVES_SESSION_TIME_TO_LIVE]
     = $config[SessionRedisConstants::YVES_SESSION_TIME_TO_LIVE]
     = SessionConfig::SESSION_LIFETIME_1_HOUR;
 $config[SessionConstants::YVES_SESSION_COOKIE_TIME_TO_LIVE] = SessionConfig::SESSION_LIFETIME_0_5_HOUR;
-$config[SessionConstants::YVES_SESSION_PERSISTENT_CONNECTION]
-    = $config[SessionConstants::ZED_SESSION_PERSISTENT_CONNECTION]
+$config[SessionRedisConstants::YVES_SESSION_PERSISTENT_CONNECTION]
+    = $config[SessionRedisConstants::ZED_SESSION_PERSISTENT_CONNECTION]
     = true;
 $config[SessionConstants::YVES_SESSION_COOKIE_SAMESITE] = getenv('SPRYKER_YVES_SESSION_COOKIE_SAMESITE') ?: Cookie::SAMESITE_LAX;
 
