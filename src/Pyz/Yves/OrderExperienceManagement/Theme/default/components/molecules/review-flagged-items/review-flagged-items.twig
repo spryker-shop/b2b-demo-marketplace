@@ -1,0 +1,36 @@
+{% extends molecule('review-flagged-items', '@SprykerFeature:OrderExperienceManagement') %}
+
+{% block title %}
+    {% set titleClassName = config.name ~ '__title' %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    {% set contentClassName = config.name ~ '__box' %}
+    {{ parent() }}
+{% endblock %}
+
+{% block itemName %}
+    <strong class="{{ config.name }}__item-name">{{ flaggedItem.recurringScheduleItem.productName }}</strong>
+    {% if flaggedItem.recurringScheduleItem.sku %}
+        <small class="{{ config.name }}__item-sku">({{ flaggedItem.recurringScheduleItem.sku }})</small>
+    {% endif %}
+{% endblock %}
+
+{% block itemStatus %}
+    {% for reviewReason in flaggedItem.reviewReasons %}
+        {% include molecule('status') with {
+            data: {
+                label: (data.reviewReasonLabelMap[reviewReason] ?? reviewReason) | trans,
+                status: data.reviewReasonBadgeMap[reviewReason],
+            },
+        } only %}
+    {% endfor %}
+{% endblock %}
+
+{% block separator %}{% endblock %}
+
+{% block grid %}
+    {% set gridClassName = config.name ~ '__item grid grid--gap' %}
+    {{ parent() }}
+{% endblock %}

@@ -1,0 +1,18 @@
+@mixin order-experience-management-review-summary-banner($name: '.review-summary-banner') {
+    #{$name} {
+        padding: var(--scale-16);
+        border-radius: var(--radius-md);
+        background: var(--background-surface);
+        border: rem(1) solid var(--border-default);
+        font-size: var(--font-size-12);
+        margin-bottom: var(--scale-24);
+
+        &__title {
+            font-size: var(--font-size-14);
+        }
+
+        @content;
+    }
+}
+
+@include order-experience-management-review-summary-banner;

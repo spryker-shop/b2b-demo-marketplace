@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "55c8edfcbe09ef16ca55f83f32a20db4",
+    "content-hash": "bf230d2812528f9a8f7aed30f6e42ff0",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -10046,16 +10046,16 @@
         },
         {
             "name": "spryker-eco/stripe",
-            "version": "1.0.1",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-eco/stripe.git",
-                "reference": "7312f4a60235a45af957794b48b0c58233b285ab"
+                "reference": "68b43be00331c10e044f2c72f063531ad216740b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-eco/stripe/zipball/7312f4a60235a45af957794b48b0c58233b285ab",
-                "reference": "7312f4a60235a45af957794b48b0c58233b285ab",
+                "url": "https://api.github.com/repos/spryker-eco/stripe/zipball/68b43be00331c10e044f2c72f063531ad216740b",
+                "reference": "68b43be00331c10e044f2c72f063531ad216740b",
                 "shasum": ""
             },
             "require": {
@@ -10117,9 +10117,9 @@
             "description": "Stripe module",
             "support": {
                 "issues": "https://github.com/spryker-eco/stripe/issues",
-                "source": "https://github.com/spryker-eco/stripe/tree/1.0.1"
+                "source": "https://github.com/spryker-eco/stripe/tree/1.0.3"
             },
-            "time": "2026-04-20T12:09:44+00:00"
+            "time": "2026-06-22T13:32:44+00:00"
         },
         {
             "name": "spryker-eco/vertex",
@@ -13017,6 +13017,96 @@
             "time": "2026-04-29T07:19:20+00:00"
         },
         {
+            "name": "spryker-feature/order-experience-management",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-feature/order-experience-management.git",
+                "reference": "0988f2d6dfeec388c0633552df6fdd1b934e6080"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-feature/order-experience-management/zipball/0988f2d6dfeec388c0633552df6fdd1b934e6080",
+                "reference": "0988f2d6dfeec388c0633552df6fdd1b934e6080",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.3",
+                "spryker/application": "^3.46.0",
+                "spryker/cart": "^7.0.0",
+                "spryker/checkout": "^6.0.0",
+                "spryker/checkout-extension": "^1.0.0",
+                "spryker/company-business-unit": "^2.0.0",
+                "spryker/company-user": "^2.0.0",
+                "spryker/customer": "^7.0.0",
+                "spryker/glossary": "^3.0.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/locale": "^4.0.0",
+                "spryker/mail": "^4.9.0",
+                "spryker/mail-extension": "^1.0.0",
+                "spryker/payment": "^5.0.0",
+                "spryker/price-cart-connector": "^6.0.0",
+                "spryker/product-packaging-unit": "^4.0.0",
+                "spryker/propel-orm": "^1.0.0",
+                "spryker/quote": "^2.0.0",
+                "spryker/sales": "^11.0.0",
+                "spryker/shipment": "^8.0.0",
+                "spryker/state-machine": "^2.0.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/util-encoding": "^2.0.0",
+                "spryker/uuid-behavior": "^1.3.0",
+                "spryker/zed-request": "^3.0.0"
+            },
+            "require-dev": {
+                "spryker-feature/purchasing-control": "*",
+                "spryker-shop/customer-page": "*",
+                "spryker/code-sniffer": "*",
+                "spryker/company": "*",
+                "spryker/company-business-unit-sales-connector": "*",
+                "spryker/company-mail-connector": "*",
+                "spryker/company-role": "*",
+                "spryker/company-sales-connector": "*",
+                "spryker/configurable-bundle": "^2.0.0",
+                "spryker/container": "*",
+                "spryker/currency": "*",
+                "spryker/log": "*",
+                "spryker/permission": "*",
+                "spryker/propel": "*",
+                "spryker/router": "*",
+                "spryker/store": "*",
+                "spryker/testify": "*"
+            },
+            "suggest": {
+                "spryker-feature/purchasing-control": "Embed cost-center-detail molecule and budget action links in recurring order storefront templates.",
+                "spryker-shop/company-page": "Register RecurringOrderMenuItemWidget in the company account navigation sidebar.",
+                "spryker-shop/customer-page": "Provides page-layout-customer extended by recurring order list, detail, and review views.",
+                "spryker-shop/shop-ui": "Provides Component base class, AjaxProvider, and app registry used by recurring order web components.",
+                "spryker/router": "Required by RecurringOrderRouteProviderPlugin to register recurring order Yves routes."
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SprykerFeature\\": "src/SprykerFeature/",
+                    "SprykerFeatureTest\\Shared\\OrderExperienceManagement\\Helper\\": "tests/SprykerFeatureTest/Shared/OrderExperienceManagement/_support/Helper/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "OrderExperienceManagement module",
+            "support": {
+                "source": "https://github.com/spryker-feature/order-experience-management/tree/master"
+            },
+            "time": "2026-06-25T12:46:52+00:00"
+        },
+        {
             "name": "spryker-feature/order-management",
             "version": "202604.0",
             "source": {
@@ -14026,12 +14116,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/purchasing-control.git",
-                "reference": "59c954ca7909b12768fd0f85329e54665d540c6b"
+                "reference": "c359ce308ff614dc41db208fd09994160dcc6a33"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/purchasing-control/zipball/59c954ca7909b12768fd0f85329e54665d540c6b",
-                "reference": "59c954ca7909b12768fd0f85329e54665d540c6b",
+                "url": "https://api.github.com/repos/spryker-feature/purchasing-control/zipball/c359ce308ff614dc41db208fd09994160dcc6a33",
+                "reference": "c359ce308ff614dc41db208fd09994160dcc6a33",
                 "shasum": ""
             },
             "require": {
@@ -14103,7 +14193,7 @@
             "support": {
                 "source": "https://github.com/spryker-feature/purchasing-control/tree/master"
             },
-            "time": "2026-05-25T17:56:56+00:00"
+            "time": "2026-06-24T12:47:58+00:00"
         },
         {
             "name": "spryker-feature/quick-add-to-cart",
@@ -16368,16 +16458,16 @@
         },
         {
             "name": "spryker-shop/checkout-page",
-            "version": "3.42.0",
+            "version": "3.42.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-shop/checkout-page.git",
-                "reference": "31a0a0b169b832f48782ae3b412ba1b3b6210043"
+                "reference": "4cc11fd7e813c5bdaeeb27f691867cf7729630e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-shop/checkout-page/zipball/31a0a0b169b832f48782ae3b412ba1b3b6210043",
-                "reference": "31a0a0b169b832f48782ae3b412ba1b3b6210043",
+                "url": "https://api.github.com/repos/spryker-shop/checkout-page/zipball/4cc11fd7e813c5bdaeeb27f691867cf7729630e4",
+                "reference": "4cc11fd7e813c5bdaeeb27f691867cf7729630e4",
                 "shasum": ""
             },
             "require": {
@@ -16456,9 +16546,9 @@
             ],
             "description": "CheckoutPage module",
             "support": {
-                "source": "https://github.com/spryker-shop/checkout-page/tree/3.42.0"
+                "source": "https://github.com/spryker-shop/checkout-page/tree/3.42.1"
             },
-            "time": "2026-06-19T11:20:50+00:00"
+            "time": "2026-06-24T12:47:58+00:00"
         },
         {
             "name": "spryker-shop/checkout-page-extension",
@@ -17823,16 +17913,16 @@
         },
         {
             "name": "spryker-shop/customer-page",
-            "version": "2.80.0",
+            "version": "2.81.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-shop/customer-page.git",
-                "reference": "d6f6251eb2d28c1854a2fb6ee27b3df7b76d69b8"
+                "reference": "51556f3b76bba4d829cc415aad41f92943a141fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-shop/customer-page/zipball/d6f6251eb2d28c1854a2fb6ee27b3df7b76d69b8",
-                "reference": "d6f6251eb2d28c1854a2fb6ee27b3df7b76d69b8",
+                "url": "https://api.github.com/repos/spryker-shop/customer-page/zipball/51556f3b76bba4d829cc415aad41f92943a141fb",
+                "reference": "51556f3b76bba4d829cc415aad41f92943a141fb",
                 "shasum": ""
             },
             "require": {
@@ -17844,7 +17934,7 @@
                 "spryker/application": "^3.8.0",
                 "spryker/application-extension": "^1.0.0",
                 "spryker/container": "^1.1.0",
-                "spryker/customer": "^7.78.0",
+                "spryker/customer": "^7.80.0",
                 "spryker/event-dispatcher-extension": "^1.0.0",
                 "spryker/http": "^1.16.0",
                 "spryker/kernel": "^3.52.0",
@@ -17924,9 +18014,9 @@
             ],
             "description": "CustomerPage module",
             "support": {
-                "source": "https://github.com/spryker-shop/customer-page/tree/2.80.0"
+                "source": "https://github.com/spryker-shop/customer-page/tree/2.81.0"
             },
-            "time": "2026-06-19T11:20:50+00:00"
+            "time": "2026-06-25T07:23:27+00:00"
         },
         {
             "name": "spryker-shop/customer-page-extension",
@@ -36635,16 +36725,16 @@
         },
         {
             "name": "spryker/console",
-            "version": "4.18.0",
+            "version": "4.18.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/console.git",
-                "reference": "8ad928db1f122c8ee35aa886e9b21ce61e9b9ceb"
+                "reference": "f5e8e88852b29ee62ef0909002bf3ece75d9de38"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/console/zipball/8ad928db1f122c8ee35aa886e9b21ce61e9b9ceb",
-                "reference": "8ad928db1f122c8ee35aa886e9b21ce61e9b9ceb",
+                "url": "https://api.github.com/repos/spryker/console/zipball/f5e8e88852b29ee62ef0909002bf3ece75d9de38",
+                "reference": "f5e8e88852b29ee62ef0909002bf3ece75d9de38",
                 "shasum": ""
             },
             "require": {
@@ -36691,9 +36781,9 @@
             ],
             "description": "Console module",
             "support": {
-                "source": "https://github.com/spryker/console/tree/4.18.0"
+                "source": "https://github.com/spryker/console/tree/4.18.1"
             },
-            "time": "2025-12-04T11:50:23+00:00"
+            "time": "2026-06-22T12:41:45+00:00"
         },
         {
             "name": "spryker/container",
@@ -38186,16 +38276,16 @@
         },
         {
             "name": "spryker/customer",
-            "version": "7.79.0",
+            "version": "7.80.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/customer.git",
-                "reference": "1361933fb9d07d0d61e9b1997704d35a4281ef3f"
+                "reference": "9d4dfabaa3aaf81ebb1ac994d6507f469ad4aff0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/customer/zipball/1361933fb9d07d0d61e9b1997704d35a4281ef3f",
-                "reference": "1361933fb9d07d0d61e9b1997704d35a4281ef3f",
+                "url": "https://api.github.com/repos/spryker/customer/zipball/9d4dfabaa3aaf81ebb1ac994d6507f469ad4aff0",
+                "reference": "9d4dfabaa3aaf81ebb1ac994d6507f469ad4aff0",
                 "shasum": ""
             },
             "require": {
@@ -38270,9 +38360,9 @@
             ],
             "description": "Customer module",
             "support": {
-                "source": "https://github.com/spryker/customer/tree/7.79.0"
+                "source": "https://github.com/spryker/customer/tree/7.80.0"
             },
-            "time": "2026-05-27T12:26:06+00:00"
+            "time": "2026-06-25T07:23:27+00:00"
         },
         {
             "name": "spryker/customer-access",
@@ -46452,16 +46542,16 @@
         },
         {
             "name": "spryker/merchant-product-option",
-            "version": "1.3.1",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/merchant-product-option.git",
-                "reference": "a50f96f08cdcfa2b43927b6f240339f5bde2997d"
+                "reference": "77952f5949fdb7433eee1e20f876a8283753d57e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/merchant-product-option/zipball/a50f96f08cdcfa2b43927b6f240339f5bde2997d",
-                "reference": "a50f96f08cdcfa2b43927b6f240339f5bde2997d",
+                "url": "https://api.github.com/repos/spryker/merchant-product-option/zipball/77952f5949fdb7433eee1e20f876a8283753d57e",
+                "reference": "77952f5949fdb7433eee1e20f876a8283753d57e",
                 "shasum": ""
             },
             "require": {
@@ -46498,9 +46588,9 @@
             ],
             "description": "MerchantProductOption module",
             "support": {
-                "source": "https://github.com/spryker/merchant-product-option/tree/1.3.1"
+                "source": "https://github.com/spryker/merchant-product-option/tree/1.4.0"
             },
-            "time": "2025-10-07T10:12:02+00:00"
+            "time": "2026-06-19T11:20:50+00:00"
         },
         {
             "name": "spryker/merchant-product-option-data-import",
@@ -55702,16 +55792,16 @@
         },
         {
             "name": "spryker/product-approval",
-            "version": "1.4.0",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-approval.git",
-                "reference": "0cf8b661ae701417aa35165e8e96a8d291519761"
+                "reference": "0e2045591d899fa68c0a4f37b21deeb6e44ec87b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-approval/zipball/0cf8b661ae701417aa35165e8e96a8d291519761",
-                "reference": "0cf8b661ae701417aa35165e8e96a8d291519761",
+                "url": "https://api.github.com/repos/spryker/product-approval/zipball/0e2045591d899fa68c0a4f37b21deeb6e44ec87b",
+                "reference": "0e2045591d899fa68c0a4f37b21deeb6e44ec87b",
                 "shasum": ""
             },
             "require": {
@@ -55750,9 +55840,9 @@
             ],
             "description": "ProductApproval module",
             "support": {
-                "source": "https://github.com/spryker/product-approval/tree/1.4.0"
+                "source": "https://github.com/spryker/product-approval/tree/1.5.0"
             },
-            "time": "2025-11-17T13:32:34+00:00"
+            "time": "2026-06-19T11:20:50+00:00"
         },
         {
             "name": "spryker/product-approval-data-import",
@@ -56798,20 +56888,20 @@
         },
         {
             "name": "spryker/product-cart-connector",
-            "version": "4.14.0",
+            "version": "4.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-cart-connector.git",
-                "reference": "2f96ce64640ee0084f41a0681bb1badb380e6800"
+                "reference": "c3c6ec4bfbc898d1f73d64cf1d7668d3e84e39db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-cart-connector/zipball/2f96ce64640ee0084f41a0681bb1badb380e6800",
-                "reference": "2f96ce64640ee0084f41a0681bb1badb380e6800",
+                "url": "https://api.github.com/repos/spryker/product-cart-connector/zipball/c3c6ec4bfbc898d1f73d64cf1d7668d3e84e39db",
+                "reference": "c3c6ec4bfbc898d1f73d64cf1d7668d3e84e39db",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/cart-extension": "^4.0.0",
                 "spryker/cart-reorder-extension": "^1.0.0",
                 "spryker/checkout-extension": "^1.2.0",
@@ -56851,9 +56941,9 @@
             ],
             "description": "ProductCartConnector module",
             "support": {
-                "source": "https://github.com/spryker/product-cart-connector/tree/4.14.0"
+                "source": "https://github.com/spryker/product-cart-connector/tree/4.15.0"
             },
-            "time": "2025-07-03T14:22:10+00:00"
+            "time": "2026-06-19T11:20:50+00:00"
         },
         {
             "name": "spryker/product-category",
@@ -57366,20 +57456,20 @@
         },
         {
             "name": "spryker/product-configuration-cart",
-            "version": "1.0.1",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-configuration-cart.git",
-                "reference": "6d7734696859da956b5cc4e66a7c0c4d24f22a81"
+                "reference": "05362cbac46651d73d094486112cf2251c511592"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-configuration-cart/zipball/6d7734696859da956b5cc4e66a7c0c4d24f22a81",
-                "reference": "6d7734696859da956b5cc4e66a7c0c4d24f22a81",
+                "url": "https://api.github.com/repos/spryker/product-configuration-cart/zipball/05362cbac46651d73d094486112cf2251c511592",
+                "reference": "05362cbac46651d73d094486112cf2251c511592",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.0",
+                "php": ">=8.3",
                 "spryker/availability-cart-connector-extension": "^1.0.0",
                 "spryker/availability-extension": "^1.1.0",
                 "spryker/cart": "^7.8.0",
@@ -57397,11 +57487,13 @@
             "require-dev": {
                 "spryker/code-sniffer": "*",
                 "spryker/config": "*",
+                "spryker/container": "*",
                 "spryker/product": "*",
                 "spryker/propel": "*",
                 "spryker/quote-request": "*",
                 "spryker/session": "*",
                 "spryker/storage": "*",
+                "spryker/store": "*",
                 "spryker/testify": "*"
             },
             "type": "library",
@@ -57421,9 +57513,9 @@
             ],
             "description": "ProductConfigurationCart module",
             "support": {
-                "source": "https://github.com/spryker/product-configuration-cart/tree/1.0.1"
+                "source": "https://github.com/spryker/product-configuration-cart/tree/1.1.0"
             },
-            "time": "2022-12-02T08:46:48+00:00"
+            "time": "2026-06-19T11:20:50+00:00"
         },
         {
             "name": "spryker/product-configuration-data-import",
@@ -58079,20 +58171,20 @@
         },
         {
             "name": "spryker/product-discontinued",
-            "version": "1.14.0",
+            "version": "1.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-discontinued.git",
-                "reference": "044b216c57a78c968aa4139d57201ab2bf8a6b2f"
+                "reference": "d074b033201b90309748b4cf49e420290fa31859"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-discontinued/zipball/044b216c57a78c968aa4139d57201ab2bf8a6b2f",
-                "reference": "044b216c57a78c968aa4139d57201ab2bf8a6b2f",
+                "url": "https://api.github.com/repos/spryker/product-discontinued/zipball/d074b033201b90309748b4cf49e420290fa31859",
+                "reference": "d074b033201b90309748b4cf49e420290fa31859",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/cart-extension": "^4.0.0",
                 "spryker/checkout-extension": "^1.2.0",
                 "spryker/kernel": "^3.76.0",
@@ -58136,9 +58228,9 @@
             ],
             "description": "ProductDiscontinued module",
             "support": {
-                "source": "https://github.com/spryker/product-discontinued/tree/1.14.0"
+                "source": "https://github.com/spryker/product-discontinued/tree/1.15.0"
             },
-            "time": "2025-08-04T11:20:12+00:00"
+            "time": "2026-06-19T11:20:50+00:00"
         },
         {
             "name": "spryker/product-discontinued-data-import",
@@ -63355,20 +63447,20 @@
         },
         {
             "name": "spryker/product-packaging-unit",
-            "version": "4.13.0",
+            "version": "4.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-packaging-unit.git",
-                "reference": "5de8bf6b054dc262cba9d40dc6c136268cc86e7c"
+                "reference": "ca0df06c779707471d6d0257e2f2dcb0e8a69ce8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-packaging-unit/zipball/5de8bf6b054dc262cba9d40dc6c136268cc86e7c",
-                "reference": "5de8bf6b054dc262cba9d40dc6c136268cc86e7c",
+                "url": "https://api.github.com/repos/spryker/product-packaging-unit/zipball/ca0df06c779707471d6d0257e2f2dcb0e8a69ce8",
+                "reference": "ca0df06c779707471d6d0257e2f2dcb0e8a69ce8",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/availability": "^9.0.0",
                 "spryker/cart-extension": "^2.0.0 || ^4.0.0",
                 "spryker/cart-reorder-extension": "^1.0.0",
@@ -63427,9 +63519,9 @@
             ],
             "description": "ProductPackagingUnit module",
             "support": {
-                "source": "https://github.com/spryker/product-packaging-unit/tree/4.13.0"
+                "source": "https://github.com/spryker/product-packaging-unit/tree/4.14.0"
             },
-            "time": "2025-08-04T11:49:53+00:00"
+            "time": "2026-06-19T11:20:50+00:00"
         },
         {
             "name": "spryker/product-packaging-unit-data-import",
@@ -63769,16 +63861,16 @@
         },
         {
             "name": "spryker/product-quantity",
-            "version": "3.7.0",
+            "version": "3.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-quantity.git",
-                "reference": "bbd23d0736c9732037dd910166b11bf9dcc5577f"
+                "reference": "934221b7aa42e38dd10ed1cbc42314eb75258072"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-quantity/zipball/bbd23d0736c9732037dd910166b11bf9dcc5577f",
-                "reference": "bbd23d0736c9732037dd910166b11bf9dcc5577f",
+                "url": "https://api.github.com/repos/spryker/product-quantity/zipball/934221b7aa42e38dd10ed1cbc42314eb75258072",
+                "reference": "934221b7aa42e38dd10ed1cbc42314eb75258072",
                 "shasum": ""
             },
             "require": {
@@ -63817,9 +63909,9 @@
             ],
             "description": "ProductQuantity module",
             "support": {
-                "source": "https://github.com/spryker/product-quantity/tree/3.7.0"
+                "source": "https://github.com/spryker/product-quantity/tree/3.8.0"
             },
-            "time": "2026-01-21T10:48:23+00:00"
+            "time": "2026-06-19T11:20:50+00:00"
         },
         {
             "name": "spryker/product-quantity-data-import",
@@ -75692,16 +75784,16 @@
         },
         {
             "name": "spryker/store-storage",
-            "version": "1.3.0",
+            "version": "1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/store-storage.git",
-                "reference": "888919042c7fef53b067e8b415c7d5aadf3736a4"
+                "reference": "183f23d38f39039e5067a52d95b9569ef6ab3749"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/store-storage/zipball/888919042c7fef53b067e8b415c7d5aadf3736a4",
-                "reference": "888919042c7fef53b067e8b415c7d5aadf3736a4",
+                "url": "https://api.github.com/repos/spryker/store-storage/zipball/183f23d38f39039e5067a52d95b9569ef6ab3749",
+                "reference": "183f23d38f39039e5067a52d95b9569ef6ab3749",
                 "shasum": ""
             },
             "require": {
@@ -75746,9 +75838,9 @@
             ],
             "description": "StoreStorage module",
             "support": {
-                "source": "https://github.com/spryker/store-storage/tree/1.3.0"
+                "source": "https://github.com/spryker/store-storage/tree/1.3.1"
             },
-            "time": "2026-03-11T14:10:06+00:00"
+            "time": "2026-06-22T12:41:45+00:00"
         },
         {
             "name": "spryker/stores-api",
@@ -92086,7 +92178,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/cypress-tests.git",
-                "reference": "13a63b8d90d2f0328cb18a96d445c7fbf6c5864f"
+                "reference": "c6132b445ba6dc6a7a14c208313837328c2419e4"
             },
             "default-branch": true,
             "type": "spryker-test",
@@ -92094,7 +92186,7 @@
                 "MIT"
             ],
             "description": "This repository is dedicated to housing an extensive collection of UI end-to-end tests, meticulously crafted using Cypress for Spryker applications. These tests are designed to thoroughly evaluate the user interface, ensuring that all interactions and visual elements function as intended in real-world scenarios. By leveraging Cypress's advanced browser automation capabilities, this suite provides an efficient and effective means of validating the user experience, confirming the seamless operation and aesthetic integrity of Spryker's front-end components. Our commitment to rigorous UI testing helps maintain the high standard of quality and reliability that Spryker users expect.",
-            "time": "2026-06-24T13:44:17+00:00"
+            "time": "2026-06-25T13:40:44+00:00"
         },
         {
             "name": "spryker/development",
@@ -92973,6 +93065,12 @@
             "alias_normalized": "202604.0"
         },
         {
+            "package": "spryker-feature/order-experience-management",
+            "version": "9999999-dev",
+            "alias": "202604.0",
+            "alias_normalized": "202604.0"
+        },
+        {
             "package": "spryker-feature/product-experience-management",
             "version": "9999999-dev",
             "alias": "202604.0",
@@ -92989,6 +93087,7 @@
     "stability-flags": {
         "spryker-feature/ai-commerce": 20,
         "spryker-feature/buy-box": 20,
+        "spryker-feature/order-experience-management": 20,
         "spryker-feature/product-experience-management": 20,
         "spryker-feature/purchasing-control": 20,
         "spryker/cypress-tests": 20,
@@ -93009,9 +93108,9 @@
         "ext-readline": "*",
         "ext-redis": "*"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "platform-overrides": {
         "php": "8.3.13"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
