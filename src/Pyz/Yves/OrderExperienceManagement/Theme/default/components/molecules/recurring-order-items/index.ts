@@ -1,1 +1,1 @@
-import './recurring-order-items.scss';
+import './style.scss';

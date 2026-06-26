@@ -1,1 +1,1 @@
-import './schedule-detail.scss';
+import './style.scss';

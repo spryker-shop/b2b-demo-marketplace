@@ -1,3 +1,4 @@
+@use 'ShopUi/styles/shared' as *;
 @mixin order-experience-management-schedule-next-execution($name: '.schedule-next-execution') {
     #{$name} {
         &__label {
@@ -15,5 +16,3 @@
         @content;
     }
 }
-
-@include order-experience-management-schedule-next-execution;

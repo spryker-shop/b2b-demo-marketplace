@@ -1,3 +1,4 @@
+@use 'ShopUi/styles/shared' as *;
 @mixin order-experience-management-review-unchanged-items($name: '.review-unchanged-items') {
     #{$name} {
         summary {
@@ -43,5 +44,3 @@
         @content;
     }
 }
-
-@include order-experience-management-review-unchanged-items;

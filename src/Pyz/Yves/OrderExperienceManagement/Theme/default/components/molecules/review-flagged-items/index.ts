@@ -1,1 +1,1 @@
-import './review-flagged-items.scss';
+import './style.scss';

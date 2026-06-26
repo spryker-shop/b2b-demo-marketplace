@@ -1,1 +1,1 @@
-import './review-unchanged-items.scss';
+import './style.scss';

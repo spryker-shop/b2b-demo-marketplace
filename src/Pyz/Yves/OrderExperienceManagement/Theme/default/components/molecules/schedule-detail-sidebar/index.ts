@@ -1,1 +1,1 @@
-import './schedule-detail-sidebar.scss';
+import './style.scss';

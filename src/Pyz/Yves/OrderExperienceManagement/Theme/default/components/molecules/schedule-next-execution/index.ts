@@ -1,1 +1,1 @@
-import './schedule-next-execution.scss';
+import './style.scss';
