@@ -17,6 +17,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 /**
  * @method \Demo\Zed\CmsBlockCustomerGroup\Persistence\CmsBlockCustomerGroupRepositoryInterface getRepository()
  * @method \Demo\Zed\CmsBlockCustomerGroup\Persistence\CmsBlockCustomerGroupEntityManagerInterface getEntityManager()
+ * @method \Demo\Zed\CmsBlockCustomerGroup\CmsBlockCustomerGroupConfig getConfig()
  */
 class CmsBlockCustomerGroupPersistenceFactory extends AbstractPersistenceFactory
 {

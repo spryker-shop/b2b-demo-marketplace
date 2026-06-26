@@ -20,6 +20,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 /**
  * @method \Demo\Zed\CmsBlockCustomerGroup\Persistence\CmsBlockCustomerGroupRepositoryInterface getRepository()
  * @method \Demo\Zed\CmsBlockCustomerGroup\Persistence\CmsBlockCustomerGroupEntityManagerInterface getEntityManager()
+ * @method \Demo\Zed\CmsBlockCustomerGroup\CmsBlockCustomerGroupConfig getConfig()
  */
 class CmsBlockCustomerGroupBusinessFactory extends AbstractBusinessFactory
 {

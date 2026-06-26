@@ -3,6 +3,7 @@ actor: Tester
 
 include:
     - PyzTest/*/*
+    - DemoTest/*/*
 
 paths:
     tests: .
@@ -21,7 +22,7 @@ coverage:
     enabled: true
     remote: true
     c3_url: 'http://backoffice.de.shop-suite.local'
-    whitelist: { include: ['src/Pyz/*.php'] }
+    whitelist: { include: ['src/Pyz/*.php', 'src/Demo/*.php'] }
 
 extensions:
     enabled:

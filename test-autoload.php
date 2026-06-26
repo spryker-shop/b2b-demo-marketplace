@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 $autoloader = function ($className) {
     $className = ltrim($className, '\\');
     $classNameParts = explode('\\', $className);
@@ -14,6 +16,22 @@ $autoloader = function ($className) {
             __DIR__,
             'tests',
             'PyzTest',
+            $application,
+            $bundle,
+            '_support',
+            $className . '.php',
+        ];
+    }
+
+    if ($classNameParts[0] === 'DemoTest') {
+        array_shift($classNameParts);
+        $application = array_shift($classNameParts);
+        $bundle = array_shift($classNameParts);
+        $className = implode(DIRECTORY_SEPARATOR, $classNameParts);
+        $filePathPartsSupport = [
+            __DIR__,
+            'tests',
+            'DemoTest',
             $application,
             $bundle,
             '_support',
