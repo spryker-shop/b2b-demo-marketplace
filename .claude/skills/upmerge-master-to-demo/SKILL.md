@@ -28,7 +28,7 @@ If the user only asks for *part* of the flow (e.g. "just open the PR for me"), d
 3. Create a feature branch off `master-demo`
 4. Merge `master` into it, resolve conflicts
 5. Refresh `composer.lock` and run `composer install` locally
-6. Reconcile Pyz overrides with the incoming changes (esp. Twig templates), then audit `deploy.spryker-icpplus.yml` against the sibling deploy files
+6. Reconcile Pyz overrides with the incoming changes (esp. Twig templates), audit `deploy.spryker-icpplus.yml` against the sibling deploy files, and audit `config/Shared/config_default.php` for demo-only config blocks the merge silently dropped
 7. Smoke-test Yves and Backoffice login via the `login-chrome` skill
 8. Push and open a PR targeting `master-demo`
 9. Move the JIRA ticket to **IN CR**
@@ -100,6 +100,9 @@ git merge master --no-ff -m "Merge master into master-demo for upmerge <TICKET>"
 - **`composer.lock` conflicts**: always resolve by regenerating in Step 5 — `git checkout --theirs composer.lock` (taking the master-demo version as a base), then refresh below. The regeneration is what matters; the merged content is a throwaway.
 - **`composer.json` conflicts**: usually `master` wins on package versions, but `master-demo` may have demo-only additions. Read both sides, prefer the union (highest versions, both demo and core additions), and surface the result to the user if it isn't obvious.
 - **Source code / config conflicts**: try a structural resolution — keep both changes when they're additive (e.g. both sides added different plugins to a Dependency Provider list). When the conflict is a real overlap, pause and ask the user.
+- **`config/Shared/config_default.php` conflicts — NEVER drop a demo-only block toward master.** This file is the single highest-risk file in the upmerge: it mixes core config (track master) with **demo-only blocks that exist only on `master-demo`** (e.g. the `AmazonQuicksightConstants` / AWS QuickSight block from `[CC-36926] Enable Amazon Quick Sight for demo shops`, demo S3/`FileSystemConstants` bucket shapes, demo payment/feature toggles). Two distinct traps live here:
+  - **Trap A — silent deletion (no conflict marker).** If `master` *deletes or never had* a block that exists only on `master-demo`, and a master-side commit in this merge touches that region, the demo-only block can disappear with **zero conflict markers**. `git merge` will not flag it. (This is exactly how the QuickSight config was lost — a master commit "fix b2b only" removed the block while reconciling, and the dependency-provider wiring that *reads* that config was left in place → Back Office Analytics page hard-crashed with `Could not find config key "AMAZON_QUICKSIGHT:AWS_REGION"`.) **Step 6e below exists to catch this — it is mandatory even on a clean merge.**
+  - **Trap B — inconsistent hand-merge.** When both sides edited adjacent blocks (e.g. the `FileSystemConstants::FILESYSTEM_SERVICE` S3 buckets), resolve **every sibling entry to the same shape** — don't apply master's change to some hunks and the demo shape to others. A half-and-half result (some buckets with `key`+`secret`, some without) is the tell-tale sign of a mis-merge. When the demo intent isn't obvious, pause and ask the user which shape is correct for this project's infra.
 
 After resolving, stage and continue the merge:
 
@@ -368,6 +371,51 @@ Also confirm any **new install step** the merge added (e.g. a `punchout` block i
 
 Record the outcome (changed / no change needed) in the PR body alongside the Pyz reconciliation.
 
+### Step 6e — Audit `config/Shared/config_default.php` for dropped demo-only config blocks
+
+**Mandatory, even on a clean merge.** This is the same silent-divergence trap as Pyz/Twig and deploy files, applied to the highest-risk config file. `config/Shared/config_default.php` carries **demo-only config blocks that exist only on `master-demo`**. A master-side commit reconciled during the merge can delete such a block with **no conflict marker** (Trap A in Step 4). The merge looks clean; the demo feature silently breaks at runtime.
+
+> **Real incident this prevents.** The AWS QuickSight block (`AmazonQuicksightConstants::*`, added by `[CC-36926] Enable Amazon Quick Sight for demo shops`) was dropped during an upmerge while its dependency-provider wiring (`Pyz\Zed\AnalyticsGui\AnalyticsGuiDependencyProvider` → `QuicksightAnalyticsCollectionExpanderPlugin`) was left intact. Result: `GET /analytics-gui/analytics` (Back Office → Analytics) hard-crashed with `Could not find config key "AMAZON_QUICKSIGHT:AWS_REGION"`. The fix was to restore the demo-only config block.
+
+**Check (1) — which `$config[...Constants::...]` keys did master-demo have that the merge result lost?**
+
+```bash
+keys() { grep -oE '\$config\[[A-Za-z0-9_]+Constants?::[A-Z0-9_]+\]' "$1" 2>/dev/null | sort -u; }
+git show master-demo:config/Shared/config_default.php > /tmp/demo-config.php
+echo "=== demo-only config KEYS dropped by the merge (investigate each!) ==="
+comm -23 <(keys /tmp/demo-config.php) <(keys config/Shared/config_default.php)
+```
+
+Any line printed here is a config key that existed on `master-demo` before the merge and is **gone now**. For each one, decide:
+- **Legitimately removed** — the demo feature was intentionally retired in this upmerge (rare; confirm there is a matching commit and that no code still reads the key).
+- **Accidentally dropped (the dangerous case)** — restore the block verbatim from `master-demo`. Find it with:
+  ```bash
+  git show master-demo:config/Shared/config_default.php | grep -n "AmazonQuicksight\|<ConstantsClass>"
+  ```
+  and re-add both the `$config[...]` lines and the corresponding `use ...Constants;` import.
+
+**Check (2) — `use` imports dropped from the file (catches the import half of a removed block):**
+
+```bash
+echo "=== Constants imports present on master-demo but missing now ==="
+comm -23 \
+  <(git show master-demo:config/Shared/config_default.php | grep -oE '^use .*Constants;' | sort -u) \
+  <(grep -oE '^use .*Constants;' config/Shared/config_default.php | sort -u)
+```
+
+**Check (3) — orphaned wiring: config a block was removed but the code that READS it still runs.** A dropped config block only crashes because a plugin/dependency-provider still consumes it. After Checks (1)–(2), for any `…Constants` you decided to *leave removed*, confirm nothing still references it:
+
+```bash
+# Example for QuickSight — generalise to whatever block you dropped
+grep -rn "Quicksight\|AmazonQuicksight" src/Pyz config/ 2>/dev/null
+```
+
+If wiring remains for a removed config block, you have an inconsistent state (like the QuickSight incident): either **restore the config** (preferred when the module is still in `composer.json` and the demo wants the feature) or **also remove the wiring** — but never leave config gone while the reader stays. When unsure which way to resolve, **pause and ask the user**; default to restoring the demo-only block, since the demo is meant to showcase the feature.
+
+**Check (4) — the analytics-gui smoke check.** Because the QuickSight regression manifested only at the Back Office Analytics endpoint, add it to the Step 7 smoke test: load `http://backoffice.eu.spryker.local/analytics-gui/analytics` and confirm it returns 200 (page renders — "No Analytics permission has been granted to the current user." is the expected healthy state on a local env without provisioned AWS), not a Whoops/500.
+
+Record the outcome (keys restored / confirmed intentionally removed / none) in the PR body alongside the Pyz and deploy audits.
+
 ## Step 7 — Smoke-test Yves and Backoffice login
 
 Invoke the `login-chrome` skill to verify the local stack still works after the merge. The smoke test scope is:
@@ -376,6 +424,7 @@ Invoke the `login-chrome` skill to verify the local stack still works after the 
 - Verify the customer overview page (`/DE/en/customer/overview`) renders without errors
 - Log into Backoffice at `http://backoffice.eu.spryker.local/security-gui/login` with `admin@spryker.com` / `change123`
 - Verify the Backoffice dashboard renders without errors
+- Load `http://backoffice.eu.spryker.local/analytics-gui/analytics` and confirm it returns 200 / renders (NOT a Whoops 500). This is the demo-only-config canary from Step 6e — a `Could not find config key "AMAZON_QUICKSIGHT:..."` here means a demo-only block was dropped during the merge.
 
 Use `Skill(login-chrome)` (or `/login-chrome`) to drive the browser. If a login or page fails, capture the console errors and surface them — that's a real regression we should not push.
 
@@ -402,8 +451,9 @@ JIRA: <TICKET-URL>
 ## Test plan
 - [x] Pyz override reconciliation (incl. Twig templates shadowing changed core)
 - [x] deploy.spryker-icpplus.yml audited vs sibling deploy files
+- [x] config/Shared/config_default.php audited for dropped demo-only config blocks (Step 6e)
 - [x] Local smoke test: Yves storefront login + customer overview
-- [x] Local smoke test: Backoffice login + dashboard
+- [x] Local smoke test: Backoffice login + dashboard + analytics-gui (QuickSight canary)
 - [ ] CI pipeline green
 
 ## Pyz override reconciliation
@@ -411,6 +461,9 @@ JIRA: <TICKET-URL>
 
 ## Deploy file audit (Step 6d)
 <!-- Result of diffing deploy.spryker-icpplus.yml vs siblings + merged-code host/entry-point requirements. Note "no change needed" if the new features only add routes to existing apps and define no new SPRYKER_*_HOST / entry-point. -->
+
+## config_default.php demo-only block audit (Step 6e)
+<!-- Result of Checks (1)-(4): list any demo-only config keys/imports restored (e.g. AmazonQuicksight), or "none dropped". Confirm analytics-gui smoke check returned 200. -->
 EOF
 )"
 ```
@@ -529,6 +582,7 @@ Don't merge the PR — that's the user's call.
 - **Don't skip the smoke test silently.** If you can't run it (stack down, no chrome), ask the user.
 - **Don't treat a clean merge as "no Pyz work."** `git merge` only flags overlapping line edits. A core Twig template changing while Demo's `src/Pyz` override shadows it produces ZERO conflict markers but a stale override — Step 6 exists to catch exactly this. Always run Step 6's checks even when the merge applied cleanly.
 - **Don't blindly accept master's Pyz over Demo's.** Demo intentionally diverges in some Pyz files (branded/marketplace markup). When a divergence's intent is unclear, ask the user rather than overwriting.
+- **Don't trust a clean `config/Shared/config_default.php` merge.** Demo-only config blocks (QuickSight, demo S3 bucket shapes, demo toggles) can be deleted by a reconciled master-side commit with ZERO conflict markers, and the code reading them stays wired → runtime crash. Always run Step 6e's key/import diff and the analytics-gui canary, even when the merge applied cleanly. When a demo-only key vanished, default to restoring it and ask the user if intent is unclear.
 - **Pipeline polling is best-effort.** If the wake-up doesn't fire for any reason, the user can re-invoke the skill with `/upmerge poll PR <N> ticket <KEY>` and it'll resume from the polling step.
 
 ## Polling-only invocation
