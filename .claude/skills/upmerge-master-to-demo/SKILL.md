@@ -29,7 +29,7 @@ If the user only asks for *part* of the flow (e.g. "just open the PR for me"), d
 4. Merge `master` into it, resolve conflicts
 5. Refresh `composer.lock` and run `composer install` locally
 6. Reconcile Pyz overrides with the incoming changes (esp. Twig templates), audit `deploy.spryker-icpplus.yml` against the sibling deploy files, and audit `config/Shared/config_default.php` for demo-only config blocks the merge silently dropped
-7. Smoke-test Yves and Backoffice login via the `login-chrome` skill
+7. Smoke-test Yves and Backoffice login via the `login-chrome` skill, then ALWAYS run the demo Cypress group (`cy:demo`)
 8. Push and open a PR targeting `master-demo`
 9. Move the JIRA ticket to **IN CR**
 10. Ask the user to review, then poll the GitHub Actions pipeline starting at +2h
@@ -430,6 +430,22 @@ Use `Skill(login-chrome)` (or `/login-chrome`) to drive the browser. If a login 
 
 If your environment doesn't have the local Spryker stack running, ask the user whether to skip the smoke test (don't silently skip — they may want to start docker first).
 
+## Step 7b — ALWAYS run the demo Cypress group (`cy:demo`)
+
+The `cypress/e2e/demo/` group is the **automated, isolated coverage for demo-only features that live only on `master-demo`** (QuickSight Analytics and the other AI Commerce features). These are exactly the surfaces an upmerge most often breaks via dropped demo-only config/wiring (Step 6e), so this run is **mandatory on every upmerge — never skip it**, even on a clean merge. It supersedes the manual analytics-gui canary (it asserts the same QuickSight 200/graceful-state, plus more, deterministically).
+
+Run it against the local stack with the demo repository id:
+
+```bash
+cd tests/cypress-tests
+ENV_REPOSITORY_ID=b2b-mp ENV_IS_SSP_ENABLED=true npm run cy:demo
+```
+
+- **All specs must pass.** A failure here is a real regression — most likely a demo-only block dropped during the merge (cross-reference Step 6e Checks 1–4). Do **not** push until it's green or the user explicitly accepts the failure.
+- If the local Spryker stack isn't running, ask the user whether to start docker or skip — same rule as Step 7, don't silently skip.
+- If `cy:demo` doesn't exist yet (older branch), that itself is a finding: the demo group / CI step may have been lost in the merge — restore it (see the `cypress-e2e-test` skill's "demo group" section) before pushing.
+- The same `cy:demo` runs in CI as its own `Run Tests (Demo)` step (`if: always()`), so a green local run predicts the CI step; a red CI demo step in Step 11 maps straight back here.
+
 ## Step 8 — Push and open the PR
 
 ```bash
@@ -454,7 +470,8 @@ JIRA: <TICKET-URL>
 - [x] config/Shared/config_default.php audited for dropped demo-only config blocks (Step 6e)
 - [x] Local smoke test: Yves storefront login + customer overview
 - [x] Local smoke test: Backoffice login + dashboard + analytics-gui (QuickSight canary)
-- [ ] CI pipeline green
+- [x] Demo Cypress group green locally (`npm run cy:demo`, `ENV_REPOSITORY_ID=b2b-mp`)
+- [ ] CI pipeline green (incl. the `Run Tests (Demo)` step)
 
 ## Pyz override reconciliation
 <!-- List Pyz files kept / adapted / aligned from Step 6. Note "none" if the merge touched no Pyz files and no core-template overrides were affected. -->
