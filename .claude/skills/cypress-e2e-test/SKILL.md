@@ -546,6 +546,12 @@ cy.reloadUntilFound(url, selector, parentSelector, retries, wait)
 
 ## Running Tests
 
+> ⚠️ **`tests/cypress-tests/.env` must exist, or every run dies before a single test with `Expected e2e.baseUrl to be a fully qualified URL … the value was "undefined://"`.** The config builds host/protocol from env vars loaded via `dotenv` from `.env`; with no `.env` they're `undefined`. `.env` is git-ignored, so it is NOT in a fresh checkout — and it gets **wiped whenever composer reinstalls the package** (`composer update spryker/cypress-tests` prints "The .git directory is missing… reinstalling", then removes + re-clones `tests/cypress-tests/`, taking `.env` and any other uncommitted file with it). After any such reinstall, or on a clean checkout, recreate it from the example that matches your stack — for this repo (b2b-mp on `.eu.spryker.local`) that's the dynamic-store example, which is also what CI uses:
+> ```bash
+> cd tests/cypress-tests && cp .env.dynamic-store.example .env
+> ```
+> Note the example sets `ENV_REPOSITORY_ID=suite`. A demoshop-guarded spec (e.g. the `demo` group, guarded to `b2b-mp`) will then **skip** on a bare `npm run …`. Prefix the real repo id to actually exercise it: `ENV_REPOSITORY_ID=b2b-mp ENV_IS_SSP_ENABLED=true npm run cy:demo`. (CI passes these via `docker/sdk exec --env`, so CI is unaffected.)
+
 **Open interactive runner:**
 ```bash
 cd tests/cypress-tests && npx cypress open
