@@ -1,0 +1,172 @@
+# Upmerge `master` → `master-demo` — Operator Guide
+
+This README explains the recurring **upmerge** workflow for the `b2b-demo-marketplace`
+repo in plain steps, with diagrams. The executable, command-by-command version lives in
+[`SKILL.md`](./SKILL.md) and runs via `/upmerge`. Read this first to understand *why*
+each step exists; use `SKILL.md` for the exact commands.
+
+## What an upmerge is
+
+`master-demo` is the demo branch. It is `master` **plus** demo-only additions (the AI
+Commerce features, demo data, branded Twig, demo-only config blocks, and the demo Cypress
+specs). Periodically we bring the latest `master` changes *into* `master-demo` so the demo
+branch doesn't drift. That direction — **`master` → `master-demo`, never the reverse** — is
+the upmerge.
+
+The hard part is everything `git merge` *cannot* see:
+
+- **Shadowed overrides** — a core Twig/class changes upstream while `src/Pyz` (or `src/Demo`)
+  shadows it; git sees no overlap, the override silently goes stale.
+- **Silently dropped demo-only config** — a reconciled master-side commit deletes a
+  demo-only block in `config/Shared/config_default.php` with **zero conflict markers**,
+  while the code reading it stays wired → runtime crash (the QuickSight incident).
+- **The external Cypress repo** — `spryker/cypress-tests` is a *separate* repo with its own
+  `master`/`master-demo`. The demo-shop merge never touches it; it must be upmerged
+  explicitly, and **by a specific commit hash, not by cypress master's tip** (see below).
+
+## The 12 steps
+
+| # | Step | Why it exists |
+|---|------|---------------|
+| 1 | **Find the JIRA ticket** | Drives the branch name + PR title (CC board 2237). |
+| 2 | **Sync `master` & `master-demo`** | Fetch + fast-forward refspecs so HEAD stays put; stop on dirty tree. |
+| 3 | **Create the feature branch** | `feature/<ticket>/upmerge-latest-master` off `master-demo`. |
+| 4 | **Merge `master`, resolve conflicts** | `composer.lock` → regenerate; `config_default.php` → never drop demo-only blocks. |
+| 5 | **Refresh `composer.lock`** | Final lock = master's lock **+** demo-only packages only. No bare `composer update`. |
+| 6a–6c | **Reconcile Pyz/Demo overrides** | Re-align overrides that shadow changed core files (esp. Twig). Silent divergence. |
+| 6d | **Audit `deploy.spryker-icpplus.yml`** | New feature may need a deploy entry/env var the merge never flagged. |
+| 6e | **Audit `config_default.php`** | Catch demo-only config blocks dropped with no conflict marker (QuickSight canary). |
+| **6f** | **Upmerge the `cypress-tests` repo** | **Merge cypress `master-demo` to the HASH demo-shop master pins — NOT cypress master's tip.** Re-pin the demo-shop. |
+| 7 | **Smoke-test Yves + Backoffice** | Login + customer overview + dashboard + `analytics-gui` (QuickSight canary). |
+| 7b | **Run `cy:demo`** | Mandatory automated coverage of demo-only features; predicts CI's `Run Tests (Demo)`. |
+| 8 | **Push + open PR** | Targets `master-demo`; PR body records every audit (6a–6f). |
+| 9 | **Move JIRA to IN CR** | Transition name "Start CR"; verify status actually changed. |
+| 10 | **Hand off + schedule poll** | Tell user; `ScheduleWakeup` for the pipeline check. |
+| 11 | **Poll pipeline + auto-fix** | phpcs/transfer/propel/lock are auto-fixable; logic/test failures go to the user. |
+| 12 | **Final report** | Green pipeline → JIRA comment + tell user. Never auto-merge. |
+
+## General flow
+
+```mermaid
+flowchart TD
+    A([/upmerge]) --> B[Step 1: Find JIRA ticket]
+    B --> C[Step 2: Sync master & master-demo]
+    C --> D{Working tree clean?}
+    D -- no --> Dx[Stop & ask user]
+    D -- yes --> E[Step 3: Branch off master-demo]
+    E --> F[Step 4: Merge master, resolve conflicts]
+    F --> G[Step 5: Reconstruct composer.lock = master + demo-only pkgs]
+
+    G --> H[Step 6a-6c: Reconcile Pyz/Demo overrides ]
+    H --> I[Step 6d: Audit deploy.spryker-icpplus.yml]
+    I --> J[Step 6e: Audit config_default.php demo-only blocks]
+    J --> K[[Step 6f: Upmerge cypress-tests repo — see cypress diagram]]
+
+    K --> L[Step 7: Smoke-test Yves + Backoffice + analytics-gui]
+    L --> M[Step 7b: npm run cy:demo]
+    M --> N{All green?}
+    N -- no --> Nx[Fix regression / ask user] --> H
+    N -- yes --> O[Step 8: Push + open PR to master-demo]
+    O --> P[Step 9: JIRA → IN CR + link PR]
+    P --> Q[Step 10: Hand off + ScheduleWakeup]
+    Q --> R[Step 11: Poll pipeline]
+    R --> S{Pipeline?}
+    S -- running --> R
+    S -- auto-fixable fail --> T[phpcbf / transfer / propel / lock] --> O
+    S -- logic/test fail --> Tx[Surface to user]
+    S -- green --> U[Step 12: JIRA comment + report]
+    U --> V([Done — user merges])
+```
+
+## Step 6f in detail — the cypress-tests upmerge
+
+`spryker/cypress-tests` is its own repo, checked out under `tests/cypress-tests/`. The
+demo-shop's `composer.json` pins it as `require-dev: "spryker/cypress-tests": "dev-master-demo"`,
+so the demo shop installs the cypress repo's `master-demo` branch.
+
+### Why merge by HASH, not by cypress master's tip
+
+The demo-shop's own `master` branch pins `spryker/cypress-tests` to a **specific commit
+reference** in its `composer.lock` (`source.reference`). Cypress `master` is almost always
+*far ahead* of that pinned commit — **64 commits ahead** in the 2026-06-27 case.
+
+```
+cypress repo:
+  master:       …──●──●──●──●──●──●  ← TIP (64 commits ahead — OFF LIMITS)
+                       │
+   demo-shop master    ●  TARGET_CYPRESS_HASH  (the pinned commit, e.g. 09e6cbcf)
+   pins this commit ──╯ │
+                        ↓ merge ONLY up to here
+  master-demo:  …──●────●──◇──◇        ← demo-only specs (◇) layered on the pinned base
+```
+
+If you ran `git merge master` in the cypress repo, `master-demo` would absorb all 64
+newer commits and run **ahead of the demo-shop version** — asserting selectors/fixtures/
+behavior the shop on `master` doesn't have yet → flaky, false failures, version skew.
+So cypress `master-demo` is advanced to **exactly the commit demo-shop master pins, and no
+further.** The pinned hash is the merge target; cypress master's tip is off-limits.
+
+After merging, you push the cypress `master-demo` branch and **re-pin the demo-shop's
+`composer.lock`** to the new cypress `master-demo` tip, so the demo shop installs the
+upmerged tests.
+
+### Cypress upmerge flow
+
+```mermaid
+flowchart TD
+    A([Step 6f start]) --> B["6f-1: Read demo-shop MASTER's composer.lock<br/>cypress source.reference → TARGET_CYPRESS_HASH"]
+    B --> C[6f-2: cd tests/cypress-tests; git fetch origin]
+    C --> D{Is TARGET_CYPRESS_HASH<br/>already in master-demo?}
+    D -- yes --> Dx[Record 'already at/ahead of pin —<br/>no merge needed'] --> RUN
+    D -- no --> E["6f-3: git checkout master-demo<br/>git merge TARGET_CYPRESS_HASH --no-ff<br/>(the HASH — never 'git merge master')"]
+    E --> F{Conflicts?}
+    F -- demo-only spec --> F1[Keep master-demo demo side] --> G
+    F -- shared/core spec --> F2[Take incoming up to the hash] --> G
+    F -- unclear --> Fx[Pause & ask user] --> G
+    F -- none --> G
+    G[6f-4: Verify TARGET is ancestor of master-demo]
+    G --> H{Any cypress-master commit<br/>NEWER than target leaked in?}
+    H -- yes --> Hx[LEAK: reset master-demo to pre-merge tip,<br/>redo 6f-3 with the HASH] --> E
+    H -- no --> RUN
+    RUN["6f-5: ENV_REPOSITORY_ID=b2b-mp npm run cy:demo"]
+    RUN --> I{All demo specs pass?}
+    I -- no --> Ix[Real regression — cross-ref Step 6e; fix / ask user] --> RUN
+    I -- yes --> J[git push origin master-demo<br/>capture new master-demo tip]
+    J --> K["Re-pin demo-shop:<br/>composer update spryker/cypress-tests --lock --no-install<br/>verify reference == new cypress master-demo tip"]
+    K --> L[git commit composer.lock<br/>record hashes in PR body]
+    L --> M([Step 6f done → continue Step 7])
+```
+
+### Key commands (full versions in `SKILL.md` Step 6f)
+
+```bash
+# 6f-1 — target hash = what demo-shop MASTER pins (run from demo-shop root)
+git show master:composer.lock | python3 -c "import json,sys; d=json.load(sys.stdin); p=[x for x in d['packages']+d['packages-dev'] if x['name']=='spryker/cypress-tests'][0]; print(p['source']['reference'])"
+
+# 6f-2/3 — merge the HASH into cypress master-demo (never 'git merge master')
+cd tests/cypress-tests && git fetch origin
+git merge-base --is-ancestor <TARGET_CYPRESS_HASH> master-demo && echo "already in master-demo" || echo "merge required"
+git checkout master-demo
+git merge <TARGET_CYPRESS_HASH> --no-ff -m "Upmerge cypress master (@<TARGET_CYPRESS_HASH>) into master-demo for <TICKET>"
+
+# 6f-4 — guard against leaking newer-than-target master commits
+git log --oneline <TARGET_CYPRESS_HASH>..origin/master | wc -l   # commits you must NOT have pulled in
+
+# 6f-5 — validate, push, re-pin demo-shop
+ENV_REPOSITORY_ID=b2b-mp ENV_IS_SSP_ENABLED=true npm run cy:demo
+git push origin master-demo
+# back in demo-shop root, on the upmerge branch:
+composer update spryker/cypress-tests --lock --no-install --ignore-platform-reqs
+git add composer.lock && git commit -m "chore(composer): re-pin spryker/cypress-tests to upmerged master-demo for <TICKET>"
+```
+
+## Golden rules
+
+- **`master` → `master-demo` only.** Never merge `master-demo` back into `master`.
+- **In the cypress repo: merge the HASH, never `git merge master`.** The demo cypress branch
+  must match what demo-shop master pins, not run ahead of it.
+- **A clean `git merge` is not "no work".** Steps 6a–6f catch the silent divergences git
+  can't flag.
+- **Never auto-merge the PR.** That's always the user's call.
+- **When intent is unclear — pause and ask.** A bad force-move or mis-merge costs far more
+  than one question.

@@ -28,7 +28,7 @@ If the user only asks for *part* of the flow (e.g. "just open the PR for me"), d
 3. Create a feature branch off `master-demo`
 4. Merge `master` into it, resolve conflicts
 5. Refresh `composer.lock` and run `composer install` locally
-6. Reconcile Pyz overrides with the incoming changes (esp. Twig templates), audit `deploy.spryker-icpplus.yml` against the sibling deploy files, and audit `config/Shared/config_default.php` for demo-only config blocks the merge silently dropped
+6. Reconcile Pyz overrides with the incoming changes (esp. Twig templates), audit `deploy.spryker-icpplus.yml` against the sibling deploy files, audit `config/Shared/config_default.php` for demo-only config blocks the merge silently dropped, **and upmerge the external `spryker/cypress-tests` repo's `master-demo` branch up to the cypress commit the demo-shop `master` pins (Step 6f)**
 7. Smoke-test Yves and Backoffice login via the `login-chrome` skill, then ALWAYS run the demo Cypress group (`cy:demo`)
 8. Push and open a PR targeting `master-demo`
 9. Move the JIRA ticket to **IN CR**
@@ -416,6 +416,98 @@ If wiring remains for a removed config block, you have an inconsistent state (li
 
 Record the outcome (keys restored / confirmed intentionally removed / none) in the PR body alongside the Pyz and deploy audits.
 
+### Step 6f — Upmerge the external `spryker/cypress-tests` repo (CRITICAL — merge by HASH, not cypress master tip)
+
+The demo-shop pins `spryker/cypress-tests` to its **own `master-demo` branch** (`require-dev: "spryker/cypress-tests": "dev-master-demo"`), checked out under `tests/cypress-tests/` (composer installs it from git source). This is a **separate repository with its own `master` and `master-demo` branches** — the demo-shop upmerge does **not** touch it. You must upmerge it explicitly, and the version of the cypress `master-demo` branch **must match the cypress version the demo-shop `master` is pinned to**.
+
+> **Why merge by HASH, never from cypress `master`'s tip — this is the whole point of the step.**
+> The demo-shop's own `master` branch pins `spryker/cypress-tests` to a **specific commit reference** in its `composer.lock` (the `source.reference` hash). Cypress `master` is almost always *dozens of commits ahead* of that pinned hash (e.g. **64 commits ahead** in the 2026-06-27 case). If you merge cypress `master`'s **tip** into cypress `master-demo`, the demo cypress branch ends up running **ahead of the demo-shop version** — it would assert behavior/selectors/fixtures the shop on `master` doesn't have yet → flaky/false failures and a version-skewed demo branch. So cypress `master-demo` must be advanced to **exactly the cypress commit the demo-shop `master` pins, and no further.** That pinned hash is your merge target; cypress `master`'s tip is off-limits.
+
+#### Step 6f-1 — Determine the target cypress commit (the hash demo-shop `master` pins)
+
+Read the cypress reference from the demo-shop's `master` lock (NOT from `master-demo`, NOT from cypress `master`):
+
+```bash
+# Run from the demo-shop repo root.
+git show master:composer.lock | python3 -c "import json,sys; d=json.load(sys.stdin); p=[x for x in d['packages']+d['packages-dev'] if x['name']=='spryker/cypress-tests'][0]; print('demo-shop master pins cypress at:', p['source']['reference'])"
+```
+
+Call that hash `TARGET_CYPRESS_HASH`. This — not cypress `origin/master` — is the upper bound for the merge.
+
+#### Step 6f-2 — In the cypress repo, sync and validate the relationship
+
+```bash
+cd tests/cypress-tests
+git fetch origin
+git rev-parse master-demo                 # current demo branch tip
+git log --oneline -1 <TARGET_CYPRESS_HASH>  # confirm the pinned commit exists & see what it is
+
+# Sanity guards — surface to the user if either is surprising:
+# (a) Is the target already in master-demo? If YES, there is nothing to merge — master-demo is already at/ahead of the pin.
+git merge-base --is-ancestor <TARGET_CYPRESS_HASH> master-demo && echo "Target already in master-demo — no merge needed" || echo "Target NOT yet in master-demo — merge required"
+# (b) How far is cypress master AHEAD of the target? Those are the commits you MUST NOT pull in.
+echo "Commits on cypress master that are AHEAD of the target hash (DO NOT MERGE THESE):"
+git log --oneline <TARGET_CYPRESS_HASH>..origin/master | wc -l
+```
+
+If guard (a) says "already in master-demo", record "cypress master-demo already at/ahead of demo-shop master's pin — no upmerge needed" in the PR body and skip to Step 6f-5 (still run `cy:demo` in Step 7b).
+
+#### Step 6f-3 — Merge the target HASH into cypress `master-demo` (never `master`)
+
+```bash
+cd tests/cypress-tests
+git checkout master-demo
+git merge <TARGET_CYPRESS_HASH> --no-ff -m "Upmerge cypress master (@<TARGET_CYPRESS_HASH>) into master-demo for <TICKET>"
+```
+
+- **Use the hash, not `git merge master`.** `git merge master` would pull cypress master's tip and everything ahead of the pin — exactly the version skew this step exists to prevent.
+- **Conflict policy**: cypress `master-demo` carries the **demo-only specs** (the `cypress/e2e/demo/` group and any demo fixtures/config). When a conflict touches a demo-only file, keep the `master-demo` (demo) side. For shared/core specs and helpers, take the incoming (master) side up to the pinned hash. When intent is unclear, **pause and ask the user**.
+
+#### Step 6f-4 — Double-check you did NOT merge ahead of the target
+
+After the merge, verify cypress `master-demo` contains the target but **nothing from cypress master that is newer than the target**:
+
+```bash
+cd tests/cypress-tests
+# Target must now be an ancestor of master-demo:
+git merge-base --is-ancestor <TARGET_CYPRESS_HASH> master-demo && echo "OK: target is in master-demo" || echo "PROBLEM: target missing"
+# master-demo must NOT contain any commit that is ahead of the target on cypress master:
+echo "Cypress-master commits AHEAD of the target that leaked into master-demo (MUST be empty):"
+git log --oneline <TARGET_CYPRESS_HASH>..origin/master ^$(git rev-parse master-demo) 2>/dev/null | head
+# Equivalent, clearer phrasing — newer-than-target master commits now reachable from master-demo:
+git log --oneline master-demo --not <TARGET_CYPRESS_HASH> | grep -Ff <(git log --format=%h <TARGET_CYPRESS_HASH>..origin/master) - 2>/dev/null && echo "LEAK DETECTED — reset and redo with the hash" || echo "OK: no newer-than-target master commits in master-demo"
+```
+
+If a leak is detected, reset cypress `master-demo` to its pre-merge tip and redo Step 6f-3 with the **hash** (not `master`). Surface to the user before force-moving the branch.
+
+#### Step 6f-5 — Run the demo cypress group, push, and re-pin the demo-shop
+
+1. Run the demo group against the local stack (this is also Step 7b — running it here validates the just-merged cypress branch):
+   ```bash
+   cd tests/cypress-tests
+   ENV_REPOSITORY_ID=b2b-mp ENV_IS_SSP_ENABLED=true npm run cy:demo
+   ```
+   All specs must pass before pushing.
+
+2. Push cypress `master-demo` (this is a push to the **external `spryker/cypress-tests` repo**, separate from the demo-shop PR):
+   ```bash
+   cd tests/cypress-tests
+   git push origin master-demo
+   ```
+   Capture the new `master-demo` tip hash — that becomes the demo-shop's new pin.
+
+3. Re-pin the demo-shop's `composer.lock` to the new cypress `master-demo` reference so the demo shop installs the upmerged tests:
+   ```bash
+   # From the demo-shop repo root, on the upmerge feature branch.
+   composer update spryker/cypress-tests --lock --no-install --ignore-platform-reqs
+   # Verify the reference now matches the cypress master-demo tip you just pushed:
+   python3 -c "import json; d=json.load(open('composer.lock')); p=[x for x in d['packages']+d['packages-dev'] if x['name']=='spryker/cypress-tests'][0]; print('demo-shop now pins cypress at:', p['version'], p['source']['reference'])"
+   git add composer.lock
+   git commit -m "chore(composer): re-pin spryker/cypress-tests to upmerged master-demo for <TICKET>"
+   ```
+
+Record in the PR body: the `TARGET_CYPRESS_HASH` you merged to, the new cypress `master-demo` tip you pushed, and confirmation that no newer-than-target cypress-master commits leaked in.
+
 ## Step 7 — Smoke-test Yves and Backoffice login
 
 Invoke the `login-chrome` skill to verify the local stack still works after the merge. The smoke test scope is:
@@ -468,6 +560,7 @@ JIRA: <TICKET-URL>
 - [x] Pyz override reconciliation (incl. Twig templates shadowing changed core)
 - [x] deploy.spryker-icpplus.yml audited vs sibling deploy files
 - [x] config/Shared/config_default.php audited for dropped demo-only config blocks (Step 6e)
+- [x] spryker/cypress-tests `master-demo` upmerged to demo-shop master's pinned cypress hash, NOT cypress master tip (Step 6f); demo-shop re-pinned
 - [x] Local smoke test: Yves storefront login + customer overview
 - [x] Local smoke test: Backoffice login + dashboard + analytics-gui (QuickSight canary)
 - [x] Demo Cypress group green locally (`npm run cy:demo`, `ENV_REPOSITORY_ID=b2b-mp`)
@@ -481,6 +574,9 @@ JIRA: <TICKET-URL>
 
 ## config_default.php demo-only block audit (Step 6e)
 <!-- Result of Checks (1)-(4): list any demo-only config keys/imports restored (e.g. AmazonQuicksight), or "none dropped". Confirm analytics-gui smoke check returned 200. -->
+
+## cypress-tests repo upmerge (Step 6f)
+<!-- TARGET_CYPRESS_HASH (the cypress commit demo-shop master pins) merged into cypress master-demo; new cypress master-demo tip pushed; demo-shop composer.lock re-pinned to it; confirmed NO newer-than-target cypress-master commits leaked in. Note "already at/ahead of pin — no merge needed" if applicable. -->
 EOF
 )"
 ```
@@ -600,6 +696,7 @@ Don't merge the PR — that's the user's call.
 - **Don't treat a clean merge as "no Pyz work."** `git merge` only flags overlapping line edits. A core Twig template changing while Demo's `src/Pyz` override shadows it produces ZERO conflict markers but a stale override — Step 6 exists to catch exactly this. Always run Step 6's checks even when the merge applied cleanly.
 - **Don't blindly accept master's Pyz over Demo's.** Demo intentionally diverges in some Pyz files (branded/marketplace markup). When a divergence's intent is unclear, ask the user rather than overwriting.
 - **Don't trust a clean `config/Shared/config_default.php` merge.** Demo-only config blocks (QuickSight, demo S3 bucket shapes, demo toggles) can be deleted by a reconciled master-side commit with ZERO conflict markers, and the code reading them stays wired → runtime crash. Always run Step 6e's key/import diff and the analytics-gui canary, even when the merge applied cleanly. When a demo-only key vanished, default to restoring it and ask the user if intent is unclear.
+- **Never `git merge master` in the cypress-tests repo (Step 6f).** Cypress `master` runs dozens of commits ahead of the hash the demo-shop `master` pins. Merge the **pinned hash** into cypress `master-demo`, then verify no newer-than-target cypress-master commits leaked in. Merging cypress master's tip puts the demo cypress branch ahead of the shop version → flaky/false test failures. The demo cypress branch version must always match what demo-shop master pins.
 - **Pipeline polling is best-effort.** If the wake-up doesn't fire for any reason, the user can re-invoke the skill with `/upmerge poll PR <N> ticket <KEY>` and it'll resume from the polling step.
 
 ## Polling-only invocation
