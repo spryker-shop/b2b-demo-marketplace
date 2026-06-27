@@ -13,7 +13,7 @@ Cypress tests MUST follow Spryker conventions: mission-critical user journeys, P
 **Structure**: One test per distinct outcome. Group checks only when they represent a single user goal.
 **Data**: Use static fixtures for smoke tests; use dynamic fixtures (via API) for feature tests.
 **Page Objects**: All UI interactions go in page classes. Tests never use raw `cy.get()` selectors directly.
-**Repositories**: Selector logic lives in a dedicated interface file (`<feature>-repository.ts`) plus at least one implementation file in a `repositories/` subfolder (e.g. `repositories/suite-<feature>-repository.ts`). Never collapse these into a single concrete class — even when only suite is supported. See the Repositories section for the exact file layout.
+**Repositories**: Selector logic lives in a dedicated `<feature>-repository.ts`, never inline in the page. Choose the shape by how many demoshop variants the markup actually has — **one concrete `@injectable @autoWired` class injected by its class token** when a single implementation covers every shop (the common case), OR an **interface + per-shop impls in `repositories/`** bound via a `REPOSITORIES` token only when the markup genuinely differs per demoshop. Do NOT default to the interface split — it was rejected on review (PR #330) as needless indirection for single-impl features. See the Repositories section for the decision rule and both layouts.
 **DI**: Use `container.get(PageClass)` for all page and scenario instances — never `new`.
 **Naming**: camelCase for variables/functions, PascalCase for classes, kebab-case for files. No abbreviations — write `authentication`, not `auth`.
 **Reuse**: Search existing pages, scenarios, commands, and fixtures before creating anything new. Priority: Reuse > Update > Create.
@@ -205,7 +205,7 @@ function getPaymentMethod(): string {
 **Location**: `tests/cypress-tests/cypress/support/pages/{yves|backoffice|mp}/`
 
 ```typescript
-import { autoWired, REPOSITORIES } from '@utils';
+import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 import { YvesPage } from '@pages/yves';
 import { FeatureRepository } from './feature-repository';
@@ -213,7 +213,10 @@ import { FeatureRepository } from './feature-repository';
 @injectable()
 @autoWired
 export class FeaturePage extends YvesPage {
-  @inject(REPOSITORIES.FeatureRepository) private repository: FeatureRepository;
+  // Single-impl (common case): inject the concrete repository by its CLASS token.
+  // Multi-variant only: `import { ..., REPOSITORIES } from '@utils'` and
+  // `@inject(REPOSITORIES.FeatureRepository) private repository: FeatureRepository;`
+  @inject(FeatureRepository) private repository: FeatureRepository;
 
   protected PAGE_URL = '/feature-path';
 
@@ -235,43 +238,31 @@ export class FeaturePage extends YvesPage {
 
 ## Repositories (Selector Logic)
 
-**This pattern is the single most-skipped rule. Pay extra attention.** Selector code MUST NOT live in the page class; it MUST be split into an **interface file** and a **per-demoshop implementation file** injected via DI. Why: selectors drift between demoshop variants (suite / b2b / b2b-mp render slightly different markup), and the interface is the contract that lets us swap a variant without rewriting the page or the test. A single concrete repository class collapses that flexibility and breaks the pattern.
+Selector code MUST NOT live in the page class — it lives in a `<feature>-repository.ts` injected via DI. **Which of the two shapes you use depends on whether the markup genuinely differs per demoshop.** Picking the wrong shape is reviewable both ways: inlining selectors in the page is wrong, and so is wrapping a single implementation in an interface + `REPOSITORIES` token + multi-map binding (rejected on PR #330 as dead indirection — `Suite`-prefixing a class that is the *only* impl reads as "there are other variants" when there aren't).
 
-### Required file layout
+### Decision rule — read this before creating files
+
+- **One implementation covers every demoshop** (the common case — most features render identical markup everywhere): a **single concrete class** named `<Feature>Repository`, `@injectable @autoWired`, injected into the page by its **class token** (`@inject(FeatureRepository)`). No interface, no `repositories/` subfolder, no `REPOSITORIES` entry, no binding map. This is exactly how the existing `ConfigurationRepository` works — mirror it.
+- **The markup genuinely differs per demoshop** (suite vs b2b vs b2b-mp render different DOM, e.g. `MultiFactorAuth`): an **interface** `<Feature>Repository` + one impl per shop under `repositories/` (`suite-…`, `b2b-…`, `b2b-mp-…`), bound through a `REPOSITORIES.<X>` token. The interface is the contract that lets DI swap the variant.
+
+When unsure, start with the single concrete class. Promoting it to an interface later — *if* a second real variant appears — is a small, mechanical change; you are not locked in.
+
+### Common case — single concrete class (DEFAULT)
 
 ```
 cypress/support/pages/<layer>/<feature>/
-├── <feature>-page.ts                       ← the Page class (injects the repository)
-├── <feature>-repository.ts                 ← the INTERFACE — selector contract
-└── repositories/
-    └── suite-<feature>-repository.ts       ← the suite IMPLEMENTATION
-    └── b2b-<feature>-repository.ts         ← (optional, only if user confirmed in Discovery)
-    └── b2b-mp-<feature>-repository.ts      ← (optional, only if user confirmed in Discovery)
+├── <feature>-page.ts                       ← Page class; `@inject(FeatureRepository)`
+└── <feature>-repository.ts                 ← the concrete repository (selectors live here)
 ```
 
-### Interface file — `<feature>-repository.ts`
-
-Must declare `export interface`, one getter per selector, no implementations.
-
 ```typescript
-export interface FeatureRepository {
-  getNameInput(): Cypress.Chainable;
-  getEmailInput(): Cypress.Chainable;
-  getSubmitButton(): Cypress.Chainable;
-  getSuccessMessageSelector(): string;
-}
-```
-
-### Suite implementation file — `repositories/suite-<feature>-repository.ts`
-
-Must live inside the `repositories/` subfolder, must `implements FeatureRepository`, must be `@injectable`, must use `[data-qa="..."]` selectors.
-
-```typescript
+// <feature>-repository.ts
+import { autoWired } from '@utils';
 import { injectable } from 'inversify';
-import { FeatureRepository } from '../<feature>-repository';
 
 @injectable()
-export class SuiteFeatureRepository implements FeatureRepository {
+@autoWired
+export class FeatureRepository {
   getNameInput = (): Cypress.Chainable => cy.get('[data-qa="feature-name-input"]');
   getEmailInput = (): Cypress.Chainable => cy.get('[data-qa="feature-email-input"]');
   getSubmitButton = (): Cypress.Chainable => cy.get('[data-qa="feature-submit-button"]');
@@ -279,44 +270,56 @@ export class SuiteFeatureRepository implements FeatureRepository {
 }
 ```
 
-### ❌ Anti-pattern — DO NOT DO THIS
+`@autoWired` self-binds the class (`container.bind(FeatureRepository).toSelf()`), so `@inject(FeatureRepository)` in the page resolves with **no** entry in `types.ts` or `inversify.config.ts`. Don't add one.
 
-A single concrete class with selectors inlined:
+### Variant case — interface + per-shop impls (ONLY when markup differs)
+
+```
+cypress/support/pages/<layer>/<feature>/
+├── <feature>-page.ts                       ← `@inject(REPOSITORIES.FeatureRepository)`
+├── <feature>-repository.ts                 ← the INTERFACE (selector contract)
+└── repositories/
+    ├── suite-<feature>-repository.ts       ← `implements FeatureRepository`, @injectable
+    ├── b2b-<feature>-repository.ts
+    └── b2b-mp-<feature>-repository.ts
+```
+
 ```typescript
-// BAD: violates the interface+variant pattern
+// <feature>-repository.ts  (interface — no implementations)
+export interface FeatureRepository {
+  getNameInput(): Cypress.Chainable;
+  getSubmitButton(): Cypress.Chainable;
+}
+// repositories/suite-<feature>-repository.ts
+import { injectable } from 'inversify';
+import { FeatureRepository } from '../<feature>-repository';
+
 @injectable()
-export class FeatureRepository {
+export class SuiteFeatureRepository implements FeatureRepository {
   getNameInput = (): Cypress.Chainable => cy.get('[data-qa="feature-name-input"]');
-  // …
+  getSubmitButton = (): Cypress.Chainable => cy.get('[data-qa="feature-submit-button"]');
 }
 ```
 
-This is the most common failure mode — don't collapse the interface and impl into one class, even when only suite is supported. The interface still matters because:
-- DI uses `REPOSITORIES.FeatureRepository` as a `Symbol.for(...)` token — the interface is what's bound.
-- Future demoshop variants become a 30-line addition rather than a refactor of every consumer.
+Then add the token to `types.ts` and bind the right impl in EACH demoshop map in `inversify.config.ts`:
+```typescript
+// types.ts
+export const REPOSITORIES = { /* …existing */ FeatureRepository: Symbol.for('FeatureRepository') };
+// inversify.config.ts — per demoshop map, the variant that matches that shop's markup
+[REPOSITORIES.FeatureRepository]: SuiteFeatureRepository,   // suite map
+[REPOSITORIES.FeatureRepository]: B2bMpFeatureRepository,   // b2b-mp map
+```
 
-### Selector priority
+### Selector priority (both shapes)
 
 1. `[data-qa="..."]` — always preferred
 2. `id` attribute — `[id="setting-key"]` if no `data-qa`
 3. `name` attribute — `[name="field_name"]` for form fields without `data-qa`
-4. Never use CSS classes, nth-child, or text matching
+4. Last resort, when a core/partial exposes none of the above: stable layout structure (`.page-title-head h2`, `[data-qa="title-action"]`) or the partial's translated text. Keep these selectors self-evident from their getter name — do NOT add explanatory doc-block comments (reviewers asked for them removed on PR #330; the getter name is the documentation).
 
-### DI binding
+### Comments in test code
 
-After creating the two files, register in `cypress/support/utils/inversify/inversify.config.ts`:
-
-```typescript
-container.bind(REPOSITORIES.FeatureRepository).to(SuiteFeatureRepository).inSingletonScope();
-```
-
-And add the token to `types.ts`:
-```typescript
-export const REPOSITORIES = {
-  // …existing
-  FeatureRepository: Symbol.for('FeatureRepository'),
-};
-```
+Reviewers (PR #330) explicitly objected to verbose `/** … */` headers on specs, pages, and repositories. Keep test code comment-free: a well-named `it(...)`, page method, and selector getter say what a comment would. Put any "what does this test cover" narrative in the `it(...)` description, not a file header.
 
 ---
 
@@ -430,28 +433,11 @@ Always define typed interfaces — never use `any` for fixture data.
 
 ## Inversify DI Registration
 
-After adding a new page, repository, or scenario, register it in:
+`@autoWired` self-binds any class decorated with it (`container.bind(Class).toSelf()`), so classes injected by their **own class token** need NO manual registration. This covers:
+- Pages (`@inject(...)` consumers) and scenarios — already `@autoWired`, just `container.get(Page)` them.
+- **Single-impl repositories** (the default shape) — `@injectable @autoWired class FeatureRepository`, injected as `@inject(FeatureRepository)`. Do **not** add it to `types.ts` or `inversify.config.ts`.
 
-**File**: `tests/cypress-tests/cypress/support/utils/inversify/inversify.config.ts`
-
-```typescript
-import { SuiteFeatureRepository } from '../../pages/yves/feature/repositories/suite-feature-repository';
-import { FeaturePage } from '../../pages/yves/feature/feature-page';
-import { FeatureScenario } from '../../scenarios/yves/feature-scenario';
-
-container.bind(REPOSITORIES.FeatureRepository).to(SuiteFeatureRepository).inSingletonScope();
-container.bind(FeaturePage).to(FeaturePage).inSingletonScope();
-container.bind(FeatureScenario).to(FeatureScenario).inSingletonScope();
-```
-
-Add the repository token to `types.ts`:
-
-```typescript
-export const REPOSITORIES = {
-  // existing...
-  FeatureRepository: Symbol.for('FeatureRepository'),
-};
-```
+You only touch the central DI files for the **variant repository shape** — register the `REPOSITORIES.<X>` token in `types.ts` and bind the per-shop impl in each demoshop map in `inversify.config.ts` (see the Repositories "Variant case" above). If you find yourself binding the same single class into every map, you're using the wrong shape — collapse it to a self-bound concrete class.
 
 ---
 
