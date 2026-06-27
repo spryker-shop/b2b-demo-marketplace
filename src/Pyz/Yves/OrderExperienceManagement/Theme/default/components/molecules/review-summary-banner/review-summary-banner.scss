@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin order-experience-management-review-summary-banner($name: '.review-summary-banner') {
     #{$name} {
         padding: var(--scale-16);
@@ -10,7 +11,5 @@
         &__title {
             font-size: var(--font-size-14);
         }
-
-        @content;
     }
 }

@@ -1,6 +1,6 @@
-@use 'ShopUi/styles/shared' as *;
+@use 'src/ShopUi/styles/shared' as *;
 @use 'OrderExperienceManagement/components/molecules/recurring-order-selector/recurring-order-selector' as *;
-@include subscription-recurring-order-selector {
+@include order-experience-management-recurring-order-selector {
     border: rem(1) solid var(--border-subtle);
     border-radius: var(--radius-md);
     margin-bottom: var(--scale-24);
