@@ -98,7 +98,11 @@ tests/cypress-tests/cypress/e2e/
 features that ship only in `master-demo`). It must be runnable on its own and must NOT be swept up by
 any other run:
 
-- **Command**: `npm run cy:demo` → `cypress run --spec "cypress/e2e/demo/**/*.ts" --headless --browser chrome`
+- **Command**: `npm run cy:demo`. In this repo the script **self-pins** the demoshop:
+  `ENV_REPOSITORY_ID=b2b-mp cypress run --spec "cypress/e2e/demo/**/*.ts" --headless --browser chrome`.
+  So a bare `npm run cy:demo` Just Works from any shell regardless of what `.env` defaults to — no env
+  prefix needed. (CI injects `ENV_REPOSITORY_ID` via `docker/sdk exec --env`, which agrees with the
+  self-pin, so CI is unaffected.)
 - **Excluded everywhere else**: the other globs use `!(smoke|demo)` so `cy:ci` and `cy:run` skip it;
   `cy:smoke` only matches `smoke/**`. Do NOT touch `cy:ci:ssp` for this — its filename filter `(ssp)*`
   already excludes demo specs (use plain feature filenames, never an `ssp`-prefixed one, under `demo/`).
@@ -106,10 +110,15 @@ any other run:
   own step in the Cypress/UI job, mirroring the SSP step — its failures are reported independently.
 - **Tags**: use `@demo` as the layer tag (plus a `@<feature>` tag and a real module tag). Static fixtures
   only, same as smoke — no dynamic fixtures, no CLI commands, no AI-provider calls.
-- **Fixtures**: `fixtures/{repositoryId}/demo/<feature>/static-<feature>.json`.
+- **Fixtures**: `fixtures/b2b-mp/demo/static-<feature>.json` (the spec sits directly in `demo/`, so the
+  fixture dir is `demo/` — NO extra `<feature>/` subfolder; see the fixture auto-discovery warning).
 - **Types**: `support/types/demo/index.ts` (re-export per-feature interface files), aliased as `@interfaces/demo`.
-- **Guard** non-b2b-mp repos at the top of the `describe` with `it.skip(...)` + `return`, since the demo
-  features only ship in `b2b-mp`.
+- **No `repositoryId` guard.** Earlier demo specs guarded the `describe` with
+  `if (!['b2b-mp'].includes(Cypress.env('repositoryId'))) { it.skip(...); return; }`. That guard was
+  REMOVED (PR #330) — the demo command self-pins b2b-mp, fixtures resolve under `fixtures/b2b-mp/demo/`,
+  and the `demo/` glob is excluded from every other run, so nothing else ever loads these specs. Adding
+  the guard back is dead code. (Only re-introduce a guard if a demo spec is ever expected to be swept up
+  by a multi-repo run — which the current isolation makes impossible.)
 
 ---
 
@@ -511,7 +520,7 @@ All three must pass before the task is complete.
 ENV_REPOSITORY_ID=b2b-mp npx cypress run --spec "cypress/e2e/<group>/<feature>.cy.ts" --headless --browser chrome
 ```
 
-If the spec is guarded to a single demoshop, also run it under a different `ENV_REPOSITORY_ID` to confirm it **skips cleanly** (pending, not erroring) rather than throwing during DI/`container.get` resolution.
+If the spec uses a `repositoryId` guard (the variant pattern, not the demo group — which is unguarded), also run it under a different `ENV_REPOSITORY_ID` to confirm it **skips cleanly** (pending, not erroring) rather than throwing during DI/`container.get` resolution.
 
 ---
 
@@ -536,7 +545,7 @@ cy.reloadUntilFound(url, selector, parentSelector, retries, wait)
 > ```bash
 > cd tests/cypress-tests && cp .env.dynamic-store.example .env
 > ```
-> Note the example sets `ENV_REPOSITORY_ID=suite`. A demoshop-guarded spec (e.g. the `demo` group, guarded to `b2b-mp`) will then **skip** on a bare `npm run …`. Prefix the real repo id to actually exercise it: `ENV_REPOSITORY_ID=b2b-mp ENV_IS_SSP_ENABLED=true npm run cy:demo`. (CI passes these via `docker/sdk exec --env`, so CI is unaffected.)
+> Note the example sets `ENV_REPOSITORY_ID=suite`. For the **layer** runs (`cy:ci:*`, `cy:smoke`) that default decides which demoshop's fixtures/markup are exercised — prefix `ENV_REPOSITORY_ID=<shop>` to target another. The **`cy:demo`** script self-pins `ENV_REPOSITORY_ID=b2b-mp`, so it ignores the `.env` default and runs the demo specs against b2b-mp with no prefix. (CI passes env via `docker/sdk exec --env`, unaffected either way.)
 
 **Open interactive runner:**
 ```bash
@@ -572,6 +581,7 @@ cd tests/cypress-tests && npx cypress run --env grepTags="@checkout" --headless 
 
 ## Directory Structure for a New Feature
 
+Default shape (single-impl repository — most features):
 ```
 cypress/
 ├── e2e/yves/feature-name/
@@ -581,15 +591,14 @@ cypress/
 │   └── dynamic-feature-name.json
 └── support/
     ├── pages/yves/feature-name/
-    │   ├── feature-name-page.ts
-    │   ├── feature-name-repository.ts
-    │   └── repositories/
-    │       └── suite-feature-name-repository.ts
+    │   ├── feature-name-page.ts          (@inject(FeatureNameRepository))
+    │   └── feature-name-repository.ts    (concrete @injectable @autoWired class)
     ├── scenarios/yves/
     │   └── feature-name-scenario.ts
     └── types/yves/
         └── index.ts  (add interface exports here)
 ```
+Only when markup differs per demoshop, add the interface + `repositories/<shop>-…` impls + `REPOSITORIES` token (see Repositories "Variant case").
 
 ## Checklist for a New Feature Test
 
@@ -597,9 +606,9 @@ cypress/
 1. Create static fixture JSON (always required) — start with `suite` under `fixtures/suite/<layer>/<feature>/`
 2. Create dynamic fixture JSON (if entities need to be created) — same suite-first rule
 3. Define TypeScript interfaces for both fixtures
-4. Create the repository interface and a **`suite`** implementation first. Only add `b2b` / `b2b-mp` implementations if the user confirmed the feature ships in those demoshops during discovery — otherwise, flag it as a follow-up in your final summary
-5. Create the page class extending the correct base page
+4. Create the repository. **Default: one concrete `@injectable @autoWired class <Feature>Repository`** with the selectors. Only split into an interface + per-shop impls under `repositories/` if you confirmed during discovery that the markup genuinely differs across demoshops — otherwise the single class is correct and complete
+5. Create the page class extending the correct base page; inject the repository by its class token (`@inject(<Feature>Repository)`) for the default shape
 6. Create a scenario class if the flow spans multiple pages
-7. Register all bindings in `inversify.config.ts` and `types.ts`
-8. Write the test file with `describe` tags and `before()` fixture loading
-9. Run the test to verify it passes
+7. DI: nothing to register for the default shape (`@autoWired` self-binds). Only the variant shape adds a `REPOSITORIES` token to `types.ts` + per-map bindings in `inversify.config.ts`
+8. Write the test file with `describe` tags and `before()` fixture loading. No file-header doc-blocks — intent goes in the `it(...)` names
+9. Run the test live to verify it passes — static gates (typecheck/lint/prettier) do NOT prove it works
