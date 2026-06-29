@@ -8,11 +8,12 @@
         cursor: pointer;
 
         &__icon {
-            color: var(--icon-secondary);
+            color: var(--icon-primary);
             flex-shrink: 0;
         }
 
         &__value {
+            text-transform: capitalize;
             white-space: nowrap;
         }
 

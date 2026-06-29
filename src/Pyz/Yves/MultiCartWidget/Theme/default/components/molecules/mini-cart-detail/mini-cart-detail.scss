@@ -42,10 +42,7 @@
         }
 
         &__name {
-            font-family: var(--label-md-family);
-            font-size: var(--label-md-size);
-            font-weight: var(--label-md-weight);
-            line-height: var(--label-md-line-height);
+            @include typography(label-md);
             color: var(--text-brand);
             white-space: nowrap;
             overflow: hidden;
@@ -60,10 +57,8 @@
             padding: var(--scale-2) var(--scale-8);
             border-radius: var(--radius-sm);
             background-color: var(--background-state-success-subtle);
-            font-family: var(--label-sm-family);
-            font-size: var(--label-sm-size);
-            font-weight: var(--label-sm-weight);
-            line-height: var(--label-sm-line-height);
+
+            @include typography(label-sm);
             color: var(--text-state-success);
             white-space: nowrap;
             flex-shrink: 0;
@@ -74,10 +69,8 @@
             display: flex;
             align-items: center;
             gap: rem(5);
-            font-family: var(--body-sm-family);
-            font-size: var(--body-sm-size);
-            font-weight: var(--body-sm-weight);
-            line-height: var(--body-sm-line-height);
+
+            @include typography(body-sm);
             color: var(--text-secondary);
             white-space: nowrap;
             overflow: hidden;
@@ -116,10 +109,7 @@
         }
 
         &__price {
-            font-family: var(--label-sm-family);
-            font-size: var(--label-sm-size);
-            font-weight: var(--label-sm-weight);
-            line-height: var(--label-sm-line-height);
+            @include typography(label-sm);
             color: var(--text-primary);
             white-space: nowrap;
         }

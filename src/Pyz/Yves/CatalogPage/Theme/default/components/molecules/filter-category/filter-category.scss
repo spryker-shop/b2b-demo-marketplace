@@ -1,52 +1,35 @@
 @mixin catalog-page-filter-category($name: '.filter-category') {
     #{$name} {
         &__menu {
-            &--lvl-1,
-            &--lvl-2 {
-                padding-left: var(--scale-8);
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-8);
 
-                @include helper-breakpoint-media-min($lg) {
-                    padding-left: 0;
-                }
+            &--lvl-2 {
+                padding-left: var(--scale-12);
             }
 
-            &--lvl-3 {
-                @include helper-breakpoint-media-min($lg) {
-                    padding-left: var(--scale-8);
-                }
+            &--lvl-3,
+            &--lvl-4,
+            &--lvl-5 {
+                padding-left: var(--scale-12);
+                border-left: var(--stroke-sm) solid var(--border-subtle);
             }
         }
 
         &__menu-item {
-            display: flex;
-            flex-grow: 1;
+            display: block;
             color: var(--text-secondary);
-
-            &--lvl-2 {
-                &:first-child {
-                    padding-top: var(--scale-4);
-
-                    @include helper-breakpoint-media-min($lg) {
-                        padding-top: 0;
-                    }
-                }
-
-                &:last-child {
-                    padding-bottom: var(--scale-4);
-
-                    @include helper-breakpoint-media-min($lg) {
-                        padding-bottom: 0;
-                    }
-                }
-            }
         }
 
         &__category-row {
-            flex-grow: 1;
-
-            &--no-children {
-                margin-left: var(--scale-16);
-            }
+            display: flex;
+            align-items: center;
+            gap: var(--scale-8);
+            min-height: rem(28);
         }
 
         &__category-target {
@@ -56,42 +39,40 @@
         }
 
         &__category-target-inner {
+            @include helper-effect-transition(padding-top);
             overflow: hidden;
+            padding-top: var(--scale-8);
         }
 
         &__category-toggle-button {
             @include helper-effect-transition(transform);
+            display: inline-flex;
+            align-items: center;
+            flex-shrink: 0;
             color: var(--icon-secondary);
-            margin-right: var(--scale-4);
             background-color: transparent;
             cursor: pointer;
-            width: var(--scale-20);
-
-            @include helper-breakpoint-media-max($lg) {
-                display: inline-block;
-                vertical-align: top;
-                margin-top: rem(-5);
-            }
+            font-size: var(--font-size-16);
         }
 
         &__menu-link {
             @include helper-effect-transition(color);
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            width: 100%;
-            margin-bottom: var(--scale-8);
+            justify-content: space-between;
+            flex: 1 0 0;
+            min-width: 0;
+            gap: var(--scale-8);
             color: var(--text-primary);
             cursor: pointer;
             background-color: transparent;
-            gap: var(--scale-8);
-            font-family: var(--font-family-sans);
-            font-size: var(--font-size-14);
-            font-weight: var(--font-weight-regular);
-            line-height: var(--font-line-height-20);
+            text-align: left;
+
+            @include typography(body-md);
 
             &--lvl-1 {
-                font-weight: var(--font-weight-semibold);
+                font-family: var(--label-md-semibold-family);
+                font-weight: var(--label-md-semibold-weight);
             }
 
             &:hover,
@@ -107,17 +88,24 @@
 
             &--active {
                 color: var(--text-brand);
+
+                #{$name}__counter {
+                    color: var(--text-brand);
+                }
             }
         }
 
         &__link-text {
+            flex: 1 0 0;
+            min-width: 0;
             text-align: left;
         }
 
         &__counter {
             flex-shrink: 0;
-            font-size: var(--font-size-12);
-            line-height: var(--font-line-height-16);
+            font-family: var(--body-sm-family);
+            font-size: var(--body-sm-size);
+            line-height: var(--body-sm-line-height);
             color: var(--text-secondary);
         }
 
@@ -126,12 +114,14 @@
                 grid-template-rows: 0fr;
             }
 
+            #{$name}__category-target-inner {
+                padding-top: 0;
+            }
+
             #{$name}__category-toggle-button {
-                transform: rotate(-90deg);
+                transform: rotate(180deg);
             }
         }
-
-        @content;
     }
 }
 

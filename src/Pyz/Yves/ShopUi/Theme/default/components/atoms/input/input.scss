@@ -78,6 +78,45 @@
             letter-spacing: var(--body-sm-letter-spacing);
         }
 
+        &--search {
+            display: flex;
+            border-radius: var(--radius-md);
+            padding-right: var(--scale-4);
+
+            &:focus-within {
+                border-color: var(--input-border-focus);
+                background: var(--background-surface);
+                box-shadow: none;
+            }
+
+            > input {
+                @include typography(body-sm);
+                flex: 1 1 0;
+                min-width: 0;
+                height: auto;
+                padding: 0;
+                border: none;
+                background: transparent;
+                outline: none;
+                color: var(--input-text-value);
+            }
+        }
+
+        &__search-icon {
+            display: flex;
+            flex-shrink: 0;
+            align-items: center;
+            justify-content: center;
+            width: rem(28);
+            height: rem(28);
+            padding: 0;
+            border: none;
+            border-radius: var(--radius-sm);
+            background: var(--background-subtle);
+            font-size: rem(16);
+            color: var(--icon-primary);
+        }
+
         @content;
     }
 }

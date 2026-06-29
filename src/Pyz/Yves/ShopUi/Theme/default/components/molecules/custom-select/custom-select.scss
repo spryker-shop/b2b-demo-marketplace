@@ -3,6 +3,7 @@
 @mixin shop-ui-custom-select($name: '.custom-select') {
     #{$name} {
         position: relative;
+        isolation: isolate;
         max-width: 100%;
         gap: rem(4);
         align-items: center;
@@ -40,6 +41,10 @@
             color: var(--icon-disabled);
         }
 
+        &:has(.select2-container--open) &__caret {
+            z-index: $setting-zi-side-drawer + 4;
+        }
+
         &__icon {
             flex-shrink: 0;
             pointer-events: none;
@@ -63,10 +68,8 @@
                 background: none;
                 box-shadow: none;
                 color: var(--text-primary);
-                font-family: var(--body-md-family);
-                font-size: var(--body-md-size);
-                font-weight: var(--body-md-weight);
-                line-height: var(--body-md-line-height);
+
+                @include typography(body-md);
                 white-space: nowrap;
                 appearance: none;
                 cursor: pointer;
@@ -125,10 +128,8 @@
 
                 #{$name}__select {
                     color: var(--text-inverse);
-                    font-family: var(--body-sm-family);
-                    font-size: var(--body-sm-size);
-                    font-weight: var(--body-sm-weight);
-                    line-height: var(--body-sm-line-height);
+
+                    @include typography(body-sm);
                     padding-right: 0;
                 }
 
@@ -234,10 +235,8 @@
                 #{$name}-selection__rendered {
                     padding-left: var(--scale-4);
                     color: var(--text-primary);
-                    font-family: var(--body-md-family);
-                    font-size: var(--body-md-size);
-                    font-weight: var(--body-md-weight);
-                    line-height: var(--body-md-line-height);
+
+                    @include typography(body-md);
                     white-space: nowrap;
                     cursor: pointer;
                     border: none;
@@ -247,10 +246,8 @@
 
                     @include helper-breakpoint-media-min($xl) {
                         color: var(--text-inverse);
-                        font-family: var(--body-sm-family);
-                        font-size: var(--body-sm-size);
-                        font-weight: var(--body-sm-weight);
-                        line-height: var(--body-sm-line-height);
+
+                        @include typography(body-sm);
                     }
                 }
 
@@ -292,9 +289,9 @@
             box-sizing: border-box;
             display: block;
             border: none;
-            padding: var(--scale-4) 0;
-            border-radius: var(--radius-sm);
-            background: var(--background-surface);
+            padding: var(--scale-8) 0;
+            border-radius: var(--radius-md);
+            background: var(--background-page);
             box-shadow: var(--shadows-md-x) var(--shadows-md-y) var(--shadows-md-blur) var(--shadows-md-spread)
                 var(--shadows-md-color);
         }
@@ -307,12 +304,30 @@
             display: block;
         }
 
-        &--sm {
-            #{$name}-results__option {
-                min-height: rem(32);
+        &-container--sm {
+            #{$name}-selection__rendered {
+                display: block;
+                height: rem(32);
+                padding-top: var(--scale-6);
+                padding-bottom: var(--scale-6);
+                padding-left: var(--scale-12);
                 font-size: var(--body-sm-size);
-                padding-left: var(--scale-8);
-                padding-right: var(--scale-8);
+                line-height: var(--body-sm-line-height);
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            #{$name}-results__option {
+                display: block;
+                height: rem(32);
+                min-height: 0;
+                padding: var(--scale-8);
+                font-size: var(--body-sm-size);
+                line-height: var(--body-sm-line-height);
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
 
                 &[aria-selected='true'] {
                     padding-right: rem(36);
@@ -320,7 +335,7 @@
             }
         }
 
-        &--xs {
+        &-container--xs {
             #{$name}-results__option {
                 min-height: rem(28);
                 font-size: var(--body-sm-size);
@@ -372,7 +387,7 @@
                     content: 'check';
                     font-family: 'Material Symbols Outlined', sans-serif;
                     position: absolute;
-                    right: var(--scale-12);
+                    right: 0;
                     top: 50%;
                     translate: -50% -50%;
                     font-size: var(--font-size-18);

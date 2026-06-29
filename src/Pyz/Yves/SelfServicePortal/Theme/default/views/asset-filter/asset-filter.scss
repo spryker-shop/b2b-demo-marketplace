@@ -10,10 +10,8 @@
 
         &__title {
             margin: 0;
-            font-family: var(--label-md-semibold-family);
-            font-size: var(--label-md-semibold-size);
-            font-weight: var(--label-md-semibold-weight);
-            line-height: var(--label-md-semibold-line-height);
+
+            @include typography(label-md-semibold);
             color: var(--text-primary);
         }
 

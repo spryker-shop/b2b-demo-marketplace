@@ -91,6 +91,11 @@
             width: 100%;
         }
 
+        &--filter {
+            display: block;
+            width: 100%;
+        }
+
         &__label:empty {
             display: none;
         }
@@ -139,22 +144,19 @@
         }
 
         &__label--filter {
+            @include typography(body-md);
             flex: 1 0 0;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: var(--scale-8);
             min-width: 0;
-            font-size: var(--font-size-14);
-            font-weight: var(--font-weight-regular);
-            line-height: var(--font-line-height-20);
             color: var(--text-primary);
         }
 
         &__counter {
+            @include typography(body-sm);
             flex-shrink: 0;
-            font-size: var(--font-size-12);
-            line-height: var(--font-line-height-16);
             color: var(--text-secondary);
         }
 

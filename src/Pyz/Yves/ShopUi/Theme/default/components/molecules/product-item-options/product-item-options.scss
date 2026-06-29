@@ -13,11 +13,8 @@
         &__item {
             display: block;
             color: var(--text-tertiary);
-            font-family: var(--label-sm-family);
-            font-size: var(--label-sm-size);
-            font-weight: var(--label-sm-weight);
-            line-height: var(--label-sm-line-height);
-            letter-spacing: var(--label-sm-letter-spacing);
+
+            @include typography(label-sm);
         }
 
         &__total-price {

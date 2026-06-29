@@ -2,7 +2,6 @@
 
 {% define config = {
     name: 'catalog-header',
-    tag: 'div',
 } %}
 
 {% define data = {
@@ -17,22 +16,33 @@
                 <h1 class="{{ config.name }}__title">{{ data.title }}</h1>
             {% endif %}
 
-            <p class="{{ config.name }}__count">
-                {% block count %}
-                    {% widget 'SspAssetFilterNameWidget' args [data.numFound] with {
-                        defaultCount: data.numFound,
-                    } only %}
-                    {% nowidget %}
-                        {{ data.numFound | executeFilterIfExists('formatInt', app.locale) }} {{ 'catalog.itemsFound' | trans }}
-                    {% endwidget %}
-                {% endblock %}
-            </p>
+            {% if app.request.query.get('q') is not empty %}
+                <p class="{{ config.name }}__count">
+                    {% block count %}
+                        {% widget 'SspAssetFilterNameWidget' args [data.numFound] with {
+                            defaultCount: data.numFound,
+                        } only %}
+                            {% block content %}
+                                {% if data.assetName is not empty %}
+                                    <strong>
+                                        {{ 'catalog.ssp.itemsFound' | trans( {'%num_found%': count, '%ssp_asset_name%': data.assetName}) }}
+                                    </strong>
+                                {% else %}
+                                    {{ count }} {{ 'catalog.itemsFound' | trans }}
+                                {% endif %}
+                            {% endblock %}
+                        {% nowidget %}
+                            {{ data.numFound | executeFilterIfExists('formatInt', app.locale) }} {{ 'catalog.itemsFound' | trans }}
+                        {% endwidget %}
+                    {% endblock %}
+                </p>
+            {% endif %}
         {% endblock %}
     </div>
 
     {% if data.numFound > 0 %}
         <div class="{{ config.name }}__controls">
-            <span class="{{ config.name }}__filter-by">{{ 'catalog.filter.by' | trans }}</span>
+            <span class="{{ config.name }}__filter-by is-hidden-sm-md">{{ 'catalog.filter.by' | trans }}</span>
 
             {% block controls %}{% endblock %}
         </div>

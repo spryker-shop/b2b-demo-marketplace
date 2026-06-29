@@ -13,10 +13,8 @@
             justify-content: space-between;
             width: 100%;
             padding: var(--scale-6) 0;
-            font-family: var(--body-md-family);
-            font-size: var(--body-md-size);
-            font-weight: var(--body-md-weight);
-            line-height: var(--body-md-line-height);
+
+            @include typography(body-md);
             color: var(--text-primary);
             background: none;
             border: none;
@@ -83,10 +81,8 @@
             align-items: center;
             gap: var(--scale-12);
             padding: var(--scale-6) 0;
-            font-family: var(--body-md-family);
-            font-size: var(--body-md-size);
-            font-weight: var(--body-md-weight);
-            line-height: var(--body-md-line-height);
+
+            @include typography(body-md);
             color: var(--text-primary);
             text-decoration: none;
         }

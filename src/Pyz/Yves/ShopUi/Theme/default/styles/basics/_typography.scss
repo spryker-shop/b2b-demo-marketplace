@@ -31,11 +31,8 @@
     @each $i, $size in $heading-sizes {
         h#{$i} {
             display: block;
-            font-family: var(--heading-#{$size}-family);
-            font-weight: var(--heading-#{$size}-weight);
-            font-size: var(--heading-#{$size}-size);
-            line-height: var(--heading-#{$size}-line-height);
-            letter-spacing: var(--heading-#{$size}-letter-spacing);
+
+            @include typography(heading-#{$size});
             color: var(--text-primary);
         }
     }

@@ -30,7 +30,7 @@
             }
 
             &--filter-enumeration {
-                margin: var(--scale-4) 0;
+                margin: 0;
                 line-height: var(--font-line-height-20);
             }
 
@@ -45,6 +45,12 @@
                     margin-right: 0;
                 }
             }
+        }
+
+        &:has(&__item--filter-enumeration) {
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-8);
         }
 
         &--social {
@@ -90,10 +96,7 @@
         }
 
         &__link--lvl-0 {
-            font-family: var(--body-md-family);
-            font-size: var(--body-md-size);
-            font-weight: var(--font-weight-regular);
-            line-height: var(--body-md-line-height);
+            @include typography(body-md);
             color: var(--text-primary);
             text-decoration: none;
 

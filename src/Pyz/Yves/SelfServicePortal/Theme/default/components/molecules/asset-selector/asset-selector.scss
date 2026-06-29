@@ -17,18 +17,14 @@
         display: inline-flex;
         align-items: center;
         gap: var(--scale-4);
-        font-family: var(--label-sm-family);
-        font-size: var(--label-sm-size);
-        font-weight: var(--label-sm-weight);
-        line-height: var(--label-sm-line-height);
+
+        @include typography(label-sm);
     }
 
     &__subtitle {
         color: var(--text-primary);
-        font-family: var(--label-sm-family);
-        font-size: var(--label-sm-size);
-        font-weight: var(--label-sm-weight);
-        line-height: var(--label-sm-line-height);
+
+        @include typography(label-sm);
         padding-bottom: 0;
     }
 
@@ -52,17 +48,15 @@
     }
 
     &--filter &__data--actions {
-        justify-content: flex-end;
+        justify-content: flex-start;
+        margin-top: var(--scale-4);
         gap: var(--scale-12);
     }
 
     &--filter &__trigger,
     &--filter &__action-link {
+        @include typography(label-sm);
         color: var(--text-brand);
-        font-family: var(--label-sm-family);
-        font-size: var(--label-sm-size);
-        font-weight: var(--label-sm-weight);
-        line-height: var(--label-sm-line-height);
         text-decoration: none;
     }
 
@@ -74,8 +68,8 @@
     }
 
     &--filter &__container--select {
-        align-items: center;
-        text-align: center;
+        align-items: flex-start;
+        text-align: left;
     }
 
     &__content {
@@ -112,10 +106,8 @@
 
     &--filter &__subtitle--name {
         color: var(--text-primary);
-        font-family: var(--label-md-family);
-        font-size: var(--label-md-size);
-        font-weight: var(--label-md-weight);
-        line-height: var(--label-md-line-height);
+
+        @include typography(label-md);
     }
 
     &--filter &__information,

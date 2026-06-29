@@ -17,24 +17,15 @@
     #{$name}-main {
         &--catalog-page,
         &--cms-search-page {
-            position: relative;
-            padding-top: rem(16);
+            padding-top: rem(12);
 
             @include helper-breakpoint-media-min($lg) {
-                padding-top: rem(20);
+                padding-top: rem(16);
             }
         }
 
         &__catalog-page-content {
             padding-bottom: rem(60);
-
-            @include helper-breakpoint-media-min($lg) {
-                padding-bottom: rem(70);
-
-                &.grid--gap {
-                    --grid-gap: #{$setting-grid-space * 3};
-                }
-            }
         }
 
         &--pdp {

@@ -1,4 +1,4 @@
-@mixin catalog-page-empty-state($name: '.empty-state') {
+@mixin catalog-page-empty-catalog-state($name: '.empty-catalog-state') {
     #{$name} {
         display: flex;
         flex-direction: column;
@@ -9,12 +9,14 @@
         background: var(--background-surface);
         border-radius: var(--radius-md);
         text-align: center;
+        margin: 0;
 
         &__content {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: var(--scale-16);
+            gap: var(--scale-20);
+            color: var(--text-primary);
         }
 
         &__message {
@@ -26,26 +28,20 @@
 
         &__heading {
             margin: 0;
-            font-family: var(--font-family-sans);
-            font-size: var(--font-size-18);
-            font-weight: var(--font-weight-semibold);
-            line-height: var(--font-line-height-28);
-            color: var(--text-primary);
+
+            @include typography(heading-sm);
         }
 
         &__text {
             margin: 0;
-            font-size: var(--font-size-14);
-            font-weight: var(--font-weight-regular);
-            line-height: var(--font-line-height-20);
-            color: var(--text-primary);
+
+            @include typography(body-md);
         }
 
         &__suggestion {
             margin: 0;
             font-size: var(--font-size-14);
             line-height: var(--font-line-height-20);
-            color: var(--text-primary);
         }
 
         &__suggestion-link {
@@ -70,4 +66,4 @@
     }
 }
 
-@include catalog-page-empty-state();
+@include catalog-page-empty-catalog-state();

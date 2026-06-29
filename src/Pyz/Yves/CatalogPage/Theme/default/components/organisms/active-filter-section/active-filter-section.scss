@@ -2,7 +2,6 @@
     #{$name} {
         display: flex;
         flex-direction: column;
-        gap: var(--scale-8);
         margin-bottom: var(--scale-16);
 
         &__head {
@@ -10,6 +9,7 @@
             align-items: center;
             justify-content: space-between;
             gap: var(--scale-8);
+            margin-bottom: var(--scale-8);
         }
 
         &__title {
@@ -37,6 +37,10 @@
             display: flex;
             flex-wrap: wrap;
             gap: var(--scale-6);
+
+            .active-filter {
+                margin: 0;
+            }
         }
 
         &__toggle {

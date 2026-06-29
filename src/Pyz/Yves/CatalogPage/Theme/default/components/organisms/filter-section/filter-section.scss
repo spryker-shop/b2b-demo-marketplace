@@ -11,7 +11,7 @@
 
         @include helper-breakpoint-media-min($lg) {
             position: static;
-            padding: var(--scale-12) var(--scale-16);
+            padding: var(--scale-12) var(--scale-16) 0;
             background: var(--background-page);
             border: var(--stroke-sm) solid var(--border-subtle);
             border-radius: var(--radius-sm);
@@ -30,11 +30,8 @@
         }
 
         &__title {
+            @include typography(heading-sm);
             padding: 0 var(--scale-16) var(--scale-12);
-            font-family: var(--heading-sm-family);
-            font-size: var(--heading-sm-size);
-            font-weight: var(--heading-sm-weight);
-            line-height: var(--heading-sm-line-height);
             text-align: center;
         }
 
@@ -43,11 +40,6 @@
         }
 
         &__search {
-            display: block;
-            margin-bottom: var(--scale-12);
-        }
-
-        &__collapse-all {
             margin-bottom: var(--scale-12);
         }
 
@@ -70,24 +62,16 @@
             }
 
             &--hollow {
-                padding: var(--scale-12) 0;
-
-                @include helper-breakpoint-media-min($lg) {
-                    border-bottom: var(--stroke-sm) solid var(--border-subtle);
-                }
+                padding-bottom: var(--scale-16);
             }
         }
 
         &__item-title {
+            @include typography(label-md-semibold);
             display: flex;
             align-items: center;
             gap: var(--scale-8);
             margin: 0;
-            font-family: var(--label-md-semibold-family);
-            font-size: var(--label-md-semibold-size);
-            font-weight: var(--label-md-semibold-weight);
-            line-height: var(--label-md-semibold-line-height);
-            letter-spacing: var(--label-md-semibold-letter-spacing);
             color: var(--text-primary);
             text-transform: none;
             cursor: pointer;
@@ -96,11 +80,16 @@
         &__item-icon {
             @include helper-effect-transition(transform);
             flex-shrink: 0;
+            color: var(--icon-secondary);
         }
 
         &__item-label {
             flex: 1 0 0;
             min-width: 0;
+        }
+
+        &__item:not(.is-collapsed) #{$name}__item-icon {
+            transform: rotate(180deg);
         }
 
         &__item-content {
@@ -110,12 +99,6 @@
                 @include helper-breakpoint-media-min($lg) {
                     margin-top: 0;
                 }
-            }
-        }
-
-        &__item:not(.is-collapsed) {
-            #{$name}__item-icon {
-                transform: rotate(180deg);
             }
         }
 

@@ -1,35 +1,39 @@
 @mixin catalog-page-sort($name: '.sort') {
     #{$name} {
+        @include helper-breakpoint-media-max($lg) {
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+
         &__controls {
             display: flex;
-            flex-direction: column;
-            gap: var(--scale-12);
+            align-items: center;
+            gap: var(--scale-8);
 
-            @include helper-breakpoint-media-min($lg) {
-                flex-direction: row;
-                align-items: center;
-                gap: var(--scale-8);
+            @include helper-breakpoint-media-max($lg) {
+                flex: 1 1 auto;
+                min-width: 0;
             }
         }
 
         &__field {
             display: flex;
-            flex-direction: column;
-            gap: var(--scale-4);
+            align-items: center;
+            gap: var(--scale-8);
 
-            @include helper-breakpoint-media-min($lg) {
-                flex-direction: row;
-                align-items: center;
-                gap: var(--scale-8);
+            &--filter {
+                max-width: rem(152);
+
+                @include helper-breakpoint-media-max($lg) {
+                    flex: 1 1 auto;
+                    max-width: none;
+                    min-width: 0;
+                }
             }
         }
 
         &__label {
-            font-family: var(--label-sm-family);
-            font-size: var(--label-sm-size);
-            font-weight: var(--label-sm-weight);
-            line-height: var(--label-sm-line-height);
-            letter-spacing: var(--label-sm-letter-spacing);
+            @include typography(label-sm);
             color: var(--text-secondary);
             white-space: nowrap;
         }

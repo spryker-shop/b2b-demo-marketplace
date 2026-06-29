@@ -13,11 +13,7 @@
         }
 
         &__description {
-            font-family: var(--body-md-family);
-            font-size: var(--body-md-size);
-            font-weight: var(--body-md-weight);
-            line-height: var(--body-md-line-height);
-            letter-spacing: var(--body-md-letter-spacing);
+            @include typography(body-md);
             color: var(--text-secondary);
         }
 
@@ -30,10 +26,8 @@
 
         &__details-title {
             margin: 0;
-            font-family: var(--label-md-semibold-family);
-            font-size: var(--label-md-semibold-size);
-            font-weight: var(--label-md-semibold-weight);
-            line-height: var(--label-md-semibold-line-height);
+
+            @include typography(label-md-semibold);
             color: var(--text-primary);
         }
 
@@ -45,10 +39,8 @@
 
         &__detail-list-item {
             margin: 0;
-            font-family: var(--body-md-family);
-            font-size: var(--body-md-size);
-            font-weight: var(--body-md-weight);
-            line-height: var(--body-md-line-height);
+
+            @include typography(body-md);
             color: var(--text-secondary);
         }
 

@@ -9,34 +9,29 @@
 
         @include helper-breakpoint-media-min($lg) {
             flex-wrap: nowrap;
-            margin-bottom: var(--scale-24);
+            margin-bottom: var(--scale-32);
         }
 
         &__info {
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
-            align-items: baseline;
+            align-items: center;
             gap: var(--scale-4) var(--scale-12);
             min-width: 0;
         }
 
         &__title {
             margin: 0;
-            font-family: var(--heading-md-family);
-            font-weight: var(--heading-md-weight);
-            font-size: var(--heading-md-size);
-            line-height: var(--heading-md-line-height);
-            letter-spacing: var(--heading-md-letter-spacing);
+
+            @include typography(heading-md);
             color: var(--text-secondary);
         }
 
         &__count {
             margin: 0;
-            font-family: var(--body-md-family);
-            font-size: var(--body-md-size);
-            font-weight: var(--body-md-weight);
-            line-height: var(--body-md-line-height);
+
+            @include typography(body-md);
             color: var(--text-secondary);
         }
 
@@ -45,16 +40,32 @@
             align-items: center;
             gap: var(--scale-8);
             flex-shrink: 0;
+
+            @include helper-breakpoint-media-max($lg) {
+                width: 100%;
+            }
         }
 
         &__filter-by {
-            font-family: var(--body-sm-family);
-            font-size: var(--body-sm-size);
-            font-weight: var(--body-sm-weight);
-            line-height: var(--body-sm-line-height);
-            letter-spacing: var(--body-sm-letter-spacing);
+            @include typography(body-sm);
             color: var(--text-primary);
             white-space: nowrap;
+        }
+
+        &__filter-trigger {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--scale-4);
+            flex-shrink: 0;
+            padding: var(--scale-6) var(--scale-12);
+            border: var(--stroke-sm) solid var(--border-default);
+            border-radius: var(--radius-sm);
+            background: var(--background-page);
+            color: var(--text-secondary);
+
+            @include typography(label-md);
+            white-space: nowrap;
+            cursor: pointer;
         }
 
         @content;

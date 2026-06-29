@@ -60,10 +60,8 @@
             top: 50%;
             transform: translateY(-50%);
             background: transparent;
-            font-family: var(--body-sm-family);
-            font-size: var(--body-sm-size);
-            font-weight: var(--body-sm-weight);
-            line-height: var(--body-sm-line-height);
+
+            @include typography(body-sm);
             color: var(--text-placeholder);
             z-index: $setting-zi-search-suggestions + 1;
             border: none;
@@ -92,11 +90,8 @@
             height: var(--scale-32);
             padding: 0 var(--scale-20);
             background: var(--background-subtle);
-            font-family: var(--label-sm-family);
-            font-size: var(--label-sm-size);
-            font-weight: var(--label-sm-weight);
-            line-height: var(--label-sm-line-height);
-            letter-spacing: var(--label-sm-letter-spacing);
+
+            @include typography(label-sm);
             color: var(--text-brand);
             text-transform: uppercase;
             cursor: pointer;

@@ -15,16 +15,17 @@
         width: rem(28);
         height: rem(28);
         border-radius: var(--radius-sm);
-        color: var(--icon-secondary);
+        color: var(--text-brand);
 
         &:hover,
         &:focus {
             color: var(--icon-primary);
+            text-decoration: none;
         }
     }
 
     &__link--active {
         background: var(--background-subtle);
-        color: var(--icon-primary);
+        pointer-events: none;
     }
 }

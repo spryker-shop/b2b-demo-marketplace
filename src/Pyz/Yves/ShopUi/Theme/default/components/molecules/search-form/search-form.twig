@@ -20,7 +20,7 @@
 {% endblock %}
 
 {% block body %}
-    <form class="{{ config.name }}__form{{ data.isDisabled is defined and data.isDisabled ? ' ' ~ config.name ~ '__form--disabled' : '' }}" action="{{ data.searchUrl }}">
+    <form class="{{ config.name }}__form input input--search{{ data.isDisabled is defined and data.isDisabled ? ' ' ~ config.name ~ '__form--disabled' : '' }}" action="{{ data.searchUrl }}">
         <input
             class="{{ config.name }}__input {{ config.jsName }}__input--{{ attributes['data-search-id'] }}"
             name="q"
@@ -57,7 +57,7 @@
 
         <button
             type="submit"
-            class="{{ config.name }}__submit"
+            class="{{ config.name }}__submit input__search-icon"
             aria-label="{{ 'global.search' | trans }}"
         >
             {% include atom('font-icon') with {

@@ -60,11 +60,8 @@
 
         &__label {
             display: block;
-            font-family: var(--body-md-family);
-            font-weight: var(--body-md-weight);
-            font-size: var(--body-md-size);
-            line-height: var(--body-md-line-height);
-            letter-spacing: var(--body-md-letter-spacing);
+
+            @include typography(body-md);
             color: var(--text-tertiary);
             text-transform: uppercase;
             margin: 0;
@@ -77,21 +74,13 @@
         }
 
         &__title {
-            font-family: var(--heading-lg-family);
-            font-size: var(--heading-lg-size);
-            font-weight: var(--heading-lg-weight);
-            line-height: var(--heading-lg-line-height);
-            letter-spacing: var(--heading-lg-letter-spacing);
+            @include typography(heading-lg);
             color: var(--text-primary);
             margin: 0;
         }
 
         &__text {
-            font-family: var(--body-md-family);
-            font-size: var(--body-md-size);
-            font-weight: var(--body-md-weight);
-            line-height: var(--body-md-line-height);
-            letter-spacing: var(--body-md-letter-spacing);
+            @include typography(body-md);
             color: var(--text-secondary);
             margin: 0;
         }
@@ -112,11 +101,8 @@
             padding: var(--scale-2) var(--scale-8);
             background-color: var(--background-subtle);
             border-radius: var(--radius-sm);
-            font-family: var(--label-sm-family);
-            font-weight: var(--label-sm-weight);
-            font-size: var(--label-sm-size);
-            line-height: var(--label-sm-line-height);
-            letter-spacing: var(--label-sm-letter-spacing);
+
+            @include typography(label-sm);
             color: var(--text-primary);
         }
 
@@ -130,11 +116,8 @@
             background-color: transparent;
             border: var(--stroke-sm) solid var(--border-default);
             border-radius: var(--radius-sm);
-            font-family: var(--button-sm-family);
-            font-weight: var(--button-sm-weight);
-            font-size: var(--button-sm-size);
-            line-height: var(--button-sm-line-height);
-            letter-spacing: var(--button-sm-letter-spacing);
+
+            @include typography(button-sm);
             color: var(--text-secondary);
             text-decoration: none;
 
@@ -146,7 +129,6 @@
             }
         }
 
-        // --small: redesigned vertical card with image area + bordered body.
         &--small {
             flex-direction: column;
             border: none;
@@ -192,11 +174,7 @@
             }
 
             #{$name}__title {
-                font-family: var(--heading-sm-family);
-                font-weight: var(--heading-sm-weight);
-                font-size: var(--heading-sm-size);
-                line-height: var(--heading-sm-line-height);
-                letter-spacing: var(--heading-sm-letter-spacing);
+                @include typography(heading-sm);
             }
 
             #{$name}__text {

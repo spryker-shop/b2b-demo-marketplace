@@ -48,20 +48,15 @@
 
         &__title {
             margin: 0;
-            font-family: var(--heading-md-family);
-            font-weight: var(--heading-md-weight);
-            font-size: var(--heading-md-size);
-            line-height: var(--heading-md-line-height);
-            letter-spacing: var(--heading-md-letter-spacing);
+
+            @include typography(heading-md);
             color: var(--text-primary);
         }
 
         &__subtitle {
             margin: 0;
-            font-family: var(--body-sm-family);
-            font-weight: var(--body-sm-weight);
-            font-size: var(--body-sm-size);
-            line-height: var(--body-sm-line-height);
+
+            @include typography(body-sm);
             color: var(--text-tertiary);
 
             &--md {
@@ -113,10 +108,8 @@
 
         &__hint {
             margin: 0;
-            font-family: var(--body-sm-family);
-            font-weight: var(--body-sm-weight);
-            font-size: var(--body-sm-size);
-            line-height: var(--body-sm-line-height);
+
+            @include typography(body-sm);
             color: var(--text-tertiary);
         }
 
@@ -147,18 +140,12 @@
         }
 
         &__label {
-            font-family: var(--label-sm-family);
-            font-weight: var(--label-sm-weight);
-            font-size: var(--label-sm-size);
-            line-height: var(--label-sm-line-height);
+            @include typography(label-sm);
             color: var(--text-primary);
         }
 
         &__forgot {
-            font-family: var(--label-sm-family);
-            font-weight: var(--label-sm-weight);
-            font-size: var(--label-sm-size);
-            line-height: var(--label-sm-line-height);
+            @include typography(label-sm);
             color: var(--text-brand);
             text-decoration: none;
             white-space: nowrap;
@@ -187,10 +174,8 @@
 
         &__back {
             align-self: center;
-            font-family: var(--label-sm-family);
-            font-weight: var(--label-sm-weight);
-            font-size: var(--label-sm-size);
-            line-height: var(--label-sm-line-height);
+
+            @include typography(label-sm);
             color: var(--text-brand);
             text-decoration: none;
 

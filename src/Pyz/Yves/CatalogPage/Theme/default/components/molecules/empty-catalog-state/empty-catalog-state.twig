@@ -1,8 +1,7 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'empty-state',
-    tag: 'div',
+    name: 'empty-catalog-state',
 } %}
 
 {% define data = {
@@ -30,7 +29,7 @@
             {% if data.suggestionTerm is not empty %}
                 <p class="{{ config.name }}__suggestion">
                     {{ data.suggestionLabel }}
-                    <a class="{{ config.name }}__suggestion-link" href="{{ data.suggestionUrl }}">{{ data.suggestionTerm }}</a>?
+                    <a class="{{ config.name }}__suggestion-link" href="{{ data.suggestionUrl }}">"{{ data.suggestionTerm }}"</a>?
                 </p>
             {% endif %}
         </div>

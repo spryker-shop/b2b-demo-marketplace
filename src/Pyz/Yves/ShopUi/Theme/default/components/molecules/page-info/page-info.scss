@@ -1,9 +1,8 @@
 .page-info {
-    background-color: $setting-color-gray-7;
-    padding: rem(10) 0 rem(12);
+    padding: rem(12) 0;
 
     @include helper-breakpoint-media-min($lg) {
-        padding-top: rem(14);
+        padding: rem(26) 0;
     }
 
     &--checkout {
@@ -17,10 +16,5 @@
             background-color: $setting-color-gray-7;
             padding: rem(14) 0 rem(12);
         }
-    }
-
-    &__title {
-        font: fw(bold) rem(22) / 1.25 $setting-font-family;
-        margin-bottom: rem(12);
     }
 }
