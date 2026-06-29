@@ -1,0 +1,11 @@
+@mixin order-experience-management-review-footer($name: '.review-footer') {
+    #{$name} {
+        small {
+            font-size: var(--font-size-12);
+        }
+
+        @content;
+    }
+}
+
+@include order-experience-management-review-footer;

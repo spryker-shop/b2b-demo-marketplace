@@ -1,0 +1,35 @@
+@mixin order-experience-management-recurring-order-items($name: '.recurring-order-items') {
+    #{$name} {
+        font-size: var(--font-size-12);
+
+        &__title {
+            font-size: var(--font-size-12);
+            font-weight: var(--font-weight-normal);
+        }
+
+        &__items {
+            display: grid;
+            gap: var(--scale-8);
+            grid-template-columns: 70% auto auto;
+            margin-bottom: var(--scale-8);
+            text-align: right;
+        }
+
+        &__main-info {
+            text-align: left;
+        }
+
+        &__summary,
+        &__item-total {
+            font-weight: var(--font-weight-bold);
+        }
+
+        &__note {
+            font-size: var(--font-size-12);
+        }
+
+        @content;
+    }
+}
+
+@include order-experience-management-recurring-order-items;
