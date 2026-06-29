@@ -1,7 +1,7 @@
 @mixin shop-ui-breadcrumb-step($name: '.breadcrumb-step') {
     #{$name} {
-        display: inline-flex;
         @include typography(label-md);
+        display: inline-flex;
 
         &__link {
             display: inline-flex;
