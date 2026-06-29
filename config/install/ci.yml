@@ -9,9 +9,6 @@ sections:
         generate-ide-auto-completion:
             command: 'vendor/bin/console dev:ide-auto-completion:generate'
 
-        rest-api-generate-documentation:
-            command: 'vendor/bin/console rest-api:generate:documentation'
-
         generate-scope-collection-file:
             command: 'vendor/bin/console oauth:scope-collection-file:generate'
 
@@ -20,6 +17,9 @@ sections:
 
         provider-processor-glue-backend:
             command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue api:generate'
+
+        rest-api-generate-documentation:
+            command: 'vendor/bin/console rest-api:generate:documentation'
 
     cache:
         router-cache-warmup-yves:

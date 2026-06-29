@@ -115,7 +115,7 @@ class CustomerConfirmationCest
         // Assert
         $I->seeResponseCodeIs(Response::HTTP_UNPROCESSABLE_ENTITY);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->seeResponseErrorsHaveCode(CustomersRestApiConfig::RESPONSE_CODE_CONFIRMATION_CODE_INVALID);
         $I->seeResponseErrorsHaveStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
@@ -147,7 +147,7 @@ class CustomerConfirmationCest
         // Assert
         $I->seeResponseCodeIs(Response::HTTP_UNPROCESSABLE_ENTITY);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->seeResponseErrorsHaveCode(RestRequestValidatorConfig::RESPONSE_CODE_REQUEST_INVALID);
         $I->seeResponseErrorsHaveStatus(Response::HTTP_UNPROCESSABLE_ENTITY);

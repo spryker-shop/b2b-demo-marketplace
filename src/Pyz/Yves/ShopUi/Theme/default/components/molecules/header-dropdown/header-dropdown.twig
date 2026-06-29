@@ -26,6 +26,7 @@
                 { label: 'customer.account.profile_data', icon: 'person', url: url('customer/profile') },
                 { label: 'customer.account.address', icon: 'location_on', url: url('customer/address') },
                 { label: 'customer.account.order_history', icon: 'receipt_long', url: url('customer/order') },
+                { label: 'recurring_orders.list.title', icon: 'calendar_month', url: url('recurring-orders') },
                 { label: 'return_page.default_title', icon: 'undo', url: url('return/list') },
                 { label: 'customer.account.newsletter', icon: 'mail', url: url('customer/newsletter') },
                 { label: 'quote_request_page.quote_request', icon: 'request_quote', url: url('quote-request') },
@@ -34,17 +35,25 @@
         }] %}
 
         {% if can('SeeCompanyMenuPermissionPlugin') %}
+            {% set companyItems = [
+                { label: 'company.account.overview', icon: 'apartment', url: url('company/overview') },
+                { label: 'company.account.company_role.users', icon: 'group', url: url('company/user') },
+                { label: 'company.account.business_unit', icon: 'corporate_fare', url: url('company/business-unit') },
+                { label: 'company.account.company_user.role', icon: 'manage_accounts', url: url('company/company-role') },
+                { label: 'company.account.merchant_relations', icon: 'handshake', url: url('company/merchant-relation') },
+                { label: 'merchant_relation_request_page.merchant_relation_request', icon: 'pending_actions', url: url('company/merchant-relation-request') },
+            ] %}
+
+            {% if can('ManageCostCentersPermissionPlugin') %}
+                {% set companyItems = companyItems | merge([
+                    { label: 'purchasing_control.cost_center.menu_item', icon: 'account_balance', url: url('company/cost-center') },
+                ]) %}
+            {% endif %}
+
             {% set accountTabs = accountTabs | merge([{
                 id: 'company-account',
                 label: 'company.account.company_account',
-                items: [
-                    { label: 'company.account.overview', icon: 'apartment', url: url('company/overview') },
-                    { label: 'company.account.company_role.users', icon: 'group', url: url('company/user') },
-                    { label: 'company.account.business_unit', icon: 'corporate_fare', url: url('company/business-unit') },
-                    { label: 'company.account.company_user.role', icon: 'manage_accounts', url: url('company/company-role') },
-                    { label: 'company.account.merchant_relations', icon: 'handshake', url: url('company/merchant-relation') },
-                    { label: 'merchant_relation_request_page.merchant_relation_request', icon: 'pending_actions', url: url('company/merchant-relation-request') },
-                ],
+                items: companyItems,
             }]) %}
         {% endif %}
     {% endif %}

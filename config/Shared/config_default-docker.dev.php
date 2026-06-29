@@ -106,7 +106,7 @@ $config[LogConstants::LOG_LEVEL] = getenv('SPRYKER_DEBUG_ENABLED') ? Logger::INF
 
 // >>> ZED REQUEST
 
-$config[ZedRequestConstants::TRANSFER_DEBUG_SESSION_FORWARD_ENABLED] = (bool)getenv('SPRYKER_DEBUG_ENABLED');
+$config[ZedRequestConstants::TRANSFER_DEBUG_SESSION_FORWARD_ENABLED] = getenv('SPRYKER_DEBUG_ENABLED') && filter_has_var(INPUT_COOKIE, 'XDEBUG_SESSION');
 $config[ZedRequestConstants::SET_REPEAT_DATA] = (bool)getenv('SPRYKER_DEBUG_ENABLED');
 
 $isTestifyConstantsClassExists = class_exists(TestifyConstants::class);
@@ -247,13 +247,15 @@ if (!getenv('SPRYKER_S3_MERCHANT_PRODUCT_DATA_IMPORT_FILES_BUCKET')) {
     ];
 }
 
-if (!getenv('SPRYKER_S3_PEM_IMPORT_KEY')) {
+if (!getenv('SPRYKER_S3_PEM_IMPORT_BUCKET')) {
       $config[FileSystemConstants::FILESYSTEM_SERVICE]['product-experience-management-imports'] = [
         'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
         'root' => '/data',
         'path' => '/data/pim-imports',
       ];
+}
 
+if (!getenv('SPRYKER_S3_PEM_EXPORT_BUCKET')) {
       $config[FileSystemConstants::FILESYSTEM_SERVICE]['product-experience-management-exports'] = [
         'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
         'root' => '/data',
@@ -261,7 +263,7 @@ if (!getenv('SPRYKER_S3_PEM_IMPORT_KEY')) {
       ];
 }
 
-if (!getenv('SPRYKER_S3_SSP_ASSETS_BUCKET')) {
+if (!getenv('SPRYKER_S3_SSP_ASSET_IMAGES_BUCKET')) {
     $config[FileSystemConstants::FILESYSTEM_SERVICE]['ssp-inquiry'] = [
         'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
         'root' => '/data',

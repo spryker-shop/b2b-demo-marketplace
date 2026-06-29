@@ -15,6 +15,10 @@
             min-width: rem(70);
         }
 
+        &__select--error + .select2-container .select2-selection__rendered {
+            border-color: var(--input-border-error);
+        }
+
         &__caret {
             position: absolute;
             z-index: $setting-zi-custom-select + 1;
@@ -29,6 +33,11 @@
         &:has(.select2-selection__rendered:hover) &__caret,
         &:has(.custom-select__select:hover) &__caret {
             color: var(--icon-primary);
+        }
+
+        &:has(.select2-container--disabled) &__caret,
+        &:has(.custom-select__select[disabled]) &__caret {
+            color: var(--icon-disabled);
         }
 
         &__icon {
@@ -149,6 +158,28 @@
             width: auto;
         }
 
+        &--xs {
+            width: auto;
+            gap: var(--scale-6);
+
+            #{$name}__select,
+            .select2 .select2-selection__rendered {
+                height: auto;
+                min-width: 0;
+                padding: var(--scale-4) var(--scale-24) var(--scale-4) var(--scale-8);
+                gap: var(--scale-6);
+                font-size: var(--body-sm-size);
+                font-weight: var(--font-weight-regular);
+                line-height: var(--body-sm-line-height);
+                letter-spacing: var(--body-sm-letter-spacing);
+            }
+
+            #{$name}__caret {
+                right: var(--scale-8);
+                font-size: var(--font-size-12);
+            }
+        }
+
         @content;
     }
 }
@@ -241,10 +272,17 @@
 
             &--disabled {
                 cursor: not-allowed;
+
+                .select2-selection__rendered {
+                    color: var(--input-text-disabled);
+                    border-color: var(--input-border-disabled);
+                    background: var(--input-background-disabled);
+                    cursor: not-allowed;
+                }
             }
 
             &--open {
-                z-index: $setting-zi-side-drawer;
+                z-index: $setting-zi-side-drawer + 3;
             }
         }
 
@@ -282,6 +320,19 @@
             }
         }
 
+        &--xs {
+            #{$name}-results__option {
+                min-height: rem(28);
+                font-size: var(--body-sm-size);
+                line-height: var(--body-sm-line-height);
+                padding: var(--scale-4) var(--scale-8);
+
+                &[aria-selected='true'] {
+                    padding-right: rem(32);
+                }
+            }
+        }
+
         &-results__options {
             width: 100%;
         }
@@ -301,6 +352,10 @@
 
             &[aria-selected] {
                 cursor: pointer;
+            }
+
+            &[aria-disabled] {
+                display: none;
             }
 
             &:not(:has(.select2-results__group)):hover {

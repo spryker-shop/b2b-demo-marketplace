@@ -47,6 +47,14 @@ class SymfonySchedulerConfig extends SprykerSymfonySchedulerConfigAlias
                 'command' => $logger . '$PHP_BIN vendor/bin/console oms:clear-locks',
                 'schedule' => '0 6 * * *',
             ],
+            'recurring-orders-check-condition' => [
+                'command' => $logger . '$PHP_BIN vendor/bin/console state-machine:check-condition RecurringOrder',
+                'schedule' => '* * * * *',
+            ],
+            'recurring-orders-clear-locks' => [
+                'command' => $logger . '$PHP_BIN vendor/bin/console state-machine:clear-locks',
+                'schedule' => '0 6 * * *',
+            ],
             'product-relation-updater' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/console product-relation:update -vvv',
                 'schedule' => '30 2 * * *',
@@ -85,19 +93,19 @@ class SymfonySchedulerConfig extends SprykerSymfonySchedulerConfigAlias
             ],
             'glue-api-generate-documentation' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/glue api:generate:documentation --invalidated-after-interval 90sec',
-                'schedule' => '*/1 * * * *',
+                'schedule' => '* * * * *',
             ],
             'sync-order-matrix' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/console order-matrix:sync',
-                'schedule' => '*/1 * * * *',
+                'schedule' => '* * * * *',
             ],
             'generate-sitemap-files' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/console sitemap:generate',
                 'schedule' => '0 0 * * *',
             ],
             'data-import-merchant-import' => [
-                'command' => $logger . '$PHP_BIN vendor/bin/console data-import:merchant-import',
-                'schedule' => '0 0 * * *',
+                'command' => $logger . '$PHP_BIN vendor/bin/console data-import-merchant:import',
+                'schedule' => '* * * * *',
             ],
             'import-job-run' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/console import:job:run',

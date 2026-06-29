@@ -3,7 +3,13 @@
 {% block themeStyles %}
     <style>
         :root {
-            {% for key, value in configurationValues('theme:storefront:colors') %}
+            {% set colors = configurationValues('theme:storefront:colors')
+                | merge(configurationValues('theme:storefront:header'))
+                | merge(configurationValues('theme:storefront:footer'))
+                | merge(configurationValues('theme:storefront:other'))
+            %}
+
+            {% for key, value in colors %}
                 {% if value is not empty %}
                     --{{ key | replace({'_': '-'}) }}: {{ value | raw }};
                 {% endif %}

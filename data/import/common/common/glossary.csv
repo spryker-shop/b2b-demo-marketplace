@@ -481,6 +481,10 @@ global.show,Show,en_US
 global.show,Show,de_DE
 global.hide,Hide,en_US
 global.hide,Ausblenden,de_DE
+global.cancel,Abbrechen,de_DE
+global.cancel,Cancel,en_US
+global.keep,Verlassen,de_DE
+global.keep,Keep,en_US
 error.404,Error 404,de_DE
 error.404,Error 404,en_US
 homepage.carousel.previous,Zurück,de_DE
@@ -505,6 +509,18 @@ customer.login.password,Password,en_US
 customer.login.password,Passwort,de_DE
 customer.login.title,Access your account,en_US
 customer.login.title,Ich bin bereits Kunde,de_DE
+customer.login.welcome_back,Welcome back,en_US
+customer.login.welcome_back,Willkommen zurück,de_DE
+customer.login.subtitle,Sign in to manage your orders and account,en_US
+customer.login.subtitle,"Melden Sie sich an, um Ihre Bestellungen und Ihr Konto zu verwalten",de_DE
+customer.login.submit,Sign in,en_US
+customer.login.submit,Anmelden,de_DE
+customer.login.terms,Terms,en_US
+customer.login.terms,AGB,de_DE
+customer.login.error,The email or password you entered is incorrect.,en_US
+customer.login.error,Die eingegebene E-Mail-Adresse oder das Passwort ist falsch.,de_DE
+customer.login.continue_as_guest,Continue as a guest,en_US
+customer.login.continue_as_guest,Als Gast fortfahren,de_DE
 customer.registration.title,Create account,en_US
 customer.registration.title,Ich bin Neukunde,de_DE
 customer.account.no_order,No orders at the moment,en_US
@@ -609,8 +625,6 @@ customer.password.invalid_password,Current password is wrong,en_US
 customer.password.invalid_password,Aktuelles Passwort ist falsch,de_DE
 customer.password.invalid,Password is invalid,en_US
 customer.password.invalid,Passwort ist ungültig,de_DE
-customer.password.restore,Set a new password,en_US
-customer.password.restore,Neues Passwort erstellen,de_DE
 customer.password.changed,Your password was changed successfully,en_US
 customer.password.changed,Ihr Passwort wurde erfolgreich geändert,de_DE
 customer.token.invalid,Token is invalid,en_US
@@ -621,6 +635,38 @@ customer.forgotten_password.email,Email Address,en_US
 customer.forgotten_password.email,E-Mail Adresse,de_DE
 customer.forgotten-password.title,Recover my password,en_US
 customer.forgotten-password.title,Passwort vergessen,de_DE
+customer.recovery.request.title,Forgot password?,en_US
+customer.recovery.request.title,Passwort vergessen?,de_DE
+customer.recovery.request.subtitle,Enter your work email and we'll send you a link to reset your password.,en_US
+customer.recovery.request.subtitle,"Geben Sie Ihre geschäftliche E-Mail-Adresse ein, und wir senden Ihnen einen Link zum Zurücksetzen Ihres Passworts.",de_DE
+customer.recovery.email_label,Work email,en_US
+customer.recovery.email_label,Geschäftliche E-Mail,de_DE
+customer.recovery.request.submit,Send reset link,en_US
+customer.recovery.request.submit,Link zum Zurücksetzen senden,de_DE
+customer.recovery.back_to_sign_in,Back to sign in,en_US
+customer.recovery.back_to_sign_in,Zurück zur Anmeldung,de_DE
+customer.recovery.sent.title,Check your email,en_US
+customer.recovery.sent.title,Überprüfen Sie Ihre E-Mail,de_DE
+customer.recovery.sent.text,"If an account exists for %email%, we've sent a link to reset your password.",en_US
+customer.recovery.sent.text,"Wenn ein Konto für %email% existiert, haben wir einen Link zum Zurücksetzen Ihres Passworts gesendet.",de_DE
+customer.recovery.sent.resend,Resend email,en_US
+customer.recovery.sent.resend,E-Mail erneut senden,de_DE
+customer.recovery.reset.title,Set a new password,en_US
+customer.recovery.reset.title,Neues Passwort erstellen,de_DE
+customer.recovery.reset.subtitle,Your new password must be different from previously used passwords.,en_US
+customer.recovery.reset.subtitle,Ihr neues Passwort muss sich von zuvor verwendeten Passwörtern unterscheiden.,de_DE
+customer.recovery.reset.new_label,New password,en_US
+customer.recovery.reset.new_label,Neues Passwort,de_DE
+customer.recovery.reset.confirm_label,Confirm password,en_US
+customer.recovery.reset.confirm_label,Passwort bestätigen,de_DE
+customer.recovery.reset.hint,"At least 8 characters, including a number and an uppercase letter.",en_US
+customer.recovery.reset.hint,"Mindestens 8 Zeichen, einschließlich einer Zahl und eines Großbuchstabens.",de_DE
+customer.recovery.reset.submit,Save password,en_US
+customer.recovery.reset.submit,Passwort speichern,de_DE
+customer.recovery.success.title,Password updated,en_US
+customer.recovery.success.title,Passwort aktualisiert,de_DE
+customer.recovery.success.text,Your password has been changed successfully. You can now sign in with your new password.,en_US
+customer.recovery.success.text,Ihr Passwort wurde erfolgreich geändert. Sie können sich jetzt mit Ihrem neuen Passwort anmelden.,de_DE
 customer.order.order_id,Order Id,en_US
 customer.order.order_id,Bestellnummer,de_DE
 customer.order.view_all,View All,en_US
@@ -1231,6 +1277,8 @@ cart.voucher.apply.non_applicable,The voucher code is invalid,en_US
 cart.voucher.apply.non_applicable,Der Gutscheincode ist ungültig,de_DE
 cart.code.apply.failed,Code could not be applied,en_US
 cart.code.apply.failed,Gutscheincode konnte nicht angewendet werden,de_DE
+cart_code_widget.error.too_many_requests,Too many voucher code attempts. Please try again later.,en_US
+cart_code_widget.error.too_many_requests,Zu viele Versuche mit Gutscheincodes. Bitte versuchen Sie es später erneut.,de_DE
 cart.code.enter-code,Gutscheincode eingeben,de_DE
 cart.code.enter-code,Enter voucher code,en_US
 cart.item.bundle.description,Items in the bundle:,en_US
@@ -1325,6 +1373,8 @@ product_review.product_ratings,Product Ratings,en_US
 product_review.product_ratings,Bewertungen,de_DE
 product_review.product_reviews,Product Reviews,en_US
 product_review.product_reviews,Rezensionen,de_DE
+product_review.reviews,Reviews,en_US
+product_review.reviews,Bewertungen,de_DE
 product_review.on,on,en_US
 product_review.on,am,de_DE
 product_review.summary.star,star,en_US
@@ -2481,6 +2531,10 @@ page.detail.volume_price.quantity,Quantity,en_US
 page.detail.volume_price.quantity,Anzahl,de_DE
 page.detail.volume_price.price,Price,en_US
 page.detail.volume_price.price,Preis,de_DE
+page.detail.volume_price,Volume pricing,en_US
+page.detail.volume_price,Mengenrabatt,de_DE
+page.detail.volume_price.saving,Saving,en_US
+page.detail.volume_price.saving,Ersparnis,de_DE
 customer.order.canceledTotal,Canceled amount,en_US
 customer.order.canceledTotal,Stornierter Betrag,de_DE
 customer.order.remunerationTotal,Remuneration Total,en_US
@@ -2501,6 +2555,8 @@ packaging_units.cart.quantity,Quantity,en_US
 packaging_units.cart.quantity,Anzahl,de_DE
 packaging_units.cart.amount,Amount,en_US
 packaging_units.cart.amount,Betrag,de_DE
+packaging_units.cart.units,Units,en_US
+packaging_units.cart.units,Einheiten,de_DE
 packaging_units.cart.item,Items,en_US
 packaging_units.cart.item,Artikel,de_DE
 packaging_units.pdp.quantity,Quantity,en_US
@@ -2686,22 +2742,40 @@ agent.authentication.failed,Authentication failed,en_US
 agent.authentication.failed,Authentifizierung fehlgeschlagen,de_DE
 agent.login.title,Access your account,en_US
 agent.login.title,Ich bin bereits Kunde,de_DE
-agent.confirm_user_selection,Confirm,en_US
-agent.confirm_user_selection,Bestätigen,de_DE
 agent.login.email,Email,en_US
 agent.login.email,E-Mail,de_DE
 agent.login.password,Password,en_US
 agent.login.password,Passwort,de_DE
 agent.login,Agent login,en_US
 agent.login,Agentenanmeldung,de_DE
-agent.control_bar.username,Agent:,en_US
-agent.control_bar.username,Agent:,de_DE
-agent.control_bar.customer_name,Customer:,en_US
-agent.control_bar.customer_name,Kunde:,de_DE
-agent.control_bar.logout_as_customer,End Customer Assistance,en_US
-agent.control_bar.logout_as_customer,Kunden-Assistenz beenden,de_DE
-agent.control_bar.logout,Logout,en_US
-agent.control_bar.logout,Abmelden,de_DE
+agent.control_bar.agent_mode,Agent Mode,en_US
+agent.control_bar.agent_mode,Agent-Modus,de_DE
+agent.control_bar.agent_mode_active,Agent Mode Active,en_US
+agent.control_bar.agent_mode_active,Agent-Modus aktiv,de_DE
+agent.control_bar.select_customer,Select customer,en_US
+agent.control_bar.select_customer,Kunde auswählen,de_DE
+agent.control_bar.start_customer_session,Start customer session,en_US
+agent.control_bar.start_customer_session,Kundensitzung starten,de_DE
+agent.control_bar.search_customers,Search customers,en_US
+agent.control_bar.search_customers,Kunden suchen,de_DE
+agent.control_bar.assisting,Assisting,en_US
+agent.control_bar.assisting,Unterstützend,de_DE
+agent.control_bar.quote_requests,Quote Requests,en_US
+agent.control_bar.quote_requests,Angebotsanfragen,de_DE
+agent.control_bar.end_agent_session,End Agent Session,en_US
+agent.control_bar.end_agent_session,Agentensitzung beenden,de_DE
+agent.control_bar.end_agent_session_confirm_title,End Agent Session?,en_US
+agent.control_bar.end_agent_session_confirm_title,Agentensitzung beenden?,de_DE
+agent.control_bar.end_agent_session_confirm_body,This ends your agent session only and you will stay logged in to the store.,en_US
+agent.control_bar.end_agent_session_confirm_body,"Dies beendet nur Ihre Agentensitzung, Sie bleiben jedoch im Shop angemeldet.",de_DE
+agent.control_bar.cancel,Cancel,en_US
+agent.control_bar.cancel,Abbrechen,de_DE
+agent.control_bar.switch_customer,Switch Customer,en_US
+agent.control_bar.switch_customer,Kunde wechseln,de_DE
+agent.control_bar.switch_customer_confirm_title,Switch Customer?,en_US
+agent.control_bar.switch_customer_confirm_title,Kunde wechseln?,de_DE
+agent.control_bar.switch_customer_confirm_body,"Your session will end with %currentName%, if you switch to %newName%. Please confirm if you like to proceed.",en_US
+agent.control_bar.switch_customer_confirm_body,"Ihre Sitzung mit %currentName% wird beendet, wenn Sie zu %newName% wechseln. Bitte bestätigen Sie, ob Sie fortfahren möchten.",de_DE
 agent.autocomplete.no_results,No results found,en_US
 agent.autocomplete.no_results,Keine Ergebnisse gefunden,de_DE
 agent_security_blocker_merchant_portal_gui.error.account_blocked,"Too many log in attempts from your address. Please wait %minutes% minutes before trying again.",en_US
@@ -4089,8 +4163,6 @@ product_configurator_gateway_page.shopping_list_item_uuid_required,"Shopping Lis
 product_configurator_gateway_page.shopping_list_item_uuid_required,"Die Artikel-ID der Einkaufsliste ist ein erforderlicher Parameter.",de_DE
 product_configurator_gateway_page.configurator_key_is_not_supported,"Configurator key is not supported.",en_US
 product_configurator_gateway_page.configurator_key_is_not_supported,"Konfiguratorschlüssel wird nicht unterstützt.",de_DE
-demo_date_time_configurator_page.checkout.validation.error.price_is_not_valid,"Product configuration price is not valid",en_US
-demo_date_time_configurator_page.checkout.validation.error.price_is_not_valid,"Der Produktkonfigurationspreis ist ungültig",de_DE
 permission.name.SeeCompanyUsersPermissionPlugin,View company users,en_US
 permission.name.SeeCompanyUsersPermissionPlugin,Firmenbenutzer anzeigen,de_DE
 store_widget.switcher.store,Store:,en_US
@@ -4139,8 +4211,8 @@ comment.validation.error.customer_not_found,Customer not found.,en_US
 comment.validation.error.customer_not_found,Kunde nicht gefunden.,de_DE
 permission.name.CreateMerchantRelationRequestPermissionPlugin,Send Merchant Relation Request,en_US
 permission.name.CreateMerchantRelationRequestPermissionPlugin,Händlerbeziehungsanfrage senden,de_DE
-merchant_relation_request_widget.request_for_relation.link,Merchant Relation Request,en_US
-merchant_relation_request_widget.request_for_relation.link,Händlerbeziehungsanfrage,de_DE
+merchant_relation_request_widget.request_for_relation.link,Relation Request,en_US
+merchant_relation_request_widget.request_for_relation.link,Beziehungsanfrage,de_DE
 merchant_relation_request_widget.request_for_relation.button,Send Request,en_US
 merchant_relation_request_widget.request_for_relation.button,Anfrage senden,de_DE
 merchant_relation_request_widget.request_for_relation.details,Contact Details,en_US
@@ -5091,6 +5163,8 @@ ssp_dashboard.overview.not_applicable,n/a,en_US
 ssp_dashboard.overview.not_applicable,n/a,de_DE
 self_service_portal.asset.form.image.description,"Max up to %size%. Allowed file formats %format%",en_US
 self_service_portal.asset.form.image.description,"Maximal bis zu %size%. Erlaubte Dateiformate: %format%",de_DE
+self_service_portal.asset.form.name.validation.min,Name must be at least 3 characters long.,en_US
+self_service_portal.asset.form.name.validation.min,Der Name muss mindestens 3 Zeichen lang sein.,de_DE
 self_service_portal.asset.validation.name.not_set,Asset name must be provided,en_US
 self_service_portal.asset.validation.name.not_set,Der Name des Assets muss angegeben werden,de_DE
 self_service_portal.asset.validation.business_unit.not_set,Business unit must be provided,en_US
@@ -5397,10 +5471,10 @@ customer.self_service_portal.service.list.status,Status,en_US
 customer.self_service_portal.service.list.status,Status,de_DE
 ssp_dashboard.general.booked_services,Booked Services,en_US
 ssp_dashboard.general.booked_services,Gebuchte Services,de_DE
-permission.name.ViewCompanySspServicePermissionPlugin,ViewCompanySspServicePermissionPlugin,en_US
-permission.name.ViewCompanySspServicePermissionPlugin,ViewCompanySspServicePermissionPlugin,de_DE
-permission.name.ViewBusinessUnitSspServicePermissionPlugin,ViewBusinessUnitSspServicePermissionPlugin,en_US
-permission.name.ViewBusinessUnitSspServicePermissionPlugin,ViewBusinessUnitSspServicePermissionPlugin,de_DE
+permission.name.ViewCompanySspServicePermissionPlugin,View Company Services,en_US
+permission.name.ViewCompanySspServicePermissionPlugin,Unternehmensservices anzeigen,de_DE
+permission.name.ViewBusinessUnitSspServicePermissionPlugin,View Business Unit Services,en_US
+permission.name.ViewBusinessUnitSspServicePermissionPlugin,Abteilungsservices anzeigen,de_DE
 self_service_portal.asset_filter.title,ASSET FILTER,en_US
 self_service_portal.asset_filter.title,ASSET FILTER,de_DE
 self_service_portal.asset_filter.description,Filter items based on your assets,en_US
@@ -6566,6 +6640,8 @@ purchasing_control.budget.selector.placeholder,Select budget,en_US
 purchasing_control.budget.selector.placeholder,Budget wählen,de_DE
 purchasing_control.budget.remaining,Remaining budget,en_US
 purchasing_control.budget.remaining,Verbleibendes Budget,de_DE
+purchasing_control.budget.apply_warning,Please apply the budget.,en_US
+purchasing_control.budget.apply_warning,Bitte Budget anwenden.,de_DE
 purchasing_control.selector.save,Select,en_US
 purchasing_control.selector.save,Wählen,de_DE
 purchasing_control.summary.cost_center_label,Cost Center,en_US
@@ -6582,6 +6658,254 @@ purchasing_control.validation.require-approval,This order exceeds the budget. Pl
 purchasing_control.validation.require-approval,Diese Bestellung überschreitet das Budget. Bitte senden Sie sie zur Genehmigung.,de_DE
 purchasing_control.validation.required,Please select a cost center and budget before placing your order.,en_US
 purchasing_control.validation.required,Bitte wählen Sie vor der Bestellung eine Kostenstelle und ein Budget aus.,de_DE
+permission.name.ManageCostCentersPermissionPlugin,Manage cost centers,en_US
+permission.name.ManageCostCentersPermissionPlugin,Kostenstellen verwalten,de_DE
+purchasing_control.validation.inactive-cost-center,The selected cost center is no longer active. Please select another cost center or contact your manager.,en_US
+purchasing_control.validation.inactive-cost-center,Die ausgewählte Kostenstelle ist nicht mehr aktiv. Bitte wählen Sie eine andere Kostenstelle oder kontaktieren Sie Ihren Manager.,de_DE
+purchasing_control.budget.no_budgets_found,No budgets available for the selected cost center.,en_US
+purchasing_control.budget.no_budgets_found,Keine Budgets für die ausgewählte Kostenstelle verfügbar.,de_DE
+purchasing_control.budget.apply,Apply,en_US
+purchasing_control.budget.apply,Übernehmen,de_DE
+purchasing_control.summary.no_budget_warning,No budget assigned — checkout is blocked.,en_US
+purchasing_control.summary.no_budget_warning,Kein Budget zugewiesen — Bestellung ist gesperrt.,de_DE
+purchasing_control.error.quote_not_found,The quote could not be found.,en_US
+purchasing_control.error.quote_not_found,Der Warenkorb wurde nicht gefunden.,de_DE
+purchasing_control.error.not_company_user,Cost center selection is only available for company users.,en_US
+purchasing_control.error.not_company_user,Die Kostenstelle kann nur von Firmenbenutzern ausgewählt werden.,de_DE
+purchasing_control.error.cost_center_access_denied,The selected cost center is not available for your business unit.,en_US
+purchasing_control.error.cost_center_access_denied,Die ausgewählte Kostenstelle ist für Ihre Geschäftseinheit nicht verfügbar.,de_DE
+purchasing_control.error.budget_access_denied,The selected budget does not belong to the chosen cost center.,en_US
+purchasing_control.error.budget_access_denied,Das ausgewählte Budget gehört nicht zur gewählten Kostenstelle.,de_DE
+purchasing_control.error.quote_approved,Cost center and budget cannot be changed after the quote has been approved.,en_US
+purchasing_control.error.quote_approved,Kostenstelle und Budget können nach der Genehmigung nicht mehr geändert werden.,de_DE
+purchasing_control.title,Cost Center Control,en_US
+purchasing_control.title,Kostenstellen-Verwaltung,de_DE
+purchasing_control.budget.validation.access_denied,You do not have permission to manage this budget.,en_US
+purchasing_control.budget.validation.access_denied,"Sie haben keine Berechtigung, dieses Budget zu verwalten.",de_DE
+purchasing_control.budget.validation.amount_invalid,Budget amount must be greater than zero.,en_US
+purchasing_control.budget.validation.amount_invalid,Der Budgetbetrag muss größer als Null sein.,de_DE
+purchasing_control.budget.validation.amount_too_large,Budget amount exceeds the maximum allowed value.,en_US
+purchasing_control.budget.validation.amount_too_large,Der Budgetbetrag überschreitet den maximal zulässigen Wert.,de_DE
+purchasing_control.budget.validation.date_range_invalid,Budget start date must be before end date.,en_US
+purchasing_control.budget.validation.date_range_invalid,Das Startdatum des Budgets muss vor dem Enddatum liegen.,de_DE
+purchasing_control.budget.validation.currency_invalid,Budget currency must be a 3-character ISO code.,en_US
+purchasing_control.budget.validation.currency_invalid,Die Budgetwährung muss ein 3-stelliger ISO-Code sein.,de_DE
+purchasing_control.budget.validation.currency_changed,Budget currency cannot be changed.,en_US
+purchasing_control.budget.validation.currency_changed,Die Budgetwährung kann nicht geändert werden.,de_DE
+purchasing_control.budget.validation.name_too_long,Budget name must not exceed 100 characters.,en_US
+purchasing_control.budget.validation.name_too_long,Der Budgetname darf nicht mehr als 100 Zeichen enthalten.,de_DE
+purchasing_control.cost_center.validation.name_too_long,Cost center name must not exceed 100 characters.,en_US
+purchasing_control.cost_center.validation.name_too_long,Der Name der Kostenstelle darf nicht mehr als 100 Zeichen enthalten.,de_DE
+purchasing_control.cost_center.validation.name_empty,Cost center name must not be empty.,en_US
+purchasing_control.cost_center.validation.name_empty,Der Name der Kostenstelle darf nicht leer sein.,de_DE
+purchasing_control.cost_center.validation.business_unit_empty,At least one business unit must be assigned to a cost center.,en_US
+purchasing_control.cost_center.validation.business_unit_empty,Der Kostenstelle muss mindestens eine Geschäftseinheit zugewiesen sein.,de_DE
+purchasing_control.cost_center.validation.access_denied,You do not have access to this cost center.,en_US
+purchasing_control.cost_center.validation.access_denied,Sie haben keinen Zugriff auf diese Kostenstelle.,de_DE
+purchasing_control.cost_center.validation.business_unit_not_in_company,Selected business units do not belong to your company.,en_US
+purchasing_control.cost_center.validation.business_unit_not_in_company,Die ausgewählten Geschäftseinheiten gehören nicht zu Ihrem Unternehmen.,de_DE
+purchasing_control.cost_center.menu_item,Cost Centers,en_US
+purchasing_control.cost_center.menu_item,Kostenstellen,de_DE
+purchasing_control.cost_center.list.title,Cost Centers,en_US
+purchasing_control.cost_center.list.title,Kostenstellen,de_DE
+purchasing_control.cost_center.list.empty,No cost centers found.,en_US
+purchasing_control.cost_center.list.empty,Keine Kostenstellen gefunden.,de_DE
+purchasing_control.cost_center.list.status,Status,en_US
+purchasing_control.cost_center.list.status,Status,de_DE
+purchasing_control.cost_center.list.actions,Actions,en_US
+purchasing_control.cost_center.list.actions,Aktionen,de_DE
+purchasing_control.cost_center.create.title,Create Cost Center,en_US
+purchasing_control.cost_center.create.title,Kostenstelle erstellen,de_DE
+purchasing_control.cost_center.update.title,Edit Cost Center,en_US
+purchasing_control.cost_center.update.title,Kostenstelle bearbeiten,de_DE
+purchasing_control.cost_center.form.name,Name,en_US
+purchasing_control.cost_center.form.name,Name,de_DE
+purchasing_control.cost_center.form.description,Description,en_US
+purchasing_control.cost_center.form.description,Beschreibung,de_DE
+purchasing_control.cost_center.form.business_unit,Business Unit,en_US
+purchasing_control.cost_center.form.business_unit,Geschäftseinheit,de_DE
+purchasing_control.cost_center.form.is_active,Cost Center is active,en_US
+purchasing_control.cost_center.form.is_active,Kostenstelle ist aktiv,de_DE
+purchasing_control.cost_center.success.created,Cost center created successfully.,en_US
+purchasing_control.cost_center.success.created,Kostenstelle erfolgreich erstellt.,de_DE
+purchasing_control.cost_center.success.updated,Cost center updated successfully.,en_US
+purchasing_control.cost_center.success.updated,Kostenstelle erfolgreich aktualisiert.,de_DE
+purchasing_control.cost_center.success.activated,Cost center activated successfully.,en_US
+purchasing_control.cost_center.success.activated,Kostenstelle erfolgreich aktiviert.,de_DE
+purchasing_control.cost_center.success.deactivated,Cost center deactivated successfully.,en_US
+purchasing_control.cost_center.success.deactivated,Kostenstelle erfolgreich deaktiviert.,de_DE
+purchasing_control.cost_center.status.active,Active,en_US
+purchasing_control.cost_center.status.active,Aktiv,de_DE
+purchasing_control.cost_center.status.inactive,Inactive,en_US
+purchasing_control.cost_center.status.inactive,Inaktiv,de_DE
+purchasing_control.cost_center.action.edit,Edit,en_US
+purchasing_control.cost_center.action.edit,Bearbeiten,de_DE
+purchasing_control.cost_center.action.activate,Activate,en_US
+purchasing_control.cost_center.action.activate,Aktivieren,de_DE
+purchasing_control.cost_center.action.deactivate,Deactivate,en_US
+purchasing_control.cost_center.action.deactivate,Deaktivieren,de_DE
+purchasing_control.cost_center.action.save,Save,en_US
+purchasing_control.cost_center.action.save,Speichern,de_DE
+purchasing_control.cost_center.action.cancel,Cancel,en_US
+purchasing_control.cost_center.action.cancel,Abbrechen,de_DE
+purchasing_control.cost_center.error.company_user_not_found,Company user not found.,en_US
+purchasing_control.cost_center.error.company_user_not_found,Unternehmensbenutzer nicht gefunden.,de_DE
+purchasing_control.cost_center.error.not_found,Cost center not found.,en_US
+purchasing_control.cost_center.error.not_found,Kostenstelle nicht gefunden.,de_DE
+purchasing_control.cost_center.search.name_placeholder,Search by name...,en_US
+purchasing_control.cost_center.search.name_placeholder,Nach Name suchen...,de_DE
+purchasing_control.cost_center.search.all_business_units,All Business Units,en_US
+purchasing_control.cost_center.search.all_business_units,Alle Geschäftseinheiten,de_DE
+purchasing_control.cost_center.search.status.all,All,en_US
+purchasing_control.cost_center.search.status.all,Alle,de_DE
+purchasing_control.cost_center.search.status.active,Active,en_US
+purchasing_control.cost_center.search.status.active,Aktiv,de_DE
+purchasing_control.cost_center.search.status.inactive,Inactive,en_US
+purchasing_control.cost_center.search.status.inactive,Inaktiv,de_DE
+purchasing_control.cost_center.search.active_filters,Active filters:,en_US
+purchasing_control.cost_center.search.active_filters,Aktive Filter:,de_DE
+purchasing_control.cost_center.search.reset_all,Reset all,en_US
+purchasing_control.cost_center.search.reset_all,Alle zurücksetzen,de_DE
+purchasing_control.cost_center.action.budgets,Budgets,en_US
+purchasing_control.cost_center.action.budgets,Budgets,de_DE
+purchasing_control.cost_center.business_units.more,more,en_US
+purchasing_control.cost_center.business_units.more,weitere,de_DE
+purchasing_control.budget.list.title,Budgets,en_US
+purchasing_control.budget.list.title,Budgets,de_DE
+purchasing_control.budget.list.empty,No budgets found for this cost center.,en_US
+purchasing_control.budget.list.empty,Keine Budgets für diese Kostenstelle gefunden.,de_DE
+purchasing_control.budget.create.title,Create Budget,en_US
+purchasing_control.budget.create.title,Budget erstellen,de_DE
+purchasing_control.budget.update.title,Edit Budget,en_US
+purchasing_control.budget.update.title,Budget bearbeiten,de_DE
+purchasing_control.budget.success.created,Budget created successfully.,en_US
+purchasing_control.budget.success.created,Budget erfolgreich erstellt.,de_DE
+purchasing_control.budget.success.updated,Budget updated successfully.,en_US
+purchasing_control.budget.success.updated,Budget erfolgreich aktualisiert.,de_DE
+purchasing_control.budget.success.deactivated,Budget deactivated successfully.,en_US
+purchasing_control.budget.success.deactivated,Budget erfolgreich deaktiviert.,de_DE
+purchasing_control.budget.success.reactivated,Budget reactivated successfully.,en_US
+purchasing_control.budget.success.reactivated,Budget erfolgreich reaktiviert.,de_DE
+purchasing_control.budget.error.not_found,Budget not found.,en_US
+purchasing_control.budget.error.not_found,Budget nicht gefunden.,de_DE
+purchasing_control.budget.error.cost_center_not_found,Cost center not found.,en_US
+purchasing_control.budget.error.cost_center_not_found,Kostenstelle nicht gefunden.,de_DE
+purchasing_control.budget.form.name,Name,en_US
+purchasing_control.budget.form.name,Name,de_DE
+purchasing_control.budget.form.amount,Total Amount,en_US
+purchasing_control.budget.form.amount,Gesamtbetrag,de_DE
+purchasing_control.budget.form.currency,Currency,en_US
+purchasing_control.budget.form.currency,Währung,de_DE
+purchasing_control.budget.form.starts_at,Start date,en_US
+purchasing_control.budget.form.starts_at,Startdatum,de_DE
+purchasing_control.budget.form.ends_at,End date,en_US
+purchasing_control.budget.form.ends_at,Enddatum,de_DE
+purchasing_control.budget.form.enforcement_rule,Enforcement Rule,en_US
+purchasing_control.budget.form.enforcement_rule,Durchsetzungsregel,de_DE
+purchasing_control.budget.form.enforcement_rule.block,Block,en_US
+purchasing_control.budget.form.enforcement_rule.block,Blockieren,de_DE
+purchasing_control.budget.form.enforcement_rule.warn,Display warning,en_US
+purchasing_control.budget.form.enforcement_rule.warn,Warnung anzeigen,de_DE
+purchasing_control.budget.form.enforcement_rule.require_approval,Require Approval,en_US
+purchasing_control.budget.form.enforcement_rule.require_approval,Genehmigung erforderlich,de_DE
+purchasing_control.budget.form.is_active,Budget is active,en_US
+purchasing_control.budget.form.is_active,Kostenstelle ist aktiv,de_DE
+purchasing_control.budget.action.save,Save,en_US
+purchasing_control.budget.action.save,Speichern,de_DE
+purchasing_control.budget.action.cancel,Cancel,en_US
+purchasing_control.budget.action.cancel,Abbrechen,de_DE
+purchasing_control.budget.action.edit,Edit,en_US
+purchasing_control.budget.action.edit,Bearbeiten,de_DE
+purchasing_control.budget.action.deactivate,Deactivate,en_US
+purchasing_control.budget.action.deactivate,Deaktivieren,de_DE
+purchasing_control.budget.action.reactivate,Reactivate,en_US
+purchasing_control.budget.action.reactivate,Reaktivieren,de_DE
+purchasing_control.budget.status.active,Active,en_US
+purchasing_control.budget.status.active,Aktiv,de_DE
+purchasing_control.budget.status.inactive,Inactive,en_US
+purchasing_control.budget.status.inactive,Inaktiv,de_DE
+purchasing_control.budget.status.archived,Archived,en_US
+purchasing_control.budget.status.archived,Archiviert,de_DE
+purchasing_control.budget.list.column.amount,Amount,en_US
+purchasing_control.budget.list.column.amount,Betrag,de_DE
+purchasing_control.budget.list.column.consumed,Consumed,en_US
+purchasing_control.budget.list.column.consumed,Verbraucht,de_DE
+purchasing_control.budget.list.column.remaining,Remaining,en_US
+purchasing_control.budget.list.column.remaining,Verbleibend,de_DE
+purchasing_control.budget.list.column.currency,Currency,en_US
+purchasing_control.budget.list.column.currency,Währung,de_DE
+purchasing_control.budget.list.column.period,Period,en_US
+purchasing_control.budget.list.column.period,Zeitraum,de_DE
+purchasing_control.budget.list.column.enforcement_rule,Rule,en_US
+purchasing_control.budget.list.column.enforcement_rule,Regel,de_DE
+purchasing_control.budget.list.column.status,Status,en_US
+purchasing_control.budget.list.column.status,Status,de_DE
+purchasing_control.budget.list.column.actions,Actions,en_US
+purchasing_control.budget.list.column.actions,Aktionen,de_DE
+purchasing_control.budget.enforcement_rule.tooltip.block,Orders exceeding this budget will be blocked. Checkout is not permitted.,en_US
+"purchasing_control.budget.enforcement_rule.tooltip.block","Bestellungen, die dieses Budget überschreiten, werden blockiert. Der Checkout ist nicht möglich.",de_DE
+purchasing_control.budget.enforcement_rule.tooltip.warn,A warning is displayed when the order exceeds this budget. The order proceeds but may require approval.,en_US
+"purchasing_control.budget.enforcement_rule.tooltip.warn","Eine Warnung wird angezeigt, wenn die Bestellung dieses Budget überschreitet. Die Bestellung wird fortgesetzt, kann jedoch eine Genehmigung erfordern.",de_DE
+purchasing_control.budget.enforcement_rule.tooltip.require_approval,Orders exceeding this budget are automatically routed for approval.,en_US
+purchasing_control.budget.enforcement_rule.tooltip.require_approval,Bestellungen die dieses Budget überschreiten werden automatisch zur Genehmigung weitergeleitet.,de_DE
+purchasing_control.budget.search.name_placeholder,Search by name...,en_US
+purchasing_control.budget.search.name_placeholder,Nach Name suchen...,de_DE
+purchasing_control.budget.search.status.all,All,en_US
+purchasing_control.budget.search.status.all,Alle,de_DE
+purchasing_control.budget.search.status.active,Active,en_US
+purchasing_control.budget.search.status.active,Aktiv,de_DE
+purchasing_control.budget.search.status.inactive,Inactive,en_US
+purchasing_control.budget.search.status.inactive,Inaktiv,de_DE
+purchasing_control.budget.search.status.archived,Archived,en_US
+purchasing_control.budget.search.status.archived,Archiviert,de_DE
+purchasing_control.budget.search.all_currencies,All Currencies,en_US
+purchasing_control.budget.search.all_currencies,Alle Währungen,de_DE
+purchasing_control.budget.search.all_enforcement_rules,All Rules,en_US
+purchasing_control.budget.search.all_enforcement_rules,Alle Regeln,de_DE
+purchasing_control.budget.search.starts_at,Start date,en_US
+purchasing_control.budget.search.starts_at,Startdatum,de_DE
+purchasing_control.budget.search.ends_at,End date,en_US
+purchasing_control.budget.search.ends_at,Enddatum,de_DE
+purchasing_control.budget.search.active_filters,Active filters:,en_US
+purchasing_control.budget.search.active_filters,Aktive Filter:,de_DE
+purchasing_control.budget.search.reset_all,Reset all,en_US
+purchasing_control.budget.search.reset_all,Alle zurücksetzen,de_DE
+purchasing_control.cost_center.access.denied,You do not have access to manage cost centers. Please contact your administrator.,en_US
+purchasing_control.cost_center.access.denied,Sie haben keinen Zugriff auf die Verwaltung von Kostenstellen. Bitte wenden Sie sich an Ihren Administrator.,de_DE
+purchasing_control.order.detail.title,Cost Center & Budget,en_US
+purchasing_control.order.detail.title,Kostenstelle & Budget,de_DE
+purchasing_control.order.detail.not_available,N/A,en_US
+purchasing_control.order.detail.not_available,N/A,de_DE
+purchasing_control.summary.active_cost_centers,Active Cost Centers,en_US
+purchasing_control.summary.active_cost_centers,Aktive Kostenstellen,de_DE
+purchasing_control.summary.total_budget,Total Budget Allocated,en_US
+purchasing_control.summary.total_budget,Gesamtbudget,de_DE
+purchasing_control.summary.consumed_budget,Total Spent,en_US
+purchasing_control.summary.consumed_budget,Verbrauchtes Budget,de_DE
+purchasing_control.summary.remaining_budget,Total Remaining,en_US
+purchasing_control.summary.remaining_budget,Verbleibendes Budget,de_DE
+purchasing_control.summary.title,Budget & Cost Center Overview,en_US
+purchasing_control.summary.title,Budget- & Kostenstellenübersicht,de_DE
+purchasing_control.summary.dashboard_title,Budget Dashboard,en_US
+purchasing_control.summary.dashboard_title,Budget-Dashboard,de_DE
+purchasing_control.summary.no_budgets_assigned,No budgets assigned,en_US
+purchasing_control.summary.no_budgets_assigned,Keine Budgets zugewiesen,de_DE
+purchasing_control.summary.column_budget_name,Budget Name,en_US
+purchasing_control.summary.column_budget_name,Budgetname,de_DE
+purchasing_control.summary.column_total,Total,en_US
+purchasing_control.summary.column_total,Gesamt,de_DE
+purchasing_control.summary.column_consumed,Consumed,en_US
+purchasing_control.summary.column_consumed,Verbraucht,de_DE
+purchasing_control.summary.column_remaining,Remaining,en_US
+purchasing_control.summary.column_remaining,Verbleibend,de_DE
+purchasing_control.order.table.cost_center,Cost Center,en_US
+purchasing_control.order.table.cost_center,Kostenstelle,de_DE
+purchasing_control.order.table.budget,Budget,en_US
+purchasing_control.order.table.budget,Budget,de_DE
+purchasing_control.budget.validation.end_date_in_past,End date cannot be in the past.,en_US
+purchasing_control.budget.validation.end_date_in_past,Das Enddatum darf nicht in der Vergangenheit liegen.,de_DE
+shop_ui.active_form_filters.reset_all.label,Reset all,en_US
+shop_ui.active_form_filters.reset_all.label,Alles zurücksetzen,de_DE
 header.menu.open,Open menu,en_US
 header.menu.open,Menü öffnen,de_DE
 header.menu.close,Close menu,en_US
@@ -6616,3 +6940,341 @@ security_oauth_knpu.error.provider_not_found,OAuth-Anmeldung ist nicht verfügba
 security_oauth_knpu.error.provider_not_found,OAuth login is unavailable.,en_US
 authentication.failed,Authentication failed. Please try again.,de_DE
 authentication.failed,Authentifizierung fehlgeschlagen. Bitte versuchen Sie es erneut.,en_US
+product.detail.in_stock,In stock,en_US
+product.detail.in_stock,Auf Lager,de_DE
+product.detail.out_of_stock_label,Out of stock,en_US
+product.detail.out_of_stock_label,Nicht auf Lager,de_DE
+product.detail.configure_product,Configure product,en_US
+product.detail.configure_product,Produkt konfigurieren,de_DE
+merchant_product_offer.change,Change,en_US
+merchant_product_offer.change,Ändern,de_DE
+merchant_product_offer.compare_sellers,Compare sellers,en_US
+merchant_product_offer.compare_sellers,Anbieter vergleichen,de_DE
+merchant_product_offer.hide_sellers,Hide sellers,en_US
+merchant_product_offer.hide_sellers,Verkäufer ausblenden,de_DE
+merchant_product_offer.show_all_sellers,Show all sellers,en_US
+merchant_product_offer.show_all_sellers,Alle Verkäufer anzeigen,de_DE
+merchant_product_offer.view_all_sellers,View all %count% sellers,en_US
+merchant_product_offer.view_all_sellers,Alle %count% Verkäufer anzeigen,de_DE
+merchant_product_offer.use_selected_seller,Use selected seller,en_US
+merchant_product_offer.use_selected_seller,Ausgewählten Verkäufer verwenden,de_DE
+merchant_product_offer.offers_count,%count% offers for this product,en_US
+merchant_product_offer.offers_count,%count% Angebote für dieses Produkt,de_DE
+shopping_list_widget.save_to_shopping_list,Save to shopping list,en_US
+shopping_list_widget.save_to_shopping_list,In Einkaufsliste speichern,de_DE
+shopping_list_widget.save_popup_description,Please select the shopping list and quantity to proceed,en_US
+shopping_list_widget.save_popup_description,"Bitte wählen Sie Einkaufsliste und Menge aus, um fortzufahren",de_DE
+shopping_list_widget.shopping_list_label,Shopping list,en_US
+shopping_list_widget.shopping_list_label,Einkaufsliste,de_DE
+general.save.button,Save,en_US
+general.save.button,Speichern,de_DE
+product.detail.select_options_notification,Please select relevant options before adding to cart!,en_US
+product.detail.select_options_notification,"Bitte wählen Sie die erforderlichen Optionen aus, bevor Sie den Artikel in den Warenkorb legen!",de_DE
+product.detail.select_options_shopping_list_notification,Please select relevant options before adding to the shopping list!,en_US
+product.detail.select_options_shopping_list_notification,"Bitte wählen Sie die erforderlichen Optionen aus, bevor Sie den Artikel zur Einkaufsliste hinzufügen!",de_DE
+product.detail.sign_in_to_see_prices,Sign in to see prices,en_US
+product.detail.sign_in_to_see_prices,"Anmelden, um Preise zu sehen",de_DE
+cart.item.variants.more,+%count% more,en_US
+cart.item.variants.more,+%count% weitere,de_DE
+cart.item.variants.less,Show less,en_US
+cart.item.variants.less,Weniger anzeigen,de_DE
+recurring_orders.summary_of_changes,Summary of changes,en_US
+recurring_orders.summary_of_changes,Zusammenfassung der Änderungen,de_DE
+recurring_orders.attention_banner.link.failed,View Failed,en_US
+recurring_orders.attention_banner.link.failed,Fehlgeschlagene anzeigen,de_DE
+recurring_orders.attention_banner.link.paused,View Paused,en_US
+recurring_orders.attention_banner.link.paused,Pausierte anzeigen,de_DE
+recurring_orders.attention_banner.link.review_required,View Review Required,en_US
+recurring_orders.attention_banner.link.review_required,Zu prüfende anzeigen,de_DE
+recurring_orders.attention_banner.message,You have %count% recurring schedule(s) that require your attention.,en_US
+recurring_orders.attention_banner.message,"Sie haben %count% wiederkehrende(n) Zeitplan/Zeitpläne, die Ihre Aufmerksamkeit erfordern.",de_DE
+recurring_orders.cadence.bi_weekly,Bi-weekly,en_US
+recurring_orders.cadence.bi_weekly,Zweiwöchentlich,de_DE
+recurring_orders.cadence.every_n_weeks,Every N weeks,en_US
+recurring_orders.cadence.every_n_weeks,Alle N Wochen,de_DE
+recurring_orders.cadence.monthly,Monthly,en_US
+recurring_orders.cadence.monthly,Monatlich,de_DE
+recurring_orders.cadence.weekly,Weekly,en_US
+recurring_orders.cadence.weekly,Wöchentlich,de_DE
+recurring_orders.checkout.cadence_label,Frequency,en_US
+recurring_orders.checkout.cadence_label,Häufigkeit,de_DE
+recurring_orders.checkout.cadence_placeholder,Select frequency,en_US
+recurring_orders.checkout.cadence_placeholder,Häufigkeit auswählen,de_DE
+recurring_orders.checkout.cadence_value_label,Interval (weeks),en_US
+recurring_orders.checkout.cadence_value_label,Intervall (Wochen),de_DE
+recurring_orders.checkout.confirm_button,Confirm,en_US
+recurring_orders.checkout.confirm_button,Bestätigen,de_DE
+recurring_orders.checkout.enable_description,"Get this order delivered automatically on your schedule. Skip and cancel anytime.",en_US
+recurring_orders.checkout.enable_description,"Lassen Sie sich diese Bestellung automatisch nach Ihrem Zeitplan liefern. Jederzeit überspringen und stornieren.",de_DE
+recurring_orders.checkout.enable_label,Set up as recurring order,en_US
+recurring_orders.checkout.enable_label,Als wiederkehrende Bestellung einrichten,de_DE
+recurring_orders.checkout.remove_button,Remove,en_US
+recurring_orders.checkout.remove_button,Entfernen,de_DE
+recurring_orders.checkout.schedule_name_label,Schedule name,en_US
+recurring_orders.checkout.schedule_name_label,Name des Zeitplans,de_DE
+recurring_orders.checkout.section_title,Recurring Order,en_US
+recurring_orders.checkout.section_title,Wiederkehrende Bestellung,de_DE
+recurring_orders.detail.access_denied,You do not have access to this recurring order.,en_US
+recurring_orders.detail.access_denied,Sie haben keinen Zugriff auf diese wiederkehrende Bestellung.,de_DE
+recurring_orders.detail.action.error,An error occurred while processing the action. Please try again.,en_US
+recurring_orders.detail.action.error,Bei der Verarbeitung der Aktion ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.,de_DE
+recurring_orders.detail.actions.cancel,Cancel Schedule,en_US
+recurring_orders.detail.actions.cancel,Zeitplan abbrechen,de_DE
+recurring_orders.detail.actions.pause,Pause,en_US
+recurring_orders.detail.actions.pause,Pausieren,de_DE
+recurring_orders.detail.actions.resume,Resume,en_US
+recurring_orders.detail.actions.resume,Fortsetzen,de_DE
+recurring_orders.detail.actions.retry,Retry Again,en_US
+recurring_orders.detail.actions.retry,Erneut versuchen,de_DE
+recurring_orders.detail.actions.review,Review,en_US
+recurring_orders.detail.actions.review,Überprüfen,de_DE
+recurring_orders.detail.actions.skip,Skip This Execution,en_US
+recurring_orders.detail.actions.skip,Diese Ausführung überspringen,de_DE
+recurring_orders.detail.cancel.modal.title,Cancel Schedule?,en_US
+recurring_orders.detail.cancel.modal.title,Zeitplan abbrechen?,de_DE
+recurring_orders.detail.cancel.modal.warning,This action is permanent. The schedule will stop immediately and cannot be reactivated.,en_US
+recurring_orders.detail.cancel.modal.warning,Diese Aktion ist dauerhaft. Der Zeitplan wird sofort gestoppt und kann nicht reaktiviert werden.,de_DE
+recurring_orders.detail.error.failed.title,The last order attempt failed for the following reasons:,en_US
+recurring_orders.detail.error.failed.title,Der letzte Bestellversuch ist aus den folgenden Gründen fehlgeschlagen:,de_DE
+recurring_orders.detail.estimated_total.info,Estimated Grand Total displays the sum of order items excl. shipping costs or discounts.,en_US
+recurring_orders.detail.estimated_total.info,Der geschätzte Gesamtbetrag enthält die Summe der Artikel ohne Versandkosten oder Rabatte.,de_DE
+recurring_orders.detail.estimated_total.label,Estimated Total,en_US
+recurring_orders.detail.estimated_total.label,Geschätzter Gesamtbetrag,de_DE
+recurring_orders.detail.skip.modal.title,Skip this execution?,en_US
+recurring_orders.detail.skip.modal.title,Diese Ausführung überspringen?,de_DE
+recurring_orders.detail.skip.modal.execution_being_skipped,Execution being skipped,en_US
+recurring_orders.detail.skip.modal.execution_being_skipped,Übersprungene Ausführung,de_DE
+recurring_orders.detail.skip.modal.next_scheduled_execution,Next scheduled execution,en_US
+recurring_orders.detail.skip.modal.next_scheduled_execution,Nächste geplante Ausführung,de_DE
+recurring_orders.detail.skip.modal.summary,The %skippedDate% order will not be placed. The schedule will continue and trigger next on %nextDate%.,en_US
+recurring_orders.detail.skip.modal.summary,Die Bestellung vom %skippedDate% wird nicht aufgegeben. Der Zeitplan läuft weiter und wird als Nächstes am %nextDate% ausgelöst.,de_DE
+recurring_orders.detail.skip.modal.confirm,Skip this execution,en_US
+recurring_orders.detail.skip.modal.confirm,Diese Ausführung überspringen,de_DE
+recurring_orders.detail.history.description,View all past and upcoming executions for this schedule,en_US
+recurring_orders.detail.history.description,Alle vergangenen und bevorstehenden Ausführungen für diesen Zeitplan anzeigen,de_DE
+recurring_orders.detail.history.actions,Actions,en_US
+recurring_orders.detail.history.actions,Aktionen,de_DE
+recurring_orders.detail.history.date,Date,en_US
+recurring_orders.detail.history.date,Datum,de_DE
+recurring_orders.detail.history.empty,No execution history yet.,en_US
+recurring_orders.detail.history.empty,Noch kein Ausführungsverlauf vorhanden.,de_DE
+recurring_orders.detail.history.order_reference,Order Reference,en_US
+recurring_orders.detail.history.order_reference,Bestellreferenz,de_DE
+recurring_orders.detail.history.status,Status,en_US
+recurring_orders.detail.history.status,Status,de_DE
+recurring_orders.detail.history.title,Past scheduled orders,en_US
+recurring_orders.detail.history.title,Ausführungsverlauf,de_DE
+recurring_orders.detail.history.view_order,View Order,en_US
+recurring_orders.detail.history.view_order,Bestellung anzeigen,de_DE
+recurring_orders.detail.next_execution.paused,Schedule is paused. Resume to set next execution date.,en_US
+recurring_orders.detail.next_execution.paused,"Zeitplan ist pausiert. Setzen Sie ihn fort, um das nächste Ausführungsdatum festzulegen.",de_DE
+recurring_orders.detail.next_execution.title,Next Scheduled Execution,en_US
+recurring_orders.detail.next_execution.title,Nächste geplante Ausführung,de_DE
+recurring_orders.detail.order_items.column.product,Product,en_US
+recurring_orders.detail.order_items.column.product,Produkt,de_DE
+recurring_orders.detail.order_items.column.quantity,Qty,en_US
+recurring_orders.detail.order_items.column.quantity,Menge,de_DE
+recurring_orders.detail.order_items.column.total,Total,en_US
+recurring_orders.detail.order_items.column.total,Gesamt,de_DE
+recurring_orders.detail.order_items.empty,No items found.,en_US
+recurring_orders.detail.order_items.empty,Keine Artikel gefunden.,de_DE
+recurring_orders.detail.order_items.label,Order Items,en_US
+recurring_orders.detail.order_items.label,Bestellartikel,de_DE
+recurring_orders.detail.pause.modal.title,Pause Schedule?,en_US
+recurring_orders.detail.pause.modal.title,Pausenplan?,de_DE
+recurring_orders.detail.pause.modal.warning,Do you want to pause the schedule now?,en_US
+recurring_orders.detail.pause.modal.warning,Möchten Sie den Zeitplan jetzt pausieren?,de_DE
+recurring_orders.detail.resume.modal.title,Resume schedule,en_US
+recurring_orders.detail.resume.modal.title,Zeitplan fortsetzen,de_DE
+recurring_orders.detail.review_required.attention,Recurring order could not be processed automatically and requires your attention.,en_US
+recurring_orders.detail.review_required.attention,Der wiederkehrende Auftrag konnte nicht automatisch verarbeitet werden und erfordert Ihre Aufmerksamkeit.,de_DE
+recurring_orders.detail.sidebar.cadence,Cadence,en_US
+recurring_orders.detail.sidebar.cadence,Häufigkeit,de_DE
+recurring_orders.detail.sidebar.created,Created,en_US
+recurring_orders.detail.sidebar.created,Erstellt,de_DE
+recurring_orders.detail.sidebar.created_by,Created By,en_US
+recurring_orders.detail.sidebar.created_by,Erstellt von,de_DE
+recurring_orders.detail.sidebar.status,Status,en_US
+recurring_orders.detail.sidebar.status,Status,de_DE
+recurring_orders.detail.sidebar.title,Schedule Details,en_US
+recurring_orders.detail.sidebar.title,Zeitplandetails,de_DE
+recurring_orders.detail.source_order,Original order,en_US
+recurring_orders.detail.source_order,Ursprüngliche Bestellung,de_DE
+recurring_orders.detail.title,Recurring Order Details,en_US
+recurring_orders.detail.title,Wiederkehrende Bestellung – Details,de_DE
+recurring_orders.error.items_not_purchasable,The following items can no longer be purchased and the recurring order was not placed: %skus%,en_US
+recurring_orders.error.items_not_purchasable,"Die folgenden Artikel können nicht mehr gekauft werden, und die wiederkehrende Bestellung wurde nicht aufgegeben: %skus%",de_DE
+recurring_orders.history.errors.show,Show errors,en_US
+recurring_orders.history.errors.show,Fehler anzeigen,de_DE
+recurring_orders.history.event.cancelled,Cancelled,en_US
+recurring_orders.history.event.cancelled,Abgebrochen,de_DE
+recurring_orders.history.event.failed,Failed,en_US
+recurring_orders.history.event.failed,Fehlgeschlagen,de_DE
+recurring_orders.history.event.paused,Paused,en_US
+recurring_orders.history.event.paused,Pausiert,de_DE
+recurring_orders.history.event.placed,Completed,en_US
+recurring_orders.history.event.placed,Abgeschlossen,de_DE
+recurring_orders.history.event.resumed,Resumed,en_US
+recurring_orders.history.event.resumed,Fortgesetzt,de_DE
+recurring_orders.history.event.skipped,Skipped,en_US
+recurring_orders.history.event.skipped,Übersprungen,de_DE
+recurring_orders.item.configurable_bundle_label,Bundle: %name%,en_US
+recurring_orders.item.configurable_bundle_label,Bundle: %name%,de_DE
+recurring_orders.list.column.actions,Actions,en_US
+recurring_orders.list.column.actions,Aktionen,de_DE
+recurring_orders.list.column.frequency,Frequency,en_US
+recurring_orders.list.column.frequency,Häufigkeit,de_DE
+recurring_orders.list.column.name,Schedule Name,en_US
+recurring_orders.list.column.name,Zeitplanname,de_DE
+recurring_orders.list.column.next_order_date,Next Order Date,en_US
+recurring_orders.list.column.next_order_date,Nächstes Bestelldatum,de_DE
+recurring_orders.list.column.status,Status,en_US
+recurring_orders.list.column.status,Status,de_DE
+recurring_orders.list.empty,No recurring orders found.,en_US
+recurring_orders.list.empty,Keine wiederkehrenden Bestellungen gefunden.,de_DE
+recurring_orders.list.form.scope,Show schedules for,en_US
+recurring_orders.list.form.scope,Zeitpläne anzeigen für,de_DE
+recurring_orders.list.form.search,Search,en_US
+recurring_orders.list.form.search,Suche,de_DE
+recurring_orders.list.form.search_placeholder,Search schedules...,en_US
+recurring_orders.list.form.search_placeholder,Zeitpläne suchen...,de_DE
+recurring_orders.list.form.status,Status,en_US
+recurring_orders.list.form.status,Status,de_DE
+recurring_orders.list.form.status.all,All statuses,en_US
+recurring_orders.list.form.status.all,Alle Status,de_DE
+recurring_orders.list.scope.company,All Company Schedules,en_US
+recurring_orders.list.scope.company,Alle Unternehmensbestellungen,de_DE
+recurring_orders.list.scope.my_business_unit,My Business Unit,en_US
+recurring_orders.list.scope.my_business_unit,Meine Geschäftseinheit,de_DE
+recurring_orders.list.scope.my_schedules,My Schedules,en_US
+recurring_orders.list.scope.my_schedules,Meine Zeitpläne,de_DE
+recurring_orders.list.title,Recurring Orders,en_US
+recurring_orders.list.title,Wiederkehrende Bestellungen,de_DE
+recurring_orders.mail.notify_buyer_placement_failure.body.cta,Review Order,en_US
+recurring_orders.mail.notify_buyer_placement_failure.body.cta,Bestellung prüfen,de_DE
+recurring_orders.mail.notify_buyer_placement_failure.body.detail,Please review the order details and failure reason in your recurring orders dashboard.,en_US
+recurring_orders.mail.notify_buyer_placement_failure.body.detail,Bitte überprüfen Sie die Bestelldetails und den Fehlergrund in Ihrem Dashboard für Folgebestellungen.,de_DE
+recurring_orders.mail.notify_buyer_placement_failure.body.intro,"We were unable to place your recurring order ""%schedule_name%"" automatically.",en_US
+recurring_orders.mail.notify_buyer_placement_failure.body.intro,"Ihre Folgebestellung ""%schedule_name%"" konnte nicht automatisch aufgegeben werden.",de_DE
+recurring_orders.mail.notify_buyer_placement_failure.body.sign_off,Best regards,en_US
+recurring_orders.mail.notify_buyer_placement_failure.body.sign_off,Mit freundlichen Grüßen,de_DE
+recurring_orders.mail.notify_buyer_placement_failure.salutation,Hello,en_US
+recurring_orders.mail.notify_buyer_placement_failure.salutation,Hallo,de_DE
+recurring_orders.mail.notify_buyer_placement_failure.subject,"Recurring order ""%schedule_name%"" could not be placed",en_US
+recurring_orders.mail.notify_buyer_placement_failure.subject,"Folgebestellung ""%schedule_name%"" konnte nicht aufgegeben werden",de_DE
+recurring_orders.mail.notify_buyer_validation_failed.body.cta,Review Order,en_US
+recurring_orders.mail.notify_buyer_validation_failed.body.cta,Bestellung überprüfen,de_DE
+recurring_orders.mail.notify_buyer_validation_failed.body.detail,Please review your order details and make any necessary adjustments before the scheduled date.,en_US
+recurring_orders.mail.notify_buyer_validation_failed.body.detail,Bitte überprüfen Sie Ihre Bestelldetails und nehmen Sie gegebenenfalls Anpassungen vor dem geplanten Datum vor.,de_DE
+recurring_orders.mail.notify_buyer_validation_failed.body.intro,"Your recurring order ""%schedule_name%"", scheduled for %execution_date%, could not be processed automatically and requires your attention.",en_US
+recurring_orders.mail.notify_buyer_validation_failed.body.intro,"Ihre wiederkehrende Bestellung ""%schedule_name%"", geplant für %execution_date%, konnte nicht automatisch verarbeitet werden und erfordert Ihre Aufmerksamkeit.",de_DE
+recurring_orders.mail.notify_buyer_validation_failed.salutation,Hello,en_US
+recurring_orders.mail.notify_buyer_validation_failed.salutation,Hallo,de_DE
+recurring_orders.mail.notify_buyer_validation_failed.subject,"Action Required: ""%schedule_name%"" — your order needs attention",en_US
+recurring_orders.mail.notify_buyer_validation_failed.subject,"Handlung erforderlich: ""%schedule_name%"" – Ihre Bestellung erfordert Aufmerksamkeit",de_DE
+recurring_orders.mail.notify_buyer_upcoming_order.body.cta,View Order,en_US
+recurring_orders.mail.notify_buyer_upcoming_order.body.cta,Bestellung ansehen,de_DE
+recurring_orders.mail.notify_buyer_upcoming_order.body.intro,"Your recurring order ""%schedule_name%"" is scheduled for %execution_date%. We will process it automatically on that date.",en_US
+recurring_orders.mail.notify_buyer_upcoming_order.body.intro,"Ihre wiederkehrende Bestellung ""%schedule_name%"" ist für %execution_date% geplant. Wir werden sie automatisch an diesem Datum verarbeiten.",de_DE
+recurring_orders.mail.notify_buyer_upcoming_order.body.review,"If you need to make changes, please review and update your order before %expiry_date%.",en_US
+recurring_orders.mail.notify_buyer_upcoming_order.body.review,"Wenn Sie Änderungen vornehmen möchten, überprüfen und aktualisieren Sie bitte Ihre Bestellung vor dem %expiry_date%.",de_DE
+recurring_orders.mail.notify_buyer_upcoming_order.salutation,Hello,en_US
+recurring_orders.mail.notify_buyer_upcoming_order.salutation,Hallo,de_DE
+recurring_orders.mail.notify_buyer_upcoming_order.subject,"Upcoming recurring order: ""%schedule_name%"" on %execution_date%",en_US
+recurring_orders.mail.notify_buyer_upcoming_order.subject,"Bevorstehende Folgebestellung: ""%schedule_name%"" am %execution_date%",de_DE
+recurring_orders.menu_item,Recurring Orders,en_US
+recurring_orders.menu_item,Wiederkehrende Bestellungen,de_DE
+recurring_orders.review.all_items_removed,The order cannot be placed - all items are unavailable and the schedule cannot be executed without items.,en_US
+recurring_orders.review.all_items_removed,Die Bestellung kann nicht aufgegeben werden - alle Artikel sind nicht verfügbar und der Zeitplan kann ohne Artikel nicht ausgeführt werden.,de_DE
+recurring_orders.review.approve_error,The changes could not be applied. Please try again.,en_US
+recurring_orders.review.approve_error,Die Änderungen konnten nicht übernommen werden. Bitte versuchen Sie es erneut.,de_DE
+recurring_orders.review.approve_failed,The changes could not be applied.,en_US
+recurring_orders.review.approve_failed,Die Änderungen konnten nicht übernommen werden.,de_DE
+recurring_orders.review.approve_success,Your changes were applied and the order was placed.,en_US
+recurring_orders.review.approve_success,Ihre Änderungen wurden übernommen und die Bestellung wurde aufgegeben.,de_DE
+recurring_orders.review.back_to_detail,Back to schedule detail,en_US
+recurring_orders.review.back_to_detail,Zurück zur Zeitplanübersicht,de_DE
+recurring_orders.review.banner.price_change,%count% price change,en_US
+recurring_orders.review.banner.price_change,%count% Preisänderung,de_DE
+recurring_orders.review.banner.substituted,%count% product substituted,en_US
+recurring_orders.review.banner.substituted,%count% Produkt ersetzt,de_DE
+recurring_orders.review.banner.unavailable,%count% unavailable,en_US
+recurring_orders.review.banner.unavailable,%count% nicht verfügbar,de_DE
+recurring_orders.review.blocking.title,Cannot proceed — blocking issues,en_US
+recurring_orders.review.blocking.title,Kann nicht fortfahren — blockierende Probleme,de_DE
+recurring_orders.review.column.current_price,Current price,en_US
+recurring_orders.review.column.current_price,Aktueller Preis,de_DE
+recurring_orders.review.column.previous_price,Previous price,en_US
+recurring_orders.review.column.previous_price,Vorheriger Preis,de_DE
+recurring_orders.review.column.reason,Reason,en_US
+recurring_orders.review.column.reason,Grund,de_DE
+recurring_orders.review.cta.accept_and_place,Accept changes & place order,en_US
+recurring_orders.review.cta.accept_and_place,Änderungen akzeptieren & Bestellung aufgeben,de_DE
+recurring_orders.review.execution_scheduled,Execution scheduled for %date%,en_US
+recurring_orders.review.execution_scheduled,Ausführung geplant für %date%,de_DE
+recurring_orders.review.flagged.title,Items requiring your review,en_US
+recurring_orders.review.flagged.title,Zu überprüfende Artikel,de_DE
+recurring_orders.review.footer.helper,Accepting these changes will update this order and future executions of the schedule.,en_US
+recurring_orders.review.footer.helper,"Wenn Sie diese Änderungen akzeptieren, werden diese Bestellung und zukünftige Ausführungen des Zeitplans aktualisiert.",de_DE
+recurring_orders.review.footer.new_total,New total,en_US
+recurring_orders.review.footer.new_total,Neue Summe,de_DE
+recurring_orders.review.footer.summary,%removed% removals,en_US
+recurring_orders.review.footer.summary,%removed% Artikel entfernt,de_DE
+recurring_orders.review.invalid_form,The request could not be processed. Please review and try again.,en_US
+recurring_orders.review.invalid_form,Die Anfrage konnte nicht verarbeitet werden. Bitte überprüfen Sie sie und versuchen Sie es erneut.,de_DE
+recurring_orders.review.modal.accepted_prices,Accepted price changes,en_US
+recurring_orders.review.modal.accepted_prices,Akzeptierte Preisänderungen,de_DE
+recurring_orders.review.modal.body,Removing unavailable items and accepting updated prices will affect this order and all future executions of this schedule. These changes will become the new reference state for the recurring order going forward.,en_US
+recurring_orders.review.modal.body,Das Entfernen nicht verfügbarer Artikel und das Akzeptieren aktualisierter Preise wirken sich auf diese Bestellung und alle zukünftigen Ausführungen dieses Zeitplans aus. Diese Änderungen werden zum neuen Referenzzustand der wiederkehrenden Bestellung.,de_DE
+recurring_orders.review.modal.headline,Confirm order and apply changes,en_US
+recurring_orders.review.modal.headline,Bestellung bestätigen und Änderungen übernehmen,de_DE
+recurring_orders.review.modal.new_total,New order total,en_US
+recurring_orders.review.modal.new_total,Neue Bestellsumme,de_DE
+recurring_orders.review.modal.original_total,Original order total,en_US
+recurring_orders.review.modal.original_total,Ursprüngliche Bestellsumme,de_DE
+recurring_orders.review.modal.removed_items,Removed items,en_US
+recurring_orders.review.modal.removed_items,Entfernte Artikel,de_DE
+recurring_orders.review.not_available,This schedule does not require review.,en_US
+recurring_orders.review.not_available,Dieser Zeitplan erfordert keine Überprüfung.,de_DE
+recurring_orders.review.prices_changed,Prices changed again since you reviewed. Please review the updated order before approving.,en_US
+recurring_orders.review.prices_changed,Die Preise haben sich seit Ihrer Überprüfung erneut geändert. Bitte überprüfen Sie die aktualisierte Bestellung vor der Genehmigung.,de_DE
+recurring_orders.review.reason.discontinued,Discontinued,en_US
+recurring_orders.review.reason.discontinued,Eingestellt,de_DE
+recurring_orders.review.reason.not_approved,Not approved,en_US
+recurring_orders.review.reason.not_approved,Nicht genehmigt,de_DE
+recurring_orders.review.reason.price_increased,Price increased,en_US
+recurring_orders.review.reason.price_increased,Preis erhöht,de_DE
+recurring_orders.review.reason.price_unavailable,Price unavailable,en_US
+recurring_orders.review.reason.price_unavailable,Preis nicht verfügbar,de_DE
+recurring_orders.review.reason.substituted,Substituted,en_US
+recurring_orders.review.reason.substituted,Ersetzt,de_DE
+recurring_orders.review.reason.unavailable,Unavailable,en_US
+recurring_orders.review.reason.unavailable,Nicht verfügbar,de_DE
+recurring_orders.review.title,Review Required — %name%,en_US
+recurring_orders.review.title,Überprüfung erforderlich — %name%,de_DE
+recurring_orders.review.unchanged.title,Unchanged items (%count%),en_US
+recurring_orders.review.unchanged.title,Unveränderte Artikel (%count%),de_DE
+recurring_orders.review.unchanged.title.plural,%count% unchanged items,en_US
+recurring_orders.review.unchanged.title.plural,%count% unveränderte Artikel,de_DE
+recurring_orders.status.active,Active,en_US
+recurring_orders.status.active,Aktiv,de_DE
+recurring_orders.status.cancelled,Cancelled,en_US
+recurring_orders.status.cancelled,Abgebrochen,de_DE
+recurring_orders.status.draft,Draft,en_US
+recurring_orders.status.draft,Entwurf,de_DE
+recurring_orders.status.failed,Failed,en_US
+recurring_orders.status.failed,Fehlgeschlagen,de_DE
+recurring_orders.status.paused,Paused,en_US
+recurring_orders.status.paused,Pausiert,de_DE
+recurring_orders.status.review_required,Review Required,en_US
+recurring_orders.status.review_required,Überprüfung erforderlich,de_DE
+recurring_orders.detail.resume.date_label,Next execution date,en_US
+recurring_orders.detail.resume.date_label,Datum der nächsten Ausführung,de_DE
+recurring_orders.detail.resume.validation.date_required,Please select a resume date.,en_US
+recurring_orders.detail.resume.validation.date_required,Bitte wählen Sie ein Fortsetzungsdatum aus.,de_DE
+recurring_orders.detail.resume.validation.date_in_past,The resume date must be in the future.,en_US
+recurring_orders.detail.resume.validation.date_in_past,Das Fortsetzungsdatum muss in der Zukunft liegen.,de_DE
+recurring_orders.checkout.validation.cadence_required,Please select a frequency.,en_US
+recurring_orders.checkout.validation.cadence_required,Bitte wählen Sie eine Häufigkeit aus.,de_DE
+recurring_orders.scheduled.order.errors.title,The following issues were found with your recurring order and it could not be placed:,en_US
+recurring_orders.scheduled.order.errors.title,Die folgenden Probleme wurden bei Ihrer wiederkehrenden Bestellung festgestellt und sie konnte nicht aufgegeben werden:,de_DE

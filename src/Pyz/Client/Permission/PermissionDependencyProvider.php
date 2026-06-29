@@ -42,6 +42,7 @@ use Spryker\Client\ShoppingList\Plugin\WriteShoppingListPermissionPlugin;
 use Spryker\Shared\Checkout\Plugin\Permission\PlaceOrderWithAmountUpToPermissionPlugin;
 use Spryker\Shared\CompanyUser\Plugin\AddCompanyUserPermissionPlugin;
 use Spryker\Shared\CompanyUserInvitation\Plugin\ManageCompanyUserInvitationPermissionPlugin;
+use SprykerFeature\Shared\PurchasingControl\Plugin\Permission\ManageCostCentersPermissionPlugin; #PurchasingControlFeature
 use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\CreateSspAssetPermissionPlugin;
 use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\CreateSspInquiryPermissionPlugin;
 use SprykerFeature\Shared\SelfServicePortal\Plugin\Permission\UnassignSspAssetPermissionPlugin;
@@ -130,6 +131,7 @@ class PermissionDependencyProvider extends SprykerPermissionDependencyProvider
             new UnassignSspAssetPermissionPlugin(),
             new ViewCompanySspServicePermissionPlugin(),
             new ViewBusinessUnitSspServicePermissionPlugin(),
+            new ManageCostCentersPermissionPlugin(), #PurchasingControlFeature
         ];
     }
 }

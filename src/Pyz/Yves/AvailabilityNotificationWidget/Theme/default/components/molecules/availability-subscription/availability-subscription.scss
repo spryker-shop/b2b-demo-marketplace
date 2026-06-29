@@ -1,0 +1,46 @@
+@mixin availability-notification-availability-subscription($name: '.availability-subscription') {
+    #{$name} {
+        display: block;
+
+        .form__fields {
+            align-items: flex-end;
+            gap: var(--scale-8);
+        }
+
+        .label {
+            margin-bottom: var(--scale-8);
+            color: var(--text-primary);
+            font-family: var(--label-sm-semibold-family);
+            font-size: rem(var(--label-sm-semibold-size));
+            font-weight: var(--label-sm-semibold-weight);
+            line-height: rem(var(--label-sm-semibold-line-height));
+        }
+
+        &__form--subscribe .form__container {
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: flex-end;
+            gap: var(--scale-8);
+        }
+
+        &__form--subscribe .form__fields {
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+
+        &__form--subscribe .form__actions {
+            flex: 0 0 auto;
+            margin: 0;
+        }
+
+        &__submit {
+            flex: 0 0 auto;
+            aspect-ratio: 1;
+            padding-left: 0;
+            padding-right: 0;
+            margin: 0;
+        }
+    }
+}
+
+@include availability-notification-availability-subscription();

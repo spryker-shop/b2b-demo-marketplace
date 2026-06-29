@@ -83,18 +83,6 @@
         }
     }
 
-    &--product-sold-by {
-        color: $setting-color-gray-5;
-        font-size: rem(var(--fontsize-3));
-        font-weight: fw(regular);
-        padding: rem(var(--scale-6)) 0 rem(14);
-        border-bottom: rem(var(--stroke-sm)) solid $setting-color-gray-1;
-
-        @include helper-breakpoint-media-min($lg) {
-            font-size: rem(22);
-        }
-    }
-
     &--price-mode {
         font-size: rem(13);
         color: $setting-color-gray-4;

@@ -13,6 +13,9 @@ use Pyz\Zed\DataImport\DataImportConfig;
 use Pyz\Zed\Development\Communication\Console\AcceptanceCodeTestConsole;
 use Pyz\Zed\Development\Communication\Console\ApiCodeTestConsole;
 use Pyz\Zed\Development\Communication\Console\FunctionalCodeTestConsole;
+use Pyz\Zed\PunchoutGateway\Communication\Console\PunchoutDemoConnectionCreateConsole;
+use Pyz\Zed\SetupFrontend\Communication\Console\StorybookBuildFrontendConsole;
+use Pyz\Zed\WaterTreatmentConfiguratorPageExample\Communication\Console\WaterTreatmentProductConfiguratorBuildFrontendConsole;
 use SecurityChecker\Command\SecurityCheckerCommand;
 use Spryker\Zed\AclEntity\Communication\Console\AclEntityMetadataConfigValidateConsole;
 use Spryker\Zed\AclMerchantPortal\Communication\Console\AclEntitySynchronizeConsole;
@@ -207,14 +210,11 @@ use Spryker\Zed\ZedNavigation\Communication\Console\BuildNavigationConsole;
 use Spryker\Zed\ZedNavigation\Communication\Console\RemoveNavigationCacheConsole;
 use SprykerEco\Zed\Algolia\Communication\Console\AlgoliaEntityExportConsole;
 use SprykerEco\Zed\NewRelic\Communication\Console\RecordDeploymentConsole;
-use SprykerEco\Zed\PunchoutGateway\Communication\Console\PunchoutCxmlDemoConnectionCreateConsole;
-use SprykerEco\Zed\PunchoutGateway\Communication\Console\PunchoutOciDemoConnectionCreateConsole;
+use SprykerFeature\Zed\OrderExperienceManagement\Communication\Console\RecurringOrderTriggerConsole;
 use SprykerFeature\Zed\ProductExperienceManagement\Communication\Console\ImportJobRunConsole;
 use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 use SprykerSdk\Zed\AiDev\Communication\Console\AiToolSetupConsole;
-use SprykerSdk\Zed\AiDev\Communication\Console\GeneratePromptsConsole;
 use SprykerSdk\Zed\AiDev\Communication\Console\McpServerConsole;
-use SprykerShop\Zed\DateTimeConfiguratorPageExample\Communication\Console\DateTimeProductConfiguratorBuildFrontendConsole;
 
 /**
  * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
@@ -405,6 +405,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new YvesBuildFrontendConsole(),
             new ZedBuildFrontendConsole(),
             new MerchantPortalBuildFrontendConsole(),
+            new StorybookBuildFrontendConsole(),
 
             new DeleteAllQueuesConsole(),
             new PurgeAllQueuesConsole(),
@@ -453,7 +454,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
 
             new MessageBrokerWorkerConsole(),
             new ScopeCacheCollectorConsole(),
-            new DateTimeProductConfiguratorBuildFrontendConsole(),
+            new WaterTreatmentProductConfiguratorBuildFrontendConsole(),
             new OrderMatrixConsole(),
             new AclEntitySynchronizeConsole(),
             new AclEntityMetadataConfigValidateConsole(),
@@ -470,6 +471,8 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new SymfonyMessengerConsumeMessagesConsole(),
             new SchedulerListConsole(),
             new ConfigurationSyncConsole(),
+
+            new RecurringOrderTriggerConsole(),
         ];
 
         $propelCommands = $container->getLocator()->propel()->facade()->getConsoleCommands();
@@ -519,7 +522,6 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
 
             if (class_exists(McpServerConsole::class)) {
                 $commands[] = new McpServerConsole();
-                $commands[] = new GeneratePromptsConsole();
             }
 
             if (class_exists(AiToolSetupConsole::class)) {
@@ -536,8 +538,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             $commands[] = new MessageBrokerSqsToSnsSubscriberConsole();
 
             // Punchout Gateway demo connections
-            $commands[] = new PunchoutOciDemoConnectionCreateConsole();
-            $commands[] = new PunchoutCxmlDemoConnectionCreateConsole();
+            $commands[] = new PunchoutDemoConnectionCreateConsole();
         }
 
         return $commands;

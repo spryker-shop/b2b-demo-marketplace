@@ -5,9 +5,22 @@
         <label>Analytics</label>
         <title>Analytics</title>
         <icon>bar_chart_4_bars</icon>
-        <bundle>analytics-gui</bundle>
-        <controller>analytics</controller>
-        <action>index</action>
+        <pages>
+            <analytics>
+                <label>Analytics</label>
+                <title>Analytics</title>
+                <bundle>analytics-gui</bundle>
+                <controller>analytics</controller>
+                <action>index</action>
+            </analytics>
+            <google-analytics>
+                <label>Search Statistics</label>
+                <title>Search Statistics</title>
+                <bundle>google-analytics</bundle>
+                <controller>search-statistics</controller>
+                <action>index</action>
+            </google-analytics>
+        </pages>
     </analytics>
     <dashboard>
         <label>Dashboard</label>
@@ -186,8 +199,8 @@
                 <action>index</action>
             </company-role-gui>
             <purchasing-control>
-                <label>Purchasing Control</label>
-                <title>Purchasing Control</title>
+                <label>Cost Centers</label>
+                <title>Cost Centers</title>
                 <bundle>purchasing-control</bundle>
                 <controller>cost-center</controller>
                 <action>index</action>
@@ -722,4 +735,48 @@
         <action>index</action>
         <visible>1</visible>
     </configuration-management>
+    <punchout-gateway>
+        <label>Punchout Connections</label>
+        <bundle>punchout-gateway</bundle>
+        <controller>list</controller>
+        <action>index</action>
+        <visible>1</visible>
+        <pages>
+            <create>
+                <title>Create Punchout Connection</title>
+                <bundle>punchout-gateway</bundle>
+                <controller>create</controller>
+                <action>index</action>
+                <visible>0</visible>
+            </create>
+            <edit>
+                <title>Edit Punchout Connection</title>
+                <bundle>punchout-gateway</bundle>
+                <controller>edit</controller>
+                <action>index</action>
+                <visible>0</visible>
+            </edit>
+            <view>
+                <title>View Punchout Connection</title>
+                <bundle>punchout-gateway</bundle>
+                <controller>view</controller>
+                <action>index</action>
+                <visible>0</visible>
+            </view>
+            <credential-add-credential>
+                <title>Add Credential</title>
+                <bundle>punchout-gateway</bundle>
+                <controller>credential</controller>
+                <action>add-credential</action>
+                <visible>0</visible>
+            </credential-add-credential>
+            <credential-edit-credential>
+                <title>Edit Credential</title>
+                <bundle>punchout-gateway</bundle>
+                <controller>credential</controller>
+                <action>edit-credential</action>
+                <visible>0</visible>
+            </credential-edit-credential>
+        </pages>
+    </punchout-gateway>
 </config>

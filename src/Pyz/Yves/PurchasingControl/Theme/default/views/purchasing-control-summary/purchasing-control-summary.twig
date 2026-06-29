@@ -1,0 +1,84 @@
+{% extends view('purchasing-control-summary', 'SprykerFeature:PurchasingControl') %}
+
+{% macro summaryTotalsBox(title, content) %}
+    <div class="col col--sm-12 col--lg-4">
+        <div class="box box--dark">
+            <h6>{{ title | trans }}</h6>
+            <p><strong>{{ content }}</strong></p>
+        </div>
+    </div>
+{% endmacro %}
+
+{% block body %}
+    {% block header %}
+        {% include molecule('action-bar') with {
+            data: {
+                title: 'purchasing_control.summary.dashboard_title' | trans,
+            },
+        } %}
+    {% endblock %}
+
+        {% block summary_totals %}
+            {% set summaryTotalsGridClass = 'grid grid--gap-smaller spacing-bottom--biggest' %}
+            <div class="{{ summaryTotalsGridClass }}">
+                {% for currency, totals in data.budgetSummaries %}
+                    {{ _self.summaryTotalsBox('purchasing_control.summary.total_budget', totals.totalAmount | money(true, currency)) }}
+                    {{ _self.summaryTotalsBox('purchasing_control.summary.consumed_budget', totals.totalConsumedAmount | money(true, currency)) }}
+                    {{ _self.summaryTotalsBox('purchasing_control.summary.remaining_budget', totals.totalRemainingAmount | money(true, currency)) }}
+                {% endfor %}
+            </div>
+        {% endblock %}
+    
+        {% set costCenterDetailsClass = 'spacing-x--small' %}
+        {% block costCenterDetails %}
+            <div class="{{ costCenterDetailsClass }}">
+                {% for costCenter in data.costCenterDetails %}
+                    {% embed molecule('collapsible-block') with {
+                        data: {
+                            title: costCenter.name,
+                        },
+                        embed: {
+                            costCenter: costCenter,
+                        }
+                    } %}    
+                        {% block content %}
+                            {% set columns = [
+                                {
+                                    id: 'budget_name',
+                                    title: 'purchasing_control.summary.column_budget_name',
+                                },
+                                {
+                                    id: 'column_total',
+                                    title: 'purchasing_control.summary.column_total',
+                                },
+                                {
+                                    id: 'column_consumed',
+                                    title: 'purchasing_control.summary.column_consumed',
+                                },
+                                {
+                                    id: 'column_remaining',
+                                    title: 'purchasing_control.summary.column_remaining',
+                                },
+                            ] %}
+
+                            {% set rows = costCenter.budgets | map(budget => {
+                                budget_name: budget.name,
+                                column_total: budget.amount | money(true, budget.currency),
+                                column_consumed: budget.consumedAmount | money(true, budget.currency),
+                                column_remaining: budget.remainingAmount | money(true, budget.currency),
+                            }) %}
+
+                            {% include molecule('advanced-table') with {
+                                data: {
+                                    columns: columns,
+                                    rows: rows,
+                                    emptyText: 'purchasing_control.summary.no_budgets_assigned',
+                                },
+                                qa: 'advanced-table-budget-summary',
+                            } only %}
+                        {% endblock %}
+                    {% endembed %}
+                {% endfor %}
+            </div>
+        {% endblock %}
+{% endblock %}

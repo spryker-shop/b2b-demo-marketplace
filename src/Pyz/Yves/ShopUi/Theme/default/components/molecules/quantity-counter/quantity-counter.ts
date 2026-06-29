@@ -22,16 +22,75 @@ export default class QuantityCounter extends Component {
         );
         this.value = this.getValue;
         this.mapEvents();
+        this.updateButtonsState();
     }
 
     protected mapEvents(): void {
         this.decrementButton.addEventListener('click', (event) => this.onChangeQuantity(event, 'decrease'));
         this.incrementButton.addEventListener('click', (event) => this.onChangeQuantity(event, 'increase'));
         this.input?.addEventListener('keydown', (event: KeyboardEvent) => this.onKeyDown(event));
+        this.input?.addEventListener('change', () => this.onManualChange());
 
         if (this.autoUpdate) {
             this.input.addEventListener('change', () => this.delayToSubmit());
         }
+    }
+
+    protected onManualChange(): void {
+        if (!this.isAvailable) {
+            return;
+        }
+
+        const currentValue = this.currentValue;
+
+        if (!Number.isFinite(currentValue) || currentValue < this.minQuantity) {
+            this.setValue(this.minQuantity);
+        } else if (currentValue > this.maxQuantity) {
+            this.setValue(this.maxQuantity);
+        }
+
+        this.updateButtonsState();
+    }
+
+    protected setValue(value: number): void {
+        this.input.value = value.toString();
+        this.input.dispatchEvent(new Event('change'));
+        this.input.dispatchEvent(new Event('input'));
+    }
+
+    protected updateButtonsState(): void {
+        this.updateDecrementState();
+        this.updateIncrementState();
+    }
+
+    protected updateDecrementState(): void {
+        const currentValue = this.currentValue;
+        const shouldDisable = !Number.isFinite(currentValue) || currentValue <= this.minQuantity;
+
+        this.decrementButton.disabled = shouldDisable;
+        this.decrementButton.classList.toggle(`${this.name}__button--disabled`, shouldDisable);
+    }
+
+    protected updateIncrementState(): void {
+        const currentValue = this.currentValue;
+        const shouldDisable = Number.isFinite(currentValue) && currentValue >= this.maxQuantity;
+
+        this.incrementButton.disabled = shouldDisable;
+        this.incrementButton.classList.toggle(`${this.name}__button--disabled`, shouldDisable);
+    }
+
+    protected get currentValue(): number {
+        try {
+            const formattedValue = this.formattedNumberInput?.unformattedValue;
+
+            if (Number.isFinite(formattedValue)) {
+                return formattedValue;
+            }
+        } catch {
+            return Number(this.input.value);
+        }
+
+        return Number(this.input.value);
     }
 
     protected onChangeQuantity(event: Event, type: 'decrease' | 'increase'): void {
@@ -45,13 +104,14 @@ export default class QuantityCounter extends Component {
         const step = this.step * this.precision;
         const calculatedValue = type === 'increase' ? value * this.precision + step : value * this.precision - step;
         const potentialValue = Number((calculatedValue / this.precision).toFixed(this.numberOfDecimalPlaces));
-        const shouldUpdate = value < this.maxQuantity || potentialValue >= this.minQuantity;
+        const shouldUpdate = potentialValue <= this.maxQuantity && potentialValue >= this.minQuantity;
 
         if (!shouldUpdate) {
             return;
         }
 
         this.input.value = potentialValue.toString();
+        this.updateButtonsState();
 
         if (this.isAjaxMode) {
             this.delayToSubmit(true);

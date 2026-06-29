@@ -1,0 +1,13 @@
+{% extends model('template') %}
+
+{% define data = {
+    listItems: {},
+} %}
+
+{% block body %}
+    {% include molecule('collapsible-list') with {
+        data: {
+            listItems: data.listItems,
+        },
+    } only %}
+{% endblock %}

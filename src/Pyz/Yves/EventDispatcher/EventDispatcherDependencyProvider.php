@@ -29,6 +29,7 @@ use Spryker\Yves\Router\Plugin\EventDispatcher\RouterSslRedirectEventDispatcherP
 use Spryker\Yves\Session\Plugin\EventDispatcher\SaveSessionEventDispatcherPlugin;
 use Spryker\Yves\Session\Plugin\EventDispatcher\SessionEventDispatcherPlugin;
 use Spryker\Yves\Storage\Plugin\EventDispatcher\StorageCacheEventDispatcherPlugin;
+use SprykerShop\Yves\CartCodeWidget\Plugin\EventDispatcher\SecurityBlockerCartCodeEventDispatcherPlugin;
 use SprykerShop\Yves\CustomerPage\Plugin\EventDispatcher\LastVisitedPageEventDispatcherPlugin;
 use SprykerShop\Yves\ErrorPage\Plugin\EventDispatcher\ErrorPageEventDispatcherPlugin;
 use SprykerShop\Yves\SecurityBlockerPage\Plugin\EventDispatcher\SecurityBlockerAgentEventDispatcherPlugin;
@@ -69,6 +70,7 @@ class EventDispatcherDependencyProvider extends SprykerEventDispatcherDependency
             new ResponseListenerEventDispatcherPlugin(),
             new SecurityBlockerCustomerEventDispatcherPlugin(),
             new SecurityBlockerAgentEventDispatcherPlugin(),
+            new SecurityBlockerCartCodeEventDispatcherPlugin(),
             new EnvironmentInfoHeaderEventDispatcherPlugin(),
             new AnonymousIdSessionAssignEventDispatcherPlugin(),
             new LastVisitedPageEventDispatcherPlugin(),

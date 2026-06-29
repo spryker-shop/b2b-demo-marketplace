@@ -465,6 +465,7 @@
                 { "type": "remove_use", "class_name": "ProductApprovalProductTableDataBulkExpanderPlugin" },
                 { "type": "remove_use", "class_name": "ProductApprovalProductTableQueryCriteriaExpanderPlugin" },
                 { "type": "remove_use", "class_name": "ProductAttachmentImageTabContentProviderPlugin" },
+                { "type": "remove_use", "class_name": "ShipmentTypeProductConcreteEditFormExpanderPlugin" },
                 { "type": "remove_plugin", "plugin_class": "MerchantProductAbstractListActionViewDataExpanderPlugin" },
                 { "type": "remove_plugin", "plugin_class": "MerchantProductAbstractFormDataProviderExpanderPlugin" },
                 { "type": "remove_plugin", "plugin_class": "MerchantProductAbstractFormExpanderPlugin" },
@@ -482,9 +483,19 @@
                 { "type": "remove_plugin", "plugin_class": "ProductApprovalProductTableActionExpanderPlugin" },
                 { "type": "remove_plugin", "plugin_class": "ProductApprovalProductTableConfigurationExpanderPlugin" },
                 { "type": "remove_plugin", "plugin_class": "ProductApprovalProductTableDataBulkExpanderPlugin" },
-                { "type": "remove_plugin", "plugin_class": "ProductApprovalProductTableQueryCriteriaExpanderPlugin" }
+                { "type": "remove_plugin", "plugin_class": "ProductApprovalProductTableQueryCriteriaExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "ShipmentTypeProductConcreteEditFormExpanderPlugin" }
             ],
             "success_messages": ["✓ ProductManagementDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/ProductOfferShipmentTypeDataImport/ProductOfferShipmentTypeDataImportDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "ProductOfferConcreteShipmentTypeValidatorStepPlugin" },
+                { "type": "remove_plugin", "plugin_class": "ProductOfferConcreteShipmentTypeValidatorStepPlugin" }
+            ],
+            "success_messages": [
+                "✓ ProductOfferShipmentTypeDataImportDependencyProvider cleaned from marketplace-specific plugins"
+            ]
         },
         "src/Pyz/Zed/ProductOption/ProductOptionDependencyProvider.php": {
             "operations": [
@@ -1182,7 +1193,7 @@
                 { "type": "remove_use", "class_name": "SecurityMerchantPortalGuiConstants" },
                 { "type": "remove_config_assignment", "constant_pattern": "MerchantPortalConstants::BASE_URL_MP" },
                 { "type": "remove_config_assignment", "constant_pattern": "MerchantPortalConstants::" },
-                { "type": "remove_line_containing", "constant_pattern": "SecurityMerchantPortalGuiConstants::" },
+                { "type": "remove_line_containing", "pattern": "SecurityMerchantPortalGuiConstants::" },
                 { "type": "remove_filesystem_config", "filesystem_name": "merchant-product-data-import-files" },
                 { "type": "remove_filesystem_config", "filesystem_name": "merchant-product-offer-data-import-files" },
                 { "type": "remove_section_comment", "comment_pattern": "MERCHANT PORTAL" }

@@ -34,6 +34,9 @@ use Spryker\Zed\Oms\Communication\Plugin\Mail\OrderShippedMailTypeBuilderPlugin;
 use Spryker\Zed\SalesInvoice\Communication\Plugin\Mail\OrderInvoiceMailTypeBuilderPlugin;
 use Spryker\Zed\SymfonyMailer\Communication\Plugin\Mail\SymfonyMailerProviderPlugin;
 use Spryker\Zed\UserPasswordResetMail\Communication\Plugin\Mail\UserPasswordResetMailTypeBuilderPlugin;
+use SprykerFeature\Zed\OrderExperienceManagement\Communication\Plugin\Mail\RecurringOrderFailureMailTypeBuilderPlugin;
+use SprykerFeature\Zed\OrderExperienceManagement\Communication\Plugin\Mail\RecurringOrderUpcomingNotificationMailTypeBuilderPlugin;
+use SprykerFeature\Zed\OrderExperienceManagement\Communication\Plugin\Mail\RecurringOrderValidationFailedMailTypeBuilderPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Mail\SspInquiryApprovedMailTypeBuilderPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Mail\SspInquiryRejectedMailTypeBuilderPlugin;
 
@@ -100,6 +103,9 @@ class MailDependencyProvider extends SprykerMailDependencyProvider
             new UserEmailMultiFactorAuthMailTypeBuilderPlugin(),
             new SspInquiryApprovedMailTypeBuilderPlugin(),
             new SspInquiryRejectedMailTypeBuilderPlugin(),
+            new RecurringOrderUpcomingNotificationMailTypeBuilderPlugin(), #RecurringOrdersFeature
+            new RecurringOrderValidationFailedMailTypeBuilderPlugin(), #RecurringOrdersFeature
+            new RecurringOrderFailureMailTypeBuilderPlugin(), #RecurringOrdersFeature
         ];
     }
 }

@@ -177,7 +177,7 @@ $config[SecurityBlockerConstants::SECURITY_BLOCKER_REDIS_PORT] = 6379;
 $config[SecurityBlockerConstants::SECURITY_BLOCKER_REDIS_PASSWORD] = false;
 $config[SecurityBlockerConstants::SECURITY_BLOCKER_REDIS_DATABASE] = 7;
 
-$config[SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_TTL] = 600;
+$config[SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_TTL] = 1200;
 $config[SecurityBlockerConstants::SECURITY_BLOCKER_BLOCK_FOR] = 300;
 $config[SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_NUMBER_OF_ATTEMPTS] = 1000;
 
@@ -192,6 +192,7 @@ $config[SchedulerConstants::ENABLED_SCHEDULERS] = [];
 
 $config[EventConstants::EVENT_CHUNK] = 5000;
 $config[QueueConstants::QUEUE_ADAPTER_CONFIGURATION][EventConstants::EVENT_QUEUE][QueueConfig::CONFIG_MAX_WORKER_NUMBER] = 1;
+$config[QueueConstants::QUEUE_WORKER_MAX_WAITING_SECONDS] = 1;
 
 $config[EventBehaviorConstants::EVENT_BEHAVIOR_TRIGGERING_ACTIVE] = getenv('TEST_GROUP') === 'acceptance';
 

@@ -28,6 +28,7 @@ suites:
                 - \SprykerTest\Glue\AuthRestApi\Helper\AuthRestApiHelper
                 - \SprykerTest\Shared\Quote\Helper\PersistentQuoteHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+                - \SprykerTest\Shared\ProductConfiguration\Helper\ProductConfigurationHelper
                 - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
                 - \SprykerTest\Zed\SalesOrderThreshold\Helper\SalesOrderThresholdHelper
                 - \SprykerTest\Shared\StockAddress\Helper\StockAddressDataHelper
@@ -67,18 +68,29 @@ suites:
                 - \SprykerTest\Zed\ProductPackagingUnit\Helper\ProductPackagingUnitTypeHelper
                 - \SprykerTest\Zed\ProductPackagingUnit\Helper\ProductPackagingUnitHelper
                 - \SprykerFeatureTest\Shared\SelfServicePortal\Helper\SelfServicePortalHelper
-                - \PyzTest\Shared\SelfServicePortal\Helper\SalesDataHelper
+                - \SprykerFeatureTest\Shared\SelfServicePortal\Helper\SalesDataHelper
                 - \SprykerTest\Zed\Oms\Helper\OmsHelper
                 - \SprykerTest\Shared\ShipmentType\Helper\ShipmentTypeHelper
                 - \SprykerTest\Shared\Shipment\Helper\ShipmentMethodDataHelper
                 - \SprykerTest\Shared\FileManager\Helper\FileManagerHelper
                 - \SprykerFeatureTest\Shared\SelfServicePortal\Helper\SspModelHelper
+                - \SprykerFeatureTest\Shared\PurchasingControl\Helper\PurchasingControlHelper
                 - \SprykerTest\Shared\ServicePoint\Helper\ServicePointHelper
                 - \SprykerTest\Zed\ProductList\Helper\ProductListHelper
                 - \SprykerTest\Shared\ProductOfferShipmentType\Helper\ProductOfferShipmentTypeHelper
                 - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
                 - \SprykerTest\Shared\ProductOfferServicePoint\Helper\ProductOfferServiceHelper
                 - \SprykerTest\Shared\ShipmentTypeServicePoint\Helper\ShipmentTypeServicePointHelper
+                - \PyzTest\Shared\OrderExperienceManagement\Helper\RecurringScheduleHelper
+                - \SprykerTest\Shared\ConfigurableBundle\Helper\ConfigurableBundleDataHelper
+                - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper
+                - \SprykerTest\Shared\Sales\Helper\SalesHelper
+                - \SprykerTest\Zed\SalesPayment\Helper\SalesPaymentHelper
+                - \SprykerTest\Shared\Shipment\Helper\ShipmentDataHelper
+                - \SprykerTest\Shared\ShoppingList\Helper\ShoppingListHelper
+                - \SprykerTest\Zed\Cms\Helper\CmsPageDataHelper
+                - \SprykerTest\Shared\CmsPagesRestApi\Helper\CmsPagesRestApiDataHelper
+                - \SprykerTest\Shared\ProductReview\Helper\ProductReviewDataHelper
                 - \SprykerTest\Zed\Twig\Helper\TwigHelper:
                       twigPlugins:
                           - \Spryker\Zed\Application\Communication\Plugin\Twig\ApplicationTwigPlugin
@@ -93,4 +105,3 @@ suites:
                     cleanup: false
                 \SprykerTest\Shared\Customer\Helper\CustomerDataHelper:
                     isMailFacadeMockEnabled: false
-                    

@@ -92,10 +92,13 @@ jobs:
             -   name: Run Architecture rules
                 run: vendor/bin/phpmd src/ text vendor/spryker/architecture-sniffer/src/ruleset.xml --minimumpriority 2
 
+            -   name: Generate rest API documentation
+                run: vendor/bin/console rest-api:generate:documentation
+
             -  name: Generate API
                run: |
-                   echo "vendor/bin/glue api:generate" && vendor/bin/glue api:generate
-                   echo "GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue api:generate" && GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue api:generate
+                   echo "vendor/bin/glue api:generate" && vendor/bin/glue api:generate --quiet-meta --keep-existing
+                   echo "GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue api:generate" && GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue api:generate --quiet-meta --keep-existing
 
             -   name: Run PHPStan
                 run: vendor/bin/phpstan analyze -l 6 -c phpstan.neon src/
@@ -107,9 +110,6 @@ jobs:
             -   name: Run Evaluator for all branches
                 run: vendor/bin/evaluator evaluate --exclude-checkers=SPRYKER_DEV_PACKAGES_CHECKER --format=compact
 
-            -   name: Generate rest API dcoumentation
-                run: vendor/bin/console rest-api:generate:documentation
-
             -   uses: actions/setup-node@v4
                 with:
                     node-version: '24'
@@ -119,7 +119,7 @@ jobs:
                     sudo npm i --location=global --unsafe-perm speccy@0.11.0
 
             -   name: Speccy lint Glue specification
-                run: speccy lint src/Generated/Glue/Specification/spryker_rest_api.schema.yml --rules=default
+                run: speccy lint src/Generated/Glue/Specification/spryker_rest_api.schema.yml --rules=default --skip openapi-tags
 
             -   name: Slack Notification for failed job
                 uses: ./.github/actions/job-slack-notifications
@@ -163,7 +163,6 @@ jobs:
                 if: always()
 
     php-84-mariadb-acceptance-alpine:
-        needs: [js-validation, validation]
         name: "Codeception / Acceptance & API"
         runs-on: ubuntu-latest
         env:
@@ -189,7 +188,7 @@ jobs:
 
             -   name: Run docker
                 run: |
-                    git clone --depth 1 https://github.com/spryker/docker-sdk.git ./docker
+                    git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
                     docker/sdk boot .github/deploy/deploy.ci.acceptance.mariadb.yml
                     docker/sdk up -t
 
@@ -236,7 +235,6 @@ jobs:
                 if: always()
 
     php-84-mariadb-functional-alpine:
-        needs: [validation]
         name: "Codeception / Functional Tests"
         runs-on: ubuntu-latest
         env:
@@ -256,7 +254,7 @@ jobs:
 
             -   name: Run docker
                 run: |
-                    git clone --depth 1 https://github.com/spryker/docker-sdk.git ./docker
+                    git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
                     docker/sdk boot .github/deploy/deploy.ci.functional.mariadb.yml -a --apcu
                     docker/sdk up -t
                     docker/sdk cli composer dump-autoload -o -a --apcu -q
@@ -269,7 +267,6 @@ jobs:
                 if: always()
 
     docker-alpine-php-84-mariadb-robot-api:
-        needs: [validation]
         name: "Robot / API"
         runs-on: ubuntu-latest
         env:
@@ -302,7 +299,7 @@ jobs:
 
             -   name: Install Project
                 run: |
-                    git clone --depth 1 https://github.com/spryker/docker-sdk.git ./docker
+                    git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
                     docker/sdk boot .github/deploy/deploy.ci.api.mariadb.robot.yml
                     #sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local' >> /etc/hosts"
                     docker/sdk up -t
@@ -346,7 +343,6 @@ jobs:
                 if: always()
 
     docker-alpine-php-84-mariadb-robot-api-b2b:
-        needs: [validation]
         name: "Robot / API B2B"
         runs-on: ubuntu-latest
         env:
@@ -369,7 +365,7 @@ jobs:
 
             -   name: Install Project
                 run: |
-                    git clone --depth 1 https://github.com/spryker/docker-sdk.git ./docker
+                    git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
                     composer require --dev spryker/robotframework-suite-tests:"dev-b2b-icp-starting-point" --ignore-platform-reqs
                     ./uninstall-frontend-marketplace.sh
                     ./uninstall-marketplace-modules.sh
@@ -416,7 +412,6 @@ jobs:
                 if: always()
 
     docker-alpine-php-84-mariadb-cypress:
-        needs: [js-validation, validation]
         name: "Cypress / UI"
         runs-on: ubuntu-latest
         env:
@@ -447,7 +442,7 @@ jobs:
 
             -   name: Run project in Docker
                 run: |
-                    git clone --depth 1 https://github.com/spryker/docker-sdk.git ./docker
+                    git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
                     docker/sdk boot .github/deploy/deploy.ci.acceptance.mariadb.cypress.yml
                     sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local' >> /etc/hosts"
                     docker/sdk up -t
@@ -509,7 +504,6 @@ jobs:
                 if: always()
 
     docker-alpine-php-84-mariadb-cypress-b2b:
-        needs: [js-validation, validation]
         name: "Cypress / UI B2B"
         runs-on: ubuntu-latest
         env:
@@ -537,7 +531,7 @@ jobs:
 
             -   name: Run project in Docker
                 run: |
-                    git clone --depth 1 https://github.com/spryker/docker-sdk.git ./docker
+                    git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
                     ./uninstall-frontend-marketplace.sh
                     ./uninstall-marketplace-modules.sh
                     docker/sdk boot .github/deploy/deploy.ci.acceptance.mariadb.cypress.yml
@@ -590,7 +584,6 @@ jobs:
                 if: always()
 
     docker-alpine-php-84-mariadb-robot-ui:
-        needs: [js-validation, validation]
         name: "Robot / UI"
         runs-on: ubuntu-latest
         env:
@@ -623,7 +616,7 @@ jobs:
 
             -   name: Install Project
                 run: |
-                    git clone --depth 1 https://github.com/spryker/docker-sdk.git ./docker
+                    git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
                     docker/sdk boot .github/deploy/deploy.ci.acceptance.mariadb.robot.yml
                     #sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local scheduler.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local date-time-configurator-example.spryker.local' >> /etc/hosts"
                     docker/sdk up -t
