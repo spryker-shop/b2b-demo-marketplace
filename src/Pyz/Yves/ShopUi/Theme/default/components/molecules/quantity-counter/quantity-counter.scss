@@ -12,6 +12,7 @@
         &--sm {
             height: var(--scale-32);
             min-width: rem(96);
+            max-width: rem(96);
         }
 
         &--disabled {
@@ -35,9 +36,11 @@
             padding: 0 var(--scale-4);
             text-align: center;
             background: none;
+            border: 0;
 
             &:focus {
                 outline: none;
+                box-shadow: none;
             }
         }
 

@@ -37,7 +37,7 @@
 
         <meta itemprop="inProductGroupWithID" content="{{ data.product.idProductAbstract }}">
 
-        <div class="grid grid--gap grid--justify">
+        <div class="grid grid--justify">
             <div class="page-layout-main__pdp-gallery">
                 {% include molecule('image-gallery', 'ProductImageWidget') ignore missing with {
                     data: {
@@ -47,13 +47,11 @@
                 } only %}
             </div>
 
-            <div class="col col--sm-12 col--lg-5">
-                {% include molecule('product-configurator', 'ProductDetailPage') with {
-                    data: {
-                        product: data.product,
-                    },
-                } only %}
-            </div>
+            {% include molecule('product-configurator', 'ProductDetailPage') with {
+                data: {
+                    product: data.product,
+                },
+            } only %}
         </div>
 
         {% widget 'ProductAlternativeListWidget' args [data.product] only %}{% endwidget %}
