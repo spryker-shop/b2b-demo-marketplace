@@ -46,22 +46,18 @@
                 {% set linkTextActiveClass = isActive ? config.name ~ '__link-text--active' %}
                 {% set triggerButtonJsName = data.parentJsName ? data.parentJsName ~ '__trigger' %}
 
-                {% set categoryNamePrepared = categoryNode.name | replace({'[^a-zA-Z0-9]': '_'}) %}
                 {% set childrenClass = categoryNode.hasChildren ? 'menu__item--has-children-list' %}
-                {% set triggerClassName = config.jsName ~ '__category-trigger-' ~ categoryNamePrepared %}
-                {% set targetCategoryClassName = config.jsName ~ '__category-target-' ~ categoryNamePrepared %}
-                {% set targetTogglerClassName = config.jsName ~ '__toggler-target-' ~ categoryNamePrepared %}
+                {% set collapsibleClass = hasChildren ? 'js-collapsible' %}
                 {% set classToToggle = config.name ~ '__category-target' %}
                 {% set categoryTargetInner = config.name ~ '__category-target-inner' %}
-                {% set classToToggleModifier = classToToggle ~ '--hidden' %}
                 {% set toggleButtonClassName = config.name  ~ '__category-toggle-button' %}
 
-                <li class="{{ config.name }}__menu-item {{ config.name }}__menu-item--lvl-{{ data.levelMenu }} {{ menuItemActiveClass }}">
+                <li class="{{ config.name }}__menu-item {{ config.name }}__menu-item--lvl-{{ data.levelMenu }} {{ menuItemActiveClass }} {{ collapsibleClass }}">
                     {% if hasChildren %}
                         {% block categoryItemToggler %}
                             <div>
                                 {% block categoryItemTogglerIcon %}
-                                    <button type="button" class="{{ toggleButtonClassName }} {{ triggerClassName }} {{ targetTogglerClassName }}">
+                                    <button type="button" class="{{ toggleButtonClassName }} js-collapsible-trigger">
                                         {% include atom('font-icon') with {
                                             class: config.name ~ '__category-toggle-button-icon',
                                             data: {
@@ -69,24 +65,6 @@
                                             },
                                         } only %}
                                     </button>
-                                {% endblock %}
-
-                                {% block categoryItemTogglerHandlers %}
-                                    {% include molecule('toggler-click') with {
-                                        attributes: {
-                                            'trigger-class-name': triggerClassName,
-                                            'target-class-name': targetCategoryClassName,
-                                            'class-to-toggle': classToToggleModifier,
-                                        },
-                                    } only %}
-
-                                    {% include molecule('toggler-click') with {
-                                        attributes: {
-                                            'trigger-class-name': triggerClassName,
-                                            'target-class-name': targetTogglerClassName,
-                                            'class-to-toggle': toggleButtonClassName ~ '--collapsed',
-                                        },
-                                    } only %}
                                 {% endblock %}
                             </div>
                         {% endblock %}
@@ -99,7 +77,7 @@
                         </button>
 
                         {% if hasChildren %}
-                            <div class="{{ classToToggle }} {{ targetCategoryClassName }}">
+                            <div class="{{ classToToggle }}">
                                 <div class="{{ categoryTargetInner }}">
                                     {% include molecule('filter-category', 'CatalogPage') with {
                                         data: {

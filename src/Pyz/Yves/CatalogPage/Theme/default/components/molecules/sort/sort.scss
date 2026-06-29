@@ -25,9 +25,11 @@
         }
 
         &__label {
-            font-size: var(--body-sm-size);
-            font-weight: var(--font-weight-medium);
-            line-height: var(--body-sm-line-height);
+            font-family: var(--label-sm-family);
+            font-size: var(--label-sm-size);
+            font-weight: var(--label-sm-weight);
+            line-height: var(--label-sm-line-height);
+            letter-spacing: var(--label-sm-letter-spacing);
             color: var(--text-secondary);
             white-space: nowrap;
         }

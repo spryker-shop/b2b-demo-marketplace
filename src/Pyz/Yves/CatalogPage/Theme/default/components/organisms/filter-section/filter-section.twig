@@ -27,6 +27,15 @@
                 } only %}
             {% endblock %}
 
+            {% block filterCollapseAll %}
+                {% include molecule('catalog-collapse-all', 'CatalogPage') with {
+                    class: config.name ~ '__collapse-all',
+                    data: {
+                        sectionSelector: '.' ~ config.name,
+                    },
+                } only %}
+            {% endblock %}
+
             {% set facets = data.filteredFacets is not empty ? data.filteredFacets : data.facets %}
             {% for filter in facets %}
                 {% set filterHasValues = filter.values is not defined or filter.values | length > 0 %}
@@ -38,20 +47,18 @@
                         {% set itemClass = isFilterCategory ? config.name ~ '__item--hollow' %}
                         {% set itemTitleClass = isFilterCategory ? 'is-hidden-lg-xxl' %}
 
-                        <div class="{{ config.name ~ '__item' }} {{ itemClass }}">
-                            <h2 class="{{ config.name ~ '__item-title toggler-accordion__item ' ~ config.jsName ~ '__trigger' ~ '-' ~ filter.name }} {{ itemTitleClass }}"
-                                data-toggle-target=".{{ config.jsName ~ '__' ~ filter.name }}">
+                        <div class="{{ config.name ~ '__item' }} {{ itemClass }} js-collapsible is-collapsed">
+                            <h2 class="{{ config.name ~ '__item-title js-collapsible-trigger' }} {{ itemTitleClass }}">
+                                <span class="{{ config.name }}__item-label">{{ ('product.filter.' ~ filter.name | lower) | trans }}</span>
                                 {% include atom('font-icon') with {
-                                    class: 'toggler-accordion__icon ' ~ config.name ~ '__item-icon',
+                                    class: config.name ~ '__item-icon',
                                     data: {
                                         name: 'expand_more',
                                     },
                                 } only %}
-                                <span class="{{ config.name }}__item-label">{{ ('product.filter.' ~ filter.name | lower) | trans }}</span>
                             </h2>
                             {% set contentModifier = filter.name == 'category' ? config.name ~ '__item-content--hollow' : '' %}
-                            {% set hiddenClassToToggleSections = filter.name == 'category' ? 'is-hidden-sm-md' : 'is-hidden' %}
-                            {% set togglerClass = config.name ~ '__item-content ' ~ config.jsName ~ '__' ~ filter.name ~ ' ' ~ hiddenClassToToggleSections ~ ' ' ~ contentModifier %}
+                            {% set togglerClass = config.name ~ '__item-content ' ~ contentModifier %}
 
                             {% include [
                                 molecule('filter-' ~ filter.config.name, 'CatalogPage'),
@@ -71,14 +78,6 @@
                                     numberFormatConfig: data.numberFormatConfig,
                                 },
                                 class: togglerClass,
-                            } only %}
-
-                            {% include molecule('toggler-accordion') with {
-                                attributes: {
-                                    'wrap-class-name': config.jsName ~ '__holder',
-                                    'trigger-class-name': config.jsName ~ '__trigger-' ~ filter.name,
-                                    'class-to-toggle': hiddenClassToToggleSections,
-                                },
                             } only %}
                         </div>
                     {% endblock %}

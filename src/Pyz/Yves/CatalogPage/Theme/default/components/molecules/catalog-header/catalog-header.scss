@@ -17,7 +17,7 @@
             flex-direction: row;
             flex-wrap: wrap;
             align-items: baseline;
-            gap: var(--scale-4) var(--scale-8);
+            gap: var(--scale-4) var(--scale-12);
             min-width: 0;
         }
 
@@ -28,13 +28,15 @@
             font-size: var(--heading-md-size);
             line-height: var(--heading-md-line-height);
             letter-spacing: var(--heading-md-letter-spacing);
-            color: var(--text-primary);
+            color: var(--text-secondary);
         }
 
         &__count {
             margin: 0;
-            font-size: var(--body-sm-size);
-            line-height: var(--body-sm-line-height);
+            font-family: var(--body-md-family);
+            font-size: var(--body-md-size);
+            font-weight: var(--body-md-weight);
+            line-height: var(--body-md-line-height);
             color: var(--text-secondary);
         }
 
@@ -46,9 +48,11 @@
         }
 
         &__filter-by {
-            font-size: var(--font-size-12);
-            font-weight: var(--font-weight-regular);
-            line-height: var(--font-line-height-16);
+            font-family: var(--body-sm-family);
+            font-size: var(--body-sm-size);
+            font-weight: var(--body-sm-weight);
+            line-height: var(--body-sm-line-height);
+            letter-spacing: var(--body-sm-letter-spacing);
             color: var(--text-primary);
             white-space: nowrap;
         }

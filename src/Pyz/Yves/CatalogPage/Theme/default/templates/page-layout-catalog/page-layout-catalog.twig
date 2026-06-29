@@ -1,5 +1,14 @@
 {% extends template('page-layout-catalog', '@SprykerShop:CatalogPage') %}
 
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            category: data.category,
+            filterPath: data.filterPath,
+        }
+    } only %}
+{% endblock %}
+
 {% block contentClass %}page-layout-main page-layout-main--catalog-page{% endblock %}
 
 {% block pageInfo %}

@@ -1,0 +1,54 @@
+@mixin catalog-page-catalog-collapse-all($name: '.catalog-collapse-all') {
+    #{$name} {
+        display: flex;
+        justify-content: flex-end;
+
+        &__trigger {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--scale-4);
+            padding: var(--scale-2) 0;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: var(--label-sm-family);
+            font-size: var(--label-sm-size);
+            font-weight: var(--label-sm-weight);
+            line-height: var(--label-sm-line-height);
+            letter-spacing: var(--label-sm-letter-spacing);
+            color: var(--text-brand);
+
+            &:hover,
+            &:focus {
+                text-decoration: none;
+            }
+        }
+
+        &__icon {
+            font-size: var(--font-size-12);
+        }
+
+        &__label--expand {
+            display: none;
+        }
+
+        &.is-collapsed {
+            #{$name}__label--collapse {
+                display: none;
+            }
+
+            #{$name}__label--expand {
+                display: inline;
+            }
+        }
+
+        &__trigger:hover #{$name}__label,
+        &__trigger:focus #{$name}__label {
+            text-decoration: underline;
+        }
+
+        @content;
+    }
+}
+
+@include catalog-page-catalog-collapse-all();

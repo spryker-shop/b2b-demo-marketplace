@@ -47,6 +47,10 @@
             margin-bottom: var(--scale-12);
         }
 
+        &__collapse-all {
+            margin-bottom: var(--scale-12);
+        }
+
         &__holder {
             height: calc(100% - 5.75rem);
             overflow: auto;
@@ -79,16 +83,18 @@
             align-items: center;
             gap: var(--scale-8);
             margin: 0;
-            font-family: var(--font-family-sans);
-            font-size: var(--font-size-14);
-            font-weight: var(--font-weight-regular);
-            line-height: var(--font-line-height-20);
+            font-family: var(--label-md-semibold-family);
+            font-size: var(--label-md-semibold-size);
+            font-weight: var(--label-md-semibold-weight);
+            line-height: var(--label-md-semibold-line-height);
+            letter-spacing: var(--label-md-semibold-letter-spacing);
             color: var(--text-primary);
             text-transform: none;
             cursor: pointer;
         }
 
         &__item-icon {
+            @include helper-effect-transition(transform);
             flex-shrink: 0;
         }
 
@@ -103,6 +109,26 @@
             &--hollow {
                 @include helper-breakpoint-media-min($lg) {
                     margin-top: 0;
+                }
+            }
+        }
+
+        &__item:not(.is-collapsed) {
+            #{$name}__item-icon {
+                transform: rotate(180deg);
+            }
+        }
+
+        &__item.is-collapsed {
+            #{$name}__item-content {
+                display: none;
+            }
+
+            &#{$name}__item--hollow {
+                #{$name}__item-content--hollow {
+                    @include helper-breakpoint-media-min($lg) {
+                        display: block;
+                    }
                 }
             }
         }
@@ -137,16 +163,22 @@
         }
 
         &.is-searching {
-            #{$name}__item-content {
+            #{$name}__item.is-collapsed #{$name}__item-content {
                 display: block;
             }
 
-            .filter-category__category-target {
-                grid-template-rows: 1fr;
+            #{$name}__item-icon {
+                transform: rotate(180deg);
             }
 
-            .toggler-accordion__icon {
-                display: none;
+            .filter-category__menu-item.is-collapsed {
+                .filter-category__category-target {
+                    grid-template-rows: 1fr;
+                }
+
+                .filter-category__category-toggle-button {
+                    transform: none;
+                }
             }
         }
 
