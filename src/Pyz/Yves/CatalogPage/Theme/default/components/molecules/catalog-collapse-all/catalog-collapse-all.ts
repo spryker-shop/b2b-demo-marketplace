@@ -39,10 +39,14 @@ export default class CatalogCollapseAll extends Component {
     }
 
     protected get units(): HTMLElement[] {
-        return <HTMLElement[]>Array.from(this.section.getElementsByClassName(this.getAttribute('unit-class')!));
+        return <HTMLElement[]>Array.from(this.section.getElementsByClassName(this.unitClass));
     }
 
     protected get collapsedClass(): string {
         return this.getAttribute('collapsed-class');
+    }
+
+    protected get unitClass(): string {
+        return this.getAttribute('unit-class');
     }
 }
