@@ -5,7 +5,6 @@ export default class VolumePriceTable extends Component {
     protected quantityElement: HTMLInputElement;
     protected currentClass: string;
 
-
     protected init(): void {
         this.rows = Array.from(this.getElementsByClassName(`${this.jsName}__row`)) as HTMLElement[];
         this.quantityElement = document.getElementsByClassName(

@@ -3,7 +3,6 @@ import Component from 'ShopUi/models/component';
 export default class WindowLoadClassRemover extends Component {
     protected targetWrapper: HTMLElement;
 
-
     protected init(): void {
         this.targetWrapper = <HTMLElement>document.getElementsByClassName(this.targetClass)[0];
 

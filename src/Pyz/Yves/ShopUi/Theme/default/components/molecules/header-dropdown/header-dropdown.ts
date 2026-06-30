@@ -4,7 +4,6 @@ export default class HeaderDropdown extends Component {
     protected trigger: HTMLElement;
     protected dropdown: HTMLElement;
 
-
     protected init(): void {
         this.trigger = this.querySelector<HTMLElement>(`.${this.jsName}__trigger`);
         this.dropdown = this.querySelector<HTMLElement>(`.${this.jsName}__dropdown`);

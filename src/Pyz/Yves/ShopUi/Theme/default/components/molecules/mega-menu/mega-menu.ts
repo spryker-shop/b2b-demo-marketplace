@@ -3,7 +3,6 @@ import Component from 'ShopUi/models/component';
 export default class MegaMenu extends Component {
     protected sidebarItems: HTMLElement[];
 
-
     protected init(): void {
         this.sidebarItems = Array.from(this.querySelectorAll<HTMLElement>(`.${this.name}__sidebar-item`));
 

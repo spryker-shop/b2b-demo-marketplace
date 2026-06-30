@@ -14,7 +14,6 @@ export default class VolumePrice extends Component {
     protected currentQuantityValue: number;
     protected timeout = 400;
 
-
     protected init(): void {
         this.productPriceElement = <HTMLElement>this.getElementsByClassName(`${this.jsName}__price`)[0];
         this.amountValueElement = <HTMLElement>this.getElementsByClassName(`${this.jsName}__amount-value`)[0];
