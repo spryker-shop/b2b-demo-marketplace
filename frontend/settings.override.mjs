@@ -30,6 +30,13 @@ import designTokens from './libs/design-tokens.mjs';
 export default defineConfig({
     assetBlacklist,
     paths: {
+        iconSprite: {
+            sources: [
+                './src/Pyz/Yves/ShopUi/Theme/default/components/atoms/icon-sprite/icon-sprite.twig',
+                './vendor/SprykerShop/ShopUi/src/SprykerShop/Yves/ShopUi/Theme/default/components/atoms/icon-sprite/icon-sprite.twig',
+            ],
+            target: './frontend/assets/global/default/icons/sprite.svg',
+        },
         sources: {
             namespaceConfig: './config/Yves/frontend-build-config.json',
             core: './vendor/spryker-shop',
