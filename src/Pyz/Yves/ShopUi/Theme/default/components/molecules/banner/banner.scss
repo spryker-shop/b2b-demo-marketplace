@@ -59,9 +59,8 @@
         }
 
         &__label {
-            display: block;
-
             @include typography(body-md);
+            display: block;
             color: var(--text-tertiary);
             text-transform: uppercase;
             margin: 0;
@@ -95,18 +94,18 @@
         }
 
         &__badge {
+            @include typography(label-sm);
             display: inline-flex;
             align-items: center;
             justify-content: center;
             padding: var(--scale-2) var(--scale-8);
             background-color: var(--background-subtle);
             border-radius: var(--radius-sm);
-
-            @include typography(label-sm);
             color: var(--text-primary);
         }
 
         &__cta {
+            @include typography(button-sm);
             align-self: flex-start;
             display: inline-flex;
             align-items: center;
@@ -116,8 +115,6 @@
             background-color: transparent;
             border: var(--stroke-sm) solid var(--border-default);
             border-radius: var(--radius-sm);
-
-            @include typography(button-sm);
             color: var(--text-secondary);
             text-decoration: none;
 

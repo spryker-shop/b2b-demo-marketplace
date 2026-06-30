@@ -1,13 +1,12 @@
 @mixin catalog-page-suggestion-links-list($name: '.suggestion-links-list') {
     #{$name} {
         &__title {
+            @include typography(label-sm);
             display: flex;
             align-items: center;
             height: var(--scale-32);
             padding: 0 var(--scale-20);
             background: var(--background-subtle);
-
-            @include typography(label-sm);
             color: var(--text-primary);
             text-transform: uppercase;
 
@@ -26,12 +25,11 @@
 
         &__link {
             @include helper-effect-transition(background-color color);
+            @include typography(body-sm);
             display: flex;
             align-items: center;
             min-height: rem(44);
             padding: var(--scale-6) var(--scale-16);
-
-            @include typography(body-sm);
             color: var(--text-primary);
             text-decoration: none;
 

@@ -11,10 +11,9 @@
         }
 
         &__item {
+            @include typography(label-sm);
             display: block;
             color: var(--text-tertiary);
-
-            @include typography(label-sm);
         }
 
         &__total-price {

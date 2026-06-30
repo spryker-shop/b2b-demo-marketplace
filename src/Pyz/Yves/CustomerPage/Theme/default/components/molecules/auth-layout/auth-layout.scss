@@ -47,16 +47,14 @@
         }
 
         &__title {
-            margin: 0;
-
             @include typography(heading-md);
+            margin: 0;
             color: var(--text-primary);
         }
 
         &__subtitle {
-            margin: 0;
-
             @include typography(body-sm);
+            margin: 0;
             color: var(--text-tertiary);
 
             &--md {
@@ -107,9 +105,8 @@
         }
 
         &__hint {
-            margin: 0;
-
             @include typography(body-sm);
+            margin: 0;
             color: var(--text-tertiary);
         }
 
@@ -173,9 +170,8 @@
         }
 
         &__back {
-            align-self: center;
-
             @include typography(label-sm);
+            align-self: center;
             color: var(--text-brand);
             text-decoration: none;
 

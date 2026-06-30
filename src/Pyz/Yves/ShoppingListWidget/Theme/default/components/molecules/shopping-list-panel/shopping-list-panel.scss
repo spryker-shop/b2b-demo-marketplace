@@ -43,9 +43,8 @@
         }
 
         &__name {
-            display: block;
-
             @include typography(label-md);
+            display: block;
             color: var(--text-brand);
             text-decoration: none;
             white-space: nowrap;
@@ -54,11 +53,10 @@
         }
 
         &__meta {
+            @include typography(body-sm);
             display: flex;
             align-items: center;
             justify-content: space-between;
-
-            @include typography(body-sm);
             color: var(--text-secondary);
             white-space: nowrap;
             overflow: hidden;

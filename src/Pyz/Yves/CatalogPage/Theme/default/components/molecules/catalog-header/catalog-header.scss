@@ -22,16 +22,14 @@
         }
 
         &__title {
-            margin: 0;
-
             @include typography(heading-md);
+            margin: 0;
             color: var(--text-secondary);
         }
 
         &__count {
-            margin: 0;
-
             @include typography(body-md);
+            margin: 0;
             color: var(--text-secondary);
         }
 
@@ -53,6 +51,7 @@
         }
 
         &__filter-trigger {
+            @include typography(label-md);
             display: inline-flex;
             align-items: center;
             gap: var(--scale-4);
@@ -62,8 +61,6 @@
             border-radius: var(--radius-sm);
             background: var(--background-page);
             color: var(--text-secondary);
-
-            @include typography(label-md);
             white-space: nowrap;
             cursor: pointer;
         }

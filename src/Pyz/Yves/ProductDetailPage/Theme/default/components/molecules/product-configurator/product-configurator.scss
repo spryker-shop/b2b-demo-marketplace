@@ -54,9 +54,8 @@
         }
 
         &__section-title {
-            margin: 0;
-
             @include typography(label-sm);
+            margin: 0;
             color: var(--text-tertiary);
         }
 
@@ -67,10 +66,9 @@
         }
 
         &__field-label {
+            @include typography(label-sm-semibold);
             display: block;
             margin: 0 0 var(--scale-8);
-
-            @include typography(label-sm-semibold);
             color: var(--text-primary);
         }
 

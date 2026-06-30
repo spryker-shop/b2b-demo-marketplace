@@ -47,8 +47,16 @@
             }
         }
 
+        &__input {
+            padding-right: rem(64);
+        }
+
         &__clear {
             @include helper-effect-transition(background-color);
+            position: absolute;
+            top: 50%;
+            right: var(--scale-40);
+            transform: translateY(-50%);
             display: none;
             flex-shrink: 0;
             align-items: center;

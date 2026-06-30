@@ -17,18 +17,14 @@
     'row-selector': data.rowSelector,
 } %}
 
-{% block extraClass %}
-    input input--search
-{% endblock %}
-
 {% block body %}
     <input type="text"
-        class="{{ config.name }}__input"
+        class="{{ config.name }}__input input input--search"
         placeholder="{{ 'catalog.filter.search.placeholder' | trans }}"
         aria-label="{{ 'catalog.filter.search.placeholder' | trans }}"
         autocomplete="off">
 
-    <span class="input__search-icon" aria-hidden="true">
+    <span class="input-search-icon" aria-hidden="true">
         {% include atom('font-icon') with {
             modifiers: ['size-inherit'],
             data: {

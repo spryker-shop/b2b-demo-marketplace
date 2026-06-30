@@ -4,6 +4,7 @@
         justify-content: flex-end;
 
         &__trigger {
+            @include typography(label-sm);
             display: inline-flex;
             align-items: center;
             gap: var(--scale-4);
@@ -11,8 +12,6 @@
             background: none;
             border: none;
             cursor: pointer;
-
-            @include typography(label-sm);
             color: var(--text-brand);
 
             &:hover,
@@ -25,17 +24,26 @@
             font-size: var(--font-size-12);
         }
 
+        &__trigger &__icon--expand {
+            display: none;
+        }
+
         &__label--expand {
             display: none;
         }
 
         &.is-collapsed {
-            #{$name}__label--collapse {
+            #{$name}__label--collapse,
+            #{$name}__icon--collapse {
                 display: none;
             }
 
             #{$name}__label--expand {
                 display: inline;
+            }
+
+            #{$name}__icon--expand {
+                display: inline-flex;
             }
         }
 

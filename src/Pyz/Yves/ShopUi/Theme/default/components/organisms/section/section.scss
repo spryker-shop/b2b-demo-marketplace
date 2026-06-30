@@ -72,9 +72,8 @@
         }
 
         &__title {
-            display: block;
-
             @include typography(heading-sm);
+            display: block;
             color: var(--text-primary);
             text-align: left;
             margin: 0 0 var(--scale-8);
@@ -116,9 +115,8 @@
         }
 
         &__sub-heading {
-            display: block;
-
             @include typography(label-md-semibold);
+            display: block;
             color: var(--text-primary);
             margin: 0 0 var(--scale-6);
 

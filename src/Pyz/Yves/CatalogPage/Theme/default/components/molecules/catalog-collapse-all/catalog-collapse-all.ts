@@ -4,11 +4,11 @@ export default class CatalogCollapseAll extends Component {
     protected trigger: HTMLButtonElement;
     protected section: HTMLElement;
 
-    protected readyCallback(): void {}
+    protected readyCallback(): void { }
 
     protected init(): void {
         this.trigger = <HTMLButtonElement>this.querySelector(`.${this.jsName}__trigger`);
-        this.section = <HTMLElement>this.closest(this.sectionSelector);
+        this.section = <HTMLElement>this.closest(this.getAttribute('section-selector'));
         this.mapEvents();
     }
 
@@ -18,7 +18,7 @@ export default class CatalogCollapseAll extends Component {
     }
 
     protected onUnitTriggerClick(event: Event): void {
-        const trigger = (<HTMLElement>event.target).closest(`.${this.triggerClass}`);
+        const trigger = (<HTMLElement>event.target).closest(`.${this.getAttribute('trigger-class')}`);
 
         if (!trigger) {
             return;
@@ -39,19 +39,7 @@ export default class CatalogCollapseAll extends Component {
     }
 
     protected get units(): HTMLElement[] {
-        return <HTMLElement[]>Array.from(this.section.getElementsByClassName(this.unitClass));
-    }
-
-    protected get sectionSelector(): string {
-        return this.getAttribute('section-selector');
-    }
-
-    protected get unitClass(): string {
-        return this.getAttribute('unit-class');
-    }
-
-    protected get triggerClass(): string {
-        return this.getAttribute('trigger-class');
+        return <HTMLElement[]>Array.from(this.section.getElementsByClassName(this.getAttribute('unit-class')!));
     }
 
     protected get collapsedClass(): string {

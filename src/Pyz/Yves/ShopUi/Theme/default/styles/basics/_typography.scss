@@ -30,9 +30,8 @@
 
     @each $i, $size in $heading-sizes {
         h#{$i} {
-            display: block;
-
             @include typography(heading-#{$size});
+            display: block;
             color: var(--text-primary);
         }
     }

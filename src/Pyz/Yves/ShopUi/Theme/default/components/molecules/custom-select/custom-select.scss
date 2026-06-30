@@ -62,14 +62,13 @@
             }
 
             #{$name}__select {
+                @include typography(body-md);
                 padding: 0;
                 margin: 0;
                 border: none;
                 background: none;
                 box-shadow: none;
                 color: var(--text-primary);
-
-                @include typography(body-md);
                 white-space: nowrap;
                 appearance: none;
                 cursor: pointer;
@@ -127,9 +126,8 @@
                 }
 
                 #{$name}__select {
-                    color: var(--text-inverse);
-
                     @include typography(body-sm);
+                    color: var(--text-inverse);
                     padding-right: 0;
                 }
 
@@ -233,10 +231,9 @@
 
             &--nav-top {
                 #{$name}-selection__rendered {
+                    @include typography(body-md);
                     padding-left: var(--scale-4);
                     color: var(--text-primary);
-
-                    @include typography(body-md);
                     white-space: nowrap;
                     cursor: pointer;
                     border: none;
@@ -245,9 +242,8 @@
                     min-width: 0;
 
                     @include helper-breakpoint-media-min($xl) {
-                        color: var(--text-inverse);
-
                         @include typography(body-sm);
+                        color: var(--text-inverse);
                     }
                 }
 

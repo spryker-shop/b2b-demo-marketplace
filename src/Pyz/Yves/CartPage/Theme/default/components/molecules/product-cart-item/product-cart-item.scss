@@ -81,12 +81,11 @@ $cart-item-image-width: 76;
         }
 
         &__title {
+            @include typography(heading-sm);
             display: block;
             margin: 0;
             overflow: hidden;
             color: var(--text-primary);
-
-            @include typography(heading-sm);
             text-decoration: none;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -99,13 +98,12 @@ $cart-item-image-width: 76;
         }
 
         &__meta {
+            @include typography(label-sm);
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             gap: var(--scale-4) var(--scale-6);
             color: var(--text-secondary);
-
-            @include typography(label-sm);
         }
 
         &__variants {
@@ -183,13 +181,12 @@ $cart-item-image-width: 76;
         }
 
         &__context {
+            @include typography(body-sm);
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             gap: var(--scale-4) var(--scale-12);
             color: var(--text-tertiary);
-
-            @include typography(body-sm);
         }
 
         &__context-item {
@@ -239,13 +236,12 @@ $cart-item-image-width: 76;
         }
 
         &__toggle {
+            @include typography(caption);
             display: inline-flex;
             align-items: center;
             gap: var(--scale-4);
             padding: 0;
             color: var(--text-secondary);
-
-            @include typography(caption);
             background: none;
             border: 0;
             cursor: pointer;

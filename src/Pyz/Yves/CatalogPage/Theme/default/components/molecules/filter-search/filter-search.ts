@@ -12,8 +12,8 @@ export default class FilterSearch extends Component {
 
     protected init(): void {
         this.input = <HTMLInputElement>this.querySelector('input');
-        this.section = <HTMLElement>this.closest(this.sectionSelector);
-        this.groups = <HTMLElement[]>Array.from(document.querySelectorAll(this.groupSelector));
+        this.section = <HTMLElement>this.closest(this.getAttribute('section-selector'));
+        this.groups = <HTMLElement[]>Array.from(document.querySelectorAll(this.getAttribute('group-selector')));
         this.mapEvents();
     }
 
@@ -24,13 +24,14 @@ export default class FilterSearch extends Component {
     protected onInput(): void {
         const query = this.input.value.trim().toLowerCase();
         const isSearching = query.length > 0;
+        const rowSelector = this.getAttribute('row-selector');
 
         if (this.section) {
             this.section.classList.toggle(SEARCHING_CLASS, isSearching);
         }
 
         this.groups.forEach((group: HTMLElement) => {
-            const rows = <HTMLElement[]>Array.from(group.querySelectorAll(this.rowSelector));
+            const rows = <HTMLElement[]>Array.from(group.querySelectorAll(rowSelector));
             let hasMatch = false;
 
             rows.forEach((row: HTMLElement) => {
@@ -48,17 +49,5 @@ export default class FilterSearch extends Component {
                 group.classList.toggle(HIDDEN_CLASS, isSearching && !hasMatch);
             }
         });
-    }
-
-    protected get sectionSelector(): string {
-        return this.getAttribute('section-selector');
-    }
-
-    protected get groupSelector(): string {
-        return this.getAttribute('group-selector');
-    }
-
-    protected get rowSelector(): string {
-        return this.getAttribute('row-selector');
     }
 }

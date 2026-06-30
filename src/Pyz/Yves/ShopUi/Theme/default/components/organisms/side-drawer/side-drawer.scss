@@ -162,9 +162,8 @@
         }
 
         &__zone-label {
-            display: block;
-
             @include typography(label-sm);
+            display: block;
             color: var(--text-tertiary);
             text-transform: uppercase;
             letter-spacing: var(--font-letter-spacing-wide);
@@ -176,13 +175,12 @@
         }
 
         &__quick-link-row {
+            @include typography(body-md);
             display: flex;
             align-items: center;
             justify-content: space-between;
             width: 100%;
             padding: var(--scale-6) 0;
-
-            @include typography(body-md);
             color: var(--text-primary);
             text-decoration: none;
             background: none;

@@ -1,9 +1,8 @@
 @mixin product-packaging-unit-widget-packaging-unit-quantity-selector($name: '.packaging-unit-quantity-selector') {
     #{$name} {
         &__quantity-label {
-            margin: 0 0 var(--scale-12);
-
             @include typography(label-sm-semibold);
+            margin: 0 0 var(--scale-12);
             color: var(--text-primary);
         }
 

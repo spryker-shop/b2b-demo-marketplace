@@ -1,3 +1,4 @@
+import './filter-search.scss';
 import register from 'ShopUi/app/registry';
 
 export default register(

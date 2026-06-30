@@ -57,6 +57,7 @@
 
         &__menu-link {
             @include helper-effect-transition(color);
+            @include typography(body-md);
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -67,8 +68,6 @@
             cursor: pointer;
             background-color: transparent;
             text-align: left;
-
-            @include typography(body-md);
 
             &--lvl-1 {
                 font-family: var(--label-md-semibold-family);

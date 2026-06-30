@@ -50,6 +50,7 @@
         }
 
         &__badge {
+            @include typography(label-sm);
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -57,8 +58,6 @@
             padding: var(--scale-2) var(--scale-8);
             border-radius: var(--radius-sm);
             background-color: var(--background-state-success-subtle);
-
-            @include typography(label-sm);
             color: var(--text-state-success);
             white-space: nowrap;
             flex-shrink: 0;
@@ -66,11 +65,10 @@
 
         &__meta {
             @include helper-effect-transition(max-height opacity);
+            @include typography(body-sm);
             display: flex;
             align-items: center;
             gap: rem(5);
-
-            @include typography(body-sm);
             color: var(--text-secondary);
             white-space: nowrap;
             overflow: hidden;

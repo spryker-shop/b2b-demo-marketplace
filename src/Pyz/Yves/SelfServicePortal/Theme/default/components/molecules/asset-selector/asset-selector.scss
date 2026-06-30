@@ -14,17 +14,15 @@
     }
 
     &__trigger {
+        @include typography(label-sm);
         display: inline-flex;
         align-items: center;
         gap: var(--scale-4);
-
-        @include typography(label-sm);
     }
 
     &__subtitle {
-        color: var(--text-primary);
-
         @include typography(label-sm);
+        color: var(--text-primary);
         padding-bottom: 0;
     }
 
@@ -105,9 +103,8 @@
     }
 
     &--filter &__subtitle--name {
-        color: var(--text-primary);
-
         @include typography(label-md);
+        color: var(--text-primary);
     }
 
     &--filter &__information,

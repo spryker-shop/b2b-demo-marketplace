@@ -24,10 +24,9 @@
         }
 
         &__label {
+            @include typography(caption);
             flex: 0 0 auto;
             min-width: rem(96);
-
-            @include typography(caption);
             color: var(--text-tertiary);
             margin: 0;
             white-space: nowrap;

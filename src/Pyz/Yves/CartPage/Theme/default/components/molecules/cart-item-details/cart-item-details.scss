@@ -10,10 +10,9 @@
         }
 
         &__section-label {
+            @include typography(label-sm-semibold);
             margin: 0 0 var(--scale-6);
             color: var(--text-tertiary);
-
-            @include typography(label-sm-semibold);
             text-align: left;
             text-transform: none;
         }

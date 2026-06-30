@@ -24,9 +24,15 @@
         <span class="{{ config.name }}__label {{ config.name }}__label--collapse">{{ 'catalog.filter.collapseAll' | trans }}</span>
         <span class="{{ config.name }}__label {{ config.name }}__label--expand">{{ 'catalog.filter.expandAll' | trans }}</span>
         {% include atom('font-icon') with {
-            class: config.name ~ '__icon',
+            class: config.name ~ '__icon ' ~ config.name ~ '__icon--collapse',
             data: {
                 name: 'unfold_less',
+            },
+        } only %}
+        {% include atom('font-icon') with {
+            class: config.name ~ '__icon ' ~ config.name ~ '__icon--expand',
+            data: {
+                name: 'unfold_more',
             },
         } only %}
     </button>

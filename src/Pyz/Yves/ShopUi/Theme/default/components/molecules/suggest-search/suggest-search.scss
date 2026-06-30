@@ -56,12 +56,11 @@
         }
 
         &__hint {
+            @include typography(body-sm);
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
             background: transparent;
-
-            @include typography(body-sm);
             color: var(--text-placeholder);
             z-index: $setting-zi-search-suggestions + 1;
             border: none;
@@ -84,14 +83,13 @@
         }
 
         &__all-items {
+            @include typography(label-sm);
             display: flex;
             align-items: center;
             width: 100%;
             height: var(--scale-32);
             padding: 0 var(--scale-20);
             background: var(--background-subtle);
-
-            @include typography(label-sm);
             color: var(--text-brand);
             text-transform: uppercase;
             cursor: pointer;

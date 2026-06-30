@@ -107,11 +107,9 @@
                 display: none;
             }
 
-            &#{$name}__item--hollow {
-                #{$name}__item-content--hollow {
-                    @include helper-breakpoint-media-min($lg) {
-                        display: block;
-                    }
+            #{$name}__item-content--hollow {
+                @include helper-breakpoint-media-min($lg) {
+                    display: block;
                 }
             }
         }

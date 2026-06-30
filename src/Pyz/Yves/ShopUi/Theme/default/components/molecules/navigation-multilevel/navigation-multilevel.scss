@@ -8,13 +8,12 @@
         }
 
         &__mobile-row {
+            @include typography(body-md);
             display: flex;
             align-items: center;
             justify-content: space-between;
             width: 100%;
             padding: var(--scale-6) 0;
-
-            @include typography(body-md);
             color: var(--text-primary);
             background: none;
             border: none;
@@ -77,12 +76,11 @@
         }
 
         &__nav-panel-link {
+            @include typography(body-md);
             display: flex;
             align-items: center;
             gap: var(--scale-12);
             padding: var(--scale-6) 0;
-
-            @include typography(body-md);
             color: var(--text-primary);
             text-decoration: none;
         }
