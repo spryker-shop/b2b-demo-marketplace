@@ -1,0 +1,15 @@
+@mixin order-experience-management-schedule-action-modal($name: '.schedule-action-modal') {
+    #{$name} {
+        &__skip-execution-data {
+            border: rem(1) solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: var(--scale-16);
+            font-size: var(--font-size-12);
+            margin-bottom: var(--scale-16);
+        }
+
+        @content;
+    }
+}
+
+@include order-experience-management-schedule-action-modal;

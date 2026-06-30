@@ -1,0 +1,190 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'schedule-action-modal',
+    tag: 'schedule-action-modal',
+} %}
+
+{% define data = {
+    schedule: required,
+    skipForm: required,
+    cancelForm: required,
+    resumeForm: null,
+    resumeUrl: '',
+    skipModalTriggerClassName: required,
+    cancelModalTriggerClassName: required,
+    pauseModalTriggerClassName: required,
+    resumeModalTriggerClassName: required,
+} %}
+
+{% block skipContent %}
+    {% set skippedExecutionDate = data.schedule.nextTriggerDate %}
+    {% set nextExecutionDate = data.schedule.nextTriggerDateAfterSkip ?: data.schedule.nextTriggerDate %}
+
+    {% set skipSummaryClassName = config.name ~ '__skip-execution-data' %}
+    {% block skipSummary %}
+        <div class="{{ skipSummaryClassName }}">
+            <div class="grid grid--justify">
+                <span class="col col--expand">{{ 'recurring_orders.detail.skip.modal.execution_being_skipped' | trans }}</span>
+                <span class="col"><s class="text-muted" data-qa="recurring-order-skip-skipped-date">{{ skippedExecutionDate | formatDate }}</s></span>
+            </div>
+            <div class="grid grid--justify spacing-top">
+                <span class="col col--expand">{{ 'recurring_orders.detail.skip.modal.next_scheduled_execution' | trans }}</span>
+                <span class="col"><strong data-qa="recurring-order-skip-next-date">{{ nextExecutionDate | formatDate }}</strong></span>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block skipDescription %}
+        <p>
+            {{ 'recurring_orders.detail.skip.modal.summary' | trans({
+                '%skippedDate%': skippedExecutionDate | formatDate,
+                '%nextDate%': nextExecutionDate | formatDate,
+            }) }}
+        </p>
+    {% endblock %}
+{% endblock %}
+
+{% block skipFooter %}
+    <div class="grid grid--right grid--gap-smaller">
+        <button class="button button--hollow js-main-popup-close">
+            {{ 'global.keep' | trans }}
+        </button>
+        {{ form_start(data.skipForm, {action: url('recurring-order/skip', {uuid: data.schedule.uuid}), attr: {class: 'inline-form'}}) }}
+            <button type="submit" class="button" data-qa="recurring-order-skip-confirm-button">
+                {{ 'recurring_orders.detail.skip.modal.confirm' | trans }}
+            </button>
+        {{ form_end(data.skipForm) }}
+    </div>
+{% endblock %}
+
+{% block cancelContent %}
+    <div class="grid grid--right grid--gap-smaller">
+        <button class="button button--hollow js-main-popup-close">
+            {{ 'global.keep' | trans }}
+        </button>
+        {{ form_start(data.cancelForm, {action: url('recurring-order/cancel', {uuid: data.schedule.uuid}), attr: {class: 'inline-form'}}) }}
+            <button type="submit" class="button button--alert" data-qa="recurring-order-cancel-confirm-button">
+                {{ 'recurring_orders.detail.actions.cancel' | trans }}
+            </button>
+        {{ form_end(data.cancelForm) }}
+    </div>
+{% endblock %}
+
+{% block pauseContent %}
+    <div class="grid grid--right spacing-top">
+        <button class="button button--hollow js-main-popup-close">
+            {{ 'global.cancel' | trans }}
+        </button>
+        {{ form_start(data.pauseForm, { action: url('recurring-order/pause', {uuid: data.schedule.uuid}), attr: { class: 'form--inline' }}) }}
+            <button class="button spacing-left" data-qa="recurring-order-pause-confirm-button">
+                {{ 'recurring_orders.detail.actions.pause' | trans }}
+            </button>
+        {{ form_end(data.pauseForm) }}
+    </div>
+{% endblock %}
+
+{% block resumeContent %}
+    <p>{{ 'recurring_orders.detail.next_execution.paused' | trans }}</p>
+
+    {% embed molecule('form') with {
+        data: {
+            form: data.resumeForm,
+            options: {
+                attr: {
+                    action: data.resumeUrl,
+                    method: 'POST',
+                }
+            },
+            submit: {
+                enable: true,
+                text: 'recurring_orders.detail.actions.resume' | trans,
+                qa: 'recurring-order-resume-confirm-button',
+                class: 'button  spacing-right--reset'
+            },
+            cancel: {
+                enable: true,
+                icon: false,
+                text: 'global.cancel' | trans,
+                class: 'button button--secondary button--hollow js-main-popup-close',
+            }
+        }
+    } only %}
+        {% block field %}
+            {% if fieldName == 'nextExecutionDate' %}
+                <div class="spacing-x--bigger">
+                    {% include molecule('date-time-picker') with {
+                        modifiers: ['with-icon'],
+                        data: {
+                            field: field,
+                            inputQa: 'recurring-order-resume-date-input',
+                        },
+                        attributes: {
+                            language: app.locale | slice(0,2),
+                            config: '{
+                                "format": "Y-m-d",
+                                "enableTime": false,
+                                "minDate": "today",
+                                "scrollInput": false,
+                                "scrollMonth": false
+                            }',
+                        },
+                    } only %}
+                </div>
+            {% else %}
+                {{ parent() }}
+            {% endif %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block body %}
+    {% include molecule('main-popup') with {
+        data: {
+            title: 'recurring_orders.detail.skip.modal.title' | trans,
+            content: block('skipContent'),
+            footer: block('skipFooter'),
+        },
+        attributes: {
+            'content-id': config.jsName ~ '-skip-popup',
+            'trigger-class-name': data.skipModalTriggerClassName,
+        },
+    } only %}
+
+    {% include molecule('main-popup') with {
+        data: {
+            title: 'recurring_orders.detail.cancel.modal.title' | trans,
+            content: 'recurring_orders.detail.cancel.modal.warning' | trans,
+            footer: block('cancelContent'),
+        },
+        attributes: {
+            'content-id': config.jsName ~ '-cancel-popup',
+            'trigger-class-name': data.cancelModalTriggerClassName,
+        },
+    } only %}
+
+    {% include molecule('main-popup') with {
+        data: {
+            title: 'recurring_orders.detail.pause.modal.title' | trans,
+            content: 'recurring_orders.detail.pause.modal.warning' | trans,
+            footer: block('pauseContent'),
+        },
+        attributes: {
+            'content-id': config.jsName ~ '-pause-popup',
+            'trigger-class-name': data.pauseModalTriggerClassName,
+        },
+    } only %}
+
+    {% include molecule('main-popup') with {
+        data: {
+            title: 'recurring_orders.detail.resume.modal.title' | trans,
+            content: block('resumeContent'),
+
+        },
+        attributes: {
+            'content-id': config.jsName ~ '-resume-popup',
+            'has-content-mount': true,
+            'trigger-class-name': data.resumeModalTriggerClassName,
+        },
+    } only %}
+{% endblock %}

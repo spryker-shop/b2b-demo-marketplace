@@ -18,6 +18,7 @@
     } only %}
         {% block embeddedData %}
             {% include molecule('quantity-counter') with {
+                modifiers: ['sm'],
                 data: {
                     isDisabled: data.readOnly,
                     autoUpdate: true,

@@ -1,0 +1,24 @@
+{% extends molecule('schedule-next-execution', '@SprykerFeature:OrderExperienceManagement') %}
+
+{% block extraClass %}{% endblock %}
+
+{% block headingLine %}
+    {% set headingLineClassName = config.name ~ '__label' %}
+    {{ parent() }}
+{% endblock %}
+
+{% block date %}
+    {% set dateClassName = config.name ~ '__date' %}
+    {{ parent() }}
+{% endblock %}
+
+{% block button %}
+    {% set buttonClassName = 'link spacing--inner' %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+
+    <hr class="spacing-y--biggest">
+{% endblock %}

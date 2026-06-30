@@ -1,0 +1,49 @@
+{% extends molecule('schedule-review', '@SprykerFeature:OrderExperienceManagement') %}
+
+{% block extraClass %}{% endblock %}
+
+{% block reviewHeader %}
+    {% set reviewHeaderClassName = config.name ~ '__heading' %}
+    {% set reviewHeaderTitleClassName = config.name ~ '__title' %}
+    {% set reviewHeaderTextClassName = config.name ~ '__heading-content' %}
+    
+    {{ parent() }}
+{% endblock %}
+
+{% block confirmModal %}
+    {% set confirmContent %}
+        <p>{{ 'recurring_orders.review.modal.body' | trans }}</p>
+        <ul class="list">
+            <li class="list-item">{{ 'recurring_orders.review.modal.removed_items' | trans }}: {{ data.review.removedItemCount }}</li>
+            <li class="list-item">{{ 'recurring_orders.review.modal.accepted_prices' | trans }}: {{ data.review.priceChangeCount }}</li>
+            <li class="list-item">{{ 'recurring_orders.review.modal.original_total' | trans }}: {{ data.review.originalTotal | money(true, data.schedule.currencyIsoCode) }}</li>
+            <li class="list-item">{{ 'recurring_orders.review.modal.new_total' | trans }}: {{ data.review.updatedTotal | money(true, data.schedule.currencyIsoCode) }}</li>
+        </ul>        
+    {% endset %}
+
+    {% set confirmFooter %}
+        {{ form_start(data.approveForm, {action: url('recurring-order/approve-review', {uuid: data.schedule.uuid}), attr: {class: 'form'}}) }}
+            {{ form_widget(data.approveForm) }}
+            <div class="grid grid--right grid--gap-smaller">
+                <button type="button" class="button button--hollow js-main-popup-close">
+                    {{ 'global.cancel' | trans }}
+                </button>
+                <button type="submit" class="button spacing-left" data-qa="recurring-order-review-approve-submit">
+                    {{ 'recurring_orders.review.cta.accept_and_place' | trans }}
+                </button>
+            </div>
+        {{ form_end(data.approveForm) }}
+    {% endset %}
+
+    {% include molecule('main-popup') with {
+        data: {
+            title: 'recurring_orders.review.modal.headline' | trans,
+            content: confirmContent,
+            footer: confirmFooter,
+        },
+        attributes: {
+            'content-id': 'review-confirm-popup',
+            'trigger-class-name': confirmModalTriggerClassName,
+        },
+    } only %}
+{% endblock %}

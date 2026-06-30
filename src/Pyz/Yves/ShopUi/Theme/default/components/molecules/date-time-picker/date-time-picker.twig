@@ -10,6 +10,7 @@
     input: {},
     fieldClass: '',
     iconName: 'calendar',
+    inputQa: '',
 } %}
 
 {% define attributes = {
@@ -28,14 +29,18 @@
             {% set class = config.name ~ '__field' ~ (data.fieldClass ? ' ' ~ data.fieldClass) %}
 
             {% if data.field  %}
+                {% set resolvedQa = data.inputQa ?: (data.field.vars.attr['data-qa'] | default('')) %}
                 {{ form_row(data.field, {
                     attr: {
                         class: config.name ~ '__field' ~ (data.fieldClass ? ' ' ~ data.fieldClass),
+                        'data-qa': resolvedQa,
                     },
                 }) }}
             {% else %}
                 {% if data.input.label %}
-                    <label {% if data.input.attrs.id %}for="{{ data.input.attrs.id }}"{% endif %} class="label">{{ data.input.label | trans }}</label>
+                    <div class="spacing-bottom--big">
+                        <label {% if data.input.attrs.id %}for="{{ data.input.attrs.id }}"{% endif %} class="label">{{ data.input.label | trans }}</label>
+                    </div>
                 {% endif %}
 
                 <input type="text" class="input input--expand {{ class }}" {{ _self.renderAttributes(data.input.attrs) }}>
