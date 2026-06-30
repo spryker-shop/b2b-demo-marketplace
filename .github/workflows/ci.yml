@@ -388,6 +388,9 @@ jobs:
 
     docker-alpine-php-84-mariadb-robot-api-b2b:
         needs: [validation]
+        # Disabled: plain-B2B compatibility is not supported on master-demo. Kept defined
+        # (not deleted) so upstream edits to this job merge cleanly during upmerges.
+        if: false
         name: "Robot / API B2B"
         runs-on: ubuntu-latest
         env:
@@ -562,6 +565,9 @@ jobs:
 
     docker-alpine-php-84-mariadb-cypress-b2b:
         needs: [js-validation, validation]
+        # Disabled: plain-B2B compatibility is not supported on master-demo. Kept defined
+        # (not deleted) so upstream edits to this job merge cleanly during upmerges.
+        if: false
         name: "Cypress / UI B2B"
         runs-on: ubuntu-latest
         env:
