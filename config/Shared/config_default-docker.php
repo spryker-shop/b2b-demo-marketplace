@@ -322,10 +322,9 @@ $config[MailConstants::SMTP_PORT] = getenv('SPRYKER_SMTP_PORT');
 /* End Mail */
 
 /* Logging */
+$logDir = (getenv('SPRYKER_LOG_DIRECTORY') ?: APPLICATION_ROOT_DIR . '/data') . '/logs';
 $config[LogConstants::LOGGER_CONFIG] = SprykerLoggerConfig::class;
-$config[LogConstants::LOG_FILE_PATH] = (getenv('SPRYKER_LOG_DIRECTORY') ?: APPLICATION_ROOT_DIR . '/data') . '/logs';
-
-$logDir = (getenv('SPRYKER_LOG_DIRECTORY') ?: APPLICATION_ROOT_DIR . '/data') . '/' . getenv('APPLICATION_STORE');
+$config[LogConstants::LOG_FILE_PATH] = $logDir;
 
 $config[EventConstants::LOG_FILE_PATH] = $logDir . '/ZED/application_events.log';
 $config[QueueConstants::QUEUE_WORKER_OUTPUT_FILE_NAME] = $logDir . '/ZED/queue.log';
