@@ -1,10 +1,11 @@
+@use 'sass:map';
 @use 'src/ShopUi/styles/shared' as *;
 @use 'ShopUi/components/molecules/advanced-table/advanced-table' as *;
 @include shop-ui-advanced-table($name: '.advanced-table') {
     &__head {
         background-color: $setting-color-gray-7;
         text-transform: uppercase;
-        font-size: map_get($setting-font-size, tiny);
+        font-size: map.get($setting-font-size, tiny);
         font-weight: fw(bold);
     }
 

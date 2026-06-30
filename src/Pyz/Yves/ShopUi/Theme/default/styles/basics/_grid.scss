@@ -38,11 +38,11 @@
                     $ratio: math.div($column, $setting-grid-columns);
 
                     &--#{$breakpoint}-#{$column} {
-                        width: calc(#{percentage($ratio)} + #{$ratio - 1} * var(--grid-gap, 0px));
+                        width: calc(#{math.percentage($ratio)} + #{$ratio - 1} * var(--grid-gap, 0px));
                     }
 
                     &--push-left-#{$breakpoint}-#{$column} {
-                        margin-left: calc(#{percentage($ratio)} + #{$ratio - 1} * var(--grid-gap, 0px));
+                        margin-left: calc(#{math.percentage($ratio)} + #{$ratio - 1} * var(--grid-gap, 0px));
                     }
                 }
 

@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use 'src/ShopUi/styles/shared' as *;
 @use 'ConfigurableBundlePage/components/molecules/configurator-product/configurator-product' as *;
 @include configurable-bundle-page-configurator-product {
@@ -72,7 +73,7 @@
     &__sku {
         display: block;
         color: $setting-color-gray-3;
-        font-size: map_get($setting-font-size, small);
+        font-size: map.get($setting-font-size, small);
         line-height: rem(18);
         text-transform: uppercase;
     }

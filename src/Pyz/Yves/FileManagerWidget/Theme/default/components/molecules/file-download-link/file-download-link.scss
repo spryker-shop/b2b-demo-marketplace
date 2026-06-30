@@ -1,8 +1,9 @@
+@use 'sass:map';
 @use 'src/ShopUi/styles/shared' as *;
 @use 'FileManagerWidget/components/molecules/file-download-link/file-download-link' as *;
 @include file-manager-widget-file-download-link {
     &__icon {
-        background-color: helper-color-light(map-get($setting-color-actions, 'alert'), 40);
-        color: helper-color-light(map-get($setting-color-actions, 'alert'), 10);
+        background-color: helper-color-light(map.get($setting-color-actions, 'alert'), 40);
+        color: helper-color-light(map.get($setting-color-actions, 'alert'), 10);
     }
 }

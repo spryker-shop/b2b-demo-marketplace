@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use 'src/ShopUi/styles/shared' as *;
 @use 'ShopUi/components/atoms/button/button' as *;
 @use 'ConfigurableBundlePage/components/molecules/configurator-button/configurator-button' as *;
@@ -68,7 +69,7 @@
 
         &--selected {
             @include configurable-bundle-page-configurator-button-state(
-                helper-color-light(map-get($setting-color-actions, 'success')),
+                helper-color-light(map.get($setting-color-actions, 'success')),
                 $setting-color-main,
                 $setting-color-transparent
             );

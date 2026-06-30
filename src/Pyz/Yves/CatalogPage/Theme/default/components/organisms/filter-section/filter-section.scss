@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use 'src/ShopUi/styles/shared' as *;
 @mixin catalog-page-filter-section($name: '.filter-section') {
     #{$name} {
@@ -14,7 +15,7 @@
             position: static;
             padding: 0;
             background: none;
-            margin: map-get($setting-spacing, 'biggest') 0 map-get($setting-spacing, 'bigger');
+            margin: map.get($setting-spacing, 'biggest') 0 map.get($setting-spacing, 'bigger');
         }
 
         &__close {

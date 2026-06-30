@@ -1,10 +1,11 @@
+@use 'sass:list';
 @use '~ShopUi/styles/settings/import' as *;
 
 @mixin helper-import($keywords...) {
     $isBlacklisted: false;
 
     @each $keyword in $keywords {
-        @if index($setting-import-blacklist, $keyword) != null {
+        @if list.index($setting-import-blacklist, $keyword) != null {
             $isBlacklisted: true;
         }
     }
