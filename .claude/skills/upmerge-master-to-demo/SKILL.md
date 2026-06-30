@@ -421,18 +421,27 @@ Record the outcome (keys restored / confirmed intentionally removed / none) in t
 The demo-shop pins `spryker/cypress-tests` to its **own `master-demo` branch** (`require-dev: "spryker/cypress-tests": "dev-master-demo"`), checked out under `tests/cypress-tests/` (composer installs it from git source). This is a **separate repository with its own `master` and `master-demo` branches** — the demo-shop upmerge does **not** touch it. You must upmerge it explicitly, and the version of the cypress `master-demo` branch **must match the cypress version the demo-shop `master` is pinned to**.
 
 > **Why merge by HASH, never from cypress `master`'s tip — this is the whole point of the step.**
-> The demo-shop's own `master` branch pins `spryker/cypress-tests` to a **specific commit reference** in its `composer.lock` (the `source.reference` hash). Cypress `master` is almost always *dozens of commits ahead* of that pinned hash (e.g. **64 commits ahead** in the 2026-06-27 case). If you merge cypress `master`'s **tip** into cypress `master-demo`, the demo cypress branch ends up running **ahead of the demo-shop version** — it would assert behavior/selectors/fixtures the shop on `master` doesn't have yet → flaky/false failures and a version-skewed demo branch. So cypress `master-demo` must be advanced to **exactly the cypress commit the demo-shop `master` pins, and no further.** That pinned hash is your merge target; cypress `master`'s tip is off-limits.
+> The demo-shop pins `spryker/cypress-tests` to a **specific commit reference** in its `composer.lock` (the `source.reference` hash). Cypress `master` is almost always *dozens of commits ahead* of that pinned hash (e.g. **64 commits ahead** in the 2026-06-27 case). If you merge cypress `master`'s **tip** into cypress `master-demo`, the demo cypress branch ends up running **ahead of the demo-shop version** — it would assert behavior/selectors/fixtures the shop doesn't have yet → flaky/false failures and a version-skewed demo branch. So cypress `master-demo` must be advanced to **exactly the cypress commit the merged demo-shop version pins, and no further.** That pinned hash is your merge target; cypress `master`'s tip is off-limits.
+>
+> **Which demo-shop version's pin? The MERGED one — not master's tip.** The demo-shop `master-demo` only contains `master` up to the point it was last upmerged, not `master`'s current tip. So the correct cypress version is the one pinned by the **master commit already merged into `master-demo`** = `git merge-base master master-demo`. On the active upmerge branch (after Step 4 merged `master` in), that merged version is simply the branch's own `composer.lock` (read it from `HEAD`). The standalone quality gate (Step 6f-4) defaults to the merge-base so it's correct even when run against `master-demo` directly.
 
-#### Step 6f-1 — Determine the target cypress commit (the hash demo-shop `master` pins)
+#### Step 6f-1 — Determine the target cypress commit (the cypress version the merged demo-shop pins)
 
-Read the cypress reference from the demo-shop's `master` lock (NOT from `master-demo`, NOT from cypress `master`):
+On the active upmerge branch, Step 4 already merged `master` into it — so the branch's own `composer.lock` carries the cypress reference of the merged master version. Read it from the branch (`HEAD`):
 
 ```bash
-# Run from the demo-shop repo root.
-git show master:composer.lock | python3 -c "import json,sys; d=json.load(sys.stdin); p=[x for x in d['packages']+d['packages-dev'] if x['name']=='spryker/cypress-tests'][0]; print('demo-shop master pins cypress at:', p['source']['reference'])"
+# Run from the demo-shop repo root, on the upmerge feature branch.
+git show HEAD:composer.lock | python3 -c "import json,sys; d=json.load(sys.stdin); p=[x for x in d['packages']+d['packages-dev'] if x['name']=='spryker/cypress-tests'][0]; print('merged demo-shop pins cypress at:', p['source']['reference'])"
 ```
 
-Call that hash `TARGET_CYPRESS_HASH`. This — not cypress `origin/master` — is the upper bound for the merge.
+If you are NOT mid-merge (e.g. validating `master-demo` standalone), read the **merge-base** pin instead — the latest master version actually in `master-demo`:
+
+```bash
+MB=$(git merge-base master master-demo)
+git show "${MB}:composer.lock" | python3 -c "import json,sys; d=json.load(sys.stdin); p=[x for x in d['packages']+d['packages-dev'] if x['name']=='spryker/cypress-tests'][0]; print('merged master version pins cypress at:', p['source']['reference'])"
+```
+
+Call that hash `TARGET_CYPRESS_HASH`. This — not cypress `origin/master`, and not necessarily demo-shop `master`'s *tip* — is the upper bound for the merge.
 
 #### Step 6f-2 — In the cypress repo, sync and validate the relationship
 
@@ -463,22 +472,26 @@ git merge <TARGET_CYPRESS_HASH> --no-ff -m "Upmerge cypress master (@<TARGET_CYP
 - **Use the hash, not `git merge master`.** `git merge master` would pull cypress master's tip and everything ahead of the pin — exactly the version skew this step exists to prevent.
 - **Conflict policy**: cypress `master-demo` carries the **demo-only specs** (the `cypress/e2e/demo/` group and any demo fixtures/config). When a conflict touches a demo-only file, keep the `master-demo` (demo) side. For shared/core specs and helpers, take the incoming (master) side up to the pinned hash. When intent is unclear, **pause and ask the user**.
 
-#### Step 6f-4 — Double-check you did NOT merge ahead of the target
+#### Step 6f-4 — Run the quality gate (double-check you did NOT merge ahead of the target)
 
-After the merge, verify cypress `master-demo` contains the target but **nothing from cypress master that is newer than the target**:
+Run the bundled quality-gate script — by default it derives the pin from the **merge-base of demo-shop `master` and `master-demo`** (the merged master version already in `master-demo`), then asserts (1) the pin is contained in cypress `master-demo` and (2) **no cypress-master commit newer than the pin leaked into `master-demo`**. On the active upmerge branch you can point it at the branch lock with `DEMOSHOP_REF=HEAD` to validate the exact lock you're about to ship:
 
 ```bash
-cd tests/cypress-tests
-# Target must now be an ancestor of master-demo:
-git merge-base --is-ancestor <TARGET_CYPRESS_HASH> master-demo && echo "OK: target is in master-demo" || echo "PROBLEM: target missing"
-# master-demo must NOT contain any commit that is ahead of the target on cypress master:
-echo "Cypress-master commits AHEAD of the target that leaked into master-demo (MUST be empty):"
-git log --oneline <TARGET_CYPRESS_HASH>..origin/master ^$(git rev-parse master-demo) 2>/dev/null | head
-# Equivalent, clearer phrasing — newer-than-target master commits now reachable from master-demo:
-git log --oneline master-demo --not <TARGET_CYPRESS_HASH> | grep -Ff <(git log --format=%h <TARGET_CYPRESS_HASH>..origin/master) - 2>/dev/null && echo "LEAK DETECTED — reset and redo with the hash" || echo "OK: no newer-than-target master commits in master-demo"
+# From the demo-shop repo root (auto-detects tests/cypress-tests):
+.claude/skills/upmerge-master-to-demo/check-cypress-not-ahead.sh
 ```
 
-If a leak is detected, reset cypress `master-demo` to its pre-merge tip and redo Step 6f-3 with the **hash** (not `master`). Surface to the user before force-moving the branch.
+Exit `0` = gate passes. Exit `1` = gate fails: it prints which check failed and, for the "ahead" case, the exact offending commits. Exit `2` = setup error (wrong dir, missing ref).
+
+This is the same gate that runs in CI (see README). If it fails with **check 2 (ahead)**, reset cypress `master-demo` to its pre-merge tip and redo Step 6f-3 with the **hash** (not `master`). If it fails with **check 1 (behind)**, the merge didn't happen / didn't reach the pin — redo Step 6f-3. Surface to the user before force-moving the branch.
+
+> The script just wraps these two `git` facts, if you want to run them by hand:
+> ```bash
+> cd tests/cypress-tests
+> git merge-base --is-ancestor <TARGET_CYPRESS_HASH> master-demo   # check 1: pin is in master-demo
+> comm -12 <(git rev-list master-demo --not <TARGET_CYPRESS_HASH> | sort) \
+>          <(git rev-list <TARGET_CYPRESS_HASH>..origin/master | sort)   # check 2: must print nothing
+> ```
 
 #### Step 6f-5 — Run the demo cypress group, push, and re-pin the demo-shop
 

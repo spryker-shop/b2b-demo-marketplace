@@ -84,27 +84,36 @@ flowchart TD
 demo-shop's `composer.json` pins it as `require-dev: "spryker/cypress-tests": "dev-master-demo"`,
 so the demo shop installs the cypress repo's `master-demo` branch.
 
-### Why merge by HASH, not by cypress master's tip
+### Why merge by HASH, not by cypress master's tip — and which hash
 
-The demo-shop's own `master` branch pins `spryker/cypress-tests` to a **specific commit
-reference** in its `composer.lock` (`source.reference`). Cypress `master` is almost always
-*far ahead* of that pinned commit — **64 commits ahead** in the 2026-06-27 case.
+The demo-shop pins `spryker/cypress-tests` to a **specific commit reference** in its
+`composer.lock` (`source.reference`). Cypress `master` is almost always *far ahead* of that
+pinned commit — **64 commits ahead** in the 2026-06-27 case.
+
+**The PIN is the cypress version of the MERGED demo-shop — not master's tip.** The demo-shop
+`master-demo` only contains `master` up to the point it was last upmerged. So the cypress
+version it must match is the one pinned by the **master commit already merged into
+`master-demo`** = `git merge-base master master-demo`. (On the active upmerge branch — after
+`master` was merged in — that merged version is simply the branch's own `composer.lock`, read
+from `HEAD`.) Reading demo-shop **master's tip** instead would demand a cypress version for
+shop code `master-demo` doesn't have yet — the inverse skew.
 
 ```
-cypress repo:
-  master:       …──●──●──●──●──●──●  ← TIP (64 commits ahead — OFF LIMITS)
-                       │
-   demo-shop master    ●  TARGET_CYPRESS_HASH  (the pinned commit, e.g. 09e6cbcf)
-   pins this commit ──╯ │
-                        ↓ merge ONLY up to here
-  master-demo:  …──●────●──◇──◇        ← demo-only specs (◇) layered on the pinned base
+demo-shop repo:                          cypress repo:
+  master:  …──○──○──○  ← tip (newer pin)    master:  …──●──●──●──●──●──●  ← TIP (OFF LIMITS)
+              │                                          │
+  merge-base  ○  ← last master merged                    ●  TARGET_CYPRESS_HASH
+  into demo   │     into master-demo;                pin │     = cypress ref the merge-base
+              │     READ ITS cypress pin   ───────────╯  │       commit's lock points to
+  master-demo ○──◆──◆  (◆ = demo-only)      master-demo: …──●──◇──◇  (◇ = demo-only specs)
+                                                          ↑ merge ONLY up to TARGET, no further
 ```
 
-If you ran `git merge master` in the cypress repo, `master-demo` would absorb all 64
-newer commits and run **ahead of the demo-shop version** — asserting selectors/fixtures/
-behavior the shop on `master` doesn't have yet → flaky, false failures, version skew.
-So cypress `master-demo` is advanced to **exactly the commit demo-shop master pins, and no
-further.** The pinned hash is the merge target; cypress master's tip is off-limits.
+If you ran `git merge master` in the cypress repo, `master-demo` would absorb all 64 newer
+commits and run **ahead of the demo-shop version** — asserting selectors/fixtures/behavior the
+shop doesn't have yet → flaky, false failures, version skew. So cypress `master-demo` is
+advanced to **exactly the commit the merged demo-shop version pins, and no further.** The
+pinned hash is the merge target; cypress master's tip is off-limits.
 
 After merging, you push the cypress `master-demo` branch and **re-pin the demo-shop's
 `composer.lock`** to the new cypress `master-demo` tip, so the demo shop installs the
@@ -114,34 +123,38 @@ upmerged tests.
 
 ```mermaid
 flowchart TD
-    A([Step 6f start]) --> B["6f-1: Read demo-shop MASTER's composer.lock<br/>cypress source.reference → TARGET_CYPRESS_HASH"]
-    B --> C[6f-2: cd tests/cypress-tests; git fetch origin]
+    A([Step 6f start]) --> B["6f-1: TARGET_CYPRESS_HASH = cypress source.reference<br/>from the MERGED demo-shop lock<br/>(branch HEAD mid-upmerge, else merge-base master..master-demo)"]
+    B --> C["6f-2: cd tests/cypress-tests, git fetch origin"]
     C --> D{Is TARGET_CYPRESS_HASH<br/>already in master-demo?}
-    D -- yes --> Dx[Record 'already at/ahead of pin —<br/>no merge needed'] --> RUN
+    D -- yes --> Dx["Record 'already at/ahead of pin — no merge needed'"] --> RUN
     D -- no --> E["6f-3: git checkout master-demo<br/>git merge TARGET_CYPRESS_HASH --no-ff<br/>(the HASH — never 'git merge master')"]
     E --> F{Conflicts?}
-    F -- demo-only spec --> F1[Keep master-demo demo side] --> G
-    F -- shared/core spec --> F2[Take incoming up to the hash] --> G
-    F -- unclear --> Fx[Pause & ask user] --> G
+    F -- demo-only spec --> F1["Keep master-demo demo side"] --> G
+    F -- shared/core spec --> F2["Take incoming up to the hash"] --> G
+    F -- unclear --> Fx["Pause and ask user"] --> G
     F -- none --> G
-    G[6f-4: Verify TARGET is ancestor of master-demo]
+    G["6f-4: Verify TARGET is ancestor of master-demo"]
     G --> H{Any cypress-master commit<br/>NEWER than target leaked in?}
-    H -- yes --> Hx[LEAK: reset master-demo to pre-merge tip,<br/>redo 6f-3 with the HASH] --> E
+    H -- yes --> Hx["LEAK: reset master-demo to pre-merge tip,<br/>redo 6f-3 with the HASH"] --> E
     H -- no --> RUN
     RUN["6f-5: ENV_REPOSITORY_ID=b2b-mp npm run cy:demo"]
     RUN --> I{All demo specs pass?}
-    I -- no --> Ix[Real regression — cross-ref Step 6e; fix / ask user] --> RUN
+    I -- no --> Ix["Real regression — cross-ref Step 6e; fix / ask user"] --> RUN
     I -- yes --> J[git push origin master-demo<br/>capture new master-demo tip]
     J --> K["Re-pin demo-shop:<br/>composer update spryker/cypress-tests --lock --no-install<br/>verify reference == new cypress master-demo tip"]
     K --> L[git commit composer.lock<br/>record hashes in PR body]
-    L --> M([Step 6f done → continue Step 7])
+    L --> M(["Step 6f done - continue Step 7"])
 ```
 
 ### Key commands (full versions in `SKILL.md` Step 6f)
 
 ```bash
-# 6f-1 — target hash = what demo-shop MASTER pins (run from demo-shop root)
-git show master:composer.lock | python3 -c "import json,sys; d=json.load(sys.stdin); p=[x for x in d['packages']+d['packages-dev'] if x['name']=='spryker/cypress-tests'][0]; print(p['source']['reference'])"
+# 6f-1 — target hash = cypress ref the MERGED demo-shop version pins.
+# On the upmerge branch (master already merged in), read the branch lock:
+git show HEAD:composer.lock | python3 -c "import json,sys; d=json.load(sys.stdin); p=[x for x in d['packages']+d['packages-dev'] if x['name']=='spryker/cypress-tests'][0]; print(p['source']['reference'])"
+# Standalone (validating master-demo directly), read the merge-base lock instead:
+MB=$(git merge-base master master-demo)
+git show "${MB}:composer.lock" | python3 -c "import json,sys; d=json.load(sys.stdin); p=[x for x in d['packages']+d['packages-dev'] if x['name']=='spryker/cypress-tests'][0]; print(p['source']['reference'])"
 
 # 6f-2/3 — merge the HASH into cypress master-demo (never 'git merge master')
 cd tests/cypress-tests && git fetch origin
@@ -159,6 +172,45 @@ git push origin master-demo
 composer update spryker/cypress-tests --lock --no-install --ignore-platform-reqs
 git add composer.lock && git commit -m "chore(composer): re-pin spryker/cypress-tests to upmerged master-demo for <TICKET>"
 ```
+
+## Quality gate: `check-cypress-not-ahead.sh`
+
+A standalone script in this folder enforces the rule above deterministically — it fails
+if cypress `master-demo` is **ahead of** (or **behind**) the cypress version pinned by the
+**merged demo-shop version**. By default it derives that PIN from the **merge-base of
+demo-shop `master` and `master-demo`** (the latest master version already in `master-demo`),
+so it's correct even run standalone. Use it in Step 6f-4, as a pre-push hook, or as a CI gate.
+
+```bash
+# From the demo-shop repo root — auto-detects tests/cypress-tests:
+.claude/skills/upmerge-master-to-demo/check-cypress-not-ahead.sh
+```
+
+**What it asserts** (TARGET = `spryker/cypress-tests` `source.reference` read from the PIN ref — by default the merge-base `master`..`master-demo`):
+
+| Check | Passes when | Fails when |
+|---|---|---|
+| 1 — not behind | TARGET is an ancestor of cypress `master-demo` | `master-demo` doesn't contain the pin (merge missing/incomplete) |
+| 2 — not ahead | no commit reachable from `master-demo` is newer than TARGET on cypress `master` | a cypress-master commit newer than the pin leaked into `master-demo` |
+
+**Exit codes:** `0` pass · `1` gate failed (lists the offending commits for the ahead case) · `2` setup error.
+
+**Env overrides** (all optional):
+- `DEMOSHOP_MASTER` (default `master`) and `DEMOSHOP_DEMO` (default `master-demo`) — the two branches the PIN merge-base is computed from.
+- `DEMOSHOP_REF` — read the PIN from this explicit ref instead of the merge-base (e.g. `DEMOSHOP_REF=HEAD` on the upmerge branch to validate the exact lock you're about to ship).
+- `TARGET_HASH` — supply the PIN hash directly, skipping composer.lock entirely.
+- `CYPRESS_DEMO` (default `master-demo`), `CYPRESS_MASTER` (default `origin/master`), `CYPRESS_DIR`, `DEMOSHOP_DIR`, `NO_FETCH=1` (skip `git fetch`).
+
+**As a CI step** (e.g. GitHub Actions) — run it after checking out both the demo-shop and the
+cypress branch so the refs are present:
+
+```yaml
+  - name: Cypress demo branch not ahead of demo-shop pin
+    run: .claude/skills/upmerge-master-to-demo/check-cypress-not-ahead.sh
+```
+
+The gate maps 1:1 to Step 6f-4 — a green local run predicts the CI gate, and a red CI gate
+points straight back to Step 6f (re-merge the **hash**, not cypress `master`).
 
 ## Golden rules
 
