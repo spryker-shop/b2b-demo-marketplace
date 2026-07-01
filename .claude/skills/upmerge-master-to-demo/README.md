@@ -2,8 +2,11 @@
 
 This README explains the recurring **upmerge** workflow for the `b2b-demo-marketplace`
 repo in plain steps, with diagrams. The executable, command-by-command version lives in
-[`SKILL.md`](./SKILL.md) and runs via `/upmerge`. Read this first to understand *why*
-each step exists; use `SKILL.md` for the exact commands.
+[`SKILL.md`](./SKILL.md) (a lean orchestrator that loads detail from `references/*.md`) and
+runs via `/upmerge-master-to-demo`. It runs **fully autonomously** — safe default at each
+step, stopping only for a handful of hard blockers. A JIRA ticket is **optional**: used only
+if provided, else the branch/PR are named by date, and the ticket status is **never** moved.
+Read this first to understand *why* each step exists; use `SKILL.md` for the exact commands.
 
 ## What an upmerge is
 
@@ -28,28 +31,29 @@ The hard part is everything `git merge` *cannot* see:
 
 | # | Step | Why it exists |
 |---|------|---------------|
-| 1 | **Find the JIRA ticket** | Drives the branch name + PR title (CC board 2237). |
+| 1 | **Ticket (optional)** | Used for branch/PR names only if the user provides one; otherwise name by date. Never searched for or invented. |
 | 2 | **Sync `master` & `master-demo`** | Fetch + fast-forward refspecs so HEAD stays put; stop on dirty tree. |
-| 3 | **Create the feature branch** | `feature/<ticket>/upmerge-latest-master` off `master-demo`. |
+| 3 | **Create the feature branch** | Off `master-demo`: `feature/<ticket>/upmerge-latest-master`, or `feature/upmerge-YYYY-MM-DD/master-to-master-demo` when ticketless. |
 | 4 | **Merge `master`, resolve conflicts** | `composer.lock` → regenerate; `config_default.php` → never drop demo-only blocks. |
 | 5 | **Refresh `composer.lock`** | Final lock = master's lock **+** demo-only packages only. No bare `composer update`. |
 | 6a–6c | **Reconcile Pyz/Demo overrides** | Re-align overrides that shadow changed core files (esp. Twig). Silent divergence. |
 | 6d | **Audit `deploy.spryker-icpplus.yml`** | New feature may need a deploy entry/env var the merge never flagged. |
 | 6e | **Audit `config_default.php`** | Catch demo-only config blocks dropped with no conflict marker (QuickSight canary). |
+| 6g | **Audit Dependency Providers** | Catch demo-only plugin/console registrations dropped from a provider list — the wiring half of 6e's config half. Restore into `src/Demo`. |
 | **6f** | **Upmerge the `cypress-tests` repo** | **Merge cypress `master-demo` to the HASH demo-shop master pins — NOT cypress master's tip.** Re-pin the demo-shop. |
 | 7 | **Smoke-test Yves + Backoffice** | Login + customer overview + dashboard + `analytics-gui` (QuickSight canary). |
 | 7b | **Run `cy:demo`** | Mandatory automated coverage of demo-only features; predicts CI's `Run Tests (Demo)`. |
-| 8 | **Push + open PR** | Targets `master-demo`; PR body records every audit (6a–6f). |
-| 9 | **Move JIRA to IN CR** | Transition name "Start CR"; verify status actually changed. |
+| 8 | **Push + open PR** | Targets `master-demo`; ticket-named or date-named; PR body records every audit (6a–6g). |
+| 9 | **JIRA (optional)** | Only if a ticket was provided: a best-effort PR-link comment. **Never** moves the ticket's status. |
 | 10 | **Hand off + schedule poll** | Tell user; `ScheduleWakeup` for the pipeline check. |
 | 11 | **Poll pipeline + auto-fix** | phpcs/transfer/propel/lock are auto-fixable; logic/test failures go to the user. |
-| 12 | **Final report** | Green pipeline → JIRA comment + tell user. Never auto-merge. |
+| 12 | **Final report** | Green pipeline → tell user (+ optional PR-link comment if ticketed). Never auto-merge. |
 
 ## General flow
 
 ```mermaid
 flowchart TD
-    A([/upmerge]) --> B[Step 1: Find JIRA ticket]
+    A([/upmerge-master-to-demo]) --> B[Step 1: Ticket optional — use if provided, else name by date]
     B --> C[Step 2: Sync master & master-demo]
     C --> D{Working tree clean?}
     D -- no --> Dx[Stop & ask user]
@@ -67,7 +71,7 @@ flowchart TD
     M --> N{All green?}
     N -- no --> Nx[Fix regression / ask user] --> H
     N -- yes --> O[Step 8: Push + open PR to master-demo]
-    O --> P[Step 9: JIRA → IN CR + link PR]
+    O --> P[Step 9: optional PR-link comment if ticketed — never move status]
     P --> Q[Step 10: Hand off + ScheduleWakeup]
     Q --> R[Step 11: Poll pipeline]
     R --> S{Pipeline?}
