@@ -113,22 +113,4 @@ class UserDependencyProvider extends SprykerUserDependencyProvider
             new MerchantAgentUserQueryCriteriaExpanderPlugin(),
         ];
     }
-
-    /**
-     * @return list<\Spryker\Zed\UserExtension\Dependency\Plugin\UserExpanderPluginInterface>
-     */
-    protected function getUserExpanderPlugins(): array
-    {
-        return [
-        ];
-    }
-
-    /**
-     * @return list<\Spryker\Zed\UserExtension\Dependency\Plugin\UserPostUpdatePluginInterface>
-     */
-    protected function getUserPostUpdatePlugins(): array
-    {
-        return [
-        ];
-    }
 }

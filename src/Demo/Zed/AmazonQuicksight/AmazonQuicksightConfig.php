@@ -7,13 +7,13 @@
 
 declare(strict_types = 1);
 
-namespace Pyz\Zed\AmazonQuicksight;
+namespace Demo\Zed\AmazonQuicksight;
 
 use SprykerEco\Zed\AmazonQuicksight\AmazonQuicksightConfig as SprykerAmazonQuicksightConfig;
 
 class AmazonQuicksightConfig extends SprykerAmazonQuicksightConfig
 {
-    protected const string ASSET_BUNDLE_IMPORT_FILE_PATH = '%s/src/Pyz/Zed/AmazonQuicksight/data/b2b-mp-asset-bundle.zip';
+    protected const string ASSET_BUNDLE_IMPORT_FILE_PATH = '%s/src/Demo/Zed/AmazonQuicksight/data/b2b-mp-asset-bundle.zip';
 
     /**
      * @var list<string>

@@ -209,7 +209,6 @@ use Spryker\Zed\Uuid\Communication\Console\UuidGeneratorConsole;
 use Spryker\Zed\ZedNavigation\Communication\Console\BuildNavigationConsole;
 use Spryker\Zed\ZedNavigation\Communication\Console\RemoveNavigationCacheConsole;
 use SprykerEco\Zed\Algolia\Communication\Console\AlgoliaEntityExportConsole;
-use SprykerEco\Zed\AmazonQuicksight\Communication\Console\QuicksightUserSyncSaveConsole;
 use SprykerEco\Zed\NewRelic\Communication\Console\RecordDeploymentConsole;
 use SprykerFeature\Zed\OrderExperienceManagement\Communication\Console\RecurringOrderTriggerConsole;
 use SprykerFeature\Zed\ProductExperienceManagement\Communication\Console\ImportJobRunConsole;
@@ -541,8 +540,6 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             // Punchout Gateway demo connections
             $commands[] = new PunchoutDemoConnectionCreateConsole();
         }
-
-        $commands[] = new QuicksightUserSyncSaveConsole();
 
         return $commands;
     }
