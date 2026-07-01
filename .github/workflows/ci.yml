@@ -125,6 +125,47 @@ jobs:
                 uses: ./.github/actions/job-slack-notifications
                 if: always()
 
+    cypress-version-gate:
+        name: "Cypress demo branch not ahead of pin"
+        if: ${{ !(github.event_name == 'push' && github.ref == 'refs/heads/master') }}
+        runs-on: ubuntu-latest
+        steps:
+            # Full history so merge-base(master, HEAD) and the demo-shop lock are readable.
+            -   name: Checkout demo-shop
+                uses: actions/checkout@v4
+                with:
+                    fetch-depth: 0
+
+            # PR checkout has no local 'master'; the gate's PIN = merge-base(master, HEAD),
+            # so fetch the demo-shop master branch as a local ref it can resolve.
+            -   name: Fetch demo-shop master
+                run: git fetch origin master:master
+
+            # The cypress-tests checkout under tests/ is a composer dist (zip) install in CI,
+            # so it has no .git. Clone the cypress repo fresh, read-only, for the gate.
+            -   name: Clone spryker/cypress-tests (master + master-demo)
+                run: |
+                    git clone --no-checkout https://github.com/spryker/cypress-tests.git /tmp/cypress-tests
+                    git -C /tmp/cypress-tests fetch origin master master-demo
+
+            # bash + python3 are preinstalled on ubuntu-latest; the script self-execs under bash.
+            # PIN = cypress hash the MERGED demo-shop version pins = merge-base(master, HEAD).
+            # This is the master-line hash (NOT the PR's own lock, which would be circular).
+            # Gate fails if cypress master-demo is BEHIND or AHEAD of that PIN.
+            -   name: Run cypress version gate
+                env:
+                    DEMOSHOP_MASTER: master
+                    DEMOSHOP_DEMO: HEAD
+                    CYPRESS_DIR: /tmp/cypress-tests
+                    CYPRESS_DEMO: origin/master-demo
+                    CYPRESS_MASTER: origin/master
+                    NO_FETCH: "1"
+                run: bash .claude/skills/upmerge-master-to-demo/check-cypress-not-ahead.sh
+
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
+
     js-validation:
         name: "NPM validation"
         runs-on: ubuntu-latest
@@ -347,6 +388,9 @@ jobs:
 
     docker-alpine-php-84-mariadb-robot-api-b2b:
         needs: [validation]
+        # Disabled: plain-B2B compatibility is not supported on master-demo. Kept defined
+        # (not deleted) so upstream edits to this job merge cleanly during upmerges.
+        if: false
         name: "Robot / API B2B"
         runs-on: ubuntu-latest
         env:
@@ -477,14 +521,25 @@ jobs:
                 run: |
                     AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp .cypress s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/b2b-mp/dms-on/cypress/${GITHUB_RUN_ID}/PHP8.4MariaDB/ --recursive
 
+            -   name: Run Tests (Demo)
+                id: run_demo_tests
+                if: always()
+                run: |
+                    docker/sdk exec --env "ENV_REPOSITORY_ID=b2b-mp" --env "ENV_IS_SSP_ENABLED=true" cypress-tests npm run cy:demo
+
+            -   name: Upload Screenshots (Demo)
+                if: failure()
+                run: |
+                    AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp .cypress s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/b2b-mp/dms-on/cypress/${GITHUB_RUN_ID}/PHP8.4MariaDB/ --recursive
+
             -   name: Generate Cypress Test Summary
-                if: always() && (steps.run_tests.outcome == 'failure' || steps.run_ssp_tests.outcome == 'failure')
+                if: always() && (steps.run_tests.outcome == 'failure' || steps.run_ssp_tests.outcome == 'failure' || steps.run_demo_tests.outcome == 'failure')
                 run: |
                     python3 tests/cypress-tests/generate_failure_summary.py .cypress > /tmp/cypress-summary.md 2>/dev/null || true
                     cat /tmp/cypress-summary.md >> $GITHUB_STEP_SUMMARY 2>/dev/null || true
 
             -   name: Save PHP logs
-                if: always() && (steps.run_tests.outcome == 'failure' || steps.run_ssp_tests.outcome == 'failure')
+                if: always() && (steps.run_tests.outcome == 'failure' || steps.run_ssp_tests.outcome == 'failure' || steps.run_demo_tests.outcome == 'failure')
                 run: |
                     mkdir -p logs
                     docker logs spryker_ci_backoffice_eu_1 > logs/backoffice_app.log 2>&1
@@ -495,7 +550,7 @@ jobs:
                     echo "PHP logs saved. After upload, they will be available in GitHub Actions Artifacts as 'cypress-ui-failed-artifacts'"
 
             -   name: Upload PHP logs
-                if: always() && (steps.run_tests.outcome == 'failure' || steps.run_ssp_tests.outcome == 'failure')
+                if: always() && (steps.run_tests.outcome == 'failure' || steps.run_ssp_tests.outcome == 'failure' || steps.run_demo_tests.outcome == 'failure')
                 uses: actions/upload-artifact@v5
                 with:
                     name: cypress-ui-failed-artifacts
@@ -510,6 +565,9 @@ jobs:
 
     docker-alpine-php-84-mariadb-cypress-b2b:
         needs: [js-validation, validation]
+        # Disabled: plain-B2B compatibility is not supported on master-demo. Kept defined
+        # (not deleted) so upstream edits to this job merge cleanly during upmerges.
+        if: false
         name: "Cypress / UI B2B"
         runs-on: ubuntu-latest
         env:

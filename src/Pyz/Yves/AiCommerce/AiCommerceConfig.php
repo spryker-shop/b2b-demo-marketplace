@@ -14,11 +14,6 @@ use SprykerFeature\Yves\AiCommerce\AiCommerceConfig as SprykerAiCommerceConfig;
 
 class AiCommerceConfig extends SprykerAiCommerceConfig
 {
-    public function isQuickOrderImageToCartEnabled(): bool
-    {
-        return true;
-    }
-
     /**
      * Specification:
      * - Returns the AI configuration name used for image-to-cart product recognition.
