@@ -3,8 +3,8 @@ env:
 
 sections:
     build:
-        # cache-zed-clear:
-        #     command: 'vendor/bin/console cache:clear'
+        cache-zed-clear:
+            command: 'vendor/bin/console cache:clear'
 
         generate-transfers:
             command: 'vendor/bin/console transfer:generate'
@@ -63,23 +63,23 @@ sections:
         configuration-sync:
             command: 'vendor/bin/console configuration:sync'
 
-        # provider-processor-glue:
-        #     command: 'vendor/bin/glue api:generate'
+        provider-processor-glue:
+            command: 'vendor/bin/glue api:generate'
 
-        # provider-processor-glue-backend:
-        #     command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue api:generate'
+        provider-processor-glue-backend:
+            command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue api:generate'
 
-        # provider-processor-glue-storefront:
-        #     command: 'GLUE_APPLICATION=GLUE_STOREFRONT vendor/bin/glue api:generate'
+        provider-processor-glue-storefront:
+            command: 'GLUE_APPLICATION=GLUE_STOREFRONT vendor/bin/glue api:generate'
 
-        # cache-glue-api-clear:
-        #     command: 'vendor/bin/glue cache:clear'
+        cache-glue-api-clear:
+            command: 'vendor/bin/glue cache:clear'
 
-        # cache-storefront-api-clear:
-        #     command: 'GLUE_APPLICATION=GLUE_STOREFRONT vendor/bin/glue cache:clear'
+        cache-storefront-api-clear:
+            command: 'GLUE_APPLICATION=GLUE_STOREFRONT vendor/bin/glue cache:clear'
 
-        # cache-backend-api-clear:
-        #     command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue cache:clear'
+        cache-backend-api-clear:
+            command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue cache:clear'
 
     build-production:
         excluded: true
