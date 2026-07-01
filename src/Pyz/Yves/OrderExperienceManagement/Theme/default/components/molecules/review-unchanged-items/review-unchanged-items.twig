@@ -1,0 +1,27 @@
+{% extends molecule('review-unchanged-items', '@SprykerFeature:OrderExperienceManagement') %}
+
+{% block body %}
+    <details open>
+        <summary>
+            {{ (data.unchangedItems | length === 1 ? 'recurring_orders.review.unchanged.title' :'recurring_orders.review.unchanged.title.plural') | trans ({'%count%': data.unchangedItems | length}) }}
+            {% include atom('font-icon') with {
+                class: config.name ~ '__summary-icon',
+                data: {
+                    name: 'keyboard_arrow_down',
+                },
+            } only %}
+        </summary>
+
+        {% block content %}
+            {% set contentClassName = config.name ~ '__box' %}
+            {{ parent() }}
+        {% endblock %}
+    </details>
+{% endblock %}
+
+{% block grid %}
+    {% set gridClassName = config.name ~ '__item grid grid--gap' %}
+    {{ parent() }}
+{% endblock %}
+
+{% block separator %}{% endblock %}

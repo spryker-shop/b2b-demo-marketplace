@@ -106,7 +106,7 @@ $config[LogConstants::LOG_LEVEL] = getenv('SPRYKER_DEBUG_ENABLED') ? Logger::INF
 
 // >>> ZED REQUEST
 
-$config[ZedRequestConstants::TRANSFER_DEBUG_SESSION_FORWARD_ENABLED] = (bool)getenv('SPRYKER_DEBUG_ENABLED');
+$config[ZedRequestConstants::TRANSFER_DEBUG_SESSION_FORWARD_ENABLED] = getenv('SPRYKER_DEBUG_ENABLED') && filter_has_var(INPUT_COOKIE, 'XDEBUG_SESSION');
 $config[ZedRequestConstants::SET_REPEAT_DATA] = (bool)getenv('SPRYKER_DEBUG_ENABLED');
 
 $isTestifyConstantsClassExists = class_exists(TestifyConstants::class);

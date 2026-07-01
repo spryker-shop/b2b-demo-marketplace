@@ -64,6 +64,7 @@
                                 {% include molecule('date-time-picker') with {
                                     data: {
                                         field: embed.field,
+                                        inputQa: 'reschedule-date',
                                     },
                                     attributes: {
                                         'formatted-date-time': embed.field.vars.value | date('Y-m-d H:i'),

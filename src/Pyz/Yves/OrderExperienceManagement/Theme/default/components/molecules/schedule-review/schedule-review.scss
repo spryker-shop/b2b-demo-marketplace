@@ -1,0 +1,21 @@
+@mixin order-experience-management-schedule-review($name: '.schedule-review') {
+    #{$name} {
+        &__heading {
+            font-size: var(--font-size-12);
+            margin-bottom: var(--scale-20);
+        }
+
+        &__title {
+            font-size: var(--heading-md-size);
+            margin: 0 0 var(--scale-12);
+        }
+
+        &__heading-content {
+            margin: 0;
+        }
+
+        @content;
+    }
+}
+
+@include order-experience-management-schedule-review;
