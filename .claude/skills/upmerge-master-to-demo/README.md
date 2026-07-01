@@ -178,13 +178,37 @@ git add composer.lock && git commit -m "chore(composer): re-pin spryker/cypress-
 A standalone script in this folder enforces the rule above deterministically — it fails
 if cypress `master-demo` is **ahead of** (or **behind**) the cypress version pinned by the
 **merged demo-shop version**. By default it derives that PIN from the **merge-base of
-demo-shop `master` and `master-demo`** (the latest master version already in `master-demo`),
-so it's correct even run standalone. Use it in Step 6f-4, as a pre-push hook, or as a CI gate.
+demo-shop `master` and `master-demo`** (the latest master version already in `master-demo`) — correct
+when run against a `master-demo` that already contains the upmerge (CI, or post-merge), **but a false
+FAIL when run on the feature branch mid-upmerge** (see the ⚠️ callout below — use `DEMOSHOP_REF=HEAD`).
+Use it in Step 6f-4, as a pre-push hook, or as a CI gate.
 
 ```bash
 # From the demo-shop repo root — auto-detects tests/cypress-tests:
 .claude/skills/upmerge-master-to-demo/check-cypress-not-ahead.sh
 ```
+
+> ### ⚠️ Running it LOCALLY on the upmerge feature branch
+>
+> The plain command above only derives the right PIN when the upmerge is **already on
+> `master-demo`** (i.e. after the PR is merged, or in CI). While you are still on the
+> `feature/<ticket>/upmerge-latest-master` branch, `master-demo` is the *pre-upmerge* branch, so
+> `merge-base(master, master-demo)` points at the **stale** old pin and the gate reports a
+> **false `❌ FAIL` (AHEAD by N commits)** even though the cypress branch is correct. The
+> `FIX: … git merge <hash>` line it prints is a **false alarm** in this case — do **not** reset/re-merge.
+>
+> **Correct local command (run this on the feature branch):**
+>
+> ```bash
+> cd <demo-shop repo root>
+> DEMOSHOP_REF=HEAD sh .claude/skills/upmerge-master-to-demo/check-cypress-not-ahead.sh
+> ```
+>
+> `DEMOSHOP_REF=HEAD` reads the PIN from **your branch's** `composer.lock` (the merged + re-pinned
+> cypress ref) → correct `✅ PASS`. Use this **after** the Step 6f-5 re-pin commit. **Before** that
+> commit, use `TARGET_HASH=<merged cypress pin>` instead (HEAD's committed lock still has the old ref).
+> The plain, no-env form becomes correct on its own only once the PR merges into `master-demo` — which
+> is why the **CI** run (below) is green with no overrides.
 
 **What it asserts** (TARGET = `spryker/cypress-tests` `source.reference` read from the PIN ref — by default the merge-base `master`..`master-demo`):
 

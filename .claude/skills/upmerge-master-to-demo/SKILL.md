@@ -23,6 +23,7 @@ If the user only asks for *part* of the flow (e.g. "just open the PR for me"), d
 
 ## High-level flow
 
+0. **Preparation — update local `master` and `master-demo` from origin** (Step 0 / Step 2)
 1. Find the JIRA ticket
 2. Sync `master` and `master-demo` from origin
 3. Create a feature branch off `master-demo`
@@ -37,6 +38,42 @@ If the user only asks for *part* of the flow (e.g. "just open the PR for me"), d
 12. Report success when the pipeline is green
 
 Each step is described below with the exact commands.
+
+---
+
+## Step 0 — Preparation: update local `master` and `master-demo`
+
+Before anything else — and before picking the ticket — make sure the two base branches locally match
+origin, so the feature branch is cut from the true latest `master-demo` and the merge brings in the true
+latest `master`. This is the same sync as Step 2 (full detail there), pulled to the front as an explicit
+preparation step:
+
+```bash
+git status --short                     # must be clean; if not, STOP and ask the user (never stash silently)
+git branch --show-current              # usually master-demo (the repo's resting branch)
+
+# HEAD on master-demo (usual case): fetch master via refspec, fast-forward the checked-out branch.
+git fetch origin master:master
+git pull --ff-only origin master-demo
+
+# (If HEAD is on some other branch, the combined refspec works:
+#  git fetch origin master:master master-demo:master-demo )
+```
+
+Confirm both are up to date (`git log --oneline -1 master` and `... master-demo` should match origin).
+If a fast-forward isn't possible (local branch diverged from origin), surface it to the user — there may
+be unpushed work we shouldn't discard.
+
+**If the `master-demo` fast-forward moved `composer.lock`, refresh `vendor/` so the local stack matches
+the branch you're about to work from:**
+
+```bash
+# Only needed if the pull changed composer.lock (git log/diff shows it moved):
+composer install --ignore-platform-reqs
+```
+
+(Skip if `composer.lock` didn't change — nothing to install.) Only proceed to Step 1 once both local
+branches are current and, if the lock moved, `vendor/` has been reinstalled.
 
 ---
 
@@ -68,11 +105,21 @@ git status --short
 
 If there are uncommitted changes, stop and ask the user what to do. Don't stash silently — the user's in-progress work is more important than this automation.
 
-Then update both base branches from origin. Do NOT use `git pull` on a checked-out branch that isn't the target — use fetch + fast-forward refspecs so we don't bounce HEAD around:
+Then update both base branches from origin. **Do NOT use the combined refspec
+`git fetch origin master:master master-demo:master-demo` from a clean start** — the repo's natural
+resting branch is `master-demo`, and git refuses to fetch into the currently-checked-out branch:
+`fatal: refusing to fetch into branch 'refs/heads/master-demo' checked out at ...`. Instead, fetch the
+branch that is NOT checked out via refspec, and fast-forward the checked-out one with `pull --ff-only`:
 
 ```bash
-git fetch origin master:master master-demo:master-demo
+# HEAD is on master-demo (the usual case):
+git fetch origin master:master        # update master via refspec (not checked out)
+git pull --ff-only origin master-demo # fast-forward the checked-out master-demo
 ```
+
+If HEAD is on some other branch, the original combined refspec is fine:
+`git fetch origin master:master master-demo:master-demo`. Detect the current branch
+(`git branch --show-current`) and pick the right form.
 
 If a fast-forward isn't possible (because the local branch has diverged from origin), surface that to the user — they may have unpushed work on `master` or `master-demo` that we shouldn't discard.
 
@@ -270,9 +317,32 @@ For each changed Pyz file, decide whether the change belongs in Demo:
 
 This is the case the merge can never surface on its own: `master` bumped a vendor package whose **core Twig template changed**, and Demo has a `Pyz` Twig override of that exact template. The override silently keeps the old markup.
 
-**`vendor/` is git-ignored in this repo** (`/vendor/` in `.gitignore`), so you can't `git diff` vendor templates directly. Instead work from the lockfile: find which packages changed version in the upmerge, map each to its module, and intersect with the modules that have a Pyz Twig override. (Validated against the latest upmerge — this is the reliable path here.)
+**`vendor/` is git-ignored in this repo** (`/vendor/` in `.gitignore`), but after Step 5's
+`composer install` the merged package versions ARE on disk under `vendor/`, so you CAN diff templates
+at file level — do that, don't stop at the module heuristic below.
 
-Run this AFTER Step 5 (so `composer.lock` reflects the merged set):
+> **The module-granularity script below is a PRE-FILTER ONLY — it massively over-reports.** It flags
+> *every* Pyz Twig override in *any* module whose package version changed. Real upmerges bump ~180
+> packages, most as trivial patch releases that don't touch the overridden template — so this can flag
+> ~120 overrides when the true count of stale ones is 0–2 (validated on CC-39486: ~120 flagged → 1 core
+> template actually changed → 0 stale after inspection). **Never treat the flagged list as the work
+> list.** Always narrow to changed-FILE granularity before spending review effort (next paragraph).
+> Also run the same intersection against `src/Demo` (Demo is a primary project namespace here too — see
+> the `project_upmerge_demo_namespace` note), not only `src/Pyz`.
+
+Two ways to narrow the pre-filter list to genuinely-stale overrides:
+1. **File-level diff against installed vendor (default, no network):** for each flagged override, diff it
+   against the freshly-installed core template (see the `diff` command further below). If the vendor
+   template is byte-identical to what it was pre-upmerge, the override can't be stale. Tip: a
+   `dev-master → 202606.0` style bump where the lock `source.reference` is UNCHANGED is only a
+   version-label change — vendor content didn't move, so skip it.
+2. **GitHub compare API (fastest, most precise):** for each changed package, compare its old→new
+   `source.reference` to get the EXACT set of changed core `.twig` files, then intersect with the Pyz/Demo
+   overrides by `{Layer}/{Module}/<rest>` path-signature. On CC-39486 a single subagent did this in ~3 min
+   and returned the definitive "1 changed template, 0 stale overrides". Delegate it to a fork/subagent to
+   keep the main context clean.
+
+Run this pre-filter AFTER Step 5 (so `composer.lock` reflects the merged set):
 
 ```bash
 python3 - <<'PYEOF'
@@ -333,6 +403,12 @@ In the PR body (Step 8) list the Pyz files you kept, adapted, or aligned, so the
 ### Step 6d — Audit `deploy.spryker-icpplus.yml` against the other deploy files
 
 Same silent-divergence trap as Pyz overrides, one level up: the merge can introduce a feature that needs a **deploy-level** entry (a Yves endpoint with an `entry-point`, a `SPRYKER_*_HOST` env var, a `DOMAIN_WHITELIST` host, an install/post-deploy step), but `git merge` never flags it because the deploy files are environment-specific and weren't part of the diff. `deploy.spryker-icpplus.yml` is the one we actively maintain — so after every upmerge, **diff it against its sibling deploy files** and against what the merged code now expects.
+
+> **Note — TWO icp deploy files exist:** `deploy.spryker-icp.yml` AND `deploy.spryker-icpplus.yml`. A
+> merge conflict may land in *either* (on CC-39486 it was a trailing-newline-only add/add on `baked:` in
+> `deploy.spryker-icp.yml`). Resolve whichever one actually conflicted, and STILL run the sibling audit
+> below against `deploy.spryker-icpplus.yml` (the actively-maintained one). Don't assume "the conflict was
+> in icp, so icpplus is untouched" — the audit is about silent divergence, not conflicts.
 
 The sibling files are the source of truth for the convention (there is usually no existing entry for a brand-new feature in *any* of them yet, so "do it like the others" means *follow the same shape*, not copy a line that doesn't exist). Good reference siblings: `deploy.spryker-scos.yml`, `deploy.spryker-sedemo15.yml`.
 
@@ -474,16 +550,42 @@ git merge <TARGET_CYPRESS_HASH> --no-ff -m "Upmerge cypress master (@<TARGET_CYP
 
 #### Step 6f-4 — Run the quality gate (double-check you did NOT merge ahead of the target)
 
-Run the bundled quality-gate script — by default it derives the pin from the **merge-base of demo-shop `master` and `master-demo`** (the merged master version already in `master-demo`), then asserts (1) the pin is contained in cypress `master-demo` and (2) **no cypress-master commit newer than the pin leaked into `master-demo`**. On the active upmerge branch you can point it at the branch lock with `DEMOSHOP_REF=HEAD` to validate the exact lock you're about to ship:
+Run the bundled quality-gate script. It asserts (1) the pin is contained in cypress `master-demo` and
+(2) **no cypress-master commit newer than the pin leaked into `master-demo`**.
 
-```bash
-# From the demo-shop repo root (auto-detects tests/cypress-tests):
-.claude/skills/upmerge-master-to-demo/check-cypress-not-ahead.sh
-```
+> ### ⚠️ CRITICAL — the PLAIN command FALSE-FAILS on the upmerge feature branch. Do not panic; do not reset.
+>
+> By default the script derives the pin from `merge-base(demo-shop master, master-demo)`. But during the
+> upmerge your work is on the **feature branch**, and local `master-demo` is still the *pre-upmerge*
+> branch — so the merge-base points at the OLD pre-upmerge commit whose lock pins a STALE cypress ref.
+> Against that stale pin, the commits you correctly merged look "ahead" → the gate prints
+> **`❌ FAIL — AHEAD by N commits`** and even suggests a `git merge <hash>` "FIX". **On the feature
+> branch this is a FALSE alarm — do NOT reset or re-merge.** (Confirmed on CC-39486: 64 false "ahead"
+> commits, all legitimate ancestors of the correct target; CI and the overridden runs were green.)
+>
+> **Run it the correct way locally, depending on where you are in Step 6f:**
+> ```bash
+> # From the demo-shop repo root (auto-detects tests/cypress-tests).
+>
+> # BEFORE the Step 6f-5 re-pin commit — supply the pin explicitly:
+> TARGET_HASH=<TARGET_CYPRESS_HASH> sh .claude/skills/upmerge-master-to-demo/check-cypress-not-ahead.sh
+>
+> # AFTER the Step 6f-5 re-pin commit is on your branch HEAD — read the pin from your own lock:
+> DEMOSHOP_REF=HEAD sh .claude/skills/upmerge-master-to-demo/check-cypress-not-ahead.sh
+> ```
+> `DEMOSHOP_REF=HEAD` FAILS *before* the re-pin (HEAD's committed lock still has the old ref) — that's
+> why you use `TARGET_HASH` first, then `DEMOSHOP_REF=HEAD`. The **plain, no-env** form
+> (`.../check-cypress-not-ahead.sh`) is correct only in **CI** or once the **PR is merged into
+> `master-demo`** (then merge-base moves forward). It is the same gate CI runs — a green
+> `TARGET_HASH`/`DEMOSHOP_REF` run locally predicts the green CI gate.
 
-Exit `0` = gate passes. Exit `1` = gate fails: it prints which check failed and, for the "ahead" case, the exact offending commits. Exit `2` = setup error (wrong dir, missing ref).
+Exit `0` = gate passes. Exit `1` = gate fails. Exit `2` = setup error (wrong dir, missing ref).
 
-This is the same gate that runs in CI (see README). If it fails with **check 2 (ahead)**, reset cypress `master-demo` to its pre-merge tip and redo Step 6f-3 with the **hash** (not `master`). If it fails with **check 1 (behind)**, the merge didn't happen / didn't reach the pin — redo Step 6f-3. Surface to the user before force-moving the branch.
+**A GENUINE failure** (i.e. the overridden run also fails, or the manual two-command check below fails):
+if it fails with **check 2 (ahead)**, reset cypress `master-demo` to its pre-merge tip and redo Step 6f-3
+with the **hash** (not `master`). If it fails with **check 1 (behind)**, the merge didn't reach the pin —
+redo Step 6f-3. Surface to the user before force-moving the branch. To tell false-fail from real, run the
+manual two-command check below with `<TARGET_CYPRESS_HASH>` — it is the ultimate source of truth.
 
 > The script just wraps these two `git` facts, if you want to run them by hand:
 > ```bash
@@ -494,6 +596,14 @@ This is the same gate that runs in CI (see README). If it fails with **check 2 (
 > ```
 
 #### Step 6f-5 — Run the demo cypress group, push, and re-pin the demo-shop
+
+> **PUSH PRECONDITION (hard gate — do NOT push cypress `master-demo` until BOTH pass, in this order):**
+> 1. `npm run cy:demo` (step 1 below) is GREEN, **and**
+> 2. `check-cypress-not-ahead.sh` reports ✅ PASS (Step 6f-4, run with `TARGET_HASH=<pin>` or, after the
+>    re-pin, `DEMOSHOP_REF=HEAD` — never trust the plain false-fail).
+>
+> This ordering is a deliberate rule: the demo cypress branch must be proven correct locally before it
+> touches the shared remote branch.
 
 1. Run the demo group against the local stack (this is also Step 7b — running it here validates the just-merged cypress branch):
    ```bash
@@ -508,6 +618,13 @@ This is the same gate that runs in CI (see README). If it fails with **check 2 (
    git push origin master-demo
    ```
    Capture the new `master-demo` tip hash — that becomes the demo-shop's new pin.
+
+   > **This push targets a protected, shared long-lived integration branch, so it requires the user's
+   > authorization** — the automation cannot perform it unattended, and that is by design. Run this step
+   > only after both push preconditions above are green (cy:demo + the validation gate). If the push is
+   > denied, STOP and ask the user to perform it themselves; do not silently skip. Until it lands, the
+   > demo-shop lock stays pinned to the previous origin cypress ref (valid, CI-resolvable) and step 3's
+   > re-pin is a follow-up.
 
 3. Re-pin the demo-shop's `composer.lock` to the new cypress `master-demo` reference so the demo shop installs the upmerged tests:
    ```bash
@@ -532,6 +649,29 @@ Invoke the `login-chrome` skill to verify the local stack still works after the 
 - Load `http://backoffice.eu.spryker.local/analytics-gui/analytics` and confirm it returns 200 / renders (NOT a Whoops 500). This is the demo-only-config canary from Step 6e — a `Could not find config key "AMAZON_QUICKSIGHT:..."` here means a demo-only block was dropped during the merge.
 
 Use `Skill(login-chrome)` (or `/login-chrome`) to drive the browser. If a login or page fails, capture the console errors and surface them — that's a real regression we should not push.
+
+> **Browser-input gotcha (saves ~3–4 failed attempts):** synthetic `computer.type` / `form_input` into
+> these login fields is unreliable — fields can read back empty and the screenshot may show a stale
+> render. For **Yves**, the reliable pattern is click → `cmd+a` → `Delete` → `type`, then verify by
+> screenshot before submitting. For the **Backoffice** (Angular/ZED web-component form) synthetic typing
+> often never lands; set the values via JS with the native setter + dispatched events and submit the form
+> directly:
+> ```js
+> // via mcp__chrome-devtools / javascript_tool
+> const set = (sel,val)=>{const el=document.querySelector(sel);
+>   Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(el,val);
+>   el.dispatchEvent(new Event('input',{bubbles:true})); el.dispatchEvent(new Event('change',{bubbles:true}));};
+> set('input[type=email]','admin@spryker.com'); set('input[type=password]','change123');
+> document.querySelector('input[type=email]').closest('form').submit();
+> ```
+> Judge success by the resulting URL / page, not the pre-submit screenshot.
+
+> **Expected non-regression — untranslated glossary key:** a newly-merged feature often introduces glossary
+> keys (e.g. `recurring_orders.menu_item`) whose data hasn't been imported into the LOCAL DB yet. Such a
+> key renders as its raw label (e.g. sidebar shows `Recurring_orders.Menu_item`). This is EXPECTED on a
+> fresh local env and is NOT a regression **as long as the key exists in the merged glossary CSV**
+> (`grep -rn "<key>" data/import/*/common/glossary.csv`). Note it as informational; optionally run
+> `docker/sdk cli console data:import:glossary` if a clean label is wanted for a screenshot.
 
 If your environment doesn't have the local Spryker stack running, ask the user whether to skip the smoke test (don't silently skip — they may want to start docker first).
 
@@ -637,7 +777,7 @@ Then schedule the pipeline check. Use `ScheduleWakeup` with the max delay of 360
 ScheduleWakeup with
   delaySeconds=3600
   reason="Initial pipeline check for upmerge PR <PR-NUMBER>"
-  prompt="/upmerge poll PR <PR-NUMBER> ticket <TICKET>"
+  prompt="/upmerge-master-to-demo poll PR <PR-NUMBER> ticket <TICKET>"
 ```
 
 (The skill *wants* a 2-hour first check, but `ScheduleWakeup` caps at 3600s. If the pipeline is still running on first poll, the polling-mode invocation reschedules itself for another 1200s, which gets us to a similar place in practice.)
@@ -659,7 +799,7 @@ Schedule another wake-up at 20 minutes (1200s):
 ScheduleWakeup with
   delaySeconds=1200
   reason="Re-check pipeline for upmerge PR <PR-NUMBER>, still running"
-  prompt="/upmerge poll PR <PR-NUMBER> ticket <TICKET>"
+  prompt="/upmerge-master-to-demo poll PR <PR-NUMBER> ticket <TICKET>"
 ```
 
 ### All green
@@ -710,8 +850,8 @@ Don't merge the PR — that's the user's call.
 - **Don't blindly accept master's Pyz over Demo's.** Demo intentionally diverges in some Pyz files (branded/marketplace markup). When a divergence's intent is unclear, ask the user rather than overwriting.
 - **Don't trust a clean `config/Shared/config_default.php` merge.** Demo-only config blocks (QuickSight, demo S3 bucket shapes, demo toggles) can be deleted by a reconciled master-side commit with ZERO conflict markers, and the code reading them stays wired → runtime crash. Always run Step 6e's key/import diff and the analytics-gui canary, even when the merge applied cleanly. When a demo-only key vanished, default to restoring it and ask the user if intent is unclear.
 - **Never `git merge master` in the cypress-tests repo (Step 6f).** Cypress `master` runs dozens of commits ahead of the hash the demo-shop `master` pins. Merge the **pinned hash** into cypress `master-demo`, then verify no newer-than-target cypress-master commits leaked in. Merging cypress master's tip puts the demo cypress branch ahead of the shop version → flaky/false test failures. The demo cypress branch version must always match what demo-shop master pins.
-- **Pipeline polling is best-effort.** If the wake-up doesn't fire for any reason, the user can re-invoke the skill with `/upmerge poll PR <N> ticket <KEY>` and it'll resume from the polling step.
+- **Pipeline polling is best-effort.** If the wake-up doesn't fire for any reason, the user can re-invoke the skill with `/upmerge-master-to-demo poll PR <N> ticket <KEY>` and it'll resume from the polling step.
 
 ## Polling-only invocation
 
-When invoked as `/upmerge poll PR <N> ticket <KEY>` (from a `ScheduleWakeup` callback or directly by the user), skip Steps 1–10 and jump straight to Step 11.
+When invoked as `/upmerge-master-to-demo poll PR <N> ticket <KEY>` (from a `ScheduleWakeup` callback or directly by the user), skip Steps 1–10 and jump straight to Step 11.
