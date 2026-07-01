@@ -76,8 +76,12 @@
 
             &:hover,
             &:focus {
-                color: var(--text-primary);
+                color: var(--text-brand);
                 text-decoration: none;
+
+                #{$name}__counter {
+                    color: var(--text-brand);
+                }
             }
 
             &[disabled] {
@@ -98,6 +102,9 @@
             flex: 1 0 0;
             min-width: 0;
             text-align: left;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
 
         &__counter {
@@ -122,6 +129,8 @@
             }
         }
     }
+
+    @include shop-ui-tooltip-trigger('#{$name}__category-row', '#{$name}__tooltip', '.is-truncated');
 }
 
 @include catalog-page-filter-category();

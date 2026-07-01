@@ -15,10 +15,32 @@
     'active-category-class-name': 'js-' ~ config.name ~ '__menu-item',
     'visible-category-class': config.name ~ '__menu-item',
     'class-to-remove': 'is-hidden-lg-xxl',
+    'category-row-class': config.name ~ '__category-row',
+    'link-text-class': config.name ~ '__link-text',
+    'truncated-class': 'is-truncated',
 } %}
 
+{% macro subtreeContainsActive(nodes, currentUrl) %}
+    {% import _self as self %}
+    {% set found = '' %}
+    {% for node in nodes %}
+        {% set nodeUrl = functionExists('generatePath') ? generatePath(node.url) : node.url %}
+        {% if nodeUrl == currentUrl %}
+            {% set found = '1' %}
+        {% elseif node.children is defined and node.children is not empty and self.subtreeContainsActive(node.children, currentUrl) == '1' %}
+            {% set found = '1' %}
+        {% endif %}
+    {% endfor %}
+    {{- found -}}
+{% endmacro %}
+
 {% block body %}
+    {% import _self as self %}
     {% set isFirstLevel = data.levelMenu == 1 %}
+
+    {% set currentUrl = app.request.pathInfo %}
+
+    {% set hasActiveCategory = isFirstLevel and currentUrl is not empty and self.subtreeContainsActive(data.categories, currentUrl) == '1' %}
 
     <ul class="{{ config.name }}__menu {{ config.name }}__menu--lvl-{{ data.levelMenu }}">
         {% for categoryNode in data.categories %}
@@ -32,12 +54,6 @@
             {% endfor %}
 
             {% if quantity > 0 or (quantity == 0 and data.isEmptyCategoryFilterValueVisible) %}
-                {% if data.filterPath is not empty %}
-                    {% set currentUrl = url(data.filterPath, {categoryPath: (app.request.attributes.get('categoryPath'))}) %}
-                {% else %}
-                    {% set currentUrl = app.request.attributes.get('categoryNode') ? app.request.attributes.get('categoryNode').url : null %}
-                {% endif %}
-
                 {% set categoryUrl = functionExists('generatePath') ? generatePath(categoryNode.url) : categoryNode.url %}
                 {% set isActive = (currentUrl == categoryUrl) %}
                 {% set disableAttribute = quantity == 0 ? 'disabled' %}
@@ -46,8 +62,10 @@
                 {% set linkTextActiveClass = isActive ? config.name ~ '__link-text--active' %}
                 {% set triggerButtonJsName = data.parentJsName ? data.parentJsName ~ '__trigger' %}
                 {% set collapsibleClass = (isFirstLevel and hasChildren) ? 'js-collapsible' %}
+                {% set isBranchActive = isActive or (isFirstLevel and hasChildren and self.subtreeContainsActive(categoryNode.children, currentUrl) == '1') %}
+                {% set collapsedClass = (isFirstLevel and hasChildren and hasActiveCategory and not isBranchActive) ? 'is-collapsed' %}
 
-                <li class="{{ config.name }}__menu-item {{ config.name }}__menu-item--lvl-{{ data.levelMenu }} {{ menuItemActiveClass }} {{ collapsibleClass }}">
+                <li class="{{ config.name }}__menu-item {{ config.name }}__menu-item--lvl-{{ data.levelMenu }} {{ menuItemActiveClass }} {{ collapsibleClass }} {{ collapsedClass }}">
                     <div class="{{ config.name }}__category-row">
                         <button class="{{ config.name }}__menu-link {{ config.name }}__menu-link--lvl-{{ data.levelMenu }} {{ menuLinkActiveClass }} {{ triggerButtonJsName }}" type="button" {{ disableAttribute }} data-url={{ categoryUrl }} data-name="{{ categoryNode.name }}">
                             <span class="{{ config.name }}__link-text {{ linkTextActiveClass }}">{{ categoryNode.name }}</span>
@@ -66,6 +84,13 @@
                                 } only %}
                             </button>
                         {% endif %}
+
+                        {% include atom('tooltip') with {
+                            class: config.name ~ '__tooltip',
+                            data: {
+                                text: categoryNode.name
+                            }
+                        } only %}
                     </div>
 
                     {% if hasChildren %}
