@@ -7,7 +7,7 @@
 
 declare(strict_types = 1);
 
-namespace Pyz\Zed\AnalyticsGui;
+namespace Demo\Zed\AnalyticsGui;
 
 use Spryker\Zed\AnalyticsGui\AnalyticsGuiDependencyProvider as SprykerAnalyticsGuiDependencyProvider;
 use SprykerEco\Zed\AmazonQuicksight\Communication\Plugin\AnalyticsGui\QuicksightAnalyticsCollectionExpanderPlugin;
