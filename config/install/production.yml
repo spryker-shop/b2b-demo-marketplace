@@ -39,3 +39,9 @@ sections:
         acl-entity-synchronize:
             command: 'vendor/bin/console acl-entity:synchronize -vvv --no-ansi'
             stores: true
+
+    api-router-cache-warmup:
+        storefront:
+            command: 'GLUE_APPLICATION=GLUE_STOREFRONT vendor/bin/glue cache:warmup'
+        backend:
+            command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue cache:warmup'
