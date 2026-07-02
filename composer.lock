@@ -50437,20 +50437,20 @@
         },
         {
             "name": "spryker/navigation",
-            "version": "2.9.0",
+            "version": "2.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/navigation.git",
-                "reference": "a8e06bba15612f83c6e1781f901d7821414e4970"
+                "reference": "dc35b233faf3c2791cb6725c1240f63496498e41"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/navigation/zipball/a8e06bba15612f83c6e1781f901d7821414e4970",
-                "reference": "a8e06bba15612f83c6e1781f901d7821414e4970",
+                "url": "https://api.github.com/repos/spryker/navigation/zipball/dc35b233faf3c2791cb6725c1240f63496498e41",
+                "reference": "dc35b233faf3c2791cb6725c1240f63496498e41",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/kernel": "^3.52.0",
                 "spryker/key-builder": "^1.0.0",
                 "spryker/locale": "^3.0.0 || ^4.0.0",
@@ -50487,22 +50487,22 @@
             ],
             "description": "Navigation module",
             "support": {
-                "source": "https://github.com/spryker/navigation/tree/2.9.0"
+                "source": "https://github.com/spryker/navigation/tree/2.10.0"
             },
-            "time": "2025-08-04T10:53:26+00:00"
+            "time": "2026-07-01T14:43:25+00:00"
         },
         {
             "name": "spryker/navigation-gui",
-            "version": "3.1.0",
+            "version": "3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/navigation-gui.git",
-                "reference": "23c92b18b156120bdea5d960ea4215842bcd6f00"
+                "reference": "fa6969917aa5e9ed99bb840dac898a127f6f82d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/navigation-gui/zipball/23c92b18b156120bdea5d960ea4215842bcd6f00",
-                "reference": "23c92b18b156120bdea5d960ea4215842bcd6f00",
+                "url": "https://api.github.com/repos/spryker/navigation-gui/zipball/fa6969917aa5e9ed99bb840dac898a127f6f82d6",
+                "reference": "fa6969917aa5e9ed99bb840dac898a127f6f82d6",
                 "shasum": ""
             },
             "require": {
@@ -50512,14 +50512,16 @@
                 "spryker/gui": "^4.0.0 || ^5.0.0",
                 "spryker/kernel": "^3.30.0",
                 "spryker/locale": "^3.0.0 || ^4.0.0",
-                "spryker/navigation": "^2.5.0",
+                "spryker/navigation": "^2.10.0",
                 "spryker/propel-orm": "^1.1.0",
                 "spryker/symfony": "^3.0.0",
+                "spryker/transfer": "^3.25.0",
                 "spryker/url": "^3.5.0",
                 "spryker/util-text": "^1.1.1"
             },
             "require-dev": {
-                "spryker/code-sniffer": "*"
+                "spryker/code-sniffer": "*",
+                "spryker/testify": "*"
             },
             "type": "library",
             "extra": {
@@ -50538,9 +50540,9 @@
             ],
             "description": "NavigationGui module",
             "support": {
-                "source": "https://github.com/spryker/navigation-gui/tree/3.1.0"
+                "source": "https://github.com/spryker/navigation-gui/tree/3.2.0"
             },
-            "time": "2026-03-13T11:49:27+00:00"
+            "time": "2026-07-01T14:43:25+00:00"
         },
         {
             "name": "spryker/navigation-storage",
@@ -75793,16 +75795,16 @@
         },
         {
             "name": "spryker/store-storage",
-            "version": "1.3.1",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/store-storage.git",
-                "reference": "183f23d38f39039e5067a52d95b9569ef6ab3749"
+                "reference": "ee3c92414ccd78557819489c4643e2b5d3e4f311"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/store-storage/zipball/183f23d38f39039e5067a52d95b9569ef6ab3749",
-                "reference": "183f23d38f39039e5067a52d95b9569ef6ab3749",
+                "url": "https://api.github.com/repos/spryker/store-storage/zipball/ee3c92414ccd78557819489c4643e2b5d3e4f311",
+                "reference": "ee3c92414ccd78557819489c4643e2b5d3e4f311",
                 "shasum": ""
             },
             "require": {
@@ -75847,9 +75849,9 @@
             ],
             "description": "StoreStorage module",
             "support": {
-                "source": "https://github.com/spryker/store-storage/tree/1.3.1"
+                "source": "https://github.com/spryker/store-storage/tree/1.4.0"
             },
-            "time": "2026-06-22T12:41:45+00:00"
+            "time": "2026-07-01T19:39:07+00:00"
         },
         {
             "name": "spryker/stores-api",
@@ -93096,9 +93098,9 @@
         "ext-readline": "*",
         "ext-redis": "*"
     },
-    "platform-dev": {},
+    "platform-dev": [],
     "platform-overrides": {
         "php": "8.3.13"
     },
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.6.0"
 }
