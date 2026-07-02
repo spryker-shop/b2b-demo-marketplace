@@ -79,6 +79,38 @@
             letter-spacing: var(--body-sm-letter-spacing);
         }
 
+        &--search {
+            @include typography(body-sm);
+            border-radius: var(--radius-md);
+            padding-right: var(--scale-40);
+            color: var(--input-text-value);
+
+            &:focus,
+            &:focus-visible {
+                background: var(--background-surface);
+                box-shadow: none;
+            }
+        }
+
+        &-search-icon {
+            position: absolute;
+            top: 50%;
+            right: var(--scale-4);
+            transform: translateY(-50%);
+            display: flex;
+            flex-shrink: 0;
+            align-items: center;
+            justify-content: center;
+            width: rem(28);
+            height: rem(28);
+            padding: 0;
+            border: none;
+            border-radius: var(--radius-sm);
+            background: var(--background-subtle);
+            font-size: rem(16);
+            color: var(--icon-primary);
+        }
+
         @content;
     }
 }

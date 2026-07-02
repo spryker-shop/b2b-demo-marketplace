@@ -1,27 +1,25 @@
 @use 'src/ShopUi/styles/shared' as *;
-.page-info {
-    background-color: $setting-color-gray-7;
-    padding: rem(10) 0 rem(12);
-
-    @include helper-breakpoint-media-min($lg) {
-        padding-top: rem(14);
-    }
-
-    &--checkout {
-        padding: rem(15) 0;
-        background-color: $setting-color-white;
-        box-shadow:
-            0 rem(10) rem(18) 0 $setting-color-alpha-2,
-            0 rem(3) rem(3) 0 $setting-color-alpha-2;
+@mixin shop-ui-page-info($name: '.page-info') {
+    #{$name} {
+        padding: rem(12) 0;
 
         @include helper-breakpoint-media-min($lg) {
-            background-color: $setting-color-gray-7;
-            padding: rem(14) 0 rem(12);
+            padding: rem(26) 0;
         }
-    }
 
-    &__title {
-        font: fw(bold) rem(22) / 1.25 $setting-font-family;
-        margin-bottom: rem(12);
+        &--checkout {
+            padding: rem(15) 0;
+            background-color: $setting-color-white;
+            box-shadow:
+                0 rem(10) rem(18) 0 $setting-color-alpha-2,
+                0 rem(3) rem(3) 0 $setting-color-alpha-2;
+
+            @include helper-breakpoint-media-min($lg) {
+                background-color: $setting-color-gray-7;
+                padding: rem(14) 0 rem(12);
+            }
+        }
+
+        @content;
     }
 }

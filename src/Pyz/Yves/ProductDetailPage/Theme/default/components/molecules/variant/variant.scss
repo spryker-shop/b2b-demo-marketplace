@@ -15,11 +15,7 @@
         }
 
         &__title {
-            font-family: var(--label-sm-semibold-family);
-            font-size: var(--label-sm-semibold-size);
-            font-weight: var(--label-sm-semibold-weight);
-            line-height: var(--label-sm-semibold-line-height);
-            letter-spacing: var(--label-sm-semibold-letter-spacing);
+            @include typography(label-sm-semibold);
             color: var(--text-primary);
 
             &--product-set {

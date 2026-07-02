@@ -1,8 +1,9 @@
 @use 'src/ShopUi/styles/shared' as *;
 @mixin catalog-page-filter-rating($name: '.filter-rating') {
     #{$name} {
-        font-size: rem(14);
-        padding-left: rem(10);
+        font-size: var(--body-md-size);
+        line-height: var(--body-md-line-height);
+        padding-left: var(--scale-8);
 
         @include helper-breakpoint-media-min($lg) {
             padding-left: 0;

@@ -12,13 +12,9 @@
         }
 
         &__item {
+            @include typography(label-sm);
             display: block;
             color: var(--text-tertiary);
-            font-family: var(--label-sm-family);
-            font-size: var(--label-sm-size);
-            font-weight: var(--label-sm-weight);
-            line-height: var(--label-sm-line-height);
-            letter-spacing: var(--label-sm-letter-spacing);
         }
 
         &__total-price {

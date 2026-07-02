@@ -1,73 +1,42 @@
 @use 'src/ShopUi/styles/shared' as *;
 @mixin catalog-page-sort($name: '.sort') {
     #{$name} {
-        margin-bottom: rem(16);
-
-        @include helper-breakpoint-media-min($lg) {
-            margin-bottom: rem(20);
+        @include helper-breakpoint-media-max($lg) {
+            flex: 1 1 auto;
+            min-width: 0;
         }
 
-        &__col {
-            font-size: rem(14);
+        &__controls {
+            display: flex;
+            align-items: center;
+            gap: var(--scale-8);
 
-            &:not(:last-child) {
-                @include helper-breakpoint-media-min($lg) {
-                    padding-right: 0.5rem;
-                }
+            @include helper-breakpoint-media-max($lg) {
+                flex: 1 1 auto;
+                min-width: 0;
             }
+        }
 
-            &--counter {
-                padding-right: rem(10);
-                font-weight: fw(medium);
-                font-size: rem(14);
+        &__field {
+            display: flex;
+            align-items: center;
+            gap: var(--scale-8);
 
-                @include helper-breakpoint-media-min($md) {
-                    font-size: rem(15);
-                }
+            &--filter {
+                max-width: rem(152);
 
-                @include helper-breakpoint-media-min($lg) {
-                    padding-bottom: rem(10);
-                }
-
-                @include helper-breakpoint-media-min($xl) {
-                    padding-bottom: 0;
-                }
-            }
-
-            &--filters {
-                width: 100%;
-                margin: 0 rem(-5);
-
-                @include helper-breakpoint-media-min($lg) {
-                    margin: 0;
-                }
-
-                @include helper-breakpoint-media-min($xl) {
-                    width: auto;
-                }
-            }
-
-            &--select {
-                padding: 0 rem(5);
-
-                @include helper-breakpoint-media-min($lg) {
-                    padding: 0;
-                }
-
-                &:not(:last-child) {
-                    @include helper-breakpoint-media-min($lg) {
-                        padding-right: rem(30);
-                    }
+                @include helper-breakpoint-media-max($lg) {
+                    flex: 1 1 auto;
+                    max-width: none;
+                    min-width: 0;
                 }
             }
         }
 
-        &__filter-grid {
-            margin: 0 rem(-5);
-
-            @include helper-breakpoint-media-min($lg) {
-                margin: 0;
-            }
+        &__label {
+            @include typography(label-sm);
+            color: var(--text-secondary);
+            white-space: nowrap;
         }
 
         @content;

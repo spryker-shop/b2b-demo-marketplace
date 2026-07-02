@@ -48,4 +48,14 @@
     &--font-inherit {
         font: inherit;
     }
+
+    &:has(.font-icon):hover,
+    &:has(.font-icon):focus {
+        text-decoration: none;
+    }
+
+    &:has(.font-icon):hover &__text,
+    &:has(.font-icon):focus &__text {
+        text-decoration: underline;
+    }
 }

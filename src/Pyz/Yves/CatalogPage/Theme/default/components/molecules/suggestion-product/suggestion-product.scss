@@ -59,10 +59,7 @@
         }
 
         &__title {
-            font-family: var(--body-sm-family);
-            font-size: var(--body-sm-size);
-            font-weight: var(--body-sm-weight);
-            line-height: var(--body-sm-line-height);
+            @include typography(body-sm);
             color: var(--text-primary);
         }
 

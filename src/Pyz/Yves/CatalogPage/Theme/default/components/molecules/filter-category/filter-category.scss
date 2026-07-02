@@ -2,147 +2,134 @@
 @mixin catalog-page-filter-category($name: '.filter-category') {
     #{$name} {
         &__menu {
-            &--lvl-1,
-            &--lvl-2 {
-                padding-left: rem(10);
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-8);
 
-                @include helper-breakpoint-media-min($lg) {
-                    padding-left: 0;
-                }
+            &--lvl-2 {
+                padding-left: var(--scale-12);
             }
 
-            &--lvl-3 {
-                @include helper-breakpoint-media-min($lg) {
-                    padding-left: rem(10);
-                }
+            &--lvl-3,
+            &--lvl-4,
+            &--lvl-5 {
+                padding-left: var(--scale-12);
+                border-left: var(--stroke-sm) solid var(--border-subtle);
             }
         }
 
         &__menu-item {
-            display: flex;
-            flex-grow: 1;
-            color: $setting-color-gray-4;
-
-            &--lvl-2 {
-                &:first-child {
-                    padding-top: rem(5);
-
-                    @include helper-breakpoint-media-min($lg) {
-                        padding-top: 0;
-                    }
-                }
-
-                &:last-child {
-                    padding-bottom: rem(5);
-
-                    @include helper-breakpoint-media-min($lg) {
-                        padding-bottom: 0;
-                    }
-                }
-            }
+            display: block;
+            color: var(--text-secondary);
         }
 
         &__category-row {
-            flex-grow: 1;
-
-            &--no-children {
-                margin-left: rem(16);
-            }
+            display: flex;
+            align-items: center;
+            gap: var(--scale-8);
+            min-height: rem(28);
         }
 
         &__category-target {
             @include helper-effect-transition(grid-template-rows);
             display: grid;
             grid-template-rows: 1fr;
-
-            &--hidden {
-                grid-template-rows: 0fr;
-            }
         }
 
         &__category-target-inner {
+            @include helper-effect-transition(padding-top);
             overflow: hidden;
+            padding-top: var(--scale-8);
         }
 
         &__category-toggle-button {
             @include helper-effect-transition(transform);
-            color: $setting-color-gray-4;
-            margin-right: rem(5);
-            background-color: $setting-color-transparent;
+            display: inline-flex;
+            align-items: center;
+            flex-shrink: 0;
+            color: var(--icon-secondary);
+            background-color: transparent;
             cursor: pointer;
-            width: rem(20);
-
-            @include helper-breakpoint-media-max($lg) {
-                display: inline-block;
-                vertical-align: top;
-                margin-top: rem(-5);
-            }
-
-            &--collapsed {
-                transform: rotate(-90deg);
-            }
+            font-size: var(--font-size-16);
         }
 
         &__menu-link {
             @include helper-effect-transition(color);
+            @include typography(body-md);
             display: flex;
+            align-items: center;
             justify-content: space-between;
-            width: 100%;
-            margin-bottom: rem(13);
-            color: $setting-color-gray-4;
+            flex: 1 0 0;
+            min-width: 0;
+            gap: var(--scale-8);
+            color: var(--text-primary);
             cursor: pointer;
-            background-color: $setting-color-transparent;
-            font: fw(regular) rem(13) / rem(16) $setting-font-family;
-            gap: var(--scale-2);
-
-            @include helper-breakpoint-media-min($lg) {
-                margin-bottom: rem(11);
-                font-size: rem(15);
-                line-height: rem(23);
-            }
+            background-color: transparent;
+            text-align: left;
 
             &--lvl-1 {
-                font-size: var(--font-size-16);
-                font-weight: fw(medium);
-            }
-
-            &--lvl-2 {
-                font-size: var(--font-size-16);
-            }
-
-            &--lvl-3 {
-                font-size: var(--font-size-14);
+                font-family: var(--label-md-semibold-family);
+                font-weight: var(--label-md-semibold-weight);
             }
 
             &:hover,
             &:focus {
-                color: $setting-color-text;
+                color: var(--text-brand);
                 text-decoration: none;
+
+                #{$name}__counter {
+                    color: var(--text-brand);
+                }
             }
 
             &[disabled] {
                 pointer-events: none;
-                color: $setting-color-gray-3;
+                color: var(--text-disabled);
             }
 
             &--active {
-                font-weight: fw(bold);
-                color: $setting-color-text;
+                color: var(--text-brand);
+
+                #{$name}__counter {
+                    color: var(--text-brand);
+                }
             }
         }
 
         &__link-text {
+            flex: 1 0 0;
+            min-width: 0;
             text-align: left;
-
-            &--active {
-                text-decoration: underline;
-            }
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
 
         &__counter {
-            @include helper-font-size(medium);
+            flex-shrink: 0;
+            font-family: var(--body-sm-family);
+            font-size: var(--body-sm-size);
+            line-height: var(--body-sm-line-height);
+            color: var(--text-secondary);
         }
 
-        @content;
+        &__menu-item.is-collapsed {
+            #{$name}__category-target {
+                grid-template-rows: 0fr;
+            }
+
+            #{$name}__category-target-inner {
+                padding-top: 0;
+            }
+
+            #{$name}__category-toggle-button {
+                transform: rotate(180deg);
+            }
+        }
     }
+
+    @include shop-ui-tooltip-trigger('#{$name}__category-row', '#{$name}__tooltip', '.is-truncated');
 }

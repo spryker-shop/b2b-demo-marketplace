@@ -73,52 +73,32 @@
         }
 
         &__title {
+            @include typography(heading-sm);
             display: block;
-            font-family: var(--heading-sm-family);
-            font-weight: var(--heading-sm-weight);
-            font-size: var(--heading-sm-size);
-            line-height: var(--heading-sm-line-height);
-            letter-spacing: var(--heading-sm-letter-spacing);
             color: var(--text-primary);
             text-align: left;
             margin: 0 0 var(--scale-8);
 
             @include helper-breakpoint-media-min($lg) {
-                font-family: var(--heading-md-family);
-                font-weight: var(--heading-md-weight);
-                font-size: var(--heading-md-size);
-                line-height: var(--heading-md-line-height);
-                letter-spacing: var(--heading-md-letter-spacing);
+                @include typography(heading-md);
             }
         }
 
         &__sub-title {
-            font-family: var(--body-sm-family);
-            font-weight: var(--body-sm-weight);
-            font-size: var(--body-sm-size);
-            line-height: var(--body-sm-line-height);
-            letter-spacing: var(--body-sm-letter-spacing);
+            @include typography(body-sm);
             color: var(--text-secondary);
             text-align: left;
             margin: 0 0 var(--scale-24);
             max-width: none;
 
             @include helper-breakpoint-media-min($lg) {
-                font-family: var(--body-lg-family);
-                font-weight: var(--body-lg-weight);
-                font-size: var(--body-lg-size);
-                line-height: var(--body-lg-line-height);
-                letter-spacing: var(--body-lg-letter-spacing);
+                @include typography(body-lg);
                 margin-bottom: var(--scale-40);
             }
         }
 
         &__text {
-            font-family: var(--body-md-family);
-            font-weight: var(--body-md-weight);
-            font-size: var(--body-md-size);
-            line-height: var(--body-md-line-height);
-            letter-spacing: var(--body-md-letter-spacing);
+            @include typography(body-md);
             color: var(--text-primary);
             text-align: left;
             max-width: none;
@@ -136,12 +116,8 @@
         }
 
         &__sub-heading {
+            @include typography(label-md-semibold);
             display: block;
-            font-family: var(--label-md-semibold-family);
-            font-weight: var(--label-md-semibold-weight);
-            font-size: var(--label-md-semibold-size);
-            line-height: var(--label-md-semibold-line-height);
-            letter-spacing: var(--label-md-semibold-letter-spacing);
             color: var(--text-primary);
             margin: 0 0 var(--scale-6);
 

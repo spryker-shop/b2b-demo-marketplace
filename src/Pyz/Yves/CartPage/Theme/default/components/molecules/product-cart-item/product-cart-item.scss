@@ -81,15 +81,11 @@ $cart-item-image-width: 76;
         }
 
         &__title {
+            @include typography(heading-sm);
             display: block;
             margin: 0;
             overflow: hidden;
             color: var(--text-primary);
-            font-family: var(--heading-sm-family);
-            font-size: var(--heading-sm-size);
-            font-weight: var(--heading-sm-weight);
-            line-height: var(--heading-sm-line-height);
-            letter-spacing: var(--heading-sm-letter-spacing);
             text-decoration: none;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -102,16 +98,12 @@ $cart-item-image-width: 76;
         }
 
         &__meta {
+            @include typography(label-sm);
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             gap: var(--scale-4) var(--scale-6);
             color: var(--text-secondary);
-            font-family: var(--label-sm-family);
-            font-size: var(--label-sm-size);
-            font-weight: var(--label-sm-weight);
-            line-height: var(--label-sm-line-height);
-            letter-spacing: var(--label-sm-letter-spacing);
         }
 
         &__variants {
@@ -189,16 +181,12 @@ $cart-item-image-width: 76;
         }
 
         &__context {
+            @include typography(body-sm);
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             gap: var(--scale-4) var(--scale-12);
             color: var(--text-tertiary);
-            font-family: var(--body-sm-family);
-            font-size: var(--body-sm-size);
-            font-weight: var(--body-sm-weight);
-            line-height: var(--body-sm-line-height);
-            letter-spacing: var(--body-sm-letter-spacing);
         }
 
         &__context-item {
@@ -248,16 +236,12 @@ $cart-item-image-width: 76;
         }
 
         &__toggle {
+            @include typography(caption);
             display: inline-flex;
             align-items: center;
             gap: var(--scale-4);
             padding: 0;
             color: var(--text-secondary);
-            font-family: var(--caption-family);
-            font-size: var(--caption-size);
-            font-weight: var(--caption-weight);
-            line-height: var(--caption-line-height);
-            letter-spacing: var(--caption-letter-spacing);
             background: none;
             border: 0;
             cursor: pointer;

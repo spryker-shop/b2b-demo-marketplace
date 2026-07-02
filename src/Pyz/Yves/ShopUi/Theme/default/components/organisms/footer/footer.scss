@@ -63,11 +63,7 @@
 
             @include shop-ui-title() {
                 &--subscription {
-                    font-family: var(--heading-sm-family);
-                    font-size: var(--heading-sm-size);
-                    font-weight: var(--heading-sm-weight);
-                    line-height: var(--heading-sm-line-height);
-                    letter-spacing: var(--heading-sm-letter-spacing);
+                    @include typography(heading-sm);
                     position: relative;
                     display: block;
                 }

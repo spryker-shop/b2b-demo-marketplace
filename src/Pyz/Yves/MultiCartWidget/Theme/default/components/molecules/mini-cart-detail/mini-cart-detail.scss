@@ -43,10 +43,7 @@
         }
 
         &__name {
-            font-family: var(--label-md-family);
-            font-size: var(--label-md-size);
-            font-weight: var(--label-md-weight);
-            line-height: var(--label-md-line-height);
+            @include typography(label-md);
             color: var(--text-brand);
             white-space: nowrap;
             overflow: hidden;
@@ -54,6 +51,7 @@
         }
 
         &__badge {
+            @include typography(label-sm);
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -61,10 +59,6 @@
             padding: var(--scale-2) var(--scale-8);
             border-radius: var(--radius-sm);
             background-color: var(--background-state-success-subtle);
-            font-family: var(--label-sm-family);
-            font-size: var(--label-sm-size);
-            font-weight: var(--label-sm-weight);
-            line-height: var(--label-sm-line-height);
             color: var(--text-state-success);
             white-space: nowrap;
             flex-shrink: 0;
@@ -72,13 +66,10 @@
 
         &__meta {
             @include helper-effect-transition(max-height opacity);
+            @include typography(body-sm);
             display: flex;
             align-items: center;
             gap: rem(5);
-            font-family: var(--body-sm-family);
-            font-size: var(--body-sm-size);
-            font-weight: var(--body-sm-weight);
-            line-height: var(--body-sm-line-height);
             color: var(--text-secondary);
             white-space: nowrap;
             overflow: hidden;
@@ -117,10 +108,7 @@
         }
 
         &__price {
-            font-family: var(--label-sm-family);
-            font-size: var(--label-sm-size);
-            font-weight: var(--label-sm-weight);
-            line-height: var(--label-sm-line-height);
+            @include typography(label-sm);
             color: var(--text-primary);
             white-space: nowrap;
         }

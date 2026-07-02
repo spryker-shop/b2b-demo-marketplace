@@ -60,10 +60,7 @@
         }
 
         &__title {
-            font-family: var(--label-md-family);
-            font-size: var(--label-md-size);
-            font-weight: var(--label-md-weight);
-            line-height: var(--label-md-line-height);
+            @include typography(label-md);
             color: var(--text-primary);
         }
 

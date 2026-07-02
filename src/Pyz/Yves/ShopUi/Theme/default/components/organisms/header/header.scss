@@ -118,14 +118,18 @@
             }
         }
 
-        &__nav-bar {
+        &__nav {
             display: none;
             position: relative;
-            z-index: $setting-zi-search-suggestions + 4;
 
             @include helper-breakpoint-media-min($xl) {
                 display: block;
+                background: var(--header-nav);
             }
+        }
+
+        &__nav-bar {
+            position: relative;
         }
 
         &__nav-bar-inner {
