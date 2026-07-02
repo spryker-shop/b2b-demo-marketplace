@@ -19,7 +19,7 @@ Detail lives in reference files, loaded when you reach each phase:
 
 Run unattended. Decide and proceed using these defaults:
 - **Merge conflicts** → resolve by the per-type rules in `@.claude/skills/upmerge-master-to-demo/references/merge-and-composer.md` (demo-owned files keep the master-demo side; core-tracking files keep the master side; additive lists keep both).
-- **Silent divergences** (Step 6 audits) → default to **restoring** the demo-only block/wiring/override; the smoke test and `cy:demo` are the safety net.
+- **Silent divergences** (Step 6 audits, and the Step 7a visual FE scan) → default to **restoring** the demo-only block/wiring/override to its working master-demo version; the smoke test, the FE scan, and `cy:demo` are the safety net. A visibly-broken redesigned page whose fix is confined to restoring a demo-owned Yves Twig/SCSS override to its master-demo pair is a simple auto-fix (Step 7a); anything needing real template/logic changes escalates.
 - **CI failures** → auto-fix the deterministic classes (phpcs, transfer:generate, propel:install, lock sync); push and re-poll.
 - Record every non-obvious decision in the PR body so the reviewer can check it.
 
@@ -37,7 +37,7 @@ Everything else: decide and continue.
 
 At the very start of the flow (before Step 2), create the 12 steps as a task list with **`TaskCreate`** — one task per numbered step, using these subjects:
 
-1. Sync master & master-demo · 2. Create feature branch · 3. Merge master, resolve conflicts · 4. Refresh composer.lock & install · 5. Reconcile overrides + deploy/config/wiring audits (6a–6e,6g) · 6. Upmerge cypress-tests repo (6f) · 7. Smoke-test + run cy:demo · 8. Push & open PR · 9. JIRA optional comment (never move status) · 10. Schedule CI poll · 11. Poll pipeline & auto-fix · 12. Final report
+1. Sync master & master-demo · 2. Create feature branch · 3. Merge master, resolve conflicts · 4. Refresh composer.lock & install · 5. Reconcile overrides + deploy/config/wiring audits (6a–6e,6g) · 6. Upmerge cypress-tests repo (6f) · 7. Smoke-test + FE-anomaly scan (7a) + run cy:demo (7b) · 8. Push & open PR · 9. JIRA optional comment (never move status) · 10. Schedule CI poll · 11. Poll pipeline & auto-fix · 12. Final report
 
 (Step 0 is folded into task 1; Step 1 ticket-handling happens before task creation since it decides the branch name.) Then drive the panel as you work:
 - **`TaskUpdate` → `in_progress`** the instant you begin a step (before its first command).
@@ -74,7 +74,7 @@ Rules:
 6. Reconcile with the incoming changes — all of the following, even on a clean merge:
    - Pyz/Demo overrides incl. Twig shadowing changed core; `deploy.spryker-icpplus.yml` sibling audit; `config_default.php` demo-only block audit (6e); Dependency Provider wiring audit (6g) → `@.claude/skills/upmerge-master-to-demo/references/demo-reconciliation.md`
    - External `spryker/cypress-tests` `master-demo` upmerge to the demo-shop's pinned cypress hash (6f) → `@.claude/skills/upmerge-master-to-demo/references/cypress-tests.md`
-7. Smoke-test Yves + Backoffice login (incl. the analytics-gui canary), then run the demo Cypress group `cy:demo` → `@.claude/skills/upmerge-master-to-demo/references/smoke-and-ci.md`
+7. Smoke-test Yves + Backoffice login (incl. the analytics-gui canary); then visually scan the pages the merge's Twig/SCSS touched for FE anomalies and auto-fix the simple ones (Step 7a); then run the demo Cypress group `cy:demo` (Step 7b) → `@.claude/skills/upmerge-master-to-demo/references/smoke-and-ci.md`
 8. Push and open the PR targeting `master-demo` (Step 8 below)
 9. JIRA — optional PR-link comment only, and only if a ticket was provided; **never** move the status (Step 9 below)
 10. Schedule the CI poll → `@.claude/skills/upmerge-master-to-demo/references/smoke-and-ci.md`
@@ -133,7 +133,7 @@ For a ticketed PR, insert the `JIRA: <TICKET-URL>` line under `## Summary`. Capt
 
 ## Pitfalls that aren't obvious from the commands
 
-- **A clean merge is not a safe merge.** `git merge` flags only overlapping line edits. Three silent losses have no conflict marker and must be caught by the Step 6 audits every time: a changed core Twig template behind a Demo/Pyz override (stale render); a dropped demo-only `config_default.php` block whose reader stays wired (runtime crash, Step 6e); a demo-only plugin/console registration dropped from a provider list (feature silently dead, Step 6g). The config-drop and wiring-drop are two halves of one invariant — for each demo feature, config and wiring are both present or both absent.
+- **A clean merge is not a safe merge.** `git merge` flags only overlapping line edits. Four silent losses have no conflict marker: a changed core Twig template behind a Demo/Pyz override (stale render); a dropped demo-only `config_default.php` block whose reader stays wired (runtime crash, Step 6e); a demo-only plugin/console registration dropped from a provider list (feature silently dead, Step 6g); and a **master redesign of a component whose Twig/SCSS the demo overrides** — the merge takes master's incompatible redesign, no marker fires, static analysis and `cy:demo` stay green, but the page renders visibly wrong (Step 7a — the search-form icon-stacking case). The first three are caught by the Step 6 diff-based audits; the fourth needs the Step 7a **visual** scan because a diff can look innocuous while the rendered layout breaks. The config-drop and wiring-drop are two halves of one invariant — for each demo feature, config and wiring are both present or both absent.
 - **Demo-only wiring belongs in `src/Demo`, not `src/Pyz`.** `Demo` shadows `Pyz` and `Pyz` is on master's edit surface, so a demo entry in a `Pyz` provider is one master-side edit from silent deletion. When restoring one, relocate it to a `src/Demo` provider extending the `Pyz` one.
 - **Cypress: merge the pinned HASH, never cypress master's tip** (Step 6f). Cypress master runs ahead of the shop's pin; merging its tip makes the demo cypress branch assert behavior the shop lacks → false failures.
 - **The cypress quality gate false-fails on a feature branch** unless you pass `TARGET_HASH=` (before re-pin) or `DEMOSHOP_REF=HEAD` (after). The plain no-env form is authoritative only in CI / on merged `master-demo`.
