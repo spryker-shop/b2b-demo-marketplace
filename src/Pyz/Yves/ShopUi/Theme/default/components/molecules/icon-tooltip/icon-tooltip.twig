@@ -22,5 +22,10 @@
             name: data.icon
         }
     } only %}
-    <span class="{{ config.name }}__tooltip">{{ data.text }}</span>
+    {% include atom('tooltip') with {
+        class: config.name ~ '__tooltip',
+        data: {
+            text: data.text
+        }
+    } only %}
 {% endblock %}
