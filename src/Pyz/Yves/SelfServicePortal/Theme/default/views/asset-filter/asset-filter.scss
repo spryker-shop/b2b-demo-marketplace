@@ -1,0 +1,21 @@
+@mixin catalog-asset-filter($name: '.catalog-asset-filter') {
+    #{$name} {
+        display: flex;
+        flex-direction: column;
+        gap: var(--scale-8);
+        padding: var(--scale-12) var(--scale-20);
+        margin-bottom: var(--scale-16);
+        background: var(--background-surface);
+        border-radius: var(--radius-sm);
+
+        &__title {
+            @include typography(label-md-semibold);
+            margin: 0;
+            color: var(--text-primary);
+        }
+
+        @content;
+    }
+}
+
+@include catalog-asset-filter();

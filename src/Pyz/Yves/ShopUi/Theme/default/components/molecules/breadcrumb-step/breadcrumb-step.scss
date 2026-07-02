@@ -1,21 +1,14 @@
 @mixin shop-ui-breadcrumb-step($name: '.breadcrumb-step') {
     #{$name} {
+        @include typography(label-md);
         display: inline-flex;
-        align-items: center;
-        font-size: inherit;
-        line-height: inherit;
-        gap: rem(5);
 
         &__link {
-            @include helper-effect-transition(color);
             display: inline-flex;
             align-items: center;
             gap: var(--scale-4);
-            padding: var(--scale-2) var(--scale-0);
             color: var(--text-brand);
-            font-weight: var(--font-weight-medium);
             text-decoration: none;
-            cursor: pointer;
 
             &:hover,
             &:focus {
@@ -32,12 +25,7 @@
         }
 
         &--current {
-            display: inline-flex;
-            align-items: center;
-            gap: var(--scale-4);
-            padding: var(--scale-2) var(--scale-0);
-            color: var(--text-primary);
-            font-weight: var(--font-weight-semibold);
+            color: var(--text-tertiary);
         }
 
         &__icon {
@@ -53,7 +41,7 @@
             align-items: center;
             color: var(--text-tertiary);
             user-select: none;
-            padding: 0 var(--scale-8);
+            padding: 0 var(--scale-6);
         }
 
         &__separator--chevron {

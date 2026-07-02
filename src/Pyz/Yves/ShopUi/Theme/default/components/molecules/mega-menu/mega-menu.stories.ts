@@ -36,7 +36,7 @@ export const Overview: StoryObj = {
                     position: relative;
                     top: auto;
                     left: auto;
-                    background: var(--header-nav, #fff);
+                    background: var(--header-main, #fff);
                     width: 992px;
                     max-width: 100%;
                     border-radius: 8px;
