@@ -1,46 +1,11 @@
 @mixin shop-ui-icon-tooltip($name: '.icon-tooltip') {
     #{$name} {
         display: inline-block;
-        position: relative;
-        --spacing-under-tooltip: #{rem(10)};
-        --border-angle-size: #{rem(3)};
-
-        &__tooltip {
-            @include helper-effect-transition(transform);
-            padding: var(--scale-6) var(--scale-8);
-            position: absolute;
-            left: 50%;
-            bottom: calc(100% + var(--spacing-under-tooltip));
-            transform-origin: bottom center;
-            transform: translateX(-50%) scale(0);
-            border-radius: var(--radius-sm);
-            background: var(--background-inverse);
-            box-shadow: var(--shadows-sm-x) var(--shadows-sm-y) var(--shadows-sm-blur) var(--shadows-sm-spread)
-                var(--shadows-sm-color);
-            font-size: var(--body-sm-size);
-            font-weight: var(--font-weight-regular);
-            line-height: var(--body-sm-line-height);
-            letter-spacing: var(--body-sm-letter-spacing);
-            white-space: nowrap;
-            color: var(--text-inverse);
-
-            &::before {
-                content: '';
-                border-top: solid var(--border-angle-size) var(--background-inverse);
-                border-left: solid var(--border-angle-size) transparent;
-                border-right: solid var(--border-angle-size) transparent;
-                position: absolute;
-                top: 100%;
-                left: calc(50% - var(--border-angle-size));
-            }
-
-            #{$name}:hover & {
-                transform: translateX(-50%) scale(1);
-            }
-        }
 
         @content;
     }
+
+    @include shop-ui-tooltip-trigger($name);
 }
 
 @include shop-ui-icon-tooltip;

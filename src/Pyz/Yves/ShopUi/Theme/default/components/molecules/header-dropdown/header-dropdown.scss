@@ -66,14 +66,11 @@
             }
 
             #{$name}--drawer & {
+                @include typography(body-md);
                 width: 100%;
                 justify-content: space-between;
                 padding: var(--scale-12) 0;
                 color: var(--text-primary);
-                font-family: var(--body-md-family);
-                font-size: var(--body-md-size);
-                font-weight: var(--body-md-weight);
-                line-height: var(--body-md-line-height);
                 text-align: left;
 
                 &:hover {
@@ -96,10 +93,7 @@
         }
 
         &__name {
-            font-family: var(--label-md-family);
-            font-size: var(--label-md-size);
-            font-weight: var(--label-md-weight);
-            line-height: var(--label-md-line-height);
+            @include typography(label-md);
             color: var(--text-primary);
             overflow: hidden;
             text-overflow: ellipsis;
@@ -107,10 +101,7 @@
         }
 
         &__company {
-            font-family: var(--body-sm-family);
-            font-size: var(--body-sm-size);
-            font-weight: var(--body-sm-weight);
-            line-height: var(--body-sm-line-height);
+            @include typography(body-sm);
             color: var(--text-secondary);
             overflow: hidden;
             text-overflow: ellipsis;

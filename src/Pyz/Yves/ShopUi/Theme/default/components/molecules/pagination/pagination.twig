@@ -88,7 +88,7 @@
         {% endif %}
 
         <li class="{{config.name}}__item">
-            <a class="{{config.name}}__step {{config.name}}__step--button {{config.name}}__step--current link--no-decoration" href="{{ path(data.paginationPath, data.parameters|merge({ page: data.currentPage })) }}{{ data.anchor }}">{{ data.currentPage | executeFilterIfExists('formatInt', app.locale) }}</a>
+            <a class="{{config.name}}__step {{config.name}}__step--button {{config.name}}__step--current link--no-decoration" aria-current="page" href="{{ path(data.paginationPath, data.parameters|merge({ page: data.currentPage })) }}{{ data.anchor }}">{{ data.currentPage | executeFilterIfExists('formatInt', app.locale) }}</a>
         </li>
 
         {% if data.currentPage < data.maxPage %}
