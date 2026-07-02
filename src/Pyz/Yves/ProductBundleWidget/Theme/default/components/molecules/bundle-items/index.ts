@@ -1,1 +1,1 @@
-import './bundle-items.scss';
+import './style.scss';

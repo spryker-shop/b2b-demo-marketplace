@@ -1,19 +1,23 @@
 @use 'src/ShopUi/styles/shared' as *;
-.subscription-info {
-    &__section {
-        display: block;
-        font-size: var(--body-sm-size);
-        font-weight: var(--body-sm-weight);
-        line-height: var(--body-sm-line-height);
-        margin-bottom: var(--scale-12);
-        text-transform: uppercase;
-    }
+@mixin newsletter-widget-subscription-info($name: '.subscription-info') {
+    #{$name} {
+        &__section {
+            display: block;
+            font-size: var(--body-sm-size);
+            font-weight: var(--body-sm-weight);
+            line-height: var(--body-sm-line-height);
+            margin-bottom: var(--scale-12);
+            text-transform: uppercase;
+        }
 
-    &__text {
-        display: block;
-        font-size: var(--body-md-size);
-        font-weight: var(--body-md-weight);
-        line-height: var(--body-md-line-height);
-        margin-top: var(--scale-8);
+        &__text {
+            display: block;
+            font-size: var(--body-md-size);
+            font-weight: var(--body-md-weight);
+            line-height: var(--body-md-line-height);
+            margin-top: var(--scale-8);
+        }
+
+        @content;
     }
 }

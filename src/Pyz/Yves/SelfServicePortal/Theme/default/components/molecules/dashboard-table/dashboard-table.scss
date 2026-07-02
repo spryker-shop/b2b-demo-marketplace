@@ -1,16 +1,20 @@
 @use 'src/ShopUi/styles/shared' as *;
-.dashboard-table {
-    &__content {
-        border: rem(2) solid $setting-color-gray-6;
-        border-radius: rem(3);
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        min-height: rem(100);
-    }
+@mixin self-service-portal-dashboard-table($name: '.dashboard-table') {
+    #{$name} {
+        &__content {
+            border: rem(2) solid $setting-color-gray-6;
+            border-radius: rem(3);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            min-height: rem(100);
+        }
 
-    &__table {
-        width: 100%;
-        flex-grow: 1;
+        &__table {
+            width: 100%;
+            flex-grow: 1;
+        }
+        @content;
     }
 }
+

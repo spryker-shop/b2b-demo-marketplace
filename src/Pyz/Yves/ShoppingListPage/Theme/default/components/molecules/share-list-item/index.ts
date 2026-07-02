@@ -1,1 +1,1 @@
-import './share-list-item.scss';
+import './style.scss';

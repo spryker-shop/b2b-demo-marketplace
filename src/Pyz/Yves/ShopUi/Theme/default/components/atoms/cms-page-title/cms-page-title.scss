@@ -1,6 +1,10 @@
 @use 'src/ShopUi/styles/shared' as *;
-.cms-page-title {
-    & * {
-        font: fw(bold) rem(28) / rem(36) $setting-font-family;
+@mixin shop-ui-cms-page-title($name: '.cms-page-title') {
+    #{$name} {
+        & * {
+            font: fw(bold) rem(28) / rem(36) $setting-font-family;
+        }
+
+        @content;
     }
 }

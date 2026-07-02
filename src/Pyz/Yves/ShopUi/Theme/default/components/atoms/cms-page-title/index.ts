@@ -1,1 +1,1 @@
-import './cms-page-title.scss';
+import './style.scss';

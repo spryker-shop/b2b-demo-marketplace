@@ -4,7 +4,7 @@
 @use '../settings/grid' as *;
 
 @function helper-breakpoint-edge-min($edges) {
-    @if length($edges) > 0 {
+    @if list.length($edges) > 0 {
         @return list.nth($edges, 1);
     }
 
@@ -12,7 +12,7 @@
 }
 
 @function helper-breakpoint-edge-max($edges) {
-    @if length($edges) > 1 {
+    @if list.length($edges) > 1 {
         @return list.nth($edges, 2);
     }
 

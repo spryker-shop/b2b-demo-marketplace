@@ -1,6 +1,4 @@
 @use 'src/ShopUi/styles/shared' as *;
-$color-selector-size: rem(18);
-$color-selector-size-big: rem(24);
 $name: '.product-detail-color-selector';
 
 @include helper-color-selector($name) {
@@ -13,8 +11,8 @@ $name: '.product-detail-color-selector';
     }
 
     &__item {
-        width: $color-selector-size-big;
-        height: $color-selector-size-big;
+        width: rem(24);
+        height: rem(24);
         border: rem(12) solid $setting-color-transparent;
         display: block;
 

@@ -1,68 +1,73 @@
 @use 'src/ShopUi/styles/shared' as *;
 @use 'ShopUi/components/molecules/form/form' as *;
-.subscription {
-    &__message {
-        font-size: var(--body-sm-size);
-        line-height: var(--body-sm-line-height);
-        letter-spacing: var(--body-sm-letter-spacing);
-        text-align: left;
-    }
 
-    &__action {
-        color: var(--text-inverse);
-
-        &:active,
-        &:focus:not(:focus-visible) {
-            background: var(--background-subtle);
-        }
-    }
-
-    @include shop-ui-form {
-        &__container {
-            display: flex;
-            gap: var(--scale-8);
+@mixin newsletter-widget-subscription($name: '.newsletter-widget-subscription') {
+    #{$name} {
+        &__message {
+            font-size: var(--body-sm-size);
+            line-height: var(--body-sm-line-height);
+            letter-spacing: var(--body-sm-letter-spacing);
+            text-align: left;
         }
 
-        &__fields {
-            flex: 1;
-            margin: 0;
-        }
-
-        &__field {
-            padding: 0;
-        }
-
-        &__actions,
         &__action {
-            margin: 0;
-        }
-
-        .label {
-            display: none;
-        }
-
-        /* stylelint-disable selector-max-class */
-        .list--alert {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .list--alert .list__item {
-            padding: var(--scale-4) var(--scale-8);
-            border-radius: var(--radius-xs);
-            background: var(--background-state-error-bold);
             color: var(--text-inverse);
-            font-size: var(--caption-size);
-            font-weight: var(--caption-weight);
-            line-height: var(--caption-line-height);
-            letter-spacing: var(--caption-letter-spacing);
 
-            &::before {
-                display: none;
+            &:active,
+            &:focus:not(:focus-visible) {
+                background: var(--background-subtle);
             }
         }
-        /* stylelint-enable selector-max-class */
+
+        @include shop-ui-form {
+            &__container {
+                display: flex;
+                gap: var(--scale-8);
+            }
+
+            &__fields {
+                flex: 1;
+                margin: 0;
+            }
+
+            &__field {
+                padding: 0;
+            }
+
+            &__actions,
+            &__action {
+                margin: 0;
+            }
+
+            .label {
+                display: none;
+            }
+
+            /* stylelint-disable selector-max-class */
+            .list--alert {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .list--alert .list__item {
+                padding: var(--scale-4) var(--scale-8);
+                border-radius: var(--radius-xs);
+                background: var(--background-state-error-bold);
+                color: var(--text-inverse);
+                font-size: var(--caption-size);
+                font-weight: var(--caption-weight);
+                line-height: var(--caption-line-height);
+                letter-spacing: var(--caption-letter-spacing);
+
+                &::before {
+                    display: none;
+                }
+            }
+            /* stylelint-enable selector-max-class */
+        }
+
+        @content;
     }
 }

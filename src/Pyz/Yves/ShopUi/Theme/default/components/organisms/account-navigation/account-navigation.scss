@@ -1,5 +1,5 @@
 @use 'src/ShopUi/styles/shared' as *;
-@import '../side-drawer/side-drawer';
+@use '../side-drawer/side-drawer' as *;
 
 @mixin shop-ui-account-navigation($name: '.account-navigation') {
     @include shop-ui-side-drawer($name) {

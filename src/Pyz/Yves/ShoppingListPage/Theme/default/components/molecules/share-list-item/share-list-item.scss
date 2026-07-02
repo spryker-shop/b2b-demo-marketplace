@@ -1,35 +1,39 @@
 @use 'src/ShopUi/styles/shared' as *;
-.shopping-list-item {
-    background-color: $setting-color-gray-7;
-    margin-bottom: rem(5);
-    padding: rem(20);
-    border-radius: $setting-border-radius;
-
-    @include helper-breakpoint-media-min($lg) {
-        padding: 0 0 0 rem(30);
-    }
-
-    &__label {
-        display: inline-block;
-        font-weight: fw(mewdium);
-        color: $setting-color-gray-5;
-        margin-bottom: rem(10);
-
-        @include helper-breakpoint-media-min($lg) {
-            margin-bottom: 0;
-        }
-    }
-
-    select,
-    .select2-selection__rendered {
-        border: 1px solid $setting-color-gray-1;
+@mixin shopping-list-page-share-list-item($name: '.share-list-item') {
+    #{$name} {
+        background-color: $setting-color-gray-7;
+        margin-bottom: rem(5);
+        padding: rem(20);
         border-radius: $setting-border-radius;
-        background-color: $setting-color-transparent;
-        text-align: right;
-        padding-right: rem(50);
 
         @include helper-breakpoint-media-min($lg) {
-            border: none;
+            padding: 0 0 0 rem(30);
         }
+
+        &__label {
+            display: inline-block;
+            font-weight: fw(mewdium);
+            color: $setting-color-gray-5;
+            margin-bottom: rem(10);
+
+            @include helper-breakpoint-media-min($lg) {
+                margin-bottom: 0;
+            }
+        }
+
+        select,
+        .select2-selection__rendered {
+            border: 1px solid $setting-color-gray-1;
+            border-radius: $setting-border-radius;
+            background-color: $setting-color-transparent;
+            text-align: right;
+            padding-right: rem(50);
+
+            @include helper-breakpoint-media-min($lg) {
+                border: none;
+            }
+        }
+
+        @content;
     }
 }

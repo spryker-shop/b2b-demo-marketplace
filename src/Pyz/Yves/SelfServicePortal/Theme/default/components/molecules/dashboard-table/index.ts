@@ -1,1 +1,1 @@
-import './dashboard-table.scss';
+import './style.scss';

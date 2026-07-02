@@ -1,1 +1,1 @@
-import './advanced-table.scss';
+import './style.scss';

@@ -1,5 +1,5 @@
 @use 'src/ShopUi/styles/shared' as *;
-@import '../../atoms/input/input';
+@use '../../atoms/input/input' as *;
 
 @mixin shop-ui-custom-select($name: '.custom-select') {
     #{$name} {

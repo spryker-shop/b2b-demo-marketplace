@@ -1,1 +1,1 @@
-import './notification-area.scss';
+import './style.scss';

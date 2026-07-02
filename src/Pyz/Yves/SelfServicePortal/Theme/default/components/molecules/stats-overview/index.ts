@@ -1,1 +1,1 @@
-import './stats-overview.scss';
+import './style.scss';

@@ -1,4 +1,8 @@
 @use 'src/ShopUi/styles/shared' as *;
-.mini-cart-radio {
-    line-height: normal;
+@mixin multi-cart-page-mini-cart-radio($name: '.mini-cart-radio') {
+    #{$name} {
+        line-height: normal;
+        
+        @content;
+    }
 }

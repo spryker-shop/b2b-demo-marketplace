@@ -1,4 +1,4 @@
-import './google-map.scss';
+import './style.scss';
 import register from 'ShopUi/app/registry';
 export default register(
     'google-map',

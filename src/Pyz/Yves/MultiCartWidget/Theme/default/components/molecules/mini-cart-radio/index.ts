@@ -1,4 +1,4 @@
-import './mini-cart-radio.scss';
+import './style.scss';
 import register from 'ShopUi/app/registry';
 export default register(
     'mini-cart-radio',
