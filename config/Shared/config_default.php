@@ -1179,7 +1179,7 @@ $config[AlgoliaConstants::IS_ACTIVE] =
 
 // -------------------------------- AWS QUICKSIGHT -------------------------------
 $config[AmazonQuicksightConstants::AWS_ACCOUNT_ID] = getenv('AWS_ACCOUNT_ID');
-$config[AmazonQuicksightConstants::AWS_REGION] = $awsRegion;
+$config[AmazonQuicksightConstants::AWS_REGION] = getenv('AWS_REGION');
 $config[AmazonQuicksightConstants::AWS_QUICKSIGHT_NAMESPACE] = getenv('QUICKSIGHT_NAMESPACE');
 $config[AmazonQuicksightConstants::DEFAULT_DATA_SOURCE_USERNAME] = getenv('SPRYKER_BI_DB_USER') ?: getenv('SPRYKER_DB_USERNAME');
 $config[AmazonQuicksightConstants::DEFAULT_DATA_SOURCE_PASSWORD] = getenv('SPRYKER_BI_DB_PASSWORD') ?: getenv('SPRYKER_DB_PASSWORD');
