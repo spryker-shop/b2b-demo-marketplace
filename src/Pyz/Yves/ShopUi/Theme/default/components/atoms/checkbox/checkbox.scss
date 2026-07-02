@@ -91,6 +91,11 @@
             width: 100%;
         }
 
+        &--filter {
+            display: block;
+            width: 100%;
+        }
+
         &__label:empty {
             display: none;
         }
@@ -132,6 +137,27 @@
             #{$name}__input:checked ~ #{$name}__box::after {
                 content: 'remove';
             }
+        }
+
+        &__container--filter {
+            width: 100%;
+        }
+
+        &__label--filter {
+            @include typography(body-md);
+            flex: 1 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--scale-8);
+            min-width: 0;
+            color: var(--text-primary);
+        }
+
+        &__counter {
+            @include typography(body-sm);
+            flex-shrink: 0;
+            color: var(--text-secondary);
         }
 
         @content;

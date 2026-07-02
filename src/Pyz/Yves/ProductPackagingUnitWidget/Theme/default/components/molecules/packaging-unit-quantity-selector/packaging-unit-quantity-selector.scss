@@ -1,12 +1,8 @@
 @mixin product-packaging-unit-widget-packaging-unit-quantity-selector($name: '.packaging-unit-quantity-selector') {
     #{$name} {
         &__quantity-label {
+            @include typography(label-sm-semibold);
             margin: 0 0 var(--scale-12);
-            font-family: var(--label-sm-semibold-family);
-            font-size: var(--label-sm-semibold-size);
-            font-weight: var(--label-sm-semibold-weight);
-            line-height: var(--label-sm-semibold-line-height);
-            letter-spacing: var(--label-sm-semibold-letter-spacing);
             color: var(--text-primary);
         }
 
@@ -51,11 +47,7 @@
 
         &__unit-field-label,
         &__unit-field-value {
-            font-family: var(--label-sm-semibold-family);
-            font-size: var(--label-sm-semibold-size);
-            font-weight: var(--label-sm-semibold-weight);
-            line-height: var(--label-sm-semibold-line-height);
-            letter-spacing: var(--label-sm-semibold-letter-spacing);
+            @include typography(label-sm-semibold);
             color: var(--text-primary);
         }
 

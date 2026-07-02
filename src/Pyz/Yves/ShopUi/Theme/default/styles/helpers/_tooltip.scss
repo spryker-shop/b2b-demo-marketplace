@@ -1,0 +1,93 @@
+@mixin shop-ui-tooltip($name: '.tooltip') {
+    #{$name} {
+        @include helper-effect-transition(transform);
+        --tooltip-gap: #{rem(10)};
+        --tooltip-arrow-size: #{rem(5)};
+        --tooltip-translate: translateX(-50%);
+        position: absolute;
+        left: 50%;
+        bottom: calc(100% + var(--tooltip-gap));
+        transform-origin: bottom center;
+        transform: var(--tooltip-translate) scale(0);
+        padding: var(--scale-6) var(--scale-8);
+        border-radius: var(--radius-sm);
+        background: var(--background-inverse);
+        box-shadow: var(--shadows-sm-x) var(--shadows-sm-y) var(--shadows-sm-blur) var(--shadows-sm-spread)
+            var(--shadows-sm-color);
+        font-size: var(--body-sm-size);
+        font-weight: var(--font-weight-regular);
+        line-height: var(--body-sm-line-height);
+        letter-spacing: var(--body-sm-letter-spacing);
+        white-space: nowrap;
+        color: var(--text-inverse);
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: calc(50% - var(--tooltip-arrow-size));
+            border-style: solid;
+            border-width: var(--tooltip-arrow-size) var(--tooltip-arrow-size) 0;
+            border-color: var(--background-inverse) transparent transparent;
+        }
+
+        &--bottom {
+            top: calc(100% + var(--tooltip-gap));
+            bottom: auto;
+            transform-origin: top center;
+
+            &::before {
+                top: auto;
+                bottom: 100%;
+                left: calc(50% - var(--tooltip-arrow-size));
+                border-width: 0 var(--tooltip-arrow-size) var(--tooltip-arrow-size);
+                border-color: transparent transparent var(--background-inverse);
+            }
+        }
+
+        &--left {
+            --tooltip-translate: translateY(-50%);
+            top: 50%;
+            right: calc(100% + var(--tooltip-gap));
+            left: auto;
+            bottom: auto;
+            transform-origin: center right;
+
+            &::before {
+                top: calc(50% - var(--tooltip-arrow-size));
+                left: 100%;
+                border-width: var(--tooltip-arrow-size) 0 var(--tooltip-arrow-size) var(--tooltip-arrow-size);
+                border-color: transparent transparent transparent var(--background-inverse);
+            }
+        }
+
+        &--right {
+            --tooltip-translate: translateY(-50%);
+            top: 50%;
+            left: calc(100% + var(--tooltip-gap));
+            bottom: auto;
+            transform-origin: center left;
+
+            &::before {
+                top: calc(50% - var(--tooltip-arrow-size));
+                left: auto;
+                right: 100%;
+                border-width: var(--tooltip-arrow-size) var(--tooltip-arrow-size) var(--tooltip-arrow-size) 0;
+                border-color: transparent var(--background-inverse) transparent transparent;
+            }
+        }
+
+        @content;
+    }
+}
+
+@mixin shop-ui-tooltip-trigger($trigger, $name: '.tooltip', $when: '') {
+    #{$trigger} {
+        position: relative;
+    }
+
+    #{$trigger}#{$when}:hover #{$name},
+    #{$trigger}#{$when}:focus-within #{$name} {
+        transform: var(--tooltip-translate, translateX(-50%)) scale(1);
+    }
+}
