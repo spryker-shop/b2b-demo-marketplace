@@ -13,7 +13,8 @@ Detail lives in reference files, loaded when you reach each phase:
 - `@.claude/skills/upmerge-master-to-demo/references/merge-and-composer.md` — sync, branch, merge conflicts, composer.lock (Steps 2–5)
 - `@.claude/skills/upmerge-master-to-demo/references/demo-reconciliation.md` — Pyz/Demo overrides, deploy, config↔wiring audits (Step 6a–6e, 6g)
 - `@.claude/skills/upmerge-master-to-demo/references/cypress-tests.md` — external cypress-tests repo upmerge (Step 6f)
-- `@.claude/skills/upmerge-master-to-demo/references/smoke-and-ci.md` — smoke test, `cy:demo`, CI polling (Steps 7–12)
+- `@.claude/skills/upmerge-master-to-demo/references/smoke.md` — smoke test, FE-anomaly scan, `cy:demo` (Steps 7, 7a, 7b)
+- `@.claude/skills/upmerge-master-to-demo/references/ci.md` — CI poll, auto-fix, final report (Steps 10–12)
 
 ## Autonomy contract
 
@@ -74,10 +75,10 @@ Rules:
 6. Reconcile with the incoming changes — all of the following, even on a clean merge:
    - Pyz/Demo overrides incl. Twig shadowing changed core; `deploy.spryker-icpplus.yml` sibling audit; `config_default.php` demo-only block audit (6e); Dependency Provider wiring audit (6g) → `@.claude/skills/upmerge-master-to-demo/references/demo-reconciliation.md`
    - External `spryker/cypress-tests` `master-demo` upmerge to the demo-shop's pinned cypress hash (6f) → `@.claude/skills/upmerge-master-to-demo/references/cypress-tests.md`
-7. Smoke-test Yves + Backoffice login (incl. the analytics-gui canary); then visually scan the pages the merge's Twig/SCSS touched for FE anomalies and auto-fix the simple ones (Step 7a); then run the demo Cypress group `cy:demo` (Step 7b) → `@.claude/skills/upmerge-master-to-demo/references/smoke-and-ci.md`
+7. Smoke-test Yves + Backoffice login (incl. the analytics-gui canary); then run the fast FE-anomaly scan over the pages the merge's Twig/SCSS touched and auto-fix the simple ones (Step 7a); then run the demo Cypress group `cy:demo` (Step 7b) → `@.claude/skills/upmerge-master-to-demo/references/smoke.md`
 8. Push and open the PR targeting `master-demo` (Step 8 below)
 9. JIRA — optional PR-link comment only, and only if a ticket was provided; **never** move the status (Step 9 below)
-10. Schedule the CI poll → `@.claude/skills/upmerge-master-to-demo/references/smoke-and-ci.md`
+10. Schedule the CI poll → `@.claude/skills/upmerge-master-to-demo/references/ci.md`
 11. Poll and auto-fix pipeline failures → same reference
 12. Final report → same reference
 
@@ -140,4 +141,4 @@ For a ticketed PR, insert the `JIRA: <TICKET-URL>` line under `## Summary`. Capt
 
 ## Polling-only invocation
 
-Invoked as `/upmerge-master-to-demo poll PR <N>` (optionally ` ticket <KEY>`), from a `ScheduleWakeup` callback or directly: skip Steps 1–10 and go straight to Step 11 (`@.claude/skills/upmerge-master-to-demo/references/smoke-and-ci.md`). The ticket key is optional — without it, poll and report with no JIRA action.
+Invoked as `/upmerge-master-to-demo poll PR <N>` (optionally ` ticket <KEY>`), from a `ScheduleWakeup` callback or directly: skip Steps 1–10 and go straight to Step 11 (`@.claude/skills/upmerge-master-to-demo/references/ci.md`). The ticket key is optional — without it, poll and report with no JIRA action.
