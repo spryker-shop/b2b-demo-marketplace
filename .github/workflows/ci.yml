@@ -719,7 +719,7 @@ jobs:
                     cat /tmp/robot-summary.md >> $GITHUB_STEP_SUMMARY 2>/dev/null || true
 
             -   name: Save PHP logs
-                if: always() && (steps.rerun_failed_tests.outcome == 'skipped' || steps.rerun_failed_tests.outcome == 'failure')
+                if: always()
                 run: |
                     mkdir -p logs
                     docker logs spryker_ci_backoffice_eu_1 > logs/backoffice_app.log 2>&1
@@ -729,13 +729,13 @@ jobs:
                     docker logs spryker_ci_glue_backend_eu_1 > logs/glue_backend_eu.log 2>&1 || true
                     mkdir -p robot-results
                     cp -r .robot/results/* robot-results/ 2>/dev/null || true
-                    echo "PHP logs saved. After upload, they will be available in GitHub Actions Artifacts as 'robot-ui-failed-artifacts'"
+                    echo "PHP logs saved. After upload, they will be available in GitHub Actions Artifacts as 'robot-ui-artifacts'"
 
             -   name: Upload PHP logs & report
-                if: always() && (steps.rerun_failed_tests.outcome == 'skipped' || steps.rerun_failed_tests.outcome == 'failure')
+                if: always()
                 uses: actions/upload-artifact@v5
                 with:
-                    name: robot-ui-failed-artifacts
+                    name: robot-ui-artifacts
                     retention-days: 5 # save for 5 days
                     path: |
                         logs/*.log
