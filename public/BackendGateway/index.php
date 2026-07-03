@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types = 1);
+
+use Pyz\Shared\ErrorHandler\ErrorHandlerEnvironment;
 use Spryker\Shared\Config\Application\Environment;
-use Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment;
 use Spryker\Zed\Application\Communication\Bootstrap\BackendGatewayBootstrap;
 
 define('APPLICATION', 'ZED');

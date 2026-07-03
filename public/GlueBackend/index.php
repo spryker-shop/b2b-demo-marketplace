@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types = 1);
+
 use Pyz\Glue\GlueApplication\Bootstrap\GlueBackendApiBootstrap;
+use Pyz\Shared\ErrorHandler\ErrorHandlerEnvironment;
 use Spryker\Shared\Config\Application\Environment;
-use Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment;
 
 define('APPLICATION', 'GLUE_BACKEND');
 defined('APPLICATION_ROOT_DIR') || define('APPLICATION_ROOT_DIR', dirname(__DIR__, 2));

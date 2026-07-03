@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types = 1);
+
+use Pyz\Shared\ErrorHandler\ErrorHandlerEnvironment;
 use Pyz\Zed\MerchantPortalApplication\Communication\Bootstrap\MerchantPortalBootstrap;
 use Spryker\Shared\Config\Application\Environment;
-use Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment;
 
 define('APPLICATION', 'MERCHANT_PORTAL');
 defined('APPLICATION_ROOT_DIR') || define('APPLICATION_ROOT_DIR', dirname(__DIR__, 2));

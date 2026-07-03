@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types = 1);
+
+use Pyz\Shared\ErrorHandler\ErrorHandlerEnvironment;
 use Pyz\Zed\Application\Communication\ZedBootstrap;
 use Spryker\Shared\Config\Application\Environment;
-use Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment;
 
 require __DIR__ . '/maintenance/maintenance.php';
 
