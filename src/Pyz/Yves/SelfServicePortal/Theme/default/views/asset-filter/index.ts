@@ -1,1 +1,1 @@
-import './asset-filter.scss';
+import './style.scss';

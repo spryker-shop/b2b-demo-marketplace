@@ -1,4 +1,4 @@
-import './comment-thread-list.scss';
+import './style.scss';
 import register from 'ShopUi/app/registry';
 export default register(
     'comment-thread-list',

@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin product-detail-page-product-configurator($name: '.product-detail') {
     #{$name} {
         display: block;
@@ -90,5 +91,3 @@
         @content;
     }
 }
-
-@include product-detail-page-product-configurator;

@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin catalog-page-empty-catalog-state($name: '.empty-catalog-state') {
     #{$name} {
         display: flex;
@@ -63,5 +64,3 @@
         @content;
     }
 }
-
-@include catalog-page-empty-catalog-state();

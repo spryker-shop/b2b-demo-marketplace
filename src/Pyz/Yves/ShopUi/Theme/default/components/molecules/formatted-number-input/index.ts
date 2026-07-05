@@ -1,4 +1,4 @@
-import './formatted-number-input.scss';
+import './style.scss';
 import register from 'ShopUi/app/registry';
 export default register(
     'formatted-number-input',

@@ -1,1 +1,1 @@
-import './action-card-grid';
+import './style.scss';

@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin merchant-product-offer-widget-seller-list($name: '.seller-list') {
     #{$name} {
         display: block;
@@ -79,5 +80,3 @@
         }
     }
 }
-
-@include merchant-product-offer-widget-seller-list();

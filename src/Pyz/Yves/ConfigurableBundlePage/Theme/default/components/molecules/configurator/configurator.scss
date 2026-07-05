@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin configurable-bundle-page-configurator($name: '.configurator') {
     #{$name} {
         padding: rem(16) 0 rem(176);
@@ -10,5 +11,3 @@
         @content;
     }
 }
-
-@include configurable-bundle-page-configurator();

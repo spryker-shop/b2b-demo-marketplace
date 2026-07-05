@@ -1,1 +1,1 @@
-import './radio';
+import './style.scss';

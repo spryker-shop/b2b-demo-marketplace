@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin order-experience-management-schedule-action-modal($name: '.schedule-action-modal') {
     #{$name} {
         &__skip-execution-data {
@@ -11,5 +12,3 @@
         @content;
     }
 }
-
-@include order-experience-management-schedule-action-modal;

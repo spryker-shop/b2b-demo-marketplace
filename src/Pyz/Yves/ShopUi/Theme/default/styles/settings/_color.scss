@@ -45,3 +45,20 @@ $setting-color-actions: (
     warning: #d88d00,
     alert: #e01a00,
 );
+
+// Configures the vendor module so core helpers resolve to project values,
+// and re-exports the remaining inherited vendor settings.
+@forward 'ShopUi/styles/settings/color' with (
+    $setting-color-main: $setting-color-main,
+    $setting-color-alt: $setting-color-alt,
+    $setting-color-white: $setting-color-white,
+    $setting-color-black: $setting-color-black,
+    $setting-color-overlay: $setting-color-overlay,
+    $setting-color-bg: $setting-color-bg,
+    $setting-color-text: $setting-color-text,
+    $setting-color-input-border: $setting-color-input-border,
+    $setting-color-input-border-focus: $setting-color-input-border-focus,
+    $setting-color-shadow: $setting-color-shadow,
+    $setting-color-dark: $setting-color-dark,
+    $setting-color-actions: $setting-color-actions
+);

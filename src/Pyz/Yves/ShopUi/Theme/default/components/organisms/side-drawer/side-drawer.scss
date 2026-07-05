@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin shop-ui-side-drawer($name: '.side-drawer') {
     #{$name} {
         position: relative;
@@ -221,5 +222,3 @@
         @content;
     }
 }
-
-@include shop-ui-side-drawer();

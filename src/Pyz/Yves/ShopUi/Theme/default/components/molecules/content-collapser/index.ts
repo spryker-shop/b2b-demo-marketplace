@@ -1,1 +1,1 @@
-import './content-collapser.scss';
+import './style.scss';

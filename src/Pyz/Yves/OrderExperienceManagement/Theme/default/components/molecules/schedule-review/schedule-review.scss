@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin order-experience-management-schedule-review($name: '.schedule-review') {
     #{$name} {
         &__heading {
@@ -17,5 +18,3 @@
         @content;
     }
 }
-
-@include order-experience-management-schedule-review;

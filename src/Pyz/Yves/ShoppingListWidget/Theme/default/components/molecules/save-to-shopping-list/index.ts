@@ -1,5 +1,5 @@
 import register from 'ShopUi/app/registry';
-import './save-to-shopping-list.scss';
+import './style.scss';
 
 export default register(
     'save-to-shopping-list',

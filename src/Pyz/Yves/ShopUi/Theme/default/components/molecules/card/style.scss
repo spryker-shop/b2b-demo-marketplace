@@ -1,0 +1,11 @@
+@use './card' as *;
+@use 'ShopUi/components/molecules/card/card' as *;
+
+@include shop-ui-card {
+    &__container {
+        &--category-list-item {
+            display: flex;
+            align-items: center;
+        }
+    }
+}

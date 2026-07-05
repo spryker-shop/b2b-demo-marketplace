@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin shop-ui-page-layout($name: '.page-layout') {
     #{$name} {
         display: flex;
@@ -103,5 +104,3 @@
         }
     }
 }
-
-@include shop-ui-page-layout();

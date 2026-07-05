@@ -1,18 +1,39 @@
-@import '~ShopUi/styles/shared';
+// Project style hub. Contract:
+//  - Each project settings module owns the configuration of its vendor counterpart
+//    (`@forward 'ShopUi/styles/settings/*' with (...)`) and may add project-only variables.
+//  - Project code must never load vendor settings directly ('ShopUi/styles/settings/*');
+//    always go through 'src/ShopUi/styles/settings/*', otherwise the vendor module is
+//    loaded unconfigured and any later `with` fails to compile.
+//  - Settings are forwarded before helpers so vendor helpers below see configured values.
+//  - This file must stay CSS-free: components `@use` it, so any emitted CSS would be
+//    duplicated into every component stylesheet.
+@forward 'settings/breakpoint';
+@forward 'settings/color';
+@forward 'settings/effect';
+@forward 'settings/font';
+@forward 'settings/grid';
+@forward 'settings/radius';
+@forward 'settings/spacing';
+@forward 'settings/z-index';
 
-@import 'helpers/reset';
-@import 'helpers/calc-rem';
-@import 'helpers/badge-chip';
-@import 'helpers/font';
-@import 'helpers/color-selector';
-@import 'helpers/outline';
-@import 'helpers/tooltip';
+// Vendor-only settings with no project override.
+@forward 'ShopUi/styles/settings/icons';
 
-@import 'settings/breakpoint';
-@import 'settings/color';
-@import 'settings/effect';
-@import 'settings/font';
-@import 'settings/grid';
-@import 'settings/radius';
-@import 'settings/spacing';
-@import 'settings/z-index';
+// Project helpers; where they overlap with vendor they forward the vendor module internally.
+@forward 'helpers/reset';
+@forward 'helpers/calc-rem';
+@forward 'helpers/badge-chip';
+@forward 'helpers/font';
+@forward 'helpers/color-selector';
+@forward 'helpers/outline';
+@forward 'helpers/tooltip';
+
+// Vendor helpers forwarded as-is — safe here because all settings they depend on
+// are already configured by the forwards above.
+@forward 'ShopUi/styles/helpers/color';
+@forward 'ShopUi/styles/helpers/effect';
+@forward 'ShopUi/styles/helpers/visibility';
+@forward 'ShopUi/styles/helpers/spacing';
+@forward 'ShopUi/styles/helpers/breakpoint';
+@forward 'ShopUi/styles/helpers/grid';
+@forward 'ShopUi/styles/helpers/ui';

@@ -1,1 +1,1 @@
-import './catalog-header';
+import './style.scss';

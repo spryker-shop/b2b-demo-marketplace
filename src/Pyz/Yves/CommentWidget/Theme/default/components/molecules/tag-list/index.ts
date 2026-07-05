@@ -1,1 +1,1 @@
-import './tag-list.scss';
+import './style.scss';

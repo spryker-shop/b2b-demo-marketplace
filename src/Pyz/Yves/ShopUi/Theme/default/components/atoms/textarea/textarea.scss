@@ -1,4 +1,5 @@
-@import '../input/input';
+@use 'src/ShopUi/styles/shared' as *;
+@use '../input/input' as *;
 
 @mixin shop-ui-textarea($name: '.textarea') {
     @include shop-ui-input-extended($name) {
@@ -10,5 +11,3 @@
         }
     }
 }
-
-@include shop-ui-textarea();

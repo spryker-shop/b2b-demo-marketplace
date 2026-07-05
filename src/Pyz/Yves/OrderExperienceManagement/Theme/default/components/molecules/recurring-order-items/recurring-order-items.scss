@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin order-experience-management-recurring-order-items($name: '.recurring-order-items') {
     #{$name} {
         font-size: var(--font-size-12);
@@ -31,5 +32,3 @@
         @content;
     }
 }
-
-@include order-experience-management-recurring-order-items;

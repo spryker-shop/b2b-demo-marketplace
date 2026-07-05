@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin shop-ui-flash-message($name: '.flash-message') {
     #{$name} {
         @include helper-effect-transition(translate opacity);
@@ -112,5 +113,3 @@
         @content;
     }
 }
-
-@include shop-ui-flash-message();

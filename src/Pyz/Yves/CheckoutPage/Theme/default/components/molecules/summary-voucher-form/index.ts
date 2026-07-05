@@ -1,1 +1,1 @@
-import './summary-voucher-form.scss';
+import './style.scss';

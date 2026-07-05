@@ -1,4 +1,4 @@
-import './flash-message.scss';
+import './style.scss';
 import register from 'ShopUi/app/registry';
 export default register(
     'flash-message',

@@ -1,1 +1,1 @@
-import './shipment-information.scss';
+import './style.scss';

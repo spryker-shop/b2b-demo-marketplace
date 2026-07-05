@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin shop-ui-toggler-accordion($name: '.toggler-accordion') {
     #{$name} {
         &__icon {
@@ -30,5 +31,3 @@
         @content;
     }
 }
-
-@include shop-ui-toggler-accordion();

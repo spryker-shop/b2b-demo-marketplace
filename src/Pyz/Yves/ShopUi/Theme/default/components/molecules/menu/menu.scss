@@ -1,3 +1,5 @@
+@use 'src/ShopUi/styles/shared' as *;
+@use 'ShopUi/components/atoms/list/list' as *;
 @mixin shop-ui-menu($name: '.menu') {
     @include shop-ui-list($name) {
         &__link,
@@ -169,5 +171,3 @@
         @content;
     }
 }
-
-@include shop-ui-menu();

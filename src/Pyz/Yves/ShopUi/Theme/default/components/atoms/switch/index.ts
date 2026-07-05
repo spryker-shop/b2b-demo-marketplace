@@ -1,1 +1,1 @@
-import './switch';
+import './style.scss';

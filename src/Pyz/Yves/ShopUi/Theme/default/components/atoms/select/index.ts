@@ -1,1 +1,1 @@
-import './select.scss';
+import './style.scss';

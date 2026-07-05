@@ -1,3 +1,5 @@
+@use 'src/ShopUi/styles/helpers/calc-rem' as *;
+@use 'ShopUi/styles/helpers/effect' as *;
 @mixin shop-ui-tooltip($name: '.tooltip') {
     #{$name} {
         @include helper-effect-transition(transform);

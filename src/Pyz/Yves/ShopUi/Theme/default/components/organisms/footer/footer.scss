@@ -1,3 +1,6 @@
+@use 'src/ShopUi/styles/shared' as *;
+@use 'ShopUi/components/atoms/title/title' as *;
+@use '../../molecules/menu/menu' as *;
 @mixin shop-ui-footer($name: '.footer') {
     #{$name} {
         background-color: var(--footer-main);
@@ -179,5 +182,3 @@
         @content;
     }
 }
-
-@include shop-ui-footer();

@@ -1,1 +1,1 @@
-import './empty-catalog-state';
+import './style.scss';

@@ -1,1 +1,1 @@
-import './availability-subscription.scss';
+import './style.scss';

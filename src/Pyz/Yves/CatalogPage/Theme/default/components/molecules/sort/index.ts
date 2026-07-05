@@ -1,1 +1,1 @@
-import './sort';
+import './style.scss';

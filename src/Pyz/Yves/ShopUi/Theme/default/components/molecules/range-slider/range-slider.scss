@@ -1,4 +1,6 @@
-@import '~nouislider/distribute/nouislider.min.css';
+@use 'src/ShopUi/styles/shared' as *;
+@use 'src/QuickOrderPage/components/molecules/quick-order-row-partial/quick-order-row-partial' as *;
+@use 'nouislider/distribute/nouislider.min.css' as *;
 
 $line-width: rem(2);
 $height-handle: rem(14);
@@ -67,5 +69,3 @@ $width-handle: rem(14);
         @content;
     }
 }
-
-@include quick-order-page-quick-order-row-partial();

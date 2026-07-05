@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin share-cart-widget-shared-cart-add-product-as-separate-item($name: '.shared-cart-add-product-as-separate-item') {
     #{$name} {
         display: block;
@@ -7,5 +8,3 @@
         @content;
     }
 }
-
-@include share-cart-widget-shared-cart-add-product-as-separate-item();

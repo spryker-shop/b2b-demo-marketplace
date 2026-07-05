@@ -1,1 +1,1 @@
-import './price-mode';
+import './style.scss';

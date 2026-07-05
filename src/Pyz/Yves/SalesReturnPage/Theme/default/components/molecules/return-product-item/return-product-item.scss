@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin sales-return-page-return-product-item($name: '.return-product-item') {
     #{$name} {
         border-bottom: rem(1) solid $setting-color-gray-7;
@@ -6,5 +7,3 @@
         @content;
     }
 }
-
-@include sales-return-page-return-product-item();

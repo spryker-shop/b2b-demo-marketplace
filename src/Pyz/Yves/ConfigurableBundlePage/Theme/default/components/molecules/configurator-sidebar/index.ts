@@ -1,1 +1,1 @@
-import './configurator-sidebar.scss';
+import './style.scss';

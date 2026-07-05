@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin configurable-bundle-page-configurator-sidebar($name: '.configurator-sidebar') {
     #{$name} {
         margin: 0 0 rem(40);
@@ -22,5 +23,3 @@
         @content;
     }
 }
-
-@include configurable-bundle-page-configurator-sidebar();

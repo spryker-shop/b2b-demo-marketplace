@@ -1,5 +1,2 @@
-@include configurable-bundle-page-selected-product-list {
-    @include helper-breakpoint-media-min($xl) {
-        margin-right: rem(16);
-    }
-}
+@use 'src/ShopUi/styles/shared' as *;
+@use 'ConfigurableBundlePage/components/molecules/selected-product-list/selected-product-list' as *;

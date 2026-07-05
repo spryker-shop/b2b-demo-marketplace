@@ -1,3 +1,7 @@
+@use 'src/ShopUi/styles/settings/color' as *;
+@use 'src/ShopUi/styles/settings/radius' as *;
+@use 'src/ShopUi/styles/helpers/calc-rem' as *;
+@use 'ShopUi/styles/helpers/effect' as *;
 @mixin helper-color-selector($name) {
     #{$name} {
         cursor: default;

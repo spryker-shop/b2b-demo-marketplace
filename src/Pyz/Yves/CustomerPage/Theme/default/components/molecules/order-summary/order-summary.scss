@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin customer-page-order-summary($name: '.order-summary') {
     #{$name} {
         margin: rem(20) 0;
@@ -117,5 +118,3 @@
         @content;
     }
 }
-
-@include customer-page-order-summary();

@@ -1,6 +1,6 @@
 import commandLineParser from 'commander';
 import stylelint from 'stylelint';
-import { globalSettings } from '../settings.js';
+import globalSettings from '../settings.override.mjs';
 
 commandLineParser
     .option('-f, --fix', 'execute stylelint in the fix mode.')
@@ -8,7 +8,7 @@ commandLineParser
     .parse(process.argv);
 
 const isFixMode = !!commandLineParser.fix;
-const defaultFilePaths = [`${globalSettings.paths.project}/**/*.scss`];
+const defaultFilePaths = [`${globalSettings.paths.sources.project}/**/*.scss`];
 const filePaths = commandLineParser.filePath ? [commandLineParser.filePath] : defaultFilePaths;
 
 stylelint

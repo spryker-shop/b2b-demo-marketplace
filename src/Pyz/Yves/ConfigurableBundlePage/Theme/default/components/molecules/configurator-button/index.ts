@@ -1,1 +1,1 @@
-import './configurator-button.scss';
+import './style.scss';

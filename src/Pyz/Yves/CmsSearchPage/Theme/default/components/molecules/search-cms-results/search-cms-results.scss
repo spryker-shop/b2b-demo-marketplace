@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin cms-search-page-search-cms-results($name: '.search-cms-results') {
     #{$name} {
         margin: 0 0 rem(50);
@@ -52,5 +53,3 @@
         @content;
     }
 }
-
-@include cms-search-page-search-cms-results();

@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin shop-ui-action-card($name: '.action-card') {
     #{$name} {
         background-color: $setting-color-gray-7;
@@ -29,5 +30,3 @@
         }
     }
 }
-
-@include shop-ui-action-card();

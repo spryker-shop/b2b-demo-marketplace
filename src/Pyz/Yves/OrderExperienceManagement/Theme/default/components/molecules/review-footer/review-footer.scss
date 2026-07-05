@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin order-experience-management-review-footer($name: '.review-footer') {
     #{$name} {
         small {
@@ -7,5 +8,3 @@
         @content;
     }
 }
-
-@include order-experience-management-review-footer;

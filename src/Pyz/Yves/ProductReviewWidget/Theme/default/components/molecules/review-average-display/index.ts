@@ -1,1 +1,1 @@
-import './review-average-display.scss';
+import './style.scss';

@@ -1,1 +1,1 @@
-import './banner.scss';
+import './style.scss';

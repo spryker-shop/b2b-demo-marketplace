@@ -1,0 +1,46 @@
+@use 'sass:map';
+@use 'src/ShopUi/styles/shared' as *;
+@use './collapsible-list' as *;
+@use 'ShopUi/components/molecules/collapsible-list/collapsible-list' as *;
+
+@include shop-ui-collapsible-list {
+    $name: '.collapsible-list';
+    margin-bottom: rem(20);
+
+    &__item {
+        margin-bottom: rem(10);
+
+        &:last-of-type {
+            margin-bottom: 0;
+        }
+    }
+
+    &__name {
+        color: $setting-color-gray-5;
+    }
+
+    &__value {
+        color: $setting-color-gray-3;
+    }
+
+    &__button--shown {
+        margin-top: rem(14);
+    }
+
+    &--small {
+        font-size: map.get($setting-font-size, small);
+        margin-bottom: rem(12);
+
+        #{$name}__item {
+            margin-bottom: rem(8);
+
+            &:last-of-type {
+                margin-bottom: 0;
+            }
+        }
+
+        #{$name}__button--shown {
+            margin-top: rem(10);
+        }
+    }
+}

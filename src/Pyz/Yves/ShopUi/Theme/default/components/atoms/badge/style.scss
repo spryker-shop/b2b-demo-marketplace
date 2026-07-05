@@ -1,0 +1,51 @@
+@use 'src/ShopUi/styles/shared' as *;
+@use './badge' as *;
+@use 'ShopUi/components/atoms/badge/badge' as *;
+
+@include shop-ui-badge('.badge') {
+    @include helper-badge-chip;
+    font-weight: var(--font-weight-medium);
+
+    &--md {
+        padding: rem(var(--scale-4)) rem(var(--scale-8));
+        font-size: rem(var(--font-size-14));
+        line-height: rem(var(--font-line-height-20));
+    }
+
+    &--info {
+        @include helper-badge-semantic-subtle(info);
+    }
+
+    &--success {
+        @include helper-badge-semantic-subtle(success);
+    }
+
+    &--warning {
+        @include helper-badge-semantic-subtle(warning);
+    }
+
+    &--error {
+        @include helper-badge-semantic-subtle(error);
+    }
+
+    &--solid {
+        color: var(--text-inverse);
+        background: var(--background-inverse);
+    }
+
+    &--info#{&}--solid {
+        @include helper-badge-semantic-bold-background(info);
+    }
+
+    &--success#{&}--solid {
+        @include helper-badge-semantic-bold-background(success);
+    }
+
+    &--warning#{&}--solid {
+        @include helper-badge-semantic-bold-background(warning);
+    }
+
+    &--error#{&}--solid {
+        @include helper-badge-semantic-bold-background(error);
+    }
+}

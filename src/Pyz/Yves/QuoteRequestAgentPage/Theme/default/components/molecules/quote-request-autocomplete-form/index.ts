@@ -1,4 +1,4 @@
-import './quote-request-autocomplete-form.scss';
+import './style.scss';
 import register from 'ShopUi/app/registry';
 export default register(
     'quote-request-autocomplete-form',

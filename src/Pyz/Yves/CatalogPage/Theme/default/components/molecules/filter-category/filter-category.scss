@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin catalog-page-filter-category($name: '.filter-category') {
     #{$name} {
         &__menu {
@@ -132,5 +133,3 @@
 
     @include shop-ui-tooltip-trigger('#{$name}__category-row', '#{$name}__tooltip', '.is-truncated');
 }
-
-@include catalog-page-filter-category();

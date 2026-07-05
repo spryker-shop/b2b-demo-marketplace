@@ -1,4 +1,5 @@
-@import '../ordered-configured-bundle-product/ordered-configured-bundle-product';
+@use 'src/ShopUi/styles/shared' as *;
+@use '../ordered-configured-bundle-product/ordered-configured-bundle-product' as *;
 
 @mixin sales-configurable-bundle-widget-ordered-configured-bundle-product-secondary(
     $name: '.ordered-configured-bundle-product-secondary'
@@ -15,5 +16,3 @@
         @content;
     }
 }
-
-@include sales-configurable-bundle-widget-ordered-configured-bundle-product-secondary();

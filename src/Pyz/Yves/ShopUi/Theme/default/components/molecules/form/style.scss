@@ -1,0 +1,275 @@
+@use 'src/ShopUi/styles/shared' as *;
+@use './form' as *;
+@use 'ShopUi/components/molecules/form/form' as *;
+
+@include shop-ui-form {
+    $name: '.form';
+
+    &__field {
+        & + & {
+            margin-top: 0.5rem;
+        }
+
+        &--section {
+            margin-top: rem(48);
+            width: 100%;
+        }
+
+        .list__item {
+            font-size: var(--body-sm-size);
+        }
+    }
+
+    &__actions {
+        display: flex;
+        flex-flow: column-reverse wrap;
+        align-items: center;
+        text-align: center;
+        justify-content: flex-end;
+
+        @include helper-breakpoint-media-min($lg) {
+            margin-top: rem(16);
+            flex-flow: row wrap;
+        }
+
+        &--actions-right {
+            justify-content: end;
+
+            #{$name}__action:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+
+    &__action {
+        flex: none;
+        width: 100%;
+        margin: rem(10) 0 0;
+
+        @include helper-breakpoint-media-min($lg) {
+            width: auto;
+            margin: 0 rem(16) 0 0;
+        }
+
+        &--expand {
+            width: 100%;
+
+            @include helper-breakpoint-media-min($lg) {
+                margin-right: 0;
+                margin-left: 0;
+            }
+        }
+
+        &--expand-sm-md {
+            @include helper-breakpoint-media-min($md) {
+                width: auto;
+                margin: rem(10) rem(16) 0 0;
+            }
+
+            @include helper-breakpoint-media-min($lg) {
+                margin-top: 0;
+            }
+        }
+
+        &--primary {
+            order: -1;
+        }
+
+        &--sm-lg-first {
+            order: -1;
+
+            @include helper-breakpoint-media-min($lg) {
+                order: 0;
+            }
+        }
+
+        &--sm-md-first {
+            order: -1;
+
+            @include helper-breakpoint-media-min($md) {
+                order: 0;
+            }
+        }
+
+        &--link {
+            width: auto;
+            margin: rem(10) auto 0;
+            font-size: rem(13);
+            text-decoration: underline;
+
+            @include helper-breakpoint-media-min($lg) {
+                margin: 0 rem(16) 0 0;
+                font-size: rem(16);
+                text-decoration: none;
+            }
+        }
+    }
+
+    &__title-description {
+        color: $setting-color-gray-2;
+        margin: rem(-8) 0 rem(16);
+    }
+
+    &--narrow {
+        #{$name}__container {
+            width: 100%;
+
+            @include helper-breakpoint-media-min($md) {
+                max-width: rem(700);
+            }
+
+            @include helper-breakpoint-media-min($xl) {
+                max-width: rem(500);
+            }
+        }
+    }
+
+    &--browse-file {
+        #{$name}__field:not(:first-of-type),
+        #{$name}__actions,
+        .input {
+            display: none;
+        }
+    }
+
+    &--text-order {
+        #{$name}__field {
+            padding-top: 0;
+        }
+
+        #{$name}__actions {
+            display: none;
+        }
+
+        .textarea {
+            min-height: rem(119);
+            padding: rem(17) rem(20) rem(18);
+            font-size: rem(13);
+            font-weight: fw(regular);
+            color: $setting-color-gray-4;
+            border-radius: $setting-border-radius;
+            border: none;
+            box-shadow:
+                0 rem(10) rem(10) 0 $setting-color-shadow-1,
+                0 rem(3) rem(3) 0 $setting-color-shadow-1;
+
+            @include helper-breakpoint-media-min($lg) {
+                min-height: rem(86);
+                padding: rem(15) rem(20);
+            }
+        }
+    }
+
+    &--note {
+        #{$name}__field {
+            padding-top: 0;
+        }
+
+        #{$name}__actions {
+            text-align: left;
+            margin-top: 0;
+        }
+
+        #{$name}__action {
+            margin-top: rem(3);
+            margin-left: 0;
+
+            @include helper-breakpoint-media-min($lg) {
+                margin-top: rem(12);
+            }
+        }
+
+        .label {
+            display: none;
+        }
+
+        .textarea {
+            font-size: rem(12);
+            font-weight: fw(regular);
+            line-height: rem(18);
+            color: $setting-color-gray-3;
+            padding: rem(12) rem(13);
+            border-radius: $setting-border-radius;
+            border: none;
+            box-shadow:
+                0 rem(10) rem(10) 0 $setting-color-shadow-1,
+                0 rem(3) rem(3) 0 $setting-color-shadow-1;
+            min-height: rem(119);
+            max-width: 100%;
+
+            @include helper-breakpoint-media-min($lg) {
+                font-size: rem(13);
+                padding: rem(15) rem(20);
+                min-height: rem(86);
+            }
+        }
+    }
+
+    &--discount-voucher {
+        #{$name}__action {
+            margin: 0;
+            width: 100%;
+        }
+    }
+
+    &--checkout-form {
+        padding: 0;
+
+        #{$name}__fields {
+            margin: 0;
+        }
+
+        #{$name}__field {
+            padding: 0 0 rem(16);
+
+            @include helper-breakpoint-media-min($lg) {
+                padding: 0 rem(10) rem(16);
+            }
+        }
+
+        #{$name}__action {
+            @include helper-breakpoint-media-min($md) {
+                margin: 0 0 0 rem(16);
+            }
+        }
+
+        .label:not(span) {
+            color: $setting-color-gray-5;
+            font-size: rem(10);
+
+            @include helper-breakpoint-media-min($lg) {
+                font-size: rem(12);
+            }
+        }
+    }
+
+    &--checkout-address-content {
+        > #{$name}__container {
+            max-width: $address-form-width;
+            margin: 0 auto;
+        }
+
+        #{$name}__actions {
+            margin: 0;
+        }
+
+        #{$name}__field {
+            .select2-selection__rendered,
+            .custom-select__select {
+                background-color: $setting-color-white;
+            }
+        }
+    }
+
+    &--container-full-width {
+        > #{$name}__container {
+            max-width: 100%;
+        }
+    }
+
+    &--hidden-actions {
+        #{$name}__actions {
+            display: none;
+        }
+    }
+}

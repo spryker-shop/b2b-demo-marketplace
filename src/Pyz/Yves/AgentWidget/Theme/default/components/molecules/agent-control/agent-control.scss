@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin agent-widget-agent-control($name: '.agent-control') {
     #{$name} {
         display: inline-flex;
@@ -381,5 +382,3 @@
         @content;
     }
 }
-
-@include agent-widget-agent-control();

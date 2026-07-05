@@ -1,1 +1,1 @@
-import './suggestion-links-list.scss';
+import './style.scss';

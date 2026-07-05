@@ -1,1 +1,1 @@
-import './search-cms-results.scss';
+import './style.scss';

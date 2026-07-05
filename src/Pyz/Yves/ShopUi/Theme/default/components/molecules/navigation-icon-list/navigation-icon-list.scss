@@ -1,13 +1,2 @@
-@include shop-ui-navigation-icon-list {
-    &__icon {
-        color: var(--text-primary);
-    }
-
-    &--social {
-        text-align: center;
-
-        @include helper-breakpoint-media-min($lg) {
-            text-align: left;
-        }
-    }
-}
+@use 'src/ShopUi/styles/shared' as *;
+@use 'ShopUi/components/molecules/navigation-icon-list/navigation-icon-list' as *;

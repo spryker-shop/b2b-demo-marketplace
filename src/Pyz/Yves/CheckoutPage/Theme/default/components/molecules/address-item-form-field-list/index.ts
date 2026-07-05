@@ -1,4 +1,4 @@
-import './address-item-form-field-list.scss';
+import './style.scss';
 import register from 'ShopUi/app/registry';
 export default register(
     'address-item-form-field-list',

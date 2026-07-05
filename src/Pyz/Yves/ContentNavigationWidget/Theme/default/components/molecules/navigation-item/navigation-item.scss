@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin content-navigation-widget-navigation-item($name: '.navigation-item') {
     #{$name} {
         border-top: rem(1) solid $setting-color-white;
@@ -36,5 +37,3 @@
         @content;
     }
 }
-
-@include content-navigation-widget-navigation-item();

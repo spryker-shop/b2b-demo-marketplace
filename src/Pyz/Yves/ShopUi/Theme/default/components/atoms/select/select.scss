@@ -1,17 +1,3 @@
+@use 'src/ShopUi/styles/shared' as *;
+@use 'ShopUi/components/atoms/select/select' as *;
 $name: '.select';
-
-@include shop-ui-select() {
-    &--quick-order-page {
-        #{$name}__select {
-            cursor: pointer;
-            padding: rem(10);
-            color: $setting-color-gray-4;
-        }
-    }
-
-    &__caret {
-        display: flex;
-        align-items: center;
-        right: rem(5);
-    }
-}

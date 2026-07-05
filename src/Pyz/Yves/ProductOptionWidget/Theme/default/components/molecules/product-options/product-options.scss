@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin product-option-widget-product-options($name: '.product-options') {
     #{$name} {
         display: flex;
@@ -27,5 +28,3 @@
         @content;
     }
 }
-
-@include product-option-widget-product-options();

@@ -1,1 +1,1 @@
-import './product-card-item.scss';
+import './style.scss';

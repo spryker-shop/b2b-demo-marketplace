@@ -1,1 +1,1 @@
-import './shipment-sidebar.scss';
+import './style.scss';

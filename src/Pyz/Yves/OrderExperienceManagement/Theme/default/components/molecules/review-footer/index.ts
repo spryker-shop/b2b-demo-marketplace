@@ -1,1 +1,1 @@
-import './review-footer.scss';
+import './style.scss';

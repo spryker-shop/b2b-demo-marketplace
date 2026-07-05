@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin merchant-profile-widget-merchant-profile($name: '.merchant-profile') {
     #{$name} {
         margin: rem(26) 0 rem(50);
@@ -16,5 +17,3 @@
         @content;
     }
 }
-
-@include merchant-profile-widget-merchant-profile();

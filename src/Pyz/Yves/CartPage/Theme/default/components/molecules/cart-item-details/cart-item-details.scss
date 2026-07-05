@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin cart-page-cart-item-details($name: '.cart-item-details') {
     #{$name} {
         &__section {
@@ -54,5 +55,3 @@
         }
     }
 }
-
-@include cart-page-cart-item-details();

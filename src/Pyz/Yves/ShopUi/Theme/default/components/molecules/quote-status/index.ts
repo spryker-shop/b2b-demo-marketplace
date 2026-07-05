@@ -1,1 +1,1 @@
-import './quote-status.scss';
+import './style.scss';

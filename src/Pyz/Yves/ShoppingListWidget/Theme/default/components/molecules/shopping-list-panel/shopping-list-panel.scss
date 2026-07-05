@@ -1,4 +1,5 @@
-@import '~src/ShopUi/styles/panel-dropdown';
+@use 'src/ShopUi/styles/shared' as *;
+@use 'src/ShopUi/styles/panel-dropdown' as *;
 
 @mixin shopping-list-widget-shopping-list-panel($name: '.shopping-list-panel') {
     @include shop-ui-panel-dropdown($name) {
@@ -93,5 +94,3 @@
         }
     }
 }
-
-@include shopping-list-widget-shopping-list-panel;

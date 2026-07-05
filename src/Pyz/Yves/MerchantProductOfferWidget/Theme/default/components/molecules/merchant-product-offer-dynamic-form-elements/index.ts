@@ -1,4 +1,4 @@
-import './merchant-product-offer-dynamic-form-elements.scss';
+import './style.scss';
 import register from 'ShopUi/app/registry';
 export default register(
     'merchant-product-offer-dynamic-form-elements',

@@ -1,1 +1,1 @@
-import './tile';
+import './style.scss';

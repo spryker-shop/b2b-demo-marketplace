@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin shop-ui-mega-menu($name: '.mega-menu') {
     #{$name} {
         display: none;
@@ -193,5 +194,3 @@
         @content;
     }
 }
-
-@include shop-ui-mega-menu();

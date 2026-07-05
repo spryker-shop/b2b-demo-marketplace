@@ -1,4 +1,4 @@
-import './toggler-accordion.scss';
+import './style.scss';
 import register from 'ShopUi/app/registry';
 export default register(
     'toggler-accordion',

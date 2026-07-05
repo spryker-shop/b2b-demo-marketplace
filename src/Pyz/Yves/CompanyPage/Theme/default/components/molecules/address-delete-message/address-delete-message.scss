@@ -1,7 +1,9 @@
+@use 'sass:map';
+@use 'src/ShopUi/styles/shared' as *;
 @mixin company-page-address-delete-message($name: '.address-delete-message') {
     #{$name} {
         &__delete-message {
-            color: map-get($setting-color-actions, 'alert');
+            color: map.get($setting-color-actions, 'alert');
         }
 
         &__address {
@@ -34,5 +36,3 @@
         @content;
     }
 }
-
-@include company-page-address-delete-message;

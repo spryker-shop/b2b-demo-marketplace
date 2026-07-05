@@ -1,1 +1,1 @@
-import './ordered-configured-bundle-product.scss';
+import './style.scss';

@@ -1,1 +1,1 @@
-import './account-menu.scss';
+import './style.scss';
