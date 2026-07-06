@@ -1,0 +1,10 @@
+@mixin catalog-page-filter-search($name: '.filter-search') {
+    #{$name} {
+        position: relative;
+        display: block;
+
+        @content;
+    }
+}
+
+@include catalog-page-filter-search();

@@ -24,13 +24,9 @@
         }
 
         &__label {
+            @include typography(caption);
             flex: 0 0 auto;
             min-width: rem(96);
-            font-family: var(--caption-family);
-            font-size: var(--caption-size);
-            font-weight: var(--caption-weight);
-            line-height: var(--caption-line-height);
-            letter-spacing: var(--caption-letter-spacing);
             color: var(--text-tertiary);
             margin: 0;
             white-space: nowrap;

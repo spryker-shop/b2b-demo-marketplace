@@ -1,0 +1,14 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'tooltip',
+    tag: 'span',
+} %}
+
+{% define data = {
+    text: required,
+} %}
+
+{% block body %}
+    {{ data.text }}
+{% endblock %}
