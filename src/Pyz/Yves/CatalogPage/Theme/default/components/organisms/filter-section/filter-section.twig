@@ -12,16 +12,28 @@
     {% if isContentPresent %}
         <h3 class="{{ config.name ~ '__title' }} is-hidden-lg-xxl">{{ 'catalog.filter.and.sorting.button' | trans }}</h3>
         <button class="{{ config.name ~ '__close' }} is-hidden-lg-xxl js-catalog-filters-trigger">
-            {% include atom('icon') with {
+            {% include atom('font-icon') with {
                 data: {
-                    name: 'cross',
+                    name: 'close',
                 },
             } only %}
         </button>
 
-        <div class="{{ config.name ~ '__sorting ' ~ config.jsName ~ '__sorting' }} is-hidden-lg-xxl"></div>
         <div class="{{ config.name ~ '__holder ' ~ config.jsName ~ '__holder' }}">
-            {% widget 'SspAssetFilterWidget' only %}{% endwidget %}
+            {% block filterSearch %}
+                {% include molecule('filter-search', 'CatalogPage') with {
+                    class: config.name ~ '__search',
+                } only %}
+            {% endblock %}
+
+            {% block filterCollapseAll %}
+                {% include molecule('catalog-collapse-all', 'CatalogPage') with {
+                    class: config.name ~ '__collapse-all',
+                    data: {
+                        sectionSelector: '.' ~ config.name,
+                    },
+                } only %}
+            {% endblock %}
 
             {% set facets = data.filteredFacets is not empty ? data.filteredFacets : data.facets %}
             {% for filter in facets %}
@@ -34,20 +46,18 @@
                         {% set itemClass = isFilterCategory ? config.name ~ '__item--hollow' %}
                         {% set itemTitleClass = isFilterCategory ? 'is-hidden-lg-xxl' %}
 
-                        <div class="{{ config.name ~ '__item' }} {{ itemClass }}">
-                            <h2 class="title title--h6 {{ config.name ~ '__item-title toggler-accordion__item ' ~ config.jsName ~ '__trigger' ~ '-' ~ filter.name }} {{ itemTitleClass }}"
-                                data-toggle-target=".{{ config.jsName ~ '__' ~ filter.name }}">
-                                {{ ('product.filter.' ~ filter.name | lower) | trans }}
-                                {% include atom('icon') with {
-                                    class: 'toggler-accordion__icon',
+                        <div class="{{ config.name ~ '__item' }} {{ itemClass }} js-collapsible is-collapsed">
+                            <h2 class="{{ config.name ~ '__item-title js-collapsible-trigger' }} {{ itemTitleClass }}">
+                                <span class="{{ config.name }}__item-label">{{ ('product.filter.' ~ filter.name | lower) | trans }}</span>
+                                {% include atom('font-icon') with {
+                                    class: config.name ~ '__item-icon',
                                     data: {
-                                        name: 'caret-down',
+                                        name: 'keyboard_arrow_down',
                                     },
                                 } only %}
                             </h2>
                             {% set contentModifier = filter.name == 'category' ? config.name ~ '__item-content--hollow' : '' %}
-                            {% set hiddenClassToToggleSections = filter.name == 'category' ? 'is-hidden-sm-md' : 'is-hidden' %}
-                            {% set togglerClass = config.name ~ '__item-content ' ~ config.jsName ~ '__' ~ filter.name ~ ' ' ~ hiddenClassToToggleSections ~ ' ' ~ contentModifier %}
+                            {% set togglerClass = config.name ~ '__item-content ' ~ contentModifier %}
 
                             {% include [
                                 molecule('filter-' ~ filter.config.name, 'CatalogPage'),
@@ -68,20 +78,12 @@
                                 },
                                 class: togglerClass,
                             } only %}
-
-                            {% include molecule('toggler-accordion') with {
-                                attributes: {
-                                    'wrap-class-name': config.jsName ~ '__holder',
-                                    'trigger-class-name': config.jsName ~ '__trigger-' ~ filter.name,
-                                    'class-to-toggle': hiddenClassToToggleSections,
-                                },
-                            } only %}
                         </div>
                     {% endblock %}
                 {% endif %}
             {% endfor %}
         </div>
 
-        <button type="button" class="button button--expand button--big {{ config.name }}__button {{ triggerButtonJsName }}">{{ 'catalog.filter.button' | trans }}</button>
+        <button type="button" class="button button--expand button--big {{ config.name }}__button {{ triggerButtonJsName }} is-hidden-lg-xxl">{{ 'catalog.filter.button' | trans }}</button>
     {% endif %}
 {% endblock %}

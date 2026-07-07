@@ -1,0 +1,72 @@
+@mixin catalog-page-catalog-header($name: '.catalog-header') {
+    #{$name} {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--scale-12);
+        margin-bottom: var(--scale-16);
+
+        @include helper-breakpoint-media-min($lg) {
+            flex-wrap: nowrap;
+            margin-bottom: var(--scale-32);
+        }
+
+        &__info {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: var(--scale-4) var(--scale-12);
+            min-width: 0;
+        }
+
+        &__title {
+            @include typography(heading-md);
+            margin: 0;
+            color: var(--text-secondary);
+        }
+
+        &__count {
+            @include typography(body-md);
+            margin: 0;
+            color: var(--text-secondary);
+        }
+
+        &__controls {
+            display: flex;
+            align-items: center;
+            gap: var(--scale-8);
+            flex-shrink: 0;
+
+            @include helper-breakpoint-media-max($lg) {
+                width: 100%;
+            }
+        }
+
+        &__filter-by {
+            @include typography(body-sm);
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
+
+        &__filter-trigger {
+            @include typography(label-md);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--scale-4);
+            flex-shrink: 0;
+            padding: var(--scale-6) var(--scale-12);
+            border: var(--stroke-sm) solid var(--border-default);
+            border-radius: var(--radius-sm);
+            background: var(--background-page);
+            color: var(--text-secondary);
+            white-space: nowrap;
+            cursor: pointer;
+        }
+
+        @content;
+    }
+}
+
+@include catalog-page-catalog-header();
