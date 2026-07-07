@@ -58,15 +58,15 @@
         &__hint {
             @include typography(body-sm);
             position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
+            top: 0;
             background: transparent;
             color: var(--text-placeholder);
             z-index: $setting-zi-search-suggestions + 1;
-            border: none;
+            border: rem(1) solid transparent;
             width: 100%;
-            padding: 0 rem(65) 0 0;
+            padding: 0 var(--scale-40) 0 var(--scale-16);
             pointer-events: none;
+            height: rem(36);
 
             &--active {
                 background: transparent;
