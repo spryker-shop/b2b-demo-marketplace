@@ -1,1 +1,1 @@
-import './page-layout-main';
+import './style.scss';

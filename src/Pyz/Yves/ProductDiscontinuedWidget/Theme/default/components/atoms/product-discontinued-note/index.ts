@@ -1,1 +1,1 @@
-import './product-discontinued-note.scss';
+import './style.scss';

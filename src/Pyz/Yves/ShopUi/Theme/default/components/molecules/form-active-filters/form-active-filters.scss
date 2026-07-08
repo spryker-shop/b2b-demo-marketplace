@@ -1,9 +1,11 @@
+@use 'sass:map';
+@use 'src/ShopUi/styles/shared' as *;
 @mixin shop-ui-form-active-filters($name: '.form-active-filters') {
     #{$name} {
         display: flex;
         flex-wrap: wrap;
         align-items: baseline;
-        font-size: map_get($setting-font-size, small);
+        font-size: map.get($setting-font-size, small);
         margin-bottom: rem(12);
 
         &__title {
@@ -70,5 +72,3 @@
         @content;
     }
 }
-
-@include shop-ui-form-active-filters();

@@ -1,0 +1,11 @@
+@use 'src/ShopUi/styles/shared' as *;
+@use './ajax-loader' as *;
+@use 'ShopUi/components/molecules/ajax-loader/ajax-loader' as *;
+
+@include shop-ui-ajax-loader {
+    background: $setting-color-alpha-4;
+
+    &--spacing-less {
+        padding: 0;
+    }
+}

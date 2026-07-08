@@ -1,1 +1,1 @@
-import './navigation-item.scss';
+import './style.scss';

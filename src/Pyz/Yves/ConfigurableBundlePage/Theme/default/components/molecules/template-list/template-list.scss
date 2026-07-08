@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin configurable-bundle-page-template-list($name: '.template-list') {
     #{$name} {
         margin: rem(50) 0;
@@ -58,5 +59,3 @@
         @content;
     }
 }
-
-@include configurable-bundle-page-template-list();

@@ -26,3 +26,9 @@ $setting-breakpoints: (
         $xxl,
     ),
 );
+
+// Configures the vendor module so core helpers resolve to project values,
+// and re-exports the remaining inherited vendor settings.
+@forward 'ShopUi/styles/settings/breakpoint' with (
+    $setting-breakpoints: $setting-breakpoints
+);

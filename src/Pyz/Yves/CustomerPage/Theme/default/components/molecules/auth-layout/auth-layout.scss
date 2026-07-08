@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin shop-ui-auth-layout($name: '.auth-layout') {
     #{$name} {
         display: flex;
@@ -210,5 +211,3 @@
         @content;
     }
 }
-
-@include shop-ui-auth-layout();

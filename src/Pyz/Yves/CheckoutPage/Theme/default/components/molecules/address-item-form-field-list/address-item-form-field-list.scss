@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin checkout-page-address-item-form-field-list($name: '.address-item-form-field-list') {
     #{$name} {
         &__wrapper {
@@ -62,5 +63,3 @@
         @content;
     }
 }
-
-@include checkout-page-address-item-form-field-list();

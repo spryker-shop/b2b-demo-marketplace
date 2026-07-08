@@ -1,0 +1,19 @@
+@use 'src/ShopUi/styles/shared' as *;
+@use './tag-list' as *;
+@use 'CommentWidget/components/molecules/tag-list/tag-list' as *;
+
+@include comment-widget-tag-list() {
+    font-size: rem(12);
+
+    &__item-link {
+        &::before,
+        &::after {
+            width: rem(8);
+        }
+
+        &--disabled {
+            background: $setting-color-gray-2;
+            color: $setting-color-gray-4;
+        }
+    }
+}

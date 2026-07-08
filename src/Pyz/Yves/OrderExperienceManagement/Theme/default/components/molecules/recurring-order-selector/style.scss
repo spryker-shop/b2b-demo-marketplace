@@ -1,0 +1,14 @@
+@use 'src/ShopUi/styles/shared' as *;
+@use './recurring-order-selector' as *;
+@use 'OrderExperienceManagement/components/molecules/recurring-order-selector/recurring-order-selector' as *;
+
+@include order-experience-management-recurring-order-selector {
+    border: rem(1) solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--scale-24);
+    padding: var(--scale-12) var(--scale-16);
+
+    .checkbox__label {
+        font-size: var(--heading-sm-size);
+    }
+}

@@ -18,3 +18,11 @@ $setting-font-weight: (
     medium: 500,
     bold: 700,
 );
+
+// Configures the vendor module so core helpers resolve to project values,
+// and re-exports the remaining inherited vendor settings.
+@forward 'ShopUi/styles/settings/font' with (
+    $setting-font-family: $setting-font-family,
+    $setting-font-size: $setting-font-size,
+    $setting-font-weight: $setting-font-weight
+);

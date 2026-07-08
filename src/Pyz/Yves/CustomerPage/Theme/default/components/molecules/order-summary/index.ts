@@ -1,1 +1,1 @@
-import './order-summary.scss';
+import './style.scss';

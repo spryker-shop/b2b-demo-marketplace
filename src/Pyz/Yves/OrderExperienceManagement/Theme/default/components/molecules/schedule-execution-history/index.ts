@@ -1,1 +1,1 @@
-import './schedule-execution-history.scss';
+import './style.scss';

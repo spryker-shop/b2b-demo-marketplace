@@ -1,1 +1,1 @@
-import './summary-item-box.scss';
+import './style.scss';

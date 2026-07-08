@@ -1,4 +1,4 @@
-import './agent-control.scss';
+import './style.scss';
 import register from 'ShopUi/app/registry';
 export default register(
     'agent-control',

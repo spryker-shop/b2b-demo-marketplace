@@ -1,1 +1,1 @@
-import './quick-order-row-partial';
+import './style.scss';

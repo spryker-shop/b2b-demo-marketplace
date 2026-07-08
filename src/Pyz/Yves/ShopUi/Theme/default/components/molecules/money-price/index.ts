@@ -1,1 +1,1 @@
-import './money-price';
+import './style.scss';

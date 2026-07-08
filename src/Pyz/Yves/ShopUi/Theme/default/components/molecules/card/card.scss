@@ -1,8 +1,2 @@
-@include shop-ui-card {
-    &__container {
-        &--category-list-item {
-            display: flex;
-            align-items: center;
-        }
-    }
-}
+@use 'src/ShopUi/styles/shared' as *;
+@use 'ShopUi/components/molecules/card/card' as *;

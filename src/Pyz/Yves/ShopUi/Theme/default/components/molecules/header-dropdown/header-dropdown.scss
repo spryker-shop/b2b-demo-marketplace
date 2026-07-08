@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin shop-ui-header-dropdown($name: '.header-dropdown') {
     #{$name} {
         display: inline-flex;
@@ -170,5 +171,3 @@
         @content;
     }
 }
-
-@include shop-ui-header-dropdown();

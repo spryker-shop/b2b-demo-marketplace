@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin merchant-product-widget-merchant-product-item($name: '.merchant-product-item') {
     #{$name} {
         border-bottom: rem(1) solid $setting-color-gray-1;
@@ -19,5 +20,3 @@
         @content;
     }
 }
-
-@include merchant-product-widget-merchant-product-item();

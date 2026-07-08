@@ -1,0 +1,62 @@
+@use './link' as *;
+@use 'ShopUi/components/atoms/link/link' as *;
+
+@include shop-ui-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+    cursor: pointer;
+    color: var(--text-brand);
+    font-size: var(--font-size-14, 14px);
+    font-weight: 500;
+    gap: var(--scale-4);
+
+    &:hover {
+        text-decoration: underline;
+        color: var(--text-brand);
+    }
+
+    &--sm {
+        font-size: var(--body-sm-size);
+    }
+
+    &--lg {
+        font-size: var(--font-size-16);
+    }
+
+    &--subtle,
+    &--subtle:hover {
+        color: var(--text-secondary);
+    }
+
+    &--danger,
+    &--danger:hover {
+        color: var(--text-state-error);
+    }
+
+    &--no-decoration {
+        text-decoration: none;
+        border: 0;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+
+    &--font-inherit {
+        font: inherit;
+    }
+
+    &:has(.font-icon):hover,
+    &:has(.font-icon):focus {
+        text-decoration: none;
+    }
+
+    &:has(.font-icon):hover &__text,
+    &:has(.font-icon):focus &__text {
+        text-decoration: underline;
+    }
+}

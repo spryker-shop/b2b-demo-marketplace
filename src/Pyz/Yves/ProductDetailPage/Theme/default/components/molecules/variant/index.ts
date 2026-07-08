@@ -1,1 +1,1 @@
-import './variant.scss';
+import './style.scss';

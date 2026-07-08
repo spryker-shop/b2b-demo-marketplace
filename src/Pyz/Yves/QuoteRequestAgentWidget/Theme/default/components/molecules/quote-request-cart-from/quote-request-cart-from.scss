@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin quote-request-agent-widget-quote-request-cart-from($name: '.quote-request-cart-from') {
     #{$name} {
         margin: rem(16) 0;
@@ -19,5 +20,3 @@
         @content;
     }
 }
-
-@include quote-request-agent-widget-quote-request-cart-from();

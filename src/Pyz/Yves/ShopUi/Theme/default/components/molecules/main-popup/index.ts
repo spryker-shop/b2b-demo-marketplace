@@ -1,4 +1,4 @@
-import './main-popup.scss';
+import './style.scss';
 import register from 'ShopUi/app/registry';
 export default register(
     'main-popup',

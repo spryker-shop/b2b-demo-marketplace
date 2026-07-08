@@ -12,3 +12,14 @@ $setting-zi-header-overlay: 1170;
 $setting-zi-side-drawer: 1200;
 $setting-zi-notification-area: 1250;
 $setting-zi-skip-link: 2000;
+
+// Configures the vendor module so core helpers resolve to project values,
+// and re-exports the remaining inherited vendor settings.
+@forward 'ShopUi/styles/settings/z-index' with (
+    $setting-zi-element: $setting-zi-element,
+    $setting-zi-overlay: $setting-zi-overlay,
+    $setting-zi-header: $setting-zi-header,
+    $setting-zi-side-drawer: $setting-zi-side-drawer,
+    $setting-zi-notification-area: $setting-zi-notification-area,
+    $setting-zi-skip-link: $setting-zi-skip-link
+);

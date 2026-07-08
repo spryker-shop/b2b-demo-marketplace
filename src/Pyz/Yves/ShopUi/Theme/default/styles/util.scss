@@ -1,8 +1,10 @@
-@import '~ShopUi/styles/util';
+// Load project settings first (they configure the vendor modules via `@forward ... with`),
+// so vendor utils below are generated from project values. Must precede any vendor load.
+@use 'src/ShopUi/styles/shared';
+@use 'ShopUi/styles/util' as util;
+@use 'utils/visibility' as project-visibility;
 
-@import 'utils/visibility';
-
-@include util-spacing;
-@include util-text;
-@include util-float;
-@include util-visibility;
+@include util.util-spacing;
+@include util.util-text;
+@include util.util-float;
+@include project-visibility.util-visibility;

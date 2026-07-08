@@ -1,4 +1,4 @@
-import './header-shopping-list-pill.scss';
+import './style.scss';
 import register from 'ShopUi/app/registry';
 export default register(
     'header-shopping-list-pill',

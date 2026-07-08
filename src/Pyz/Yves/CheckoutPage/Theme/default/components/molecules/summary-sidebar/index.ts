@@ -1,1 +1,1 @@
-import './summary-sidebar.scss';
+import './style.scss';

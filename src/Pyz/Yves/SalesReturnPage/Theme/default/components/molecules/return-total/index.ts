@@ -1,1 +1,1 @@
-import './return-total.scss';
+import './style.scss';

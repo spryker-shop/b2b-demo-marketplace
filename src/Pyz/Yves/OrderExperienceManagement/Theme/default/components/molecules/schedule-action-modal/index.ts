@@ -1,1 +1,1 @@
-import './schedule-action-modal.scss';
+import './style.scss';

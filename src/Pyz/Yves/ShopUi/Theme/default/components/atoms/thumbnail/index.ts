@@ -1,1 +1,1 @@
-import './thumbnail';
+import './style.scss';

@@ -1,1 +1,1 @@
-import './shopping-list-message';
+import './style.scss';

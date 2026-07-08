@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin catalog-page-catalog-header($name: '.catalog-header') {
     #{$name} {
         display: flex;
@@ -68,5 +69,3 @@
         @content;
     }
 }
-
-@include catalog-page-catalog-header();

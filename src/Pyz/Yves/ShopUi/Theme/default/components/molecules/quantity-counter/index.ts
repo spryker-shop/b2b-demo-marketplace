@@ -1,4 +1,4 @@
-import './quantity-counter.scss';
+import './style.scss';
 import register from 'ShopUi/app/registry';
 export default register(
     'quantity-counter',

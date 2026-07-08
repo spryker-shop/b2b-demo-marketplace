@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin cart-page-cart-summary($name: '.cart-summary') {
     #{$name} {
         &__wrapper {
@@ -55,5 +56,3 @@
         @content;
     }
 }
-
-@include cart-page-cart-summary();

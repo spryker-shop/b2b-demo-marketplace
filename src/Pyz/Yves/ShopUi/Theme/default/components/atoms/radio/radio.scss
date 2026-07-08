@@ -1,4 +1,5 @@
-@import '../checkbox/checkbox';
+@use 'src/ShopUi/styles/shared' as *;
+@use '../checkbox/checkbox' as *;
 
 @mixin shop-ui-radio($name: '.radio') {
     @include shop-ui-checkbox($name) {
@@ -68,5 +69,3 @@
         @content;
     }
 }
-
-@include shop-ui-radio;

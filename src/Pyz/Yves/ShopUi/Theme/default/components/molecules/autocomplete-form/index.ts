@@ -1,4 +1,4 @@
-import './autocomplete-form.scss';
+import './style.scss';
 import register from 'ShopUi/app/registry';
 export default register(
     'autocomplete-form',

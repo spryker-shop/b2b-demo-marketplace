@@ -1,1 +1,1 @@
-import './alert.scss';
+import './style.scss';

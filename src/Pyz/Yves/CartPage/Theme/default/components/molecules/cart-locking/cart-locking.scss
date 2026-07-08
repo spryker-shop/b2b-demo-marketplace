@@ -1,3 +1,5 @@
+@use 'sass:map';
+@use 'src/ShopUi/styles/shared' as *;
 $cart-locking-info-padding: rem(52);
 
 @mixin cart-page-cart-locking($name: '.cart-locking') {
@@ -23,7 +25,7 @@ $cart-locking-info-padding: rem(52);
 
         &__reset-link {
             color: $setting-color-alt;
-            font-weight: map_get($setting-font-weight, medium);
+            font-weight: map.get($setting-font-weight, medium);
 
             @include helper-breakpoint-media-min($xl) {
                 @include helper-effect-transition(color);
@@ -39,5 +41,3 @@ $cart-locking-info-padding: rem(52);
         @content;
     }
 }
-
-@include cart-page-cart-locking();

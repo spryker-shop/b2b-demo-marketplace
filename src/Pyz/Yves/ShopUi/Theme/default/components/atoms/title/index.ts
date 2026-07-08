@@ -1,1 +1,1 @@
-import './title';
+import './style.scss';

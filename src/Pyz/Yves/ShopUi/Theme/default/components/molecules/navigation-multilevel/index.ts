@@ -1,4 +1,4 @@
-import './navigation-multilevel.scss';
+import './style.scss';
 import register from 'ShopUi/app/registry';
 export default register(
     'navigation-multilevel',

@@ -1,1 +1,1 @@
-import './section';
+import './style.scss';

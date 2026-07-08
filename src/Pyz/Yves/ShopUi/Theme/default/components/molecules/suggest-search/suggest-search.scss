@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin shop-ui-suggest-search($name: '.suggest-search') {
     #{$name} {
         &__container {
@@ -119,5 +120,3 @@
         @content;
     }
 }
-
-@include shop-ui-suggest-search;

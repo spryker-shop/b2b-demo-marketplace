@@ -1,1 +1,1 @@
-import './search-tabs.scss';
+import './style.scss';

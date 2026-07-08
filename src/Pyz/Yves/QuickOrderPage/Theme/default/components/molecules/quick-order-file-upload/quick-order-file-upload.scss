@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin quick-order-page-quick-order-file-upload($name: '.quick-order-file-upload') {
     #{$name} {
         background-color: $setting-color-gray-7;
@@ -69,5 +70,3 @@
         @content;
     }
 }
-
-@include quick-order-page-quick-order-file-upload;

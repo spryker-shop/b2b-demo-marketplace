@@ -1,1 +1,1 @@
-import './table-action-link';
+import './style.scss';

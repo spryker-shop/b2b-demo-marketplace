@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin product-packaging-unit-widget-packaging-unit-cart($name: '.packaging-unit-cart') {
     #{$name} {
         &__list {
@@ -47,5 +48,3 @@
         @content;
     }
 }
-
-@include product-packaging-unit-widget-packaging-unit-cart();

@@ -1,0 +1,73 @@
+@use 'src/ShopUi/styles/shared' as *;
+@use './status' as *;
+@use 'ShopUi/components/molecules/status/status' as *;
+
+@include shop-ui-status {
+    $name: &;
+
+    @include helper-badge-chip;
+    font-weight: var(--font-weight-medium);
+
+    &::before {
+        display: none;
+    }
+
+    &--success,
+    &--availability,
+    &--shipped,
+    &--in-stock,
+    &--never-out-of-stock,
+    &--available,
+    &--approved,
+    &--ready,
+    &--delivered,
+    &--refunded,
+    &--completed {
+        @include helper-badge-semantic-subtle(success);
+
+        &#{$name}--solid {
+            @include helper-badge-semantic-bold-background(success);
+        }
+    }
+
+    &--info,
+    &--commission-calculated,
+    &--paid,
+    &--processing,
+    &--in-progress,
+    &--confirmed,
+    &--pending-approval {
+        @include helper-badge-semantic-subtle(info);
+
+        &#{$name}--solid {
+            @include helper-badge-semantic-bold-background(info);
+        }
+    }
+
+    &--warning,
+    &--ready-for-return,
+    &--returned,
+    &--waiting-for-return,
+    &--return-canceled,
+    &--partially-fulfilled,
+    &--needs-attention {
+        @include helper-badge-semantic-subtle(warning);
+
+        &#{$name}--solid {
+            @include helper-badge-semantic-bold-background(warning);
+        }
+    }
+
+    &--alert,
+    &--out-of-stock,
+    &--rejected,
+    &--not-configured,
+    &--cancelled,
+    &--failed {
+        @include helper-badge-semantic-subtle(error);
+
+        &#{$name}--solid {
+            @include helper-badge-semantic-bold-background(error);
+        }
+    }
+}

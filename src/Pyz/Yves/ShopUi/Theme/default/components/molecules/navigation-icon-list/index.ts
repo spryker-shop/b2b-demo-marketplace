@@ -1,1 +1,1 @@
-import './navigation-icon-list';
+import './style.scss';

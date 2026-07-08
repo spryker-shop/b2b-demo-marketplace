@@ -1,5 +1,2 @@
-@include self-service-portal-assets-preview($name: '.assets-preview') {
-    &__content.box {
-        padding-bottom: rem(15);
-    }
-}
+@use 'src/ShopUi/styles/shared' as *;
+@use 'SelfServicePortal/components/molecules/assets-preview/assets-preview' as *;

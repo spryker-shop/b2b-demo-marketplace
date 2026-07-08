@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin catalog-page-filter-search($name: '.filter-search') {
     #{$name} {
         position: relative;
@@ -6,5 +7,3 @@
         @content;
     }
 }
-
-@include catalog-page-filter-search();

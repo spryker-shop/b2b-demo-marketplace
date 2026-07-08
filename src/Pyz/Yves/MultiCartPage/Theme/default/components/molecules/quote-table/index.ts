@@ -1,1 +1,1 @@
-import './quote-table.scss';
+import './style.scss';

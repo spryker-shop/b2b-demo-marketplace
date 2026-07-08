@@ -1,0 +1,106 @@
+@use 'src/ShopUi/styles/shared' as *;
+@use './label-group' as *;
+@use 'ProductLabelWidget/components/molecules/label-group/label-group' as *;
+
+@include product-label-widget-label-group {
+    line-height: 0;
+    display: flex;
+    gap: rem(4);
+    vertical-align: top;
+    justify-content: flex-end;
+    pointer-events: auto;
+    margin-bottom: rem(8);
+    right: auto;
+    padding: rem(6);
+
+    &:hover {
+        .label-group__all-labels-wrapper {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    }
+
+    &__label-flag {
+        &--pdp {
+            display: inline;
+            vertical-align: top;
+        }
+    }
+
+    &__text {
+        @include helper-badge-chip;
+
+        &--service,
+        &--spare-parts,
+        &--top,
+        &--info {
+            @include helper-badge-semantic-subtle(info);
+        }
+
+        &--scheduled,
+        &--success {
+            @include helper-badge-semantic-subtle(success);
+        }
+
+        &--discontinued,
+        &--warning {
+            @include helper-badge-semantic-subtle(warning);
+        }
+
+        &-regected,
+        &--not-compatible,
+        &--sale,
+        &--error {
+            @include helper-badge-semantic-subtle(error);
+        }
+    }
+
+    &--pdp {
+        position: static;
+        padding: 0 0 rem(4);
+        font-size: 0;
+        line-height: 0;
+        justify-content: flex-start;
+        margin: 0;
+    }
+
+    &--bottom-right {
+        top: auto;
+        left: auto;
+        bottom: 0;
+    }
+
+    &__counter {
+        @include helper-badge-chip;
+        display: inline-block;
+        font-size: rem(12);
+        line-height: rem(20);
+        background-color: $setting-color-gray-1;
+        color: $setting-color-gray-8;
+        padding: 0 rem(6);
+        border-radius: $setting-border-radius-2;
+
+        &--pdp {
+            display: none;
+        }
+    }
+
+    &__all-labels-wrapper {
+        @include helper-effect-transition(opacity);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: rem(4);
+        position: absolute;
+        right: rem(4);
+        top: 100%;
+        opacity: 0;
+        pointer-events: none;
+
+        &--pdp {
+            display: inline;
+            position: static;
+            opacity: 1;
+        }
+    }
+}

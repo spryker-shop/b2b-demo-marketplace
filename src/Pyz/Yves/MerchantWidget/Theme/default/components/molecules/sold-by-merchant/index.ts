@@ -1,1 +1,1 @@
-import './sold-by-merchant.scss';
+import './style.scss';

@@ -1,4 +1,4 @@
-import './date-time-picker.scss';
+import './style.scss';
 import register from 'ShopUi/app/registry';
 export default register(
     'date-time-picker',

@@ -1,1 +1,1 @@
-import './review-summary-banner.scss';
+import './style.scss';

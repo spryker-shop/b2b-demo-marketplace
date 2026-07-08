@@ -1,8 +1,3 @@
+@use 'src/ShopUi/styles/shared' as *;
+@use 'ShopUi/components/organisms/notification-area/notification-area' as *;
 $name: '.notification-area';
-
-@include shop-ui-notification-area($name) {
-    top: auto;
-    left: auto;
-    bottom: rem(12);
-    right: rem(12);
-}

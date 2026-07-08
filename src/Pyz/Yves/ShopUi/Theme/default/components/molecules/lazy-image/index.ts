@@ -1,4 +1,4 @@
-import './lazy-image.scss';
+import './style.scss';
 import register from 'ShopUi/app/registry';
 export default register(
     'lazy-image',

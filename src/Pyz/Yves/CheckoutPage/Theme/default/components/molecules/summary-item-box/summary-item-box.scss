@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin checkout-page-summary-item-box($name: '.summary-item-box') {
     #{$name} {
         background-color: $setting-color-gray-7;
@@ -52,5 +53,3 @@
         @content;
     }
 }
-
-@include checkout-page-summary-item-box();

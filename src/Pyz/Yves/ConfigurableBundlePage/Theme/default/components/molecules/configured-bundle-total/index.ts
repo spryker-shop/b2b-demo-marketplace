@@ -1,1 +1,1 @@
-import './configured-bundle-total.scss';
+import './style.scss';

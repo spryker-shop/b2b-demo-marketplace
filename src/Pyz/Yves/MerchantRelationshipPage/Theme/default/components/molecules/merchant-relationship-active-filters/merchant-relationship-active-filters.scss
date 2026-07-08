@@ -1,8 +1,10 @@
+@use 'sass:map';
+@use 'src/ShopUi/styles/shared' as *;
 .merchant-relationship-active-filters {
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
-    font-size: map_get($setting-font-size, small);
+    font-size: map.get($setting-font-size, small);
     margin-bottom: rem(12);
 
     &__title {

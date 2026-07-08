@@ -1,4 +1,5 @@
-@import '../../atoms/checkbox/checkbox';
+@use 'src/ShopUi/styles/shared' as *;
+@use '../../atoms/checkbox/checkbox' as *;
 
 @mixin shop-ui-toggler-checkbox($name: '.toggler-checkbox') {
     @include shop-ui-checkbox($name) {
@@ -9,5 +10,3 @@
         @content;
     }
 }
-
-@include shop-ui-toggler-checkbox;

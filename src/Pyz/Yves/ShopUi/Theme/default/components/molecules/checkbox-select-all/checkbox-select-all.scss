@@ -1,4 +1,5 @@
-@import '../../atoms/checkbox/checkbox';
+@use 'src/ShopUi/styles/shared' as *;
+@use '../../atoms/checkbox/checkbox' as *;
 
 @mixin shop-ui-checkbox-select-all($name: '.checkbox-select-all') {
     @include shop-ui-checkbox($name) {
@@ -54,5 +55,3 @@
 
     @content;
 }
-
-@include shop-ui-checkbox-select-all();

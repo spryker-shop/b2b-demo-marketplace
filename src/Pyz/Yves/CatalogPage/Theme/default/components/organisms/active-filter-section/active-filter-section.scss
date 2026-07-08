@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin catalog-page-active-filter-section($name: '.active-filter-section') {
     #{$name} {
         display: flex;
@@ -80,5 +81,3 @@
         @content;
     }
 }
-
-@include catalog-page-active-filter-section();

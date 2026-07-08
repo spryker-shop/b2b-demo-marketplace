@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin product-review-new-review-form($name: '.new-review-form') {
     #{$name} {
         &__card {
@@ -43,5 +44,3 @@
         }
     }
 }
-
-@include product-review-new-review-form;

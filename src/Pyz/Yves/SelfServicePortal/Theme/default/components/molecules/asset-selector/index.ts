@@ -1,4 +1,4 @@
-import './asset-selector.scss';
+import './style.scss';
 import register from 'ShopUi/app/registry';
 export default register(
     'asset-selector',

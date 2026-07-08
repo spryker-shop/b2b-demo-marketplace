@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin shop-ui-navigation-footer-item($name: '.navigation-footer-item') {
     #{$name} {
         &--social {
@@ -16,5 +17,3 @@
         @content;
     }
 }
-
-@include shop-ui-navigation-footer-item;

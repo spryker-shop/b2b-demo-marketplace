@@ -1,1 +1,1 @@
-import './status.scss';
+import './style.scss';

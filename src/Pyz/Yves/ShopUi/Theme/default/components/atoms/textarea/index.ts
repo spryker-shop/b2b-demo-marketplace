@@ -1,1 +1,1 @@
-import './textarea.scss';
+import './style.scss';

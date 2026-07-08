@@ -1,1 +1,1 @@
-import './icon-tooltip';
+import './style.scss';

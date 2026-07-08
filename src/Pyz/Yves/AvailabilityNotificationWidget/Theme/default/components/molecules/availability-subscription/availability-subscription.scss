@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin availability-notification-availability-subscription($name: '.availability-subscription') {
     #{$name} {
         display: block;
@@ -42,5 +43,3 @@
         }
     }
 }
-
-@include availability-notification-availability-subscription();

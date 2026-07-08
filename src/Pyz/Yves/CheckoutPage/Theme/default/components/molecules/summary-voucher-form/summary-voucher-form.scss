@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin checkout-page-summary-voucher-form($name: '.summary-voucher-form') {
     #{$name} {
         &__item {
@@ -27,5 +28,3 @@
         @content;
     }
 }
-
-@include checkout-page-summary-voucher-form();

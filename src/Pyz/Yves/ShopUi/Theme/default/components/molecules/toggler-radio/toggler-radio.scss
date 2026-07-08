@@ -1,4 +1,5 @@
-@import '../../atoms/radio/radio';
+@use 'src/ShopUi/styles/shared' as *;
+@use '../../atoms/radio/radio' as *;
 
 @mixin shop-ui-toggler-radio($name: '.toggler-radio') {
     @include shop-ui-radio($name) {
@@ -31,5 +32,3 @@
         @content;
     }
 }
-
-@include shop-ui-toggler-radio;

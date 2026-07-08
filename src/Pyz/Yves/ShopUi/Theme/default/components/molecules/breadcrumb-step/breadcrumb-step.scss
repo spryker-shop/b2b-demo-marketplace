@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin shop-ui-breadcrumb-step($name: '.breadcrumb-step') {
     #{$name} {
         @include typography(label-md);
@@ -177,5 +178,3 @@
         @content;
     }
 }
-
-@include shop-ui-breadcrumb-step();

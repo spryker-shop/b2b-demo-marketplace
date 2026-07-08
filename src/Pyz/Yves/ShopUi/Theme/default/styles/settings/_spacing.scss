@@ -9,3 +9,9 @@ $setting-spacing: (
     small: var(--scale-2),
     reset: var(--scale-0),
 );
+
+// Configures the vendor module so core helpers resolve to project values,
+// and re-exports the remaining inherited vendor settings.
+@forward 'ShopUi/styles/settings/spacing' with (
+    $setting-spacing: $setting-spacing
+);

@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin shop-ui-navigation-top($name: '.navigation-top') {
     #{$name} {
         display: none;
@@ -71,5 +72,3 @@
         @content;
     }
 }
-
-@include shop-ui-navigation-top();

@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin cart-code-widget-cart-code-summary($name: '.cart-code-summary') {
     #{$name} {
         &__item {
@@ -33,5 +34,3 @@
         @content;
     }
 }
-
-@include cart-code-widget-cart-code-summary();

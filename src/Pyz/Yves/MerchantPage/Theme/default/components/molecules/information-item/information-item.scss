@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin merchant-page-information-item($name: '.information-item') {
     #{$name} {
         margin-bottom: rem(16);
@@ -11,5 +12,3 @@
         @content;
     }
 }
-
-@include merchant-page-information-item();

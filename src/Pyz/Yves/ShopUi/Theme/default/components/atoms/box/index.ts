@@ -1,1 +1,1 @@
-import './box';
+import './style.scss';

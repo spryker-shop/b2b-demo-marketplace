@@ -1,3 +1,5 @@
+@use 'sass:map';
+@use 'src/ShopUi/styles/shared' as *;
 @mixin shopping-list-widget-shop-list-item($name: '.shop-list-item') {
     #{$name} {
         position: relative;
@@ -71,12 +73,10 @@
             font-weight: fw(bold);
 
             &--full {
-                color: map_get($setting-color-actions, 'success');
+                color: map.get($setting-color-actions, 'success');
             }
         }
 
         @content;
     }
 }
-
-@include shopping-list-widget-shop-list-item();

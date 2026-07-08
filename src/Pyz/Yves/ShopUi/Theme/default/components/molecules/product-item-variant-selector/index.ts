@@ -1,1 +1,1 @@
-import './product-item-variant-selector';
+import './style.scss';

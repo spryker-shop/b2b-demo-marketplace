@@ -1,1 +1,1 @@
-import './quote-approve-request.scss';
+import './style.scss';

@@ -1,1 +1,1 @@
-import './packaging-unit-cart.scss';
+import './style.scss';

@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin order-experience-management-schedule-detail-sidebar($name: '.schedule-detail-sidebar') {
     #{$name} {
         background: var(--background-surface);
@@ -29,5 +30,3 @@
         @content;
     }
 }
-
-@include order-experience-management-schedule-detail-sidebar;

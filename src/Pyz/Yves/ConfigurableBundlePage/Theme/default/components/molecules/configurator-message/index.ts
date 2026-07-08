@@ -1,1 +1,1 @@
-import './configurator-message.scss';
+import './style.scss';

@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin configurable-bundle-widget-configured-bundle($name: '.configured-bundle') {
     #{$name} {
         border: rem(1) solid $setting-color-gray-7;
@@ -60,5 +61,3 @@
         @content;
     }
 }
-
-@include configurable-bundle-widget-configured-bundle;

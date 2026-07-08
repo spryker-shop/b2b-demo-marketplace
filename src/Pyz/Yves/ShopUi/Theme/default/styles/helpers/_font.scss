@@ -1,5 +1,8 @@
+@use 'sass:map';
+@use 'src/ShopUi/styles/settings/font' as *;
+@forward 'ShopUi/styles/helpers/font';
 @function fw($weight) {
-    @return map-get($setting-font-weight, $weight);
+    @return map.get($setting-font-weight, $weight);
 }
 
 @mixin typography($name) {

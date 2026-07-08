@@ -1,1 +1,1 @@
-import './filter-section';
+import './style.scss';

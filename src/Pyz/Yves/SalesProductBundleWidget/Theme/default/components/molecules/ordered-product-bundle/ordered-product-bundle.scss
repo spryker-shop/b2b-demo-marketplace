@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin sales-product-bundle-widget-ordered-product-bundle($name: '.ordered-product-bundle') {
     #{$name} {
         &__content {
@@ -7,5 +8,3 @@
         @content;
     }
 }
-
-@include sales-product-bundle-widget-ordered-product-bundle();

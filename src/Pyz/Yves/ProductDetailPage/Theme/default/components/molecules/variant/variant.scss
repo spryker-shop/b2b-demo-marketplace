@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin product-detail-page-variant-configurator($name: '.variant') {
     #{$name} {
         display: flex;
@@ -25,5 +26,3 @@
         }
     }
 }
-
-@include product-detail-page-variant-configurator;

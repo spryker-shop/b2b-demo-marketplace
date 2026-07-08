@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin multi-cart-page-quote-table($name: '.quote-table') {
     #{$name} {
         &__cart-name {
@@ -26,5 +27,3 @@
         @content;
     }
 }
-
-@include multi-cart-page-quote-table();

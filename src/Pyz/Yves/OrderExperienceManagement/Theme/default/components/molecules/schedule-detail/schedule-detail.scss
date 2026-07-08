@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin order-experience-management-schedule-detail($name: '.schedule-detail') {
     #{$name} {
         &__grid {
@@ -15,5 +16,3 @@
         }
     }
 }
-
-@include order-experience-management-schedule-detail;

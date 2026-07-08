@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin shop-ui-formatted-number-input($name: '.formatted-number-input') {
     #{$name} {
         min-width: rem(1);
@@ -7,5 +8,3 @@
         }
     }
 }
-
-@include shop-ui-formatted-number-input();

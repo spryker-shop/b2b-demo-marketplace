@@ -1,1 +1,1 @@
-import './schedule-review.scss';
+import './style.scss';

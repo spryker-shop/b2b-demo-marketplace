@@ -1,0 +1,147 @@
+@use 'src/ShopUi/styles/shared' as *;
+@use './money-price' as *;
+@use 'ShopUi/components/molecules/money-price/money-price' as *;
+
+@include shop-ui-money-price {
+    $name: &;
+    color: var(--text-primary);
+
+    &--row {
+        display: flex;
+        align-items: baseline;
+        gap: var(--scale-8);
+        flex-wrap: wrap;
+    }
+
+    &--big {
+        margin-top: rem(12);
+        margin-bottom: rem(23);
+
+        @include helper-breakpoint-media-min($lg) {
+            margin-top: 0;
+        }
+    }
+
+    &--medium {
+        margin: 0 0 $setting-grid-space;
+        width: 100%;
+    }
+
+    &--margin-bottom-from-tablet {
+        margin: 0;
+
+        @include helper-breakpoint-media-min($lg) {
+            margin: 0 0 $setting-grid-space;
+        }
+    }
+
+    &--text-right-from-tablet {
+        @include helper-breakpoint-media-min($lg) {
+            text-align: right;
+        }
+    }
+
+    &--secondary {
+        margin-top: rem(8);
+        padding: rem(14) rem(16);
+        background: $setting-color-gray-7;
+    }
+
+    &--detail {
+        margin: 0;
+
+        #{$name}__amount {
+            @include typography(price-lg);
+            color: var(--text-primary);
+
+            &--original {
+                @include typography(caption);
+                color: var(--text-tertiary);
+                text-decoration: line-through;
+            }
+        }
+
+        #{$name}__mode {
+            @include typography(body-sm);
+            color: var(--text-tertiary);
+        }
+    }
+
+    &__amount {
+        font-size: rem(16);
+        font-weight: fw(medium);
+        line-height: 1.2;
+        color: var(--text-primary);
+
+        @include helper-breakpoint-media-min($lg) {
+            font-size: rem(21);
+        }
+
+        &--sm {
+            font-family: var(--label-sm-family);
+            font-size: var(--label-sm-size);
+            font-weight: var(--label-sm-weight);
+            line-height: 1;
+        }
+
+        &--big {
+            font-size: rem(24);
+            font-weight: fw(bold);
+            line-height: normal;
+
+            @include helper-breakpoint-media-min($lg) {
+                font-size: rem(26);
+            }
+        }
+
+        &--medium {
+            font-size: rem(18);
+            font-weight: fw(bold);
+            line-height: normal;
+        }
+
+        &--gray-color {
+            color: $setting-color-gray-5;
+        }
+
+        &--original {
+            font-size: var(--caption-size);
+            font-weight: var(--caption-weight);
+            text-decoration: line-through;
+        }
+
+        &--block {
+            display: block;
+        }
+
+        &--cart {
+            @include typography(price-sm);
+            color: var(--text-primary);
+        }
+    }
+
+    &__mode {
+        font-family: var(--label-sm-family);
+        font-size: var(--label-sm-size);
+        font-weight: var(--label-sm-weight);
+        line-height: 1;
+        white-space: nowrap;
+
+        &--big {
+            font-size: rem(13);
+            line-height: normal;
+        }
+
+        &--block {
+            display: block;
+        }
+
+        &--cart {
+            color: var(--text-tertiary);
+            font-family: var(--body-sm-family);
+            font-size: var(--body-sm-size);
+            font-weight: var(--font-weight-regular);
+            line-height: var(--body-sm-line-height);
+        }
+    }
+}

@@ -1,1 +1,1 @@
-import './menu';
+import './style.scss';

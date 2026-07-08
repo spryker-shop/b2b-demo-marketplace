@@ -1,1 +1,1 @@
-import './request-status.scss';
+import './style.scss';

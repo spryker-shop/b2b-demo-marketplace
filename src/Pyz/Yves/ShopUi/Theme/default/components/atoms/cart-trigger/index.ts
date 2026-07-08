@@ -1,1 +1,1 @@
-import './cart-trigger.scss';
+import './style.scss';

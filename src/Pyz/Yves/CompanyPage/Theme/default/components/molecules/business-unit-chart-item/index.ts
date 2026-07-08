@@ -1,1 +1,1 @@
-import './business-unit-chart-item';
+import './style.scss';

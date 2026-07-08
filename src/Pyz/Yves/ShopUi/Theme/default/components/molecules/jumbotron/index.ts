@@ -1,1 +1,1 @@
-import './jumbotron.scss';
+import './style.scss';

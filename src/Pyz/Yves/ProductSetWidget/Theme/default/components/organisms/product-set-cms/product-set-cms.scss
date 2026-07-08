@@ -1,3 +1,4 @@
+@use 'src/ShopUi/styles/shared' as *;
 @mixin product-set-widget-product-set-cms($name: '.product-set-cms') {
     #{$name} {
         padding-bottom: rem(80);
@@ -14,5 +15,3 @@
         @content;
     }
 }
-
-@include product-set-widget-product-set-cms;

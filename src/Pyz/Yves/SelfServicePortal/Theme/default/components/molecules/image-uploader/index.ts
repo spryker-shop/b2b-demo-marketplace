@@ -1,5 +1,5 @@
 import register from 'ShopUi/app/registry';
-import './image-uploader.scss';
+import './style.scss';
 export default register(
     'image-uploader',
     () =>
