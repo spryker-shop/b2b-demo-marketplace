@@ -1,0 +1,36 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'reactive-demo',
+    tag: 'reactive-demo'
+} %}
+
+{% block body %}
+    <div class="{{ config.name }}__panel">
+        <span class="{{ config.name }}__title">Reactive POC</span>
+
+        <dl class="{{ config.name }}__state">
+            <dt class="{{ config.name }}__state-label">locale</dt>
+            <dd class="{{ config.name }}__state-value" data-bind-text="app.locale"></dd>
+            <dt class="{{ config.name }}__state-label">currency</dt>
+            <dd class="{{ config.name }}__state-value">
+                <span data-bind-text="app.currency.code"></span>&nbsp;<span data-bind-text="app.currency.symbol"></span>
+            </dd>
+            <dt class="{{ config.name }}__state-label">price mode</dt>
+            <dd class="{{ config.name }}__state-value" data-bind-text="app.priceMode"></dd>
+            <dt class="{{ config.name }}__state-label">logged in</dt>
+            <dd class="{{ config.name }}__state-value" data-bind-text="app.customer.isLoggedIn"></dd>
+            <dt class="{{ config.name }}__state-label">cms idCategory</dt>
+            <dd class="{{ config.name }}__state-value" data-bind-text="catalog.cmsBlock.idCategory"></dd>
+        </dl>
+
+        <div class="{{ config.name }}__controls">
+            <button type="button" class="button {{ config.jsName }}__increment">
+                counter +1 (<span data-bind-text="demo.counter">0</span>)
+            </button>
+            <span class="{{ config.name }}__badge" data-bind-text="demo.counter">0</span>
+            <button type="button" class="button button--hollow {{ config.jsName }}__toggle">toggle cms block</button>
+            <input type="number" class="input {{ config.name }}__category-input {{ config.jsName }}__category-input" placeholder="idCategory">
+        </div>
+    </div>
+{% endblock %}

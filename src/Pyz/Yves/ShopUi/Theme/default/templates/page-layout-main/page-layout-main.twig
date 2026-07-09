@@ -256,6 +256,25 @@
 {% block globalComponents %}
     {{ parent() }}
 
+    {% do setGlobalStore({
+        app: {
+            locale: app.locale,
+            currency: {
+                code: currencyIsoCode(),
+                symbol: moneySymbol(currencyIsoCode()).symbol,
+            },
+            priceMode: getPriceMode(),
+            customer: {
+                isLoggedIn: is_granted('ROLE_USER'),
+            },
+        },
+    }) %}
+    {% include molecule('reactive-bind') with {
+        data: {
+            state: getGlobalStore(),
+        },
+    } only %}
+
     {% include molecule('node-animator') only %}
 
     {% include molecule('window-load-class-remover') with {

@@ -28,6 +28,42 @@
 {% block contentTop %}
     {% if data.categoryId %}
         <div class="container">
+            {% embed molecule('reactive-bind') with {
+                data: {
+                    state: {
+                        catalog: {
+                            cmsBlock: {
+                                idCategory: data.categoryId,
+                                position: 'middle',
+                            },
+                        },
+                        demo: {
+                            counter: 0,
+                            cmsBlockHidden: false,
+                        },
+                    },
+                },
+                embed: {
+                    idCategory: data.categoryId,
+                },
+            } only %}
+                {% block content %}
+                    {% include molecule('reactive-demo') only %}
+
+                    {% include molecule('catalog-cms-block', 'CmsBlockWidget') ignore missing with {
+                        class: 'box',
+                        data: {
+                            idCategory: embed.idCategory,
+                            position: 'middle',
+                        },
+                        attributes: {
+                            'data-bind-attr': 'data-id-category:catalog.cmsBlock.idCategory,data-position:catalog.cmsBlock.position',
+                            'data-bind-class': 'is-hidden:demo.cmsBlockHidden',
+                        },
+                    } only %}
+                {% endblock %}
+            {% endembed %}
+
             <div class="catalog-cms-block">
                 {% cms_slot 'slt-6' required ['idCategory'] with {
                     idCategory: data.categoryId,
