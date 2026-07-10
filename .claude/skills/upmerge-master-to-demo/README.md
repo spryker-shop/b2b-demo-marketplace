@@ -41,8 +41,9 @@ The hard part is everything `git merge` *cannot* see:
 | 6e | **Audit `config_default.php`** | Catch demo-only config blocks dropped with no conflict marker (QuickSight canary). |
 | 6g | **Audit Dependency Providers** | Catch demo-only plugin/console registrations dropped from a provider list — the wiring half of 6e's config half. Restore into `src/Demo`. |
 | **6f** | **Upmerge the `cypress-tests` repo** | **Merge cypress `master-demo` to the HASH demo-shop master pins — NOT cypress master's tip.** Re-pin the demo-shop. |
-| 7 | **Smoke-test Yves + Backoffice** | Login + customer overview + dashboard + `analytics-gui` (QuickSight canary). |
-| 7b | **Run `cy:demo`** | Mandatory automated coverage of demo-only features; predicts CI's `Run Tests (Demo)`. |
+| 7 | **Runtime feature smoke** | Delegates to `Skill(demo-runtime-smoke)` — all 10 AI Commerce features live, incl. `analytics-gui` (QuickSight canary). |
+| 7a | **Visual FE-anomaly scan** | Diff-driven visit of pages THIS merge's Twig/SCSS touched — catches a redesign shadowing a demo override that the fixed 10-feature check above doesn't enumerate. |
+| 7b | **Run `cy:demo` + `cy:demo:full`** | Mandatory smoke tier (`cy:demo`) predicts CI's `Run Tests (Demo)`; full tier (`cy:demo:full`) adds real-provider `@demo-full` cases, gated on BO provider tokens being configured. |
 | 8 | **Push + open PR** | Targets `master-demo`; ticket-named or date-named; PR body records every audit (6a–6g). |
 | 9 | **JIRA (optional)** | Only if a ticket was provided: a best-effort PR-link comment. **Never** moves the ticket's status. |
 | 10 | **Hand off + schedule poll** | Tell user; `ScheduleWakeup` for the pipeline check. |
@@ -66,9 +67,10 @@ flowchart TD
     I --> J[Step 6e: Audit config_default.php demo-only blocks]
     J --> K[[Step 6f: Upmerge cypress-tests repo — see cypress diagram]]
 
-    K --> L[Step 7: Smoke-test Yves + Backoffice + analytics-gui]
-    L --> M[Step 7b: npm run cy:demo]
-    M --> N{All green?}
+    K --> L["Step 7: Skill(demo-runtime-smoke) — all 10 features + analytics-gui"]
+    L --> La[Step 7a: visual FE-anomaly scan on changed files]
+    La --> M[Step 7b: npm run cy:demo + npm run cy:demo:full]
+    M --> N{All green? full-tier @demo-full<br/>self-skip w/o tokens is OK}
     N -- no --> Nx[Fix regression / ask user] --> H
     N -- yes --> O[Step 8: Push + open PR to master-demo]
     O --> P[Step 9: optional PR-link comment if ticketed — never move status]
