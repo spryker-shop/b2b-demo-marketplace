@@ -17,14 +17,4 @@ class VertexConfig extends SprykerEcoVertexConfig
     {
         return true;
     }
-
-    public function isTaxAssistEnabled(): bool
-    {
-        return true;
-    }
-
-    public function isInvoicingEnabled(): bool
-    {
-        return true;
-    }
 }
