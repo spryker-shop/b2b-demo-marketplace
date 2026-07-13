@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8007db23aa883094f9fc5b29d6858275",
+    "content-hash": "83cebdbb7f0ec1d68237e5ee1bf46ba4",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -10522,7 +10522,7 @@
         },
         {
             "name": "spryker-feature/buy-box",
-            "version": "1.2.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/buy-box.git",
@@ -10556,6 +10556,7 @@
                 "spryker-shop/merchant-relation-request-widget": "Add the module if you want to use MerchantRelationRequestCreateLinkWidget.",
                 "spryker-shop/price-product-volume-widget": "Add the module if you want to use CurrentProductPriceVolumeWidget."
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -10573,7 +10574,7 @@
             ],
             "description": "BuyBox module",
             "support": {
-                "source": "https://github.com/spryker-feature/buy-box/tree/1.2.0"
+                "source": "https://github.com/spryker-feature/buy-box/tree/master"
             },
             "time": "2026-07-09T07:51:37+00:00"
         },
@@ -13028,7 +13029,7 @@
         },
         {
             "name": "spryker-feature/order-experience-management",
-            "version": "0.1.5",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/order-experience-management.git",
@@ -13093,6 +13094,7 @@
                 "spryker-shop/shop-ui": "Provides Component base class, AjaxProvider, and app registry used by recurring order web components.",
                 "spryker/router": "Required by RecurringOrderRouteProviderPlugin to register recurring order Yves routes."
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -13111,7 +13113,7 @@
             ],
             "description": "OrderExperienceManagement module",
             "support": {
-                "source": "https://github.com/spryker-feature/order-experience-management/tree/0.1.5"
+                "source": "https://github.com/spryker-feature/order-experience-management/tree/master"
             },
             "time": "2026-07-06T09:16:43+00:00"
         },
@@ -93090,11 +93092,25 @@
             "version": "9999999-dev",
             "alias": "202606.0",
             "alias_normalized": "202606.0"
+        },
+        {
+            "package": "spryker-feature/buy-box",
+            "version": "9999999-dev",
+            "alias": "202606.0",
+            "alias_normalized": "202606.0"
+        },
+        {
+            "package": "spryker-feature/order-experience-management",
+            "version": "9999999-dev",
+            "alias": "202606.0",
+            "alias_normalized": "202606.0"
         }
     ],
     "minimum-stability": "dev",
     "stability-flags": {
         "spryker-feature/ai-commerce": 20,
+        "spryker-feature/buy-box": 20,
+        "spryker-feature/order-experience-management": 20,
         "spryker/cypress-tests": 20,
         "spryker/robotframework-suite-tests": 20
     },

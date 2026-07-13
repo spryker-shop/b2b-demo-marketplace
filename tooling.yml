@@ -3,8 +3,3 @@ evaluator:
         - checker: NPM_CHECKER
           var:
               ALLOWED_SEVERITY_LEVELS: [critical]
-    ignoreErrors:
-        - checker: MINIMUM_ALLOWED_SHOP_VERSION
-          messages:
-              - '#^The package "spryker-feature/buy-box" version 1\.2\.0 is not supported\. The minimum allowed version is 202204\.0$#'
-              - '#^The package "spryker-feature/order-experience-management" version 0\.1\.5 is not supported\. The minimum allowed version is 202204\.0$#'
