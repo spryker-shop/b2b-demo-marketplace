@@ -17,6 +17,7 @@ Cypress tests MUST follow Spryker conventions: mission-critical user journeys, P
 **DI**: Use `container.get(PageClass)` for all page and scenario instances — never `new`.
 **Naming**: camelCase for variables/functions, PascalCase for classes, kebab-case for files. No abbreviations — write `authentication`, not `auth`.
 **Reuse**: Search existing pages, scenarios, commands, and fixtures before creating anything new. Priority: Reuse > Update > Create.
+**No comments**: NEVER write comments in test code — no `//`, no `/* */`, no `/** */`, on specs, pages, or repositories. This was flagged on PR #330 and made an absolute rule on PR #356. Intent goes in the `it(...)` description and in method/getter names, never a comment. The ONLY exception is a functional `// eslint-disable-*` / `@ts-*` pragma. Before finishing, grep your diff for added comment lines and delete every one. See "Comments in test code — DO NOT ADD COMMENTS".
 
 ---
 
@@ -326,9 +327,73 @@ export const REPOSITORIES = { /* …existing */ FeatureRepository: Symbol.for('F
 3. `name` attribute — `[name="field_name"]` for form fields without `data-qa`
 4. Last resort, when a core/partial exposes none of the above: stable layout structure (`.page-title-head h2`, `[data-qa="title-action"]`) or the partial's translated text. Keep these selectors self-evident from their getter name — do NOT add explanatory doc-block comments (reviewers asked for them removed on PR #330; the getter name is the documentation).
 
-### Comments in test code
+### Comments in test code — DO NOT ADD COMMENTS
 
-Reviewers (PR #330) explicitly objected to verbose `/** … */` headers on specs, pages, and repositories. Keep test code comment-free: a well-named `it(...)`, page method, and selector getter say what a comment would. Put any "what does this test cover" narrative in the `it(...)` description, not a file header.
+**Do not add comments to test code. None.** No `/** … */` headers, no inline `//` notes, no file banners, no "NOTE — …" or "why" explanations — on specs, pages, or repositories. Reviewers (PR #330, PR #356) rejected them repeatedly ("I doubt somebody will read it"), and on PR #356 the instruction was made absolute: **do not add comments to code.**
+
+The code must document itself instead:
+- **Name it, don't comment it.** A `recalculate(reference)` method, an `it('…')` description, a `getPanelInputSelector()` getter — the name carries the meaning a comment would.
+- **A "why" that can't be named goes in the `it(...)` description or the method name**, not a comment. If you feel you *need* a comment to explain a quirk, that's a signal to rename the method/helper so the quirk is in the name (e.g. `submitImageThroughFilePopupUntilSuccessful`, `expandPanel` that is idempotent).
+- **When editing existing code, remove comments you encounter** in the lines you touch — don't preserve or add to them.
+
+---
+
+## Reducing Duplication (PR #356 review rules)
+
+Reviewers reject copy-paste in specs and page objects. Apply these before considering any spec done:
+
+### 1. No inline magic strings — move them to the repository
+
+Any hardcoded value in a spec or a page method — CSS selector, URL/endpoint path, label text, error message, placeholder, CSS class name, data-attribute name, window key, localStorage key — goes into the `<feature>-repository.ts` as a named getter, exposed through the page object when the spec needs it. The spec asserts against `page.getSaveLabel()`, never the literal `'Save'`. This is the selector rule generalized to *all* static text. Extract a value once it is **reused, or a domain constant, or plausibly changeable**; a genuinely one-off substring that reads clearly inline may stay.
+
+### 2. Loop over blocks that differ only by a value
+
+When two-or-more `it()`s or assertion blocks differ only by a vendor name, feature key, endpoint, or locale, drive them from a typed array and a `forEach` — do not copy the block per value.
+
+```typescript
+const VENDORS = ['openai', 'anthropic', 'aws'];
+VENDORS.forEach((vendor) => {
+  it(`${vendor} tab shows a masked token field`, { tags: ['@demo-smoke'] }, () => {
+    page.getApiTokenInput(vendor).should('have.attr', 'type', 'password');
+  });
+});
+```
+
+Parameterize a selector/key by argument in the repository (`getApiTokenInputSelector(vendor)`) rather than writing one getter per value.
+
+### 3. Extract shared logic used across specs into a helper
+
+Logic repeated across specs belongs in one place, not copy-pasted:
+- Repeated **skip-guards** → a util. This repo has `skipUnlessAiProviderEnabled(this)` in `@utils` for every `@demo-full` case — use it, never inline `if (!Cypress.env('DEMO_AI_PROVIDER_ENABLED')) this.skip()`.
+- Repeated **URL builders** → a method on the shared base page (`BackofficePage.getBackofficeAbsoluteUrl(path)`), not one per feature page.
+- Repeated **assertion blocks** → a page method (e.g. `auditLogsPage.assertNewestRowConfigurationIsFilterable('AWS')`).
+- **One request/fetch helper, parameterized** — merge sibling methods that differ by one query param into a single method with an options object (PR #356 merged `fetchRecentTableData` + `fetchTableDataFilteredByConfiguration` → `fetchTableData({ length?, configurationName? })`).
+
+### 4. Merge closely-related cases to save runtime
+
+Every `it()` re-runs `beforeEach` (login, visit). Multiple `it()`s that visit the **same page and assert closely-related facets of one user goal** should be one `it()`. For endpoint-contract / validation matrices, use a single parameterized `it()` iterating a `contract` array rather than one `it()` per row:
+
+```typescript
+const contract = [
+  { description: 'GET is rejected', request: { method: 'GET' }, expectedStatus: 405 },
+  { description: 'token-less POST is rejected', request: { method: 'POST' }, expectedStatus: 403 },
+];
+it('the endpoint enforces its status contract', { tags: ['@demo-smoke'] }, () => {
+  contract.forEach(({ description, request, expectedStatus }) => {
+    page.requestEndpoint(request.method).its('status').should('eq', expectedStatus);
+  });
+});
+```
+
+Do **not** over-merge: keep cases separate when merging hurts readability or debuggability (e.g. one-SSE-event-per-test), and **never drop an assertion** when merging — preserve full coverage.
+
+### 5. Remove dead code
+
+Delete exported types, consts, page getters, repository selectors, and fixture fields that nothing references. Re-grep to confirm zero usages before deleting (`grep -rn "getOriginalField" cypress/`). An unused fixture field is dead data — remove it from both the `.json` and its TypeScript interface.
+
+### 6. Const consistency
+
+If you extract one value in a group to a `const`, extract its siblings too. Don't leave `'ai_commerce'` inline next to a `SETTING_KEY` const, or an inline `15000` timeout next to a named `AWS_TIMEOUT`. Either all related values are named or none are.
 
 ---
 
@@ -469,13 +534,19 @@ cy.wait(5000); // arbitrary timeout — flaky, slow, and masks real issues
 ## Anti-Patterns
 
 - `cy.wait(timeout)` without waiting for a specific condition
-- Assertions inside page objects — assertions belong only in test specs
+- Assertions inside page objects — assertions belong only in test specs (a reusable page-level *assertion helper* that specs call is fine; ad-hoc assertions mixed into interaction methods are not)
 - Creating duplicate page objects — always search before creating
 - Tests that depend on execution order of other tests
 - Multiple unrelated scenarios in one test
 - Hardcoded test data in test specs
 - Inventing tags that don't exist in the Release App
 - Over-testing — only write tests that are explicitly required
+- **Inline magic strings** (labels, error text, endpoint paths, CSS classes, selectors) in specs or page methods — move them to the repository (see Reducing Duplication #1)
+- **Copy-pasted blocks that differ only by a value** — loop over a typed array instead (#2)
+- **Copy-pasted skip-guards / URL builders / assertion blocks / near-identical fetch methods** — extract one shared helper (#3)
+- **Any comments** — do not add comments to test code at all (see Comments); the name carries the intent
+- **Dead code** — unused getters, types, consts, or fixture fields (#5)
+- **Inconsistent extraction** — half the sibling values as consts, half inline (#6)
 
 ---
 
@@ -507,12 +578,22 @@ After any change to test files, always run:
 
 ```bash
 cd tests/cypress-tests
-npm run typecheck      # verify TypeScript types
-npm run lint           # check code style
-npm run prettier:write # format code
+npm run typecheck
+npm run lint
+npm run prettier:write
 ```
 
 All three must pass before the task is complete.
+
+**Also verify you left NO comments** (the code must carry its own meaning — see Critical Instructions). Grep your changes and delete any comment that is not a functional `eslint-disable`/`@ts-` pragma:
+
+```bash
+git diff --name-only | grep -E '\.ts$' | while IFS= read -r f; do
+  grep -nE '^\s*(//|/\*|\*)|\S+\s+//' "$f" | grep -vE 'eslint-disable|eslint-enable|@ts-|https?://'
+done
+```
+
+This must return nothing (besides intercept-glob strings like `'**/path/**'`, which are not comments).
 
 **Then run the spec live — the static gates do NOT prove the test works.** Fixture path mistakes, selector drift, login/CSRF issues, and timing all pass typecheck/lint/prettier and fail only at runtime. Run the actual spec against the running app with the correct `ENV_REPOSITORY_ID` (e.g. `b2b-mp` for this repo) and confirm it goes green:
 
