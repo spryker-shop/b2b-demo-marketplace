@@ -10,6 +10,7 @@ declare(strict_types = 1);
 namespace Pyz\Yves\Twig;
 
 use Pyz\Yves\PriceWidget\Plugin\Twig\PriceModeTwigPlugin;
+use Pyz\Yves\Twig\Plugin\GlobalStoreTwigPlugin;
 use Spryker\Service\UtilDateTime\Plugin\Twig\DateTimeFormatterTwigPlugin;
 use Spryker\Shared\Twig\Plugin\FormTwigPlugin;
 use Spryker\Shared\Twig\Plugin\RoutingTwigPlugin;
@@ -93,6 +94,7 @@ class TwigDependencyProvider extends SprykerTwigDependencyProvider
             new NumberFormatterTwigPlugin(),
             new GeneratePathTwigPlugin(),
             new FileSizeFormatterTwigPlugin(),
+            new GlobalStoreTwigPlugin(),
         ];
     }
 

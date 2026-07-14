@@ -1,0 +1,22 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'reactive-bind',
+    tag: 'reactive-bind'
+} %}
+
+{% define data = {
+    state: null,
+    prefix: null
+} %}
+
+{% define attributes = {
+    prefix: data.prefix | default(false)
+} %}
+
+{% block body %}
+    {% if data.state is not null %}
+        <script type="application/json">{{ data.state | json_encode(constant('JSON_HEX_TAG') b-or constant('JSON_HEX_AMP') b-or constant('JSON_HEX_APOS') b-or constant('JSON_HEX_QUOT')) | raw }}</script>
+    {% endif %}
+    {% block content %}{% endblock %}
+{% endblock %}

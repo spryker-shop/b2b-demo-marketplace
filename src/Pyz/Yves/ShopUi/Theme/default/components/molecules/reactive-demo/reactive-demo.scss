@@ -1,0 +1,72 @@
+@mixin shop-ui-reactive-demo($name: '.reactive-demo') {
+    #{$name} {
+        display: block;
+        margin-bottom: var(--scale-16);
+
+        &__panel {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: var(--scale-12);
+            padding: var(--scale-16);
+            border: var(--stroke-sm) solid var(--border-default);
+            border-radius: var(--radius-lg);
+            background: var(--background-page);
+        }
+
+        &__title {
+            font-size: var(--label-md-semibold-size);
+            font-weight: var(--label-md-semibold-weight);
+            line-height: var(--label-md-semibold-line-height);
+        }
+
+        &__state {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: var(--scale-4) var(--scale-12);
+            margin: 0;
+        }
+
+        &__state-label {
+            color: var(--text-secondary);
+            font-size: var(--body-sm-size);
+            line-height: var(--body-sm-line-height);
+        }
+
+        &__state-value {
+            margin: 0;
+            color: var(--text-primary);
+            font-size: var(--body-sm-size);
+            font-weight: var(--font-weight-semibold);
+            line-height: var(--body-sm-line-height);
+        }
+
+        &__controls {
+            display: flex;
+            align-items: center;
+            gap: var(--scale-8);
+        }
+
+        &__badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: var(--scale-24);
+            padding: var(--scale-2) var(--scale-8);
+            border-radius: var(--radius-sm);
+            background: var(--background-inverse);
+            color: var(--text-inverse);
+            font-size: var(--body-sm-size);
+            line-height: var(--body-sm-line-height);
+        }
+
+        &__category-input {
+            max-width: 120px;
+        }
+
+        @content;
+    }
+}
+
+@include shop-ui-reactive-demo;
