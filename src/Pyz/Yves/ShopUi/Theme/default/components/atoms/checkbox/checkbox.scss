@@ -94,6 +94,15 @@
         &--filter {
             display: block;
             width: 100%;
+
+            #{$name}__box {
+                width: rem(16);
+                height: rem(16);
+            }
+
+            #{$name}__input:checked ~ #{$name}__box::after {
+                font-size: var(--font-size-16);
+            }
         }
 
         &__label:empty {

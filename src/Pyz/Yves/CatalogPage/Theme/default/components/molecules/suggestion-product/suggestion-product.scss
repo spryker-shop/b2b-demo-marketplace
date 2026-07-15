@@ -63,9 +63,7 @@
         }
 
         &__sku {
-            font-size: var(--caption-size);
-            font-weight: var(--caption-weight);
-            line-height: var(--caption-line-height);
+            @include typography(caption);
             color: var(--text-secondary);
         }
 

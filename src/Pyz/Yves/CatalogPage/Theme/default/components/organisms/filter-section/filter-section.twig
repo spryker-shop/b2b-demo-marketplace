@@ -1,5 +1,17 @@
 {% extends organism('filter-section', '@SprykerShop:CatalogPage') %}
 
+{% define config = {
+    name: 'filter-section',
+    tag: 'filter-section',
+} %}
+
+{% define attributes = {
+    'trigger-class-name': 'js-catalog-filters-trigger',
+    'class-to-toggle': 'is-hidden-sm-md',
+    'overlay-breakpoint': 768,
+    'dialog-label': 'catalog.filter.and.sorting.button' | trans,
+} %}
+
 {% set isContentPresent = data.facets | length > 0 %}
 
 {% block extraClass %}
@@ -10,22 +22,50 @@
     {% set triggerButtonJsName = data.parentJsName ? data.parentJsName ~ '__trigger' %}
 
     {% if isContentPresent %}
-        <h3 class="{{ config.name ~ '__title' }} is-hidden-lg-xxl">{{ 'catalog.filter.and.sorting.button' | trans }}</h3>
-        <button class="{{ config.name ~ '__close' }} is-hidden-lg-xxl js-catalog-filters-trigger">
-            {% include atom('font-icon') with {
-                data: {
-                    name: 'close',
-                },
-            } only %}
-        </button>
+        <header class="{{ config.name }}__header is-hidden-lg-xxl">
+            <button type="button" class="{{ config.name }}__close {{ config.jsName }}__close" aria-label="{{ 'catalog.filter.close' | trans }}">
+                {% include atom('font-icon') with {
+                    modifiers: ['size-inherit'],
+                    data: {
+                        name: 'close',
+                    },
+                } only %}
+            </button>
 
-        <div class="{{ config.name ~ '__holder ' ~ config.jsName ~ '__holder' }}">
+            {% include molecule('logo') with {
+                class: config.name ~ '__header-logo',
+                modifiers: ['drawer'],
+            } only %}
+
+            {% if is_granted('ROLE_USER') %}
+                {% set cartQuantity = functionExists('getCartQuantity') ? getCartQuantity() : app['cart.quantity'] | default(0) %}
+                <a
+                    href="{{ url('cart') }}"
+                    class="link--no-decoration cart-trigger {{ config.name }}__header-cart"
+                    aria-label="{{ 'header.cart' | trans }}{{ cartQuantity > 0 ? ', ' ~ cartQuantity ~ ' ' ~ ('header.cart.items' | trans) : '' }}"
+                >
+                    <span class="cart-trigger__icon">
+                        {% include atom('font-icon') with {
+                            modifiers: ['size-inherit'],
+                            data: { name: 'shopping_cart' },
+                        } only %}
+                    </span>
+                    {% if cartQuantity > 0 %}
+                        <span class="cart-trigger__badge" aria-hidden="true">{{ cartQuantity }}</span>
+                    {% endif %}
+                </a>
+            {% endif %}
+        </header>
+
+        <div class="{{ config.name }}__search-zone">
             {% block filterSearch %}
                 {% include molecule('filter-search', 'CatalogPage') with {
                     class: config.name ~ '__search',
                 } only %}
             {% endblock %}
+        </div>
 
+        <div class="{{ config.name ~ '__holder ' ~ config.jsName ~ '__holder' }}">
             {% block filterCollapseAll %}
                 {% include molecule('catalog-collapse-all', 'CatalogPage') with {
                     class: config.name ~ '__collapse-all',
@@ -43,20 +83,21 @@
                 {% if filterHasValues %}
                     {% block filters %}
                         {% set isFilterCategory = filter.name == 'category' %}
-                        {% set itemClass = isFilterCategory ? config.name ~ '__item--hollow' %}
-                        {% set itemTitleClass = isFilterCategory ? 'is-hidden-lg-xxl' %}
+                        {% set itemClass = isFilterCategory ? config.name ~ '__item--hollow' : 'js-collapsible is-collapsed' %}
 
-                        <div class="{{ config.name ~ '__item' }} {{ itemClass }} js-collapsible is-collapsed">
-                            <h2 class="{{ config.name ~ '__item-title js-collapsible-trigger' }} {{ itemTitleClass }}">
-                                <span class="{{ config.name }}__item-label">{{ ('product.filter.' ~ filter.name | lower) | trans }}</span>
-                                {% include atom('font-icon') with {
-                                    class: config.name ~ '__item-icon',
-                                    data: {
-                                        name: 'keyboard_arrow_down',
-                                    },
-                                } only %}
-                            </h2>
-                            {% set contentModifier = filter.name == 'category' ? config.name ~ '__item-content--hollow' : '' %}
+                        <div class="{{ config.name ~ '__item' }} {{ itemClass }}">
+                            {% if not isFilterCategory %}
+                                <h2 class="{{ config.name ~ '__item-title js-collapsible-trigger' }}">
+                                    <span class="{{ config.name }}__item-label">{{ ('product.filter.' ~ filter.name | lower) | trans }}</span>
+                                    {% include atom('font-icon') with {
+                                        class: config.name ~ '__item-icon',
+                                        data: {
+                                            name: 'keyboard_arrow_down',
+                                        },
+                                    } only %}
+                                </h2>
+                            {% endif %}
+                            {% set contentModifier = isFilterCategory ? config.name ~ '__item-content--hollow' : '' %}
                             {% set togglerClass = config.name ~ '__item-content ' ~ contentModifier %}
 
                             {% include [
@@ -84,6 +125,13 @@
             {% endfor %}
         </div>
 
-        <button type="button" class="button button--expand button--big {{ config.name }}__button {{ triggerButtonJsName }} is-hidden-lg-xxl">{{ 'catalog.filter.button' | trans }}</button>
+        <div class="{{ config.name }}__footer is-hidden-lg-xxl">
+            <button type="button" class="button button--secondary {{ config.name }}__footer-button {{ config.jsName }}__clear">
+                {{ 'catalog.filter.clearAll' | trans }}
+            </button>
+            <button type="button" class="button {{ config.name }}__footer-button {{ config.jsName }}__apply {{ triggerButtonJsName }}">
+                {{ 'catalog.filter.showResults' | trans }}
+            </button>
+        </div>
     {% endif %}
 {% endblock %}

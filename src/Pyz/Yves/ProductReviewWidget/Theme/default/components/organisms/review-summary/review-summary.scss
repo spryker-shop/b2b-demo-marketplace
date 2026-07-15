@@ -31,12 +31,9 @@
         }
 
         &__sub-title {
+            @include typography(label-md-semibold);
             margin: 0 0 var(--scale-16);
             color: var(--text-primary);
-            font-family: var(--label-md-semibold-family);
-            font-size: rem(var(--label-md-semibold-size));
-            font-weight: var(--label-md-semibold-weight);
-            line-height: rem(var(--label-md-semibold-line-height));
         }
 
         &__no-review {

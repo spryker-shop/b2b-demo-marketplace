@@ -1,18 +1,14 @@
 .subscription-info {
     &__section {
+        @include typography(body-sm);
         display: block;
-        font-size: var(--body-sm-size);
-        font-weight: var(--body-sm-weight);
-        line-height: var(--body-sm-line-height);
         margin-bottom: var(--scale-12);
         text-transform: uppercase;
     }
 
     &__text {
+        @include typography(body-md);
         display: block;
-        font-size: var(--body-md-size);
-        font-weight: var(--body-md-weight);
-        line-height: var(--body-md-line-height);
         margin-top: var(--scale-8);
     }
 }

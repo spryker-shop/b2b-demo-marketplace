@@ -24,11 +24,8 @@
         }
 
         &__sidebar-header {
+            @include typography(label-sm-semibold);
             padding: var(--scale-20) var(--scale-16);
-            font-family: var(--label-sm-family);
-            font-size: var(--label-sm-size);
-            font-weight: var(--font-weight-semibold);
-            line-height: var(--label-sm-line-height);
             color: var(--text-tertiary);
             flex-shrink: 0;
             margin: 0;
@@ -52,15 +49,12 @@
         }
 
         &__sidebar-link {
+            @include typography(body-md);
             position: relative;
             display: flex;
             align-items: center;
             gap: var(--scale-8);
             padding: var(--scale-8) var(--scale-16) var(--scale-8) var(--scale-20);
-            font-family: var(--body-md-family);
-            font-size: var(--body-md-size);
-            font-weight: var(--font-weight-regular);
-            line-height: var(--body-md-line-height);
             color: var(--text-secondary);
             text-decoration: none;
         }
@@ -162,10 +156,7 @@
         }
 
         &__panel-link {
-            font-family: var(--body-md-family);
-            font-size: var(--body-md-size);
-            font-weight: var(--font-weight-regular);
-            line-height: var(--body-md-line-height);
+            @include typography(body-md);
             color: var(--text-primary);
             text-decoration: none;
 

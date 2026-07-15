@@ -9,20 +9,14 @@
         }
 
         &__title {
+            @include typography(label-sm-semibold);
             margin: 0 0 rem(var(--scale-6));
             color: var(--text-tertiary);
-            font-family: var(--body-sm-family);
-            font-size: rem(var(--body-sm-size));
-            font-weight: var(--font-weight-semibold);
-            line-height: rem(var(--body-sm-line-height));
         }
 
         &__label {
+            @include typography(label-sm-semibold);
             color: var(--text-tertiary);
-            font-family: var(--body-sm-family);
-            font-size: rem(var(--body-sm-size));
-            font-weight: var(--font-weight-semibold);
-            line-height: rem(var(--body-sm-line-height));
         }
 
         &__content {
@@ -36,13 +30,10 @@
         }
 
         &__text {
+            @include typography(body-sm);
             flex: 1 1 auto;
             min-width: 0;
             color: var(--text-secondary);
-            font-family: var(--body-sm-family);
-            font-size: rem(var(--body-sm-size));
-            font-weight: var(--font-weight-regular);
-            line-height: rem(var(--body-sm-line-height));
         }
 
         &__menu {
