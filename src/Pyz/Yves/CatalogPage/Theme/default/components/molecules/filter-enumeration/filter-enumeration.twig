@@ -14,9 +14,9 @@
 {% set inputComponent = isMultiSelect ? 'checkbox' : 'radio' %}
 
 {% block body %}
-    <ul class="menu {{ config.name }}__list">
+    <ul class="{{ config.name }}__list">
         {% for filterValue in data.filter.values %}
-            <li class="menu__item menu__item--filter-enumeration {{ config.name }}__item">
+            <li class="{{ config.name }}__item">
                 {% include atom(inputComponent) with {
                     modifiers: ['filter'],
                     attributes: {
