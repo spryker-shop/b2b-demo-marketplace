@@ -83,7 +83,10 @@
                 {% if filterHasValues %}
                     {% block filters %}
                         {% set isFilterCategory = filter.name == 'category' %}
-                        {% set itemClass = isFilterCategory ? config.name ~ '__item--hollow' : 'js-collapsible is-collapsed' %}
+                        {% set filterParameter = filter.config.parameterName | default('') %}
+                        {% set isFilterActive = filterParameter and app.request.query.has(filterParameter) %}
+                        {% set collapsibleClass = 'js-collapsible' ~ (isFilterActive ? '' : ' is-collapsed') %}
+                        {% set itemClass = isFilterCategory ? config.name ~ '__item--hollow' : collapsibleClass %}
 
                         <div class="{{ config.name ~ '__item' }} {{ itemClass }}">
                             {% if not isFilterCategory %}

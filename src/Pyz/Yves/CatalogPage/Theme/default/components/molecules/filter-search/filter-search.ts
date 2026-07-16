@@ -43,15 +43,20 @@ export default class FilterSearch extends Component {
             this.section.classList.toggle(SEARCHING_CLASS, isSearching);
         }
 
+        const titleSelector = this.getAttribute('title-selector');
         let hasAnyMatch = false;
 
         this.groups.forEach((group: HTMLElement) => {
+            const title = <HTMLElement>group.querySelector(titleSelector);
+            const titleText = (title?.textContent || '').trim().toLowerCase();
+            const titleMatch = isSearching && titleText.indexOf(query) !== -1;
+
             const rows = <HTMLElement[]>Array.from(group.querySelectorAll(rowSelector));
-            let hasMatch = false;
+            let hasMatch = titleMatch;
 
             rows.forEach((row: HTMLElement) => {
                 const text = (row.textContent || '').trim().toLowerCase();
-                const isMatch = !isSearching || text.indexOf(query) !== -1;
+                const isMatch = !isSearching || titleMatch || text.indexOf(query) !== -1;
 
                 row.classList.toggle(HIDDEN_CLASS, !isMatch);
 
@@ -60,9 +65,7 @@ export default class FilterSearch extends Component {
                 }
             });
 
-            if (rows.length > 0) {
-                group.classList.toggle(HIDDEN_CLASS, isSearching && !hasMatch);
-            }
+            group.classList.toggle(HIDDEN_CLASS, isSearching && !hasMatch);
 
             if (hasMatch) {
                 hasAnyMatch = true;
