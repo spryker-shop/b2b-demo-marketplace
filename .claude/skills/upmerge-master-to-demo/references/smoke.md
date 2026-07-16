@@ -2,36 +2,36 @@
 
 Detail for `@.claude/skills/upmerge-master-to-demo/SKILL.md`. If the local Spryker stack isn't running, start it (`script -q /dev/null docker/sdk up`) rather than skipping — this workflow runs unattended. CI polling (Steps 10–12) lives in `@.claude/skills/upmerge-master-to-demo/references/ci.md`.
 
-Log outcomes per the SKILL.md convention: `[upmerge 7/12] DONE  smoke: Yves+BO login OK, analytics-gui 200`; `[upmerge 7a/12] DONE  FE scan: <N> pages, <fixed X / none>`; `[upmerge 7b/12] DONE  cy:demo <N> specs green`.
+Log outcomes per the SKILL.md convention: `[upmerge 7/12] DONE  demo-runtime-smoke: <N> PASS / <M> ANOMALY / <K> NOT-COVERED`; `[upmerge 7a/12] DONE  FE scan: <N> changed-file pages, <fixed X / none>`; `[upmerge 7b/12] DONE  cy:demo <N> specs green, cy:demo:full <status>`.
 
-## Step 7 — Smoke-test Yves and Backoffice login
+## Step 7 / 7a — Runtime feature smoke (delegated) + changed-file visual scan (owned here)
 
-Drive the browser with `Skill(spryker-runtime)`. Scope:
+Two checks share this step, split by ownership:
 
-- Yves login at `http://yves.eu.spryker.local/DE/en/login` with `spencor.hopkin@acme.com` / `change123` (canonical B2B user; `sonia@spryker.com` does NOT exist — valid customers are `@acme.com` / `@ottom.de`, list with `mariadb -h database -u spryker -psecret -D eu-docker -e "SELECT email FROM spy_customer WHERE registered IS NOT NULL LIMIT 15;"`).
-- `/DE/en/customer/overview` renders without errors.
-- Backoffice login at `http://backoffice.eu.spryker.local/security-gui/login` with `admin@spryker.com` / `change123`; dashboard renders.
-- `http://backoffice.eu.spryker.local/analytics-gui/analytics` returns 200 / renders (NOT a Whoops 500). This is the demo-only-config canary from Step 6e — a `Could not find config key "AMAZON_QUICKSIGHT:..."` here means a demo-only block was dropped. A `Class "\Pyz\Zed\AnalyticsGui\...DependencyProvider" not found` (or any `\Pyz\...\...DependencyProvider not found` where the real provider lives in `src/Demo`) is usually a **stale local class-resolver cache**, not a merge drop — run `docker/sdk cli console cache:class-resolver:build` (not just `cache:empty-all`) and re-check before treating it as a regression.
+- **Runtime health of the 10 fixed AI Commerce features** — delegated entirely to `Skill(demo-runtime-smoke)`. That skill owns the login flows, credentials, the toggle-off-vs-broken and geometry-over-eyeballing gotchas, and the PASS/ANOMALY/NOT-COVERED recipe for each of the 10 features (including the analytics-gui/QuickSight canary and the quote-request cost-price agent-edit route). Don't re-derive any of that here — invoke the skill and fold its report into the log lines below.
+- **Visual scan of the pages THIS merge's Twig/SCSS actually touched** — stays owned by upmerge, because it keys off `git diff`, not off a fixed feature list. `demo-runtime-smoke` always checks the same 10 fixed surfaces regardless of what changed; a merge can also touch a Twig/SCSS file outside those 10 (any ShopUi/Pyz component the demo overrides), and that needs a diff-driven visit, not a fixed table. This is what Step 7a below still does.
 
-**Reliable input patterns** (synthetic typing is flaky on these forms):
-- The **redesigned Yves login** (master) is a standalone minimal card (no header/search) — set values via the native setter + dispatched events, then submit the form directly (same pattern as the BO form below), and judge success by the resulting URL, not the pre-submit screenshot. A plain `click → cmd+a → Delete → type` also works but is flakier.
-- Backoffice (Angular/ZED web-component form): set values via the native setter + dispatched events, then submit the form directly:
-  ```js
-  const set = (sel,val)=>{const el=document.querySelector(sel);
-    Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(el,val);
-    el.dispatchEvent(new Event('input',{bubbles:true})); el.dispatchEvent(new Event('change',{bubbles:true}));};
-  set('input[type=email]','admin@spryker.com'); set('input[type=password]','change123');
-  document.querySelector('input[type=email]').closest('form').submit();
-  ```
-  Judge success by the resulting URL/page, not the pre-submit screenshot.
+### Step 7 — Invoke `demo-runtime-smoke`
 
-A raw glossary label (e.g. sidebar shows `Recurring_orders.Menu_item`) is **expected** on a fresh local env when the key exists in the merged glossary CSV (`grep -rn "<key>" data/import/*/common/glossary.csv`) but its `data:import` hasn't run — informational, not a regression. Run `docker/sdk cli console data:import:glossary` if a clean label is wanted.
+```
+Skill(demo-runtime-smoke)
+```
 
-A login or page that actually errors is a real regression — capture console errors and treat it as a hard stop.
+Run it as-is — it already covers Yves/BO/agent/MP login, the analytics-gui canary, and all 10 features, no upmerge-specific args needed. Take its per-feature PASS/ANOMALY/NOT-COVERED table and:
+- Fold the overall verdict into `[upmerge 7/12] DONE  demo-runtime-smoke: <N> PASS / <M> ANOMALY / <K> NOT-COVERED`.
+- For any ANOMALY it already auto-fixed (same restore-the-override recipe as Step 7a below), record the fix in the PR body under Reconciliation notes.
+- For any ANOMALY it escalated, that's this step's hard stop too — leave the task `in_progress`, log `BLOCKED`, surface the page/screenshot/diagnosis, stop.
+- A `NOT-COVERED` line (toggle off, no provider token, MP login silently failing, no seed data) is informational, not a blocker — carry its reason into the PR body.
 
-## Step 7a — Visual FE-anomaly scan on the pages the merge touched (auto-fix the simple ones)
+If the stack isn't up, `demo-runtime-smoke` starts it itself — no separate boot step needed here.
+
+<!-- The former Step 7 (manual Yves+BO login walkthrough, glossary/analytics-gui canary, reliable-input JS snippets) now lives inside Skill(demo-runtime-smoke) — see its "Prerequisites", "Two gotchas", and feature #8 (QuickSight) rows instead of duplicating them here. -->
+
+## Step 7a — Visual FE-anomaly scan on the pages THIS merge touched (auto-fix the simple ones)
 
 `git merge` and the Step 6b pre-filter both miss a whole class of breakage: **a demo/Pyz Twig or SCSS override shadowed by a master redesign of the same component**. No conflict marker fires, `cy:demo` may still pass (it asserts behavior, not layout), and static analysis is clean — but the page renders visibly wrong (icons stacked instead of inline, a search bar with no border box, overlapping controls, a broken grid). This is the same trap as Step 6b, caught here by *looking* instead of diffing. **A green login + green `cy:demo` is not enough — visually QA the redesigned pages every run.**
+
+This sub-step is scoped to whatever `git diff` shows the merge changed — a different lens than `demo-runtime-smoke`'s fixed 10-feature table above, so run both; they catch different risk. For the shared gotchas (toggle-OFF `0×0` widgets are not anomalies, geometry-probe over eyeballing, reliable login input patterns, the quote-request-agent-edit-route recipe), see `Skill(demo-runtime-smoke)`'s "Two gotchas" section and its `references/feature-checks.md` — not duplicated below. The cart-item seeding case (row #6) has no counterpart in that skill and stays documented here.
 
 ### Fast FE-anomaly flow (the smoke lane)
 
@@ -60,15 +60,9 @@ const dy = Math.abs(input.getBoundingClientRect().y - submit.getBoundingClientRe
 dy < 12 ? 'inline (ok)' : `stacked (dy=${dy}) — anomaly`;
 ```
 
-**Two gotchas that look like anomalies but are NOT** (learned running this live on a clean master-demo):
-- **A `0×0` demo-widget box is expected when its feature toggle is OFF.** The search-by-image molecule is `display:flex` but `0×0` because its enable flag is off in a fresh env (see the toggle list in `demo-reconciliation.md` / the AI-Commerce smoke plan) — the *surrounding* search box still renders fine. Only treat a widget as broken if the **standard chrome around it** breaks, or a **toggle-ON** widget is mislaid. Don't restore an override over a toggle-off `0×0`.
+**Gotchas that look like anomalies but are NOT** — toggle-OFF `0×0` widgets (see `demo-runtime-smoke`'s "Two gotchas" section, and feature 2 in its `references/feature-checks.md`) and the quote-request cost-price agent-edit-route recipe + its "empty Cost Price is a data state, not a break" case (feature 7c in that same file) are covered there in detail — read those before flagging row #1 or #7 above as broken; not re-explained here. **Cart-item seeding (#6) is unique to this Yves scan** (`demo-runtime-smoke` has no cart feature) and stays documented below.
+
 - **Cart (#6) needs a seeded item** — a clean session's cart is empty and the demo catalog's headline products are **configurable** (need a variant attribute + a concrete variant SKU — the abstract SKU e.g. `VSB-2500` is "not found" in quick-order). To exercise the cart-item layout, seed a simple non-configurable product first (`Skill(spryker-data-seeder)`) or add via a resolvable variant SKU. If you can't seed within the smoke budget, record #6 as **not covered this run** — honest, not a pass.
-- **Quote-request cost-price (#7) needs NO seeding — open an existing quote request on the AGENT EDIT route.** This is the crucial part: the cost-price molecule renders **only on the agent edit view**, NOT on the customer read-only `details` view. Recipe (verified live):
-  1. Agent-login at `http://yves.eu.spryker.local/en/agent/login` with `agent123@spryker.com` / `change123` (the `spy_user.status` shows `0` in the mariadb client but that is *active* — admin shows the same; `is_agent=1`). No customer impersonation is needed for the agent edit route.
-  2. List existing quote requests: `mariadb -h database -u spryker -psecret -D eu-docker -e "SELECT quote_request_reference,status FROM spy_quote_request ORDER BY id_quote_request DESC LIMIT 10;"`.
-  3. Open one at the **agent edit** route `/DE/en/agent/quote-request/edit/<REF>` (e.g. `/DE/en/agent/quote-request/edit/DE--21-6`). Each line item shows a **Cost Price** row + **Gross margin** badge + "Use default price" checkbox, aligned in the item box — that is the #7 PASS.
-  - Route gotchas: the customer view `/DE/en/quote-request/details/<REF>` renders **0 cost-price nodes** (molecule not on that view — don't test cost-price there); `?quoteRequestReference=` and `?_switch_user=` both error/404 (use the path-segment agent-edit route). Logging into the **Back Office in the same browser clobbers the Yves agent session** — do the agent check before / separately from the BO scan, and re-login if `Agent Mode` is gone.
-- **Empty "Cost Price: — / ⚠ (warning)" is a data state, not a break.** On a quote-request version whose cost price hasn't been applied yet, every item shows `Cost Price: —` with an amber warning and `Gross margin: —` — the molecule still renders and is laid out correctly. **Edit → Save** recalculates and applies real values (verified: `DE--21-6` after save shows `€337.88 / 30%`; an un-saved `DE--21-4` shows `— / ⚠`). So for #7 the Step 7a check is purely *does the molecule render & lay out* (it does on both) — the `—` vs `€value` is expected cost-price application state, not a Step 7a anomaly.
 
 Known-good baseline (verified live on `master-demo`): the historical **search-form icon-stacking regression is currently absent** — the demo override is intact and icons render inline. If a run shows them stacked, that's the regression returning → diagnose per below.
 
@@ -139,15 +133,19 @@ Because these are demo-owned FE files a demo-only feature depends on, prefer the
 
 Log: `[upmerge 7a/12] DONE  FE scan: <N> Yves + <M> BO pages checked, <fixed X / none>` — e.g. `restored search-form.{twig,scss} (icons were stacked)` or `no anomalies (Yves: search/PLP/PDP/quick-order/quote-request; BO: price-tax/CMS/layout; cart not-covered — no seeded item)`.
 
-## Step 7b — Run the demo Cypress group (`cy:demo`)
+## Step 7b — Run the demo Cypress groups (`cy:demo` + `cy:demo:full`)
 
-`cypress/e2e/demo/` is the automated coverage for demo-only features (QuickSight and the other AI Commerce features) — exactly what an upmerge breaks via dropped demo config/wiring. Mandatory on every upmerge; it supersedes the manual analytics-gui canary.
+`cypress/e2e/demo/` is the automated coverage for demo-only features (QuickSight and the other AI Commerce features) — exactly what an upmerge breaks via dropped demo config/wiring. Two tiers, both run on every upmerge:
 
 ```bash
 cd tests/cypress-tests
-ENV_REPOSITORY_ID=b2b-mp ENV_IS_SSP_ENABLED=true npm run cy:demo
+ENV_IS_SSP_ENABLED=true npm run cy:demo         # smoke tier: @demo-smoke only (script sets ENV_REPOSITORY_ID=b2b-mp itself)
+ENV_IS_SSP_ENABLED=true npm run cy:demo:full    # full tier: @demo-smoke ∪ @demo-full, real AI provider (script sets ENV_REPOSITORY_ID=b2b-mp + DEMO_AI_PROVIDER_ENABLED=1 itself)
 ```
 
-All specs must pass before pushing. A failure is a real regression — cross-reference Step 6e/6g (dropped demo block or wiring). If `cy:demo` doesn't exist on the branch, that itself is a finding: the demo group / CI step may have been lost in the merge — restore it (see the `cypress-e2e-test` skill's demo-group section) before pushing. The same `cy:demo` runs in CI as its own `Run Tests (Demo)` step, so a green local run predicts the green CI step.
+- **`cy:demo` (smoke, `@demo-smoke`)** — mocked/no-provider assertions, needs no API tokens. **Mandatory gate.** All specs must pass before pushing; supersedes the manual analytics-gui canary. A failure is a real regression — cross-reference Step 6e/6g (dropped demo block or wiring). If `cy:demo` doesn't exist on the branch, that itself is a finding: the demo group / CI step may have been lost in the merge — restore it (see the `cypress-e2e-test` skill's demo-group section) before pushing. The same `cy:demo` runs in CI as its own `Run Tests (Demo)` step, so a green local run predicts the green CI step.
+- **`cy:demo:full` (`@demo-smoke ∪ @demo-full`, real provider)** — runs the same smoke cases plus the `@demo-full` cases that hit **real** AI providers (OpenAI + AWS Bedrock), and needs the provider API tokens configured in Back Office AI Configuration (feature 1 in `demo-runtime-smoke`'s feature table). **Run it when tokens are present; the `@demo-full` cases self-skip gracefully when they aren't**, so an unattended upmerge with no tokens configured is not a hard failure on this tier — only `cy:demo` is the mandatory gate. Real-provider runs can be slower and occasionally need a rerun (rate limits, provider latency) — that's expected, not a regression signal by itself; only treat a `@demo-full` failure as real after a rerun still fails.
 
-> `cy:demo` asserts **behavior**, not layout — it will pass on a visually-broken page. It does **not** replace the Step 7a visual scan; run both.
+A failure in either tier is cross-referenced against Step 6e/6g (dropped demo block or wiring) before treating it as new breakage.
+
+> Both tiers assert **behavior**, not layout — they pass on a visually-broken page. Neither replaces the Step 7a visual scan; run all three (`cy:demo`, `cy:demo:full`, and the Step 7a visual scan).

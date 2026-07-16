@@ -1,6 +1,6 @@
 # CI poll and auto-fix (Steps 10–12)
 
-Detail for `@.claude/skills/upmerge-master-to-demo/SKILL.md`. The local smoke test, FE-anomaly scan, and `cy:demo` (Steps 7, 7a, 7b) live in `@.claude/skills/upmerge-master-to-demo/references/smoke.md`. This file covers everything after the PR is open: scheduling the pipeline poll, polling + auto-fixing deterministic failures, and the final report.
+Detail for `@.claude/skills/upmerge-master-to-demo/SKILL.md`. The runtime feature smoke (delegated to `Skill(demo-runtime-smoke)`), FE-anomaly scan, and `cy:demo`/`cy:demo:full` (Steps 7, 7a, 7b) live in `@.claude/skills/upmerge-master-to-demo/references/smoke.md`. This file covers everything after the PR is open: scheduling the pipeline poll, polling + auto-fixing deterministic failures, and the final report.
 
 Log outcomes per the SKILL.md convention: `[upmerge 10/12] DONE  poll scheduled +60m`; `[upmerge 11/12]` a line per poll (`running`, `auto-fixed phpcs → pushed`, or `BLOCKED  phpstan failure`); `[upmerge 12/12] DONE  pipeline green`.
 

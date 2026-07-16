@@ -13,14 +13,14 @@ Detail lives in reference files, loaded when you reach each phase:
 - `@.claude/skills/upmerge-master-to-demo/references/merge-and-composer.md` — sync, branch, merge conflicts, composer.lock (Steps 2–5)
 - `@.claude/skills/upmerge-master-to-demo/references/demo-reconciliation.md` — Pyz/Demo overrides, deploy, config↔wiring audits (Step 6a–6e, 6g)
 - `@.claude/skills/upmerge-master-to-demo/references/cypress-tests.md` — external cypress-tests repo upmerge (Step 6f)
-- `@.claude/skills/upmerge-master-to-demo/references/smoke.md` — smoke test, FE-anomaly scan, `cy:demo` (Steps 7, 7a, 7b)
+- `@.claude/skills/upmerge-master-to-demo/references/smoke.md` — runtime feature smoke (delegated to `Skill(demo-runtime-smoke)`), changed-file FE-anomaly scan, `cy:demo` + `cy:demo:full` (Steps 7, 7a, 7b)
 - `@.claude/skills/upmerge-master-to-demo/references/ci.md` — CI poll, auto-fix, final report (Steps 10–12)
 
 ## Autonomy contract
 
 Run unattended. Decide and proceed using these defaults:
 - **Merge conflicts** → resolve by the per-type rules in `@.claude/skills/upmerge-master-to-demo/references/merge-and-composer.md` (demo-owned files keep the master-demo side; core-tracking files keep the master side; additive lists keep both).
-- **Silent divergences** (Step 6 audits, and the Step 7a visual FE scan) → default to **restoring** the demo-only block/wiring/override to its working master-demo version; the smoke test, the FE scan, and `cy:demo` are the safety net. A visibly-broken redesigned page whose fix is confined to restoring a demo-owned Yves Twig/SCSS override to its master-demo pair is a simple auto-fix (Step 7a); anything needing real template/logic changes escalates.
+- **Silent divergences** (Step 6 audits, the `demo-runtime-smoke` runtime check, and the Step 7a visual FE scan) → default to **restoring** the demo-only block/wiring/override to its working master-demo version; the runtime smoke, the FE scan, and `cy:demo`/`cy:demo:full` are the safety net. A visibly-broken redesigned page whose fix is confined to restoring a demo-owned Yves Twig/SCSS override to its master-demo pair is a simple auto-fix (Step 7/7a); anything needing real template/logic changes escalates.
 - **CI failures** → auto-fix the deterministic classes (phpcs, transfer:generate, propel:install, lock sync); push and re-poll.
 - Record every non-obvious decision in the PR body so the reviewer can check it.
 
@@ -38,7 +38,7 @@ Everything else: decide and continue.
 
 At the very start of the flow (before Step 2), create the 12 steps as a task list with **`TaskCreate`** — one task per numbered step, using these subjects:
 
-1. Sync master & master-demo · 2. Create feature branch · 3. Merge master, resolve conflicts · 4. Refresh composer.lock & install · 5. Reconcile overrides + deploy/config/wiring audits (6a–6e,6g) · 6. Upmerge cypress-tests repo (6f) · 7. Smoke-test + FE-anomaly scan (7a) + run cy:demo (7b) · 8. Push & open PR · 9. JIRA optional comment (never move status) · 10. Schedule CI poll · 11. Poll pipeline & auto-fix · 12. Final report
+1. Sync master & master-demo · 2. Create feature branch · 3. Merge master, resolve conflicts · 4. Refresh composer.lock & install · 5. Reconcile overrides + deploy/config/wiring audits (6a–6e,6g) · 6. Upmerge cypress-tests repo (6f) · 7. Runtime feature smoke via demo-runtime-smoke + FE-anomaly scan (7a) + run cy:demo and cy:demo:full (7b) · 8. Push & open PR · 9. JIRA optional comment (never move status) · 10. Schedule CI poll · 11. Poll pipeline & auto-fix · 12. Final report
 
 (Step 0 is folded into task 1; Step 1 ticket-handling happens before task creation since it decides the branch name.) Then drive the panel as you work:
 - **`TaskUpdate` → `in_progress`** the instant you begin a step (before its first command).
@@ -75,7 +75,7 @@ Rules:
 6. Reconcile with the incoming changes — all of the following, even on a clean merge:
    - Pyz/Demo overrides incl. Twig shadowing changed core; `deploy.spryker-icpplus.yml` sibling audit; `config_default.php` demo-only block audit (6e); Dependency Provider wiring audit (6g) → `@.claude/skills/upmerge-master-to-demo/references/demo-reconciliation.md`
    - External `spryker/cypress-tests` `master-demo` upmerge to the demo-shop's pinned cypress hash (6f) → `@.claude/skills/upmerge-master-to-demo/references/cypress-tests.md`
-7. Smoke-test Yves + Backoffice login (incl. the analytics-gui canary); then run the fast FE-anomaly scan over the pages the merge's Twig/SCSS touched and auto-fix the simple ones (Step 7a); then run the demo Cypress group `cy:demo` (Step 7b) → `@.claude/skills/upmerge-master-to-demo/references/smoke.md`
+7. Runtime feature smoke via `Skill(demo-runtime-smoke)` (all 10 AI Commerce features incl. the analytics-gui/QuickSight canary); then run the fast FE-anomaly scan over the pages the merge's Twig/SCSS touched and auto-fix the simple ones (Step 7a); then run both demo Cypress tiers, `cy:demo` and `cy:demo:full` (Step 7b) → `@.claude/skills/upmerge-master-to-demo/references/smoke.md`
 8. Push and open the PR targeting `master-demo` (Step 8 below)
 9. JIRA — optional PR-link comment only, and only if a ticket was provided; **never** move the status (Step 9 below)
 10. Schedule the CI poll → `@.claude/skills/upmerge-master-to-demo/references/ci.md`
@@ -108,8 +108,9 @@ Routine upmerge bringing the latest `master` changes into `master-demo`.
 - [x] config_default.php audited for dropped demo-only config blocks (Step 6e)
 - [x] Dependency Providers audited for dropped demo-only plugin/console registrations (Step 6g)
 - [x] spryker/cypress-tests master-demo upmerged to the demo-shop's pinned cypress hash; demo-shop re-pinned (Step 6f)
-- [x] Local smoke: Yves login + customer overview; Backoffice login + dashboard + analytics-gui (QuickSight canary)
-- [x] Demo Cypress group green locally (npm run cy:demo, ENV_REPOSITORY_ID=b2b-mp)
+- [x] Runtime feature smoke via Skill(demo-runtime-smoke): all 10 AI Commerce features, incl. Backoffice dashboard + analytics-gui (QuickSight canary)
+- [x] Demo Cypress smoke tier green locally (npm run cy:demo)
+- [x] Demo Cypress full tier (npm run cy:demo:full) — green, or @demo-full self-skipped (no provider token configured)
 - [ ] CI pipeline green (incl. the Run Tests (Demo) step)
 
 ## Reconciliation notes
