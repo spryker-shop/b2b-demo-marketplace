@@ -5,11 +5,16 @@
         align-items: center;
         justify-content: center;
         gap: var(--scale-24);
-        padding: var(--scale-64) var(--scale-16);
-        background: var(--background-surface);
+        padding: var(--scale-64) var(--scale-32);
+        background: var(--background-page);
         border-radius: var(--radius-md);
         text-align: center;
         margin: 0;
+
+        @include helper-breakpoint-media-min($lg) {
+            padding: var(--scale-64) var(--scale-16);
+            background: var(--background-surface);
+        }
 
         &__content {
             display: flex;
@@ -37,13 +42,12 @@
         }
 
         &__suggestion {
+            @include typography(body-md);
             margin: 0;
-            font-size: var(--font-size-14);
-            line-height: var(--font-line-height-20);
         }
 
         &__suggestion-link {
-            font-weight: var(--font-weight-semibold);
+            @include typography(label-md-semibold);
             color: var(--text-brand);
             text-decoration: none;
 
@@ -54,9 +58,8 @@
         }
 
         &__tip {
+            @include typography(body-sm);
             margin: 0;
-            font-size: var(--font-size-12);
-            line-height: var(--font-line-height-16);
             color: var(--text-secondary);
         }
 

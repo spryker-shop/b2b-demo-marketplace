@@ -17,8 +17,6 @@
     #{$name}-main {
         &--catalog-page,
         &--cms-search-page {
-            padding-top: rem(12);
-
             @include helper-breakpoint-media-min($lg) {
                 padding-top: rem(16);
             }
@@ -26,6 +24,14 @@
 
         &__catalog-page-content {
             padding-bottom: rem(60);
+        }
+
+        &__catalog-filter-column {
+            display: contents;
+
+            @include helper-breakpoint-media-min($lg) {
+                display: block;
+            }
         }
 
         &--pdp {

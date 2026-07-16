@@ -5,12 +5,9 @@
         gap: var(--scale-8);
 
         &__notify {
+            @include typography(body-sm);
             padding: var(--scale-12) var(--scale-16);
             color: var(--text-state-error);
-            font-family: var(--body-sm-family);
-            font-size: rem(var(--body-sm-size));
-            font-weight: var(--font-weight-regular);
-            line-height: rem(var(--body-sm-line-height));
             background: var(--background-state-error-subtle);
             border-radius: var(--radius-sm);
             margin-top: var(--scale-8);

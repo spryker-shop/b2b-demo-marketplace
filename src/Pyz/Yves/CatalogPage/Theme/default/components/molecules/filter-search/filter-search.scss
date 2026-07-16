@@ -1,7 +1,18 @@
 @mixin catalog-page-filter-search($name: '.filter-search') {
     #{$name} {
-        position: relative;
         display: block;
+
+        &__field {
+            position: relative;
+            display: block;
+        }
+
+        &__empty {
+            @include typography(body-md);
+            margin: var(--scale-12) 0 0;
+            color: var(--text-secondary);
+            text-align: center;
+        }
 
         @content;
     }

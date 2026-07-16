@@ -7,15 +7,12 @@
         }
 
         &__toggle {
+            @include typography(label-sm);
             display: inline-flex;
             align-items: center;
             gap: var(--scale-4);
             margin-bottom: var(--scale-8);
             color: var(--text-secondary);
-            font-family: var(--label-sm-family);
-            font-size: rem(var(--label-sm-size));
-            font-weight: var(--label-sm-weight);
-            line-height: rem(var(--label-sm-line-height));
             cursor: pointer;
             list-style: none;
 
@@ -25,8 +22,8 @@
         }
 
         &__toggle-icon {
-            width: rem(var(--scale-16));
-            height: rem(var(--scale-16));
+            width: var(--scale-16);
+            height: var(--scale-16);
             color: var(--icon-secondary);
         }
 
@@ -54,15 +51,12 @@
         }
 
         &__view-all {
+            @include typography(label-sm);
             align-self: flex-start;
             padding: 0;
             background: none;
             border: 0;
             color: var(--text-secondary);
-            font-family: var(--label-sm-family);
-            font-size: rem(var(--label-sm-size));
-            font-weight: var(--label-sm-weight);
-            line-height: rem(var(--label-sm-line-height));
             cursor: pointer;
         }
 

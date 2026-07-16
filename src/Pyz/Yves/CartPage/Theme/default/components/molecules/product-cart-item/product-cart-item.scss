@@ -136,16 +136,12 @@ $cart-item-image-width: 76;
         }
 
         &__variants-more {
+            @include typography(label-sm-regular);
             display: inline-flex;
             align-items: center;
             gap: var(--scale-4);
             padding: var(--scale-2) 0;
             color: var(--text-brand);
-            font-family: var(--label-sm-family);
-            font-size: var(--label-sm-size);
-            font-weight: var(--font-weight-regular);
-            line-height: var(--label-sm-line-height);
-            letter-spacing: var(--label-sm-letter-spacing);
             background: none;
             border: 0;
             cursor: pointer;
@@ -317,16 +313,13 @@ $cart-item-image-width: 76;
         }
 
         &__remove-tooltip {
+            @include typography(body-sm);
             position: absolute;
             right: 0;
-            bottom: calc(100% + #{var(--scale-4)});
+            bottom: calc(100% + var(--scale-4));
             z-index: $setting-zi-dropdown;
             padding: var(--scale-4) var(--scale-8);
             color: var(--text-inverse, #fff);
-            font-family: var(--body-sm-family);
-            font-size: var(--body-sm-size);
-            font-weight: var(--font-weight-regular);
-            line-height: var(--body-sm-line-height);
             white-space: nowrap;
             background: var(--background-inverse, #3b3b3d);
             border-radius: var(--radius-sm);
