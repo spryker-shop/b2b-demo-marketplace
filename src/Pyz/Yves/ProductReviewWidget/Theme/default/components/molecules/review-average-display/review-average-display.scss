@@ -9,7 +9,7 @@
         text-align: center;
 
         @include helper-breakpoint-media-min($xl) {
-            margin-right: rem(var(--scale-64));
+            margin-right: var(--scale-64);
         }
 
         &__average-rating {
