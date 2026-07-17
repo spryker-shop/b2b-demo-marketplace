@@ -21,7 +21,7 @@ export default class PackagingUnitQuantitySelector extends PackagingUnitQuantity
 
         newPriceBlock?.classList.add('is-hidden');
 
-        const originalPrice = volumePrice.originalPrice;
+        const originalPrice = volumePrice.getPriceForQuantity(Number(this.qtyInSalesUnitInput?.value));
         const quantity = Number(this.qtyInBaseUnitInput?.value);
         const defaultAmount = Number(this.amountDefaultInBaseUnitInput?.value);
         const amountRatio = defaultAmount > 0 ? amountInBaseUnits / defaultAmount : 1;
