@@ -8,23 +8,24 @@ Log each sub-step: `[upmerge 6f-1/12] DONE  target=<hash>`; `[upmerge 6f-3/12] D
 
 Advance cypress `master-demo` to **exactly the cypress commit the merged demo-shop version pins — and no further**. Cypress `master` is usually dozens of commits ahead of that pin (64 ahead in one recent case); merging its tip puts the demo cypress branch ahead of the shop → flaky/false failures. The pinned hash is the upper bound.
 
-The correct version is the one pinned by the master commit already merged into `master-demo`. On the active upmerge branch (after Step 4), that's the branch's own `composer.lock` at `HEAD`.
+The correct version is the one pinned by the **master commit already merged in** — read from `merge-base(master, HEAD)`, i.e. master's tip on the upmerge branch. This is exactly what the CI gate uses (`.github/workflows/ci.yml`, the `Cypress demo branch not ahead of pin` job, `DEMOSHOP_DEMO: HEAD` → `PIN = merge-base(master, HEAD)`), so reading the target the same way makes the local decision match CI's verdict.
+
+> **CRITICAL — do NOT read `HEAD:composer.lock`'s cypress entry directly.** On the demo-shop, `HEAD`'s lock pins the cypress **`dev-master-demo`** entry (the demo branch's *own* pin — e.g. `b6153bd`). The gate targets the pin the merged **master** version requires — the **`dev-master`** entry at `merge-base(master, HEAD)` (e.g. `ebf6602`). They are different refs. Reading `HEAD`'s entry makes 6f-2 wrongly conclude "already at pin, nothing to merge" while CI correctly fails **BEHIND** — this is the exact trap that shipped a red `cypress-version-gate` on an otherwise-green upmerge. Always compute the target from the merge-base, never from `HEAD`'s cypress lock entry.
 
 ## 6f-1 — Determine the target hash
 
-```bash
-# On the upmerge feature branch (Step 4 already merged master in):
-git show HEAD:composer.lock | python3 -c "import json,sys; d=json.load(sys.stdin); p=[x for x in d['packages']+d['packages-dev'] if x['name']=='spryker/cypress-tests'][0]; print('target:', p['source']['reference'])"
-```
-
-If validating `master-demo` standalone (not mid-merge), read the merge-base pin instead:
+Read the pin from `merge-base(master, HEAD)` — the same computation CI performs (works both mid-upmerge and when validating `master-demo` standalone, since the merge-base is the latest master either contains):
 
 ```bash
-MB=$(git merge-base master master-demo)
-git show "${MB}:composer.lock" | python3 -c "import json,sys; d=json.load(sys.stdin); p=[x for x in d['packages']+d['packages-dev'] if x['name']=='spryker/cypress-tests'][0]; print('target:', p['source']['reference'])"
+# On the upmerge feature branch (Step 4 already merged master in) OR on master-demo standalone:
+MB=$(git merge-base master HEAD)
+echo "PIN source commit: $(git log --oneline -1 "$MB")"
+git show "${MB}:composer.lock" | python3 -c "import json,sys; d=json.load(sys.stdin); p=[x for x in d['packages']+d['packages-dev'] if x['name']=='spryker/cypress-tests'][0]; print('target:', p['source']['reference'], '| version:', p['version'])"
 ```
 
-Call it `TARGET_CYPRESS_HASH`.
+The printed `version` should be `dev-master` (master's pin), **not** `dev-master-demo`. If it prints `dev-master-demo`, you read the wrong ref — you're looking at the demo pin, not the master pin the gate wants; recompute `MB` (it must resolve to a master-line commit, e.g. master's tip).
+
+Call the `source.reference` `TARGET_CYPRESS_HASH`.
 
 ## 6f-2 — Sync the cypress repo and check the relationship
 
@@ -35,12 +36,25 @@ git rev-parse master-demo
 git log --oneline -1 <TARGET_CYPRESS_HASH>
 
 # Already contained? Then master-demo is at/ahead of the pin — nothing to merge.
-git merge-base --is-ancestor <TARGET_CYPRESS_HASH> master-demo && echo "already in master-demo — skip to 6f-5" || echo "merge required"
+git merge-base --is-ancestor <TARGET_CYPRESS_HASH> origin/master-demo && echo "already in master-demo — skip to 6f-5" || echo "merge required"
 # How far cypress master is ahead of target (these must NOT be pulled in):
 git log --oneline <TARGET_CYPRESS_HASH>..origin/master | wc -l
 ```
 
 If already contained, record "cypress master-demo already at/ahead of pin — no upmerge needed" and skip to 6f-5 (still run `cy:demo`).
+
+**Before trusting an "already contained" result, sanity-check the target came from the master pin, not the demo pin.** A `<TARGET_CYPRESS_HASH>` that equals the current cypress `origin/master-demo` tip is the tell-tale of the 6f-1 misread (you read `HEAD`'s `dev-master-demo` entry, so "target" *is* the demo tip and is trivially "already contained"). The real master pin (`dev-master` at the merge-base) is normally a cypress-`master` commit **not yet** in `master-demo`. If your target equals the master-demo tip, re-run 6f-1 exactly as written (merge-base, not `HEAD`) before concluding no upmerge is needed. **Confirm against CI's own computation** — this reproduces the `cypress-version-gate` job locally and is the authoritative check:
+
+```bash
+# from the demo-shop repo root, on the upmerge branch:
+rm -rf /tmp/cypress-gate && git clone --no-checkout https://github.com/spryker/cypress-tests.git /tmp/cypress-gate
+git -C /tmp/cypress-gate fetch origin master master-demo
+DEMOSHOP_MASTER=master DEMOSHOP_DEMO=HEAD CYPRESS_DIR=/tmp/cypress-gate \
+  CYPRESS_DEMO=origin/master-demo CYPRESS_MASTER=origin/master NO_FETCH=1 \
+  bash .claude/skills/upmerge-master-to-demo/check-cypress-not-ahead.sh
+```
+
+Exit 0 here = the CI gate will pass; a non-zero exit (BEHIND) = there is a real cypress upmerge to do, regardless of what `HEAD`'s demo pin suggested. Run this in 6f-2 every time, not only when something looks off.
 
 ## 6f-3 — Merge the target HASH into cypress master-demo
 
