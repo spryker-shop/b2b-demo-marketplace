@@ -256,6 +256,13 @@
 {% block globalComponents %}
     {{ parent() }}
 
+    {% include molecule('sticky-body-toggler') with {
+        class: 'js-sticky-body-toggler-root',
+        attributes: {
+            'class-to-fix-body': 'is-locked-mobile',
+        },
+    } only %}
+
     {% include molecule('node-animator') only %}
 
     {% include molecule('window-load-class-remover') with {

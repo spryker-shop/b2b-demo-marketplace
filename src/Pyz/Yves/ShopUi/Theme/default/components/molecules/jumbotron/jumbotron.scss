@@ -63,29 +63,20 @@
         }
 
         &__label {
-            font-size: var(--label-sm-regular-size);
-            line-height: var(--label-sm-regular-line-height);
-            font-weight: var(--label-sm-regular-weight);
-            letter-spacing: var(--label-sm-regular-letter-spacing);
+            @include typography(label-sm-regular);
             color: var(--text-inverse);
             text-transform: uppercase;
             margin-bottom: var(--scale-16);
         }
 
         &__title {
-            font-size: var(--heading-lg-size);
-            line-height: var(--heading-lg-line-height);
-            font-weight: var(--heading-lg-weight);
-            letter-spacing: var(--heading-lg-letter-spacing);
+            @include typography(heading-lg);
             color: var(--text-inverse);
             margin-bottom: var(--scale-12);
         }
 
         &__text {
-            font-size: var(--body-md-size);
-            line-height: var(--body-md-line-height);
-            font-weight: var(--body-md-weight);
-            letter-spacing: normal;
+            @include typography(body-md);
             color: var(--text-inverse);
             padding: 0;
             margin-bottom: var(--scale-20);
