@@ -5,11 +5,8 @@
         gap: var(--scale-8);
 
         &__label {
+            @include typography(label-sm);
             margin: 0;
-            font-family: var(--label-sm-family);
-            font-size: rem(var(--label-sm-size));
-            font-weight: var(--label-sm-weight);
-            line-height: rem(var(--label-sm-line-height));
             color: var(--text-secondary);
         }
 
@@ -49,10 +46,7 @@
         }
 
         &__cell {
-            font-family: var(--label-sm-family);
-            font-size: rem(var(--label-sm-size));
-            font-weight: var(--label-sm-weight);
-            line-height: rem(var(--label-sm-line-height));
+            @include typography(label-sm);
             color: var(--text-primary);
 
             &--quantity {

@@ -18,6 +18,7 @@
 
         &__trigger {
             @include helper-effect-transition(color border-color);
+            @include typography(label-md);
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -25,9 +26,6 @@
             white-space: nowrap;
             gap: var(--scale-8);
             padding: var(--scale-12) var(--scale-16);
-            font-size: var(--font-size-14);
-            font-weight: var(--font-weight-medium);
-            line-height: var(--font-line-height-20);
             color: var(--text-secondary);
             background: transparent;
             border: none;

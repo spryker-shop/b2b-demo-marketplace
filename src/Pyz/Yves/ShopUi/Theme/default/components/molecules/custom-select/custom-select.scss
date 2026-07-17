@@ -163,14 +163,11 @@
 
             #{$name}__select,
             .select2 .select2-selection__rendered {
+                @include typography(body-sm);
                 height: auto;
                 min-width: 0;
                 padding: var(--scale-4) var(--scale-24) var(--scale-4) var(--scale-8);
                 gap: var(--scale-6);
-                font-size: var(--body-sm-size);
-                font-weight: var(--font-weight-regular);
-                line-height: var(--body-sm-line-height);
-                letter-spacing: var(--body-sm-letter-spacing);
             }
 
             #{$name}__caret {

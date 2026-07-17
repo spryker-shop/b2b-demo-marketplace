@@ -2,16 +2,13 @@
     #{$name} {
         &__row {
             @include helper-effect-transition(background-color);
+            @include typography(label-md);
             display: flex;
             align-items: center;
             gap: var(--scale-12);
             padding: var(--scale-8) var(--scale-12);
             text-decoration: none;
             color: var(--text-primary);
-            font-family: var(--body-sm-family);
-            font-size: var(--body-md-size);
-            font-weight: var(--font-weight-medium);
-            line-height: var(--body-md-line-height);
             border-radius: var(--radius-sm);
 
             &:hover {

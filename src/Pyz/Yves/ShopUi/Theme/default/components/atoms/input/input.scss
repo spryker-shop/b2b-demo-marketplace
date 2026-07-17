@@ -1,6 +1,7 @@
 @mixin shop-ui-input-extended($name: '.input') {
     #{$name} {
         @include helper-effect-transition(background-color border-color box-shadow color);
+        @include typography(label-md);
         display: inline-flex;
         height: rem(36);
         padding: 0 var(--scale-16);
@@ -11,10 +12,6 @@
         border: var(--stroke-sm) solid var(--input-border-default);
         background: var(--input-background-default);
         color: var(--input-text-value);
-        font-size: var(--label-md-size);
-        font-weight: var(--label-md-weight);
-        line-height: var(--label-md-line-height);
-        letter-spacing: var(--label-md-letter-spacing);
 
         ::placeholder {
             color: var(--input-text-placeholder);
@@ -61,21 +58,15 @@
         }
 
         &--sm {
+            @include typography(label-sm);
             height: rem(32);
-            font-size: var(--label-sm-size);
-            font-weight: var(--label-sm-weight);
-            line-height: var(--label-sm-line-height);
-            letter-spacing: var(--label-sm-letter-spacing);
         }
 
         &--xs {
+            @include typography(body-sm);
             height: auto;
             padding: var(--scale-4) var(--scale-8);
             gap: var(--scale-6);
-            font-size: var(--body-sm-size);
-            font-weight: var(--font-weight-regular);
-            line-height: var(--body-sm-line-height);
-            letter-spacing: var(--body-sm-letter-spacing);
         }
 
         &--search {

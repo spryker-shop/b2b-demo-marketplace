@@ -9,15 +9,12 @@
         text-align: center;
 
         @include helper-breakpoint-media-min($xl) {
-            margin-right: rem(var(--scale-64));
+            margin-right: var(--scale-64);
         }
 
         &__average-rating {
+            @include typography(heading-xl);
             color: var(--text-primary);
-            font-family: var(--heading-xl-family);
-            font-size: rem(var(--heading-xl-size));
-            font-weight: var(--heading-xl-weight);
-            line-height: rem(var(--heading-xl-line-height));
         }
 
         &__rating-selector {
@@ -26,11 +23,8 @@
         }
 
         &__total-review {
+            @include typography(body-sm);
             color: var(--text-secondary);
-            font-family: var(--body-sm-family);
-            font-size: rem(var(--body-sm-size));
-            font-weight: var(--body-sm-weight);
-            line-height: rem(var(--body-sm-line-height));
         }
     }
 }
