@@ -4,9 +4,13 @@
         flex-direction: column;
         gap: var(--scale-8);
         padding: var(--scale-12) var(--scale-20);
-        margin-bottom: var(--scale-16);
+        margin-bottom: var(--scale-24);
         background: var(--background-surface);
         border-radius: var(--radius-sm);
+
+        @include helper-breakpoint-media-min($lg) {
+            margin-bottom: var(--scale-16);
+        }
 
         &__title {
             @include typography(label-md-semibold);

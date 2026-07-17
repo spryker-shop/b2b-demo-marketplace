@@ -877,9 +877,10 @@ $config[ApplicationConstants::BASE_URL_ZED] = sprintf(
 
 $merchantPortalPort = (int)(getenv('SPRYKER_MP_PORT')) ?: 443;
 $config[MerchantPortalConstants::BASE_URL_MP] = sprintf(
-    'http://%s%s',
+    '%s://%s%s',
+    $merchantPortalPort === 443 ? 'https' : 'http',
     getenv('SPRYKER_MP_HOST'),
-    $merchantPortalPort !== 80 ? ':' . $merchantPortalPort : '',
+    $merchantPortalPort !== 443 ? ':' . $merchantPortalPort : '',
 );
 
 // ----------------------------------------------------------------------------

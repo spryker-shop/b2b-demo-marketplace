@@ -38,11 +38,8 @@
         }
 
         &__nav-panel-section-header {
+            @include typography(caption);
             padding: var(--scale-4) var(--scale-16) var(--scale-6);
-            font-family: var(--caption-family);
-            font-size: var(--caption-size);
-            font-weight: var(--font-weight-regular);
-            line-height: var(--caption-line-height);
             color: var(--text-tertiary);
             flex-shrink: 0;
         }

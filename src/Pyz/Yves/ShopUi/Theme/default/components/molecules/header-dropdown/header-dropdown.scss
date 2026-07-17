@@ -47,6 +47,7 @@
 
         &__trigger--self-service {
             @include helper-effect-transition(color);
+            @include typography(label-md);
             display: flex;
             align-items: center;
             gap: var(--scale-4);
@@ -55,10 +56,6 @@
             cursor: pointer;
             padding: 0;
             white-space: nowrap;
-            font-family: var(--body-md-family);
-            font-size: var(--body-md-size);
-            font-weight: var(--font-weight-medium);
-            line-height: var(--body-md-line-height);
             color: var(--text-secondary);
 
             &:hover {

@@ -1,6 +1,7 @@
 @mixin shop-ui-tooltip($name: '.tooltip') {
     #{$name} {
         @include helper-effect-transition(transform);
+        @include typography(body-sm);
         --tooltip-gap: #{rem(10)};
         --tooltip-arrow-size: #{rem(5)};
         --tooltip-translate: translateX(-50%);
@@ -14,10 +15,6 @@
         background: var(--background-inverse);
         box-shadow: var(--shadows-sm-x) var(--shadows-sm-y) var(--shadows-sm-blur) var(--shadows-sm-spread)
             var(--shadows-sm-color);
-        font-size: var(--body-sm-size);
-        font-weight: var(--font-weight-regular);
-        line-height: var(--body-sm-line-height);
-        letter-spacing: var(--body-sm-letter-spacing);
         white-space: nowrap;
         color: var(--text-inverse);
 

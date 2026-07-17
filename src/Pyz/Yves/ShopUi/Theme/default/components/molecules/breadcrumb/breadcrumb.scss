@@ -9,18 +9,18 @@
         font-family: var(--font-family-sans);
         font-size: var(--font-size-14);
         line-height: var(--font-line-height-20);
-        --breadcrumb-icon-size: #{rem(var(--font-size-18))};
+        --breadcrumb-icon-size: var(--font-size-18);
 
         &--sm {
             font-size: var(--body-sm-size);
             line-height: var(--body-sm-line-height);
-            --breadcrumb-icon-size: calc(#{rem(var(--font-size-18))} * 12 / 14);
+            --breadcrumb-icon-size: calc(var(--font-size-18) * 12 / 14);
         }
 
         &--md {
             font-size: var(--font-size-14);
             line-height: var(--font-line-height-20);
-            --breadcrumb-icon-size: #{rem(var(--font-size-18))};
+            --breadcrumb-icon-size: var(--font-size-18);
         }
 
         &--progress {

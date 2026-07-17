@@ -3,13 +3,10 @@
         display: none;
 
         @include helper-breakpoint-media-min($lg) {
+            @include typography(label-sm);
             display: flex;
             align-items: center;
             gap: var(--scale-6);
-            font-family: var(--body-sm-family);
-            font-size: var(--body-sm-size);
-            font-weight: var(--font-weight-medium);
-            line-height: var(--body-sm-line-height);
             color: var(--text-inverse);
             white-space: nowrap;
         }

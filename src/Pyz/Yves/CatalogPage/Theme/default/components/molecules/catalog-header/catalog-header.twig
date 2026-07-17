@@ -17,7 +17,7 @@
             {% endif %}
 
             {% if app.request.query.get('q') is not empty %}
-                <p class="{{ config.name }}__count">
+                <p class="{{ config.name }}__count is-hidden-sm-md">
                     {% block count %}
                         {% widget 'SspAssetFilterNameWidget' args [data.numFound] with {
                             defaultCount: data.numFound,
