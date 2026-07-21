@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\Acl;
 
+use Generated\Shared\Transfer\GroupTransfer;
 use Spryker\Shared\Acl\AclConstants;
 use Spryker\Zed\Acl\AclConfig as SprykerAclConfig;
 
@@ -18,6 +19,21 @@ class AclConfig extends SprykerAclConfig
      * @var string
      */
     protected const RULE_TYPE_DENY = 'deny';
+
+    /**
+     * @var string
+     */
+    protected const ROLE_DISCOUNT_MANAGER = 'Discount Manager';
+
+    /**
+     * @var string
+     */
+    protected const GROUP_DISCOUNT_MANAGERS = 'Discount Managers';
+
+    /**
+     * @var string
+     */
+    protected const GROUP_REFERENCE_DISCOUNT_MANAGERS = 'discount-managers-group';
 
     /**
      * @return array<array<string, mixed>>
@@ -37,7 +53,80 @@ class AclConfig extends SprykerAclConfig
             'agent-merchant@spryker.com' => [
                 'group' => AclConstants::ROOT_GROUP,
             ],
+            'diego@spryker.com' => [
+                'group' => static::GROUP_DISCOUNT_MANAGERS,
+            ],
         ];
+    }
+
+    /**
+     * @return array<array<string, mixed>>
+     */
+    public function getInstallerGroups(): array
+    {
+        $installerGroups = parent::getInstallerGroups();
+
+        $installerGroups[] = [
+            GroupTransfer::NAME => static::GROUP_DISCOUNT_MANAGERS,
+            GroupTransfer::REFERENCE => static::GROUP_REFERENCE_DISCOUNT_MANAGERS,
+        ];
+
+        return $installerGroups;
+    }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    public function getInstallerRoles(): array
+    {
+        $installerRoles = parent::getInstallerRoles();
+
+        $installerRoles[] = [
+            'name' => static::ROLE_DISCOUNT_MANAGER,
+            'group' => static::GROUP_DISCOUNT_MANAGERS,
+        ];
+
+        return $installerRoles;
+    }
+
+    /**
+     * @param array<array<string, mixed>> $installerRules
+     *
+     * @return array<array<string, mixed>>
+     */
+    protected function addDiscountManagerInstallerRules(array $installerRules): array
+    {
+        $discountManagerRules = [
+            [
+                'bundle' => 'ai-commerce',
+                'controller' => AclConstants::VALIDATOR_WILDCARD,
+                'action' => AclConstants::VALIDATOR_WILDCARD,
+            ],
+            [
+                'bundle' => 'discount',
+                'controller' => 'index',
+                'action' => 'list',
+            ],
+            [
+                'bundle' => 'discount',
+                'controller' => AclConstants::VALIDATOR_WILDCARD,
+                'action' => AclConstants::VALIDATOR_WILDCARD,
+            ],
+            [
+                'bundle' => 'dashboard',
+                'controller' => AclConstants::VALIDATOR_WILDCARD,
+                'action' => AclConstants::VALIDATOR_WILDCARD,
+            ],
+        ];
+
+        foreach ($discountManagerRules as $discountManagerRule) {
+            $installerRules[] = $discountManagerRule + [
+                'type' => AclConstants::ALLOW,
+                'role' => static::ROLE_DISCOUNT_MANAGER,
+            ];
+        }
+
+        return $installerRules;
     }
 
     /**
@@ -82,6 +171,7 @@ class AclConfig extends SprykerAclConfig
     {
         $installerRules = parent::getInstallerRules();
         $installerRules = $this->addMerchantPortalInstallerRules($installerRules);
+        $installerRules = $this->addDiscountManagerInstallerRules($installerRules);
 
         return $installerRules;
     }
