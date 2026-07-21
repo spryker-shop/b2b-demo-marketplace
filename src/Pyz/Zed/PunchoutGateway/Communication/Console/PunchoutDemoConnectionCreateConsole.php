@@ -70,6 +70,9 @@ class PunchoutDemoConnectionCreateConsole extends Console
         return static::CODE_SUCCESS;
     }
 
+    /**
+     * @SuppressWarnings(OrmNewEntityNotInCommunicationRule) Legacy: one-off demo-data seeding console creates the ORM entity by design. Do not suppress for new code.
+     */
     protected function createCxmlConnection(OutputInterface $output, int $idStore): void
     {
         $existingEntity = SpyPunchoutConnectionQuery::create()
@@ -99,6 +102,9 @@ class PunchoutDemoConnectionCreateConsole extends Console
         $output->writeln(sprintf('Created cXML demo connection (id=%d).', $entity->getIdPunchoutConnection()));
     }
 
+    /**
+     * @SuppressWarnings(OrmNewEntityNotInCommunicationRule) Legacy: one-off demo-data seeding console creates the ORM entity by design. Do not suppress for new code.
+     */
     protected function createOciConnection(OutputInterface $output, int $idStore): void
     {
         $existingEntity = SpyPunchoutConnectionQuery::create()

@@ -20,6 +20,8 @@ class RouterConfig extends SprykerRouterConfig
     /**
      * @see \Spryker\Yves\Router\Plugin\RouterEnhancer\LanguagePrefixRouterEnhancerPlugin
      *
+     * @SuppressWarnings(LocatorInDependencyProviderOnlyRule) Legacy: router config reads allowed languages at bootstrap, mirrors core RouterConfig. Do not suppress for new code.
+     *
      * @return array<string>
      */
     public function getAllowedLanguages(): array
@@ -28,6 +30,8 @@ class RouterConfig extends SprykerRouterConfig
     }
 
     /**
+     * @SuppressWarnings(LocatorInDependencyProviderOnlyRule) Legacy: router config reads store names at bootstrap, mirrors core RouterConfig. Do not suppress for new code.
+     *
      * @return array<string>
      */
     public function getAllowedStores(): array

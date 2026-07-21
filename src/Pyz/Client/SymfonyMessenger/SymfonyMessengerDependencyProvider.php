@@ -18,6 +18,8 @@ use Spryker\Zed\SymfonyScheduler\Communication\Plugin\SymfonyMessenger\Scheduler
 class SymfonyMessengerDependencyProvider extends SprykerSymfonyMessengerDependencyProvider
 {
     /**
+     * @SuppressWarnings(LayerAccessRule) Legacy: transport plugin stack registers Zed scheduler plugins by design. Do not suppress for new code.
+     *
      * @return array<\Spryker\Shared\SymfonyMessengerExtension\Dependency\Plugin\TransportFactoryProviderPluginInterface>
      */
     protected function getTransportFactoryProviderPlugins(): array
@@ -28,6 +30,8 @@ class SymfonyMessengerDependencyProvider extends SprykerSymfonyMessengerDependen
     }
 
     /**
+     * @SuppressWarnings(LayerAccessRule) Legacy: transport plugin stack registers Zed scheduler plugins by design. Do not suppress for new code.
+     *
      * @return array<\Spryker\Shared\SymfonyMessengerExtension\Dependency\Plugin\AvailableTransportProviderPluginInterface>
      */
     protected function getAvailableTransportProviderPlugins(): array
@@ -38,6 +42,8 @@ class SymfonyMessengerDependencyProvider extends SprykerSymfonyMessengerDependen
     }
 
     /**
+     * @SuppressWarnings(LayerAccessRule) Legacy: transport plugin stack registers Zed scheduler plugins by design. Do not suppress for new code.
+     *
      * @return array<\Spryker\Shared\SymfonyMessengerExtension\Dependency\Plugin\MessageMappingProviderPluginInterface>
      */
     protected function getMessageMappingProviderPlugins(): array
@@ -48,6 +54,8 @@ class SymfonyMessengerDependencyProvider extends SprykerSymfonyMessengerDependen
     }
 
     /**
+     * @SuppressWarnings(LayerAccessRule) Legacy: transport plugin stack registers Zed scheduler plugins by design. Do not suppress for new code.
+     *
      * @return array<\Spryker\Zed\SymfonyScheduler\Communication\Plugin\SymfonyMessenger\CompiledCronTransportGroupAwarePlugin>
      */
     protected function getGroupAwareTransportsPlugins(): array

@@ -183,6 +183,8 @@ class OauthDependencyProvider extends SprykerOauthDependencyProvider
     }
 
     /**
+     * @SuppressWarnings(LayerAccessRule) Legacy: OAuth scope stack registers Glue collector plugins by design. Do not suppress for new code.
+     *
      * @return array<\Spryker\Glue\OauthExtension\Dependency\Plugin\ScopeCollectorPluginInterface>
      */
     protected function getScopeCollectorPlugins(): array
@@ -194,6 +196,8 @@ class OauthDependencyProvider extends SprykerOauthDependencyProvider
     }
 
     /**
+     * @SuppressWarnings(LayerAccessRule) Legacy: OAuth scope stack registers Glue finder plugins by design. Do not suppress for new code.
+     *
      * @return array<\Spryker\Glue\OauthExtension\Dependency\Plugin\ScopeFinderPluginInterface>
      */
     protected function getScopeFinderPlugins(): array

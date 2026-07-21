@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "83cebdbb7f0ec1d68237e5ee1bf46ba4",
+    "content-hash": "66feca3404b37cdd7f2f8996c65821c9",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -92088,16 +92088,16 @@
         },
         {
             "name": "spryker/architecture-sniffer",
-            "version": "0.5.10",
+            "version": "dev-feature/cc-39653-project-architecture-sniffer",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/architecture-sniffer.git",
-                "reference": "70c25aec9c6e1254caf1181760dec7ef41f01678"
+                "reference": "abc4ac560c44f836be47b9452a1aaaf68b71e35c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/architecture-sniffer/zipball/70c25aec9c6e1254caf1181760dec7ef41f01678",
-                "reference": "70c25aec9c6e1254caf1181760dec7ef41f01678",
+                "url": "https://api.github.com/repos/spryker/architecture-sniffer/zipball/abc4ac560c44f836be47b9452a1aaaf68b71e35c",
+                "reference": "abc4ac560c44f836be47b9452a1aaaf68b71e35c",
                 "shasum": ""
             },
             "require": {
@@ -92115,6 +92115,9 @@
                 "spryker/code-sniffer": "*",
                 "symfony/var-dumper": "^5.4.24"
             },
+            "bin": [
+                "bin/spryker-architecture"
+            ],
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -92146,7 +92149,7 @@
                 "issues": "https://github.com/spryker/architecture-sniffer/issues",
                 "source": "https://github.com/spryker/architecture-sniffer"
             },
-            "time": "2026-04-16T13:09:10+00:00"
+            "time": "2026-07-21T13:51:31+00:00"
         },
         {
             "name": "spryker/code-sniffer",
@@ -93111,6 +93114,7 @@
         "spryker-feature/ai-commerce": 20,
         "spryker-feature/buy-box": 20,
         "spryker-feature/order-experience-management": 20,
+        "spryker/architecture-sniffer": 20,
         "spryker/cypress-tests": 20,
         "spryker/robotframework-suite-tests": 20
     },
@@ -93133,5 +93137,5 @@
     "platform-overrides": {
         "php": "8.3.13"
     },
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.6.0"
 }
