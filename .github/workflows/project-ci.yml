@@ -35,6 +35,9 @@ on:
 
 env:
     SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+    # NOTE: the env var name is fixed — the shared ./.github/actions/job-slack-notifications
+    # action reads WEEKLY_CI_SLACK_CHANNEL_ID by that exact name. Point the secret at
+    # your project's Slack channel; do not rename this key unless you also update the action.
     WEEKLY_CI_SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
     JIRA_TICKET_SLACK_USER_GROUP_MAPPING: ${{ secrets.JIRA_TICKET_SLACK_USER_GROUP_MAPPING }}
 
@@ -88,6 +91,17 @@ jobs:
                 with:
                     composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
 
+            -   name: Validate composer manifest and lock file
+                run: composer validate --no-check-publish
+
+            # Soft (non-blocking) check: report known CVEs in dependencies without failing the build.
+            -   name: Audit dependencies for known vulnerabilities (soft)
+                run: composer audit --no-interaction || echo "::warning title=composer audit::Known vulnerabilities reported in dependencies (non-blocking). Please review."
+
+            # Soft (non-blocking) check: report outdated direct dependencies (SES05 upgradability).
+            -   name: Report outdated dependencies (soft)
+                run: composer outdated -D -M --no-interaction || echo "::warning title=composer outdated::Outdated direct dependencies reported (non-blocking). Consider upgrading."
+
             -   name: Generate transfer objects
                 run: vendor/bin/console transfer:generate
 
@@ -139,7 +153,7 @@ jobs:
                 id: evaluator
                 run: |
                     set +e
-                    OUTPUT=$(vendor/bin/evaluator evaluate --exclude-checkers=SPRYKER_DEV_PACKAGES_CHECKER --format=compact 2>&1)
+                    OUTPUT=$(vendor/bin/evaluator evaluate --format=compact 2>&1)
                     CODE=$?
                     echo "$OUTPUT"
                     {
@@ -211,6 +225,10 @@ jobs:
 
             -   name: Install NPM packages
                 run: npm ci
+
+            # Soft (non-blocking) check: report known CVEs in NPM dependencies (SES05).
+            -   name: Audit NPM dependencies (soft)
+                run: npm audit || echo "::warning title=npm audit::Known vulnerabilities reported in NPM dependencies (non-blocking). Please review."
 
             -   name: Style lint
                 run: npm run yves:stylelint
