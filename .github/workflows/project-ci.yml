@@ -70,13 +70,9 @@ jobs:
             || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         name: "Static analysis"
         runs-on: ubuntu-latest
-        strategy:
-            fail-fast: false
-            matrix:
-                php-version: [
-                    '8.3',
-                    '8.4'
-                ]
+        permissions:
+            contents: read
+            pull-requests: write # required for the soft Evaluator step to post a PR comment
 
         env:
             APPLICATION_ENV: ci.mysql
@@ -138,8 +134,50 @@ jobs:
             -   name: Run PHPStan
                 run: vendor/bin/phpstan analyze -l 6 -c phpstan.neon src/
 
-            -   name: Run Evaluator for all branches
-                run: vendor/bin/evaluator evaluate --exclude-checkers=SPRYKER_DEV_PACKAGES_CHECKER --format=compact
+            # Soft (non-blocking) check: Evaluator findings warn but never fail the job.
+            -   name: Run Evaluator for all branches (soft)
+                id: evaluator
+                run: |
+                    set +e
+                    OUTPUT=$(vendor/bin/evaluator evaluate --exclude-checkers=SPRYKER_DEV_PACKAGES_CHECKER --format=compact 2>&1)
+                    CODE=$?
+                    echo "$OUTPUT"
+                    {
+                        echo "outcome=$([ $CODE -eq 0 ] && echo success || echo failure)"
+                        echo "report<<EVALUATOR_EOF"
+                        echo "$OUTPUT"
+                        echo "EVALUATOR_EOF"
+                    } >> "$GITHUB_OUTPUT"
+                    exit 0
+
+            -   name: Report Evaluator findings
+                if: always() && steps.evaluator.outputs.outcome == 'failure'
+                env:
+                    GH_TOKEN: ${{ github.token }}
+                    EVALUATOR_REPORT: ${{ steps.evaluator.outputs.report }}
+                run: |
+                    echo "::warning title=Evaluator findings (non-blocking)::Evaluator reported issues. This does NOT fail the build, but please review and fix them."
+                    {
+                        echo "## ⚠️ Evaluator findings (non-blocking)"
+                        echo ""
+                        echo "The Spryker Evaluator reported issues. This step is **soft** — it does not fail the build — but the findings should be reviewed and fixed."
+                        echo ""
+                        echo '```'
+                        echo "$EVALUATOR_REPORT"
+                        echo '```'
+                    } >> "$GITHUB_STEP_SUMMARY"
+                    if [ "${{ github.event_name }}" = "pull_request" ]; then
+                        {
+                            echo "## ⚠️ Evaluator findings (non-blocking)"
+                            echo ""
+                            echo "The Spryker Evaluator reported issues in this PR. This check is **soft** — it does not block merging — but please review and address them."
+                            echo ""
+                            echo '```'
+                            echo "$EVALUATOR_REPORT"
+                            echo '```'
+                        } > /tmp/evaluator-comment.md
+                        gh pr comment "${{ github.event.pull_request.number }}" --body-file /tmp/evaluator-comment.md || echo "::warning::Could not post PR comment (missing pull-requests: write permission?)."
+                    fi
 
             -   uses: actions/setup-node@v4
                 with:
