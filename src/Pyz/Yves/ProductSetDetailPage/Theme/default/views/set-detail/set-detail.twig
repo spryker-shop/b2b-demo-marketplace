@@ -64,7 +64,8 @@
 
                             {% block body %}
                                 {% set containerClass = config.name ~ '__container grid grid--column grid--middle grid--center' %}
-                                {% set contentClass = contentClass | default('') ~ ' text-center' %}
+                                {# default('') must bind to contentClass (undefined here); the | filter has higher precedence than ~, so keep it directly on the variable #}
+                                {% set contentClass = contentClass | default('') ~ ' ' ~ 'text-center' %}
 
                                 {{ parent() }}
                             {% endblock %}
