@@ -205,6 +205,51 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
     public const FACADE_PRODUCT_EXPERIENCE_MANAGEMENT = 'FACADE_PRODUCT_EXPERIENCE_MANAGEMENT';
 
     /**
+     * @var string
+     */
+    public const FACADE_CART = 'FACADE_CART';
+
+    /**
+     * @var string
+     */
+    public const FACADE_CHECKOUT = 'FACADE_CHECKOUT';
+
+    /**
+     * @var string
+     */
+    public const FACADE_OMS = 'FACADE_OMS';
+
+    /**
+     * @var string
+     */
+    public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+
+    /**
+     * @var string
+     */
+    public const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
+
+    /**
+     * @var string
+     */
+    public const FACADE_CALCULATION = 'FACADE_CALCULATION';
+
+    /**
+     * @var string
+     */
+    public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
+
+    /**
+     * @var string
+     */
+    public const FACADE_MERCHANT_SALES_ORDER = 'FACADE_MERCHANT_SALES_ORDER';
+
+    /**
+     * @var string
+     */
+    public const FACADE_MERCHANT_OMS = 'FACADE_MERCHANT_OMS';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -224,6 +269,141 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
         $container = $this->addStoreFacade($container);
         $container = $this->addMerchantUserFacade($container);
         $container = $this->addProductExperienceManagementFacade($container);
+        $container = $this->addCartFacade($container);
+        $container = $this->addCheckoutFacade($container);
+        $container = $this->addOmsFacade($container);
+        $container = $this->addCustomerFacade($container);
+        $container = $this->addShipmentFacade($container);
+        $container = $this->addCalculationFacade($container);
+        $container = $this->addCompanyUserFacade($container);
+        $container = $this->addMerchantSalesOrderFacade($container);
+        $container = $this->addMerchantOmsFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyUserFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_COMPANY_USER, function (Container $container) {
+            return $container->getLocator()->companyUser()->facade();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantSalesOrderFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_MERCHANT_SALES_ORDER, function (Container $container) {
+            return $container->getLocator()->merchantSalesOrder()->facade();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantOmsFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_MERCHANT_OMS, function (Container $container) {
+            return $container->getLocator()->merchantOms()->facade();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCartFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_CART, function (Container $container) {
+            return $container->getLocator()->cart()->facade();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCheckoutFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_CHECKOUT, function (Container $container) {
+            return $container->getLocator()->checkout()->facade();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOmsFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_OMS, function (Container $container) {
+            return $container->getLocator()->oms()->facade();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCustomerFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_CUSTOMER, function (Container $container) {
+            return $container->getLocator()->customer()->facade();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addShipmentFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_SHIPMENT, function (Container $container) {
+            return $container->getLocator()->shipment()->facade();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCalculationFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_CALCULATION, function (Container $container) {
+            return $container->getLocator()->calculation()->facade();
+        });
 
         return $container;
     }
