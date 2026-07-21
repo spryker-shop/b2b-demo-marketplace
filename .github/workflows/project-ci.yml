@@ -1,0 +1,271 @@
+# -----------------------------------------------------------------------------
+# EXAMPLE / TEMPLATE WORKFLOW — not a product-delivery pipeline.
+#
+# This file is a starting point for configuring a project-specific CI pipeline.
+# Copy it and adapt the jobs, triggers and test suites to your project's needs.
+#
+# This MUST be the ONLY CI workflow used for project development. All other
+# workflows in .github/workflows/ (ci.yml, compatibility-ci.yml,
+# generate-api-docs.yml, up-merge-latest-release-to-master-deploy.yml, etc.)
+# are for product delivery / upstream maintenance and MUST NOT be used to gate
+# project work. During project setup, DELETE those other workflow files and
+# keep only this one (renamed/adapted as needed).
+# -----------------------------------------------------------------------------
+name: B2B-MP-PROJECT-CI
+
+on:
+    # TEMPORARY: the schedule below only exists so this example runs on a cadence
+    # while it is still a template. When adopting this as the real project CI,
+    # uncomment the `push` / `pull_request` triggers below (as in ci.yml) so it
+    # runs per PR commit and on master, and REMOVE this temporary `schedule`.
+    schedule:
+        - cron: '0 2 * * 0'
+    workflow_dispatch:
+    # While a template, this runs on PRs only when the `run-project-ci` label is
+    # added (see the per-job `if:` gates). When adopting as real project CI,
+    # replace this `pull_request` block AND the temporary `schedule` above with
+    # the product-style triggers below (uncomment them) so it runs per PR commit
+    # and on master pushes.
+    pull_request:
+        types: [ labeled, synchronize ]
+    # push:
+    #     branches:
+    #         - master
+    # pull_request:
+
+env:
+    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+    WEEKLY_CI_SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
+    JIRA_TICKET_SLACK_USER_GROUP_MAPPING: ${{ secrets.JIRA_TICKET_SLACK_USER_GROUP_MAPPING }}
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    scan-credentials:
+        if: >
+            (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'run-project-ci'))
+            || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        name: "Scan for Credentials"
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - name: Run TruffleHog OSS
+              uses: trufflesecurity/trufflehog@v3.90.8
+              with:
+                  extra_args: --log-level=2 --results=verified
+
+            - name: Slack Notification for failed job
+              uses: ./.github/actions/job-slack-notifications
+              if: always()
+
+    validation:
+        if: >
+            (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'run-project-ci'))
+            || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        name: "Static analysis"
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                php-version: [
+                    '8.3',
+                    '8.4'
+                ]
+
+        env:
+            APPLICATION_ENV: ci.mysql
+            APPLICATION_STORE: DE
+            PROJECT: suite
+            SPRYKER_CURRENT_REGION: EU
+            COMPOSER_IGNORE_CHROMEDRIVER: 1
+
+        steps:
+            -   uses: actions/checkout@v4
+
+            -   uses: ramsey/composer-install@v3
+                with:
+                    composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
+
+            -   name: Generate transfer objects
+                run: vendor/bin/console transfer:generate
+
+            -   name: Generate transfer databuilder objects
+                run: vendor/bin/console transfer:databuilder:generate
+
+            -   name: Propel install
+                run: |
+                    vendor/bin/console propel:schema:copy
+                    vendor/bin/console propel:model:build
+                    vendor/bin/console transfer:entity:generate
+
+            -   name: Codecept build
+                run: vendor/bin/codecept build -q
+
+            -   name: Generate autocompletion files
+                run: vendor/bin/console dev:ide-auto-completion:generate
+
+            -   name: Setup search map files
+                run: vendor/bin/console search:setup:source-map
+
+            -   name: Validate propel files
+                run: |
+                    vendor/bin/console propel:schema:validate
+                    vendor/bin/console propel:schema:validate-xml-names
+
+            -   name: Validate transfer files
+                run: vendor/bin/console transfer:validate
+
+            -   name: Run CodeStyle checks
+                run: vendor/bin/console code:sniff:style
+
+            -   name: Run Project Architecture rules
+                run: vendor/bin/phpmd src/ text architecture-sniffer/ruleset.xml --minimumpriority 4
+
+            -   name: Generate rest API documentation
+                run: vendor/bin/console rest-api:generate:documentation
+
+            -  name: Generate API
+               run: |
+                   echo "vendor/bin/glue api:generate" && vendor/bin/glue api:generate --quiet-meta --keep-existing
+                   echo "GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue api:generate" && GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue api:generate --quiet-meta --keep-existing
+
+            -   name: Run PHPStan
+                run: vendor/bin/phpstan analyze -l 6 -c phpstan.neon src/
+
+            -   name: Run Evaluator for all branches
+                run: vendor/bin/evaluator evaluate --exclude-checkers=SPRYKER_DEV_PACKAGES_CHECKER --format=compact
+
+            -   uses: actions/setup-node@v4
+                with:
+                    node-version: '24'
+
+            -   name: Install NPM packages
+                run: |
+                    sudo npm i --location=global --unsafe-perm speccy@0.11.0
+
+            -   name: Speccy lint Glue specification
+                run: speccy lint src/Generated/Glue/Specification/spryker_rest_api.schema.yml --rules=default --skip openapi-tags
+
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
+
+    js-validation:
+        if: >
+            (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'run-project-ci'))
+            || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        name: "NPM validation"
+        runs-on: ubuntu-latest
+        steps:
+            -   uses: actions/checkout@v4
+
+            -   name: Setup Node.js
+                uses: actions/setup-node@v5
+                with:
+                    node-version: '24'
+                    cache: 'npm'
+
+            -   name: Install NPM packages
+                run: npm ci
+
+            -   name: Style lint
+                run: npm run yves:stylelint
+
+            -   name: ES lint
+                run: npm run yves:lint
+
+            -   name: Front-end Formatter
+                run: npm run formatter
+
+            -   name: Front-end MP Lint
+                run: npm run mp:lint
+
+            -   name: Front-end MP Style lint
+                run: npm run mp:stylelint
+
+            -   name: Front-end MP Unit Tests
+                run: npm run mp:test
+
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
+
+    php-84-mariadb-functional-alpine:
+        needs: [validation, js-validation]
+        name: "Codeception / Functional Tests"
+        runs-on: ubuntu-latest
+        env:
+            PROGRESS_TYPE: plain
+            SPRYKER_PLATFORM_IMAGE: spryker/php:8.4
+            TRAVIS: 1
+            SPRYKER_CURRENT_REGION: EU
+            DYNAMIC_STORE_MODE: true
+            COMPOSER_IGNORE_CHROMEDRIVER: 1
+
+        steps:
+            -   uses: actions/checkout@v4
+
+            -   uses: ramsey/composer-install@v3
+                with:
+                    composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
+
+            -   name: Run docker
+                run: |
+                    git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
+                    docker/sdk boot .github/deploy/deploy.ci.functional.mariadb.yml -a --apcu
+                    docker/sdk up -t
+                    docker/sdk cli composer dump-autoload -o -a --apcu -q
+
+            -   name: Run Tests
+                run: docker/sdk testing codecept run -c tests/codeception.ci.functional.yml
+
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
+
+    # ---------------------------------------------------------------------------
+    # PLACEHOLDER: Project-level Cypress UI tests.
+    #
+    # This job is intentionally a scaffold. Fill in the "Install Project" and
+    # "Run Tests" steps once the project-level Cypress suite exists (e.g. under
+    # tests/cypress-tests). Mirror the Cypress job in compatibility-ci.yml
+    # (docker-alpine-php-83-postgres-cypress) for the docker boot + run commands,
+    # then flip `if: false` below to the standard schedule/dispatch/label gate.
+    # ---------------------------------------------------------------------------
+    project-cypress:
+        if: false # TODO: enable once the project-level Cypress suite is implemented.
+        needs: [validation, js-validation]
+        name: "Cypress / UI (project)"
+        runs-on: ubuntu-latest
+        env:
+            PROGRESS_TYPE: plain
+            SPRYKER_PLATFORM_IMAGE: spryker/php:8.3
+            SPRYKER_CURRENT_REGION: EU
+            DYNAMIC_STORE_MODE: true
+        steps:
+            -   uses: actions/checkout@v4
+
+            -   name: Placeholder
+                run: echo "Project-level Cypress tests are not implemented yet. See the comment above this job."
+
+            # -   name: Install Project
+            #     run: |
+            #         git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
+            #         docker/sdk boot <project-cypress-deploy-file>
+            #         docker/sdk up -t
+            #         docker/sdk cli composer dump-autoload -o -a --apcu -q
+            #
+            # -   name: Run Tests
+            #     run: |
+            #         docker/sdk exec cypress-tests npx cypress install
+            #         docker/sdk exec cypress-tests npm run cy:ci:project
+
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
