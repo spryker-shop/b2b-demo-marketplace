@@ -21,6 +21,7 @@
     {% set formNote = data.form.vars is defined ? data.form.vars.value.note %}
     {% set note = data.note ?: formNote %}
     {% set isNoteNotEmpty = note is not empty %}
+    {% set menuAnchorId = "#{config.jsName}-menu-#{random()}" %}
 
     {% if data.canWrite or isNoteNotEmpty %}
         {% block contentInner %}
@@ -30,22 +31,29 @@
                         <div class="{{ config.name }}__text">{{ note | nl2br }}</div>
                         {% if data.canWrite %}
                             {% block cartItemNoteActions %}
-                                {% include molecule('cart-configured-bundle-item-note-actions', 'ConfigurableBundleNoteWidget') with {
-                                    data: {
-                                        buttons: [
-                                            {
-                                                class: 'link link--icon ' ~ config.jsName ~ '__edit',
-                                                icon: 'edit',
-                                                text: 'customer.profile.address.edit' | trans,
-                                            },
-                                            {
-                                                class: 'link link--icon ' ~ config.jsName ~ '__remove',
-                                                icon: 'delete',
-                                                text: 'cart.delete.item' | trans,
-                                            },
-                                        ],
-                                    },
-                                } only %}
+                                <div class="{{ config.name }}__menu">
+                                    <button
+                                        type="button"
+                                        class="{{ config.name }}__menu-trigger"
+                                        popovertarget="{{ menuAnchorId }}"
+                                        style="anchor-name: --{{ menuAnchorId }}"
+                                        aria-label="{{ 'Comment actions' | trans }}"
+                                    >
+                                        {% include atom('font-icon') with {
+                                            modifiers: ['size-inherit'],
+                                            data: { name: 'more_vert' },
+                                        } only %}
+                                    </button>
+                                    <div
+                                        id="{{ menuAnchorId }}"
+                                        popover="auto"
+                                        class="{{ config.name }}__menu-list"
+                                        style="position-anchor: --{{ menuAnchorId }}"
+                                    >
+                                        <button type="button" class="{{ config.name }}__menu-item {{ config.jsName }}__edit">{{ 'Edit' | trans }}</button>
+                                        <button type="button" class="{{ config.name }}__menu-item {{ config.jsName }}__remove">{{ 'Delete' | trans }}</button>
+                                    </div>
+                                </div>
                             {% endblock %}
                         {% endif %}
                     </div>

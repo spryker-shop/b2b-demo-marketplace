@@ -1,38 +1,40 @@
 @mixin configurable-bundle-widget-configured-bundle($name: '.configured-bundle') {
     #{$name} {
-        border: rem(1) solid $setting-color-gray-7;
-        margin-bottom: rem(22);
-        padding-bottom: rem(32);
-        overflow: hidden;
-
-        &__col {
-            @include helper-breakpoint-media-min($lg) {
-                text-align: right;
-            }
-
-            &--displaced {
-                margin-left: rem(-8);
-
-                @include helper-breakpoint-media-min($lg) {
-                    margin-left: 0;
-                }
-            }
-        }
+        display: block;
+        padding: var(--scale-16);
+        background: var(--background-page);
+        border: var(--stroke-sm) solid var(--border-default);
+        border-radius: var(--radius-md);
+        margin-bottom: var(--scale-16);
 
         &__content {
-            display: flex;
-            flex-wrap: wrap;
-            padding: rem(18) rem(30);
-            overflow: hidden;
-            background-color: $setting-color-gray-7;
+            display: grid;
+            gap: var(--scale-8);
+            margin-bottom: var(--scale-8);
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, auto);
             align-items: center;
+
+            @include helper-breakpoint(lg) {
+                align-items: center;
+                grid-template-columns: 1fr auto auto auto;
+                grid-template-rows: 1fr;
+            }
+
+            & > :not(#{$name}__title) {
+                grid-row: 2;
+
+                @include helper-breakpoint(lg) {
+                    grid-row: 1;
+                }
+            }
         }
 
         &__actions {
             display: flex;
             flex-wrap: wrap;
+            gap: var(--scale-8);
             justify-content: space-between;
-            padding: 0 rem(30);
         }
 
         &__info {
@@ -42,19 +44,57 @@
         }
 
         &__title {
-            margin-bottom: 0;
-
-            @include helper-breakpoint-media-min($lg) {
-                font-size: rem(20);
+            @include typography(heading-sm);
+            width: 100%;
+            grid-row: 1;
+            grid-column: span 3 / span 3;
+            
+            a {
+                color: currentColor;
             }
         }
 
-        &__products {
-            padding: rem(18) rem(30);
+        &__remove {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: var(--scale-32);
+            height: var(--scale-32);
+            padding: 0;
+            color: var(--icon-secondary);
+            font-size: var(--scale-20);
+            line-height: 1;
+            background: none;
+            border: 0;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+
+            &:hover {
+                color: var(--text-state-error);
+                background: var(--background-surface);
+            }
+
+            &:hover &-tooltip,
+            &:focus-visible &-tooltip {
+                opacity: 1;
+            }
         }
 
-        &__text {
-            font-size: rem(18);
+        &__remove-tooltip {
+            @include typography(body-sm);
+            position: absolute;
+            right: 0;
+            bottom: calc(100% + var(--scale-4));
+            z-index: $setting-zi-dropdown;
+            padding: var(--scale-4) var(--scale-8);
+            color: var(--text-inverse, #fff);
+            white-space: nowrap;
+            background: var(--background-inverse, #3b3b3d);
+            border-radius: var(--radius-sm);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 150ms ease;
         }
 
         @content;

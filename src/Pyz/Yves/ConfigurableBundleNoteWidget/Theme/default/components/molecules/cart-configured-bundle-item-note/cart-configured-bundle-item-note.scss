@@ -1,49 +1,148 @@
 @mixin configurable-bundle-note-widget-cart-configured-bundle-item-note($name: '.cart-configured-bundle-item-note') {
     #{$name} {
-        &__container {
-            background-color: $setting-color-gray-7;
-            padding: rem(13) rem(20);
+        margin-top: var(--scale-8);
 
-            @include helper-breakpoint-media-min($lg) {
-                padding-top: rem(17);
-                padding-bottom: rem(17);
-            }
+        &__container {
+            padding: var(--scale-12) var(--scale-4) var(--scale-12) var(--scale-12);
+            background-color: var(--background-surface);
+            border-radius: var(--radius-sm);
         }
 
         &__title {
-            font-size: rem(13);
-            font-weight: fw(medium);
-            line-height: normal;
-            color: $setting-color-gray-5;
-            margin-bottom: rem(7);
-
-            @include helper-breakpoint-media-min($lg) {
-                font-size: rem(14);
-            }
+            @include typography(label-sm-semibold);
+            margin: 0 0 var(--scale-6);
+            color: var(--text-tertiary);
         }
 
         &__label {
-            font-size: rem(12);
-            line-height: rem(18);
-            color: $setting-color-gray-3;
-
-            @include helper-breakpoint-media-min($lg) {
-                font-size: rem(14);
-            }
+            @include typography(label-sm-semibold);
+            color: var(--text-tertiary);
         }
 
         &__content {
-            margin-top: rem(17);
+            margin-top: var(--scale-12);
+        }
+
+        &__text-wrap {
+            display: flex;
+            align-items: flex-start;
+            gap: rem(10);
         }
 
         &__text {
-            color: $setting-color-gray-3;
-            font-size: rem(13);
-            line-height: 1.38;
+            @include typography(body-sm);
+            flex: 1 1 auto;
+            min-width: 0;
+            color: var(--text-secondary);
+        }
+
+        &__menu {
+            display: flex;
+            flex-shrink: 0;
+            align-self: flex-start;
+        }
+
+        &__menu-trigger {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: rem(16);
+            height: rem(16);
+            padding: 0;
+            color: var(--icon-secondary);
+            background: none;
+            border: 0;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: rem(12);
+            line-height: 1;
+
+            &:hover {
+                color: var(--text-primary);
+                background: var(--background-surface);
+            }
+        }
+
+        &__menu-list[popover] {
+            position: fixed;
+            inset: auto;
+            top: anchor(bottom, 100%);
+            right: anchor(right, 0);
+            margin: var(--scale-4) 0 0;
+            min-width: rem(120);
+            padding: var(--scale-4);
+            background: var(--background-page);
+            border: var(--stroke-sm) solid var(--border-default);
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-md);
+        }
+
+        &__menu-list[popover]:not(:popover-open) {
+            display: none;
+        }
+
+        &__menu-item {
+            display: block;
+            width: 100%;
+            padding: var(--scale-4) var(--scale-8);
+            color: var(--text-primary);
+            font-family: var(--body-md-family);
+            font-size: var(--body-md-size);
+            text-align: left;
+            background: none;
+            border: 0;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+
+            &:hover {
+                background: var(--background-surface);
+            }
+        }
+
+        .form__field {
+            padding-top: 0;
+        }
+
+        .form__actions {
+            text-align: left;
+            margin-top: 0;
+        }
+
+        .form__action {
+            margin-top: rem(3);
+            margin-left: 0;
+
+            @include helper-breakpoint-media-min($lg) {
+                margin-top: rem(12);
+            }
+        }
+
+        .label {
+            display: none;
+        }
+
+        .textarea {
+            font-size: rem(12);
+            font-weight: fw(regular);
+            line-height: rem(18);
+            padding: rem(12) rem(13);
+            border-radius: $setting-border-radius;
+            border: none;
+            box-shadow:
+                0 rem(10) rem(10) 0 $setting-color-shadow-1,
+                0 rem(3) rem(3) 0 $setting-color-shadow-1;
+            min-height: rem(119);
+            max-width: 100%;
+
+            @include helper-breakpoint-media-min($lg) {
+                font-size: rem(13);
+                padding: rem(15) rem(20);
+                min-height: rem(86);
+            }
         }
 
         @content;
     }
 }
 
-@include configurable-bundle-note-widget-cart-configured-bundle-item-note;
+@include configurable-bundle-note-widget-cart-configured-bundle-item-note();
