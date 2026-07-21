@@ -166,9 +166,13 @@ jobs:
 
             -   name: Report Evaluator findings
                 if: always() && steps.evaluator.outputs.outcome == 'failure'
+                # All untrusted / context values are passed via env and referenced as shell
+                # variables (never inlined as ${{ }} inside run:) to avoid script injection.
                 env:
                     GH_TOKEN: ${{ github.token }}
                     EVALUATOR_REPORT: ${{ steps.evaluator.outputs.report }}
+                    EVENT_NAME: ${{ github.event_name }}
+                    PR_NUMBER: ${{ github.event.pull_request.number }}
                 run: |
                     echo "::warning title=Evaluator findings (non-blocking)::Evaluator reported issues. This does NOT fail the build, but please review and fix them."
                     {
@@ -180,7 +184,7 @@ jobs:
                         echo "$EVALUATOR_REPORT"
                         echo '```'
                     } >> "$GITHUB_STEP_SUMMARY"
-                    if [ "${{ github.event_name }}" = "pull_request" ]; then
+                    if [ "$EVENT_NAME" = "pull_request" ]; then
                         {
                             echo "## ⚠️ Evaluator findings (non-blocking)"
                             echo ""
@@ -190,7 +194,7 @@ jobs:
                             echo "$EVALUATOR_REPORT"
                             echo '```'
                         } > /tmp/evaluator-comment.md
-                        gh pr comment "${{ github.event.pull_request.number }}" --body-file /tmp/evaluator-comment.md || echo "::warning::Could not post PR comment (missing pull-requests: write permission?)."
+                        gh pr comment "$PR_NUMBER" --body-file /tmp/evaluator-comment.md || echo "::warning::Could not post PR comment (missing pull-requests: write permission?)."
                     fi
 
             -   uses: actions/setup-node@v4
