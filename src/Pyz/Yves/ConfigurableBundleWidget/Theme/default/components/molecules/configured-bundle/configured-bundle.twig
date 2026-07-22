@@ -56,7 +56,7 @@
     {% endblock %}
 
     {% block bundlePriceInformation %}
-        <div>
+        <div class="{{ config.name }}__price">
             {% block bundleTotal %}
                 {{ parent() }}
             {% endblock %}

@@ -22,7 +22,6 @@ $cart-item-image-width: 76;
             min-width: 0;
             display: grid;
             grid-template-columns: 1fr;
-            row-gap: var(--scale-12);
 
             @include helper-breakpoint-media-min($lg) {
                 grid-template-columns: 1fr auto;

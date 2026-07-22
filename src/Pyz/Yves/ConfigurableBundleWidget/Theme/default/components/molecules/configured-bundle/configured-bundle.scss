@@ -10,7 +10,7 @@
         &__content {
             display: grid;
             gap: var(--scale-8);
-            margin-bottom: var(--scale-8);
+            margin-bottom: var(--scale-16);
             grid-template-columns: repeat(2, 1fr);
             grid-template-rows: repeat(2, auto);
             align-items: center;
@@ -28,6 +28,10 @@
                     grid-row: 1;
                 }
             }
+        }
+
+        &__price {
+            text-align: right;
         }
 
         &__actions {
