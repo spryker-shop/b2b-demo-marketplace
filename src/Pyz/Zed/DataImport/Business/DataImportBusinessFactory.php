@@ -41,6 +41,8 @@ use Pyz\Zed\DataImport\Business\Model\Country\Repository\CountryRepository;
 use Pyz\Zed\DataImport\Business\Model\Country\Repository\CountryRepositoryInterface;
 use Pyz\Zed\DataImport\Business\Model\Currency\CurrencyWriterStep;
 use Pyz\Zed\DataImport\Business\Model\Customer\CustomerWriterStep;
+use Pyz\Zed\DataImport\Business\Model\CustomerGroup\CustomerGroupToCustomerWriterStep;
+use Pyz\Zed\DataImport\Business\Model\CustomerGroup\CustomerGroupWriterStep;
 use Pyz\Zed\DataImport\Business\Model\DataImporterConditional;
 use Pyz\Zed\DataImport\Business\Model\DataImporterDataSetWriterAwareConditional;
 use Pyz\Zed\DataImport\Business\Model\DataSet\DataSetConditionInterface;
@@ -147,6 +149,10 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
                 return $this->createCategoryTemplateImporter($dataImportConfigurationActionTransfer);
             case DataImportConfig::IMPORT_TYPE_CUSTOMER:
                 return $this->createCustomerImporter($dataImportConfigurationActionTransfer);
+            case DataImportConfig::IMPORT_TYPE_CUSTOMER_GROUP:
+                return $this->createCustomerGroupImporter($dataImportConfigurationActionTransfer);
+            case DataImportConfig::IMPORT_TYPE_CUSTOMER_GROUP_TO_CUSTOMER:
+                return $this->createCustomerGroupToCustomerImporter($dataImportConfigurationActionTransfer);
             case DataImportConfig::IMPORT_TYPE_GLOSSARY:
                 return $this->createGlossaryImporter($dataImportConfigurationActionTransfer);
             case DataImportConfig::IMPORT_TYPE_TAX:
@@ -292,6 +298,44 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
         $dataSetStepBroker->addStep(new CustomerWriterStep());
+
+        $dataImporter->addDataSetStepBroker($dataSetStepBroker);
+
+        return $dataImporter;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DataImportConfigurationActionTransfer $dataImportConfigurationActionTransfer
+     *
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
+     */
+    public function createCustomerGroupImporter(DataImportConfigurationActionTransfer $dataImportConfigurationActionTransfer)
+    {
+        $dataImporter = $this->getCsvDataImporterFromConfig(
+            $this->getConfig()->buildImporterConfigurationByDataImportConfigAction($dataImportConfigurationActionTransfer),
+        );
+
+        $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
+        $dataSetStepBroker->addStep(new CustomerGroupWriterStep());
+
+        $dataImporter->addDataSetStepBroker($dataSetStepBroker);
+
+        return $dataImporter;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DataImportConfigurationActionTransfer $dataImportConfigurationActionTransfer
+     *
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
+     */
+    public function createCustomerGroupToCustomerImporter(DataImportConfigurationActionTransfer $dataImportConfigurationActionTransfer)
+    {
+        $dataImporter = $this->getCsvDataImporterFromConfig(
+            $this->getConfig()->buildImporterConfigurationByDataImportConfigAction($dataImportConfigurationActionTransfer),
+        );
+
+        $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
+        $dataSetStepBroker->addStep(new CustomerGroupToCustomerWriterStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
 
