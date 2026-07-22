@@ -2,6 +2,7 @@
 
 {% block companyContent %}
     {% include molecule('action-bar', 'ShopUi') with {
+        modifiers: ['first', 'middle'],
         data: {
             title: 'company.account.company_role.edit_information' | trans({
                 '%role_name%' : data.form.vars.value.name,

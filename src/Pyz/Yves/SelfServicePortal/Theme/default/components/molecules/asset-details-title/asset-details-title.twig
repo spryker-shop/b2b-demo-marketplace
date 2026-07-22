@@ -1,5 +1,20 @@
 {% extends molecule('asset-details-title', '@SprykerFeature:SelfServicePortal') %}
 
+{% block body %}
+    {% include molecule('action-bar') with {
+        modifiers: ['first', 'middle'],
+        data: {
+            title:  data.title,
+            actions: [
+                {
+                    block: block('unassign'),
+                    block: block('edit'),
+                },
+            ],
+        },
+    } only %}
+{% endblock %}
+
 {% block unassign %}
     {% if data.canBusinessUnitBeUnassigned and can('UnassignSspAssetPermissionPlugin') %}
         <button title="{{ 'self_service_portal.asset.details_page.unassign' | trans }}" class="link link--alert {{ confirmationTrigger }}" {{ qa('unassign-ssp-asset-link') }}>

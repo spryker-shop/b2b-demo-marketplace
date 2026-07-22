@@ -26,23 +26,20 @@
 {% endblock %}
 
 {% block customerContent %}
-    <div class="grid grid--justify">
-        <div class="col col--sm-12 col--md-auto spacing-bottom spacing-bottom--big">
-            <h3>{{ 'page.multi_cart.shopping_cart.list.title' | trans }}</h3>
-        </div>
-        <div class="col col--sm-12 col--md-auto spacing-bottom spacing-bottom--big">
-            <a class="button button--expand button--hollow" href="{{ url('multi-cart/create') }}">
-                {% include atom('icon') with {
-                    class: 'spacing-right spacing-right--small',
-                    modifiers: ['plus-small'],
-                    data: {
-                        name: 'plus',
-                    },
-                } only %}
-                {{- 'page.multi_cart.shopping_cart.list.create_link' | trans -}}
-            </a>
-        </div>
-    </div>
+    {% include molecule('action-bar') with {
+        modifiers: ['first', 'middle'],
+        data: {
+            title: 'page.multi_cart.shopping_cart.list.title' | trans,
+            actions: [
+                {
+                    title: 'page.multi_cart.shopping_cart.list.create_link' | trans,
+                    url: url('multi-cart/create'),
+                    modifiers: ['alternative', 'hollow'],
+                    icon: 'plus',
+                },
+            ],
+        },
+    } only %}
 
     {% if data.quotes is not empty %}
         {% include molecule('quote-table', 'MultiCartPage') with {

@@ -28,7 +28,8 @@
 {% endblock %}
 
 {% block companyContent %}
-    {% include molecule('action-bar', 'ShopUi') with {
+    {% include molecule('action-bar') with {
+        modifiers: ['first', 'middle'],
         data: {
             title: 'company.account.company_role.details' | trans,
             actions: [

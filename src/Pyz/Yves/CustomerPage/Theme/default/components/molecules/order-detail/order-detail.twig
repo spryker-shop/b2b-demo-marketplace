@@ -7,7 +7,7 @@
 {% block body %}
     {% block orderActions %}
         {% embed molecule('action-bar') with {
-            modifiers: ['first'],
+            modifiers: ['first', 'middle'],
             data: {
                 title: 'customer.profile.order_details' | trans,
                 actions: [

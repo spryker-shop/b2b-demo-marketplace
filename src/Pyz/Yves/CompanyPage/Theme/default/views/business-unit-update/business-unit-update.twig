@@ -2,7 +2,7 @@
 
 {% block companyContent %}
     {% include molecule('action-bar') with {
-        modifiers: ['narrow'],
+        modifiers: ['first', 'middle'],
         data: {
             title: 'company.account.business_unit.edit_information' | trans,
             actions: [
@@ -15,6 +15,7 @@
             ],
         },
     } only %}
+    
     {% embed molecule('form') with {
         modifiers: ['narrow'],
         data: {

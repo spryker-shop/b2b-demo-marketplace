@@ -4,6 +4,7 @@
     {% set buIndexUrl = url('company/business-unit/update', { id: data.idCompanyBusinessUnit }) %}
 
     {% include molecule('action-bar') with {
+        modifiers: ['first', 'middle'],
         data: {
             title: 'company.account.create_address_information' | trans,
             actions: [

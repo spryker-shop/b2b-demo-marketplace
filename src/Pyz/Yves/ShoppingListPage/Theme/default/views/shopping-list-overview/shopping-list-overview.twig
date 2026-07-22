@@ -8,9 +8,15 @@
 } %}
 
 {% block customerContent %}
-    {% embed molecule('form') with {
+    {% include molecule('action-bar') with {
+        modifiers: ['first', 'middle'],
         data: {
             title: data.title,
+        },
+    } only %}
+
+    {% embed molecule('form') with {
+        data: {
             form: data.shoppingListForm,
             submit: {
                 enable: true,

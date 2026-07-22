@@ -33,6 +33,7 @@
 
 {% block companyContent %}
     {% include molecule('action-bar', 'ShopUi') with {
+        modifiers: ['first', 'middle'],
         data: {
             title: 'company.account.company_user' | trans,
             actions: (can('ManageCompanyUserInvitationPermissionPlugin') ? [

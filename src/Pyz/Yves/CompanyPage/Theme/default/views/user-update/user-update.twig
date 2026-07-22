@@ -21,6 +21,7 @@
 
 {% block companyContent %}
     {% include molecule('action-bar') with {
+        modifiers: ['first', 'middle'],
         data: {
             title: 'company.account.company_user.edit_information' | trans({
                 '%first_name%' : data.form.vars.value.first_name,

@@ -3,7 +3,7 @@
 {% block customerContent %}
     {% if can('CreateSspInquiryPermissionPlugin') %}
         {% include molecule('action-bar') with {
-            modifiers: ['first'],
+            modifiers: ['first', 'middle'],
             data: {
                 title: data.title | trans,
                 actions: [

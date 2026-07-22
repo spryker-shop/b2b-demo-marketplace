@@ -5,6 +5,7 @@
     {% set buListUrl = url('company/business-unit') %}
 
     {% include molecule('action-bar') with {
+        modifiers: ['first', 'middle'],
         data: {
             title: 'company.account.edit_address_information' | trans,
         },

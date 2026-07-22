@@ -31,7 +31,8 @@
 {% endblock %}
 
 {% block companyContent %}
-    {% include molecule('action-bar', 'ShopUi') with {
+    {% include molecule('action-bar') with {
+        modifiers: ['first', 'middle'],
         data: {
             title: 'company.account.company_role' | trans,
             actions: [
@@ -39,10 +40,10 @@
                     title: 'company.account.company_role.add' | trans,
                     url: url('company/company-role/create'),
                     primary: true,
-                    icon: 'plus'
-                }
-            ]
-        }
+                    icon: 'plus',
+                },
+            ],
+        },
     } only %}
 
     {% if data.roles is not empty %}
@@ -52,9 +53,9 @@
                 actions: {
                     view: false,
                     update: true,
-                    delete: true
-                }
-            }
+                    delete: true,
+                },
+            },
         } only %}
 
         {% include molecule('pagination') with {

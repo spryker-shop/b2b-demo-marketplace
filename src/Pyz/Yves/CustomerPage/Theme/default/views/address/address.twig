@@ -60,7 +60,7 @@
 
 {% block customerContent %}
     {% include molecule('action-bar') with {
-        modifiers: ['first'],
+        modifiers: ['first', 'middle'],
         data: {
             title: 'customer.account.address' | trans,
             actions: data.addresses | length ? [

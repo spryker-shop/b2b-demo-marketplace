@@ -1,9 +1,15 @@
 {% extends view('address-create', '@SprykerShop:CustomerPage') %}
 
 {% block customerContent %}
-    {% include molecule('form') with {
+    {% include molecule('action-bar') with {
+        modifiers: ['first', 'middle'],
         data: {
             title: 'customer.account.edit_address_information' | trans,
+        },
+    } only %}
+
+    {% include molecule('form') with {
+        data: {
             form: data.form,
             shouldRequireMessage: true,
             options: {

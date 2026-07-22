@@ -4,6 +4,7 @@
     {% set wrapperClassName = '' %}
 
     {% include molecule('action-bar') with {
+        modifiers: ['first', 'middle'],
         data: {
             title: 'recurring_orders.list.title' | trans,
         },

@@ -8,6 +8,7 @@
 
 {% block customerContent %}
     {% include molecule('action-bar', 'ShopUi') with {
+        modifiers: ['first', 'middle'],
         data: {
             title: 'company_user.change_company_user' | trans
         }
