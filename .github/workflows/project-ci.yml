@@ -63,9 +63,6 @@ jobs:
             || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         name: "Static analysis"
         runs-on: ubuntu-latest
-        permissions:
-            contents: read
-            pull-requests: write # required for the soft-findings step to post a PR comment
 
         env:
             APPLICATION_ENV: ci.mysql
@@ -81,7 +78,7 @@ jobs:
 
             -   uses: ramsey/composer-install@v3
                 with:
-                    composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
+                    composer-options: "-q --ignore-platform-reqs --no-interaction --prefer-install=auto"
 
             -   name: Validate composer manifest and lock file
                 run: composer validate --no-check-publish
@@ -132,104 +129,8 @@ jobs:
             -   name: Run PHPStan
                 run: vendor/bin/phpstan analyze -l 6 -c phpstan.neon src/
 
-            # ============================================================================
-            # Soft (non-blocking) checks
-            # ----------------------------------------------------------------------------
-            # Quality signals that inform but must NEVER fail this pipeline. Each
-            # check below runs with `set +e` / `exit 0`, captures its outcome + output,
-            # and reports NOTHING on its own. A single "Report soft findings" step at the
-            # end aggregates all failing checks into ONE CI warning, ONE step-summary
-            # block, and ONE PR comment.
-            # ============================================================================
-
-            -   name: Report outdated dependencies (soft)
-                id: soft_outdated
-                # NOTE: `composer outdated` exits 0 even when packages ARE outdated — the
-                # list is normal stdout, not an error. So the "finding" signal here is the
-                # presence of outdated entries (JSON `installed[]`), NOT the exit code.
-                run: |
-                    set +e
-                    JSON=$(composer outdated -D -M --format=json --no-interaction 2>/dev/null)
-                    # Human-readable table for the log + report.
-                    OUTPUT=$(composer outdated -D -M --no-interaction 2>&1)
-                    echo "$OUTPUT"
-                    COUNT=$(printf '%s' "$JSON" | php -r '$d=json_decode(stream_get_contents(STDIN),true); echo count($d["installed"]??[]);' 2>/dev/null)
-                    [ -z "$COUNT" ] && COUNT=0
-                    {
-                        echo "outcome=$([ "$COUNT" -gt 0 ] && echo failure || echo success)"
-                        echo "report<<SOFT_EOF"
-                        echo "$OUTPUT"
-                        echo "SOFT_EOF"
-                    } >> "$GITHUB_OUTPUT"
-                    exit 0
-
-            -   name: Run Spryker Evaluator (soft)
-                id: soft_evaluator
-                run: |
-                    set +e
-                    OUTPUT=$(vendor/bin/evaluator evaluate --format=compact 2>&1)
-                    CODE=$?
-                    echo "$OUTPUT"
-                    {
-                        echo "outcome=$([ $CODE -eq 0 ] && echo success || echo failure)"
-                        echo "report<<SOFT_EOF"
-                        echo "$OUTPUT"
-                        echo "SOFT_EOF"
-                    } >> "$GITHUB_OUTPUT"
-                    exit 0
-
-            -   name: Report soft (non-blocking) findings
-                if: always()
-                env:
-                    GH_TOKEN: ${{ github.token }}
-                    EVENT_NAME: ${{ github.event_name }}
-                    PR_NUMBER: ${{ github.event.pull_request.number }}
-                    OUTDATED_OUTCOME: ${{ steps.soft_outdated.outputs.outcome }}
-                    OUTDATED_REPORT: ${{ steps.soft_outdated.outputs.report }}
-                    EVALUATOR_OUTCOME: ${{ steps.soft_evaluator.outputs.outcome }}
-                    EVALUATOR_REPORT: ${{ steps.soft_evaluator.outputs.report }}
-                run: |
-                    REPORT_FILE="$(mktemp)"
-                    HAS_FINDINGS=0
-
-                    append_section() {
-                        # $1 = title, $2 = outcome, $3 = report body
-                        if [ "$2" = "failure" ]; then
-                            HAS_FINDINGS=1
-                            {
-                                echo "### ❌ $1"
-                                echo ""
-                                echo '```'
-                                echo "$3"
-                                echo '```'
-                                echo ""
-                            } >> "$REPORT_FILE"
-                        fi
-                    }
-
-                    {
-                        echo "## ⚠️ Soft (non-blocking) checks"
-                        echo ""
-                        echo "These quality signals do **not** fail the build and do **not** block merging, but the findings below should be reviewed and addressed."
-                        echo ""
-                    } >> "$REPORT_FILE"
-
-                    append_section "composer outdated — outdated direct dependencies" "$OUTDATED_OUTCOME" "$OUTDATED_REPORT"
-                    append_section "Spryker Evaluator" "$EVALUATOR_OUTCOME" "$EVALUATOR_REPORT"
-
-                    if [ "$HAS_FINDINGS" -eq 0 ]; then
-                        echo "All soft (non-blocking) checks passed — no findings to report."
-                        exit 0
-                    fi
-
-                    echo "::warning title=Soft checks (non-blocking)::One or more soft checks reported findings (composer outdated / Evaluator). This does NOT fail the build, but please review the job summary."
-
-                    cat "$REPORT_FILE" >> "$GITHUB_STEP_SUMMARY"
-
-                    if [ "$EVENT_NAME" = "pull_request" ] && [ -n "$PR_NUMBER" ]; then
-                        gh pr comment "$PR_NUMBER" --body-file "$REPORT_FILE" \
-                            || echo "::warning::Could not post PR comment (missing pull-requests: write permission?)."
-                    fi
+            -   name: Run Spryker Evaluator
+                run: vendor/bin/evaluator evaluate --exclude-checkers=SPRYKER_DEV_PACKAGES_CHECKER --format=compact
 
             -   uses: actions/setup-node@v4
                 with:
@@ -299,14 +200,13 @@ jobs:
 
             -   uses: ramsey/composer-install@v3
                 with:
-                    composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
+                    composer-options: "-q --ignore-platform-reqs --no-interaction --prefer-install=auto"
 
             -   name: Run docker
                 run: |
                     git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
                     docker/sdk boot .github/deploy/deploy.ci.functional.mariadb.yml -a --apcu
                     docker/sdk up -t
-                    docker/sdk cli composer dump-autoload -o -a --apcu -q
 
             -   name: Run Tests
                 run: docker/sdk testing codecept run -c tests/codeception.ci.functional.yml
