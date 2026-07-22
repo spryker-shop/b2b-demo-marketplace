@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# EXAMPLE / TEMPLATE WORKFLOW — not a product-delivery pipeline.
+# EXAMPLE / TEMPLATE WORKFLOW — Spryker project-delivery pipeline.
 #
 # This file is a starting point for configuring a project-specific CI pipeline.
 # Copy it and adapt the jobs, triggers and test suites to your project's needs.
@@ -17,7 +17,8 @@ on:
     # TEMPORARY: the schedule below only exists so this example runs on a cadence
     # while it is still a template. When adopting this as the real project CI,
     # uncomment the `push` / `pull_request` triggers below (as in ci.yml) so it
-    # runs per PR commit and on master, and REMOVE this temporary `schedule`.
+    # runs per PR commit and on master, and REMOVE this temporary `schedule`
+    # and `run-project-ci` label dependency.
     schedule:
         - cron: '0 2 * * 0'
     workflow_dispatch:
@@ -76,7 +77,7 @@ jobs:
         runs-on: ubuntu-latest
         permissions:
             contents: read
-            pull-requests: write # required for the soft Evaluator step to post a PR comment
+            pull-requests: write # required for the soft-findings step to post a PR comment
 
         env:
             APPLICATION_ENV: ci.mysql
@@ -96,14 +97,6 @@ jobs:
 
             -   name: Validate composer manifest and lock file
                 run: composer validate --no-check-publish
-
-            # Soft (non-blocking) check: report known CVEs in dependencies without failing the build.
-            -   name: Audit dependencies for known vulnerabilities (soft)
-                run: composer audit --no-interaction || echo "::warning title=composer audit::Known vulnerabilities reported in dependencies (non-blocking). Please review."
-
-            # Soft (non-blocking) check: report outdated direct dependencies (SES05 upgradability).
-            -   name: Report outdated dependencies (soft)
-                run: composer outdated -D -M --no-interaction || echo "::warning title=composer outdated::Outdated direct dependencies reported (non-blocking). Consider upgrading."
 
             -   name: Generate transfer objects
                 run: vendor/bin/console transfer:generate
@@ -151,9 +144,33 @@ jobs:
             -   name: Run PHPStan
                 run: vendor/bin/phpstan analyze -l 6 -c phpstan.neon src/
 
-            # Soft (non-blocking) check: Evaluator findings warn but never fail the job.
-            -   name: Run Evaluator for all branches (soft)
-                id: evaluator
+            # ============================================================================
+            # Soft (non-blocking) checks
+            # ----------------------------------------------------------------------------
+            # Quality signals that inform but must NEVER fail this pipeline. Each
+            # check below runs with `set +e` / `exit 0`, captures its outcome + output,
+            # and reports NOTHING on its own. A single "Report soft findings" step at the
+            # end aggregates all failing checks into ONE CI warning, ONE step-summary
+            # block, and ONE PR comment.
+            # ============================================================================
+
+            -   name: Report outdated dependencies (soft)
+                id: soft_outdated
+                run: |
+                    set +e
+                    OUTPUT=$(composer outdated -D -M --no-interaction 2>&1)
+                    CODE=$?
+                    echo "$OUTPUT"
+                    {
+                        echo "outcome=$([ $CODE -eq 0 ] && echo success || echo failure)"
+                        echo "report<<SOFT_EOF"
+                        echo "$OUTPUT"
+                        echo "SOFT_EOF"
+                    } >> "$GITHUB_OUTPUT"
+                    exit 0
+
+            -   name: Run Spryker Evaluator (soft)
+                id: soft_evaluator
                 run: |
                     set +e
                     OUTPUT=$(vendor/bin/evaluator evaluate --format=compact 2>&1)
@@ -161,43 +178,63 @@ jobs:
                     echo "$OUTPUT"
                     {
                         echo "outcome=$([ $CODE -eq 0 ] && echo success || echo failure)"
-                        echo "report<<EVALUATOR_EOF"
+                        echo "report<<SOFT_EOF"
                         echo "$OUTPUT"
-                        echo "EVALUATOR_EOF"
+                        echo "SOFT_EOF"
                     } >> "$GITHUB_OUTPUT"
                     exit 0
 
-            -   name: Report Evaluator findings
-                if: always() && steps.evaluator.outputs.outcome == 'failure'
-                # All untrusted / context values are passed via env and referenced as shell
-                # variables (never inlined as ${{ }} inside run:) to avoid script injection.
+            -   name: Report soft (non-blocking) findings
+                if: always()
                 env:
                     GH_TOKEN: ${{ github.token }}
-                    EVALUATOR_REPORT: ${{ steps.evaluator.outputs.report }}
                     EVENT_NAME: ${{ github.event_name }}
                     PR_NUMBER: ${{ github.event.pull_request.number }}
+                    OUTDATED_OUTCOME: ${{ steps.soft_outdated.outputs.outcome }}
+                    OUTDATED_REPORT: ${{ steps.soft_outdated.outputs.report }}
+                    EVALUATOR_OUTCOME: ${{ steps.soft_evaluator.outputs.outcome }}
+                    EVALUATOR_REPORT: ${{ steps.soft_evaluator.outputs.report }}
                 run: |
-                    echo "::warning title=Evaluator findings (non-blocking)::Evaluator reported issues. This does NOT fail the build, but please review and fix them."
+                    REPORT_FILE="$(mktemp)"
+                    HAS_FINDINGS=0
+
+                    append_section() {
+                        # $1 = title, $2 = outcome, $3 = report body
+                        if [ "$2" = "failure" ]; then
+                            HAS_FINDINGS=1
+                            {
+                                echo "### ❌ $1"
+                                echo ""
+                                echo '```'
+                                echo "$3"
+                                echo '```'
+                                echo ""
+                            } >> "$REPORT_FILE"
+                        fi
+                    }
+
                     {
-                        echo "## ⚠️ Evaluator findings (non-blocking)"
+                        echo "## ⚠️ Soft (non-blocking) checks"
                         echo ""
-                        echo "The Spryker Evaluator reported issues. This step is **soft** — it does not fail the build — but the findings should be reviewed and fixed."
+                        echo "These quality signals do **not** fail the build and do **not** block merging, but the findings below should be reviewed and addressed."
                         echo ""
-                        echo '```'
-                        echo "$EVALUATOR_REPORT"
-                        echo '```'
-                    } >> "$GITHUB_STEP_SUMMARY"
-                    if [ "$EVENT_NAME" = "pull_request" ]; then
-                        {
-                            echo "## ⚠️ Evaluator findings (non-blocking)"
-                            echo ""
-                            echo "The Spryker Evaluator reported issues in this PR. This check is **soft** — it does not block merging — but please review and address them."
-                            echo ""
-                            echo '```'
-                            echo "$EVALUATOR_REPORT"
-                            echo '```'
-                        } > /tmp/evaluator-comment.md
-                        gh pr comment "$PR_NUMBER" --body-file /tmp/evaluator-comment.md || echo "::warning::Could not post PR comment (missing pull-requests: write permission?)."
+                    } >> "$REPORT_FILE"
+
+                    append_section "composer outdated — outdated direct dependencies" "$OUTDATED_OUTCOME" "$OUTDATED_REPORT"
+                    append_section "Spryker Evaluator" "$EVALUATOR_OUTCOME" "$EVALUATOR_REPORT"
+
+                    if [ "$HAS_FINDINGS" -eq 0 ]; then
+                        echo "All soft (non-blocking) checks passed — no findings to report."
+                        exit 0
+                    fi
+
+                    echo "::warning title=Soft checks (non-blocking)::One or more soft checks reported findings (composer outdated / Evaluator). This does NOT fail the build, but please review the job summary."
+
+                    cat "$REPORT_FILE" >> "$GITHUB_STEP_SUMMARY"
+
+                    if [ "$EVENT_NAME" = "pull_request" ] && [ -n "$PR_NUMBER" ]; then
+                        gh pr comment "$PR_NUMBER" --body-file "$REPORT_FILE" \
+                            || echo "::warning::Could not post PR comment (missing pull-requests: write permission?)."
                     fi
 
             -   uses: actions/setup-node@v4
@@ -234,10 +271,6 @@ jobs:
 
             -   name: Install NPM packages
                 run: npm ci
-
-            # Soft (non-blocking) check: report known CVEs in NPM dependencies (SES05).
-            -   name: Audit NPM dependencies (soft)
-                run: npm audit || echo "::warning title=npm audit::Known vulnerabilities reported in NPM dependencies (non-blocking). Please review."
 
             -   name: Style lint
                 run: npm run yves:stylelint
