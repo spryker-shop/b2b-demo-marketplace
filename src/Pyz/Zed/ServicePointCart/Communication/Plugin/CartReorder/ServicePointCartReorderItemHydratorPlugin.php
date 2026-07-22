@@ -24,14 +24,6 @@ use Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderItemHydratorPl
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * Restores the service context (shipment type and service point) on reorder items whose product offer
- * is sold via a non-delivery shipment type (e.g. in-center-service).
- *
- * The sales order snapshot (`spy_sales_order_item_service_point`) stores only the service point name and key,
- * so without this hydrator amendment/reorder carts lose `ItemTransfer.shipmentType` and `ItemTransfer.servicePoint`.
- * Checkout then assigns the default `delivery` type to such items and the Click&Collect replacement fails with
- * `click_and_collect_example.error.item_replacement_not_found`, because service-only offers cannot be delivered.
- *
  * @method \Spryker\Zed\ServicePointCart\ServicePointCartConfig getConfig()
  * @method \Spryker\Zed\ServicePointCart\Business\ServicePointCartFacadeInterface getFacade()
  */
@@ -40,6 +32,8 @@ class ServicePointCartReorderItemHydratorPlugin extends AbstractPlugin implement
     /**
      * {@inheritDoc}
      * - Expects reorder items to be hydrated with `productOfferReference` (e.g. by `ProductOfferCartReorderItemHydratorPlugin`).
+     * - Sets `ItemTransfer.merchantReference` from the product offer when the reorder item has none
+     *   (e.g. in installations where sales order items do not persist a merchant reference).
      * - Sets `ItemTransfer.shipmentType` for reorder items whose product offer has a non-delivery shipment type.
      * - Sets `ItemTransfer.servicePoint` for those items when the product offer provides a service at a service point.
      *
@@ -69,6 +63,10 @@ class ServicePointCartReorderItemHydratorPlugin extends AbstractPlugin implement
 
         if (!$productOfferEntity) {
             return;
+        }
+
+        if (!$itemTransfer->getMerchantReference() && $productOfferEntity->getMerchantReference()) {
+            $itemTransfer->setMerchantReference($productOfferEntity->getMerchantReference());
         }
 
         $productOfferShipmentTypeEntity = SpyProductOfferShipmentTypeQuery::create()
