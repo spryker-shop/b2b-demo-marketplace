@@ -27,6 +27,13 @@
 {% endblock %}
 
 {% block customerContent %}
+    {% include molecule('action-bar') with {
+        modifiers: ['first', 'middle'],
+        data: {
+            title: 'shopping_list_page.edit.page.title' | trans,
+        },
+    } only %}
+
     {% set hasWritePermission = can('WriteShoppingListPermissionPlugin', data.idShoppingList) %}
 
     <div class="spacing-bottom spacing-bottom--bigger">

@@ -1,0 +1,33 @@
+{% extends view('create-from-cart', '@SprykerShop:ShoppingListPage') %}
+
+{% block customerContent %}
+    {% include molecule('action-bar') with {
+        modifiers: ['first', 'middle'],
+        data: {
+            title: 'customer.account.shopping_list.create_from_cart.form_title' | trans({
+                '%cart_name%' : data.cart.name,
+            })
+        },
+    } only %}
+
+    <div class="grid">
+        <div class="col col--sm-12 col--lg-6">
+            {% widget 'CreateShoppingListFromCartWidget' args [data.cart.idQuote] with {
+                data: {
+                    backUrl: data.backUrl,
+                    isLabelHidden: false,
+                },
+            }  only %}
+                {% block actions %}
+                    <div class="spacing-top--biggest text-right">
+                        {% set submitButtonClasses = "button button--success" %}
+
+                        {% block actionsInner %}
+                            {{ parent() }}
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+            {% endwidget %}
+        </div>
+    </div>
+{% endblock %}

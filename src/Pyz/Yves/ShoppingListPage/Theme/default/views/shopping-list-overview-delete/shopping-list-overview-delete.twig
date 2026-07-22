@@ -1,6 +1,15 @@
 {% extends view('shopping-list-overview-delete', '@SprykerShop:ShoppingListPage') %}
 
 {% block customerContent %}
+    {% include molecule('action-bar') with {
+        modifiers: ['first', 'middle'],
+        data: {
+            title: 'shopping_list_page.delete.confirm.title' | trans({
+                '%name%' : data.title,
+            })
+        },
+    } only %}
+
     {% include molecule('shopping-list-message', 'ShoppingListPage') with {
         data: {
             title: data.title,

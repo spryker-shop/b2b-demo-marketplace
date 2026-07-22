@@ -1,9 +1,15 @@
 {% extends view('cart-update', '@SprykerShop:MultiCartPage') %}
 
-{% block content %}
+{% block customerContent %}
+    {% include molecule('action-bar') with {
+        modifiers: ['first', 'middle'],
+        data: {
+            title: 'multi_cart.form.edit' | trans ~ '«' ~ data.form.vars.value.name ~ '»',
+        },
+    } only %}
+
     <div class="grid cart-update">
         <div class="col col--sm-12 col--lg-6">
-            <h2>{{ 'multi_cart.form.edit' | trans }} «{{ data.form.vars.value.name }}»</h2>
             {% include molecule('form') with {
                 data: {
                     form: data.form,
