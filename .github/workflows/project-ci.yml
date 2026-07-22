@@ -156,13 +156,19 @@ jobs:
 
             -   name: Report outdated dependencies (soft)
                 id: soft_outdated
+                # NOTE: `composer outdated` exits 0 even when packages ARE outdated — the
+                # list is normal stdout, not an error. So the "finding" signal here is the
+                # presence of outdated entries (JSON `installed[]`), NOT the exit code.
                 run: |
                     set +e
+                    JSON=$(composer outdated -D -M --format=json --no-interaction 2>/dev/null)
+                    # Human-readable table for the log + report.
                     OUTPUT=$(composer outdated -D -M --no-interaction 2>&1)
-                    CODE=$?
                     echo "$OUTPUT"
+                    COUNT=$(printf '%s' "$JSON" | php -r '$d=json_decode(stream_get_contents(STDIN),true); echo count($d["installed"]??[]);' 2>/dev/null)
+                    [ -z "$COUNT" ] && COUNT=0
                     {
-                        echo "outcome=$([ $CODE -eq 0 ] && echo success || echo failure)"
+                        echo "outcome=$([ "$COUNT" -gt 0 ] && echo failure || echo success)"
                         echo "report<<SOFT_EOF"
                         echo "$OUTPUT"
                         echo "SOFT_EOF"
