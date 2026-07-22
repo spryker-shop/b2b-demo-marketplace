@@ -171,7 +171,10 @@
                 { "type": "remove_constant", "constant_name": "FACADE_MERCHANT_OMS" },
                 { "type": "remove_method", "method_name": "addMerchantSalesOrderFacade" },
                 { "type": "remove_method", "method_name": "addMerchantOmsFacade" },
-                { "type": "remove_line_containing", "pattern": "$container = $this->addMerchantSalesOrderFacade($container);" },
+                {
+                    "type": "remove_line_containing",
+                    "pattern": "$container = $this->addMerchantSalesOrderFacade($container);"
+                },
                 { "type": "remove_line_containing", "pattern": "$container = $this->addMerchantOmsFacade($container);" }
             ],
             "success_messages": ["✓ DataImportDependencyProvider cleaned from marketplace-specific plugins"]
@@ -193,9 +196,18 @@
                 { "type": "remove_use", "class_name": "MerchantOrderItemCriteriaTransfer" },
                 { "type": "remove_use", "class_name": "MerchantOmsFacadeInterface" },
                 { "type": "remove_use", "class_name": "MerchantSalesOrderFacadeInterface" },
-                { "type": "remove_line_containing", "pattern": "protected MerchantSalesOrderFacadeInterface $merchantSalesOrderFacade," },
-                { "type": "remove_line_containing", "pattern": "protected MerchantOmsFacadeInterface $merchantOmsFacade," },
-                { "type": "remove_line_containing", "pattern": "protected const MERCHANT_OMS_EVENT_PREFIX = 'merchant:';" },
+                {
+                    "type": "remove_line_containing",
+                    "pattern": "protected MerchantSalesOrderFacadeInterface $merchantSalesOrderFacade,"
+                },
+                {
+                    "type": "remove_line_containing",
+                    "pattern": "protected MerchantOmsFacadeInterface $merchantOmsFacade,"
+                },
+                {
+                    "type": "remove_line_containing",
+                    "pattern": "protected const MERCHANT_OMS_EVENT_PREFIX = 'merchant:';"
+                },
                 { "type": "remove_method", "method_name": "triggerMerchantOmsEvent" },
                 {
                     "type": "replace_string",
