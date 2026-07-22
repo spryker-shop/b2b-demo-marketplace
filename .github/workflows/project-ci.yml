@@ -34,14 +34,6 @@ on:
     #         - master
     # pull_request:
 
-env:
-    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-    # NOTE: the env var name is fixed — the shared ./.github/actions/job-slack-notifications
-    # action reads WEEKLY_CI_SLACK_CHANNEL_ID by that exact name. Point the secret at
-    # your project's Slack channel; do not rename this key unless you also update the action.
-    WEEKLY_CI_SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
-    JIRA_TICKET_SLACK_USER_GROUP_MAPPING: ${{ secrets.JIRA_TICKET_SLACK_USER_GROUP_MAPPING }}
-
 concurrency:
     group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
     cancel-in-progress: true
@@ -64,10 +56,6 @@ jobs:
               uses: trufflesecurity/trufflehog@v3.90.8
               with:
                   extra_args: --log-level=2 --results=verified
-
-            - name: Slack Notification for failed job
-              uses: ./.github/actions/job-slack-notifications
-              if: always()
 
     validation:
         if: >
@@ -254,10 +242,6 @@ jobs:
             -   name: Speccy lint Glue specification
                 run: speccy lint src/Generated/Glue/Specification/spryker_rest_api.schema.yml --rules=default --skip openapi-tags
 
-            -   name: Slack Notification for failed job
-                uses: ./.github/actions/job-slack-notifications
-                if: always()
-
     js-validation:
         if: >
             (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'run-project-ci'))
@@ -296,10 +280,6 @@ jobs:
             -   name: Front-end MP Unit Tests
                 run: npm run mp:test
 
-            -   name: Slack Notification for failed job
-                uses: ./.github/actions/job-slack-notifications
-                if: always()
-
     php-84-mariadb-functional-alpine:
         needs: [validation, js-validation]
         name: "Codeception / Functional Tests"
@@ -330,10 +310,6 @@ jobs:
 
             -   name: Run Tests
                 run: docker/sdk testing codecept run -c tests/codeception.ci.functional.yml
-
-            -   name: Slack Notification for failed job
-                uses: ./.github/actions/job-slack-notifications
-                if: always()
 
     # ---------------------------------------------------------------------------
     # PLACEHOLDER: Project-level Cypress UI tests.
@@ -373,7 +349,3 @@ jobs:
             #     run: |
             #         docker/sdk exec cypress-tests npx cypress install
             #         docker/sdk exec cypress-tests npm run cy:ci:project
-
-            -   name: Slack Notification for failed job
-                uses: ./.github/actions/job-slack-notifications
-                if: always()
