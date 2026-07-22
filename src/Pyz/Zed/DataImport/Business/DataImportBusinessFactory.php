@@ -1872,9 +1872,6 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
         return $dataImporter;
     }
 
-    /**
-     * @return \Pyz\Zed\DataImport\Business\Model\SalesOrder\QuoteBuilder
-     */
     public function createSalesOrderQuoteBuilder(): QuoteBuilder
     {
         return new QuoteBuilder(
@@ -1886,25 +1883,16 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
         );
     }
 
-    /**
-     * @return \Pyz\Zed\DataImport\Business\Model\SalesOrder\AddressResolver
-     */
     public function createSalesOrderAddressResolver(): AddressResolver
     {
         return new AddressResolver($this->getCustomerFacade());
     }
 
-    /**
-     * @return \Pyz\Zed\DataImport\Business\Model\SalesOrder\ItemsExpander
-     */
     public function createSalesOrderItemsExpander(): ItemsExpander
     {
         return new ItemsExpander($this->getCartFacade());
     }
 
-    /**
-     * @return \Pyz\Zed\DataImport\Business\Model\SalesOrder\ShipmentExpander
-     */
     public function createSalesOrderShipmentExpander(): ShipmentExpander
     {
         return new ShipmentExpander(
@@ -1913,17 +1901,11 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
         );
     }
 
-    /**
-     * @return \Pyz\Zed\DataImport\Business\Model\SalesOrder\PaymentExpander
-     */
     public function createSalesOrderPaymentExpander(): PaymentExpander
     {
         return new PaymentExpander();
     }
 
-    /**
-     * @return \Pyz\Zed\DataImport\Business\Model\SalesOrder\OmsEventTrigger
-     */
     public function createSalesOrderOmsEventTrigger(): OmsEventTrigger
     {
         return new OmsEventTrigger(
@@ -1933,9 +1915,6 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\Cart\Business\CartFacadeInterface
-     */
     public function getCartFacade(): CartFacadeInterface
     {
         return $this->getProvidedDependency(DataImportDependencyProvider::FACADE_CART);
@@ -1949,57 +1928,36 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
         return $this->getProvidedDependency(DataImportDependencyProvider::FACADE_CHECKOUT);
     }
 
-    /**
-     * @return \Spryker\Zed\Oms\Business\OmsFacadeInterface
-     */
     public function getOmsFacade(): OmsFacadeInterface
     {
         return $this->getProvidedDependency(DataImportDependencyProvider::FACADE_OMS);
     }
 
-    /**
-     * @return \Spryker\Zed\Customer\Business\CustomerFacadeInterface
-     */
     public function getCustomerFacade(): CustomerFacadeInterface
     {
         return $this->getProvidedDependency(DataImportDependencyProvider::FACADE_CUSTOMER);
     }
 
-    /**
-     * @return \Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface
-     */
     public function getCompanyUserFacade(): CompanyUserFacadeInterface
     {
         return $this->getProvidedDependency(DataImportDependencyProvider::FACADE_COMPANY_USER);
     }
 
-    /**
-     * @return \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface
-     */
     public function getShipmentFacade(): ShipmentFacadeInterface
     {
         return $this->getProvidedDependency(DataImportDependencyProvider::FACADE_SHIPMENT);
     }
 
-    /**
-     * @return \Spryker\Zed\Calculation\Business\CalculationFacadeInterface
-     */
     public function getCalculationFacade(): CalculationFacadeInterface
     {
         return $this->getProvidedDependency(DataImportDependencyProvider::FACADE_CALCULATION);
     }
 
-    /**
-     * @return \Spryker\Zed\MerchantSalesOrder\Business\MerchantSalesOrderFacadeInterface
-     */
     public function getMerchantSalesOrderFacade(): MerchantSalesOrderFacadeInterface
     {
         return $this->getProvidedDependency(DataImportDependencyProvider::FACADE_MERCHANT_SALES_ORDER);
     }
 
-    /**
-     * @return \Spryker\Zed\MerchantOms\Business\MerchantOmsFacadeInterface
-     */
     public function getMerchantOmsFacade(): MerchantOmsFacadeInterface
     {
         return $this->getProvidedDependency(DataImportDependencyProvider::FACADE_MERCHANT_OMS);

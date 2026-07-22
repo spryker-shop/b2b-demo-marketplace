@@ -132,10 +132,6 @@ class ItemsExpander
         return $this->expandItemWithServiceDetails($itemTransfer, $productOfferEntity);
     }
 
-    /**
-     * Items sold via a non-delivery shipment type (e.g. in-center-service) require the shipment type
-     * and the service point on the item transfer to pass checkout preconditions and to be persisted.
-     */
     protected function expandItemWithServiceDetails(ItemTransfer $itemTransfer, SpyProductOffer $productOfferEntity): ItemTransfer
     {
         $productOfferShipmentTypeEntity = SpyProductOfferShipmentTypeQuery::create()
