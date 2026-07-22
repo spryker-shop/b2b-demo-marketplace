@@ -166,9 +166,44 @@
                 { "type": "remove_plugin", "plugin_class": "MerchantCommissionStoreDataImportPlugin" },
                 { "type": "remove_plugin", "plugin_class": "MerchantCommissionMerchantDataImportPlugin" },
                 { "type": "remove_plugin", "plugin_class": "MerchantCombinedProductDataImportPlugin" },
-                { "type": "remove_plugin", "plugin_class": "ProductAbstractApprovalStatusDataImportPlugin" }
+                { "type": "remove_plugin", "plugin_class": "ProductAbstractApprovalStatusDataImportPlugin" },
+                { "type": "remove_constant", "constant_name": "FACADE_MERCHANT_SALES_ORDER" },
+                { "type": "remove_constant", "constant_name": "FACADE_MERCHANT_OMS" },
+                { "type": "remove_method", "method_name": "addMerchantSalesOrderFacade" },
+                { "type": "remove_method", "method_name": "addMerchantOmsFacade" },
+                { "type": "remove_line_containing", "pattern": "$container = $this->addMerchantSalesOrderFacade($container);" },
+                { "type": "remove_line_containing", "pattern": "$container = $this->addMerchantOmsFacade($container);" }
             ],
             "success_messages": ["✓ DataImportDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/DataImport/Business/DataImportBusinessFactory.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantSalesOrderFacadeInterface" },
+                { "type": "remove_use", "class_name": "MerchantOmsFacadeInterface" },
+                { "type": "remove_method", "method_name": "getMerchantSalesOrderFacade" },
+                { "type": "remove_method", "method_name": "getMerchantOmsFacade" },
+                { "type": "remove_line_containing", "pattern": "$this->getMerchantSalesOrderFacade()," },
+                { "type": "remove_line_containing", "pattern": "$this->getMerchantOmsFacade()," }
+            ],
+            "success_messages": ["✓ DataImportBusinessFactory cleaned from marketplace-specific facades"]
+        },
+        "src/Pyz/Zed/DataImport/Business/Model/SalesOrder/OmsEventTrigger.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantOmsTriggerRequestTransfer" },
+                { "type": "remove_use", "class_name": "MerchantOrderItemCriteriaTransfer" },
+                { "type": "remove_use", "class_name": "MerchantOmsFacadeInterface" },
+                { "type": "remove_use", "class_name": "MerchantSalesOrderFacadeInterface" },
+                { "type": "remove_line_containing", "pattern": "protected MerchantSalesOrderFacadeInterface $merchantSalesOrderFacade," },
+                { "type": "remove_line_containing", "pattern": "protected MerchantOmsFacadeInterface $merchantOmsFacade," },
+                { "type": "remove_line_containing", "pattern": "protected const MERCHANT_OMS_EVENT_PREFIX = 'merchant:';" },
+                { "type": "remove_method", "method_name": "triggerMerchantOmsEvent" },
+                {
+                    "type": "replace_string",
+                    "old_value": "            if (str_starts_with($omsEvent, static::MERCHANT_OMS_EVENT_PREFIX)) {\n                $this->triggerMerchantOmsEvent(\n                    substr($omsEvent, strlen(static::MERCHANT_OMS_EVENT_PREFIX)),\n                    $salesOrderItemIds,\n                );\n            } else {\n                $this->omsFacade->triggerEventForOrderItems($omsEvent, $salesOrderItemIds);\n            }",
+                    "new_value": "            $this->omsFacade->triggerEventForOrderItems($omsEvent, $salesOrderItemIds);"
+                }
+            ],
+            "success_messages": ["✓ OmsEventTrigger cleaned from marketplace-specific OMS event handling"]
         },
         "src/Pyz/Zed/DataImport/DataImportConfig.php": {
             "operations": [
