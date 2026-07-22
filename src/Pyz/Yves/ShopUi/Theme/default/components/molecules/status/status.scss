@@ -1,8 +1,11 @@
 @include shop-ui-status {
     $name: &;
 
-    @include helper-badge-chip;
-    font-weight: var(--font-weight-medium);
+    &,
+    &--availability {
+        @include helper-badge-chip;
+        font-weight: var(--font-weight-medium);
+    }
 
     &::before {
         display: none;
