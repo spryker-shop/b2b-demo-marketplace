@@ -23,17 +23,17 @@ class AddressResolver
 
     public function resolveBillingAddress(CustomerTransfer $customerTransfer): AddressTransfer
     {
-        return $this->resolveCustomerAddress($customerTransfer, $customerTransfer->getDefaultBillingAddress())
+        return $this->resolveCustomerAddress($customerTransfer, $customerTransfer->getDefaultBillingAddress() ?? (int)$customerTransfer->getDefaultBillingAddress())
             ?? $this->buildCompanyBusinessUnitAddress($customerTransfer);
     }
 
     public function resolveShippingAddress(CustomerTransfer $customerTransfer, AddressTransfer $billingAddressTransfer): AddressTransfer
     {
-        return $this->resolveCustomerAddress($customerTransfer, $customerTransfer->getDefaultShippingAddress())
+        return $this->resolveCustomerAddress($customerTransfer, $customerTransfer->getDefaultShippingAddress() ?? (int)$customerTransfer->getDefaultShippingAddress())
             ?? (new AddressTransfer())->fromArray($billingAddressTransfer->toArray());
     }
 
-    protected function resolveCustomerAddress(CustomerTransfer $customerTransfer, ?string $idDefaultAddress): ?AddressTransfer
+    protected function resolveCustomerAddress(CustomerTransfer $customerTransfer, ?int $idDefaultAddress): ?AddressTransfer
     {
         $addressesTransfer = $this->customerFacade->getAddresses($customerTransfer);
         $fallbackAddressTransfer = null;
