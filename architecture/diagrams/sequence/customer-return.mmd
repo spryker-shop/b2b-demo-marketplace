@@ -1,0 +1,27 @@
+sequenceDiagram
+    autonumber
+
+    box rgb(230, 126, 34) Customer
+        participant Cust as Customer
+    end
+    box rgb(41, 128, 185) Spryker
+        participant Portal as Yves Returns Portal
+        participant Return as Return Management
+        participant OMS as OMS (return sub-process)
+        participant DB as MariaDB
+    end
+    box rgb(39, 174, 96) Carriers
+        participant Carrier as DHL / DPD / GLS
+    end
+
+    Cust->>Portal: Open returns portal, select order/items
+    Portal->>Return: Create return (items in Shipped/Delivered, within Return Policy window)
+    Return->>DB: Persist return + return items
+    Return->>OMS: Start return OMS sub-process
+    Note over OMS: Return items move through their own OMS states
+    OMS->>OMS: onEnter transition -> ReturnLabelCommand
+    OMS->>Carrier: Request return label [REST]
+    Carrier-->>OMS: Return label (PDF/URL)
+    OMS->>DB: Store carrier label reference on return
+    Portal-->>Cust: Show return confirmation + downloadable label
+    Note over Carrier: Carrier-label generation is a CUSTOM OMS command<br/>(not an OOTB packaged capability)

@@ -1,0 +1,21 @@
+sequenceDiagram
+    autonumber
+
+    box rgb(230, 126, 34) Customer
+        participant Cust as Customer
+    end
+    box rgb(41, 128, 185) Spryker Checkout
+        participant Cart as Cart / Checkout
+        participant Split as Shipment Split (warehouse allocation)
+        participant Offer as Marketplace Offer / Shipment primitives
+        participant Sales as Sales / OMS
+    end
+
+    Cust->>Cart: Proceed to checkout with multi-item cart
+    Cart->>Split: Determine warehouse allocation per item
+    Note over Split: Items sourced from different warehouses/fulfillers<br/>(Drop Shipment modeled via Marketplace Offer + Marketplace Shipment)
+    Split->>Offer: Group items into shipments per allocation
+    Offer-->>Cart: One shipment per warehouse/fulfiller
+    Cart->>Sales: Place order -> multiple sales shipments
+    Sales->>Sales: Each shipment runs its own OMS branch
+    Note over Sales: Supplier/fulfiller ships its items directly (drop shipment)

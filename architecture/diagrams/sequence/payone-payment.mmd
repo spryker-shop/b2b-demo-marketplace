@@ -1,0 +1,29 @@
+sequenceDiagram
+    autonumber
+
+    box rgb(230, 126, 34) Customer
+        participant Cust as Customer (Yves)
+    end
+    box rgb(41, 128, 185) Spryker
+        participant Checkout as Checkout / Payment (direct Payone module)
+        participant OMS as OMS / StateMachine
+        participant RMQ as RabbitMQ (MessageBroker)
+    end
+    box rgb(39, 174, 96) PSP
+        participant Payone as Payone PSP
+    end
+
+    Note over Cust: ADR-001 — direct Payone module (ACP is being sunset), not the ACP app
+    Cust->>Checkout: Submit checkout (selected Payone method)
+    Checkout->>Payone: Pre-authorize / init payment [REST]
+    Payone-->>Checkout: PaymentID + redirect URL
+    Checkout-->>Cust: Redirect to Payone (iframe/redirect)
+    Cust->>Payone: Enter payment details
+    Payone-->>Cust: Redirect back to shop (result)
+    Checkout->>OMS: Place order (state: new / payment pending)
+
+    Note over Payone,RMQ: Async capture/status via MessageBroker-based event bus
+    Payone->>RMQ: Payment status event (authorized / captured / failed)
+    RMQ->>OMS: triggerEvent("capture successful")
+    OMS->>OMS: Run OMS command (mark paid),<br/>fire-and-forget; retries if command throws
+    Note over OMS: 4000-6000 payment messages/day; COINs handled as OMS transitions

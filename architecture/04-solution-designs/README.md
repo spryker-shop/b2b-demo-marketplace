@@ -32,6 +32,13 @@ Examples:
 - `sd-002-payment-gateway-integration.md`
 - `sd-003-ciam-authentication.md`
 
+## Index
+
+| SD | Title | Status |
+|----|-------|--------|
+| [SD-001](sd-001-erp-integration-and-data-migration.md) | ERP Integration & Data Migration (delta import + historical migration) | Draft |
+| [SD-002](sd-002-returns-portal-and-carrier-labels.md) | Returns Portal & Carrier Labels | Draft |
+
 ## Template
 
 Use `sd-000-template.md` as the starting point for new solution designs.

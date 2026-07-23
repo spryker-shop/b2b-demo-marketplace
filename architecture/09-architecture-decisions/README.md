@@ -43,7 +43,7 @@ flowchart TB
 - An SD explores multiple options
 - Team reviews and makes decisions
 - Key decisions are extracted into ADRs
-- Example: SD-003 exploring CIAM options → ADR-005 "Use Auth0"
+- For instance: SD-001 exploring ERP import options → ADR-003 "Delta-only import via Talend"
 
 **2. From Meetings/Discussions**
 - Decision made during architecture review
@@ -54,7 +54,7 @@ flowchart TB
 - Organization mandates specific approach
 - Industry compliance requirement
 - Document the constraint and rationale
-- Example: "Use OAuth 2.0 per company security policy"
+- For instance: "Authenticate the Glue Backend API with OAuth 2.0 scopes for Talend"
 
 **4. Backfilling Past Decisions**
 - Important decisions were made but never documented
@@ -73,6 +73,15 @@ Examples:
 ## Template
 
 Use `adr-000-template.md` as the starting point for new ADRs.
+
+## Index
+
+| ADR | Title | Status |
+|-----|-------|--------|
+| [ADR-001](adr-001-payone-direct-module-over-acp.md) | Payone via direct module (not ACP) | Proposed (gate G1) |
+| [ADR-002](adr-002-external-full-text-search-sitesearch360.md) | SiteSearch360 for full-text; OOTB ES for category PLPs | Accepted |
+| [ADR-003](adr-003-delta-only-data-import-via-talend-glue-backend-api.md) | Delta-only data import via Talend over Glue Backend API | Accepted |
+| [ADR-004](adr-004-dwh-access-mechanism.md) | DWH access mechanism (site2site VPN vs Data Exchange API) | Proposed (gate G2) |
 
 ## ADR Lifecycle
 
