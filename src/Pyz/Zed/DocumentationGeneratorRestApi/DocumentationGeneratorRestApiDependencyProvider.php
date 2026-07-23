@@ -16,6 +16,8 @@ use Spryker\Zed\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiDepen
 class DocumentationGeneratorRestApiDependencyProvider extends SprykerDocumentationGeneratorRestApiDependencyProvider
 {
     /**
+     * @SuppressWarnings(LayerAccessRule) Legacy: documentation generator registers Glue provider plugins. Do not suppress for new code.
+     *
      * @return array<\Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface>
      */
     protected function getResourceRoutePluginProviderPlugins(): array
@@ -26,6 +28,8 @@ class DocumentationGeneratorRestApiDependencyProvider extends SprykerDocumentati
     }
 
     /**
+     * @SuppressWarnings(LayerAccessRule) Legacy: documentation generator registers Glue provider plugins. Do not suppress for new code.
+     *
      * @return array<\Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface>
      */
     protected function getResourceRelationshipCollectionProviderPlugins(): array

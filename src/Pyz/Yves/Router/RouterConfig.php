@@ -18,6 +18,8 @@ use Spryker\Yves\Router\RouterConfig as SprykerRouterConfig;
 class RouterConfig extends SprykerRouterConfig
 {
     /**
+     * @SuppressWarnings(LocatorInDependencyProviderOnlyRule) Legacy: router config reads allowed languages at bootstrap, mirrors core RouterConfig. Do not suppress for new code.
+     *
      * @see \Spryker\Yves\Router\Plugin\RouterEnhancer\LanguagePrefixRouterEnhancerPlugin
      *
      * @return array<string>
@@ -28,6 +30,8 @@ class RouterConfig extends SprykerRouterConfig
     }
 
     /**
+     * @SuppressWarnings(LocatorInDependencyProviderOnlyRule) Legacy: router config reads store names at bootstrap, mirrors core RouterConfig. Do not suppress for new code.
+     *
      * @return array<string>
      */
     public function getAllowedStores(): array
