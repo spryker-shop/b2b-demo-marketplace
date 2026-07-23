@@ -36,6 +36,22 @@ class AclConfig extends SprykerAclConfig
     protected const GROUP_REFERENCE_DISCOUNT_MANAGERS = 'discount-managers-group';
 
     /**
+     * @uses \Spryker\Zed\SecurityMerchantPortalGui\Communication\Builder\OptionsBuilder::PATH_LOGOUT
+     */
+    protected const string MERCHANT_PORTAL_ACCESS_DENIED_URI = '/security-merchant-portal-gui/logout';
+
+    protected const string APPLICATION_MERCHANT_PORTAL = 'MERCHANT_PORTAL';
+
+    public function getAccessDeniedUri(): string
+    {
+        if (APPLICATION === static::APPLICATION_MERCHANT_PORTAL) {
+            return static::MERCHANT_PORTAL_ACCESS_DENIED_URI;
+        }
+
+        return parent::getAccessDeniedUri();
+    }
+
+    /**
      * @return array<array<string, mixed>>
      */
     public function getInstallerUsers(): array
