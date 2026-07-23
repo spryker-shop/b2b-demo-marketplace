@@ -2,35 +2,75 @@
 config:
   layout: elk
 ---
+%% C1 System Context — NORMA B2C food discounter (Spryker)
+%% AUTHORED from the NORMA TAD Components + Connectors tables (source diagram was drawio, not mermaid).
+%% Storefront JS-widget integrations are grouped separately from backend/ETL integrations to keep the
+%% many external systems readable.
 flowchart LR
-    Customer["👤 Customer"] -- Browse & Purchase --> Spryker["🛒 Spryker B2B Marketplace<br>Platform"]
-    BackofficeUser["👤 Backoffice User"] -- Manage Platform --> Spryker
-    MerchantUser["👤 Merchant User"] -- Manage Products & Orders --> Spryker
-    DevOpsEngineer["👤 DevOps Engineer"] -- Monitor Performance --> APM["📊 Application Performance<br>Monitoring"]
-    BusinessAnalyst["👤 Business Analyst"] -- Analyze Data --> BI["📈 Business Intelligence<br>Platform"]
-    Customer -- Authentication --> CIAM["🔐 CIAM System<br>Identity &amp; Access"]
-    BackofficeUser -- Authentication --> CIAM
-    MerchantUser -- Authentication --> CIAM
-    Spryker -- New Orders --> ERP["💾 ERP System<br>Orders &amp; Inventory"]
-    PIM["📦 PIM System<br>Product Data"] -- Product Data,<br>Base Prices --> Spryker
-    Spryker <-- Payments --> Payment["💳 Payment Gateway<br>Transactions"]
-    CIAM -- Customer data, tokens --> Spryker
-    ERP -- Stock, Order Updates,<br>Customer-Specific Prices --> Spryker
-    Spryker -- Metrics & Traces --> APM
-    Spryker -- Business Data --> BI
+    Customer["👤 Customer<br>(B2C shopper, DE)"] -- Browse & Purchase --> Spryker["🛒 NORMA Storefront<br>Spryker Platform<br>(Yves / Zed / Glue)"]
+    BackofficeUser["👤 Back Office User<br>(~20 staff)"] -- Manage Platform --> Spryker
+
+    %% Backend / ETL integrations (server-to-server)
+    subgraph Backend["Backend & ETL Integrations"]
+        Talend["🔁 Talend<br>ETL / Service Bus"]
+        Plentymarkets["💾 Plentymarkets<br>ERP"]
+        DWH["📈 DWH<br>Data Warehouse / BI"]
+        Payone["💳 Payone<br>PSP"]
+        Feed["🗂️ Feed Dynamix<br>Feed Management"]
+        Emarsys["✉️ Emarsys<br>CRM / Newsletter"]
+        Melissa["📍 Melissa<br>Address Verification"]
+        Carriers["📦 DHL / DPD / GLS<br>Return-label Carriers"]
+    end
+
+    %% Storefront JS-widget / client-side integrations
+    subgraph Storefront["Storefront JS-widget & Search Integrations"]
+        SiteSearch["🔍 SiteSearch360<br>Full-text Search"]
+        Tracking["📊 GTM / GA / MS Clarity /<br>FB Conversion / Easy Marketing"]
+        Consent["🛡️ Usercentrics<br>Consent Mgmt"]
+        Experiments["🧪 Kameleoon<br>A/B + Recs"]
+        Widgets["🧩 Klarna / Sovendus / Jotform /<br>ParcelLab / OMQ / reCAPTCHA v3"]
+    end
+
+    %% Backend flows
+    Plentymarkets -- Products, prices,<br>stock, order updates --> Talend
+    Talend -- Delta import<br>[Glue Backend API] --> Spryker
+    Spryker -- Orders & payments<br>[Glue Backend API] --> Talend
+    Talend -- Orders/payments --> Plentymarkets
+    Spryker -- DB data for BI<br>[site2site VPN / Data Exchange API] --> Talend
+    Talend -- BI data --> DWH
+    Spryker <-- Payment auth/capture<br>[Redirect + Message Bus] --> Payone
+    Spryker -- Product data --> Feed
+    Feed -- Feed content --> SiteSearch
+    Spryker -- Customer info --> Emarsys
+    Spryker -- Address lookup --> Melissa
+    Spryker -- Return-label requests<br>[REST] --> Carriers
+
+    %% Storefront flows
+    Customer -- Search queries --> SiteSearch
+    Customer -- Consent / tracking --> Consent
+    Customer -- Tracking events --> Tracking
+    Customer -- Experiments --> Experiments
+    Customer -- Widgets --> Widgets
 
     Customer:::userStyle
-    Spryker:::systemStyle
     BackofficeUser:::userStyle
-    MerchantUser:::userStyle
-    DevOpsEngineer:::userStyle
-    APM:::externalStyle
-    BusinessAnalyst:::userStyle
-    BI:::externalStyle
-    CIAM:::externalStyle
-    ERP:::externalStyle
-    PIM:::externalStyle
-    Payment:::externalStyle
+    Spryker:::systemStyle
+    Talend:::backendStyle
+    Plentymarkets:::externalStyle
+    DWH:::externalStyle
+    Payone:::backendStyle
+    Feed:::backendStyle
+    Emarsys:::backendStyle
+    Melissa:::backendStyle
+    Carriers:::externalStyle
+    SiteSearch:::webStyle
+    Tracking:::externalStyle
+    Consent:::externalStyle
+    Experiments:::externalStyle
+    Widgets:::externalStyle
+
     classDef userStyle fill:#e1f5ff,stroke:#0366d6,stroke-width:2px
     classDef systemStyle fill:#E67E22,stroke:#c0392b,stroke-width:3px,color:#fff
     classDef externalStyle fill:#95A5A6,stroke:#7f8c8d,stroke-width:2px,color:#fff
+    classDef backendStyle fill:#2980B9,stroke:#2980b9,stroke-width:2px,color:#fff
+    classDef webStyle fill:#27AE60,stroke:#27ae60,stroke-width:2px,color:#fff

@@ -1,0 +1,76 @@
+---
+config:
+  layout: elk
+---
+%% Integration overview — NORMA (22 external systems). Grouped by integration style so it stays readable:
+%% backend/ETL (server-to-server), PSP, carriers, and storefront JS widgets (client-side).
+flowchart LR
+    Spryker["🛒 NORMA Spryker Platform"]:::systemStyle
+
+    subgraph ETL["Backend / ETL (REST, server-to-server)"]
+        direction TB
+        Talend["🔁 Talend ETL"]
+        Plenty["💾 Plentymarkets ERP"]
+        DWH["📈 DWH"]
+        Feed["🗂️ Feed Dynamix"]
+        Emarsys["✉️ Emarsys CRM"]
+        Melissa["📍 Melissa Lookup API"]
+    end
+
+    subgraph PSP["Payment"]
+        Payone["💳 Payone PSP"]
+    end
+
+    subgraph Carrier["Return-label Carriers (REST)"]
+        DHL["📦 DHL"]
+        DPD["📦 DPD"]
+        GLS["📦 GLS"]
+    end
+
+    subgraph Search["Search"]
+        SS360["🔍 SiteSearch360 (full-text)"]
+    end
+
+    subgraph JS["Storefront JS widgets (client-side)"]
+        direction TB
+        Analytics["📊 GTM / GA / MS Clarity /<br>FB Conversion API / Easy Marketing"]
+        Consent["🛡️ Usercentrics"]
+        Kameleoon["🧪 Kameleoon (A/B + recs)"]
+        Klarna["Klarna (PDP recs)"]
+        Misc["Sovendus / Jotform /<br>ParcelLab / OMQ / reCAPTCHA v3"]
+    end
+
+    Plenty <--> Talend
+    Talend -- "delta import ~50/10min<br>[Glue Backend API]" --> Spryker
+    Spryker -- "orders+payments delta 10min<br>[Glue Backend API]" --> Talend
+    Talend --> DWH
+    Spryker -- "BI extract<br>[site2site VPN / Data Exchange API]" --> DWH
+    Spryker -- "product feed [REST]" --> Feed
+    Feed --> SS360
+    Spryker -- "customer info [REST]" --> Emarsys
+    Spryker -- "address verify [REST]" --> Melissa
+    Spryker <-- "redirect + MessageBroker events" --> Payone
+    Spryker -- "return labels [REST]" --> DHL & DPD & GLS
+    Spryker <-- "search widget + feed" --> SS360
+    Spryker -. "JS widgets rendered on storefront" .-> Analytics & Consent & Kameleoon & Klarna & Misc
+
+    Talend:::apiStyle
+    Plenty:::externalStyle
+    DWH:::externalStyle
+    Feed:::apiStyle
+    Emarsys:::apiStyle
+    Melissa:::apiStyle
+    Payone:::apiStyle
+    DHL:::externalStyle
+    DPD:::externalStyle
+    GLS:::externalStyle
+    SS360:::webStyle
+    Analytics:::externalStyle
+    Consent:::externalStyle
+    Kameleoon:::externalStyle
+    Klarna:::externalStyle
+    Misc:::externalStyle
+    classDef systemStyle fill:#E67E22,stroke:#c0392b,stroke-width:3px,color:#fff
+    classDef externalStyle fill:#95A5A6,stroke:#7f8c8d,stroke-width:2px,color:#fff
+    classDef apiStyle fill:#2980B9,stroke:#2980b9,stroke-width:2px,color:#fff
+    classDef webStyle fill:#27AE60,stroke:#27ae60,stroke-width:2px,color:#fff

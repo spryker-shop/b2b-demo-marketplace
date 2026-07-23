@@ -1,0 +1,65 @@
+@startuml
+' NORMA ERP delta import + historical migration — DRAFT data model (SD-001).
+' Core product/price/stock entities are populated by the delta importer; two custom control tables track
+' the delta cursor (idempotency) and the historical migration mapping.
+!define primary_key(x) <b>x</b>
+!define foreign_key(x) <i>x</i>
+!define not_null(x) <u>x</u>
+
+package "Core (populated by delta import)" {
+  entity spy_product_abstract {
+    primary_key(id_product_abstract) : INTEGER
+    --
+    not_null(sku) : VARCHAR(255)
+  }
+  entity spy_product {
+    primary_key(id_product) : INTEGER
+    --
+    not_null(foreign_key(fk_product_abstract)) : INTEGER
+    not_null(sku) : VARCHAR(255)
+  }
+  entity spy_price_product {
+    primary_key(id_price_product) : INTEGER
+    --
+    foreign_key(fk_product) : INTEGER
+    foreign_key(fk_product_abstract) : INTEGER
+    price_type : VARCHAR(255)  'standard|RRP|sale'
+  }
+  entity spy_availability {
+    primary_key(id_availability) : INTEGER
+    --
+    not_null(sku) : VARCHAR(255)
+    quantity : DECIMAL
+  }
+  entity spy_customer {
+    primary_key(id_customer) : INTEGER
+    --
+    not_null(email) : VARCHAR(255)
+    password : VARCHAR(255)  're-hash strategy: see SD-001'
+  }
+}
+
+package "Custom: Import control (norma_*)" {
+  entity norma_import_cursor {
+    primary_key(id_import_cursor) : INTEGER
+    --
+    not_null(entity_type) : VARCHAR(64)  'product|price|stock|order_status'
+    not_null(last_delta_token) : VARCHAR(255)
+    last_run_at : TIMESTAMP
+  }
+  entity norma_migration_map {
+    primary_key(id_migration_map) : INTEGER
+    --
+    not_null(entity_type) : VARCHAR(64)  'customer|order|return'
+    not_null(legacy_id) : VARCHAR(255)   'Shopware/DWH id'
+    not_null(spryker_id) : VARCHAR(255)
+    migrated_at : TIMESTAMP
+  }
+}
+
+spy_product_abstract::id_product_abstract ||--o{ spy_product::fk_product_abstract : "variants"
+spy_product::id_product ||--o{ spy_price_product::fk_product : "concrete prices"
+spy_product_abstract::id_product_abstract ||--o{ spy_price_product::fk_product_abstract : "abstract prices"
+norma_migration_map::spryker_id ..> spy_customer::id_customer : "maps legacy -> spryker"
+
+@enduml

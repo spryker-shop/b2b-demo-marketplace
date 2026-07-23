@@ -1,0 +1,33 @@
+sequenceDiagram
+    autonumber
+
+    box rgb(149, 165, 166) External ETL
+        participant ERP as Plentymarkets ERP
+        participant Talend as Talend (ETL)
+    end
+    box rgb(41, 128, 185) Spryker Backend
+        participant Glue as Glue Backend API
+        participant Import as DeltaImportProcessor + Batch Writers
+        participant DB as MariaDB
+        participant RMQ as RabbitMQ
+    end
+    box rgb(39, 174, 96) Publish & Sync
+        participant Jenkins as Zed - P&S Workers
+        participant Storage as Redis / OpenSearch
+    end
+
+    Note over ERP,Talend: Every 10 min, ~50 changed products (delta only)
+    ERP->>Talend: Provide changed products/prices/stock
+    Talend->>Glue: POST/PATCH delta batch<br/>[Glue Backend API, auth token/OAuth]
+    Glue->>Import: Hand off batch
+    Note over Import: Batch, not per-row; CTE bulk writes;<br/>lookups preloaded (Data Import optimization)
+    Import->>DB: Bulk upsert product/price/stock
+    Import->>RMQ: Trigger entity events (bulk)
+    Glue-->>Talend: 2xx + accepted count (idempotent by delta cursor)
+
+    RMQ->>Jenkins: Consume event messages (chunks)
+    Jenkins->>DB: Write storage/search tables (bulk)
+    Jenkins->>RMQ: Trigger sync messages
+    RMQ->>Jenkins: Consume sync messages
+    Jenkins->>Storage: Deliver product/price data to Redis + OpenSearch
+    Note over Storage: Category PLPs now reflect delta;<br/>full-text search served by SiteSearch360 (separate feed)

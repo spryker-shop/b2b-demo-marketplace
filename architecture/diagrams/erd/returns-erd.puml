@@ -1,0 +1,52 @@
+@startuml
+' NORMA Returns Portal + carrier labels — DRAFT data model (SD-002).
+' Extends core Return Management (spy_sales_return / spy_sales_return_item) with a custom carrier-label table.
+!define primary_key(x) <b>x</b>
+!define foreign_key(x) <i>x</i>
+!define not_null(x) <u>x</u>
+
+package "Core Return Management" {
+  entity spy_sales_return {
+    primary_key(id_sales_return) : INTEGER
+    --
+    not_null(foreign_key(fk_customer)) : INTEGER
+    not_null(return_reference) : VARCHAR(255)
+    not_null(store) : VARCHAR(32)
+    created_at : TIMESTAMP
+    updated_at : TIMESTAMP
+  }
+  entity spy_sales_return_item {
+    primary_key(id_sales_return_item) : INTEGER
+    --
+    not_null(foreign_key(fk_sales_return)) : INTEGER
+    not_null(foreign_key(fk_sales_order_item)) : INTEGER
+    not_null(reason) : VARCHAR(255)
+  }
+  entity spy_oms_order_item_state {
+    primary_key(id_oms_order_item_state) : INTEGER
+    --
+    not_null(name) : VARCHAR(255)
+  }
+}
+
+package "Custom: Carrier Labels (norma_return_label)" {
+  entity norma_return_label {
+    primary_key(id_return_label) : INTEGER
+    --
+    not_null(foreign_key(fk_sales_return)) : INTEGER
+    not_null(carrier) : VARCHAR(16)  'DHL|DPD|GLS'
+    not_null(status) : VARCHAR(32)   'requested|generated|failed'
+    tracking_number : VARCHAR(255)
+    label_url : VARCHAR(1024)
+    label_blob_ref : VARCHAR(1024)   'S3/object key if stored'
+    error_message : TEXT
+    created_at : TIMESTAMP
+    updated_at : TIMESTAMP
+  }
+}
+
+spy_sales_return::id_sales_return ||--o{ spy_sales_return_item::fk_sales_return : "has items"
+spy_sales_return::id_sales_return ||--o{ norma_return_label::fk_sales_return : "has labels"
+spy_sales_return_item::fk_sales_order_item }o--|| spy_oms_order_item_state::id_oms_order_item_state : "item state (via OMS)"
+
+@enduml
