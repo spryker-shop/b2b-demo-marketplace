@@ -20,6 +20,6 @@ class VertexConfig extends SprykerVertexConfig
      */
     public function isConfigurationModuleUsed(): bool
     {
-        return false;
+        return true;
     }
 }
