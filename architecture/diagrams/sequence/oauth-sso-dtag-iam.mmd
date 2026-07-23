@@ -1,0 +1,23 @@
+sequenceDiagram
+    actor Customer
+    participant Yves as Yves Storefront
+    participant IAM as DTAG IAM (Empower ID)
+    participant Strategy as Custom OAuth<br>Customer Strategy
+    participant DB as Spryker DB
+
+    Customer->>Yves: Request protected resource
+    Yves->>Yves: No session detected
+    Yves-->>Customer: Redirect to IAM (authorize)
+    Customer->>IAM: Authenticate
+    IAM-->>Customer: Redirect back with auth code
+    Customer->>Yves: Return with auth code
+    Yves->>IAM: Exchange code for tokens
+    IAM-->>Yves: Access/ID tokens
+    Yves->>Strategy: Resolve customer from token
+    Strategy->>DB: Find/link customer + company/dealer context
+    DB-->>Strategy: CustomerTransfer (with company relations)
+    Strategy-->>Yves: Authenticated customer
+    Yves->>Yves: Create session
+    Yves-->>Customer: Access granted (dealer-scoped catalog)
+
+    Note over Strategy: OOTB AcceptOnly / CreateCustomer<br>strategies insufficient for B2B —<br>custom strategy establishes company context

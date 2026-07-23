@@ -1,0 +1,25 @@
+sequenceDiagram
+    actor Customer
+    participant Yves as Yves Storefront
+    participant Locator as Dealer Locator
+    participant MR as Merchant Relationship<br>(B2B Contracts)
+    actor Dealer as Dealer (Merchant Portal)
+    participant Rest as Product Restrictions<br>+ Custom Prices
+    participant OMS as Order / OMS
+
+    Customer->>Locator: Find a dealer (linkout)
+    Locator-->>Customer: Selected dealer
+    Customer->>Yves: Send registration/join request
+    Yves->>MR: Create contract request
+    MR-->>Dealer: Appears in "new customers" overview
+    Dealer->>MR: Accept + assign merchant-specific customer ID
+    Dealer->>Rest: Configure prices/delivery + product visibility
+    MR-->>Customer: Approved (added to dealer pool)
+
+    Customer->>Yves: Select active dealer, browse
+    Yves->>Rest: Resolve visible products + dealer/customer prices
+    Rest-->>Yves: Dealer-scoped catalog + discount-group prices
+    Customer->>Yves: Place order (Invoice)
+    Yves->>OMS: Create merchant order
+    OMS-->>Dealer: Order to fulfil & ship
+    Note over Customer,Dealer: Dealer↔customer comments available on the order

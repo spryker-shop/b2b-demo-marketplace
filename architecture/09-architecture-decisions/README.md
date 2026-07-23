@@ -61,14 +61,18 @@ flowchart TB
 - Document them now while context is still available
 - Mark with historical date in context
 
+## ADRs in this project
+
+| ID | Title | Status |
+|----|-------|--------|
+| [ADR-001](adr-001-merchant-relationship-for-dealer-customer-model.md) | Model dealers as merchants and dealer↔customer links via Merchant Relationship | Accepted |
+| [ADR-002](adr-002-persistence-acl-for-market-isolation.md) | Isolate market data in Back Office via Persistence ACL pattern | Proposed |
+| [ADR-003](adr-003-direct-s3-xml-import-not-proxied.md) | Direct S3 XML import — split on middleware, CTE-based ingest | Accepted |
+| [ADR-004](adr-004-external-catalog-search-delegation.md) | Delegate catalog structure and PLP/search to IParts | Accepted |
+
 ## Naming Convention
 
 ADRs follow the pattern: `adr-XXX-brief-title.md`
-
-Examples:
-- `adr-001-use-postgresql.md`
-- `adr-005-use-auth0-as-ciam.md`
-- `adr-012-multi-region-deployment.md`
 
 ## Template
 

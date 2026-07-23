@@ -1,0 +1,45 @@
+---
+config:
+  layout: elk
+---
+flowchart LR
+    subgraph Platform["Daimler Truck B2B Parts Marketplace (Spryker)"]
+        Yves["🛒 Yves Storefront"]
+        Zed["⚙️ Zed Back Office"]
+        MP["🏬 Merchant Portal"]
+        Glue["🔌 Glue Backend API"]
+        Import["📥 Import pipeline<br>(S3 + Middleware + CTE)"]
+    end
+
+    IParts["📦 IParts (REST)<br>catalog + part match"] -- catalog/PLP/search --> Yves
+    VIS["🚚 VIS (REST)<br>FIN/VIN, vehicle card"] -- vehicle data --> Yves
+    TruckLog["📊 TruckLog DIMS (SOAP)"] -- availability --> Yves
+    LogBus["📊 MB LogBus DIMS (REST)"] -- availability fallback --> Yves
+    CRISP["💾 CRISP (REST)"] -- customer org --> Zed
+    RetailNet["💾 RetailNet (REST)"] -- dealer org --> Zed
+    IPS["💾 IPS (SFTP/XML)"] -- full XML files --> S3["🗄️ S3 bucket"]
+    S3 --> Import
+    IAM["🔐 DTAG IAM (OAuth)"] -- auth tokens --> Yves
+    Yves <-- linkout/basket --> FUSO["🔗 FUSO / BPC"]
+    Yves <-- linkout --> Locator["🔗 Dealer Locator"]
+
+    Yves:::web
+    Zed:::backend
+    MP:::backend
+    Glue:::backend
+    Import:::backend
+    S3:::storage
+    IParts:::externalStyle
+    VIS:::externalStyle
+    TruckLog:::externalStyle
+    LogBus:::externalStyle
+    CRISP:::externalStyle
+    RetailNet:::externalStyle
+    IPS:::externalStyle
+    IAM:::externalStyle
+    FUSO:::externalStyle
+    Locator:::externalStyle
+    classDef web fill:#27AE60,stroke:#1e8449,stroke-width:2px,color:#fff
+    classDef backend fill:#2980B9,stroke:#1f618d,stroke-width:2px,color:#fff
+    classDef storage fill:#9B59B6,stroke:#7d3c98,stroke-width:2px,color:#fff
+    classDef externalStyle fill:#95A5A6,stroke:#7f8c8d,stroke-width:2px,color:#fff

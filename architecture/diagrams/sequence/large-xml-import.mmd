@@ -1,0 +1,22 @@
+sequenceDiagram
+    participant IPS as IPS (SFTP)
+    participant S3 as S3 bucket
+    participant MW as ETL Middleware
+    participant Import as Spryker DataImport
+    participant DB as Spryker DB
+    participant MQ as RabbitMQ (multi-queue)
+    participant Redis as Redis (P&S)
+
+    IPS->>S3: Deliver FULL XML (~1.5M productdata tags)
+    Note over S3: Spryker is NOT a file proxy
+    MW->>S3: Fetch large XML
+    MW->>MW: Split into per-entity/per-store chunks
+    MW->>Import: Hand chunks
+    Import->>DB: CTE / PDO bulk write (no per-row ORM)
+    Import->>DB: Record import run (type, started, finished, success)
+    DB->>MQ: Emit events
+    par Multiple publisher queues
+        MQ->>Redis: Publish & Sync (tuned chunk size)
+    end
+    Note over Redis: Only Storefront-relevant product data exported
+    Note over Import,Redis: Budget ~30 min (not strict), scaling toward 26 mio parts

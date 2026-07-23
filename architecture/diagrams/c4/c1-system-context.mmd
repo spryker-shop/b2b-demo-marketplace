@@ -3,34 +3,38 @@ config:
   layout: elk
 ---
 flowchart LR
-    Customer["👤 Customer"] -- Browse & Purchase --> Spryker["🛒 Spryker B2B Marketplace<br>Platform"]
-    BackofficeUser["👤 Backoffice User"] -- Manage Platform --> Spryker
-    MerchantUser["👤 Merchant User"] -- Manage Products & Orders --> Spryker
-    DevOpsEngineer["👤 DevOps Engineer"] -- Monitor Performance --> APM["📊 Application Performance<br>Monitoring"]
-    BusinessAnalyst["👤 Business Analyst"] -- Analyze Data --> BI["📈 Business Intelligence<br>Platform"]
-    Customer -- Authentication --> CIAM["🔐 CIAM System<br>Identity &amp; Access"]
-    BackofficeUser -- Authentication --> CIAM
-    MerchantUser -- Authentication --> CIAM
-    Spryker -- New Orders --> ERP["💾 ERP System<br>Orders &amp; Inventory"]
-    PIM["📦 PIM System<br>Product Data"] -- Product Data,<br>Base Prices --> Spryker
-    Spryker <-- Payments --> Payment["💳 Payment Gateway<br>Transactions"]
-    CIAM -- Customer data, tokens --> Spryker
-    ERP -- Stock, Order Updates,<br>Customer-Specific Prices --> Spryker
-    Spryker -- Metrics & Traces --> APM
-    Spryker -- Business Data --> BI
+    HQ["👤 Headquarter User<br>(Daimler Germany)"] -- Manage all markets, monitoring --> Spryker["🛒 Daimler Truck<br>B2B Parts Marketplace<br>(Spryker)"]
+    Market["👤 Market User<br>(22 subsidiaries)"] -- Manage own market & dealers --> Spryker
+    Dealer["👤 Dealer User<br>(Merchant)"] -- Prices, customer pool, orders --> Spryker
+    Customer["👤 Customer<br>(workshop org)"] -- Browse & order parts --> Spryker
 
+    IParts["📦 IParts<br>Catalog + part-vehicle match<br>(REST)"] -- Catalog structure, PLP/search --> Spryker
+    VIS["🚚 VIS<br>Vehicle info, FIN/VIN<br>(REST)"] -- Vehicle data card --> Spryker
+    TruckLog["📊 TruckLog DIMS<br>Availability (SOAP)"] -- Stock/availability --> Spryker
+    LogBus["📊 MB LogBus DIMS<br>Availability (REST)"] -- Stock/availability (fallback) --> Spryker
+    CRISP["💾 CRISP<br>Customer org (REST)"] -- Customer org info --> Spryker
+    IPS["💾 IPS<br>Prices & parts master<br>(XML/SFTP → S3)"] -- Full XML import --> Spryker
+    RetailNet["💾 RetailNet<br>Dealer org (REST)"] -- Dealer org info --> Spryker
+    Spryker <-- Locate/register dealer --> Locator["🔗 Dealer Locator<br>(Linkout)"]
+    Spryker <-- External catalog, basket --> FUSO["🔗 FUSO / BPC<br>External catalogs<br>(Linkout/REST)"]
+    Customer -- Authentication --> IAM["🔐 DTAG IAM<br>Empower ID (OAuth)"]
+    IAM -- Tokens, identity --> Spryker
+
+    HQ:::userStyle
+    Market:::userStyle
+    Dealer:::userStyle
     Customer:::userStyle
     Spryker:::systemStyle
-    BackofficeUser:::userStyle
-    MerchantUser:::userStyle
-    DevOpsEngineer:::userStyle
-    APM:::externalStyle
-    BusinessAnalyst:::userStyle
-    BI:::externalStyle
-    CIAM:::externalStyle
-    ERP:::externalStyle
-    PIM:::externalStyle
-    Payment:::externalStyle
+    IParts:::externalStyle
+    VIS:::externalStyle
+    TruckLog:::externalStyle
+    LogBus:::externalStyle
+    CRISP:::externalStyle
+    IPS:::externalStyle
+    RetailNet:::externalStyle
+    Locator:::externalStyle
+    FUSO:::externalStyle
+    IAM:::externalStyle
     classDef userStyle fill:#e1f5ff,stroke:#0366d6,stroke-width:2px
     classDef systemStyle fill:#E67E22,stroke:#c0392b,stroke-width:3px,color:#fff
     classDef externalStyle fill:#95A5A6,stroke:#7f8c8d,stroke-width:2px,color:#fff

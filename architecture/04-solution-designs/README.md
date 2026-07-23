@@ -23,14 +23,16 @@ Create a solution design when:
 - Researching and proposing technical approaches
 - The work requires detailed planning across multiple components
 
+## Solution Designs in this project
+
+| ID | Title | Status |
+|----|-------|--------|
+| [SD-001](sd-001-dealer-prices-discount-groups.md) | Dealer Prices & Discount Groups | Draft |
+| [SD-002](sd-002-dealer-hierarchy-branches.md) | Dealer Hierarchy — Main Instance & Subordinate Branches | Draft |
+
 ## Naming Convention
 
 Solution designs follow the pattern: `sd-XXX-brief-title.md`
-
-Examples:
-- `sd-001-erp-integration.md`
-- `sd-002-payment-gateway-integration.md`
-- `sd-003-ciam-authentication.md`
 
 ## Template
 
