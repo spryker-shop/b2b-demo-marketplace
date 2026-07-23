@@ -1,0 +1,27 @@
+%% DTAG IAM (Empower ID) OAuth login — Daimler
+%% Storefront (Yves) path = Federated Authentication (OAuth2/OIDC, Authorization Code), CONFIRMED.
+%% Glue/headless API SSO is "coming later" (NOT GA) — flagged as a note.
+sequenceDiagram
+    autonumber
+
+    participant User as Customer / BO User
+    participant Yves as Yves / Back Office<br/>(Federated Auth plugins)
+    participant IAM as DTAG IAM (Empower ID)
+    participant Spryker as Spryker Auth (Zed)
+    participant DB as MariaDB
+
+    User->>Yves: click "Login with DTAG IAM"
+    Yves->>IAM: redirect (Authorization Code flow)
+    User->>IAM: authenticate
+    IAM-->>Yves: redirect back with auth code
+    Yves->>IAM: exchange code → access token
+    IAM-->>Yves: token + claims (email required)
+
+    Yves->>Spryker: match identity by (provider, external_id)
+    alt Existing account
+        Spryker->>DB: link identity, start session
+    else First login (JIT)
+        Spryker->>DB: just-in-time provision account, link identity
+    end
+    Note over Yves,DB: Access token discarded after claims fetch —<br/>Spryker session is independent of IdP (no federated logout yet)
+    Note over User,IAM: ⚠ Glue/API-level OAuth SSO is NOT GA (research §15).<br/>Headless clients need the CIAM-provider path or a project-level solution.<br/>Role/claims → ACL mapping is a future capability → done at project level today.

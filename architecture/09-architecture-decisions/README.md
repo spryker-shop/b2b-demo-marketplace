@@ -61,6 +61,15 @@ flowchart TB
 - Document them now while context is still available
 - Mark with historical date in context
 
+## Index (Daimler Truck B2B Parts)
+
+| ADR | Title | Status |
+|-----|-------|--------|
+| [ADR-001](adr-001-single-shared-database-at-scale.md) | Single shared Database / Redis / ES for the global catalog at scale | Proposed (Gate G1) |
+| [ADR-002](adr-002-external-catalog-search-delegation.md) | Delegate catalog search / filtering to an external Daimler API | Proposed (Gate G2) |
+| [ADR-003](adr-003-merchant-relationship-for-dealer-customer-approval.md) | Build dealer approval / customer pool / pricing on Merchant B2B Contracts | Accepted |
+| [ADR-004](adr-004-persistence-acl-for-per-market-isolation.md) | Persistence ACL for per-market Back Office data isolation | Accepted (Propel-only caveat) |
+
 ## Naming Convention
 
 ADRs follow the pattern: `adr-XXX-brief-title.md`

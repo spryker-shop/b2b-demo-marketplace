@@ -1,36 +1,65 @@
+%% C1 System Context — Daimler Truck B2B Parts (After Sales)
+%% AUTHORED from the TAD "Additional Components Information" + "Connectors information" tables
+%% (source diagram was drawio/tad-daimler.drawio, not mermaid). All Daimler-side systems are
+%% external partners of the Spryker platform. Styling per architecture-prep colour convention.
 ---
 config:
   layout: elk
 ---
 flowchart LR
-    Customer["👤 Customer"] -- Browse & Purchase --> Spryker["🛒 Spryker B2B Marketplace<br>Platform"]
-    BackofficeUser["👤 Backoffice User"] -- Manage Platform --> Spryker
-    MerchantUser["👤 Merchant User"] -- Manage Products & Orders --> Spryker
-    DevOpsEngineer["👤 DevOps Engineer"] -- Monitor Performance --> APM["📊 Application Performance<br>Monitoring"]
-    BusinessAnalyst["👤 Business Analyst"] -- Analyze Data --> BI["📈 Business Intelligence<br>Platform"]
-    Customer -- Authentication --> CIAM["🔐 CIAM System<br>Identity &amp; Access"]
-    BackofficeUser -- Authentication --> CIAM
-    MerchantUser -- Authentication --> CIAM
-    Spryker -- New Orders --> ERP["💾 ERP System<br>Orders &amp; Inventory"]
-    PIM["📦 PIM System<br>Product Data"] -- Product Data,<br>Base Prices --> Spryker
-    Spryker <-- Payments --> Payment["💳 Payment Gateway<br>Transactions"]
-    CIAM -- Customer data, tokens --> Spryker
-    ERP -- Stock, Order Updates,<br>Customer-Specific Prices --> Spryker
-    Spryker -- Metrics & Traces --> APM
-    Spryker -- Business Data --> BI
+    %% ---- Actors ----
+    Customer["👤 Customer<br>(workshop / service provider org)"] -- Browse, register, order --> Spryker
+    DealerUser["👤 Dealer User<br>(merchant, 22 markets)"] -- Manage customers &amp; orders --> Spryker
+    MarketUser["👤 Market BO User"] -- Manage market data --> Spryker
+    HQUser["👤 HQ BO User<br>(Daimler Germany)"] -- Monitor all markets --> Spryker
+
+    %% ---- The platform ----
+    Spryker["🛒 Spryker B2B Marketplace<br>Daimler Truck Parts After Sales<br>(Yves storefront, single region, 22 stores/DMS)"]
+
+    %% ---- Authentication ----
+    Customer -- Authentication (OAuth) --> IAM["🔐 DTAG IAM (Empower ID)<br>User roles &amp; rights, IAM"]
+    IAM -- Tokens / claims --> Spryker
+
+    %% ---- Inbound data (source of catalog / prices / stock / org data) ----
+    IParts["📦 IParts<br>Parts catalogue structure + fitment"] -- Catalog data + part info [REST] --> Spryker
+    VIS["🚚 Vehicle Information Service (VIS)<br>FIN/VIN validation, vehicle card"] -- Vehicle data [REST] --> Spryker
+    TruckLog["📡 TruckLog (DIMS-SOAP)<br>Global spare-part availability"] -- Availability [SOAP/REST] --> Spryker
+    LogBus["📡 MB LogBus DIMS<br>Availability fallback"] -- Availability [REST] --> Spryker
+    CRISP["🏢 CRISP<br>Customer organisation info"] -- Customer org data [REST] --> Spryker
+    RetailNet["🏢 RetailNet<br>Dealer (merchant) org info"] -- Dealer org data [REST] --> Spryker
+    IPS["🗄️ IPS (Integrated Price Service)<br>Prices + parts master"] -- XML files [SFTP] --> S3["📁 AWS S3<br>Import bucket"]
+    S3 -- Full XML import (~1.5M &lt;SET&gt; tags / 30 min) --> Spryker
+
+    %% ---- Catalog search delegation (NOT Spryker ES) ----
+    Spryker -- Search / filter / category tree [REST] --> ExtSearch["🔍 External Catalog Search API<br>(Daimler; PLP delegated, not Spryker ES)"]
+
+    %% ---- Linkouts + round-trip ----
+    Spryker -- Redirect / basket details [Linkout/REST] --> FUSO["🔗 FUSO / BPC<br>External FUSO &amp; Bus catalogues"]
+    FUSO -- Return basket --> Spryker
+    Spryker -- Redirect to register a dealer relation [Linkout] --> Locator["🔗 Dealer Locator<br>Dealer locations, registration"]
+    Locator -- Return --> Spryker
 
     Customer:::userStyle
+    DealerUser:::userStyle
+    MarketUser:::userStyle
+    HQUser:::userStyle
     Spryker:::systemStyle
-    BackofficeUser:::userStyle
-    MerchantUser:::userStyle
-    DevOpsEngineer:::userStyle
-    APM:::externalStyle
-    BusinessAnalyst:::userStyle
-    BI:::externalStyle
-    CIAM:::externalStyle
-    ERP:::externalStyle
-    PIM:::externalStyle
-    Payment:::externalStyle
+    IAM:::externalStyle
+    IParts:::externalStyle
+    VIS:::externalStyle
+    TruckLog:::externalStyle
+    LogBus:::externalStyle
+    CRISP:::externalStyle
+    RetailNet:::externalStyle
+    IPS:::externalStyle
+    S3:::storageStyle
+    ExtSearch:::searchStyle
+    FUSO:::webStyle
+    Locator:::webStyle
+
     classDef userStyle fill:#e1f5ff,stroke:#0366d6,stroke-width:2px
     classDef systemStyle fill:#E67E22,stroke:#c0392b,stroke-width:3px,color:#fff
     classDef externalStyle fill:#95A5A6,stroke:#7f8c8d,stroke-width:2px,color:#fff
+    classDef storageStyle fill:#9B59B6,stroke:#8e44ad,stroke-width:2px,color:#fff
+    classDef searchStyle fill:#2980B9,stroke:#2980b9,stroke-width:2px,color:#fff
+    classDef webStyle fill:#27AE60,stroke:#27ae60,stroke-width:2px,color:#fff

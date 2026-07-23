@@ -1,0 +1,30 @@
+%% Add-to-cart with merchant-specific price + live availability — Daimler
+%% Prices resolved via merchant relation; availability read live from TruckLog / MB LogBus DIMS.
+sequenceDiagram
+    autonumber
+
+    participant Cust as Customer
+    participant Yves as Yves Storefront
+    participant Cart as Cart / Price (Zed)
+    participant MRel as MerchantB2bContracts
+    participant Avail as AvailabilityAdapter
+    participant TruckLog as TruckLog / MB LogBus DIMS
+    participant Redis as Redis
+
+    Cust->>Yves: Add part to cart (active dealer selected)
+    Yves->>Cart: add item + recalculate
+    Cart->>MRel: resolve merchant-specific price<br/>(dealer list price / customer discount group)
+    MRel-->>Cart: net price (calculated dynamically)
+
+    Yves->>Avail: request availability for SKU + market
+    alt TruckLog available for market
+        Avail->>TruckLog: availability query [SOAP/REST]
+    else fallback
+        Avail->>TruckLog: MB LogBus DIMS [REST]
+    end
+    TruckLog-->>Avail: stock / availability
+    Avail-->>Yves: availability (display only, not blocking)
+
+    Cart->>Redis: read cached storage data (product/price)
+    Yves-->>Cust: cart line with price + availability
+    Note over Yves,TruckLog: Availability is live/read-through (external), NOT stored as Spryker stock.

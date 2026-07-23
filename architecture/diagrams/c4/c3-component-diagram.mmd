@@ -1,96 +1,77 @@
+%% C3 Component — Daimler custom domains (project-level modules on top of Spryker core)
+%% Shows the custom/extended modules that carry the Daimler-specific behaviour and the core
+%% Spryker features they build on (per research-docs.md).
 ---
 config:
   layout: elk
 ---
 flowchart TB
-    subgraph YvesPresentation["Presentation Layer"]
-        YvesControllers["Controllers<br><small>Page Controllers</small>"]
-        YvesTemplates["Templates<br><small>Twig Views</small>"]
-        YvesWidgets["Widgets<br><small>Reusable UI Components</small>"]
+    subgraph Storefront["🌐 Yves Storefront (custom + extended)"]
+        ExtSearchClient["ExternalCatalogSearch<br><small>QueryInterface impl → external API</small>"]
+        AvailabilityWidget["AvailabilityWidget<br><small>TruckLog / MB LogBus lookup</small>"]
+        VinSearch["VinPartSearch<br><small>VIS FIN/VIN + UK licence-plate</small>"]
+        DealerSelect["DealerSelection<br><small>active-dealer scoping of prices/products</small>"]
     end
-    subgraph Yves["🌐 Yves Application Layer (Storefront)"]
-        direction TB
-        YvesPresentation
-    end
-    subgraph GluePresentation["Presentation Layer"]
-        GlueControllers["Resource Controllers<br><small>REST Endpoints</small>"]
-        GlueProcessors["Processors<br><small>Request/Response Handlers</small>"]
-        GlueFormatters["Formatters<br><small>Data Serialization</small>"]
-    end
-    subgraph GlueAPI["🔌 Glue Application Layer (BackendAPI, StoreFrontAPI)"]
-        direction TB
-        GluePresentation
-    end
-    subgraph ClientCommunication["Communication Layer"]
-        ClientStubs["Stubs<br><small>Remote Service Interfaces</small>"]
-        ClientAdapters["Adapters<br><small>Protocol Handlers</small>"]
-        ClientCache["Cache Handlers<br><small>Redis/Storage Access</small>"]
-    end
-    subgraph Client["🔗 Client Application Layer"]
-        direction TB
-        ClientCommunication
-    end
-    subgraph ZedPresentation["Presentation Layer"]
-        ZedControllers["Controllers<br><small>CRUD Controllers, Forms, API Controllers</small>"]
-        ZedViews["Views &amp; Tables<br><small>Symfony Forms, UI Components</small>"]
-        ZedRouters["Routers<br><small>Request Routing</small>"]
-    end
-    subgraph ZedCommunication["Communication Layer"]
-        ZedFacades["Facades<br><small>Module API</small>"]
-        ZedPlugins["Plugins<br><small>Extension Points</small>"]
-        ZedGateway["Gateway<br><small>RPC Handlers</small>"]
-    end
-    subgraph ZedBusiness["Business Layer"]
-        ZedModels["Business Models<br><small>Business Logic</small>"]
-    end
-    subgraph ZedService["Service Layer"]
-        ZedServices["Services<br><small>Shared Utilities</small>"]
-    end
-    subgraph ZedPersistence["Persistence Layer"]
-        ZedEntities["Entities<br><small>Propel ORM Models</small>"]
-        ZedRepositories["Repositories<br><small>Read Operations</small>"]
-        ZedEntityManagers["Entity Managers<br><small>Write Operations</small>"]
-    end
-    subgraph Zed["🏢 Zed Application Layer (BackOffice, MerchantPortal, BackendGateway)"]
-        direction TB
-        ZedPresentation
-        ZedCommunication
-        ZedBusiness
-        ZedService
-        ZedPersistence
-    end
-    subgraph Database["💾 Database"]
-        MySQL["MySQL/MariaDB<br><small>Relational Database</small>"]
-    end
-    subgraph CacheStorage["⚡ Cache & Search"]
-        Redis["Redis/Valkey<br><small>Key-Value Store</small>"]
-        OpenSearch["OpenSearch<br><small>Search Engine</small>"]
-    end
-    YvesControllers --> YvesTemplates & YvesWidgets & ClientStubs
-    GlueControllers --> GlueProcessors & ClientStubs
-    GlueProcessors --> GlueFormatters
-    ClientStubs --> ClientAdapters & ClientCache
-    ClientAdapters --> ZedGateway
-    ClientCache --> Redis & OpenSearch
-    ZedControllers --> ZedViews & ZedRouters & ZedFacades
-    ZedGateway --> ZedFacades
-    ZedFacades --> ZedModels
-    ZedPlugins --> ZedFacades
-    ZedModels --> ZedServices & ZedRepositories & ZedEntityManagers
-    ZedRepositories --> ZedEntities
-    ZedEntityManagers --> ZedEntities
-    ZedEntities --> MySQL
 
-    YvesPresentation:::presentationStyle
-    GluePresentation:::presentationStyle
-    ClientCommunication:::communicationStyle
-    ZedPresentation:::presentationStyle
-    ZedCommunication:::communicationStyle
-    ZedBusiness:::businessStyle
-    ZedService:::serviceStyle
-    ZedPersistence:::persistenceStyle
-    classDef presentationStyle fill:#27AE60,stroke:#27ae60,stroke-width:2px,color:#fff
-    classDef communicationStyle fill:#E67E22,stroke:#d68910,stroke-width:2px,color:#fff
-    classDef businessStyle fill:#2980B9,stroke:#2980b9,stroke-width:2px,color:#fff
-    classDef serviceStyle fill:#95A5A6,stroke:#95a5a6,stroke-width:2px,color:#fff
-    classDef persistenceStyle fill:#9B59B6,stroke:#8e44ad,stroke-width:2px,color:#fff
+    subgraph MerchantDomain["🏪 Dealer / Merchant Domain (Zed + MP)"]
+        MerchantRel["MerchantB2bContracts (core)<br><small>dealer↔customer relation</small>"]
+        ProdRestrict["MerchantProductRestriction (core)<br><small>per-customer product lists</small>"]
+        CustApproval["CustomerApprovalRequest (custom)<br><small>registration-request → approve/reject</small>"]
+        DealerHierarchy["DealerBranchHierarchy (custom)<br><small>main instance + branches, shared prices</small>"]
+        MerchantPrice["MerchantSpecificPrice (custom)<br><small>discount groups per customer/product</small>"]
+    end
+
+    subgraph MarketDomain["🏢 Market / HQ Domain (Zed BO)"]
+        PersistenceAcl["PersistenceAcl (core)<br><small>per-market row-level isolation</small>"]
+        BoUserRoles["User + ACL (core)<br><small>branch/market BO roles</small>"]
+        HqMonitor["HqMonitoring (custom)<br><small>import status, dumps, revenue, legal</small>"]
+        LegalTemplates["MarketLegalTemplate (custom)<br><small>T&amp;C/warranty per market, fallback</small>"]
+    end
+
+    subgraph ImportDomain["⏰ Import &amp; Sync Domain (Zed console + P&S)"]
+        XmlImporter["XmlPartsImporter (custom)<br><small>S3 XML → CTE bulk import</small>"]
+        ImportTracker["ImportExecutionTracker (custom)<br><small>type, created/finished, success</small>"]
+        PriceImporter["PriceImporter (custom)<br><small>LLP + discount classes, CTE</small>"]
+        PublishSync["Publish &amp; Sync (core, tuned)<br><small>chunked, event triggerBulk</small>"]
+    end
+
+    subgraph OrderComms["💬 Order Communication"]
+        Comments["Comments + OMS (core)<br><small>customer↔dealer order dialog</small>"]
+        Oms["OMS / StateMachine (core)<br><small>Invoice-only order process</small>"]
+    end
+
+    DealerSelect --> MerchantRel
+    MerchantRel --> ProdRestrict
+    CustApproval --> MerchantRel
+    DealerHierarchy --> MerchantRel
+    MerchantPrice --> MerchantRel
+    HqMonitor --> ImportTracker
+    XmlImporter --> ImportTracker
+    XmlImporter --> PublishSync
+    PriceImporter --> PublishSync
+    ExtSearchClient -.-> ProdRestrict
+    Comments --> Oms
+    BoUserRoles --> PersistenceAcl
+
+    ExtSearchClient:::custom
+    AvailabilityWidget:::custom
+    VinSearch:::custom
+    DealerSelect:::custom
+    CustApproval:::custom
+    DealerHierarchy:::custom
+    MerchantPrice:::custom
+    HqMonitor:::custom
+    LegalTemplates:::custom
+    XmlImporter:::custom
+    ImportTracker:::custom
+    PriceImporter:::custom
+    MerchantRel:::core
+    ProdRestrict:::core
+    PersistenceAcl:::core
+    BoUserRoles:::core
+    PublishSync:::core
+    Comments:::core
+    Oms:::core
+
+    classDef custom fill:#2980B9,stroke:#2980b9,stroke-width:2px,color:#fff
+    classDef core fill:#9B59B6,stroke:#8e44ad,stroke-width:2px,color:#fff
