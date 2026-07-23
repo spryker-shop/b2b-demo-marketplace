@@ -1,0 +1,55 @@
+@startuml
+' Scania SD-001 — Dynamic service line item data model (recommended Option A: virtual/on-the-fly product).
+' POC draft. Reuses Spryker Sales/Quote tables; adds project columns for service ref, vehicle, locked price source.
+' spy_sales_order_item is core; the "scania_*" columns are project extensions carried on quote/order item.
+
+skinparam linetype ortho
+skinparam classAttributeIconSize 0
+
+entity "spy_quote (core)" as quote {
+  * id_quote : INT <<PK>>
+  --
+  fk_customer : INT
+  fk_store : INT
+  quote_data : JSON  ' holds dynamic service items for POC
+}
+
+entity "spy_sales_order (core)" as order {
+  * id_sales_order : INT <<PK>>
+  --
+  fk_customer : INT
+  order_reference : VARCHAR
+  store : VARCHAR
+}
+
+entity "spy_sales_order_item (core)" as orderitem {
+  * id_sales_order_item : INT <<PK>>
+  --
+  fk_sales_order : INT <<FK>>
+  sku : VARCHAR            ' synthetic SKU for the service
+  name : VARCHAR
+  gross_price : INT        ' locked SECM price (minor units)
+  quantity : INT
+}
+
+entity "scania_service_order_item (project)" as svc {
+  * id_scania_service_order_item : INT <<PK>>
+  --
+  fk_sales_order_item : INT <<FK>>
+  service_ref : VARCHAR    ' SECM service identifier
+  vehicle_ref : VARCHAR    ' FMAT asset / VIN
+  secm_price_snapshot : INT ' price locked at add-to-cart
+  price_source : VARCHAR   ' 'SECM'
+  activation_date : DATE   ' Future (SSP date/time)
+}
+
+order ||--o{ orderitem : contains
+orderitem ||--o| svc : "extends (1:1, dynamic service only)"
+quote ||..o{ svc : "represented in quote_data (POC) →\nmaterialised on order placement"
+
+note bottom of svc
+  Ownership: Scania project modules (read-write).
+  Price is READ-ONLY after lock (ADR-004 / price-revalidation open question #18).
+  For a regular product line item, no scania_service_order_item row exists.
+end note
+@enduml

@@ -1,0 +1,26 @@
+%% Scania — Asset selection via live FMAT fetch (POC, no caching — ADR-002)
+sequenceDiagram
+    autonumber
+    actor User as Fleet Customer
+    participant Yves as Yves (Asset UI)
+    participant Zed as Zed (ScaniaFmatAsset)
+    participant Client as FMAT Client
+    participant FMAT as FMAT (Fleet Mgmt)
+
+    Note over User,FMAT: Assets are fetched live on every page load — no Spryker persistence for POC (ADR-002)
+    User->>Yves: Open "My Fleet" (page N)
+    Yves->>Zed: getAssets(customerId, page)
+    Zed->>Client: fetchAssets(customerRef, page, pageSize)
+    Client->>FMAT: GET /assets?customer=…&page=N (REST, sync)
+    alt FMAT responds
+        FMAT-->>Client: Paginated vehicle list (VIN, model, …)
+        Client-->>Zed: AssetTransfer collection
+        Zed-->>Yves: Assets + pagination
+        Yves-->>User: Render paginated fleet list
+        User->>Yves: Select a vehicle
+        Yves-->>User: Proceed to service catalog (see service-browse-select)
+    else FMAT unavailable
+        FMAT-->>Client: Error / timeout
+        Note right of Client: POC — surface exception (graceful<br/>error handling is Future scope)
+        Client-->>Yves: Exception
+    end

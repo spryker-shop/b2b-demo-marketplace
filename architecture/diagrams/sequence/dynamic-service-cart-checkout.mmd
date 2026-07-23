@@ -1,0 +1,32 @@
+%% Scania — Add dynamic service to cart → invoice checkout (POC). Flagship flow (SD-001, ADR-003, ADR-004).
+sequenceDiagram
+    autonumber
+    actor User as Fleet Customer
+    participant Yves as Yves (PDP / Cart / Checkout)
+    participant Cart as Zed Cart<br/>(ScaniaDynamicService expander)
+    participant SecmC as SECM Client
+    participant SECM as SECM
+    participant Checkout as Zed Checkout
+    participant Sales as Zed Sales / OMS
+    participant DB as Database
+
+    Note over User,DB: Dynamic service line item — price locked at add-to-cart (ADR-004 gate: modelling still Proposed)
+    User->>Yves: Add service (for vehicle) to cart
+    Yves->>Cart: addItem(serviceRef, vehicleRef)
+    Cart->>SecmC: getPrice(serviceRef, vehicleRef)
+    SecmC->>SECM: GET /services?vehicle=… (price re-read)
+    SECM-->>SecmC: Unit price
+    SecmC-->>Cart: Price
+    Cart->>Cart: Build dynamic item (service, vehicle, locked SECM price)
+    Cart->>DB: Persist quote (cart survives sessions)
+    Cart-->>Yves: Updated cart (services + optional regular products, multi-asset)
+
+    User->>Yves: Proceed to checkout
+    Yves->>Checkout: Summary (invoice only — no PSP, ADR-003)
+    User->>Yves: Place Order
+    Yves->>Checkout: placeOrder()
+    Checkout->>Sales: Create sales order (invoice payment method)
+    Sales->>DB: Persist order
+    Sales-->>Yves: Order confirmation
+    Yves-->>User: Order placed + OOTB confirmation email
+    Note right of Sales: OMS then fires post-order FMAT notifications<br/>asynchronously (see oms-post-order-fmat)

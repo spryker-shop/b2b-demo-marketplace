@@ -36,6 +36,13 @@ Examples:
 
 Use `sd-000-template.md` as the starting point for new solution designs.
 
+## Index (Scania Service Sales POC)
+
+| SD | Title | Status |
+|----|-------|--------|
+| [SD-001](sd-001-dynamic-service-and-price-in-cart.md) | Dynamic service and price in cart (flagship; feeds ADR-004) | Draft |
+| [SD-002](sd-002-external-service-configurator-with-configurable-product.md) | External service configurator with Configurable Product | Draft |
+
 For diagram organization and best practices, see [PUBLIC-DOC-GUIDELINE.md](../PUBLIC-DOC-GUIDELINE.md#diagram-organization--best-practices).
 
 **Workflow:**

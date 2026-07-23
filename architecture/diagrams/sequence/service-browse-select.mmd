@@ -1,0 +1,31 @@
+%% Scania — Service browse + select (SECM catalog + PIM-SPISA details) per selected vehicle (POC)
+sequenceDiagram
+    autonumber
+    actor User as Fleet Customer
+    participant Yves as Yves (Service UI / PDP)
+    participant SecmZed as Zed (ScaniaSecmService)
+    participant SecmC as SECM Client
+    participant SECM as SECM (Service Catalog)
+    participant SpisaZed as Zed (ScaniaSpisaDetail)
+    participant SpisaC as PIM-SPISA Client
+    participant SPISA as PIM-SPISA (Service Details)
+
+    Note over User,SPISA: Services & prices are NOT in the Spryker catalog — sourced live per vehicle (SD-001)
+    User->>Yves: View services for selected vehicle
+    Yves->>SecmZed: getCompatibleServices(vehicleRef)
+    SecmZed->>SecmC: fetchServices(vehicleRef)
+    SecmC->>SECM: GET /services?vehicle=… (REST, sync)
+    SECM-->>SecmC: Up to ~100 compatible services + prices
+    SecmC-->>SecmZed: ServiceTransfer collection (with price)
+    SecmZed-->>Yves: Service list (only compatible shown)
+    Yves-->>User: Render service list
+
+    User->>Yves: Open a service (PDP)
+    Yves->>SpisaZed: getServiceDetail(serviceRef)
+    SpisaZed->>SpisaC: fetchDetail(serviceRef)
+    SpisaC->>SPISA: GET /service-details?ref=… (REST, sync)
+    SPISA-->>SpisaC: Description, images, (config payload — SD-002)
+    SpisaC-->>SpisaZed: DetailTransfer
+    SpisaZed-->>Yves: Merge SECM price + SPISA detail
+    Yves-->>User: Render service PDP (price locked at add-to-cart)
+    Note right of Yves: Future — 1–2 step wizard via Configurable Product (SD-002);<br/>optional SSP service date/time on PDP (Future)

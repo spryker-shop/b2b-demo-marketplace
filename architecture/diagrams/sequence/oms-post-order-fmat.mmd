@@ -1,0 +1,35 @@
+%% Scania — OMS post-order FMAT notifications (2 async, fire-and-forget). Grounded in research-docs.md §12 OMS.
+sequenceDiagram
+    autonumber
+    participant Sales as Zed Sales (order placed)
+    participant OMS as OMS State Machine
+    participant Cron as Zed Cron (queue worker)
+    participant Cmd1 as OMS Command:<br/>Order-Created Notify
+    participant Cmd2 as OMS Command:<br/>Payment+Activation Notify (Future)
+    participant Client as FMAT Client
+    participant FMAT as FMAT
+
+    Note over Sales,FMAT: Fire-and-forget: transition <event> omitted → Zed drives the model via cron,<br/>caller not blocked. Command failure keeps item in source state (safe retry).
+    Sales->>OMS: Order enters initial state
+    OMS->>OMS: Transition (onEnter) → "notify FMAT: order created"
+    OMS->>Cron: Schedule non-blocking transition
+    Cron->>Cmd1: execute()
+    Cmd1->>Client: POST order-created payload
+    Client->>FMAT: POST /orders (REST, async) [Post-Order #1 — POC]
+    alt FMAT accepts
+        FMAT-->>Client: 2xx
+        Client-->>Cmd1: OK
+        Cmd1-->>OMS: Move to next state
+    else FMAT error
+        FMAT-->>Client: error
+        Client-->>Cmd1: Exception
+        Note right of Cmd1: Item stays in source state → retried on next cron run
+    end
+
+    rect rgb(149, 165, 166)
+        Note over Cmd2,FMAT: Future scope — second notification
+        OMS->>Cron: Transition → "notify FMAT: payment + activation date"
+        Cron->>Cmd2: execute()
+        Cmd2->>Client: POST payment + activation date
+        Client->>FMAT: POST /orders/{id}/activation (REST, async) [Post-Order #2 — Future]
+    end
