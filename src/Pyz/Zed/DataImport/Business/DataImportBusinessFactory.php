@@ -94,6 +94,13 @@ use Pyz\Zed\DataImport\Business\Model\ProductSet\ProductSetImageLocalizedAttribu
 use Pyz\Zed\DataImport\Business\Model\ProductSet\ProductSetWriterStep;
 use Pyz\Zed\DataImport\Business\Model\ProductStock\ProductStockHydratorStep;
 use Pyz\Zed\DataImport\Business\Model\ProductStock\Writer\ProductStockPropelDataSetWriter;
+use Pyz\Zed\DataImport\Business\Model\SalesOrder\AddressResolver;
+use Pyz\Zed\DataImport\Business\Model\SalesOrder\ItemsExpander;
+use Pyz\Zed\DataImport\Business\Model\SalesOrder\OmsEventTrigger;
+use Pyz\Zed\DataImport\Business\Model\SalesOrder\PaymentExpander;
+use Pyz\Zed\DataImport\Business\Model\SalesOrder\QuoteBuilder;
+use Pyz\Zed\DataImport\Business\Model\SalesOrder\SalesOrderWriterStep;
+use Pyz\Zed\DataImport\Business\Model\SalesOrder\ShipmentExpander;
 use Pyz\Zed\DataImport\Business\Model\Tax\TaxSetNameToIdTaxSetStep;
 use Pyz\Zed\DataImport\Business\Model\Tax\TaxWriterStep;
 use Pyz\Zed\DataImport\Communication\Plugin\CombinedProduct\ProductAbstract\CombinedProductAbstractPropelWriterPlugin;
@@ -110,7 +117,12 @@ use Pyz\Zed\DataImport\Communication\Plugin\ProductStock\ProductStockPropelWrite
 use Pyz\Zed\DataImport\DataImportConfig;
 use Pyz\Zed\DataImport\DataImportDependencyProvider;
 use Spryker\Shared\ProductSearch\Code\KeyBuilder\FilterGlossaryKeyBuilder;
+use Spryker\Zed\Calculation\Business\CalculationFacadeInterface;
+use Spryker\Zed\Cart\Business\CartFacadeInterface;
+use Spryker\Zed\Checkout\Business\CheckoutFacadeInterface;
+use Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface;
 use Spryker\Zed\Currency\Business\CurrencyFacadeInterface;
+use Spryker\Zed\Customer\Business\CustomerFacadeInterface;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory as SprykerDataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImporterDataSetWriterAwareInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
@@ -120,9 +132,13 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterCollection;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface;
 use Spryker\Zed\Discount\DiscountConfig;
 use Spryker\Zed\Event\Business\EventFacadeInterface;
+use Spryker\Zed\MerchantOms\Business\MerchantOmsFacadeInterface;
+use Spryker\Zed\MerchantSalesOrder\Business\MerchantSalesOrderFacadeInterface;
 use Spryker\Zed\MerchantUser\Business\MerchantUserFacadeInterface;
+use Spryker\Zed\Oms\Business\OmsFacadeInterface;
 use Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface;
+use Spryker\Zed\Shipment\Business\ShipmentFacadeInterface;
 use Spryker\Zed\Stock\Business\StockFacadeInterface;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
 use SprykerFeature\Zed\ProductExperienceManagement\Business\ProductExperienceManagementFacadeInterface;
@@ -219,6 +235,8 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
                 return $this->createNavigationNodeImporter($dataImportConfigurationActionTransfer);
             case DataImportConfig::IMPORT_TYPE_MERCHANT_USER:
                 return $this->createMerchantUserImporter($dataImportConfigurationActionTransfer);
+            case DataImportConfig::IMPORT_TYPE_SALES_ORDER:
+                return $this->createSalesOrderImporter($dataImportConfigurationActionTransfer);
             default:
                 return null;
         }
@@ -1830,5 +1848,118 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
     public function getMerchantUserFacade(): MerchantUserFacadeInterface
     {
         return $this->getProvidedDependency(DataImportDependencyProvider::FACADE_MERCHANT_USER);
+    }
+
+    public function createSalesOrderImporter(
+        DataImportConfigurationActionTransfer $dataImportConfigurationActionTransfer,
+    ): DataImporterInterface {
+        $dataImporter = $this->getCsvDataImporterFromConfig(
+            $this->getConfig()->buildImporterConfigurationByDataImportConfigAction($dataImportConfigurationActionTransfer),
+        );
+
+        $dataSetStepBroker = $this->createDataSetStepBroker();
+        $dataSetStepBroker->addStep(new SalesOrderWriterStep(
+            $this->getCheckoutFacade(),
+            $this->createSalesOrderQuoteBuilder(),
+            $this->createSalesOrderItemsExpander(),
+            $this->createSalesOrderShipmentExpander(),
+            $this->createSalesOrderPaymentExpander(),
+            $this->createSalesOrderOmsEventTrigger(),
+        ));
+
+        $dataImporter->addDataSetStepBroker($dataSetStepBroker);
+
+        return $dataImporter;
+    }
+
+    public function createSalesOrderQuoteBuilder(): QuoteBuilder
+    {
+        return new QuoteBuilder(
+            $this->getCustomerFacade(),
+            $this->getCompanyUserFacade(),
+            $this->getStoreFacade(),
+            $this->getCurrencyFacade(),
+            $this->createSalesOrderAddressResolver(),
+        );
+    }
+
+    public function createSalesOrderAddressResolver(): AddressResolver
+    {
+        return new AddressResolver($this->getCustomerFacade());
+    }
+
+    public function createSalesOrderItemsExpander(): ItemsExpander
+    {
+        return new ItemsExpander($this->getCartFacade());
+    }
+
+    public function createSalesOrderShipmentExpander(): ShipmentExpander
+    {
+        return new ShipmentExpander(
+            $this->getShipmentFacade(),
+            $this->getCalculationFacade(),
+        );
+    }
+
+    public function createSalesOrderPaymentExpander(): PaymentExpander
+    {
+        return new PaymentExpander();
+    }
+
+    public function createSalesOrderOmsEventTrigger(): OmsEventTrigger
+    {
+        return new OmsEventTrigger(
+            $this->getOmsFacade(),
+            $this->getMerchantSalesOrderFacade(),
+            $this->getMerchantOmsFacade(),
+        );
+    }
+
+    public function getCartFacade(): CartFacadeInterface
+    {
+        return $this->getProvidedDependency(DataImportDependencyProvider::FACADE_CART);
+    }
+
+    /**
+     * @return \Spryker\Zed\Checkout\Business\CheckoutFacadeInterface
+     */
+    public function getCheckoutFacade(): CheckoutFacadeInterface
+    {
+        return $this->getProvidedDependency(DataImportDependencyProvider::FACADE_CHECKOUT);
+    }
+
+    public function getOmsFacade(): OmsFacadeInterface
+    {
+        return $this->getProvidedDependency(DataImportDependencyProvider::FACADE_OMS);
+    }
+
+    public function getCustomerFacade(): CustomerFacadeInterface
+    {
+        return $this->getProvidedDependency(DataImportDependencyProvider::FACADE_CUSTOMER);
+    }
+
+    public function getCompanyUserFacade(): CompanyUserFacadeInterface
+    {
+        return $this->getProvidedDependency(DataImportDependencyProvider::FACADE_COMPANY_USER);
+    }
+
+    public function getShipmentFacade(): ShipmentFacadeInterface
+    {
+        return $this->getProvidedDependency(DataImportDependencyProvider::FACADE_SHIPMENT);
+    }
+
+    public function getCalculationFacade(): CalculationFacadeInterface
+    {
+        return $this->getProvidedDependency(DataImportDependencyProvider::FACADE_CALCULATION);
+    }
+
+    public function getMerchantSalesOrderFacade(): MerchantSalesOrderFacadeInterface
+    {
+        return $this->getProvidedDependency(DataImportDependencyProvider::FACADE_MERCHANT_SALES_ORDER);
+    }
+
+    public function getMerchantOmsFacade(): MerchantOmsFacadeInterface
+    {
+        return $this->getProvidedDependency(DataImportDependencyProvider::FACADE_MERCHANT_OMS);
     }
 }
