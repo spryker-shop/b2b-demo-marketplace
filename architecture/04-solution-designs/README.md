@@ -23,14 +23,20 @@ Create a solution design when:
 - Researching and proposing technical approaches
 - The work requires detailed planning across multiple components
 
+## Solution Designs in this project
+
+| SD | Title | Status |
+|----|-------|--------|
+| [SD-001](sd-001-dynamic-service-price-in-cart.md) | Modelling dynamic services & prices in the cart (options A/B/C) | Draft (exploration) |
+| [SD-002](sd-002-configurable-product-external-configurator.md) | Configurable Product with PIM-SPISA as external configurator (Future) | Draft (exploration) |
+
 ## Naming Convention
 
 Solution designs follow the pattern: `sd-XXX-brief-title.md`
 
 Examples:
-- `sd-001-erp-integration.md`
-- `sd-002-payment-gateway-integration.md`
-- `sd-003-ciam-authentication.md`
+- `sd-001-dynamic-service-price-in-cart.md`
+- `sd-002-configurable-product-external-configurator.md`
 
 ## Template
 

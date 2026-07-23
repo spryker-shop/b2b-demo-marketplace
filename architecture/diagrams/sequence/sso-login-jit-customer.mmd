@@ -1,0 +1,35 @@
+sequenceDiagram
+    autonumber
+
+    box rgb(225, 245, 255) Fleet Customer
+        participant User as Fleet Customer (Browser)
+    end
+    box rgb(230, 126, 34) Spryker
+        participant Yves as Yves Storefront
+        participant OAuth as OAuth / Auth (Zed)
+        participant Strategy as CiamOauthCustomerAuthenticationStrategyPlugin (custom)
+        participant Company as Customer / Company / CompanyRole
+    end
+    box rgb(149, 165, 166) External
+        participant CIAM as CIAM (My Scania)
+    end
+
+    Note over User: No Spryker-native login — SSO only
+    User->>Yves: Access shop (unauthenticated)
+    Yves->>CIAM: Redirect to CIAM login [protocol TBD]
+    User->>CIAM: Authenticate
+    CIAM-->>Yves: Callback: token + profile<br/>(name, email, company, country, roles, products)
+    Yves->>OAuth: Process SSO callback
+    OAuth->>Strategy: Resolve/create CustomerTransfer
+    Strategy->>Company: Find customer by email
+    alt Customer does not exist
+        Strategy->>Company: Create customer + company relation
+        Strategy->>Company: Map CIAM roles -> Spryker Company Roles (ACL)
+        Note over Strategy,Company: POC: on failure throw exception (no graceful handling)
+    else Customer exists
+        Strategy->>Company: Load company context + roles
+    end
+    Company-->>Strategy: CustomerTransfer (with company + roles)
+    Strategy-->>OAuth: Authenticated customer
+    OAuth-->>Yves: Session established
+    Yves-->>User: Logged in — redirect to asset selection

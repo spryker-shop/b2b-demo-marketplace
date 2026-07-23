@@ -3,34 +3,29 @@ config:
   layout: elk
 ---
 flowchart LR
-    Customer["👤 Customer"] -- Browse & Purchase --> Spryker["🛒 Spryker B2B Marketplace<br>Platform"]
-    BackofficeUser["👤 Backoffice User"] -- Manage Platform --> Spryker
-    MerchantUser["👤 Merchant User"] -- Manage Products & Orders --> Spryker
-    DevOpsEngineer["👤 DevOps Engineer"] -- Monitor Performance --> APM["📊 Application Performance<br>Monitoring"]
-    BusinessAnalyst["👤 Business Analyst"] -- Analyze Data --> BI["📈 Business Intelligence<br>Platform"]
-    Customer -- Authentication --> CIAM["🔐 CIAM System<br>Identity &amp; Access"]
-    BackofficeUser -- Authentication --> CIAM
-    MerchantUser -- Authentication --> CIAM
-    Spryker -- New Orders --> ERP["💾 ERP System<br>Orders &amp; Inventory"]
-    PIM["📦 PIM System<br>Product Data"] -- Product Data,<br>Base Prices --> Spryker
-    Spryker <-- Payments --> Payment["💳 Payment Gateway<br>Transactions"]
-    CIAM -- Customer data, tokens --> Spryker
-    ERP -- Stock, Order Updates,<br>Customer-Specific Prices --> Spryker
-    Spryker -- Metrics & Traces --> APM
-    Spryker -- Business Data --> BI
+    FleetCustomer["👤 Fleet Customer<br><small>B2B Company User (SSO)</small>"] -- Login, select vehicle,<br>browse & buy services --> Spryker["🛒 Scania Service Shop<br>(Spryker B2B Marketplace)<br><small>POC — Scania sole merchant</small>"]
+    BackOfficeUser["👤 Back Office User<br><small>Scania internal</small>"] -- Manage orders,<br>catalog, config --> Spryker
+    Merchant["👤 Merchant<br><small>Scania-licensed provider</small>"] -. Future: fulfil services .-> Spryker
 
-    Customer:::userStyle
+    Spryker -- Authenticate (SSO),<br>fetch customer/roles/products --> CIAM["🔐 CIAM (My Scania)<br><small>External — SSO / IdP</small>"]
+    CIAM -- Tokens, name, email,<br>company, country, roles --> Spryker
+    Spryker -- Fetch vehicles/assets<br>(live, paginated) --> FMAT["🚚 FMAT<br><small>External — Fleet Asset Mgmt</small>"]
+    Spryker -- Post-order notify:<br>order created (async);<br>payment+activation (async, future) --> FMAT
+    Spryker -- Fetch compatible services<br>+ prices per vehicle --> SECM["🧰 SECM<br><small>External — Service Catalog & Pricing</small>"]
+    Spryker -- Fetch service details:<br>description, images<br>(external configurator, future) --> PIMSPISA["📦 PIM-SPISA<br><small>External — Service Details/Config</small>"]
+    Spryker -- Order confirmation --> SMTP["✉️ SMTP<br><small>External — Email delivery</small>"]
+    SMTP -- Confirmation email --> FleetCustomer
+
+    FleetCustomer:::userStyle
+    BackOfficeUser:::userStyle
+    Merchant:::futureStyle
     Spryker:::systemStyle
-    BackofficeUser:::userStyle
-    MerchantUser:::userStyle
-    DevOpsEngineer:::userStyle
-    APM:::externalStyle
-    BusinessAnalyst:::userStyle
-    BI:::externalStyle
     CIAM:::externalStyle
-    ERP:::externalStyle
-    PIM:::externalStyle
-    Payment:::externalStyle
+    FMAT:::externalStyle
+    SECM:::externalStyle
+    PIMSPISA:::externalStyle
+    SMTP:::externalStyle
     classDef userStyle fill:#e1f5ff,stroke:#0366d6,stroke-width:2px
     classDef systemStyle fill:#E67E22,stroke:#c0392b,stroke-width:3px,color:#fff
     classDef externalStyle fill:#95A5A6,stroke:#7f8c8d,stroke-width:2px,color:#fff
+    classDef futureStyle fill:#d5d8dc,stroke:#7f8c8d,stroke-width:2px,stroke-dasharray:5 5,color:#555

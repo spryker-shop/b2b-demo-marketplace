@@ -1,0 +1,24 @@
+---
+config:
+  layout: elk
+---
+flowchart LR
+    Spryker["🛒 Scania Service Shop<br>(Spryker B2B Marketplace)"]
+
+    CIAM["🔐 CIAM (My Scania)"] -- SSO login + profile/roles/products<br>[REST · Sync · per login · protocol TBD] --> Spryker
+    FMAT["🚚 FMAT"] -- Vehicles/assets<br>[REST · Sync · on asset page · paginated · TBD] --> Spryker
+    SECM["🧰 SECM"] -- Compatible services + prices<br>[REST · Sync · after asset select · ~100/vehicle · TBD] --> Spryker
+    PIMSPISA["📦 PIM-SPISA"] -- Service details (desc, images)<br>[REST · Sync · on service select · TBD] --> Spryker
+
+    Spryker -- Post-order 1: order created<br>[REST · Async/OMS · per order · fire-and-forget · TBD] --> FMAT
+    Spryker -. "Post-order 2: payment + activation date<br>[REST · Async/OMS · FUTURE]" .-> FMAT
+    Spryker -- Order confirmation<br>[SMTP · Push · per order] --> SMTP["✉️ SMTP"]
+
+    Spryker:::systemStyle
+    CIAM:::externalStyle
+    FMAT:::externalStyle
+    SECM:::externalStyle
+    PIMSPISA:::externalStyle
+    SMTP:::externalStyle
+    classDef systemStyle fill:#E67E22,stroke:#c0392b,stroke-width:3px,color:#fff
+    classDef externalStyle fill:#95A5A6,stroke:#7f8c8d,stroke-width:2px,color:#fff

@@ -61,14 +61,22 @@ flowchart TB
 - Document them now while context is still available
 - Mark with historical date in context
 
+## ADRs in this project
+
+| ADR | Title | Status |
+|-----|-------|--------|
+| [ADR-001](adr-001-ciam-sole-authentication.md) | CIAM (SSO) is the sole authentication method | Accepted (POC) |
+| [ADR-002](adr-002-live-fetch-assets-no-cache-poc.md) | Live-fetch assets (no caching) for the POC | Accepted (POC) |
+| [ADR-003](adr-003-invoice-only-no-psp-poc.md) | Invoice-only checkout, no PSP, for the POC | Accepted (POC) |
+
 ## Naming Convention
 
 ADRs follow the pattern: `adr-XXX-brief-title.md`
 
 Examples:
-- `adr-001-use-postgresql.md`
-- `adr-005-use-auth0-as-ciam.md`
-- `adr-012-multi-region-deployment.md`
+- `adr-001-ciam-sole-authentication.md`
+- `adr-002-live-fetch-assets-no-cache-poc.md`
+- `adr-003-invoice-only-no-psp-poc.md`
 
 ## Template
 

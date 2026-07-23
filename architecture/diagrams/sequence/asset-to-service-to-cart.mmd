@@ -1,0 +1,45 @@
+sequenceDiagram
+    autonumber
+
+    box rgb(225, 245, 255) Fleet Customer
+        participant User as Fleet Customer (Browser)
+    end
+    box rgb(230, 126, 34) Spryker
+        participant Yves as Yves Storefront
+        participant AssetC as FmatAssetClient
+        participant CatC as SecmServiceCatalogClient
+        participant DetC as SpisaServiceDetailClient
+        participant Cart as Cart (dynamic service item — SD-001)
+    end
+    box rgb(149, 165, 166) External
+        participant FMAT as FMAT
+        participant SECM as SECM
+        participant SPISA as PIM-SPISA
+    end
+
+    User->>Yves: Open asset selection page
+    Yves->>AssetC: Fetch vehicles (paginated)
+    AssetC->>FMAT: GET assets for customer [live, no cache]
+    FMAT-->>AssetC: Vehicle list (page)
+    AssetC-->>Yves: Assets
+    Yves-->>User: Show fleet vehicles
+
+    User->>Yves: Select a vehicle
+    Yves->>CatC: Fetch compatible services + prices
+    CatC->>SECM: GET services for vehicle
+    SECM-->>CatC: Services (max ~100) + prices
+    CatC-->>Yves: Service catalog
+    Yves-->>User: Show compatible services
+
+    User->>Yves: Open a service
+    Yves->>DetC: Fetch service detail
+    DetC->>SPISA: GET description + images
+    SPISA-->>DetC: Service detail (control package)
+    DetC-->>Yves: Detail
+    Yves-->>User: Service detail page
+
+    User->>Yves: Add service to cart (for vehicle X)
+    Yves->>Cart: Add dynamic service item<br/>(SKU synthesised, price from SECM)
+    Note over Cart: Price locked at add-to-cart (POC suggestion)<br/>re-validation TBD — see ADR/SD-001
+    Cart-->>Yves: Cart updated
+    Yves-->>User: Item in cart

@@ -1,0 +1,37 @@
+sequenceDiagram
+    autonumber
+
+    box rgb(225, 245, 255) Fleet Customer
+        participant User as Fleet Customer (Browser)
+    end
+    box rgb(230, 126, 34) Spryker
+        participant Yves as Yves Storefront
+        participant Checkout as Checkout (Zed)
+        participant OMS as OMS State Machine
+        participant Notify as FMAT OMS Commands
+        participant Mail as OrderConfirmationMail command
+    end
+    box rgb(149, 165, 166) External
+        participant FMAT as FMAT
+        participant SMTP as SMTP
+    end
+
+    User->>Yves: Proceed to checkout
+    Yves->>Checkout: Submit (Invoice — no PSP)
+    Checkout->>Checkout: Validate cart + place order
+    Note over Checkout: No approval workflow (POC)
+    Checkout->>OMS: Order created -> initial state
+    Checkout-->>Yves: Order placed
+    Yves-->>User: Order confirmation page
+
+    par Async, fire-and-forget (POC)
+        OMS->>Notify: Event: order created
+        Notify->>FMAT: POST order-created notification [async]
+        Note over Notify,FMAT: Fire-and-forget — no retry/error handling (POC)
+    and
+        OMS->>Mail: Event: send confirmation
+        Mail->>SMTP: Send order confirmation email
+        SMTP-->>User: Confirmation email
+    end
+
+    Note over OMS,FMAT: FUTURE — 2nd async call: payment + activation date
