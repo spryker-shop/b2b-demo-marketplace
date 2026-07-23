@@ -1,0 +1,59 @@
+%% Integration overview — Daimler (~12 external systems), grouped by direction/protocol/phase.
+---
+config:
+  layout: elk
+---
+flowchart LR
+    Spryker["🛒 Spryker Platform"]
+
+    subgraph Inbound["Inbound — data into Spryker"]
+        IParts["📦 IParts [REST]<br><small>catalog + fitment — P1</small>"]
+        VIS["🚚 VIS [REST]<br><small>FIN/VIN — P1</small>"]
+        CRISP["🏢 CRISP [REST]<br><small>customer org — P1</small>"]
+        RetailNet["🏢 RetailNet [REST]<br><small>dealer org — P1</small>"]
+        IPS["🗄️ IPS [SFTP/XML→S3]<br><small>prices + master — P1</small>"]
+    end
+
+    subgraph Availability["Availability (read-through)"]
+        TruckLog["📡 TruckLog DIMS [SOAP/REST]<br><small>global stock — phased per market</small>"]
+        LogBus["📡 MB LogBus DIMS [REST]<br><small>fallback — P1</small>"]
+    end
+
+    subgraph Auth["Identity"]
+        IAM["🔐 DTAG IAM [OAuth]<br><small>storefront/BO SSO — P1;<br>Glue SSO not GA</small>"]
+    end
+
+    subgraph Outbound["Outbound / round-trip"]
+        ExtSearch["🔍 External Catalog Search API [REST]<br><small>PLP/search delegated — P1</small>"]
+        FUSO["🔗 FUSO / BPC [Linkout/REST]<br><small>external catalog + basket — P1</small>"]
+        Locator["🔗 Dealer Locator [Linkout]<br><small>registration — P1</small>"]
+    end
+
+    IParts --> Spryker
+    VIS --> Spryker
+    CRISP --> Spryker
+    RetailNet --> Spryker
+    IPS --> Spryker
+    TruckLog --> Spryker
+    LogBus --> Spryker
+    IAM <--> Spryker
+    Spryker <--> ExtSearch
+    Spryker <--> FUSO
+    Spryker <--> Locator
+
+    Spryker:::systemStyle
+    IParts:::externalStyle
+    VIS:::externalStyle
+    CRISP:::externalStyle
+    RetailNet:::externalStyle
+    IPS:::externalStyle
+    TruckLog:::externalStyle
+    LogBus:::externalStyle
+    IAM:::externalStyle
+    ExtSearch:::apiStyle
+    FUSO:::webStyle
+    Locator:::webStyle
+    classDef systemStyle fill:#E67E22,stroke:#c0392b,stroke-width:3px,color:#fff
+    classDef externalStyle fill:#95A5A6,stroke:#7f8c8d,stroke-width:2px,color:#fff
+    classDef apiStyle fill:#2980B9,stroke:#2980b9,stroke-width:2px,color:#fff
+    classDef webStyle fill:#27AE60,stroke:#27ae60,stroke-width:2px,color:#fff

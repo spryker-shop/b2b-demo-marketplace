@@ -1,0 +1,34 @@
+%% Customer registration-request → dealer approval → order — Daimler
+%% Built on Merchant B2B Contracts (relation request → approval) + Merchant Product Restrictions.
+sequenceDiagram
+    autonumber
+
+    participant Cust as Customer<br/>(company user)
+    participant Yves as Yves Storefront
+    participant MRel as MerchantB2bContracts (Zed)
+    participant MP as Merchant Portal<br/>(Dealer)
+    participant Restrict as MerchantProductRestriction
+    participant DB as MariaDB
+
+    Note over Cust,DB: Customer must be in a dealer's approved pool before ordering
+
+    Cust->>Yves: Submit registration request to dealer<br/>(business unit + owner + message)
+    Yves->>MRel: create relation request (status Pending)
+    MRel->>DB: persist request
+
+    Note over MP,DB: Dealer reviews in "New customers" MP page
+    MP->>MRel: approve / reject
+    alt Approved
+        MRel->>DB: relation created (approved) + merchant-specific customer ID
+        MRel->>Restrict: apply per-customer product lists (allow/exclude)
+        MP->>MRel: set merchant-specific prices / delivery costs / methods
+    else Rejected
+        MRel->>DB: request rejected (no relation)
+    end
+
+    Note over Cust,DB: Customer selects an active dealer
+    Cust->>Yves: choose active dealer
+    Yves->>Restrict: resolve visible products for (customer, dealer)
+    Yves->>MRel: resolve merchant-specific prices
+    Cust->>Yves: add to cart → checkout (Invoice only)
+    Yves->>DB: place order (scoped to selected dealer/merchant)

@@ -23,6 +23,13 @@ Create a solution design when:
 - Researching and proposing technical approaches
 - The work requires detailed planning across multiple components
 
+## Index (Daimler Truck B2B Parts)
+
+| SD | Title | Status |
+|----|-------|--------|
+| [SD-001](sd-001-large-scale-data-import-and-publish-sync.md) | Large-scale data import & Publish & Sync (IPS XML → 30 min at 300k → 26M) | Draft |
+| [SD-002](sd-002-dealer-hierarchy-and-customer-approval.md) | Dealer hierarchy & customer approval (merchant relations, branch pricing) | Draft |
+
 ## Naming Convention
 
 Solution designs follow the pattern: `sd-XXX-brief-title.md`

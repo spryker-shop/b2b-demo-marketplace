@@ -1,0 +1,100 @@
+@startuml
+' ERD — Dealer hierarchy & customer approval (SD-002)
+' Core Spryker tables (spy_merchant, spy_company*, spy_price_product*) + Daimler custom tables (pyz_*).
+!define primary_key(x) <b>x</b>
+!define foreign_key(x) <i>x</i>
+!define not_null(x) <u>x</u>
+
+package "Core — Merchant / Company" {
+  entity spy_merchant {
+    primary_key(id_merchant) : INTEGER
+    --
+    not_null(merchant_reference) : VARCHAR
+    not_null(name) : VARCHAR
+    status : VARCHAR
+  }
+  entity spy_company {
+    primary_key(id_company) : INTEGER
+    --
+    not_null(name) : VARCHAR
+    is_active : BOOLEAN
+  }
+  entity spy_company_business_unit {
+    primary_key(id_company_business_unit) : INTEGER
+    --
+    not_null(foreign_key(fk_company)) : INTEGER
+    foreign_key(fk_parent_company_business_unit) : INTEGER
+    name : VARCHAR
+  }
+  entity spy_company_user {
+    primary_key(id_company_user) : INTEGER
+    --
+    not_null(foreign_key(fk_company)) : INTEGER
+    not_null(foreign_key(fk_customer)) : INTEGER
+    foreign_key(fk_company_business_unit) : INTEGER
+  }
+}
+
+package "Core — Merchant Relation & Restriction" {
+  entity spy_merchant_relationship {
+    primary_key(id_merchant_relationship) : INTEGER
+    --
+    not_null(foreign_key(fk_merchant)) : INTEGER
+    not_null(foreign_key(fk_company_business_unit_owner)) : INTEGER
+    merchant_relationship_key : VARCHAR
+  }
+  entity spy_merchant_relationship_to_company_business_unit {
+    primary_key(id) : INTEGER
+    --
+    not_null(foreign_key(fk_merchant_relationship)) : INTEGER
+    not_null(foreign_key(fk_company_business_unit)) : INTEGER
+  }
+  entity spy_price_product_merchant_relationship {
+    primary_key(id) : INTEGER
+    --
+    not_null(foreign_key(fk_merchant_relationship)) : INTEGER
+    not_null(foreign_key(fk_price_product)) : INTEGER
+    fk_store : INTEGER
+    fk_currency : INTEGER
+  }
+}
+
+package "Custom — Daimler (pyz_*)" {
+  entity pyz_dealer_branch {
+    primary_key(id_dealer_branch) : INTEGER
+    --
+    not_null(foreign_key(fk_merchant)) : INTEGER
+    foreign_key(fk_parent_merchant) : INTEGER
+    not_null(foreign_key(fk_store)) : INTEGER
+    is_main_instance : BOOLEAN
+  }
+  entity pyz_customer_approval_request {
+    primary_key(id_customer_approval_request) : INTEGER
+    --
+    not_null(foreign_key(fk_merchant)) : INTEGER
+    not_null(foreign_key(fk_company_business_unit)) : INTEGER
+    not_null(status) : VARCHAR
+    merchant_specific_customer_id : VARCHAR
+    message : TEXT
+    created_at : TIMESTAMP
+  }
+}
+
+' Relationships
+spy_company_business_unit::fk_company }o--|| spy_company::id_company : "belongs to"
+spy_company_business_unit::fk_parent_company_business_unit }o--o| spy_company_business_unit::id_company_business_unit : "parent"
+spy_company_user::fk_company }o--|| spy_company::id_company : "belongs to"
+spy_company_user::fk_company_business_unit }o--o| spy_company_business_unit::id_company_business_unit : "assigned"
+
+spy_merchant_relationship::fk_merchant }o--|| spy_merchant::id_merchant : "seller"
+spy_merchant_relationship::fk_company_business_unit_owner }o--|| spy_company_business_unit::id_company_business_unit : "buyer owner"
+spy_merchant_relationship_to_company_business_unit::fk_merchant_relationship }o--|| spy_merchant_relationship::id_merchant_relationship : "assigns"
+spy_merchant_relationship_to_company_business_unit::fk_company_business_unit }o--|| spy_company_business_unit::id_company_business_unit : "to unit"
+spy_price_product_merchant_relationship::fk_merchant_relationship }o--|| spy_merchant_relationship::id_merchant_relationship : "prices for"
+
+pyz_dealer_branch::fk_merchant }o--|| spy_merchant::id_merchant : "is dealer"
+pyz_dealer_branch::fk_parent_merchant }o--o| spy_merchant::id_merchant : "branch of main"
+pyz_customer_approval_request::fk_merchant }o--|| spy_merchant::id_merchant : "requested to"
+pyz_customer_approval_request::fk_company_business_unit }o--|| spy_company_business_unit::id_company_business_unit : "from buyer"
+
+@enduml

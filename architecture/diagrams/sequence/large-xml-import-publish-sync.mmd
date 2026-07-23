@@ -1,0 +1,45 @@
+%% Large XML data import + Publish & Sync — Daimler
+%% Confirmed against research-docs.md §11 (CTE bulk, chunked P&S, disableEvent/triggerBulk/enableEvent,
+%% don't proxy files through Spryker). Style follows publish-sync.mmd template.
+sequenceDiagram
+    autonumber
+
+    participant IPS as IPS (Daimler)
+    participant S3 as AWS S3<br/>(import bucket)
+    participant Import as Zed Console<br/>XmlPartsImporter
+    participant Tracker as ImportExecutionTracker
+    participant DB as MariaDB
+    participant RabbitMQ
+    participant Worker as Jenkins P&S Worker
+    participant Redis as Redis
+
+    Note over IPS,Redis: Full parts + price import (~1.5M &lt;SET&gt; tags, target 30 min)
+
+    rect rgb(41, 128, 185)
+        Note right of IPS: File lands on S3 (NOT proxied through Spryker)
+        IPS->>S3: SFTP → XML file(s)
+        Import->>Tracker: record start (type, created_at)
+        Import->>S3: stream/read XML in chunks [S3 API]
+    end
+
+    rect rgb(39, 174, 96)
+        Note right of Import: CTE-based bulk import, event batching
+        Import->>Import: pre-step: load lookups into memory
+        Import->>RabbitMQ: EventBehaviorConfig::disableEvent()
+        loop per chunk (e.g. 5k rows)
+            Import->>DB: CTE bulk INSERT/UPDATE<br/>spy_product_abstract, spy_price_product_store
+        end
+        Import->>RabbitMQ: triggerBulk(events) then enableEvent()
+        Import->>Tracker: record finished_at + success
+    end
+
+    rect rgb(230, 126, 34)
+        Note right of Worker: Chunked Publish & Sync (bulk, no per-message queries)
+        RabbitMQ->>Worker: consume event chunk
+        Worker->>DB: CTE bulk write *_storage tables
+        Worker->>RabbitMQ: sync messages (bulk)
+        RabbitMQ->>Worker: consume sync chunk
+        Worker->>Redis: bulk populate KV storage
+    end
+
+    Note over IPS,Redis: Product SEARCH/FILTER is delegated to external catalog API — not indexed in Spryker ES
