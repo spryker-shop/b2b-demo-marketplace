@@ -71,6 +71,30 @@ class UserConfig extends SprykerUserConfig
                 'username' => 'michele@computer-experts.com',
             ],
             [
+                'firstName' => 'Thomas',
+                'lastName' => 'Becker',
+                'password' => 'change123',
+                'username' => 'thomas.becker@ecoheat-systems.de',
+            ],
+            [
+                'firstName' => 'Ben',
+                'lastName' => 'Foster',
+                'password' => 'change123',
+                'username' => 'ben.foster@boilerexpertsltd.com',
+            ],
+            [
+                'firstName' => 'Greta',
+                'lastName' => 'Lindqvist',
+                'password' => 'change123',
+                'username' => 'greta.lindqvist@greensteamsupplies.com',
+            ],
+            [
+                'firstName' => 'Ivo',
+                'lastName' => 'Petrov',
+                'password' => 'change123',
+                'username' => 'ivo.petrov@industrialthermalco.com',
+            ],
+            [
                 'firstName' => 'Vitaliy',
                 'lastName' => 'Smith',
                 'password' => 'change123',
