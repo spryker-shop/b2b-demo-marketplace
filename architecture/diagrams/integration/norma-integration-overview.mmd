@@ -1,0 +1,77 @@
+---
+config:
+  layout: elk
+---
+flowchart LR
+    Spryker["🛒 NORMA Spryker Platform"]
+
+    subgraph Backend["Backend Integrations (server-to-server)"]
+        direction TB
+        Talend["🔀 Talend ETL"]
+        ERP["💾 Plentymarkets ERP"]
+        Payone["💳 Payone (ACP)"]
+        FeedDynamix["📤 Feed Dynamix"]
+        Emarsys["✉️ Emarsys (CRM)"]
+        Melissa["📍 Melissa"]
+        Carriers["📦 DHL / DPD / GLS"]
+        DWH["📈 DWH (BI)"]
+        Shopware["🗄️ Shopware 5 (migration)"]
+    end
+
+    subgraph Storefront["Storefront JS-Widget Integrations (consent-gated via Usercentrics)"]
+        direction TB
+        Usercentrics["🛡️ Usercentrics (consent gate)"]
+        GTM["📊 GTM / GA"]
+        EasyMktg["🏷️ Easy Marketing"]
+        Clarity["👁️ MS Clarity"]
+        Sovendus["🎁 Sovendus"]
+        Klarna["⭐ Klarna (PDP recs)"]
+        Jotform["📝 Jotform"]
+        ParcelLab["🚚 ParcelLab"]
+        OMQ["❓ OMQ FAQ"]
+        Facebook["📘 Facebook CAPI"]
+        reCAPTCHA["🤖 reCAPTCHA v3"]
+        Kameleoon["🧪 Kameleoon (recs + A/B)"]
+        SiteSearch["🔍 SiteSearch360"]
+    end
+
+    Spryker -- "delta import (REST) / order export (REST)" --> Talend
+    Talend -- "REST" --> ERP
+    Spryker -- "iframe/redirect + ACP events bus (4-6k/day)" --> Payone
+    Spryker -- "product feed (REST)" --> FeedDynamix
+    Spryker -- "campaigns (REST)" --> Emarsys
+    Spryker -- "address verify (REST)" --> Melissa
+    Spryker -- "return labels (REST)" --> Carriers
+    Spryker -- "BI (VPN DB / Data Exchange API)" --> DWH
+    Shopware -- "customers + passwords (one-off)" --> Spryker
+
+    Spryker -- "JS widgets rendered in browser" --> Usercentrics
+    Usercentrics -- "loads after consent" --> GTM & EasyMktg & Clarity & Sovendus & Klarna & Jotform & ParcelLab & OMQ & Facebook & reCAPTCHA & Kameleoon & SiteSearch
+
+    Spryker:::systemStyle
+    Talend:::apiStyle
+    ERP:::externalStyle
+    Payone:::apiStyle
+    FeedDynamix:::apiStyle
+    Emarsys:::apiStyle
+    Melissa:::apiStyle
+    Carriers:::apiStyle
+    DWH:::apiStyle
+    Shopware:::externalStyle
+    Usercentrics:::webAppStyle
+    GTM:::externalStyle
+    EasyMktg:::externalStyle
+    Clarity:::externalStyle
+    Sovendus:::externalStyle
+    Klarna:::externalStyle
+    Jotform:::externalStyle
+    ParcelLab:::externalStyle
+    OMQ:::externalStyle
+    Facebook:::externalStyle
+    reCAPTCHA:::externalStyle
+    Kameleoon:::externalStyle
+    SiteSearch:::externalStyle
+    classDef systemStyle fill:#E67E22,stroke:#c0392b,stroke-width:3px,color:#fff
+    classDef webAppStyle fill:#27AE60,stroke:#27ae60,stroke-width:2px,color:#fff
+    classDef apiStyle fill:#2980B9,stroke:#2980b9,stroke-width:2px,color:#fff
+    classDef externalStyle fill:#95A5A6,stroke:#7f8c8d,stroke-width:2px,color:#fff

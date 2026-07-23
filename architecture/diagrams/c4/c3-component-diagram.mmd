@@ -3,94 +3,71 @@ config:
   layout: elk
 ---
 flowchart TB
-    subgraph YvesPresentation["Presentation Layer"]
-        YvesControllers["Controllers<br><small>Page Controllers</small>"]
-        YvesTemplates["Templates<br><small>Twig Views</small>"]
-        YvesWidgets["Widgets<br><small>Reusable UI Components</small>"]
+    subgraph YvesC["🌐 Yves (Storefront)"]
+        ReturnPortal["Return Portal<br><small>custom return flow</small>"]
+        SearchClient["SiteSearch360 Search Client<br><small>full-text delegation</small>"]
+        Widgets["Storefront Widgets<br><small>consent-gated JS integrations</small>"]
     end
-    subgraph Yves["🌐 Yves Application Layer (Storefront)"]
-        direction TB
-        YvesPresentation
+    subgraph GlueC["⚙️ Glue Backend API"]
+        CatalogImport["Catalog Import (delta)<br><small>products/prices/stock/categories</small>"]
+        OrderExport["Order Export<br><small>orders + payments</small>"]
+        DataExchange["Data Exchange / DWH Export"]
+        FeedExport["Feed Export<br><small>Feed Dynamix</small>"]
     end
-    subgraph GluePresentation["Presentation Layer"]
-        GlueControllers["Resource Controllers<br><small>REST Endpoints</small>"]
-        GlueProcessors["Processors<br><small>Request/Response Handlers</small>"]
-        GlueFormatters["Formatters<br><small>Data Serialization</small>"]
+    subgraph ZedC["🏢 Zed (Backend)"]
+        DataImportMod["Data Import<br><small>batch/PDO</small>"]
+        PS["Publish & Sync<br><small>multi-queue publishers</small>"]
+        OMS["OMS + State Machines<br><small>base + foreign/ACP payment</small>"]
+        PayoneMod["Payone Payment (ACP)<br><small>events-bus consumer</small>"]
+        OrderSplit["Order Splitting<br><small>by warehouse</small>"]
+        ReturnsMod["Returns + Carrier Labels<br><small>custom OMS command</small>"]
+        Connectors["REST Connectors<br><small>Emarsys / Melissa / carriers</small>"]
+        Migration["Shopware Migration<br><small>one-off</small>"]
     end
-    subgraph GlueAPI["🔌 Glue Application Layer (BackendAPI, StoreFrontAPI)"]
-        direction TB
-        GluePresentation
+    subgraph StorageC["💾 Storage"]
+        DB["MariaDB"]
+        Redis["Redis (KV)"]
+        ES["Elasticsearch"]
+        Rabbit["RabbitMQ"]
     end
-    subgraph ClientCommunication["Communication Layer"]
-        ClientStubs["Stubs<br><small>Remote Service Interfaces</small>"]
-        ClientAdapters["Adapters<br><small>Protocol Handlers</small>"]
-        ClientCache["Cache Handlers<br><small>Redis/Storage Access</small>"]
-    end
-    subgraph Client["🔗 Client Application Layer"]
-        direction TB
-        ClientCommunication
-    end
-    subgraph ZedPresentation["Presentation Layer"]
-        ZedControllers["Controllers<br><small>CRUD Controllers, Forms, API Controllers</small>"]
-        ZedViews["Views &amp; Tables<br><small>Symfony Forms, UI Components</small>"]
-        ZedRouters["Routers<br><small>Request Routing</small>"]
-    end
-    subgraph ZedCommunication["Communication Layer"]
-        ZedFacades["Facades<br><small>Module API</small>"]
-        ZedPlugins["Plugins<br><small>Extension Points</small>"]
-        ZedGateway["Gateway<br><small>RPC Handlers</small>"]
-    end
-    subgraph ZedBusiness["Business Layer"]
-        ZedModels["Business Models<br><small>Business Logic</small>"]
-    end
-    subgraph ZedService["Service Layer"]
-        ZedServices["Services<br><small>Shared Utilities</small>"]
-    end
-    subgraph ZedPersistence["Persistence Layer"]
-        ZedEntities["Entities<br><small>Propel ORM Models</small>"]
-        ZedRepositories["Repositories<br><small>Read Operations</small>"]
-        ZedEntityManagers["Entity Managers<br><small>Write Operations</small>"]
-    end
-    subgraph Zed["🏢 Zed Application Layer (BackOffice, MerchantPortal, BackendGateway)"]
-        direction TB
-        ZedPresentation
-        ZedCommunication
-        ZedBusiness
-        ZedService
-        ZedPersistence
-    end
-    subgraph Database["💾 Database"]
-        MySQL["MySQL/MariaDB<br><small>Relational Database</small>"]
-    end
-    subgraph CacheStorage["⚡ Cache & Search"]
-        Redis["Redis/Valkey<br><small>Key-Value Store</small>"]
-        OpenSearch["OpenSearch<br><small>Search Engine</small>"]
-    end
-    YvesControllers --> YvesTemplates & YvesWidgets & ClientStubs
-    GlueControllers --> GlueProcessors & ClientStubs
-    GlueProcessors --> GlueFormatters
-    ClientStubs --> ClientAdapters & ClientCache
-    ClientAdapters --> ZedGateway
-    ClientCache --> Redis & OpenSearch
-    ZedControllers --> ZedViews & ZedRouters & ZedFacades
-    ZedGateway --> ZedFacades
-    ZedFacades --> ZedModels
-    ZedPlugins --> ZedFacades
-    ZedModels --> ZedServices & ZedRepositories & ZedEntityManagers
-    ZedRepositories --> ZedEntities
-    ZedEntityManagers --> ZedEntities
-    ZedEntities --> MySQL
 
-    YvesPresentation:::presentationStyle
-    GluePresentation:::presentationStyle
-    ClientCommunication:::communicationStyle
-    ZedPresentation:::presentationStyle
-    ZedCommunication:::communicationStyle
-    ZedBusiness:::businessStyle
-    ZedService:::serviceStyle
-    ZedPersistence:::persistenceStyle
+    CatalogImport --> DataImportMod --> DB
+    DB --> PS
+    PS --> Rabbit
+    PS --> Redis
+    PS --> ES
+    OrderSplit --> OMS
+    OMS --> PayoneMod
+    PayoneMod --> Rabbit
+    OMS --> ReturnsMod --> Connectors
+    OMS --> OrderExport
+    OMS --> Connectors
+    ReturnPortal --> OMS
+    SearchClient -.-> ES
+    Migration --> DB
+
+    ReturnPortal:::presentationStyle
+    SearchClient:::presentationStyle
+    Widgets:::presentationStyle
+    CatalogImport:::apiStyle
+    OrderExport:::apiStyle
+    DataExchange:::apiStyle
+    FeedExport:::apiStyle
+    DataImportMod:::businessStyle
+    PS:::businessStyle
+    OMS:::businessStyle
+    PayoneMod:::businessStyle
+    OrderSplit:::businessStyle
+    ReturnsMod:::businessStyle
+    Connectors:::communicationStyle
+    Migration:::businessStyle
+    DB:::persistenceStyle
+    Redis:::persistenceStyle
+    ES:::persistenceStyle
+    Rabbit:::infraStyle
     classDef presentationStyle fill:#27AE60,stroke:#27ae60,stroke-width:2px,color:#fff
     classDef communicationStyle fill:#E67E22,stroke:#d68910,stroke-width:2px,color:#fff
     classDef businessStyle fill:#2980B9,stroke:#2980b9,stroke-width:2px,color:#fff
-    classDef serviceStyle fill:#95A5A6,stroke:#95a5a6,stroke-width:2px,color:#fff
+    classDef apiStyle fill:#2980B9,stroke:#2980b9,stroke-width:2px,color:#fff
     classDef persistenceStyle fill:#9B59B6,stroke:#8e44ad,stroke-width:2px,color:#fff
+    classDef infraStyle fill:#95A5A6,stroke:#95a5a6,stroke-width:2px,color:#fff

@@ -23,6 +23,13 @@ Create a solution design when:
 - Researching and proposing technical approaches
 - The work requires detailed planning across multiple components
 
+## NORMA Solution Designs
+
+| SD | Title | Status |
+|----|-------|--------|
+| [SD-001](sd-001-shopware5-data-migration.md) | Shopware 5 → Spryker Data Migration | Draft |
+| [SD-002](sd-002-dwh-integration-external-db-access.md) | DWH Integration — External DB Access | Draft |
+
 ## Naming Convention
 
 Solution designs follow the pattern: `sd-XXX-brief-title.md`

@@ -1,0 +1,22 @@
+sequenceDiagram
+    autonumber
+
+    box rgb(41, 128, 185) Spryker Backend
+        participant OMS as OMS
+        participant Export as Order Export
+        participant Glue as Glue Backend API
+    end
+    box rgb(149, 165, 166) External
+        participant Talend as Talend ETL
+        participant ERP as Plentymarkets ERP
+    end
+
+    Note over OMS: On order placement / state change
+    OMS->>Export: Stage order + payments for export
+    Note over Export: Scheduler triggers delta export every 10 min
+    Export->>Glue: Provide order+payment delta
+    Talend->>Glue: Pull/receive delta [REST]
+    Talend->>ERP: Forward orders + payments
+    ERP-->>Talend: Order-status updates
+    Talend->>Glue: Inbound order-status delta
+    Glue->>OMS: Apply order-status update

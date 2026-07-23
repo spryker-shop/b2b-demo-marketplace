@@ -3,34 +3,38 @@ config:
   layout: elk
 ---
 flowchart LR
-    Customer["👤 Customer"] -- Browse & Purchase --> Spryker["🛒 Spryker B2B Marketplace<br>Platform"]
-    BackofficeUser["👤 Backoffice User"] -- Manage Platform --> Spryker
-    MerchantUser["👤 Merchant User"] -- Manage Products & Orders --> Spryker
-    DevOpsEngineer["👤 DevOps Engineer"] -- Monitor Performance --> APM["📊 Application Performance<br>Monitoring"]
-    BusinessAnalyst["👤 Business Analyst"] -- Analyze Data --> BI["📈 Business Intelligence<br>Platform"]
-    Customer -- Authentication --> CIAM["🔐 CIAM System<br>Identity &amp; Access"]
-    BackofficeUser -- Authentication --> CIAM
-    MerchantUser -- Authentication --> CIAM
-    Spryker -- New Orders --> ERP["💾 ERP System<br>Orders &amp; Inventory"]
-    PIM["📦 PIM System<br>Product Data"] -- Product Data,<br>Base Prices --> Spryker
-    Spryker <-- Payments --> Payment["💳 Payment Gateway<br>Transactions"]
-    CIAM -- Customer data, tokens --> Spryker
-    ERP -- Stock, Order Updates,<br>Customer-Specific Prices --> Spryker
-    Spryker -- Metrics & Traces --> APM
-    Spryker -- Business Data --> BI
+    Customer["👤 Customer<br>(B2C shopper)"] -- Browse & Purchase --> Spryker["🛒 NORMA Spryker Platform<br>B2C + limited Marketplace"]
+    BackofficeUser["👤 Back Office User"] -- Manage Platform --> Spryker
+    Dropshipper["👤 Dropshipper (Merchant)<br><small>+…Y</small>"] -- Fulfil drop shipments --> Spryker
+
+    Spryker -- "Catalog import (delta) /<br>Order export" --> Talend["🔀 Talend<br>ETL Service Bus"]
+    Talend -- "Products, prices, stock,<br>categories, order updates" --> ERP["💾 Plentymarkets ERP"]
+    Spryker <-- "Payment (iframe/redirect)<br>+ ACP events" --> Payone["💳 Payone (ACP)"]
+    Spryker -- "Product feed" --> FeedDynamix["📤 Feed Dynamix"]
+    Spryker -- "Newsletter / campaigns" --> Emarsys["✉️ Emarsys (CRM)"]
+    Spryker -- "Address verification" --> Melissa["📍 Melissa Lookup API"]
+    Spryker -- "Return labels" --> Carriers["📦 DHL / DPD / GLS"]
+    Spryker -- "BI data (VPN / Data Exchange API)" --> DWH["📈 DWH (BI)"]
+    SiteSearch["🔍 SiteSearch360<br>full-text search"] -- Search results --> Spryker
+    Shopware["🗄️ Shopware 5<br><small>legacy (migration)</small>"] -- "Customers + passwords" --> Spryker
+
+    Customer -- "Consent-gated JS widgets" --> JSWidgets["🧩 Storefront JS Widgets<br>GTM/GA, Clarity, Kameleoon,<br>Klarna, Sovendus, Jotform,<br>ParcelLab, OMQ, Facebook CAPI,<br>reCAPTCHA, Easy Marketing,<br>Usercentrics"]
 
     Customer:::userStyle
-    Spryker:::systemStyle
     BackofficeUser:::userStyle
-    MerchantUser:::userStyle
-    DevOpsEngineer:::userStyle
-    APM:::externalStyle
-    BusinessAnalyst:::userStyle
-    BI:::externalStyle
-    CIAM:::externalStyle
+    Dropshipper:::userStyle
+    Spryker:::systemStyle
+    Talend:::externalStyle
     ERP:::externalStyle
-    PIM:::externalStyle
-    Payment:::externalStyle
+    Payone:::externalStyle
+    FeedDynamix:::externalStyle
+    Emarsys:::externalStyle
+    Melissa:::externalStyle
+    Carriers:::externalStyle
+    DWH:::externalStyle
+    SiteSearch:::externalStyle
+    Shopware:::externalStyle
+    JSWidgets:::externalStyle
     classDef userStyle fill:#e1f5ff,stroke:#0366d6,stroke-width:2px
     classDef systemStyle fill:#E67E22,stroke:#c0392b,stroke-width:3px,color:#fff
     classDef externalStyle fill:#95A5A6,stroke:#7f8c8d,stroke-width:2px,color:#fff

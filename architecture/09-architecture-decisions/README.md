@@ -61,6 +61,15 @@ flowchart TB
 - Document them now while context is still available
 - Mark with historical date in context
 
+## NORMA Architecture Decisions
+
+| ADR | Title | Status |
+|-----|-------|--------|
+| [ADR-001](adr-001-talend-glue-backend-api-erp-integration.md) | Talend + Glue Backend API for ERP integration | Accepted |
+| [ADR-002](adr-002-payone-acp-payment.md) | Payone via App Composition Platform (ACP) | Accepted |
+| [ADR-003](adr-003-sitesearch360-plus-ootb-search.md) | SiteSearch360 (full-text) + OOTB Elasticsearch (category) | Accepted |
+| [ADR-004](adr-004-delta-only-import-strategy.md) | Delta-only import strategy (full built on delta) | Accepted |
+
 ## Naming Convention
 
 ADRs follow the pattern: `adr-XXX-brief-title.md`

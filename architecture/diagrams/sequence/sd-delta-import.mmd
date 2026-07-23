@@ -1,0 +1,30 @@
+sequenceDiagram
+    autonumber
+
+    box rgb(149, 165, 166) ERP side
+        participant ERP as Plentymarkets ERP
+        participant Talend as Talend ETL
+    end
+    box rgb(41, 128, 185) Spryker Backend
+        participant Glue as Glue Backend API
+        participant Import as Data Import
+        participant DB as MariaDB
+    end
+    box rgb(155, 89, 182) Publish & Sync
+        participant RMQ as RabbitMQ
+        participant PS as P&S Publishers/Sync
+        participant Redis as Redis (KV)
+        participant ES as Elasticsearch
+    end
+
+    Note over Talend: Scheduler triggers delta every 10 min (~50 products)
+    ERP->>Talend: Changed products, prices, stock, categories
+    Talend->>Glue: POST delta payload (REST, token+scope)
+    Glue->>Import: Hand off delta records
+    Import->>DB: Batch upsert (PDO, pre-gathered lookups)
+    DB->>RMQ: Emit entity change events [AMQP]
+    RMQ->>PS: Publish (multiple queues, chunked)
+    PS->>DB: Stage to *_storage / *_search
+    PS->>Redis: Sync key-value storefront data
+    PS->>ES: Index category/catalog docs
+    Note over Redis,ES: Storefront serves updated catalog within the 10-min window

@@ -1,0 +1,31 @@
+sequenceDiagram
+    autonumber
+
+    box rgb(39, 174, 96) Storefront
+        participant Customer as Customer
+        participant Yves as Yves
+    end
+    box rgb(41, 128, 185) Spryker Backend
+        participant Checkout as Checkout / OMS
+        participant OMS as OMS (foreign/ACP SM)
+    end
+    box rgb(149, 165, 166) External
+        participant Melissa as Melissa
+        participant Payone as Payone ACP App
+        participant Bus as ACP Events Bus
+    end
+
+    Customer->>Yves: Submit checkout
+    Yves->>Melissa: Verify address [REST]
+    Melissa-->>Yves: Address valid
+    Yves->>Checkout: Place checkout
+    Checkout->>Checkout: Split shipments by warehouse
+    Checkout->>Payone: Initialise payment
+    Payone-->>Yves: iframe / redirect URL
+    Customer->>Payone: Complete payment (iframe/redirect)
+    Payone->>Bus: Emit payment event
+    Bus-->>OMS: Payment authorised/captured event
+    OMS->>OMS: Advance foreign/ACP payment state machine
+    OMS->>Checkout: Confirm order
+    OMS-->>Customer: Order confirmation email (OMS command)
+    Note over OMS: Order queued for export to Plentymarkets

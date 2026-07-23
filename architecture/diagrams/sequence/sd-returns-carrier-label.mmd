@@ -1,0 +1,27 @@
+sequenceDiagram
+    autonumber
+
+    box rgb(39, 174, 96) Storefront
+        participant Customer as Customer
+        participant Portal as Return Portal (Yves)
+    end
+    box rgb(41, 128, 185) Spryker Backend
+        participant Returns as Return Management
+        participant OMS as OMS (return states)
+        participant Cmd as Custom Carrier Command
+    end
+    box rgb(149, 165, 166) External
+        participant Carrier as DHL / DPD / GLS
+        participant Talend as Talend → ERP
+    end
+
+    Customer->>Portal: Open return portal, select items
+    Note over Portal: Items must be Shipped/Delivered & within return policy
+    Portal->>Returns: Create return
+    Returns->>OMS: Move items to "Waiting for return"
+    OMS->>Cmd: Fire carrier-label command (on transition)
+    Cmd->>Carrier: Request return label/voucher [REST]
+    Carrier-->>Cmd: Return label
+    Cmd-->>Customer: Provide label
+    OMS->>OMS: Returned → Refunded
+    OMS->>Talend: Export return/refund state
