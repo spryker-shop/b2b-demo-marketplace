@@ -112,10 +112,13 @@ the step that needs it, not all up front:
   met, the build-ready five, arc42 structure & cross-consistency), returning a per-section verdict +
   ranked defect list. **Read by the orchestrator before Step 6, and by the reviewer subagent as its
   brief.**
-- [references/preview.md](references/preview.md) — the optional **localhost HTML preview + PDF export**:
-  a self-contained Markdown+Mermaid renderer served on localhost that doubles as the print-to-PDF path
-  (one printable document → Save as PDF). Throwaway scratch, never committed. **Read at Step 7 when the
-  user wants to view or export the finished document.**
+- [references/preview.md](references/preview.md) — the **two browser previews + PDF export**, both
+  written into `architecture/` and both fully project-agnostic (copy-only, no baked content, no
+  hardcoded file list): `preview.html` (dev — served over http, auto-discovers the folder's docs
+  live via HEAD probes + the SD/ADR folder READMEs, so it works on any static server incl. PhpStorm),
+  and `preview-standalone.html` (handoff — compiled **on demand** by a **pure-Bash builder** that
+  bakes every section + diagram into one file that **opens by double-click on `file://`** and is the
+  print-to-PDF path). **Read at Step 7 when producing/exporting the finished document.**
 
 ## Operating principles
 
@@ -381,14 +384,29 @@ automatically — architecture docs are reviewed via pull request (per the templ
 suggest the branch/commit and let the user run it, unless they explicitly asked you to commit. List the
 remaining TODOs so the user knows exactly what still needs a human answer.
 
-**Offer a browser preview + PDF export.** The finished document is Markdown + Mermaid — hard to read as
-raw files. Offer a **localhost HTML preview** (Markdown + diagrams rendered) that doubles as the
-**PDF export path**: it's built as one printable document, so `Cmd/Ctrl+P → Save as PDF` gives the whole
-architecture as a single file. Read [references/preview.md](references/preview.md) for the
-self-contained renderer, the serve command, and the manual + headless-Chrome PDF routes. The preview is
-throwaway scratch under the run cache dir — it never touches the committed `architecture/` Markdown. In
-Gated mode ask if they want it; in Autonomous mode generate it and hand over the URL + the "print to
-PDF" one-liner.
+**Produce browser previews + PDF export.** The finished document is Markdown + Mermaid — hard to read
+as raw files. Two previews, both written into `architecture/` and both **project-agnostic (copy-only —
+no baked content, no hardcoded file list; the same two files work in any project's `architecture/`)**,
+per [references/preview.md](references/preview.md):
+- **`architecture/preview.html`** — the **dev / live** view. Served over http, it auto-discovers the
+  folder's docs at runtime (HEAD-probe `NN-*.md` sections; read the `04`/`09` folder READMEs to find
+  the SD/ADR filenames — never autoindex scraping, which PhpStorm and many servers don't provide, and
+  which is why SDs/ADRs went missing before). Edit a `.md`, refresh, see it — no regeneration. Copy it
+  in from the start.
+- **`architecture/preview-standalone.html`** — the **handoff / offline** view, compiled **on demand at
+  the end** by a **pure-Bash builder** (base64 JSON island; no Python) that bakes every section +
+  diagram into one file. It **opens by double-click over `file://`** (no server) and is the **PDF
+  export path**: one printable document, so `Cmd/Ctrl+P → Save as PDF` gives the whole architecture as
+  a single file. It's a regenerable snapshot of the Markdown (the single source of truth) — re-run the
+  builder after edits.
+
+Why both: browsers block `fetch()` on `file://`, so no single file can both open on `file://` and read
+the live folder — live-read needs a server, double-click needs baked content. The builder + `tpl.html`
+are throwaway scratch under the run cache dir. In Gated mode ask which the user wants; in Autonomous
+mode write `preview.html` and compile the standalone at handover, verify (`preview.html` render-checked
+over http — assert every section + **every SD and ADR** shows in the TOC; the standalone static- or
+http-validated since the Chrome extension can't open `file://`), and hand over both paths + the "print
+to PDF" one-liner.
 
 When the user **did** ask for commits/PRs (typical for multi-deliverable runs): treat push/PR as an
 outward-facing gate. Commit everything push-ready **first** (all branches/worktrees), then attempt
@@ -412,5 +430,5 @@ block for the user to run themselves (with the `!` prefix), then finish the rest
 | Multi-deliverable writing | one isolated teammate per deliverable, own worktree ([multi-deliverable.md](references/multi-deliverable.md)) |
 | Cross-link & consistency | orchestrator, inline (multi-deliverable: each writer, orchestrator spot-checks) |
 | Self-review | independent reviewer teammate against [review.md](references/review.md) → ranked findings; orchestrator applies fixes (Autonomous) or surfaces to user (Gated) |
-| Preview / PDF export (offered at handoff) | self-contained localhost renderer per [preview.md](references/preview.md) → browser view + `Cmd/Ctrl+P` Save-as-PDF (or headless-Chrome `--print-to-pdf`) |
+| Preview / PDF export | Two project-agnostic files in `architecture/` per [preview.md](references/preview.md): `preview.html` (dev — served, auto-discovers via HEAD probes + SD/ADR READMEs, any static server) and `preview-standalone.html` (handoff — pure-Bash builder bakes all content into one `file://`-openable file; `Cmd/Ctrl+P` Save-as-PDF or headless-Chrome `--print-to-pdf`) |
 | Push / PRs (only if asked) | commit push-ready first; on denial emit the `!`-prefixed command block for the user |

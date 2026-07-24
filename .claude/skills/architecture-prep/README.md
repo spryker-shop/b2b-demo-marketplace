@@ -83,7 +83,7 @@ flowchart TD
     Esc --> S6d
 
     S6d --> S7["**Step 7** — Handoff<br/>ready to feed a PRD · list TODOs"]:::backend
-    S7 --> Prev{{"Preview + PDF?<br/>localhost HTML → Save-as-PDF"}}:::web
+    S7 --> Prev{{"Preview + PDF?<br/>preview.html (served) · preview-standalone.html (file://) → Save-as-PDF"}}:::web
     S7 --> Push{{"Push / PRs?<br/>(only if asked)"}}:::web
     Prev --> Done
     Push --> Done(["architecture/ committed · PR(s) opened · PDF exported"]):::user
@@ -111,7 +111,7 @@ finding ends either *fixed* or *converted to a triaged owned gap*; nothing is si
 | [sections.md](references/sections.md) | Per-arc42-section writer guidance + diagram map | Step 4, each writer its own § |
 | [architecture-depth.md](references/architecture-depth.md) | The decision-grade / build-ready depth bar | Orchestrator once + every writer |
 | [review.md](references/review.md) | Spryker-specific self-review checklist | Before Step 6 + the reviewer subagent |
-| [preview.md](references/preview.md) | Localhost HTML preview + PDF export (print / headless Chrome) | Step 7, to view or export the doc |
+| [preview.md](references/preview.md) | Two project-agnostic (copy-only) files in `architecture/`: `preview.html` (dev — served, auto-discovers docs) + `preview-standalone.html` (handoff — pure-Bash-built, opens over file://) + PDF export | Step 7, to view or export the doc |
 
 ## The arc42 sections
 
