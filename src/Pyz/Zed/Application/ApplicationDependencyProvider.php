@@ -101,9 +101,9 @@ class ApplicationDependencyProvider extends SprykerApplicationDependencyProvider
             new OauthKnpuApplicationPlugin(),
         ];
 
-        if (class_exists(WebProfilerApplicationPlugin::class)) {
-            $applicationPlugins[] = new WebProfilerApplicationPlugin();
-        }
+        // if (class_exists(WebProfilerApplicationPlugin::class)) {
+        //     $applicationPlugins[] = new WebProfilerApplicationPlugin();
+        // }
 
         return $applicationPlugins;
     }

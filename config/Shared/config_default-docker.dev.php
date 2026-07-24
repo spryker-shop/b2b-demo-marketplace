@@ -3,6 +3,8 @@
 declare(strict_types = 1);
 
 use Monolog\Logger;
+use Pyz\Shared\Console\ConsoleConstants;
+use Spryker\Service\FlysystemAws3v3FileSystem\Plugin\Flysystem\Aws3v3FilesystemBuilderPlugin;
 use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
 use Spryker\Shared\AppCatalogGui\AppCatalogGuiConstants;
 use Spryker\Shared\Application\ApplicationConstants;
@@ -287,6 +289,8 @@ if (!getenv('SPRYKER_S3_SSP_ASSET_IMAGES_BUCKET')) {
         'root' => '/data',
         'path' => '/data/ssp-model-image',
     ];
+
+    $config[ConsoleConstants::ENABLE_DEVELOPMENT_CONSOLE_COMMANDS] = true;
 }
 
 if (!getenv('SPRYKER_S3_PUBLIC_ASSETS_BUCKET')) {

@@ -45,18 +45,17 @@ image:
     tag: spryker/php:8.4
     environment:
         SPRYKER_DNS_RESOLVER_IP: "10.105.0.2"
-        SPRYKER_HOOK_BEFORE_DEPLOY: "vendor/bin/install -r EU/pre-deploy -vvv"
-        SPRYKER_HOOK_AFTER_DEPLOY: "true"
-        SPRYKER_HOOK_INSTALL: "vendor/bin/install -r EU/production --no-ansi -vvv"
+        SPRYKER_HOOK_BEFORE_DEPLOY: 'vendor/bin/install -r pre-deploy -vvv'
+        SPRYKER_HOOK_AFTER_DEPLOY: "vendor/bin/install -r install-post-deploy-workflow-icp.yml -vvv"
+        SPRYKER_HOOK_INSTALL: 'vendor/bin/install -r production --no-ansi -vvv'
         SPRYKER_HOOK_DESTRUCTIVE_INSTALL: "vendor/bin/install -r destructive --no-ansi -vvv"
-        SPRYKER_PRODUCT_CONFIGURATOR_HOST: demo-date-time-configurator.icp.cloud.spryker.toys
-        SPRYKER_PRODUCT_CONFIGURATOR_PORT: 443
+        SPRYKER_WATER_TREATMENT_CONFIGURATOR_HOST: demo-water-treatment-configurator.icp.cloud.spryker.toys
+        SPRYKER_WATER_TREATMENT_CONFIGURATOR_PORT: 443
         SPRYKER_PRODUCT_CONFIGURATOR_ENCRYPTION_KEY: 'change123'
         SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR: '0c1ffefeebdab4a3d839d0e52590c9a2'
         SPRYKER_YVES_HOST_EU: yves.eu.icp.cloud.spryker.toys
         SPRYKER_YVES_HOST_US: yves.us.icp.cloud.spryker.toys
         SPRYKER_DYNAMIC_STORE_MODE: true
-        SPRYKER_WATER_TREATMENT_CONFIGURATOR_HOST: demo-water-treatment-configurator.icp.cloud.spryker.toys
     php:
         enabled-extensions:
             - otel
@@ -121,15 +120,13 @@ groups:
             yves:
                 application: yves
                 endpoints:
-                    demo-date-time-configurator.icp.cloud.spryker.toys:
-                        entry-point: Configurator
-                    demo-water-treatment-configurator.icp.cloud.spryker.toys:
-                        entry-point: WaterTreatmentConfigurator
                     yves.eu.icp.cloud.spryker.toys:
                         region: EU
                         services:
                             session:
                                 namespace: 1
+                    demo-water-treatment-configurator.icp.cloud.spryker.toys:
+                        entry-point: WaterTreatmentConfigurator
                 http:
                     max-request-body-size: 100M
             boffice:
@@ -165,6 +162,12 @@ groups:
                     glue-backend.eu.icp.cloud.spryker.toys:
                         region: EU
                         cors-allow-origin: '*'
+            storybook:
+                application: static
+                endpoints:
+                    storybook.eu.icp.cloud.spryker.toys:
+                        entry-point: Storybook/assets
+                        region: EU
 services:
     database:
         engine: mysql
@@ -219,7 +222,7 @@ docker:
         enabled: true
 
     testing:
-        store: EU
+       store: EU
 
     debug:
         enabled: false
