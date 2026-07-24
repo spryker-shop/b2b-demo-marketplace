@@ -39,7 +39,15 @@
         {% block bundleName %}
             <h6 class="{{ config.name }}__title">
                 {%- block bundleNameText -%}
-                    {{ parent() }}
+                    {% if data.bundle.template.idConfigurableBundleTemplate %}
+                        <a class="{{ config.name }}__title-link" href="{{ path(
+                            'configurable-bundle/configurator/slots', {
+                                'idConfigurableBundleTemplate': data.bundle.template.idConfigurableBundleTemplate,
+                            }
+                        ) }}">{{ data.bundle.template.name | trans }}</a>
+                    {% else %}
+                        {{ data.bundle.template.name | trans }}
+                    {% endif %}
                 {%- endblock -%}
             </h6>
         {% endblock %}

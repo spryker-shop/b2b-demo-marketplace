@@ -3,9 +3,13 @@
 {% block body %}
     <div class="{{ _self.renderClass(config.name ~ '__col', ['image']) }}">
         {% block image %}
-            {% set imageModifiers =  ['bundle-cart-item'] %}
-
-            {{ parent() }}
+            {% include molecule('lazy-image') with {
+                class: config.name ~ '__image',
+                data: {
+                    imageSrc: data.image,
+                    imageTitle: data.name,
+                },
+            } only %}
         {% endblock %}
     </div>
     <div class="{{ _self.renderClass(config.name ~ '__col', ['description']) }}">

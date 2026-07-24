@@ -52,10 +52,10 @@
             width: 100%;
             grid-row: 1;
             grid-column: span 3 / span 3;
+        }
 
-            a {
-                color: currentColor;
-            }
+        &__title-link {
+            color: currentColor;
         }
 
         &__remove {
@@ -87,6 +87,7 @@
 
         &__remove-tooltip {
             @include typography(body-sm);
+            @include helper-effect-transition(opacity);
             position: absolute;
             right: 0;
             bottom: calc(100% + var(--scale-4));
@@ -94,11 +95,10 @@
             padding: var(--scale-4) var(--scale-8);
             color: var(--text-inverse, #fff);
             white-space: nowrap;
-            background: var(--background-inverse, #3b3b3d);
+            background: var(--background-inverse);
             border-radius: var(--radius-sm);
             opacity: 0;
             pointer-events: none;
-            transition: opacity 150ms ease;
         }
 
         @content;
