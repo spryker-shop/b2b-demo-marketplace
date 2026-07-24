@@ -1,68 +1,30 @@
-@mixin sales-configurable-bundle-widget-ordered-configured-bundle-product($name: '.ordered-configured-bundle-product') {
-    #{$name} {
-        display: flex;
-        flex-wrap: wrap;
-        overflow: hidden;
+$cart-item-max-visible-variants: 3;
+$cart-item-image-width: 76;
 
-        &__container {
-            flex-wrap: wrap;
-            justify-content: flex-start;
-            flex-grow: 1;
-            margin-top: 0;
+@include configured-bundle-product-shared('.ordered-configured-bundle-product') {
+    position: relative;
+    padding: var(--scale-8);
 
-            @include helper-breakpoint-media-min($lg) {
-                justify-content: space-between;
-            }
+    &__checkbox {
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: $setting-zi-element;
+    }
+
+    &__col--rail {
+        flex-direction: column;
+        font-size: var(--font-size-14);
+        line-height: var(--font-line-height-20);
+
+        @include helper-breakpoint-media-min($lg) {
+            align-items: flex-end;
         }
+    }
 
-        &__col {
-            display: flex;
-            flex-wrap: wrap;
-        }
-
-        &__inner-section {
-            @include helper-breakpoint-media-min($lg) {
-                text-align: center;
-            }
-
-            &:first-child,
-            &:last-child,
-            &--text-right {
-                @include helper-breakpoint-media-min($lg) {
-                    text-align: right;
-                }
-            }
-
-            &--image {
-                width: 22%;
-                min-width: 22%;
-            }
-
-            &--text-light {
-                color: $setting-color-gray-3;
-            }
-        }
-
-        &__general-information {
-            padding-right: rem(50);
-        }
-
-        &__text {
-            font-size: rem(14);
-        }
-
-        &__sku {
-            font-size: rem(13);
-        }
-
-        &__item-title {
-            font-size: rem(14);
-            font-weight: fw(bold);
-            margin-bottom: 0;
-        }
-
-        @content;
+    &__title {
+        font-weight: var(--font-weight-semibold);
+        font-size: var(--font-size-14);
+        line-height: var(--font-line-height-20);
     }
 }
-
-@include sales-configurable-bundle-widget-ordered-configured-bundle-product();
