@@ -33,112 +33,70 @@ fetched.) Don't waste a run trying to make one file do both — it isn't possibl
 
 ---
 
-## File 1 — `architecture/preview.html` (dev, served, reusable)
+## Both files share ONE render core — this is what keeps them identical
 
-A single static page you **copy unchanged** into any `architecture/`. On load it **auto-discovers**
-the docs in its own folder and renders them — no hardcoded file list, no manifest.
+The single most important rule, and the one that has bitten this skill before: **`preview.html` and
+`preview-standalone.html` MUST embed a byte-identical render core.** If they use two separately-written
+renderers they drift — different section ordering, a missing ADR, different mermaid handling — and the
+"dev preview" no longer matches the "handoff file". They are the *same page fed by two content sources*,
+not two pages.
 
-**Discovery must be server-agnostic.** Do NOT discover by scraping a directory-listing/autoindex page:
-`python3 -m http.server` serves an autoindex, but **PhpStorm's built-in server (port 63342) and many
-others do not** — autoindex scraping silently finds nothing and the ADRs/SDs go missing. Instead:
+**Do not hand-write either file.** Generate both with the committed builder, which splices one shared
+HEAD + one shared render core + a one-line loader that is the ONLY difference between them:
 
-- **Top-level sections:** probe `NN-<slug>.md` for `NN` = `01..20` against the known arc42 slug set
-  (`introduction-and-goals`, `constraints`, `system-scope-and-context`, `solution-designs`,
-  `building-block-view`, `runtime-view`, `deployment-view`, `crosscutting-concepts`,
-  `architecture-decisions`, `quality-requirements`, `risks-and-technical-debt`, `glossary`) with a
-  `HEAD` request (fall back to `GET`); render the ones that respond `200`.
-- **SDs / ADRs:** **read the folder README** (`04-solution-designs/README.md`,
-  `09-architecture-decisions/README.md`) and extract the linked filenames
-  (`/\(([^)]+\.md)\)/`, keep `sd-*`/`adr-*`, drop `*-000-template.md`). Every Spryker arc42 SD/ADR
-  folder ships a README that indexes its docs, so this works on **any** static server. Numeric probe
-  (`sd-001.md`, `adr-001.md`, …) is the fallback if a README is absent.
-- **Diagrams:** replace each `[label](….mmd)` link with a fenced ```` ```mermaid ```` block by
-  `fetch()`ing the `.mmd` relative to the section file, running `clean_mermaid` (see gotchas).
-- **Cross-links:** rewrite relative `NN-name.md[#…]` / `sd-…md` / `adr-…md` to in-page `#anchor`s;
-  keep `http(s)` links (open in new tab).
-- Render Markdown with `marked`, **sanitize with `DOMPurify.sanitize(marked.parse(...))`** (XSS-safe
-  + satisfies repo safety hooks), diagrams with `mermaid`.
+- `preview-assets/head.html` — shared `<!doctype>` … `#doc` container: CDN `<script>`s, all CSS
+  (theme-aware + `@media print`), the sidebar/TOC layout, and an empty `#banner`. Identical in both.
+- `preview-assets/render-core.js` — the shared `window.ARCH_CORE` module: `render(docs, mermaid)`
+  (ordering via `orderKey`, `renderable` filter, `.mmd` inlining, relative-link rewriting to in-page
+  anchors, `DOMPurify.sanitize(marked.parse(...))`, mermaid run) **plus both loaders**:
+  `loadByFetch()` (dev) and `loadFromIsland()` (handoff). Identical in both files — this is the core
+  whose hash the builder asserts.
+- `preview-assets/build-previews.sh` — emits both files. `preview.html` = HEAD + core + a loader that
+  calls `ARCH_CORE.loadByFetch()`; `preview-standalone.html` = HEAD + a baked base64 JSON island +
+  core + a loader that calls `ARCH_CORE.loadFromIsland()`. The script ends by asserting the
+  `ARCH_CORE` block is byte-identical in both (`shasum`) and **fails loudly if they ever diverge**.
 
-Serve the `architecture/` folder (so relative fetches resolve) and open over http:
+Run it (from anywhere) at Step 7; copy the three assets into the run cache or invoke them in place:
+
+```bash
+ARCH="<ABS>/architecture" \
+ASSETS="<SKILL>/references/preview-assets" \
+bash "<SKILL>/references/preview-assets/build-previews.sh"
+# -> wrote architecture/preview.html and architecture/preview-standalone.html
+# -> OK: shared core identical (<sha1>)
+```
+
+Both files are project-agnostic (no baked file list, no project name) — the same `head.html` +
+`render-core.js` drop into any Spryker `architecture/`. Only the standalone's island is project-specific,
+and the builder regenerates it from whatever `.md`/`.mmd` are on disk.
+
+### What the shared core does (the contract — do not fork it)
+
+- **Discovery, dev (`loadByFetch`)**: HEAD-probe `NN-<slug>.md` for `NN`=`01..20` over the arc42 slug
+  set; find SD/ADR filenames by **reading the `04`/`09` folder READMEs** (never autoindex scraping —
+  `python3 -m http.server` has an autoindex but PhpStorm's 63342 server and others do not, which is
+  exactly how ADRs/SDs went missing). Then prefetch every `.mmd` the docs reference.
+- **Discovery, handoff (`loadFromIsland`)**: base64-decode the baked island — same `{path,text}` shape
+  `loadByFetch` returns, so `render()` can't tell them apart. That sameness is the whole point.
+- **Ordering**: `orderKey` sorts `01..NN`, folding `sd-*`/`adr-*` right after their parent number.
+- **Skips**: `README.md`, `PUBLIC-DOC-GUIDELINE.md`, `*-000-template.md`.
+- **Diagrams**: replace `[..](*.mmd)` with fenced ```` ```mermaid ````, resolved by suffix match; run
+  `cleanMermaid` (strip pre-`---` `%%` comments; `;`→`,`).
+- **Cross-links**: relative `NN-*.md` / `sd-*.md` / `adr-*.md` → in-page `#id`; `http(s)` → new tab.
+- **id per doc** = path slugified (`09-architecture-decisions/adr-002-…` → `09-architecture-decisions-adr-002-…`).
+- **Sanitize** every fragment with `DOMPurify.sanitize(marked.parse(...))` (XSS-safe + satisfies hooks).
+- Pin CDN versions (`marked@12`, `mermaid@11`, `dompurify@3`); keep the renderer in **one** `<script>`.
+
+If you must edit rendering behavior, edit `render-core.js` **once** — both files pick it up and stay
+identical. Never patch one file's renderer alone.
+
+### Serve preview.html (dev)
 
 ```bash
 cd <ABS>/architecture
-python3 -m http.server 8912 --bind 127.0.0.1     # or PhpStorm's built-in server, or any static server
+python3 -m http.server 8912 --bind 127.0.0.1     # or PhpStorm's built-in server (works: README discovery)
 # open: http://127.0.0.1:8912/preview.html
 ```
-
-It renders **only over http** — the in-page error banner says so and points at the serve command.
-
----
-
-## File 2 — `architecture/preview-standalone.html` (compiled, no server, one file)
-
-Built **on demand at the end** of a run. All selected sections + SDs + ADRs + every `.mmd` diagram
-are baked into one file that opens on `file://` by double-click — nothing beside it, nothing fetched
-from disk. The only network need is the mermaid/marked/DOMPurify CDN (first open; then browser-cached).
-
-### Build it with a pure-Bash builder (no Python, no build dependency)
-
-The skill runs a shell; use it. The builder base64-encodes each `.md`/`.mmd` into a JSON island
-(base64 sidesteps all HTML/JS escaping traps), then the page decodes and renders on load. Write the
-builder to the run cache dir, run it, then delete it — the **output** file is the only committed
-artifact.
-
-```bash
-# build-standalone.sh  — run from anywhere; ARCH points at the deliverable folder. Pure bash + base64.
-ARCH="<ABS>/architecture"
-OUT="$ARCH/preview-standalone.html"
-cd "$ARCH"
-
-# 1) Collect docs into a JSON island: selected sections in order, then SDs, then ADRs, then diagrams.
-#    (List ONLY the sections written this run; base64 avoids every escaping problem.)
-ISLAND=$(
-  echo "["
-  first=1
-  for f in $(ls -1 [0-9]*.md 2>/dev/null | sort) \
-           $(ls -1 04-solution-designs/sd-*.md 2>/dev/null | grep -v '000-template' | sort) \
-           $(ls -1 09-architecture-decisions/adr-*.md 2>/dev/null | grep -v '000-template' | sort) \
-           $(find diagrams -name '*.mmd' 2>/dev/null | sort); do
-    b64=$(base64 < "$f" | tr -d '\n')
-    if [ $first -eq 1 ]; then first=0; else echo ","; fi
-    printf '{"path":"%s","b64":"%s"}' "$f" "$b64"
-  done
-  echo "]"
-)
-
-# 2) Write the template with an __ISLAND__ placeholder (see tpl below), then substitute.
-#    Guard </ -> <\/ so no embedded "</script>" closes the island early. Pure awk, no Python.
-printf '%s' "$ISLAND" | awk '{gsub(/<\//,"<\\/"); print}' > /tmp/arch-island.json
-awk 'NR==FNR{isl=isl $0 ORS; next} {sub(/__ISLAND__/, isl); print}' /tmp/arch-island.json "$ARCH/tpl.html" > "$OUT"
-rm -f /tmp/arch-island.json
-echo "wrote $OUT"
-```
-
-> The island is base64 so the section Markdown can contain any characters (backticks, `</script>`,
-> quotes) without breaking the page. The renderer base64-decodes each entry at load. The `<\/` guard
-> is still applied because base64 alphabet never contains `<`, but the template's own JS must not
-> accidentally emit a literal `</script>` either — keep the renderer as one `<script>` block.
-
-### The template (`tpl.html`, one `__ISLAND__` placeholder)
-
-Same look as `preview.html`; the only difference is **it reads the JSON island, not `fetch()`** — so
-there is zero runtime fetch and it opens on `file://`. It: base64-decodes each entry, orders sections
-`01..NN` with SDs/ADRs folded after their number, skips `README.md`/`PUBLIC-DOC-GUIDELINE.md`/
-`*-000-template.md`, inlines `.mmd` links as fenced mermaid (resolved by suffix match against the
-baked diagrams), rewrites relative `.md` links to in-page anchors, and renders with
-`DOMPurify.sanitize(marked.parse(...))`.
-
-Key renderer contract (keep these — they are what the NORMA run verified):
-- `id` per doc = the path slugified (`09-architecture-decisions/adr-002-…` → `09-architecture-decisions-adr-002-…`); the cross-link rewriter maps relative `.md` targets to those ids.
-- `clean_mermaid`: strip any `%%` comment lines that precede the `---` frontmatter, and replace `;`→`,` in labels (both otherwise show Mermaid's "Syntax error" bomb).
-- Pin CDN versions (`marked@12`, `mermaid@11`, `dompurify@3`); keep DOMPurify.
-- One `<script>` for the renderer (no stray `</script>` in emitted strings).
-- Theme-aware CSS (`prefers-color-scheme`) and `@media print` page-breaks between sections so
-  `Cmd/Ctrl+P → Save as PDF` yields the whole document as one PDF.
-
-> Use the NORMA `architecture/preview-standalone.html` produced on the reference run as the canonical
-> template — copy its `<head>`+`<style>`+renderer verbatim and only swap the JSON island. It is the
-> validated recipe; don't re-derive the renderer from scratch.
 
 ### Export to PDF
 
@@ -195,7 +153,11 @@ Always stop any test server you start (`pkill -f "http.server <port>"`).
 - **Committed (deliverable), both in `architecture/`:** `preview.html` (copy-only, from the start) and
   `preview-standalone.html` (compiled on demand at handover; a regenerable snapshot — re-run the
   builder after editing sections).
-- **Scratch (run cache, never committed):** `build-standalone.sh` and `tpl.html` under
-  `.claude/.cache/architecture-prep/<run-id>/preview/`. Delete after the build.
-- **Reusability contract:** neither file contains project-specific content or a hardcoded file list.
-  The same two files drop into any Spryker `architecture/` folder unchanged.
+- **Skill assets (source, in the skill — not copied per run):** `references/preview-assets/head.html`,
+  `render-core.js`, `build-previews.sh`. The builder reads them via `$ASSETS` and writes the two files
+  directly into `architecture/`; nothing intermediate needs to land in the deliverable or a cache dir.
+- **Reusability contract:** neither output file contains project-specific content or a hardcoded file
+  list; the shared `head.html` + `render-core.js` drop into any Spryker `architecture/` unchanged. Only
+  the standalone's baked island is project-specific, and the builder regenerates it from disk.
+- **Anti-divergence guarantee:** the builder asserts (`shasum`) that the `ARCH_CORE` block is
+  byte-identical in both files and fails if not — so the two previews can never silently drift apart.
