@@ -13,6 +13,7 @@ use Spryker\Zed\Configuration\ConfigurationDependencyProvider as SprykerConfigur
 use Spryker\Zed\Store\Communication\Plugin\Configuration\StoreConfigurationScopeIdentifierProviderPlugin;
 use SprykerEco\Zed\Algolia\Communication\Plugin\Configuration\AlgoliaCredentialsPreSavePlugin;
 use SprykerEco\Zed\Stripe\Communication\Plugin\Configuration\StripeCredentialsPreSavePlugin;
+use SprykerEco\Zed\Vertex\Communication\Plugin\Configuration\VertexTaxProviderPreSavePlugin;
 
 class ConfigurationDependencyProvider extends SprykerConfigurationDependencyProvider
 {
@@ -34,6 +35,7 @@ class ConfigurationDependencyProvider extends SprykerConfigurationDependencyProv
         return [
             new AlgoliaCredentialsPreSavePlugin(),
             new StripeCredentialsPreSavePlugin(),
+            new VertexTaxProviderPreSavePlugin(),
         ];
     }
 }

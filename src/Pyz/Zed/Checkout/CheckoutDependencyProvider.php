@@ -174,6 +174,7 @@ class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
             new OrderTotalsSaverPlugin(),
             new SalesOrderShipmentSavePlugin(),
             new OrderItemsSaverPlugin(),
+            new ShipmentTypeCheckoutDoSaveOrderPlugin(),
             new CartNoteSaverPlugin(), #CartNoteFeature
             new DiscountOrderSavePlugin(),
             new ProductBundleOrderSaverPlugin(),
