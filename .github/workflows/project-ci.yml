@@ -116,7 +116,7 @@ jobs:
                 run: vendor/bin/console code:sniff:style
 
             -   name: Run Project Architecture rules
-                run: vendor/bin/phpmd src/ text architecture-sniffer/ruleset.xml --minimumpriority 4
+                run: vendor/bin/phpmd src/ text phpmd.xml --minimumpriority 4
 
             -   name: Generate rest API documentation
                 run: vendor/bin/console rest-api:generate:documentation

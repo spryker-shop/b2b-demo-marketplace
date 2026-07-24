@@ -41,30 +41,40 @@
     <!-- Pulls in PhpMd + Client/Service/Shared/Yves/Zed/Glue/Common    -->
     <!-- project-level rules. These are the project-level (relaxed +    -->
     <!-- project-specific) rules, not the strict core-framework ones.   -->
+    <!--                                                               -->
+    <!-- To EXCLUDE rules, add <exclude name="..."/> children to THIS   -->
+    <!-- block (see customization 1 below). To OVERRIDE a rule's        -->
+    <!-- priority or properties, exclude it here and re-add it below    -->
+    <!-- (customizations 2 and 3).                                      -->
     <!-- ============================================================= -->
-    <rule ref="vendor/spryker/architecture-sniffer/src/Project/ruleset.xml" />
+    <rule ref="vendor/spryker/architecture-sniffer/src/Project/ruleset.xml">
 
-    <!-- ============================================================= -->
-    <!-- CUSTOMIZATIONS                                                -->
-    <!-- IMPORTANT: everything below MUST come AFTER the aggregate     -->
-    <!-- import above, otherwise the import re-adds the original       -->
-    <!-- definition and clobbers your override.                       -->
-    <!-- ============================================================= -->
-
-    <!-- 1) EXCLUDE a rule (drop it from the imported set).
-         Reference the ruleset file that contains it and name the rule
-         via its `name` attribute.
-
-    <rule ref="vendor/spryker/architecture-sniffer/src/Project/Zed/ruleset.xml">
+        <!-- 1) EXCLUDE a rule (drop it entirely). The <exclude> MUST live
+             inside this aggregate <rule ref> block — a separate <rule ref>
+             below is silently ignored, because PHPMD keeps the first copy
+             of a rule it imports by name.
         <exclude name="FacadeSingleFactoryCallRule" />
         <exclude name="FacadeNoLogicRule" />
-    </rule>
-    -->
+        -->
 
-    <!-- 2) CHANGE SEVERITY (priority) or message of a single rule.
-         Reference a single rule with `.../ruleset.xml/RuleName` and
-         re-declare the pieces you want to override. Lower priority
-         number = more severe (1 = highest).
+        <!-- To OVERRIDE (not drop) a rule, also exclude it here so the
+             re-added copy below wins, e.g.:
+        <exclude name="FacadeRule" />
+        <exclude name="OrmNewEntityNotInCommunicationRule" />
+        -->
+
+    </rule>
+
+    <!-- ============================================================= -->
+    <!-- CUSTOMIZATIONS (priority / property overrides)               -->
+    <!-- Each override re-adds a SINGLE rule with the same name that    -->
+    <!-- was <exclude>d in the aggregate block above. Without the       -->
+    <!-- matching <exclude> above, the override below has no effect.    -->
+    <!-- ============================================================= -->
+
+    <!-- 2) CHANGE SEVERITY (priority) of a rule.
+         Requires <exclude name="FacadeRule"/> in the aggregate block above.
+         Lower priority number = more severe (1 = highest).
 
     <rule ref="vendor/spryker/architecture-sniffer/src/Project/Zed/ruleset.xml/FacadeRule">
         <priority>3</priority>
@@ -72,6 +82,7 @@
     -->
 
     <!-- 3) PASS A PARAMETER (property) to a rule.
+         Requires <exclude name="OrmNewEntityNotInCommunicationRule"/> above.
          Some project rules expose tunable properties (e.g.
          `ignoreclasspattern` to skip classes matching a regex).
 
