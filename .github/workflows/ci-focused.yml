@@ -1,0 +1,59 @@
+name: B2B-MP-CI-FOCUSED
+
+on:
+    workflow_dispatch:
+        inputs:
+            framework:
+                description: "Which framework to run (and only that). robot-api / cypress run both their mp + b2b variants."
+                required: true
+                type: choice
+                options:
+                    - codeception
+                    - robot-api
+                    - robot-ui
+                    - cypress
+
+concurrency:
+    # Include the framework so concurrent focused runs on the same branch don't cancel each other
+    # (a re-dispatch of the SAME framework still cancels its own in-flight run).
+    group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event.inputs.framework }}
+    cancel-in-progress: true
+
+# NOTE: consumers now restore a build-once dump (CC-39284). The build job for the chosen
+# framework's data flavour is gated on the framework input and wired as a dependency, so a
+# focused run builds exactly one dump. No `narrow` sub-framework input yet — that arrives once
+# the reusable workflows are parameterized for sharding.
+jobs:
+    build-db:
+        if: ${{ inputs.framework == 'codeception' || inputs.framework == 'cypress' }}
+        uses: ./.github/workflows/_build-db.yml
+        secrets: inherit
+
+    build-robot-db:
+        if: ${{ inputs.framework == 'robot-api' || inputs.framework == 'robot-ui' }}
+        uses: ./.github/workflows/_build-robot-db.yml
+        secrets: inherit
+
+    codeception:
+        needs: [build-db]
+        if: ${{ inputs.framework == 'codeception' }}
+        uses: ./.github/workflows/_codeception.yml
+        secrets: inherit
+
+    robot-api:
+        needs: [build-robot-db]
+        if: ${{ inputs.framework == 'robot-api' }}
+        uses: ./.github/workflows/_robot-api.yml
+        secrets: inherit
+
+    robot-ui:
+        needs: [build-robot-db]
+        if: ${{ inputs.framework == 'robot-ui' }}
+        uses: ./.github/workflows/_robot-ui.yml
+        secrets: inherit
+
+    cypress:
+        needs: [build-db]
+        if: ${{ inputs.framework == 'cypress' }}
+        uses: ./.github/workflows/_cypress.yml
+        secrets: inherit

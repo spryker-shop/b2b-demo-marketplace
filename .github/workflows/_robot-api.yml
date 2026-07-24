@@ -1,0 +1,269 @@
+name: _robot-api
+
+on:
+    workflow_call:
+
+env:
+    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+    WEEKLY_CI_SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
+    JIRA_TICKET_SLACK_USER_GROUP_MAPPING: ${{ secrets.JIRA_TICKET_SLACK_USER_GROUP_MAPPING }}
+    ROBOT_TESTS_ARTIFACTS_BUCKET_REGION: eu-west-1
+
+jobs:
+    # Pure matrix-compute job (bash only) — emits ROBOT_SHARD_COUNT shards as
+    # {label,shard,total} JSON. Shared by both variants (mp_b2b + b2b); the per-job
+    # slice differs because each variant's find walks a different TEST_SET.
+    robot-api-shards:
+        name: "Robot API shards"
+        timeout-minutes: 2
+        runs-on: ubuntu-latest
+        outputs:
+            shards: ${{ steps.compute.outputs.shards }}
+        steps:
+            -   id: compute
+                env:
+                    ROBOT_SHARD_COUNT: "2"
+                run: |
+                    n="${ROBOT_SHARD_COUNT}"
+                    SHARDS="["
+                    for i in $(seq 1 "$n"); do
+                        [ "$i" -gt 1 ] && SHARDS="${SHARDS},"
+                        SHARDS="${SHARDS}{\"label\":\"${i}/${n}\",\"shard\":${i},\"total\":${n}}"
+                    done
+                    SHARDS="${SHARDS}]"
+                    echo "shards=${SHARDS}" >> "$GITHUB_OUTPUT"
+                    echo "Computed Robot API shards: ${SHARDS}"
+
+    robot-api:
+        name: "Robot / API ${{ matrix.shard.label }}"
+        timeout-minutes: 60
+        needs: robot-api-shards
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                shard: ${{ fromJson(needs.robot-api-shards.outputs.shards) }}
+        env:
+            PROGRESS_TYPE: plain
+            SPRYKER_PLATFORM_IMAGE: spryker/php:8.4
+            TRAVIS: 1
+            SPRYKER_CURRENT_REGION: EU
+            DYNAMIC_STORE_MODE: true
+            TEST_SET: api/mp_b2b
+        steps:
+            -   uses: actions/checkout@v4
+
+            -   uses: actions/download-artifact@v6
+                with:
+                    name: spryker-robot-db
+
+            #  needed for mount:baked + provides the vendor robot tree the shard-slice walks
+            -   name: Install robotframework-suite-tests folder
+                run: |
+                    cd data
+                    VERSION=$(php -r "echo json_decode(file_get_contents('../composer.json'), true)['require-dev']['spryker/robotframework-suite-tests'] ?? 'dev-master';")
+                    composer require "spryker/robotframework-suite-tests:$VERSION" --dev --no-interaction --ignore-platform-reqs
+                    mv vendor ../
+
+            -   name: Compute shard slice
+                env:
+                    SHARD: ${{ matrix.shard.shard }}
+                    TOTAL: ${{ matrix.shard.total }}
+                run: |
+                    # Discover .robot suite files for this variant's TEST_SET. b2b has NO
+                    # /suite/ subdir (unlike suite's tests/<set>/suite/*.robot) — files live
+                    # directly under tests/<set>/**. Strip the vendor package prefix so the
+                    # path resolves inside the robot-framework container (cwd /opt/robotframework,
+                    # tree baked at tests/...), matching suite's slice mechanism.
+                    mapfile -t suites < <(find vendor -type f -path "*/tests/${TEST_SET}/*.robot" \
+                        | LC_ALL=C sort \
+                        | sed 's|^vendor/spryker/robotframework-suite-tests/||')
+
+                    # Remainder-distribution slice (verbatim from suite's robot sharding).
+                    n=${#suites[@]}
+                    base=$(( n / TOTAL ))
+                    extra=$(( n % TOTAL ))
+                    if (( SHARD - 1 < extra )); then
+                        start=$(( (SHARD - 1) * (base + 1) ))
+                        size=$(( base + 1 ))
+                    else
+                        start=$(( extra * (base + 1) + (SHARD - 1 - extra) * base ))
+                        size=$base
+                    fi
+                    sliced=("${suites[@]:start:size}")
+                    echo "ROBOT_SUITES=${sliced[*]}" >> "$GITHUB_ENV"
+                    echo "🔀 Shard ${SHARD}/${TOTAL}: ${size} of ${n} suites"
+
+            -   name: Configure sysctl limits
+                run: |
+                    sudo sysctl -w vm.swappiness=10
+                    sudo sysctl -w fs.file-max=262144
+                    sudo sysctl -w vm.max_map_count=262144
+                    ulimit -n 65536
+
+            -   name: Install Project
+                # Build-once: restore the shared spryker-robot-db dump (full_ROBOT) via
+                # ci.restore-db.stage2 instead of importing demodata per shard.
+                run: |
+                    git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
+                    docker/sdk boot .github/deploy/deploy.ci.api.mariadb.robot.yml
+                    SPRYKER_PIPELINE=ci.restore-db.stage2 docker/sdk up -t
+
+            -   name: Validate sync completeness
+                uses: ./.github/actions/validate-sync-completeness
+
+            -   name: Run Tests
+                id: tests
+                if: env.ROBOT_SUITES != ''
+                run: |
+                    read -ra suites <<< "$ROBOT_SUITES"
+                    docker/sdk exec robot-framework robot --listener resources/libraries/failure_detail_listener.py -v env:api_mp_b2b -v docker:True -v dms:true -v glue_env:http://glue.eu.spryker.local -v bapi_env:http://glue-backend.eu.spryker.local -v sapi_env:http://glue-storefront.eu.spryker.local --exclude skip-due-to-issueORskip-due-to-refactoring -d results --runemptysuite "${suites[@]}"
+
+            -   name: Generate Robot Test Summary
+                if: always() && steps.tests.outcome == 'failure'
+                run: |
+                    docker/sdk exec robot-framework python resources/libraries/generate_failure_summary.py results/output.xml > /tmp/robot-summary.md 2>/dev/null || true
+                    cat /tmp/robot-summary.md >> $GITHUB_STEP_SUMMARY 2>/dev/null || true
+
+            -   name: Save PHP logs
+                if: failure()
+                run: |
+                    mkdir -p logs
+                    docker logs spryker_ci_backoffice_eu_1 > logs/backoffice_app.log 2>&1 || true
+                    docker logs spryker_ci_glue_eu_1 > logs/glue_app.log 2>&1 || true
+                    docker logs spryker_ci_glue_backend_eu_1 > logs/glue_backend_eu.log 2>&1 || true
+                    docker logs spryker_ci_glue_storefront_eu_1 > logs/glue_storefront_eu.log 2>&1 || true
+                    mkdir -p robot-results
+                    cp -r .robot/results/* robot-results/ 2>/dev/null || true
+                    echo "PHP logs saved. After upload, they will be available in GitHub Actions Artifacts as 'robot-api-failed-artifacts-shard-${{ matrix.shard.shard }}-of-${{ matrix.shard.total }}'"
+
+            -   name: Upload PHP logs & report
+                if: always() && steps.tests.outcome == 'failure'
+                uses: actions/upload-artifact@v5
+                with:
+                    name: robot-api-failed-artifacts-shard-${{ matrix.shard.shard }}-of-${{ matrix.shard.total }}
+                    retention-days: 5 # save for 5 days
+                    path: |
+                        logs/*.log
+                        robot-results/report.html
+                        robot-results/log.html
+
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
+
+    robot-api-b2b:
+        name: "Robot / API B2B ${{ matrix.shard.label }}"
+        timeout-minutes: 60
+        needs: robot-api-shards
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                shard: ${{ fromJson(needs.robot-api-shards.outputs.shards) }}
+        env:
+            PROGRESS_TYPE: plain
+            SPRYKER_PLATFORM_IMAGE: spryker/php:8.4
+            TRAVIS: 1
+            SPRYKER_CURRENT_REGION: EU
+            DYNAMIC_STORE_MODE: true
+            TEST_SET: api/b2b
+        steps:
+            -   uses: actions/checkout@v4
+
+            -   uses: actions/download-artifact@v6
+                with:
+                    name: spryker-robot-db
+
+            #  b2b variant uses its own robot test branch; also provides the vendor tree the slice walks
+            -   name: Install robotframework-suite-tests folder (b2b)
+                run: |
+                    composer require --dev spryker/robotframework-suite-tests:"dev-b2b-icp-starting-point" --ignore-platform-reqs
+
+            -   name: Compute shard slice
+                env:
+                    SHARD: ${{ matrix.shard.shard }}
+                    TOTAL: ${{ matrix.shard.total }}
+                run: |
+                    mapfile -t suites < <(find vendor -type f -path "*/tests/${TEST_SET}/*.robot" \
+                        | LC_ALL=C sort \
+                        | sed 's|^vendor/spryker/robotframework-suite-tests/||')
+                    n=${#suites[@]}
+                    base=$(( n / TOTAL ))
+                    extra=$(( n % TOTAL ))
+                    if (( SHARD - 1 < extra )); then
+                        start=$(( (SHARD - 1) * (base + 1) ))
+                        size=$(( base + 1 ))
+                    else
+                        start=$(( extra * (base + 1) + (SHARD - 1 - extra) * base ))
+                        size=$base
+                    fi
+                    sliced=("${suites[@]:start:size}")
+                    echo "ROBOT_SUITES=${sliced[*]}" >> "$GITHUB_ENV"
+                    echo "🔀 Shard ${SHARD}/${TOTAL}: ${size} of ${n} suites"
+
+            -   name: Configure sysctl limits
+                run: |
+                    sudo sysctl -w vm.swappiness=10
+                    sudo sysctl -w fs.file-max=262144
+                    sudo sysctl -w vm.max_map_count=262144
+                    ulimit -n 65536
+                    chmod +x uninstall-marketplace-modules.sh
+                    chmod +x uninstall-frontend-marketplace.sh
+
+            -   name: Install Project
+                # Build-once: restore the shared spryker-robot-db dump (full_ROBOT). The b2b
+                # variant uninstalls marketplace first so the restored DB is rebuilt against
+                # non-marketplace code. RISK to watch on CI: the dump is built from the mp_b2b
+                # (marketplace-installed) path — if the b2b tests fail on marketplace residue,
+                # the fallback is a dedicated _build-robot-db-b2b dump.
+                run: |
+                    git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
+                    ./uninstall-frontend-marketplace.sh
+                    ./uninstall-marketplace-modules.sh
+                    docker/sdk boot .github/deploy/deploy.ci.api.mariadb.robot.yml
+                    SPRYKER_PIPELINE=ci.restore-db.stage2 docker/sdk up -t
+                    docker/sdk cli composer dump-autoload -o -a --apcu -q
+
+            -   name: Validate sync completeness
+                uses: ./.github/actions/validate-sync-completeness
+
+            -   name: Run Tests
+                id: tests
+                if: env.ROBOT_SUITES != ''
+                run: |
+                    read -ra suites <<< "$ROBOT_SUITES"
+                    docker/sdk exec robot-framework robot --listener resources/libraries/failure_detail_listener.py -v env:api_b2b -v docker:True -v dms:true -v glue_env:http://glue.eu.spryker.local -v bapi_env:http://glue-backend.eu.spryker.local -v sapi_env:http://glue.eu.spryker.local --exclude skip-due-to-issueORskip-due-to-refactoring -d results --runemptysuite "${suites[@]}"
+
+            -   name: Generate Robot Test Summary
+                if: always() && steps.tests.outcome == 'failure'
+                run: |
+                    docker/sdk exec robot-framework python resources/libraries/generate_failure_summary.py results/output.xml > /tmp/robot-summary.md 2>/dev/null || true
+                    cat /tmp/robot-summary.md >> $GITHUB_STEP_SUMMARY 2>/dev/null || true
+
+            -   name: Save PHP logs
+                if: failure()
+                run: |
+                    mkdir -p logs
+                    docker logs spryker_ci_backoffice_eu_1 > logs/backoffice_app.log 2>&1 || true
+                    docker logs spryker_ci_glue_eu_1 > logs/glue_app.log 2>&1 || true
+                    docker logs spryker_ci_glue_backend_eu_1 > logs/glue_backend_eu.log 2>&1 || true
+                    docker logs spryker_ci_glue_storefront_eu_1 > logs/glue_storefront_eu.log 2>&1 || true
+                    mkdir -p robot-results
+                    cp -r .robot/results/* robot-results/ 2>/dev/null || true
+                    echo "PHP logs saved. After upload, they will be available in GitHub Actions Artifacts as 'robot-api-b2b-failed-artifacts-shard-${{ matrix.shard.shard }}-of-${{ matrix.shard.total }}'"
+
+            -   name: Upload PHP logs & report
+                if: always() && steps.tests.outcome == 'failure'
+                uses: actions/upload-artifact@v5
+                with:
+                    name: robot-api-b2b-failed-artifacts-shard-${{ matrix.shard.shard }}-of-${{ matrix.shard.total }}
+                    retention-days: 5 # save for 5 days
+                    path: |
+                        logs/*.log
+                        robot-results/report.html
+                        robot-results/log.html
+
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
