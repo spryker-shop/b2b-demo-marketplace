@@ -1,0 +1,32 @@
+%% Scania — CIAM SSO login + JIT customer creation (POC)
+%% Grounded in research-docs.md §15 Federated Authentication (Authorization Code flow, storefront JIT provisioning).
+sequenceDiagram
+    autonumber
+    actor User as Fleet Customer
+    participant Yves as Yves (Storefront)
+    participant CIAM as CIAM (My Scania IdP)
+    participant Auth as ScaniaCiamAuth<br/>(Federated Auth plugin chain)
+    participant Zed as Zed (Customer + Company)
+    participant DB as Database
+
+    Note over User,DB: Native Spryker login is disabled — CIAM is the sole auth method (ADR-001)
+    User->>Yves: Click "Log in with My Scania"
+    Yves->>CIAM: Redirect (OAuth2 Authorization Code)
+    CIAM->>User: Present My Scania login
+    User->>CIAM: Authenticate
+    CIAM-->>Yves: Redirect back with authorization code
+    Yves->>CIAM: Exchange code for tokens
+    CIAM-->>Yves: id_token + claims (email, name, company, country, roles)
+    Yves->>Auth: Handle identity (provider, external_id)
+    Auth->>Zed: Find customer by (provider, external_id) / email
+    alt Customer exists
+        Zed-->>Auth: Existing customer + company user
+    else Not found — JIT provisioning
+        Auth->>Zed: Create Customer + Company + Company User (from claims)
+        Auth->>Zed: Map CIAM roles → Company Roles (ACL)
+        Zed->>DB: Persist customer, company user, role assignment
+        Note right of Zed: POC fail-fast — throw exception<br/>if creation fails (ADR-001)
+        Zed-->>Auth: New customer + company user
+    end
+    Auth-->>Yves: Establish Spryker session (independent of IdP)
+    Yves-->>User: Logged in — redirect to fleet / dashboard

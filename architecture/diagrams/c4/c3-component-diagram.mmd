@@ -1,96 +1,68 @@
+%% C3 Component — Scania custom integration domains (POC)
+%% Focus: the project-level modules that make Scania different from OOTB Spryker.
+%% Each custom module follows the Spryker Client (external HTTP) + Zed (facade/business) split.
 ---
 config:
   layout: elk
 ---
 flowchart TB
-    subgraph YvesPresentation["Presentation Layer"]
-        YvesControllers["Controllers<br><small>Page Controllers</small>"]
-        YvesTemplates["Templates<br><small>Twig Views</small>"]
-        YvesWidgets["Widgets<br><small>Reusable UI Components</small>"]
-    end
-    subgraph Yves["🌐 Yves Application Layer (Storefront)"]
+    subgraph Auth["🔐 ScaniaCiamAuth (Yves + Zed)"]
         direction TB
-        YvesPresentation
+        CiamPlugins["Federated Auth plugin chain<br><small>AuthenticationLink → ClientStrategy →<br>IdentityStrategy → IdentityPersistence</small>"]
+        CiamJit["JIT Customer Provisioner<br><small>maps claims → Customer + Company User</small>"]
+        RoleMapper["CIAM Role Mapper<br><small>CIAM role → Company Role (ACL)</small>"]
     end
-    subgraph GluePresentation["Presentation Layer"]
-        GlueControllers["Resource Controllers<br><small>REST Endpoints</small>"]
-        GlueProcessors["Processors<br><small>Request/Response Handlers</small>"]
-        GlueFormatters["Formatters<br><small>Data Serialization</small>"]
-    end
-    subgraph GlueAPI["🔌 Glue Application Layer (BackendAPI, StoreFrontAPI)"]
+    subgraph Asset["🚛 ScaniaFmatAsset (Client + Zed)"]
         direction TB
-        GluePresentation
+        FmatClient["FMAT Client<br><small>HTTP adapter, paginated fetch</small>"]
+        AssetReader["Asset Reader (live fetch)<br><small>no caching for POC</small>"]
+        AssetWidget["Asset selection UI<br><small>Yves list + selector</small>"]
     end
-    subgraph ClientCommunication["Communication Layer"]
-        ClientStubs["Stubs<br><small>Remote Service Interfaces</small>"]
-        ClientAdapters["Adapters<br><small>Protocol Handlers</small>"]
-        ClientCache["Cache Handlers<br><small>Redis/Storage Access</small>"]
-    end
-    subgraph Client["🔗 Client Application Layer"]
+    subgraph Catalog["📋 ScaniaSecmService (Client + Zed)"]
         direction TB
-        ClientCommunication
+        SecmClient["SECM Client<br><small>HTTP adapter</small>"]
+        ServiceReader["Service Reader<br><small>compatible services + price per vehicle</small>"]
     end
-    subgraph ZedPresentation["Presentation Layer"]
-        ZedControllers["Controllers<br><small>CRUD Controllers, Forms, API Controllers</small>"]
-        ZedViews["Views &amp; Tables<br><small>Symfony Forms, UI Components</small>"]
-        ZedRouters["Routers<br><small>Request Routing</small>"]
-    end
-    subgraph ZedCommunication["Communication Layer"]
-        ZedFacades["Facades<br><small>Module API</small>"]
-        ZedPlugins["Plugins<br><small>Extension Points</small>"]
-        ZedGateway["Gateway<br><small>RPC Handlers</small>"]
-    end
-    subgraph ZedBusiness["Business Layer"]
-        ZedModels["Business Models<br><small>Business Logic</small>"]
-    end
-    subgraph ZedService["Service Layer"]
-        ZedServices["Services<br><small>Shared Utilities</small>"]
-    end
-    subgraph ZedPersistence["Persistence Layer"]
-        ZedEntities["Entities<br><small>Propel ORM Models</small>"]
-        ZedRepositories["Repositories<br><small>Read Operations</small>"]
-        ZedEntityManagers["Entity Managers<br><small>Write Operations</small>"]
-    end
-    subgraph Zed["🏢 Zed Application Layer (BackOffice, MerchantPortal, BackendGateway)"]
+    subgraph Details["📦 ScaniaSpisaDetail (Client + Zed)"]
         direction TB
-        ZedPresentation
-        ZedCommunication
-        ZedBusiness
-        ZedService
-        ZedPersistence
+        SpisaClient["PIM-SPISA Client<br><small>HTTP adapter</small>"]
+        DetailExpander["Detail Expander<br><small>description, images; config payload (SD-002)</small>"]
     end
-    subgraph Database["💾 Database"]
-        MySQL["MySQL/MariaDB<br><small>Relational Database</small>"]
+    subgraph Cart["🛒 ScaniaDynamicService (Zed)"]
+        direction TB
+        CartExpander["Cart Item Expander<br><small>inject dynamic service + SECM price</small>"]
+        PriceLock["Price Lock plugin<br><small>lock SECM price at add-to-cart</small>"]
     end
-    subgraph CacheStorage["⚡ Cache & Search"]
-        Redis["Redis/Valkey<br><small>Key-Value Store</small>"]
-        OpenSearch["OpenSearch<br><small>Search Engine</small>"]
+    subgraph OMS["📬 ScaniaFmatOrderNotify (Zed)"]
+        direction TB
+        NotifyCmd1["OMS Command: Order-Created notify<br><small>POST FMAT #1</small>"]
+        NotifyCmd2["OMS Command: Payment+Activation notify<br><small>POST FMAT #2 (Future)</small>"]
     end
-    YvesControllers --> YvesTemplates & YvesWidgets & ClientStubs
-    GlueControllers --> GlueProcessors & ClientStubs
-    GlueProcessors --> GlueFormatters
-    ClientStubs --> ClientAdapters & ClientCache
-    ClientAdapters --> ZedGateway
-    ClientCache --> Redis & OpenSearch
-    ZedControllers --> ZedViews & ZedRouters & ZedFacades
-    ZedGateway --> ZedFacades
-    ZedFacades --> ZedModels
-    ZedPlugins --> ZedFacades
-    ZedModels --> ZedServices & ZedRepositories & ZedEntityManagers
-    ZedRepositories --> ZedEntities
-    ZedEntityManagers --> ZedEntities
-    ZedEntities --> MySQL
 
-    YvesPresentation:::presentationStyle
-    GluePresentation:::presentationStyle
-    ClientCommunication:::communicationStyle
-    ZedPresentation:::presentationStyle
-    ZedCommunication:::communicationStyle
-    ZedBusiness:::businessStyle
-    ZedService:::serviceStyle
-    ZedPersistence:::persistenceStyle
-    classDef presentationStyle fill:#27AE60,stroke:#27ae60,stroke-width:2px,color:#fff
-    classDef communicationStyle fill:#E67E22,stroke:#d68910,stroke-width:2px,color:#fff
-    classDef businessStyle fill:#2980B9,stroke:#2980b9,stroke-width:2px,color:#fff
-    classDef serviceStyle fill:#95A5A6,stroke:#95a5a6,stroke-width:2px,color:#fff
-    classDef persistenceStyle fill:#9B59B6,stroke:#8e44ad,stroke-width:2px,color:#fff
+    Core["🟠 Spryker Core<br><small>Customer, Company, Cart, Checkout,<br>Sales, OMS, ConfigurableProduct, SSP</small>"]
+
+    CiamPlugins --> CiamJit --> RoleMapper --> Core
+    AssetWidget --> AssetReader --> FmatClient
+    AssetReader --> Core
+    ServiceReader --> SecmClient
+    ServiceReader --> Core
+    DetailExpander --> SpisaClient
+    DetailExpander --> Core
+    CartExpander --> PriceLock
+    CartExpander --> Core
+    Core --> NotifyCmd1
+    Core --> NotifyCmd2
+    NotifyCmd1 --> FmatClient
+    NotifyCmd2 --> FmatClient
+
+    Auth:::authStyle
+    Asset:::apiStyle
+    Catalog:::apiStyle
+    Details:::apiStyle
+    Cart:::businessStyle
+    OMS:::businessStyle
+    Core:::systemStyle
+    classDef authStyle fill:#e1f5ff,stroke:#0366d6,stroke-width:2px
+    classDef apiStyle fill:#2980B9,stroke:#2980b9,stroke-width:2px,color:#fff
+    classDef businessStyle fill:#27AE60,stroke:#27ae60,stroke-width:2px,color:#fff
+    classDef systemStyle fill:#E67E22,stroke:#c0392b,stroke-width:3px,color:#fff

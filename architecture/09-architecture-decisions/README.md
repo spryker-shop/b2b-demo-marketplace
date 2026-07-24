@@ -74,6 +74,15 @@ Examples:
 
 Use `adr-000-template.md` as the starting point for new ADRs.
 
+## Index (Scania Service Sales POC)
+
+| ADR | Title | Status |
+|-----|-------|--------|
+| [ADR-001](adr-001-authentication-via-ciam-sso-only.md) | Authentication via CIAM SSO only (native login disabled) | Accepted (POC) |
+| [ADR-002](adr-002-live-fetch-assets-no-caching.md) | Live-fetch assets from FMAT with no caching | Accepted (POC) |
+| [ADR-003](adr-003-invoice-only-no-psp.md) | Invoice-only payment, no PSP | Accepted (POC) |
+| [ADR-004](adr-004-dynamic-service-price-cart-modelling.md) | Dynamic service & price in cart — modelling approach | **Proposed** (gate G1) |
+
 ## ADR Lifecycle
 
 ADRs have a status that reflects their lifecycle:

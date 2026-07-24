@@ -1,0 +1,39 @@
+%% Scania — Integration overview: all 4 external systems + SMTP, with direction / protocol / sync-async / phase.
+---
+config:
+  layout: elk
+---
+flowchart LR
+    subgraph Spryker["🛒 Scania Service Shop (Spryker)"]
+        Yves["Yves Storefront"]
+        Modules["Scania Integration Modules<br><small>Client + Zed connectors</small>"]
+        OMSc["OMS Commands<br><small>post-order async</small>"]
+        Mail["OOTB Mailer"]
+    end
+
+    CIAM["🔐 CIAM (My Scania)"]
+    FMAT["🚛 FMAT"]
+    SECM["📋 SECM"]
+    SPISA["📦 PIM-SPISA"]
+    SMTP["📧 SMTP"]
+
+    Yves -- "SSO login · OAuth2/OIDC · sync · every login · POC" --> CIAM
+    CIAM -- "profile, company, roles, products · REST · sync · POC" --> Yves
+    Modules -- "fetch assets · REST · sync · on asset page (paginated) · POC" --> FMAT
+    Modules -- "fetch services + prices · REST · sync · after asset select (~100/veh) · POC" --> SECM
+    Modules -- "fetch service details · REST · sync · on service select · POC" --> SPISA
+    OMSc -- "order created · REST · async (OMS) · per order · POC" --> FMAT
+    OMSc -. "payment + activation date · REST · async (OMS) · per order · FUTURE" .-> FMAT
+    Mail -- "order confirmation · SMTP · push · per order · POC" --> SMTP
+
+    Yves:::systemStyle
+    Modules:::systemStyle
+    OMSc:::systemStyle
+    Mail:::systemStyle
+    CIAM:::externalStyle
+    FMAT:::externalStyle
+    SECM:::externalStyle
+    SPISA:::externalStyle
+    SMTP:::externalStyle
+    classDef systemStyle fill:#E67E22,stroke:#c0392b,stroke-width:2px,color:#fff
+    classDef externalStyle fill:#95A5A6,stroke:#7f8c8d,stroke-width:2px,color:#fff
