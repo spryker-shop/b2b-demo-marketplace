@@ -6,6 +6,7 @@
 
 {% block companyContent %}
     {% include molecule('action-bar', 'ShopUi') with {
+        modifiers: ['first', 'middle'],
         data: {
             title: 'merchant_relation_request_page.merchant_relation_request' | trans,
             actions: (can('CreateMerchantRelationRequestPermissionPlugin') ? [

@@ -12,8 +12,8 @@
         currentPage: _view.pagination.page,
         paginationPath: 'company/user-invitation',
         maxPage: _view.pagination.lastPage,
-        showAlwaysFirstAndLast: true
-    }
+        showAlwaysFirstAndLast: true,
+    },
 } %}
 
 {% block breadcrumbs %}
@@ -36,6 +36,7 @@
 
 {% block companyContent %}
      {% include molecule('action-bar') with {
+        modifiers: ['first', 'middle'],
         data: {
             title: 'company.user.invitation.import.title' | trans
         }

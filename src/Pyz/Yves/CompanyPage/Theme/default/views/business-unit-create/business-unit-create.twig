@@ -3,11 +3,17 @@
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
         data: {
-            steps: [{
-                    label: 'company.account' | trans,
+            steps: [
+                {
+                    label: 'company.account.page-title' | trans,
+                    url: url('company/overview'),
                 },
                 {
                     label: 'company.account.business_unit' | trans,
+                    url: url('company/business-unit'),
+                },
+                {
+                    label: 'company.account.business_unit.create' | trans,
                 },
             ]},
     } only %}
@@ -39,6 +45,7 @@
         {% block title %}
             {% if data.title is not empty %}
                 {% include molecule('action-bar', 'ShopUi') with {
+                    modifiers: ['first', 'middle'],
                     data: {
                         title: 'company.account.business_unit.create' | trans,
                     },

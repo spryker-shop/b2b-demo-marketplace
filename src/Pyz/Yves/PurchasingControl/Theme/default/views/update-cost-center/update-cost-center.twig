@@ -1,4 +1,4 @@
-{% extends view('update-budget', 'SprykerFeature:PurchasingControl') %}
+{% extends view('update-cost-center', '@SprykerFeature:PurchasingControl') %}
 
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
@@ -24,8 +24,8 @@
     {% include molecule('action-bar', 'ShopUi') with {
         modifiers: ['first', 'middle'],
         data: {
-            title: data.title,
-        }
+            title: data.title ~ ' "' ~ data.costCenter.name ~ '"',
+        },
     } only %}
 
     {% block form %}

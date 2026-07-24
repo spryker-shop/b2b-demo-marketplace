@@ -2,7 +2,12 @@
 
 {% block companyContent %}
     {% block heading %}
-        <h3 class="spacing-bottom spacing-bottom--big">{{ 'merchant_relation_request_page.merchant_relation_request.title_create' | trans }}</h3>
+        {% include molecule('action-bar', 'ShopUi') with {
+            modifiers: ['first', 'middle'],
+            data: {
+                title: 'merchant_relation_request_page.merchant_relation_request.title_create' | trans,
+            },
+        } only %}
 
         <ul>
             <li>

@@ -6,25 +6,35 @@
     title: 'customer.account.newsletter' | trans
 } %}
 
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [{
+                label: 'customer.account' | trans,
+                url: url('customer/overview'),
+            }, {
+                label: 'customer.account.newsletter' | trans,
+            }],
+        },
+    } only %}
+{% endblock %}
+
 {% block customerContent %}
     {% include molecule('action-bar') with {
         modifiers: ['first', 'middle'],
         data: {
-            title: 'customer.account.newsletter' | trans,
+            title: 'customer.newsletter.subscription' | trans,
         }
     } only %}
 
-    <div class="box">
-        <h4>{{ 'customer.newsletter.subscription' | trans }}</h4>
-        <p class="text-small">{{ 'customer.newsletter.text' | trans }}</p>
+    <p class="text-small">{{ 'customer.newsletter.text' | trans }}</p>
 
-        {% include molecule('form') with {
-            data: {
-                form: data.form,
-                submit: {
-                    enable: true
-                }
+    {% include molecule('form') with {
+        data: {
+            form: data.form,
+            submit: {
+                enable: true
             }
-        } only %}
-    </div>
+        }
+    } only %}
 {% endblock %}

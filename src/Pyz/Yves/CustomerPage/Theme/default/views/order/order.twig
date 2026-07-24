@@ -1,5 +1,18 @@
 {% extends view('order', '@SprykerShop:CustomerPage') %}
 
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [{
+                label: 'customer.account' | trans,
+                url: url('customer/overview'),
+            },{
+                label: 'customer.account.order_history' | trans,
+            }]
+        }
+    } only %}
+{% endblock %}
+
 {% block customerContent %}
     {% embed molecule('action-bar') with {
         modifiers: ['first'],

@@ -5,6 +5,7 @@
 
     {% block costCenterHeader %}
         {% include molecule('action-bar', 'ShopUi') with {
+            modifiers: ['first', 'middle'],
             data: {
                 title: 'purchasing_control.cost_center.list.title' | trans,
                 actions: (can('ManageCostCentersPermissionPlugin') ? [

@@ -1,18 +1,37 @@
 {% extends view('profile-delete', '@SprykerShop:CustomerPage') %}
 
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [{
+                label: 'customer.account' | trans,
+                url: url('customer/overview'),
+            },{
+                label: 'customer.account.profile_data' | trans,
+                url: url('customer/profile'),
+            },{
+                label: 'customer.profile.delete' | trans,
+            }]
+        }
+    } only %}
+{% endblock %}
+
 {% block customerContent %}
-    <div class="box">
-        <h5>{{ "customer.profile.delete" | trans }}</h5>
-        <hr />
-        <div class="grid grid--middle grid--justify ">
-            <div class="col col--sm-12 col--lg-auto spacing-y spacing-y--small">
-                {{ "customer.profile.delete.confirmation_question" | trans }}
-            </div>
-            <div class="col col--sm-12 col--lg-auto spacing-y spacing-y--small">
-                {{ form_start(data.customerDeleteForm, {'attr': {'class': 'float-right'}, 'action': url('customer/delete/confirm')}) }}
-                    <button data-init-single-click class="button button--expand button--alert">{{ 'customer.profile.delete' | trans }}</button>
-                {{ form_end(data.customerDeleteForm) }}
-            </div>
+    {% include molecule('action-bar') with {
+        modifiers: ['first', 'middle'],
+        data: {
+            title: 'customer.profile.delete' | trans,
+        },
+    } only %}
+    
+    <div class="grid grid--middle grid--justify ">
+        <div class="col col--sm-12 col--lg-auto spacing-y spacing-y--small">
+            {{ "customer.profile.delete.confirmation_question" | trans }}
+        </div>
+        <div class="col col--sm-12 col--lg-auto spacing-y spacing-y--small">
+            {{ form_start(data.customerDeleteForm, {'attr': {'class': 'float-right'}, 'action': url('customer/delete/confirm')}) }}
+                <button data-init-single-click class="button button--expand button--alert">{{ 'customer.profile.delete' | trans }}</button>
+            {{ form_end(data.customerDeleteForm) }}
         </div>
     </div>
 {% endblock %}

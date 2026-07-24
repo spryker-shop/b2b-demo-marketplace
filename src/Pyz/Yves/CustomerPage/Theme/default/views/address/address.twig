@@ -7,6 +7,19 @@
     title: 'customer.account.address' | trans,
 } %}
 
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [{
+                label: 'customer.account' | trans,
+                url: url('customer/overview'),
+            },{
+                label: 'customer.account.default_address' | trans,
+            }]
+        }
+    } only %}
+{% endblock %}
+
 {% macro address(label, address, addressId, customerDeleteForm) %}
     {% if address is not empty %}
         {% embed molecule('action-card') with {

@@ -1,47 +1,27 @@
-{% extends template('page-layout-customer', 'CustomerPage') %}
+{% extends view('cart-delete', '@SprykerShop:MultiCartPage') %}
 
 {% define data = {
-    cart: _view.cart | default([]),
-    cartName: _view.cart.name | default,
-    cartIdQuote: _view.cart.idQuote | default,
-    cartShareDetails: _view.cart.shareDetails | default,
     backUrl: app.request.headers.get('referer') | default(url('multi-cart')),
-    multiCartDeleteForm: _view.multiCartDeleteForm,
 } %}
 
-{% block breadcrumbs %}
-    {% include molecule('breadcrumb') with {
+{% block customerContent %}
+    {% include molecule('action-bar') with {
+        modifiers: ['first', 'middle'],
         data: {
-            steps: [{
-                label: 'customer.profile' | trans,
-                url: url('customer/overview'),
-            },{
-                label: 'multi_cart_page.cart_delete_confirmation.breadcrumbs.shopping_carts' | trans,
-                url: url('multi-cart'),
-            },{
-                label: 'multi_cart_page.cart_delete_confirmation.warning' | trans,
-            }],
+            title: 'multi_cart_page.cart_delete_confirmation.warning' | trans,
         },
     } only %}
-{% endblock %}
+    
+    <p>{{ "multi_cart_page.cart_delete_confirmation.trying_to_delete" | trans }}: <strong>{{ data.cartName }}</strong></p>
 
-{% block content %}
-    <div class="grid cart-update">
-        <div class="col--sm-12 col--lg-6">
-            <h2>{{ "multi_cart_page.cart_delete_confirmation.warning" | trans }}</h2>
+    {% widget 'CartDeleteSharingCompanyUsersListWidget' args [data.cart] only %}{% endwidget %}
 
-            <p>{{ "multi_cart_page.cart_delete_confirmation.trying_to_delete" | trans }}: <strong>{{ data.cartName }}</strong></p>
-
-            {% widget 'CartDeleteSharingCompanyUsersListWidget' args [data.cart] only %}{% endwidget %}
-
-            <div class="grid">
-                <a href="{{ data.backUrl }}" class="col col--sm-12 col--md-auto button button--hollow spacing-right spacing-right--big spacing-top spacing-top">
-                    {{ "general.back.button" | trans }}
-                </a>
-                {{ form_start(data.multiCartDeleteForm, {'attr': {'class': 'col col--sm-12 col--md-auto'}, 'action': url('multi-cart/delete', { 'idQuote' : data.cartIdQuote })}) }}
-                    <button data-init-single-click class="button button--alert spacing-top spacing-top">{{ 'multi_cart_page.cart_delete_confirmation.delete' | trans }}</button>
-                {{ form_end(data.multiCartDeleteForm) }}
-            </div>
-        </div>
+    <div class="grid">
+        <a href="{{ data.backUrl }}" class="col col--sm-12 col--md-auto button button--hollow spacing-right spacing-right--big spacing-top spacing-top">
+            {{ "general.back.button" | trans }}
+        </a>
+        {{ form_start(data.multiCartDeleteForm, {'attr': {'class': 'col col--sm-12 col--md-auto'}, 'action': url('multi-cart/delete', { 'idQuote' : data.cartIdQuote })}) }}
+            <button data-init-single-click class="button button--alert spacing-top spacing-top">{{ 'multi_cart_page.cart_delete_confirmation.delete' | trans }}</button>
+        {{ form_end(data.multiCartDeleteForm) }}
     </div>
 {% endblock %}

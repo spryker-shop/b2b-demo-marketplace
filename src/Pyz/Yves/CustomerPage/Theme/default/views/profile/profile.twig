@@ -10,6 +10,19 @@
     title: 'customer.account.profile_data' | trans,
 } %}
 
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [{
+                label: 'customer.account' | trans,
+                url: url('customer/overview'),
+            },{
+                label: 'customer.account.profile_data' | trans,
+            }]
+        }
+    } only %}
+{% endblock %}
+
 {% macro profileForm(title, content) %}
     {% embed molecule('action-card') with {
         data: {

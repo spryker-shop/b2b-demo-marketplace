@@ -2,8 +2,14 @@
 
 {% block companyContent %}
     {% block relationsHeading %}
-        <h3 class="spacing-bottom spacing-bottom--big">{{ 'merchant_relationship_page.merchant_relationsip_detail' | trans }}</h3>
-
+        {% include molecule('action-bar') with {
+            class: 'spacing-bottom',
+            modifiers: ['first', 'middle'],
+            data: {
+                title: 'merchant_relationship_page.merchant_relationsip_detail' | trans,
+            }
+        } only %}
+        
         <ul class="spacing-bottom spacing-bottom--big">
             <li>
                 {{ 'merchant_relationship_page.merchant_relationsip_detail.date_created' | trans  ~ ': ' }}
@@ -13,39 +19,49 @@
     {% endblock %}
 
     {% block relationsLogo %}
-        <h4 class="spacing-bottom spacing-bottom--big">
-            {{ 'merchant_relationship_page.merchant_relationship.merchant' | trans }}
-        </h4>
+        {% include molecule('action-bar') with {
+            class: 'spacing-bottom',
+            modifiers: ['middle'],
+            data: {
+                title: 'merchant_relationship_page.merchant_relationship.merchant' | trans,
+            }
+        } only %}
+
+        <div class="grid grid--middle spacing-bottom spacing-bottom--big">
+            {% if data.merchant.merchantProfile.logoUrl %}
+                <div class="col col--sm-2 col--lg-1 spacing">
+                    {% include molecule('lazy-image') with {
+                        data: {
+                            imageSrc: data.merchant.merchantProfile.logoUrl,
+                            alt: data.merchant.name
+                        },
+                    } only %}
+                </div>
+            {% endif %}
+
+            <div class="col">
+                <strong>
+                    {% if data.merchantUrl is not null %}
+                        <a class="link" href="{{ functionExists('generatePath') ? generatePath(data.merchantUrl) : data.merchantUrl }}">
+                            {{ data.merchant.name }}
+                        </a>
+                    {% else %}
+                        {{ data.merchant.name }}
+                    {% endif %}
+                </strong>
+            </div>
+        </div>
     {% endblock %}
 
-    <div class="grid grid--middle spacing-bottom spacing-bottom--big">
-        {% if data.merchant.merchantProfile.logoUrl %}
-            <div class="col col--sm-2 col--lg-1 spacing">
-                {% include molecule('lazy-image') with {
-                    data: {
-                        imageSrc: data.merchant.merchantProfile.logoUrl,
-                        alt: data.merchant.name
-                    },
-                } only %}
-            </div>
-        {% endif %}
-
-        <div class="col">
-            <strong>
-                {% if data.merchantUrl is not null %}
-                    <a class="link" href="{{ functionExists('generatePath') ? generatePath(data.merchantUrl) : data.merchantUrl }}">
-                        {{ data.merchant.name }}
-                    </a>
-                {% else %}
-                    {{ data.merchant.name }}
-                {% endif %}
-            </strong>
-        </div>
-    </div>
-
     {% block relationsDesctiption %}
-        <h4 class="spacing-bottom spacing-bottom--big">{{ 'merchant_relationship_page.merchant_relationsip_detail.company_details' | trans }}</h4>
-
+        {% include molecule('action-bar') with {
+            class: 'spacing-bottom',
+            modifiers: ['middle'],
+            data: {
+                title: 'merchant_relationship_page.merchant_relationsip_detail.company_details' | trans,
+            }
+        } only %}
+        
         <ul>
             <li class="spacing-bottom grid grid--gap-smaller grid--nowrap">
                 <span class="col col--xl-3">{{ 'merchant_relationship_page.merchant_relationsip_detail.company' | trans  ~ ': ' }}</span>

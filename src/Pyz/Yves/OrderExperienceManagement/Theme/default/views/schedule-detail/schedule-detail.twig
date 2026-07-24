@@ -1,0 +1,17 @@
+{% extends view('schedule-detail', '@SprykerFeature:OrderExperienceManagement') %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [{
+                label: 'customer.account' | trans,
+                url: url('customer/overview'),
+            },{
+                label: 'recurring_orders.list.title' | trans,
+                url: url('recurring-orders'),
+            }, {
+                label: 'recurring_orders.view_details' | trans,
+            }],
+        },
+    } only %}
+{% endblock %}

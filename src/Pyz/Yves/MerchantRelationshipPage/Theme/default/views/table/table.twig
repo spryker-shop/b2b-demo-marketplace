@@ -5,10 +5,13 @@
 {% block merchantRelationshipPaginationSeparator %}{% endblock %}
 
 {% block companyContent %}
-    <h3 class="spacing-bottom spacing-bottom--big">
-        {{ 'company.account.merchant_relations' | trans }}
-    </h3>
-
+    {% include molecule('action-bar', 'ShopUi') with {
+        modifiers: ['first', 'middle'],
+        data: {
+            title: 'company.account.merchant_relations' | trans,
+        },
+    } only %}
+    
     {{ block('relationshipFiltersSection') }}
     {{ block('relationshipSection') }}
 {% endblock %}

@@ -1,5 +1,21 @@
 {% extends view('address-create', '@SprykerShop:CustomerPage') %}
 
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [{
+                label: 'customer.account' | trans,
+                url: url('customer/overview'),
+            },{
+                label: 'customer.account.default_address' | trans,
+                url: url('customer/address'),
+            },{
+                label: 'customer.profile.address.edit' | trans,
+            }]
+        }
+    } only %}
+{% endblock %}
+
 {% block customerContent %}
     {% include molecule('action-bar') with {
         modifiers: ['first', 'middle'],

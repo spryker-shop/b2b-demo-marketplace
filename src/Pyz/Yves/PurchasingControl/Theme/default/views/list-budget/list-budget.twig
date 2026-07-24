@@ -1,8 +1,29 @@
 {% extends view('list-budget', 'SprykerFeature:PurchasingControl') %}
 
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'company.account.page-title' | trans,
+                    url: url('company/overview'),
+                }, 
+                {
+                    label: 'purchasing_control.cost_center.menu_item' | trans,
+                    url: url('company/cost-center'),
+                },
+                {
+                    label: data.currentBreadcrumb | trans,
+                }
+            ]
+        }
+    } only %}
+{% endblock %}
+
 {% block companyContent %}
     {% block budgetHeader %}
         {% include molecule('action-bar', 'ShopUi') with {
+            modifiers: ['first', 'middle'],
             data: {
                 title: 'purchasing_control.budget.list.title' | trans,
                 actions: (can('ManageCostCentersPermissionPlugin') ? [
