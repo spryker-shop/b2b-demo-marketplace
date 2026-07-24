@@ -10,6 +10,11 @@
         Asserting clean code architecture with Spryker project.
     </description>
 
+    <!-- ============================================================= -->
+    <!-- File / path exclusions (filters WHICH files are analyzed).    -->
+    <!-- Note: this is different from <exclude name="..."/> below,     -->
+    <!-- which removes a RULE. exclude-pattern filters PATHS.          -->
+    <!-- ============================================================= -->
     <exclude-pattern>Persistence/Propel</exclude-pattern>
     <exclude-pattern>Presentation</exclude-pattern>
     <exclude-pattern>tests/_data</exclude-pattern>
@@ -31,14 +36,50 @@
     <exclude-pattern>*/ExampleStateMachine/*</exclude-pattern>
     <exclude-pattern>*/WaterTreatmentConfiguratorPageExample/*</exclude-pattern>
 
-    <!-- Consolidated PHPMD rules (Clean Code, Code Size, Controversial, Design, Naming, Unused Code) -->
-    <rule ref="architecture-sniffer/PhpMd/ruleset.xml" />
+    <!-- ============================================================= -->
+    <!-- Import the vendor project ruleset (single aggregate file).     -->
+    <!-- Pulls in PhpMd + Client/Service/Shared/Yves/Zed/Glue/Common    -->
+    <!-- project-level rules. These are the project-level (relaxed +    -->
+    <!-- project-specific) rules, not the strict core-framework ones.   -->
+    <!-- ============================================================= -->
+    <rule ref="vendor/spryker/architecture-sniffer/src/Project/ruleset.xml" />
 
-    <rule ref="architecture-sniffer/Client/ruleset.xml" />
-    <rule ref="architecture-sniffer/Service/ruleset.xml" />
-    <rule ref="architecture-sniffer/Shared/ruleset.xml" />
-    <rule ref="architecture-sniffer/Yves/ruleset.xml" />
-    <rule ref="architecture-sniffer/Zed/ruleset.xml" />
-    <rule ref="architecture-sniffer/Common/ruleset.xml" />
+    <!-- ============================================================= -->
+    <!-- CUSTOMIZATIONS                                                -->
+    <!-- IMPORTANT: everything below MUST come AFTER the aggregate     -->
+    <!-- import above, otherwise the import re-adds the original       -->
+    <!-- definition and clobbers your override.                       -->
+    <!-- ============================================================= -->
+
+    <!-- 1) EXCLUDE a rule (drop it from the imported set).
+         Reference the ruleset file that contains it and name the rule
+         via its `name` attribute.
+
+    <rule ref="vendor/spryker/architecture-sniffer/src/Project/Zed/ruleset.xml">
+        <exclude name="FacadeSingleFactoryCallRule" />
+        <exclude name="FacadeNoLogicRule" />
+    </rule>
+    -->
+
+    <!-- 2) CHANGE SEVERITY (priority) or message of a single rule.
+         Reference a single rule with `.../ruleset.xml/RuleName` and
+         re-declare the pieces you want to override. Lower priority
+         number = more severe (1 = highest).
+
+    <rule ref="vendor/spryker/architecture-sniffer/src/Project/Zed/ruleset.xml/FacadeRule">
+        <priority>3</priority>
+    </rule>
+    -->
+
+    <!-- 3) PASS A PARAMETER (property) to a rule.
+         Some project rules expose tunable properties (e.g.
+         `ignoreclasspattern` to skip classes matching a regex).
+
+    <rule ref="vendor/spryker/architecture-sniffer/src/Project/Zed/ruleset.xml/OrmNewEntityNotInCommunicationRule">
+        <properties>
+            <property name="ignoreclasspattern" value="#\\SomeModule\\#" />
+        </properties>
+    </rule>
+    -->
 
 </ruleset>
