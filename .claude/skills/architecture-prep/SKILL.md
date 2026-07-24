@@ -143,10 +143,8 @@ the step that needs it, not all up front:
   marking what's still a placeholder.
 - **Only the sections the user chose.** Step 0 asks which arc42 sections to produce this run. Fill
   exactly those; leave the others as-is (untouched template). Don't silently expand scope.
-- **The deliverable is version-controlled prose + diagrams-as-code.** Markdown + **Mermaid (`.mmd`)
-  only** — every diagram type including ERDs (`erDiagram`). No PlantUML/`.puml` (it can't render in the
-  browser preview, the PDF, or GitHub) and no binary formats. Diagrams follow the project's universal
-  color scheme (in sections.md).
+- **The deliverable is version-controlled prose + diagrams-as-code.** Markdown + Mermaid/PlantUML
+  only — no binary formats. Diagrams follow the project's universal color scheme (in sections.md).
 - **Honest status.** If a section is thin because the interview couldn't fill it, mark it (an
   `> **TODO:**` note naming what's missing) rather than dressing it up. A truthful gap is more useful
   to the PRD author than confident invention.
@@ -292,8 +290,7 @@ Otherwise spawn **one teammate per selected section**, in parallel. Each teammat
 - reads the **current template file** it's replacing (to keep the structure/heading style);
 - fills the section with project-specific content, replacing example content, and marks any
   unfillable part with a `> **TODO:** …` note naming what's missing;
-- produces the paired **diagram file(s)** as Mermaid `.mmd` (ERDs included — `erDiagram`, never
-  `.puml`) following the color/style convention;
+- produces the paired **diagram file(s)** as Mermaid/PlantUML following the color/style convention;
 - edits the real file(s) under the output target and returns a compact "done + what I wrote + open
   TODOs" summary.
 
