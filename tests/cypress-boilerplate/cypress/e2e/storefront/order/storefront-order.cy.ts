@@ -67,15 +67,14 @@ context('Customer orders', () => {
     productDetailsPage.addProductToCart()
     cartIcon.getCartTrigger().click()
     cartPage
-      .getCartItem(productData.availableProduct.concreteSku)
-      .find('[itemprop="price"]')
+      .getCartItemPrice(productData.availableProduct.concreteSku)
       .should('contain', productData.availableProduct.price)
     cartPage.getCheckoutButton().click()
     checkoutAddress.provideExistingAddress()
     checkoutShipping.provideShipment(checkoutData.storefrontShipment.name)
     checkoutPayment.providePayment(checkoutData.storefrontPayment.name)
-    checkoutSummary.selectCostCenter('Production & Manufacturing')
-    checkoutSummary.selectBudget('Production Annual Budget 2026 - Warning')
+    checkoutSummary.selectCostCenter(checkoutData.storefrontCostCenter.name)
+    checkoutSummary.selectBudget(checkoutData.storefrontBudget.name)
     checkoutSummary.applyCostCenterAndBudget()
     checkoutSummary
       .getGrandTotalAmount()

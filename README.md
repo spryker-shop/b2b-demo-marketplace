@@ -134,8 +134,8 @@ There are several testing frameworks integrated into this repository:
 * Robot Framework tests and Cypress tests that are used for testing of Spryker core features are located in separate repositories. 
   - They are integrated via `composer.json`. You should remove the mentions of `spryker/cypress-tests` and `spryker/robotframework-suite-tests` from `composer.json` ("repositories" and "require-dev" sections) unless you plan to re-use these tests on your project.
   - Spryker does not guarantee these tests would work on a customized project.
-* In addition, this project has its own project-owned end-to-end UI test baseline using [Cypress](https://www.cypress.io/) (derived from [`spryker-projects/cypress-boilerplate`](https://github.com/spryker-projects/cypress-boilerplate)) committed under `tests/e2e/`. This is separate from the `spryker/cypress-tests` package above and not a Composer dependency.
-  - Run tests locally with `npm run cy:open` / `npm run cy:run` from `tests/e2e/` — see `tests/e2e/README.md` for setup and environment configuration.
+* In addition, this project has its own project-owned end-to-end UI test baseline using [Cypress](https://www.cypress.io/) (derived from [`spryker-projects/cypress-boilerplate`](https://github.com/spryker-projects/cypress-boilerplate)) committed under `tests/cypress-boilerplate/`. This is separate from the `spryker/cypress-tests` package above and not a Composer dependency.
+  - Run tests locally with `npm run cy:open` / `npm run cy:run` from `tests/cypress-boilerplate/` — see `tests/cypress-boilerplate/README.md` for setup and environment configuration.
 
 ## Troubleshooting installation of the B2B Marketplace Demo Shop
 

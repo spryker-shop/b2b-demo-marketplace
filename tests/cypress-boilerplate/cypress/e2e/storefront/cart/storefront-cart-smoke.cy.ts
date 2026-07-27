@@ -45,8 +45,7 @@ context('Storefront smoke: homepage to cart', () => {
     cartIcon.getCartTrigger().click()
 
     cartPage
-      .getCartItem(productData.availableProduct.concreteSku)
-      .find('[itemprop="price"]')
+      .getCartItemPrice(productData.availableProduct.concreteSku)
       .should('contain', productData.availableProduct.price)
   })
 })
