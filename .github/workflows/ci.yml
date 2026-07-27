@@ -687,3 +687,90 @@ jobs:
             -   name: Slack Notification for failed job
                 uses: ./.github/actions/job-slack-notifications
                 if: always()
+
+    cypress-quality-gate:
+        name: "Cypress-boilerplate / Lint & Format"
+        runs-on: ubuntu-latest
+        steps:
+            -   uses: actions/checkout@v4
+
+            -   name: Setup Node.js
+                uses: actions/setup-node@v5
+                with:
+                    node-version: '24'
+                    cache: 'npm'
+                    cache-dependency-path: tests/e2e/package-lock.json
+
+            -   name: Install Cypress project dependencies
+                working-directory: tests/e2e
+                run: npm ci
+
+            -   name: ES lint
+                working-directory: tests/e2e
+                run: npm run lint:check
+
+            -   name: Prettier check
+                working-directory: tests/e2e
+                run: npm run prettier:check
+
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
+
+    cypress-e2e:
+        needs: [js-validation, validation, cypress-quality-gate]
+        name: "Cypress-boilerplate / E2E"
+        runs-on: ubuntu-latest
+        env:
+            PROGRESS_TYPE: plain
+            SPRYKER_PLATFORM_IMAGE: spryker/php:8.4
+            TRAVIS: 1
+            SPRYKER_CURRENT_REGION: EU
+            DYNAMIC_STORE_MODE: true
+
+        steps:
+            -   uses: actions/checkout@v4
+
+            -   uses: ramsey/composer-install@v3
+                with:
+                    composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
+
+            -   name: Setup Node.js
+                uses: actions/setup-node@v5
+                with:
+                    node-version: '24'
+                    cache: 'npm'
+                    cache-dependency-path: tests/e2e/package-lock.json
+
+            -   name: Install Cypress project dependencies
+                working-directory: tests/e2e
+                run: npm ci
+
+            -   name: Run docker
+                run: |
+                    git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
+                    docker/sdk boot .github/deploy/deploy.ci.acceptance.mariadb.yml
+                    docker/sdk up -t
+                    docker/sdk cli composer dump-autoload -o -a --apcu -q
+
+            -   name: Start queue worker
+                run: docker/sdk console queue:worker:start --stop-when-empty
+
+            -   name: Run Cypress E2E tests
+                id: cypress-tests
+                working-directory: tests/e2e
+                run: npx cypress run --env environment=ci --headless --browser chrome
+
+            -   name: Upload Cypress artifacts
+                if: always() && steps.cypress-tests.outcome == 'failure'
+                uses: actions/upload-artifact@v5
+                with:
+                    name: cypress-e2e-failed-artifacts
+                    retention-days: 5
+                    path: |
+                        tests/e2e/cypress/data/screenshots/**/*
+                        tests/e2e/cypress/data/reports/**/*
+
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
