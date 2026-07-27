@@ -16,7 +16,7 @@ use Spryker\Zed\MultiFactorAuth\Communication\Plugin\Factors\Email\UserEmailMult
 class MultiFactorAuthDependencyProvider extends SprykerGlueApplicationDependencyProvider
 {
     /**
-     * @SuppressWarnings(LayerAccessRule) Legacy: MFA plugin stack registers the Yves customer factor plugin by design. Do not suppress for new code.
+     * @SuppressWarnings(LayerAccessRule) Legacy code. Must not be used as a code example.
      *
      * @return array<\Spryker\Shared\MultiFactorAuthExtension\Dependency\Plugin\MultiFactorAuthPluginInterface>
      */

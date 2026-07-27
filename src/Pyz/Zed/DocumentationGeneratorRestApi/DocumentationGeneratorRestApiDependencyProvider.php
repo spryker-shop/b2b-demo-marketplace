@@ -16,7 +16,7 @@ use Spryker\Zed\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiDepen
 class DocumentationGeneratorRestApiDependencyProvider extends SprykerDocumentationGeneratorRestApiDependencyProvider
 {
     /**
-     * @SuppressWarnings(LayerAccessRule) Legacy: documentation generator registers Glue provider plugins. Do not suppress for new code.
+     * @SuppressWarnings(LayerAccessRule) Legacy code. Must not be used as a code example.
      *
      * @return array<\Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface>
      */
@@ -28,7 +28,7 @@ class DocumentationGeneratorRestApiDependencyProvider extends SprykerDocumentati
     }
 
     /**
-     * @SuppressWarnings(LayerAccessRule) Legacy: documentation generator registers Glue provider plugins. Do not suppress for new code.
+     * @SuppressWarnings(LayerAccessRule) Legacy code. Must not be used as a code example.
      *
      * @return array<\Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface>
      */

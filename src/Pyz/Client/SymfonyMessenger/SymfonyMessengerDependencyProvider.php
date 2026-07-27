@@ -18,7 +18,7 @@ use Spryker\Zed\SymfonyScheduler\Communication\Plugin\SymfonyMessenger\Scheduler
 class SymfonyMessengerDependencyProvider extends SprykerSymfonyMessengerDependencyProvider
 {
     /**
-     * @SuppressWarnings(LayerAccessRule) Legacy: transport plugin stack registers Zed scheduler plugins by design. Do not suppress for new code.
+     * @SuppressWarnings(LayerAccessRule) Legacy code. Must not be used as a code example.
      *
      * @return array<\Spryker\Shared\SymfonyMessengerExtension\Dependency\Plugin\TransportFactoryProviderPluginInterface>
      */
@@ -30,7 +30,7 @@ class SymfonyMessengerDependencyProvider extends SprykerSymfonyMessengerDependen
     }
 
     /**
-     * @SuppressWarnings(LayerAccessRule) Legacy: transport plugin stack registers Zed scheduler plugins by design. Do not suppress for new code.
+     * @SuppressWarnings(LayerAccessRule) Legacy code. Must not be used as a code example.
      *
      * @return array<\Spryker\Shared\SymfonyMessengerExtension\Dependency\Plugin\AvailableTransportProviderPluginInterface>
      */
@@ -42,7 +42,7 @@ class SymfonyMessengerDependencyProvider extends SprykerSymfonyMessengerDependen
     }
 
     /**
-     * @SuppressWarnings(LayerAccessRule) Legacy: transport plugin stack registers Zed scheduler plugins by design. Do not suppress for new code.
+     * @SuppressWarnings(LayerAccessRule) Legacy code. Must not be used as a code example.
      *
      * @return array<\Spryker\Shared\SymfonyMessengerExtension\Dependency\Plugin\MessageMappingProviderPluginInterface>
      */
@@ -54,7 +54,7 @@ class SymfonyMessengerDependencyProvider extends SprykerSymfonyMessengerDependen
     }
 
     /**
-     * @SuppressWarnings(LayerAccessRule) Legacy: transport plugin stack registers Zed scheduler plugins by design. Do not suppress for new code.
+     * @SuppressWarnings(LayerAccessRule) Legacy code. Must not be used as a code example.
      *
      * @return array<\Spryker\Zed\SymfonyScheduler\Communication\Plugin\SymfonyMessenger\CompiledCronTransportGroupAwarePlugin>
      */

@@ -76,7 +76,7 @@ class PermissionDependencyProvider extends SprykerPermissionDependencyProvider
     }
 
     /**
-     * @SuppressWarnings(LayerAccessRule) Legacy: permission plugin stack aggregates plugins from other layers by design. Do not suppress for new code.
+     * @SuppressWarnings(LayerAccessRule) Legacy code. Must not be used as a code example.
      *
      * @return array<\Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface>
      */

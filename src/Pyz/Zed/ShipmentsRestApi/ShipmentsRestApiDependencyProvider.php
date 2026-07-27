@@ -33,7 +33,7 @@ class ShipmentsRestApiDependencyProvider extends SprykerShipmentsRestApiDependen
     }
 
     /**
-     * @SuppressWarnings(LayerAccessRule) Legacy: expander stack registers a Glue cart plugin by design. Do not suppress for new code.
+     * @SuppressWarnings(LayerAccessRule) Legacy code. Must not be used as a code example.
      *
      * @return list<\Spryker\Zed\ShipmentsRestApiExtension\Dependency\Plugin\QuoteItemExpanderPluginInterface>
      */

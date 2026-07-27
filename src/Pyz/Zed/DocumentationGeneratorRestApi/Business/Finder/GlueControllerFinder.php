@@ -15,7 +15,7 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Finder\GlueControllerFind
 class GlueControllerFinder extends SprykerGlueControllerFinder
 {
     /**
-     * @SuppressWarnings(LayerAccessRule) Legacy: doc generator inspects Glue route plugins by design. Do not suppress for new code.
+     * @SuppressWarnings(LayerAccessRule) Legacy code. Must not be used as a code example.
      *
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      *

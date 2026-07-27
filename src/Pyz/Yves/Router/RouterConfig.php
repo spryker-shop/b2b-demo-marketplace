@@ -18,7 +18,7 @@ use Spryker\Yves\Router\RouterConfig as SprykerRouterConfig;
 class RouterConfig extends SprykerRouterConfig
 {
     /**
-     * @SuppressWarnings(LocatorInDependencyProviderOnlyRule) Legacy: router config reads allowed languages at bootstrap, mirrors core RouterConfig. Do not suppress for new code.
+     * @SuppressWarnings(LocatorInDependencyProviderOnlyRule) Legacy code. Must not be used as a code example.
      *
      * @see \Spryker\Yves\Router\Plugin\RouterEnhancer\LanguagePrefixRouterEnhancerPlugin
      *
@@ -30,7 +30,7 @@ class RouterConfig extends SprykerRouterConfig
     }
 
     /**
-     * @SuppressWarnings(LocatorInDependencyProviderOnlyRule) Legacy: router config reads store names at bootstrap, mirrors core RouterConfig. Do not suppress for new code.
+     * @SuppressWarnings(LocatorInDependencyProviderOnlyRule) Legacy code. Must not be used as a code example.
      *
      * @return array<string>
      */

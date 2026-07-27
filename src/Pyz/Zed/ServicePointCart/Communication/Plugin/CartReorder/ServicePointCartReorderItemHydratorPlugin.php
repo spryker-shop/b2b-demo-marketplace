@@ -57,7 +57,7 @@ class ServicePointCartReorderItemHydratorPlugin extends AbstractPlugin implement
     }
 
     /**
-     * @SuppressWarnings(NPathComplexity) Legacy: guard-clause hydration walks the product offer -> shipment type -> service point chain by design. Do not suppress for new code.
+     * @SuppressWarnings(NPathComplexity) Legacy code. Must not be used as a code example.
      */
     protected function expandItemWithServiceDetails(ItemTransfer $itemTransfer): void
     {
