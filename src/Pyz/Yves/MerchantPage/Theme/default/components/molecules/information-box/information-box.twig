@@ -1,0 +1,79 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'information-box',
+} %}
+
+{% define data = {
+    email: '',
+    addresses: [],
+    phone: '',
+    deliveryTime: [],
+}%}
+
+{% block extraClass %}
+    box box--alternative
+{% endblock %}
+
+{% macro item(name, icon, title, text) %}
+    <div class="{{ name }}__item">
+        <div class="{{ name }}__icon">
+            {% include atom('font-icon') with {
+                modifiers: ['font-inherit'],
+                data: {
+                    name: icon,
+                },
+            } only %}
+        </div>
+
+        <div class="{{ name }}__content">
+            <strong class="{{ name }}__title">{{ title }}</strong>
+            <div class="{{ name }}__text">{{ text }}</div>
+        </div>
+    </div>
+{% endmacro %}
+
+{% block body %}
+    <h3 class="{{ config.name }}__heading">{{ 'merchant_page.merchant_details.title' | trans }}</h3>
+    {% block email %}
+        {% if data.email %}
+            {% set emailValue = data.email | trans %}
+            {% set emailText %}
+                <a href="mailto:{{ emailValue }}" class="link link--info">{{ emailValue }}</a>
+            {% endset %}
+
+            {{ _self.item(config.name, 'email', 'merchant_profile.email' | trans, emailText) }}
+        {% endif %}
+    {% endblock %}
+
+    {% block phone %}
+        {% if data.phone %}
+            {{ _self.item(config.name, 'phone', 'merchant_profile.phone' | trans, data.phone | trans) }}
+        {% endif %}
+    {% endblock %}
+
+    {% block address %}
+        {% if data.addresses %}
+            {% set addressText %}
+                {% for address in data.addresses %}
+                    <div>{{ address.address1 }} {{ address.address2 }}</div>
+                    <div>{{ address.zipCode }} {{ address.city }}</div>
+                    <div>{{ address.address3 }}</div>
+                    <div>{{ address.countryName }}</div>
+                {% endfor %}
+            {% endset %}
+
+            {{ _self.item(config.name, 'location_on', 'merchant_profile.address' | trans, addressText) }}
+        {% endif %}
+    {% endblock %}
+
+    {% block deliveryTime %}
+        {% set deliveryTimeGlossaryValue = (data.deliveryTime ?: '') | trans %}
+        {% set hasDeliveryTimeTranslation = deliveryTimeGlossaryValue
+            ? data.deliveryTime != deliveryTimeGlossaryValue %}
+
+        {% if hasDeliveryTimeTranslation %}
+            {{ _self.item(config.name, 'schedule', 'merchant_profile.delivery_time' | trans, deliveryTimeGlossaryValue) }}
+        {% endif %}
+    {% endblock %}
+{% endblock %}

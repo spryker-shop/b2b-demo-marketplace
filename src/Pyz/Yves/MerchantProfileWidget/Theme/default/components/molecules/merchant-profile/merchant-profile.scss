@@ -1,16 +1,85 @@
 @mixin merchant-profile-widget-merchant-profile($name: '.merchant-profile') {
     #{$name} {
-        margin: rem(26) 0 rem(50);
-        color: $setting-color-black;
+        margin-bottom: var(--scale-64);
 
-        @include helper-breakpoint-media-min($lg) {
-            margin-bottom: rem(130);
+        &__hero-image {
+            width: 100%;
+            aspect-ratio: 12/5;
+            object-fit: cover;
+            object-position: 50% 50%;
+            border-radius: var(--radius-md);
         }
 
         &__info-text {
             color: $setting-color-gray-4;
             font-size: rem(15);
             line-height: rem(20);
+        }
+
+        &__details {
+            @include typography(body-sm);
+            background: var(--background-page);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--scale-12);
+            color: var(--text-secondary);
+
+            &[open] {
+                #{$name}__toggle-icon {
+                    transform: rotate(180deg);
+                }
+            }
+
+            h5 {
+                @include typography(label-sm);
+            }
+        }
+
+        &__toggle {
+            @include typography(label-md);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--scale-4);
+            color: var(--text-primary);
+            cursor: pointer;
+            list-style: none;
+            padding: var(--scale-20) var(--scale-24);
+
+            &::-webkit-details-marker {
+                display: none;
+            }
+        }
+
+        &__toggle-icon {
+            @include helper-effect-transition(transform);
+        }
+
+        &__content {
+            padding: var(--scale-12) var(--scale-24) var(--scale-24);
+        }
+
+        &__merchant-info {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--scale-20);
+            margin: var(--scale-24) 0 var(--scale-48);
+        }
+
+        &__merchant-description {
+            @include typography(body-md);
+            flex-grow: 1;
+        }
+
+        &__merchant-name {
+            @include typography(heading-sm);
+            margin-bottom: var(--scale-16);
+        }
+
+        &__merchant-logo {
+            width: 60px;
+            border-radius: var(--radius-md);
+            object-fit: contain;
         }
 
         @content;
