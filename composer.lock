@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4096b8ab29667dabd442b688caff4989",
+    "content-hash": "57eb36f31951e675fc540ca9f0ff634e",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -26037,16 +26037,16 @@
         },
         {
             "name": "spryker/api-platform",
-            "version": "1.22.0",
+            "version": "dev-bugfix/cc-39382/performance-investigation",
             "source": {
                 "type": "git",
-                "url": "https://github.com/spryker/api-platform.git",
-                "reference": "bf88347cc227c20627c74866852c4ab6f11f34d9"
+                "url": "https://github.com/olhalivitchuk/api-platform.git",
+                "reference": "c248751494207708c86471cc33149b25b03b5670"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/api-platform/zipball/bf88347cc227c20627c74866852c4ab6f11f34d9",
-                "reference": "bf88347cc227c20627c74866852c4ab6f11f34d9",
+                "url": "https://api.github.com/repos/olhalivitchuk/api-platform/zipball/c248751494207708c86471cc33149b25b03b5670",
+                "reference": "c248751494207708c86471cc33149b25b03b5670",
                 "shasum": ""
             },
             "require": {
@@ -26068,6 +26068,7 @@
                 "api-platform/validator": "^4.3.0",
                 "friendsofcxml/cxml-php": "^2.0.0",
                 "php": ">=8.3",
+                "spryker/doctrine-inflector": "^1.0.0 || ^2.0.0",
                 "spryker/entity-tag": "^1.0.0",
                 "spryker/glossary-storage": "^1.0.0",
                 "spryker/kernel": "^3.48.0",
@@ -26084,6 +26085,9 @@
                 "symfony/security-bundle": "^6.0.0 || ^7.0.0",
                 "symfony/yaml": "^6.0.0 || ^7.0.0"
             },
+            "conflict": {
+                "spryker/serializer": "<1.1.0"
+            },
             "require-dev": {
                 "spryker/code-sniffer": "*",
                 "spryker/console": "*",
@@ -26095,7 +26099,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "1.23.x-dev"
                 }
             },
             "autoload": {
@@ -26103,7 +26107,20 @@
                     "Spryker\\": "src/Spryker/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "SprykerTest\\ApiPlatform\\Helper\\": "tests/SprykerTest/ApiPlatform/_support/Helper/",
+                    "SprykerTest\\": "tests/SprykerTest/"
+                }
+            },
+            "scripts": {
+                "cs-check": [
+                    "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
+                ],
+                "cs-fix": [
+                    "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
+                ]
+            },
             "license": [
                 "proprietary"
             ],
@@ -26116,9 +26133,9 @@
                 "spryker"
             ],
             "support": {
-                "source": "https://github.com/spryker/api-platform/tree/1.22.0"
+                "source": "https://github.com/olhalivitchuk/api-platform/tree/bugfix/cc-39382/performance-investigation"
             },
-            "time": "2026-06-23T06:59:07+00:00"
+            "time": "2026-07-27T09:49:45+00:00"
         },
         {
             "name": "spryker/app-catalog-gui",
@@ -29161,16 +29178,16 @@
         },
         {
             "name": "spryker/catalog-search-rest-api",
-            "version": "2.14.0",
+            "version": "dev-bugfix/cc-39382/performance-investigation",
             "source": {
                 "type": "git",
-                "url": "https://github.com/spryker/catalog-search-rest-api.git",
-                "reference": "267902efcfd05f2f34879ded9a04cb1f7bf9b685"
+                "url": "https://github.com/olhalivitchuk/catalog-search-rest-api.git",
+                "reference": "73719bb61a0cf2f79674802cf7c14d6207f9be97"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/catalog-search-rest-api/zipball/267902efcfd05f2f34879ded9a04cb1f7bf9b685",
-                "reference": "267902efcfd05f2f34879ded9a04cb1f7bf9b685",
+                "url": "https://api.github.com/repos/olhalivitchuk/catalog-search-rest-api/zipball/73719bb61a0cf2f79674802cf7c14d6207f9be97",
+                "reference": "73719bb61a0cf2f79674802cf7c14d6207f9be97",
                 "shasum": ""
             },
             "require": {
@@ -29186,6 +29203,9 @@
                 "spryker/product-category-filter-storage": "^1.0.0",
                 "spryker/symfony": "^3.0.0",
                 "spryker/transfer": "^3.42.0"
+            },
+            "conflict": {
+                "spryker/api-platform": "<1.23.0"
             },
             "require-dev": {
                 "spryker/api-platform": "*",
@@ -29209,28 +29229,40 @@
                     "Spryker\\": "src/Spryker/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "SprykerTest\\": "tests/SprykerTest/"
+                }
+            },
+            "scripts": {
+                "cs-check": [
+                    "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+                ],
+                "cs-fix": [
+                    "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+                ]
+            },
             "license": [
                 "proprietary"
             ],
             "description": "CatalogSearchRestApi module",
             "support": {
-                "source": "https://github.com/spryker/catalog-search-rest-api/tree/2.14.0"
+                "source": "https://github.com/olhalivitchuk/catalog-search-rest-api/tree/bugfix/cc-39382/performance-investigation"
             },
-            "time": "2026-07-01T20:14:56+00:00"
+            "time": "2026-07-27T09:49:45+00:00"
         },
         {
             "name": "spryker/categories-rest-api",
-            "version": "1.10.1",
+            "version": "dev-bugfix/cc-39382/performance-investigation",
             "source": {
                 "type": "git",
-                "url": "https://github.com/spryker/categories-rest-api.git",
-                "reference": "f0c2359a09cef4692e5af65fc5dcff0f4e6a6a3f"
+                "url": "https://github.com/olhalivitchuk/categories-rest-api.git",
+                "reference": "2a8862abb2bebf96816c08c4eb75fc021ed14175"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/categories-rest-api/zipball/f0c2359a09cef4692e5af65fc5dcff0f4e6a6a3f",
-                "reference": "f0c2359a09cef4692e5af65fc5dcff0f4e6a6a3f",
+                "url": "https://api.github.com/repos/olhalivitchuk/categories-rest-api/zipball/2a8862abb2bebf96816c08c4eb75fc021ed14175",
+                "reference": "2a8862abb2bebf96816c08c4eb75fc021ed14175",
                 "shasum": ""
             },
             "require": {
@@ -29265,15 +29297,27 @@
                     "Spryker\\": "src/Spryker/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "SprykerTest\\": "tests/SprykerTest/"
+                }
+            },
+            "scripts": {
+                "cs-check": [
+                    "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+                ],
+                "cs-fix": [
+                    "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+                ]
+            },
             "license": [
                 "proprietary"
             ],
             "description": "CategoriesRestApi module",
             "support": {
-                "source": "https://github.com/spryker/categories-rest-api/tree/1.10.1"
+                "source": "https://github.com/olhalivitchuk/categories-rest-api/tree/bugfix/cc-39382/performance-investigation"
             },
-            "time": "2026-05-22T08:02:08+00:00"
+            "time": "2026-07-27T09:49:45+00:00"
         },
         {
             "name": "spryker/category",
@@ -52678,16 +52722,16 @@
         },
         {
             "name": "spryker/orders-rest-api",
-            "version": "4.16.1",
+            "version": "dev-bugfix/cc-39382/performance-investigation",
             "source": {
                 "type": "git",
-                "url": "https://github.com/spryker/orders-rest-api.git",
-                "reference": "1c90d2acb6bd275641cf8afab2773c8ecbfaa17c"
+                "url": "https://github.com/olhalivitchuk/orders-rest-api.git",
+                "reference": "9d72a5ba0c5a1defd70c39120f960e40c737bbc2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/orders-rest-api/zipball/1c90d2acb6bd275641cf8afab2773c8ecbfaa17c",
-                "reference": "1c90d2acb6bd275641cf8afab2773c8ecbfaa17c",
+                "url": "https://api.github.com/repos/olhalivitchuk/orders-rest-api/zipball/9d72a5ba0c5a1defd70c39120f960e40c737bbc2",
+                "reference": "9d72a5ba0c5a1defd70c39120f960e40c737bbc2",
                 "shasum": ""
             },
             "require": {
@@ -52701,6 +52745,9 @@
                 "spryker/sales": "^11.22.0",
                 "spryker/symfony": "^3.0.0",
                 "spryker/transfer": "^3.42.0"
+            },
+            "conflict": {
+                "spryker/api-platform": "<1.23.0"
             },
             "require-dev": {
                 "spryker/api-platform": "^1.0.0",
@@ -52722,15 +52769,22 @@
                     "Spryker\\": "src/Spryker/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "scripts": {
+                "cs-check": [
+                    "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+                ],
+                "cs-fix": [
+                    "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+                ]
+            },
             "license": [
                 "proprietary"
             ],
             "description": "OrdersRestApi module",
             "support": {
-                "source": "https://github.com/spryker/orders-rest-api/tree/4.16.1"
+                "source": "https://github.com/olhalivitchuk/orders-rest-api/tree/bugfix/cc-39382/performance-investigation"
             },
-            "time": "2026-05-22T08:02:08+00:00"
+            "time": "2026-07-27T09:49:45+00:00"
         },
         {
             "name": "spryker/orders-rest-api-extension",
@@ -65247,16 +65301,16 @@
         },
         {
             "name": "spryker/products-categories-resource-relationship",
-            "version": "1.6.0",
+            "version": "dev-bugfix/cc-39382/performance-investigation",
             "source": {
                 "type": "git",
-                "url": "https://github.com/spryker/products-categories-resource-relationship.git",
-                "reference": "01c96c997edf8b3d1210c415aac9b0afebab3380"
+                "url": "https://github.com/olhalivitchuk/products-categories-resource-relationship.git",
+                "reference": "627dc77cd86a32cba449fbd7a2807201134752f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/products-categories-resource-relationship/zipball/01c96c997edf8b3d1210c415aac9b0afebab3380",
-                "reference": "01c96c997edf8b3d1210c415aac9b0afebab3380",
+                "url": "https://api.github.com/repos/olhalivitchuk/products-categories-resource-relationship/zipball/627dc77cd86a32cba449fbd7a2807201134752f2",
+                "reference": "627dc77cd86a32cba449fbd7a2807201134752f2",
                 "shasum": ""
             },
             "require": {
@@ -65289,15 +65343,22 @@
                     "Spryker\\": "src/Spryker/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "scripts": {
+                "cs-check": [
+                    "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+                ],
+                "cs-fix": [
+                    "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+                ]
+            },
             "license": [
                 "proprietary"
             ],
             "description": "ProductsCategoriesResourceRelationship module",
             "support": {
-                "source": "https://github.com/spryker/products-categories-resource-relationship/tree/1.6.0"
+                "source": "https://github.com/olhalivitchuk/products-categories-resource-relationship/tree/bugfix/cc-39382/performance-investigation"
             },
-            "time": "2026-05-05T12:31:55+00:00"
+            "time": "2026-07-27T09:49:45+00:00"
         },
         {
             "name": "spryker/products-rest-api",
@@ -71564,16 +71625,16 @@
         },
         {
             "name": "spryker/serializer",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/serializer.git",
-                "reference": "364f93c8375d358cfb5ebc003f6accf8e8b799d2"
+                "reference": "643fde01584dc2fa92275fd0d2aaed1a87800078"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/serializer/zipball/364f93c8375d358cfb5ebc003f6accf8e8b799d2",
-                "reference": "364f93c8375d358cfb5ebc003f6accf8e8b799d2",
+                "url": "https://api.github.com/repos/spryker/serializer/zipball/643fde01584dc2fa92275fd0d2aaed1a87800078",
+                "reference": "643fde01584dc2fa92275fd0d2aaed1a87800078",
                 "shasum": ""
             },
             "require": {
@@ -71590,7 +71651,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "1.1.x-dev"
                 }
             },
             "autoload": {
@@ -71604,9 +71665,9 @@
             ],
             "description": "Serializer module",
             "support": {
-                "source": "https://github.com/spryker/serializer/tree/1.0.0"
+                "source": "https://github.com/spryker/serializer/tree/1.1.0"
             },
-            "time": "2026-04-23T15:09:57+00:00"
+            "time": "2026-07-16T12:03:22+00:00"
         },
         {
             "name": "spryker/serializer-extension",
@@ -93079,10 +93140,46 @@
             "time": "2025-12-08T11:19:18+00:00"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "package": "spryker/api-platform",
+            "version": "dev-bugfix/cc-39382/performance-investigation",
+            "alias": "1.23.0",
+            "alias_normalized": "1.23.0.0"
+        },
+        {
+            "package": "spryker/catalog-search-rest-api",
+            "version": "dev-bugfix/cc-39382/performance-investigation",
+            "alias": "2.15.0",
+            "alias_normalized": "2.15.0.0"
+        },
+        {
+            "package": "spryker/categories-rest-api",
+            "version": "dev-bugfix/cc-39382/performance-investigation",
+            "alias": "1.10.1",
+            "alias_normalized": "1.10.1.0"
+        },
+        {
+            "package": "spryker/orders-rest-api",
+            "version": "dev-bugfix/cc-39382/performance-investigation",
+            "alias": "4.17.0",
+            "alias_normalized": "4.17.0.0"
+        },
+        {
+            "package": "spryker/products-categories-resource-relationship",
+            "version": "dev-bugfix/cc-39382/performance-investigation",
+            "alias": "1.6.0",
+            "alias_normalized": "1.6.0.0"
+        }
+    ],
     "minimum-stability": "dev",
     "stability-flags": {
+        "spryker/api-platform": 20,
+        "spryker/catalog-search-rest-api": 20,
+        "spryker/categories-rest-api": 20,
         "spryker/cypress-tests": 20,
+        "spryker/orders-rest-api": 20,
+        "spryker/products-categories-resource-relationship": 20,
         "spryker/robotframework-suite-tests": 20
     },
     "prefer-stable": true,
