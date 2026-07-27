@@ -2,27 +2,32 @@
     #{$name} {
         display: flex;
         flex-direction: column;
-        margin-bottom: var(--scale-16);
+        margin-bottom: var(--scale-32);
+
+        @include helper-breakpoint-media-min($lg) {
+            margin-bottom: var(--scale-16);
+        }
 
         &__head {
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: var(--scale-8);
-            margin-bottom: var(--scale-8);
+            margin-bottom: var(--scale-16);
+
+            @include helper-breakpoint-media-min($lg) {
+                margin-bottom: var(--scale-8);
+                gap: var(--scale-6);
+            }
         }
 
         &__title {
-            font-size: var(--label-md-size);
-            font-weight: var(--label-md-weight);
-            line-height: var(--label-md-line-height);
+            @include typography(label-md);
             color: var(--text-primary);
         }
 
         &__clear {
-            font-size: var(--label-sm-semibold-size);
-            font-weight: var(--label-sm-semibold-weight);
-            line-height: var(--label-sm-semibold-line-height);
+            @include typography(label-sm-semibold);
             color: var(--text-brand);
             text-decoration: none;
             white-space: nowrap;
@@ -45,9 +50,9 @@
 
         &__toggle {
             @include helper-badge-chip;
+            @include typography(label-sm);
             background: var(--background-subtle);
             color: var(--text-primary);
-            font-weight: var(--font-weight-medium);
             cursor: pointer;
 
             &:hover,

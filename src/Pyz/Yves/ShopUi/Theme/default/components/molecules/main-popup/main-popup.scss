@@ -43,16 +43,12 @@
         }
 
         &__title {
-            font-size: var(--font-size-20);
-            font-weight: var(--font-weight-semibold);
-            line-height: var(--font-line-height-28);
+            @include typography(heading-sm);
             color: var(--text-primary);
         }
 
         &__subtitle {
-            font-size: var(--body-sm-size);
-            font-weight: var(--font-weight-regular);
-            line-height: var(--body-sm-line-height);
+            @include typography(body-sm);
             color: var(--text-secondary);
         }
 

@@ -3,13 +3,10 @@
 @include shop-ui-nav-pill('.header-shopping-list-pill') {
     &__trigger {
         @include helper-effect-transition(color);
+        @include typography(label-md);
         display: flex;
         align-items: center;
         gap: var(--scale-4);
-        font-family: var(--body-md-family);
-        font-size: var(--body-md-size);
-        font-weight: var(--font-weight-medium);
-        line-height: var(--body-md-line-height);
         color: var(--text-secondary);
         background: none;
         border: none;

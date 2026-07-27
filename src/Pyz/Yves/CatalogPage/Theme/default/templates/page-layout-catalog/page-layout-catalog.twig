@@ -57,31 +57,19 @@
                 },
             } only %}
 
-            <div class="col col--sm-12 col--lg-4 col--xl-3">
+            <div class="col col--sm-12 col--lg-4 col--xl-3 page-layout-main__catalog-filter-column">
                 {% block filterBar %}
                     {% block filterBarAsset %}
                         {% if is_granted('ROLE_USER') %}
-                            {% widget 'SspAssetFilterWidget' only %}{% endwidget %}
+                            <div class="is-hidden-sm-md">
+                                {% widget 'SspAssetFilterWidget' only %}{% endwidget %}
+                            </div>
                         {% endif %}
                     {% endblock %}
 
-                    {% include molecule('toggler-click') with {
-                        attributes: {
-                            'trigger-class-name': 'js-catalog-filters-trigger',
-                            'target-class-name': 'js-filter-section',
-                            'class-to-toggle': 'is-hidden-sm-md',
-                        },
-                    } only %}
-
-                    {% include molecule('sticky-body-toggler') with {
-                        attributes: {
-                            'trigger-class-name': 'js-catalog-filters-trigger',
-                            'class-to-fix-body': 'is-locked-mobile',
-                        },
-                    } only %}
-
                     {% block filterBarActiveFilters %}
                         {% include organism('active-filter-section', 'CatalogPage') with {
+                            class: 'is-hidden-sm-md',
                             data: {
                                 facets: data.facets,
                                 filteredFacets: data.filteredFacets,
@@ -118,7 +106,7 @@
                         },
                     } only %}
                         {% block controls %}
-                            <button type="button" class="catalog-header__filter-trigger js-catalog-filters-trigger is-hidden-lg-xxl">
+                            <button type="button" class="catalog-header__filter-trigger js-catalog-filters-trigger is-hidden-lg-xxl" aria-haspopup="dialog" aria-expanded="false">
                                 {% include atom('font-icon') with {
                                     data: {
                                         name: 'tune',
@@ -142,6 +130,26 @@
                             } only %}
                         {% endblock %}
                     {% endembed %}
+                {% endblock %}
+
+                {% block mobileFilterExtras %}
+                    {% if is_granted('ROLE_USER') %}
+                        <div class="is-hidden-lg-xxl">
+                            {% widget 'SspAssetFilterWidget' only %}{% endwidget %}
+                        </div>
+                    {% endif %}
+
+                    {% if data.products %}
+                        {% include organism('active-filter-section', 'CatalogPage') with {
+                            class: 'is-hidden-lg-xxl',
+                            data: {
+                                facets: data.facets,
+                                filteredFacets: data.filteredFacets,
+                                numFound: data.pagination.numFound | default(0),
+                                variant: 'mobile',
+                            },
+                        } only %}
+                    {% endif %}
                 {% endblock %}
 
                 {% if data.products %}

@@ -24,9 +24,7 @@
     @include shop-ui-link {
         &--privacy {
             @include helper-effect-transition(color);
-            font-size: var(--label-sm-size);
-            font-weight: var(--label-sm-weight);
-            line-height: var(--label-sm-line-height);
+            @include typography(label-sm);
             color: var(--text-primary);
             text-decoration: none;
 

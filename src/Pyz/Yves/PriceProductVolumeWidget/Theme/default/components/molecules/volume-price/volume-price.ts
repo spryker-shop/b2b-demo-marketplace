@@ -59,6 +59,12 @@ export default class VolumePrice extends Component {
         return this.amountValueElement.dataset.originalPrice ?? this.amountValueElement.innerText;
     }
 
+    public getPriceForQuantity(quantity: number): string {
+        const tier = this.volumePricesData.find((priceData) => quantity >= priceData.count);
+
+        return tier ? tier.price : this.originalPrice;
+    }
+
     public changePrice(price: string): void {
         if (this.amountValueElement.innerText.trim() !== price.trim()) {
             this.amountValueElement.textContent = price;

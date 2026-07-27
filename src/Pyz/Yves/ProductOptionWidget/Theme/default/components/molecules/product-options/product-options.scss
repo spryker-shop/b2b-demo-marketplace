@@ -16,12 +16,8 @@
         }
 
         &__title {
+            @include typography(label-sm-semibold);
             color: var(--text-primary);
-            font-family: var(--label-sm-semibold-family);
-            font-size: rem(var(--label-sm-semibold-size));
-            font-weight: var(--label-sm-semibold-weight);
-            line-height: rem(var(--label-sm-semibold-line-height));
-            letter-spacing: var(--label-sm-semibold-letter-spacing);
         }
 
         @content;
