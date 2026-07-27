@@ -65,7 +65,7 @@ jobs:
 
             -   uses: ramsey/composer-install@v3
                 with:
-                    composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
+                    composer-options: "-q --ignore-platform-reqs --no-interaction --prefer-install=auto"
 
             -   name: Generate transfer objects
                 run: vendor/bin/console transfer:generate
@@ -197,14 +197,13 @@ jobs:
 
             -   uses: ramsey/composer-install@v3
                 with:
-                    composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
+                    composer-options: "-q --ignore-platform-reqs --no-interaction --prefer-install=auto"
 
             -   name: Run docker
                 run: |
                     git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
                     docker/sdk boot .github/deploy/deploy.ci.functional.mariadb.yml -a --apcu
                     docker/sdk up -t
-                    docker/sdk cli composer dump-autoload -o -a --apcu -q
 
             -   name: Run Tests
                 run: docker/sdk testing codecept run -c tests/codeception.ci.functional.yml
