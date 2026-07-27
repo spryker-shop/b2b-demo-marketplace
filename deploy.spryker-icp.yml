@@ -61,9 +61,16 @@ image:
             - otel
             - amqp
         ini:
-            'opcache.revalidate_freq': 0
+            # Perf: opcache was disabled -> every request recompiled the whole PHP graph
+            # (esp. the large API Platform / serializer class graph), giving flat ~2s latency.
+            # Prod opcache config: cache bytecode once, don't revalidate (image code is immutable/baked).
+            'opcache.enable': 1
             'opcache.enable_cli': 0
-            'opcache.enable': 0
+            'opcache.validate_timestamps': 0
+            'opcache.revalidate_freq': 0
+            'opcache.memory_consumption': 512
+            'opcache.max_accelerated_files': 100000
+            'opcache.interned_strings_buffer': 32
             'max_execution_time': 300
             'request_terminate_timeout': 300
             'upload_max_filesize': '100M'
