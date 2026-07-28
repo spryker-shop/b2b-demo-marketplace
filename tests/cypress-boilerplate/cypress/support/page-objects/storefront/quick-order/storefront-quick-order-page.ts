@@ -83,49 +83,32 @@ export class StorefrontQuickOrderPage extends AbstractPage {
       .first()
   }
 
-  openMerchantFilterDropdown = (): Cypress.Chainable => {
-    return this.getMerchantFilterSelect()
-      .parent()
-      .find('.select2-selection')
-      .first()
-      .click({ force: true })
-  }
-
   selectMerchant = (merchant: string, maxRetries = 3): void => {
     const trySelectMerchant = (retries = 0): void => {
-      this.openMerchantFilterDropdown()
+      this.getMerchantFilterSelect().then(($select) => {
+        const hasOption = $select
+          .find('option')
+          .toArray()
+          .some((option) => option.textContent?.trim() === merchant)
 
-      // select2 renders its dropdown list from the same options as the underlying
-      // <select>, so check the actual visible list items rather than the hidden
-      // native element, and click the matching one directly.
-      cy.get('.select2-results__option', { timeout: 10000 }).then(
-        ($options) => {
-          const match = $options
-            .toArray()
-            .find((option) => option.textContent?.trim() === merchant)
-
-          if (match) {
-            cy.wrap(match).click()
-            return
-          }
-
-          // close the dropdown before reloading, so it doesn't stay open across it
-          cy.get('body').type('{esc}')
-
-          if (retries >= maxRetries) {
-            throw new Error(
-              `Merchant "${merchant}" not found in the quick-order merchant filter list after ${maxRetries} reload(s) — the merchant search index may not have finished syncing.`
-            )
-          }
-
-          cy.log(
-            `Merchant "${merchant}" not found in filter list yet. Reloading... [${retries + 1}/${maxRetries}]`
-          )
-          cy.reload()
-          cy.wait(5000)
-          trySelectMerchant(retries + 1)
+        if (hasOption) {
+          cy.wrap($select).select(merchant, { force: true })
+          return
         }
-      )
+
+        if (retries >= maxRetries) {
+          throw new Error(
+            `Merchant "${merchant}" not found in the quick-order merchant filter after ${maxRetries} reload(s) — the merchant search index may not have finished syncing.`
+          )
+        }
+
+        cy.log(
+          `Merchant "${merchant}" not found in filter yet. Reloading... [${retries + 1}/${maxRetries}]`
+        )
+        cy.reload()
+        cy.wait(5000)
+        trySelectMerchant(retries + 1)
+      })
     }
 
     trySelectMerchant()
