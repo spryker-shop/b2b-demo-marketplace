@@ -197,7 +197,7 @@ jobs:
 
             -   uses: ramsey/composer-install@v3
                 with:
-                    composer-options: "-q --ignore-platform-reqs --no-interaction --prefer-install=auto"
+                    composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
 
             -   name: Run docker
                 run: |
