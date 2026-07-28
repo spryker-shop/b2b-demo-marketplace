@@ -4,7 +4,24 @@
     metaTitle: _view.productSet.metaTitle,
 } %}
 
-{% block pageInfo %}{% endblock %}
+{% block pageInfo %}
+    <div class="page-info">
+        <div class="container">
+            {% block breadcrumbs %}
+                {% include molecule('breadcrumb') with {
+                    data: {
+                        steps: [
+                            {
+                                label: 'product.sets' | trans,
+                                url: url('product-sets')
+                            },
+                        ]
+                    }
+                } only %}
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}
 
 {% block content %}
     {% set images = [] %}
