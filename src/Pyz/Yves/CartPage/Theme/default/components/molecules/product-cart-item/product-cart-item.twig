@@ -137,7 +137,7 @@
                             <button
                                 type="button"
                                 class="{{ config.name }}__context-item {{ config.jsName }}__context-item{% if hasNote %} {{ config.name }}__context-item--filled{% endif %}"
-                                data-trigger-target=".js-cart-item-note__edit, .js-cart-item-note__trigger"
+                                {% if not hasNote %}data-trigger-target=".js-cart-item-note__trigger" data-focus-target=".js-cart-item-note__content textarea"{% endif %}
                             >
                                 {% include atom('font-icon') with { class: config.name ~ '__context-glyph', data: { name: 'mode_comment' } } only %}
                                 <span class="{{ config.name }}__context-text">
