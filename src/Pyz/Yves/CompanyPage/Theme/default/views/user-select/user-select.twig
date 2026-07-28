@@ -3,8 +3,23 @@
 {% define data = {
     form: _view.form,
     title: 'company_user.change_company_user' | trans,
-    activePage: 'change-company-user'
+    activePage: 'change-company-user',
 } %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'customer.account' | trans,
+                    url: url('customer/overview')
+                }, {
+                    label: 'company_user.change_company_user' | trans
+                }
+            ]
+        }
+    } only %}
+{% endblock %}
 
 {% block customerContent %}
     {% include molecule('action-bar', 'ShopUi') with {
@@ -14,24 +29,15 @@
         }
     } only %}
 
-    <div class="box">
-        {% include molecule('form') with {
-            data: {
-                form: data.form,
-                options: {
-                    action: url('company/user/select')
-                },
-                layout: {
-                    companyUserAccount: 'col col--sm-12 col--lg-8'
-                },
-                submit: {
-                    enable: true,
-                    class: 'button'
-                },
-                cancel: {
-                    enable: false
-                }
-            }
-        } only %}
-    </div>
+    {% include molecule('form') with {
+        data: {
+            form: data.form,
+            options: {
+                action: url('company/user/select'),
+            },
+            submit: {
+                enable: true,
+            },
+        },
+    } only %}
 {% endblock %}

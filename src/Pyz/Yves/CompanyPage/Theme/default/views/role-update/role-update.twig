@@ -1,5 +1,27 @@
 {% extends view('role-update', '@SprykerShop:CompanyPage') %}
 
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'company.account.page-title' | trans,
+                    url: url('company/overview'),
+                },
+                {
+                    label: data.title,
+                    url: url('company/company-role')
+                },
+                {
+                    label: 'company.account.company_role.edit_information' | trans({
+                        '%role_name%' : data.form.vars.value.name,
+                    }),
+                }
+            ]
+        }
+    } only %}
+{% endblock %}
+
 {% block companyContent %}
     {% include molecule('action-bar', 'ShopUi') with {
         modifiers: ['first', 'middle'],

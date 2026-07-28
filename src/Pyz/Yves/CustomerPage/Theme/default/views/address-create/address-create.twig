@@ -1,5 +1,9 @@
 {% extends view('address-create', '@SprykerShop:CustomerPage') %}
 
+{% define data = {
+    formType: 'new',
+} %}
+
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
         data: {
@@ -10,7 +14,7 @@
                 label: 'customer.account.default_address' | trans,
                 url: url('customer/address'),
             },{
-                label: 'customer.profile.address.edit' | trans,
+                label: ('customer.profile.address.breadcrumb.' ~ data.formType) | trans,
             }]
         }
     } only %}
@@ -20,7 +24,7 @@
     {% include molecule('action-bar') with {
         modifiers: ['first', 'middle'],
         data: {
-            title: 'customer.account.edit_address_information' | trans,
+            title: ('customer.profile.address.' ~ data.formType) | trans,
         },
     } only %}
 
