@@ -77,11 +77,41 @@ export class StorefrontQuickOrderPage extends AbstractPage {
       .click()
   }
 
-  selectMerchant = (merchant: string): void => {
-    this.getQuickOrderForm()
+  getMerchantFilterSelect = (): Cypress.Chainable => {
+    return this.getQuickOrderForm()
       .find('[data-qa="component custom-select"] select')
       .first()
-      .select(merchant, { force: true })
+  }
+
+  selectMerchant = (merchant: string, maxRetries = 3): void => {
+    const trySelectMerchant = (retries = 0): void => {
+      this.getMerchantFilterSelect().then(($select) => {
+        const hasOption = $select
+          .find('option')
+          .toArray()
+          .some((option) => option.textContent?.trim() === merchant)
+
+        if (hasOption) {
+          cy.wrap($select).select(merchant, { force: true })
+          return
+        }
+
+        if (retries >= maxRetries) {
+          throw new Error(
+            `Merchant "${merchant}" not found in the quick-order merchant filter after ${maxRetries} reload(s) — the merchant search index may not have finished syncing.`
+          )
+        }
+
+        cy.log(
+          `Merchant "${merchant}" not found in filter yet. Reloading... [${retries + 1}/${maxRetries}]`
+        )
+        cy.reload()
+        cy.wait(5000)
+        trySelectMerchant(retries + 1)
+      })
+    }
+
+    trySelectMerchant()
   }
 
   addToCart = (): Cypress.Chainable => {
