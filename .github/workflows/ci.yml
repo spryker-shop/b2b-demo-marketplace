@@ -757,6 +757,11 @@ jobs:
             -   name: Start queue worker
                 run: docker/sdk console queue:worker:start --stop-when-empty
 
+            -   name: Warm up merchant search index
+                run: |
+                    docker/sdk console sync:data merchant
+                    docker/sdk console queue:worker:start --stop-when-empty
+
             -   name: Run Cypress E2E tests
                 id: cypress-tests
                 working-directory: tests/cypress-boilerplate
