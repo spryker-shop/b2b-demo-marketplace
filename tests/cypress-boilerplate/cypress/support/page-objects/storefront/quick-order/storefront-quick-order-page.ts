@@ -86,24 +86,34 @@ export class StorefrontQuickOrderPage extends AbstractPage {
   selectMerchant = (merchant: string, maxRetries = 3): void => {
     const trySelectMerchant = (retries = 0): void => {
       this.getMerchantFilterSelect().then(($select) => {
-        const hasOption = $select
+        const availableOptions = $select
           .find('option')
           .toArray()
-          .some((option) => option.textContent?.trim() === merchant)
+          .map((option: { textContent: string }) => option.textContent?.trim())
+
+        const hasOption = availableOptions.some(
+          (optionText: string) => optionText === merchant
+        )
 
         if (hasOption) {
           cy.wrap($select).select(merchant, { force: true })
           return
         }
 
+        // surface exactly what the filter *did* contain — the previous, bare
+        // "not found" message gave no way to tell an empty/near-empty filter
+        // (search index genuinely not populated yet) apart from a filter that
+        // has other merchants but is specifically missing this one.
+        const optionsSummary = `[${availableOptions.join(', ')}]`
+
         if (retries >= maxRetries) {
           throw new Error(
-            `Merchant "${merchant}" not found in the quick-order merchant filter after ${maxRetries} reload(s) — the merchant search index may not have finished syncing.`
+            `Merchant "${merchant}" not found in the quick-order merchant filter after ${maxRetries} reload(s) — the merchant search index may not have finished syncing. Options present at last attempt: ${optionsSummary}`
           )
         }
 
         cy.log(
-          `Merchant "${merchant}" not found in filter yet. Reloading... [${retries + 1}/${maxRetries}]`
+          `Merchant "${merchant}" not found in filter yet. Options present: ${optionsSummary}. Reloading... [${retries + 1}/${maxRetries}]`
         )
         cy.reload()
         cy.wait(5000)
