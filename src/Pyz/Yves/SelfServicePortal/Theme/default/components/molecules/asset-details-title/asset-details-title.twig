@@ -5,14 +5,21 @@
         modifiers: ['first', 'middle'],
         data: {
             title:  data.title,
+            titleQa: 'ssp-asset-details-title',
             actions: [
                 {
                     block: block('unassign'),
-                    block: block('edit'),
                 },
+                {
+                    block: block('edit'),
+                }
             ],
         },
     } only %}
+
+    {% block popup %}
+        {{ parent() }}
+    {% endblock %}
 {% endblock %}
 
 {% block unassign %}
