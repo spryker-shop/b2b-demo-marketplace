@@ -26035,16 +26035,16 @@
         },
         {
             "name": "spryker/api-platform",
-            "version": "1.22.0",
+            "version": "1.24.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/api-platform.git",
-                "reference": "bf88347cc227c20627c74866852c4ab6f11f34d9"
+                "reference": "16c4314cc6fc2f340594ff75e3e49bf76408aff0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/api-platform/zipball/bf88347cc227c20627c74866852c4ab6f11f34d9",
-                "reference": "bf88347cc227c20627c74866852c4ab6f11f34d9",
+                "url": "https://api.github.com/repos/spryker/api-platform/zipball/16c4314cc6fc2f340594ff75e3e49bf76408aff0",
+                "reference": "16c4314cc6fc2f340594ff75e3e49bf76408aff0",
                 "shasum": ""
             },
             "require": {
@@ -26066,6 +26066,7 @@
                 "api-platform/validator": "^4.3.0",
                 "friendsofcxml/cxml-php": "^2.0.0",
                 "php": ">=8.3",
+                "spryker/doctrine-inflector": "^1.0.0 || ^2.0.0",
                 "spryker/entity-tag": "^1.0.0",
                 "spryker/glossary-storage": "^1.0.0",
                 "spryker/kernel": "^3.48.0",
@@ -26082,10 +26083,14 @@
                 "symfony/security-bundle": "^6.0.0 || ^7.0.0",
                 "symfony/yaml": "^6.0.0 || ^7.0.0"
             },
+            "conflict": {
+                "spryker/serializer": "<1.1.1"
+            },
             "require-dev": {
                 "spryker/code-sniffer": "*",
                 "spryker/console": "*",
                 "spryker/container": "*",
+                "spryker/decimal-object": "*",
                 "spryker/symfony": "*",
                 "spryker/testify": "*",
                 "symfony/framework-bundle": "*"
@@ -26093,7 +26098,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "1.23.x-dev"
                 }
             },
             "autoload": {
@@ -26114,9 +26119,9 @@
                 "spryker"
             ],
             "support": {
-                "source": "https://github.com/spryker/api-platform/tree/1.22.0"
+                "source": "https://github.com/spryker/api-platform/tree/1.24.0"
             },
-            "time": "2026-06-23T06:59:07+00:00"
+            "time": "2026-07-29T12:27:42+00:00"
         },
         {
             "name": "spryker/app-catalog-gui",
@@ -71563,16 +71568,16 @@
         },
         {
             "name": "spryker/serializer",
-            "version": "1.0.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/serializer.git",
-                "reference": "364f93c8375d358cfb5ebc003f6accf8e8b799d2"
+                "reference": "5290d3989d4d749f837ab992e4f31d65a73d67c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/serializer/zipball/364f93c8375d358cfb5ebc003f6accf8e8b799d2",
-                "reference": "364f93c8375d358cfb5ebc003f6accf8e8b799d2",
+                "url": "https://api.github.com/repos/spryker/serializer/zipball/5290d3989d4d749f837ab992e4f31d65a73d67c9",
+                "reference": "5290d3989d4d749f837ab992e4f31d65a73d67c9",
                 "shasum": ""
             },
             "require": {
@@ -71584,12 +71589,13 @@
             },
             "require-dev": {
                 "spryker/code-sniffer": "*",
+                "spryker/decimal-object": "*",
                 "spryker/testify": "*"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "1.1.x-dev"
                 }
             },
             "autoload": {
@@ -71603,9 +71609,9 @@
             ],
             "description": "Serializer module",
             "support": {
-                "source": "https://github.com/spryker/serializer/tree/1.0.0"
+                "source": "https://github.com/spryker/serializer/tree/1.1.1"
             },
-            "time": "2026-04-23T15:09:57+00:00"
+            "time": "2026-07-29T04:51:54+00:00"
         },
         {
             "name": "spryker/serializer-extension",
@@ -93131,5 +93137,5 @@
     "platform-overrides": {
         "php": "8.3.13"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
