@@ -22,14 +22,11 @@
         }
 
         &__name {
+            @include typography(label-sm);
             flex: 1 1 auto;
             min-width: 0;
             overflow: hidden;
             color: var(--text-primary);
-            font-family: var(--label-sm-family);
-            font-size: rem(var(--label-sm-size));
-            font-weight: var(--label-sm-weight);
-            line-height: rem(var(--label-sm-line-height));
             text-overflow: ellipsis;
             white-space: nowrap;
         }
@@ -44,14 +41,11 @@
         }
 
         &__price {
+            @include typography(label-sm-semibold);
             display: inline-flex;
             flex: 0 1 auto;
             align-items: baseline;
             gap: var(--scale-4);
-            font-family: var(--label-sm-semibold-family);
-            font-size: rem(var(--label-sm-semibold-size));
-            font-weight: var(--label-sm-semibold-weight);
-            line-height: rem(var(--label-sm-semibold-line-height));
             text-align: right;
         }
 
@@ -131,15 +125,12 @@
         }
 
         &__menu-option {
+            @include typography(body-sm);
             display: flex;
             align-items: center;
             justify-content: flex-start;
             padding: var(--scale-6) var(--scale-8);
             color: var(--text-primary);
-            font-family: var(--body-sm-family);
-            font-size: rem(var(--body-sm-size));
-            font-weight: var(--font-weight-regular);
-            line-height: rem(var(--body-sm-line-height));
             text-decoration: none;
             white-space: nowrap;
 

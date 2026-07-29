@@ -2,13 +2,11 @@ import Component from 'ShopUi/models/component';
 
 export default class StickyBodyToggler extends Component {
     protected triggers: HTMLElement[];
-    protected body: HTMLElement;
 
     protected readyCallback(): void {}
 
     protected init(): void {
         this.triggers = <HTMLElement[]>Array.from(document.getElementsByClassName(this.triggerClassName));
-        this.body = <HTMLElement>document.body;
         this.mapEvents();
     }
 
@@ -18,24 +16,38 @@ export default class StickyBodyToggler extends Component {
         });
     }
 
-    protected toggleStickyBody(): void {
-        const isBodySticky = this.body.classList.contains(this.classToFixBody);
+    lock(): void {
+        const offset = window.scrollY;
 
-        if (isBodySticky) {
-            const scrollToVal = parseInt(this.body.dataset.scrollTo);
+        document.body.style.top = `${-offset}px`;
+        document.body.dataset.scrollTo = offset.toString();
+        document.body.classList.add(this.classToFixBody);
+    }
 
-            this.body.style.top = '0';
-            this.body.classList.remove(this.classToFixBody);
-            window.scrollTo(0, scrollToVal);
+    unlock(): void {
+        if (!this.isLocked) {
+            return;
+        }
+
+        const scrollTo = parseInt(document.body.dataset.scrollTo || '0') || 0;
+
+        document.body.style.top = '0';
+        document.body.classList.remove(this.classToFixBody);
+        window.scrollTo(0, scrollTo);
+    }
+
+    toggleStickyBody(): void {
+        if (this.isLocked) {
+            this.unlock();
 
             return;
         }
 
-        const offset = window.scrollY;
+        this.lock();
+    }
 
-        this.body.style.top = `${-offset}px`;
-        this.body.classList.add(this.classToFixBody);
-        this.body.dataset.scrollTo = offset.toString();
+    get isLocked(): boolean {
+        return document.body.classList.contains(this.classToFixBody);
     }
 
     protected get triggerClassName(): string {

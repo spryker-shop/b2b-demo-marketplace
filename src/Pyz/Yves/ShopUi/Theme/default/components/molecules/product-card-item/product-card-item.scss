@@ -144,9 +144,7 @@ $dropdown-top-indent: calc(100% + #{rem(15)});
         }
 
         &__title {
-            font-size: var(--font-size-14);
-            font-weight: var(--font-weight-medium);
-            line-height: var(--font-line-height-20);
+            @include typography(label-md);
             color: var(--text-primary);
             margin-bottom: 0;
             text-decoration: none;
@@ -157,9 +155,7 @@ $dropdown-top-indent: calc(100% + #{rem(15)});
             overflow: hidden;
 
             @include helper-breakpoint-media-min($lg) {
-                font-size: var(--heading-sm-size);
-                font-weight: var(--heading-sm-weight);
-                line-height: var(--heading-sm-line-height);
+                @include typography(heading-sm);
             }
 
             &--shopping-list-alternative {

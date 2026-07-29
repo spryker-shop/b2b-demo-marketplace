@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\CartReorder;
 
+use Pyz\Zed\ServicePointCart\Communication\Plugin\CartReorder\ServicePointCartReorderItemHydratorPlugin;
 use Spryker\Zed\AvailabilityCartConnector\Communication\Plugin\CartReorder\RemoveUnavailableItemsCartReorderPreAddToCartPlugin;
 use Spryker\Zed\CartNote\Communication\Plugin\CartReorder\CartNoteCartPreReorderPlugin;
 use Spryker\Zed\CartNote\Communication\Plugin\CartReorder\CartNoteCartReorderItemHydratorPlugin;
@@ -140,6 +141,7 @@ class CartReorderDependencyProvider extends SprykerCartReorderDependencyProvider
             new ProductOfferCartReorderItemHydratorPlugin(),
             new MerchantProductCartReorderItemHydratorPlugin(),
             new MerchantProductOfferCartReorderItemHydratorPlugin(),
+            new ServicePointCartReorderItemHydratorPlugin(),
             new ProductConfigurationCartReorderItemHydratorPlugin(),
             new ProductOptionCartReorderItemHydratorPlugin(),
             new ConfigurableBundleCartReorderItemHydratorPlugin(),

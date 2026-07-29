@@ -77,11 +77,8 @@
     }
 
     &__subtitle--name {
+        @include typography(body-sm);
         color: var(--text-secondary);
-        font-family: var(--body-sm-family);
-        font-size: var(--body-sm-size);
-        font-weight: var(--font-weight-regular);
-        line-height: var(--body-sm-line-height);
         text-decoration: none;
     }
 
@@ -239,15 +236,12 @@
     }
 
     &--cart &__data-row {
+        @include typography(body-sm);
         display: flex;
         flex-wrap: nowrap;
         align-items: center;
         min-width: 0;
         gap: 0;
-        font-family: var(--body-sm-family);
-        font-size: var(--body-sm-size);
-        font-weight: var(--font-weight-regular);
-        line-height: var(--body-sm-line-height);
         color: var(--text-secondary);
     }
 

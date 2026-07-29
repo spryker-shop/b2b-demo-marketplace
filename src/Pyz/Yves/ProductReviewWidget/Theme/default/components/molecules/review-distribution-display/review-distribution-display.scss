@@ -7,14 +7,11 @@
         }
 
         &__summary-stars {
+            @include typography(label-sm-semibold);
             width: rem(56);
             padding-right: var(--scale-12);
             padding-bottom: var(--scale-12);
             color: var(--text-primary);
-            font-family: var(--label-sm-semibold-family);
-            font-size: rem(var(--label-sm-semibold-size));
-            font-weight: var(--label-sm-semibold-weight);
-            line-height: rem(var(--label-sm-semibold-line-height));
             white-space: nowrap;
         }
 
@@ -40,8 +37,8 @@
             padding-bottom: var(--scale-12);
             color: var(--text-secondary);
             font-family: var(--body-sm-family);
-            font-size: rem(var(--body-sm-size));
-            line-height: rem(var(--body-sm-line-height));
+            font-size: var(--body-sm-size);
+            line-height: var(--body-sm-line-height);
             text-align: right;
             white-space: nowrap;
         }

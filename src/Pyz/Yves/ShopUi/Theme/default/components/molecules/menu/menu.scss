@@ -29,11 +29,6 @@
                 }
             }
 
-            &--filter-enumeration {
-                margin: 0;
-                line-height: var(--font-line-height-20);
-            }
-
             &--social {
                 margin: 0 var(--scale-8);
 
@@ -45,12 +40,6 @@
                     margin-right: 0;
                 }
             }
-        }
-
-        &:has(&__item--filter-enumeration) {
-            display: flex;
-            flex-direction: column;
-            gap: var(--scale-8);
         }
 
         &--social {
