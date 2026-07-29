@@ -31,7 +31,7 @@
                         <div class="{{ config.name }}__merchant-info">
                             <img class="{{ config.name }}__merchant-logo" src="{{ data.merchantStorageProfile.logoUrl }}" alt="">                            
                             <div class="{{ config.name }}__merchant-description">
-                                <h2 class="{{ config.name }}__merchant-name">{{ data.merchantName }}</h2>
+                                <h2 class="{{ config.name }}__merchant-name" {{ qa('merchant-profile-name') }}>{{ data.merchantName }}</h2>
                                 <div class="spacing-bottom">
                                     {{ descriptionGlossaryValue }}
                                 </div>
@@ -58,6 +58,7 @@
                     {% set informationArticles = informationArticles|merge([{
                         'title': 'merchant_profile.terms_and_conditions' | trans,
                         'text': termsConditionsGlossaryValue,
+                        'qa': 'merchant-profile-terms-and-conditions',
                     }]) %}
                 {% endif %}
                 {% set cancellationPolicyGlossaryValue = (data.merchantStorageProfile.cancellationPolicyGlossaryKey ?: '') | trans %}
@@ -67,6 +68,7 @@
                     {% set informationArticles = informationArticles|merge([{
                         'title': 'merchant_profile.cancellation_policy' | trans,
                         'text': cancellationPolicyGlossaryValue,
+                        'qa': 'merchant-profile-cancellation-policy',
                     }]) %}
                 {% endif %}
                 {% set imprintGlossaryValue = (data.merchantStorageProfile.imprintGlossaryKey ?: '') | trans %}
@@ -76,6 +78,7 @@
                     {% set informationArticles = informationArticles|merge([{
                         'title': 'merchant_profile.imprint' | trans,
                         'text': imprintGlossaryValue,
+                        'qa': 'merchant-profile-imprint',
                     }]) %}
                 {% endif %}
                 {% set dataPrivacyGlossaryValue = (data.merchantStorageProfile.dataPrivacyGlossaryKey ?: '') | trans %}
@@ -85,13 +88,14 @@
                     {% set informationArticles = informationArticles|merge([{
                         'title': 'merchant_profile.privacy' | trans,
                         'text': dataPrivacyGlossaryValue,
+                        'qa': 'merchant-profile-data-privacy',
                     }]) %}
                 {% endif %}
                 
                 {% for informationArticle in informationArticles %}
                     {% block additionalInformation %}
-                        <details class="{{ config.name }}__details" {{ loop.first ? 'open' : ''}}>
-                            <summary class="{{ config.name }}__toggle">
+                        <details class="{{ config.name }}__details" {{ qa(informationArticle.qa) }} {{ loop.first ? 'open' : ''}}>
+                            <summary class="{{ config.name }}__toggle" {{ qa(informationArticle.qa ~ '-toggle') }}>
                                 <span class="{{ config.name }}__toggle-label {{ config.name }}__toggle-label--collapse">
                                     {{ informationArticle.title }}
                                 </span>
@@ -102,7 +106,7 @@
                                 } only %}
                             </summary>
 
-                            <div class="{{ config.name }}__content">
+                            <div class="{{ config.name }}__content" {{ qa(informationArticle.qa ~ '-value') }}>
                                 {{ informationArticle.text | raw  }}
                             </div>
                         </details>

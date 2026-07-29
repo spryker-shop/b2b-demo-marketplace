@@ -15,8 +15,8 @@
     box box--alternative
 {% endblock %}
 
-{% macro item(name, icon, title, text) %}
-    <div class="{{ name }}__item">
+{% macro item(name, icon, title, text, qaName) %}
+    <div class="{{ name }}__item" {{ qa(qaName) }}>
         <div class="{{ name }}__icon">
             {% include atom('font-icon') with {
                 modifiers: ['font-inherit'],
@@ -28,7 +28,7 @@
 
         <div class="{{ name }}__content">
             <strong class="{{ name }}__title">{{ title }}</strong>
-            <div class="{{ name }}__text">{{ text }}</div>
+            <div class="{{ name }}__text" {{ qa(qaName ~ '-value') }}>{{ text }}</div>
         </div>
     </div>
 {% endmacro %}
@@ -42,13 +42,13 @@
                 <a href="mailto:{{ emailValue }}" class="link link--info">{{ emailValue }}</a>
             {% endset %}
 
-            {{ _self.item(config.name, 'email', 'merchant_profile.email' | trans, emailText) }}
+            {{ _self.item(config.name, 'email', 'merchant_profile.email' | trans, emailText, 'merchant-profile-email') }}
         {% endif %}
     {% endblock %}
 
     {% block phone %}
         {% if data.phone %}
-            {{ _self.item(config.name, 'phone', 'merchant_profile.phone' | trans, data.phone | trans) }}
+            {{ _self.item(config.name, 'phone', 'merchant_profile.phone' | trans, data.phone | trans, 'merchant-profile-phone') }}
         {% endif %}
     {% endblock %}
 
@@ -63,7 +63,7 @@
                 {% endfor %}
             {% endset %}
 
-            {{ _self.item(config.name, 'location_on', 'merchant_profile.address' | trans, addressText) }}
+            {{ _self.item(config.name, 'location_on', 'merchant_profile.address' | trans, addressText, 'merchant-profile-address') }}
         {% endif %}
     {% endblock %}
 
@@ -73,7 +73,7 @@
             ? data.deliveryTime != deliveryTimeGlossaryValue %}
 
         {% if hasDeliveryTimeTranslation %}
-            {{ _self.item(config.name, 'schedule', 'merchant_profile.delivery_time' | trans, deliveryTimeGlossaryValue) }}
+            {{ _self.item(config.name, 'schedule', 'merchant_profile.delivery_time' | trans, deliveryTimeGlossaryValue, 'merchant-profile-delivery-time') }}
         {% endif %}
     {% endblock %}
 {% endblock %}
