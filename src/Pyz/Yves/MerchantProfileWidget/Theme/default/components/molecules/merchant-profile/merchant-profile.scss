@@ -66,6 +66,12 @@
             margin: var(--scale-24) 0 var(--scale-48);
         }
 
+        &__merchant-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--scale-8);
+        }
+
         &__merchant-description {
             @include typography(body-md);
             flex-grow: 1;

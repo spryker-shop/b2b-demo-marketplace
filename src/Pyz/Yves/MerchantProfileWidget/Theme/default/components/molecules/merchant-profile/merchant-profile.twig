@@ -32,16 +32,28 @@
                             <img class="{{ config.name }}__merchant-logo" src="{{ data.merchantStorageProfile.logoUrl }}" alt="">                            
                             <div class="{{ config.name }}__merchant-description">
                                 <h2 class="{{ config.name }}__merchant-name" {{ qa('merchant-profile-name') }}>{{ data.merchantName }}</h2>
-                                <div class="spacing-bottom">
+                                <div class="spacing-bottom--biggest">
                                     {{ descriptionGlossaryValue }}
                                 </div>
-                                {% if data.merchantName is defined and data.merchantName is not empty %}
-                                    {% widget 'MerchantSearchLinkWidget' args [data.merchantName] with {
-                                        data: {
-                                            classes: '',
-                                        },
-                                    } only %}{% endwidget %}
-                                {% endif %}
+                                <div class="{{ config.name }}__merchant-actions">
+                                    {% if data.merchantName is defined and data.merchantName is not empty %}
+                                        {% widget 'MerchantSearchLinkWidget' args [data.merchantName] with {
+                                            data: {
+                                                classes: '',
+                                            },
+                                        } only %}{% endwidget %}
+                                    {% endif %}
+
+                                    {% block merchantRelationRequestCreateButton %}
+                                        {% widget 'MerchantRelationRequestCreateButtonWidget' args [data.merchantReference] only %}
+                                            {% block body %}
+                                                {% block button %}
+                                                    {{ parent() }}
+                                                {% endblock %}
+                                            {% endblock %}
+                                        {% endwidget %}
+                                    {% endblock %}
+                                </div>
                             </div>
                         </div>
                     {% endblock %}
