@@ -58,6 +58,7 @@ context('Order management', () => {
       userCredentials.backofficeUser.password
     )
     backofficeOrderListPage.visit()
+    backofficeOrderListPage.filterOrdersByReference(createdOrderReference)
     // verify that the order placed in before hook exists in BO as the first order in the list
     backofficeOrderListPage
       .getOrderReference(0)
@@ -93,6 +94,7 @@ context('Order management', () => {
       userCredentials.backofficeUser.password
     )
     backofficeOrderListPage.visit()
+    backofficeOrderListPage.filterOrdersByReference(createdOrderReference)
     // verify that the order placed in before hook exists in BO as the first order in the list
     backofficeOrderListPage
       .getOrderReference(0)

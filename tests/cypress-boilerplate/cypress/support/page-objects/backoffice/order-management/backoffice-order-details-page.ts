@@ -23,8 +23,10 @@ export class BackofficeOrderDetailsPage extends AbstractPage {
     return this.getOrderOverview().find('.subtotal-row')
   }
 
-  getOmsTriggers = (): Cypress.Chainable => {
-    return cy.get(omsTriggerForm)
+  getOmsTriggers = (
+    options?: Partial<Cypress.Timeoutable>
+  ): Cypress.Chainable => {
+    return cy.get(omsTriggerForm, options)
   }
 
   private getOrderFlashMessages = (): Cypress.Chainable => {
@@ -40,6 +42,22 @@ export class BackofficeOrderDetailsPage extends AbstractPage {
       .contains(triggerName, { timeout: 10000 })
       .should('be.visible')
       .click()
+
+    this.getOmsTriggers({ timeout: 10000 }).should(($triggers) => {
+      const stillPresent = $triggers
+        .find('button')
+        .toArray()
+        .some(
+          (button: HTMLButtonElement) =>
+            button.innerText.trim().toLowerCase() ===
+            triggerName.trim().toLowerCase()
+        )
+
+      expect(
+        stillPresent,
+        `Trigger "${triggerName}" is still present after clicking it — the OMS transition may not have taken effect yet.`
+      ).to.eq(false)
+    })
   }
 
   private getOrderItems = (): Cypress.Chainable => {

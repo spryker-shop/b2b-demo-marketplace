@@ -11,12 +11,28 @@ export class BackofficeOrderListPage extends AbstractPage {
       .eq(orderPosition)
   }
 
+  getOrderSearchInput = (): Cypress.Chainable => {
+    return cy
+      .get('[data-qa="data-table"]')
+      .closest('.dt-container')
+      .find('.dt-search input[type="search"]')
+  }
+
+  filterOrdersByReference = (orderReference: string): Cypress.Chainable => {
+    this.getOrderSearchInput().clear().type(orderReference)
+    return cy
+      .get('[data-qa="data-table"]')
+      .find('tbody')
+      .find('tr')
+      .should('contain', orderReference, { timeout: 10000 })
+  }
+
   getOrderInTableByReference = (orderReference: string): Cypress.Chainable => {
     return cy
       .get('[data-qa="data-table"]')
       .find('tbody')
       .find('tr')
-      .contains(orderReference)
+      .contains(orderReference, { timeout: 10000 })
   }
 
   getOrderReference = (orderPosition: number): Cypress.Chainable => {
@@ -40,6 +56,7 @@ export class BackofficeOrderListPage extends AbstractPage {
   }
 
   viewOrderByReference = (orderReference: string): void => {
+    this.filterOrdersByReference(orderReference)
     this.getOrderViewButtonByReference(orderReference).click()
   }
 }

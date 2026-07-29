@@ -69,6 +69,7 @@ context('Merchant Order management', () => {
       userCredentials.backofficeUser.password
     )
     backofficeOrderListPage.visit()
+    backofficeOrderListPage.filterOrdersByReference(createdOrderReference)
     backofficeOrderListPage.viewOrderByReference(createdOrderReference)
     omsTransitionScenarios.triggerOmsTransition()
     omsTransitionScenarios.waitForOrderProcessing('grace period started', 20)
@@ -97,10 +98,7 @@ context('Merchant Order management', () => {
     // now navigate to orders page
     merchantOrderListPage.visit()
     // verify that the order placed in before hook exists and was passed to merchant
-    merchantOrderListPage
-      .getOrderInTableByReference(createdOrderReference)
-      .should('exist')
-      .click()
+    merchantOrderListPage.viewOrderByReference(createdOrderReference)
     // check that price for the product is still as it was in the shop
     merchantOrderDetailsPage
       .getOrderSubTotals()
