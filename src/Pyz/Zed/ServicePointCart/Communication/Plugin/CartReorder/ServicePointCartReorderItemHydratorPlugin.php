@@ -56,6 +56,9 @@ class ServicePointCartReorderItemHydratorPlugin extends AbstractPlugin implement
         return $cartReorderTransfer;
     }
 
+    /**
+     * @SuppressWarnings(NPathComplexity) Must not be used as a code example.
+     */
     protected function expandItemWithServiceDetails(ItemTransfer $itemTransfer): void
     {
         $productOfferEntity = SpyProductOfferQuery::create()
