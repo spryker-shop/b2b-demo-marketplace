@@ -15,7 +15,7 @@ use SprykerShop\Yves\StorageRouter\StorageRouterConfig as SprykerStorageRouterCo
 class StorageRouterConfig extends SprykerStorageRouterConfig
 {
     /**
-     * @SuppressWarnings(LocatorInDependencyProviderOnlyRule) Legacy code. Must not be used as a code example.
+     * @SuppressWarnings(LocatorInDependencyProviderOnlyRule) Must not be used as a code example.
      *
      * @return array<string>
      */

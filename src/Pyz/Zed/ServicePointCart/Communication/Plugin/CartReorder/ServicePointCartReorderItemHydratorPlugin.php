@@ -57,7 +57,7 @@ class ServicePointCartReorderItemHydratorPlugin extends AbstractPlugin implement
     }
 
     /**
-     * @SuppressWarnings(NPathComplexity) Legacy code. Must not be used as a code example.
+     * @SuppressWarnings(NPathComplexity) Must not be used as a code example.
      */
     protected function expandItemWithServiceDetails(ItemTransfer $itemTransfer): void
     {

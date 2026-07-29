@@ -71,7 +71,7 @@ class PunchoutDemoConnectionCreateConsole extends Console
     }
 
     /**
-     * @SuppressWarnings(OrmNewEntityNotInCommunicationRule) Legacy code. Must not be used as a code example.
+     * @SuppressWarnings(OrmNewEntityNotInCommunicationRule) Must not be used as a code example.
      */
     protected function createCxmlConnection(OutputInterface $output, int $idStore): void
     {
@@ -103,7 +103,7 @@ class PunchoutDemoConnectionCreateConsole extends Console
     }
 
     /**
-     * @SuppressWarnings(OrmNewEntityNotInCommunicationRule) Legacy code. Must not be used as a code example.
+     * @SuppressWarnings(OrmNewEntityNotInCommunicationRule) Must not be used as a code example.
      */
     protected function createOciConnection(OutputInterface $output, int $idStore): void
     {

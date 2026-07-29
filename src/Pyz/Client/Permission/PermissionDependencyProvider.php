@@ -76,7 +76,7 @@ class PermissionDependencyProvider extends SprykerPermissionDependencyProvider
     }
 
     /**
-     * @SuppressWarnings(LayerAccessRule) Legacy code. Must not be used as a code example.
+     * @SuppressWarnings(LayerAccessRule) Must not be used as a code example.
      *
      * @return array<\Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface>
      */

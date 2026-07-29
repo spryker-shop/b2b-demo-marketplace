@@ -183,7 +183,7 @@ class OauthDependencyProvider extends SprykerOauthDependencyProvider
     }
 
     /**
-     * @SuppressWarnings(LayerAccessRule) Legacy code. Must not be used as a code example.
+     * @SuppressWarnings(LayerAccessRule) Must not be used as a code example.
      *
      * @return array<\Spryker\Glue\OauthExtension\Dependency\Plugin\ScopeCollectorPluginInterface>
      */
@@ -196,7 +196,7 @@ class OauthDependencyProvider extends SprykerOauthDependencyProvider
     }
 
     /**
-     * @SuppressWarnings(LayerAccessRule) Legacy code. Must not be used as a code example.
+     * @SuppressWarnings(LayerAccessRule) Must not be used as a code example.
      *
      * @return array<\Spryker\Glue\OauthExtension\Dependency\Plugin\ScopeFinderPluginInterface>
      */

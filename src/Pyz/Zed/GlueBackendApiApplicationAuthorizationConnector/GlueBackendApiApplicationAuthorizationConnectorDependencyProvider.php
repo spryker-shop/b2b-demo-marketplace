@@ -15,7 +15,7 @@ use Spryker\Zed\GlueBackendApiApplicationAuthorizationConnector\GlueBackendApiAp
 class GlueBackendApiApplicationAuthorizationConnectorDependencyProvider extends SprykerGlueBackendApiApplicationAuthorizationConnectorDependencyProvider
 {
     /**
-     * @SuppressWarnings(LayerAccessRule) Legacy code. Must not be used as a code example.
+     * @SuppressWarnings(LayerAccessRule) Must not be used as a code example.
      *
      * @return array<\Spryker\Zed\GlueBackendApiApplicationAuthorizationConnectorExtension\Dependency\Plugin\ProtectedPathCollectionExpanderPluginInterface>
      */
