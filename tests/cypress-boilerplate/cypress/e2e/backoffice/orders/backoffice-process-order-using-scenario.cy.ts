@@ -67,6 +67,10 @@ context('Order management', () => {
     backofficeOrderDetailsPage
       .getOrderSubtotal()
       .should('contain', productData.availableOffer.price)
+    // if the tests are run on an env without active scheduler, we will need to trigger oms transition using CLI commands
+    // make sure the location from which you run cypress tests has access to Spryker env
+    omsTransitionScenarios.triggerOmsTransition()
+    omsTransitionScenarios.waitForOrderProcessing('grace period started', 20)
     // clicks the oms trigger with the name 'skip grace period'
     omsTransitionScenarios.triggerOmsEvent(
       createdOrderReference,

@@ -11,6 +11,8 @@ import userCredentials from '@fixtures/user-data.json'
 import { MerchantLoginPage } from '@support/page-objects/merchant-portal/login/merchant-portal-login-page'
 import { MerchantOrderListPage } from '@support/page-objects/merchant-portal/order-management/merchant-portal-order-list-page'
 import { MerchantOrderDetailsPage } from '@support/page-objects/merchant-portal/order-management/merchant-portal-order-details-page'
+import { BackofficeLoginPage } from '@support/page-objects/backoffice/login/backoffice-login-page'
+import { BackofficeOrderListPage } from '@support/page-objects/backoffice/order-management/backoffice-order-list-page'
 import { GlueCheckoutScenarios } from '@support/scenarios/glue/glue-checkout-scenarios'
 import { GlueAddressesScenarios } from '@support/scenarios/glue/glue-addresses-scenarios'
 import { OmsTransitionScenarios } from '@support/scenarios/backoffice/oms-transition-scenarios'
@@ -19,6 +21,8 @@ import { GlueCartsScenarios } from '@support/scenarios/glue/glue-carts-scenarios
 const merchantLoginPage = new MerchantLoginPage()
 const merchantOrderListPage = new MerchantOrderListPage()
 const merchantOrderDetailsPage = new MerchantOrderDetailsPage()
+const backofficeLoginPage = new BackofficeLoginPage()
+const backofficeOrderListPage = new BackofficeOrderListPage()
 const glueCheckoutScenarios = new GlueCheckoutScenarios()
 const glueAddressesScenarios = new GlueAddressesScenarios()
 const omsTransitionScenarios = new OmsTransitionScenarios()
@@ -60,6 +64,14 @@ context('Merchant Order management', () => {
     // if the tests are run on an env without active scheduler, we will need to trigger oms transition using CLI commands
     // make sure the location from which you run cypress tests has access to Spryker env
     omsTransitionScenarios.triggerOmsTransition()
+    backofficeLoginPage.login(
+      userCredentials.backofficeUser.email,
+      userCredentials.backofficeUser.password
+    )
+    backofficeOrderListPage.visit()
+    backofficeOrderListPage.viewOrderByReference(createdOrderReference)
+    omsTransitionScenarios.triggerOmsTransition()
+    omsTransitionScenarios.waitForOrderProcessing('grace period started', 20)
     // clicks the oms trigger with the name 'skip grace period'
     omsTransitionScenarios.triggerOmsEvent(
       createdOrderReference,

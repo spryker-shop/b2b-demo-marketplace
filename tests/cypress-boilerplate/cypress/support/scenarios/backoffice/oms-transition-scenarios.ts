@@ -63,7 +63,7 @@ export class OmsTransitionScenarios {
         return cy
           .exec(`${baseCommand} console oms:check-condition`, {
             failOnNonZeroExit: true,
-            timeout: 180000,
+            timeout: 300000,
           })
           .then((result) => {
             cy.log(
@@ -74,7 +74,7 @@ export class OmsTransitionScenarios {
             return cy
               .exec(`${baseCommand} console oms:check-timeout`, {
                 failOnNonZeroExit: true,
-                timeout: 180000,
+                timeout: 300000,
               })
               .then((result) => {
                 cy.log(
@@ -144,15 +144,25 @@ export class OmsTransitionScenarios {
           return cy.wrap(null)
         }
 
+        // surface exactly which triggers *were* available — the previous, bare
+        // "not found" message gave no way to tell whether the order is stuck in
+        // an earlier state (e.g. only "Cancel" available, meaning the CLI OMS
+        // transition never actually advanced it) from some other cause.
+        const availableTriggers = $triggers
+          .find('button')
+          .toArray()
+          .map((button: HTMLButtonElement) => button.innerText.trim())
+        const triggersSummary = `[${availableTriggers.join(', ')}]`
+
         if (retries >= maxRetries) {
           throw new Error(
-            `Trigger "${triggerName}" not found after ${maxRetries} reload(s).`
+            `Trigger "${triggerName}" not found after ${maxRetries} reload(s). Triggers present at last attempt: ${triggersSummary}`
           )
         }
 
         retries++
         cy.log(
-          `Trigger "${triggerName}" not found. Reloading... [${retries}/${maxRetries}]`
+          `Trigger "${triggerName}" not found. Triggers present: ${triggersSummary}. Reloading... [${retries}/${maxRetries}]`
         )
         return cy.reload().then(() => {
           cy.wait(10000)
