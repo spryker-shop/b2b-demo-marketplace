@@ -33,7 +33,7 @@
             {% set hasWritePermission = can('WriteShoppingListPermissionPlugin', shoppingList.idShoppingList) %}
             <tr>
                 {% if data.enableTableForm %}
-                    <td class="transform-cell transform-cell--no-label spacing-top spacing-top--inner spacing-top--big">
+                    <td class="transform-cell transform-cell--no-label">
                         {% include atom('checkbox') with {
                             attributes: {
                                 name: 'shoppingLists[]',
@@ -43,8 +43,8 @@
                         } only %}
                     </td>
                 {% endif %}
-                <td class="transform-cell spacing-top spacing-top--inner spacing-top--big" data-content="{{ 'customer.account.shopping_list.overview.name' | trans }}">
-                    <a class="title title--link spacing spacing--reset" href="{{ path('shopping-list/details', { idShoppingList: shoppingList.idShoppingList }) }}">{{ shoppingList.name }}</a>
+                <td class="transform-cell" data-content="{{ 'customer.account.shopping_list.overview.name' | trans }}">
+                    <a class="title title--link" href="{{ path('shopping-list/details', { idShoppingList: shoppingList.idShoppingList }) }}">{{ shoppingList.name }}</a>
                 </td>
                 <td class="transform-cell" data-content="{{ 'customer.account.shopping_list.overview.owner' | trans }}">{{ shoppingList.owner }}</td>
                 <td class="transform-cell" data-content="{{ 'customer.account.shopping_list.overview.created_date' | trans }}">{{ shoppingList.createdAt | formatDate }}</td>
@@ -55,7 +55,7 @@
                         }
                     } only %}
                 </td>
-                <td class="transform-cell spacing-bottom spacing-bottom--inner spacing-bottom--big" data-content="{{ 'customer.account.shopping_list.overview.item_count' | trans }}">
+                <td class="transform-cell" data-content="{{ 'customer.account.shopping_list.overview.item_count' | trans }}">
                     <span class="badge badge--shopping-list">
                         {{ shoppingList.numberOfItems | default(0) | executeFilterIfExists('formatInt', app.locale) }}
                         {{ 'checkout.step.summary.items' | trans }}

@@ -2,10 +2,8 @@
 
 {% block salesReturnContentTitle %}
     {% include molecule('action-bar') with {
-        modifiers: ['first'],
         data: {
             title: 'return_page.list.title' | trans,
-            actions: [],
         },
     } only %}
 {% endblock %}
