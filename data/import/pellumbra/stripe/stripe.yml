@@ -1,0 +1,18 @@
+# Project-local Stripe import.
+#
+# The vendor recipe (vendor/spryker-eco/stripe/data/import/stripe.yml) ships a
+# payment_method_store.csv hardcoded to the demoshop stores DE/AT, which aborts the
+# import with "Store not found: DE" once the project stores are PL/UA.
+#
+# Only the store ASSIGNMENT is project-specific, so the two store-agnostic entities are
+# imported straight from the vendor paths (they resolve in-container at import time, when
+# vendor/ exists) and payment-method-store comes from the local file next to this one.
+version: 0
+
+actions:
+  - data_entity: payment-method
+    source: vendor/spryker-eco/stripe/data/import/payment_method.csv
+  - data_entity: payment-method-store
+    source: data/import/pellumbra/stripe/payment_method_store.csv
+  - data_entity: glossary
+    source: vendor/spryker-eco/stripe/data/import/glossary.csv

@@ -231,6 +231,7 @@ const getAppSettingsByTheme = (namespaceConfig, theme, pathToConfig) => {
                     join(globalSettings.context, paths.features),
                     join(globalSettings.context, paths.eco),
                     join(globalSettings.context, paths.project),
+                    join(globalSettings.context, './src/Plmb/Yves'),
                 ],
                 // files/dirs patterns
                 patterns: customThemeEntryPointPatterns(),
@@ -261,7 +262,10 @@ const getAppSettingsByTheme = (namespaceConfig, theme, pathToConfig) => {
 
             // entry point patterns (application files)
             shopUiEntryPoints: {
-                dirs: [join(globalSettings.context, paths.project)],
+                dirs: [
+                    join(globalSettings.context, paths.project),
+                    join(globalSettings.context, './src/Plmb/Yves'),
+                ],
                 patterns: [...shopUiEntryPointsPattern()],
                 fallbackPatterns: [...shopUiEntryPointsPattern(true)],
             },

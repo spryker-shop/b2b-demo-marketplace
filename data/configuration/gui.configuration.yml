@@ -1,0 +1,82 @@
+# yaml-language-server: $schema=../../../../Spryker/Configuration/resources/configuration/configuration-schema-v1.json
+#
+# Project override of spryker/gui's Back Office theme, applying the Pellumbra palette.
+# Without this file the Back Office keeps Spryker's default teal (#1ebea0) and slate sidebar.
+#
+# These keys are injected as CSS custom properties into :root by
+# vendor/spryker/gui/src/Spryker/Zed/Gui/Presentation/Partials/theme-styles.twig
+# (underscores become hyphens: bo_main_color -> --bo-main-color) and consumed by
+# vendor/spryker/gui/src/Spryker/Gui/assets/Zed/sass/_variables.scss.
+features:
+    - key: theme
+      name: Theme
+      description: Visual branding settings for Storefront, Back Office, and Merchant Portal
+      enabled: true
+      order: 10
+      tabs:
+          - key: backoffice
+            name: Back Office
+            icon: admin_panel_settings
+            description: Back Office theme color
+            order: 3
+            enabled: true
+            groups:
+                - key: colors
+                  name: Back Office Colors
+                  scopes:
+                      - global
+                      - store
+                  enabled: true
+                  settings:
+                      # Accent gold, not the near-black brand primary: this drives buttons, links and
+                      # active states, and #1A1720 would be unreadable as an action colour on white.
+                      - key: bo_main_color
+                        name: Backoffice Theme Color
+                        description: Primary theme color for the Back Office interface
+                        type: color
+                        default_value: '#c08a3e'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: false
+                        constraints:
+                            - type: regex
+                              message: 'Must be a valid hex color (e.g. #1ebea0)'
+                              options:
+                                  pattern: '/^#[0-9A-Fa-f]{6}$/'
+                      # Brand primary works well here - a dark sidebar is the shipped design intent.
+                      - key: bo_sidenav_color
+                        name: Backoffice Side Navigation Color
+                        description: Background color of the Back Office side navigation
+                        type: color
+                        default_value: '#1a1720'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: false
+                        constraints:
+                            - type: regex
+                              message: 'Must be a valid hex color (e.g. #23303c)'
+                              options:
+                                  pattern: '/^#[0-9A-Fa-f]{6}$/'
+                      # Cream from the logo palette, for contrast on the dark sidebar.
+                      - key: bo_sidenav_text_color
+                        name: Backoffice Side Navigation Text Color
+                        description: Text color of the Back Office side navigation
+                        type: color
+                        default_value: '#f4efe6'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: false
+                        constraints:
+                            - type: regex
+                              message: 'Must be a valid hex color (e.g. #e4e4e4)'
+                              options:
+                                  pattern: '/^#[0-9A-Fa-f]{6}$/'

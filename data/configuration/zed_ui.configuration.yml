@@ -1,0 +1,45 @@
+# yaml-language-server: $schema=../../../../Spryker/Configuration/resources/configuration/configuration-schema-v1.json
+#
+# Project override of spryker/zed-ui's Merchant Portal theme, applying the Pellumbra accent.
+# Without this file the Merchant Portal keeps Spryker's default teal (#1ebea0).
+#
+# NOTE the constraint pattern here has NO delimiters ('^#...$'), unlike gui.configuration.yml
+# which uses '/^#...$/'. That asymmetry is in the shipped vendor files - reproduced verbatim
+# so this override validates the same way the core one does.
+features:
+    - key: theme
+      name: Theme
+      description: Visual branding settings for Storefront, Back Office, and Merchant Portal
+      enabled: true
+      order: 10
+      tabs:
+          - key: merchant_portal
+            name: Merchant Portal
+            icon: storefront
+            description: Merchant Portal theme color
+            order: 4
+            enabled: true
+            groups:
+                - key: colors
+                  name: Merchant Portal Colors
+                  scopes:
+                      - global
+                      - store
+                  enabled: true
+                  settings:
+                      - key: spy_primary_color
+                        name: Merchant Portal Theme Color
+                        description: Primary theme color for the Merchant Portal interface
+                        type: color
+                        default_value: '#c08a3e'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: false
+                        constraints:
+                            - type: regex
+                              message: 'Must be a valid hex color (e.g. #1ebea0)'
+                              options:
+                                  pattern: '^#[0-9A-Fa-f]{6}$'

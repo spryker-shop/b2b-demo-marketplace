@@ -25,10 +25,9 @@ class CodeBucketConfig extends AbstractCodeBucketConfig
         }
 
         return [
-            'EU',
-            'US',
-            'DE',
-            'AT',
+            'EE',
+            'PL',
+            'UA',
         ];
     }
 

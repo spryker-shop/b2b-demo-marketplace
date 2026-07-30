@@ -1,6 +1,6 @@
 env:
     NEW_RELIC_ENABLED: 0
-    SPRYKER_CURRENT_REGION: EU
+    SPRYKER_CURRENT_REGION: EE
 
 command-timeout: 7200
 
@@ -66,7 +66,7 @@ sections:
             command: 'vendor/bin/console product:check-validity'
 
         stripe:
-            command: 'vendor/bin/console data:import --config=vendor/spryker-eco/stripe/data/import/stripe.yml -vvv --no-ansi'
+            command: 'vendor/bin/console data:import --config=data/import/pellumbra/stripe/stripe.yml -vvv --no-ansi'
 
         punchout:
             command: 'vendor/bin/console punchout-gateway:demo-connection:create'

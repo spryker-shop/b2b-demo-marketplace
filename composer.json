@@ -1,6 +1,6 @@
 {
-    "name": "spryker-shop/b2b-demo-marketplace",
-    "description": "Spryker B2B Marketplace Demo Shop",
+    "name": "pellumbra/shop",
+    "description": "Pellumbra — B2B marketplace for industrial MRO supplies (bearings, fasteners, lubricants, seals, tools, workshop consumables)",
     "license": "proprietary",
     "require": {
         "php": ">=8.3",
@@ -413,12 +413,14 @@
         "psr-4": {
             "Generated\\": "src/Generated/",
             "Orm\\": "src/Orm/",
+            "Plmb\\": "src/Plmb/",
             "Pyz\\": "src/Pyz/",
             "SprykerConfig\\": "src/SprykerConfig/"
         }
     },
     "autoload-dev": {
         "psr-4": {
+            "PlmbTest\\": "tests/PlmbTest/",
             "PyzTest\\": "tests/PyzTest/"
         },
         "files": [

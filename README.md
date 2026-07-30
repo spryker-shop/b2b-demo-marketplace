@@ -1,15 +1,23 @@
-# Spryker B2B Marketplace Demo Shop
-[![Build Status](https://github.com/spryker-shop/b2b-demo-marketplace/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/spryker-shop/b2b-demo-marketplace/actions?query=branch:master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker-shop/b2b-demo-marketplace/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spryker-shop/b2b-demo-marketplace/?branch=master)
+# Pellumbra
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.3-8892BF.svg)](https://php.net/)
 
 ## Description
 
-Spryker B2B Marketplace Demo Shop is a collection of Spryker Marketplace B2B-specific features. It suits most projects as a starting point of development and can be used to explore Spryker.
+Pellumbra is a B2B marketplace for industrial MRO supplies — bearings and transmission, fasteners,
+lubricants and chemicals, seals and fluid power, tools and abrasives, workshop consumables.
 
-## B2B Marketplace Demo Shop quick start
+Built on the Spryker Marketplace B2B stack.
 
-This section describes how to get started with the B2B Marketplace Demo Shop quickly.
+| | |
+|---|---|
+| Project namespace | `Plmb` (`src/Plmb`) — resolves ahead of the inherited `Pyz` layer |
+| Stores | `PL` (`pl_PL`/`en_US`, `PLN`/`EUR`) · `UA` (`uk_UA`/`en_US`, `UAH`/`EUR`) |
+| Deploy region | `EE` |
+| Local dev domain | `plmb.local` |
+
+## Quick start
+
+This section describes how to get started with Pellumbra locally.
 
 For detailed installation instructions, see [Install Spryker](https://docs.spryker.com/docs/dg/dev/set-up-spryker-locally/install-spryker/install-spryker.html).
 
