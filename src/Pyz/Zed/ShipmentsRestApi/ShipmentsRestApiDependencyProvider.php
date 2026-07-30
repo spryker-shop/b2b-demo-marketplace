@@ -33,6 +33,8 @@ class ShipmentsRestApiDependencyProvider extends SprykerShipmentsRestApiDependen
     }
 
     /**
+     * @SuppressWarnings(LayerAccessRule) Must not be used as a code example.
+     *
      * @return list<\Spryker\Zed\ShipmentsRestApiExtension\Dependency\Plugin\QuoteItemExpanderPluginInterface>
      */
     protected function getQuoteItemExpanderPlugins(): array

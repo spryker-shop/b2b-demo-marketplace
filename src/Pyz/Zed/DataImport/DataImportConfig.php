@@ -233,6 +233,11 @@ class DataImportConfig extends SprykerDataImportConfig
     public const IMPORT_TYPE_MERCHANT_USER = 'merchant-user';
 
     /**
+     * @var string
+     */
+    public const IMPORT_TYPE_SALES_ORDER = 'sales-order';
+
+    /**
      * @var int
      */
     protected const READ_COLLECTION_BATCH_SIZE = 500;
@@ -261,6 +266,7 @@ class DataImportConfig extends SprykerDataImportConfig
             SelfServicePortalConfig::IMPORT_TYPE_PRODUCT_SHIPMENT_TYPE,
             ProductOfferShoppingListDataImportConfig::IMPORT_TYPE_PRODUCT_OFFER_SHOPPING_LIST_ITEM,
             ConfigurationConfig::IMPORT_TYPE_CONFIGURATION_VALUE,
+            static::IMPORT_TYPE_SALES_ORDER,
         ];
 
         return array_merge(parent::getFullImportTypes(), $customImportTypes);
