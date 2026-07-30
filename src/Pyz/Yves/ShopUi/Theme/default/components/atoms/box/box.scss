@@ -5,8 +5,18 @@
     margin: 0;
 
     @include helper-breakpoint-media-min($lg) {
-        &:not(&--spacingless) {
-            padding: rem(32);
+        padding: rem(32);
+
+        &--spacingless {
+            padding: 0;
+        }
+
+        &--small {
+            padding: rem(16) rem(32);
+        }
+
+        &--smaller {
+            padding: rem(16) rem(20);
         }
     }
 
@@ -36,5 +46,12 @@
         border: none;
         border-bottom: rem(1) solid $setting-color-gray-1;
         margin: rem(15) rem(-20);
+    }
+
+    &--alternative {
+        background: var(--backgroud-page);
+        padding: var(--scale-20) var(--scale-24);
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-md);
     }
 }
