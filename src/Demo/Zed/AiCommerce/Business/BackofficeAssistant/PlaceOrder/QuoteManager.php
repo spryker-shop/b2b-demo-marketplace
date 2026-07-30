@@ -123,6 +123,10 @@ class QuoteManager implements QuoteManagerInterface
     /**
      * {@inheritDoc}
      *
+     * @SuppressWarnings(CyclomaticComplexity) PoC code. Must not be used as a code example.
+     *
+     * @SuppressWarnings(NPathComplexity) PoC code. Must not be used as a code example.
+     *
      * @param array<string, mixed> $arguments
      *
      * @return string

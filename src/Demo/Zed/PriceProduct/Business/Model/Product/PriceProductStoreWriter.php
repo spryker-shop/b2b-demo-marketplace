@@ -51,6 +51,14 @@ class PriceProductStoreWriter extends SprykerPriceProductStoreWriter
         return $priceProductTransfer;
     }
 
+    /**
+     * @SuppressWarnings(OrmAccessRule) PoC code. Must not be used as a code example.
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
+     *
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore
+     */
     protected function findPriceProductStoreEntity(
         PriceProductTransfer $priceProductTransfer,
         MoneyValueTransfer $moneyValueTransfer,
