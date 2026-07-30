@@ -1,9 +1,13 @@
 <?php
 
-namespace Plmb\Zed\CiProbe;
+/**
+ * This file is part of the Spryker Commerce OS.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
+ */
 
-use Plmb\Zed\Stock\StockConfig;
-use Spryker\Zed\Kernel\AbstractBundleConfig;
+declare(strict_types = 1);
+
+namespace Plmb\Zed\CiProbe;
 
 /**
  * ============================================================================
@@ -14,63 +18,97 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
  * .github/workflows/ci.yml actually fail the pipeline. It is not real code and
  * nothing references it.
  *
- * Expected CI result while this file is present - the "Static analysis" job FAILS at:
+ * ---------------------------------------------------------------------------
+ * STAGE 2: CODE STYLE CLEAN ON PURPOSE.
+ * ---------------------------------------------------------------------------
+ * Stage 1 (45 CS errors) already proved the `Run CodeStyle checks` step gates -
+ * observed red on GitHub, 45 errors affecting 38 lines, this file only.
  *
- *   Run CodeStyle checks   vendor/bin/console code:sniff:style
- *                          -> 41 errors (tabs, missing declare(strict_types),
- *                             no file doc block, unused import, snake_case method)
+ * The job stops at its FIRST failing step, and CS is step 12 of 20. So while CS
+ * was red, everything behind it never executed:
  *
- *   Run PHPStan            vendor/bin/phpstan analyze -l 6 -c phpstan.neon src/
- *                          -> 5 errors (missingType.return, missingType.parameter,
- *                             method.notFound, return.type, missingType.iterableValue)
+ *   13 Run Architecture rules vendor/bin/phpmd ... architecture-sniffer
+ *   14 Run Project Architecture rules vendor/bin/phpmd ... phpmd.xml
+ *   17 Run PHPStan vendor/bin/phpstan analyze -l 6
  *
- * The job runs its steps in order and stops at the first failure, so the CS step
- * fails first; PHPStan is reached only once the CS errors are removed.
+ * This file is now CS-clean (and phpmd-clean) so the job walks past those steps
+ * and PHPStan can be proven independently.
  *
- * `php -l` still passes - the file is syntactically valid on purpose, so the failure
- * comes from the analysers rather than a parse error.
+ * Expected CI result while this file is present - `Static analysis` FAILS at:
  *
- * Once the red run is observed: delete src/Plmb/Zed/CiProbe/ and confirm the job
- * goes green again.
+ *   Run PHPStan -> 4 errors:
+ *                     method.notFound calls a method that does not exist
+ *                     return.type declared int, returns string
+ *                     argument.type passes string where int is declared
+ *                     missingType.iterableValue `@return array` with no value type
+ *
+ * NOTE ON WHAT CANNOT BE PROVEN HERE: the `missingType.parameter` and
+ * `missingType.return` errors from stage 1 are gone by construction. Spryker CS
+ * REQUIRES `@param`/`@return` doc blocks on every method, and those annotations
+ * are exactly what PHPStan reads to infer the types - so a CS-clean file cannot
+ * carry a missing-type error. The two checks genuinely overlap there; CS already
+ * covers it.
+ *
+ * `php -l` still passes - the file is syntactically valid on purpose, so the
+ * failure comes from the analyser rather than a parse error.
+ *
+ * Once the red PHPStan run is observed: delete src/Plmb/Zed/CiProbe/ and confirm
+ * the whole job goes green.
  */
 class CiProbe
 {
-	/**
-	 * CS: tab indentation, no declare(strict_types), snake_case method name.
-	 * PHPStan L6: no return type, no param type.
-	 */
-	public function do_the_thing($input)
-	{
-		$unused = 'never read';
+    /**
+     * PHPStan L6: calls a method that does not exist on this class.
+     *
+     * Deliberately on `$this` rather than on a collaborator: instantiating a
+     * resolvable Spryker class with `new` trips phpmd's InstanceResolvingRule
+     * (step 14, "Run Project Architecture rules"), which runs BEFORE PHPStan and
+     * would block this probe from ever reaching the step it is meant to test.
+     *
+     * @return string
+     */
+    public function callsAMethodThatDoesNotExist(): string
+    {
+        return $this->thisMethodDoesNotExistAnywhere();
+    }
 
-		return $input;
-	}
+    /**
+     * PHPStan L6: declared to return int, actually returns a string.
+     *
+     * @return int
+     */
+    public function returnsTheWrongType(): int
+    {
+        return 'definitely not an int';
+    }
 
-	/**
-	 * PHPStan L6: calls a method that does not exist on StockConfig.
-	 */
-	public function callsAMethodThatDoesNotExist(): string
-	{
-		$config = new StockConfig();
+    /**
+     * PHPStan L6: passes a string into a parameter declared as int.
+     *
+     * @return string
+     */
+    public function passesTheWrongArgumentType(): string
+    {
+        return $this->formatNumber('not an int');
+    }
 
-		return $config->thisMethodDoesNotExistAnywhere();
-	}
+    /**
+     * PHPStan L6: array return type with no value type specified.
+     *
+     * @return array
+     */
+    public function untypedArray(): array
+    {
+        return [1, 'two', 3.0];
+    }
 
-	/**
-	 * PHPStan L6: declared to return int, actually returns a string.
-	 */
-	public function returnsTheWrongType(): int
-	{
-		return 'definitely not an int';
-	}
-
-	/**
-	 * PHPStan L6: array return type with no value type specified.
-	 *
-	 * @return array
-	 */
-	public function untypedArray(): array
-	{
-		return [1, 'two', 3.0];
-	}
+    /**
+     * @param int $number
+     *
+     * @return string
+     */
+    protected function formatNumber(int $number): string
+    {
+        return (string)$number;
+    }
 }
