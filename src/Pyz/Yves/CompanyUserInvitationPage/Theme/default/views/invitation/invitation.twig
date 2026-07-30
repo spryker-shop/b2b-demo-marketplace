@@ -36,10 +36,9 @@
 
 {% block companyContent %}
      {% include molecule('action-bar') with {
-        modifiers: ['first', 'middle'],
         data: {
-            title: 'company.user.invitation.import.title' | trans
-        }
+            title: 'company.user.invitation.import.title' | trans,
+        },
     } only %}
 
     {% include molecule('form') with {

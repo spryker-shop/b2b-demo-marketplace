@@ -22,8 +22,7 @@
 
 {% block companyContent %}
     {% block budgetHeader %}
-        {% include molecule('action-bar', 'ShopUi') with {
-            modifiers: ['first', 'middle'],
+        {% include molecule('action-bar') with {
             data: {
                 title: 'purchasing_control.budget.list.title' | trans,
                 actions: (can('ManageCostCentersPermissionPlugin') ? [

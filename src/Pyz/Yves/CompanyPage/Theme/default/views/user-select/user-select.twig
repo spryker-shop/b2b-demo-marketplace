@@ -22,11 +22,10 @@
 {% endblock %}
 
 {% block customerContent %}
-    {% include molecule('action-bar', 'ShopUi') with {
-        modifiers: ['first', 'middle'],
+    {% include molecule('action-bar') with {
         data: {
-            title: 'company_user.change_company_user' | trans
-        }
+            title: 'company_user.change_company_user' | trans,
+        },
     } only %}
 
     {% include molecule('form') with {

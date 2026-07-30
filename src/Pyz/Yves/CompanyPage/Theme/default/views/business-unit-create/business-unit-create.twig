@@ -44,8 +44,7 @@
     } only %}
         {% block title %}
             {% if data.title is not empty %}
-                {% include molecule('action-bar', 'ShopUi') with {
-                    modifiers: ['first', 'middle'],
+                {% include molecule('action-bar') with {
                     data: {
                         title: 'company.account.business_unit.create' | trans,
                     },

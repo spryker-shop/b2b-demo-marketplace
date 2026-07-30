@@ -8,10 +8,9 @@
 
 {% block companyContent %}
     {% include molecule('action-bar') with {
-        modifiers: ['first', 'middle'],
         data: {
-            title: 'company.user.invitation.resend.title' | trans
-        }
+            title: 'company.user.invitation.resend.title' | trans,
+        },
     } only %}
     {{ "company.user.invitation.resend.confirmation.question" | trans }}<br><br>
 

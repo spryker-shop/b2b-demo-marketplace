@@ -21,8 +21,7 @@
 {% endblock %}
 
 {% block companyContent %}
-    {% include molecule('action-bar', 'ShopUi') with {
-        modifiers: ['first', 'middle'],
+    {% include molecule('action-bar') with {
         data: {
             title: data.title ~ ' "' ~ data.costCenter.name ~ '"',
         },

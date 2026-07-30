@@ -3,8 +3,7 @@
 {% block companyContent %}
     {% block relationsHeading %}
         {% include molecule('action-bar') with {
-            class: 'spacing-bottom',
-            modifiers: ['first', 'middle'],
+            modifiers: ['small'],
             data: {
                 title: 'merchant_relationship_page.merchant_relationsip_detail' | trans,
             }
@@ -20,8 +19,7 @@
 
     {% block relationsLogo %}
         {% include molecule('action-bar') with {
-            class: 'spacing-bottom',
-            modifiers: ['middle'],
+            modifiers: ['small'],
             data: {
                 title: 'merchant_relationship_page.merchant_relationship.merchant' | trans,
             }
@@ -55,8 +53,7 @@
 
     {% block relationsDesctiption %}
         {% include molecule('action-bar') with {
-            class: 'spacing-bottom',
-            modifiers: ['middle'],
+            modifiers: ['small'],
             data: {
                 title: 'merchant_relationship_page.merchant_relationsip_detail.company_details' | trans,
             }

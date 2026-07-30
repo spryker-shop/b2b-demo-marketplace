@@ -22,7 +22,6 @@
 
 {% block customerContent %}
     {% include molecule('action-bar') with {
-        modifiers: ['first', 'middle'],
         data: {
             title: ('customer.profile.address.' ~ data.formType) | trans,
         },

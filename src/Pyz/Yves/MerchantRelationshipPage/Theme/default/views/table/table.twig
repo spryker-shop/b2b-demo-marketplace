@@ -5,8 +5,7 @@
 {% block merchantRelationshipPaginationSeparator %}{% endblock %}
 
 {% block companyContent %}
-    {% include molecule('action-bar', 'ShopUi') with {
-        modifiers: ['first', 'middle'],
+    {% include molecule('action-bar') with {
         data: {
             title: 'company.account.merchant_relations' | trans,
         },

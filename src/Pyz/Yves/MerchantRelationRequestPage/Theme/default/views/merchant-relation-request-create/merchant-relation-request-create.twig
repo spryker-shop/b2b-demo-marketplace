@@ -27,8 +27,7 @@
 {% block additionalDetailsSeparator %}{% endblock %}
 
 {% block companyContent %}
-    {% include molecule('action-bar', 'ShopUi') with {
-        modifiers: ['first', 'middle'],
+    {% include molecule('action-bar') with {
         data: {
             title: 'merchant_relation_request_page.merchant_relation_request.title_create' | trans,
         },

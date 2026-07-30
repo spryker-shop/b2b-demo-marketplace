@@ -22,7 +22,6 @@
 
 {% block customerContent %}
     {% include molecule('action-bar') with {
-        modifiers: ['first', 'middle'],
         data: {
             title: 'multi_cart.form.edit' | trans ~ ' «' ~ data.form.vars.value.name ~ '»',
         },

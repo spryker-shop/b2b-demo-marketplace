@@ -2,7 +2,6 @@
 
 {% block customerContent %}
     {% include molecule('action-bar') with {
-        modifiers: ['first', 'middle'],
         data: {
             title: 'customer.account.shopping_list.create_from_cart.form_title' | trans({
                 '%cart_name%' : data.cart.name,
