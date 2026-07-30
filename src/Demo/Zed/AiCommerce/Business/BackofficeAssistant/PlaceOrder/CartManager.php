@@ -108,6 +108,8 @@ class CartManager implements CartManagerInterface
     /**
      * {@inheritDoc}
      *
+     * @SuppressWarnings(NPathComplexity) PoC code. Must not be used as a code example.
+     *
      * @param array<string, mixed> $arguments
      */
     public function updateCartItem(array $arguments): string
@@ -212,6 +214,8 @@ class CartManager implements CartManagerInterface
 
     /**
      * {@inheritDoc}
+     *
+     * @SuppressWarnings(NPathComplexity) PoC code. Must not be used as a code example.
      *
      * @param array<string, mixed> $arguments
      */
