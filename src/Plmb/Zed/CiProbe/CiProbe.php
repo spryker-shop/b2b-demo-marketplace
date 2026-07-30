@@ -9,6 +9,8 @@ declare(strict_types = 1);
 
 namespace Plmb\Zed\CiProbe;
 
+use Plmb\Zed\Stock\StockConfig;
+
 /**
  * ============================================================================
  * DELIBERATELY BROKEN - CI PROBE. DELETE THIS FILE.
@@ -19,28 +21,44 @@ namespace Plmb\Zed\CiProbe;
  * nothing references it.
  *
  * ---------------------------------------------------------------------------
- * STAGE 2: CODE STYLE CLEAN ON PURPOSE.
+ * WHY THIS IS PROVEN ONE GATE PER RUN
  * ---------------------------------------------------------------------------
- * Stage 1 (45 CS errors) already proved the `Run CodeStyle checks` step gates -
- * observed red on GitHub, 45 errors affecting 38 lines, this file only.
+ * The job runs its 20 steps in order and STOPS AT THE FIRST FAILURE. So a single
+ * red run only ever proves the FIRST gate it reaches; everything behind it never
+ * executes. Proving four gates therefore takes four runs, each one clean up to
+ * the gate under test:
  *
- * The job stops at its FIRST failing step, and CS is step 12 of 20. So while CS
- * was red, everything behind it never executed:
+ * - step 12 "Run CodeStyle checks" = vendor/bin/console code:sniff:style
+ * - step 13 "Run Architecture rules" = phpmd with the architecture-sniffer ruleset
+ * - step 14 "Run Project Architecture rules" = phpmd with the project phpmd.xml
+ * - step 17 "Run PHPStan" = phpstan analyze -l 6
  *
- *   13 Run Architecture rules vendor/bin/phpmd ... architecture-sniffer
- *   14 Run Project Architecture rules vendor/bin/phpmd ... phpmd.xml
- *   17 Run PHPStan vendor/bin/phpstan analyze -l 6
+ * PROVEN SO FAR (all observed red on GitHub, this file the only one flagged):
  *
- * This file is now CS-clean (and phpmd-clean) so the job walks past those steps
- * and PHPStan can be proven independently.
+ * - stage 1, step 12, CS, run 30548532240: 45 errors affecting 38 lines
+ * - stage 2, step 17, PHPStan, run 30549369253: 4 errors (listed below)
+ * - stage 3, step 14, phpmd: InstanceResolvingRule, 1 violation (CURRENT)
  *
- * Expected CI result while this file is present - `Static analysis` FAILS at:
+ * STILL UNPROVEN: step 13 (architecture-sniffer, priority 2) has only ever been
+ * observed PASSING. Passing is not evidence that it gates.
  *
- *   Run PHPStan -> 4 errors:
- *                     method.notFound calls a method that does not exist
- *                     return.type declared int, returns string
- *                     argument.type passes string where int is declared
- *                     missingType.iterableValue `@return array` with no value type
+ * ---------------------------------------------------------------------------
+ * CURRENT STAGE: 3 - fails at step 14, phpmd `phpmd.xml`.
+ * ---------------------------------------------------------------------------
+ * instantiatesAResolvableClassDirectly() trips InstanceResolvingRule. Steps 12
+ * and 13 are deliberately CLEAN so the failure lands exactly on 14 (verified
+ * locally: phpcs exit 0, architecture-sniffer exit 0, phpmd.xml 1 violation).
+ *
+ * Since 14 precedes 17, the PHPStan errors below are NOT reached in this stage.
+ * That is fine - they were already proven in stage 2:
+ *
+ * - method.notFound: calls a method that does not exist
+ * - return.type: declared int, returns string
+ * - argument.type: passes string where int is declared
+ * - missingType.iterableValue: `@return array` with no value type
+ *
+ * TO MOVE ON: delete instantiatesAResolvableClassDirectly() (and the now-unused
+ * StockConfig import) and the failure hands back to PHPStan at step 17.
  *
  * NOTE ON WHAT CANNOT BE PROVEN HERE: the `missingType.parameter` and
  * `missingType.return` errors from stage 1 are gone by construction. Spryker CS
@@ -52,18 +70,36 @@ namespace Plmb\Zed\CiProbe;
  * `php -l` still passes - the file is syntactically valid on purpose, so the
  * failure comes from the analyser rather than a parse error.
  *
- * Once the red PHPStan run is observed: delete src/Plmb/Zed/CiProbe/ and confirm
- * the whole job goes green.
+ * WHEN ALL GATES ARE PROVEN: delete src/Plmb/Zed/CiProbe/ and confirm the whole
+ * job goes green.
  */
 class CiProbe
 {
     /**
+     * phpmd `phpmd.xml` InstanceResolvingRule (step 14, "Run Project Architecture rules"):
+     * an automatically-resolved Spryker class must not be instantiated with `new` -
+     * it should come from a Dependency Provider / resolver.
+     *
+     * STAGE 3 ONLY. This is the method that proves step 14 gates. Because step 14
+     * runs BEFORE PHPStan (step 17), this method makes the job fail at 14 and the
+     * PHPStan errors below are never reached - that is expected: PHPStan was already
+     * proven red in run 30549369253 with all 4 errors.
+     *
+     * Delete this ONE method to hand the failure back to PHPStan.
+     *
+     * @return \Plmb\Zed\Stock\StockConfig
+     */
+    public function instantiatesAResolvableClassDirectly(): StockConfig
+    {
+        return new StockConfig();
+    }
+
+    /**
      * PHPStan L6: calls a method that does not exist on this class.
      *
-     * Deliberately on `$this` rather than on a collaborator: instantiating a
-     * resolvable Spryker class with `new` trips phpmd's InstanceResolvingRule
-     * (step 14, "Run Project Architecture rules"), which runs BEFORE PHPStan and
-     * would block this probe from ever reaching the step it is meant to test.
+     * Deliberately on `$this` rather than on a collaborator - see
+     * instantiatesAResolvableClassDirectly() above for why a `new` here would
+     * short-circuit the job at step 14 instead.
      *
      * @return string
      */
