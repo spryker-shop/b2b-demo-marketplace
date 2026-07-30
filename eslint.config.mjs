@@ -43,7 +43,11 @@ export default [
     {
         files: [
             'src/{Pyz,SprykerShop,SprykerFeature}/*/src/{Pyz,SprykerShop,SprykerFeature}/Yves/**/*.ts',
-            'src/{Pyz,Plmb}/Yves/**/*.ts',
+            // Plmb only, deliberately NOT Pyz: the upstream pattern above is a vendor-module path
+            // shape, so it never matched src/Pyz/Yves/**. Adding Pyz here retroactively subjects
+            // the shipped Pyz storybook/theme TS to this block's strict rules (no-magic-numbers,
+            // max-lines) and reddens 39 errors in files this project never touched.
+            'src/Plmb/Yves/**/*.ts',
         ],
         languageOptions: {
             parser: typescriptParser,

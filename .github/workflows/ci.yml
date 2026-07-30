@@ -53,6 +53,13 @@ jobs:
             APPLICATION_STORE: PL
             PROJECT: suite
             SPRYKER_CURRENT_REGION: EE
+            # This project is DMS: stores live in the database, not in config/Shared/stores.php.
+            # Without this flag the deprecated legacy Store bootstraps (Environment::defineLocale)
+            # and requires a `PL` key in the still-shipped config/Shared/stores.php, whose hardcoded
+            # fallback only defines DE/AT/US -> "Missing setup for store: PL" on the first console
+            # call. Docker supplies SPRYKER_ACTIVE_STORES from the deploy file, but this job runs
+            # console on the bare runner, so the flag has to be set here.
+            SPRYKER_DYNAMIC_STORE_MODE: true
             COMPOSER_IGNORE_CHROMEDRIVER: 1
 
         steps:
