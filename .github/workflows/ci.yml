@@ -294,6 +294,13 @@ jobs:
                     docker/sdk console sync:data merchant
                     docker/sdk console queue:worker:start --stop-when-empty
 
+            # this job doesn't depend on the old spryker/cypress-tests package (installed
+            # to tests/cypress-tests/ by composer-install above) at all — delete it before
+            # running the suite to prove that, and to stay correct once that package is
+            # dropped from composer.json for good.
+            -   name: Remove old cypress-tests package folder
+                run: rm -rf tests/cypress-tests
+
             -   name: Run Cypress E2E tests
                 id: cypress-tests
                 working-directory: tests/cypress-boilerplate
