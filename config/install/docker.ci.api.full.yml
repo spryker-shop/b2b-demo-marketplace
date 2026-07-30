@@ -103,8 +103,11 @@ sections:
         queue-setup:
             command: 'vendor/bin/console queue:setup'
 
-        import-eu-region-demodata:
-            command: 'vendor/bin/console data:import --config=data/import/local/full_EU.yml'
+        # Region-templated, matching config/install/docker.yml. The shipped value was a hardcoded
+        # full_EU.yml; this project's region is EE, so that path does not exist and the install
+        # aborted with `Could not open Yaml file "data/import/local/full_EU.yml"`.
+        import-demodata:
+            command: 'vendor/bin/console data:import --config=data/import/local/full_${SPRYKER_REGION}.yml'
 
         setup-search-create-sources:
             command: 'vendor/bin/console search:setup:sources'
