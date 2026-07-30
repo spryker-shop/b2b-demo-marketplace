@@ -198,19 +198,19 @@ class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
              * Plugins
              * `UpdateOrderByQuoteCheckoutDoSaveOrderPlugin`,
              * `OrderTotalsSaverPlugin`,
-             * `ShipmentTypeCheckoutDoSaveOrderPlugin`
              * `ReplaceSalesOrderDiscountsCheckoutDoSaveOrderPlugin`
              * `ReplaceSalesOrderShipmentCheckoutDoSaveOrderPlugin`,
+             * `ShipmentTypeCheckoutDoSaveOrderPlugin`
              * `SalesOrderAmendmentItemsCheckoutDoSaveOrderPlugin`,
              * must be enabled in the strict order.
              */
             new UpdateOrderByQuoteCheckoutDoSaveOrderPlugin(),
             new OrderTotalsSaverPlugin(),
             new ReleaseUsedCodesCheckoutDoSaveOrderPlugin(),
-            new ShipmentTypeCheckoutDoSaveOrderPlugin(),
             new UpdateCartNoteCheckoutDoSaveOrderPlugin(), #CartNoteFeature
             new ReplaceSalesOrderDiscountsCheckoutDoSaveOrderPlugin(),
             new ReplaceSalesOrderShipmentCheckoutDoSaveOrderPlugin(),
+            new ShipmentTypeCheckoutDoSaveOrderPlugin(),
             new SalesOrderAmendmentQuoteCheckoutDoSaveOrderPlugin(),
             new SalesOrderAmendmentItemsCheckoutDoSaveOrderPlugin(),
             new ProductBundleOrderSaverPlugin(),
