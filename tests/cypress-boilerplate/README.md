@@ -81,6 +81,18 @@ If the environment is not provided at launch, by default `local` environment wil
 npx cypress open
 ```
 
+This is equivalent to explicitly passing `local`:
+
+```bash
+npx cypress open --env environment=local
+```
+
+Or, using the npm script shortcut for the same thing:
+
+```bash
+npm run cy:open
+```
+
 And this is an example of opening tests against `staging` environment:
 
 ```bash
@@ -97,6 +109,12 @@ npx cypress run --env environment=staging
 Run all tests in a headless mode vs `local` environment without using Cypress UI
 
 ```bash
+npx cypress run --env environment=local
+```
+
+Or, using the npm script shortcut for the same thing:
+
+```bash
 npm run cy:run
 ```
 
@@ -104,6 +122,26 @@ Run all tests within `docker/sdk` in a headless mode vs `local` environment with
 
 ```bash
 docker/sdk exec cypress npm run cy:run:docker
+```
+
+#### Running a single spec file
+
+To run one specific spec (or a comma-separated list of specs) instead of the whole suite, pass `--spec` with a path relative to this directory. This works with both `cypress open` and `cypress run`, and with any `environment` value:
+
+```bash
+npx cypress run --env environment=local --spec "cypress/e2e/storefront/checkout/storefront-checkout.cy.ts"
+```
+
+Glob patterns are also supported, e.g. to run every spec under a feature folder:
+
+```bash
+npx cypress run --env environment=local --spec "cypress/e2e/storefront/cart/*.cy.ts"
+```
+
+To run more than one specific spec in a single run, separate the paths with a comma:
+
+```bash
+npx cypress run --env environment=local --spec "cypress/e2e/storefront/checkout/storefront-checkout.cy.ts,cypress/e2e/storefront/cart/storefront-cart-smoke.cy.ts"
 ```
 
 ### 4. Code Quality Checks
@@ -119,6 +157,8 @@ Fix code formatting
 ```bash
 npm run code:fix
 ```
+
+These same two checks (`lint:check` and `prettier:check`) run in CI on every push/PR as the **"Cypress-boilerplate / Lint & Format"** job (`cypress-quality-gate` in `.github/workflows/ci.yml`). It's intentionally a separate, fast, Docker-independent job that the E2E job depends on — a lint or formatting violation fails here in seconds, before the E2E job spends time booting the full Docker/SDK acceptance stack.
 
 ### 5. Test Reports
 
