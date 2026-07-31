@@ -18,6 +18,12 @@
         },
         {
           "type": "helper",
+          "name": "haveLocale",
+          "key": "locale",
+          "arguments": [{ "localeName": "{{LOCALE_NAME}}" }]
+        },
+        {
+          "type": "helper",
           "name": "haveConfirmedCustomer",
           "key": "customer",
           "arguments": [
@@ -86,7 +92,18 @@
           "type": "helper",
           "name": "haveFullProduct",
           "key": "product",
-          "arguments": [{}, { "idTaxSet": "#taxSet.id_tax_set" }]
+          "arguments": [
+            {},
+            {
+              "idTaxSet": "#taxSet.id_tax_set",
+              "localizedAttributes": [
+                {
+                  "name": "{{QUICK_ORDER_PRODUCT_NAME}}",
+                  "locale": "#locale"
+                }
+              ]
+            }
+          ]
         },
         {
           "type": "helper",

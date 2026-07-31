@@ -38,6 +38,16 @@ const storefrontCartScenarios = new StorefrontCartScenarios()
 let dynamicFixtures: QuickOrderDynamicFixtures
 let staticFixtures: QuickOrderStaticFixtures
 
+// The product name has to be searchable by the quick-order autocomplete, which never
+// returns haveFullProduct's own default (`uniqid('Product #', true)`, e.g.
+// "Product #6a6ccefaafff16.65668963"). The payload therefore takes the name as a
+// {{QUICK_ORDER_PRODUCT_NAME}} placeholder. It is set here at module scope — which runs when
+// the spec is loaded, before the root `before` hook in support/e2e.ts requests the fixtures —
+// and carries a timestamp so a previous run's product can never be matched instead of this
+// run's. If the ordering ever changed, fixture loading would fail loudly on the unresolved
+// placeholder rather than silently using a stale name.
+Cypress.env('QUICK_ORDER_PRODUCT_NAME', `Cypress Quick Order ${Date.now()}`)
+
 context('Quick order', () => {
   before(() => {
     ;({ dynamicFixtures, staticFixtures } = getFixtures<
@@ -78,16 +88,7 @@ context('Quick order', () => {
       .should('contain', dynamicFixtures.product.sku)
   })
 
-  // SKIPPED — pending a decision on how to name a generated product.
-  // `haveFullProduct` names its product `uniqid('Product #', true)`, e.g.
-  // "Product #6a6ccefaafff16.65668963", and the quick-order autocomplete never returns it:
-  // this assertion times out after a full 20s even though the same product is found
-  // immediately when searched by SKU (the test above), and it is present in the search
-  // index. Searching by name therefore needs a search-friendly product name, which means
-  // overriding `localizedAttributes` on the fixture (possible — `haveLocale` is whitelisted
-  // — but it changes what the generated product looks like for every other spec that may
-  // later reuse this payload, so it is left as a decision rather than assumed.
-  it.skip('can search product by name and add to cart', () => {
+  it('can search product by name and add to cart', () => {
     const productName = getProductName(dynamicFixtures.product)
 
     cy.intercept('GET', '**/product-search/product-concrete-search**').as(
