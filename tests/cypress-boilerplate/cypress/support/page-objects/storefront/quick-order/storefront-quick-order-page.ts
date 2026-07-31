@@ -17,8 +17,8 @@ export class StorefrontQuickOrderPage extends AbstractPage {
     return cy.get('[data-qa="component product-search-autocomplete-form"]')
   }
 
-  getSuggestedProductsList(): Cypress.Chainable {
-    return cy.get('[data-qa="component products-list"]')
+  getSuggestedProductsList(timeout?: number): Cypress.Chainable {
+    return cy.get('[data-qa="component products-list"]', { timeout })
   }
 
   searchProduct = (
@@ -31,11 +31,15 @@ export class StorefrontQuickOrderPage extends AbstractPage {
   }
 
   applySuggestedProduct = (skuOrName: string): Cypress.Chainable => {
-    // Wait for suggestions to appear and contain the expected text, then click.
-    return this.getSuggestedProductsList()
-      .filter(':visible')
-      .should('contain', skuOrName, { timeout: 20000 })
-      .contains(skuOrName, { timeout: 20000 })
+    // Wait for suggestions to appear and contain the expected text, then click. The retry
+    // window has to be set on the `cy.get()` inside getSuggestedProductsList(): an options
+    // object passed to `should('contain', value, …)` is ignored, so this used to fall back
+    // to the 4s default. A product created per run by dynamic fixtures needs longer than
+    // that to become searchable.
+    return this.getSuggestedProductsList(20000)
+      .filter(':visible', { timeout: 20000 })
+      .should('contain', skuOrName)
+      .contains(skuOrName)
       .click()
   }
 
@@ -47,7 +51,19 @@ export class StorefrontQuickOrderPage extends AbstractPage {
       .eq(fieldIndex)
       .find('[data-qa="component custom-select"] select')
       .should('contain', merchant)
-      .select(merchant, { force: true })
+      .then(($select) => {
+        // A merchant that both owns the product and sells it through an offer is listed
+        // once per source, so selecting by visible text can match several options and
+        // `cy.select()` refuses an ambiguous match. Resolve the first matching option to
+        // its value and select that instead.
+        const value = $select
+          .find('option')
+          .filter((_index, option) => option.textContent?.trim() === merchant)
+          .first()
+          .val() as string
+
+        return cy.wrap($select).select(value, { force: true })
+      })
   }
 
   getQuantityInput = (rowIndex: number): Cypress.Chainable => {

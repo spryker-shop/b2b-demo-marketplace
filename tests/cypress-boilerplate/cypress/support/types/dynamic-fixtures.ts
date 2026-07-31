@@ -51,6 +51,19 @@ export interface ShipmentMethodFixture {
   name: string
 }
 
+export interface MerchantFixture {
+  id_merchant: number
+  name: string
+  merchant_reference: string
+}
+
+export interface ProductOfferFixture {
+  id_product_offer: number
+  product_offer_reference: string
+  concrete_sku: string
+  merchant_reference: string
+}
+
 /**
  * Reads the fixtures the global `before` hook in support/e2e.ts loaded for the current
  * spec. Specs declare what their own fixture files produce:
