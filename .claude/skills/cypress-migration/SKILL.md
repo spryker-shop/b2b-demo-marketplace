@@ -24,6 +24,24 @@ the repo you're actually working in. Several steps below exist specifically beca
 instead of verifying caused real mistakes the first time this migration was done; don't skip
 the verification sub-steps even though they look like extra work.
 
+### What is proven vs. what is not
+
+Be honest with yourself about this while working, because the two halves of this migration have
+very different track records in the reference repo (`spryker-shop/b2b-demo-marketplace`):
+
+- **Proven (Steps 6–11):** the vendored `tests/cypress-boilerplate/` suite, its CI jobs, and the
+  companion skill were built and debugged against a live Spryker B2B Marketplace instance.
+- **NOT yet executed anywhere (Steps 2–5, the removal half):** the reference repo is Spryker's
+  own *product* repo — it still needs its demo-shop suites, so it never deleted them. Its
+  cypress-boilerplate work was purely **additive**: `spryker/cypress-tests` and
+  `spryker/robotframework-suite-tests` are still in its `composer.json`/`composer.lock`, and the
+  old Robot/Cypress CI jobs are still live there. So the removal instructions below have never
+  actually been run end-to-end. Treat them as a careful plan, not a proven script: verify each
+  deletion with the greps given rather than trusting the step.
+
+Instead of deleting its own suites, the reference repo **labels everything an adopting project
+should delete** — that inventory is the authoritative removal list. See Step 3.
+
 ## Step 1 — Confirm scope
 
 ```bash
@@ -78,13 +96,45 @@ tracked, investigate before touching it; it may be legitimate project content.
 
 ## Step 3 — Remove CI workflow jobs referencing the old suites
 
+**Start with the removal markers, not with grep.** If the target project descends from
+b2b-demo-marketplace (or you copied its `ci.yml`), the workflow already tells you exactly what
+to delete:
+
+```bash
+grep -rn "remove for project\|REMOVE FOR PROJECT" .github/workflows/*.yml
+```
+
+Two kinds of hit, and they are **not** interchangeable:
+
+1. A `# ===== REMOVE FOR PROJECT =====` banner. Everything from the banner to the end of the
+   `jobs:` mapping is product-delivery/upstream suites (Codeception acceptance, Robot, the old
+   demo-shop Cypress). In the reference repo that banner sits at ~line 316 and the marked
+   region runs to EOF (~820) covering six jobs:
+   `php-84-mariadb-acceptance-alpine`, `docker-alpine-php-84-mariadb-robot-api`,
+   `docker-alpine-php-84-mariadb-robot-api-b2b`, `docker-alpine-php-84-mariadb-cypress`,
+   `docker-alpine-php-84-mariadb-cypress-b2b`, `docker-alpine-php-84-mariadb-robot-ui`.
+2. Individual `# [remove for project]` comments **above the banner**, which mark things that
+   are product-only but have nothing to do with test suites (e.g. the multi-PHP `strategy`
+   matrix, a `release-*`-branch-only Evaluator step). These are legitimate project cleanups but
+   are **out of scope for this migration** — don't sweep them up silently. Leave them, or raise
+   them with the user as a separate change.
+
+Line numbers drift; re-derive them, never hardcode. **Keep** `cypress-quality-gate` and
+`cypress-e2e` (the new project-owned jobs) — they live *above* the banner precisely so this
+step doesn't eat them.
+
+Then confirm nothing was missed by grep, since a project may have suites the markers don't
+cover — and note there is usually **more than one workflow file** (the reference repo also has
+`.github/workflows/compatibility-ci.yml` with its own `*-robot-api`, `*-cypress`, `*-robot-ui`
+jobs):
+
 ```bash
 grep -rn "robot\|cypress" .github/workflows/*.yml
 ```
 
-For every job block that references the removed packages (by name, by docker-compose file,
-by deploy-yml file), identify its exact line range: the job starts at its `<job-key>:` line
-(same indentation as other job keys under `jobs:`) and ends at the line before the next
+For every remaining job block that references the removed packages (by name, by docker-compose
+file, by deploy-yml file), identify its exact line range: the job starts at its `<job-key>:`
+line (same indentation as other job keys under `jobs:`) and ends at the line before the next
 sibling job key (or end of file). Delete each full block, then:
 
 ```bash
@@ -105,7 +155,28 @@ Also check no remaining job has a `needs:` list referencing a job name you just 
 Find candidate files:
 ```bash
 grep -rl "robot\|cypress" .github/deploy/ config/install/ 2>/dev/null
+ls .github/deploy/ config/install/ | grep -i "robot\|cypress"
 ```
+
+For reference, this is the full inventory in b2b-demo-marketplace, as a sanity-check on what
+you find in the target project (re-verify — do not delete from this list blindly):
+
+| Path | Action |
+|---|---|
+| `.github/deploy/deploy.ci.acceptance.mariadb.cypress-boilerplate.yml` | **KEEP** — this is the new project-owned stack |
+| `.github/deploy/deploy.ci.acceptance.mariadb.cypress.yml` | delete (old demo-shop Cypress) |
+| `.github/deploy/deploy.ci.acceptance.postgress.cypress.yml` | delete |
+| `.github/deploy/deploy.ci.acceptance.mariadb.robot.yml` | delete |
+| `.github/deploy/deploy.ci.acceptance.postgres.robot.yml` | delete |
+| `.github/deploy/deploy.ci.api.mariadb.robot.yml` | delete |
+| `.github/deploy/deploy.ci.api.postgres.robot.yml` | delete |
+| `config/install/docker.robot.ci.acceptance.yml` | delete |
+| `config/install/docker.robot.ci.api.full.yml` | delete |
+
+Note the near-identical `cypress.yml` vs `cypress-boilerplate.yml` names — deleting the wrong
+one breaks the job you just built. Cross-check against `grep -n "docker/sdk boot"
+.github/workflows/*.yml` and only delete deploy files whose sole referencing jobs you removed
+in Step 3.
 
 **Before deleting any file, grep the whole repo for its literal filename** to confirm nothing
 else references it — don't trust that a "robot"/"cypress" name means it's exclusively used by
@@ -123,6 +194,18 @@ which case it must be **kept**, since deleting it would break unrelated demodata
 **Check the actual `command:`/`source:` lines in each install pipeline yml directly** —
 don't infer from a research summary or from what a similar project did; re-verify with a live
 grep every time, since naming conventions vary and can be misleading.
+
+Worked example (verified in b2b-demo-marketplace — re-run it, don't trust it):
+```bash
+grep -rn "full_ROBOT\|b2b_full_ROBOT" --include="*.yml" --include="*.php" . | grep -v vendor
+```
+There, `data/import/local/full_ROBOT.yml` and `b2b_full_ROBOT.yml` are referenced **only** by
+`config/install/docker.robot.ci.acceptance.yml` and `config/install/docker.robot.ci.api.full.yml`
+— both of which Step 4 deletes. So they fall into case (a): once those pipelines are gone, these
+configs *and* the CSV fixture trees they point at (`data/import/robot/`,
+`data/import/b2b_robot/`) are orphaned and should be deleted too. A different project may wire
+the same-looking file into its general demodata import instead, which is case (b) — hence the
+grep.
 
 Also check for any environment-specific PHP config solely tied to a deleted deploy
 environment (e.g. a config file only loaded when `environment: docker.ci.cypress` is
@@ -162,20 +245,24 @@ that the raw upstream template does not have. Vendoring from it means the target
 starts from a working baseline instead of rediscovering the same bugs from scratch.
 
 ```bash
-# NOTE: tests/cypress-boilerplate/ does not exist on the default branch (master) — a plain
-# `git clone` checks out master and the rsync below would fail with "No such file or directory".
-# Clone the branch that actually contains it, and confirm before copying.
-git clone --depth 1 --branch add-cypress-boilerplate \
-  https://github.com/spryker-shop/b2b-demo-marketplace.git <scratch-dir>
-ls <scratch-dir>/tests/cypress-boilerplate/package.json   # must exist before proceeding
+git clone --depth 1 https://github.com/spryker-shop/b2b-demo-marketplace.git <scratch-dir>
+
+# ALWAYS verify the source directory is actually present before copying. If this fails, the
+# clone landed on a branch that predates the boilerplate — see the fallback below.
+ls <scratch-dir>/tests/cypress-boilerplate/package.json
+
 rsync -a --exclude='.git' --exclude='node_modules' \
   <scratch-dir>/tests/cypress-boilerplate/ <project>/tests/cypress-boilerplate/
 ```
 
-If that branch has since been merged to `master`, drop the `--branch` flag — but verify the
-directory exists on whatever branch you clone rather than assuming it does:
+**If that `ls` fails**, `tests/cypress-boilerplate/` has not been merged into the default branch
+yet and you must clone the branch that carries it (it was developed on
+`add-cypress-boilerplate`). Don't skip the check and let `rsync` fail with a bare "No such file
+or directory":
 ```bash
-git ls-remote --heads https://github.com/spryker-shop/b2b-demo-marketplace.git   # list available branches
+git ls-remote --heads https://github.com/spryker-shop/b2b-demo-marketplace.git   # find the branch
+git clone --depth 1 --branch <branch-with-the-boilerplate> \
+  https://github.com/spryker-shop/b2b-demo-marketplace.git <scratch-dir>
 ```
 
 Pick a destination path that is **not** the old (now-removed) installer-path directory and is
@@ -255,6 +342,29 @@ Add two jobs:
    installs the Cypress project's dependencies, and runs `npx cypress run --env
    environment=ci ...`, uploading screenshots/reports as artifacts on failure.
 
+The reference repo's two jobs (`cypress-quality-gate` and `cypress-e2e` in its `ci.yml`) are
+the model to copy — they are placed **above** the `REMOVE FOR PROJECT` banner deliberately, so
+Step 3's deletion doesn't take them with it. Its `cypress-e2e` step order is worth reproducing,
+because two of the steps exist to fix real flakiness rather than as boilerplate:
+
+1. `actions/checkout` → `ramsey/composer-install` → `actions/setup-node` (Node 24, npm cache
+   keyed on `tests/cypress-boilerplate/package-lock.json`) → `npm ci`
+2. `docker/sdk boot <deploy>.yml`, add the stack's hostnames to `/etc/hosts`, `docker/sdk up -t`
+3. **`docker/sdk console queue:worker:start --stop-when-empty`** — drain the queue, otherwise
+   asynchronously-published data isn't visible to the UI yet
+4. **`docker/sdk console sync:data merchant` + drain the queue again** — warm the search index,
+   otherwise merchant/product listings are empty on the first assertions
+5. `npx cypress run --env environment=ci --headless --browser chrome` (`--browser chrome` relies
+   on Chrome being preinstalled on the GitHub-hosted runner image; nothing in the repo installs
+   or version-pins it, and the Cypress binary itself is downloaded on first use because only the
+   npm cache is cached, not `~/.cache/Cypress`)
+6. Upload `cypress/data/screenshots/**` and `cypress/data/reports/**` as artifacts, `if:
+   always() && steps.<id>.outcome == 'failure'`
+
+If you removed `spryker/cypress-tests` in Step 2, make sure you do **not** carry over any
+workaround step that deletes its installer path (e.g. `rm -rf tests/cypress-tests`) — such a
+step only exists while that package is still installed, and is dead weight afterwards.
+
 Match the existing workflow file's formatting/indentation style exactly, then validate:
 ```bash
 python3 -c "import yaml; yaml.safe_load(open('<workflow-file>')); print('OK')"
@@ -294,7 +404,13 @@ describe the new project-owned setup, its location, and a pointer to the new
       deleted file names (deploy configs, docker-compose files, install pipelines) returns
       nothing outside historical git log; no remaining CI job's `needs:` references a job you
       deleted; data-import fixture configs still used by *other* pipelines were verified as
-      still referenced (Step 4), not deleted by mistake.
+      still referenced (Step 4), not deleted by mistake. Every test-suite block the reference
+      workflow marked for removal is gone, and the installer path is gone:
+      ```bash
+      grep -rn "REMOVE FOR PROJECT" .github/workflows/*.yml   # banner + its jobs should be gone
+      ls -d tests/cypress-tests 2>/dev/null                   # must not exist
+      ls .github/deploy/ config/install/ | grep -i "robot\|cypress"   # only cypress-boilerplate may remain
+      ```
 - [ ] 3. The target project's repository contains its own Cypress boilerplate — vendored
       under `tests/cypress-boilerplate/` (per Step 7), committed to the repo, not a Composer
       dependency and not re-fetched at CI/runtime.
