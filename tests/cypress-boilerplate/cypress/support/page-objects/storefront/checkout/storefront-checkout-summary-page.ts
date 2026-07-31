@@ -44,11 +44,19 @@ export class StorefrontCheckoutSummaryPage extends AbstractPage {
     cy.intercept('POST', '**/company/cost-center/update-quote').as(
       'costCenterUpdateQuote'
     )
-    // the native <select> is select2-enhanced and visually covered by select2's own
-    // rendered UI, so a real click isn't needed (and isn't actionable) — force setting
-    // the value directly still fires the native `change` event and the onchange handler
-    this.getCostCenterSelect().select(costCenterName, { force: true })
-    cy.wait('@costCenterUpdateQuote')
+    this.getCostCenterSelect().then(($select) => {
+      // when the business unit has a single cost center it is already selected, and
+      // re-selecting the same option fires no `change` event and therefore no round trip
+      if ($select.find('option:selected').text().trim() === costCenterName) {
+        return
+      }
+
+      // the native <select> is select2-enhanced and visually covered by select2's own
+      // rendered UI, so a real click isn't needed (and isn't actionable) — force setting
+      // the value directly still fires the native `change` event and the onchange handler
+      cy.wrap($select).select(costCenterName, { force: true })
+      cy.wait('@costCenterUpdateQuote')
+    })
   }
 
   selectBudget = (budgetNameContains: string): void => {

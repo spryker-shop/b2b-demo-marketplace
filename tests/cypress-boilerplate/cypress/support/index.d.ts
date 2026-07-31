@@ -3,6 +3,26 @@ declare module 'cypress-mochawesome-reporter/register'
 declare namespace Cypress {
   interface Chainable {
     /**
+     * Creates the data described by a DynamicFixtures payload in the shop and resolves
+     * with the created records keyed by the payload's `key` fields.
+     *
+     * @example cy.loadDynamicFixturesByPayload('storefront/cart/dynamic-storefront-cart-smoke')
+     */
+    loadDynamicFixturesByPayload(
+      dynamicFixturesFilePath: string,
+      retries?: number
+    ): Cypress.Chainable<any>
+
+    /**
+     * Reads a static fixture file and resolves its {{ENV_VAR}} placeholders.
+     *
+     * @example cy.loadStaticFixturesByPath('storefront/cart/static-storefront-cart-smoke')
+     */
+    loadStaticFixturesByPath(
+      staticFixturesFilePath: string
+    ): Cypress.Chainable<any>
+
+    /**
      * @example cy.closeAllFlashMessages()
      */
     closeAllFlashMessages(): Cypress.Chainable<any>

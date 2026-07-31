@@ -1,6 +1,12 @@
-import customerCredentials from '@fixtures/customer-data.json'
-import productData from '@fixtures/product-data.json'
-import checkoutData from '@fixtures/checkout-data.json'
+// Everything this spec checks out with is created before it runs by
+// cypress/fixtures/storefront/checkout/dynamic-storefront-checkout.json: the customer,
+// its company with a business unit address to ship to, the product with price and stock,
+// the shipment method, and the cost center plus budget the Purchasing Control feature
+// requires on the summary step. The only value that still comes from a static fixture is
+// the payment method name — payment methods are bound to a payment plugin registered in
+// project code (Pyz\Yves\DummyPayment), so a generated one would never be rendered.
+// The generated product has no merchant or product offer behind it, so the checkout
+// offers the Dummy Payment methods rather than the marketplace ones.
 import { StorefrontLoginPage } from '@support/page-objects/storefront/login/storefront-login-page'
 import { StorefrontSearchResultsPage } from '@support/page-objects/storefront/search/storefront-search-results-page'
 import { StorefrontProductDetailsPage } from '@support/page-objects/storefront/product/storefront-product-details-page'
@@ -11,9 +17,31 @@ import { StorefrontCheckoutShippingPage } from '@support/page-objects/storefront
 import { StorefrontCheckoutPaymentPage } from '@support/page-objects/storefront/checkout/storefront-checkout-payment-page'
 import { StorefrontCheckoutSummaryPage } from '@support/page-objects/storefront/checkout/storefront-checkout-summary-page'
 import { StorefrontCheckoutSuccessPage } from '@support/page-objects/storefront/checkout/storefront-checkout-success-page'
-import { GlueAddressesScenarios } from '@support/scenarios/glue/glue-addresses-scenarios'
-import { GlueCartsScenarios } from '@support/scenarios/glue/glue-carts-scenarios'
 import { StorefrontCartScenarios } from '@support/scenarios/storefront/storefront-cart-scenarios'
+import {
+  getFixtures,
+  getProductName,
+  BudgetFixture,
+  CostCenterFixture,
+  CustomerFixture,
+  PriceProductFixture,
+  ProductFixture,
+  ShipmentMethodFixture,
+} from '@support/types/dynamic-fixtures'
+
+interface CheckoutDynamicFixtures {
+  customer: CustomerFixture
+  product: ProductFixture
+  productPrice: PriceProductFixture
+  shipmentMethod: ShipmentMethodFixture
+  costCenter: CostCenterFixture
+  budget: BudgetFixture
+}
+
+interface CheckoutStaticFixtures {
+  defaultPassword: string
+  paymentMethodName: string
+}
 
 const storefrontLoginPage = new StorefrontLoginPage()
 const search = new StorefrontSearchResultsPage()
@@ -25,53 +53,53 @@ const checkoutShipping = new StorefrontCheckoutShippingPage()
 const checkoutPayment = new StorefrontCheckoutPaymentPage()
 const checkoutSummary = new StorefrontCheckoutSummaryPage()
 const checkoutSuccess = new StorefrontCheckoutSuccessPage()
-const glueAddressesScenarios = new GlueAddressesScenarios()
-const glueCartsScenarios = new GlueCartsScenarios()
 const storefrontCartScenarios = new StorefrontCartScenarios()
 
-before(() => {
-  // reset customer addresses
-  glueAddressesScenarios.deleteAllCustomerAddresses(
-    customerCredentials.email,
-    customerCredentials.password,
-    customerCredentials.reference
-  )
-  // reset customer carts
-  glueCartsScenarios.deleteAllShoppingCarts(
-    customerCredentials.email,
-    customerCredentials.password
-  )
-})
+let dynamicFixtures: CheckoutDynamicFixtures
+let staticFixtures: CheckoutStaticFixtures
 
 context('Customer checkout', () => {
+  before(() => {
+    // the customer is created per run, so it starts without carts or addresses and
+    // nothing has to be reset here
+    ;({ dynamicFixtures, staticFixtures } = getFixtures<
+      CheckoutDynamicFixtures,
+      CheckoutStaticFixtures
+    >())
+  })
+
   it('can place order on storefront', () => {
     // here we use method from login page object to open login page, enter credentials and login
     storefrontLoginPage.login(
-      customerCredentials.email,
-      customerCredentials.password
+      dynamicFixtures.customer.email,
+      staticFixtures.defaultPassword
     )
     storefrontCartScenarios.createNewCart()
     // here we use search page object to find a product and go to its PDP
-    search.findProduct(productData.availableProduct.abstractSku)
+    search.findProduct(dynamicFixtures.product.abstract_sku)
     // here we check that the correct product PDP was opened - this is an assertion, other assertions can be added as needed
     productDetailsPage
       .getProductName()
-      .should('contain', productData.availableProduct.name)
+      .should('contain', getProductName(dynamicFixtures.product))
     productDetailsPage.addProductToCart()
     cartIcon.getCartTrigger().click()
     // another assertion checking that price in cart is as expected
-    cartPage
-      .getCartItemPrice(productData.availableProduct.concreteSku)
-      .should('contain', productData.availableProduct.price)
+    cy.formatDisplayPrice(
+      dynamicFixtures.productPrice.money_value.gross_amount
+    ).then((expectedPrice: string) => {
+      cartPage
+        .getCartItemPrice(dynamicFixtures.product.sku)
+        .should('contain', expectedPrice)
+    })
     cartPage.getCheckoutButton().click()
     checkoutAddress.provideExistingAddress()
-    checkoutShipping.provideShipment(checkoutData.storefrontShipment.name)
-    checkoutPayment.providePayment(checkoutData.storefrontPayment.name)
-    // this customer's business unit has the Purchasing Control feature enabled, so a
-    // cost center and budget must be selected on the summary page before an order can
-    // be placed
-    checkoutSummary.selectCostCenter(checkoutData.storefrontCostCenter.name)
-    checkoutSummary.selectBudget(checkoutData.storefrontBudget.name)
+    checkoutShipping.provideShipment(dynamicFixtures.shipmentMethod.name)
+    checkoutPayment.providePayment(staticFixtures.paymentMethodName)
+    // this customer's business unit has a cost center, which turns on the Purchasing
+    // Control feature for it: a cost center and budget must be selected on the summary
+    // page before an order can be placed
+    checkoutSummary.selectCostCenter(dynamicFixtures.costCenter.name)
+    checkoutSummary.selectBudget(dynamicFixtures.budget.name)
     checkoutSummary.applyCostCenterAndBudget()
     checkoutSummary.completeOrder()
     checkoutSuccess.checkOrderSuccess()

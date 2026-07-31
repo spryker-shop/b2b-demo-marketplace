@@ -25,9 +25,13 @@ Locators use the `data-qa` attribute convention already present in this project'
 
   - Execute CLI commands directly from within Cypress tests for enhanced control and flexibility.
 
+- **Dynamic Fixtures:**
+
+  - Test data is created in the shop before a spec runs instead of being hardcoded, so specs don't break when the demodata changes. See [Test data](#test-data) below.
+
 - **Static Fixtures:**
 
-  - Uses static fixtures to manage test data effectively, ensuring consistency and reliability in test execution.
+  - Values that come from project configuration rather than demodata (payment method names, for example) still live in static fixture files.
 
 - **Environment Configurations:**
 
@@ -163,6 +167,86 @@ These same two checks (`lint:check` and `prettier:check`) run in CI on every pus
 ### 5. Test Reports
 
 After test execution, an HTML report will be automatically generated and available under `cypress/data/reports`
+
+## Test data
+
+Specs must not depend on demodata. A SKU, customer email or store-prefixed reference that
+exists in `data/import` today can disappear with the next demodata change and take the
+suite down with it. Instead, a spec declares the data it needs and that data is created in
+the shop right before the spec runs, through the **DynamicFixtures API** —
+`POST <GLUE_BACKEND_URL>/dynamic-fixtures`, provided by `spryker/testify-backend-api` and
+registered in this project by `DynamicFixturesBackendResourcePlugin`
+(`src/Pyz/Glue/GlueBackendApiApplication/GlueBackendApiApplicationDependencyProvider.php`).
+
+### Fixture files
+
+Fixture files are resolved from the spec's own path — nothing needs to be registered.
+For `cypress/e2e/storefront/cart/storefront-cart-smoke.cy.ts`:
+
+| File                                                                  | Ends up in                       |
+| --------------------------------------------------------------------- | -------------------------------- |
+| `cypress/fixtures/storefront/cart/dynamic-storefront-cart-smoke.json` | `Cypress.env('dynamicFixtures')` |
+| `cypress/fixtures/storefront/cart/static-storefront-cart-smoke.json`  | `Cypress.env('staticFixtures')`  |
+
+Both are optional. The global `before` hook in `cypress/support/e2e.ts` loads whichever
+exists; specs read them through `getFixtures()` from `@support/types/dynamic-fixtures`.
+
+A dynamic fixture file is a list of operations. Each one calls a Codeception helper method
+enabled in `tests/PyzTest/Zed/TestifyBackendApi/codeception.dynamic.fixtures.yml` and
+stores its result under `key`, which later operations reference as `#key` / `#key.field`:
+
+```json
+{
+  "type": "helper",
+  "name": "haveFullProduct",
+  "key": "product",
+  "arguments": [{}, { "idTaxSet": "#taxSet.id_tax_set" }]
+}
+```
+
+`"synchronize": true` publishes the created records so they reach the search index — needed
+whenever a spec finds a product through the storefront catalog. Note that a product needs
+**both** a concrete price (`havePriceProduct`) and an abstract price
+(`havePriceProductAbstract`) to be findable by SKU in the storefront search.
+
+If a spec needs a helper that isn't enabled yet, add it to
+`codeception.dynamic.fixtures.yml` — that's how
+`\SprykerTest\Zed\CompanyUnitAddress\Helper\CompanyUnitAddressDataHelper` (business unit
+addresses for the checkout address step) was made available.
+
+### One place for store-dependent values
+
+Values that depend on how the project is configured are never repeated inside fixture
+files. They are written as `{{PLACEHOLDER}}` and resolved from the environment files in
+`.envs/` when the fixture is loaded (this applies to static fixtures too):
+
+```
+STORE_NAME=DE
+LOCALE_NAME=en_US
+CURRENCY_CODE=EUR
+COUNTRY_ISO2=DE
+DEFAULT_PASSWORD=change123
+```
+
+When the project's store set changes — say `DE` is replaced by `PL` — changing
+`STORE_NAME` (and the locale/currency/country that go with it) in `.envs/.env.<environment>`
+is enough; every fixture payload follows. An unresolved placeholder fails the spec with a
+clear error rather than silently creating data in the wrong store.
+
+### What still can't be generated
+
+- **Payment methods** are bound to a payment plugin registered in project code
+  (`Pyz\Yves\DummyPayment`), so a generated payment method would never be rendered in
+  checkout. The method _name_ therefore stays in the static fixture — a configuration
+  value, not demodata.
+- **Backoffice and Merchant Portal users** are currently still read from the shared
+  `cypress/fixtures/user-data.json`. The specs using them have not been converted yet.
+
+### Not yet converted
+
+Only `storefront-cart-smoke` and `storefront-checkout` use dynamic fixtures so far. The
+remaining specs still import the shared `cypress/fixtures/*-data.json` files, which is why
+those files are still present.
 
 ## Additional Resources
 

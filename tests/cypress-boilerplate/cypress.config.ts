@@ -35,7 +35,13 @@ export default defineConfig({
     setupNodeEvents: async (on, config) => {
       const plugin = await import('cypress-mochawesome-reporter/plugin')
       plugin.default(on)
-      on('task', {})
+      on('task', {
+        // used by support/e2e.ts to detect whether the current spec ships its own
+        // dynamic/static fixture files (cy.fixture would fail the spec on a missing file)
+        isFileExists: (filePath: string): boolean => {
+          return fs.existsSync(filePath)
+        },
+      })
       //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       // ENVIRONMENT SETUP
       //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
