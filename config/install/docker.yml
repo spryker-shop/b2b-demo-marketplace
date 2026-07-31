@@ -60,6 +60,9 @@ sections:
         install-backend-api-assets:
             command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue assets:install public/GlueBackend/assets/'
 
+        configuration-sync:
+            command: 'vendor/bin/console configuration:sync'
+
         provider-processor-glue:
             command: 'vendor/bin/glue api:generate'
 
