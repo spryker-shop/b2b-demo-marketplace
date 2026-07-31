@@ -20,7 +20,6 @@ use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
-use Orm\Zed\Country\Persistence\SpyCountryStoreQuery;
 use Orm\Zed\Currency\Persistence\SpyCurrency;
 use Orm\Zed\Currency\Persistence\SpyCurrencyQuery;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
@@ -46,7 +45,6 @@ use Spryker\Zed\Calculation\Communication\Plugin\Calculator\RefundableAmountCalc
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\RefundTotalCalculatorPlugin;
 use Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilTextBridge;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Store\Business\StoreFacade;
 
 /**
  * Inherited Methods
@@ -245,7 +243,7 @@ class CalculationBusinessTester extends Actor
      */
     public function getCurrentStoreTransfer(): StoreTransfer
     {
-        return (new StoreFacade())->getCurrentStore();
+        return $this->getLocator()->store()->facade()->getCurrentStore();
     }
 
     /**
@@ -253,15 +251,9 @@ class CalculationBusinessTester extends Actor
      */
     public function getCurrentStoreCountryIso2Code(): string
     {
-        $countryStoreEntity = SpyCountryStoreQuery::create()
-            ->filterByFkStore($this->getCurrentStoreTransfer()->getIdStoreOrFail())
-            ->findOne();
+        $countryIso2Codes = $this->getCurrentStoreTransfer()->getCountries();
 
-        if ($countryStoreEntity === null) {
-            return static::FALLBACK_COUNTRY_ISO2_CODE;
-        }
-
-        return $countryStoreEntity->getCountry()->getIso2Code();
+        return current($countryIso2Codes) ?: static::FALLBACK_COUNTRY_ISO2_CODE;
     }
 
     /**

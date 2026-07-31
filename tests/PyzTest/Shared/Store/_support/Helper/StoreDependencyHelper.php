@@ -27,11 +27,13 @@ class StoreDependencyHelper extends SprykerStoreDependencyHelper
      */
     public function _before(TestInterface $test): void
     {
+        $storeName = $this->getDefaultStoreName();
+
         parent::_before($test);
 
         $this->getContainerHelper()
             ->getContainer()
-            ->set(static::SERVICE_STORE, $this->getDefaultStoreName());
+            ->set(static::SERVICE_STORE, $storeName);
     }
 
     /**
@@ -39,8 +41,6 @@ class StoreDependencyHelper extends SprykerStoreDependencyHelper
      */
     public function getDefaultStoreName(): string
     {
-        $storeTransfers = $this->getLocator()->store()->facade()->getAllStores();
-
-        return current($storeTransfers)->getNameOrFail();
+        return $this->getLocator()->store()->facade()->getCurrentStore(true)->getNameOrFail();
     }
 }
