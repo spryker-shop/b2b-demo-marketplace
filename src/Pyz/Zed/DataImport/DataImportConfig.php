@@ -267,6 +267,9 @@ class DataImportConfig extends SprykerDataImportConfig
             ProductOfferShoppingListDataImportConfig::IMPORT_TYPE_PRODUCT_OFFER_SHOPPING_LIST_ITEM,
             ConfigurationConfig::IMPORT_TYPE_CONFIGURATION_VALUE,
             static::IMPORT_TYPE_SALES_ORDER,
+            SelfServicePortalConfig::IMPORT_TYPE_SSP_MODEL,
+            SelfServicePortalConfig::IMPORT_TYPE_SSP_ASSET,
+            SelfServicePortalConfig::IMPORT_TYPE_FILE_ATTACHMENT,
         ];
 
         return array_merge(parent::getFullImportTypes(), $customImportTypes);
