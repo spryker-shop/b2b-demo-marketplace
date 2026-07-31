@@ -25,7 +25,7 @@ class StoreDependencyHelper extends SprykerStoreDependencyHelper
      *
      * @return void
      */
-    public function _before(TestInterface $test)
+    public function _before(TestInterface $test): void
     {
         parent::_before($test);
 
