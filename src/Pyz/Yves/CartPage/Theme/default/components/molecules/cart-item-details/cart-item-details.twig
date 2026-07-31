@@ -42,7 +42,11 @@
                         {% widget 'SspAssetInfoForItemWidget' args [listItem] only %}{% endwidget %}
                     {% endif %}
 
-                    {% widget 'SspServicePointNameForItemWidget' args [listItem] only %}
+                    {% widget 'SspServicePointNameForItemWidget' args [listItem] with {
+                        data: {
+                            rowClass: config.name ~ '__service-row',
+                        },
+                    } only %}
                         {% elsewidget 'ServicePointNameForItemWidget' args [listItem] only %}
                     {% endwidget %}
                 </div>
