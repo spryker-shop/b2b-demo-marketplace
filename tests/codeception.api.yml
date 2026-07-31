@@ -2,6 +2,7 @@ namespace: PyzTest
 actor: Tester
 
 include:
+    - PlmbTest/*/*
     - PyzTest/*/*
 
 paths:
@@ -21,7 +22,7 @@ coverage:
     enabled: true
     remote: true
     c3_url: 'http://backoffice.de.shop-suite.local'
-    whitelist: { include: ['src/Pyz/*.php'] }
+    whitelist: { include: ['src/Plmb/*.php', 'src/Pyz/*.php'] }
 
 extensions:
     enabled:

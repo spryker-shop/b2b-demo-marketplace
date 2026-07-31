@@ -78,6 +78,10 @@ npm-debug.log
 /tests/cypress-tests
 /tests/PyzTest/*/*/_output/*
 /tests/PyzTest/*/*/_support/_generated/*
+# Same rules for the project namespace's test tree: the *Tester.php actor is hand-editable and
+# tracked, but _support/_generated/*Actions.php is emitted by `codecept build` and must not be.
+/tests/PlmbTest/*/*/_output/*
+/tests/PlmbTest/*/*/_support/_generated/*
 
 /.robot
 /.cypress

@@ -8,7 +8,7 @@ commandLineParser
     .parse(process.argv);
 
 const isFixMode = !!commandLineParser.fix;
-const defaultFilePaths = [`${globalSettings.paths.project}/**/*.scss`];
+const defaultFilePaths = [`${globalSettings.paths.project}/**/*.scss`, './src/Plmb/Yves/**/*.scss'];
 const filePaths = commandLineParser.filePath ? [commandLineParser.filePath] : defaultFilePaths;
 
 stylelint

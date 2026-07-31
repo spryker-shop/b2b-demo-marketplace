@@ -20,6 +20,7 @@ use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
+use Orm\Zed\Country\Persistence\SpyCountryStoreQuery;
 use Orm\Zed\Currency\Persistence\SpyCurrency;
 use Orm\Zed\Currency\Persistence\SpyCurrencyQuery;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
@@ -45,6 +46,7 @@ use Spryker\Zed\Calculation\Communication\Plugin\Calculator\RefundableAmountCalc
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\RefundTotalCalculatorPlugin;
 use Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilTextBridge;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Store\Business\StoreFacade;
 
 /**
  * Inherited Methods
@@ -74,7 +76,7 @@ class CalculationBusinessTester extends Actor
     /**
      * @var string
      */
-    protected const COUNTRY_DE = 'DE';
+    protected const FALLBACK_COUNTRY_ISO2_CODE = 'DE';
 
     /**
      * @param int $discountAmount
@@ -243,9 +245,23 @@ class CalculationBusinessTester extends Actor
      */
     public function getCurrentStoreTransfer(): StoreTransfer
     {
-        return (new StoreTransfer())
-            ->setIdStore(1)
-            ->setName(static::COUNTRY_DE);
+        return (new StoreFacade())->getCurrentStore();
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrentStoreCountryIso2Code(): string
+    {
+        $countryStoreEntity = SpyCountryStoreQuery::create()
+            ->filterByFkStore($this->getCurrentStoreTransfer()->getIdStoreOrFail())
+            ->findOne();
+
+        if ($countryStoreEntity === null) {
+            return static::FALLBACK_COUNTRY_ISO2_CODE;
+        }
+
+        return $countryStoreEntity->getCountry()->getIso2Code();
     }
 
     /**
@@ -322,7 +338,7 @@ class CalculationBusinessTester extends Actor
      */
     public function createAbstractProductWithTaxSet(float $taxRate): SpyProductAbstract
     {
-        $countryEntity = SpyCountryQuery::create()->findOneByIso2Code(static::COUNTRY_DE);
+        $countryEntity = SpyCountryQuery::create()->findOneByIso2Code($this->getCurrentStoreCountryIso2Code());
 
         $taxRateEntity = new SpyTaxRate();
         $taxRateEntity->setRate($taxRate);
@@ -377,7 +393,7 @@ class CalculationBusinessTester extends Actor
      */
     protected function createProductOptionValue(float $taxRate): SpyProductOptionValue
     {
-        $countryEntity = SpyCountryQuery::create()->findOneByIso2Code('DE');
+        $countryEntity = SpyCountryQuery::create()->findOneByIso2Code($this->getCurrentStoreCountryIso2Code());
 
         $taxRateEntity = new SpyTaxRate();
         $taxRateEntity->setRate($taxRate);
@@ -466,6 +482,6 @@ class CalculationBusinessTester extends Actor
      */
     public function getCurrentShippingAddress(): AddressTransfer
     {
-        return (new AddressTransfer())->setIso2Code(static::COUNTRY_DE);
+        return (new AddressTransfer())->setIso2Code($this->getCurrentStoreCountryIso2Code());
     }
 }

@@ -166,8 +166,9 @@ $config[KernelConstants::SPRYKER_ROOT] = APPLICATION_ROOT_DIR . '/vendor/spryker
 $config[KernelConstants::RESOLVABLE_CLASS_NAMES_CACHE_ENABLED] = true;
 $config[KernelConstants::RESOLVED_INSTANCE_CACHE_ENABLED] = true;
 
-$config[KernelConstants::PROJECT_NAMESPACE] = 'Pyz';
+$config[KernelConstants::PROJECT_NAMESPACE] = 'Plmb';
 $config[KernelConstants::PROJECT_NAMESPACES] = [
+    'Plmb',
     'Pyz',
 ];
 $config[KernelConstants::CORE_NAMESPACES] = [
@@ -215,7 +216,11 @@ $config[CmsGuiConstants::CMS_PAGE_PREVIEW_URI] = '/en/cms/preview/%d';
 // >>> TRANSLATOR
 
 $config[TranslatorConstants::TRANSLATION_ZED_FALLBACK_LOCALES] = [
+    // Back Office translator fallbacks (not the storefront). de_DE stays: German is one of the two
+    // Back Office UI languages Spryker ships translations for, and the line is inert if unused.
     'de_DE' => ['en_US'],
+    'pl_PL' => ['en_US'],
+    'uk_UA' => ['en_US'],
 ];
 
 // >>> MONITORING
@@ -905,14 +910,14 @@ $config[AvailabilityNotificationConstants::BASE_URL_YVES_PORT]
     = $yvesPort;
 $config[AvailabilityNotificationConstants::STORE_TO_YVES_HOST_MAPPING]
     = $config[SitemapConstants::STORE_TO_YVES_HOST_MAPPING] = [
-    'DE' => getenv('SPRYKER_YVES_HOST_DE'),
-    'AT' => getenv('SPRYKER_YVES_HOST_AT'),
-    'US' => getenv('SPRYKER_YVES_HOST_US'),
+    // Both stores are served by the single region storefront endpoint, so they fall back to the
+    // region host. A per-store SPRYKER_YVES_HOST_<STORE> still wins if a store ever gets its own host.
+    'PL' => getenv('SPRYKER_YVES_HOST_PL') ?: getenv('SPRYKER_YVES_HOST_EE'),
+    'UA' => getenv('SPRYKER_YVES_HOST_UA') ?: getenv('SPRYKER_YVES_HOST_EE'),
 ];
 $config[AvailabilityNotificationConstants::REGION_TO_YVES_HOST_MAPPING]
     = $config[SitemapConstants::REGION_TO_YVES_HOST_MAPPING] = [
-    'EU' => getenv('SPRYKER_YVES_HOST_EU'),
-    'US' => getenv('SPRYKER_YVES_HOST_US'),
+    'EE' => getenv('SPRYKER_YVES_HOST_EE'),
 ];
 
 // ----------------------------------------------------------------------------
@@ -1114,6 +1119,7 @@ $sprykerGlueBackendHost = getenv('SPRYKER_GLUE_BACKEND_HOST');
 $sprykerGlueBackendPort = (int)(getenv('SPRYKER_GLUE_BACKEND_PORT')) ?: 443;
 $config[GlueBackendApiApplicationConstants::GLUE_BACKEND_API_HOST] = $sprykerGlueBackendHost;
 $config[GlueBackendApiApplicationConstants::PROJECT_NAMESPACES] = [
+    'Plmb',
     'Pyz',
 ];
 $config[GlueBackendApiApplicationConstants::GLUE_BACKEND_CORS_ALLOW_ORIGIN] = getenv('SPRYKER_GLUE_APPLICATION_CORS_ALLOW_ORIGIN') ?: '*';

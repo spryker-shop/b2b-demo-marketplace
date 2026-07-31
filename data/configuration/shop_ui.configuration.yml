@@ -6,6 +6,39 @@ features:
       enabled: true
       order: 10
       tabs:
+          - key: logos
+            name: Logos
+            icon: storefront
+            description: Brand logo shown in the storefront header
+            order: 1
+            enabled: true
+            groups:
+                - key: logos
+                  name: Logos
+                  description: Set the brand logo displayed in the storefront header.
+                  scopes:
+                      - global
+                      - store
+                  enabled: true
+                  settings:
+                      - key: yves_logo_url
+                        name: Storefront Logo
+                        description: URL of the logo image rendered in the storefront header. Leave empty to fall back to the built-in logo icon.
+                        help_text: 'Absolute path or URL to an image. Example: /assets/static/images/pellumbra-logo.svg'
+                        type: text
+                        default_value: '/assets/static/images/pellumbra-logo.svg'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        constraints:
+                            - type: max
+                              message: 'Logo URL must not exceed 2048 characters'
+                              options:
+                                  max: 2048
+
           - key: storefront
             name: Storefront
             icon: storefront
@@ -25,7 +58,7 @@ features:
                         name: Primary Brand Color
                         description: Primary buttons, cart badge, pagination active page, checkbox/radio/switch checked state, mega-menu active indicator
                         type: color
-                        default_value: '#318272'
+                        default_value: '#1a1720'
                         scopes:
                             - global
                             - store
@@ -42,7 +75,7 @@ features:
                         name: Subtle Brand Color
                         description: Tertiary button hover background, selected option highlight in dropdowns
                         type: color
-                        default_value: '#f3fffc'
+                        default_value: '#f3f2f5'
                         scopes:
                             - global
                             - store
@@ -59,7 +92,7 @@ features:
                         name: Hover Color
                         description: Hover state for primary buttons, checkbox, radio, and switch
                         type: color
-                        default_value: '#226558'
+                        default_value: '#2e2440'
                         scopes:
                             - global
                             - store
@@ -76,7 +109,7 @@ features:
                         name: Selected Color
                         description: Active/pressed state for primary buttons
                         type: color
-                        default_value: '#15483e'
+                        default_value: '#0d0b10'
                         scopes:
                             - global
                             - store
@@ -93,7 +126,7 @@ features:
                         name: Focus Outline Color
                         description: Keyboard focus outline on selects, user-account dropdown, cart pill
                         type: color
-                        default_value: '#acffef'
+                        default_value: '#ecdcc5'
                         scopes:
                             - global
                             - store
@@ -110,7 +143,7 @@ features:
                         name: Focus Shadow Color
                         description: Focus glow on buttons, inputs, checkboxes, switches, selects, tabs
                         type: color
-                        default_value: '#acffef'
+                        default_value: '#ecdcc5'
                         scopes:
                             - global
                             - store
@@ -127,7 +160,7 @@ features:
                         name: Text Color
                         description: Links, breadcrumbs, active tabs, navigation hover, shopping list names, mini-cart item links, suggest search highlights
                         type: color
-                        default_value: '#226558'
+                        default_value: '#6b5b84'
                         scopes:
                             - global
                             - store
@@ -144,7 +177,7 @@ features:
                         name: Border Color
                         description: Active tab underline, checkout back-button border
                         type: color
-                        default_value: '#318272'
+                        default_value: '#1a1720'
                         scopes:
                             - global
                             - store
@@ -161,7 +194,7 @@ features:
                         name: Icon Color
                         description: Brand-colored icons across the storefront
                         type: color
-                        default_value: '#226558'
+                        default_value: '#6b5b84'
                         scopes:
                             - global
                             - store
@@ -186,7 +219,7 @@ features:
                         name: Top Bar
                         description: Background of the top info/utility bar above the main header
                         type: color
-                        default_value: '#3b3b3d'
+                        default_value: '#2e2440'
                         scopes:
                             - global
                             - store
@@ -245,7 +278,7 @@ features:
                         name: Newsletter Section
                         description: Background of the newsletter subscription section in the footer
                         type: color
-                        default_value: '#1b3835'
+                        default_value: '#1a1720'
                         scopes:
                             - global
                             - store
@@ -304,7 +337,7 @@ features:
                         name: Highlight Background Color
                         description: Accent background for highlighted sections on the page
                         type: color
-                        default_value: '#f9faff'
+                        default_value: '#fbf8f3'
                         scopes:
                             - global
                             - store

@@ -5,15 +5,15 @@ $autoloader = function ($className) {
     $classNameParts = explode('\\', $className);
 
     $filePathPartsSupport = [];
-    if ($classNameParts[0] === 'PyzTest') {
-        array_shift($classNameParts);
+    if ($classNameParts[0] === 'PyzTest' || $classNameParts[0] === 'PlmbTest') {
+        $testNamespace = array_shift($classNameParts);
         $application = array_shift($classNameParts);
         $bundle = array_shift($classNameParts);
         $className = implode(DIRECTORY_SEPARATOR, $classNameParts);
         $filePathPartsSupport = [
             __DIR__,
             'tests',
-            'PyzTest',
+            $testNamespace,
             $application,
             $bundle,
             '_support',

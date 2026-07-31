@@ -1,6 +1,6 @@
 version: '0.1'
 
-namespace: spryker_b2b_marketplace_dev
+namespace: pellumbra_ee_dev
 tag: 'dev'
 
 environment: docker.dev
@@ -14,10 +14,10 @@ image:
         'upload_max_filesize': '100M'
         'post_max_size': '100M'
     environment:
-        SPRYKER_WATER_TREATMENT_CONFIGURATOR_HOST: water-treatment-configurator.spryker.local
+        SPRYKER_WATER_TREATMENT_CONFIGURATOR_HOST: water-treatment-configurator.plmb.local
         SPRYKER_WATER_TREATMENT_CONFIGURATOR_PORT: 80
         SPRYKER_DYNAMIC_STORE_MODE: true
-        SPRYKER_YVES_HOST_EU: yves.eu.spryker.local
+        SPRYKER_YVES_HOST_EE: yves.ee.plmb.local
     node:
         version: 24
         npm: 10
@@ -30,83 +30,83 @@ assets:
     mode: development
 
 regions:
-    EU:
+    EE:
         services:
             mail:
                 sender:
-                    name: Spryker No-Reply
-                    email: no-reply@spryker.local
+                    name: Pellumbra No-Reply
+                    email: no-reply@plmb.local
             database:
-                database: eu-docker
+                database: ee-docker
                 username: spryker
                 password: secret
 
             broker:
-                namespace: eu-docker
+                namespace: ee-docker
             key_value_store:
                 namespace: 1
             search:
-                namespace: eu_search
+                namespace: ee_search
 
 groups:
-    EU:
-        region: EU
+    EE:
+        region: EE
         applications:
-            mportal_eu: # custom name to differentiate between two applications, incorrect for the cloud usage
+            mportal_ee: # custom name to differentiate between two applications, incorrect for the cloud usage
                 application: merchant-portal
                 endpoints:
-                    mp.eu.spryker.local:
-                        region: EU
+                    mp.ee.plmb.local:
+                        region: EE
                         entry-point: MerchantPortal
                         primal: true
                         services:
                             session:
                                 namespace: 1
-            yves_eu: # custom name to differentiate between two applications, incorrect for the cloud usage
+            yves_ee: # custom name to differentiate between two applications, incorrect for the cloud usage
                 application: yves
                 endpoints:
-                    water-treatment-configurator.spryker.local:
+                    water-treatment-configurator.plmb.local:
                         entry-point: WaterTreatmentConfigurator
-                    yves.eu.spryker.local:
-                        region: EU
+                    yves.ee.plmb.local:
+                        region: EE
                         services:
                             session:
                                 namespace: 2
                 http:
                     max-request-body-size: 100M
-            glue_eu: # custom name to differentiate between two applications, incorrect for the cloud usage
+            glue_ee: # custom name to differentiate between two applications, incorrect for the cloud usage
                 application: glue
                 endpoints:
-                    glue.eu.spryker.local:
-                        region: EU
-            gluebackend_eu: # custom name to differentiate between two applications, incorrect for the cloud usage
+                    glue.ee.plmb.local:
+                        region: EE
+            gluebackend_ee: # custom name to differentiate between two applications, incorrect for the cloud usage
                 application: glue-backend
                 endpoints:
-                    glue-backend.eu.spryker.local:
-                        region: EU
-            boffice_eu: # custom name to differentiate between two applications, incorrect for the cloud usage
+                    glue-backend.ee.plmb.local:
+                        region: EE
+            boffice_ee: # custom name to differentiate between two applications, incorrect for the cloud usage
                 application: backoffice
                 endpoints:
-                    backoffice.eu.spryker.local:
-                        region: EU
+                    backoffice.ee.plmb.local:
+                        region: EE
                         primal: true
                         services:
                             session:
                                 namespace: 3
                 http:
                     max-request-body-size: 100M
-            backgw_eu: # custom name to differentiate between two applications, incorrect for the cloud usage
+            backgw_ee: # custom name to differentiate between two applications, incorrect for the cloud usage
                 application: backend-gateway
                 endpoints:
-                    backend-gateway.eu.spryker.local:
-                        region: EU
+                    backend-gateway.ee.plmb.local:
+                        region: EE
                         primal: true
-            storybook_eu:
+            storybook_ee:
                 application: static
                 endpoints:
-                    storybook.spryker.local:
+                    storybook.plmb.local:
                         entry-point: Storybook/assets
-                        region: EU
+                        region: EE
 services:
     database:
         engine: mysql
@@ -124,7 +124,7 @@ services:
             username: 'spryker'
             password: 'secret'
         endpoints:
-            queue.spryker.local:
+            queue.plmb.local:
             localhost:5672:
                 protocol: tcp
     session:
@@ -145,23 +145,23 @@ services:
         version: '2.516.3'
         csrf-protection-enabled: true
         endpoints:
-            scheduler.spryker.local:
+            scheduler.plmb.local:
     mail_catcher:
         engine: mailpit
         endpoints:
-            mail.spryker.local:
+            mail.plmb.local:
     swagger:
         engine: swagger-ui
         endpoints:
-            swagger.spryker.local:
+            swagger.plmb.local:
     redis-gui:
         engine: redis-commander
         endpoints:
-            redis-commander.spryker.local:
+            redis-commander.plmb.local:
     dashboard:
         engine: dashboard
         endpoints:
-            spryker.local:
+            plmb.local:
     webdriver:
         engine: chromedriver
 
@@ -171,7 +171,7 @@ docker:
         redirect: true
 
     testing:
-        region: EU
+        region: EE
 
     debug:
         enabled: true
