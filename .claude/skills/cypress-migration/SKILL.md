@@ -8,10 +8,12 @@ description: >
   project", "onboard this project onto cypress", "integrate cypress-boilerplate", or any
   request to replace `spryker/cypress-tests` / `spryker/robotframework-suite-tests` with a
   project's own Cypress setup. This is a one-time setup/migration skill — it removes the old
-  suites, vendors in spryker-projects/cypress-boilerplate, wires up CI, and generates the
-  companion day-to-day `cypress-tests` skill for the target project. It is written to be
-  project-agnostic: every step discovers the target project's actual conventions before
-  acting rather than assuming they match any specific reference project.
+  suites, vendors in the already-adapted `tests/cypress-boilerplate/` implementation from the
+  spryker-shop/b2b-demo-marketplace repository (the proven reference implementation — not the
+  raw spryker-projects/cypress-boilerplate template), wires up CI, and generates the companion
+  day-to-day `cypress-tests` skill for the target project. It is written to be project-agnostic
+  for the *target* project: every step discovers the target's actual conventions (hostnames,
+  fixtures, CI patterns) before acting rather than assuming they match the reference project.
 ---
 
 # Cypress Migration: Demo-Shop Suites → Project-Owned Baseline
@@ -28,9 +30,9 @@ the verification sub-steps even though they look like extra work.
 grep -n "spryker/cypress-tests\|spryker/robotframework-suite-tests" composer.json
 ```
 
-If neither package is present, this project doesn't need the removal steps — skip to Step 6
-(vendoring) if the goal is just adding a Cypress baseline to a project that never had these
-suites.
+If neither package is present, this project doesn't need the removal steps (Steps 2–5) — skip
+ahead to Step 6 (detect the locator convention) and Step 7 (vendoring) if the goal is just
+adding a Cypress baseline to a project that never had these suites.
 
 If the project uses a different combination (only one of the two packages, or additional
 similar internal test packages), adapt the steps below accordingly rather than assuming both
@@ -50,9 +52,20 @@ In `composer.json`, remove:
   Read the surrounding block — if `installer-paths` maps other packages too, only remove the
   entries specific to the removed packages, not the whole block.
 
-Then run `composer update --lock` (regenerates `composer.lock` and purges the corresponding
-`vendor/` directories). If `composer`/PHP isn't available in your environment, tell the user
-this step still needs to be run and why (the lock file must reflect the require-dev removal).
+Then sync the lock file and the installed tree. Note that `composer update --lock` only
+rewrites `composer.lock` — it does **not** remove anything already installed under `vendor/`,
+so it alone won't purge the old packages:
+```bash
+composer update --lock   # sync composer.lock with the edited composer.json
+composer install         # actually remove the packages from vendor/
+```
+Alternatively, skip the manual `require-dev` edit above and let Composer do all three (edit
+`composer.json`, update the lock, prune `vendor/`) in one step:
+```bash
+composer remove --dev spryker/cypress-tests spryker/robotframework-suite-tests
+```
+If `composer`/PHP isn't available in your environment, tell the user this step still needs to
+be run and why (the lock file must reflect the require-dev removal).
 
 Check for a leftover **untracked** install directory from a custom installer path (e.g. a
 `tests/cypress-tests/`-style directory that was checked out by Composer via
@@ -75,9 +88,15 @@ by deploy-yml file), identify its exact line range: the job starts at its `<job-
 sibling job key (or end of file). Delete each full block, then:
 
 ```bash
-grep -n "robot\|cypress" .github/workflows/*.yml   # must return nothing
+grep -n "robot\|cypress" .github/workflows/*.yml   # no *active* job references may remain
 python3 -c "import yaml; yaml.safe_load(open('<file>')); print('OK')"   # each edited file
 ```
+
+Judge that grep by whether any **live** job still references the removed suites — not by
+whether it prints zero lines. Commented-out blocks kept deliberately for reference, and the
+project-owned Cypress jobs you add in Step 9, both legitimately match this pattern. (The
+`python3 -c "import yaml"` check needs PyYAML installed; if it's missing, use any other YAML
+parser available rather than skipping validation.)
 
 Also check no remaining job has a `needs:` list referencing a job name you just deleted.
 
@@ -127,23 +146,43 @@ grep -rl "data-cy=" src/ --include="*.twig" 2>/dev/null | wc -l
 
 - If one convention already has real usage in the project's templates, use that one — adding
   a second, competing convention creates long-term maintenance drift.
-- If none exist yet, `data-qa` is a reasonable default consistent with the Spryker ecosystem
-  and the reference boilerplate's own example tests, but **confirm this choice with the user
-  explicitly** before proceeding — it's a project-wide convention that's expensive to reverse
-  once tests and templates are built on it.
+- If none exist yet, `data-qa` is a reasonable default — it's what the b2b-demo-marketplace
+  reference implementation (Step 7) already uses throughout — but **confirm this choice with
+  the user explicitly** before proceeding — it's a project-wide convention that's expensive to
+  reverse once tests and templates are built on it.
 
-## Step 7 — Vendor `spryker-projects/cypress-boilerplate` as plain files
+## Step 7 — Vendor the `tests/cypress-boilerplate/` implementation from b2b-demo-marketplace
+
+The source of truth is no longer the raw `spryker-projects/cypress-boilerplate` template —
+it's the **already-adapted, already-battle-tested** copy committed at
+`tests/cypress-boilerplate/` in `spryker-shop/b2b-demo-marketplace`. That copy has had real
+bugs found and fixed against a live Spryker B2B Marketplace instance (locator fixes, OMS
+transition timing/race fixes, search-index sync timing, DataTables-based list filtering, etc.)
+that the raw upstream template does not have. Vendoring from it means the target project
+starts from a working baseline instead of rediscovering the same bugs from scratch.
 
 ```bash
-git clone --depth 1 https://github.com/spryker-projects/cypress-boilerplate.git <scratch-dir>
-rsync -a --exclude='.git' --exclude='composer.json' <scratch-dir>/ <project>/tests/e2e/
-rm -rf <project>/tests/e2e/.github   # its CI/PR-template files are for the standalone boilerplate repo, not this monorepo
+# NOTE: tests/cypress-boilerplate/ does not exist on the default branch (master) — a plain
+# `git clone` checks out master and the rsync below would fail with "No such file or directory".
+# Clone the branch that actually contains it, and confirm before copying.
+git clone --depth 1 --branch add-cypress-boilerplate \
+  https://github.com/spryker-shop/b2b-demo-marketplace.git <scratch-dir>
+ls <scratch-dir>/tests/cypress-boilerplate/package.json   # must exist before proceeding
+rsync -a --exclude='.git' --exclude='node_modules' \
+  <scratch-dir>/tests/cypress-boilerplate/ <project>/tests/cypress-boilerplate/
+```
+
+If that branch has since been merged to `master`, drop the `--branch` flag — but verify the
+directory exists on whatever branch you clone rather than assuming it does:
+```bash
+git ls-remote --heads https://github.com/spryker-shop/b2b-demo-marketplace.git   # list available branches
 ```
 
 Pick a destination path that is **not** the old (now-removed) installer-path directory and is
-**not** covered by a stale `.gitignore` rule from Step 5 — e.g. `tests/e2e/`. Verify:
+**not** covered by a stale `.gitignore` rule from Step 5 — `tests/cypress-boilerplate/` is the
+established convention; only deviate from it with an explicit reason. Verify:
 ```bash
-git check-ignore -v <project>/tests/e2e   # must produce no output
+git check-ignore -v <project>/tests/cypress-boilerplate   # must produce no output
 ```
 
 Then adapt, discovering each value rather than assuming a default is correct:
@@ -151,12 +190,15 @@ Then adapt, discovering each value rather than assuming a default is correct:
 - `.envs/.env.local` / `.envs/.env.ci` / etc.: set `BACK_OFFICE_URL`/`STOREFRONT_URL`/
   `GLUE_URL`/`MP_URL` to the project's actual local/CI hostnames — grep existing CI workflows
   or install configs for `*.spryker.local` (or whatever domain convention the project uses)
-  rather than trusting the boilerplate's defaults are right for this project.
+  rather than trusting the reference project's own hostnames are right for this one.
 - `PROJECT_LOCATION` (used by any CLI-exec-based commands, e.g. OMS transitions): set to the
-  relative path from the vendored Cypress directory back to the repo root (e.g. `..` if
-  Cypress runs with `tests/e2e` as its working directory).
-- If Step 6 determined the project's convention differs from what the boilerplate ships with
-  (`data-qa`), update the vendored page-object selectors accordingly.
+  relative path from the vendored Cypress directory back to the repo root (e.g. `../..` if
+  Cypress runs with `tests/cypress-boilerplate` — two directories deep — as its working
+  directory). Set this in **every** `.envs/.env.<environment>` file that needs it, including
+  the local one — a value only set for CI and missing locally silently no-ops any CLI-exec
+  step when run locally instead of failing loudly.
+- If Step 6 determined the project's convention differs from `data-qa` (what this reference
+  copy already uses throughout), update the vendored page-object selectors accordingly.
 - **Verify the vendored fixture data is real for this project**, don't just trust it:
   ```bash
   grep -rl "<fixture-customer-email>" data/import/common/ 2>/dev/null
@@ -164,7 +206,10 @@ Then adapt, discovering each value rather than assuming a default is correct:
   ```
   If the values aren't found in the project's own demodata, replace them with values that
   are — a smoke test asserting on data that doesn't exist in this project's environment will
-  fail for reasons unrelated to the code under test.
+  fail for reasons unrelated to the code under test. Prefer merchants/products/customers with
+  no unusual restrictions (e.g. B2B Purchasing Control has no Glue REST API support at all —
+  a customer whose business unit requires cost-center/budget selection will make any
+  Glue-API-based test-setup scaffolding fail with a 422 regardless of the code under test).
 
 ## Step 8 — Add representative smoke tests
 
@@ -172,16 +217,24 @@ At minimum, prove the baseline works end-to-end with:
 1. A storefront homepage → search/PDP → add-to-cart flow.
 2. A full checkout flow.
 
-Reuse whatever page objects/scenarios the vendored boilerplate already ships (it typically
-already includes working examples for common Spryker flows — check
+Reuse whatever page objects/scenarios the vendored `tests/cypress-boilerplate/` copy already
+ships (it already includes working examples for common Spryker flows — check
 `cypress/support/page-objects/` and `cypress/e2e/` before writing new ones). Every test must
 reset any state it mutates in a `before`/`beforeEach` hook (deterministic setup/cleanup) and
 assert on specific, meaningful content rather than mere presence/visibility.
 
 Run locally before moving on:
 ```bash
-cd <project>/tests/e2e && npm ci && npm run code:check && npm run cy:run
+cd <project>/tests/cypress-boilerplate && npm ci
+npm run lint:check && npm run prettier:check   # NOT `code:check` — see below
+npm run cy:run
 ```
+
+Do **not** use `npm run code:check` as a pass/fail gate. The boilerplate defines it as
+`eslint . ; prettier . --check` — the `;` means the script exits with *prettier's* status, so a
+real ESLint failure is silently reported as success. Always run `lint:check` and
+`prettier:check` as separate commands (this is why the CI job in Step 9 runs them as two
+separate steps). `code:check` is fine for eyeballing all issues at once, just not for gating.
 (`cy:run` requires a locally booted instance of the target project — if one isn't available
 in your environment, say so explicitly rather than claiming this step passed.)
 
@@ -228,16 +281,44 @@ If the project's README (or equivalent) documents the old demo-shop suites, upda
 describe the new project-owned setup, its location, and a pointer to the new
 `cypress-tests` skill.
 
-## Final checklist
+## Final checklist (acceptance criteria)
 
-- [ ] `composer.json`/`composer.lock` no longer reference the removed packages.
-- [ ] Repo-wide grep for the removed packages' names and deleted file names returns nothing
-      outside of historical git log.
-- [ ] Data-import fixture configs still in use by other pipelines were verified as still
-      referenced (Step 4) — none of them were deleted by mistake.
-- [ ] `npm run code:check` passes in the vendored Cypress directory.
-- [ ] At least one smoke spec runs successfully against a booted target environment (or the
-      limitation is stated explicitly if no environment was available to test against).
-- [ ] New/edited CI workflow YAML parses and follows the existing file's formatting.
-- [ ] `.claude/skills/cypress-tests/SKILL.md` exists, reflects this project's actual
-      discovered conventions, and is listed as an available skill.
+- [ ] 1. `composer.json` and `composer.lock` no longer contain `spryker/cypress-tests` or
+      `spryker/robotframework-suite-tests`.
+      ```bash
+      grep -n "spryker/cypress-tests\|spryker/robotframework-suite-tests" composer.json composer.lock
+      ```
+      must return nothing.
+- [ ] 2. No active project command, configuration, or CI job depends on the removed demo-shop
+      Cypress or Robot Framework suites. Repo-wide grep for the removed packages' names and
+      deleted file names (deploy configs, docker-compose files, install pipelines) returns
+      nothing outside historical git log; no remaining CI job's `needs:` references a job you
+      deleted; data-import fixture configs still used by *other* pipelines were verified as
+      still referenced (Step 4), not deleted by mistake.
+- [ ] 3. The target project's repository contains its own Cypress boilerplate — vendored
+      under `tests/cypress-boilerplate/` (per Step 7), committed to the repo, not a Composer
+      dependency and not re-fetched at CI/runtime.
+- [ ] 4. Cypress can be installed and executed using documented project commands (`npm ci`,
+      `npm run cy:run`, `npx cypress open`, etc.) without any Composer-based Cypress
+      dependency. `npm run lint:check` **and** `npm run prettier:check` each pass in the
+      vendored Cypress directory (run separately — `code:check` masks ESLint failures, Step 8).
+- [ ] 5. At least one project-specific Cypress smoke test runs successfully against a
+      configured target environment (or the limitation is stated explicitly if no environment
+      was available to test against).
+- [ ] 6. Test selectors, fixtures, test users, and assertions used by the initial tests are
+      project-owned — verified against the target project's own demodata/templates (Step 6/7),
+      not copied from the reference project's fixtures unexamined; no demo-shop-specific
+      dependencies or locators remain.
+- [ ] 7. A Claude Skill for Cypress (`cypress-tests`, generated in Step 10) is available in
+      the project repository and contains clear, actionable instructions for Claude to create,
+      run, review, and validate Cypress tests.
+- [ ] 8. That Claude Skill defines the project's actual conventions for test structure,
+      naming, locators, fixtures/test data, environment variables, and supported test
+      commands — the real, discovered values, not generic placeholders.
+- [ ] 9. That Claude Skill applies an executable quality gate that, at minimum, verifies tests
+      pass, lint/format is clean, no brittle selectors are used (no raw `cy.get()` outside
+      page objects, no positional/XPath selectors), setup/cleanup is deterministic, and
+      assertions are clear and specific.
+- [ ] 10. Cypress setup, initial tests, the Claude Skill, and quality-gate automation are all
+      committed to the main repository — including the new/edited CI workflow YAML, verified
+      to parse and to follow the existing file's formatting.
