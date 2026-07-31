@@ -179,7 +179,7 @@ jobs:
                 uses: ./.github/actions/job-slack-notifications
                 if: always()
 
-    [project applicable] Functional Codeception tests.
+    # [project applicable] Functional Codeception tests.
     php-84-mariadb-functional-alpine:
         needs: [validation, js-validation]
         name: "Codeception / Functional Tests"
@@ -319,7 +319,7 @@ jobs:
     # project CI. Delete them when adopting this workflow for project work.
     # =========================================================================
 
-    [remove for project]
+    # [remove for project]
     php-84-mariadb-acceptance-alpine:
         needs: [js-validation, validation]
         name: "Codeception / Acceptance & API"
@@ -393,7 +393,7 @@ jobs:
                 uses: ./.github/actions/job-slack-notifications
                 if: always()
 
-    [remove for project]
+    # [remove for project]
     docker-alpine-php-84-mariadb-robot-api:
         needs: [validation]
         name: "Robot / API"
@@ -817,3 +817,4 @@ jobs:
             -   name: Slack Notification for failed job
                 uses: ./.github/actions/job-slack-notifications
                 if: always()
+
