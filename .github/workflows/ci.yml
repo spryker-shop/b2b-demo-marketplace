@@ -250,7 +250,7 @@ jobs:
     # Project-owned Cypress E2E suite (storefront, backoffice,
     # merchant portal, Glue) — boots a full Docker/SDK stack and runs it headlessly.
     cypress-e2e:
-        needs: [js-validation, validation, cypress-quality-gate]
+        # needs: [js-validation, validation, cypress-quality-gate]
         name: "Cypress-boilerplate / E2E"
         runs-on: ubuntu-latest
         env:
