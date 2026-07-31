@@ -2,7 +2,6 @@
 
 {% block customerContent %}
     {% include molecule('action-bar') with {
-        modifiers: ['first'],
         data: {
             title: data.title | trans,
         },
@@ -64,6 +63,7 @@
                                 {% include molecule('date-time-picker') with {
                                     data: {
                                         field: embed.field,
+                                        inputQa: 'reschedule-date',
                                     },
                                     attributes: {
                                         'formatted-date-time': embed.field.vars.value | date('Y-m-d H:i'),

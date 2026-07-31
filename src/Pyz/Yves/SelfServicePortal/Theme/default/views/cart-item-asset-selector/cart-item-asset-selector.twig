@@ -35,7 +35,7 @@
                 {% block information %}
                     <div class="title--h6 {{ config.name }}__data-row {{ config.name }}__information">
                         <strong>{{ 'self_service_portal.asset.serial_number' | trans }}:</strong>
-                        <span class="{{ config.name }}__asset-text {{ config.jsName }}__asset-serial" {{ qa('asset-selector-serial') }}>{{- data.asset is not empty ? data.asset.serialNumber -}}</span>
+                        <span class="{{ config.name }}__asset-text {{ config.jsName }}__asset-serial" {% if data.asset is not empty %}title="{{ data.asset.serialNumber }}"{% endif %} {{ qa('asset-selector-serial') }}>{{- data.asset is not empty ? data.asset.serialNumber -}}</span>
                     </div>
                 {% endblock %}
 

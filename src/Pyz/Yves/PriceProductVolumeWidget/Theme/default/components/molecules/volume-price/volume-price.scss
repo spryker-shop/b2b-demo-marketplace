@@ -2,6 +2,10 @@
     #{$name} {
         margin-bottom: rem(12);
 
+        &:not(:last-child) {
+            padding-bottom: var(--scale-16);
+        }
+
         &__amount {
             font-size: rem(24);
             font-weight: fw(bold);
@@ -48,12 +52,11 @@
             margin-bottom: 0;
 
             #{$name}__amount {
+                @include typography(label-sm-semibold);
                 display: block;
-                font-size: rem(16);
-                font-weight: fw(regular);
                 margin: 0;
                 padding-left: rem(10);
-                color: $setting-color-gray-5;
+                color: var(--text-primary);
 
                 &--original {
                     font-size: rem(14);
@@ -61,13 +64,63 @@
                 }
 
                 &--text-alt {
-                    color: $setting-color-alt;
+                    color: var(--text-primary);
                 }
             }
 
             #{$name}__mode {
                 font-size: rem(12);
                 line-height: rem(18);
+            }
+        }
+
+        &--seller {
+            display: inline-flex;
+            flex-direction: row-reverse;
+            align-items: baseline;
+            gap: var(--scale-4);
+            margin: 0;
+            padding-bottom: 0;
+
+            #{$name}__amount {
+                @include typography(label-sm-semibold);
+                margin: 0;
+                color: var(--text-primary);
+
+                &--original {
+                    color: var(--text-tertiary);
+                    font-weight: var(--font-weight-regular);
+                    text-decoration: line-through;
+                }
+            }
+
+            #{$name}__mode {
+                @include typography(body-sm);
+                color: var(--text-secondary);
+            }
+        }
+
+        &--detail {
+            margin: 0;
+
+            #{$name}__amount {
+                @include typography(price-lg);
+                color: var(--text-primary);
+
+                &--text-alt {
+                    color: var(--text-primary);
+                }
+
+                &--original {
+                    @include typography(caption);
+                    color: var(--text-tertiary);
+                    text-decoration: line-through;
+                }
+            }
+
+            #{$name}__mode {
+                @include typography(body-sm);
+                color: var(--text-tertiary);
             }
         }
 

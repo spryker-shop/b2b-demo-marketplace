@@ -1,0 +1,41 @@
+{% extends molecule('schedule-detail-sidebar', '@SprykerFeature:OrderExperienceManagement') %}
+
+{% block extraClass %}{% endblock %}
+
+{% block definitionList %}
+    {% set definitionListValueClassName = config.name ~ '__value' %}
+
+    {{ parent() }}
+{% endblock %}
+
+{% block additionalInfo %}
+    {% set definitionListKeyClassName = config.name ~ '__label' %}
+    {% set definitionListValueClassName = config.name ~ '__value' %}
+    
+    {% widget 'CostCenterDetailWidget' args [data.quote] with {
+        embed: {
+            configName: config.name
+        },
+    } only %}
+        {% block body %}
+            {% embed molecule('cost-center-detail', 'PurchasingControl') with {
+                data: {
+                    costCenterName: data.costCenterName,
+                    budgetName: data.budgetName,
+                },
+                embed: {
+                    configName: embed.configName,
+                },
+            } only %}
+                {% block component %}
+                    {% block listItems %}
+                        {% set listKeyClassName = embed.configName ~ '__label' %}
+                        {% set listValueClassName = embed.configName ~ '__value' %}
+
+                        {{ parent() }}
+                    {% endblock %}
+                {% endblock %}
+            {% endembed %}
+        {% endblock %}
+    {% endwidget %}
+{% endblock %}

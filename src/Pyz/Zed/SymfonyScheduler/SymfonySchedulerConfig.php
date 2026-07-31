@@ -47,6 +47,14 @@ class SymfonySchedulerConfig extends SprykerSymfonySchedulerConfigAlias
                 'command' => $logger . '$PHP_BIN vendor/bin/console oms:clear-locks',
                 'schedule' => '0 6 * * *',
             ],
+            'recurring-orders-check-condition' => [
+                'command' => $logger . '$PHP_BIN vendor/bin/console state-machine:check-condition RecurringOrder',
+                'schedule' => '* * * * *',
+            ],
+            'recurring-orders-clear-locks' => [
+                'command' => $logger . '$PHP_BIN vendor/bin/console state-machine:clear-locks',
+                'schedule' => '0 6 * * *',
+            ],
             'product-relation-updater' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/console product-relation:update -vvv',
                 'schedule' => '30 2 * * *',

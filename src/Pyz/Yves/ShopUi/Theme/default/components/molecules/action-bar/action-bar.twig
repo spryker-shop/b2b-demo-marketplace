@@ -12,7 +12,8 @@
 } %}
 
 {% block body %}
-    <h3 class="{{ component.renderClass(config.name ~ '__title', modifiers, class) }}">
+    <h3 class="{{ component.renderClass(config.name ~ '__title', modifiers, class) }}"
+        {% if data.titleQa is defined %} data-qa="{{ data.titleQa }}"{% endif %}>
         {{ data.title }}
     </h3>
     <div class="{{ config.name }}__actions">

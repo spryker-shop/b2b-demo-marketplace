@@ -132,11 +132,11 @@ class CmsBlockWriterStep extends PublishAwareStep implements DataImportStepInter
     protected function findOrCreateCmsBlock(DataSetInterface $dataSet, SpyCmsBlockTemplate $templateEntity): SpyCmsBlock
     {
         $cmsBlockEntity = SpyCmsBlockQuery::create()
-            ->filterByFkTemplate($templateEntity->getIdCmsBlockTemplate())
             ->filterByKey($dataSet[static::KEY_BLOCK_KEY])
-            ->filterByName($dataSet[static::KEY_BLOCK_NAME])
             ->findOneOrCreate();
 
+        $cmsBlockEntity->setFkTemplate($templateEntity->getIdCmsBlockTemplate());
+        $cmsBlockEntity->setName($dataSet[static::KEY_BLOCK_NAME]);
         $cmsBlockEntity->setIsActive($dataSet[static::KEY_ACTIVE]);
 
         if ($cmsBlockEntity->isNew() || $cmsBlockEntity->isModified()) {

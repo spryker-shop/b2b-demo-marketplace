@@ -1,20 +1,19 @@
 @mixin cart-page-cart-item-details($name: '.cart-item-details') {
     #{$name} {
         &__section {
-            padding-top: rem(var(--scale-16));
-        }
+            padding-bottom: var(--scale-16);
+            text-align: left;
 
-        &__section + &__section {
-            margin-top: rem(var(--scale-12));
+            &:last-child {
+                padding-bottom: 0;
+            }
         }
 
         &__section-label {
-            margin: 0 0 rem(var(--scale-8));
-            color: var(--text-secondary);
-            font-family: var(--label-sm-family);
-            font-size: rem(var(--label-sm-size));
-            font-weight: var(--label-sm-weight);
-            line-height: rem(var(--label-sm-line-height));
+            @include typography(label-sm-semibold);
+            margin: 0 0 var(--scale-6);
+            color: var(--text-tertiary);
+            text-align: left;
             text-transform: none;
         }
 
@@ -25,14 +24,14 @@
         &__comments textarea,
         &__comments input[type='text'] {
             width: 100%;
-            padding: rem(var(--scale-8)) rem(var(--scale-12));
+            padding: var(--scale-8) var(--scale-12);
             color: var(--text-primary);
             font-family: var(--body-md-family);
-            font-size: rem(var(--body-md-size));
-            line-height: rem(var(--body-md-line-height));
+            font-size: var(--body-md-size);
+            line-height: var(--body-md-line-height);
             background: var(--background-surface);
-            border: rem(var(--stroke-sm)) dashed var(--border-default);
-            border-radius: rem(var(--radius-sm));
+            border: var(--stroke-sm) dashed var(--border-default);
+            border-radius: var(--radius-sm);
         }
 
         &__comments textarea:focus,
@@ -43,10 +42,19 @@
         }
 
         &__asset {
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-8);
+            text-align: left;
             color: var(--text-secondary);
             font-family: var(--body-sm-family);
-            font-size: rem(var(--body-sm-size));
-            line-height: rem(var(--body-sm-line-height));
+            font-size: var(--body-sm-size);
+            line-height: var(--body-sm-line-height);
+        }
+
+        &__service-row {
+            @include typography(body-sm);
+            color: var(--text-secondary);
         }
     }
 }

@@ -54,6 +54,7 @@ use Spryker\Zed\SalesOrderAmendment\Communication\Plugin\CartReorder\QuoteReques
 use Spryker\Zed\SalesOrderAmendmentOms\Communication\Plugin\CartReorder\IsAmendableOrderCartReorderRequestValidatorPlugin;
 use Spryker\Zed\SalesOrderAmendmentOms\Communication\Plugin\CartReorder\StartOrderAmendmentCartReorderPostCreatePlugin;
 use Spryker\Zed\SalesProductConfiguration\Communication\Plugin\CartReorder\ProductConfigurationCartReorderItemHydratorPlugin;
+use Spryker\Zed\SalesShipmentType\Communication\Plugin\CartReorder\ShipmentTypeReorderItemHydratorPlugin;
 use Spryker\Zed\Store\Communication\Plugin\CartReorder\CurrentStoreCartReorderValidatorPlugin;
 
 class CartReorderDependencyProvider extends SprykerCartReorderDependencyProvider
@@ -138,6 +139,7 @@ class CartReorderDependencyProvider extends SprykerCartReorderDependencyProvider
             new ProductPackagingUnitCartReorderItemHydratorPlugin(),
             new CartNoteCartReorderItemHydratorPlugin(),
             new ProductOfferCartReorderItemHydratorPlugin(),
+            new ShipmentTypeReorderItemHydratorPlugin(),
             new MerchantProductCartReorderItemHydratorPlugin(),
             new MerchantProductOfferCartReorderItemHydratorPlugin(),
             new ProductConfigurationCartReorderItemHydratorPlugin(),

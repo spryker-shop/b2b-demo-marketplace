@@ -1,0 +1,11 @@
+{% extends molecule('review-summary-banner', '@SprykerFeature:OrderExperienceManagement') %}
+
+{% block grid %}
+    {% set gridClassName = 'grid grid--gap grid--justify' %}
+    <h3 class="{{ config.name }}__title">{{ 'recurring_orders.summary_of_changes' | trans }}</h3>
+    {{ parent() }}
+{% endblock %}
+
+{% block newValue %}
+    <strong class="spacing-left--bigger" data-qa="recurring-order-review-footer-total">{{ data.review.updatedTotal | money(true, data.currencyIsoCode) }}</strong>
+{% endblock %}

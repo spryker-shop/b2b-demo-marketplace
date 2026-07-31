@@ -43,6 +43,26 @@
         background: $setting-color-gray-7;
     }
 
+    &--detail {
+        margin: 0;
+
+        #{$name}__amount {
+            @include typography(price-lg);
+            color: var(--text-primary);
+
+            &--original {
+                @include typography(caption);
+                color: var(--text-tertiary);
+                text-decoration: line-through;
+            }
+        }
+
+        #{$name}__mode {
+            @include typography(body-sm);
+            color: var(--text-tertiary);
+        }
+    }
+
     &__amount {
         font-size: rem(16);
         font-weight: fw(medium);
@@ -91,10 +111,8 @@
         }
 
         &--cart {
+            @include typography(price-sm);
             color: var(--text-primary);
-            font-size: rem(var(--font-size-16));
-            font-weight: var(--font-weight-semibold);
-            letter-spacing: var(--font-letter-spacing-tight);
         }
     }
 
@@ -115,10 +133,8 @@
         }
 
         &--cart {
+            @include typography(body-sm);
             color: var(--text-tertiary);
-            font-family: var(--body-sm-family);
-            font-size: rem(var(--body-sm-size));
-            line-height: rem(var(--body-sm-line-height));
         }
     }
 }

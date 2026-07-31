@@ -10,6 +10,7 @@
     title: '',
     text: '',
     icon: null,
+    isStatic: false,
 } %}
 
 {% define attributes = {
@@ -17,7 +18,7 @@
     'max-visible-messages': 3,
 } %}
 
-{% set modifiers = [data.action] | merge(modifiers | default([])) %}
+{% set modifiers = [data.action] | merge(modifiers | default([])) | merge(data.isStatic ? ['static'] : []) %}
 
 {% set actionMapper = {
     'success': 'check_circle',
@@ -49,12 +50,14 @@
         </div>
     {% endblock %}
 
-    <button type="button" class="{{ config.name }}__close">
-        {% include atom('font-icon') with {
-            modifiers: ['big'],
-            data: {
-                name: 'close',
-            },
-        } only %}
-    </button>
+    {% if not data.isStatic %}
+        <button type="button" class="{{ config.name }}__close">
+            {% include atom('font-icon') with {
+                modifiers: ['big'],
+                data: {
+                    name: 'close',
+                },
+            } only %}
+        </button>
+    {% endif %}
 {% endblock %}

@@ -154,7 +154,10 @@ const getConfiguration = async (appSettings) => {
                                 loader: 'postcss-loader',
                                 options: {
                                     postcssOptions: {
-                                        plugins: [require('autoprefixer')],
+                                        plugins: [
+                                            require('../libs/postcss-hoist-mixed-declarations'),
+                                            require('autoprefixer'),
+                                        ],
                                     },
                                 },
                             },

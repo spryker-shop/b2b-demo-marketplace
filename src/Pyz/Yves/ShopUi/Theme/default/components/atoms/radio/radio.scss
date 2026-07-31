@@ -4,7 +4,7 @@
     @include shop-ui-checkbox($name) {
         &__box {
             border-radius: 100%;
-            border-width: rem(var(--scale-2));
+            border-width: var(--scale-2);
         }
 
         &__input:checked ~ {

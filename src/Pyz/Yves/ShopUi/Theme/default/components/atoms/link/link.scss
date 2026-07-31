@@ -34,19 +34,31 @@
         color: var(--text-state-error);
     }
 
+    &--info,
+    &--info:hover {
+        color: var(--text-state-info);
+    }
+
     &--no-decoration {
         text-decoration: none;
+        border: 0;
 
         &:hover {
             text-decoration: none;
         }
     }
 
-    &--footer {
-        color: var(--icon-secondary);
+    &--font-inherit {
+        font: inherit;
+    }
 
-        &:hover {
-            color: var(--icon-primary);
-        }
+    &:has(.font-icon):hover,
+    &:has(.font-icon):focus {
+        text-decoration: none;
+    }
+
+    &:has(.font-icon):hover &__text,
+    &:has(.font-icon):focus &__text {
+        text-decoration: underline;
     }
 }

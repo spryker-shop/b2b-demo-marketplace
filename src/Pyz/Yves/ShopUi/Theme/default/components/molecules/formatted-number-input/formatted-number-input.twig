@@ -10,3 +10,11 @@
     'decimal-separator': globalNumberFormatConfig['decimal-separator'] | default('.'),
     'decimal-rounding': globalNumberFormatConfig['decimal-rounding'] | default(3),
 } %}
+
+{% block body %}
+    <input value="{{ data.inputValue }}"
+           class="{{ config.jsName }}__input input {{ _self.renderClass(config.name ~ '__input', modifiers) }} {{ data.inputExtraClasses }}"
+           {{ _self.renderAttributes(data.inputAttributes) }} aria-label="{{ 'shop_ui.aria_label.counter.input' | trans }}">
+
+    {{ block('hiddenInput') }}
+{% endblock %}

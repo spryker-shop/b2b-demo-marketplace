@@ -1,0 +1,57 @@
+{% extends molecule('recurring-order-attention-banner', '@SprykerFeature:OrderExperienceManagement') %}
+
+{% block extraClass %}{% endblock %}
+
+{% block body %}
+    {% embed molecule('flash-message') with {
+        modifiers: ['warning'],
+        data: {
+            isStatic: true,
+            action: 'warning',
+        },
+        embed: {
+            count: data.count,
+            attentionStatusCounts: data.attentionStatusCounts,
+        },
+    } only %}
+        {% block content %}
+            <div>
+                {% set statusIconMap = {
+                    'paused': 'action-warning',
+                    'review_required': 'action-warning-triangle',
+                    'failed': 'action-alert',
+                } %}
+
+                <h6 class="{{ config.name }}__title spacing-bottom--biggest">{{ 'recurring_orders.attention_banner.message' | trans({'%count%': embed.count}) }}</h6>
+
+                {% block statuses %}
+                    <div class="grid grid--gap spacing-bottom--biggest">
+                        {% for status, count in embed.attentionStatusCounts | filter(count => count > 0) %}    
+                            <div class="col grid grid--middle">
+                                {% include atom('icon') with {
+                                    class: 'spacing-right',
+                                    data: {
+                                        name: statusIconMap[status],
+                                    },
+                                } only %}
+                                {{ count }}
+                                {{ ('recurring_orders.status.' ~ status) | trans }}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="grid grid--gap spacing-bottom--small">
+                        {% for status, count in embed.attentionStatusCounts | filter(count => count > 0) %}
+                            <div class="col">
+                                <a href="{{ url('recurring-orders', {'recurring_order_search_form[filters][status]': status}) }}"
+                                    class="button button--sm button--hollow">
+                                    {{ ('recurring_orders.attention_banner.link.' ~ status) | trans }}
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endblock %}
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

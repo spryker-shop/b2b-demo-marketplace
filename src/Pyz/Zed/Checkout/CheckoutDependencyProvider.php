@@ -74,6 +74,8 @@ use Spryker\Zed\Shipment\Communication\Plugin\Checkout\SalesOrderShipmentSavePlu
 use Spryker\Zed\ShipmentCheckoutConnector\Communication\Plugin\Checkout\ShipmentCheckoutPreCheckPlugin;
 use Spryker\Zed\ShipmentTypeCart\Communication\Plugin\Checkout\ShipmentTypeCheckoutPreConditionPlugin;
 use SprykerEco\Zed\Stripe\Communication\Plugin\Checkout\StripeCheckoutPostSavePlugin;
+use SprykerFeature\Zed\OrderExperienceManagement\Communication\Plugin\Checkout\RecurringOrderCheckoutPreConditionPlugin;
+use SprykerFeature\Zed\OrderExperienceManagement\Communication\Plugin\Checkout\RecurringOrdersCheckoutPostSavePlugin;
 use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\Checkout\BudgetCheckoutPreConditionPlugin;
 use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\Checkout\ConsumeBudgetCheckoutPostSavePlugin;
 use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\Checkout\CostCenterOrderSaverPlugin;
@@ -110,6 +112,7 @@ class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
             new ServicePointCheckoutPreConditionPlugin(),
             new ShipmentTypeCheckoutPreConditionPlugin(),
             new BudgetCheckoutPreConditionPlugin(),
+            new RecurringOrderCheckoutPreConditionPlugin(), #RecurringOrdersFeature
         ];
     }
 
@@ -171,6 +174,7 @@ class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
             new OrderTotalsSaverPlugin(),
             new SalesOrderShipmentSavePlugin(),
             new OrderItemsSaverPlugin(),
+            new ShipmentTypeCheckoutDoSaveOrderPlugin(),
             new CartNoteSaverPlugin(), #CartNoteFeature
             new DiscountOrderSavePlugin(),
             new ProductBundleOrderSaverPlugin(),
@@ -194,19 +198,19 @@ class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
              * Plugins
              * `UpdateOrderByQuoteCheckoutDoSaveOrderPlugin`,
              * `OrderTotalsSaverPlugin`,
-             * `ShipmentTypeCheckoutDoSaveOrderPlugin`
              * `ReplaceSalesOrderDiscountsCheckoutDoSaveOrderPlugin`
              * `ReplaceSalesOrderShipmentCheckoutDoSaveOrderPlugin`,
+             * `ShipmentTypeCheckoutDoSaveOrderPlugin`
              * `SalesOrderAmendmentItemsCheckoutDoSaveOrderPlugin`,
              * must be enabled in the strict order.
              */
             new UpdateOrderByQuoteCheckoutDoSaveOrderPlugin(),
             new OrderTotalsSaverPlugin(),
             new ReleaseUsedCodesCheckoutDoSaveOrderPlugin(),
-            new ShipmentTypeCheckoutDoSaveOrderPlugin(),
             new UpdateCartNoteCheckoutDoSaveOrderPlugin(), #CartNoteFeature
             new ReplaceSalesOrderDiscountsCheckoutDoSaveOrderPlugin(),
             new ReplaceSalesOrderShipmentCheckoutDoSaveOrderPlugin(),
+            new ShipmentTypeCheckoutDoSaveOrderPlugin(),
             new SalesOrderAmendmentQuoteCheckoutDoSaveOrderPlugin(),
             new SalesOrderAmendmentItemsCheckoutDoSaveOrderPlugin(),
             new ProductBundleOrderSaverPlugin(),
@@ -228,6 +232,7 @@ class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
             new PaymentConfirmPreOrderPaymentCheckoutPostSavePlugin(),
             new StripeCheckoutPostSavePlugin(),
             new ConsumeBudgetCheckoutPostSavePlugin(),
+            new RecurringOrdersCheckoutPostSavePlugin(), #RecurringOrdersFeature
         ];
     }
 

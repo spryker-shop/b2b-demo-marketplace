@@ -1,0 +1,18 @@
+@mixin product-detail-page-variant-configurator($name: '.variant-configurator') {
+    #{$name} {
+        display: flex;
+        flex-direction: column;
+        gap: var(--scale-8);
+
+        &__notify {
+            @include typography(body-sm);
+            padding: var(--scale-12) var(--scale-16);
+            color: var(--text-state-error);
+            background: var(--background-state-error-subtle);
+            border-radius: var(--radius-sm);
+            margin-top: var(--scale-8);
+        }
+    }
+}
+
+@include product-detail-page-variant-configurator;

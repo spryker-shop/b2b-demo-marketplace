@@ -1,0 +1,33 @@
+@mixin order-experience-management-schedule-detail-sidebar($name: '.schedule-detail-sidebar') {
+    #{$name} {
+        background: var(--background-surface);
+        padding: var(--scale-16);
+
+        &__title {
+            font-size: var(--font-size-18);
+            line-height: 1.55;
+            margin-bottom: var(--scale-12);
+        }
+
+        &__fields {
+            font-size: var(--font-size-12);
+            line-height: 1.33;
+        }
+
+        .link {
+            font-size: var(--font-size-12);
+        }
+
+        &__label {
+            color: var(--text-tertiary);
+        }
+
+        &__value {
+            margin-bottom: var(--scale-12);
+        }
+
+        @content;
+    }
+}
+
+@include order-experience-management-schedule-detail-sidebar;

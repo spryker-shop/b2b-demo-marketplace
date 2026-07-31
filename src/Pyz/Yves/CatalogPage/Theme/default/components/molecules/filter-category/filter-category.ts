@@ -15,6 +15,31 @@ export default class FilterCategory extends Component {
         );
 
         this.hideCategory();
+        this.mapTruncationEvents();
+    }
+
+    protected mapTruncationEvents(): void {
+        if (this.parentElement && this.parentElement.closest(this.tagName.toLowerCase())) {
+            return;
+        }
+
+        this.addEventListener('mouseover', (event: Event) => this.onRowHover(event));
+    }
+
+    protected onRowHover(event: Event): void {
+        const row = (<HTMLElement>event.target).closest<HTMLElement>(`.${this.categoryRowClass}`);
+
+        if (!row) {
+            return;
+        }
+
+        const linkText = row.querySelector<HTMLElement>(`.${this.linkTextClass}`);
+
+        if (!linkText) {
+            return;
+        }
+
+        row.classList.toggle(this.truncatedClass, linkText.scrollWidth > linkText.clientWidth);
     }
 
     protected hideCategory(): void {
@@ -63,5 +88,17 @@ export default class FilterCategory extends Component {
 
     protected get classToRemove(): string {
         return this.getAttribute('class-to-remove');
+    }
+
+    protected get categoryRowClass(): string {
+        return this.getAttribute('category-row-class');
+    }
+
+    protected get linkTextClass(): string {
+        return this.getAttribute('link-text-class');
+    }
+
+    protected get truncatedClass(): string {
+        return this.getAttribute('truncated-class');
     }
 }

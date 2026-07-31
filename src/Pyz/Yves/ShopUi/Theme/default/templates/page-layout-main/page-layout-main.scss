@@ -17,19 +17,20 @@
     #{$name}-main {
         &--catalog-page,
         &--cms-search-page {
-            position: relative;
-            padding-top: rem(16);
-
             @include helper-breakpoint-media-min($lg) {
-                padding-top: rem(20);
+                padding-top: rem(16);
             }
         }
 
         &__catalog-page-content {
             padding-bottom: rem(60);
+        }
+
+        &__catalog-filter-column {
+            display: contents;
 
             @include helper-breakpoint-media-min($lg) {
-                padding-bottom: rem(70);
+                display: block;
             }
         }
 
@@ -93,16 +94,17 @@
         &__pdp-gallery {
             background: $setting-color-alpha-2;
             padding: 0 rem(15) rem(15);
-            margin: 0 rem(-15);
+            margin: 0 0 rem(15);
             width: calc(100% + #{rem(30)});
             min-width: 100%;
 
             @include helper-breakpoint-media-min($lg) {
                 background: $setting-color-transparent;
-                width: calc(#{$setting-pdp-gallery-max-width} / #{$setting-site-max-width} * 100%);
-                min-width: calc(#{$setting-pdp-gallery-max-width} / #{$setting-site-max-width} * 100%);
-                margin: 0 rem(15) 0 0;
-                padding-bottom: 0;
+                width: auto;
+                min-width: 0;
+                margin: 0 var(--scale-24) 0 0;
+                flex-grow: 1;
+                padding: 0;
             }
         }
     }

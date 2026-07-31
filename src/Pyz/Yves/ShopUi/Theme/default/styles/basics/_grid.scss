@@ -161,9 +161,11 @@
             }
         }
 
-        &--gap-small {
-            --grid-gap: #{rem(20)};
-            gap: var(--grid-gap);
+        @each $gap-name, $gap-value in $setting-spacing {
+            &--gap-#{$gap-name} {
+                --grid-gap: #{$gap-value};
+                gap: var(--grid-gap);
+            }
         }
 
         &--gap-smaller {

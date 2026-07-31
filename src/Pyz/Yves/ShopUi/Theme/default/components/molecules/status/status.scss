@@ -1,13 +1,17 @@
 @include shop-ui-status {
     $name: &;
 
-    @include helper-badge-chip;
-    font-weight: var(--font-weight-medium);
+    &,
+    &--availability {
+        @include helper-badge-chip;
+        font-weight: var(--font-weight-medium);
+    }
 
     &::before {
         display: none;
     }
 
+    &--success,
     &--availability,
     &--shipped,
     &--in-stock,
@@ -15,8 +19,9 @@
     &--available,
     &--approved,
     &--ready,
-    &--paid,
-    &--delivered {
+    &--delivered,
+    &--refunded,
+    &--completed {
         @include helper-badge-semantic-subtle(success);
 
         &#{$name}--solid {
@@ -24,11 +29,27 @@
         }
     }
 
-    &--cancelled,
+    &--info,
+    &--commission-calculated,
+    &--paid,
+    &--processing,
+    &--in-progress,
+    &--confirmed,
+    &--pending-approval {
+        @include helper-badge-semantic-subtle(info);
+
+        &#{$name}--solid {
+            @include helper-badge-semantic-bold-background(info);
+        }
+    }
+
+    &--warning,
     &--ready-for-return,
     &--returned,
     &--waiting-for-return,
-    &--return-canceled {
+    &--return-canceled,
+    &--partially-fulfilled,
+    &--needs-attention {
         @include helper-badge-semantic-subtle(warning);
 
         &#{$name}--solid {
@@ -36,21 +57,16 @@
         }
     }
 
+    &--alert,
     &--out-of-stock,
     &--rejected,
-    &--not-configured {
+    &--not-configured,
+    &--cancelled,
+    &--failed {
         @include helper-badge-semantic-subtle(error);
 
         &#{$name}--solid {
             @include helper-badge-semantic-bold-background(error);
-        }
-    }
-
-    &--info {
-        @include helper-badge-semantic-subtle(info);
-
-        &#{$name}--solid {
-            @include helper-badge-semantic-bold-background(info);
         }
     }
 }

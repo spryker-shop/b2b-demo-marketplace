@@ -1,0 +1,27 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'search-tabs',
+} %}
+
+{% define data = {
+    tabs: required,
+    searchString: required,
+    requestParams: required,
+} %}
+
+{% block body %}
+    <div class="spr-tabs__nav spr-tabs__nav--with-bar" role="tablist">
+        {% for key, tab in data.tabs %}
+            <a href="{{ url(tab.route, {q: data.searchString}) }}"
+                class="spr-tabs__trigger {{ tab.isActive ? 'spr-tabs__trigger--active' : '' }}"
+                role="tab"
+                aria-selected="{{ tab.isActive ? 'true' : 'false' }}">
+                {{ tab.title | trans }}
+                {% if tab.count is not null %}
+                    <span class="{{ config.name }}__counter">({{ tab.count }})</span>
+                {% endif %}
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}

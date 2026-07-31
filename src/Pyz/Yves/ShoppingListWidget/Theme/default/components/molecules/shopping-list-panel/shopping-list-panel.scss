@@ -43,11 +43,8 @@
         }
 
         &__name {
+            @include typography(label-md);
             display: block;
-            font-family: var(--label-md-family);
-            font-size: var(--label-md-size);
-            font-weight: var(--label-md-weight);
-            line-height: var(--label-md-line-height);
             color: var(--text-brand);
             text-decoration: none;
             white-space: nowrap;
@@ -56,13 +53,10 @@
         }
 
         &__meta {
+            @include typography(body-sm);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-family: var(--body-sm-family);
-            font-size: var(--body-sm-size);
-            font-weight: var(--body-sm-weight);
-            line-height: var(--body-sm-line-height);
             color: var(--text-secondary);
             white-space: nowrap;
             overflow: hidden;

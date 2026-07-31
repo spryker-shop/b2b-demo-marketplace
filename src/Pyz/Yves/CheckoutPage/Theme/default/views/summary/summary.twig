@@ -5,6 +5,13 @@
 } %}
 
 {% block content %}
+    {% set recurringOrderSelectorWidget = findWidget('RecurringOrderSelectorWidget', [data.cart]) %}
+    {% if recurringOrderSelectorWidget and recurringOrderSelectorWidget.isVisible %}
+        <div class="spacing-bottom--biggest">
+            {% widget 'RecurringOrderSelectorWidget' args [data.cart] only %}{% endwidget %}
+        </div>
+    {% endif %}
+
     {% for shipmentGroup in data.shipmentGroups %}
         <article class="grid grid--gap spacing-bottom spacing-bottom--big">
             <h3 class="col col--sm-12 title title--second spacing-bottom spacing-bottom--small">
@@ -184,7 +191,6 @@
     <div class="spacing-top--biggest">
         {% widget 'CostCenterSelectorWidget' args [data.cart] only %}{% endwidget %}
     </div>
-    
 
     {% embed molecule('form') with {
         modifiers: ['checkout-form'],

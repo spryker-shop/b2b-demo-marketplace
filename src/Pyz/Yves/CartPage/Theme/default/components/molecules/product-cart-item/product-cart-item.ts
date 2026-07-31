@@ -2,6 +2,7 @@ import Component from 'ShopUi/models/component';
 
 export default class ProductCartItem extends Component {
     protected toggle: HTMLButtonElement | null = null;
+    protected variantsMore: HTMLButtonElement | null = null;
     protected contextItems: HTMLElement[] = [];
 
     protected readyCallback(): void {}
@@ -14,9 +15,14 @@ export default class ProductCartItem extends Component {
             this.toggle?.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
         });
 
-        this.contextItems = Array.from(
-            this.querySelectorAll<HTMLElement>(`.${this.jsName}__context-item[data-trigger-target]`),
-        );
+        this.variantsMore = this.querySelector<HTMLButtonElement>(`.${this.jsName}__variants-more`);
+        this.variantsMore?.addEventListener('click', (event: Event) => {
+            event.preventDefault();
+            const isExpanded = this.variantsMore?.getAttribute('aria-expanded') === 'true';
+            this.variantsMore?.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
+        });
+
+        this.contextItems = Array.from(this.querySelectorAll<HTMLElement>(`.${this.jsName}__context-item`));
         this.contextItems.forEach((item) => {
             item.addEventListener('click', (event: Event) => this.onContextItemClick(event, item));
         });
@@ -24,19 +30,32 @@ export default class ProductCartItem extends Component {
 
     protected onContextItemClick(event: Event, item: HTMLElement): void {
         event.preventDefault();
+        this.ensureExpanded();
+
         const targetSelector = item.getAttribute('data-trigger-target');
         if (!targetSelector) {
             return;
         }
-
-        this.ensureExpanded();
 
         const target = this.querySelector<HTMLElement>(targetSelector);
         if (!target) {
             return;
         }
 
-        target.click();
+        const focusSelector = item.getAttribute('data-focus-target');
+        const field = focusSelector ? this.querySelector<HTMLElement>(focusSelector) : null;
+
+        if (!field) {
+            target.click();
+
+            return;
+        }
+
+        if (!field.offsetParent) {
+            target.click();
+        }
+
+        field.focus();
     }
 
     protected ensureExpanded(): void {

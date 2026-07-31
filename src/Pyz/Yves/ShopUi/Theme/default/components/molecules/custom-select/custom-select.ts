@@ -71,6 +71,7 @@ export default class CustomSelect extends Component {
     initSelect(): void {
         if (window.innerWidth >= this.mobileResolution && !this.isInited) {
             this.isInited = true;
+            this.removeStaleDropdowns();
             this.$select.select2({
                 minimumResultsForSearch: Infinity,
                 width: this.configWidth,
@@ -81,6 +82,10 @@ export default class CustomSelect extends Component {
             this.isInited = false;
             this.$select.select2('destroy');
         }
+    }
+
+    protected removeStaleDropdowns(): void {
+        Array.from(this.getElementsByClassName('select2-container')).forEach((dropdown: Element) => dropdown.remove());
     }
 
     protected get configWidth(): string {

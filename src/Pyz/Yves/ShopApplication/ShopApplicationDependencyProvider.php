@@ -32,14 +32,17 @@ use Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin;
 use Spryker\Yves\Validator\Plugin\Application\ValidatorApplicationPlugin;
 use SprykerEco\Yves\PunchoutGateway\Widget\PunchoutCartWidget;
 use SprykerFeature\Yves\BuyBox\Widget\BuyBoxWidget;
+use SprykerFeature\Yves\OrderExperienceManagement\Widget\RecurringOrderMenuItemWidget;
+use SprykerFeature\Yves\OrderExperienceManagement\Widget\RecurringOrderSelectorWidget;
 use SprykerFeature\Yves\ProductExperienceManagement\Widget\ProductAttributeVisibilityCartWidget;
 use SprykerFeature\Yves\ProductExperienceManagement\Widget\ProductAttributeVisibilityPdpWidget;
 use SprykerFeature\Yves\ProductExperienceManagement\Widget\ProductAttributeVisibilityPlpWidget;
-use SprykerFeature\Yves\PurchasingControl\Widget\CostCenterBudgetFilterWidget; #PurchasingControlFeature
-use SprykerFeature\Yves\PurchasingControl\Widget\CostCenterMenuItemWidget; #PurchasingControlFeature
-use SprykerFeature\Yves\PurchasingControl\Widget\CostCenterOrderDetailWidget; #PurchasingControlFeature
+use SprykerFeature\Yves\PurchasingControl\Widget\CostCenterBudgetFilterWidget;
+use SprykerFeature\Yves\PurchasingControl\Widget\CostCenterDetailWidget;
+use SprykerFeature\Yves\PurchasingControl\Widget\CostCenterMenuItemWidget;
+use SprykerFeature\Yves\PurchasingControl\Widget\CostCenterOrderDetailWidget;
 use SprykerFeature\Yves\PurchasingControl\Widget\CostCenterSelectorWidget;
-use SprykerFeature\Yves\PurchasingControl\Widget\PurchasingControlSummaryWidget; #PurchasingControlFeature
+use SprykerFeature\Yves\PurchasingControl\Widget\PurchasingControlSummaryWidget;
 use SprykerFeature\Yves\SelfServicePortal\Plugin\ShopApplication\AddressFormItemsByShipmentTypeWidgetCacheKeyGeneratorStrategyPlugin;
 use SprykerFeature\Yves\SelfServicePortal\Plugin\ShopApplication\SingleAddressPerShipmentTypeWidgetCacheKeyGeneratorStrategyPlugin;
 use SprykerFeature\Yves\SelfServicePortal\Plugin\ShopApplication\SspDashboardFilterControllerEventHandlerPlugin;
@@ -446,6 +449,9 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             ProductAttributeVisibilityCartWidget::class,
             CostCenterSelectorWidget::class, #CostCenterFeature
             PurchasingControlSummaryWidget::class, #PurchasingControlFeature
+            CostCenterDetailWidget::class, #RecurringOrdersFeature
+            RecurringOrderSelectorWidget::class, #RecurringOrdersFeature
+            RecurringOrderMenuItemWidget::class, #RecurringOrdersFeature
             CostCenterMenuItemWidget::class, #PurchasingControlFeature
             CostCenterBudgetFilterWidget::class, #PurchasingControlFeature
             CostCenterOrderDetailWidget::class, #PurchasingControlFeature

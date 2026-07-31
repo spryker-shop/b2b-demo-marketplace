@@ -13,7 +13,9 @@ use Pyz\Zed\DataImport\DataImportConfig;
 use Pyz\Zed\Development\Communication\Console\AcceptanceCodeTestConsole;
 use Pyz\Zed\Development\Communication\Console\ApiCodeTestConsole;
 use Pyz\Zed\Development\Communication\Console\FunctionalCodeTestConsole;
+use Pyz\Zed\PunchoutGateway\Communication\Console\PunchoutDemoConnectionCreateConsole;
 use Pyz\Zed\SetupFrontend\Communication\Console\StorybookBuildFrontendConsole;
+use Pyz\Zed\WaterTreatmentConfiguratorPageExample\Communication\Console\WaterTreatmentProductConfiguratorBuildFrontendConsole;
 use SecurityChecker\Command\SecurityCheckerCommand;
 use Spryker\Zed\AclEntity\Communication\Console\AclEntityMetadataConfigValidateConsole;
 use Spryker\Zed\AclMerchantPortal\Communication\Console\AclEntitySynchronizeConsole;
@@ -208,13 +210,11 @@ use Spryker\Zed\ZedNavigation\Communication\Console\BuildNavigationConsole;
 use Spryker\Zed\ZedNavigation\Communication\Console\RemoveNavigationCacheConsole;
 use SprykerEco\Zed\Algolia\Communication\Console\AlgoliaEntityExportConsole;
 use SprykerEco\Zed\NewRelic\Communication\Console\RecordDeploymentConsole;
-use SprykerEco\Zed\PunchoutGateway\Communication\Console\PunchoutCxmlDemoConnectionCreateConsole;
-use SprykerEco\Zed\PunchoutGateway\Communication\Console\PunchoutOciDemoConnectionCreateConsole;
+use SprykerFeature\Zed\OrderExperienceManagement\Communication\Console\RecurringOrderTriggerConsole;
 use SprykerFeature\Zed\ProductExperienceManagement\Communication\Console\ImportJobRunConsole;
 use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 use SprykerSdk\Zed\AiDev\Communication\Console\AiToolSetupConsole;
 use SprykerSdk\Zed\AiDev\Communication\Console\McpServerConsole;
-use SprykerShop\Zed\DateTimeConfiguratorPageExample\Communication\Console\DateTimeProductConfiguratorBuildFrontendConsole;
 
 /**
  * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
@@ -275,6 +275,8 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . CategoryDataImportConfig::IMPORT_TYPE_CATEGORY_STORE),
             new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_CATEGORY_TEMPLATE),
             new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_CUSTOMER),
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_CUSTOMER_GROUP),
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_CUSTOMER_GROUP_TO_CUSTOMER),
             new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_GLOSSARY),
             new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_NAVIGATION),
             new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_NAVIGATION_NODE),
@@ -304,6 +306,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_SHIPMENT_PRICE),
             new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_TAX),
             new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_DISCOUNT_AMOUNT),
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_SALES_ORDER),
             new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ShipmentDataImportConfig::IMPORT_TYPE_SHIPMENT),
             new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ShipmentDataImportConfig::IMPORT_TYPE_SHIPMENT_PRICE),
             new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ShipmentDataImportConfig::IMPORT_TYPE_SHIPMENT_METHOD_STORE),
@@ -454,7 +457,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
 
             new MessageBrokerWorkerConsole(),
             new ScopeCacheCollectorConsole(),
-            new DateTimeProductConfiguratorBuildFrontendConsole(),
+            new WaterTreatmentProductConfiguratorBuildFrontendConsole(),
             new OrderMatrixConsole(),
             new AclEntitySynchronizeConsole(),
             new AclEntityMetadataConfigValidateConsole(),
@@ -471,6 +474,8 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new SymfonyMessengerConsumeMessagesConsole(),
             new SchedulerListConsole(),
             new ConfigurationSyncConsole(),
+
+            new RecurringOrderTriggerConsole(),
         ];
 
         $propelCommands = $container->getLocator()->propel()->facade()->getConsoleCommands();
@@ -536,8 +541,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             $commands[] = new MessageBrokerSqsToSnsSubscriberConsole();
 
             // Punchout Gateway demo connections
-            $commands[] = new PunchoutOciDemoConnectionCreateConsole();
-            $commands[] = new PunchoutCxmlDemoConnectionCreateConsole();
+            $commands[] = new PunchoutDemoConnectionCreateConsole();
         }
 
         return $commands;

@@ -1,3 +1,11 @@
 @function fw($weight) {
     @return map-get($setting-font-weight, $weight);
 }
+
+@mixin typography($name) {
+    font-family: var(--#{$name}-family);
+    font-weight: var(--#{$name}-weight);
+    font-size: var(--#{$name}-size);
+    line-height: var(--#{$name}-line-height);
+    letter-spacing: var(--#{$name}-letter-spacing);
+}

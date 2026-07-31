@@ -119,43 +119,47 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        {% if data.showNavigation %}
-            <div class="{{ config.name }}__nav-bar" id="{{ attributes.navigationId }}">
-                <div class="{{ config.name }}__nav-bar-inner">
-                    <nav class="{{ config.name }}__nav-categories" aria-label="{{ 'shop_ui.aria_label.main.navigation' | trans }}">
-                        {% block navigation %}
-                            {% widget 'NavigationWidget' args ['MAIN_NAVIGATION', 'navigation-main'] only %}{% endwidget %}
-                        {% endblock %}
-                    </nav>
+    {% if data.showNavigation %}
+        <div class="{{ config.name }}__nav">
+            <div class="container">
+                <div class="{{ config.name }}__nav-bar" id="{{ attributes.navigationId }}">
+                    <div class="{{ config.name }}__nav-bar-inner">
+                        <nav class="{{ config.name }}__nav-categories" aria-label="{{ 'shop_ui.aria_label.main.navigation' | trans }}">
+                            {% block navigation %}
+                                {% widget 'NavigationWidget' args ['MAIN_NAVIGATION', 'navigation-main'] only %}{% endwidget %}
+                            {% endblock %}
+                        </nav>
 
-                    {% if is_granted('ROLE_USER') %}
-                        <div class="{{ config.name }}__nav-quick-links">
-                            <div>
-                                {% widget 'ShoppingListNavigationMenuWidget' with {
-                                    data: {
-                                        isAjaxMode: data.isAjaxMode,
-                                        view: 'header',
-                                    },
-                                } only %}
-                                {% endwidget %}
+                        {% if is_granted('ROLE_USER') %}
+                            <div class="{{ config.name }}__nav-quick-links">
+                                <div>
+                                    {% widget 'ShoppingListNavigationMenuWidget' with {
+                                        data: {
+                                            isAjaxMode: data.isAjaxMode,
+                                            view: 'header',
+                                        },
+                                    } only %}
+                                    {% endwidget %}
+                                </div>
+
+                                {% if can('SeeCompanyMenuPermissionPlugin') %}
+                                    {% include molecule('header-dropdown') with {
+                                        data: {
+                                            preset: 'self-service',
+                                        },
+                                    } only %}
+                                {% endif %}
+
+                                <a href="{{ url('quick-order') }}" class="{{ config.name }}__nav-link">
+                                    {{ 'quick-order.page-title' | trans }}
+                                </a>
                             </div>
-
-                            {% if can('SeeCompanyMenuPermissionPlugin') %}
-                                {% include molecule('header-dropdown') with {
-                                    data: {
-                                        preset: 'self-service',
-                                    },
-                                } only %}
-                            {% endif %}
-
-                            <a href="{{ url('quick-order') }}" class="{{ config.name }}__nav-link">
-                                {{ 'quick-order.page-title' | trans }}
-                            </a>
-                        </div>
-                    {% endif %}
+                        {% endif %}
+                    </div>
                 </div>
             </div>
-        {% endif %}
-    </div>
+        </div>
+    {% endif %}
 {% endblock %}
