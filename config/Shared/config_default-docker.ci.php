@@ -98,6 +98,11 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'root' => APPLICATION_ROOT_DIR . '/data/DE/media/',
         'path' => 'files/',
     ],
+    'import-files' => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => APPLICATION_ROOT_DIR . '/data/import',
+        'path' => '/',
+    ],
     'product-experience-management-imports' => [
         'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
         'root' => '/data',
