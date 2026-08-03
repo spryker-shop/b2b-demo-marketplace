@@ -234,7 +234,7 @@ actions:
   - data_entity: company
     source : data/import/b2b_common/common/company.csv
   - data_entity: company-business-unit
-    source : data/import/b2b_common/common/company_business_unit.csv
+    source : data/import/common/common/company_business_unit.csv
   - data_entity: company-unit-address
     source : data/import/b2b_common/common/company_unit_address.csv
   - data_entity: company-unit-address-label
@@ -322,6 +322,8 @@ actions:
     source: data/import/b2b_common/AT/comment.csv
   - data_entity: mime-type
     source: data/import/b2b_common/common/mime_type.csv
+  - data_entity: self-service-portal-file
+    source: data/import/common/common/file.csv
 
 #9. Click&Collect import
   - data_entity: service-point
@@ -350,13 +352,15 @@ actions:
   - data_entity: product-to-product-class
     source: data/import/b2b_common/common/product_to_product_class.csv
   - data_entity: ssp-asset
-    source: data/import/b2b_common/common/ssp_asset.csv
+    source: data/import/common/common/ssp_asset.csv
   - data_entity: ssp-model
     source: data/import/b2b_common/common/ssp_model.csv
   - data_entity: ssp-model-asset
     source: data/import/b2b_common/common/ssp_model_asset.csv
   - data_entity: ssp-model-product-list
     source: data/import/b2b_common/common/ssp_model_product_list.csv
+  - data_entity: self-service-portal-file-attachment
+    source: data/import/common/common/file_attachment.csv
 
   - data_entity: sales-order
     source: data/import/b2b_common/common/sales_order.csv
