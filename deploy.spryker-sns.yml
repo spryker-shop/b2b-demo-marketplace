@@ -66,7 +66,7 @@ image:
             'opcache.enable_cli': 0
             'opcache.validate_timestamps': 0
             # Keep at <=50% of the service memory limit (measured need is ~130-150MB per app pool)
-            'opcache.memory_consumption': 256
+            'opcache.memory_consumption': 128
             'opcache.max_accelerated_files': 100000
             'opcache.interned_strings_buffer': 32
     node:
