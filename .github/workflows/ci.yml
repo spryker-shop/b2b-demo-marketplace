@@ -247,8 +247,7 @@ jobs:
                 uses: ./.github/actions/job-slack-notifications
                 if: always()
 
-    # Project-owned Cypress E2E suite (storefront, backoffice,
-    # merchant portal, Glue) — boots a full Docker/SDK stack and runs it headlessly.
+    # [project applicable] Cypress Project tests run
     cypress-e2e:
         needs: [js-validation, validation, cypress-quality-gate]
         name: "Cypress-boilerplate / E2E"
