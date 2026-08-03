@@ -52,10 +52,6 @@ export class StorefrontQuickOrderPage extends AbstractPage {
       .find('[data-qa="component custom-select"] select')
       .should('contain', merchant)
       .then(($select) => {
-        // A merchant that both owns the product and sells it through an offer is listed
-        // once per source, so selecting by visible text can match several options and
-        // `cy.select()` refuses an ambiguous match. Resolve the first matching option to
-        // its value and select that instead.
         const value = $select
           .find('option')
           .filter((_index, option) => option.textContent?.trim() === merchant)
@@ -116,10 +112,6 @@ export class StorefrontQuickOrderPage extends AbstractPage {
           return
         }
 
-        // surface exactly what the filter *did* contain — the previous, bare
-        // "not found" message gave no way to tell an empty/near-empty filter
-        // (search index genuinely not populated yet) apart from a filter that
-        // has other merchants but is specifically missing this one.
         const optionsSummary = `[${availableOptions.join(', ')}]`
 
         if (retries >= maxRetries) {

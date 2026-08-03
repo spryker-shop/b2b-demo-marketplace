@@ -1,7 +1,3 @@
-// Shapes of the records the DynamicFixtures API returns. The API serialises Spryker
-// transfer objects, so the field names are snake_case — these interfaces cover only the
-// fields the specs actually read, not the full transfers.
-
 export interface CustomerFixture {
   id_customer: number
   email: string
@@ -55,6 +51,13 @@ export interface MerchantFixture {
   id_merchant: number
   name: string
   merchant_reference: string
+}
+
+export interface UserFixture {
+  id_user: number
+  username: string
+  first_name: string
+  last_name: string
 }
 
 export interface ProductOfferFixture {

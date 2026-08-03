@@ -1,41 +1,53 @@
-// this spec places its setup order via the Glue API purely as fast scaffolding for
-// testing backoffice OMS transitions/order views, not checkout itself — it needs a
-// customer whose business unit has no B2B purchasing restrictions (no cost-center/budget
-// requirement), since Purchasing Control has no Glue API support in this project and
-// would block order placement with a 422 no matter what payload is sent. The shared
-// customer-data.json fixture (Sonia / Acme Corporation) has this restriction.
-import customerCredentials from '@fixtures/customer-order-data.json'
-import productData from '@fixtures/product-data.json'
 import checkoutData from '@fixtures/checkout-data.json'
 import userCredentials from '@fixtures/user-data.json'
 import { BackofficeLoginPage } from '@support/page-objects/backoffice/login/backoffice-login-page'
 import { BackofficeOrderListPage } from '@support/page-objects/backoffice/order-management/backoffice-order-list-page'
 import { BackofficeOrderDetailsPage } from '@support/page-objects/backoffice/order-management/backoffice-order-details-page'
+import {
+  getFixtures,
+  CustomerFixture,
+  PriceProductFixture,
+  ProductFixture,
+  ProductOfferFixture,
+} from '@support/types/dynamic-fixtures'
+
+interface BackofficeOrderDynamicFixtures {
+  customer: CustomerFixture
+  product: ProductFixture
+  productPrice: PriceProductFixture
+  productOffer: ProductOfferFixture
+}
+
+interface BackofficeOrderStaticFixtures {
+  defaultPassword: string
+}
 
 const backofficeLoginPage = new BackofficeLoginPage()
 const backofficeOrderListPage = new BackofficeOrderListPage()
 const backofficeOrderDetailsPage = new BackofficeOrderDetailsPage()
 
+let dynamicFixtures: BackofficeOrderDynamicFixtures
+let staticFixtures: BackofficeOrderStaticFixtures
 let orderReference: string
 
 context('Order management', () => {
   before(function () {
-    // reset customer addresses
-    cy.deleteAllCustomerAddresses(
-      customerCredentials.email,
-      customerCredentials.password,
-      customerCredentials.reference
-    )
+    // the customer is created per run, so it has no addresses or carts to reset here
+    ;({ dynamicFixtures, staticFixtures } = getFixtures<
+      BackofficeOrderDynamicFixtures,
+      BackofficeOrderStaticFixtures
+    >())
+
     // placing an order for processing
     cy.placeOrderViaGlue(
-      customerCredentials.email,
-      customerCredentials.password,
-      productData.availableOffer.concreteSku,
+      dynamicFixtures.customer.email,
+      staticFixtures.defaultPassword,
+      dynamicFixtures.product.sku,
       checkoutData.glueShipment.id,
       checkoutData.gluePayment.providerName,
       checkoutData.gluePayment.methodName,
-      productData.availableOffer.offer,
-      productData.availableOffer.merchantReference
+      dynamicFixtures.productOffer.product_offer_reference,
+      dynamicFixtures.productOffer.merchant_reference
     ).then((response: string) => {
       orderReference = response
     })
@@ -57,9 +69,13 @@ context('Order management', () => {
       .should('have.text', orderReference)
     backofficeOrderListPage.viewOrderByPosition(0)
     // check that price for the product is still as it was in the shop
-    backofficeOrderDetailsPage
-      .getOrderSubtotal()
-      .should('contain', productData.availableOffer.price)
+    cy.formatDisplayPrice(
+      dynamicFixtures.productPrice.money_value.gross_amount
+    ).then((expectedPrice: string) => {
+      backofficeOrderDetailsPage
+        .getOrderSubtotal()
+        .should('contain', expectedPrice)
+    })
     cy.triggerOmsTransition()
     cy.waitForOrderProcessing('grace period started', 20)
     // clicks the oms trigger with the name 'skip grace period'
@@ -70,7 +86,7 @@ context('Order management', () => {
       .getSuccessfulOrderMessages()
       .should('contain', 'Status change triggered successfully.')
     backofficeOrderDetailsPage
-      .getOrderItemHistory(productData.availableOffer.concreteSku)
+      .getOrderItemHistory(dynamicFixtures.product.sku)
       .should('contain', 'tax invoice submitted')
   })
 
@@ -89,6 +105,6 @@ context('Order management', () => {
     // check that customer email is correct on the order details page
     backofficeOrderDetailsPage
       .getCustomerEmail()
-      .should('have.text', customerCredentials.email)
+      .should('have.text', dynamicFixtures.customer.email)
   })
 })

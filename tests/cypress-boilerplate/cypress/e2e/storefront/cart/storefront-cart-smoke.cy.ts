@@ -1,7 +1,3 @@
-// All shop data this spec needs is created before it runs by
-// cypress/fixtures/storefront/cart/dynamic-storefront-cart-smoke.json, so nothing here
-// depends on demodata: a fresh customer (with a company, business unit and cart
-// permissions) and a fresh product with price and stock are generated per run.
 import { StorefrontLoginPage } from '@support/page-objects/storefront/login/storefront-login-page'
 import { StorefrontHomePage } from '@support/page-objects/storefront/home/storefront-home-page'
 import { StorefrontSearchResultsPage } from '@support/page-objects/storefront/search/storefront-search-results-page'

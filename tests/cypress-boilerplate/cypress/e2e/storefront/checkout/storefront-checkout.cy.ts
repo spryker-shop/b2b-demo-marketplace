@@ -1,12 +1,3 @@
-// Everything this spec checks out with is created before it runs by
-// cypress/fixtures/storefront/checkout/dynamic-storefront-checkout.json: the customer,
-// its company with a business unit address to ship to, the product with price and stock,
-// the shipment method, and the cost center plus budget the Purchasing Control feature
-// requires on the summary step. The only value that still comes from a static fixture is
-// the payment method name — payment methods are bound to a payment plugin registered in
-// project code (Pyz\Yves\DummyPayment), so a generated one would never be rendered.
-// The generated product has no merchant or product offer behind it, so the checkout
-// offers the Dummy Payment methods rather than the marketplace ones.
 import { StorefrontLoginPage } from '@support/page-objects/storefront/login/storefront-login-page'
 import { StorefrontSearchResultsPage } from '@support/page-objects/storefront/search/storefront-search-results-page'
 import { StorefrontProductDetailsPage } from '@support/page-objects/storefront/product/storefront-product-details-page'
@@ -95,9 +86,6 @@ context('Customer checkout', () => {
     checkoutAddress.provideExistingAddress()
     checkoutShipping.provideShipment(dynamicFixtures.shipmentMethod.name)
     checkoutPayment.providePayment(staticFixtures.paymentMethodName)
-    // this customer's business unit has a cost center, which turns on the Purchasing
-    // Control feature for it: a cost center and budget must be selected on the summary
-    // page before an order can be placed
     checkoutSummary.selectCostCenter(dynamicFixtures.costCenter.name)
     checkoutSummary.selectBudget(dynamicFixtures.budget.name)
     checkoutSummary.applyCostCenterAndBudget()

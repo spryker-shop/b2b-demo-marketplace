@@ -31,11 +31,33 @@ export class MerchantOrderListPage extends AbstractPage {
     cy.get('web-mp-manage-order', { timeout: 20000 }).should('be.visible')
   }
 
+  getOrderSearchInput = (): Cypress.Chainable => {
+    return cy.get('input[placeholder="Search"]', { timeout: 20000 })
+  }
+
+  /**
+   * Narrows the merchant order table down to a single order. The table is paginated and not
+   * sorted by recency, so a freshly placed order is usually not on the first page — without
+   * searching first, looking it up in the table only ever finds it by luck.
+   */
+  searchOrderByReference = (orderReference: string): Cypress.Chainable => {
+    cy.intercept('GET', '**/sales-merchant-portal-gui/orders/table-data**').as(
+      'merchantOrdersTableData'
+    )
+    this.getOrderSearchInput().clear().type(`${orderReference}{enter}`)
+    cy.wait('@merchantOrdersTableData', { timeout: 30000 })
+
+    return cy.get('mp-sales-orders-table', { timeout: 20000 })
+  }
+
   viewOrderByReference = (orderReference: string, maxRetries = 5): void => {
     const tryFind = (retries = 0): void => {
+      this.searchOrderByReference(orderReference)
       this.getOrderInTableByReference(orderReference).then(($rows) => {
         if ($rows.length > 0) {
-          cy.wrap($rows).click()
+          this.getOrderInTableByReference(orderReference)
+            .should('have.length', 1)
+            .click({ force: true })
           cy.get('web-mp-manage-order', { timeout: 20000 }).should('be.visible')
           return
         }

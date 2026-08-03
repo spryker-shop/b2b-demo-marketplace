@@ -1,52 +1,61 @@
-// this spec places an order directly via the Glue API, so it needs a customer whose
-// business unit has no B2B purchasing restrictions (no cost-center/budget requirement) —
-// that feature has no Glue API support in this project and would block checkout with a
-// 422 no matter what payload is sent. The shared customer-data.json fixture
-// (Sonia / Acme Corporation) has this restriction.
-import customerCredentials from '@fixtures/customer-order-data.json'
-import productData from '@fixtures/product-data.json'
+// The product and the offer the setup order is placed for are created before this spec runs
+// by cypress/fixtures/glue/orders/dynamic-glue-orders.json, so the spec no longer depends on
+// a specific demodata product staying available and in stock. The offer is created under the
+// merchant referenced by MERCHANT_REFERENCE in .envs/.
+// The customer is generated per run too, with a business unit that has no
+// B2B purchasing restrictions (no cost-center/budget requirement), since Purchasing Control
+// has no Glue API support in this project and would block order placement with a 422.
+// Shipment and payment also stay static — they are bound to what the environment provides.
 import checkoutData from '@fixtures/checkout-data.json'
 
 import { AccessTokens } from '@support/glue-endpoints/authentication/access-tokens'
 import { Orders } from '@support/glue-endpoints/order/orders'
 import { validateSchema } from '@support/api-helper/api-helper'
-import { GlueAddressesScenarios } from '@support/scenarios/glue/glue-addresses-scenarios'
-import { GlueCartsScenarios } from '@support/scenarios/glue/glue-carts-scenarios'
 import { GlueCheckoutScenarios } from '@support/scenarios/glue/glue-checkout-scenarios'
 import ordersSchema from '@support/glue-endpoints/order/orders-response'
+import {
+  getFixtures,
+  CustomerFixture,
+  ProductFixture,
+  ProductOfferFixture,
+} from '@support/types/dynamic-fixtures'
+
+interface GlueOrdersDynamicFixtures {
+  customer: CustomerFixture
+  product: ProductFixture
+  productOffer: ProductOfferFixture
+}
+
+interface GlueOrdersStaticFixtures {
+  defaultPassword: string
+}
 
 const tokenEndpoint = new AccessTokens()
 const ordersEndpoint = new Orders()
-const glueAddressesScenarios = new GlueAddressesScenarios()
-const glueCartsScenarios = new GlueCartsScenarios()
 const glueCheckoutScenarios = new GlueCheckoutScenarios()
 
+let dynamicFixtures: GlueOrdersDynamicFixtures
+let staticFixtures: GlueOrdersStaticFixtures
 let createdOrderReference: string
 
 before(() => {
-  // reset customer addresses
-  glueAddressesScenarios.deleteAllCustomerAddresses(
-    customerCredentials.email,
-    customerCredentials.password,
-    customerCredentials.reference
-  )
-  // reset customer carts
-  glueCartsScenarios.deleteAllShoppingCarts(
-    customerCredentials.email,
-    customerCredentials.password
-  )
+  // the customer is created per run, so it starts with no carts or addresses to reset
+  ;({ dynamicFixtures, staticFixtures } = getFixtures<
+    GlueOrdersDynamicFixtures,
+    GlueOrdersStaticFixtures
+  >())
 
   // place an order for retrieving order details
   glueCheckoutScenarios
     .placeOrder(
-      customerCredentials.email,
-      customerCredentials.password,
-      productData.availableOffer.concreteSku,
+      dynamicFixtures.customer.email,
+      staticFixtures.defaultPassword,
+      dynamicFixtures.product.sku,
       checkoutData.glueShipment.id,
       checkoutData.gluePayment.providerName,
       checkoutData.gluePayment.methodName,
-      productData.availableOffer.offer,
-      productData.availableOffer.merchantReference
+      dynamicFixtures.productOffer.product_offer_reference,
+      dynamicFixtures.productOffer.merchant_reference
     )
     .then(({ orderReference }) => {
       createdOrderReference = orderReference
@@ -57,8 +66,8 @@ context('Customer orders', () => {
   it('can retrieve order via GLUE', () => {
     tokenEndpoint
       .getCustomerAccessToken(
-        customerCredentials.email,
-        customerCredentials.password
+        dynamicFixtures.customer.email,
+        staticFixtures.defaultPassword
       )
       .then((response) => {
         expect(response.isOkStatusCode).to.be.true
@@ -89,8 +98,8 @@ context('Customer orders', () => {
   it('missing order returns error via GLUE', () => {
     tokenEndpoint
       .getCustomerAccessToken(
-        customerCredentials.email,
-        customerCredentials.password
+        dynamicFixtures.customer.email,
+        staticFixtures.defaultPassword
       )
       .then((response) => {
         expect(response.isOkStatusCode).to.be.true

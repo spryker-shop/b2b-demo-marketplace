@@ -6,9 +6,6 @@ export class StorefrontCheckoutAddressPage extends AbstractPage {
   protected PAGE_URL = Cypress.env('STOREFRONT_URL') + '/en/checkout/address'
 
   getShippingAddressDropdown = (): Cypress.Chainable => {
-    // this checkout defaults to its per-item shipping address flow; a top-level
-    // "single address" selector also exists in the DOM but stays hidden, so filter to
-    // the ones actually visible rather than relying on raw index
     return cy
       .get(addressForm)
       .find('[data-qa*="checkout-full-addresses"]')
@@ -63,8 +60,6 @@ export class StorefrontCheckoutAddressPage extends AbstractPage {
   }
 
   getBillingTheSameAsShippingCheckbox = (): Cypress.Chainable => {
-    // the wrapping <toggler-checkbox> custom element shares the same id as its inner
-    // <input> — scope to the input tag so cy.get doesn't resolve to the wrapper
     return cy.get(addressForm).find('input#addressesForm_billingSameAsShipping')
   }
 
@@ -87,9 +82,6 @@ export class StorefrontCheckoutAddressPage extends AbstractPage {
 
   provideExistingAddress = (): void => {
     this.selectFirstBusinessAddressAvailableForShipping()
-    // billing defaults to "Define new address" with no fields filled in, which fails
-    // server-side validation and silently re-renders the same address step; check this
-    // instead of also picking a billing address
     this.getBillingTheSameAsShippingCheckbox().check({ force: true })
     this.submitAddress()
   }

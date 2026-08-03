@@ -1,11 +1,3 @@
-// this spec places its setup order via the Glue API purely as fast scaffolding for
-// testing backoffice OMS transitions/order views, not checkout itself — it needs a
-// customer whose business unit has no B2B purchasing restrictions (no cost-center/budget
-// requirement), since Purchasing Control has no Glue API support in this project and
-// would block order placement with a 422 no matter what payload is sent. The shared
-// customer-data.json fixture (Sonia / Acme Corporation) has this restriction.
-import customerCredentials from '@fixtures/customer-order-data.json'
-import productData from '@fixtures/product-data.json'
 import checkoutData from '@fixtures/checkout-data.json'
 import userCredentials from '@fixtures/user-data.json'
 import { BackofficeLoginPage } from '@support/page-objects/backoffice/login/backoffice-login-page'
@@ -13,36 +5,54 @@ import { BackofficeOrderListPage } from '@support/page-objects/backoffice/order-
 import { BackofficeOrderDetailsPage } from '@support/page-objects/backoffice/order-management/backoffice-order-details-page'
 import { GlueCheckoutScenarios } from '@support/scenarios/glue/glue-checkout-scenarios'
 import { OmsTransitionScenarios } from '@support/scenarios/backoffice/oms-transition-scenarios'
-import { GlueAddressesScenarios } from '@support/scenarios/glue/glue-addresses-scenarios'
+import {
+  getFixtures,
+  CustomerFixture,
+  PriceProductFixture,
+  ProductFixture,
+  ProductOfferFixture,
+} from '@support/types/dynamic-fixtures'
+
+interface BackofficeOrderDynamicFixtures {
+  customer: CustomerFixture
+  product: ProductFixture
+  productPrice: PriceProductFixture
+  productOffer: ProductOfferFixture
+}
+
+interface BackofficeOrderStaticFixtures {
+  defaultPassword: string
+}
 
 const backofficeLoginPage = new BackofficeLoginPage()
 const backofficeOrderListPage = new BackofficeOrderListPage()
 const backofficeOrderDetailsPage = new BackofficeOrderDetailsPage()
 const glueCheckoutScenarios = new GlueCheckoutScenarios()
-const glueAddressesScenarios = new GlueAddressesScenarios()
 const omsTransitionScenarios = new OmsTransitionScenarios()
 
+let dynamicFixtures: BackofficeOrderDynamicFixtures
+let staticFixtures: BackofficeOrderStaticFixtures
 let createdOrderReference: string
 
 context('Order management', () => {
   before(function () {
-    // reset customer addresses
-    glueAddressesScenarios.deleteAllCustomerAddresses(
-      customerCredentials.email,
-      customerCredentials.password,
-      customerCredentials.reference
-    )
+    // the customer is created per run, so it has no addresses or carts to reset here
+    ;({ dynamicFixtures, staticFixtures } = getFixtures<
+      BackofficeOrderDynamicFixtures,
+      BackofficeOrderStaticFixtures
+    >())
+
     // placing an order for processing
     glueCheckoutScenarios
       .placeOrder(
-        customerCredentials.email,
-        customerCredentials.password,
-        productData.availableOffer.concreteSku,
+        dynamicFixtures.customer.email,
+        staticFixtures.defaultPassword,
+        dynamicFixtures.product.sku,
         checkoutData.glueShipment.id,
         checkoutData.gluePayment.providerName,
         checkoutData.gluePayment.methodName,
-        productData.availableOffer.offer,
-        productData.availableOffer.merchantReference
+        dynamicFixtures.productOffer.product_offer_reference,
+        dynamicFixtures.productOffer.merchant_reference
       )
       .then(({ orderReference }) => {
         createdOrderReference = orderReference
@@ -65,9 +75,13 @@ context('Order management', () => {
       .should('have.text', createdOrderReference)
     backofficeOrderListPage.viewOrderByPosition(0)
     // check that price for the product is still as it was in the shop
-    backofficeOrderDetailsPage
-      .getOrderSubtotal()
-      .should('contain', productData.availableOffer.price)
+    cy.formatDisplayPrice(
+      dynamicFixtures.productPrice.money_value.gross_amount
+    ).then((expectedPrice: string) => {
+      backofficeOrderDetailsPage
+        .getOrderSubtotal()
+        .should('contain', expectedPrice)
+    })
     // if the tests are run on an env without active scheduler, we will need to trigger oms transition using CLI commands
     // make sure the location from which you run cypress tests has access to Spryker env
     omsTransitionScenarios.triggerOmsTransition()
@@ -84,7 +98,7 @@ context('Order management', () => {
       .getSuccessfulOrderMessages()
       .should('contain', 'Status change triggered successfully.')
     backofficeOrderDetailsPage
-      .getOrderItemHistory(productData.availableOffer.concreteSku)
+      .getOrderItemHistory(dynamicFixtures.product.sku)
       .should('contain', 'tax invoice submitted')
   })
 
@@ -103,6 +117,6 @@ context('Order management', () => {
     // check that customer email is correct on the order details page
     backofficeOrderDetailsPage
       .getCustomerEmail()
-      .should('have.text', customerCredentials.email)
+      .should('have.text', dynamicFixtures.customer.email)
   })
 })

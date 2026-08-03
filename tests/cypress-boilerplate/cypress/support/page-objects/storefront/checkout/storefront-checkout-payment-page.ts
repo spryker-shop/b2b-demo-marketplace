@@ -14,8 +14,6 @@ export class StorefrontCheckoutPaymentPage extends AbstractPage {
   }
 
   providePayment = (paymentName: string): void => {
-    // this project disables the invoice date-of-birth field
-    // (see DummyMarketplacePaymentConfig::isDateOfBirthEnabled), so it's never rendered
     this.selectPaymentMethod(paymentName)
     this.submitPayment()
   }

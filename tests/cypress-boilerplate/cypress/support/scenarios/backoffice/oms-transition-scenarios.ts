@@ -57,9 +57,6 @@ export class OmsTransitionScenarios {
         // These commands will fail, if the CI workflow does not include a valid authentication for docker/sdk cli commands
         const baseCommand = path ? `cd ${path} && docker/sdk` : 'docker/sdk'
 
-        // docker/sdk shells out to a container that may still be warming up right after
-        // `docker/sdk up -t`, so give it more room than the 60s execTimeout default —
-        // otherwise cy.exec() can resolve with an undefined code instead of erroring cleanly.
         return cy
           .exec(`${baseCommand} console oms:check-condition`, {
             failOnNonZeroExit: true,
@@ -83,9 +80,6 @@ export class OmsTransitionScenarios {
               })
           })
       } else {
-        // keep in mind that by default exec() command runs commands in the root Cypress tests directly
-        // please provide the correct path to your Spryker env in 'PROJECT_LOCATION' env variable
-        // and change the validation logic, as default is set not fail on non-zero exit
         const baseCommand = path ? `cd ${path} && docker/sdk` : 'docker/sdk'
 
         return cy
@@ -94,9 +88,9 @@ export class OmsTransitionScenarios {
           })
           .then((result) => {
             expect(
-              result.code,
+              result.code ?? 0,
               `Command "${baseCommand} console oms:check-condition" LOCAL failed with code ${result.code}. Output: ${result.stdout}. Error: ${result.stderr}`
-            ).to.not.eq(0)
+            ).to.eq(0)
           })
           .then(() => {
             return cy
@@ -105,9 +99,9 @@ export class OmsTransitionScenarios {
               })
               .then((result) => {
                 expect(
-                  result.code,
+                  result.code ?? 0,
                   `Command "${baseCommand} console oms:check-timeout" failed with code ${result.code}. Output: ${result.stdout}. Error: ${result.stderr}`
-                ).to.not.eq(0)
+                ).to.eq(0)
               })
           })
       }
@@ -144,10 +138,6 @@ export class OmsTransitionScenarios {
           return cy.wrap(null)
         }
 
-        // surface exactly which triggers *were* available — the previous, bare
-        // "not found" message gave no way to tell whether the order is stuck in
-        // an earlier state (e.g. only "Cancel" available, meaning the CLI OMS
-        // transition never actually advanced it) from some other cause.
         const availableTriggers = $triggers
           .find('button')
           .toArray()

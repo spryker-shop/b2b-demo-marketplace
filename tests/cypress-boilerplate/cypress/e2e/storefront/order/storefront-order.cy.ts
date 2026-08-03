@@ -1,6 +1,3 @@
-import customerCredentials from '@fixtures/customer-data.json'
-import productData from '@fixtures/product-data.json'
-import checkoutData from '@fixtures/checkout-data.json'
 import { StorefrontLoginPage } from '@support/page-objects/storefront/login/storefront-login-page'
 import { StorefrontSearchResultsPage } from '@support/page-objects/storefront/search/storefront-search-results-page'
 import { StorefrontProductDetailsPage } from '@support/page-objects/storefront/product/storefront-product-details-page'
@@ -13,12 +10,32 @@ import { StorefrontCheckoutSummaryPage } from '@support/page-objects/storefront/
 import { StorefrontCheckoutSuccessPage } from '@support/page-objects/storefront/checkout/storefront-checkout-success-page'
 import { StorefrontCustomerOverviewPage } from '@support/page-objects/storefront/customer/storefront-customer-overview-page'
 import { StorefrontCustomerOrderDetailsPage } from '@support/page-objects/storefront/customer/storefront-customer-order-details-page'
-import { GlueAddressesScenarios } from '@support/scenarios/glue/glue-addresses-scenarios'
-import { GlueCartsScenarios } from '@support/scenarios/glue/glue-carts-scenarios'
 import { StorefrontCartScenarios } from '@support/scenarios/storefront/storefront-cart-scenarios'
+import {
+  getFixtures,
+  getProductName,
+  BudgetFixture,
+  CostCenterFixture,
+  CustomerFixture,
+  PriceProductFixture,
+  ProductFixture,
+  ShipmentMethodFixture,
+} from '@support/types/dynamic-fixtures'
 
-const glueAddressesScenarios = new GlueAddressesScenarios()
-const glueCartsScenarios = new GlueCartsScenarios()
+interface OrderDynamicFixtures {
+  customer: CustomerFixture
+  product: ProductFixture
+  productPrice: PriceProductFixture
+  shipmentMethod: ShipmentMethodFixture
+  costCenter: CostCenterFixture
+  budget: BudgetFixture
+}
+
+interface OrderStaticFixtures {
+  defaultPassword: string
+  paymentMethodName: string
+}
+
 const storefrontCartScenarios = new StorefrontCartScenarios()
 const storefrontLoginPage = new StorefrontLoginPage()
 const search = new StorefrontSearchResultsPage()
@@ -34,47 +51,42 @@ const storefrontCustomerOverviewPage = new StorefrontCustomerOverviewPage()
 const storefrontCustomerOrderDetailsPage =
   new StorefrontCustomerOrderDetailsPage()
 
+let dynamicFixtures: OrderDynamicFixtures
+let staticFixtures: OrderStaticFixtures
 let orderGrandTotal: string
 let createdOrderReference: string
 
 context('Customer orders', () => {
   before(() => {
-    // reset customer addresses
-    glueAddressesScenarios.deleteAllCustomerAddresses(
-      customerCredentials.email,
-      customerCredentials.password,
-      customerCredentials.reference
-    )
-    // reset customer carts
-    glueCartsScenarios.deleteAllShoppingCarts(
-      customerCredentials.email,
-      customerCredentials.password
-    )
+    ;({ dynamicFixtures, staticFixtures } = getFixtures<
+      OrderDynamicFixtures,
+      OrderStaticFixtures
+    >())
 
-    // place an order through the real storefront checkout flow — this customer's
-    // business unit has the Purchasing Control feature enabled, so a cost center and
-    // budget must be selected on the summary page before an order can be placed
-    // (there is no Glue API support for this, so it can't be set up via the API)
     storefrontLoginPage.login(
-      customerCredentials.email,
-      customerCredentials.password
+      dynamicFixtures.customer.email,
+      staticFixtures.defaultPassword
     )
     storefrontCartScenarios.createNewCart()
-    search.findProduct(productData.availableProduct.abstractSku)
+    search.findProduct(dynamicFixtures.product.abstract_sku)
     productDetailsPage
       .getProductName()
-      .should('contain', productData.availableProduct.name)
+      .should('contain', getProductName(dynamicFixtures.product))
     productDetailsPage.addProductToCart()
     cartIcon.getCartTrigger().click()
-    cartPage
-      .getCartItemPrice(productData.availableProduct.concreteSku)
-      .should('contain', productData.availableProduct.price)
+    cy.formatDisplayPrice(
+      dynamicFixtures.productPrice.money_value.gross_amount
+    ).then((expectedPrice: string) => {
+      cartPage
+        .getCartItemPrice(dynamicFixtures.product.sku)
+        .should('contain', expectedPrice)
+    })
     cartPage.getCheckoutButton().click()
     checkoutAddress.provideExistingAddress()
-    checkoutShipping.provideShipment(checkoutData.storefrontShipment.name)
-    checkoutPayment.providePayment(checkoutData.storefrontPayment.name)
-    checkoutSummary.selectCostCenter(checkoutData.storefrontCostCenter.name)
-    checkoutSummary.selectBudget(checkoutData.storefrontBudget.name)
+    checkoutShipping.provideShipment(dynamicFixtures.shipmentMethod.name)
+    checkoutPayment.providePayment(staticFixtures.paymentMethodName)
+    checkoutSummary.selectCostCenter(dynamicFixtures.costCenter.name)
+    checkoutSummary.selectBudget(dynamicFixtures.budget.name)
     checkoutSummary.applyCostCenterAndBudget()
     checkoutSummary
       .getGrandTotalAmount()
@@ -92,8 +104,8 @@ context('Customer orders', () => {
   it('can see placed order in orders table', () => {
     // login as a customer
     storefrontLoginPage.login(
-      customerCredentials.email,
-      customerCredentials.password
+      dynamicFixtures.customer.email,
+      staticFixtures.defaultPassword
     )
     // open customer overview page and assert order table is visible
     storefrontCustomerOverviewPage.visit()
@@ -108,8 +120,8 @@ context('Customer orders', () => {
   it('can open order details page', () => {
     // login as a customer
     storefrontLoginPage.login(
-      customerCredentials.email,
-      customerCredentials.password
+      dynamicFixtures.customer.email,
+      staticFixtures.defaultPassword
     )
 
     // open customer overview page and click on the first view order button

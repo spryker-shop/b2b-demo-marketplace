@@ -1,17 +1,38 @@
+// The customer this spec authenticates as is created before it runs by
+// cypress/fixtures/glue/access-tokens/dynamic-glue-access-token.json, so the spec no longer
+// depends on a demodata customer existing with a known password.
 import { validateSchema } from '@support/api-helper/api-helper'
 import accessTokenSchema from '@support/glue-endpoints/authentication/access-tokens-response'
 import { AccessTokens } from '@support/glue-endpoints/authentication/access-tokens'
-import customerCredentials from '@fixtures/customer-data.json'
 import errorResponseSchema from '@support/api-helper/general-responses/error-response'
+import { getFixtures, CustomerFixture } from '@support/types/dynamic-fixtures'
+
+interface AccessTokenDynamicFixtures {
+  customer: CustomerFixture
+}
+
+interface AccessTokenStaticFixtures {
+  defaultPassword: string
+}
 
 const tokenEndpoint = new AccessTokens()
 
+let dynamicFixtures: AccessTokenDynamicFixtures
+let staticFixtures: AccessTokenStaticFixtures
+
 context('Access Token + Examples of schema validation', () => {
+  before(() => {
+    ;({ dynamicFixtures, staticFixtures } = getFixtures<
+      AccessTokenDynamicFixtures,
+      AccessTokenStaticFixtures
+    >())
+  })
+
   it('Positive | Can get access token via GLue', () => {
     tokenEndpoint
       .getCustomerAccessToken(
-        customerCredentials.email,
-        customerCredentials.password
+        dynamicFixtures.customer.email,
+        staticFixtures.defaultPassword
       )
       .then((response) => {
         validateSchema(accessTokenSchema, response)
@@ -26,7 +47,7 @@ context('Access Token + Examples of schema validation', () => {
     tokenEndpoint
       .getCustomerAccessToken(
         'fake_email@spryker.com',
-        customerCredentials.password
+        staticFixtures.defaultPassword
       )
       .then((response) => {
         validateSchema(errorResponseSchema, response)

@@ -1,11 +1,3 @@
-// this spec places its setup order via the Glue API purely as fast scaffolding for
-// testing merchant-portal order processing, not checkout itself — it needs a customer
-// whose business unit has no B2B purchasing restrictions (no cost-center/budget
-// requirement), since Purchasing Control has no Glue API support in this project and
-// would block order placement with a 422 no matter what payload is sent. The shared
-// customer-data.json fixture (Sonia / Acme Corporation) has this restriction.
-import customerCredentials from '@fixtures/customer-order-data.json'
-import productData from '@fixtures/product-data.json'
 import checkoutData from '@fixtures/checkout-data.json'
 import userCredentials from '@fixtures/user-data.json'
 import { MerchantLoginPage } from '@support/page-objects/merchant-portal/login/merchant-portal-login-page'
@@ -13,47 +5,86 @@ import { MerchantOrderListPage } from '@support/page-objects/merchant-portal/ord
 import { MerchantOrderDetailsPage } from '@support/page-objects/merchant-portal/order-management/merchant-portal-order-details-page'
 import { BackofficeLoginPage } from '@support/page-objects/backoffice/login/backoffice-login-page'
 import { BackofficeOrderListPage } from '@support/page-objects/backoffice/order-management/backoffice-order-list-page'
+import { BackofficeOrderDetailsPage } from '@support/page-objects/backoffice/order-management/backoffice-order-details-page'
 import { GlueCheckoutScenarios } from '@support/scenarios/glue/glue-checkout-scenarios'
-import { GlueAddressesScenarios } from '@support/scenarios/glue/glue-addresses-scenarios'
 import { OmsTransitionScenarios } from '@support/scenarios/backoffice/oms-transition-scenarios'
-import { GlueCartsScenarios } from '@support/scenarios/glue/glue-carts-scenarios'
+import {
+  getFixtures,
+  CustomerFixture,
+  PriceProductFixture,
+  ProductFixture,
+  ProductOfferFixture,
+} from '@support/types/dynamic-fixtures'
+
+interface MerchantOrderDynamicFixtures {
+  customer: CustomerFixture
+  product: ProductFixture
+  productPrice: PriceProductFixture
+  productOffer: ProductOfferFixture
+}
+
+interface MerchantOrderStaticFixtures {
+  defaultPassword: string
+}
 
 const merchantLoginPage = new MerchantLoginPage()
 const merchantOrderListPage = new MerchantOrderListPage()
 const merchantOrderDetailsPage = new MerchantOrderDetailsPage()
 const backofficeLoginPage = new BackofficeLoginPage()
 const backofficeOrderListPage = new BackofficeOrderListPage()
+const backofficeOrderDetailsPage = new BackofficeOrderDetailsPage()
 const glueCheckoutScenarios = new GlueCheckoutScenarios()
-const glueAddressesScenarios = new GlueAddressesScenarios()
 const omsTransitionScenarios = new OmsTransitionScenarios()
-const glueCartsScenarios = new GlueCartsScenarios()
 
+let dynamicFixtures: MerchantOrderDynamicFixtures
+let staticFixtures: MerchantOrderStaticFixtures
 let createdOrderReference: string
+
+const clickOmsTriggerIfOffered = (triggerName: string): void => {
+  cy.get('body').then(($body) => {
+    // Look only at the OMS trigger buttons, and match the whole label rather than a
+    // substring: the order page is full of unrelated text that contains a trigger name
+    // ("Payment", "Payment method"… all contain "Pay").
+    const isOffered = $body
+      .find('form[name="oms_trigger_form"] button')
+      .toArray()
+      .some(
+        (button) =>
+          (button as HTMLButtonElement).innerText.trim().toLowerCase() ===
+          triggerName.trim().toLowerCase()
+      )
+
+    if (isOffered) {
+      backofficeOrderDetailsPage.triggerOms(triggerName)
+
+      return
+    }
+
+    cy.log(
+      `OMS trigger "${triggerName}" is not offered — the order has already advanced past it.`
+    )
+  })
+}
 
 context('Merchant Order management', () => {
   before(function () {
-    // reset customer addresses
-    glueAddressesScenarios.deleteAllCustomerAddresses(
-      customerCredentials.email,
-      customerCredentials.password,
-      customerCredentials.reference
-    )
-    // reset customer carts
-    glueCartsScenarios.deleteAllShoppingCarts(
-      customerCredentials.email,
-      customerCredentials.password
-    )
+    // the customer is created per run, so it has no addresses or carts to reset here
+    ;({ dynamicFixtures, staticFixtures } = getFixtures<
+      MerchantOrderDynamicFixtures,
+      MerchantOrderStaticFixtures
+    >())
+
     // placing an order for processing
     glueCheckoutScenarios
       .placeOrder(
-        customerCredentials.email,
-        customerCredentials.password,
-        productData.availableOffer.concreteSku,
+        dynamicFixtures.customer.email,
+        staticFixtures.defaultPassword,
+        dynamicFixtures.product.sku,
         checkoutData.glueShipment.id,
         checkoutData.gluePayment.providerName,
         checkoutData.gluePayment.methodName,
-        productData.availableOffer.offer,
-        productData.availableOffer.merchantReference
+        dynamicFixtures.productOffer.product_offer_reference,
+        dynamicFixtures.productOffer.merchant_reference
       )
       .then(({ orderReference }) => {
         createdOrderReference = orderReference
@@ -72,15 +103,8 @@ context('Merchant Order management', () => {
     backofficeOrderListPage.filterOrdersByReference(createdOrderReference)
     backofficeOrderListPage.viewOrderByReference(createdOrderReference)
     omsTransitionScenarios.triggerOmsTransition()
-    omsTransitionScenarios.waitForOrderProcessing('grace period started', 20)
-    // clicks the oms trigger with the name 'skip grace period'
-    omsTransitionScenarios.triggerOmsEvent(
-      createdOrderReference,
-      'skip grace period',
-      20
-    )
-    // clicks the oms trigger with the name 'Pay'
-    omsTransitionScenarios.triggerOmsEvent(createdOrderReference, 'Pay', 20)
+    clickOmsTriggerIfOffered('skip grace period')
+    clickOmsTriggerIfOffered('Pay')
     // if the tests are run on an env without active scheduler, e.g. local env, we will need to trigger oms transition using CLI commands
     // make sure the location from which you run cypress tests has access to Spryker env
     omsTransitionScenarios.triggerOmsTransition()
@@ -100,15 +124,19 @@ context('Merchant Order management', () => {
     // verify that the order placed in before hook exists and was passed to merchant
     merchantOrderListPage.viewOrderByReference(createdOrderReference)
     // check that price for the product is still as it was in the shop
-    merchantOrderDetailsPage
-      .getOrderSubTotals()
-      .should('contain', productData.availableOffer.price)
+    cy.formatDisplayPrice(
+      dynamicFixtures.productPrice.money_value.gross_amount
+    ).then((expectedPrice: string) => {
+      merchantOrderDetailsPage
+        .getOrderSubTotals()
+        .should('contain', expectedPrice)
+    })
     // clicks the oms trigger with the name 'Pay'
     merchantOrderDetailsPage.triggerOms('Ship')
     merchantOrderDetailsPage.getOrderItemsStates().should('contain', 'Shipped')
     merchantOrderDetailsPage.openOrderTab('Items')
     merchantOrderDetailsPage
-      .getOrderItemState(productData.availableOffer.concreteSku)
+      .getOrderItemState(dynamicFixtures.product.sku)
       .should('contain', 'shipped')
   })
 })

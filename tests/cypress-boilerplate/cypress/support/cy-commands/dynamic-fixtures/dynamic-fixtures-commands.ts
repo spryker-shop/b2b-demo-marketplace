@@ -1,16 +1,3 @@
-// Dynamic fixtures replace hardcoded demodata (SKUs, customer emails, store-prefixed
-// references) with data created on the fly through the Testify DynamicFixtures API
-// (`POST <glue-backend>/dynamic-fixtures`, provided by spryker/testify-backend-api and
-// registered in this project via DynamicFixturesBackendResourcePlugin).
-//
-// A payload is a list of operations; each operation calls a Codeception helper method
-// from tests/PyzTest/Zed/TestifyBackendApi/codeception.dynamic.fixtures.yml and stores
-// its result under `key`, so later operations can reference it as `#key` / `#key.field`.
-
-// Values that depend on how the project is configured (which stores exist, which locale
-// and currency they use, the default password) must never be repeated inside payloads.
-// They are written as `{{ENV_VAR}}` placeholders and resolved from the environment files
-// in .envs/ — that is the single place to change when the store set changes.
 const interpolateEnvPlaceholders = <T>(fixtures: T): T => {
   const serialized = JSON.stringify(fixtures)
 
@@ -32,9 +19,6 @@ const interpolateEnvPlaceholders = <T>(fixtures: T): T => {
   return JSON.parse(resolved)
 }
 
-// The API answers with a JSON:API document: a single resource object when the payload
-// produced one keyed result, an array of them otherwise. Flatten both shapes into a
-// plain `{ key: data }` object so specs can read `dynamicFixtures.customer.email`.
 const mapResponseToFixtures = (
   responseBody: Record<string, any>
 ): Record<string, unknown> => {

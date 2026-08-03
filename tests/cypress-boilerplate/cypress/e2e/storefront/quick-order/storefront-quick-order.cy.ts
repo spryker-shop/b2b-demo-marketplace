@@ -38,14 +38,6 @@ const storefrontCartScenarios = new StorefrontCartScenarios()
 let dynamicFixtures: QuickOrderDynamicFixtures
 let staticFixtures: QuickOrderStaticFixtures
 
-// The product name has to be searchable by the quick-order autocomplete, which never
-// returns haveFullProduct's own default (`uniqid('Product #', true)`, e.g.
-// "Product #6a6ccefaafff16.65668963"). The payload therefore takes the name as a
-// {{QUICK_ORDER_PRODUCT_NAME}} placeholder. It is set here at module scope — which runs when
-// the spec is loaded, before the root `before` hook in support/e2e.ts requests the fixtures —
-// and carries a timestamp so a previous run's product can never be matched instead of this
-// run's. If the ordering ever changed, fixture loading would fail loudly on the unresolved
-// placeholder rather than silently using a stale name.
 Cypress.env('QUICK_ORDER_PRODUCT_NAME', `Cypress Quick Order ${Date.now()}`)
 
 context('Quick order', () => {
@@ -61,14 +53,7 @@ context('Quick order', () => {
       dynamicFixtures.customer.email,
       staticFixtures.defaultPassword
     )
-
-    // unlike the single-test specs, every test here fills a cart, so each one needs its own
-    // empty cart rather than inheriting whatever the previous test left active. Creating a
-    // fresh cart is preferred over deleting the old ones through Glue: the storefront
-    // customer created by the fixtures is a B2B company user, and the Glue storefront
-    // token endpoint does not authenticate it.
     storefrontCartScenarios.createNewCart()
-
     storefrontQuickOrderPage.visit()
   })
 
@@ -105,13 +90,6 @@ context('Quick order', () => {
   })
 
   it('can add merchant-specific product to cart', () => {
-    // The per-row merchant select is used rather than the form's top-level merchant filter:
-    // that filter is backed by a merchant search that is requested without pagination
-    // parameters, so it only ever renders the first page of merchants
-    // (MerchantSearchConfig::PAGINATION_DEFAULT_ITEMS_PER_PAGE = 10) while this project's
-    // demodata alone already defines 16 — a merchant created per run is therefore never
-    // guaranteed to be listed there. The row-level select is scoped to the merchants
-    // offering the product in that row, which is exactly the offer the fixtures created.
     cy.intercept('GET', '**/product-search/product-concrete-search**').as(
       'productSearch'
     )
