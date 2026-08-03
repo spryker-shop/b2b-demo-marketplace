@@ -213,11 +213,7 @@ jobs:
                 uses: ./.github/actions/job-slack-notifications
                 if: always()
 
-    # =========================================================================
-    # Cypress-boilerplate — this project's OWN end-to-end UI test baseline,
-    # vendored as plain committed files under tests/cypress-boilerplate/ 
-    # tests the project itself and should be KEPT when adopting this workflow.
-    # =========================================================================
+    # [project applicable] Cypress Project tests: Lint & Format
     cypress-quality-gate:
         name: "Cypress-boilerplate / Lint & Format"
         runs-on: ubuntu-latest
