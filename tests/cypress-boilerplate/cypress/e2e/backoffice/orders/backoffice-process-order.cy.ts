@@ -77,17 +77,14 @@ context('Order management', () => {
         .should('contain', expectedPrice)
     })
     cy.triggerOmsTransition()
-    cy.waitForOrderProcessing('grace period started', 20)
-    // clicks the oms trigger with the name 'skip grace period'
-    backofficeOrderDetailsPage.triggerOms('skip grace period')
-    // clicks the oms trigger with the name 'Pay'
-    backofficeOrderDetailsPage.triggerOms('Pay')
-    backofficeOrderDetailsPage
-      .getSuccessfulOrderMessages()
-      .should('contain', 'Status change triggered successfully.')
-    backofficeOrderDetailsPage
-      .getOrderItemHistory(dynamicFixtures.product.sku)
-      .should('contain', 'tax invoice submitted')
+    backofficeOrderDetailsPage.clickOmsTriggerIfOffered('skip grace period')
+    backofficeOrderDetailsPage.clickOmsTriggerIfOffered('Pay')
+    cy.triggerOmsTransition()
+    backofficeOrderDetailsPage.waitForOrderItemStateInHistory(
+      dynamicFixtures.product.sku,
+      'tax invoice submitted',
+      20
+    )
   })
 
   it('checks customer email in order details page', () => {

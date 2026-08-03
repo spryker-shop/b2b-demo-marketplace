@@ -40,32 +40,6 @@ let dynamicFixtures: MerchantOrderDynamicFixtures
 let staticFixtures: MerchantOrderStaticFixtures
 let createdOrderReference: string
 
-const clickOmsTriggerIfOffered = (triggerName: string): void => {
-  cy.get('body').then(($body) => {
-    // Look only at the OMS trigger buttons, and match the whole label rather than a
-    // substring: the order page is full of unrelated text that contains a trigger name
-    // ("Payment", "Payment method"… all contain "Pay").
-    const isOffered = $body
-      .find('form[name="oms_trigger_form"] button')
-      .toArray()
-      .some(
-        (button) =>
-          (button as HTMLButtonElement).innerText.trim().toLowerCase() ===
-          triggerName.trim().toLowerCase()
-      )
-
-    if (isOffered) {
-      backofficeOrderDetailsPage.triggerOms(triggerName)
-
-      return
-    }
-
-    cy.log(
-      `OMS trigger "${triggerName}" is not offered — the order has already advanced past it.`
-    )
-  })
-}
-
 context('Merchant Order management', () => {
   before(function () {
     // the customer is created per run, so it has no addresses or carts to reset here
@@ -103,8 +77,8 @@ context('Merchant Order management', () => {
     backofficeOrderListPage.filterOrdersByReference(createdOrderReference)
     backofficeOrderListPage.viewOrderByReference(createdOrderReference)
     omsTransitionScenarios.triggerOmsTransition()
-    clickOmsTriggerIfOffered('skip grace period')
-    clickOmsTriggerIfOffered('Pay')
+    backofficeOrderDetailsPage.clickOmsTriggerIfOffered('skip grace period')
+    backofficeOrderDetailsPage.clickOmsTriggerIfOffered('Pay')
     // if the tests are run on an env without active scheduler, e.g. local env, we will need to trigger oms transition using CLI commands
     // make sure the location from which you run cypress tests has access to Spryker env
     omsTransitionScenarios.triggerOmsTransition()

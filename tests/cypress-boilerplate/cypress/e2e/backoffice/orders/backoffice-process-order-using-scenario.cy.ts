@@ -85,21 +85,14 @@ context('Order management', () => {
     // if the tests are run on an env without active scheduler, we will need to trigger oms transition using CLI commands
     // make sure the location from which you run cypress tests has access to Spryker env
     omsTransitionScenarios.triggerOmsTransition()
-    omsTransitionScenarios.waitForOrderProcessing('grace period started', 20)
-    // clicks the oms trigger with the name 'skip grace period'
-    omsTransitionScenarios.triggerOmsEvent(
-      createdOrderReference,
-      'skip grace period',
+    backofficeOrderDetailsPage.clickOmsTriggerIfOffered('skip grace period')
+    backofficeOrderDetailsPage.clickOmsTriggerIfOffered('Pay')
+    omsTransitionScenarios.triggerOmsTransition()
+    backofficeOrderDetailsPage.waitForOrderItemStateInHistory(
+      dynamicFixtures.product.sku,
+      'tax invoice submitted',
       20
     )
-    // clicks the oms trigger with the name 'Pay'
-    omsTransitionScenarios.triggerOmsEvent(createdOrderReference, 'Pay', 20)
-    backofficeOrderDetailsPage
-      .getSuccessfulOrderMessages()
-      .should('contain', 'Status change triggered successfully.')
-    backofficeOrderDetailsPage
-      .getOrderItemHistory(dynamicFixtures.product.sku)
-      .should('contain', 'tax invoice submitted')
   })
 
   it('checks customer email in order details page', () => {
