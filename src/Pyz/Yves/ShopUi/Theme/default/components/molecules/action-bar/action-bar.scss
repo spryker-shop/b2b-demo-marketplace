@@ -1,25 +1,15 @@
 @mixin shop-ui-action-bar($name: '.action-bar') {
     #{$name} {
-        margin-top: rem(16);
-        margin-bottom: rem(16);
+        margin-bottom: var(--scale-16);
 
         @include helper-breakpoint-media-min($md) {
             display: flex;
             flex-flow: row wrap;
-            gap: rem(16);
-        }
-
-        &--first {
-            margin-top: 0;
-        }
-
-        &--big {
-            margin-top: rem(48);
+            gap: var(--scale-16);
         }
 
         &--small {
-            margin-top: rem(16);
-            margin-bottom: rem(8);
+            margin-bottom: var(--scale-8);
         }
 
         &--spaceless {
@@ -40,19 +30,18 @@
             flex-grow: 1;
 
             &--small {
-                @include helper-font-size(4);
-                @include helper-font-line-height(4);
+                @include typography(heading-sm);
             }
 
             &--middle {
-                font-size: rem(22);
+                @include typography(heading-md);
             }
         }
 
         &__actions {
             display: flex;
             flex-direction: column;
-            gap: rem(8);
+            gap: var(--scale-8);
 
             @include helper-breakpoint-media-min($md) {
                 flex-direction: row;
@@ -74,7 +63,7 @@
         }
 
         &__icon {
-            margin-right: rem(10);
+            margin-right: var(--scale-8);
         }
     }
 }

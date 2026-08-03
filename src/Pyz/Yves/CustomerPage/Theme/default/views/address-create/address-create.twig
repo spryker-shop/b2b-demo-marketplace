@@ -1,9 +1,34 @@
 {% extends view('address-create', '@SprykerShop:CustomerPage') %}
 
+{% define data = {
+    formType: 'new',
+} %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [{
+                label: 'customer.account' | trans,
+                url: url('customer/overview'),
+            },{
+                label: 'customer.account.default_address' | trans,
+                url: url('customer/address'),
+            },{
+                label: ('customer.profile.address.breadcrumb.' ~ data.formType) | trans,
+            }]
+        }
+    } only %}
+{% endblock %}
+
 {% block customerContent %}
+    {% include molecule('action-bar') with {
+        data: {
+            title: ('customer.profile.address.' ~ data.formType) | trans,
+        },
+    } only %}
+
     {% include molecule('form') with {
         data: {
-            title: 'customer.account.edit_address_information' | trans,
             form: data.form,
             shouldRequireMessage: true,
             options: {
