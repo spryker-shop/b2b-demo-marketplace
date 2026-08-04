@@ -139,6 +139,8 @@ use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\DataImport\Product
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\DataImport\ProductShipmentTypeDataImportPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\DataImport\ProductToProductClassDataImportPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\DataImport\SspAssetDataImportPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\DataImport\SspFileAttachmentDataImportPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\DataImport\SspFileDataImportPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\DataImport\SspInquiryDataImportPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\DataImport\SspModelAssetDataImportPlugin;
 use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\DataImport\SspModelDataImportPlugin;
@@ -533,6 +535,8 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
             new ProductToProductClassDataImportPlugin(),
             new SspInquiryDataImportPlugin(),
             new SspAssetDataImportPlugin(),
+            new SspFileDataImportPlugin(),
+            new SspFileAttachmentDataImportPlugin(),
             new SspModelDataImportPlugin(),
             new SspModelAssetDataImportPlugin(),
             new SspModelProductListDataImportPlugin(),
