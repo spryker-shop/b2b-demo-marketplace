@@ -2,7 +2,7 @@
 
 {% block noLocation %}
     {% if not data.servicePoint %}
-        <div class="{{ config.jsName }}__no-location {{ config.name }}__location-container">
+        <div class="{{ config.jsName }}__no-location {{ config.name }}__location-container" {{ qa('ssp-select-location') }}>
             <button type="button" class="link link--font-inherit link--no-decoration {{ attributes['trigger-class-name'] }}">
                 {{ 'service_point_widget.select_location_action' | trans }}
             </button>

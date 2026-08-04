@@ -167,9 +167,8 @@ $cart-item-image-width: 76;
         }
 
         &__meta-item:first-child::after {
-            content: '\00B7';
+            @include helper-dot-separator;
             margin-left: var(--scale-6);
-            color: var(--text-tertiary);
         }
 
         &__stock {
@@ -202,9 +201,8 @@ $cart-item-image-width: 76;
             cursor: pointer;
 
             &:not(:last-child)::after {
-                content: '\00B7';
+                @include helper-dot-separator;
                 margin-left: var(--scale-12);
-                color: var(--text-tertiary);
             }
 
             &--filled {

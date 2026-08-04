@@ -1,13 +1,46 @@
 @mixin merchant-opening-hours-widget-date-information-item($name: '.date-information-item') {
     #{$name} {
-        &__date {
-            line-height: rem(29);
+        @include typography(body-sm);
+        margin-bottom: var(--scale-16);
+
+        &__title {
+            @include typography(heading-sm);
+            margin-bottom: var(--scale-8);
+        }
+
+        &__subtitle {
+            @include typography(label-sm);
+            text-transform: uppercase;
+            margin-bottom: var(--scale-8);
+            color: var(--text-tertiary);
+        }
+
+        &__grid {
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            column-gap: var(--scale-8);
+            padding: 8px 0 0;
+
+            &:not(:last-child) {
+                border-bottom: 1px solid var(--border-subtle);
+                padding-bottom: 7px;
+            }
         }
 
         &__time {
-            color: $setting-color-gray-4;
-            line-height: rem(29);
-            text-align: right;
+            @include typography(label-md);
+        }
+
+        &__date {
+            margin-top: var(--scale-2);
+        }
+
+        &__date-note {
+            @include typography(body-sm);
+            color: var(--text-secondary);
+            display: block;
         }
 
         @content;

@@ -88,4 +88,14 @@ class QueueConfig extends SprykerQueueConfig
 
         return $queueOptionTransfer;
     }
+
+    public function isResourceAwareQueueWorkerEnabled(): bool
+    {
+        return true;
+    }
+
+    public function isReducedSyncQueueScanEnabled(): bool
+    {
+        return true;
+    }
 }

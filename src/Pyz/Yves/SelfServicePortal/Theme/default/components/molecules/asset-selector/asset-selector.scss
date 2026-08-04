@@ -266,12 +266,11 @@
     }
 
     &--cart &__information::before {
-        content: '\00B7';
+        @include helper-dot-separator;
         display: none;
-        color: var(--text-tertiary);
 
         @include helper-breakpoint-media-min($lg) {
-            display: inline;
+            display: inline-block;
             margin: 0 var(--scale-4);
         }
     }
