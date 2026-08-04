@@ -4,7 +4,7 @@ import path from 'node:path';
 import glob from 'fast-glob';
 import webpack from 'webpack';
 import autoprefixer from 'autoprefixer';
-import * as sass from 'sass';
+import * as sass from 'sass-embedded';
 
 // Spryker widgets are PHP classes whose `getName()` returns the widget id used
 // in `{% widget 'X' %}` calls and whose `getTemplate()` returns the twig path
