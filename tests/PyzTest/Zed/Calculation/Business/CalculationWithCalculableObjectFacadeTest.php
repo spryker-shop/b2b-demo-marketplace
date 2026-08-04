@@ -445,7 +445,7 @@ class CalculationWithCalculableObjectFacadeTest extends Unit
         $quoteTransfer->setPriceMode(CalculationPriceMode::PRICE_MODE_GROSS);
 
         $shippingAddressTransfer = new AddressTransfer();
-        $shippingAddressTransfer->setIso2Code('DE');
+        $shippingAddressTransfer->setIso2Code($this->tester->getCurrentStoreCountryIso2Code());
         $quoteTransfer->setShippingAddress($shippingAddressTransfer);
 
         $itemTransfer = new ItemTransfer();

@@ -74,7 +74,7 @@ class CalculationBusinessTester extends Actor
     /**
      * @var string
      */
-    protected const COUNTRY_DE = 'DE';
+    protected const FALLBACK_COUNTRY_ISO2_CODE = 'DE';
 
     /**
      * @param int $discountAmount
@@ -243,9 +243,17 @@ class CalculationBusinessTester extends Actor
      */
     public function getCurrentStoreTransfer(): StoreTransfer
     {
-        return (new StoreTransfer())
-            ->setIdStore(1)
-            ->setName(static::COUNTRY_DE);
+        return $this->getLocator()->store()->facade()->getCurrentStore();
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrentStoreCountryIso2Code(): string
+    {
+        $countryIso2Codes = $this->getCurrentStoreTransfer()->getCountries();
+
+        return current($countryIso2Codes) ?: static::FALLBACK_COUNTRY_ISO2_CODE;
     }
 
     /**
@@ -322,7 +330,7 @@ class CalculationBusinessTester extends Actor
      */
     public function createAbstractProductWithTaxSet(float $taxRate): SpyProductAbstract
     {
-        $countryEntity = SpyCountryQuery::create()->findOneByIso2Code(static::COUNTRY_DE);
+        $countryEntity = SpyCountryQuery::create()->findOneByIso2Code($this->getCurrentStoreCountryIso2Code());
 
         $taxRateEntity = new SpyTaxRate();
         $taxRateEntity->setRate($taxRate);
@@ -377,7 +385,7 @@ class CalculationBusinessTester extends Actor
      */
     protected function createProductOptionValue(float $taxRate): SpyProductOptionValue
     {
-        $countryEntity = SpyCountryQuery::create()->findOneByIso2Code('DE');
+        $countryEntity = SpyCountryQuery::create()->findOneByIso2Code($this->getCurrentStoreCountryIso2Code());
 
         $taxRateEntity = new SpyTaxRate();
         $taxRateEntity->setRate($taxRate);
@@ -466,6 +474,6 @@ class CalculationBusinessTester extends Actor
      */
     public function getCurrentShippingAddress(): AddressTransfer
     {
-        return (new AddressTransfer())->setIso2Code(static::COUNTRY_DE);
+        return (new AddressTransfer())->setIso2Code($this->getCurrentStoreCountryIso2Code());
     }
 }

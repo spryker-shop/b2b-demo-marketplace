@@ -25,6 +25,10 @@ sections:
         propel-migration-cleanup:
             command: 'vendor/bin/console propel:migration:delete -vvv --no-ansi'
 
+    configuration:
+        configuration-sync:
+            command: 'vendor/bin/console configuration:sync -vvv --no-ansi'
+
     setup-queue:
         queue-setup:
             command: 'vendor/bin/console queue:setup'

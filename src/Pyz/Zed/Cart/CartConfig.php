@@ -17,4 +17,9 @@ class CartConfig extends SprykerCartConfig
     {
         return true;
     }
+
+    public function isCartReloadOnPreCheckFailureEnabled(): bool
+    {
+        return true;
+    }
 }
