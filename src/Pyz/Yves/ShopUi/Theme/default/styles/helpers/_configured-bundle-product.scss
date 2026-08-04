@@ -1,3 +1,9 @@
+@use 'calc-rem' as *;
+@use 'font' as *;
+@use '../settings/breakpoint' as *;
+@use '../settings/color' as *;
+@use '~ShopUi/styles/helpers/breakpoint' as *;
+
 @mixin configured-bundle-product-shared($name: '.configured-bundle-product', $image-width: 76) {
     #{$name} {
         display: flex;
