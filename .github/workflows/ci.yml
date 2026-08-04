@@ -147,6 +147,10 @@ jobs:
         steps:
             -   uses: actions/checkout@v4
 
+            -   uses: ramsey/composer-install@v3
+                with:
+                    composer-options: "-q --ignore-platform-reqs --no-interaction --prefer-install=auto"
+
             -   name: Setup Node.js
                 uses: actions/setup-node@v5
                 with:
