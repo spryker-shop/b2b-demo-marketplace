@@ -1,10 +1,28 @@
+import { createHash } from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
-
 import glob from 'fast-glob';
 import webpack from 'webpack';
 import autoprefixer from 'autoprefixer';
 import * as sass from 'sass-embedded';
+
+import {
+    createErrorTranslatingSassImplementation,
+    createSassInjectionImporterFactory,
+    isInjectableComponentPath,
+    isInjectableStyleRootPath,
+} from '../../../../../../../vendor/spryker-shop/shop-ui/src/SprykerShop/Yves/ShopUi/FrontendBuilder/libs/sass/sass-injection-importer.mts';
+import { createMixinIndex } from '../../../../../../../vendor/spryker-shop/shop-ui/src/SprykerShop/Yves/ShopUi/FrontendBuilder/libs/sass/mixin-index.mts';
+import { getFilteredNamespaceConfigList } from '../../../../../../../vendor/spryker-shop/shop-ui/src/SprykerShop/Yves/ShopUi/FrontendBuilder/libs/sass/namespace-config-parser.mts';
+import { getAliasList } from '../../../../../../../vendor/spryker-shop/shop-ui/src/SprykerShop/Yves/ShopUi/FrontendBuilder/libs/webpack/alias.mts';
+import {
+    findAppEntryPoint,
+    findComponentStyles,
+} from '../../../../../../../vendor/spryker-shop/shop-ui/src/SprykerShop/Yves/ShopUi/FrontendBuilder/libs/webpack/finder.mts';
+import {
+    getAppSettings,
+    loadProjectGlobalSettings,
+} from '../../../../../../../vendor/spryker-shop/shop-ui/src/SprykerShop/Yves/ShopUi/FrontendBuilder/settings.mts';
 
 // Spryker widgets are PHP classes whose `getName()` returns the widget id used
 // in `{% widget 'X' %}` calls and whose `getTemplate()` returns the twig path
@@ -33,15 +51,26 @@ function buildWidgetMap(root: string): Record<string, string> {
 }
 
 const projectRoot = path.resolve(__dirname, '../../../../../../..');
-const shopUiVendor = path.resolve(projectRoot, 'vendor/spryker-shop/shop-ui/src/SprykerShop/Yves/ShopUi/Theme/default');
-const shopUiPyz = path.resolve(projectRoot, 'src/Pyz/Yves/ShopUi/Theme/default');
 
 export default {
     stories: [path.join(projectRoot, 'src/Pyz/Yves/ShopUi/Theme/default/**/*.stories.{js,ts}')],
 
     framework: '@storybook/html-webpack5',
 
-    addons: ['@storybook/addon-essentials'],
+    addons: [
+        {
+            name: '@storybook/addon-essentials',
+            options: {
+                controls: false,
+                actions: false,
+                backgrounds: false,
+                measure: false,
+                outline: false,
+                viewport: false,
+                toolbars: false,
+            },
+        },
+    ],
 
     staticDirs: [
         { from: path.join(projectRoot, 'frontend/assets/global/default/icons'), to: '/icons' },
@@ -49,48 +78,53 @@ export default {
     ],
 
     async webpackFinal(config) {
-        const sharedScss = path.resolve(shopUiPyz, 'styles/shared.scss');
-
-        const vendorStyleDirs = [
-            path.join(projectRoot, 'vendor/spryker-shop'),
-            path.join(projectRoot, 'vendor/spryker-feature'),
-            path.join(projectRoot, 'vendor/spryker'),
-        ];
-
-        const vendorStylePatterns = vendorStyleDirs.flatMap((dir) => [
-            path.join(dir, '**/Theme/default/components/atoms/*/*.scss'),
-            path.join(dir, '**/Theme/default/components/molecules/*/*.scss'),
-            path.join(dir, '**/Theme/default/components/organisms/*/*.scss'),
-            path.join(dir, '**/Theme/default/templates/*/*.scss'),
-            path.join(dir, '**/Theme/default/views/*/*.scss'),
-        ]);
-
-        const vendorStyles = await glob(vendorStylePatterns, {
-            ignore: ['**/style.scss', '**/node_modules/**'],
-            absolute: true,
+        // --- Builder inputs: the same settings `npm run yves` resolves (frontend/yves.settings.mts included) ---
+        const globalSettings = await loadProjectGlobalSettings();
+        const namespaceConfigPath = path.resolve(projectRoot, globalSettings.paths.namespaceConfig);
+        const namespaceConfigList = getFilteredNamespaceConfigList({
+            mode: 'development',
+            namespaces: [],
+            themes: [],
+            pathToConfig: namespaceConfigPath,
+            isInjectionDebuggingEnabled: false,
         });
+        const [appSettings] = getAppSettings(namespaceConfigList, namespaceConfigPath, globalSettings);
 
-        const allResources = [sharedScss, ...vendorStyles];
-
-        // --- Aliases from tsconfig.yves.json ---
-        const tsConfig = require(path.join(projectRoot, 'tsconfig.yves.json'));
-        const tsPaths = tsConfig.compilerOptions.paths || {};
-        const tsAliases = {};
-
-        for (const [aliasPattern, targets] of Object.entries<string[]>(tsPaths)) {
-            if (aliasPattern === '*' || !targets.length) continue;
-            const alias = aliasPattern.replace(/\/\*$/, '');
-            const target = targets[0].replace(/\/\*$/, '');
-            tsAliases[alias] = path.resolve(projectRoot, target);
-        }
+        const aliasList = getAliasList(appSettings);
 
         config.resolve.alias = {
             ...config.resolve.alias,
-            ...tsAliases,
+            ...aliasList,
             'storybook-helpers': path.resolve(projectRoot, 'src/Pyz/Yves/ShopUi/Theme/storybook/helpers'),
         };
 
         config.resolve.extensions = [...new Set([...(config.resolve.extensions || []), '.ts', '.js', '.scss'])];
+
+        // --- Sass pipeline: the ShopUi FrontendBuilder injection, same as `npm run yves` ---
+        const [componentStyles, sharedStyleFilePaths, projectWrapperPath] = await Promise.all([
+            findComponentStyles(appSettings.find.componentStyles),
+            findComponentStyles({
+                dirs: appSettings.find.componentStyles.dirs,
+                patterns: ['**/Theme/*/styles/**/*.scss', '!**/__tests__/**'],
+            }),
+            findAppEntryPoint(appSettings.find.shopUiEntryPoints, './styles/shared.scss'),
+        ]);
+
+        const mixinIndex = await createMixinIndex({
+            componentStyleFilePaths: componentStyles,
+            sharedStyleFilePaths,
+            isInjectionDebuggingEnabled: false,
+        });
+
+        const {
+            buildInjectionBanner,
+            buildStyleRootBanner,
+            createImporter: createSassInjectionImporter,
+        } = createSassInjectionImporterFactory({
+            aliasList,
+            projectWrapperPath: projectWrapperPath ?? null,
+            mixinIndex,
+        });
 
         const widgetMap = buildWidgetMap(projectRoot);
 
@@ -138,28 +172,41 @@ export default {
                 {
                     loader: 'sass-loader',
                     options: {
-                        implementation: sass,
-                        api: 'legacy',
-                        sassOptions: {
-                            includePaths: [
-                                shopUiVendor,
-                                path.join(shopUiVendor, 'styles'),
-                                shopUiPyz,
-                                path.join(shopUiPyz, 'styles'),
-                            ],
-                            silenceDeprecations: ['import', 'legacy-js-api'],
-                        },
+                        implementation: createErrorTranslatingSassImplementation(sass),
+                        api: 'modern-compiler',
                         additionalData: (content, loaderContext) => {
-                            const currentFile = loaderContext.resourcePath;
-                            const imports = allResources
-                                .filter((resource) => resource !== currentFile)
-                                .map((resource) => `@import "${resource}";`)
-                                .join('\n');
-                            return `${imports}\n${content}`;
+                            const isComponentRoot = isInjectableComponentPath(loaderContext.resourcePath);
+
+                            if (!isComponentRoot && !isInjectableStyleRootPath(loaderContext.resourcePath)) {
+                                return content;
+                            }
+
+                            const injectionBanner = isComponentRoot
+                                ? buildInjectionBanner(content, loaderContext.resourcePath)
+                                : buildStyleRootBanner(content);
+
+                            return `${injectionBanner} ${content}`;
+                        },
+                        sassOptions: (loaderContext) => {
+                            const sassInjectionImporter = createSassInjectionImporter({
+                                onFileLoaded: (loadedFilePath) => loaderContext.addDependency(loadedFilePath),
+                            });
+
+                            return {
+                                importer: sassInjectionImporter,
+                                importers: [sassInjectionImporter],
+                            };
                         },
                     },
                 },
             ],
+        };
+
+        config.devtool = false;
+        config.optimization = { ...config.optimization, minimize: false };
+        config.cache = {
+            type: 'filesystem',
+            version: `storybook-mixin-index-${createHash('sha256').update(mixinIndex.getFingerprint()).digest('hex')}`,
         };
 
         config.module.rules = config.module.rules.filter(
