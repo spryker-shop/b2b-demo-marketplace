@@ -4,8 +4,6 @@ export default class SprTabs extends Component {
     protected triggers!: HTMLButtonElement[];
     protected panels!: HTMLElement[];
 
-    protected readyCallback(): void {}
-
     protected init(): void {
         this.triggers = Array.from(this.querySelectorAll<HTMLButtonElement>(`.${this.jsName}__trigger`));
         this.panels = Array.from(this.querySelectorAll<HTMLElement>(`.${this.jsName}__panel`));
