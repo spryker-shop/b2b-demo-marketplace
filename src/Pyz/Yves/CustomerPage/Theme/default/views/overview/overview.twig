@@ -82,9 +82,11 @@
 {% endmacro %}
 
 {% block customerContent %}
-    <h3>
-        {{- 'customer.account.overview' | trans -}}
-    </h3>
+    {% include molecule('action-bar') with {
+        data: {
+            title: 'customer.account.overview' | trans,
+        },
+    } only %}
 
     {% include molecule('action-bar', 'ShopUi') with {
         modifiers: ['small'],
