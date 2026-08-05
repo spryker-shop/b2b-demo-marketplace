@@ -150,6 +150,13 @@ groups:
                         services:
                             session:
                                 namespace: 4
+            storybook:
+                application: static
+                endpoints:
+                    storybook.b2b-marketplace-eu.demo-spryker.com:
+                        entry-point: Storybook/assets
+                        region: EU
+
 services:
     database:
         engine: mysql
