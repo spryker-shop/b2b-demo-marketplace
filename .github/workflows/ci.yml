@@ -78,29 +78,6 @@ jobs:
                             const body = await res.text();
                             console.log(`${name}: status=${res.status} bytes=${body.length} time=${Date.now() - start}ms is-hidden=${(body.match(/is-hidden/g) || []).length}`);
                         }
-                        const login = await get('/DE/en/login');
-                        const token = (login.html.match(/name="loginForm\[_token\]"[^>]*value="([^"]+)"/) || [])[1];
-                        const formAction = (login.html.match(/<form[^>]*name="loginForm"[^>]*action="([^"]*)"/) || login.html.match(/action="([^"]*login_check[^"]*)"/) || [])[1];
-                        console.log('login page:', login.url, 'token:', token ? 'found' : 'MISSING', 'action:', formAction || 'NOT FOUND');
-                        const body = new URLSearchParams({'loginForm[email]': 'sonia@acme.com', 'loginForm[password]': 'change123', 'loginForm[_token]': token});
-                        let postUrl = new URL(formAction || new URL(login.url).pathname.replace(/login$/, 'login_check'), base).href;
-                        let res;
-                        for (let hop = 0; hop < 6; hop++) {
-                            res = await fetch(postUrl, {method: 'POST', body, redirect: 'manual', headers: {cookie: cookieHeader()}});
-                            storeCookies(res);
-                            console.log('login POST', postUrl, '->', res.status);
-                            if ([307, 308].includes(res.status)) { postUrl = new URL(res.headers.get('location'), base).href; continue; }
-                            break;
-                        }
-                        const order = await get('/customer/order');
-                        console.log('order page:', order.url, 'status:', order.res.status);
-                        const html = order.html;
-                        const i = html.indexOf('filter-section');
-                        console.log('--- section snippet ---');
-                        console.log(i > 0 ? html.substr(Math.max(0, i - 500), 1200).replace(/\s+/g, ' ') : 'filter-section NOT FOUND');
-                        console.log('--- diagnostics ---');
-                        console.log('order-active-filters rendered:', html.includes('order-active-filters'));
-                        console.log('is-hidden total on page:', (html.match(/is-hidden/g) || []).length);
                     })().catch(e => console.log('PROBE FAILED:', e.message));
                     EOF
                     docker/sdk exec cypress-tests node cypress/support/__delivery-probe.cjs
@@ -110,13 +87,44 @@ jobs:
                 run: |
                     docker/sdk exec yves_eu sh -c 'ls -la /data/public/Yves/assets/current/default/css/ 2>/dev/null; md5sum /data/public/Yves/assets/current/default/css/yves_default.non-critical.css 2>/dev/null' || true
 
-            -   name: Run order-amendment spec (video enabled)
+            -   name: Run markup probe spec in real browser
                 id: run_tests
                 run: |
+                    cat > tests/cypress-tests/cypress/e2e/__markup-probe.cy.ts <<'EOF'
+                    describe('order filter section markup probe', (): void => {
+                      it('dumps section class and computed display', (): void => {
+                        cy.visit('/login');
+                        cy.get('input[name="loginForm[email]"]').type('sonia@acme.com');
+                        cy.get('input[name="loginForm[password]"]').type('change123');
+                        cy.get('form[name="loginForm"]').submit();
+                        cy.url().should('not.include', '/login');
+                        cy.visit('/customer/order');
+                        cy.get('form[name="orderSearchForm"]').should('exist');
+                        cy.document().then((doc) => {
+                          const section = doc.querySelector('[class*="filter-section"]') as HTMLElement | null;
+                          const out = {
+                            url: doc.location.href,
+                            sectionClass: section ? section.className : 'NOT FOUND',
+                            sectionDisplay: section ? doc.defaultView.getComputedStyle(section).display : null,
+                            activeFiltersRendered: !!doc.querySelector('[class*="order-active-filters"]'),
+                            sectionHtmlHead: section ? section.outerHTML.slice(0, 1000) : null,
+                            styleSheets: Array.from(doc.styleSheets).map((s) => {
+                              let n = -1;
+                              try { n = s.cssRules.length; } catch (e) { n = -2; }
+                              return `${(s.href || 'inline').split('/').pop()}:${n}`;
+                            }),
+                          };
+                          cy.writeFile('cypress/support/__probe-out.json', out);
+                        });
+                      });
+                    });
+                    EOF
                     docker/sdk exec cypress-tests cp .env.dynamic-store.example .env
                     docker/sdk exec cypress-tests git log -1
                     docker/sdk exec cypress-tests npx cypress install
-                    docker/sdk exec --env "ENV_REPOSITORY_ID=b2b-mp" --env "ENV_IS_SSP_ENABLED=true" --env "CYPRESS_video=true" cypress-tests npx cypress run --spec cypress/e2e/yves/order-amendment/order-amendment-finish.cy.ts --headless --browser chrome
+                    docker/sdk exec --env "ENV_REPOSITORY_ID=b2b-mp" --env "ENV_IS_SSP_ENABLED=true" cypress-tests npx cypress run --spec cypress/e2e/__markup-probe.cy.ts --headless --browser chrome || true
+                    echo "=== PROBE OUTPUT ==="
+                    cat tests/cypress-tests/cypress/support/__probe-out.json || echo "NO PROBE OUTPUT"
 
             -   name: Collect evidence
                 if: always()
