@@ -30,7 +30,7 @@ suites:
                 - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
-                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
+                - \PyzTest\Shared\Store\Helper\StoreDependencyHelper
                 - \PyzTest\Zed\MessageBroker\Helper\MessageBrokerHelper
 
     AssetCommunication:
@@ -54,7 +54,7 @@ suites:
                 - \SprykerTest\Shared\Asset\Helper\AssetDataHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
-                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
+                - \PyzTest\Shared\Store\Helper\StoreDependencyHelper
                 - \PyzTest\Zed\MessageBroker\Helper\MessageBrokerHelper
 
     PaymentPresentation:
@@ -113,7 +113,7 @@ suites:
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
-                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
+                - \PyzTest\Shared\Store\Helper\StoreDependencyHelper
 
     ProductReviewCommunication:
         path: MessageHandlers/ProductReview/Communication
@@ -138,5 +138,5 @@ suites:
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
-                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
+                - \PyzTest\Shared\Store\Helper\StoreDependencyHelper
                 - \PyzTest\Zed\MessageBroker\Helper\MessageBrokerHelper

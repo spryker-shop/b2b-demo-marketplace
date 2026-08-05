@@ -41,17 +41,11 @@ export default class AddressItemFormFieldList extends Component {
             this.querySelectorAll<HTMLElement>(`.${this.getAttribute('same-address-for-all-items-control')} input`),
         );
 
-        this.productItems = Array.from(this.querySelectorAll<HTMLElement>(`.${this.getAttribute('product-item')}`));
+        const excludedTypes: string[] = JSON.parse(this.getAttribute('excluded-types') || '[]');
 
-        for (const element of this.productItems) {
-            const excludedTypes: string[] = JSON.parse(this.getAttribute('excluded-types') || '[]');
-            const currentShipmentType = element.getAttribute('shipment-type');
-
-            if (excludedTypes.includes(currentShipmentType)) {
-                this.visibleWithoutValidation = false;
-                break;
-            }
-        }
+        this.productItems = Array.from(
+            this.querySelectorAll<HTMLElement>(`.${this.getAttribute('product-item')}`),
+        ).filter((element) => !excludedTypes.includes(element.getAttribute('shipment-type')));
 
         this.mapEvents();
     }
@@ -137,9 +131,8 @@ export default class AddressItemFormFieldList extends Component {
 
             const input = element.querySelector<HTMLInputElement>('input');
 
-            if (!isValid && input) {
+            if (!isValid && input?.checked) {
                 input.checked = false;
-                input.value = null;
                 input.dispatchEvent(new Event('change'));
             }
         });

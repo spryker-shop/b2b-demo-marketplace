@@ -5,7 +5,7 @@ export default class ValidateNextCheckoutStep extends ValidateNextCheckoutStepCo
         super.mapEvents();
         document
             .querySelector(`.${this.getAttribute('same-billing-class-name')} input[type="checkbox"]`)
-            ?.addEventListener('change', (event) => this.toggleDisablingNextStepButton(event, true));
+            ?.addEventListener('change', () => this.onTriggerInput());
     }
 
     protected get isDropdownTriggerPreSelected(): boolean {
@@ -14,23 +14,7 @@ export default class ValidateNextCheckoutStep extends ValidateNextCheckoutStepCo
         }
 
         return this.dropdownTriggers.some(
-            (element: HTMLSelectElement) => element.closest('is-hidden') && !element.value,
+            (element: HTMLSelectElement) => !element.closest('.is-hidden') && !element.value,
         );
-    }
-
-    protected toggleDisablingNextStepButton(event: Event, checkbox: boolean): void {
-        if (!this.target) {
-            return;
-        }
-
-        if (checkbox) {
-            this.disableNextStepButton(!(event.target as HTMLInputElement).checked);
-
-            return;
-        }
-
-        const isFormInvalid =
-            this.isFormFieldsEmpty || this.isDropdownTriggerPreSelected || this.isExtraTriggersUnchecked;
-        this.disableNextStepButton(isFormInvalid);
     }
 }

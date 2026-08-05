@@ -16,6 +16,8 @@ use Spryker\Zed\MultiFactorAuth\Communication\Plugin\Factors\Email\UserEmailMult
 class MultiFactorAuthDependencyProvider extends SprykerGlueApplicationDependencyProvider
 {
     /**
+     * @SuppressWarnings(LayerAccessRule) Must not be used as a code example.
+     *
      * @return array<\Spryker\Shared\MultiFactorAuthExtension\Dependency\Plugin\MultiFactorAuthPluginInterface>
      */
     protected function getCustomerMultiFactorAuthPlugins(): array
