@@ -2,7 +2,7 @@
 
 Detail for `@.claude/skills/upmerge-master-to-demo/SKILL.md` Step 6. The merge brings changes into `master-demo` that Demo's project code must stay in sync with, but `git merge` flags none of them — the override/config/wiring files and the changed upstream files live at different paths (no line overlap) or the loss is a same-file line edit inside a list. These audits make the divergence explicit. **Run all of them even on a clean merge.**
 
-Log each sub-step's outcome with its own DONE line (see the logging convention in SKILL.md): `[upmerge 6a/12] DONE  Pyz files: 3 changed, 2 kept, 1 reverted to demo`; `[upmerge 6b/12] DONE  Twig overrides: 120 flagged → 0 stale after file-diff`; `[upmerge 6d/12] DONE  deploy audit: no gaps`; `[upmerge 6e/12] DONE  config audit: none dropped` (or "restored AmazonQuicksight block"); `[upmerge 6g/12] DONE  provider audit: none dropped` (or "restored QuicksightUserExpanderPlugin into src/Demo").
+Log each sub-step's outcome with its own DONE line (see the logging convention in SKILL.md): `[upmerge 6a/12] DONE  Pyz files: 3 changed, 2 kept, 1 reverted to demo`; `[upmerge 6b/12] DONE  Twig overrides: 120 flagged → 0 stale after file-diff`; `[upmerge 6d/12] DONE  deploy audit: checks 1-3 no gaps, ini diff clean` (or "aligned icpplus opcache block with scos — master-side drift") — **the DONE line must state the ini-diff (check 4) result separately**, since checks 1-3 can be clean while check 4 finds drift; `[upmerge 6e/12] DONE  config audit: none dropped` (or "restored AmazonQuicksight block"); `[upmerge 6g/12] DONE  provider audit: none dropped` (or "restored QuicksightUserExpanderPlugin into src/Demo").
 
 ## Namespace ground rule — demo-only code belongs in `src/Demo`
 
@@ -72,6 +72,10 @@ List the Pyz/Demo files you kept, adapted, or aligned in the PR body so the revi
 
 Same silent-divergence trap, one level up: the merge can introduce a feature needing a deploy-level entry (a Yves `entry-point`, a `SPRYKER_*_HOST`, a `DOMAIN_WHITELIST` host, an install step), and `git merge` never flags it. `deploy.spryker-icpplus.yml` is the actively-maintained file; siblings (`deploy.spryker-scos.yml`, `deploy.spryker-sedemo15.yml`) are the convention reference. Both `deploy.spryker-icp.yml` and `deploy.spryker-icpplus.yml` exist and either may carry a conflict — resolve whichever conflicted and still run this audit against icpplus.
 
+> **`deploy.spryker-icpplus.yml` does not exist on `master` — it is a `master-demo`-only file.** Confirm with `git cat-file -e master:deploy.spryker-icpplus.yml`. This is the whole reason the audit exists, and it means the divergence runs in **two independent directions**:
+> - **Forward (checks 1–3):** the merged code introduces a requirement icpplus lacks.
+> - **Backward (check 4):** **master edits a runtime/tuning block in the deploy files it *can* see (`icp`, `scos`, `sns`, `aws-env-template`) and icpplus silently never receives it.** No conflict marker, no missing-key signal from checks 1–3 (the keys aren't *missing* — they're present with stale *values*), and nothing in the merged code "requires" anything. Only a value-level diff against a sibling finds it. Real case: CC-39382 enabled+tuned opcache on `icp`/`scos`/`sns`/`aws-env-template`, leaving icpplus the only cloud env on `opcache.enable: 0` with the superseded `opcache.revalidate_freq` key (fixed in CC-39940). **Checks 1–3 all reported "no gaps" on that run — check 4 is what catches it.**
+
 ```bash
 # (1) entry-points siblings define that icpplus doesn't
 for f in deploy.spryker-scos.yml deploy.spryker-sedemo15.yml; do echo "=== $f ==="; grep -nE 'entry-point:' "$f"; done
@@ -84,9 +88,31 @@ echo "=== sedemo15 keys not in icpplus ==="; comm -13 <(extract deploy.spryker-i
 
 # (3) NEW host/whitelist/entry-point requirements the merged code introduced
 git diff master-demo..HEAD -- config/Shared/ | grep -iE "getenv\('SPRYKER_[A-Z_]*HOST'\)|DOMAIN_WHITELIST|ENTRY_POINT"
+
+# (4) VALUE-level drift: image.php.ini block, icpplus vs the cloud siblings.
+#     Catches master-side tuning changes icpplus can never receive (opcache, timeouts, upload limits).
+ini_block() { awk '/^[[:space:]]*ini:/{f=1;next} f&&/^[[:space:]]*[a-z]/{exit} f&&NF{sub(/^[[:space:]]+/,"");print}' "$1" 2>/dev/null; }
+for f in deploy.spryker-icp.yml deploy.spryker-scos.yml deploy.spryker-sns.yml; do
+  [ -f "$f" ] || continue
+  echo "=== icpplus vs $f (< = icpplus side, > = sibling side) ==="
+  diff <(ini_block deploy.spryker-icpplus.yml) <(ini_block "$f") && echo "  identical"
+done
+# Did master change any sibling's ini block in THIS merge? (the smoking gun)
+git diff master-demo...HEAD -- deploy.spryker-icp.yml deploy.spryker-scos.yml deploy.spryker-sns.yml deploy.aws-env-template.yml \
+  | grep -E '^[-+].*(opcache|max_execution_time|request_terminate_timeout|upload_max_filesize|post_max_size|memory)' || echo "  (no sibling ini change this merge)"
 ```
 
-**Most differing keys are NOT gaps.** Hostnames, `AWS_REGION`, deploy-hook paths (`SPRYKER_HOOK_*`), and features another env happens to demo are environment-specific by design — don't copy them. A key is a genuine gap only when check (3) shows the merged code introduced a requirement icpplus lacks (reads a new `SPRYKER_FOO_HOST`, adds a `DOMAIN_WHITELIST` host, registers a new Yves entry-point). A feature that only adds routes to the existing Yves app needs nothing. When check (3) confirms a gap, add the matching entry shaped like the existing `*-configurator` endpoint. Also confirm any new install step (e.g. a `destructive.yml` block) belongs in the recipe icpplus's deploy hooks run. Record the outcome in the PR body.
+**Most differing keys are NOT gaps.** Hostnames, `AWS_REGION`, deploy-hook paths (`SPRYKER_HOOK_*`), database/namespace values, and features another env happens to demo are environment-specific by design — don't copy them. For checks 1–3, a key is a genuine gap only when check (3) shows the merged code introduced a requirement icpplus lacks (reads a new `SPRYKER_FOO_HOST`, adds a `DOMAIN_WHITELIST` host, registers a new Yves entry-point). A feature that only adds routes to the existing Yves app needs nothing. When check (3) confirms a gap, add the matching entry shaped like the existing `*-configurator` endpoint. Also confirm any new install step (e.g. a `destructive.yml` block) belongs in the recipe icpplus's deploy hooks run.
+
+**For check (4), the rule is inverted — the `ini:` block is runtime tuning, not environment identity, so it SHOULD match the cloud siblings.** Treat any difference as drift to fix rather than intentional variance:
+- Sibling ini block changed in this merge **and** icpplus differs → **copy the sibling's block verbatim** into icpplus (autonomous fix; the same rule the skill applies to restoring demo blocks). Commit separately (`chore(deploy): align icpplus <setting> with icp/scos/sns`), and state in the PR body that this is **master-side drift a demo-only file cannot receive**, not something the merge dropped.
+- Differs but no sibling changed this merge → pre-existing drift. Still worth reporting in the PR body; fix it if it's the same mechanical copy, otherwise flag it.
+- **Diff against MORE THAN ONE sibling before copying — the siblings do not all agree, and picking the wrong reference silently mis-sizes the env.** Some values are intentionally per-environment. Real case: CC-39382 set `opcache.memory_consumption` to **256 on `icp`** but **128 on `scos`/`sns`/`aws-env-template`**. Copying `icp` wholesale gave icpplus 256; the fleet default (and the value in the generic `aws-env-template`) is 128, which is what icpplus should carry since it declares no memory limit distinguishing it from `scos`/`sns`. Rule of thumb: **`aws-env-template.yml` is the canonical default**; where a concrete env differs from it, that difference is that env's own decision — don't inherit it. Prefer the *lower* sizing when uncertain (under-allocated opcache degrades gracefully; over-allocating against an unknown container limit risks OOM).
+- Before copying a *sized* value (`opcache.memory_consumption`, memory limits), check the comment's premise still holds for icpplus — e.g. `# Keep at <=50% of the service memory limit` requires comparing each env's `limits:`/memory settings, not blind copying.
+- Re-validate the YAML after editing (`php -r 'require "vendor/autoload.php"; var_dump(Symfony\Component\Yaml\Yaml::parseFile("deploy.spryker-icpplus.yml")["image"]["php"]["ini"]);'`) and confirm the file has only **one** `ini:` block so no second occurrence is left stale.
+- Call out any behavioral consequence for a demo box — notably `opcache.validate_timestamps: 0` means deployed code changes need a container restart to take effect.
+
+Record the outcome of all four checks in the PR body — and say which one found anything, since "checks 1–3 clean" is not the same as "deploy audit clean".
 
 ## Step 6e — Audit `config/Shared/config_default.php` for dropped demo-only config blocks
 
