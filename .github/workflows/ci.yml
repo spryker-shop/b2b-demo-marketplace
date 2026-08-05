@@ -397,8 +397,7 @@ jobs:
             -   name: Install Project
                 run: |
                     git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
-                    # TEMP verification pin - revert to dev-b2b-icp-starting-point before merge
-                    composer require --dev spryker/robotframework-suite-tests:"dev-bugfix/cc-38846-weekly-ci-b2b-mp-robot-api-test-fails-get-search-suggestions-with-brand-and-currency" --ignore-platform-reqs
+                    composer require --dev spryker/robotframework-suite-tests:"dev-b2b-icp-starting-point" --ignore-platform-reqs
                     ./uninstall-frontend-marketplace.sh
                     ./uninstall-marketplace-modules.sh
                     docker/sdk boot .github/deploy/deploy.ci.api.mariadb.robot.yml
