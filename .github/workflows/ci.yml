@@ -78,14 +78,20 @@ jobs:
                             const body = await res.text();
                             console.log(`${name}: status=${res.status} bytes=${body.length} time=${Date.now() - start}ms is-hidden=${(body.match(/is-hidden/g) || []).length}`);
                         }
-                        const login = await get('/login');
+                        const login = await get('/DE/en/login');
                         const token = (login.html.match(/name="loginForm\[_token\]"[^>]*value="([^"]+)"/) || [])[1];
-                        console.log('login page:', login.url, 'token:', token ? 'found' : 'MISSING');
+                        const formAction = (login.html.match(/<form[^>]*name="loginForm"[^>]*action="([^"]*)"/) || login.html.match(/action="([^"]*login_check[^"]*)"/) || [])[1];
+                        console.log('login page:', login.url, 'token:', token ? 'found' : 'MISSING', 'action:', formAction || 'NOT FOUND');
                         const body = new URLSearchParams({'loginForm[email]': 'sonia@acme.com', 'loginForm[password]': 'change123', 'loginForm[_token]': token});
-                        const loginCheckPath = new URL(login.url).pathname.replace(/login$/, 'login_check');
-                        let res = await fetch(base + loginCheckPath, {method: 'POST', body, redirect: 'manual', headers: {cookie: cookieHeader()}});
-                        storeCookies(res);
-                        console.log('login_check status:', res.status);
+                        let postUrl = new URL(formAction || new URL(login.url).pathname.replace(/login$/, 'login_check'), base).href;
+                        let res;
+                        for (let hop = 0; hop < 6; hop++) {
+                            res = await fetch(postUrl, {method: 'POST', body, redirect: 'manual', headers: {cookie: cookieHeader()}});
+                            storeCookies(res);
+                            console.log('login POST', postUrl, '->', res.status);
+                            if ([307, 308].includes(res.status)) { postUrl = new URL(res.headers.get('location'), base).href; continue; }
+                            break;
+                        }
                         const order = await get('/customer/order');
                         console.log('order page:', order.url, 'status:', order.res.status);
                         const html = order.html;
