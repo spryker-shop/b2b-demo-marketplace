@@ -43,9 +43,8 @@
 
         &__asset {
             display: flex;
-            flex-wrap: wrap;
-            align-items: flex-start;
-            justify-content: flex-start;
+            flex-direction: column;
+            gap: var(--scale-8);
             text-align: left;
             color: var(--text-secondary);
             font-family: var(--body-sm-family);
@@ -125,6 +124,11 @@
                 margin-right: rem(var(--scale-4));
                 color: var(--text-secondary);
             }
+        }
+
+        &__service-row {
+            @include typography(body-sm);
+            color: var(--text-secondary);
         }
     }
 }

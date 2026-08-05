@@ -4,7 +4,7 @@
     {% set searchForm = data.searchForm %}
 
     {% block costCenterHeader %}
-        {% include molecule('action-bar', 'ShopUi') with {
+        {% include molecule('action-bar') with {
             data: {
                 title: 'purchasing_control.cost_center.list.title' | trans,
                 actions: (can('ManageCostCentersPermissionPlugin') ? [
