@@ -1,0 +1,155 @@
+name: _robot-api
+
+on:
+    workflow_call:
+
+env:
+    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+    WEEKLY_CI_SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
+    JIRA_TICKET_SLACK_USER_GROUP_MAPPING: ${{ secrets.JIRA_TICKET_SLACK_USER_GROUP_MAPPING }}
+
+jobs:
+    robot-api:
+        name: "Robot / API"
+        runs-on: ubuntu-latest
+        env:
+            PROGRESS_TYPE: plain
+            SPRYKER_PLATFORM_IMAGE: spryker/php:8.4
+            TRAVIS: 1
+            SPRYKER_CURRENT_REGION: EU
+            DYNAMIC_STORE_MODE: true
+        steps:
+            -   uses: actions/checkout@v4
+
+            #-   uses: ramsey/composer-install@v3
+            #    with:
+            #        composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
+
+            #  needed for mount:baked
+            -   name: Install robotframework-suite-tests folder
+                run: |
+                    cd data
+                    VERSION=$(php -r "echo json_decode(file_get_contents('../composer.json'), true)['require-dev']['spryker/robotframework-suite-tests'] ?? 'dev-master';")
+                    composer require "spryker/robotframework-suite-tests:$VERSION" --dev --no-interaction --ignore-platform-reqs
+                    mv vendor ../
+
+            -   name: Configure sysctl limits
+                run: |
+                    sudo sysctl -w vm.swappiness=10
+                    sudo sysctl -w fs.file-max=262144
+                    sudo sysctl -w vm.max_map_count=262144
+                    ulimit -n 65536
+
+            -   name: Install Project
+                run: |
+                    git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
+                    docker/sdk boot .github/deploy/deploy.ci.api.mariadb.robot.yml
+                    #sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local' >> /etc/hosts"
+                    docker/sdk up -t
+
+            -   name: Run Tests
+                id: tests
+                run: |
+                    docker/sdk exec robot-framework robot --listener resources/libraries/failure_detail_listener.py -v env:api_mp_b2b -v docker:True -v dms:true -v glue_env:http://glue.eu.spryker.local -v bapi_env:http://glue-backend.eu.spryker.local -v sapi_env:http://glue-storefront.eu.spryker.local --exclude skip-due-to-issueORskip-due-to-refactoring -d results -s robotframework.tests.api.mp_b2b .
+
+            -   name: Generate Robot Test Summary
+                if: always() && steps.tests.outcome == 'failure'
+                run: |
+                    docker/sdk exec robot-framework python resources/libraries/generate_failure_summary.py results/output.xml > /tmp/robot-summary.md 2>/dev/null || true
+                    cat /tmp/robot-summary.md >> $GITHUB_STEP_SUMMARY 2>/dev/null || true
+
+            -   name: Save PHP logs
+                if: failure()
+                run: |
+                    mkdir -p logs
+                    docker logs spryker_ci_backoffice_eu_1 > logs/backoffice_app.log 2>&1 || true
+                    docker logs spryker_ci_glue_eu_1 > logs/glue_app.log 2>&1 || true
+                    docker logs spryker_ci_glue_backend_eu_1 > logs/glue_backend_eu.log 2>&1 || true
+                    docker logs spryker_ci_glue_storefront_eu_1 > logs/glue_storefront_eu.log 2>&1 || true
+                    mkdir -p robot-results
+                    cp -r .robot/results/* robot-results/ 2>/dev/null || true
+                    echo "PHP logs saved. After upload, they will be available in GitHub Actions Artifacts as 'robot-api-failed-artifacts'"
+
+            -   name: Upload PHP logs & report
+                if: always() && steps.tests.outcome == 'failure'
+                uses: actions/upload-artifact@v5
+                with:
+                    name: robot-api-failed-artifacts
+                    retention-days: 5 # save for 5 days
+                    path: |
+                        logs/*.log
+                        robot-results/report.html
+                        robot-results/log.html
+
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
+
+    robot-api-b2b:
+        name: "Robot / API B2B"
+        runs-on: ubuntu-latest
+        env:
+            PROGRESS_TYPE: plain
+            SPRYKER_PLATFORM_IMAGE: spryker/php:8.4
+            TRAVIS: 1
+            SPRYKER_CURRENT_REGION: EU
+            DYNAMIC_STORE_MODE: true
+        steps:
+            -   uses: actions/checkout@v4
+
+            -   name: Configure sysctl limits
+                run: |
+                    sudo sysctl -w vm.swappiness=10
+                    sudo sysctl -w fs.file-max=262144
+                    sudo sysctl -w vm.max_map_count=262144
+                    ulimit -n 65536
+                    chmod +x uninstall-marketplace-modules.sh
+                    chmod +x uninstall-frontend-marketplace.sh
+
+            -   name: Install Project
+                run: |
+                    git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
+                    composer require --dev spryker/robotframework-suite-tests:"dev-b2b-icp-starting-point" --ignore-platform-reqs
+                    ./uninstall-frontend-marketplace.sh
+                    ./uninstall-marketplace-modules.sh
+                    docker/sdk boot .github/deploy/deploy.ci.api.mariadb.robot.yml
+                    docker/sdk up -t
+                    docker/sdk cli composer dump-autoload -o -a --apcu -q
+
+            -   name: Run Tests
+                id: tests
+                run: |
+                    docker/sdk exec robot-framework robot --listener resources/libraries/failure_detail_listener.py -v env:api_b2b -v docker:True -v dms:true -v glue_env:http://glue.eu.spryker.local -v bapi_env:http://glue-backend.eu.spryker.local -v sapi_env:http://glue.eu.spryker.local --exclude skip-due-to-issueORskip-due-to-refactoring -d results -s robotframework.tests.api.b2b .
+
+            -   name: Generate Robot Test Summary
+                if: always() && steps.tests.outcome == 'failure'
+                run: |
+                    docker/sdk exec robot-framework python resources/libraries/generate_failure_summary.py results/output.xml > /tmp/robot-summary.md 2>/dev/null || true
+                    cat /tmp/robot-summary.md >> $GITHUB_STEP_SUMMARY 2>/dev/null || true
+
+            -   name: Save PHP logs
+                if: failure()
+                run: |
+                    mkdir -p logs
+                    docker logs spryker_ci_backoffice_eu_1 > logs/backoffice_app.log 2>&1 || true
+                    docker logs spryker_ci_glue_eu_1 > logs/glue_app.log 2>&1 || true
+                    docker logs spryker_ci_glue_backend_eu_1 > logs/glue_backend_eu.log 2>&1 || true
+                    docker logs spryker_ci_glue_storefront_eu_1 > logs/glue_storefront_eu.log 2>&1 || true
+                    mkdir -p robot-results
+                    cp -r .robot/results/* robot-results/ 2>/dev/null || true
+                    echo "PHP logs saved. After upload, they will be available in GitHub Actions Artifacts as 'robot-api-b2b-failed-artifacts'"
+
+            -   name: Upload PHP logs & report
+                if: always() && steps.tests.outcome == 'failure'
+                uses: actions/upload-artifact@v5
+                with:
+                    name: robot-api-b2b-failed-artifacts
+                    retention-days: 5 # save for 5 days
+                    path: |
+                        logs/*.log
+                        robot-results/report.html
+                        robot-results/log.html
+
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()

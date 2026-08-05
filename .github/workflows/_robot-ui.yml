@@ -1,0 +1,108 @@
+name: _robot-ui
+
+on:
+    workflow_call:
+
+env:
+    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+    WEEKLY_CI_SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
+    JIRA_TICKET_SLACK_USER_GROUP_MAPPING: ${{ secrets.JIRA_TICKET_SLACK_USER_GROUP_MAPPING }}
+
+jobs:
+    robot-ui:
+        name: "Robot / UI"
+        runs-on: ubuntu-latest
+        env:
+            PROGRESS_TYPE: plain
+            SPRYKER_PLATFORM_IMAGE: spryker/php:8.4
+            TRAVIS: 1
+            SPRYKER_CURRENT_REGION: EU
+            DYNAMIC_STORE_MODE: true
+        steps:
+            -   uses: actions/checkout@v4
+
+            -   uses: ramsey/composer-install@v3
+                with:
+                    composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
+
+            #  needed for mount:baked
+            #-   name: Install robotframework-suite-tests folder
+            #    run: |
+            #        cd data
+            #        VERSION=$(php -r "echo json_decode(file_get_contents('../composer.json'), true)['require-dev']['spryker/robotframework-suite-tests'] ?? 'dev-master';")
+            #        composer require "spryker/robotframework-suite-tests:$VERSION" --dev --no-interaction --ignore-platform-reqs
+            #        mv vendor ../
+
+            -   name: Configure sysctl limits
+                run: |
+                    sudo sysctl -w vm.swappiness=10
+                    sudo sysctl -w fs.file-max=262144
+                    sudo sysctl -w vm.max_map_count=262144
+                    ulimit -n 65536
+
+            -   name: Install Project
+                run: |
+                    git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
+                    docker/sdk boot .github/deploy/deploy.ci.acceptance.mariadb.robot.yml
+                    #sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local scheduler.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local date-time-configurator-example.spryker.local' >> /etc/hosts"
+                    docker/sdk up -t
+                    docker/sdk cli composer dump-autoload -o -a --apcu -q
+
+            -   name: Run Dynamic Tests Set
+                id: run_dynamic_tests
+                continue-on-error: true
+                run: |
+                    docker/sdk exec robot-framework pabot --processes $(nproc) --ordering pabot_mp_b2b_ordering --listener resources/libraries/failure_detail_listener.py -v env:ui_mp_b2b -v docker:True -v headless:true -v ignore_console:false -v dms:true -v is_ssp:true -d results/dynamic_set --exclude skip-due-to-issueORskip-due-to-refactoringORstatic-set -s '*'.tests.parallel_ui.mp_b2b .
+            -   name: Run Static Tests Set
+                id: run_static_tests
+                continue-on-error: true
+                run: |
+                    docker/sdk exec robot-framework robot --listener resources/libraries/failure_detail_listener.py -v env:ui_mp_b2b -v docker:True -v headless:true -v ignore_console:false -v dms:true -v is_ssp:true -d results/static_set --exclude skip-due-to-issueORskip-due-to-refactoring --include static-set -s '*'.tests.parallel_ui.mp_b2b .
+            -   name: Merge Initial Test Results
+                id: merge_initial_results
+                continue-on-error: true
+                run: |
+                    docker/sdk exec robot-framework rebot -d results --output output.xml --merge results/dynamic_set/output.xml results/static_set/output.xml
+            -   name: Rerun Failed Tests
+                id: rerun_failed_tests
+                if: always() && (steps.run_dynamic_tests.outcome == 'failure' || steps.run_static_tests.outcome == 'failure')
+                run: |
+                    docker/sdk exec robot-framework robot --listener resources/libraries/failure_detail_listener.py -v env:ui_mp_b2b -v docker:True -v dms:true -v headless:true -v ignore_console:false -v is_ssp:true -d results/rerun --runemptysuite --rerunfailed results/output.xml --output rerun.xml -s '*'.tests.parallel_ui.mp_b2b .
+            -   name: Merge Final Test Results
+                if: always() && steps.rerun_failed_tests.outcome != 'skipped'
+                run: |
+                    docker/sdk exec robot-framework rebot -d results --merge results/output.xml results/rerun/rerun.xml
+
+            -   name: Generate Robot Test Summary
+                if: always() && (steps.rerun_failed_tests.outcome == 'skipped' || steps.rerun_failed_tests.outcome == 'failure')
+                run: |
+                    docker/sdk exec robot-framework python resources/libraries/generate_failure_summary.py results/output.xml > /tmp/robot-summary.md 2>/dev/null || true
+                    cat /tmp/robot-summary.md >> $GITHUB_STEP_SUMMARY 2>/dev/null || true
+
+            -   name: Save PHP logs
+                if: always() && (steps.rerun_failed_tests.outcome == 'skipped' || steps.rerun_failed_tests.outcome == 'failure')
+                run: |
+                    mkdir -p logs
+                    docker logs spryker_ci_backoffice_eu_1 > logs/backoffice_app.log 2>&1
+                    docker logs spryker_ci_glue_eu_1 > logs/glue_app.log 2>&1
+                    docker logs spryker_ci_yves_eu_1 > logs/yves_app.log 2>&1
+                    docker logs spryker_ci_merchant_portal_eu_1 > logs/merchant_portal_app.log 2>&1
+                    docker logs spryker_ci_glue_backend_eu_1 > logs/glue_backend_eu.log 2>&1 || true
+                    mkdir -p robot-results
+                    cp -r .robot/results/* robot-results/ 2>/dev/null || true
+                    echo "PHP logs saved. After upload, they will be available in GitHub Actions Artifacts as 'robot-ui-failed-artifacts'"
+
+            -   name: Upload PHP logs & report
+                if: always() && (steps.rerun_failed_tests.outcome == 'skipped' || steps.rerun_failed_tests.outcome == 'failure')
+                uses: actions/upload-artifact@v5
+                with:
+                    name: robot-ui-failed-artifacts
+                    retention-days: 5 # save for 5 days
+                    path: |
+                        logs/*.log
+                        robot-results/report.html
+                        robot-results/log.html
+
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
