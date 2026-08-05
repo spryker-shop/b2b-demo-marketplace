@@ -2,6 +2,7 @@ name: B2B-MP-CI
 
 on:
     pull_request:
+    workflow_dispatch:
 
 concurrency:
     group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -39,21 +40,30 @@ jobs:
                     docker/sdk up -t
                     docker/sdk cli composer dump-autoload -o -a --apcu -q
 
-            -   name: Debug CSS delivery (curl from cypress container)
+            -   name: Debug CSS delivery (node fetch from cypress container)
                 run: |
-                    docker/sdk exec cypress-tests sh -c '
-                        for i in 1 2 3; do
-                            echo "=== attempt $i: non-critical.css ===";
-                            curl -s -o /tmp/nc.css -w "code=%{http_code} size=%{size_download} time=%{time_total}s speed=%{speed_download}B/s\n" http://yves.eu.spryker.local/assets/current/default/css/yves_default.non-critical.css || echo "CURL FAILED rc=$?";
-                            md5sum /tmp/nc.css 2>/dev/null || true;
-                            echo "is-hidden occurrences: $(grep -c "is-hidden" /tmp/nc.css 2>/dev/null || echo 0)";
-                            rm -f /tmp/nc.css;
-                        done;
-                        echo "=== critical.css ===";
-                        curl -s -o /tmp/cr.css -w "code=%{http_code} size=%{size_download} time=%{time_total}s\n" http://yves.eu.spryker.local/assets/current/default/css/yves_default.critical.css || echo "CURL FAILED rc=$?";
-                        md5sum /tmp/cr.css 2>/dev/null || true;
-                        echo "=== headers non-critical ===";
-                        curl -sSI http://yves.eu.spryker.local/assets/current/default/css/yves_default.non-critical.css || true'
+                    cat > tests/cypress-tests/cypress/support/__delivery-probe.cjs <<'EOF'
+                    const urls = {
+                        'non-critical': 'http://yves.eu.spryker.local/assets/current/default/css/yves_default.non-critical.css',
+                        'critical': 'http://yves.eu.spryker.local/assets/current/default/css/yves_default.critical.css',
+                    };
+                    (async () => {
+                        for (const [name, url] of Object.entries(urls)) {
+                            for (let i = 1; i <= 3; i++) {
+                                const start = Date.now();
+                                try {
+                                    const res = await fetch(url);
+                                    const body = await res.text();
+                                    const hits = (body.match(/is-hidden/g) || []).length;
+                                    console.log(`${name} #${i}: status=${res.status} bytes=${body.length} time=${Date.now() - start}ms is-hidden=${hits} content-length-header=${res.headers.get('content-length')}`);
+                                } catch (e) {
+                                    console.log(`${name} #${i}: FETCH FAILED after ${Date.now() - start}ms: ${e.message} ${e.cause ? e.cause.message || e.cause.code : ''}`);
+                                }
+                            }
+                        }
+                    })();
+                    EOF
+                    docker/sdk exec cypress-tests node cypress/support/__delivery-probe.cjs
 
             -   name: Debug CSS on disk (yves container)
                 run: |
@@ -67,10 +77,24 @@ jobs:
                     docker/sdk exec cypress-tests npx cypress install
                     docker/sdk exec --env "ENV_REPOSITORY_ID=b2b-mp" --env "ENV_IS_SSP_ENABLED=true" --env "CYPRESS_video=true" cypress-tests npx cypress run --spec cypress/e2e/yves/order-amendment/order-amendment-finish.cy.ts --headless --browser chrome
 
+            -   name: Collect evidence
+                if: always()
+                run: |
+                    mkdir -p evidence
+                    echo "--- .cypress dirs on runner ---"
+                    sudo find . -type d -name ".cypress" 2>/dev/null || true
+                    echo "--- mp4/png files ---"
+                    sudo find . \( -name "*.mp4" -o -path "*cypress/screenshots/*.png" \) 2>/dev/null | head -20 || true
+                    for d in $(sudo find . -type d -name ".cypress" 2>/dev/null); do sudo cp -R "$d"/. evidence/ 2>/dev/null || true; done
+                    sudo find . -name "*.mp4" -not -path "./evidence/*" -exec cp {} evidence/ \; 2>/dev/null || true
+                    sudo chmod -R a+r evidence || true
+                    ls -laR evidence | head -40
+
             -   name: Upload evidence
                 if: always()
                 uses: actions/upload-artifact@v5
                 with:
                     name: css-delivery-debug
                     retention-days: 5
-                    path: .cypress/
+                    path: evidence/
+                    include-hidden-files: true
