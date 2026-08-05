@@ -1,0 +1,6 @@
+{% extends view('address-create', 'CustomerPage') %}
+
+{% define data = {
+    formType: 'edit',
+    formAction: url('customer/address/update', {id: _view.idCustomerAddress}),
+} %}

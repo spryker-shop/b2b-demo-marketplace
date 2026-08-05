@@ -5,7 +5,7 @@
 {% block merchantRelationRequestPaginationSeparator %}{% endblock %}
 
 {% block companyContent %}
-    {% include molecule('action-bar', 'ShopUi') with {
+    {% include molecule('action-bar') with {
         data: {
             title: 'merchant_relation_request_page.merchant_relation_request' | trans,
             actions: (can('CreateMerchantRelationRequestPermissionPlugin') ? [

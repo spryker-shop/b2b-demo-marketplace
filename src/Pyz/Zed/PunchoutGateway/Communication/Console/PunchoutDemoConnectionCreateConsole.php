@@ -9,10 +9,10 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\PunchoutGateway\Communication\Console;
 
-use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
-use Orm\Zed\PunchoutGateway\Persistence\SpyPunchoutConnection;
-use Orm\Zed\PunchoutGateway\Persistence\SpyPunchoutConnectionQuery;
-use Orm\Zed\PunchoutGateway\Persistence\SpyPunchoutCredential;
+use Generated\Shared\Transfer\PunchoutConnectionCollectionTransfer;
+use Generated\Shared\Transfer\PunchoutConnectionTransfer;
+use Generated\Shared\Transfer\PunchoutCredentialTransfer;
+use Generated\Shared\Transfer\PunchoutCxmlConfigurationTransfer;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use SprykerEco\Shared\PunchoutGateway\PunchoutGatewayConfig;
 use SprykerEco\Zed\PunchoutGateway\Communication\Plugin\PunchoutGateway\DefaultCxmlProcessorPlugin;
@@ -22,8 +22,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \SprykerEco\Zed\PunchoutGateway\Persistence\PunchoutGatewayRepositoryInterface getRepository()
- * @method \SprykerEco\Zed\PunchoutGateway\Business\PunchoutGatewayFacadeInterface getFacade()
+ * @method \Pyz\Zed\PunchoutGateway\Business\PunchoutGatewayBusinessFactory getBusinessFactory()
  * @method \SprykerEco\Zed\PunchoutGateway\Communication\PunchoutGatewayCommunicationFactory getFactory()
+ * @method \SprykerEco\Zed\PunchoutGateway\Business\PunchoutGatewayFacadeInterface getFacade()
  */
 class PunchoutDemoConnectionCreateConsole extends Console
 {
@@ -53,6 +54,8 @@ class PunchoutDemoConnectionCreateConsole extends Console
 
     protected const string OCI_CUSTOMER_EMAIL = 'sonia@acme.com';
 
+    protected const string MAPPING_TARGET_COLOR = 'item.concreteAttributes.color';
+
     protected function configure(): void
     {
         $this->setName(static::COMMAND_NAME)->setDescription(static::DESCRIPTION);
@@ -61,94 +64,59 @@ class PunchoutDemoConnectionCreateConsole extends Console
 
     protected function execute(InputInterface $input, OutputInterface $output): int // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
-        $storeTransfer = $this->getFactory()->getStoreFacade()->getStoreByName(static::STORE_NAME);
-        $idStore = $storeTransfer->getIdStoreOrFail();
+        $punchoutConnectionCollectionTransfer = (new PunchoutConnectionCollectionTransfer())
+            ->addPunchoutConnection($this->createCxmlConnectionTransfer())
+            ->addPunchoutConnection($this->createOciConnectionTransfer());
 
-        $this->createCxmlConnection($output, $idStore);
-        $this->createOciConnection($output, $idStore);
+        $punchoutConnectionCollectionTransfer = $this->getBusinessFactory()
+            ->createPunchoutDemoConnectionCreator()
+            ->createDemoPunchoutConnections($punchoutConnectionCollectionTransfer);
+
+        foreach ($punchoutConnectionCollectionTransfer->getPunchoutConnections() as $punchoutConnectionTransfer) {
+            $output->writeln(sprintf(
+                'Created demo punchout connection "%s" (id=%d).',
+                $punchoutConnectionTransfer->getNameOrFail(),
+                $punchoutConnectionTransfer->getIdPunchoutConnectionOrFail(),
+            ));
+        }
 
         return static::CODE_SUCCESS;
     }
 
-    /**
-     * @SuppressWarnings(OrmNewEntityNotInCommunicationRule) Must not be used as a code example.
-     */
-    protected function createCxmlConnection(OutputInterface $output, int $idStore): void
+    protected function createCxmlConnectionTransfer(): PunchoutConnectionTransfer
     {
-        $existingEntity = SpyPunchoutConnectionQuery::create()
-            ->filterBySenderIdentity(static::CXML_SENDER_IDENTITY)
-            ->findOne();
+        $punchoutCxmlConfigurationTransfer = (new PunchoutCxmlConfigurationTransfer())
+            ->setSenderIdentity(static::CXML_SENDER_IDENTITY)
+            ->setSenderSharedSecret(static::CXML_SENDER_SHARED_SECRET);
 
-        if ($existingEntity !== null) {
-            $output->writeln(sprintf('cXML connection already exists (id=%d). Skipping.', $existingEntity->getIdPunchoutConnection()));
-
-            return;
-        }
-
-        $entity = new SpyPunchoutConnection();
-        $entity->setFkStore($idStore);
-        $entity->setName(static::CXML_CONNECTION_NAME);
-        $entity->setIsActive(true);
-        $entity->setProtocolType(PunchoutGatewayConfig::PROTOCOL_TYPE_CXML);
-        $entity->setSenderIdentity(static::CXML_SENDER_IDENTITY);
-        $entity->setConfiguration((string)json_encode([
-            PunchoutGatewayConfig::CONFIGURATION_KEY_SENDER_SHARED_SECRET => password_hash(static::CXML_SENDER_SHARED_SECRET, PASSWORD_DEFAULT),
-            PunchoutGatewayConfig::CONFIGURATION_KEY_MAPPING => [static::CXML_MAPPING_EXTRINSIC_COLOR => 'item.concreteAttributes.color'],
-        ]));
-        $entity->setProcessorPluginClass(DefaultCxmlProcessorPlugin::class);
-        $entity->setAllowIframe(true);
-        $entity->save();
-
-        $output->writeln(sprintf('Created cXML demo connection (id=%d).', $entity->getIdPunchoutConnection()));
+        return (new PunchoutConnectionTransfer())
+            ->setStoreName(static::STORE_NAME)
+            ->setName(static::CXML_CONNECTION_NAME)
+            ->setIsActive(true)
+            ->setAllowIframe(true)
+            ->setProtocolType(PunchoutGatewayConfig::PROTOCOL_TYPE_CXML)
+            ->setCxmlConfiguration($punchoutCxmlConfigurationTransfer)
+            ->setMappings([static::CXML_MAPPING_EXTRINSIC_COLOR => static::MAPPING_TARGET_COLOR])
+            ->setProcessorPluginClass(DefaultCxmlProcessorPlugin::class);
     }
 
-    /**
-     * @SuppressWarnings(OrmNewEntityNotInCommunicationRule) Must not be used as a code example.
-     */
-    protected function createOciConnection(OutputInterface $output, int $idStore): void
+    protected function createOciConnectionTransfer(): PunchoutConnectionTransfer
     {
-        $existingEntity = SpyPunchoutConnectionQuery::create()
-            ->filterByFkStore($idStore)
-            ->filterByRequestUrl(static::OCI_REQUEST_URL)
-            ->findOne();
+        $punchoutCredentialTransfer = (new PunchoutCredentialTransfer())
+            ->setUsername(static::OCI_CREDENTIALS_USERNAME)
+            ->setPassword(static::OCI_CREDENTIALS_PASSWORD)
+            ->setCustomerEmail(static::OCI_CUSTOMER_EMAIL)
+            ->setIsActive(true);
 
-        if ($existingEntity !== null) {
-            $output->writeln(sprintf('OCI connection already exists (id=%d). Skipping.', $existingEntity->getIdPunchoutConnection()));
-
-            return;
-        }
-
-        $punchoutConnectionEntity = new SpyPunchoutConnection();
-        $punchoutConnectionEntity->setFkStore($idStore);
-        $punchoutConnectionEntity->setName(static::OCI_CONNECTION_NAME);
-        $punchoutConnectionEntity->setIsActive(true);
-        $punchoutConnectionEntity->setProtocolType(PunchoutGatewayConfig::PROTOCOL_TYPE_OCI);
-        $punchoutConnectionEntity->setRequestUrl(static::OCI_REQUEST_URL);
-        $punchoutConnectionEntity->setAllowIframe(true);
-        $punchoutConnectionEntity->setConfiguration((string)json_encode([
-            PunchoutGatewayConfig::CONFIGURATION_KEY_MAPPING => [static::OCI_MAPPING_CUSTOM_FIELD_COLOR => 'item.concreteAttributes.color'],
-        ]));
-        $punchoutConnectionEntity->setProcessorPluginClass(DefaultOciProcessorPlugin::class);
-        $punchoutConnectionEntity->save();
-
-        $output->writeln(sprintf('Created OCI demo connection (id=%d).', $punchoutConnectionEntity->getIdPunchoutConnection()));
-
-        $credentialEntity = new SpyPunchoutCredential();
-        $credentialEntity->setFkPunchoutConnection($punchoutConnectionEntity->getIdPunchoutConnection());
-        $credentialEntity->setUsername(static::OCI_CREDENTIALS_USERNAME);
-        $credentialEntity->setPasswordHash(password_hash(static::OCI_CREDENTIALS_PASSWORD, PASSWORD_DEFAULT));
-
-        $customer = SpyCustomerQuery::create()->filterByEmail(static::OCI_CUSTOMER_EMAIL)->findOne();
-
-        if ($customer === null) {
-            $output->writeln(sprintf('Customer with email %s for OCI connection was not found. Please create credentials manually.', static::OCI_CUSTOMER_EMAIL));
-
-            return;
-        }
-
-        $credentialEntity->setFkCustomer($customer->getIdCustomer());
-        $credentialEntity->save();
-
-        $output->writeln(sprintf('Created OCI credentials (id=%d).', $credentialEntity->getIdPunchoutCredential()));
+        return (new PunchoutConnectionTransfer())
+            ->setStoreName(static::STORE_NAME)
+            ->setName(static::OCI_CONNECTION_NAME)
+            ->setIsActive(true)
+            ->setAllowIframe(true)
+            ->setProtocolType(PunchoutGatewayConfig::PROTOCOL_TYPE_OCI)
+            ->setRequestUrl(static::OCI_REQUEST_URL)
+            ->setMappings([static::OCI_MAPPING_CUSTOM_FIELD_COLOR => static::MAPPING_TARGET_COLOR])
+            ->setProcessorPluginClass(DefaultOciProcessorPlugin::class)
+            ->setCredential($punchoutCredentialTransfer);
     }
 }

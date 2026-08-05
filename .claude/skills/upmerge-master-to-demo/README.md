@@ -37,7 +37,7 @@ The hard part is everything `git merge` *cannot* see:
 | 4 | **Merge `master`, resolve conflicts** | `composer.lock` → regenerate; `config_default.php` → never drop demo-only blocks. |
 | 5 | **Refresh `composer.lock`** | Final lock = master's lock **+** demo-only packages only. No bare `composer update`. |
 | 6a–6c | **Reconcile Pyz/Demo overrides** | Re-align overrides that shadow changed core files (esp. Twig). Silent divergence. |
-| 6d | **Audit `deploy.spryker-icpplus.yml`** | New feature may need a deploy entry/env var the merge never flagged. |
+| 6d | **Audit `deploy.spryker-icpplus.yml`** | Two directions: a new feature may need a deploy entry/env var the merge never flagged (checks 1–3) **and** master may have tuned `image.php.ini` on the siblings it can see while this demo-only file kept stale values (check 4 — value-level ini diff vs `icp`/`scos`/`sns`). |
 | 6e | **Audit `config_default.php`** | Catch demo-only config blocks dropped with no conflict marker (QuickSight canary). |
 | 6g | **Audit Dependency Providers** | Catch demo-only plugin/console registrations dropped from a provider list — the wiring half of 6e's config half. Restore into `src/Demo`. |
 | **6f** | **Upmerge the `cypress-tests` repo** | **Merge cypress `master-demo` to the HASH demo-shop master pins — NOT cypress master's tip.** Re-pin the demo-shop. |
@@ -63,7 +63,7 @@ flowchart TD
     F --> G[Step 5: Reconstruct composer.lock = master + demo-only pkgs]
 
     G --> H[Step 6a-6c: Reconcile Pyz/Demo overrides ]
-    H --> I[Step 6d: Audit deploy.spryker-icpplus.yml]
+    H --> I[Step 6d: Audit deploy.spryker-icpplus.yml<br/>entry-points + env keys + image.php.ini diff]
     I --> J[Step 6e: Audit config_default.php demo-only blocks]
     J --> K[[Step 6f: Upmerge cypress-tests repo — see cypress diagram]]
 
