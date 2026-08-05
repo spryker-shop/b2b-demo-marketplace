@@ -31,7 +31,7 @@ interface CheckoutDynamicFixtures {
 
 interface CheckoutStaticFixtures {
   defaultPassword: string
-  paymentMethodName: string
+  paymentMethodKey: string
 }
 
 const storefrontLoginPage = new StorefrontLoginPage()
@@ -85,7 +85,7 @@ context('Customer checkout', () => {
     cartPage.getCheckoutButton().click()
     checkoutAddress.provideExistingAddress()
     checkoutShipping.provideShipment(dynamicFixtures.shipmentMethod.name)
-    checkoutPayment.providePayment(staticFixtures.paymentMethodName)
+    checkoutPayment.providePayment(staticFixtures.paymentMethodKey)
     checkoutSummary.selectCostCenter(dynamicFixtures.costCenter.name)
     checkoutSummary.selectBudget(dynamicFixtures.budget.name)
     checkoutSummary.applyCostCenterAndBudget()

@@ -1,7 +1,11 @@
 import { AbstractPage } from '../../abstract-page'
 
 export class StorefrontCustomerOverviewPage extends AbstractPage {
-  protected PAGE_URL = Cypress.env('STOREFRONT_URL') + '/en/customer/overview'
+  protected PAGE_URL =
+    Cypress.env('STOREFRONT_URL') +
+    '/' +
+    Cypress.env('LOCALE_PREFIX') +
+    '/customer/overview'
 
   getOrdersTable = (): Cypress.Chainable => {
     return cy.get('[data-qa="component order-table"] > table')
@@ -12,9 +16,7 @@ export class StorefrontCustomerOverviewPage extends AbstractPage {
   }
 
   getFirstOrderRowPrice = (): Cypress.Chainable => {
-    return this.getFirstOrderRow()
-      .find('[data-content="Total"] strong')
-      .invoke('text')
+    return this.getFirstOrderRow().find('td strong').invoke('text')
   }
 
   getOrderRowActions = (rowIndex: number): Cypress.Chainable => {
@@ -25,10 +27,9 @@ export class StorefrontCustomerOverviewPage extends AbstractPage {
   }
 
   getOrderViewActionButton = (rowIndex: number): Cypress.Chainable => {
-    return this.getOrderRowActions(rowIndex)
-      .find('[data-qa="component table-action-link"] .table-action-link__title')
-      .contains('View Order')
-      .parent()
+    return this.getOrderRowActions(rowIndex).find(
+      '[data-qa="component table-action-link"][href*="/customer/order/details"]'
+    )
   }
 
   getFirstOrderViewActionButton = (): Cypress.Chainable => {

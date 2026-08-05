@@ -12,6 +12,18 @@
         },
         {
           "type": "helper",
+          "name": "haveLocale",
+          "key": "storeLocale",
+          "arguments": [{ "locale_name": "{{LOCALE_NAME}}" }]
+        },
+        {
+          "type": "helper",
+          "name": "getCurrencyByIsoCode",
+          "key": "currencyTransfer",
+          "arguments": ["{{CURRENCY_CODE}}"]
+        },
+        {
+          "type": "helper",
           "name": "haveTaxSet",
           "key": "taxSet",
           "arguments": [{}]
@@ -83,10 +95,28 @@
           ]
         },
         {
+          "type": "builder",
+          "name": "LocalizedAttributesBuilder",
+          "key": "localizedAttribute"
+        },
+        {
           "type": "helper",
           "name": "haveFullProduct",
           "key": "product",
-          "arguments": [{}, { "idTaxSet": "#taxSet.id_tax_set" }]
+          "arguments": [
+            {
+              "isActive": true
+            },
+            {
+              "idTaxSet": 1,
+              "storeRelation": {
+                "idStores": ["#store.id_store"]
+              },
+              "localizedAttributes": [
+                { "locale": "#storeLocale", "name": "#localizedAttribute.name" }
+              ]
+            }
+          ]
         },
         {
           "type": "helper",
@@ -96,7 +126,12 @@
             {
               "skuProductAbstract": "#product.abstract_sku",
               "skuProduct": "#product.sku",
-              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
+              "moneyValue": {
+                "netAmount": "{{PRODUCT_PRICE_ABOVE_THRESHOLD}}",
+                "grossAmount": "{{PRODUCT_PRICE_ABOVE_THRESHOLD}}",
+                "currency": "#currencyTransfer",
+                "store": "#store"
+              }
             }
           ]
         },
@@ -107,7 +142,12 @@
             "#product.fk_product_abstract",
             {
               "skuProductAbstract": "#product.abstract_sku",
-              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
+              "moneyValue": {
+                "netAmount": "{{PRODUCT_PRICE_ABOVE_THRESHOLD}}",
+                "grossAmount": "{{PRODUCT_PRICE_ABOVE_THRESHOLD}}",
+                "currency": "#currencyTransfer",
+                "store": "#store"
+              }
             }
           ]
         },
@@ -118,6 +158,12 @@
             "#store",
             { "sku": "#product.sku", "isNeverOutOfStock": "1" }
           ]
+        },
+        {
+          "type": "helper",
+          "name": "haveShipmentType",
+          "key": "shipmentType",
+          "arguments": [{ "key": "delivery" }]
         }
       ]
     }

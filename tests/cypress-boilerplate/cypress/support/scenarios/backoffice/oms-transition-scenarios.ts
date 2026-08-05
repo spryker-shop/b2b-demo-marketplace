@@ -1,4 +1,3 @@
-import userCredentials from '../../../fixtures/user-data.json'
 import { BackofficeLoginPage } from '../../page-objects/backoffice/login/backoffice-login-page'
 import { BackofficeOrderListPage } from '../../page-objects/backoffice/order-management/backoffice-order-list-page'
 import { BackofficeOrderDetailsPage } from '../../page-objects/backoffice/order-management/backoffice-order-details-page'
@@ -29,12 +28,12 @@ export class OmsTransitionScenarios {
         const checkConditionRequest = {
           method: 'POST',
           url: `${dockerCliUrl}/console`,
-          body: "APPLICATION_STORE='DE' COMMAND='console oms:check-condition' cli.sh",
+          body: `APPLICATION_STORE='${Cypress.env('STORE_NAME')}' COMMAND='console oms:check-condition' cli.sh`,
         }
         const checkTimeoutRequest = {
           method: 'POST',
           url: `${dockerCliUrl}/console`,
-          body: "APPLICATION_STORE='DE' COMMAND='console oms:check-timeout' cli.sh",
+          body: `APPLICATION_STORE='${Cypress.env('STORE_NAME')}' COMMAND='console oms:check-timeout' cli.sh`,
         }
 
         return cy
@@ -177,13 +176,12 @@ export class OmsTransitionScenarios {
   triggerOmsEvent = (
     orderReference: string,
     eventName: string,
-    maxRetries: number
+    maxRetries: number,
+    email: string,
+    password: string
   ): Cypress.Chainable => {
     return backofficeLoginPage
-      .login(
-        userCredentials.backofficeUser.email,
-        userCredentials.backofficeUser.password
-      )
+      .login(email, password)
       .then(() => backofficeOrderListPage.visit())
       .then(() => backofficeOrderListPage.viewOrderByReference(orderReference))
       .then(() => this.waitForOmsTrigger(eventName, maxRetries)) // try reload up to 2 times

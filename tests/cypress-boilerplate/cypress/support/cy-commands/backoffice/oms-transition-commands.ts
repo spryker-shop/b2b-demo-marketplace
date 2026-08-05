@@ -1,4 +1,3 @@
-import userCredentials from '../../../fixtures/user-data.json'
 import { BackofficeLoginPage } from '../../page-objects/backoffice/login/backoffice-login-page'
 import { BackofficeOrderListPage } from '../../page-objects/backoffice/order-management/backoffice-order-list-page'
 import { BackofficeOrderDetailsPage } from '../../page-objects/backoffice/order-management/backoffice-order-details-page'
@@ -18,12 +17,12 @@ Cypress.Commands.add(
         const checkConditionRequest = {
           method: 'POST',
           url: `${dockerCliUrl}/console`,
-          body: "APPLICATION_STORE='DE' COMMAND='console oms:check-condition' cli.sh",
+          body: `APPLICATION_STORE='${Cypress.env('STORE_NAME')}' COMMAND='console oms:check-condition' cli.sh`,
         }
         const checkTimeoutRequest = {
           method: 'POST',
           url: `${dockerCliUrl}/console`,
-          body: "APPLICATION_STORE='DE' COMMAND='console oms:check-timeout' cli.sh",
+          body: `APPLICATION_STORE='${Cypress.env('STORE_NAME')}' COMMAND='console oms:check-timeout' cli.sh`,
         }
 
         return cy
@@ -101,12 +100,14 @@ Cypress.Commands.add(
 
 Cypress.Commands.add(
   'triggerOmsEvent',
-  (orderReference: string, eventName: string): Cypress.Chainable => {
+  (
+    orderReference: string,
+    eventName: string,
+    email: string,
+    password: string
+  ): Cypress.Chainable => {
     return backofficeLoginPage
-      .login(
-        userCredentials.backofficeUser.email,
-        userCredentials.backofficeUser.password
-      )
+      .login(email, password)
       .then(() => backofficeOrderListPage.visit())
       .then(() => backofficeOrderListPage.viewOrderByReference(orderReference))
       .then(() => backofficeOrderDetailsPage.triggerOms(eventName))

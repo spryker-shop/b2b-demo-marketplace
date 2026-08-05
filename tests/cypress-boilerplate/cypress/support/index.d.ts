@@ -86,7 +86,11 @@ declare namespace Cypress {
 
     /**
      * @example cy.formatDisplayPrice(8999)
+     * @example cy.formatDisplayPrice(8999, 'en_US')
      */
-    formatDisplayPrice(price: number): Cypress.Chainable<string>
+    formatDisplayPrice(
+      price: number,
+      locale?: string
+    ): Cypress.Chainable<string>
   }
 }

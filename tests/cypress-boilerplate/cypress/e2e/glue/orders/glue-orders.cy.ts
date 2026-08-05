@@ -1,11 +1,3 @@
-// The product and the offer the setup order is placed for are created before this spec runs
-// by cypress/fixtures/glue/orders/dynamic-glue-orders.json, so the spec no longer depends on
-// a specific demodata product staying available and in stock. The offer is created under the
-// merchant referenced by MERCHANT_REFERENCE in .envs/.
-// The customer is generated per run too, with a business unit that has no
-// B2B purchasing restrictions (no cost-center/budget requirement), since Purchasing Control
-// has no Glue API support in this project and would block order placement with a 422.
-// Shipment and payment also stay static — they are bound to what the environment provides.
 import checkoutData from '@fixtures/checkout-data.json'
 
 import { AccessTokens } from '@support/glue-endpoints/authentication/access-tokens'

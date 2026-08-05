@@ -17,8 +17,8 @@ export class Carts extends GlueRequest {
           attributes: {
             name: currentDateTime.toISOString(),
             priceMode: 'GROSS_MODE',
-            currency: 'EUR',
-            store: 'DE',
+            currency: Cypress.env('CURRENCY_CODE'),
+            store: Cypress.env('STORE_NAME'),
           },
         },
       },

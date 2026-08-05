@@ -1,5 +1,4 @@
 import checkoutData from '@fixtures/checkout-data.json'
-import userCredentials from '@fixtures/user-data.json'
 import { MerchantLoginPage } from '@support/page-objects/merchant-portal/login/merchant-portal-login-page'
 import { MerchantOrderListPage } from '@support/page-objects/merchant-portal/order-management/merchant-portal-order-list-page'
 import { MerchantOrderDetailsPage } from '@support/page-objects/merchant-portal/order-management/merchant-portal-order-details-page'
@@ -14,9 +13,12 @@ import {
   PriceProductFixture,
   ProductFixture,
   ProductOfferFixture,
+  UserFixture,
 } from '@support/types/dynamic-fixtures'
 
 interface MerchantOrderDynamicFixtures {
+  backofficeUser: UserFixture
+  merchantUser: UserFixture
   customer: CustomerFixture
   product: ProductFixture
   productPrice: PriceProductFixture
@@ -70,8 +72,8 @@ context('Merchant Order management', () => {
     // make sure the location from which you run cypress tests has access to Spryker env
     omsTransitionScenarios.triggerOmsTransition()
     backofficeLoginPage.login(
-      userCredentials.backofficeUser.email,
-      userCredentials.backofficeUser.password
+      dynamicFixtures.backofficeUser.username,
+      staticFixtures.defaultPassword
     )
     backofficeOrderListPage.visit()
     backofficeOrderListPage.filterOrdersByReference(createdOrderReference)
@@ -85,8 +87,8 @@ context('Merchant Order management', () => {
     omsTransitionScenarios.waitForOrderProcessing('sent to merchant', 20)
     //process order in merchant portal
     merchantLoginPage.login(
-      userCredentials.merchantPortalUser.email,
-      userCredentials.merchantPortalUser.password
+      dynamicFixtures.merchantUser.username,
+      staticFixtures.defaultPassword
     )
     // wait until login redirects away from the login page (session established)
     cy.url({ timeout: 20000 }).should(

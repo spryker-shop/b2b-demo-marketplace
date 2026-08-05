@@ -3,10 +3,18 @@ import { AbstractPage } from '../../abstract-page'
 const paymentForm = 'form[name="paymentForm"]'
 
 export class StorefrontCheckoutPaymentPage extends AbstractPage {
-  protected PAGE_URL = Cypress.env('STOREFRONT_URL') + '/en/checkout/payment'
+  protected PAGE_URL =
+    Cypress.env('STOREFRONT_URL') +
+    '/' +
+    Cypress.env('LOCALE_PREFIX') +
+    '/checkout/payment'
 
-  selectPaymentMethod = (paymentName: string): void => {
-    cy.get(paymentForm).contains(paymentName).click()
+  selectPaymentMethod = (paymentMethodKey: string): void => {
+    cy.get(paymentForm)
+      .find(
+        `input[name="paymentForm[paymentSelection]"][value="${paymentMethodKey}"]`
+      )
+      .check({ force: true })
   }
 
   submitPayment = (): void => {

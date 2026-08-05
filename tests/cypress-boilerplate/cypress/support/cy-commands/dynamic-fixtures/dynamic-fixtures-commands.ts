@@ -62,9 +62,8 @@ Cypress.Commands.add(
           failOnStatusCode: false,
         })
         .then((response) => {
-          // 500/408 here are usually a queue worker or publish-and-sync timeout rather
-          // than a broken payload, so give it another go before failing the whole spec
-          if (response.status === 500 || response.status === 408) {
+          // Usually a queue/publish timeout, not a bad payload; 504 is the gateway's own 60s limit.
+          if ([500, 408, 502, 503, 504].includes(response.status)) {
             if (retries > 0) {
               cy.log('Retrying dynamic fixtures request after error or timeout')
 
