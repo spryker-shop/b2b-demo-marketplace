@@ -47,23 +47,58 @@ jobs:
                         'non-critical': 'http://yves.eu.spryker.local/assets/current/default/css/yves_default.non-critical.css',
                         'critical': 'http://yves.eu.spryker.local/assets/current/default/css/yves_default.critical.css',
                     };
+                    const base = 'http://yves.eu.spryker.local';
+                    const jar = new Map();
+                    const cookieHeader = () => [...jar.values()].join('; ');
+                    const storeCookies = (res) => {
+                        const cookies = res.headers.getSetCookie ? res.headers.getSetCookie() : [];
+                        for (const c of cookies) {
+                            const kv = c.split(';')[0];
+                            jar.set(kv.split('=')[0], kv);
+                        }
+                    };
+                    const get = async (path) => {
+                        let url = base + path;
+                        for (let hop = 0; hop < 6; hop++) {
+                            const res = await fetch(url, {redirect: 'manual', headers: {cookie: cookieHeader()}});
+                            storeCookies(res);
+                            if (res.status >= 300 && res.status < 400) {
+                                const loc = res.headers.get('location');
+                                url = loc.startsWith('http') ? loc : base + loc;
+                                continue;
+                            }
+                            return {res, html: await res.text(), url};
+                        }
+                        throw new Error('redirect loop');
+                    };
                     (async () => {
                         for (const [name, url] of Object.entries(urls)) {
-                            for (let i = 1; i <= 3; i++) {
-                                const start = Date.now();
-                                try {
-                                    const res = await fetch(url);
-                                    const body = await res.text();
-                                    const hits = (body.match(/is-hidden/g) || []).length;
-                                    console.log(`${name} #${i}: status=${res.status} bytes=${body.length} time=${Date.now() - start}ms is-hidden=${hits} content-length-header=${res.headers.get('content-length')}`);
-                                } catch (e) {
-                                    console.log(`${name} #${i}: FETCH FAILED after ${Date.now() - start}ms: ${e.message} ${e.cause ? e.cause.message || e.cause.code : ''}`);
-                                }
-                            }
+                            const start = Date.now();
+                            const res = await fetch(url);
+                            const body = await res.text();
+                            console.log(`${name}: status=${res.status} bytes=${body.length} time=${Date.now() - start}ms is-hidden=${(body.match(/is-hidden/g) || []).length}`);
                         }
-                    })();
+                        const login = await get('/login');
+                        const token = (login.html.match(/name="loginForm\[_token\]"[^>]*value="([^"]+)"/) || [])[1];
+                        console.log('login page:', login.url, 'token:', token ? 'found' : 'MISSING');
+                        const body = new URLSearchParams({'loginForm[email]': 'sonia@acme.com', 'loginForm[password]': 'change123', 'loginForm[_token]': token});
+                        const loginCheckPath = new URL(login.url).pathname.replace(/login$/, 'login_check');
+                        let res = await fetch(base + loginCheckPath, {method: 'POST', body, redirect: 'manual', headers: {cookie: cookieHeader()}});
+                        storeCookies(res);
+                        console.log('login_check status:', res.status);
+                        const order = await get('/customer/order');
+                        console.log('order page:', order.url, 'status:', order.res.status);
+                        const html = order.html;
+                        const i = html.indexOf('filter-section');
+                        console.log('--- section snippet ---');
+                        console.log(i > 0 ? html.substr(Math.max(0, i - 500), 1200).replace(/\s+/g, ' ') : 'filter-section NOT FOUND');
+                        console.log('--- diagnostics ---');
+                        console.log('order-active-filters rendered:', html.includes('order-active-filters'));
+                        console.log('is-hidden total on page:', (html.match(/is-hidden/g) || []).length);
+                    })().catch(e => console.log('PROBE FAILED:', e.message));
                     EOF
                     docker/sdk exec cypress-tests node cypress/support/__delivery-probe.cjs
+                    docker/sdk cli composer show 2>/dev/null | grep -E "spryker-shop/shop-ui|spryker-shop/customer-page|self-service-portal|purchasing-control" || true
 
             -   name: Debug CSS on disk (yves container)
                 run: |
