@@ -1,6 +1,7 @@
 @mixin cms-cms-content($name: '.cms-content') {
     #{$name} {
         @include typography(body-lg);
+        margin-bottom: var(--scale-64);
         color: var(--text-primary);
 
         > *:first-child {
