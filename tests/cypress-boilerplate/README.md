@@ -1,8 +1,10 @@
 ## Description
 
-This is the project-owned Cypress end-to-end test suite for the B2B Marketplace Demo Shop, vendored from [`spryker-projects/cypress-boilerplate`](https://github.com/spryker-projects/cypress-boilerplate) as plain committed files (**not** a Composer dependency). It is separate from the internal `spryker/cypress-tests` package (integrated via `composer.json`), which is intended for Spryker's own core-feature testing and is not guaranteed to work on a customized project.
+This is the Cypress end-to-end test suite for the B2B Marketplace Demo Shop. It is part of this repository — plain committed files under `tests/cypress-boilerplate/`, **not** a Composer dependency and not fetched from anywhere at install or CI time. Change it like any other project code.
 
-Locators use the `data-qa` attribute convention already present in this project's Twig templates. Detailed guides, best practices, and naming conventions are documented in the upstream boilerplate's [Wiki](https://github.com/spryker-projects/cypress-boilerplate/wiki) — treat it as reference material; this directory is the project's own copy to extend, not a live dependency on that repo.
+It is the only Cypress suite in this project: the internal `spryker/cypress-tests` package (and the Robot Framework suite alongside it) has been removed, since those targeted Spryker's own core features and were not guaranteed to work on a customized project.
+
+Locators use the `data-qa` attribute convention already present in this project's Twig templates. The conventions this suite follows — directory layout, spec/page-object/fixture naming, the Page Object pattern, and the quality gate — are documented in the [Spryker Documentation](https://docs.spryker.com/docs/dg/dev/guidelines/testing-guidelines/cypress-testing/naming-conventions.html).
 
 ### Key Features
 
@@ -250,7 +252,7 @@ those files are still present.
 
 ## Additional Resources
 
-For detailed guides, best practices, and how-to articles, please refer to our [Wiki](https://github.com/spryker-projects/cypress-boilerplate/wiki).
+For detailed guides, best practices, and how-to articles, please refer to our documentation [E2E Testing with Cypress](https://docs.spryker.comdocs/dg/dev/guidelines/testing-guidelines/cypress-testing.html).
 
 ### ❗If you are new to Cypress:
 
