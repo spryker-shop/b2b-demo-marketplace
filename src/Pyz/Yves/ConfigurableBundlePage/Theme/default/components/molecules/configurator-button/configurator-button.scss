@@ -65,7 +65,7 @@
 
         &--selected {
             @include configurable-bundle-page-configurator-button-state(
-                helper-color-light(map-get($setting-color-actions, 'success')),
+                helper-color-light(map.get($setting-color-actions, 'success')),
                 $setting-color-main,
                 $setting-color-transparent
             );

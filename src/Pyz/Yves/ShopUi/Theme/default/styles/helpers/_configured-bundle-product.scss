@@ -1,4 +1,10 @@
-@mixin configured-bundle-product-shared($name: '.configured-bundle-product') {
+@use 'calc-rem' as *;
+@use 'font' as *;
+@use '../settings/breakpoint' as *;
+@use '../settings/color' as *;
+@use '~ShopUi/styles/helpers/breakpoint' as *;
+
+@mixin configured-bundle-product-shared($name: '.configured-bundle-product', $image-width: 76) {
     #{$name} {
         display: flex;
         margin-bottom: var(--scale-24);
@@ -6,7 +12,7 @@
         &__col--image {
             flex: 0 0 auto;
             align-self: flex-start;
-            width: rem($cart-item-image-width);
+            width: rem($image-width);
             padding-right: var(--scale-12);
 
             @include helper-breakpoint-media-min($lg) {
@@ -53,7 +59,7 @@
             gap: var(--scale-8);
             grid-column: 1;
             grid-row: 3;
-            width: calc(100% + #{rem($cart-item-image-width)});
+            width: calc(100% + #{rem($image-width)});
 
             #{$name}__price-zone {
                 margin-left: auto;

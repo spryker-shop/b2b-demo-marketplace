@@ -10,8 +10,6 @@ export default class FilterSearch extends Component {
     protected emptyMessage: HTMLElement;
     protected collapseAll: HTMLElement;
 
-    protected readyCallback(): void {}
-
     protected init(): void {
         this.input = <HTMLInputElement>this.querySelector('input');
         this.section = <HTMLElement>this.closest(this.getAttribute('section-selector'));
