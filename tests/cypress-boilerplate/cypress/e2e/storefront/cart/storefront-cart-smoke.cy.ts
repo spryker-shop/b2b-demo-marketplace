@@ -8,20 +8,11 @@ import { StorefrontCartScenarios } from '@support/scenarios/storefront/storefron
 import {
   getFixtures,
   getProductName,
-  CustomerFixture,
-  PriceProductFixture,
-  ProductFixture,
-} from '@support/types/dynamic-fixtures'
-
-interface CartSmokeDynamicFixtures {
-  customer: CustomerFixture
-  product: ProductFixture
-  productPrice: PriceProductFixture
-}
-
-interface CartSmokeStaticFixtures {
-  defaultPassword: string
-}
+} from '@support/fixture-helper/fixture-helper'
+import {
+  CartSmokeDynamicFixtures,
+  CartSmokeStaticFixtures,
+} from '@support/types/storefront'
 
 const storefrontLoginPage = new StorefrontLoginPage()
 const homePage = new StorefrontHomePage()

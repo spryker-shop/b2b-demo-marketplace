@@ -4,26 +4,11 @@ import { BackofficeOrderListPage } from '@support/page-objects/backoffice/order-
 import { BackofficeOrderDetailsPage } from '@support/page-objects/backoffice/order-management/backoffice-order-details-page'
 import { GlueCheckoutScenarios } from '@support/scenarios/glue/glue-checkout-scenarios'
 import { OmsTransitionScenarios } from '@support/scenarios/backoffice/oms-transition-scenarios'
+import { getFixtures } from '@support/fixture-helper/fixture-helper'
 import {
-  getFixtures,
-  CustomerFixture,
-  PriceProductFixture,
-  ProductFixture,
-  ProductOfferFixture,
-  UserFixture,
-} from '@support/types/dynamic-fixtures'
-
-interface BackofficeOrderDynamicFixtures {
-  backofficeUser: UserFixture
-  customer: CustomerFixture
-  product: ProductFixture
-  productPrice: PriceProductFixture
-  productOffer: ProductOfferFixture
-}
-
-interface BackofficeOrderStaticFixtures {
-  defaultPassword: string
-}
+  BackofficeOrderDynamicFixtures,
+  BackofficeOrderStaticFixtures,
+} from '@support/types/backoffice'
 
 const backofficeLoginPage = new BackofficeLoginPage()
 const backofficeOrderListPage = new BackofficeOrderListPage()

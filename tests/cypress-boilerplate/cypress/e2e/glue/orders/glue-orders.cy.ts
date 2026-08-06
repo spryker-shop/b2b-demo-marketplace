@@ -5,22 +5,11 @@ import { Orders } from '@support/glue-endpoints/order/orders'
 import { validateSchema } from '@support/api-helper/api-helper'
 import { GlueCheckoutScenarios } from '@support/scenarios/glue/glue-checkout-scenarios'
 import ordersSchema from '@support/glue-endpoints/order/orders-response'
+import { getFixtures } from '@support/fixture-helper/fixture-helper'
 import {
-  getFixtures,
-  CustomerFixture,
-  ProductFixture,
-  ProductOfferFixture,
-} from '@support/types/dynamic-fixtures'
-
-interface GlueOrdersDynamicFixtures {
-  customer: CustomerFixture
-  product: ProductFixture
-  productOffer: ProductOfferFixture
-}
-
-interface GlueOrdersStaticFixtures {
-  defaultPassword: string
-}
+  GlueOrdersDynamicFixtures,
+  GlueOrdersStaticFixtures,
+} from '@support/types/glue'
 
 const tokenEndpoint = new AccessTokens()
 const ordersEndpoint = new Orders()

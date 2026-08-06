@@ -5,15 +5,11 @@ import { validateSchema } from '@support/api-helper/api-helper'
 import accessTokenSchema from '@support/glue-endpoints/authentication/access-tokens-response'
 import { AccessTokens } from '@support/glue-endpoints/authentication/access-tokens'
 import errorResponseSchema from '@support/api-helper/general-responses/error-response'
-import { getFixtures, CustomerFixture } from '@support/types/dynamic-fixtures'
-
-interface AccessTokenDynamicFixtures {
-  customer: CustomerFixture
-}
-
-interface AccessTokenStaticFixtures {
-  defaultPassword: string
-}
+import { getFixtures } from '@support/fixture-helper/fixture-helper'
+import {
+  AccessTokenDynamicFixtures,
+  AccessTokenStaticFixtures,
+} from '@support/types/glue'
 
 const tokenEndpoint = new AccessTokens()
 

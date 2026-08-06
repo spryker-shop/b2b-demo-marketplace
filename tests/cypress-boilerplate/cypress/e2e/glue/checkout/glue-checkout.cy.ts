@@ -7,22 +7,11 @@ import { Checkout } from '@support/glue-endpoints/checkout/checkout'
 import { validateSchema } from '@support/api-helper/api-helper'
 import accessTokenSchema from '@support/glue-endpoints/authentication/access-tokens-response'
 import checkoutSchema from '@support/glue-endpoints/checkout/checkout-response'
+import { getFixtures } from '@support/fixture-helper/fixture-helper'
 import {
-  getFixtures,
-  CustomerFixture,
-  ProductFixture,
-  ProductOfferFixture,
-} from '@support/types/dynamic-fixtures'
-
-interface GlueCheckoutDynamicFixtures {
-  customer: CustomerFixture
-  product: ProductFixture
-  productOffer: ProductOfferFixture
-}
-
-interface GlueCheckoutStaticFixtures {
-  defaultPassword: string
-}
+  GlueCheckoutDynamicFixtures,
+  GlueCheckoutStaticFixtures,
+} from '@support/types/glue'
 
 const tokenEndpoint = new AccessTokens()
 const cartEndpoint = new Carts()

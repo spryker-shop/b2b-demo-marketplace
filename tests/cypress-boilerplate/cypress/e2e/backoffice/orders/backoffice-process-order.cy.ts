@@ -2,26 +2,11 @@ import checkoutData from '@fixtures/shared/checkout-data.json'
 import { BackofficeLoginPage } from '@support/page-objects/backoffice/login/backoffice-login-page'
 import { BackofficeOrderListPage } from '@support/page-objects/backoffice/order-management/backoffice-order-list-page'
 import { BackofficeOrderDetailsPage } from '@support/page-objects/backoffice/order-management/backoffice-order-details-page'
+import { getFixtures } from '@support/fixture-helper/fixture-helper'
 import {
-  getFixtures,
-  CustomerFixture,
-  PriceProductFixture,
-  ProductFixture,
-  ProductOfferFixture,
-  UserFixture,
-} from '@support/types/dynamic-fixtures'
-
-interface BackofficeOrderDynamicFixtures {
-  backofficeUser: UserFixture
-  customer: CustomerFixture
-  product: ProductFixture
-  productPrice: PriceProductFixture
-  productOffer: ProductOfferFixture
-}
-
-interface BackofficeOrderStaticFixtures {
-  defaultPassword: string
-}
+  BackofficeOrderDynamicFixtures,
+  BackofficeOrderStaticFixtures,
+} from '@support/types/backoffice'
 
 const backofficeLoginPage = new BackofficeLoginPage()
 const backofficeOrderListPage = new BackofficeOrderListPage()

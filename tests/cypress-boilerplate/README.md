@@ -191,7 +191,8 @@ For `cypress/e2e/storefront/cart/storefront-cart-smoke.cy.ts`:
 | `cypress/fixtures/storefront/cart/static-storefront-cart-smoke.json`  | `Cypress.env('staticFixtures')`  |
 
 Both are optional. The global `before` hook in `cypress/support/e2e.ts` loads whichever
-exists; specs read them through `getFixtures()` from `@support/types/dynamic-fixtures`.
+exists; specs read them through `getFixtures()` from
+`@support/fixture-helper/fixture-helper`.
 
 A dynamic fixture file is a list of operations. Each one calls a Codeception helper method
 enabled in `tests/PyzTest/Zed/TestifyBackendApi/codeception.dynamic.fixtures.yml` and
@@ -215,6 +216,28 @@ If a spec needs a helper that isn't enabled yet, add it to
 `codeception.dynamic.fixtures.yml` — that's how
 `\SprykerTest\Zed\CompanyUnitAddress\Helper\CompanyUnitAddressDataHelper` (business unit
 addresses for the checkout address step) was made available.
+
+### Where the fixture types live
+
+A spec declares no interfaces of its own. What its fixture files produce is typed under
+`cypress/support/types/`:
+
+```
+types/<app>/<feature>.ts   <Feature>DynamicFixtures / <Feature>StaticFixtures
+types/<app>/index.ts       barrel — what specs import
+types/shared/              entity types used by more than one app (Customer, Product, ...)
+```
+
+An entity used by a single app lives in that app's folder instead, so everything in
+`shared/` is genuinely shared. A spec then imports one line per concern:
+
+```ts
+import { getFixtures } from '@support/fixture-helper/fixture-helper'
+import {
+  CartSmokeDynamicFixtures,
+  CartSmokeStaticFixtures,
+} from '@support/types/storefront'
+```
 
 ### One place for store-dependent values
 
@@ -263,14 +286,11 @@ rather than derived.
   (`Pyz\Yves\DummyPayment`), so a generated payment method would never be rendered in
   checkout. The method _name_ therefore stays in the static fixture — a configuration
   value, not demodata.
-- **Backoffice and Merchant Portal users** are currently still read from the shared
-  `cypress/fixtures/user-data.json`. The specs using them have not been converted yet.
-
-### Not yet converted
-
-Only `storefront-cart-smoke` and `storefront-checkout` use dynamic fixtures so far. The
-remaining specs still import the shared `cypress/fixtures/*-data.json` files, which is why
-those files are still present.
+- **Glue shipment and payment identifiers** stay in
+  `cypress/fixtures/shared/checkout-data.json`. They are the shipment method id and the
+  payment provider/method names the Glue checkout payload has to send — configuration
+  rather than demodata. It sits in `shared/` because specs across Glue, Backoffice and
+  Merchant Portal all place their setup order the same way.
 
 ## Additional Resources
 

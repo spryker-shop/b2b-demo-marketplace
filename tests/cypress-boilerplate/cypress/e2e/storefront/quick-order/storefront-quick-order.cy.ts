@@ -12,21 +12,11 @@ import { StorefrontCartScenarios } from '@support/scenarios/storefront/storefron
 import {
   getFixtures,
   getProductName,
-  CustomerFixture,
-  MerchantFixture,
-  ProductFixture,
-} from '@support/types/dynamic-fixtures'
-
-interface QuickOrderDynamicFixtures {
-  customer: CustomerFixture
-  product: ProductFixture
-  merchant: MerchantFixture
-}
-
-interface QuickOrderStaticFixtures {
-  defaultPassword: string
-  quantity: number
-}
+} from '@support/fixture-helper/fixture-helper'
+import {
+  QuickOrderDynamicFixtures,
+  QuickOrderStaticFixtures,
+} from '@support/types/storefront'
 
 const storefrontLoginPage = new StorefrontLoginPage()
 const storefrontCartPage = new StorefrontCartPage()

@@ -12,27 +12,11 @@ import { StorefrontCartScenarios } from '@support/scenarios/storefront/storefron
 import {
   getFixtures,
   getProductName,
-  BudgetFixture,
-  CostCenterFixture,
-  CustomerFixture,
-  PriceProductFixture,
-  ProductFixture,
-  ShipmentMethodFixture,
-} from '@support/types/dynamic-fixtures'
-
-interface CheckoutDynamicFixtures {
-  customer: CustomerFixture
-  product: ProductFixture
-  productPrice: PriceProductFixture
-  shipmentMethod: ShipmentMethodFixture
-  costCenter: CostCenterFixture
-  budget: BudgetFixture
-}
-
-interface CheckoutStaticFixtures {
-  defaultPassword: string
-  paymentMethodKey: string
-}
+} from '@support/fixture-helper/fixture-helper'
+import {
+  CheckoutDynamicFixtures,
+  CheckoutStaticFixtures,
+} from '@support/types/storefront'
 
 const storefrontLoginPage = new StorefrontLoginPage()
 const search = new StorefrontSearchResultsPage()
