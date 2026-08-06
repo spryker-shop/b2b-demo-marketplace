@@ -301,9 +301,13 @@ const COMPONENT_MACRO_DEFS =
 function preprocessMacros(source: string): string {
     // twig.js does not support `{% macro %}` with `{% embed %}` inside, and it
     // cannot resolve macros inherited through `{% extends %}`. We:
-    //   1. Inline only macros whose body contains `{% embed %}` at their call
-    //      sites (e.g. product-item.thumbnail). Plain macros are left intact so
-    //      other templates that `{% import %}` them keep working.
+    //   1. Inline macros at their call sites when their body contains
+    //      `{% embed %}` (e.g. product-item.thumbnail), or when the template
+    //      `{% extends %}` — under extends the top-level `{% import _self %}`
+    //      never executes, so inside blocks `alias.macro(...)` degrades to
+    //      evaluating the argument list (renders the last argument as text).
+    //      Plain macros in non-extending templates are left intact so other
+    //      templates that `{% import %}` them keep working.
     //   2. For templates that import `_self as X` but define no macros locally,
     //      synthesize `renderClass`/`renderAttributes` macros from the component
     //      model so calls resolve in both expression and output contexts.
@@ -318,13 +322,12 @@ function preprocessMacros(source: string): string {
         return COMPONENT_MACRO_DEFS + source;
     }
 
+    const hasExtends = /\{%-?\s*extends\s+/.test(source);
     const macros: MacroMap = {};
     const macroRe = /\{%-?\s*macro\s+(\w+)\s*\(([^)]*)\)\s*-?%\}([\s\S]*?)\{%-?\s*endmacro\s*-?%\}/g;
     let stripped = source.replace(macroRe, (full, name: string, paramList: string, body: string) => {
-        // Only strip+inline macros that wrap an {% embed %} — those don't render
-        // correctly through twig.js's normal macro path. Leave plain macros so
-        // other templates that import them keep working.
-        if (!/\{%-?\s*embed\s+/.test(body)) return full;
+        const isEmbedMacro = /\{%-?\s*embed\s+/.test(body);
+        if (!isEmbedMacro && !hasExtends) return full;
 
         const params: MacroParam[] = paramList
             .split(',')
@@ -337,7 +340,10 @@ function preprocessMacros(source: string): string {
                     : { name: p.slice(0, eq).trim(), def: p.slice(eq + 1).trim() };
             });
         macros[name] = { params, body };
-        return '';
+        // Embed-macros never render through twig.js's macro path — drop the
+        // definition. Under extends the definition is inert (top-level content
+        // is discarded), so it can stay in place.
+        return isEmbedMacro ? '' : full;
     });
 
     if (!Object.keys(macros).length) return source;
@@ -584,8 +590,41 @@ function preprocessLazyImagePreserveSets(source: string): string {
         );
 }
 
+function preprocessStringInterpolation(source: string): string {
+    // twig.js does not implement `#{expr}` interpolation inside double-quoted
+    // strings — the sequence passes through as a literal. Rewrite interpolated
+    // strings to explicit concatenation, which twig.js evaluates correctly:
+    //   "#{configName}__button--#{buttonType}" → ((configName) ~ '__button--' ~ (buttonType))
+    // Only simple variable paths (`#{config.jsName}`) are rewritten; strings with
+    // complex interpolated expressions (calls, pipes, arrow bodies) are left
+    // alone so the later preprocessing passes keep seeing their original shape.
+    const stringRe = /"((?:[^"\\]|\\.)*)"/g;
+    return source.replace(stringRe, (full, inner: string) => {
+        if (!inner.includes('#{')) return full;
+        const parts: string[] = [];
+        let rest = inner;
+        for (let open = rest.indexOf('#{'); open !== -1; open = rest.indexOf('#{')) {
+            const close = rest.indexOf('}', open);
+            if (close === -1) return full;
+            const expression = rest.slice(open + 2, close).trim();
+            if (!/^[\w.]+$/.test(expression)) return full;
+            const literal = rest.slice(0, open);
+            if (literal) parts.push(`'${literal.replace(/'/g, "\\'")}'`);
+            // No parens around the expression: twig.js's expression compiler
+            // crashes on a doubled opening paren in a function argument
+            // (`qa(((a) ~ 'b'))`), and a plain dotted path needs none.
+            parts.push(expression);
+            rest = rest.slice(close + 1);
+        }
+        if (rest) parts.push(`'${rest.replace(/'/g, "\\'")}'`);
+        if (!parts.length) return full;
+        return `(${parts.join(' ~ ')})`;
+    });
+}
+
 export function preprocess(source: string): string {
     let result = preprocessLazyImagePreserveSets(source);
+    result = preprocessStringInterpolation(result);
     result = preprocessTernaryNoElse(result);
     result = preprocessDefine(result);
     result = preprocessWidgets(result);
