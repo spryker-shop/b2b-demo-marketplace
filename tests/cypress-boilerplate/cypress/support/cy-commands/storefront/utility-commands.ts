@@ -12,9 +12,17 @@ Cypress.Commands.add('closeAllFlashMessages', (): Cypress.Chainable => {
 
 Cypress.Commands.add(
   'formatDisplayPrice',
-  (price: number): Cypress.Chainable => {
-    const priceInEuros = (price / 100).toFixed(2)
-    const formattedPrice = `€${parseFloat(priceInEuros).toLocaleString('en-US', { minimumFractionDigits: 2 })}`
+  (price: number, locale?: string): Cypress.Chainable => {
+    const intlLocale = (locale ?? String(Cypress.env('LOCALE_NAME'))).replace(
+      '_',
+      '-'
+    )
+    const currency = String(Cypress.env('CURRENCY_CODE'))
+
+    const formattedPrice = new Intl.NumberFormat(intlLocale, {
+      style: 'currency',
+      currency,
+    }).format(price / 100)
 
     return cy.wrap(formattedPrice)
   }

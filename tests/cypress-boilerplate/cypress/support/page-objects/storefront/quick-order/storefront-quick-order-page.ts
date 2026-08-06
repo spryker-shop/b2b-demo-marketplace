@@ -1,7 +1,11 @@
 import { AbstractPage } from '../../abstract-page'
 
 export class StorefrontQuickOrderPage extends AbstractPage {
-  protected PAGE_URL = Cypress.env('STOREFRONT_URL') + '/en/quick-order'
+  protected PAGE_URL =
+    Cypress.env('STOREFRONT_URL') +
+    '/' +
+    Cypress.env('LOCALE_PREFIX') +
+    '/quick-order'
 
   getQuickOrderForm = (): Cypress.Chainable => {
     return cy.get('[data-qa="component quick-order-form"]')

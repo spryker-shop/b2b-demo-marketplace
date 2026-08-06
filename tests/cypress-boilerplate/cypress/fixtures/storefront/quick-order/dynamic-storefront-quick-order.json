@@ -12,6 +12,12 @@
         },
         {
           "type": "helper",
+          "name": "getCurrencyByIsoCode",
+          "key": "currencyTransfer",
+          "arguments": ["{{CURRENCY_CODE}}"]
+        },
+        {
+          "type": "helper",
           "name": "haveTaxSet",
           "key": "taxSet",
           "arguments": [{}]
@@ -113,7 +119,12 @@
             {
               "skuProductAbstract": "#product.abstract_sku",
               "skuProduct": "#product.sku",
-              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
+              "moneyValue": {
+                "netAmount": "{{PRODUCT_PRICE_ABOVE_THRESHOLD}}",
+                "grossAmount": "{{PRODUCT_PRICE_ABOVE_THRESHOLD}}",
+                "currency": "#currencyTransfer",
+                "store": "#store"
+              }
             }
           ]
         },
@@ -124,7 +135,12 @@
             "#product.fk_product_abstract",
             {
               "skuProductAbstract": "#product.abstract_sku",
-              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
+              "moneyValue": {
+                "netAmount": "{{PRODUCT_PRICE_ABOVE_THRESHOLD}}",
+                "grossAmount": "{{PRODUCT_PRICE_ABOVE_THRESHOLD}}",
+                "currency": "#currencyTransfer",
+                "store": "#store"
+              }
             }
           ]
         },

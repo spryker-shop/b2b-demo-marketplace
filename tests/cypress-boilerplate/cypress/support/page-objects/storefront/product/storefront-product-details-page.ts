@@ -25,7 +25,7 @@ export class StorefrontProductDetailsPage extends AbstractPage {
 
   addProductToCart = (): void => {
     this.getAddToCartButton().click()
-    cy.get('flash-message').should('contain', 'Items added successfully')
+    cy.get('flash-message.flash-message--success').should('exist')
     cy.closeAllFlashMessages()
   }
 }

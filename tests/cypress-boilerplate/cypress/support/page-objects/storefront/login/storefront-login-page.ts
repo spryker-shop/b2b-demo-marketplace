@@ -3,7 +3,11 @@ import { AbstractPage } from '../../abstract-page'
 const loginForm = 'form[name="loginForm"]'
 
 export class StorefrontLoginPage extends AbstractPage {
-  protected PAGE_URL = Cypress.env('STOREFRONT_URL') + '/en/login'
+  protected PAGE_URL =
+    Cypress.env('STOREFRONT_URL') +
+    '/' +
+    Cypress.env('LOCALE_PREFIX') +
+    '/login'
 
   getEmailField = (): Cypress.Chainable => {
     return cy.get(loginForm).find('#loginForm_email')

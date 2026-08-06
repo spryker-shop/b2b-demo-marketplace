@@ -1,12 +1,18 @@
 import { AbstractPage } from '../../abstract-page'
 
 export class StorefrontCheckoutSuccessPage extends AbstractPage {
-  protected PAGE_URL = Cypress.env('STOREFRONT_URL') + '/en/checkout/success'
+  protected PAGE_URL =
+    Cypress.env('STOREFRONT_URL') +
+    '/' +
+    Cypress.env('LOCALE_PREFIX') +
+    '/checkout/success'
 
   checkOrderSuccess = (): void => {
+    const localePrefix = Cypress.env('LOCALE_PREFIX')
+
     cy.location('pathname', { timeout: 30000 }).should(
       'match',
-      /^\/([^\/]+\/)?en\/checkout\/success$/
+      new RegExp(`^/([^/]+/)?${localePrefix}/checkout/success$`)
     )
   }
 

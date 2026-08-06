@@ -26,11 +26,6 @@ export interface PriceProductFixture {
   }
 }
 
-export interface CompanyBusinessUnitFixture {
-  id_company_business_unit: number
-  name: string
-}
-
 export interface CostCenterFixture {
   id_cost_center: number
   name: string

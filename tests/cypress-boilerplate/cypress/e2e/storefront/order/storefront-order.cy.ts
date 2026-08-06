@@ -33,7 +33,7 @@ interface OrderDynamicFixtures {
 
 interface OrderStaticFixtures {
   defaultPassword: string
-  paymentMethodName: string
+  paymentMethodKey: string
 }
 
 const storefrontCartScenarios = new StorefrontCartScenarios()
@@ -84,7 +84,7 @@ context('Customer orders', () => {
     cartPage.getCheckoutButton().click()
     checkoutAddress.provideExistingAddress()
     checkoutShipping.provideShipment(dynamicFixtures.shipmentMethod.name)
-    checkoutPayment.providePayment(staticFixtures.paymentMethodName)
+    checkoutPayment.providePayment(staticFixtures.paymentMethodKey)
     checkoutSummary.selectCostCenter(dynamicFixtures.costCenter.name)
     checkoutSummary.selectBudget(dynamicFixtures.budget.name)
     checkoutSummary.applyCostCenterAndBudget()
@@ -128,8 +128,8 @@ context('Customer orders', () => {
     storefrontCustomerOverviewPage.visit()
     storefrontCustomerOverviewPage.getFirstOrderViewActionButton().click()
 
-    // assert we are on the correct order details page
-    storefrontCustomerOrderDetailsPage.getPageTitle().contains('Order Details')
+    // assert we are on the correct order details page - by URL, since the heading is translated
+    cy.location('pathname').should('include', '/customer/order/details')
     storefrontCustomerOrderDetailsPage
       .getOrderInfoBlockOrderReference()
       .should('contain', createdOrderReference)

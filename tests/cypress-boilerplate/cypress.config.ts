@@ -2,6 +2,54 @@ import { defineConfig } from 'cypress'
 import * as fs from 'fs'
 import { config as dotenvConfig } from 'dotenv'
 
+interface ResolvedStore {
+  name: string
+  default_locale_iso_code: string
+  default_currency_iso_code: string
+  countries: string[]
+}
+
+const resolveStoreContext = async (
+  env: Record<string, string>
+): Promise<Record<string, string>> => {
+  const endpoint = `${env.GLUE_BACKEND_URL}/dynamic-fixtures`
+  const response = await fetch(endpoint, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/vnd.api+json' },
+    body: JSON.stringify({
+      data: {
+        type: 'dynamic-fixtures',
+        attributes: {
+          synchronize: false,
+          operations: [
+            { type: 'helper', name: 'getAllowedStore', key: 'store' },
+          ],
+        },
+      },
+    }),
+  })
+
+  if (!response.ok) {
+    throw new Error(
+      `Could not resolve the store context from ${endpoint} (${response.status}). The same endpoint creates every fixture, so no spec can run without it.`
+    )
+  }
+
+  const store: ResolvedStore = (await response.json()).data.attributes.data
+
+  if (!store?.name) {
+    throw new Error(`${endpoint} returned no store - this shop has none.`)
+  }
+
+  return {
+    STORE_NAME: store.name,
+    LOCALE_NAME: store.default_locale_iso_code,
+    LOCALE_PREFIX: store.default_locale_iso_code.split('_')[0].toLowerCase(),
+    CURRENCY_CODE: store.default_currency_iso_code,
+    COUNTRY_ISO2: store.countries[0],
+  }
+}
+
 export default defineConfig({
   watchForFileChanges: false,
   screenshotOnRunFailure: true,
@@ -107,6 +155,11 @@ export default defineConfig({
 
       // Set GLUE_URL as baseUrl from the loaded environment variables
       config.baseUrl = config.env.GLUE_URL
+
+      //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      // STORE CONTEXT (resolved from the shop - never configured)
+      //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      Object.assign(config.env, await resolveStoreContext(config.env))
 
       return config
     },

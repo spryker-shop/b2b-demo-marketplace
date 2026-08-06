@@ -77,7 +77,7 @@ const ordersSchema = {
                         type: 'array',
                         items: { type: 'string' },
                       },
-                      image: { type: 'string' },
+                      image: { type: ['string', 'null'] },
                     },
                   },
                   calculatedDiscounts: {

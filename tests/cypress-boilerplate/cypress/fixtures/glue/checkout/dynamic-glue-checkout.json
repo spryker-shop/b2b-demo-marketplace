@@ -16,6 +16,12 @@
         },
         {
           "type": "helper",
+          "name": "getCurrencyByIsoCode",
+          "key": "currencyTransfer",
+          "arguments": ["{{CURRENCY_CODE}}"]
+        },
+        {
+          "type": "helper",
           "name": "haveTaxSet",
           "key": "taxSet",
           "arguments": [{}]
@@ -143,8 +149,10 @@
               "skuProductAbstract": "#product.abstract_sku",
               "skuProduct": "#product.sku",
               "moneyValue": {
-                "netAmount": 30000,
-                "grossAmount": 30000
+                "netAmount": "{{PRODUCT_PRICE_ABOVE_THRESHOLD}}",
+                "grossAmount": "{{PRODUCT_PRICE_ABOVE_THRESHOLD}}",
+                "currency": "#currencyTransfer",
+                "store": "#store"
               }
             }
           ]
@@ -157,8 +165,10 @@
             {
               "skuProductAbstract": "#product.abstract_sku",
               "moneyValue": {
-                "netAmount": 30000,
-                "grossAmount": 30000
+                "netAmount": "{{PRODUCT_PRICE_ABOVE_THRESHOLD}}",
+                "grossAmount": "{{PRODUCT_PRICE_ABOVE_THRESHOLD}}",
+                "currency": "#currencyTransfer",
+                "store": "#store"
               }
             }
           ]
@@ -176,13 +186,47 @@
         },
         {
           "type": "helper",
+          "name": "haveActiveMerchantWithStore",
+          "key": "merchant",
+          "arguments": [
+            {
+              "storeRelation": {
+                "idStores": ["#store.id_store"]
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveStock",
+          "key": "merchantWarehouse",
+          "arguments": [
+            {
+              "storeRelation": {
+                "idStores": ["#store.id_store"]
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantStock",
+          "arguments": [
+            {
+              "idStock": "#merchantWarehouse.id_stock",
+              "idMerchant": "#merchant.id_merchant"
+            }
+          ]
+        },
+        {
+          "type": "helper",
           "name": "haveProductOffer",
           "key": "productOffer",
           "arguments": [
             {
               "idProductConcrete": "#product.id_product_concrete",
               "concreteSku": "#product.sku",
-              "merchantReference": "{{MERCHANT_REFERENCE}}",
+              "merchantReference": "#merchant.merchant_reference",
               "isActive": true,
               "approvalStatus": "approved"
             }
@@ -202,7 +246,7 @@
               "productOfferReference": "#productOffer.product_offer_reference",
               "isNeverOutOfStock": true,
               "stock": {
-                "name": "{{MERCHANT_WAREHOUSE_NAME}}"
+                "name": "#merchantWarehouse.name"
               }
             }
           ]

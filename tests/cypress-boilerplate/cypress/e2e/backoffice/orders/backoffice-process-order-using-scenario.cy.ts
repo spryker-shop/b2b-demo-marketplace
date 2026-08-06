@@ -1,5 +1,4 @@
 import checkoutData from '@fixtures/checkout-data.json'
-import userCredentials from '@fixtures/user-data.json'
 import { BackofficeLoginPage } from '@support/page-objects/backoffice/login/backoffice-login-page'
 import { BackofficeOrderListPage } from '@support/page-objects/backoffice/order-management/backoffice-order-list-page'
 import { BackofficeOrderDetailsPage } from '@support/page-objects/backoffice/order-management/backoffice-order-details-page'
@@ -11,9 +10,11 @@ import {
   PriceProductFixture,
   ProductFixture,
   ProductOfferFixture,
+  UserFixture,
 } from '@support/types/dynamic-fixtures'
 
 interface BackofficeOrderDynamicFixtures {
+  backofficeUser: UserFixture
   customer: CustomerFixture
   product: ProductFixture
   productPrice: PriceProductFixture
@@ -64,8 +65,8 @@ context('Order management', () => {
     // make sure the location from which you run cypress tests has access to Spryker env
     omsTransitionScenarios.triggerOmsTransition()
     backofficeLoginPage.login(
-      userCredentials.backofficeUser.email,
-      userCredentials.backofficeUser.password
+      dynamicFixtures.backofficeUser.username,
+      staticFixtures.defaultPassword
     )
     backofficeOrderListPage.visit()
     backofficeOrderListPage.filterOrdersByReference(createdOrderReference)
@@ -97,8 +98,8 @@ context('Order management', () => {
 
   it('checks customer email in order details page', () => {
     backofficeLoginPage.login(
-      userCredentials.backofficeUser.email,
-      userCredentials.backofficeUser.password
+      dynamicFixtures.backofficeUser.username,
+      staticFixtures.defaultPassword
     )
     backofficeOrderListPage.visit()
     backofficeOrderListPage.filterOrdersByReference(createdOrderReference)
