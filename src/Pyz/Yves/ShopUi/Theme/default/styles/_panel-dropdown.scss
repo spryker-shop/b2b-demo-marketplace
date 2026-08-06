@@ -1,3 +1,5 @@
+@use 'shared' as *;
+
 @mixin shop-ui-nav-pill($name: '.nav-pill', $dropdown-width: rem(430)) {
     #{$name} {
         position: relative;
