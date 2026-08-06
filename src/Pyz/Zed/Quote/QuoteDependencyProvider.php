@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\Quote;
 
+use Spryker\Zed\AvailabilityCartConnector\Communication\Plugin\Quote\AvailabilityLockedQuoteExpandBeforeCreatePlugin;
 use Spryker\Zed\Comment\Communication\Plugin\Quote\CommentThreadQuoteExpanderPlugin;
 use Spryker\Zed\Currency\Communication\Plugin\Quote\DefaultCurrencyQuoteExpandBeforeCreatePlugin;
 use Spryker\Zed\Currency\Communication\Plugin\Quote\QuoteCurrencyValidatorPlugin;
@@ -154,6 +155,7 @@ class QuoteDependencyProvider extends SprykerQuoteDependencyProvider
     {
         return [
             new DefaultCurrencyQuoteExpandBeforeCreatePlugin(),
+            new AvailabilityLockedQuoteExpandBeforeCreatePlugin(), #QuotationProcessFeature
         ];
     }
 
