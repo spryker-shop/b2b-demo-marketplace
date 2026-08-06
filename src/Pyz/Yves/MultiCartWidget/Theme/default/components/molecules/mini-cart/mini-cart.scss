@@ -1,4 +1,4 @@
-@import '~src/ShopUi/styles/panel-dropdown';
+@use '~src/ShopUi/styles/panel-dropdown' as *;
 
 @mixin shop-ui-mini-cart($name: '.mini-cart') {
     @include shop-ui-panel-dropdown($name) {

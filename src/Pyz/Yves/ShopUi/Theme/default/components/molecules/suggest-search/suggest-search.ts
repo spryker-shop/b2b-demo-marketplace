@@ -21,7 +21,7 @@ export default class SuggestSearch extends SuggestSearchCore {
         this.closeTrigger = <HTMLElement>document.getElementsByClassName(this.closeClassName)[0];
         this.wrapper = <HTMLElement>document.getElementsByClassName(this.wrapperClassName)[0];
 
-        super.readyCallback();
+        super.init();
     }
 
     protected mapEvents(): void {

@@ -62,9 +62,13 @@ image:
             - otel
             - amqp
         ini:
-            'opcache.revalidate_freq': 0
+            'opcache.enable': 1
             'opcache.enable_cli': 0
-            'opcache.enable': 0
+            'opcache.validate_timestamps': 0
+            # Keep at <=50% of the service memory limit
+            'opcache.memory_consumption': 128
+            'opcache.max_accelerated_files': 100000
+            'opcache.interned_strings_buffer': 32
     node:
         version: 24
         npm: 10

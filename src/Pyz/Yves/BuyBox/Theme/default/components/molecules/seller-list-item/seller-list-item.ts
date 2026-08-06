@@ -3,8 +3,6 @@ import Component from 'ShopUi/models/component';
 export default class SellerListItem extends Component {
     protected menu: HTMLDetailsElement;
 
-    protected readyCallback(): void {}
-
     protected init(): void {
         this.menu = <HTMLDetailsElement>this.getElementsByClassName(`${this.jsName}__menu`)[0];
 

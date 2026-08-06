@@ -3,8 +3,6 @@ import Component from 'ShopUi/models/component';
 export default class StickyBodyToggler extends Component {
     protected triggers: HTMLElement[];
 
-    protected readyCallback(): void {}
-
     protected init(): void {
         this.triggers = <HTMLElement[]>Array.from(document.getElementsByClassName(this.triggerClassName));
         this.mapEvents();

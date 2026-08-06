@@ -25,4 +25,15 @@ class PropelConfig extends SprykerPropelConfig
     {
         return true;
     }
+
+    /**
+     * @return array<string, array<string>>
+     */
+    public function getWhitelistForAllowedAttributeValueChanges(): array
+    {
+        return [
+            'spy_product_page_search.schema.xml' => ['type'],
+            'spy_product_review_search.schema.xml' => ['type'],
+        ];
+    }
 }
