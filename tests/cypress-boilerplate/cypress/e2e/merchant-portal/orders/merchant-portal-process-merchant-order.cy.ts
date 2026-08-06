@@ -1,4 +1,4 @@
-import checkoutData from '@fixtures/checkout-data.json'
+import checkoutData from '@fixtures/shared/checkout-data.json'
 import { MerchantLoginPage } from '@support/page-objects/merchant-portal/login/merchant-portal-login-page'
 import { MerchantOrderListPage } from '@support/page-objects/merchant-portal/order-management/merchant-portal-order-list-page'
 import { MerchantOrderDetailsPage } from '@support/page-objects/merchant-portal/order-management/merchant-portal-order-details-page'

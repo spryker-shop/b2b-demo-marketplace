@@ -1,4 +1,4 @@
-import checkoutData from '@fixtures/checkout-data.json'
+import checkoutData from '@fixtures/shared/checkout-data.json'
 
 import { AccessTokens } from '@support/glue-endpoints/authentication/access-tokens'
 import { Orders } from '@support/glue-endpoints/order/orders'

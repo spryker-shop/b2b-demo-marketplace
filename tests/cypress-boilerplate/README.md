@@ -219,21 +219,43 @@ addresses for the checkout address step) was made available.
 ### One place for store-dependent values
 
 Values that depend on how the project is configured are never repeated inside fixture
-files. They are written as `{{PLACEHOLDER}}` and resolved from the environment files in
-`.envs/` when the fixture is loaded (this applies to static fixtures too):
+files. They are written as `{{PLACEHOLDER}}` and interpolated from `Cypress.env(...)` when
+the fixture is loaded (this applies to static fixtures too). An unresolved placeholder
+fails the spec with a clear error rather than silently creating data in the wrong store.
+
+Those placeholders come from two different sources, and the distinction matters:
+
+**1. Store context — resolved from the shop, never configured.** Before any spec runs,
+`cypress.config.ts` calls the same DynamicFixtures API the fixtures use
+(`POST <GLUE_BACKEND_URL>/dynamic-fixtures` with the `getAllowedStore` helper) and derives:
+
+| Placeholder     | Derived from                                        |
+| --------------- | --------------------------------------------------- |
+| `STORE_NAME`    | `store.name`                                        |
+| `LOCALE_NAME`   | `store.default_locale_iso_code` (e.g. `en_US`)      |
+| `LOCALE_PREFIX` | language part of the locale, lowercased (e.g. `en`) |
+| `CURRENCY_CODE` | `store.default_currency_iso_code`                   |
+| `COUNTRY_ISO2`  | `store.countries[0]`                                |
+
+These are **not** in `.envs/` and must not be added there — they are applied with
+`Object.assign` after the env files load, so a same-named entry in `.envs/` would be
+silently overwritten and have no effect. When the project's store set changes — say `DE` is
+replaced by `PL` — nothing needs editing: the next run queries the shop and every fixture
+payload follows automatically. If the shop has no store, or the endpoint is unreachable,
+Cypress fails at startup with an explicit message instead of running against wrong data.
+
+**2. Values that genuinely are configuration** live in `.envs/.env.<environment>`, because
+nothing in the shop can be queried for them:
 
 ```
-STORE_NAME=DE
-LOCALE_NAME=en_US
-CURRENCY_CODE=EUR
-COUNTRY_ISO2=DE
 DEFAULT_PASSWORD=change123
+PRODUCT_PRICE_ABOVE_THRESHOLD=60000
 ```
 
-When the project's store set changes — say `DE` is replaced by `PL` — changing
-`STORE_NAME` (and the locale/currency/country that go with it) in `.envs/.env.<environment>`
-is enough; every fixture payload follows. An unresolved placeholder fails the spec with a
-clear error rather than silently creating data in the wrong store.
+`PRODUCT_PRICE_ABOVE_THRESHOLD` is the fixture product's price in minor units. It has to
+clear the store's hard-minimum order threshold while staying under its soft-minimum one
+(`spy_sales_order_threshold`), and no API exposes those values — hence it is configured
+rather than derived.
 
 ### What still can't be generated
 
