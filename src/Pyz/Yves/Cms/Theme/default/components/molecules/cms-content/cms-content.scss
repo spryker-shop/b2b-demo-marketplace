@@ -1,0 +1,285 @@
+@mixin cms-cms-content($name: '.cms-content') {
+    #{$name} {
+        @include typography(body-lg);
+        color: var(--text-primary);
+
+        > *:first-child {
+            margin-top: 0;
+        }
+
+        > *:last-child {
+            margin-bottom: 0;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            margin: var(--scale-32) 0 var(--scale-12);
+
+            &:first-child {
+                margin-top: 0;
+            }
+        }
+
+        h1 {
+            @include typography(heading-xl);
+        }
+
+        h2 {
+            @include typography(heading-lg);
+        }
+
+        h3 {
+            @include typography(heading-md);
+        }
+
+        h4,
+        h5,
+        h6 {
+            @include typography(heading-sm);
+        }
+
+        p {
+            margin: 0 0 var(--scale-16);
+        }
+
+        a {
+            color: var(--text-brand);
+            text-decoration: underline;
+
+            &:hover,
+            &:focus {
+                color: var(--text-brand);
+                text-decoration: none;
+            }
+        }
+
+        b,
+        strong {
+            font-weight: var(--font-weight-semibold);
+        }
+
+        i,
+        em {
+            font-style: italic;
+        }
+
+        u {
+            text-decoration: underline;
+        }
+
+        s,
+        strike,
+        del {
+            text-decoration: line-through;
+        }
+
+        sub,
+        sup {
+            font-size: var(--font-size-12);
+            line-height: 0;
+            position: relative;
+            vertical-align: baseline;
+        }
+
+        sub {
+            bottom: -0.25em;
+        }
+
+        sup {
+            top: -0.5em;
+        }
+
+        small {
+            font-size: var(--body-md-size);
+        }
+
+        mark {
+            background-color: var(--background-state-warning-subtle);
+            color: var(--text-primary);
+            padding: 0 var(--scale-2);
+        }
+
+        abbr[title] {
+            text-decoration: underline dotted;
+            cursor: help;
+        }
+
+        hr {
+            height: 0;
+            border-top: var(--stroke-sm) solid var(--border-default);
+            margin: var(--scale-24) 0;
+        }
+
+        ul,
+        ol {
+            margin: 0 0 var(--scale-16);
+            padding-left: var(--scale-24);
+        }
+
+        ul {
+            list-style: disc outside;
+
+            ul {
+                list-style-type: circle;
+            }
+
+            ul ul {
+                list-style-type: square;
+            }
+        }
+
+        ol {
+            list-style: decimal outside;
+
+            ol {
+                list-style-type: lower-alpha;
+            }
+
+            ol ol {
+                list-style-type: lower-roman;
+            }
+        }
+
+        li {
+            margin-bottom: var(--scale-4);
+
+            > ul,
+            > ol {
+                margin: var(--scale-4) 0 0;
+            }
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        dl {
+            margin: 0 0 var(--scale-16);
+        }
+
+        dt {
+            font-weight: var(--font-weight-semibold);
+        }
+
+        dd {
+            margin: 0 0 var(--scale-8);
+            padding-left: var(--scale-16);
+        }
+
+        blockquote {
+            margin: var(--scale-24) 0;
+            padding: var(--scale-4) var(--scale-20);
+            border-left: var(--stroke-lg) solid var(--border-brand);
+            color: var(--text-secondary);
+            font-style: italic;
+
+            cite {
+                display: block;
+                margin-top: var(--scale-8);
+                color: var(--text-tertiary);
+                font-style: normal;
+                font-size: var(--body-md-size);
+            }
+        }
+
+        code,
+        kbd,
+        samp {
+            background-color: var(--background-subtle);
+            border-radius: var(--radius-sm);
+            padding: var(--scale-2) var(--scale-6);
+            font-family: monospace;
+            font-size: var(--body-md-size);
+        }
+
+        pre {
+            background-color: var(--background-subtle);
+            border-radius: var(--radius-md);
+            margin: 0 0 var(--scale-16);
+            padding: var(--scale-16);
+            overflow-x: auto;
+            font-family: monospace;
+            font-size: var(--body-md-size);
+            line-height: var(--font-line-height-20);
+            white-space: pre;
+
+            code {
+                background: none;
+                padding: 0;
+                border-radius: 0;
+            }
+        }
+
+        img {
+            display: inline-block;
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--radius-sm);
+        }
+
+        figure {
+            margin: var(--scale-24) 0;
+            max-width: 100%;
+        }
+
+        figcaption {
+            margin-top: var(--scale-8);
+            color: var(--text-tertiary);
+            font-size: var(--body-md-size);
+            line-height: var(--font-line-height-20);
+        }
+
+        iframe,
+        video,
+        embed,
+        object {
+            display: block;
+            max-width: 100%;
+            margin: var(--scale-24) 0;
+            border: 0;
+        }
+
+        /**
+            * Editors emit fixed-width tables that overflow on narrow screens,
+            * so the table scrolls inside its own wrapper instead of the page.
+            */
+        table {
+            display: block;
+            width: 100%;
+            margin: 0 0 var(--scale-16);
+            overflow-x: auto;
+            border-collapse: collapse;
+            font-size: var(--body-md-size);
+
+            @include helper-breakpoint-media-min($lg) {
+                display: table;
+            }
+        }
+
+        caption {
+            padding-bottom: var(--scale-8);
+            color: var(--text-tertiary);
+            font-size: var(--body-md-size);
+            text-align: left;
+        }
+
+        th,
+        td {
+            padding: var(--scale-8) var(--scale-12);
+            border: var(--stroke-sm) solid var(--border-default);
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: var(--background-subtle);
+            font-weight: var(--font-weight-semibold);
+        }
+
+        @content;
+    }
+}
