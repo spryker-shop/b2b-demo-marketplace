@@ -67,17 +67,20 @@ jobs:
                     sudo sysctl -w vm.max_map_count=262144
                     ulimit -n 65536
 
-            # Must land before the boot so the dump is part of the baked image.
+            # Must land before the boot so the dump is part of the baked image. Marketplace cells
+            # only: the b2b cells uninstall marketplace and import b2b_full_EU, a different dataset
+            # from the one this dump is built from, so they keep importing for themselves.
             -   uses: actions/download-artifact@v6
+                if: matrix.cell.repository_id != 'b2b'
                 with:
                     name: spryker-app-db
 
             -   name: Run project in Docker
-                # Build-once: restore the shared spryker-app-db dump (full_EU) instead of importing
-                # demodata per shard. That removes the per-shard publish race which left
-                # store-storage incomplete (defaultLocaleIsoCode null -> 500 in the StoreSwitcher
-                # widget); the sync gate below turns any remaining incompleteness into a hard build
-                # failure rather than a flaky test.
+                # Marketplace cells restore the shared spryker-app-db dump (full_EU) instead of
+                # importing demodata per shard; the sync gate below then asserts the storage and
+                # search counts match the database before any test runs. The b2b cells import for
+                # themselves: uninstalling marketplace rewrites the demodata path to b2b_full_EU,
+                # so this dump is the wrong dataset for them.
                 run: |
                     git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
                     if [ "${{ matrix.cell.repository_id }}" = "b2b" ]; then
@@ -88,10 +91,15 @@ jobs:
                     fi
                     docker/sdk boot .github/deploy/deploy.ci.acceptance.mariadb.cypress.yml
                     sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local' >> /etc/hosts"
-                    SPRYKER_PIPELINE=ci.restore-db.stage2 docker/sdk up -t
+                    if [ "${{ matrix.cell.repository_id }}" = "b2b" ]; then
+                        docker/sdk up -t
+                    else
+                        SPRYKER_PIPELINE=ci.restore-db.stage2 docker/sdk up -t
+                    fi
                     docker/sdk cli composer dump-autoload -o -a --apcu -q
 
             -   name: Validate sync completeness
+                if: matrix.cell.repository_id != 'b2b'
                 uses: ./.github/actions/validate-sync-completeness
 
             -   name: Run Tests
