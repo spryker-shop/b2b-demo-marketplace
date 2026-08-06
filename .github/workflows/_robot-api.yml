@@ -25,6 +25,11 @@ jobs:
             #    with:
             #        composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
 
+            # Must land before the boot so the dump is part of the baked image.
+            -   uses: actions/download-artifact@v6
+                with:
+                    name: spryker-robot-db
+
             #  needed for mount:baked
             -   name: Install robotframework-suite-tests folder
                 run: |
@@ -41,11 +46,17 @@ jobs:
                     ulimit -n 65536
 
             -   name: Install Project
+                # Build-once: restore the shared spryker-robot-db dump (full_ROBOT) via
+                # ci.restore-db.stage2 instead of importing demodata here. The deploy file's own
+                # pipeline key is untouched; only SPRYKER_PIPELINE is overridden.
                 run: |
                     git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
                     docker/sdk boot .github/deploy/deploy.ci.api.mariadb.robot.yml
                     #sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local' >> /etc/hosts"
-                    docker/sdk up -t
+                    SPRYKER_PIPELINE=ci.restore-db.stage2 docker/sdk up -t
+
+            -   name: Validate sync completeness
+                uses: ./.github/actions/validate-sync-completeness
 
             -   name: Run Tests
                 id: tests
@@ -97,6 +108,11 @@ jobs:
         steps:
             -   uses: actions/checkout@v4
 
+            # Must land before the boot so the dump is part of the baked image.
+            -   uses: actions/download-artifact@v6
+                with:
+                    name: spryker-robot-db
+
             -   name: Configure sysctl limits
                 run: |
                     sudo sysctl -w vm.swappiness=10
@@ -107,14 +123,22 @@ jobs:
                     chmod +x uninstall-frontend-marketplace.sh
 
             -   name: Install Project
+                # Build-once: restore the shared spryker-robot-db dump (full_ROBOT). This variant
+                # uninstalls marketplace first, so the restored DB is rebuilt against
+                # non-marketplace code. Watch on CI: the dump is built from the mp_b2b
+                # (marketplace-installed) path — if these tests fail on marketplace residue, the
+                # fallback is a dedicated non-marketplace robot dump.
                 run: |
                     git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
                     composer require --dev spryker/robotframework-suite-tests:"dev-b2b-icp-starting-point" --ignore-platform-reqs
                     ./uninstall-frontend-marketplace.sh
                     ./uninstall-marketplace-modules.sh
                     docker/sdk boot .github/deploy/deploy.ci.api.mariadb.robot.yml
-                    docker/sdk up -t
+                    SPRYKER_PIPELINE=ci.restore-db.stage2 docker/sdk up -t
                     docker/sdk cli composer dump-autoload -o -a --apcu -q
+
+            -   name: Validate sync completeness
+                uses: ./.github/actions/validate-sync-completeness
 
             -   name: Run Tests
                 id: tests

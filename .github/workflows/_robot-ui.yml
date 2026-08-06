@@ -21,6 +21,11 @@ jobs:
         steps:
             -   uses: actions/checkout@v4
 
+            # Must land before the boot so the dump is part of the baked image.
+            -   uses: actions/download-artifact@v6
+                with:
+                    name: spryker-robot-db
+
             -   uses: ramsey/composer-install@v3
                 with:
                     composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
@@ -41,12 +46,26 @@ jobs:
                     ulimit -n 65536
 
             -   name: Install Project
+                # Build-once: restore the shared spryker-robot-db dump (full_ROBOT) via
+                # ci.restore-db.stage2 instead of importing demodata here. No cost-center
+                # deactivation hack (unlike suite): full_ROBOT carries no cost centers, so the
+                # checkout/budget deadlock that hack works around does not arise here.
                 run: |
                     git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
                     docker/sdk boot .github/deploy/deploy.ci.acceptance.mariadb.robot.yml
                     #sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local scheduler.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local date-time-configurator-example.spryker.local' >> /etc/hosts"
-                    docker/sdk up -t
+                    SPRYKER_PIPELINE=ci.restore-db.stage2 docker/sdk up -t
                     docker/sdk cli composer dump-autoload -o -a --apcu -q
+
+            -   name: Validate sync completeness
+                uses: ./.github/actions/validate-sync-completeness
+
+            -   name: Pre-warm Yves Twig cache
+                # The restore pipeline's twig warmers don't compile CMS string templates (built
+                # lazily by the CMS content renderer on first render), so pabot workers race on
+                # Twig's FilesystemCache::mkdir. One sequential render compiles it up front.
+                run: |
+                    docker/sdk exec robot-framework curl -sf http://yves.eu.spryker.local/ -o /dev/null || true
 
             -   name: Run Dynamic Tests Set
                 id: run_dynamic_tests

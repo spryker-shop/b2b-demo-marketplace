@@ -184,8 +184,23 @@ jobs:
 
     # Functional lane is project applicable; the acceptance & API lane is product-only.
     # Both live in _codeception.yml, annotated per job there.
-    codeception:
+    # Imports the demodata once and publishes it as a dump, so each consumer restores it instead
+    # of importing independently. Not draft-tiered: codeception always runs, so its dump must too.
+    build-db:
+        needs: [js-validation]
+        uses: ./.github/workflows/_build-db.yml
+        secrets: inherit
+
+    # The ROBOT dataset differs from the EU one, so the robot lanes need their own dump.
+    # Draft-tiered to match its consumers — no point building it when they skip.
+    build-robot-db:
         needs: [js-validation, validation]
+        if: ${{ github.event_name != 'pull_request' || github.event.pull_request.draft == false }}
+        uses: ./.github/workflows/_build-robot-db.yml
+        secrets: inherit
+
+    codeception:
+        needs: [js-validation, validation, build-db]
         uses: ./.github/workflows/_codeception.yml
         secrets: inherit
 
@@ -198,7 +213,7 @@ jobs:
 
     # [remove for project]
     robot-api:
-        needs: [validation]
+        needs: [validation, build-robot-db]
         # Draft PRs skip the E2E tier; it runs on ready_for_review.
         if: ${{ github.event_name != 'pull_request' || github.event.pull_request.draft == false }}
         uses: ./.github/workflows/_robot-api.yml
@@ -206,7 +221,7 @@ jobs:
 
     # [remove for project]
     robot-ui:
-        needs: [js-validation, validation]
+        needs: [js-validation, validation, build-robot-db]
         # Draft PRs skip the E2E tier; it runs on ready_for_review.
         if: ${{ github.event_name != 'pull_request' || github.event.pull_request.draft == false }}
         uses: ./.github/workflows/_robot-ui.yml
@@ -214,7 +229,7 @@ jobs:
 
     # [remove for project]
     cypress:
-        needs: [js-validation, validation]
+        needs: [js-validation, validation, build-db]
         # Draft PRs skip the E2E tier; it runs on ready_for_review.
         if: ${{ github.event_name != 'pull_request' || github.event.pull_request.draft == false }}
         uses: ./.github/workflows/_cypress.yml

@@ -34,11 +34,23 @@ jobs:
                     sudo sysctl -w vm.max_map_count=262144
                     ulimit -n 65536
 
+            # Must land before the boot so the dump is part of the baked image.
+            -   uses: actions/download-artifact@v6
+                with:
+                    name: spryker-app-db
+
             -   name: Run docker
+                # Build-once: restore the shared spryker-app-db dump (full_EU) via
+                # ci.restore-db.stage2 instead of importing demodata here. The deploy file's own
+                # pipeline key is untouched; only SPRYKER_PIPELINE is overridden for this
+                # invocation. codecept fixtures still runs afterwards.
                 run: |
                     git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
                     docker/sdk boot .github/deploy/deploy.ci.acceptance.mariadb.yml
-                    docker/sdk up -t
+                    SPRYKER_PIPELINE=ci.restore-db.stage2 docker/sdk up -t
+
+            -   name: Validate sync completeness
+                uses: ./.github/actions/validate-sync-completeness
 
             -   name: Run Fixtures
                 run: |
@@ -101,11 +113,23 @@ jobs:
                 with:
                     composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
 
+            # Must land before the boot so the dump is part of the baked image.
+            -   uses: actions/download-artifact@v6
+                with:
+                    name: spryker-app-db
+
             -   name: Run docker
+                # Build-once: restore the shared spryker-app-db dump (full_EU) via
+                # ci.restore-db.stage2 instead of importing demodata here. The functional
+                # pipeline's own demodata step is bypassed by the override only.
                 run: |
                     git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
                     docker/sdk boot .github/deploy/deploy.ci.functional.mariadb.yml -a --apcu
-                    docker/sdk up -t
+                    SPRYKER_PIPELINE=ci.restore-db.stage2 docker/sdk up -t
+                    docker/sdk cli composer dump-autoload -o -a --apcu -q
+
+            -   name: Validate sync completeness
+                uses: ./.github/actions/validate-sync-completeness
 
             -   name: Run Tests
                 run: docker/sdk testing codecept run -c tests/codeception.ci.functional.yml
