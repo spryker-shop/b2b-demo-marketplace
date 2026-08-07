@@ -1,5 +1,8 @@
+@use 'sass:map';
+@use '../settings/font' as *;
+
 @function fw($weight) {
-    @return map-get($setting-font-weight, $weight);
+    @return map.get($setting-font-weight, $weight);
 }
 
 @mixin typography($name) {
