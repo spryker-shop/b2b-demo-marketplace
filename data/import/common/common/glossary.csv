@@ -11,6 +11,8 @@ cart.price,Preis,de_DE
 cart.price,Price,en_US
 cart.shipping.order-item,+ Versand,de_DE
 cart.shipping.order-item,+ Shipping,en_US
+self_service_portal.recurring_order.add_product.error.service_delivery_required,Service product %sku% does not support delivery. Please remove it or choose a different product.,en_US
+self_service_portal.recurring_order.add_product.error.service_delivery_required,Das Serviceprodukt %sku% unterstützt keine Lieferung. Bitte entfernen Sie es oder wählen Sie ein anderes Produkt.,de_DE
 cart.shipping,Versand,de_DE
 cart.shipping,Shipping,en_US
 cart.total,Gesamt,de_DE
@@ -6656,6 +6658,20 @@ purchasing_control.budget.selector.label,Budget,en_US
 purchasing_control.budget.selector.label,Budget,de_DE
 purchasing_control.budget.selector.placeholder,Select budget,en_US
 purchasing_control.budget.selector.placeholder,Budget wählen,de_DE
+purchasing_control.recurring_order.budget.total,Total budget,en_US
+purchasing_control.recurring_order.budget.total,Gesamtbudget,de_DE
+purchasing_control.recurring_order.budget.used,Used,en_US
+purchasing_control.recurring_order.budget.used,Verbraucht,de_DE
+purchasing_control.recurring_order.budget.remaining,Remaining,en_US
+purchasing_control.recurring_order.budget.remaining,Verbleibend,de_DE
+purchasing_control.recurring_order.budget.usage,%used% used of %total%,en_US
+purchasing_control.recurring_order.budget.usage,%used% von %total% verwendet,de_DE
+purchasing_control.recurring_order.budget_cost_center_mismatch,The selected budget does not belong to the selected cost center.,en_US
+purchasing_control.recurring_order.budget_cost_center_mismatch,Das ausgewählte Budget gehört nicht zur ausgewählten Kostenstelle.,de_DE
+purchasing_control.recurring_order.cost_center_required,Select cost center,en_US
+purchasing_control.recurring_order.cost_center_required,Kostenstelle wählen,de_DE
+purchasing_control.recurring_order.budget_required,Select budget,en_US
+purchasing_control.recurring_order.budget_required,Budget wählen,de_DE
 purchasing_control.budget.remaining,Remaining budget,en_US
 purchasing_control.budget.remaining,Verbleibendes Budget,de_DE
 purchasing_control.budget.apply_warning,Please apply the budget.,en_US
@@ -6680,6 +6696,10 @@ permission.name.ManageCostCentersPermissionPlugin,Manage cost centers,en_US
 permission.name.ManageCostCentersPermissionPlugin,Kostenstellen verwalten,de_DE
 purchasing_control.validation.inactive-cost-center,The selected cost center is no longer active. Please select another cost center or contact your manager.,en_US
 purchasing_control.validation.inactive-cost-center,Die ausgewählte Kostenstelle ist nicht mehr aktiv. Bitte wählen Sie eine andere Kostenstelle oder kontaktieren Sie Ihren Manager.,de_DE
+purchasing_control.validation.inactive-budget,The selected budget is no longer available. Please select another budget or contact your manager.,en_US
+purchasing_control.validation.inactive-budget,Das ausgewählte Budget ist nicht mehr verfügbar. Bitte wählen Sie ein anderes Budget oder kontaktieren Sie Ihren Manager.,de_DE
+purchasing_control.validation.approval-rule-not-supported,"The selected budget requires approval and cannot be used for a recurring order. Please select another budget.",en_US
+purchasing_control.validation.approval-rule-not-supported,"Das ausgewählte Budget erfordert eine Genehmigung und kann nicht für eine wiederkehrende Bestellung verwendet werden. Bitte wählen Sie ein anderes Budget aus.",de_DE
 purchasing_control.budget.no_budgets_found,No budgets available for the selected cost center.,en_US
 purchasing_control.budget.no_budgets_found,Keine Budgets für die ausgewählte Kostenstelle verfügbar.,de_DE
 purchasing_control.budget.apply,Apply,en_US
@@ -7060,6 +7080,22 @@ recurring_orders.checkout.schedule_name_label,Schedule name,en_US
 recurring_orders.checkout.schedule_name_label,Name des Zeitplans,de_DE
 recurring_orders.checkout.section_title,Recurring Order,en_US
 recurring_orders.checkout.section_title,Wiederkehrende Bestellung,de_DE
+recurring_orders.checkout.start_date_label,Start date,en_US
+recurring_orders.checkout.start_date_label,Startdatum,de_DE
+recurring_orders.checkout.start_date_tooltip,"The date your first recurring delivery is placed. Today's order is placed as normal, recurring deliveries then repeat on your selected frequency from this date.",en_US
+recurring_orders.checkout.start_date_tooltip,"Das Datum, an dem Ihre erste wiederkehrende Lieferung erfolgt. Die heutige Bestellung wird wie gewohnt aufgegeben, wiederkehrende Lieferungen wiederholen sich danach ab diesem Datum in der von Ihnen gewählten Häufigkeit.",de_DE
+recurring_orders.checkout.start_date_tooltip_label,More information about the start date,en_US
+recurring_orders.checkout.start_date_tooltip_label,Weitere Informationen zum Startdatum,de_DE
+recurring_orders.checkout.first_order_notice,Your first recurring order starts on %date%,en_US
+recurring_orders.checkout.first_order_notice,Ihre erste wiederkehrende Bestellung beginnt am %date%,de_DE
+recurring_orders.checkout.validation.start_date_required,Please choose a start date.,en_US
+recurring_orders.checkout.validation.start_date_required,Bitte wählen Sie ein Startdatum aus.,de_DE
+recurring_orders.checkout.validation.start_date_in_past,The start date cannot be in the past.,en_US
+recurring_orders.checkout.validation.start_date_in_past,Das Startdatum darf nicht in der Vergangenheit liegen.,de_DE
+recurring_orders.checkout.error.start_date_in_past,The recurring order start date cannot be in the past.,en_US
+recurring_orders.checkout.error.start_date_in_past,Das Startdatum der wiederkehrenden Bestellung darf nicht in der Vergangenheit liegen.,de_DE
+recurring_orders.checkout.error.start_date_required,Please choose a start date for the recurring order.,en_US
+recurring_orders.checkout.error.start_date_required,Bitte wählen Sie ein Startdatum für die wiederkehrende Bestellung aus.,de_DE
 recurring_orders.detail.access_denied,You do not have access to this recurring order.,en_US
 recurring_orders.detail.access_denied,Sie haben keinen Zugriff auf diese wiederkehrende Bestellung.,de_DE
 recurring_orders.detail.action.error,An error occurred while processing the action. Please try again.,en_US
@@ -7126,12 +7162,40 @@ recurring_orders.detail.order_items.empty,No items found.,en_US
 recurring_orders.detail.order_items.empty,Keine Artikel gefunden.,de_DE
 recurring_orders.detail.order_items.label,Order Items,en_US
 recurring_orders.detail.order_items.label,Bestellartikel,de_DE
+recurring_orders.detail.order_items.one_time_label,Just this order,en_US
+recurring_orders.detail.order_items.one_time_label,Nur diese Bestellung,de_DE
+recurring_orders.detail.order_items.recurring_quantity_label,Recurring: %quantity%,en_US
+recurring_orders.detail.order_items.recurring_quantity_label,Wiederkehrend: %quantity%,de_DE
 recurring_orders.detail.pause.modal.title,Pause Schedule?,en_US
 recurring_orders.detail.pause.modal.title,Pausenplan?,de_DE
 recurring_orders.detail.pause.modal.warning,Do you want to pause the schedule now?,en_US
 recurring_orders.detail.pause.modal.warning,Möchten Sie den Zeitplan jetzt pausieren?,de_DE
 recurring_orders.detail.resume.modal.title,Resume schedule,en_US
 recurring_orders.detail.resume.modal.title,Zeitplan fortsetzen,de_DE
+recurring_orders.detail.edit.title,Edit schedule,en_US
+recurring_orders.detail.edit.title,Zeitplan bearbeiten,de_DE
+recurring_orders.detail.edit.actions.save,Save changes,en_US
+recurring_orders.detail.edit.actions.save,Änderungen speichern,de_DE
+recurring_orders.detail.edit.success,Recurring order updated.,en_US
+recurring_orders.detail.edit.success,Wiederkehrende Bestellung aktualisiert.,de_DE
+recurring_orders.detail.edit.error,Recurring order could not be updated.,en_US
+recurring_orders.detail.edit.error,Wiederkehrende Bestellung konnte nicht aktualisiert werden.,de_DE
+recurring_orders.detail.edit.error.schedule_not_found,Recurring order %uuid% not found or access denied.,en_US
+recurring_orders.detail.edit.error.schedule_not_found,Wiederkehrende Bestellung %uuid% nicht gefunden oder Zugriff verweigert.,de_DE
+recurring_orders.detail.edit.name_label,Name,en_US
+recurring_orders.detail.edit.name_label,Name,de_DE
+recurring_orders.detail.edit.frequency_label,Frequency,en_US
+recurring_orders.detail.edit.frequency_label,Häufigkeit,de_DE
+recurring_orders.detail.edit.cadence_value_label,Interval,en_US
+recurring_orders.detail.edit.cadence_value_label,Intervall,de_DE
+recurring_orders.detail.edit.starting_date_label,Next Execution Date,en_US
+recurring_orders.detail.edit.starting_date_label,Nächstes Ausführungsdatum,de_DE
+recurring_orders.detail.edit.validation.name_required,Please enter a name.,en_US
+recurring_orders.detail.edit.validation.name_required,Bitte geben Sie einen Namen ein.,de_DE
+recurring_orders.detail.edit.validation.starting_date_required,Please select a starting date.,en_US
+recurring_orders.detail.edit.validation.starting_date_required,Bitte wählen Sie ein Startdatum.,de_DE
+recurring_orders.detail.edit.validation.starting_date_in_past,The starting date cannot be in the past.,en_US
+recurring_orders.detail.edit.validation.starting_date_in_past,Das Startdatum darf nicht in der Vergangenheit liegen.,de_DE
 recurring_orders.detail.review_required.attention,Recurring order could not be processed automatically and requires your attention.,en_US
 recurring_orders.detail.review_required.attention,Der wiederkehrende Auftrag konnte nicht automatisch verarbeitet werden und erfordert Ihre Aufmerksamkeit.,de_DE
 recurring_orders.detail.sidebar.cadence,Cadence,en_US
@@ -7242,6 +7306,84 @@ recurring_orders.review.approve_failed,The changes could not be applied.,en_US
 recurring_orders.review.approve_failed,Die Änderungen konnten nicht übernommen werden.,de_DE
 recurring_orders.review.approve_success,Your changes were applied and the order was placed.,en_US
 recurring_orders.review.approve_success,Ihre Änderungen wurden übernommen und die Bestellung wurde aufgegeben.,de_DE
+recurring_orders.review.add_product.title,Added products (%count%),en_US
+recurring_orders.review.add_product.title,Hinzugefügte Produkte (%count%),de_DE
+recurring_orders.review.add_product.title.singular,Added product (%count%),en_US
+recurring_orders.review.add_product.title.singular,Hinzugefügtes Produkt (%count%),de_DE
+recurring_orders.review.add_product.open_modal,Add product,en_US
+recurring_orders.review.add_product.open_modal,Produkt hinzufügen,de_DE
+recurring_orders.review.add_product.modal.title,Add a product,en_US
+recurring_orders.review.add_product.modal.title,Produkt hinzufügen,de_DE
+recurring_orders.review.add_product.label,Add a product — name or SKU,en_US
+recurring_orders.review.add_product.label,Produkt hinzufügen — Name oder SKU,de_DE
+recurring_orders.review.add_product.quantity,Quantity,en_US
+recurring_orders.review.add_product.quantity,Menge,de_DE
+recurring_orders.review.add_product.add,Add,en_US
+recurring_orders.review.add_product.add,Hinzufügen,de_DE
+recurring_orders.review.add_product.clear,Clear,en_US
+recurring_orders.review.add_product.clear,Zurücksetzen,de_DE
+recurring_orders.review.add_product.price,Price,en_US
+recurring_orders.review.add_product.price,Preis,de_DE
+recurring_orders.review.add_product.remove,Remove,en_US
+recurring_orders.review.add_product.remove,Entfernen,de_DE
+recurring_orders.review.add_product.error.no_price,No price is available for product %sku%. Please remove it or choose a different product.,en_US
+recurring_orders.review.add_product.error.no_price,Für das Produkt %sku% ist kein Preis verfügbar. Bitte entfernen Sie es oder wählen Sie ein anderes Produkt.,de_DE
+recurring_orders.review.add_product.error.not_available,Product %sku% is not available. Please remove it or choose a different product.,en_US
+recurring_orders.review.add_product.error.not_available,Das Produkt %sku% ist nicht verfügbar. Bitte entfernen Sie es oder wählen Sie ein anderes Produkt.,de_DE
+recurring_orders.review.add_product.error.shipment_unavailable,No shipment method is available for product %sku%. Please remove it or choose a different product.,en_US
+recurring_orders.review.add_product.error.shipment_unavailable,Für das Produkt %sku% ist keine Versandart verfügbar. Bitte entfernen Sie es oder wählen Sie ein anderes Produkt.,de_DE
+recurring_orders.review.add_product.error.measurement_unit_not_supported,Product %sku% is sold in measurement units and cannot be added here. Please choose a different product.,en_US
+recurring_orders.review.add_product.error.measurement_unit_not_supported,Das Produkt %sku% wird in Maßeinheiten verkauft und kann hier nicht hinzugefügt werden. Bitte wählen Sie ein anderes Produkt.,de_DE
+recurring_orders.review.add_product.error.packaging_unit_not_supported,Product %sku% is sold in packaging units and cannot be added here. Please choose a different product.,en_US
+recurring_orders.review.add_product.error.packaging_unit_not_supported,Das Produkt %sku% wird in Verpackungseinheiten verkauft und kann hier nicht hinzugefügt werden. Bitte wählen Sie ein anderes Produkt.,de_DE
+recurring_orders.review.add_product.error.not_placeable,The added products cannot be scheduled. Please review your selection and try again.,en_US
+recurring_orders.review.add_product.error.not_placeable,Die hinzugefügten Produkte können nicht eingeplant werden. Bitte überprüfen Sie Ihre Auswahl und versuchen Sie es erneut.,de_DE
+recurring_orders.review.add_product.shipment_address,Delivery address,en_US
+recurring_orders.review.add_product.shipment_address,Lieferadresse,de_DE
+recurring_orders.review.add_product.shipment_address.placeholder,Select a delivery address,en_US
+recurring_orders.review.add_product.shipment_address.placeholder,Lieferadresse auswählen,de_DE
+recurring_orders.review.add_product.shipment_address.group.schedule,Saved with this schedule,en_US
+recurring_orders.review.add_product.shipment_address.group.schedule,Mit diesem Zeitplan gespeichert,de_DE
+recurring_orders.review.add_product.shipment_address.group.company_unit_address,Business unit addresses,en_US
+recurring_orders.review.add_product.shipment_address.group.company_unit_address,Adressen der Geschäftseinheit,de_DE
+recurring_orders.review.add_product.shipment_method,Shipment method,en_US
+recurring_orders.review.add_product.shipment_method,Versandart,de_DE
+recurring_orders.review.add_product.shipment_method.placeholder,Select a shipment method,en_US
+recurring_orders.review.add_product.shipment_method.placeholder,Versandart auswählen,de_DE
+recurring_orders.review.add_product.shipment_method.none,No shipment methods available for this address.,en_US
+recurring_orders.review.add_product.shipment_method.none,Für diese Adresse sind keine Versandarten verfügbar.,de_DE
+recurring_orders.review.substitute.label,Substitute,en_US
+recurring_orders.review.substitute.label,Ersatzprodukt,de_DE
+recurring_orders.review.product-discontinued.message,"This product is discontinued. Choose a replacement to keep it in your order.",en_US
+recurring_orders.review.product-discontinued.message,"Dieses Produkt wurde eingestellt. Wählen Sie einen Ersatz aus, damit es in Ihrer Bestellung bleibt.",de_DE
+recurring_orders.review.substitute.select,Select Substitute,en_US
+recurring_orders.review.substitute.select,Ersatzprodukt auswählen,de_DE
+recurring_orders.review.substitute.change,Change,en_US
+recurring_orders.review.substitute.change,Ändern,de_DE
+recurring_orders.review.substitute.remove,Remove,en_US
+recurring_orders.review.substitute.remove,Entfernen,de_DE
+recurring_orders.review.substitute.remove,Remove,en_US
+recurring_orders.review.substitute.remove,Entfernen,de_DE
+recurring_orders.review.substitute.removed,Removed,en_US
+recurring_orders.review.substitute.removed,Entfernt,de_DE
+recurring_orders.review.substitute.recommended,recommended,en_US
+recurring_orders.review.substitute.recommended,empfohlen,de_DE
+recurring_orders.review.substitute.unavailable,unavailable,en_US
+recurring_orders.review.substitute.unavailable,nicht verfügbar,de_DE
+recurring_orders.review.substitute.delta_same,Same price,en_US
+recurring_orders.review.substitute.delta_same,Gleicher Preis,de_DE
+recurring_orders.review.substitute.delta_lower,Lower price,en_US
+recurring_orders.review.substitute.delta_lower,Niedrigerer Preis,de_DE
+recurring_orders.review.substitute.delta_higher,Higher price,en_US
+recurring_orders.review.substitute.delta_higher,Höherer Preis,de_DE
+recurring_orders.review.substitute.modal.title,Choose a substitute,en_US
+recurring_orders.review.substitute.modal.title,Ersatzprodukt wählen,de_DE
+recurring_orders.review.substitute.modal.description,%product% is no longer available. Select a replacement to use for this order.,en_US
+recurring_orders.review.substitute.modal.description,%product% ist nicht mehr verfügbar. Wählen Sie einen Ersatz für diese Bestellung.,de_DE
+recurring_orders.review.substitute.modal.confirm,Use this substitute,en_US
+recurring_orders.review.substitute.modal.confirm,Diesen Ersatz verwenden,de_DE
+recurring_orders.review.substitute.sold-by,Sold by,en_US
+recurring_orders.review.substitute.sold-by,Verkauft durch,de_DE
 recurring_orders.review.back_to_detail,Back to schedule detail,en_US
 recurring_orders.review.back_to_detail,Zurück zur Zeitplanübersicht,de_DE
 recurring_orders.review.banner.price_change,%count% price change,en_US
@@ -7268,8 +7410,8 @@ recurring_orders.review.footer.helper,Accepting these changes will update this o
 recurring_orders.review.footer.helper,"Wenn Sie diese Änderungen akzeptieren, werden diese Bestellung und zukünftige Ausführungen des Zeitplans aktualisiert.",de_DE
 recurring_orders.review.footer.new_total,New total,en_US
 recurring_orders.review.footer.new_total,Neue Summe,de_DE
-recurring_orders.review.footer.summary,%removed% removals,en_US
-recurring_orders.review.footer.summary,%removed% Artikel entfernt,de_DE
+recurring_orders.review.footer.summary,Removed products: %removed%,en_US
+recurring_orders.review.footer.summary,Entfernte Produkte: %removed%,de_DE
 recurring_orders.review.invalid_form,The request could not be processed. Please review and try again.,en_US
 recurring_orders.review.invalid_form,Die Anfrage konnte nicht verarbeitet werden. Bitte überprüfen Sie sie und versuchen Sie es erneut.,de_DE
 recurring_orders.review.modal.accepted_prices,Accepted price changes,en_US
@@ -7282,10 +7424,42 @@ recurring_orders.review.modal.new_total,New order total,en_US
 recurring_orders.review.modal.new_total,Neue Bestellsumme,de_DE
 recurring_orders.review.modal.original_total,Original order total,en_US
 recurring_orders.review.modal.original_total,Ursprüngliche Bestellsumme,de_DE
-recurring_orders.review.modal.removed_items,Removed items,en_US
-recurring_orders.review.modal.removed_items,Entfernte Artikel,de_DE
+recurring_orders.review.modal.removed_items,Removed products,en_US
+recurring_orders.review.modal.removed_items,Entfernte Produkte,de_DE
+recurring_orders.review.modal.substituted_items,Substituted products,en_US
+recurring_orders.review.modal.substituted_items,Ersetzte Produkte,de_DE
+recurring_orders.review.modal.added_products,Added products,en_US
+recurring_orders.review.modal.added_products,Hinzugefügte Produkte,de_DE
+recurring_orders.review.quantity_label,Quantity (every future order),en_US
+recurring_orders.review.quantity_label,Menge (jede zukünftige Bestellung),de_DE
+recurring_orders.review.scope.label,Apply these changes to,en_US
+recurring_orders.review.scope.label,Diese Änderungen anwenden auf,de_DE
+recurring_orders.review.scope.this_order,This order only,en_US
+recurring_orders.review.scope.this_order,Nur diese Bestellung,de_DE
+recurring_orders.review-scope-selector-option.occurrence.note,"Apply to the %date% execution. Your recurring schedule stays unchanged.",en_US
+recurring_orders.review-scope-selector-option.occurrence.note,"Auf die Ausführung am %date% anwenden. Ihr wiederkehrender Zeitplan bleibt unverändert.",de_DE
+recurring_orders.review.scope.every_future,Update schedule permanently,en_US
+recurring_orders.review.scope.every_future,Zeitplan dauerhaft aktualisieren,de_DE
+recurring_orders.review-scope-selector-option.standing.note,"Apply to this and all future executions, and update reference prices.",en_US
+recurring_orders.review-scope-selector-option.standing.note,"Wenden Sie dies auf diese und alle zukünftigen Ausführungen an und aktualisieren Sie die Referenzpreise.",de_DE
+recurring_orders.review.remove.label,Remove from schedule,en_US
+recurring_orders.review.remove.label,Aus Zeitplan entfernen,de_DE
+recurring_orders.review.remove.undo,Undo removal,en_US
+recurring_orders.review.remove.undo,Entfernen rückgängig machen,de_DE
+recurring_orders.review.quantity.decrease,Decrease quantity,en_US
+recurring_orders.review.quantity.decrease,Menge verringern,de_DE
+recurring_orders.review.quantity.increase,Increase quantity,en_US
+recurring_orders.review.quantity.increase,Menge erhöhen,de_DE
+recurring_orders.review.scope_required,Please choose whether each quantity change applies to just this order or every future order.,en_US
+recurring_orders.review.scope_required,Bitte wählen Sie ob jede Mengenänderung nur für diese Bestellung oder für jede zukünftige Bestellung gilt.,de_DE
+recurring_orders.review.quantity_invalid,Please enter a quantity of at least 1. To drop an item use the remove action instead.,en_US
+recurring_orders.review.quantity_invalid,Bitte geben Sie eine Menge von mindestens 1 ein. Verwenden Sie zum Entfernen eines Artikels die Entfernen-Aktion.,de_DE
 recurring_orders.review.not_available,This schedule does not require review.,en_US
 recurring_orders.review.not_available,Dieser Zeitplan erfordert keine Überprüfung.,de_DE
+recurring_orders.review.currency_mismatch,This recurring order can only be reviewed in its own currency. Please switch back to it to make changes.,en_US
+recurring_orders.review.currency_mismatch,"Diese wiederkehrende Bestellung kann nur in ihrer eigenen Währung überprüft werden. Bitte wechseln Sie zurück, um Änderungen vorzunehmen.",de_DE
+recurring_orders.review.price_mode_mismatch,This recurring order can only be reviewed in its own price mode (gross/net). Please switch back to it to make changes.,en_US
+recurring_orders.review.price_mode_mismatch,"Diese wiederkehrende Bestellung kann nur in ihrem eigenen Preismodus (brutto/netto) überprüft werden. Bitte wechseln Sie zurück, um Änderungen vorzunehmen.",de_DE
 recurring_orders.review.prices_changed,Prices changed again since you reviewed. Please review the updated order before approving.,en_US
 recurring_orders.review.prices_changed,Die Preise haben sich seit Ihrer Überprüfung erneut geändert. Bitte überprüfen Sie die aktualisierte Bestellung vor der Genehmigung.,de_DE
 recurring_orders.review.reason.discontinued,Discontinued,en_US
@@ -7300,6 +7474,8 @@ recurring_orders.review.reason.substituted,Substituted,en_US
 recurring_orders.review.reason.substituted,Ersetzt,de_DE
 recurring_orders.review.reason.unavailable,Unavailable,en_US
 recurring_orders.review.reason.unavailable,Nicht verfügbar,de_DE
+recurring_orders.review.reason.out_of_stock,Out Of Stock,en_US
+recurring_orders.review.reason.out_of_stock,Nicht auf Lager,de_DE
 recurring_orders.review.title,Review Required — %name%,en_US
 recurring_orders.review.title,Überprüfung erforderlich — %name%,de_DE
 recurring_orders.review.unchanged.title,Unchanged items (%count%),en_US
@@ -7326,8 +7502,18 @@ recurring_orders.detail.resume.validation.date_in_past,The resume date must be i
 recurring_orders.detail.resume.validation.date_in_past,Das Fortsetzungsdatum muss in der Zukunft liegen.,de_DE
 recurring_orders.checkout.validation.cadence_required,Please select a frequency.,en_US
 recurring_orders.checkout.validation.cadence_required,Bitte wählen Sie eine Häufigkeit aus.,de_DE
+recurring_orders.checkout.validation.settings_not_confirmed,Please confirm your recurring order settings before submitting.,en_US
+recurring_orders.checkout.validation.settings_not_confirmed,Bitte bestätigen Sie Ihre Einstellungen für die wiederkehrende Bestellung vor dem Absenden.,de_DE
 recurring_orders.scheduled.order.errors.title,The following issues were found with your recurring order and it could not be placed:,en_US
 recurring_orders.scheduled.order.errors.title,Die folgenden Probleme wurden bei Ihrer wiederkehrenden Bestellung festgestellt und sie konnte nicht aufgegeben werden:,de_DE
+recurring_orders.checkout.error.not_eligible,This cart cannot be placed as a recurring order.,en_US
+recurring_orders.checkout.error.not_eligible,Dieser Warenkorb kann nicht als wiederkehrende Bestellung aufgegeben werden.,de_DE
+recurring_orders.checkout.error.cadence_value_required,Please choose an interval for the recurring order.,en_US
+recurring_orders.checkout.error.cadence_value_required,Bitte wählen Sie ein Intervall für die wiederkehrende Bestellung aus.,de_DE
+recurring_orders.error.quote_not_found,The cart could not be found or access was denied.,en_US
+recurring_orders.error.quote_not_found,Der Warenkorb wurde nicht gefunden oder der Zugriff wurde verweigert.,de_DE
+recurring_orders.review.reason.configurable_bundle_unavailable,Configurable bundle unavailable,en_US
+recurring_orders.review.reason.configurable_bundle_unavailable,Konfigurierbares Bundle nicht verfügbar,de_DE
 catalog.no-results.browse-all,Browse all products,en_US
 catalog.no-results.browse-all,Alle Produkte ansehen,de_DE
 configurable_bundle.template.name.3,"Boiler System Bundle",en_US
