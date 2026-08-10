@@ -1,0 +1,11 @@
+@include order-experience-management-review-substitute {
+    padding: var(--scale-12) var(--scale-16);
+
+    &__summary {
+        @include typography(body-md);
+    }
+    &__sold-by-wrapper {
+        @include typography(body-sm);
+        margin-top: var(--scale-4);
+    }
+}

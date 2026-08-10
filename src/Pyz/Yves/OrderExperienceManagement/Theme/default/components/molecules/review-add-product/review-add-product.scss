@@ -1,0 +1,29 @@
+@include order-experience-management-review-add-product {
+    @include typography(body-md);
+
+    &__summary {
+        @include typography(label-md);
+        margin: 0 0 var(--scale-12);
+        position: relative;
+        padding-right: var(--scale-24);
+        list-style: none;
+    }
+
+    &__summary-icon {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        translate: 0 -50%;
+
+        [open] & {
+            rotate: 180deg;
+        }
+    }
+
+    &__box {
+        border: rem(1) solid var(--border-subtle);
+        border-radius: var(--radius-md);
+        margin-bottom: var(--scale-24);
+        padding: var(--scale-12);
+    }
+}

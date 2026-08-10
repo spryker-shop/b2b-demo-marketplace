@@ -1,0 +1,94 @@
+{% extends molecule('review-substitute', '@SprykerFeature:OrderExperienceManagement') %}
+
+{% block body %}
+    {% set triggerModalButtonClassname = config.jsName ~ '__modal-trigger--' ~ data.index %}
+
+    <div class="{{ config.name }}__summary ">
+        {% if substituteOptions | length == 0 %}
+            <div class="{{ config.name }}__discontinued-message {{ config.jsName }}__discontinued-message spacing-bottom--small {{ hiddenClass }}">
+                {{ 'recurring_orders.review.product-discontinued.message' | trans }}
+            </div>
+        {% endif %}
+        <div class="grid grid--gap-smaller grid--nowrap-lg-only {{ config.jsName }}__line js-review-total-recalculator__line" data-unit-price="0" data-quantity="{{ quantity }}" data-line-total="0">
+            <div class="col col--expand {{ config.jsName }}__applied {{ hiddenClass }}">
+                <div>
+                    <strong class="{{ config.jsName }}__summary-name"></strong>
+                    {% include molecule('status') with {
+                        data: {
+                            label: 'recurring_orders.review.substitute.label' | trans,
+                            status: 'warning',
+                        },
+                    } only %}
+                </div>
+                <div>
+                    <span class="{{ config.jsName }}__summary-sku text-muted"></span>
+                    <span class="{{ config.jsName }}__summary-price text-muted"></span>
+                </div>
+            </div>
+            <div class="col {{ config.jsName }}__qty-wrap {{ hiddenClass }}">
+                {% include molecule('quantity-counter') with {
+                    modifiers: ['sm'],
+                    data: {
+                        inputExtraClasses: config.name ~ '__qty ' ~ config.jsName ~ '__qty js-review-total-recalculator__line-quantity',
+                        numberFormatConfig: {
+                            'watch-external-changes': true,
+                        },
+                    },
+                    attributes: {
+                        name: '',
+                        min: 1,
+                        value: quantity,
+                        'data-qa': 'recurring-order-review-substitute-quantity',
+                    },
+                } only %}
+            </div>
+            <div class="col">
+                <button type="button" class="button button--sm button--hollow {{ config.jsName }}__remove {{ hiddenClass }}"
+                        {{ qa('recurring-order-review-substitute-remove')}}>
+                    {{ 'recurring_orders.review.substitute.remove' | trans }}
+                </button>
+            </div>
+        </div>
+        <div class="{{ config.jsName }}__applied-details {{ hiddenClass }}">
+            {% apply spaceless %}
+                <div class="{{ config.name }}__sold-by-wrapper">
+                    <span class="{{ config.name }}__sold-by-label">{{ 'recurring_orders.review.substitute.sold-by' | trans }}</span>
+                    <strong class="{{ config.name }}__sold-by-value {{ config.jsName }}__summary-merchant text-muted"></strong>
+                </div>
+            {% endapply %}
+        </div>
+    </div>
+
+    {% block mainPopup %}
+        {% include molecule('main-popup') with {
+            class: "#{config.jsName}__product-popup #{config.name}__product-popup",
+            data: {
+                title: 'recurring_orders.review.substitute.modal.title' | trans,
+                content: block('picker'),
+            },
+            attributes: {
+                'content-id': "#{config.name}__product-popup--#{data.index}",
+                'trigger-class-name': triggerModalButtonClassname,
+                'close-popup-selector': ".#{cancelClass}",
+                'has-content-mount': true,
+            },
+        } only %}
+    {% endblock %}
+{% endblock %}
+
+{% block picker %}
+    {% include molecule('review-substitute-picker', 'OrderExperienceManagement') with {
+        data: {
+            itemReview: data.itemReview,
+            currency: data.currency,
+            index: data.index,
+            entryKey: entryKey,
+            confirmClass: confirmClass,
+            cancelClass: cancelClass,
+            hiddenClass: hiddenClass,
+            shipmentAddressChoices: data.shipmentAddressChoices,
+            shipmentMethodsUrl: data.shipmentMethodsUrl,
+            priceUrl: data.priceUrl,
+        },
+    } only %}
+{% endblock %}

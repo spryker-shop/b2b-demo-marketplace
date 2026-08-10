@@ -13,7 +13,7 @@
 {% block itemName %}
     <strong class="{{ config.name }}__item-name">{{ flaggedItem.recurringScheduleItem.productName }}</strong>
     {% if flaggedItem.recurringScheduleItem.sku %}
-        <small class="{{ config.name }}__item-sku">({{ flaggedItem.recurringScheduleItem.sku }})</small>
+        <span class="{{ config.name }}__item-sku">({{ flaggedItem.recurringScheduleItem.sku }})</span>
     {% endif %}
 {% endblock %}
 
@@ -33,4 +33,49 @@
 {% block grid %}
     {% set gridClassName = config.name ~ '__item grid grid--gap' %}
     {{ parent() }}
+{% endblock %}
+
+{% block quantityControl %}
+    {% set itemForm = data.formByGroupKey['gk_' ~ flaggedItem.recurringScheduleItem.groupKey] ?? null %}
+    {% set isDiscontinued = 'discontinued' in flaggedItem.reviewReasons %}
+    {% if itemForm %}
+        <div class="col {{ isDiscontinued ? 'is-hidden' : '' }}">
+            {% embed molecule('review-quantity-control', 'OrderExperienceManagement') with {
+                data: {
+                    itemForm: itemForm,
+                    currentQuantity: (flaggedItem.recurringScheduleItem.nextDeliveryQuantity ?: flaggedItem.recurringScheduleItem.quantity),
+                    unitPrice: flaggedItem.currentPrice ?? referenceUnitPrice,
+                    isRemovable: true,
+                    isDiscontinued: isDiscontinued,
+                    isRemovalLocked: flaggedItem.isPurchasable is same as(false),
+                    substituteEntryKey: hasSubstituteOptions ? 'sub_' ~ loop.index0 : '',
+                    hasPriceChange: hasPriceChange,
+                },
+                embed: {
+                    isDiscontinued: isDiscontinued,
+                }
+            } only %}
+                {% block extraClass %}
+                    js-review-total-recalculator__line
+
+                    {% if data.isDiscontinued %}
+                        is-hidden
+                    {% endif %}
+                {% endblock %}
+            {% endembed %}
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block substituteSelect %}
+    {% if hasSubstituteOptions %}
+        {% set hasAppliedSubstitute = ('sub_' ~ loop.index0) in data.addedItemKeys %}
+        <div class="col">
+            <button type="button"
+                class="button button--sm button--hollow js-review-substitute__modal-trigger--{{ loop.index0 }}"
+                {{ qa('recurring-order-review-substitute-change') }}>
+                {{ (hasAppliedSubstitute ? 'recurring_orders.review.substitute.change' : 'recurring_orders.review.substitute.select') | trans }}
+            </button>
+        </div>
+    {% endif %}
 {% endblock %}

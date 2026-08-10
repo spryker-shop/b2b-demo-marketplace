@@ -1,0 +1,10 @@
+{% extends molecule('recurring-order-cost-center-budget', '@SprykerFeature:PurchasingControl') %}
+
+{% block extraClass %}
+    box box--alternative spacing-bottom--biggest
+{% endblock %}
+
+{% block form %}
+    {% set formGridClassName = "grid grid--gap spacing-bottom--biggest" %}
+    {{ parent() }}
+{% endblock %}

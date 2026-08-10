@@ -1,0 +1,6 @@
+{% extends molecule('review-add-product-picker', '@SprykerFeature:OrderExperienceManagement') %}
+
+
+{% block quantityLabel %}
+    <label for="add-product-quantity-input" class="label {{ config.name }}__label">{{ 'recurring_orders.review.add_product.quantity' | trans }}</label>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends molecule('review-add-product', '@SprykerFeature:OrderExperienceManagement') %}
+
+{% block body %}
+    {% set openModalClassName = config.jsName ~ '__open-modal' %}
+    {% set addedItemsCount = data.approveForm.addedItems | length %}
+
+    <details open>
+        <summary class="{{ config.name }}__summary">
+            {% block title %}
+                <span class="{{ config.jsName }}__title">
+                    {{ (addedItemsCount == 1 ? 'recurring_orders.review.add_product.title.singular' : 'recurring_orders.review.add_product.title') | trans({'%count%': addedItemsCount}) }}
+                </span>
+            {% endblock %}
+
+            {% block titleTemplates %}
+                <template data-id="{{ config.jsName }}-title-template">{{ 'recurring_orders.review.add_product.title' | trans({'%count%': '%count%'}) }}</template>
+                <template data-id="{{ config.jsName }}-title-template-singular">{{ 'recurring_orders.review.add_product.title.singular' | trans({'%count%': '%count%'}) }}</template>
+            {% endblock %}
+
+            {% include atom('font-icon') with {
+                class: config.name ~ '__summary-icon',
+                data: {
+                    name: 'keyboard_arrow_down',
+                },
+            } only %}
+        </summary>
+
+        {% block content %}
+            {% set contentClassName = config.name ~ '__box' %}
+            {{ parent() }}
+        {% endblock %}
+    </details>
+
+    {% block modal %}
+        {{ parent() }}
+    {% endblock %}
+{% endblock %}

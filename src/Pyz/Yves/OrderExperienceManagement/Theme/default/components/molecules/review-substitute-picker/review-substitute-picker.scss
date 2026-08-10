@@ -1,0 +1,33 @@
+@include order-experience-management-review-substitute-picker {
+    @include typography(body-md);
+
+    &__head {
+        margin-bottom: var(--scale-16);
+    }
+
+    &__option {
+        background: var(--backgroud-page);
+        padding: var(--scale-16);
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-md);
+        margin-bottom: var(--scale-4);
+    }
+
+    &__option-price,
+    &__option-name {
+        @include typography(label-md);
+    }
+
+    &__option-sku {
+        @include typography(body-sm);
+    }
+
+    &__footer,
+    &__shipment-selection {
+        margin-top: var(--scale-16);
+    }
+
+    &__offer {
+        padding-left: var(--scale-24);
+    }
+}

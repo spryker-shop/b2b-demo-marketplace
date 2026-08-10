@@ -1,0 +1,23 @@
+@include purchasing-control-recurring-order-budget-summary {
+    &__key {
+        @include typography('body-md');
+    }
+
+    &__value {
+        @include typography('label-md');
+    }
+
+    &__progress {
+        background: var(--background-brand-subtle);
+    }
+
+    &__bar {
+        background: var(--background-brand-primary);
+    }
+
+    &__remaining-wrapper {
+        display: flex;
+        padding-top: var(--scale-8);
+        gap: var(--scale-8);
+    }
+}

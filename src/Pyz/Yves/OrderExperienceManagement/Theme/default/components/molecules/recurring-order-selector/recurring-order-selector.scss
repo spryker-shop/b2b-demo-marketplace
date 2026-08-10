@@ -1,10 +1,7 @@
-@mixin order-experience-management-recurring-order-selector-base-hook {
-    border: rem(1) solid var(--border-subtle);
+@include order-experience-management-recurring-order-selector {
+    @include typography(body-md);
+    border: rem(1) solid var(--border-default);
     border-radius: var(--radius-md);
     margin-bottom: var(--scale-24);
     padding: var(--scale-12) var(--scale-16);
-
-    .checkbox__label {
-        font-size: var(--heading-sm-size);
-    }
 }
