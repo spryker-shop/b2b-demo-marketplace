@@ -20,4 +20,7 @@ return static function (FrameworkConfig $framework, string $env): void {
         ]);
 
     $framework->test($env === 'dockerdev');
+    if ($env !== 'dockerdev') {
+        $container->parameters()->set('.container.dumper.inline_factories', true);
+    }
 };
