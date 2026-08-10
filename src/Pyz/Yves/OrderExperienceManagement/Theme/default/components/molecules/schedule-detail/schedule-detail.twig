@@ -6,6 +6,7 @@
 {% set cancelModalTriggerClassName = 'js-cancel-schedule-button' %}
 {% set pauseModalTriggerClassName = 'js-pause-schedule-button' %}
 {% set resumeModalTriggerClassName = 'js-resume-schedule-button' %}
+{% set editModalTriggerClassName = 'js-edit-schedule-button' %}
 
 {% block recurringScheduleHeader %}
     {% set status = data.schedule.status %}
@@ -57,6 +58,7 @@
                     schedule: data.schedule,
                     statusClassMap: data.statusClassMap,
                     quote: data.quote,
+                    editModalTriggerClassName: editModalTriggerClassName,
                 },
             } only %}
         </div>
