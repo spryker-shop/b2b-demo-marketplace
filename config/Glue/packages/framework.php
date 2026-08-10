@@ -10,9 +10,10 @@ declare(strict_types = 1);
 /**
  * @see config/README.md for more information about this configuration.
  */
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Config\FrameworkConfig;
 
-return static function (FrameworkConfig $framework, string $env): void {
+return static function (FrameworkConfig $framework, ContainerConfigurator $container, string $env): void {
     $framework->secret('spryker-glue-secret');
 
     $framework->assets([
