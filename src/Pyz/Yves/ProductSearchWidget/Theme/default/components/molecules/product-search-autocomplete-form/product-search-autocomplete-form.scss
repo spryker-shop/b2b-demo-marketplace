@@ -12,25 +12,6 @@
             transform: translateY(-50%);
         }
 
-        &__input {
-            @include helper-effect-transition(background-color);
-            padding: rem(15) rem(36) rem(15) rem(38);
-            font-size: rem(12);
-            font-weight: fw(medium);
-            border-radius: $setting-border-radius;
-            box-shadow: 0 rem(3) rem(3) 0 $setting-color-shadow-1;
-
-            &--no-icon {
-                padding-left: rem(20);
-                padding-right: rem(20);
-            }
-
-            &:focus {
-                border: none;
-                background-color: $setting-color-gray-6;
-            }
-        }
-
         &__suggestions {
             margin: 0;
             position: absolute;
