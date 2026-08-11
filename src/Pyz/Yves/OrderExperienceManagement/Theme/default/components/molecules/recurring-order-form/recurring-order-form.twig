@@ -78,6 +78,7 @@
                         data: {
                             field: field,
                             labelIsHidden: true,
+                            inputQa: 'recurring-order-start-date-input',
                         },
                         attributes: {
                             language: app.locale | slice(0, 2),
@@ -90,12 +91,6 @@
                             }',
                         },
                     } only %}
-                    {# {{ form_widget(field, {
-                        attr: {
-                            min: 'now' | date('Y-m-d'),
-                            'data-qa': 'recurring-order-start-date-input',
-                        },
-                    }) }} #}
                 </div>
             {% else %}
                 {{ parent() }}
