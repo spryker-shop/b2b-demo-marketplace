@@ -1,39 +1,37 @@
 {% extends molecule('recurring-order-budget-summary', '@SprykerFeature:PurchasingControl') %}
 
 {% block extraClass %}
-    box box--alternative {{ not data.isStatic ? 'is-hidden' : '' }}
+    {{ not data.isStatic ? 'is-hidden' : '' }}
 {% endblock %}
 
 {% block body %}
-    {% set infoGridClassName = "grid grid--gap grid--justify" %}
-    {% set infoLeftColumnClassName = "col col--sm-6" %}
-    {% set infoRightColumnClassName = "col col--sm-6 text-right" %}
-    {% set infoLabelClassName = config.name ~ "__key" %}
-    {% set infoValueClassName = config.name ~ "__value" %}
+    {% set keyClassName = config.name ~ '__key' %}
+    {% set valueClassName = config.name ~ '__value' %}
+    {% set figureClassName = config.name ~ '__figure' %}
 
-    {% block info %}
-        <div class="{{ infoGridClassName }}">
-            <div class="{{ infoLeftColumnClassName }}">
-                <label class="{{ infoLabelClassName }}">{{ 'purchasing_control.recurring_order.budget.used' | trans }}</label>
-                <strong class="{{ infoValueClassName }} {{ config.jsName }}__used" {{ qa('recurring-order-budget-summary-used') }}>{{ data.usedFormatted }}</strong>
-            </div>
-            <div class="{{ infoRightColumnClassName }}">
-                <label class="{{ infoLabelClassName }}">{{ 'purchasing_control.recurring_order.budget.total' | trans }}</label>
-                <strong class="{{ infoValueClassName }} {{ config.jsName }}__total" {{ qa('recurring-order-budget-summary-total') }}>{{ data.totalFormatted }}</strong>
-            </div>
+    {% block remaining %}
+        <div class="{{ config.name }}__headline">
+            <span class="{{ keyClassName }}">{{ 'purchasing_control.recurring_order.budget.remaining' | trans }}</span>
+            <strong class="{{ config.name }}__amount {{ config.jsName }}__remaining" {{ qa('recurring-order-budget-summary-remaining') }}>{{ data.remainingFormatted }}</strong>
         </div>
     {% endblock %}
 
     {% block progress %}
-        <div class="{{ config.name }}__progress" role="meter">
+        <div class="{{ config.name }}__progress" aria-hidden="true">
             <div class="{{ config.name }}__bar {{ config.jsName }}__bar" style="width: {{ data.usedPercent }}%"></div>
         </div>
     {% endblock %}
 
-    {% block remaining %}
-        <div class="{{ config.name }}__remaining-wrapper">
-            <label class="{{ infoLabelClassName }}">{{ 'purchasing_control.recurring_order.budget.remaining' | trans }}</label>
-            <strong class="{{ infoValueClassName }} {{ config.jsName }}__remaining" {{ qa('recurring-order-budget-summary-remaining') }}>{{ data.remainingFormatted }}</strong>
+    {% block info %}
+        <div class="{{ config.name }}__figures">
+            <div class="{{ figureClassName }}">
+                <span class="{{ keyClassName }}">{{ 'purchasing_control.recurring_order.budget.used' | trans }}</span>
+                <span class="{{ valueClassName }} {{ config.jsName }}__used" {{ qa('recurring-order-budget-summary-used') }}>{{ data.usedFormatted }}</span>
+            </div>
+            <div class="{{ figureClassName }} {{ figureClassName }}--end">
+                <span class="{{ keyClassName }}">{{ 'purchasing_control.recurring_order.budget.total' | trans }}</span>
+                <span class="{{ valueClassName }} {{ config.jsName }}__total" {{ qa('recurring-order-budget-summary-total') }}>{{ data.totalFormatted }}</span>
+            </div>
         </div>
     {% endblock %}
 {% endblock %}
