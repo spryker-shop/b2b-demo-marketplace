@@ -320,7 +320,9 @@ jobs:
 
     # [remove for project]
     robot-ui:
-        needs: [js-validation, validation, build-robot-db]
+        # No build-robot-db dependency: this lane imports its own demodata, so waiting on the
+        # dump would only add the build job's ten minutes to the critical path.
+        needs: [js-validation, validation]
         # Draft PRs skip the E2E tier; it runs on ready_for_review.
         if: ${{ github.event_name != 'pull_request' || github.event.pull_request.draft == false }}
         uses: ./.github/workflows/_robot-ui.yml
