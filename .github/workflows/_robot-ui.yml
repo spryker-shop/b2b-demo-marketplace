@@ -20,13 +20,17 @@ jobs:
             DYNAMIC_STORE_MODE: true
         steps:
             -   uses: actions/checkout@v4
+                with:
+                    # Nothing downstream needs the checkout token; every repo cloned or
+                    # composer-installed in these jobs is public.
+                    persist-credentials: false
 
             # Must land before the boot so the dump is part of the baked image.
             -   uses: actions/download-artifact@v6
                 with:
                     name: spryker-robot-db
 
-            -   uses: ramsey/composer-install@v3
+            -   uses: ramsey/composer-install@a8d0d959dab41457692a5e2041bd9b757a119e3f # v3
                 with:
                     composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
 
