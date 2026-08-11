@@ -10,11 +10,11 @@
 
         &__new-price,
         &__title {
-            @include typography(label-md)
+            @include typography(label-md);
         }
 
         &__old-price {
-            @include typography(label-sm)
+            @include typography(label-sm);
         }
 
         @content;
