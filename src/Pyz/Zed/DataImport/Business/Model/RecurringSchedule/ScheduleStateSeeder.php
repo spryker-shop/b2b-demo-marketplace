@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\DataImport\Business\Model\RecurringSchedule;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\OrderExperienceManagement\Persistence\SpyRecurringSchedule;
 use Orm\Zed\OrderExperienceManagement\Persistence\SpyRecurringScheduleHistory;
 use Orm\Zed\OrderExperienceManagement\Persistence\SpyRecurringScheduleQuery;
@@ -46,6 +47,24 @@ class ScheduleStateSeeder
     {
         return SpyRecurringScheduleQuery::create()
             ->findOneByFkSourceSalesOrder($idSalesOrder);
+    }
+
+    /**
+     * @see \SprykerFeature\Zed\OrderExperienceManagement\Business\Schedule\Mapper\RecurringScheduleMapper::mapQuoteToRecurringSchedule()
+     */
+    public function clearSourceOrderReference(SpyRecurringSchedule $recurringScheduleEntity): void
+    {
+        $quoteData = $this->utilEncodingService->decodeJson($recurringScheduleEntity->getQuoteData(), true);
+
+        if (!is_array($quoteData) || ($quoteData[QuoteTransfer::ORDER_REFERENCE] ?? null) === null) {
+            return;
+        }
+
+        $quoteData[QuoteTransfer::ORDER_REFERENCE] = null;
+
+        $recurringScheduleEntity
+            ->setQuoteData((string)$this->utilEncodingService->encodeJson($quoteData))
+            ->save();
     }
 
     public function applyNextTriggerDate(SpyRecurringSchedule $recurringScheduleEntity, string $dateExpression): void

@@ -100,6 +100,8 @@ class RecurringScheduleWriterStep implements DataImportStepInterface
             ));
         }
 
+        $this->scheduleStateSeeder->clearSourceOrderReference($recurringScheduleEntity);
+
         $nextTriggerDateExpression = trim((string)$dataSet[RecurringScheduleDataSetInterface::COLUMN_NEXT_TRIGGER_DATE]);
 
         if ($nextTriggerDateExpression !== '') {
