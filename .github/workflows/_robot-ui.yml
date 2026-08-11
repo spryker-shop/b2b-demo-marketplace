@@ -45,7 +45,7 @@ jobs:
                     ulimit -n 65536
 
             -   name: Install Project
-                # Imports demodata here rather than restoring the shared spryker-robot-db dump.
+                # Imports demodata here rather than restoring a pre-built dump.
                 # This lane is deliberately NOT build-once. Restoring the dump here turned a
                 # green 45-minute job into a red two-hour one: 34 of 67 tests failed, spread
                 # across catalog, search, cart, checkout, prices and order management, every one

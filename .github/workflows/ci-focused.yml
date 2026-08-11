@@ -19,18 +19,13 @@ concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event.inputs.framework }}
     cancel-in-progress: true
 
-# NOTE: the consumers restore a pre-built dump rather than importing demodata, so each framework
-# here has to bring its own build job along — codeception and cypress restore the EU dump, the two
-# robot lanes restore the ROBOT one. There is no `narrow` sub-framework input yet.
+# NOTE: only codeception restores a pre-built dump, so it is the one framework here that has to
+# bring a build job along. The cypress and robot lanes import their own demodata. There is no
+# `narrow` sub-framework input yet.
 jobs:
     build-db:
-        if: ${{ inputs.framework == 'codeception' || inputs.framework == 'cypress' }}
+        if: ${{ inputs.framework == 'codeception' }}
         uses: ./.github/workflows/_build-db.yml
-        secrets: inherit
-
-    build-robot-db:
-        if: ${{ inputs.framework == 'robot-api' || inputs.framework == 'robot-ui' }}
-        uses: ./.github/workflows/_build-robot-db.yml
         secrets: inherit
 
     codeception:
@@ -41,18 +36,15 @@ jobs:
 
     robot-api:
         if: ${{ inputs.framework == 'robot-api' }}
-        needs: [build-robot-db]
         uses: ./.github/workflows/_robot-api.yml
         secrets: inherit
 
     robot-ui:
         if: ${{ inputs.framework == 'robot-ui' }}
-        needs: [build-robot-db]
         uses: ./.github/workflows/_robot-ui.yml
         secrets: inherit
 
     cypress:
         if: ${{ inputs.framework == 'cypress' }}
-        needs: [build-db]
         uses: ./.github/workflows/_cypress.yml
         secrets: inherit

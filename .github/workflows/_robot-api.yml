@@ -29,11 +29,6 @@ jobs:
             #    with:
             #        composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
 
-            # Must land before the boot so the dump is part of the baked image.
-            -   uses: actions/download-artifact@v6
-                with:
-                    name: spryker-robot-db
-
             #  needed for mount:baked
             -   name: Install robotframework-suite-tests folder
                 run: |
@@ -50,17 +45,18 @@ jobs:
                     ulimit -n 65536
 
             -   name: Install Project
-                # Build-once: restore the shared spryker-robot-db dump (full_ROBOT) via
-                # ci.restore-db.stage2 instead of importing demodata here. The deploy file's own
-                # pipeline key is untouched; only SPRYKER_PIPELINE is overridden.
+                # Imports demodata rather than restoring the shared dump. On the restore this
+                # lane went red intermittently -- green twice, then 20 of 881 tests failing on a
+                # commit that touched only composer.lock -- and every one of those failures was a
+                # search or a price assertion: Search_by_*, Search_sort_by_price_*,
+                # Get_search_suggestions_*, Get_abstract_prices_*. Restoring rebuilds Redis and
+                # Elasticsearch from the dump well enough to pass most of the time, which is
+                # worse than not doing it: it converts a deterministic lane into a flaky one.
                 run: |
                     git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
                     docker/sdk boot .github/deploy/deploy.ci.api.mariadb.robot.yml
                     #sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local' >> /etc/hosts"
-                    SPRYKER_PIPELINE=ci.restore-db.stage2 docker/sdk up -t
-
-            -   name: Validate sync completeness
-                uses: ./.github/actions/validate-sync-completeness
+                    docker/sdk up -t
 
             -   name: Run Tests
                 id: tests

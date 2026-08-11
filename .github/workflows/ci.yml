@@ -195,14 +195,6 @@ jobs:
         uses: ./.github/workflows/_build-db.yml
         secrets: inherit
 
-    # The ROBOT dataset differs from the EU one, so the robot lanes need their own dump.
-    # Draft-tiered to match its consumers — no point building it when they skip.
-    build-robot-db:
-        needs: [js-validation, validation]
-        if: ${{ github.event_name != 'pull_request' || github.event.pull_request.draft == false }}
-        uses: ./.github/workflows/_build-robot-db.yml
-        secrets: inherit
-
     codeception:
         needs: [js-validation, validation, build-db]
         uses: ./.github/workflows/_codeception.yml
@@ -312,7 +304,7 @@ jobs:
 
     # [remove for project]
     robot-api:
-        needs: [validation, build-robot-db]
+        needs: [validation]
         # Draft PRs skip the E2E tier; it runs on ready_for_review.
         if: ${{ github.event_name != 'pull_request' || github.event.pull_request.draft == false }}
         uses: ./.github/workflows/_robot-api.yml
@@ -320,8 +312,6 @@ jobs:
 
     # [remove for project]
     robot-ui:
-        # No build-robot-db dependency: this lane imports its own demodata, so waiting on the
-        # dump would only add the build job's ten minutes to the critical path.
         needs: [js-validation, validation]
         # Draft PRs skip the E2E tier; it runs on ready_for_review.
         if: ${{ github.event_name != 'pull_request' || github.event.pull_request.draft == false }}
@@ -330,7 +320,7 @@ jobs:
 
     # [remove for project]
     cypress:
-        needs: [js-validation, validation, build-db]
+        needs: [js-validation, validation]
         # Draft PRs skip the E2E tier; it runs on ready_for_review.
         if: ${{ github.event_name != 'pull_request' || github.event.pull_request.draft == false }}
         uses: ./.github/workflows/_cypress.yml
