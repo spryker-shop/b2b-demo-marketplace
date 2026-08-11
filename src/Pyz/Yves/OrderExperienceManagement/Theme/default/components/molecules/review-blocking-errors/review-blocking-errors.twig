@@ -1,7 +1,7 @@
 {% extends  molecule('review-blocking-errors', '@SprykerFeature:OrderExperienceManagement') %}
 
 {% block body %}
-    <div qa('recurring-order-review-blocking-errors')>
+    <div {{ qa('recurring-order-review-blocking-errors') }}>
         {% embed molecule('flash-message') with {
             modifiers: ['warning'],
             class: 'spacing-bottom--biggest',
