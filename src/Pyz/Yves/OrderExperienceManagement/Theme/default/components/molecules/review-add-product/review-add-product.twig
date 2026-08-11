@@ -36,10 +36,14 @@
                     class="{{ config.name }}__line js-review-total-recalculator__line"
                     {{ qa(config.name ~ '-line') }}
                 >
-                    <span class="{{ config.name }}__line-name" {{ qa(config.name ~ '-line-name') }}>
-                        <span class="{{ config.jsName }}__line-name-text"></span>
-                        <small class="{{ config.name }}__line-sku {{ config.jsName }}__line-sku text-muted"></small>
-                    </span>
+                    <div class="{{ config.name }}__line-meta">
+                        <span class="{{ config.name }}__line-name" {{ qa(config.name ~ '-line-name') }}>
+                            <strong class="{{ config.jsName }}__line-name-text"></strong>
+                            <small class="{{ config.name }}__line-sku {{ config.jsName }}__line-sku text-muted"></small>
+                        </span>
+
+                        <div class="{{ config.name }}__line-price {{ config.jsName }}__line-price" {{ qa(config.name ~ '-line-price') }}></div>
+                    </div>
 
                     {% include molecule('quantity-counter') with {
                         modifiers: ['sm'],
@@ -51,8 +55,6 @@
                             'data-qa': config.name ~ '-line-quantity',
                         },
                     } only %}
-
-                    <span class="{{ config.name }}__line-price {{ config.jsName }}__line-price" {{ qa(config.name ~ '-line-price') }}></span>
 
                     <button
                         type="button"

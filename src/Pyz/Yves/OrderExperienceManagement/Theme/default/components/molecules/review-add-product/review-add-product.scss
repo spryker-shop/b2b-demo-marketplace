@@ -1,13 +1,25 @@
 @include order-experience-management-review-add-product {
     @include typography(body-md);
 
+    &__lines {
+        margin: 0 calc(var(--scale-12) * -1);
+    }
     &__line {
-        padding: var(--scale-12) 0;
-        align-items: center
+        padding: var(--scale-12);
+        align-items: center;
+        border-bottom: rem(1) solid var(--border-subtle);
+
+        &:last-child {
+            margin-bottom: var(--scale-12);
+        }
     }
 
-    &__line-name {
-        @include typography(label-md);
+    &__line-meta {
+        flex-grow: 1;
+    }
+
+    &__line-sku {
+        @include typography(body-sm);
     }
 
     &__summary {
