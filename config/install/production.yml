@@ -29,6 +29,14 @@ sections:
         configuration-sync:
             command: 'vendor/bin/console configuration:sync -vvv --no-ansi'
 
+    # Re-seeds config-derived DB records (OAuth clients, scopes, ACL, permissions) so that rotated
+    # secrets injected into the containers stay in sync with their hashes in the database.
+    # Without this a normal deploy leaves spy_oauth_client holding the previous secret hash and the
+    # backend API /token endpoint fails with invalid_client until a destructive deploy reseeds it.
+    init-db:
+        setup-init-db:
+            command: 'vendor/bin/console setup:init-db -vvv --no-ansi'
+
     scheduler-start:
         queue-setup:
             command: 'vendor/bin/console queue:setup'
