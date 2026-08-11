@@ -1,6 +1,15 @@
 @include order-experience-management-review-add-product {
     @include typography(body-md);
 
+    &__line {
+        padding: var(--scale-12) 0;
+        align-items: center
+    }
+
+    &__line-name {
+        @include typography(label-md);
+    }
+
     &__summary {
         @include typography(label-md);
         margin: 0 0 var(--scale-12);

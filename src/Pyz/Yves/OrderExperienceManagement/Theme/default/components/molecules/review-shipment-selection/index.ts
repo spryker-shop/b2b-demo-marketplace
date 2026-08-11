@@ -1,4 +1,4 @@
-import 'OrderExperienceManagement/components/molecules/review-shipment-selection/style.scss';
+import './review-shipment-selection.scss';
 import register from 'ShopUi/app/registry';
 
 export default register(

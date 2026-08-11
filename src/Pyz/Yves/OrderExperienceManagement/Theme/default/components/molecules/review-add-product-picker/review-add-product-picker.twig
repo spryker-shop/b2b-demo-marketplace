@@ -1,6 +1,47 @@
 {% extends molecule('review-add-product-picker', '@SprykerFeature:OrderExperienceManagement') %}
 
-
 {% block quantityLabel %}
     <label for="add-product-quantity-input" class="label {{ config.name }}__label">{{ 'recurring_orders.review.add_product.quantity' | trans }}</label>
+{% endblock %}
+
+{% block merchantProductOffersSelect %}
+    <div class="{{ config.name }}__offer" {{ qa(config.name ~ '-offer') }}>
+        {% widget 'MerchantProductOffersSelectWidget' with {
+            data: {
+                id: 'review-add-product-offers',
+                submitButtonClassName: config.jsName ~ '__add',
+                autocompleteFormClassName: pickerAutocompleteClassName,
+                url: 'recurring-order/product-offer-select',
+                mounAfterRender: true,
+            },
+        } only %}{% endwidget %}
+    </div>
+{% endblock %}
+
+{% block quantityInput %}
+    {% include molecule('quantity-counter') with {
+        data: {
+            inputExtraClasses: config.jsName ~ '__quantity',
+        },
+        attributes: {
+            id: 'add-product-quantity-input',
+            min: 1,
+            value: 1,
+            'data-qa': config.name ~ '-quantity',
+        },
+    } only %}
+{% endblock %}
+
+{% block actions %}
+    <div class="{{ config.name }}__actions grid grid--right">
+        {% set actionAddButtonClassName = config.jsName ~ "__add button" %}
+        {% set actionClearButtonClassName = config.jsName ~ "__clear button button--hollow" %}
+        {% block actionClearButton %}
+            {{ parent() }}
+        {% endblock %}
+
+        {% block actionAddButton %}
+            {{ parent() }}
+        {% endblock %}
+    </div>
 {% endblock %}
