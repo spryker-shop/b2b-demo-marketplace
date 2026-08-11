@@ -1,0 +1,6 @@
+{% extends view('merchant-product-offers-select-form', '@SprykerFeature:OrderExperienceManagement') %}
+
+{% block productOffersForm %}
+    <label for="{{ field.vars.id }}" class="label">{{ field.vars.label | trans }}</b>
+    {{ form_widget(field) }}
+{% endblock %}

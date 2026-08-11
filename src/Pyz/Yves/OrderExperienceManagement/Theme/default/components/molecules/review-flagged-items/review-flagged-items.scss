@@ -6,6 +6,10 @@
             @include typography(label-md);
             margin: 0 0 var(--scale-12);
         }
+        
+        &__item-name {
+            margin: 0 0 var(--scale-4);
+        }
 
         &__item-sku {
             @include typography(body-sm);
@@ -23,6 +27,14 @@
             &:not(:last-child) {
                 border-bottom: rem(1) solid var(--border-subtle);
             }
+        }
+
+        .sold-by-merchant {
+            margin: var(--scale-4) 0;
+        }
+
+        &__price-info {
+            @include typography(label-sm);
         }
 
         @content;

@@ -31,7 +31,7 @@
 {% block separator %}{% endblock %}
 
 {% block grid %}
-    {% set gridClassName = config.name ~ '__item grid grid--gap' %}
+    {% set gridClassName = config.name ~ '__item grid grid--gap grid--nowrap' %}
     {{ parent() }}
 {% endblock %}
 
@@ -77,5 +77,11 @@
                 {{ (hasAppliedSubstitute ? 'recurring_orders.review.substitute.change' : 'recurring_orders.review.substitute.select') | trans }}
             </button>
         </div>
+    {% endif %}
+{% endblock %}
+
+{% block itemPriceInfo %}
+    {% if (flaggedItem.previousPrice is not null) %}
+        <small class="{{ config.name }}__price-info">{{ (flaggedItem.recurringScheduleItem.nextDeliveryQuantity ?: flaggedItem.recurringScheduleItem.quantity) }}x <s>{{ flaggedItem.previousPrice | money(true, data.currencyIsoCode) }}</s> {{ flaggedItem.currentPrice | money(true, data.currencyIsoCode) }}</small>
     {% endif %}
 {% endblock %}

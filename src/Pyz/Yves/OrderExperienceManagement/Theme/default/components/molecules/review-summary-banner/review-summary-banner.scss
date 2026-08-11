@@ -8,8 +8,13 @@
         border-radius: var(--radius-md);
         background: var(--background-surface);
 
+        &__new-price,
         &__title {
-            font-size: var(--font-size-14);
+            @include typography(label-md)
+        }
+
+        &__old-price {
+            @include typography(label-sm)
         }
 
         @content;

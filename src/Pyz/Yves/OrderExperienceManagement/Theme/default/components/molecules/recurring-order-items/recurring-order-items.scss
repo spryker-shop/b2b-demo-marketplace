@@ -1,10 +1,10 @@
 @mixin order-experience-management-recurring-order-items($name: '.recurring-order-items') {
     #{$name} {
-        font-size: var(--font-size-12);
+        @include typography(body-sm);
 
         &__title {
-            font-size: var(--font-size-12);
-            font-weight: var(--font-weight-normal);
+            @include typography(label-sm);
+            margin-bottom: var(--scale-8);
         }
 
         &__items {
