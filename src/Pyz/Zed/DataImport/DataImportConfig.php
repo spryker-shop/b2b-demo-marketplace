@@ -15,6 +15,7 @@ use Spryker\Zed\MerchantProductApprovalDataImport\MerchantProductApprovalDataImp
 use Spryker\Zed\ProductApprovalDataImport\ProductApprovalDataImportConfig;
 use Spryker\Zed\ProductOfferShoppingListDataImport\ProductOfferShoppingListDataImportConfig;
 use Spryker\Zed\StockAddressDataImport\StockAddressDataImportConfig;
+use Spryker\Zed\Workflow\WorkflowConfig;
 use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 
 /**
@@ -251,6 +252,7 @@ class DataImportConfig extends SprykerDataImportConfig
             SelfServicePortalConfig::IMPORT_TYPE_PRODUCT_SHIPMENT_TYPE,
             ProductOfferShoppingListDataImportConfig::IMPORT_TYPE_PRODUCT_OFFER_SHOPPING_LIST_ITEM,
             ConfigurationConfig::IMPORT_TYPE_CONFIGURATION_VALUE,
+            WorkflowConfig::IMPORT_TYPE_WORKFLOW, #WorkflowFeature
         ];
 
         return array_merge(parent::getFullImportTypes(), $customImportTypes);

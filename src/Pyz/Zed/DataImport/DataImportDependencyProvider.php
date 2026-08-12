@@ -132,6 +132,7 @@ use Spryker\Zed\StockDataImport\Communication\Plugin\StockDataImportPlugin;
 use Spryker\Zed\StockDataImport\Communication\Plugin\StockStoreDataImportPlugin;
 use Spryker\Zed\StoreContextDataImport\Communication\Plugin\DataImport\StoreContextDataImportPlugin;
 use Spryker\Zed\StoreDataImport\Communication\Plugin\DataImport\StoreDataImportPlugin;
+use Spryker\Zed\Workflow\Communication\Plugin\DataImport\WorkflowDataImportPlugin; #WorkflowFeature
 use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\DataImport\BudgetDataImportPlugin; #PurchasingControlFeature
 use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\DataImport\CostCenterDataImportPlugin; #PurchasingControlFeature
 use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\DataImport\CostCenterToCompanyBusinessUnitDataImportPlugin; #PurchasingControlFeature
@@ -526,6 +527,7 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
             new CostCenterDataImportPlugin(), #PurchasingControlFeature
             new BudgetDataImportPlugin(), #PurchasingControlFeature
             new CostCenterToCompanyBusinessUnitDataImportPlugin(), #PurchasingControlFeature
+            new WorkflowDataImportPlugin(), #WorkflowFeature
         ];
     }
 

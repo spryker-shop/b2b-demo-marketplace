@@ -206,6 +206,9 @@ use Spryker\Zed\Twig\Communication\Console\CacheWarmerConsole;
 use Spryker\Zed\Twig\Communication\Console\TwigTemplateWarmerConsole;
 use Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin;
 use Spryker\Zed\Uuid\Communication\Console\UuidGeneratorConsole;
+use Spryker\Zed\Workflow\Communication\Console\CheckConditionConsole as WorkflowCheckConditionConsole;
+use Spryker\Zed\Workflow\Communication\Console\CheckTimeoutConsole as WorkflowCheckTimeoutConsole;
+use Spryker\Zed\Workflow\WorkflowConfig;
 use Spryker\Zed\ZedNavigation\Communication\Console\BuildNavigationConsole;
 use Spryker\Zed\ZedNavigation\Communication\Console\RemoveNavigationCacheConsole;
 use SprykerEco\Zed\Algolia\Communication\Console\AlgoliaEntityExportConsole;
@@ -259,6 +262,8 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new StateMachineCheckTimeoutConsole(),
             new StateMachineCheckConditionConsole(),
             new StateMachineClearLocksConsole(),
+            new WorkflowCheckConditionConsole(), #WorkflowFeature
+            new WorkflowCheckTimeoutConsole(), #WorkflowFeature
             new ImportOrderItemsStatusConsole(),
             new SessionRemoveLockConsole(),
             new QueueTaskConsole(),
@@ -371,6 +376,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . SelfServicePortalConfig::IMPORT_TYPE_SSP_MODEL_ASSET),
             new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . SelfServicePortalConfig::IMPORT_TYPE_SSP_MODEL_PRODUCT_LIST),
             new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ProductAttachmentConfig::IMPORT_TYPE_PRODUCT_ATTACHMENT),
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . WorkflowConfig::IMPORT_TYPE_WORKFLOW), #WorkflowFeature
 
             // Publish and Synchronization
             new EventBehaviorTriggerTimeoutConsole(),
