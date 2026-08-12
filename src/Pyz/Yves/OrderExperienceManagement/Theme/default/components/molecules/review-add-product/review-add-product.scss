@@ -15,10 +15,15 @@
         }
     }
 
+    &__line-name-text {
+        @include typography(body-md);
+    }
+
     &__line-meta {
         flex-grow: 1;
     }
 
+    &__line-price,
     &__line-sku {
         @include typography(body-sm);
     }
