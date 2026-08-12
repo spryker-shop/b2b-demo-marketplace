@@ -46,6 +46,8 @@
                 {% include molecule('recurring-order-items', 'OrderExperienceManagement') with {
                     data: {
                         schedule: data.schedule,
+                        itemFlagLabelMap: data.itemFlagLabelMap,
+                        itemFlagBadgeMap: data.itemFlagBadgeMap,
                     }
                 } only %}
             </div>
