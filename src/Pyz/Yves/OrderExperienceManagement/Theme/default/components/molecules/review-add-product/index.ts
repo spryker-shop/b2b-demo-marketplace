@@ -7,6 +7,6 @@ export default register(
         import(
             /* webpackMode: "lazy", */
             /* webpackChunkName: "review-add-product" */
-            'OrderExperienceManagement/components/molecules/review-add-product/review-add-product'
+            './review-add-product'
         ),
 );

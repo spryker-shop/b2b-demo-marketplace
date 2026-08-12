@@ -1,0 +1,103 @@
+{% extends molecule('recurring-order-edit-form', '@SprykerFeature:OrderExperienceManagement') %}
+
+{% block body %}
+    {% embed molecule('form') with {
+        data: {
+            form: data.form,
+            options: {
+                attr: {
+                    action: data.editUrl,
+                    method: 'POST',
+                    novalidate: false,
+                }
+            },
+            submit: {
+                enable: true,
+                text: 'recurring_orders.detail.edit.actions.save' | trans,
+                qa: 'recurring-order-edit-confirm-button',
+            },
+            cancel: {
+                enable: true,
+                icon: false,
+                text: 'global.cancel' | trans,
+                class: 'button button--secondary button--hollow js-main-popup-close',
+            }
+        },
+        embed: {
+            configName: config.jsName,
+            configJsName: config.jsName,
+        },
+    } only %}
+        {% block field %}
+            {% if fieldName == 'name' %}
+                {{ form_row(field, {
+                    rowAttr: {
+                        class: 'form__field col col--sm-12',
+                    },
+                    attr: {
+                        'data-qa': 'recurring-order-edit-name-input',
+                    },
+                }) }}
+            {% elseif fieldName == 'cadenceType' %}
+                {{ form_row(field, {
+                    rowAttr: {
+                        class: 'form__field col col--sm-12',
+                    },
+                    attr: {
+                        class: embed.configJsName ~ '__type ',
+                        'data-qa': 'recurring-order-edit-cadence-select',
+                    },
+                }) }}
+            {% elseif fieldName == 'cadenceValue' %}
+                {{ form_row(field, {
+                    rowAttr: {
+                        class: embed.configName ~ '__value-wrapper ' ~ 'form__field col col--sm-12'
+                    },
+                    attr: {
+                        'data-qa': 'recurring-order-edit-cadence-value-input',
+                    },
+                }) }}
+            {% elseif fieldName == 'nextExecutionDate' %}
+                <div class="form__field col col--sm-12">
+                    {{ form_label(field) }}
+                    {{ form_errors(field) }}
+
+                    {% include molecule('date-time-picker') with {
+                        modifiers: ['with-icon'],
+                        data: {
+                            field: field,
+                            labelIsHidden: true,
+                            inputQa: 'recurring-order-edit-date-input',
+                        },
+                        attributes: {
+                            language: app.locale | slice(0, 2),
+                            config: '{
+                                "format": "Y-m-d",
+                                "enableTime": false,
+                                "minDate": "today",
+                                "scrollInput": false,
+                                "scrollMonth": false
+                            }',
+                        },
+                    } only %}
+                </div>
+            {% elseif fieldName == 'idCostCenter' %}
+                {% embed molecule('recurring-order-cost-center-budget', 'PurchasingControl') with {
+                    class: 'form__field col col--sm-12',
+                    data: {
+                        approveForm: data.form,
+                    },
+                } only %}
+                    {% block extraClass %}{% endblock %}
+                    
+                    {% block form %}
+                        {% set formColClassName = "col col--sm-12 spacing-bottom--big" %}
+                        {{ parent() }}
+                    {% endblock %}
+                {% endembed %}
+            {% else %}
+                {{ parent() }}
+            {% endif %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

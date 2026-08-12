@@ -6,6 +6,6 @@ export default register(
         import(
             /* webpackMode: "eager" */
             /* webpackChunkName: "recurring-order-budget-summary" */
-            'PurchasingControl/components/molecules/recurring-order-budget-summary/recurring-order-budget-summary'
+            './recurring-order-budget-summary'
         ),
 );
