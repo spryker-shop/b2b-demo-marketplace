@@ -19,10 +19,8 @@ concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event.inputs.framework }}
     cancel-in-progress: true
 
-# NOTE: only codeception restores a pre-built dump, so it is the one framework here that has to
-# bring a build job along. The cypress and robot lanes import their own demodata. There is no
-# `narrow` sub-framework input yet.
 jobs:
+    # Only codeception restores a dump; the cypress and robot lanes import their own demodata.
     build-db:
         if: ${{ inputs.framework == 'codeception' }}
         uses: ./.github/workflows/_build-db.yml

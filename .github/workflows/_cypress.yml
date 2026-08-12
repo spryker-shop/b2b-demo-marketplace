@@ -27,12 +27,8 @@ jobs:
 
             -   id: compute
                 name: Generate shard matrix
-                # The generator lists the installed specs and packs them into a fixed
-                # number of shards, self-checking that the packed set equals the
-                # installed set — so adding or renaming a spec is absorbed instead of
-                # failing the tier. jq then crosses each shard with the repository_ids
-                # that must run it: the SSP shard exists only for the marketplace
-                # variant, every core shard runs for both.
+                # jq crosses each generated shard with the repository_ids that must run it:
+                # the SSP shard is marketplace-only, every core shard runs for both.
                 run: |
                     CORE=$(.github/workflows/scripts/generate-cypress-shards.py)
                     CELLS=$(printf '%s' "$CORE" | jq -c '[ .[] as $s
@@ -74,15 +70,9 @@ jobs:
                     ulimit -n 65536
 
             -   name: Run project in Docker
-                # Every cell imports its own demodata. Restoring the shared dump on the
-                # marketplace cells was measurably faster by only a minute or two -- those cells
-                # ran 21-28m against the importing b2b cells' 20-26m -- and it cost correctness:
-                # the dynamic-store specs failed on every restored run with a 500 from Yves,
-                # `defaultLocaleIsoCode` null on a store the test had just created, while the
-                # same specs passed on the importing cells and on the unsharded baseline. The
-                # restored environment does not reliably reproduce the storage and search
-                # projections the storefront reads. Sharding is where this lane's wall-clock win
-                # comes from anyway: five cells of ~25m against one job of ~90m.
+                # Deliberately imports demodata rather than restoring the shared dump: the
+                # restore bought a minute or two per cell and cost correctness. Sharding is
+                # where this lane's wall-clock win comes from.
                 run: |
                     git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
                     if [ "${{ matrix.cell.repository_id }}" = "b2b" ]; then
@@ -108,9 +98,8 @@ jobs:
                     fi
 
             -   name: Upload Screenshots
-                # Scoped to a test failure, like the three steps below it. On bare failure() a red
-                # boot or install step also triggers this, and `.cypress` does not exist yet, so
-                # the upload adds a second red step that points away from the real cause.
+                # Scoped to a test failure: on a failed boot `.cypress` does not exist yet, and
+                # the upload would add a second red step pointing away from the real cause.
                 if: failure() && steps.run_tests.outcome == 'failure'
                 run: |
                     AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp .cypress s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/${{ matrix.cell.repository_id }}/dms-on/cypress/${GITHUB_RUN_ID}/PHP8.4MariaDB/shard-${{ matrix.cell.shard }}/ --recursive

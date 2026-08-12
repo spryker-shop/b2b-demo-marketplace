@@ -44,10 +44,8 @@ jobs:
                     name: spryker-app-db
 
             -   name: Run docker
-                # Build-once: restore the shared spryker-app-db dump (full_EU) via
-                # ci.restore-db.stage2 instead of importing demodata here. The deploy file's own
-                # pipeline key is untouched; only SPRYKER_PIPELINE is overridden for this
-                # invocation. codecept fixtures still runs afterwards.
+                # The pipeline override restores the shared dump instead of importing demodata;
+                # the deploy file's own pipeline key is untouched.
                 run: |
                     git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
                     docker/sdk boot .github/deploy/deploy.ci.acceptance.mariadb.yml
@@ -125,9 +123,8 @@ jobs:
                     name: spryker-app-db
 
             -   name: Run docker
-                # Build-once: restore the shared spryker-app-db dump (full_EU) via
-                # ci.restore-db.stage2 instead of importing demodata here. The functional
-                # pipeline's own demodata step is bypassed by the override only.
+                # The pipeline override restores the shared dump instead of importing demodata;
+                # the deploy file's own pipeline key is untouched.
                 run: |
                     git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
                     docker/sdk boot .github/deploy/deploy.ci.functional.mariadb.yml -a --apcu

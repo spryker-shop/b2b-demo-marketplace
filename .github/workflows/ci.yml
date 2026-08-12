@@ -186,10 +186,7 @@ jobs:
                 uses: ./.github/actions/job-slack-notifications
                 if: always()
 
-    # Functional lane is project applicable; the acceptance & API lane is product-only.
-    # Both live in _codeception.yml, annotated per job there.
-    # Imports the demodata once and publishes it as a dump, so each consumer restores it instead
-    # of importing independently. Not draft-tiered: codeception always runs, so its dump must too.
+    # Not draft-tiered: codeception always runs, so its dump must too.
     build-db:
         needs: [js-validation]
         uses: ./.github/workflows/_build-db.yml

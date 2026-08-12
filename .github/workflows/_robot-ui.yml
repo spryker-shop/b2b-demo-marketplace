@@ -45,16 +45,8 @@ jobs:
                     ulimit -n 65536
 
             -   name: Install Project
-                # Imports demodata here rather than restoring a pre-built dump.
-                # This lane is deliberately NOT build-once. Restoring the dump here turned a
-                # green 45-minute job into a red two-hour one: 34 of 67 tests failed, spread
-                # across catalog, search, cart, checkout, prices and order management, every one
-                # of them a 60-second locator timeout with almost nothing in the application
-                # logs. That signature is an incompletely rebuilt storefront projection —
-                # queries return empty, pages render fine, the awaited element simply never
-                # arrives. robot-api restores the same dump and stays green, so the dump itself
-                # is sound; what the UI needs from Redis and Elasticsearch is more than the
-                # restore reliably reconstructs. Importing costs one boot and is correct.
+                # Deliberately imports demodata rather than restoring the shared dump: on the
+                # restore this lane went red with widespread locator timeouts.
                 run: |
                     git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
                     docker/sdk boot .github/deploy/deploy.ci.acceptance.mariadb.robot.yml
