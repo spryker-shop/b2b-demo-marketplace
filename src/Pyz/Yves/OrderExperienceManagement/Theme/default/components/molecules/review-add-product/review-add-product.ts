@@ -41,7 +41,7 @@ export default class ReviewAddProduct extends CoreReviewAddProduct {
 
         this.linesContainer.appendChild(lineElement);
         this.triggerRecalculation();
-        
+
         await mount();
     }
 }
