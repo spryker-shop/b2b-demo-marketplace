@@ -1,16 +1,120 @@
 @mixin merchant-profile-widget-merchant-profile($name: '.merchant-profile') {
     #{$name} {
-        margin: rem(26) 0 rem(50);
-        color: $setting-color-black;
+        &__grid {
+            margin-bottom: var(--scale-64);
 
-        @include helper-breakpoint-media-min($lg) {
-            margin-bottom: rem(130);
+            @include helper-breakpoint(lg) {
+                display: grid;
+                column-gap: #{$setting-grid-space * 2};
+                grid-template-columns: 1fr 32%;
+                grid-template-rows: max-content max-content 1fr;
+                grid-template-areas:
+                    'hero sidebar'
+                    'info sidebar'
+                    'cms sidebar';
+            }
+        }
+
+        &__hero-image {
+            width: 100%;
+            aspect-ratio: 12/5;
+            object-fit: cover;
+            object-position: 50% 50%;
+            border-radius: var(--radius-md);
+            grid-area: hero;
+            margin-bottom: var(--scale-24);
         }
 
         &__info-text {
             color: $setting-color-gray-4;
             font-size: rem(15);
             line-height: rem(20);
+        }
+
+        &__details {
+            @include typography(body-md);
+            background: var(--background-page);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--scale-12);
+            color: var(--text-secondary);
+
+            &[open] {
+                #{$name}__toggle-icon {
+                    transform: rotate(180deg);
+                }
+            }
+
+            h5 {
+                @include typography(label-md);
+            }
+        }
+
+        &__toggle {
+            @include typography(label-md);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--scale-4);
+            color: var(--text-primary);
+            cursor: pointer;
+            list-style: none;
+            padding: var(--scale-20) var(--scale-24);
+
+            &::-webkit-details-marker {
+                display: none;
+            }
+        }
+
+        &__toggle-icon {
+            @include helper-effect-transition(transform);
+        }
+
+        &__content {
+            padding: var(--scale-12) var(--scale-24) var(--scale-24);
+        }
+
+        &__sidebar {
+            grid-area: sidebar;
+            margin-bottom: var(--scale-48);
+        }
+
+        &__cms-data {
+            grid-area: cms;
+        }
+
+        &__merchant-info {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--scale-20);
+            margin-bottom: var(--scale-24);
+            grid-area: info;
+
+            @include helper-breakpoint(lg) {
+                margin-bottom: var(--scale-48);
+            }
+        }
+
+        &__merchant-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--scale-8);
+        }
+
+        &__merchant-description {
+            @include typography(body-md);
+            flex-grow: 1;
+        }
+
+        &__merchant-name {
+            @include typography(heading-sm);
+            margin-bottom: var(--scale-16);
+        }
+
+        &__merchant-logo {
+            width: 60px;
+            border-radius: var(--radius-md);
+            object-fit: contain;
         }
 
         @content;

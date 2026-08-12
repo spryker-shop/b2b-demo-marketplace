@@ -116,6 +116,7 @@
             gap: var(--scale-8);
 
             .link {
+                @include typography(label-sm);
                 display: inline-flex;
                 align-items: center;
                 padding: var(--scale-6) var(--scale-12);
@@ -123,9 +124,6 @@
                 border: var(--stroke-sm) solid var(--border-default);
                 background: var(--background-page);
                 color: var(--text-primary);
-                font-size: var(--label-sm-size);
-                font-weight: var(--label-sm-weight);
-                line-height: var(--label-sm-line-height);
                 text-decoration: none;
 
                 &:hover {

@@ -137,7 +137,7 @@ duration,select,yes,yes,"1 Day",Duration,Duration,,,PDP
 efficiency,select,yes,yes,"0.91, 0.92",Efficiency,Efficiency,,,PDP
 efficiencyrating,select,yes,yes,"COP 3.7","Efficiency Rating","Efficiency Rating",,,PDP
 electrodematerial,select,yes,yes,Ceramic,"Electrode Material","Electrode Material",,,PDP
-enclosurerating,select,yes,yes,IP65,"Enclosure Rating","Enclosure Rating",,,PDP
+enclosurerating,select,yes,yes,"IP65, IP21","Enclosure Rating","Enclosure Rating",,,PDP
 flowrate,select,yes,yes,"3.5 m³/h","Flow Rate","Flow Rate",,,PDP
 fueltype,select,yes,yes,"Natural Gas, Oil","Fuel Type","Fuel Type",,,PDP
 gasesmeasured,select,yes,yes,"O2, CO, NO","Gases Measured","Gases Measured",,,PDP
@@ -158,7 +158,7 @@ membranetype,select,yes,yes,Replaceable,"Membrane Type","Membrane Type",,,PDP
 memory,select,yes,yes,"4 GB",Memory,Memory,,,PDP
 motorprotection,select,yes,yes,IP44,"Motor Protection","Motor Protection",,,PDP
 mounting,select,yes,yes,"DIN rail",Mounting,Mounting,,,PDP
-noiselevel,select,yes,yes,"58 dB(A)","Noise Level","Noise Level",,,PDP
+noiselevel,select,yes,yes,"58 dB(A), from 68 dB(A) at 1m","Noise Level","Noise Level",,,PDP
 nominalcapacity,select,yes,yes,"60 kW","Nominal Capacity","Nominal Capacity",,,PDP
 operatingpressure,select,yes,yes,"10 bar","Operating Pressure","Operating Pressure",,,PDP
 orificesize,select,yes,yes,"40 mm","Orifice Size","Orifice Size",,,PDP
@@ -172,7 +172,7 @@ pressurerating,select,yes,yes,PN16,"Pressure Rating","Pressure Rating",,,PDP
 probelength,select,yes,yes,"50 mm","Probe Length","Probe Length",,,PDP
 protection,select,yes,yes,IP54,Protection,Protection,,,PDP
 protectionclass,select,yes,yes,IP40,"Protection Class","Protection Class",,,PDP
-refrigeranttype,select,yes,yes,"R1234ze, R134a","Refrigerant Type","Refrigerant Type",,,PDP
+refrigeranttype,select,yes,yes,"R1234ze, R134a, R-410A, R-32","Refrigerant Type","Refrigerant Type",,,PDP
 resettype,select,yes,yes,Manual,"Reset Type","Reset Type",,,PDP
 safetystandard,select,yes,yes,"EN 12953","Safety Standard","Safety Standard",,,PDP
 sealmaterial,select,yes,yes,PTFE,"Seal Material","Seal Material",,,PDP
@@ -200,6 +200,59 @@ volume,select,yes,yes,"120 L",Volume,Volume,,,PDP
 watervolume,select,yes,yes,"460 L","Water Volume","Water Volume",,,PDP
 limitrange,select,yes,yes,,"Limit Range",Grenzbereich,,,PDP
 poweroutput,select,yes,yes,,"Power Output",Ausgangsleistung,,,PDP
-phasesupport,select,yes,yes,,"Phase Support",Phasenunterstützung,,,PDP
+phase_supply,select,yes,yes,"Single Phase, Three Phase, Single Phase (230V), Three Phase (400V)","Phase Supply",Phasenversorgung,,,PDP
 openingpressure,select,yes,yes,,"Opening Pressure",Öffnungsdruck,,,PDP
 pumphousing,select,yes,yes,,"Pump Housing",Pumpengehäuse,,,PDP
+thermalcapacity,select,yes,yes,"300 kW, 500 kW",Thermal Capacity,Thermal Capacity,,,PDP
+platematerial,select,yes,yes,AISI 316 Stainless Steel,Plate Material,Plate Material,,,PDP
+flowconfiguration,select,yes,yes,Counter-flow,Flow Configuration,Flow Configuration,,,PDP
+maxoperatingtemperature,select,yes,yes,"150°C, 95°C",Max Operating Temperature,Max Operating Temperature,,,PDP
+maxoperatingpressure,select,yes,yes,16 bar,Max Operating Pressure,Max Operating Pressure,,,PDP
+connectionsize,select,yes,yes,"DN65 flanged, DN100 flanged",Connection Size,Connection Size,,,PDP
+numberofplates,select,yes,yes,"40, 64",Number of Plates,Number of Plates,,,PDP
+heatrecoveryoutput,select,yes,yes,up to 150 kW,Heat Recovery Output,Heat Recovery Output,,,PDP
+fluegasinlettemperature,select,yes,yes,up to 350°C,Flue Gas Inlet Temperature,Flue Gas Inlet Temperature,,,PDP
+heatexchangertype,select,yes,yes,Finned-tube,Heat Exchanger Type,Heat Exchanger Type,,,PDP
+bodymaterial,select,yes,yes,"Carbon Steel with epoxy coating, S235 Steel, epoxy-lined, Cast iron / Stainless steel rotor",Body Material,Body Material,,,PDP
+condensatedrain,select,yes,yes,DN25,Condensate Drain,Condensate Drain,,,PDP
+efficiencygain,select,yes,yes,up to 6%,Efficiency Gain,Efficiency Gain,,,PDP
+flueconnection,select,yes,yes,Ø200 mm,Flue Connection,Flue Connection,,,PDP
+maxworkingpressure,select,yes,yes,"3 bar, 10 bar",Max Working Pressure,Max Working Pressure,,,PDP
+insulation,select,yes,yes,"100mm PU foam, blue cladding",Insulation,Insulation,,,PDP
+connections,select,yes,yes,"6× DN32 (1¼"") BSP threaded ports",Connections,Connections,,,PDP
+standingheight,select,yes,yes,"1,820 mm",Standing Height,Standing Height,,,PDP
+connection,select,yes,yes,"¾"" BSP male, DN50 flanged",Connection,Connection,,,PDP
+diaphragmmaterial,select,yes,yes,SBR rubber,Diaphragm Material,Diaphragm Material,,,PDP
+casing,select,yes,yes,"Powder-coated steel (RAL 3000 Red), Galvanised steel, powder-coated (RAL 7035 Light Grey)",Casing,Casing,,,PDP
+certification,select,yes,yes,"PED 2014/68/EU, EN 14511, CE marked, ErP compliant",Certification,Certification,,,PDP
+motortype,select,yes,yes,EC (Electronically Commutated),Motor Type,Motor Type,,,PDP
+energyclass,select,yes,yes,IE5,Energy Class,Energy Class,,,PDP
+flowtemperature,text,yes,no,,Flow Temperature,Vorlauftemperatur,,,PDP
+thermaloutput,text,yes,no,,Thermal Output,Wärmeleistung,,,PDP
+ashremoval,text,yes,no,,Ash Removal,Entaschung,,,PDP
+burnertype,text,yes,no,,Burner Type,Brennertyp,,,PDP
+combustionefficiency,text,yes,no,,Combustion Efficiency,Verbrennungswirkungsgrad,,,PDP
+control,text,yes,no,,Control,Steuerung,,,PDP
+controlsystem,text,yes,no,,Control System,Steuerungssystem,,,PDP
+feedsystem,text,yes,no,,Feed System,Zuführsystem,,,PDP
+fluegasconnection,text,yes,no,,Flue Gas Connection,Abgasanschluss,,,PDP
+frame,text,yes,no,,Frame,Rahmen,,,PDP
+heatexchangermaterial,text,yes,no,,Heat Exchanger Material,Wärmetauschermaterial,,,PDP
+heatingelements,text,yes,no,,Heating Elements,Heizelemente,,,PDP
+operationmode,text,yes,no,,Operation Mode,Betriebsmodus,,,PDP
+totalthermaloutput,text,yes,no,,Total Thermal Output,Gesamtwärmeleistung,,,PDP
+compressortype,text,yes,no,,Compressor Type,Verdichtertyp,,,PDP
+airdistribution,text,yes,no,,Air Distribution,Luftverteilung,,,PDP
+coolingcapacity,select,yes,yes,"7 kW, 10 kW, 12 kW, 18 kW, 20 kW, 24 kW, 25 kW, 35 kW, 40 kW, 60 kW, 80 kW",Cooling Capacity,Kühlleistung,,,PDP
+airdischargedirection,select,yes,yes,"Downflow, Horizontal, Upflow",Air Discharge Direction,Luftausblasrichtung,,,PDP
+refrigerantcircuitconfiguration,select,yes,yes,"Single Circuit, Dual Circuit",Refrigerant Circuit,Kältemittelkreislauf,,,PDP
+humidificationmodule,select,yes,yes,"None, Integrated Humidifier",Humidification Module,Befeuchtungsmodul,,,PDP
+airflowdirection,select,yes,yes,"Upflow (front discharge), Downflow (underfloor), Rear discharge",Air Flow Direction,Luftstromrichtung,,,PDP
+operatingmode,select,yes,yes,"Cooling Only, Heat Pump (Cooling + Heating), Cooling + Electric Auxiliary Heat",Operating Mode,Betriebsart,,,PDP
+coolingmethod,text,yes,no,,Cooling Method,Kühlverfahren,,,PDP
+fantype,text,yes,no,,Fan Type,Ventilatortyp,,,PDP
+temperatureaccuracy,text,yes,no,,Temperature Accuracy,Temperaturgenauigkeit,,,PDP
+humiditycontrol,text,yes,no,,Humidity Control,Feuchteregelung,,,PDP
+systemtype,text,yes,no,,System Type,Systemtyp,,,PDP
+indoorunitmounting,text,yes,no,,Indoor Unit Mounting,Montage Inneneinheit,,,PDP
+autorestart,text,yes,no,,Auto-restart,Wiederanlauf,,,PDP

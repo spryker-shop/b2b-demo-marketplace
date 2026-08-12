@@ -68,9 +68,7 @@
         }
 
         &__name {
-            font-size: var(--heading-sm-size);
-            font-weight: var(--heading-sm-weight);
-            line-height: var(--heading-sm-line-height);
+            @include typography(heading-sm);
             color: var(--text-primary);
             display: block;
             text-decoration: none;

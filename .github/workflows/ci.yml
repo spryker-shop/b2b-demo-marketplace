@@ -7,6 +7,7 @@ on:
             - master
     workflow_dispatch:
 
+# [optional for project]
 env:
     SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
     WEEKLY_CI_SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
@@ -16,7 +17,13 @@ concurrency:
     group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
     cancel-in-progress: true
 
+# =============================================================================
+# Jobs below (until the "REMOVE FOR PROJECT" banner) are applicable for project
+# development. Everything under that banner is product-delivery only and should
+# be removed when this workflow is adopted as the project CI.
+# =============================================================================
 jobs:
+    # [project applicable] Credential scan.
     scan-credentials:
         name: "Scan for Credentials"
         if: ${{ !(github.event_name == 'push' && github.ref == 'refs/heads/master') }}
@@ -31,10 +38,13 @@ jobs:
               uses: trufflesecurity/trufflehog@v3.90.8
               with:
                   extra_args: --log-level=2 --results=verified
+    # [project applicable] Static analysis (sniffers, phpmd, phpstan, evaluator, speccy).
     validation:
         name: "Static analysis"
         if: ${{ !(github.event_name == 'push' && github.ref == 'refs/heads/master') }}
         runs-on: ubuntu-latest
+        # [remove for project] multi-PHP matrix is product-only; a project runs a
+        # single PHP version (8.4) — drop this whole `strategy` block for the project.
         strategy:
             fail-fast: false
             matrix:
@@ -55,7 +65,7 @@ jobs:
 
             -   uses: ramsey/composer-install@v3
                 with:
-                    composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
+                    composer-options: "-q --ignore-platform-reqs --no-interaction --prefer-install=auto"
 
             -   name: Generate transfer objects
                 run: vendor/bin/console transfer:generate
@@ -92,6 +102,9 @@ jobs:
             -   name: Run Architecture rules
                 run: vendor/bin/phpmd src/ text vendor/spryker/architecture-sniffer/src/ruleset.xml --minimumpriority 2
 
+            -   name: Run Project Architecture rules
+                run: vendor/bin/phpmd src/ text phpmd.xml --minimumpriority 4
+
             -   name: Generate rest API documentation
                 run: vendor/bin/console rest-api:generate:documentation
 
@@ -103,12 +116,15 @@ jobs:
             -   name: Run PHPStan
                 run: vendor/bin/phpstan analyze -l 6 -c phpstan.neon src/
 
+            # [remove for project] release-* branch flow only; projects have no release branches.
             -   name: Run Evaluator for release branches
                 run: vendor/bin/evaluator evaluate --format=compact
                 if: github.event.pull_request.base.ref == 'master' && startsWith(github.event.pull_request.head.ref, 'release-')
 
-            -   name: Run Evaluator for all branches
-                run: vendor/bin/evaluator evaluate --exclude-checkers=SPRYKER_DEV_PACKAGES_CHECKER --format=compact
+            -   name: Run Evaluator project code checks
+                run: >-
+                    vendor/bin/evaluator evaluate --format=compact
+                    --exclude-checkers=DISCOURAGED_PACKAGES_CHECKER,MINIMUM_ALLOWED_SHOP_VERSION,NPM_CHECKER,OPEN_SOURCE_VULNERABILITIES_CHECKER,PHP_VERSION_CHECKER,SPRYKER_DEV_PACKAGES_CHECKER,SPRYKER_SECURITY_CHECKER
 
             -   uses: actions/setup-node@v4
                 with:
@@ -121,15 +137,21 @@ jobs:
             -   name: Speccy lint Glue specification
                 run: speccy lint src/Generated/Glue/Specification/spryker_rest_api.schema.yml --rules=default --skip openapi-tags
 
+            # [optional for project]
             -   name: Slack Notification for failed job
                 uses: ./.github/actions/job-slack-notifications
                 if: always()
 
+    # [project applicable] Frontend validation (lint, stylelint, formatter, MP unit tests).
     js-validation:
         name: "NPM validation"
         runs-on: ubuntu-latest
         steps:
             -   uses: actions/checkout@v4
+
+            -   uses: ramsey/composer-install@v3
+                with:
+                    composer-options: "-q --ignore-platform-reqs --no-interaction --prefer-install=auto"
 
             -   name: Setup Node.js
                 uses: actions/setup-node@v5
@@ -158,10 +180,147 @@ jobs:
             -   name: Front-end MP Unit Tests
                 run: npm run mp:test
 
+            # [optional for project]
             -   name: Slack Notification for failed job
                 uses: ./.github/actions/job-slack-notifications
                 if: always()
 
+    # [project applicable] Functional Codeception tests.
+    php-84-mariadb-functional-alpine:
+        needs: [validation, js-validation]
+        name: "Codeception / Functional Tests"
+        runs-on: ubuntu-latest
+        env:
+            PROGRESS_TYPE: plain
+            SPRYKER_PLATFORM_IMAGE: spryker/php:8.4
+            TRAVIS: 1
+            SPRYKER_CURRENT_REGION: EU
+            DYNAMIC_STORE_MODE: true
+            COMPOSER_IGNORE_CHROMEDRIVER: 1
+
+        steps:
+            -   uses: actions/checkout@v4
+
+            -   uses: ramsey/composer-install@v3
+                with:
+                    composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
+
+            -   name: Run docker
+                run: |
+                    git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
+                    docker/sdk boot .github/deploy/deploy.ci.functional.mariadb.yml -a --apcu
+                    docker/sdk up -t
+
+            -   name: Run Tests
+                run: docker/sdk testing codecept run -c tests/codeception.ci.functional.yml
+
+            # [optional for project]
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
+
+    # [project applicable] Cypress Project tests: Lint & Format
+    cypress-quality-gate:
+        name: "Cypress-boilerplate / Lint & Format"
+        runs-on: ubuntu-latest
+        steps:
+            -   uses: actions/checkout@v4
+
+            -   name: Setup Node.js
+                uses: actions/setup-node@v5
+                with:
+                    node-version: '24'
+                    cache: 'npm'
+                    cache-dependency-path: tests/cypress-boilerplate/package-lock.json
+
+            -   name: Install Cypress project dependencies
+                working-directory: tests/cypress-boilerplate
+                run: npm ci
+
+            -   name: ES lint
+                working-directory: tests/cypress-boilerplate
+                run: npm run lint:check
+
+            -   name: Prettier check
+                working-directory: tests/cypress-boilerplate
+                run: npm run prettier:check
+
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
+
+    # [project applicable] Cypress Project tests run
+    cypress-e2e:
+        needs: [js-validation, validation, cypress-quality-gate]
+        name: "Cypress-boilerplate / E2E"
+        runs-on: ubuntu-latest
+        env:
+            PROGRESS_TYPE: plain
+            SPRYKER_PLATFORM_IMAGE: spryker/php:8.4
+            TRAVIS: 1
+            SPRYKER_CURRENT_REGION: EU
+            DYNAMIC_STORE_MODE: true
+
+        steps:
+            -   uses: actions/checkout@v4
+
+            -   uses: ramsey/composer-install@v3
+                with:
+                    composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
+
+            -   name: Setup Node.js
+                uses: actions/setup-node@v5
+                with:
+                    node-version: '24'
+                    cache: 'npm'
+                    cache-dependency-path: tests/cypress-boilerplate/package-lock.json
+
+            -   name: Install Cypress project dependencies
+                working-directory: tests/cypress-boilerplate
+                run: npm ci
+
+            -   name: Run docker
+                run: |
+                    git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
+                    docker/sdk boot .github/deploy/deploy.ci.acceptance.mariadb.cypress-boilerplate.yml
+                    sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local' >> /etc/hosts"
+                    docker/sdk up -t
+                    docker/sdk cli composer dump-autoload -o -a --apcu -q
+
+            -   name: Start queue worker
+                run: docker/sdk console queue:worker:start --stop-when-empty
+
+            -   name: Warm up merchant search index
+                run: |
+                    docker/sdk console sync:data merchant
+                    docker/sdk console queue:worker:start --stop-when-empty
+
+            -   name: Run Cypress E2E tests
+                id: cypress-tests
+                working-directory: tests/cypress-boilerplate
+                run: npx cypress run --env environment=ci --headless --browser chrome
+
+            -   name: Upload Cypress artifacts
+                if: always() && steps.cypress-tests.outcome == 'failure'
+                uses: actions/upload-artifact@v5
+                with:
+                    name: cypress-e2e-failed-artifacts
+                    retention-days: 5
+                    path: |
+                        tests/cypress-boilerplate/cypress/data/screenshots/**/*
+                        tests/cypress-boilerplate/cypress/data/reports/**/*
+
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()
+
+    # =========================================================================
+    # REMOVE FOR PROJECT — the jobs below are product-delivery / upstream
+    # maintenance suites (acceptance, robot, cypress) and are NOT part of the
+    # project CI. Delete them when adopting this workflow for project work.
+    # =========================================================================
+
+    # [remove for project]
     php-84-mariadb-acceptance-alpine:
         needs: [js-validation, validation]
         name: "Codeception / Acceptance & API"
@@ -235,39 +394,7 @@ jobs:
                 uses: ./.github/actions/job-slack-notifications
                 if: always()
 
-    php-84-mariadb-functional-alpine:
-        needs: [validation]
-        name: "Codeception / Functional Tests"
-        runs-on: ubuntu-latest
-        env:
-            PROGRESS_TYPE: plain
-            SPRYKER_PLATFORM_IMAGE: spryker/php:8.4
-            TRAVIS: 1
-            SPRYKER_CURRENT_REGION: EU
-            DYNAMIC_STORE_MODE: true
-            COMPOSER_IGNORE_CHROMEDRIVER: 1
-
-        steps:
-            -   uses: actions/checkout@v4
-
-            -   uses: ramsey/composer-install@v3
-                with:
-                    composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
-
-            -   name: Run docker
-                run: |
-                    git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
-                    docker/sdk boot .github/deploy/deploy.ci.functional.mariadb.yml -a --apcu
-                    docker/sdk up -t
-                    docker/sdk cli composer dump-autoload -o -a --apcu -q
-
-            -   name: Run Tests
-                run: docker/sdk testing codecept run -c tests/codeception.ci.functional.yml
-
-            -   name: Slack Notification for failed job
-                uses: ./.github/actions/job-slack-notifications
-                if: always()
-
+    # [remove for project]
     docker-alpine-php-84-mariadb-robot-api:
         needs: [validation]
         name: "Robot / API"
@@ -345,6 +472,7 @@ jobs:
                 uses: ./.github/actions/job-slack-notifications
                 if: always()
 
+    # [remove for project]
     docker-alpine-php-84-mariadb-robot-api-b2b:
         needs: [validation]
         name: "Robot / API B2B"
@@ -415,6 +543,7 @@ jobs:
                 uses: ./.github/actions/job-slack-notifications
                 if: always()
 
+    # [remove for project]
     docker-alpine-php-84-mariadb-cypress:
         needs: [js-validation, validation]
         name: "Cypress / UI"
@@ -508,6 +637,7 @@ jobs:
                 uses: ./.github/actions/job-slack-notifications
                 if: always()
 
+    # [remove for project]
     docker-alpine-php-84-mariadb-cypress-b2b:
         needs: [js-validation, validation]
         name: "Cypress / UI B2B"
@@ -589,6 +719,7 @@ jobs:
                 uses: ./.github/actions/job-slack-notifications
                 if: always()
 
+    # [remove for project]
     docker-alpine-php-84-mariadb-robot-ui:
         needs: [js-validation, validation]
         name: "Robot / UI"
@@ -687,3 +818,4 @@ jobs:
             -   name: Slack Notification for failed job
                 uses: ./.github/actions/job-slack-notifications
                 if: always()
+

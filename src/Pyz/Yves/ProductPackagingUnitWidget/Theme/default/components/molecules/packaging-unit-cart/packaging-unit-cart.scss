@@ -23,14 +23,10 @@
         }
 
         &__label {
+            @include typography(body-sm);
             flex: 0 0 auto;
             min-width: rem(96);
-            font-family: var(--body-sm-family);
-            font-size: var(--body-sm-size);
-            font-weight: var(--font-weight-regular);
-            line-height: var(--body-sm-line-height);
             color: var(--text-tertiary);
-            letter-spacing: var(--font-letter-spacing-normal);
             margin: 0;
             white-space: nowrap;
         }

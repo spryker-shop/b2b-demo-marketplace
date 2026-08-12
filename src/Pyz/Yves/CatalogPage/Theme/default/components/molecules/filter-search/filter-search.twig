@@ -8,28 +8,36 @@
 {% define data = {
     sectionSelector: '.filter-section',
     groupSelector: '.filter-section .filter-section__item',
-    rowSelector: '.menu__item--filter-enumeration, .filter-category__menu-item',
+    rowSelector: '.filter-enumeration__item, .filter-category__menu-item',
+    titleSelector: '.filter-section__item-label',
+    collapseAllSelector: '.filter-section__collapse-all',
 } %}
 
 {% define attributes = {
     'section-selector': data.sectionSelector,
     'group-selector': data.groupSelector,
     'row-selector': data.rowSelector,
+    'title-selector': data.titleSelector,
+    'collapse-all-selector': data.collapseAllSelector,
 } %}
 
 {% block body %}
-    <input type="text"
-        class="{{ config.name }}__input input input--search"
-        placeholder="{{ 'catalog.filter.search.placeholder' | trans }}"
-        aria-label="{{ 'catalog.filter.search.placeholder' | trans }}"
-        autocomplete="off">
+    <span class="{{ config.name }}__field">
+        <input type="text"
+            class="{{ config.name }}__input input input--search"
+            placeholder="{{ 'catalog.filter.search.placeholder' | trans }}"
+            aria-label="{{ 'catalog.filter.search.placeholder' | trans }}"
+            autocomplete="off">
 
-    <span class="input-search-icon" aria-hidden="true">
-        {% include atom('font-icon') with {
-            modifiers: ['size-inherit'],
-            data: {
-                name: 'search',
-            },
-        } only %}
+        <span class="input-search-icon" aria-hidden="true">
+            {% include atom('font-icon') with {
+                modifiers: ['size-inherit'],
+                data: {
+                    name: 'search',
+                },
+            } only %}
+        </span>
     </span>
+
+    <p class="{{ config.name }}__empty {{ config.jsName }}__empty is-hidden" role="status">{{ 'catalog.filter.search.noResults' | trans }}</p>
 {% endblock %}

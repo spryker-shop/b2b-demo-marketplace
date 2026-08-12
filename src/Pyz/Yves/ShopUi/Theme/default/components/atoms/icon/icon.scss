@@ -12,7 +12,7 @@ $shop-ui-icon-size-bigger: 1.5rem;
 
     &--checkout {
         width: rem(109);
-        height: rem(var(--scale-8));
+        height: var(--scale-8);
 
         @include helper-breakpoint-media-min($lg) {
             width: rem(167);
@@ -66,7 +66,7 @@ $shop-ui-icon-size-bigger: 1.5rem;
         }
 
         &::before {
-            height: rem(var(--stroke-md));
+            height: var(--stroke-md);
             width: 100%;
             top: 50%;
             left: 0;
@@ -79,7 +79,7 @@ $shop-ui-icon-size-bigger: 1.5rem;
 
         &::after {
             height: 100%;
-            width: rem(var(--stroke-md));
+            width: var(--stroke-md);
             top: 0;
             left: 50%;
             transform: translateX(-50%);
@@ -98,11 +98,11 @@ $shop-ui-icon-size-bigger: 1.5rem;
 
     &--toggler-cross-thin {
         &::before {
-            height: rem(var(--stroke-md));
+            height: var(--stroke-md);
         }
 
         &::after {
-            width: rem(var(--stroke-md));
+            width: var(--stroke-md);
         }
     }
 
@@ -126,7 +126,7 @@ $shop-ui-icon-size-bigger: 1.5rem;
 
     &--invoice-logo {
         width: rem(52);
-        height: rem(var(--scale-6));
+        height: var(--scale-6);
 
         @include helper-breakpoint-media-min($lg) {
             width: rem(83);
@@ -142,7 +142,7 @@ $shop-ui-icon-size-bigger: 1.5rem;
     &--payment-logo {
         position: absolute;
         top: 50%;
-        right: rem(var(--scale-6));
+        right: var(--scale-6);
         translate: 0 -50%;
     }
 
@@ -170,7 +170,7 @@ $shop-ui-icon-size-bigger: 1.5rem;
 
     &--copyright {
         width: rem(106);
-        height: rem(var(--scale-10));
+        height: var(--scale-10);
     }
 
     &--view-mode-switch {
@@ -181,7 +181,7 @@ $shop-ui-icon-size-bigger: 1.5rem;
 
     &--reset {
         @include helper-effect-transition(color);
-        margin-right: rem(var(--scale-4));
+        margin-right: var(--scale-4);
         color: $setting-color-gray-5;
     }
 
@@ -197,13 +197,13 @@ $shop-ui-icon-size-bigger: 1.5rem;
     }
 
     &--create-new-cart {
-        width: rem(var(--scale-16));
-        height: rem(var(--scale-16));
+        width: var(--scale-16);
+        height: var(--scale-16);
         vertical-align: bottom;
     }
 
     &--trolley {
-        width: rem(var(--scale-16));
+        width: var(--scale-16);
     }
 
     &--title {
@@ -247,8 +247,8 @@ $shop-ui-icon-size-bigger: 1.5rem;
     }
 
     &--clock {
-        width: rem(var(--scale-4));
-        height: rem(var(--scale-4));
+        width: var(--scale-4);
+        height: var(--scale-4);
     }
 
     &--cart-locked {

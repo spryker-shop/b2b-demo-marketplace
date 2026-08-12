@@ -1,9 +1,11 @@
+@use '../settings/color' as *;
+
 /**
  * Forces element outline.
  */
 @mixin helper-outline {
-    outline: rem(var(--stroke-sm)) solid $setting-color-main;
-    outline-offset: rem(var(--stroke-sm));
+    outline: var(--stroke-sm) solid $setting-color-main;
+    outline-offset: var(--stroke-sm);
 
     @content;
 }

@@ -11,8 +11,6 @@ export default class QuantityCounter extends Component {
     protected numberOfDecimalPlaces = 10;
     protected formattedNumberInput: FormattedNumberInput;
 
-    protected readyCallback(): void {}
-
     protected init(): void {
         this.incrementButton = <HTMLButtonElement>this.getElementsByClassName(`${this.jsName}__button-increment`)[0];
         this.decrementButton = <HTMLButtonElement>this.getElementsByClassName(`${this.jsName}__button-decrement`)[0];
@@ -65,7 +63,7 @@ export default class QuantityCounter extends Component {
 
     protected updateDecrementState(): void {
         const currentValue = this.currentValue;
-        const shouldDisable = !Number.isFinite(currentValue) || currentValue <= this.minQuantity;
+        const shouldDisable = !this.isAvailable || !Number.isFinite(currentValue) || currentValue <= this.minQuantity;
 
         this.decrementButton.disabled = shouldDisable;
         this.decrementButton.classList.toggle(`${this.name}__button--disabled`, shouldDisable);
@@ -73,7 +71,7 @@ export default class QuantityCounter extends Component {
 
     protected updateIncrementState(): void {
         const currentValue = this.currentValue;
-        const shouldDisable = Number.isFinite(currentValue) && currentValue >= this.maxQuantity;
+        const shouldDisable = !this.isAvailable || (Number.isFinite(currentValue) && currentValue >= this.maxQuantity);
 
         this.incrementButton.disabled = shouldDisable;
         this.incrementButton.classList.toggle(`${this.name}__button--disabled`, shouldDisable);

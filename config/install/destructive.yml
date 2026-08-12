@@ -41,6 +41,10 @@ sections:
         init-database:
             command: 'vendor/bin/console setup:init-db -vvv --no-ansi'
 
+    configuration:
+        configuration-sync:
+            command: 'vendor/bin/console configuration:sync -vvv --no-ansi'
+
     setup-queue:
         queue-setup:
             command: 'vendor/bin/console queue:setup'

@@ -5,12 +5,14 @@
         left: 0;
         bottom: 0;
         right: 0;
-        padding: var(--scale-16) var(--scale-16) var(--scale-64);
+        display: flex;
+        flex-direction: column;
         background: var(--background-page);
         z-index: $setting-zi-header + 1;
 
         @include helper-breakpoint-media-min($lg) {
             position: static;
+            display: block;
             padding: var(--scale-12) var(--scale-16) 0;
             background: var(--background-page);
             border: var(--stroke-sm) solid var(--border-subtle);
@@ -18,44 +20,90 @@
             margin-bottom: var(--scale-24);
         }
 
+        &__header {
+            position: relative;
+            display: flex;
+            align-items: center;
+            height: rem(56);
+            padding: 0 var(--scale-16);
+            flex-shrink: 0;
+        }
+
         &__close {
-            position: absolute;
-            right: var(--scale-16);
-            top: var(--scale-16);
-            color: var(--icon-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: rem(40);
+            height: rem(40);
+            padding: 0;
+            border: none;
             background: none;
+            color: var(--icon-primary);
+            font-size: rem(24);
+            cursor: pointer;
+        }
+
+        &__header-logo {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            height: rem(52);
+        }
+
+        &__header-cart {
+            margin-left: auto;
+        }
+
+        &__search-zone {
+            flex-shrink: 0;
+            padding: var(--scale-4) var(--scale-16) var(--scale-12);
 
             @include helper-breakpoint-media-min($lg) {
-                display: none;
+                padding: 0;
             }
         }
 
-        &__title {
-            @include typography(heading-sm);
-            padding: 0 var(--scale-16) var(--scale-12);
-            text-align: center;
+        &__search {
+            @include helper-breakpoint-media-min($lg) {
+                margin-bottom: var(--scale-12);
+            }
         }
 
         &__sorting {
             padding-bottom: var(--scale-12);
         }
 
-        &__search {
-            margin-bottom: var(--scale-12);
-        }
-
         &__holder {
-            height: calc(100% - 5.75rem);
-            overflow: auto;
+            flex: 1 1 auto;
+            min-height: 0;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            padding: 0 var(--scale-16) var(--scale-24);
 
             @include helper-breakpoint-media-min($lg) {
+                flex: none;
                 height: auto;
                 overflow: visible;
+                padding: 0;
             }
         }
 
+        &__footer {
+            display: flex;
+            gap: var(--scale-8);
+            flex-shrink: 0;
+            padding: var(--scale-12) var(--scale-16) calc(var(--scale-12) + env(safe-area-inset-bottom));
+            background: var(--background-page);
+            border-top: var(--stroke-sm) solid var(--border-subtle);
+        }
+
+        &__footer-button {
+            flex: 1 1 0;
+            min-width: 0;
+        }
+
         &__item {
-            padding: var(--scale-12) 0;
+            padding: var(--scale-8) 0;
             border-bottom: var(--stroke-sm) solid var(--border-subtle);
 
             &:last-child {
@@ -72,6 +120,7 @@
             display: flex;
             align-items: center;
             gap: var(--scale-8);
+            min-height: rem(28);
             margin: 0;
             color: var(--text-primary);
             text-transform: none;
@@ -115,22 +164,9 @@
             }
         }
 
-        &__button {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            border-radius: 0;
-
-            @include helper-breakpoint-media-min($lg) {
-                position: static;
-                margin-top: var(--scale-16);
-                border-radius: var(--radius-sm);
-            }
-        }
-
         &--sub-categories-grid {
             position: relative;
+            display: block;
             background: none;
             z-index: $setting-zi-element;
             padding: var(--scale-16) 0 var(--scale-24);

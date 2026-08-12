@@ -4,10 +4,7 @@
 
         @include shop-ui-title() {
             &--footer {
-                font-weight: var(--font-weight-semibold);
-                font-size: var(--label-sm-size);
-                line-height: var(--label-sm-line-height);
-                font-family: var(--label-sm-family);
+                @include typography(label-sm-semibold);
                 text-transform: uppercase;
                 margin-bottom: var(--scale-12);
             }
@@ -19,12 +16,8 @@
 
             @include shop-ui-title() {
                 &--footer-logo {
+                    @include typography(body-md);
                     color: var(--text-secondary);
-                    font-family: var(--body-md-family);
-                    font-size: var(--body-md-size);
-                    font-weight: var(--font-weight-regular);
-                    line-height: var(--body-md-line-height);
-                    letter-spacing: var(--body-md-letter-spacing);
                     text-transform: none;
                     flex-shrink: 0;
                     margin: 0;
@@ -89,9 +82,7 @@
         }
 
         &__contact-tagline {
-            font-size: var(--body-sm-size);
-            font-weight: var(--font-weight-regular);
-            line-height: var(--body-sm-line-height);
+            @include typography(body-sm);
             color: var(--text-primary);
             white-space: nowrap;
             margin: 0;
@@ -106,13 +97,11 @@
 
         &__contact-info-item {
             @include helper-effect-transition(color);
+            @include typography(body-md);
             display: flex;
             align-items: center;
             gap: var(--scale-8);
             color: var(--text-primary);
-            font-size: var(--body-md-size);
-            font-weight: var(--font-weight-regular);
-            line-height: var(--body-md-line-height);
             text-decoration: none;
 
             &:hover,

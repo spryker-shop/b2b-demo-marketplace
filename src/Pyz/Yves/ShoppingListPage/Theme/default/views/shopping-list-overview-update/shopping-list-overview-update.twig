@@ -13,8 +13,10 @@
         data: {
             steps: [{
                 label: 'customer.account' | trans,
+                url: url('customer/overview'),
             },{
                 label: 'customer.account.shopping_list' | trans,
+                url: url('shopping-list'),
             },{
                 label: 'customer.account.shopping_list.overview.edit' | trans,
             }],
@@ -27,6 +29,12 @@
 {% endblock %}
 
 {% block customerContent %}
+    {% include molecule('action-bar') with {
+        data: {
+            title: 'shopping_list_page.edit.page.title' | trans,
+        },
+    } only %}
+
     {% set hasWritePermission = can('WriteShoppingListPermissionPlugin', data.idShoppingList) %}
 
     <div class="spacing-bottom spacing-bottom--bigger">

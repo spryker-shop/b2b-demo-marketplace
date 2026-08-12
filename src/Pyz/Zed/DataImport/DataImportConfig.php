@@ -36,6 +36,16 @@ class DataImportConfig extends SprykerDataImportConfig
     /**
      * @var string
      */
+    public const IMPORT_TYPE_CUSTOMER_GROUP = 'customer-group';
+
+    /**
+     * @var string
+     */
+    public const IMPORT_TYPE_CUSTOMER_GROUP_TO_CUSTOMER = 'customer-group-to-customer';
+
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_GLOSSARY = 'glossary';
 
     /**
@@ -224,6 +234,11 @@ class DataImportConfig extends SprykerDataImportConfig
     public const IMPORT_TYPE_MERCHANT_USER = 'merchant-user';
 
     /**
+     * @var string
+     */
+    public const IMPORT_TYPE_SALES_ORDER = 'sales-order';
+
+    /**
      * @var int
      */
     protected const READ_COLLECTION_BATCH_SIZE = 500;
@@ -253,6 +268,10 @@ class DataImportConfig extends SprykerDataImportConfig
             ProductOfferShoppingListDataImportConfig::IMPORT_TYPE_PRODUCT_OFFER_SHOPPING_LIST_ITEM,
             ConfigurationConfig::IMPORT_TYPE_CONFIGURATION_VALUE,
             WorkflowConfig::IMPORT_TYPE_WORKFLOW, #WorkflowFeature
+            static::IMPORT_TYPE_SALES_ORDER,
+            SelfServicePortalConfig::IMPORT_TYPE_SSP_MODEL,
+            SelfServicePortalConfig::IMPORT_TYPE_SSP_ASSET,
+            SelfServicePortalConfig::IMPORT_TYPE_FILE_ATTACHMENT,
         ];
 
         return array_merge(parent::getFullImportTypes(), $customImportTypes);

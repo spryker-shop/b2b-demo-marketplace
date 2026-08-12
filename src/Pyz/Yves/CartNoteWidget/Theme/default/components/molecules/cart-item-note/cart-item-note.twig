@@ -69,7 +69,7 @@
                 {% set jsModifier = data.form.vars.value.groupKey | replace({"." : ""}) | replace({" " : "_"}) %}
 
                 <div class="{{ config.name }}__form {{ config.jsName }}__form {{ config.jsName }}__form--{{ jsModifier }} {% if isNoteNotEmpty %}is-hidden{% endif %}">
-                    <h6 class="{{ config.name }}__label toggler-accordion__item {{ config.jsName }}__trigger {% if isNoteNotEmpty %}active{% endif %}" data-toggle-target='.{{ config.jsName }}__content--{{ jsModifier }}'>
+                    <h6 class="{{ config.name }}__label toggler-accordion__item {{ config.jsName }}__trigger {% if isNoteNotEmpty %}toggler-accordion__item--active{% endif %}" data-toggle-target='.{{ config.jsName }}__content--{{ jsModifier }}'>
                         {{ 'cart_note.form.add_comment' | trans }}
                         <span class="icon icon--toggler-cross icon--toggler-cross-link toggler-accordion__icon"></span>
                     </h6>

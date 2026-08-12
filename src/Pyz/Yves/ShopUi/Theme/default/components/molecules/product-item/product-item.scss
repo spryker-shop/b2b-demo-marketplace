@@ -43,15 +43,13 @@
         }
 
         &__badge {
+            @include typography(label-sm);
             position: absolute;
             top: var(--scale-12);
             left: var(--scale-12);
             padding: var(--scale-2) var(--scale-8);
             background: var(--background-muted);
             border-radius: var(--radius-sm);
-            font-size: var(--label-sm-size);
-            font-weight: var(--label-sm-weight);
-            line-height: var(--label-sm-line-height);
             color: var(--text-primary);
             z-index: 1;
         }
@@ -71,9 +69,7 @@
         }
 
         &__name {
-            font-size: var(--heading-sm-size);
-            font-weight: var(--heading-sm-weight);
-            line-height: var(--heading-sm-line-height);
+            @include typography(heading-sm);
             color: var(--text-primary);
             text-decoration: none;
             display: -webkit-box;
@@ -94,16 +90,12 @@
         }
 
         &__attributes {
-            font-size: var(--label-sm-semibold-size);
-            font-weight: var(--label-sm-semibold-weight);
-            line-height: var(--label-sm-semibold-line-height);
+            @include typography(label-sm-semibold);
             color: var(--text-secondary);
         }
 
         &__sku-info {
-            font-size: var(--label-sm-size);
-            font-weight: var(--label-sm-weight);
-            line-height: var(--label-sm-line-height);
+            @include typography(label-sm);
             color: var(--text-secondary);
             white-space: nowrap;
             overflow: hidden;
@@ -111,19 +103,15 @@
         }
 
         &__category {
-            font-size: var(--label-sm-regular-size);
-            font-weight: var(--label-sm-regular-weight);
-            line-height: var(--label-sm-regular-line-height);
+            @include typography(label-sm-regular);
             color: var(--text-secondary);
         }
 
         &__rating {
+            @include typography(label-sm-regular);
             display: flex;
             align-items: center;
             gap: var(--scale-6);
-            font-size: var(--label-sm-regular-size);
-            font-weight: var(--label-sm-regular-weight);
-            line-height: var(--label-sm-regular-line-height);
             color: var(--text-secondary);
         }
 
@@ -138,27 +126,20 @@
         }
 
         &__price {
-            font-size: var(--price-md-size);
-            font-weight: var(--price-md-weight);
-            line-height: var(--price-md-line-height);
-            letter-spacing: var(--price-md-letter-spacing);
+            @include typography(price-md);
             color: var(--text-primary);
         }
 
         &__price-discount {
-            font-size: var(--body-sm-size);
-            font-weight: var(--body-sm-weight);
-            line-height: var(--body-sm-line-height);
+            @include typography(body-sm);
             color: var(--text-secondary);
         }
 
         &__availability {
+            @include typography(body-sm);
             display: flex;
             align-items: center;
             gap: var(--scale-4);
-            font-size: var(--body-sm-size);
-            font-weight: var(--body-sm-weight);
-            line-height: var(--body-sm-line-height);
             color: var(--text-tertiary);
         }
 
