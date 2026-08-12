@@ -71,6 +71,7 @@
                         },
                         attributes: {
                             language: app.locale | slice(0, 2),
+                            'formatted-date-time': field.vars.value | date('Y-m-d'),
                             config: '{
                                 "format": "Y-m-d",
                                 "enableTime": false,
@@ -101,3 +102,4 @@
         {% endblock %}
     {% endembed %}
 {% endblock %}
+
