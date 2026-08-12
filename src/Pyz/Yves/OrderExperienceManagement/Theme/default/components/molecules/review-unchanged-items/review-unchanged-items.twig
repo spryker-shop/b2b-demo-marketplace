@@ -27,7 +27,7 @@
 {% block separator %}{% endblock %}
 
 {% block itemName %}
-    <strong>{{ item.productName }}</strong>
+    <strong class="{{ config.name }}__item-name">{{ item.productName }}</strong>
     {% if item.sku %}
         <small class="{{ config.name }}__item-sku">({{ item.sku }})</small>
     {% endif %}
