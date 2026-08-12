@@ -27,6 +27,18 @@
             text-align: left;
         }
 
+        &__item-bundle {
+            display: block;
+            color: var(--text-tertiary);
+        }
+
+        &__item-flags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--scale-4);
+            margin-top: var(--scale-4);
+        }
+
         &__summary,
         &__item-total {
             font-weight: var(--font-weight-bold);
