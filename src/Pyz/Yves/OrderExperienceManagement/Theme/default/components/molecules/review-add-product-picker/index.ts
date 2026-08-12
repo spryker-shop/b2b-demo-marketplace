@@ -7,6 +7,6 @@ export default register(
         import(
             /* webpackMode: "lazy", */
             /* webpackChunkName: "review-add-product-picker" */
-            'OrderExperienceManagement/components/molecules/review-add-product-picker/review-add-product-picker'
+            './review-add-product-picker'
         ),
 );

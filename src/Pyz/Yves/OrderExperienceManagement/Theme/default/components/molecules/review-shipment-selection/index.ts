@@ -7,6 +7,6 @@ export default register(
         import(
             /* webpackMode: "lazy", */
             /* webpackChunkName: "review-shipment-selection" */
-            'OrderExperienceManagement/components/molecules/review-shipment-selection/review-shipment-selection'
+            './review-shipment-selection'
         ),
 );
