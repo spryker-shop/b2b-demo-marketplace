@@ -48,6 +48,9 @@ class AmazonQuicksightConfig extends SprykerAmazonQuicksightConfig
         'SprykerB2BMPDefaultDatasetProductConcreteStore',
         'SprykerB2BMPDefaultDatasetQuoteProducts',
         'SprykerB2BMPDefaultDatasetShoppingListProducts',
+        'SprykerB2BMPDefaultDatasetSspAsset',
+        'SprykerB2BMPDefaultDatasetSspBookedServiceCustomSQL',
+        'SprykerB2BMPDefaultDatasetSspInquiry',
     ];
 
     protected const string DEFAULT_DATA_SOURCE_ID = 'SprykerB2BMPDefaultDataSource';
