@@ -11,6 +11,7 @@
             <div class="{{ config.name }}__main-info">
                 <strong class="{{ config.name }}__item-name">{{ item.productName }}</strong>
                 <span class="{{ config.name }}__item-sku">({{ item.sku }})</span>
+                {% widget 'SoldByMerchantWidget' args [item] only %}{% endwidget %}
             </div>
             <div class="{{ config.name }}__item-quantity">
                 <span {{ qa('recurring-order-detail-item-quantity') }}>{{ item.quantity }}</span>
