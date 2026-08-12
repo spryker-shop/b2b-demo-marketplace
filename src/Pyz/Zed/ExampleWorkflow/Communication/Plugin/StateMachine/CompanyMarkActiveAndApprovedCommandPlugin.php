@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Spryker Suite.
+ * This file is part of the Spryker Commerce OS.
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
@@ -20,6 +20,7 @@ use Spryker\Zed\Workflow\Dependency\Plugin\WorkflowCommandPluginInterface;
  * it loads the SpyCompany by the state machine identifier (the company id) and marks it active and approved.
  *
  * @method \Pyz\Zed\ExampleWorkflow\Communication\ExampleWorkflowCommunicationFactory getFactory()
+ * @method \Pyz\Zed\ExampleWorkflow\ExampleWorkflowConfig getConfig()
  */
 class CompanyMarkActiveAndApprovedCommandPlugin extends AbstractPlugin implements WorkflowCommandPluginInterface
 {

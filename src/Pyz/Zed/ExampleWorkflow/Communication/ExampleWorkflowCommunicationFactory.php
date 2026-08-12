@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Spryker Suite.
+ * This file is part of the Spryker Commerce OS.
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
@@ -15,6 +15,9 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\SymfonyMailer\Business\SymfonyMailerFacadeInterface;
 use Spryker\Zed\Workflow\Business\WorkflowFacadeInterface;
 
+/**
+ * @method \Pyz\Zed\ExampleWorkflow\ExampleWorkflowConfig getConfig()
+ */
 class ExampleWorkflowCommunicationFactory extends AbstractCommunicationFactory
 {
     public function getCustomerFacade(): CustomerFacadeInterface

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Spryker Suite.
+ * This file is part of the Spryker Commerce OS.
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
@@ -12,6 +12,10 @@ namespace Pyz\Zed\ExampleWorkflow\Communication\Plugin\StateMachine;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Workflow\Dependency\Plugin\StateMachineProcessTriggerPluginInterface;
 
+/**
+ * @method \Pyz\Zed\ExampleWorkflow\ExampleWorkflowConfig getConfig()
+ * @method \Pyz\Zed\ExampleWorkflow\Communication\ExampleWorkflowCommunicationFactory getFactory()
+ */
 class CompanyCreateStateMachineProcessTriggerPlugin extends AbstractPlugin implements StateMachineProcessTriggerPluginInterface
 {
     protected const string EVENT_NAME = 'Entity.spy_company.create';

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Spryker Suite.
+ * This file is part of the Spryker Commerce OS.
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
@@ -18,6 +18,7 @@ use Spryker\Zed\Workflow\Dependency\Plugin\WorkflowConditionPluginInterface;
  * "business verification -> contract agreement" and always returns true for demo purposes.
  *
  * @method \Pyz\Zed\ExampleWorkflow\Communication\ExampleWorkflowCommunicationFactory getFactory()
+ * @method \Pyz\Zed\ExampleWorkflow\ExampleWorkflowConfig getConfig()
  */
 class CompanyIsBusinessVerifiedConditionPlugin extends AbstractPlugin implements WorkflowConditionPluginInterface
 {
