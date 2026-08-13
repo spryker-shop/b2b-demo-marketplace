@@ -10,9 +10,9 @@
             </div>
         {% endif %}
         <div class="grid grid--gap-smaller grid--nowrap-lg-only {{ config.jsName }}__line js-review-total-recalculator__line" data-unit-price="0" data-quantity="{{ quantity }}" data-line-total="0">
-            <div class="col col--expand {{ config.jsName }}__applied {{ hiddenClass }}">
+            <div class="col col--expand {{ config.name }}__applied {{ config.jsName }}__applied {{ hiddenClass }}">
                 <div>
-                    <strong class="{{ config.jsName }}__summary-name"></strong>
+                    <strong class="{{ config.name }}__summary-name {{ config.jsName }}__summary-name"></strong>
                     {% include molecule('status') with {
                         data: {
                             label: 'recurring_orders.review.substitute.label' | trans,
@@ -49,7 +49,7 @@
                 </button>
             </div>
         </div>
-        <div class="{{ config.jsName }}__applied-details {{ hiddenClass }}">
+        <div class="{{ config.name }}__applied-details {{ config.jsName }}__applied-details {{ hiddenClass }}">
             {% apply spaceless %}
                 <div class="{{ config.name }}__sold-by-wrapper">
                     <span class="{{ config.name }}__sold-by-label">{{ 'recurring_orders.review.substitute.sold-by' | trans }}</span>

@@ -15,8 +15,14 @@
             text-align: right;
         }
 
-        .sold-by-merchant {
+        &__item-meta {
+            @include typography(body-sm);
             margin-top: var(--scale-2);
+        }
+
+        .sold-by-merchant {
+            @include typography(body-sm);
+            color: inherit;
         }
 
         &__item-name {
@@ -42,10 +48,6 @@
         &__item-recurring-quantity,
         &__item-recurring-total {
             display: block;
-            // The base styles give `small` an absolute size, which here lands above the cell's own.
-            font-size: var(--font-size-12);
-            font-weight: var(--font-weight-regular);
-            color: var(--text-tertiary);
         }
 
         &__summary,
@@ -55,6 +57,12 @@
 
         &__note {
             font-size: var(--font-size-12);
+        }
+
+        &__summary {
+            border-top: 1px solid var(--border-default);
+            margin-top: var(--scale-12);
+            padding-top: var(--scale-12);
         }
 
         @content;

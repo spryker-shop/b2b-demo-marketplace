@@ -28,9 +28,6 @@
 
 {% block itemName %}
     <strong class="{{ config.name }}__item-name">{{ item.productName }}</strong>
-    {% if item.sku %}
-        <small class="{{ config.name }}__item-sku">({{ item.sku }})</small>
-    {% endif %}
 
     {% for flag in item.flags %}
         {% include molecule('status') with {
@@ -42,6 +39,16 @@
     {% endfor %}
 {% endblock %}
 
+{% block soldBy %}
+    <div class="grid grid--gap-smaller {{ config.name }}__item-meta">
+        <div class="col">
+            {% if item.sku %}
+                <small class="{{ config.name }}__item-sku">{{ 'recurring_orders.sku' | trans({'%sku%': item.sku })}}</small>
+            {% endif %}
+        </div>
+        <div class="col">{{ parent() }}</div>
+    </div>
+{% endblock %}
 
 {% block itemPriceInfo %}
     <span class="{{ config.name }}__price">{{ currentQuantity }}x {{ unitPrice | money(true, data.currencyIsoCode) }}</small>

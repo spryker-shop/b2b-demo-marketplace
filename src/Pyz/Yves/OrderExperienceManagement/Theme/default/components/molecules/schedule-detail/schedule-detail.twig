@@ -10,9 +10,9 @@
 
 {% block recurringScheduleHeader %}
     {% set status = data.schedule.status %}
-    {% set schedulePauseButtonClassName = 'button button--hollow spacing-left' %}
-    {% set scheduleResumeButtonClassName = 'button spacing-left' %}
-    {% set scheduleCancelButtonClassName = 'button button--alert' %}
+    {% set schedulePauseButtonClassName = 'button button--sm button--hollow spacing-left' %}
+    {% set scheduleResumeButtonClassName = 'button button--sm spacing-left' %}
+    {% set scheduleCancelButtonClassName = 'button button--sm button--alert' %}
 
     {% include molecule('action-bar') with {
         data: {

@@ -17,9 +17,6 @@
         <div class="{{ config.name }}__items">
             <div class="{{ config.name }}__main-info">
                 <strong class="{{ config.name }}__item-name">{{ item.productName ?: item.sku }}</strong>
-                {% if item.productName %}
-                    <span class="{{ config.name }}__item-sku">({{ item.sku }})</span>
-                {% endif %}
 
                 {% if item.configurableBundleName %}
                     <span class="{{ config.name }}__item-bundle">
@@ -39,7 +36,16 @@
                     </span>
                 {% endif %}
 
-                {% widget 'SoldByMerchantWidget' args [item] only %}{% endwidget %}
+                <div class="grid grid--gap-smaller {{ config.name }}__item-meta">
+                    <div class="col">
+                        {% if item.productName %}
+                            <span class="{{ config.name }}__item-sku">{{ 'recurring_orders.sku' | trans({'%sku%': item.sku })}}</span>
+                        {% endif %}
+                    </div>
+                    <div class="col">
+                        {% widget 'SoldByMerchantWidget' args [item] only %}{% endwidget %}
+                    </div>
+                </div>
             </div>
             <div class="{{ config.name }}__item-quantity">
                 {% if isOneTimeRemoval %}

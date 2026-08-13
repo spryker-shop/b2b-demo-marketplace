@@ -12,9 +12,17 @@
 
 {% block itemName %}
     <strong class="{{ config.name }}__item-name">{{ flaggedItem.recurringScheduleItem.productName }}</strong>
-    {% if flaggedItem.recurringScheduleItem.sku %}
-        <span class="{{ config.name }}__item-sku">({{ flaggedItem.recurringScheduleItem.sku }})</span>
-    {% endif %}
+{% endblock %}
+
+{% block soldBy %}
+    <div class="grid grid--gap-smaller {{ config.name }}__item-meta">
+        <div class="col">
+            {% if flaggedItem.recurringScheduleItem.sku %}
+                <span class="{{ config.name }}__item-sku">{{ 'recurring_orders.sku' | trans({'%sku%': flaggedItem.recurringScheduleItem.sku })}}</span>
+            {% endif %}
+        </div>
+        <div class="col">{{ parent() }}</div>
+    </div>
 {% endblock %}
 
 {% block itemStatus %}

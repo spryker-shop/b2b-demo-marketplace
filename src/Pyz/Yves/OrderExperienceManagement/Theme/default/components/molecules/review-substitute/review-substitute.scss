@@ -1,8 +1,22 @@
 @include order-experience-management-review-substitute {
-    padding: var(--scale-12) var(--scale-16);
+    $name: '.review-substitute';
+
+    padding: 0 var(--scale-16) 0 var(--scale-24);
+
+    &:has(#{$name}__applied.is-hidden) {
+        display: none;
+    }
 
     &__summary {
-        @include typography(body-md);
+        @include typography(body-sm);
+        background: var(--background-subtle);
+        padding: var(--scale-12) var(--scale-16);
+        border-radius: var(--radius-md);
+        margin: 0;
+    }
+
+    &__summary-name {
+        @include typography(body-sm);
     }
 
     &__sold-by-wrapper {

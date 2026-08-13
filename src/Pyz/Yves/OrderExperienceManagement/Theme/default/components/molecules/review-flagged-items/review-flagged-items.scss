@@ -11,8 +11,14 @@
             font-weight: normal;
         }
 
-        &__item-sku {
+        &__item-meta {
             @include typography(body-sm);
+            margin-top: var(--scale-2);
+        }
+
+        .sold-by-merchant {
+            @include typography(body-sm);
+            color: inherit;
         }
 
         &__box {
@@ -23,14 +29,6 @@
 
         &__item {
             padding: var(--scale-12) var(--scale-16);
-
-            &:not(:last-child) {
-                border-bottom: rem(1) solid var(--border-subtle);
-            }
-        }
-
-        .sold-by-merchant {
-            margin-top: var(--scale-2);
         }
 
         &__price-info {

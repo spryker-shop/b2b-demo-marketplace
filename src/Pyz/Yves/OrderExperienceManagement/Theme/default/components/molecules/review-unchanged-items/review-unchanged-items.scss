@@ -40,8 +40,14 @@
             @include typography(body-sm);
         }
 
-        .sold-by-merchant {
+        &__item-meta {
+            @include typography(body-sm);
             margin-top: var(--scale-2);
+        }
+
+        .sold-by-merchant {
+            @include typography(body-sm);
+            color: inherit;
         }
 
         @content;
