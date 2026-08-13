@@ -77,3 +77,15 @@
         {{ parent() }}
     {% endblock %}
 {% endblock %}
+
+{% block openModalButton %}
+    <div class="grid grid--right spacing-bottom">
+        <button
+            type="button"
+            class="{{ openModalClassName }} button button--sm button--secondary"
+            {{ qa(config.name ~ '-open-modal') }}
+        >
+            {{ 'recurring_orders.review.add_product.open_modal' | trans }}
+        </button>
+    </div>
+{% endblock %}
