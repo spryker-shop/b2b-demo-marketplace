@@ -43,6 +43,14 @@ class SymfonySchedulerConfig extends SprykerSymfonySchedulerConfigAlias
                 'command' => $logger . '$PHP_BIN vendor/bin/console oms:check-timeout',
                 'schedule' => '* * * * *',
             ],
+            'check-workflow-conditions' => [
+                'command' => $logger . '$PHP_BIN vendor/bin/console workflow:check-condition',
+                'schedule' => '* * * * *',
+            ],
+            'check-workflow-timeouts' => [
+                'command' => $logger . '$PHP_BIN vendor/bin/console workflow:check-timeout',
+                'schedule' => '* * * * *',
+            ],
             'clear-oms-locks' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/console oms:clear-locks',
                 'schedule' => '0 6 * * *',
