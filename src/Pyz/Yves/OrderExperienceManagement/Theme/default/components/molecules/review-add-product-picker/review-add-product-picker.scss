@@ -10,9 +10,20 @@
 
     &__price {
         @include typography(label-md);
-        z-index: 999;
+        right: var(--scale-2);
+        z-index: $setting-zi-dropdown;
         background: var(--white);
-        padding: 0 var(--scale-8);
+        padding: 0 var(--scale-6);
         border-left: 1px solid var(--border-default);
+
+        &::after {
+            content: '';
+            position: absolute;
+            right: calc(100% + 1px);
+            top: 0;
+            height: 100%;
+            width: var(--scale-16);
+            background: linear-gradient(90deg,rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 80%);
+        }
     }
 }
