@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "945bc6ec364fffd73b0a324d1df7140b",
+    "content-hash": "adf8cf7980ed4a39cec3576b58432783",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -13325,7 +13325,7 @@
         },
         {
             "name": "spryker-feature/product",
-            "version": "202606.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/product.git",
@@ -13374,6 +13374,7 @@
             "suggest": {
                 "spryker-feature/spryker-core": "Recommended feature dependency."
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -13386,13 +13387,13 @@
             ],
             "description": "Product [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/product/tree/202606.0"
+                "source": "https://github.com/spryker-feature/product/tree/master"
             },
             "time": "2026-06-29T07:51:32+00:00"
         },
         {
             "name": "spryker-feature/product-approval-process",
-            "version": "202606.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/product-approval-process.git",
@@ -13412,6 +13413,7 @@
                 "spryker/product-approval-gui": "^2.1.0",
                 "spryker/product-management": "^0.20.0"
             },
+            "default-branch": true,
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
@@ -13424,7 +13426,7 @@
             ],
             "description": "Product Approval Process [feature]",
             "support": {
-                "source": "https://github.com/spryker-feature/product-approval-process/tree/202606.0"
+                "source": "https://github.com/spryker-feature/product-approval-process/tree/master"
             },
             "time": "2026-06-29T07:51:32+00:00"
         },
@@ -55372,16 +55374,16 @@
         },
         {
             "name": "spryker/product",
-            "version": "6.55.0",
+            "version": "6.56.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product.git",
-                "reference": "f4f105dde30e2f834ebfa43455e6a2e25399f759"
+                "reference": "8bb79f5cae30e40db5a1f4c85f4e2f964f0c855c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product/zipball/f4f105dde30e2f834ebfa43455e6a2e25399f759",
-                "reference": "f4f105dde30e2f834ebfa43455e6a2e25399f759",
+                "url": "https://api.github.com/repos/spryker/product/zipball/8bb79f5cae30e40db5a1f4c85f4e2f964f0c855c",
+                "reference": "8bb79f5cae30e40db5a1f4c85f4e2f964f0c855c",
                 "shasum": ""
             },
             "require": {
@@ -55433,9 +55435,9 @@
             ],
             "description": "Product module",
             "support": {
-                "source": "https://github.com/spryker/product/tree/6.55.0"
+                "source": "https://github.com/spryker/product/tree/6.56.0"
             },
-            "time": "2026-06-02T15:21:50+00:00"
+            "time": "2026-08-12T12:29:42+00:00"
         },
         {
             "name": "spryker/product-abstract-data-feed",
@@ -56104,16 +56106,16 @@
         },
         {
             "name": "spryker/product-attribute",
-            "version": "1.20.0",
+            "version": "1.21.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-attribute.git",
-                "reference": "777c03d995d4bab18cc1c90783b9d772495dabae"
+                "reference": "1d841272fba75956a7bf8378fccfc9ae5aa84485"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-attribute/zipball/777c03d995d4bab18cc1c90783b9d772495dabae",
-                "reference": "777c03d995d4bab18cc1c90783b9d772495dabae",
+                "url": "https://api.github.com/repos/spryker/product-attribute/zipball/1d841272fba75956a7bf8378fccfc9ae5aa84485",
+                "reference": "1d841272fba75956a7bf8378fccfc9ae5aa84485",
                 "shasum": ""
             },
             "require": {
@@ -56153,9 +56155,9 @@
             ],
             "description": "ProductAttribute module",
             "support": {
-                "source": "https://github.com/spryker/product-attribute/tree/1.20.0"
+                "source": "https://github.com/spryker/product-attribute/tree/1.21.0"
             },
-            "time": "2026-05-04T12:41:40+00:00"
+            "time": "2026-08-12T12:29:42+00:00"
         },
         {
             "name": "spryker/product-attribute-extension",
@@ -59963,16 +59965,16 @@
         },
         {
             "name": "spryker/product-management",
-            "version": "0.20.11",
+            "version": "0.20.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-management.git",
-                "reference": "fea4a7cdab8bedaa5d13ae50cc17df215cc6b042"
+                "reference": "47fc9782c74ea134103fd979b6df231776b9a64f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-management/zipball/fea4a7cdab8bedaa5d13ae50cc17df215cc6b042",
-                "reference": "fea4a7cdab8bedaa5d13ae50cc17df215cc6b042",
+                "url": "https://api.github.com/repos/spryker/product-management/zipball/47fc9782c74ea134103fd979b6df231776b9a64f",
+                "reference": "47fc9782c74ea134103fd979b6df231776b9a64f",
                 "shasum": ""
             },
             "require": {
@@ -60044,9 +60046,9 @@
             ],
             "description": "ProductManagement module",
             "support": {
-                "source": "https://github.com/spryker/product-management/tree/0.20.11"
+                "source": "https://github.com/spryker/product-management/tree/0.20.13"
             },
-            "time": "2026-06-02T20:41:17+00:00"
+            "time": "2026-08-12T12:29:42+00:00"
         },
         {
             "name": "spryker/product-management-extension",
@@ -63698,16 +63700,16 @@
         },
         {
             "name": "spryker/product-page-search",
-            "version": "3.49.0",
+            "version": "3.50.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-page-search.git",
-                "reference": "39889546b6662e640e19e82045ddbb37bd4557ac"
+                "reference": "731b9cb84f0abc473d563ddd4f1804d8dbc44662"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-page-search/zipball/39889546b6662e640e19e82045ddbb37bd4557ac",
-                "reference": "39889546b6662e640e19e82045ddbb37bd4557ac",
+                "url": "https://api.github.com/repos/spryker/product-page-search/zipball/731b9cb84f0abc473d563ddd4f1804d8dbc44662",
+                "reference": "731b9cb84f0abc473d563ddd4f1804d8dbc44662",
                 "shasum": ""
             },
             "require": {
@@ -63728,7 +63730,7 @@
                 "spryker/product-page-search-extension": "^1.7.0",
                 "spryker/product-search": "^5.15.0",
                 "spryker/propel": "^3.47.0",
-                "spryker/propel-orm": "^1.5.0",
+                "spryker/propel-orm": "^1.22.0",
                 "spryker/publisher-extension": "^1.0.0",
                 "spryker/search": "^7.0.0 || ^8.0.0",
                 "spryker/store": "^1.7.0",
@@ -63772,9 +63774,9 @@
             ],
             "description": "ProductPageSearch module",
             "support": {
-                "source": "https://github.com/spryker/product-page-search/tree/3.49.0"
+                "source": "https://github.com/spryker/product-page-search/tree/3.50.0"
             },
-            "time": "2026-06-02T20:41:17+00:00"
+            "time": "2026-08-12T12:29:42+00:00"
         },
         {
             "name": "spryker/product-page-search-extension",
@@ -65082,16 +65084,16 @@
         },
         {
             "name": "spryker/product-storage",
-            "version": "1.54.0",
+            "version": "1.55.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-storage.git",
-                "reference": "997c9d01c8c1134bec3a168d14e88bb66d068332"
+                "reference": "307dd283379a6091ff01f7ef5e9585758eb50bc5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-storage/zipball/997c9d01c8c1134bec3a168d14e88bb66d068332",
-                "reference": "997c9d01c8c1134bec3a168d14e88bb66d068332",
+                "url": "https://api.github.com/repos/spryker/product-storage/zipball/307dd283379a6091ff01f7ef5e9585758eb50bc5",
+                "reference": "307dd283379a6091ff01f7ef5e9585758eb50bc5",
                 "shasum": ""
             },
             "require": {
@@ -65104,7 +65106,7 @@
                 "spryker/product": "^5.5.0 || ^6.0.0",
                 "spryker/product-management-extension": "^1.9.0",
                 "spryker/product-storage-extension": "^1.7.0",
-                "spryker/propel-orm": "^1.5.0",
+                "spryker/propel-orm": "^1.22.0",
                 "spryker/publisher-extension": "^1.0.0",
                 "spryker/sitemap-extension": "^1.1.0",
                 "spryker/storage": "^3.4.0",
@@ -65150,9 +65152,9 @@
             ],
             "description": "ProductStorage module",
             "support": {
-                "source": "https://github.com/spryker/product-storage/tree/1.54.0"
+                "source": "https://github.com/spryker/product-storage/tree/1.55.0"
             },
-            "time": "2026-07-13T10:17:36+00:00"
+            "time": "2026-08-12T12:29:42+00:00"
         },
         {
             "name": "spryker/product-storage-extension",
@@ -65522,16 +65524,16 @@
         },
         {
             "name": "spryker/propel-orm",
-            "version": "1.24.0",
+            "version": "1.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/propel-orm.git",
-                "reference": "6615019424b9d102ce51742ebead0e8391729a81"
+                "reference": "0ba26ab6e174b9f1548e636e7d8e7ef543629afb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/propel-orm/zipball/6615019424b9d102ce51742ebead0e8391729a81",
-                "reference": "6615019424b9d102ce51742ebead0e8391729a81",
+                "url": "https://api.github.com/repos/spryker/propel-orm/zipball/0ba26ab6e174b9f1548e636e7d8e7ef543629afb",
+                "reference": "0ba26ab6e174b9f1548e636e7d8e7ef543629afb",
                 "shasum": ""
             },
             "require": {
@@ -65567,9 +65569,9 @@
             ],
             "description": "PropelOrm module",
             "support": {
-                "source": "https://github.com/spryker/propel-orm/tree/1.24.0"
+                "source": "https://github.com/spryker/propel-orm/tree/1.25.0"
             },
-            "time": "2026-06-23T14:19:47+00:00"
+            "time": "2026-08-12T12:29:42+00:00"
         },
         {
             "name": "spryker/propel-orm-extension",
@@ -93172,6 +93174,18 @@
             "alias_normalized": "202606.0"
         },
         {
+            "package": "spryker-feature/product",
+            "version": "9999999-dev",
+            "alias": "202606.0",
+            "alias_normalized": "202606.0"
+        },
+        {
+            "package": "spryker-feature/product-approval-process",
+            "version": "9999999-dev",
+            "alias": "202606.0",
+            "alias_normalized": "202606.0"
+        },
+        {
             "package": "spryker-feature/purchasing-control",
             "version": "9999999-dev",
             "alias": "202606.0",
@@ -93195,6 +93209,8 @@
         "spryker-feature/ai-commerce": 20,
         "spryker-feature/buy-box": 20,
         "spryker-feature/order-experience-management": 20,
+        "spryker-feature/product": 20,
+        "spryker-feature/product-approval-process": 20,
         "spryker-feature/purchasing-control": 20,
         "spryker-feature/self-service-portal": 20,
         "spryker-feature/spryker-core": 20,
