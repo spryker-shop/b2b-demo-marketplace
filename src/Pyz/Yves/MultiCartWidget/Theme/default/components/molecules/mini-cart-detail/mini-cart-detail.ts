@@ -5,8 +5,6 @@ export default class MiniCartDetail extends Component {
     protected expandBtn: HTMLElement;
     protected activateForm: HTMLFormElement;
 
-    protected readyCallback(): void {}
-
     protected init(): void {
         this.linkEl = this.querySelector<HTMLElement>(`.${this.jsName}__link`);
         this.expandBtn = this.querySelector<HTMLElement>(`.${this.jsName}__expand-btn`);

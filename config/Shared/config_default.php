@@ -233,6 +233,7 @@ if ($isTestifyConstantsClassExists) {
     $config[TestifyConstants::GLUE_OPEN_API_SCHEMA] = APPLICATION_SOURCE_DIR . '/Generated/Glue/Specification/spryker_rest_api.schema.yml';
     $config[TestifyConstants::BOOTSTRAP_CLASS_YVES] = YvesBootstrap::class;
     $config[TestifyConstants::BOOTSTRAP_CLASS_ZED] = ZedBootstrap::class;
+    $config[TestifyConstants::IS_DATA_BUILDER_RULE_EVAL_ENABLED] = false;
 }
 
 // ----------------------------------------------------------------------------
