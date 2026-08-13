@@ -1,3 +1,4 @@
+$name: '.review-add-product';
 @include order-experience-management-review-add-product {
     @include typography(body-md);
 
@@ -52,5 +53,9 @@
         border-radius: var(--radius-md);
         margin-bottom: var(--scale-24);
         padding: var(--scale-12);
+
+        &:has(#{$name}__line) {
+            padding-top: 0;
+        }
     }
 }
