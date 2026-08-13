@@ -39,6 +39,15 @@
             margin-top: var(--scale-4);
         }
 
+        &__item-recurring-quantity,
+        &__item-recurring-total {
+            display: block;
+            // The base styles give `small` an absolute size, which here lands above the cell's own.
+            font-size: var(--font-size-12);
+            font-weight: var(--font-weight-regular);
+            color: var(--text-tertiary);
+        }
+
         &__summary,
         &__item-total {
             font-weight: var(--font-weight-bold);
