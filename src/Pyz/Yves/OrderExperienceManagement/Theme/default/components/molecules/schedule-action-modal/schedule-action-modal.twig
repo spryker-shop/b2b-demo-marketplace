@@ -11,10 +11,14 @@
     cancelForm: required,
     resumeForm: null,
     resumeUrl: '',
+    editForm: null,
+    editUrl: '',
+    cadenceTypeEveryNWeeks: '',
     skipModalTriggerClassName: required,
     cancelModalTriggerClassName: required,
     pauseModalTriggerClassName: required,
     resumeModalTriggerClassName: required,
+    editModalTriggerClassName: required,
 } %}
 
 {% block skipContent %}
@@ -138,6 +142,16 @@
     {% endembed %}
 {% endblock %}
 
+{% block editContent %}
+    {% include molecule('recurring-order-edit-form', 'OrderExperienceManagement') with {
+        data: {
+            form: data.editForm,
+            editUrl: data.editUrl,
+            cadenceTypeEveryNWeeks: data.cadenceTypeEveryNWeeks,
+        }
+    } only %}
+{% endblock %}
+
 {% block body %}
     {% include molecule('main-popup') with {
         data: {
@@ -187,4 +201,18 @@
             'trigger-class-name': data.resumeModalTriggerClassName,
         },
     } only %}
+
+    {% if data.editForm %}
+        {% include molecule('main-popup') with {
+            data: {
+                title: 'recurring_orders.detail.edit.title' | trans,
+                content: block('editContent'),
+            },
+            attributes: {
+                'content-id': config.jsName ~ '-edit-popup',
+                'trigger-class-name': data.editModalTriggerClassName,
+                'has-content-mount': true,
+            },
+        } only %}
+    {% endif %}
 {% endblock %}
