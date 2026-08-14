@@ -120,6 +120,7 @@ use Spryker\Shared\Storage\StorageConstants;
 use Spryker\Shared\StorageRedis\StorageRedisConstants;
 use Spryker\Shared\SymfonyMailer\SymfonyMailerConstants;
 use Spryker\Shared\SymfonyMessenger\SymfonyMessengerConstants;
+use Spryker\Shared\SymfonyScheduler\SymfonySchedulerConstants;
 use Spryker\Shared\Synchronization\SynchronizationConstants;
 use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Shared\Testify\TestifyConstants;
@@ -452,6 +453,18 @@ $config[StorageRedisConstants::STORAGE_REDIS_PASSWORD] = getenv('SPRYKER_KEY_VAL
 $config[StorageRedisConstants::STORAGE_REDIS_DATABASE] = $keyValueRegionNamespaces[$namespaceKey]['namespace'] ?? getenv('SPRYKER_KEY_VALUE_STORE_NAMESPACE') ?: 1;
 $config[StorageRedisConstants::STORAGE_REDIS_DATA_SOURCE_NAMES] = json_decode(getenv('SPRYKER_KEY_VALUE_STORE_SOURCE_NAMES') ?: '[]', true) ?: [];
 $config[StorageRedisConstants::STORAGE_REDIS_CONNECTION_OPTIONS] = json_decode(getenv('SPRYKER_KEY_VALUE_STORE_CONNECTION_OPTIONS') ?: '[]', true) ?: [];
+
+// >>> SYMFONY SCHEDULER
+
+$config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_REDIS_PERSISTENT_CONNECTION] = true;
+$config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_REDIS_SCHEME] = getenv('SPRYKER_KEY_VALUE_STORE_PROTOCOL') ?: 'tcp';
+$config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_REDIS_HOST] = getenv('SPRYKER_KEY_VALUE_STORE_HOST');
+$config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_REDIS_PORT] = getenv('SPRYKER_KEY_VALUE_STORE_PORT');
+$config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_REDIS_USER] = getenv('SPRYKER_KEY_VALUE_USERNAME');
+$config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_REDIS_PASSWORD] = getenv('SPRYKER_KEY_VALUE_PASSWORD');
+$config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_REDIS_DATABASE] = $keyValueRegionNamespaces[$namespaceKey]['namespace'] ?? getenv('SPRYKER_KEY_VALUE_STORE_NAMESPACE') ?: 1;
+$config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_REDIS_DATA_SOURCE_NAMES] = json_decode(getenv('SPRYKER_KEY_VALUE_STORE_SOURCE_NAMES') ?: '[]', true) ?: [];
+$config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_REDIS_CONNECTION_OPTIONS] = json_decode(getenv('SPRYKER_KEY_VALUE_STORE_CONNECTION_OPTIONS') ?: '[]', true) ?: [];
 
 // >>> SESSION
 
