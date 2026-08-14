@@ -7,7 +7,7 @@
     }
 
     &__summary {
-        @include typography(body-sm);
+        @include typography(body-md);
         background: var(--background-subtle);
         padding: var(--scale-12) var(--scale-16);
         border-radius: var(--radius-md);
@@ -15,10 +15,10 @@
     }
 
     &__summary-name {
-        @include typography(body-sm);
+        @include typography(body-md);
     }
 
     &__item-meta {
-        @include typography(body-sm);
+        @include typography(body-md);
     }
 }

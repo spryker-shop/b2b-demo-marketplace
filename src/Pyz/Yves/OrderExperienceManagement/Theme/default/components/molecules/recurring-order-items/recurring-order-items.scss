@@ -1,9 +1,9 @@
 @mixin order-experience-management-recurring-order-items($name: '.recurring-order-items') {
     #{$name} {
-        @include typography(body-sm);
+        @include typography(body-md);
 
         &__title {
-            @include typography(label-sm);
+            @include typography(label-md);
             margin-bottom: var(--scale-8);
         }
 
@@ -16,12 +16,12 @@
         }
 
         &__item-meta {
-            @include typography(body-sm);
+            @include typography(body-md);
             margin-top: var(--scale-2);
         }
 
         .sold-by-merchant {
-            @include typography(body-sm);
+            @include typography(body-md);
             color: inherit;
         }
 

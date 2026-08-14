@@ -1,6 +1,6 @@
 @mixin order-experience-management-review-unchanged-items($name: '.review-unchanged-items') {
     #{$name} {
-        @include typography(body-sm);
+        @include typography(body-md);
 
         summary {
             @include typography(label-md);
@@ -37,16 +37,16 @@
 
         &__item-name,
         &__item-sku {
-            @include typography(body-sm);
+            @include typography(body-md);
         }
 
         &__item-meta {
-            @include typography(body-sm);
+            @include typography(body-md);
             margin-top: var(--scale-2);
         }
 
         .sold-by-merchant {
-            @include typography(body-sm);
+            @include typography(body-md);
             color: inherit;
         }
 

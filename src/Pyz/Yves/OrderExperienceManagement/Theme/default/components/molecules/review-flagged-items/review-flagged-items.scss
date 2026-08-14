@@ -1,6 +1,6 @@
 @mixin order-experience-management-review-flagged-items($name: '.review-flagged-items') {
     #{$name} {
-        @include typography(body-sm);
+        @include typography(body-md);
 
         &__title {
             @include typography(label-md);
@@ -12,12 +12,12 @@
         }
 
         &__item-meta {
-            @include typography(body-sm);
+            @include typography(body-md);
             margin-top: var(--scale-2);
         }
 
         .sold-by-merchant {
-            @include typography(body-sm);
+            @include typography(body-md);
             color: inherit;
         }
 
@@ -32,7 +32,7 @@
         }
 
         &__price-info {
-            @include typography(body-sm);
+            @include typography(body-md);
         }
 
         @content;

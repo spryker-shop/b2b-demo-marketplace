@@ -1,11 +1,11 @@
 @mixin order-experience-management-schedule-detail-sidebar($name: '.schedule-detail-sidebar') {
     #{$name} {
-        @include typography(body-sm);
+        @include typography(body-md);
         background: var(--background-surface);
         padding: var(--scale-16);
 
         .link {
-            @include typography(body-sm);
+            @include typography(body-md);
         }
 
         &__heading {
@@ -24,7 +24,7 @@
         }
 
         &__value {
-            @include typography(label-sm);
+            @include typography(label-md);
             margin-bottom: var(--scale-12);
         }
 
