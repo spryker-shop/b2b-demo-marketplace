@@ -7,6 +7,6 @@ export default register(
         import(
             /* webpackMode: "lazy", */
             /* webpackChunkName: "review-substitute" */
-            'OrderExperienceManagement/components/molecules/review-substitute/review-substitute'
+            './review-substitute'
         ),
 );

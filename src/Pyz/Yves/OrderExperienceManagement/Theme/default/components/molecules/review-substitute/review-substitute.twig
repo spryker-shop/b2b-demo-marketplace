@@ -20,9 +20,16 @@
                         },
                     } only %}
                 </div>
-                <div>
-                    <span class="{{ config.jsName }}__summary-sku text-muted"></span>
-                    <span class="{{ config.jsName }}__summary-price text-muted"></span>
+                <div class="grid grid--gap-smaller {{ config.name }}__item-meta">
+                    <div class="col">
+                        1x
+                        <span class="{{ config.jsName }}__summary-price"></span>
+                    </div>
+                    <div class="col">{{ 'recurring_orders.sku' | trans({'%sku%': ''}) }} <span class="{{ config.jsName }}__summary-sku"></span></div>
+                    <div class="col {{ config.name }}__applied-details {{ config.jsName }}__applied-details {{ hiddenClass }}">
+                        {{ 'recurring_orders.review.substitute.sold-by' | trans }}
+                        <span class="{{ config.name }}__sold-by-value {{ config.jsName }}__summary-merchant text-muted"></span>
+                    </div>
                 </div>
             </div>
             <div class="col {{ config.jsName }}__qty-wrap {{ hiddenClass }}">
@@ -48,14 +55,6 @@
                     {{ 'recurring_orders.review.substitute.remove' | trans }}
                 </button>
             </div>
-        </div>
-        <div class="{{ config.name }}__applied-details {{ config.jsName }}__applied-details {{ hiddenClass }}">
-            {% apply spaceless %}
-                <div class="{{ config.name }}__sold-by-wrapper">
-                    <span class="{{ config.name }}__sold-by-label">{{ 'recurring_orders.review.substitute.sold-by' | trans }}</span>
-                    <strong class="{{ config.name }}__sold-by-value {{ config.jsName }}__summary-merchant text-muted"></strong>
-                </div>
-            {% endapply %}
         </div>
     </div>
 

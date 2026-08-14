@@ -15,7 +15,13 @@
 {% endblock %}
 
 {% block soldBy %}
-    <div class="grid grid--gap-smaller {{ config.name }}__item-meta">
+    <div class="grid grid--gap-smaller {{ config.name }}__item-meta">        
+        {% if (flaggedItem.previousPrice is not null) %}
+        <div class="col">
+            <span class="{{ config.name }}__price">{{ (flaggedItem.recurringScheduleItem.nextDeliveryQuantity ?: flaggedItem.recurringScheduleItem.quantity) }}x <s>{{ flaggedItem.previousPrice | money(true, data.currencyIsoCode) }}</s> {{ flaggedItem.currentPrice | money(true, data.currencyIsoCode) }}</span>
+        </div>
+        {% endif %}
+        
         <div class="col">
             {% if flaggedItem.recurringScheduleItem.sku %}
                 <span class="{{ config.name }}__item-sku">{{ 'recurring_orders.sku' | trans({'%sku%': flaggedItem.recurringScheduleItem.sku })}}</span>
@@ -24,6 +30,8 @@
         <div class="col">{{ parent() }}</div>
     </div>
 {% endblock %}
+
+{% block itemPriceInfo %}{% endblock %}
 
 {% block itemStatus %}
     {% for reviewReason in flaggedItem.reviewReasons %}
@@ -85,11 +93,5 @@
                 {{ (hasAppliedSubstitute ? 'recurring_orders.review.substitute.change' : 'recurring_orders.review.substitute.select') | trans }}
             </button>
         </div>
-    {% endif %}
-{% endblock %}
-
-{% block itemPriceInfo %}
-    {% if (flaggedItem.previousPrice is not null) %}
-        <small class="{{ config.name }}__price-info">{{ (flaggedItem.recurringScheduleItem.nextDeliveryQuantity ?: flaggedItem.recurringScheduleItem.quantity) }}x <s>{{ flaggedItem.previousPrice | money(true, data.currencyIsoCode) }}</s> {{ flaggedItem.currentPrice | money(true, data.currencyIsoCode) }}</small>
     {% endif %}
 {% endblock %}

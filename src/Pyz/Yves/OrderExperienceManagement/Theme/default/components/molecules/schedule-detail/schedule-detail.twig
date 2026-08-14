@@ -69,30 +69,49 @@
 
 {% block errorBanner %}
     {% if data.schedule.status in data.errorBannerStatuses and data.schedule.status != data.statusReviewRequired %}
-        <div class="alert alert--warning spacing-bottom">
-            <div>
-                {% set failedItem = data.schedule.history | filter(h => h.eventType == data.historyEventTypeFailed and h.errors is not empty) | first %}
-                {% if failedItem %}
-                    {{ 'recurring_orders.detail.error.failed.title' | trans }}
-                    <ul class="list">
-                        {% for error in failedItem.errors %}
-                            <li class="list__item">{{ error.message | trans(error.parameters ?? {}) }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
+        {% set failedItem = data.schedule.history | filter(h => h.eventType == data.historyEventTypeFailed and h.errors is not empty) | first %}
 
-                {% set scheduleRetryButtonClassName = 'button spacing-top' %}
-                {% block scheduleRetryForm %}
-                    {% if data.schedule.status == data.statusFailed %}
-                        {{ form_start(data.retryForm, {action: url('recurring-order/retry', {uuid: data.schedule.uuid}), attr: {class: 'inline-form'}}) }}
-                            <button type="submit" class="{{ scheduleRetryButtonClassName }}" data-qa="recurring-order-retry-button">
-                                {{ 'recurring_orders.detail.actions.retry' | trans }}
-                            </button>
-                        {{ form_end(data.retryForm) }}
+        {% embed molecule('flash-message') with {
+            class: 'spacing-bottom--biggest',
+            modifiers: ['alert'],
+            data: {
+                isStatic: true,
+                icon: 'warning',
+            },
+            embed: {
+                configName: config.name,
+                schedule: data.schedule,
+                failedItem: failedItem,
+                retryForm: data.retryForm,
+                statusFailed: data.statusFailed,
+            },
+        } only %}
+            {% block content %}
+                <div class="grid grid--expand grid--center grid--gap--smaller">
+                    <div class="col col--expand {{ embed.configName }}__flash-content">
+                        {% if embed.failedItem %}
+                            <h6 class="{{ config.name }}__title">{{ 'recurring_orders.detail.error.failed.title' | trans }}</h6>
+
+                            <ul class="list">
+                                {% for error in embed.failedItem.errors %}
+                                    <li class="list__item">{{ error.message | trans(error.parameters ?? {}) }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+
+                    {% if embed.schedule.status == embed.statusFailed %}
+                        <div class="col">
+                            {{ form_start(embed.retryForm, {action: url('recurring-order/retry', {uuid: embed.schedule.uuid}), attr: {class: 'inline-form'}}) }}
+                                <button type="submit" class="button button--sm" data-qa="recurring-order-retry-button">
+                                    {{ 'recurring_orders.detail.actions.retry' | trans }}
+                                </button>
+                            {{ form_end(embed.retryForm) }}
+                        </div>
                     {% endif %}
-                {% endblock %}
-            </div>
-        </div>
+                </div>
+            {% endblock %}
+        {% endembed %}
     {% endif %}
 
     {% if data.schedule.status == data.statusReviewRequired %}
