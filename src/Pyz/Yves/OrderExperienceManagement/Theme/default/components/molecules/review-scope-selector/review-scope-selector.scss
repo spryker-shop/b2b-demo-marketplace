@@ -1,5 +1,6 @@
 @use 'sass:meta';
 @use 'sass:map';
+
 @mixin order-experience-management-review-scope-selector($name: '.review-scope-selector') {
     #{$name} {
         display: flex;
@@ -15,7 +16,7 @@
             border: 1px solid var(--border-subtle);
             border-radius: var(--radius-md);
             padding: var(--scale-12) var(--scale-16);
-            
+
             &:hover {
                 background: var(--background-subtle);
             }
