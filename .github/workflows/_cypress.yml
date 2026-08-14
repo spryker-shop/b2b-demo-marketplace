@@ -29,10 +29,19 @@ jobs:
                 name: Generate shard matrix
                 # jq crosses each generated shard with the repository_ids that must run it:
                 # the SSP shard is marketplace-only, every core shard runs for both.
+                #
+                # master-demo: plain-B2B is NOT supported here, so "b2b" is excluded from
+                # every cell — the same rationale as the `if: false` on the standalone
+                # "Cypress / UI B2B" and "Robot / API B2B" jobs in ci.yml. The demo migrated
+                # its demo data to the data/import/common/** layout, so the b2b recipe
+                # (b2b_full_EU.yml, substituted in by uninstall-marketplace-modules.sh)
+                # imports a sales_order.csv carrying cost_center_key without importing any
+                # cost centers, and data:import fails. The upstream shape is kept intact so
+                # master's edits to this expression still merge cleanly during upmerges.
                 run: |
                     CORE=$(.github/workflows/scripts/generate-cypress-shards.py)
                     CELLS=$(printf '%s' "$CORE" | jq -c '[ .[] as $s
-                        | (if $s.mode == "ssp" then ["b2b-mp"] else ["b2b-mp", "b2b"] end)[] as $repo
+                        | (if $s.mode == "ssp" then ["b2b-mp"] else ["b2b-mp"] end)[] as $repo
                         | $s + {repository_id: $repo, label: "\($repo) \($s.label)"}
                     ]')
                     echo "cells=${CELLS}" >> "$GITHUB_OUTPUT"
