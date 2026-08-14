@@ -42,6 +42,16 @@ class SymfonySchedulerConfig extends SprykerSymfonySchedulerConfig
                 'schedule' => '* * * * *',
                 'priority' => 220,
             ],
+            'check-workflow-conditions' => [
+                'command' => $logger . '$PHP_BIN vendor/bin/console workflow:check-condition',
+                'schedule' => '* * * * *',
+                'priority' => 220,
+            ],
+            'check-workflow-timeouts' => [
+                'command' => $logger . '$PHP_BIN vendor/bin/console workflow:check-timeout',
+                'schedule' => '* * * * *',
+                'priority' => 220,
+            ],
             'check-oms-conditions' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/console oms:check-condition',
                 'schedule' => '* * * * *',
