@@ -4,8 +4,6 @@ export default class CatalogCollapseAll extends Component {
     protected trigger: HTMLButtonElement;
     protected section: HTMLElement;
 
-    protected readyCallback(): void {}
-
     protected init(): void {
         this.trigger = <HTMLButtonElement>this.querySelector(`.${this.jsName}__trigger`);
         this.section = <HTMLElement>this.closest(this.getAttribute('section-selector'));

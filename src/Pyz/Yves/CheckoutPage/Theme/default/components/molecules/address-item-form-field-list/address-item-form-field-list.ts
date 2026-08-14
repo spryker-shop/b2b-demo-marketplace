@@ -23,7 +23,6 @@ export default class AddressItemFormFieldList extends Component {
 
     protected observer = new MutationObserver(this.onInputChangeCallback.bind(this));
 
-    protected readyCallback(): void {}
     protected init(): void {
         this.elementsToToggle = Array.from(
             document.querySelectorAll<HTMLElement>(`.${this.getAttribute('elements-to-toggle-class')}`),

@@ -19,8 +19,6 @@ export default class FilterSection extends Component {
     protected stickyBodyToggler: StickyBodyToggler;
     protected isOpen = false;
 
-    protected readyCallback(): void {}
-
     protected init(): void {
         this.triggers = <HTMLElement[]>Array.from(document.getElementsByClassName(this.triggerClassName));
         this.closeButton = <HTMLButtonElement>this.querySelector(`.${this.jsName}__close`);
