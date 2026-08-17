@@ -2,6 +2,19 @@ name: _robot-ui
 
 on:
     workflow_call:
+        inputs:
+            platform-image:
+                description: "PHP platform image the job boots on."
+                type: string
+                default: "spryker/php:8.4"
+            deploy-file:
+                description: "Deploy file the job boots."
+                type: string
+                default: ".github/deploy/deploy.ci.acceptance.mariadb.robot.yml"
+            db-engine:
+                description: "Robot db_engine variable, e.g. psycopg2. Empty leaves the Robot suite default."
+                type: string
+                default: ""
 
 env:
     SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
@@ -14,10 +27,12 @@ jobs:
         runs-on: ubuntu-latest
         env:
             PROGRESS_TYPE: plain
-            SPRYKER_PLATFORM_IMAGE: spryker/php:8.4
+            SPRYKER_PLATFORM_IMAGE: ${{ inputs.platform-image }}
             TRAVIS: 1
             SPRYKER_CURRENT_REGION: EU
             DYNAMIC_STORE_MODE: true
+            DEPLOY_FILE: ${{ inputs.deploy-file }}
+            DB_ENGINE: ${{ inputs.db-engine }}
         steps:
             -   uses: actions/checkout@v4
                 with:
@@ -49,7 +64,7 @@ jobs:
                 # restore this lane went red with widespread locator timeouts.
                 run: |
                     git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
-                    docker/sdk boot .github/deploy/deploy.ci.acceptance.mariadb.robot.yml
+                    docker/sdk boot "$DEPLOY_FILE"
                     #sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local scheduler.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local date-time-configurator-example.spryker.local' >> /etc/hosts"
                     docker/sdk up -t
                     docker/sdk cli composer dump-autoload -o -a --apcu -q
@@ -57,13 +72,14 @@ jobs:
             -   name: Run Dynamic Tests Set
                 id: run_dynamic_tests
                 continue-on-error: true
+                # ${DB_ENGINE:+…} expands to nothing when the caller left the engine unset.
                 run: |
-                    docker/sdk exec robot-framework pabot --processes $(nproc) --ordering pabot_mp_b2b_ordering --listener resources/libraries/failure_detail_listener.py -v env:ui_mp_b2b -v docker:True -v headless:true -v ignore_console:false -v dms:true -v is_ssp:true -d results/dynamic_set --exclude skip-due-to-issueORskip-due-to-refactoringORstatic-set -s '*'.tests.parallel_ui.mp_b2b .
+                    docker/sdk exec robot-framework pabot --processes $(nproc) --ordering pabot_mp_b2b_ordering --listener resources/libraries/failure_detail_listener.py -v env:ui_mp_b2b -v docker:True -v headless:true -v ignore_console:false -v dms:true -v is_ssp:true ${DB_ENGINE:+-v db_engine:$DB_ENGINE} -d results/dynamic_set --exclude skip-due-to-issueORskip-due-to-refactoringORstatic-set -s '*'.tests.parallel_ui.mp_b2b .
             -   name: Run Static Tests Set
                 id: run_static_tests
                 continue-on-error: true
                 run: |
-                    docker/sdk exec robot-framework robot --listener resources/libraries/failure_detail_listener.py -v env:ui_mp_b2b -v docker:True -v headless:true -v ignore_console:false -v dms:true -v is_ssp:true -d results/static_set --exclude skip-due-to-issueORskip-due-to-refactoring --include static-set -s '*'.tests.parallel_ui.mp_b2b .
+                    docker/sdk exec robot-framework robot --listener resources/libraries/failure_detail_listener.py -v env:ui_mp_b2b -v docker:True -v headless:true -v ignore_console:false -v dms:true -v is_ssp:true ${DB_ENGINE:+-v db_engine:$DB_ENGINE} -d results/static_set --exclude skip-due-to-issueORskip-due-to-refactoring --include static-set -s '*'.tests.parallel_ui.mp_b2b .
             -   name: Merge Initial Test Results
                 id: merge_initial_results
                 continue-on-error: true
@@ -73,7 +89,7 @@ jobs:
                 id: rerun_failed_tests
                 if: always() && (steps.run_dynamic_tests.outcome == 'failure' || steps.run_static_tests.outcome == 'failure')
                 run: |
-                    docker/sdk exec robot-framework robot --listener resources/libraries/failure_detail_listener.py -v env:ui_mp_b2b -v docker:True -v dms:true -v headless:true -v ignore_console:false -v is_ssp:true -d results/rerun --runemptysuite --rerunfailed results/output.xml --output rerun.xml -s '*'.tests.parallel_ui.mp_b2b .
+                    docker/sdk exec robot-framework robot --listener resources/libraries/failure_detail_listener.py -v env:ui_mp_b2b -v docker:True -v dms:true -v headless:true -v ignore_console:false -v is_ssp:true ${DB_ENGINE:+-v db_engine:$DB_ENGINE} -d results/rerun --runemptysuite --rerunfailed results/output.xml --output rerun.xml -s '*'.tests.parallel_ui.mp_b2b .
             -   name: Merge Final Test Results
                 if: always() && steps.rerun_failed_tests.outcome != 'skipped'
                 run: |
