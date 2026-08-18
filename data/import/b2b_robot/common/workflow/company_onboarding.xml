@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<statemachine
+    xmlns="spryker:state-machine-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:state-machine-01 http://static.spryker.com/state-machine-01.xsd"
+>
+
+    <process name="CompanyOnboarding" main="true">
+
+        <states>
+            <state name="created"/>
+            <state name="business verification" display="Business verification"/>
+            <state name="contract agreement" display="Contract agreement"/>
+            <state name="customer group assignment" display="Customer group assignment"/>
+            <state name="approving" display="Approving"/>
+            <state name="approved" display="Approved"/>
+            <state name="denied" display="Denied"/>
+        </states>
+
+        <transitions>
+            <transition happy="true">
+                <source>created</source>
+                <target>business verification</target>
+                <event>initiate</event>
+            </transition>
+
+            <transition happy="true" condition="CompanyOnboarding/IsBusinessVerified">
+                <source>business verification</source>
+                <target>contract agreement</target>
+                <event>verify business</event>
+            </transition>
+
+            <transition>
+                <source>business verification</source>
+                <target>denied</target>
+                <event>verify business</event>
+            </transition>
+
+            <transition happy="true">
+                <source>contract agreement</source>
+                <target>customer group assignment</target>
+                <event>record contract agreement</event>
+            </transition>
+
+            <!-- Event-less condition: the workflow rests in "customer group assignment" and the
+                 condition cron advances it only once at least one company user of the company has
+                 been assigned to any customer group. -->
+            <transition happy="true" condition="CompanyOnboarding/HasCompanyUserInCustomerGroup">
+                <source>customer group assignment</source>
+                <target>approving</target>
+            </transition>
+
+            <!-- onEnter: entering "approving" runs the command that marks the company active/approved,
+                 then moves to "approved". The command lives on an event (engine only runs commands on
+                 events), so the conditional wait above is split from the command execution here. -->
+            <transition happy="true">
+                <source>approving</source>
+                <target>approved</target>
+                <event>mark approved</event>
+            </transition>
+        </transitions>
+
+        <events>
+            <event name="initiate" onEnter="true"/>
+            <event name="verify business" timeout="3 second"/>
+            <event name="record contract agreement" manual="true"/>
+            <event name="mark approved" onEnter="true" command="CompanyOnboarding/MarkCompanyActiveAndApproved"/>
+        </events>
+
+    </process>
+
+</statemachine>

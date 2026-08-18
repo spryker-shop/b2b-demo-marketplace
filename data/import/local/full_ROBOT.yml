@@ -31,6 +31,8 @@ actions:
     source: data/import/common/AT/store_context.csv
   - data_entity: customer
     source: data/import/common/common/customer.csv
+  - data_entity: workflow
+    source: data/import/common/common/workflow.csv
   - data_entity: glossary
     source: data/import/common/common/glossary.csv
   - data_entity: tax
@@ -207,7 +209,7 @@ actions:
   - data_entity: content-product-set
     source: data/import/common/common/content_product_set.csv
   - data_entity: cms-page
-    source: data/import/common/common/cms_page.csv
+    source: data/import/robot/common/cms_page.csv
   - data_entity: cms-slot-template
     source: data/import/common/common/cms_slot_template.csv
   - data_entity: cms-slot

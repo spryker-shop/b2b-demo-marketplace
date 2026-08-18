@@ -31,6 +31,8 @@ actions:
     source: data/import/common/AT/store_context.csv
   - data_entity: customer
     source: data/import/common/common/customer.csv
+  - data_entity: workflow
+    source: data/import/common/common/workflow.csv
   - data_entity: customer-group
     source: data/import/common/common/customer_group.csv
   - data_entity: customer-group-to-customer
@@ -431,3 +433,11 @@ actions:
 
   - data_entity: sales-order
     source: data/import/common/common/sales_order.csv
+
+    # RecurringOrders
+  - data_entity: merchant-product-offer
+    source: data/import/common/common/marketplace/merchant_product_offer_recurring_base.csv
+  - data_entity: recurring-schedule
+    source: data/import/common/common/recurring_schedule.csv
+  - data_entity: merchant-product-offer
+    source: data/import/common/common/marketplace/merchant_product_offer_recurring_drift.csv

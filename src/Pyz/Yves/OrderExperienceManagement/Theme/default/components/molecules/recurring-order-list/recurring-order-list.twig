@@ -1,15 +1,25 @@
 {% extends molecule('recurring-order-list', '@SprykerFeature:OrderExperienceManagement') %}
 
-{% block wrapper %}
-    {% set wrapperClassName = '' %}
+{% block body %}
+    {% block wrapper %}
+        {% set wrapperClassName = '' %}
 
-    {% include molecule('action-bar') with {
-        data: {
-            title: 'recurring_orders.list.title' | trans,
-        },
-    } only %}
+        {% include molecule('action-bar') with {
+            data: {
+                title: 'recurring_orders.list.title' | trans,
+            },
+        } only %}
 
-    {{ parent() }}
+        {% set searchForm = data.searchForm %}
+        {% include molecule('recurring-order-attention-banner', 'OrderExperienceManagement') with {
+            data: {
+                count: data.attentionCount,
+                attentionStatusCounts: data.attentionStatusCounts,
+            },
+        } only %}
+
+        {{ parent() }}
+    {% endblock %}
 {% endblock %}
 
 {% block table %}

@@ -1,7 +1,7 @@
 @mixin order-experience-management-schedule-review($name: '.schedule-review') {
     #{$name} {
         &__heading {
-            font-size: var(--font-size-12);
+            @include typography(body-md);
             margin-bottom: var(--scale-20);
         }
 
@@ -12,6 +12,23 @@
 
         &__heading-content {
             margin: 0;
+        }
+
+        &__confirmation-popup {
+            @include typography(body-md);
+        }
+
+        &__changes-list {
+            margin: var(--scale-12) 0;
+        }
+
+        &__changes-list-item {
+            margin: 0 0 var(--scale-2);
+        }
+
+        &__changes-item-value {
+            @include typography(label-md);
+            margin-left: var(--scale-4);
         }
 
         @content;
