@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7eb6a83c4cf3bb5c44d622170c1fd917",
+    "content-hash": "af522e25b9a24daf9ed77c45e9ff3de0",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -10127,16 +10127,16 @@
         },
         {
             "name": "spryker-eco/vertex",
-            "version": "1.5.1",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-eco/vertex.git",
-                "reference": "67e2ecf07828572234d684fc01c7ed1bd68ac4ec"
+                "reference": "9b568f8fb020749c01f1cb26f4dd85396ee44685"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-eco/vertex/zipball/67e2ecf07828572234d684fc01c7ed1bd68ac4ec",
-                "reference": "67e2ecf07828572234d684fc01c7ed1bd68ac4ec",
+                "url": "https://api.github.com/repos/spryker-eco/vertex/zipball/9b568f8fb020749c01f1cb26f4dd85396ee44685",
+                "reference": "9b568f8fb020749c01f1cb26f4dd85396ee44685",
                 "shasum": ""
             },
             "require": {
@@ -10198,9 +10198,9 @@
             "description": "Vertex module",
             "support": {
                 "issues": "https://github.com/spryker-eco/vertex/issues",
-                "source": "https://github.com/spryker-eco/vertex/tree/1.5.1"
+                "source": "https://github.com/spryker-eco/vertex/tree/1.6.0"
             },
-            "time": "2026-07-23T14:19:38+00:00"
+            "time": "2026-08-13T13:51:53+00:00"
         },
         {
             "name": "spryker-feature/acl",
@@ -13572,16 +13572,16 @@
         },
         {
             "name": "spryker-feature/product-experience-management",
-            "version": "202606.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/product-experience-management.git",
-                "reference": "3fcb907b8d74d2587fb20d9c66895d33e8a7c73a"
+                "reference": "93facf1569ed0905717ab85762c66d99f8ff0d46"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/product-experience-management/zipball/3fcb907b8d74d2587fb20d9c66895d33e8a7c73a",
-                "reference": "3fcb907b8d74d2587fb20d9c66895d33e8a7c73a",
+                "url": "https://api.github.com/repos/spryker-feature/product-experience-management/zipball/93facf1569ed0905717ab85762c66d99f8ff0d46",
+                "reference": "93facf1569ed0905717ab85762c66d99f8ff0d46",
                 "shasum": ""
             },
             "require": {
@@ -13602,6 +13602,7 @@
                 "spryker/oms": "^11.0.0",
                 "spryker/price-product": "^4.0.0",
                 "spryker/product": "^6.0.0",
+                "spryker/product-approval": "^1.0.0",
                 "spryker/product-attribute": "^1.20.0",
                 "spryker/product-attribute-extension": "^1.2.0",
                 "spryker/product-attribute-gui-extension": "^1.0.0",
@@ -13635,6 +13636,7 @@
             "suggest": {
                 "spryker-feature/self-service-portal": "Enables product class and shipment type import/export. Install dependency to get SelfServicePortal-specific data included in import and export operations."
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -13652,9 +13654,9 @@
             ],
             "description": "ProductExperienceManagement module",
             "support": {
-                "source": "https://github.com/spryker-feature/product-experience-management/tree/202606.0"
+                "source": "https://github.com/spryker-feature/product-experience-management/tree/master"
             },
-            "time": "2026-06-18T12:39:18+00:00"
+            "time": "2026-08-14T10:30:58+00:00"
         },
         {
             "name": "spryker-feature/product-groups",
@@ -93276,6 +93278,12 @@
             "alias_normalized": "202606.0"
         },
         {
+            "package": "spryker-feature/product-experience-management",
+            "version": "9999999-dev",
+            "alias": "202606.0",
+            "alias_normalized": "202606.0"
+        },
+        {
             "package": "spryker-feature/purchasing-control",
             "version": "9999999-dev",
             "alias": "202606.0",
@@ -93301,6 +93309,7 @@
         "spryker-feature/order-experience-management": 20,
         "spryker-feature/product": 20,
         "spryker-feature/product-approval-process": 20,
+        "spryker-feature/product-experience-management": 20,
         "spryker-feature/purchasing-control": 20,
         "spryker-feature/self-service-portal": 20,
         "spryker-feature/spryker-core": 20,
@@ -93326,5 +93335,5 @@
     "platform-overrides": {
         "php": "8.3.13"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
