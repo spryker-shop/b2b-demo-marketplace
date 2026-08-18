@@ -77,11 +77,6 @@ class SymfonySchedulerConfig extends SprykerSymfonySchedulerConfig
                 'schedule' => '0 6 * * *',
                 'priority' => 170,
             ],
-            'recurring-orders-forecast-refresh' => [
-                'command' => $logger . '$PHP_BIN vendor/bin/console recurring-orders:forecast:refresh',
-                'schedule' => '0 * * * *',
-                'priority' => 160,
-            ],
             'product-relation-updater' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/console product-relation:update -vvv',
                 'schedule' => '30 2 * * *',
@@ -112,11 +107,6 @@ class SymfonySchedulerConfig extends SprykerSymfonySchedulerConfig
                 'schedule' => '0 6 * * *',
                 'priority' => 110,
             ],
-            'check-product-offer-validity' => [
-                'command' => $logger . '$PHP_BIN vendor/bin/console product-offer:check-validity',
-                'schedule' => '0 6 * * *',
-                'priority' => 100,
-            ],
             'remove-expired-refresh-tokens' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/console oauth:refresh-token:remove-expired',
                 'schedule' => '*/5 * * * *',
@@ -131,11 +121,6 @@ class SymfonySchedulerConfig extends SprykerSymfonySchedulerConfig
                 'command' => $logger . '$PHP_BIN vendor/bin/console order:invoice:send',
                 'schedule' => '*/5 * * * *',
                 'priority' => 70,
-            ],
-            'page-product-abstract-refresh' => [
-                'command' => $logger . '$PHP_BIN vendor/bin/console product-page-search:product-abstract-refresh',
-                'schedule' => '0 6 * * *',
-                'priority' => 60,
             ],
             'glue-api-generate-documentation' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/glue api:generate:documentation --invalidated-after-interval 90sec',
@@ -163,21 +148,6 @@ class SymfonySchedulerConfig extends SprykerSymfonySchedulerConfig
                 'priority' => 10,
             ],
         ];
-
-        /* Push notification */
-        if (getenv('SPRYKER_PUSH_NOTIFICATION_WEB_PUSH_PHP_VAPID_PUBLIC_KEY')) {
-            $jobs['send-push-notifications'] = [
-                'command' => $logger . '$PHP_BIN vendor/bin/console push-notification:send',
-                'schedule' => '* * * * *',
-                'priority' => 15,
-            ];
-
-            $jobs['delete-expired-push-notification-subscriptions'] = [
-                'command' => $logger . '$PHP_BIN vendor/bin/console push-notification:delete-expired-push-notification-subscriptions',
-                'schedule' => '0 0 * * 0',
-                'priority' => 5,
-            ];
-        }
 
         /* Message broker */
         if ($this->get(MessageBrokerConstants::IS_ENABLED)) {
