@@ -11,13 +11,9 @@ namespace PyzTest\Zed\MessageBroker;
 
 use Codeception\Actor;
 use Generated\Shared\Transfer\CurrencyTransfer;
-use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
-use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
-use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
-use PyzTest\Zed\MessageBroker\PageObject\SalesPage;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 /**
@@ -36,9 +32,9 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
  *
  * @SuppressWarnings(\PyzTest\Zed\Payment\PHPMD)
  */
-class PaymentPresentationTester extends Actor
+class PaymentCommunicationTester extends Actor
 {
-    use _generated\PaymentPresentationTesterActions;
+    use _generated\PaymentCommunicationTesterActions;
 
     /**
      * @var string
@@ -102,30 +98,37 @@ class PaymentPresentationTester extends Actor
         );
     }
 
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrder
-     * @param string $finalState
-     *
-     * @return void
-     */
-    public function assertOrderHasCorrectState(SpySalesOrder $salesOrder, string $finalState): void
+    public function assertOrderHasCorrectState(SpySalesOrder $salesOrder, string $expectedItemState): void
     {
-        $omsProcess = $this->getOmsProcess();
-        $this->assertNotNull($omsProcess, 'oms process doesnt exist');
+        $this->assertGreaterThan(
+            0,
+            SpyOmsOrderItemStateQuery::create()->filterByName($expectedItemState)->count(),
+            sprintf('OMS order item state "%s" does not exist.', $expectedItemState),
+        );
 
-        $finalOrderItemState = $this->getOrderItemState($finalState);
-        $this->assertNotNull($finalOrderItemState, 'order item state doesnt exist');
+        // COUNT queries read straight from the database: Propel's instance pool still holds the
+        // order items as they were hydrated before the message moved them.
+        $orderItemCount = SpySalesOrderItemQuery::create()->filterByOrder($salesOrder)->count();
+        $this->assertGreaterThan(0, $orderItemCount, 'Sales order has no items to assert on.');
 
-        $this->amOnPage(
+        $itemsInExpectedStateCount = SpySalesOrderItemQuery::create()
+            ->filterByOrder($salesOrder)
+            ->useStateQuery()
+                ->filterByName($expectedItemState)
+            ->endUse()
+            ->count();
+
+        $this->assertSame(
+            $orderItemCount,
+            $itemsInExpectedStateCount,
             sprintf(
-                SalesPage::SALES_ORDER_ITEM_PAGE_URL,
-                $omsProcess->getIdOmsOrderProcess(),
-                $finalOrderItemState->getIdOmsOrderItemState(),
+                'Expected all %d items of order "%s" to be in state "%s", %d are.',
+                $orderItemCount,
+                $salesOrder->getOrderReference(),
+                $expectedItemState,
+                $itemsInExpectedStateCount,
             ),
         );
-        $this->wait(10);
-
-        $this->canSee($salesOrder->getOrderReference());
     }
 
     /**
@@ -145,29 +148,5 @@ class PaymentPresentationTester extends Actor
         }
 
         return $orderItemIds;
-    }
-
-    /**
-     * @param string $stateName
-     *
-     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState|null
-     */
-    protected function getOrderItemState(string $stateName): ?SpyOmsOrderItemState
-    {
-        $omsOrderItemStateQuery = new SpyOmsOrderItemStateQuery();
-        $omsOrderItemStateQuery->filterByName($stateName);
-
-        return $omsOrderItemStateQuery->findOne();
-    }
-
-    /**
-     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess|null
-     */
-    protected function getOmsProcess(): ?SpyOmsOrderProcess
-    {
-        $omsOrderProcessQuery = new SpyOmsOrderProcessQuery();
-        $omsOrderProcessQuery->filterByName(static::DEFAULT_OMS_PROCESS_NAME);
-
-        return $omsOrderProcessQuery->findOne();
     }
 }

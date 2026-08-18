@@ -13,9 +13,6 @@ use Codeception\Actor;
 use Generated\Shared\DataBuilder\MessageAttributesBuilder;
 use Generated\Shared\Transfer\AddPaymentMethodTransfer;
 use Generated\Shared\Transfer\DeletePaymentMethodTransfer;
-use Orm\Zed\Payment\Persistence\SpyPaymentMethodQuery;
-use Orm\Zed\Payment\Persistence\SpyPaymentMethodStoreQuery;
-use Ramsey\Uuid\Uuid;
 use Spryker\Zed\Payment\Business\Generator\PaymentMethodKeyGenerator;
 use Spryker\Zed\Payment\Dependency\Service\PaymentToUtilTextServiceBridge;
 
@@ -35,9 +32,9 @@ use Spryker\Zed\Payment\Dependency\Service\PaymentToUtilTextServiceBridge;
  *
  * @SuppressWarnings(\PyzTest\Zed\MessageBroker\PHPMD)
  */
-class PaymentMethodPresentationTester extends Actor
+class PaymentMethodCommunicationTester extends Actor
 {
-    use _generated\PaymentMethodPresentationTesterActions {
+    use _generated\PaymentMethodCommunicationTesterActions {
         haveAddPaymentMethodTransfer as protected testerHaveAddPaymentMethodTransferAction;
         haveDeletePaymentMethodTransfer as protected testerHaveDeletePaymentMethodTransferAction;
     }
@@ -45,8 +42,6 @@ class PaymentMethodPresentationTester extends Actor
     /**
      * @param array<string, mixed> $seedData
      * @param array<string, mixed> $messageAttributesSeedData
-     *
-     * @return \Generated\Shared\Transfer\AddPaymentMethodTransfer
      */
     public function haveAddPaymentMethodTransfer(
         array $seedData,
@@ -61,8 +56,6 @@ class PaymentMethodPresentationTester extends Actor
     /**
      * @param array<string, mixed> $seedData
      * @param array<string, mixed> $messageAttributesSeedData
-     *
-     * @return \Generated\Shared\Transfer\DeletePaymentMethodTransfer
      */
     public function haveDeletePaymentMethodTransfer(
         array $seedData,
@@ -74,12 +67,6 @@ class PaymentMethodPresentationTester extends Actor
             );
     }
 
-    /**
-     * @param string $paymentProviderName
-     * @param string $paymentMethodName
-     *
-     * @return string
-     */
     public function generatePaymentMethodKey(
         string $paymentProviderName,
         string $paymentMethodName,
@@ -95,35 +82,5 @@ class PaymentMethodPresentationTester extends Actor
         );
     }
 
-    /**
-     * @param string $paymentMethodKey
-     *
-     * @return void
-     */
-    public function cleanupPaymentMethodByPaymentMethodKey(string $paymentMethodKey): void
-    {
-        $this->addCleanup(function () use ($paymentMethodKey): void {
-            $paymentMethod = SpyPaymentMethodQuery::create()
-                ->filterByPaymentMethodKey($paymentMethodKey)
-                ->findOne();
 
-            if ($paymentMethod === null) {
-                return;
-            }
-
-            SpyPaymentMethodStoreQuery::create()
-                ->filterByFkPaymentMethod($paymentMethod->getIdPaymentMethod())
-                ->delete();
-
-            $paymentMethod->delete();
-        });
-    }
-
-    /**
-     * @return string
-     */
-    protected function getUuid(): string
-    {
-        return Uuid::uuid4()->toString();
-    }
 }
