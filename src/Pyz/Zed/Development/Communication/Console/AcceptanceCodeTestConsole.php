@@ -12,6 +12,8 @@ namespace Pyz\Zed\Development\Communication\Console;
 use Spryker\Zed\Development\Communication\Console\CodeTestConsole;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\Development\Communication\Console\CodeTestConsole} (`code:test`, or `code:test -m <module>`) instead. Will be removed in the next major.
+ *
  * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
  * @method \Spryker\Zed\Development\Communication\DevelopmentCommunicationFactory getFactory()
  */
