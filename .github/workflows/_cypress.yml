@@ -2,6 +2,25 @@ name: _cypress
 
 on:
     workflow_call:
+        inputs:
+            platform-image:
+                description: "PHP platform image the shards boot on."
+                type: string
+                default: "spryker/php:8.4"
+            deploy-file:
+                description: "Deploy file the shards boot."
+                type: string
+                default: ".github/deploy/deploy.ci.acceptance.mariadb.cypress.yml"
+            repository-ids:
+                description: "JSON array of Cypress repository ids each core shard runs for."
+                type: string
+                default: '["b2b-mp", "b2b"]'
+            artifact-platform:
+                # Kept in step with platform-image and deploy-file; it only names the
+                # S3 folder the screenshots land in.
+                description: "Platform segment of the screenshot upload path."
+                type: string
+                default: "PHP8.4MariaDB"
 
 env:
     SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
@@ -27,12 +46,14 @@ jobs:
 
             -   id: compute
                 name: Generate shard matrix
+                env:
+                    REPOSITORY_IDS: ${{ inputs.repository-ids }}
                 # jq crosses each generated shard with the repository_ids that must run it:
-                # the SSP shard is marketplace-only, every core shard runs for both.
+                # the SSP shard is marketplace-only, every core shard runs for all requested ids.
                 run: |
                     CORE=$(.github/workflows/scripts/generate-cypress-shards.py)
-                    CELLS=$(printf '%s' "$CORE" | jq -c '[ .[] as $s
-                        | (if $s.mode == "ssp" then ["b2b-mp"] else ["b2b-mp", "b2b"] end)[] as $repo
+                    CELLS=$(printf '%s' "$CORE" | jq -c --argjson repos "$REPOSITORY_IDS" '[ .[] as $s
+                        | (if $s.mode == "ssp" then ($repos | map(select(. == "b2b-mp"))) else $repos end)[] as $repo
                         | $s + {repository_id: $repo, label: "\($repo) \($s.label)"}
                     ]')
                     echo "cells=${CELLS}" >> "$GITHUB_OUTPUT"
@@ -48,11 +69,13 @@ jobs:
                 cell: ${{ fromJson(needs.cypress-shards.outputs.cells) }}
         env:
             PROGRESS_TYPE: plain
-            SPRYKER_PLATFORM_IMAGE: spryker/php:8.4
+            SPRYKER_PLATFORM_IMAGE: ${{ inputs.platform-image }}
             TRAVIS: 1
             ROBOT_TESTS_ARTIFACTS_BUCKET_REGION: eu-west-1
             SPRYKER_CURRENT_REGION: EU
             DYNAMIC_STORE_MODE: true
+            DEPLOY_FILE: ${{ inputs.deploy-file }}
+            ARTIFACT_PLATFORM: ${{ inputs.artifact-platform }}
         steps:
             -   uses: actions/checkout@v4
                 with:
@@ -81,7 +104,7 @@ jobs:
                         ./uninstall-frontend-marketplace.sh
                         ./uninstall-marketplace-modules.sh
                     fi
-                    docker/sdk boot .github/deploy/deploy.ci.acceptance.mariadb.cypress.yml
+                    docker/sdk boot "$DEPLOY_FILE"
                     sudo bash -c "echo '127.0.0.1 backend-api.eu.spryker.local backend-api.us.spryker.local backend-gateway.eu.spryker.local backend-gateway.us.spryker.local backoffice.eu.spryker.local backoffice.us.spryker.local glue-backend.eu.spryker.local glue-backend.us.spryker.local glue-storefront.eu.spryker.local glue-storefront.us.spryker.local glue.eu.spryker.local glue.us.spryker.local mail.spryker.local mp.eu.spryker.local mp.us.spryker.local queue.spryker.local spryker.local swagger.spryker.local yves.eu.spryker.local yves.us.spryker.local' >> /etc/hosts"
                     docker/sdk up -t
                     docker/sdk cli composer dump-autoload -o -a --apcu -q
@@ -102,7 +125,7 @@ jobs:
                 # the upload would add a second red step pointing away from the real cause.
                 if: failure() && steps.run_tests.outcome == 'failure'
                 run: |
-                    AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp .cypress s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/${{ matrix.cell.repository_id }}/dms-on/cypress/${GITHUB_RUN_ID}/PHP8.4MariaDB/shard-${{ matrix.cell.shard }}/ --recursive
+                    AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp .cypress s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/${{ matrix.cell.repository_id }}/dms-on/cypress/${GITHUB_RUN_ID}/${ARTIFACT_PLATFORM}/shard-${{ matrix.cell.shard }}/ --recursive
 
             -   name: Generate Cypress Test Summary
                 if: always() && steps.run_tests.outcome == 'failure'
