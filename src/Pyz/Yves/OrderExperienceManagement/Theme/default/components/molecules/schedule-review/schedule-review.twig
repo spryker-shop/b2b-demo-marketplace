@@ -11,39 +11,69 @@
 {% endblock %}
 
 {% block confirmModal %}
-    {% set confirmContent %}
-        <p>{{ 'recurring_orders.review.modal.body' | trans }}</p>
-        <ul class="list">
-            <li class="list-item">{{ 'recurring_orders.review.modal.removed_items' | trans }}: {{ data.review.removedItemCount }}</li>
-            <li class="list-item">{{ 'recurring_orders.review.modal.accepted_prices' | trans }}: {{ data.review.priceChangeCount }}</li>
-            <li class="list-item">{{ 'recurring_orders.review.modal.original_total' | trans }}: {{ data.review.originalTotal | money(true, data.schedule.currencyIsoCode) }}</li>
-            <li class="list-item">{{ 'recurring_orders.review.modal.new_total' | trans }}: {{ data.review.updatedTotal | money(true, data.schedule.currencyIsoCode) }}</li>
-        </ul>        
-    {% endset %}
+        {% set confirmContent %}
+            <p>{{ 'recurring_orders.review.modal.body' | trans }}</p>
+            {% set changeSummaryRows = [
+                {
+                    label: 'recurring_orders.review.modal.removed_items',
+                    jsClass: 'js-review-change-summary__removed',
+                    qa: 'recurring-order-review-modal-removed',
+                },
+                {
+                    label: 'recurring_orders.review.modal.accepted_prices',
+                    jsClass: 'js-review-change-summary__price-changes',
+                    qa: 'recurring-order-review-modal-price-changes',
+                },
+                {
+                    label: 'recurring_orders.review.modal.substituted_items',
+                    jsClass: 'js-review-change-summary__substituted',
+                    qa: 'recurring-order-review-modal-substituted',
+                },
+                {
+                    label: 'recurring_orders.review.modal.added_products',
+                    jsClass: 'js-review-change-summary__added',
+                    qa: 'recurring-order-review-modal-added',
+                },
+            ] %}
 
-    {% set confirmFooter %}
-        {{ form_start(data.approveForm, {action: url('recurring-order/approve-review', {uuid: data.schedule.uuid}), attr: {class: 'form'}}) }}
-            {{ form_widget(data.approveForm) }}
-            <div class="grid grid--right grid--gap-smaller">
+            <ul class="{{ config.name }}__changes-list">
+                {% for changeSummaryRow in changeSummaryRows %}
+                    <li class="{{ config.name }}__changes-list-item">{{ changeSummaryRow.label | trans }}: <span class="{{ config.name }}__changes-item-value {{ changeSummaryRow.jsClass }}" data-qa="{{ changeSummaryRow.qa }}">0</span></li>
+                {% endfor %}
+                <li class="{{ config.name }}__changes-list-item">{{ 'recurring_orders.review.modal.original_total' | trans }}: <span class="{{ config.name }}__changes-item-value">{{ data.review.originalTotal | money(true, data.schedule.currencyIsoCode) }}</span></li>
+                <li class="{{ config.name }}__changes-list-item">{{ 'recurring_orders.review.modal.new_total' | trans }}: <span class="{{ config.name }}__changes-item-value js-review-total-recalculator__total" data-qa="recurring-order-review-modal-new-total">{{ data.review.updatedTotal | money(true, data.schedule.currencyIsoCode) }}</span></li>
+            </ul>
+            
+            {% block scopeSelector %}
+                {% include molecule('review-scope-selector', 'OrderExperienceManagement') with {
+                    data: {
+                        choices: data.scopeChoices,
+                        inputSelector: '#' ~ data.approveForm.scope.vars.id,
+                        nextTriggerDate: data.schedule.nextTriggerDate,
+                    },
+                } only %}
+            {% endblock %}
+
+            <div class="grid grid--right spacing-top">
                 <button type="button" class="button button--hollow js-main-popup-close">
                     {{ 'global.cancel' | trans }}
                 </button>
-                <button type="submit" class="button spacing-left" data-qa="recurring-order-review-approve-submit">
+                <button type="submit" form="{{ reviewFormId }}" class="button spacing-left js-{{ config.name }}__modal-submit" data-qa="recurring-order-review-approve-submit">
                     {{ 'recurring_orders.review.cta.accept_and_place' | trans }}
                 </button>
             </div>
-        {{ form_end(data.approveForm) }}
-    {% endset %}
+        {% endset %}
 
-    {% include molecule('main-popup') with {
-        data: {
-            title: 'recurring_orders.review.modal.headline' | trans,
-            content: confirmContent,
-            footer: confirmFooter,
-        },
-        attributes: {
-            'content-id': 'review-confirm-popup',
-            'trigger-class-name': confirmModalTriggerClassName,
-        },
-    } only %}
-{% endblock %}
+        {% include molecule('main-popup') with {
+            class: config.jsName ~ '__confirmation-popup' ~ ' ' ~ config.name ~ '__confirmation-popup',
+            modifiers: ['wide'],
+            data: {
+                title: 'recurring_orders.review.modal.headline' | trans,
+                content: confirmContent,
+            },
+            attributes: {
+                'content-id': 'review-confirm-popup',
+                'trigger-class-name': confirmModalTriggerClassName,
+            },
+        } only %}
+    {% endblock %}

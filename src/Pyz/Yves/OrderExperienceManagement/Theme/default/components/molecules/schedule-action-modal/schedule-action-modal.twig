@@ -1,21 +1,4 @@
-{% extends model('component') %}
-
-{% define config = {
-    name: 'schedule-action-modal',
-    tag: 'schedule-action-modal',
-} %}
-
-{% define data = {
-    schedule: required,
-    skipForm: required,
-    cancelForm: required,
-    resumeForm: null,
-    resumeUrl: '',
-    skipModalTriggerClassName: required,
-    cancelModalTriggerClassName: required,
-    pauseModalTriggerClassName: required,
-    resumeModalTriggerClassName: required,
-} %}
+{% extends molecule('schedule-action-modal', '@SprykerFeature:OrderExperienceManagement') %}
 
 {% block skipContent %}
     {% set skippedExecutionDate = data.schedule.nextTriggerDate %}
@@ -187,4 +170,18 @@
             'trigger-class-name': data.resumeModalTriggerClassName,
         },
     } only %}
+
+    {% if data.editForm %}
+        {% include molecule('main-popup') with {
+            data: {
+                title: 'recurring_orders.detail.edit.title' | trans,
+                content: block('editContent'),
+            },
+            attributes: {
+                'content-id': config.jsName ~ '-edit-popup',
+                'trigger-class-name': data.editModalTriggerClassName,
+                'has-content-mount': true,
+            },
+        } only %}
+    {% endif %}
 {% endblock %}

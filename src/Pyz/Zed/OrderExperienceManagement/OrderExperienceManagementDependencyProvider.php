@@ -16,6 +16,8 @@ use SprykerFeature\Zed\OrderExperienceManagement\Communication\Plugin\Cadence\We
 use SprykerFeature\Zed\OrderExperienceManagement\Communication\Plugin\ScheduleValidator\CheckoutPlaceabilityScheduleValidatorPlugin;
 use SprykerFeature\Zed\OrderExperienceManagement\Communication\Plugin\ScheduleValidator\PriceScheduleValidatorPlugin;
 use SprykerFeature\Zed\OrderExperienceManagement\OrderExperienceManagementDependencyProvider as SprykerOrderExperienceManagementDependencyProvider;
+use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\OrderExperienceManagement\BudgetApprovalRuleRecurringOrderCheckoutValidatorPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\OrderExperienceManagement\ServiceProductAddedItemValidatorPlugin;
 
 class OrderExperienceManagementDependencyProvider extends SprykerOrderExperienceManagementDependencyProvider
 {
@@ -40,6 +42,26 @@ class OrderExperienceManagementDependencyProvider extends SprykerOrderExperience
         return [
             new PriceScheduleValidatorPlugin(), #RecurringOrdersFeature
             new CheckoutPlaceabilityScheduleValidatorPlugin(), #RecurringOrdersFeature
+        ];
+    }
+
+    /**
+     * @return array<\SprykerFeature\Zed\OrderExperienceManagement\Dependency\Plugin\AddedItemValidatorPluginInterface>
+     */
+    protected function getAddedItemValidatorPlugins(): array
+    {
+        return [
+            new ServiceProductAddedItemValidatorPlugin(), #RecurringOrdersFeature
+        ];
+    }
+
+    /**
+     * @return array<\SprykerFeature\Zed\OrderExperienceManagement\Dependency\Plugin\RecurringOrderCheckoutValidatorPluginInterface>
+     */
+    protected function getRecurringOrderCheckoutValidatorPlugins(): array
+    {
+        return [
+            new BudgetApprovalRuleRecurringOrderCheckoutValidatorPlugin(), #RecurringOrdersFeature
         ];
     }
 }
