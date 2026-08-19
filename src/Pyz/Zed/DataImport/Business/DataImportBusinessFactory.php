@@ -94,6 +94,9 @@ use Pyz\Zed\DataImport\Business\Model\ProductSet\ProductSetImageLocalizedAttribu
 use Pyz\Zed\DataImport\Business\Model\ProductSet\ProductSetWriterStep;
 use Pyz\Zed\DataImport\Business\Model\ProductStock\ProductStockHydratorStep;
 use Pyz\Zed\DataImport\Business\Model\ProductStock\Writer\ProductStockPropelDataSetWriter;
+use Pyz\Zed\DataImport\Business\Model\RecurringSchedule\RecurringOrderSettingsBuilder;
+use Pyz\Zed\DataImport\Business\Model\RecurringSchedule\RecurringScheduleWriterStep;
+use Pyz\Zed\DataImport\Business\Model\RecurringSchedule\ScheduleStateSeeder;
 use Pyz\Zed\DataImport\Business\Model\SalesOrder\AddressResolver;
 use Pyz\Zed\DataImport\Business\Model\SalesOrder\ItemsExpander;
 use Pyz\Zed\DataImport\Business\Model\SalesOrder\OmsEventTrigger;
@@ -237,6 +240,8 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
                 return $this->createMerchantUserImporter($dataImportConfigurationActionTransfer);
             case DataImportConfig::IMPORT_TYPE_SALES_ORDER:
                 return $this->createSalesOrderImporter($dataImportConfigurationActionTransfer);
+            case DataImportConfig::IMPORT_TYPE_RECURRING_SCHEDULE:
+                return $this->createRecurringScheduleImporter($dataImportConfigurationActionTransfer);
             default:
                 return null;
         }
@@ -1870,6 +1875,42 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
 
         return $dataImporter;
+    }
+
+    public function createRecurringScheduleImporter(
+        DataImportConfigurationActionTransfer $dataImportConfigurationActionTransfer,
+    ): DataImporterInterface {
+        $dataImporter = $this->getCsvDataImporterFromConfig(
+            $this->getConfig()->buildImporterConfigurationByDataImportConfigAction($dataImportConfigurationActionTransfer),
+        );
+
+        $dataSetStepBroker = $this->createDataSetStepBroker();
+        $dataSetStepBroker->addStep(new RecurringScheduleWriterStep(
+            $this->getCheckoutFacade(),
+            $this->createSalesOrderQuoteBuilder(),
+            $this->createSalesOrderItemsExpander(),
+            $this->createSalesOrderShipmentExpander(),
+            $this->createSalesOrderPaymentExpander(),
+            $this->createRecurringOrderSettingsBuilder(),
+            $this->createRecurringScheduleStateSeeder(),
+        ));
+
+        $dataImporter->addDataSetStepBroker($dataSetStepBroker);
+
+        return $dataImporter;
+    }
+
+    public function createRecurringOrderSettingsBuilder(): RecurringOrderSettingsBuilder
+    {
+        return new RecurringOrderSettingsBuilder();
+    }
+
+    public function createRecurringScheduleStateSeeder(): ScheduleStateSeeder
+    {
+        return new ScheduleStateSeeder(
+            $this->createRecurringOrderSettingsBuilder(),
+            $this->getUtilEncodingService(),
+        );
     }
 
     public function createSalesOrderQuoteBuilder(): QuoteBuilder

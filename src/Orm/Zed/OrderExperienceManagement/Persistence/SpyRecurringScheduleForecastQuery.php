@@ -9,7 +9,7 @@ declare(strict_types = 1);
 
 namespace Orm\Zed\OrderExperienceManagement\Persistence;
 
-use Orm\Zed\OrderExperienceManagement\Persistence\Base\SpyRecurringScheduleForecastQuery as BaseSpyRecurringScheduleForecastQuery;
+use SprykerFeature\Zed\OrderExperienceManagement\Persistence\Propel\AbstractSpyRecurringScheduleForecastQuery as BaseSpyRecurringScheduleForecastQuery;
 
 /**
  * Skeleton subclass for performing query and update operations on the 'spy_recurring_schedule_forecast' table.

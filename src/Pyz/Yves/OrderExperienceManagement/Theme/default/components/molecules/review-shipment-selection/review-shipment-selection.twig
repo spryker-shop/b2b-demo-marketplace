@@ -1,0 +1,50 @@
+{% extends molecule('review-shipment-selection', '@SprykerFeature:OrderExperienceManagement') %}
+
+{% block addressLabel %}
+    <label class="{{ config.name }}__label label">{{ 'recurring_orders.review.add_product.shipment_address' | trans }}</label>
+{% endblock %}
+
+{% block select %}
+    {% embed molecule('custom-select') with {
+        modifiers: ['full-width'],
+        attributes: {
+            name: 'shipment_address',
+            'config-width': '100%',
+            'config-theme': 'group',
+        },
+        data: {
+            isGrouped: true,
+        },
+        embed: {
+            shipmentAddressChoices: data.shipmentAddressChoices,
+            addressSelectClassName: addressSelectClassName,
+        },
+    } only %}
+        {%- block selectClass -%}
+            {{ embed.addressSelectClassName }} {{ parent() }}
+        {%- endblock -%}
+
+        {%- block selectAttributes -%}
+            {{ parent() }}
+            {{ qa('review-shipment-selection-address') }}
+            aria-label="{{ 'recurring_orders.review.add_product.shipment_address' | trans }}"
+        {%- endblock -%}
+
+        {% block option %}
+            <option value="{{ shippingAddressKey }}"
+                    data-id-company-unit-address="{{ addressChoice.idCompanyUnitAddress }}">{{- addressChoice.label -}}</option>
+        {% endblock %}
+
+        {% block optionsGroup %}
+            <option value="">{{ 'recurring_orders.review.add_product.shipment_address.placeholder' | trans }}</option>
+
+            {% for groupGlossaryKey, addressChoices in embed.shipmentAddressChoices %}
+                <optgroup label="{{ groupGlossaryKey | trans }}">
+                    {% for shippingAddressKey, addressChoice in addressChoices %}
+                        {{ block('option') }}
+                    {% endfor %}
+                </optgroup>
+            {% endfor %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

@@ -1,12 +1,12 @@
 @mixin order-experience-management-review-unchanged-items($name: '.review-unchanged-items') {
     #{$name} {
+        @include typography(body-md);
+
         summary {
-            font-size: var(--font-size-12);
+            @include typography(label-md);
             margin: 0 0 var(--scale-12);
-            font-weight: normal;
-            line-height: 1.33;
             position: relative;
-            padding-right: rem(20);
+            padding-right: var(--scale-24);
             list-style: none;
         }
 
@@ -28,7 +28,6 @@
         }
 
         &__item {
-            font-size: var(--font-size-12);
             padding: var(--scale-12) var(--scale-16);
 
             &:not(:last-child) {
@@ -36,8 +35,19 @@
             }
         }
 
-        small {
-            font-size: var(--font-size-12);
+        &__item-name,
+        &__item-sku {
+            @include typography(body-md);
+        }
+
+        &__item-meta {
+            @include typography(body-md);
+            margin-top: var(--scale-2);
+        }
+
+        .sold-by-merchant {
+            @include typography(body-md);
+            color: inherit;
         }
 
         @content;

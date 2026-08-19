@@ -20,8 +20,36 @@
 {% endblock %}
 
 {% block grid %}
-    {% set gridClassName = config.name ~ '__item grid grid--gap' %}
+    {% set gridClassName = config.name ~ '__item grid grid--gap js-review-total-recalculator__line' %}
     {{ parent() }}
 {% endblock %}
 
 {% block separator %}{% endblock %}
+
+{% block itemName %}
+    <strong class="{{ config.name }}__item-name">{{ item.productName }}</strong>
+
+    {% for flag in item.flags %}
+        {% include molecule('status') with {
+            data: {
+                label: (data.itemFlagLabelMap[flag] ?? flag) | trans,
+                status: data.itemFlagBadgeMap[flag],
+            },
+        } only %}
+    {% endfor %}
+{% endblock %}
+
+{% block soldBy %}
+    <div class="grid grid--gap-smaller {{ config.name }}__item-meta">
+        <div class="col">
+            {% if item.sku %}
+                <small class="{{ config.name }}__item-sku">{{ 'recurring_orders.sku' | trans({'%sku%': item.sku })}}</small>
+            {% endif %}
+        </div>
+        <div class="col">{{ parent() }}</div>
+    </div>
+{% endblock %}
+
+{% block itemPriceInfo %}
+    <span class="{{ config.name }}__price">{{ currentQuantity }}x {{ unitPrice | money(true, data.currencyIsoCode) }}</small>
+{% endblock %}
