@@ -81,6 +81,4 @@ class PaymentMethodCommunicationTester extends Actor
             $paymentMethodName,
         );
     }
-
-
 }
