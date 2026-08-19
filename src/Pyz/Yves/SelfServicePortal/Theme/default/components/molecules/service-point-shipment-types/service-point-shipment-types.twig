@@ -81,7 +81,32 @@
 
 {% block datepicker %}
     {% if data.isServiceDateTimeFieldVisible %}
+        {#
+            Fixed seminar dates per seminar module (concrete SKU) and training center (service point
+            key), as specified in CC-39954. weekday follows Date.getDay(): 1 = Monday ... 4 = Thursday.
+        #}
+        {% set seminarSlots = {
+            'SRV-TR-SEM-002': {
+                sp5: { weekday: 1, from: '09:00', to: '12:00' },
+                sp6: { weekday: 2, from: '09:00', to: '12:00' },
+                sp7: { weekday: 1, from: '09:00', to: '12:00', everyOtherWeek: true },
+            },
+            'SRV-TR-SEM-001': {
+                sp5: { weekday: 1, from: '13:00', to: '17:00' },
+                sp6: { weekday: 2, from: '13:00', to: '17:00' },
+                sp7: { weekday: 1, from: '13:00', to: '17:00', everyOtherWeek: true },
+            },
+            'SRV-TR-SEM-003': {
+                sp5: { weekday: 4, from: '09:00', to: '17:00' },
+                sp6: { weekday: 3, from: '09:00', to: '17:00' },
+                sp7: { weekday: 3, from: '09:00', to: '17:00', everyOtherWeek: true },
+            },
+        } %}
+        {% set isSeminar = data.product.sku starts with 'SRV-TR-SEM' %}
+        {% set productSlots = seminarSlots[data.product.sku] | default({}) %}
+
         <div class="spacing-bottom--biggest">
+            {# `only` isolates the widget body, so everything the picker needs must travel through `embed`. #}
             {% widget 'LanguageSwitcherWidget' args [app.request.pathInfo, app.request.queryString, app.request.requestUri] with {
                 embed: {
                     input: {
@@ -92,6 +117,9 @@
                             placeholder: 'self_service_portal.service.product.service_date_time' | trans,
                         },
                     },
+                    isSeminar: isSeminar,
+                    productSlots: productSlots,
+                    ajaxProviderClass: ajaxProviderClass,
                 },
             } only %}
                 {% block body %}
@@ -105,6 +133,10 @@
                                 dateFormat: 'Y-m-d H:i',
                                 minDate: 'today',
                             } | json_encode,
+                            'fixed-service-slots': embed.isSeminar,
+                            'service-slots': embed.productSlots | json_encode,
+                            'service-point-key-selector': '[data-service-point-key-input]',
+                            'service-point-provider-class': embed.isSeminar ? embed.ajaxProviderClass : '',
                         },
                     } only %}
                 {% endblock %}
