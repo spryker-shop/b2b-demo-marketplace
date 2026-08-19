@@ -13,12 +13,12 @@
     {{ parent() }}
 {% endblock %}
 
-
 {% block additionalInfo %}
-    {% set definitionListKeyClassName = config.name ~ '__label' %}
-    {% set definitionListValueClassName = config.name ~ '__value' %}
-    
-    {% widget 'CostCenterDetailWidget' args [data.quote] with {
+    {% widget 'CostCenterDetailWidget' args [data.quote, data.withBudgetSummary] with {
+        data: {
+            definitionListKeyClassName: definitionListKeyClassName,
+            definitionListValueClassName: definitionListValueClassName,
+        },
         embed: {
             configName: config.name
         },
@@ -28,6 +28,7 @@
                 data: {
                     costCenterName: data.costCenterName,
                     budgetName: data.budgetName,
+                    budgetSummary: data.budgetSummary,
                 },
                 embed: {
                     configName: embed.configName,
@@ -40,6 +41,8 @@
 
                         {{ parent() }}
                     {% endblock %}
+
+                    {{ block('budgetSummary') }}
                 {% endblock %}
             {% endembed %}
         {% endblock %}
