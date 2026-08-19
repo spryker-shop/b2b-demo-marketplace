@@ -3,8 +3,7 @@ import ReviewQuantityControlCore from 'OrderExperienceManagement/components/mole
 export default class ReviewQuantityControl extends ReviewQuantityControlCore {
     protected init(): void {
         super.init();
-        
-        
+
         this.syncQuantityCounterState();
     }
 
