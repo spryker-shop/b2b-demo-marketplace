@@ -10,7 +10,6 @@ declare(strict_types = 1);
 namespace Pyz\Zed\Console;
 
 use Pyz\Zed\DataImport\DataImportConfig;
-use Pyz\Zed\Development\Communication\Console\AcceptanceCodeTestConsole;
 use Pyz\Zed\Development\Communication\Console\ApiCodeTestConsole;
 use Pyz\Zed\Development\Communication\Console\FunctionalCodeTestConsole;
 use Pyz\Zed\PunchoutGateway\Communication\Console\PunchoutDemoConnectionCreateConsole;
@@ -497,7 +496,6 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             $commands[] = new CodeTestConsole();
             $commands[] = new CodeStyleSnifferConsole();
             $commands[] = new CodeArchitectureSnifferConsole();
-            $commands[] = new AcceptanceCodeTestConsole();
             $commands[] = new FunctionalCodeTestConsole();
             $commands[] = new ApiCodeTestConsole();
             $commands[] = new CodeFixturesConsole();
