@@ -42,110 +42,115 @@ class SymfonySchedulerConfig extends SprykerSymfonySchedulerConfig
                 'schedule' => '* * * * *',
                 'priority' => 220,
             ],
-            'check-workflow-conditions' => [
-                'command' => $logger . '$PHP_BIN vendor/bin/console workflow:check-condition',
-                'schedule' => '* * * * *',
-                'priority' => 220,
-            ],
-            'check-workflow-timeouts' => [
-                'command' => $logger . '$PHP_BIN vendor/bin/console workflow:check-timeout',
-                'schedule' => '* * * * *',
-                'priority' => 220,
-            ],
             'check-oms-conditions' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/console oms:check-condition',
                 'schedule' => '* * * * *',
-                'priority' => 210,
+                'priority' => 250,
             ],
             'check-oms-timeouts' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/console oms:check-timeout',
+                'schedule' => '* * * * *',
+                'priority' => 250,
+            ],
+            'check-workflow-conditions' => [
+                'command' => $logger . '$PHP_BIN vendor/bin/console workflow:check-condition',
+                'schedule' => '* * * * *',
+                'priority' => 200,
+            ],
+            'check-workflow-timeouts' => [
+                'command' => $logger . '$PHP_BIN vendor/bin/console workflow:check-timeout',
                 'schedule' => '* * * * *',
                 'priority' => 200,
             ],
             'clear-oms-locks' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/console oms:clear-locks',
                 'schedule' => '0 6 * * *',
-                'priority' => 190,
+                'priority' => 200,
             ],
             'recurring-orders-check-condition' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/console state-machine:check-condition RecurringOrder',
                 'schedule' => '* * * * *',
-                'priority' => 180,
+                'priority' => 200,
             ],
             'recurring-orders-clear-locks' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/console state-machine:clear-locks',
                 'schedule' => '0 6 * * *',
-                'priority' => 170,
+                'priority' => 200,
+            ],
+            'recurring-orders-forecast-refresh' => [
+                'command' => $logger . '$PHP_BIN vendor/bin/console recurring-orders:forecast:refresh',
+                'schedule' => '0 * * * *',
+                'priority' => 200,
             ],
             'product-relation-updater' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/console product-relation:update -vvv',
                 'schedule' => '30 2 * * *',
-                'priority' => 160,
+                'priority' => 200,
             ],
             'event-trigger-timeout' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/console event:trigger:timeout',
                 'schedule' => '*/5 * * * *',
-                'priority' => 150,
+                'priority' => 200,
             ],
             'deactivate-discontinued-products' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/console product:deactivate-discontinued-products',
                 'schedule' => '0 0 * * *',
-                'priority' => 140,
+                'priority' => 200,
             ],
             'clean-expired-guest-cart' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/console cart:guest:clean-expired',
                 'schedule' => '30 1 * * *',
-                'priority' => 130,
+                'priority' => 200,
             ],
             'close-outdated-quote-requests' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/console quote-request:close-outdated',
                 'schedule' => '0 * * * *',
-                'priority' => 120,
+                'priority' => 200,
             ],
             'apply-price-product-schedule' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/console price-product:schedule:apply',
                 'schedule' => '0 6 * * *',
-                'priority' => 110,
+                'priority' => 200,
             ],
             'remove-expired-refresh-tokens' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/console oauth:refresh-token:remove-expired',
                 'schedule' => '*/5 * * * *',
-                'priority' => 90,
+                'priority' => 200,
             ],
             'delete-expired-customer-invalidated' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/console customer:delete-expired-invalidated',
                 'schedule' => '0 0 * * 0',
-                'priority' => 80,
+                'priority' => 200,
             ],
             'order-invoice-send' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/console order:invoice:send',
                 'schedule' => '*/5 * * * *',
-                'priority' => 70,
+                'priority' => 200,
             ],
             'glue-api-generate-documentation' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/glue api:generate:documentation --invalidated-after-interval 90sec',
                 'schedule' => '* * * * *',
-                'priority' => 50,
+                'priority' => 200,
             ],
             'sync-order-matrix' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/console order-matrix:sync',
                 'schedule' => '* * * * *',
-                'priority' => 40,
+                'priority' => 200,
             ],
             'generate-sitemap-files' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/console sitemap:generate',
                 'schedule' => '0 0 * * *',
-                'priority' => 30,
+                'priority' => 200,
             ],
             'data-import-merchant-import' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/console data-import-merchant:import',
                 'schedule' => '* * * * *',
-                'priority' => 20,
+                'priority' => 200,
             ],
             'import-job-run' => [
                 'command' => $logger . '$PHP_BIN vendor/bin/console import:job:run',
                 'schedule' => '* * * * *',
-                'priority' => 10,
+                'priority' => 200,
             ],
         ];
 
@@ -154,7 +159,7 @@ class SymfonySchedulerConfig extends SprykerSymfonySchedulerConfig
             $jobs['message-broker-consume-channels'] = [
                 'command' => $logger . '$PHP_BIN vendor/bin/console message-broker:consume --time-limit=15 --sleep=5',
                 'schedule' => '* * * * *',
-                'priority' => 25,
+                'priority' => 200,
             ];
         }
 
