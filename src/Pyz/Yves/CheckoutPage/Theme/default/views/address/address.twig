@@ -90,7 +90,7 @@
             {% set billingSameAsShippingContainerClassName = embed.jsAddressClass ~ '__billing-same-as-shipping-container' %}
 
             {% set hasShipmentTypes = data.form.shipmentType is defined %}
-            {% set defaultShipmentTypes = ['delivery','in-center-service'] %}
+            {% set defaultShipmentTypes = ['delivery','in-center-service','on-site-service'] %}
             {% set currentShipmentType = data.form.shipmentType.key.vars.value | default(defaultShipmentTypes[0]) %}
             {% set isDefaultShipmentType = currentShipmentType in defaultShipmentTypes %}
             {% set shipmentTypeHiddenClassName = hasShipmentTypes and not isDefaultShipmentType ? hiddenClassName %}
