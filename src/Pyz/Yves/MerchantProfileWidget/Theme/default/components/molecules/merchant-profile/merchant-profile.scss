@@ -1,6 +1,19 @@
 @mixin merchant-profile-widget-merchant-profile($name: '.merchant-profile') {
     #{$name} {
-        margin-bottom: var(--scale-64);
+        &__grid {
+            margin-bottom: var(--scale-64);
+
+            @include helper-breakpoint(lg) {
+                display: grid;
+                column-gap: #{$setting-grid-space * 2};
+                grid-template-columns: 1fr 32%;
+                grid-template-rows: max-content max-content 1fr;
+                grid-template-areas:
+                    'hero sidebar'
+                    'info sidebar'
+                    'cms sidebar';
+            }
+        }
 
         &__hero-image {
             width: 100%;
@@ -8,6 +21,8 @@
             object-fit: cover;
             object-position: 50% 50%;
             border-radius: var(--radius-md);
+            grid-area: hero;
+            margin-bottom: var(--scale-24);
         }
 
         &__info-text {
@@ -17,7 +32,7 @@
         }
 
         &__details {
-            @include typography(body-sm);
+            @include typography(body-md);
             background: var(--background-page);
             border: 1px solid var(--border-subtle);
             border-radius: var(--radius-lg);
@@ -31,7 +46,7 @@
             }
 
             h5 {
-                @include typography(label-sm);
+                @include typography(label-md);
             }
         }
 
@@ -59,11 +74,25 @@
             padding: var(--scale-12) var(--scale-24) var(--scale-24);
         }
 
+        &__sidebar {
+            grid-area: sidebar;
+            margin-bottom: var(--scale-48);
+        }
+
+        &__cms-data {
+            grid-area: cms;
+        }
+
         &__merchant-info {
             display: flex;
             align-items: flex-start;
             gap: var(--scale-20);
-            margin: var(--scale-24) 0 var(--scale-48);
+            margin-bottom: var(--scale-24);
+            grid-area: info;
+
+            @include helper-breakpoint(lg) {
+                margin-bottom: var(--scale-48);
+            }
         }
 
         &__merchant-actions {

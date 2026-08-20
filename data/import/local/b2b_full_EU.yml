@@ -29,6 +29,8 @@ actions:
     source: data/import/b2b_common/AT/store_context.csv
   - data_entity: customer
     source: data/import/b2b_common/common/customer.csv
+  - data_entity: workflow
+    source: data/import/b2b_common/common/workflow.csv
   - data_entity: glossary
     source: data/import/b2b_common/common/glossary.csv
   - data_entity: tax
@@ -176,7 +178,7 @@ actions:
   - data_entity: product-alternative
     source: data/import/b2b_common/common/product_alternative.csv
   - data_entity: product-quantity
-    source: data/import/b2b_common/common/product_quantity.csv
+    source: data/import/common/common/product_quantity.csv
   # Store relation
   - data_entity: discount-store
     source: data/import/b2b_common/DE/discount_store.csv
@@ -200,15 +202,15 @@ actions:
   - data_entity: cms-block
     source: data/import/b2b_common/common/cms_block.csv
   - data_entity: content-banner
-    source: data/import/b2b_common/common/content_banner.csv
+    source: data/import/common/common/content_banner.csv
   - data_entity: content-navigation
     source: data/import/b2b_common/common/content_navigation.csv
   - data_entity: content-product-abstract-list
-    source: data/import/b2b_common/common/content_product_abstract_list.csv
+    source: data/import/common/common/content_product_abstract_list.csv
   - data_entity: content-product-set
     source: data/import/b2b_common/common/content_product_set.csv
   - data_entity: cms-page
-    source: data/import/b2b_common/common/cms_page.csv
+    source: data/import/common/common/cms_page.csv
   - data_entity: cms-slot-template
     source: data/import/b2b_common/common/cms_slot_template.csv
   - data_entity: cms-slot

@@ -6,14 +6,72 @@
 {% endblock %}
 
 {% block table %}
+    {% set oneTimeFlag = 'one_time' %}
+    {% set priceModeNet = 'NET_MODE' %}
+
     {% for item in data.schedule.items %}
+        {% set itemQuantity = item.nextDeliveryQuantity ?? item.quantity %}
+        {% set isOneTimeRemoval = item.nextDeliveryQuantity is not null and item.nextDeliveryQuantity == 0 %}
+        {% set unitPrice = data.schedule.priceMode == priceModeNet ? item.referenceNetPrice : item.referenceGrossPrice %}
+
         <div class="{{ config.name }}__items">
             <div class="{{ config.name }}__main-info">
-                <strong class="{{ config.name }}__item-name">{{ item.productName }}</strong>
-                <span class="{{ config.name }}__item-sku">({{ item.sku }})</span>
+                <strong class="{{ config.name }}__item-name">{{ item.productName ?: item.sku }}</strong>
+
+                {% if item.configurableBundleName %}
+                    <span class="{{ config.name }}__item-bundle">
+                        {{- 'recurring_orders.item.configurable_bundle_label' | trans({'%name%': item.configurableBundleName | trans | e}) -}}
+                    </span>
+                {% endif %}
+
+                {% if item.flags | length %}
+                    <span class="{{ config.name }}__item-flags">
+                        {% for flag in item.flags %}
+                            {% set flagLabel = isOneTimeRemoval and flag == oneTimeFlag
+                                ? 'recurring_orders.detail.order_items.not_in_next_order_label'
+                                : (data.itemFlagLabelMap[flag] ?? flag) %}
+
+                            <span class="status status--{{ data.itemFlagBadgeMap[flag] ?? '' }}">{{ flagLabel | trans }}</span>
+                        {% endfor %}
+                    </span>
+                {% endif %}
+
+                <div class="grid grid--gap-smaller {{ config.name }}__item-meta">
+                    <div class="col">
+                        {% if item.productName %}
+                            <span class="{{ config.name }}__item-sku">{{ 'recurring_orders.sku' | trans({'%sku%': item.sku })}}</span>
+                        {% endif %}
+                    </div>
+                    <div class="col">
+                        {% widget 'SoldByMerchantWidget' args [item] only %}{% endwidget %}
+                    </div>
+                </div>
             </div>
-            <div class="{{ config.name }}__item-quantity">{{ item.quantity }} x {{ item.referenceGrossPrice | money(true, data.schedule.currencyIsoCode) }}</div>
-            <div class="{{ config.name }}__item-total">{{ item.itemTotal | money(true, data.schedule.currencyIsoCode) }}</div>
+            <div class="{{ config.name }}__item-quantity">
+                {% if isOneTimeRemoval %}
+                    <small class="{{ config.name }}__item-recurring-quantity" {{ qa('recurring-order-detail-item-quantity') }}>
+                        {{- 'recurring_orders.detail.order_items.recurring_quantity_label' | trans({'%quantity%': item.quantity}) -}}
+                    </small>
+                {% else %}
+                    <span {{ qa('recurring-order-detail-item-quantity') }}>{{ itemQuantity }}</span>
+                    x {{ unitPrice | money(true, data.schedule.currencyIsoCode) }}
+
+                    {% if item.nextDeliveryQuantity is not null and item.quantity > 0 %}
+                        <small class="{{ config.name }}__item-recurring-quantity">
+                            {{- 'recurring_orders.detail.order_items.recurring_quantity_label' | trans({'%quantity%': item.quantity}) -}}
+                        </small>
+                    {% endif %}
+                {% endif %}
+            </div>
+            <div class="{{ config.name }}__item-total">
+                {% if isOneTimeRemoval %}
+                    <small class="{{ config.name }}__item-recurring-total">
+                        {{- (item.quantity * unitPrice) | money(true, data.schedule.currencyIsoCode) -}}
+                    </small>
+                {% else %}
+                    {{ item.itemTotal | money(true, data.schedule.currencyIsoCode) }}
+                {% endif %}
+            </div>
         </div>
     {% else %}
         <p>{{ 'recurring_orders.detail.order_items.empty' | trans }}</p>

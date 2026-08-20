@@ -15,6 +15,7 @@ use Spryker\Zed\MerchantProductApprovalDataImport\MerchantProductApprovalDataImp
 use Spryker\Zed\ProductApprovalDataImport\ProductApprovalDataImportConfig;
 use Spryker\Zed\ProductOfferShoppingListDataImport\ProductOfferShoppingListDataImportConfig;
 use Spryker\Zed\StockAddressDataImport\StockAddressDataImportConfig;
+use Spryker\Zed\Workflow\WorkflowConfig;
 use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 
 /**
@@ -238,6 +239,11 @@ class DataImportConfig extends SprykerDataImportConfig
     public const IMPORT_TYPE_SALES_ORDER = 'sales-order';
 
     /**
+     * @var string
+     */
+    public const IMPORT_TYPE_RECURRING_SCHEDULE = 'recurring-schedule';
+
+    /**
      * @var int
      */
     protected const READ_COLLECTION_BATCH_SIZE = 500;
@@ -266,7 +272,9 @@ class DataImportConfig extends SprykerDataImportConfig
             SelfServicePortalConfig::IMPORT_TYPE_PRODUCT_SHIPMENT_TYPE,
             ProductOfferShoppingListDataImportConfig::IMPORT_TYPE_PRODUCT_OFFER_SHOPPING_LIST_ITEM,
             ConfigurationConfig::IMPORT_TYPE_CONFIGURATION_VALUE,
+            WorkflowConfig::IMPORT_TYPE_WORKFLOW, #WorkflowFeature
             static::IMPORT_TYPE_SALES_ORDER,
+            static::IMPORT_TYPE_RECURRING_SCHEDULE,
             SelfServicePortalConfig::IMPORT_TYPE_SSP_MODEL,
             SelfServicePortalConfig::IMPORT_TYPE_SSP_ASSET,
             SelfServicePortalConfig::IMPORT_TYPE_FILE_ATTACHMENT,

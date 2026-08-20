@@ -7,25 +7,6 @@
             z-index: $setting-zi-search-suggestions + 2;
         }
 
-        #{$name}__input {
-            padding: rem(15) rem(36) rem(15) rem(18);
-            font-size: rem(15);
-            font-weight: fw(regular);
-            border: rem(1) solid var(--input-border-default);
-            border-radius: var(--radius-md);
-
-            &--active {
-                border-radius: $setting-border-radius $setting-border-radius 0 0;
-            }
-
-            &:focus,
-            &:focus-visible {
-                box-shadow: none;
-                outline: none;
-                border-color: var(--text-primary);
-            }
-        }
-
         &__suggestion {
             margin: 0;
             position: absolute;
