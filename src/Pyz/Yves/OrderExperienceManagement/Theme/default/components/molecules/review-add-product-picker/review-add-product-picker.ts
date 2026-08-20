@@ -14,7 +14,7 @@ export default class ReviewAddProductPicker extends ReviewAddProductPickerCore {
             this.clearSelection();
         }
     }
-    
+
     protected reset(): void {
         super.reset();
 
@@ -22,9 +22,7 @@ export default class ReviewAddProductPicker extends ReviewAddProductPickerCore {
             `.${ReviewAddProductPicker.AUTOCOMPLETE_TEXT_INPUT_CLASS}`,
         );
 
-        console.log(this.querySelector<HTMLInputElement>(
-            `.${ReviewAddProductPicker.AUTOCOMPLETE_TEXT_INPUT_CLASS}`,
-        ))
+        console.log(this.querySelector<HTMLInputElement>(`.${ReviewAddProductPicker.AUTOCOMPLETE_TEXT_INPUT_CLASS}`));
 
         if (searchTextInput) {
             searchTextInput.value = '';
