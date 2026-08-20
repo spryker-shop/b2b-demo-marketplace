@@ -16,9 +16,6 @@
 {% endblock %}
 
 {% block selectedLocation %}
-    {# Exposes the chosen service point to the service date picker, which is rendered outside this ajax block. #}
-    <input type="hidden" data-service-point-key-input value="{{ data.servicePoint ? data.servicePoint.key : '' }}">
-
     <div class="{{ config.jsName }}__location-container {{ config.name }}__location-container {% if not data.servicePoint %}{{ attributes['toggle-class-name'] }}{% endif %}">
         <strong>{{ 'service_point_widget.location_label' | trans }}</strong>
         <span class="{{ config.jsName }}__location">{{ block('address') }}</span>
