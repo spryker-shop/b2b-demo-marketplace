@@ -44,6 +44,7 @@ use Spryker\Shared\StorageDatabase\StorageDatabaseConstants;
 use Spryker\Shared\StorageRedis\StorageRedisConstants;
 use Spryker\Shared\SymfonyMailer\SymfonyMailerConstants;
 use Spryker\Shared\SymfonyMessenger\SymfonyMessengerConstants;
+use Spryker\Shared\SymfonyScheduler\SymfonySchedulerConstants;
 use Spryker\Shared\Testify\TestifyConstants;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
 use Spryker\Zed\OauthDummy\OauthDummyConfig;
@@ -145,6 +146,13 @@ $config[StorageRedisConstants::STORAGE_REDIS_HOST] = '127.0.0.1';
 $config[StorageRedisConstants::STORAGE_REDIS_PORT] = 6379;
 $config[StorageRedisConstants::STORAGE_REDIS_PASSWORD] = false;
 $config[StorageRedisConstants::STORAGE_REDIS_DATABASE] = 3;
+
+$config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_REDIS_PERSISTENT_CONNECTION] = true;
+$config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_REDIS_SCHEME] = 'tcp';
+$config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_REDIS_HOST] = getenv('STORAGE_REDIS_HOST') ?: '127.0.0.1';
+$config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_REDIS_PORT] = 6379;
+$config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_REDIS_PASSWORD] = false;
+$config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_REDIS_DATABASE] = 3;
 
 $config[StorageDatabaseConstants::DB_DEBUG] = false;
 $config[StorageDatabaseConstants::DB_DATABASE] = 'DE_test_zed';

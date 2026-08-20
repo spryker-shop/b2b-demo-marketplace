@@ -14,6 +14,20 @@ use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConfig as SprykerSe
 class SelfServicePortalConfig extends SprykerSelfServicePortalConfig
 {
     /**
+     * @uses \Spryker\Shared\ShipmentType\ShipmentTypeConfig::SHIPMENT_TYPE_DELIVERY
+     *
+     * @var string
+     */
+    public const SHIPMENT_TYPE_DELIVERY = 'delivery';
+
+    /**
+     * @var array<string>
+     */
+    public const RECURRING_ORDER_SERVICE_SHIPMENT_TYPE_KEYS = [
+        self::SHIPMENT_TYPE_DELIVERY,
+    ];
+
+    /**
      * @return array<string, string>
      */
     public function getInquiryInitialStateMachineMap(): array
