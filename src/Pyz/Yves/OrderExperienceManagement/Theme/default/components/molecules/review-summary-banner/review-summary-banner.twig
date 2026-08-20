@@ -6,6 +6,17 @@
     {{ parent() }}
 {% endblock %}
 
-{% block newValue %}
-    <strong class="spacing-left--bigger" data-qa="recurring-order-review-footer-total">{{ data.review.updatedTotal | money(true, data.currencyIsoCode) }}</strong>
+{% block dataChange %}
+    <div class="grid grid--middle grid--gap-smaller">
+        <div class="col {{ config.name }}__old-price">
+            {% block oldValue %}
+                {{ parent() }}
+            {% endblock %}
+        </div>
+        <div class="col {{ config.name }}__new-price">
+            {% block newValue %}
+                {{ parent() }}
+            {% endblock %}
+        </div>
+    </div>
 {% endblock %}
