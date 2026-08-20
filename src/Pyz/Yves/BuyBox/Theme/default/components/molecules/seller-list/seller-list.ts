@@ -17,9 +17,7 @@ export default class SellerList extends Component {
      * Submitting that combination is rejected as unavailable, so realign the input on every mount.
      */
     protected syncCartFormOfferInput(): void {
-        const checkedRadio = <HTMLInputElement>(
-            this.querySelector(`input[name="${SellerList.INLINE_GROUP}"]:checked`)
-        );
+        const checkedRadio = <HTMLInputElement>this.querySelector(`input[name="${SellerList.INLINE_GROUP}"]:checked`);
 
         if (checkedRadio) {
             this.updateCartFormOfferInput(checkedRadio.value);
