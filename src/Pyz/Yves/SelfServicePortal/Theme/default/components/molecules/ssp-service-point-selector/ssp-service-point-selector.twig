@@ -1,8 +1,8 @@
 {% extends molecule('ssp-service-point-selector', '@SprykerFeature:SelfServicePortal') %}
 
 {% block noLocation %}
-    {# Technical seminars are booked in a training center, not in a service shop (CC-39954). #}
-    {% set selectLocationKey = data.product.sku starts with 'SRV-TR-SEM'
+    {# Services carrying the `seminar` product class are booked in a training center, not a service shop. #}
+    {% set selectLocationKey = 'seminar' in (data.product.productClassNames | default([]))
         ? 'self_service_portal.service.product.select_training_center'
         : 'service_point_widget.select_location_action' %}
 
