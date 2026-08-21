@@ -10,16 +10,15 @@ declare(strict_types = 1);
 namespace Pyz\Client\SymfonyMessenger;
 
 use Spryker\Client\SymfonyMessenger\SymfonyMessengerDependencyProvider as SprykerSymfonyMessengerDependencyProvider;
-use Spryker\Zed\SymfonyScheduler\Communication\Plugin\SymfonyMessenger\CompiledCronTransportGroupAwarePlugin;
-use Spryker\Zed\SymfonyScheduler\Communication\Plugin\SymfonyMessenger\SchedulerAvailableTransportProviderPlugin;
-use Spryker\Zed\SymfonyScheduler\Communication\Plugin\SymfonyMessenger\SchedulerMessageMappingProviderPlugin;
-use Spryker\Zed\SymfonyScheduler\Communication\Plugin\SymfonyMessenger\SchedulerTransportFactoryProviderPlugin;
+use Spryker\Client\SymfonyScheduler\Plugin\SymfonyMessenger\CompiledCronTransportGroupAwarePlugin;
+use Spryker\Client\SymfonyScheduler\Plugin\SymfonyMessenger\DisabledSchedulerJobTransportGuardPlugin;
+use Spryker\Client\SymfonyScheduler\Plugin\SymfonyMessenger\SchedulerAvailableTransportConfigProviderPlugin;
+use Spryker\Client\SymfonyScheduler\Plugin\SymfonyMessenger\SchedulerMessageMappingProviderPlugin;
+use Spryker\Client\SymfonyScheduler\Plugin\SymfonyMessenger\SchedulerTransportFactoryProviderPlugin;
 
 class SymfonyMessengerDependencyProvider extends SprykerSymfonyMessengerDependencyProvider
 {
     /**
-     * @SuppressWarnings(LayerAccessRule) Must not be used as a code example.
-     *
      * @return array<\Spryker\Shared\SymfonyMessengerExtension\Dependency\Plugin\TransportFactoryProviderPluginInterface>
      */
     protected function getTransportFactoryProviderPlugins(): array
@@ -30,20 +29,16 @@ class SymfonyMessengerDependencyProvider extends SprykerSymfonyMessengerDependen
     }
 
     /**
-     * @SuppressWarnings(LayerAccessRule) Must not be used as a code example.
-     *
-     * @return array<\Spryker\Shared\SymfonyMessengerExtension\Dependency\Plugin\AvailableTransportProviderPluginInterface>
+     * @return array<\Spryker\Shared\SymfonyMessengerExtension\Dependency\Plugin\AvailableTransportConfigProviderPluginInterface>
      */
-    protected function getAvailableTransportProviderPlugins(): array
+    protected function getAvailableTransportConfigProviderPlugins(): array
     {
         return [
-            new SchedulerAvailableTransportProviderPlugin(),
+            new SchedulerAvailableTransportConfigProviderPlugin(),
         ];
     }
 
     /**
-     * @SuppressWarnings(LayerAccessRule) Must not be used as a code example.
-     *
      * @return array<\Spryker\Shared\SymfonyMessengerExtension\Dependency\Plugin\MessageMappingProviderPluginInterface>
      */
     protected function getMessageMappingProviderPlugins(): array
@@ -53,15 +48,20 @@ class SymfonyMessengerDependencyProvider extends SprykerSymfonyMessengerDependen
         ];
     }
 
-    /**
-     * @SuppressWarnings(LayerAccessRule) Must not be used as a code example.
-     *
-     * @return array<\Spryker\Zed\SymfonyScheduler\Communication\Plugin\SymfonyMessenger\CompiledCronTransportGroupAwarePlugin>
-     */
     protected function getGroupAwareTransportsPlugins(): array
     {
         return [
             new CompiledCronTransportGroupAwarePlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Shared\SymfonyMessengerExtension\Dependency\Plugin\TransportConsumeGuardPluginInterface>
+     */
+    protected function getTransportConsumeGuardPlugins(): array
+    {
+        return [
+            new DisabledSchedulerJobTransportGuardPlugin(),
         ];
     }
 }

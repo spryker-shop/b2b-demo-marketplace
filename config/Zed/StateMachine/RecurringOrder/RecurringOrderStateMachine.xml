@@ -74,9 +74,15 @@
                 <event>validate</event>
             </transition>
 
-            <transition>
+            <transition condition="RecurringOrders/IsPlacementDue">
                 <source>review_required</source>
                 <target>confirmed</target>
+                <event>confirm</event>
+            </transition>
+
+            <transition>
+                <source>review_required</source>
+                <target>active</target>
                 <event>confirm</event>
             </transition>
 
