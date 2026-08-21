@@ -57,24 +57,15 @@ suites:
                 - \PyzTest\Shared\Store\Helper\StoreDependencyHelper
                 - \PyzTest\Zed\MessageBroker\Helper\MessageBrokerHelper
 
-    PaymentPresentation:
-        path: MessageHandlers/Payment/Presentation
-        actor: PaymentPresentationTester
+    PaymentCommunication:
+        path: MessageHandlers/Payment/Communication
+        actor: PaymentCommunicationTester
         modules:
             enabled:
                 - Asserts
                 - \PyzTest\Shared\Testify\Helper\Environment
-                - \SprykerTest\Shared\Application\Helper\ZedHelper
-                - \SprykerTest\Shared\Testify\Helper\BrowserHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper:
                       projectNamespaces: ['Pyz']
-                - WebDriver:
-                      url: ''
-                      browser: chrome
-                      window_size: 1920x1080
-                      host: 0.0.0.0
-                      restart: false
-                      log_js_errors: false
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
                 - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
@@ -85,35 +76,31 @@ suites:
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
                 - \PyzTest\Zed\MessageBroker\Helper\MessageBrokerHelper
 
-    PaymentMethodPresentation:
-        path: MessageHandlers/PaymentMethod/Presentation
-        actor: PaymentMethodPresentationTester
+
+    PaymentMethodCommunication:
+        path: MessageHandlers/PaymentMethod/Communication
+        actor: PaymentMethodCommunicationTester
         modules:
             enabled:
                 - Asserts
                 - \PyzTest\Shared\Testify\Helper\Environment
-                - \SprykerTest\Shared\Application\Helper\ZedHelper
+                - \SprykerTest\Shared\Config\Helper\ConfigInit
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper:
                       projectNamespaces: ['Pyz']
-                - \SprykerTest\Shared\Propel\Helper\PropelInstallHelper
-                - WebDriver:
-                      url: ''
-                      browser: chrome
-                      window_size: 1920x1080
-                      host: 0.0.0.0
-                      restart: false
-                      log_js_errors: true
-                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
-                - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
-                - \SprykerTest\Shared\Payment\Helper\PaymentDataHelper
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
                 - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
+                - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Zed\MessageBroker\Helper\InMemoryMessageBrokerHelper
                 - \SprykerTest\Zed\MessageBroker\Helper\MessageBrokerHelper
-                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Payment\Helper\PaymentDataHelper
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
-                - \PyzTest\Shared\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
+                - \PyzTest\Zed\MessageBroker\Helper\MessageBrokerHelper
+
 
     ProductReviewCommunication:
         path: MessageHandlers/ProductReview/Communication
