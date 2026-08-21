@@ -27,10 +27,6 @@ class PriceProductOfferMapper extends SprykerPriceProductOfferMapper
     protected const PROPERTY_PATH_VALUES_INDEX_PRICE_PRODUCT_INDEX = 4;
 
     /**
-     * Offer-level violations (for example an unassigned currency) are reported at `[priceProductOffers][0]`, without the
-     * price index the parent implementation reads from the property path. Those are shown as row errors instead of
-     * letting the property path analyzer fail on a missing path segment.
-     *
      * @param \Generated\Shared\Transfer\ValidationErrorTransfer $validationErrorTransfer
      * @param \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfer
      * @param array<mixed> $initialData
