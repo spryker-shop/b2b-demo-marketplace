@@ -14146,12 +14146,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/purchasing-control.git",
-                "reference": "04abff11baaec8193d988a0caef58b21090a5f08"
+                "reference": "cdef08c19a6048340fef94b4d48937efe4fd3e73"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/purchasing-control/zipball/04abff11baaec8193d988a0caef58b21090a5f08",
-                "reference": "04abff11baaec8193d988a0caef58b21090a5f08",
+                "url": "https://api.github.com/repos/spryker-feature/purchasing-control/zipball/cdef08c19a6048340fef94b4d48937efe4fd3e73",
+                "reference": "cdef08c19a6048340fef94b4d48937efe4fd3e73",
                 "shasum": ""
             },
             "require": {
@@ -14177,6 +14177,8 @@
                 "spryker/quote": "^2.0.0",
                 "spryker/quote-approval": "^1.5.0",
                 "spryker/quote-extension": "^1.0.0",
+                "spryker/quote-request": "^2.8.0",
+                "spryker/quote-request-agent": "^2.3.0",
                 "spryker/sales": "^11.83.0",
                 "spryker/sales-extension": "^1.15.0",
                 "spryker/store": "^1.35.0",
@@ -14202,6 +14204,8 @@
                 "spryker-feature/order-experience-management": "Enables cost center selection in recurring order approve and schedule edit forms, and blocks recurring order checkout for budgets that require approval. Install this feature to use the plugins under `Yves/PurchasingControl/Plugin/OrderExperienceManagement` and `Zed/PurchasingControl/Communication/Plugin/OrderExperienceManagement`.",
                 "spryker-shop/company-page": "Use this module if you want to display company information on the storefront.",
                 "spryker-shop/customer-page": "Use this module if you want to display customer information on the storefront.",
+                "spryker-shop/quote-request-agent-page": "Add the module if you want to use QuoteRequestAgentCostCenterSelectorWidget on the agent quote request details and edit pages: ^3.7.0",
+                "spryker-shop/quote-request-page": "Add the module if you want to use QuoteRequestCostCenterSelectorWidget on the quote request details and edit pages: ^3.8.0",
                 "spryker/oms": "Use OMS to manage order states and processes.",
                 "spryker/router": "Use Router when the storefront needs to be able to route to the purchasing control module."
             },
@@ -14226,7 +14230,7 @@
             "support": {
                 "source": "https://github.com/spryker-feature/purchasing-control/tree/master"
             },
-            "time": "2026-08-11T06:46:27+00:00"
+            "time": "2026-08-20T07:14:46+00:00"
         },
         {
             "name": "spryker-feature/quick-add-to-cart",
@@ -22174,16 +22178,16 @@
         },
         {
             "name": "spryker-shop/quote-request-agent-page",
-            "version": "3.6.0",
+            "version": "3.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-shop/quote-request-agent-page.git",
-                "reference": "df8365e858357d3c868e59c78e75ef9bd3932c2f"
+                "reference": "089050c41281645235d4c5ecc4aa5c2e3795d84f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-shop/quote-request-agent-page/zipball/df8365e858357d3c868e59c78e75ef9bd3932c2f",
-                "reference": "df8365e858357d3c868e59c78e75ef9bd3932c2f",
+                "url": "https://api.github.com/repos/spryker-shop/quote-request-agent-page/zipball/089050c41281645235d4c5ecc4aa5c2e3795d84f",
+                "reference": "089050c41281645235d4c5ecc4aa5c2e3795d84f",
                 "shasum": ""
             },
             "require": {
@@ -22222,6 +22226,7 @@
                 "spryker/testify": "*"
             },
             "suggest": {
+                "spryker-feature/purchasing-control": "Add the module if you want to display the cost center and budget selector on the agent quote request details and edit pages.",
                 "spryker-shop/agent-page": "If you want to use agent layout templates: ^1.2.0",
                 "spryker-shop/cart-page": "If you use shipment or shipment price customization during quote request: ^3.16.0",
                 "spryker-shop/company-user-agent-widget": "If you want to use company user auto-complete form: ^1.0.0",
@@ -22249,9 +22254,9 @@
             ],
             "description": "QuoteRequestAgentPage module",
             "support": {
-                "source": "https://github.com/spryker-shop/quote-request-agent-page/tree/3.6.0"
+                "source": "https://github.com/spryker-shop/quote-request-agent-page/tree/3.7.0"
             },
-            "time": "2026-08-04T08:22:01+00:00"
+            "time": "2026-08-20T07:14:46+00:00"
         },
         {
             "name": "spryker-shop/quote-request-agent-page-extension",
@@ -22360,16 +22365,16 @@
         },
         {
             "name": "spryker-shop/quote-request-page",
-            "version": "3.7.0",
+            "version": "3.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-shop/quote-request-page.git",
-                "reference": "c557bddf1a0a2433c8935da3270b45a9b1dcace9"
+                "reference": "1e1259ccc7fb1cd775c5d878ac42e1c92c187696"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-shop/quote-request-page/zipball/c557bddf1a0a2433c8935da3270b45a9b1dcace9",
-                "reference": "c557bddf1a0a2433c8935da3270b45a9b1dcace9",
+                "url": "https://api.github.com/repos/spryker-shop/quote-request-page/zipball/1e1259ccc7fb1cd775c5d878ac42e1c92c187696",
+                "reference": "1e1259ccc7fb1cd775c5d878ac42e1c92c187696",
                 "shasum": ""
             },
             "require": {
@@ -22402,6 +22407,7 @@
                 "spryker/testify": "*"
             },
             "suggest": {
+                "spryker-feature/purchasing-control": "Add the module if you want to display the cost center and budget selector on the quote request details and edit pages.",
                 "spryker-shop/cart-page": "If you use shipment or shipment price customization during quote request: ^3.16.0",
                 "spryker-shop/checkout-page": "If you use shipment selection for quote requests or want to customize checkout steps during quote request: ^3.12.0",
                 "spryker-shop/configurable-bundle-widget": "If you want to use configurable bundle widget functionality",
@@ -22430,9 +22436,9 @@
             ],
             "description": "QuoteRequestPage module",
             "support": {
-                "source": "https://github.com/spryker-shop/quote-request-page/tree/3.7.0"
+                "source": "https://github.com/spryker-shop/quote-request-page/tree/3.8.0"
             },
-            "time": "2026-08-04T08:22:01+00:00"
+            "time": "2026-08-20T07:14:46+00:00"
         },
         {
             "name": "spryker-shop/quote-request-page-extension",
