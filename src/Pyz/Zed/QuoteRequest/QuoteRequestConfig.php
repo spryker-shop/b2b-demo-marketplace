@@ -35,6 +35,8 @@ class QuoteRequestConfig extends SprykerQuoteRequestConfig
             QuoteTransfer::BILLING_ADDRESS,
             QuoteTransfer::SHIPMENT,
             QuoteTransfer::SHIPPING_ADDRESS,
+            QuoteTransfer::ID_COST_CENTER,
+            QuoteTransfer::ID_BUDGET,
         ]);
     }
 }
