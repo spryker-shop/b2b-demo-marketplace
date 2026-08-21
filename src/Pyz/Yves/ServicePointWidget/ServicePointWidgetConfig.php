@@ -15,6 +15,11 @@ use SprykerShop\Yves\ServicePointWidget\ServicePointWidgetConfig as SprykerServi
 class ServicePointWidgetConfig extends SprykerServicePointWidgetConfig
 {
     /**
+     * @var string
+     */
+    protected const SHIPMENT_TYPE_ON_SITE_SERVICE = 'on-site-service';
+
+    /**
      * @return list<string>
      */
     public function getNotApplicableServicePointAddressStepFormItemPropertiesForHydration(): array
@@ -32,6 +37,7 @@ class ServicePointWidgetConfig extends SprykerServicePointWidgetConfig
     {
         return [
             static::SHIPMENT_TYPE_DELIVERY,
+            static::SHIPMENT_TYPE_ON_SITE_SERVICE,
         ];
     }
 }
