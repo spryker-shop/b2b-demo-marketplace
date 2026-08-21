@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ec069d7757ef0f3c2e58a7b97dde6996",
+    "content-hash": "2595c703772054ff6234ae76735d239a",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -14576,16 +14576,16 @@
         },
         {
             "name": "spryker-feature/self-service-portal",
-            "version": "20.13.3",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/self-service-portal.git",
-                "reference": "3a92225f36551c9e53a3e404cfcf45106d0c04db"
+                "reference": "40ddebb67cf96d215e3b3fb88a9d0436b2d21cce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/self-service-portal/zipball/3a92225f36551c9e53a3e404cfcf45106d0c04db",
-                "reference": "3a92225f36551c9e53a3e404cfcf45106d0c04db",
+                "url": "https://api.github.com/repos/spryker-feature/self-service-portal/zipball/40ddebb67cf96d215e3b3fb88a9d0436b2d21cce",
+                "reference": "40ddebb67cf96d215e3b3fb88a9d0436b2d21cce",
                 "shasum": ""
             },
             "require": {
@@ -14708,6 +14708,7 @@
                 "spryker/ramsey-uuid": "*",
                 "spryker/sales-payment": "*",
                 "spryker/search": "*",
+                "spryker/search-elasticsearch": "*",
                 "spryker/shipment": "*",
                 "spryker/testify": "*"
             },
@@ -14718,6 +14719,7 @@
                 "spryker/catalog": "If you want to use the product class catalog feature, you need to install this module.",
                 "spryker/container": "Add this module when you want to use the Container."
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -14736,9 +14738,9 @@
             ],
             "description": "SelfServicePortal module",
             "support": {
-                "source": "https://github.com/spryker-feature/self-service-portal/tree/20.13.3"
+                "source": "https://github.com/spryker-feature/self-service-portal/tree/master"
             },
-            "time": "2026-08-20T12:14:22+00:00"
+            "time": "2026-08-21T09:09:12+00:00"
         },
         {
             "name": "spryker-feature/service-points",
@@ -93288,6 +93290,12 @@
             "alias_normalized": "202606.0"
         },
         {
+            "package": "spryker-feature/self-service-portal",
+            "version": "9999999-dev",
+            "alias": "202606.0",
+            "alias_normalized": "202606.0"
+        },
+        {
             "package": "spryker-feature/spryker-core",
             "version": "9999999-dev",
             "alias": "202606.0",
@@ -93303,6 +93311,7 @@
         "spryker-feature/product-approval-process": 20,
         "spryker-feature/product-experience-management": 20,
         "spryker-feature/purchasing-control": 20,
+        "spryker-feature/self-service-portal": 20,
         "spryker-feature/spryker-core": 20,
         "spryker/cypress-tests": 20,
         "spryker/robotframework-suite-tests": 20
