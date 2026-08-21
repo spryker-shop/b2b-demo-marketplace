@@ -75,7 +75,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends SprykerProductOf
     /**
      * @param int|null $idProductOffer
      *
-     * @return \Symfony\Component\Form\DataTransformerInterface
+     * @return \Symfony\Component\Form\DataTransformerInterface<\ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>, string>
      */
     public function createPriceProductOfferTransformer(?int $idProductOffer = null): DataTransformerInterface
     {
