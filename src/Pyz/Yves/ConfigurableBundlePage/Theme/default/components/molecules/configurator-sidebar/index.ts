@@ -1,1 +1,0 @@
-import './configurator-sidebar.scss';
