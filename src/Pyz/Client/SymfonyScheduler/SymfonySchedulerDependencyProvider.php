@@ -7,10 +7,10 @@
 
 declare(strict_types = 1);
 
-namespace Pyz\Zed\SymfonyScheduler;
+namespace Pyz\Client\SymfonyScheduler;
 
-use Spryker\Zed\SymfonyScheduler\Communication\Plugin\SymfonyScheduler\CompiledCronTransportsHandlerProviderPlugin;
-use Spryker\Zed\SymfonyScheduler\SymfonySchedulerDependencyProvider as SprykerSymfonySchedulerDependencyProvider;
+use Spryker\Client\SymfonyScheduler\Plugin\SymfonyScheduler\CompiledCronTransportsHandlerProviderPlugin;
+use Spryker\Client\SymfonyScheduler\SymfonySchedulerDependencyProvider as SprykerSymfonySchedulerDependencyProvider;
 
 class SymfonySchedulerDependencyProvider extends SprykerSymfonySchedulerDependencyProvider
 {

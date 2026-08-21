@@ -28,6 +28,7 @@ use Spryker\Zed\Customer\Communication\Plugin\Sales\CustomerOrderHydratePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\Sales\DiscountOrderHydratePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\Sales\DiscountSalesOrderItemCollectionPreDeletePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\Sales\SalesDiscountSalesExpensePreDeletePlugin;
+use Spryker\Zed\MerchantOms\Communication\Plugin\Sales\MerchantStateOrderItemExpanderPlugin;
 use Spryker\Zed\MerchantOmsGui\Communication\Plugin\Sales\MerchantOmsStateOrderItemsTableExpanderPlugin;
 use Spryker\Zed\MerchantProfile\Communication\Plugin\Sales\MerchantDataOrderHydratePlugin;
 use Spryker\Zed\MerchantSalesOrder\Communication\Plugin\Sales\MerchantOrderDataOrderExpanderPlugin;
@@ -293,6 +294,7 @@ class SalesDependencyProvider extends SprykerSalesDependencyProvider
             new ShipmentTypeOrderItemExpanderPlugin(),
             new SspServiceCancellableOrderItemExpanderPlugin(),
             new SspAssetOrderItemExpanderPlugin(),
+            new MerchantStateOrderItemExpanderPlugin(),
         ];
     }
 

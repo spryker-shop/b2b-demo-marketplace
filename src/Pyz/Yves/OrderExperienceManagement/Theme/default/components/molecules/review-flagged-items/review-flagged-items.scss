@@ -1,12 +1,24 @@
 @mixin order-experience-management-review-flagged-items($name: '.review-flagged-items') {
     #{$name} {
-        font-size: var(--font-size-12);
+        @include typography(body-md);
 
         &__title {
-            font-size: var(--font-size-12);
+            @include typography(label-md);
             margin: 0 0 var(--scale-12);
+        }
+
+        &__item-name {
             font-weight: normal;
-            line-height: 1.14;
+        }
+
+        &__item-meta {
+            @include typography(body-md);
+            margin-top: var(--scale-2);
+        }
+
+        .sold-by-merchant {
+            @include typography(body-md);
+            color: inherit;
         }
 
         &__box {
@@ -17,18 +29,10 @@
 
         &__item {
             padding: var(--scale-12) var(--scale-16);
-
-            &:not(:last-child) {
-                border-bottom: rem(1) solid var(--border-subtle);
-            }
         }
 
-        &__item-name {
-            font-weight: var(--font-weight-semibold);
-        }
-
-        small {
-            font-size: var(--font-size-12);
+        &__price-info {
+            @include typography(body-md);
         }
 
         @content;
