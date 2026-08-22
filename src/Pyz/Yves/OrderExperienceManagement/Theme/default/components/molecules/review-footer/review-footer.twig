@@ -2,16 +2,12 @@
 
 {% block extraClass %}{% endblock %}
 
-{% block actions %}
-    <div class="col grid grid--gap-smaller">
-        {% block backButton %}
-            {% set backButtonClassName = 'button button--hollow' %}
-            {{ parent() }}
-        {% endblock %}
+{% block backButton %}
+    {% set backButtonClassName = config.name ~ '__button button button--hollow' %}
+    {{ parent() }}
+{% endblock %}
 
-        {% block acceptButton %}
-            {% set acceptButtonClassName = 'button' %}
-            {{ parent() }}
-        {% endblock %}
-    </div>
+{% block acceptButton %}
+    {% set acceptButtonClassName = config.name ~ '__button button' %}
+    {{ parent() }}
 {% endblock %}
