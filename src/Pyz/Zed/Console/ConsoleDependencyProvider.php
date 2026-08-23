@@ -13,7 +13,6 @@ use Pyz\Zed\DataImport\DataImportConfig;
 use Pyz\Zed\Development\Communication\Console\AcceptanceCodeTestConsole;
 use Pyz\Zed\Development\Communication\Console\ApiCodeTestConsole;
 use Pyz\Zed\Development\Communication\Console\FunctionalCodeTestConsole;
-use Demo\Zed\McpCommerce\Communication\Console\McpCommerceFeatureFlagConsole;
 use Pyz\Zed\PunchoutGateway\Communication\Console\PunchoutDemoConnectionCreateConsole;
 use Pyz\Zed\SetupFrontend\Communication\Console\StorybookBuildFrontendConsole;
 use Pyz\Zed\WaterTreatmentConfiguratorPageExample\Communication\Console\WaterTreatmentProductConfiguratorBuildFrontendConsole;
@@ -492,10 +491,6 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
 
         $propelCommands = $container->getLocator()->propel()->facade()->getConsoleCommands();
         $commands = array_merge($commands, $propelCommands);
-
-        // Always available: provisioning scripts, demo runbooks and automated tests need to be
-        // able to toggle the MCP Commerce Server, which ships fail-closed.
-        $commands[] = new McpCommerceFeatureFlagConsole();
 
         if ($this->getConfig()->isDevelopmentConsoleCommandsEnabled()) {
             $commands[] = new EventListenerDumpConsole();
