@@ -2,6 +2,7 @@ import { defineConfig } from 'cypress'
 import * as fs from 'fs'
 import { createHash, randomBytes } from 'crypto'
 import { execFileSync } from 'child_process'
+import { join, resolve } from 'path'
 import { config as dotenvConfig } from 'dotenv'
 
 interface ResolvedStore {
@@ -109,9 +110,15 @@ export default defineConfig({
             `redis-cli -h key_value_store -n 1 -x SET ${storageKey} < /tmp/mcp-kv.json`,
           ].join(' && ')
 
+          // Resolved absolutely from the config's own cwd (the cypress-boilerplate directory), so it
+          // does not depend on where the Cypress process happens to be invoked from. PROJECT_LOCATION
+          // is a *Cypress* env var, not a process one, so reading it from process.env yielded
+          // undefined and the relative fallback resolved differently on CI than locally.
+          const repoRoot = resolve(process.cwd(), '..', '..')
+
           try {
-            execFileSync('docker/sdk', ['cli', script], {
-              cwd: process.env.PROJECT_LOCATION ?? '../..',
+            execFileSync(join(repoRoot, 'docker', 'sdk'), ['cli', script], {
+              cwd: repoRoot,
               stdio: 'pipe',
               timeout: 180000,
             })
