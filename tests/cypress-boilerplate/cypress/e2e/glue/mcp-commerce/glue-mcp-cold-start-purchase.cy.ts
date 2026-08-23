@@ -30,13 +30,19 @@ describe('MCP Commerce Server - cold-start purchase journey', (): void => {
       McpCommerceColdStartStaticFixtures
     >())
 
-    // The MCP feature flag is enabled by this spec's dynamic fixture
-    // (fixtures/glue/mcp-commerce/dynamic-glue-mcp-cold-start-purchase.json), which runs
-    // `console mcp-commerce:feature-flag enable` server-side through the Testify dynamic-fixtures
-    // endpoint. The feature ships fail-closed, so without that a fresh environment 404s every MCP
-    // endpoint and step 1 below would see 404 where it expects 401. Arranging it through the fixture
-    // channel — the same one every other spec uses — avoids depending on the runner's shell, cwd or
-    // PATH, which is what broke earlier attempts.
+    // This spec's dynamic fixture
+    // (fixtures/glue/mcp-commerce/dynamic-glue-mcp-cold-start-purchase.json) arranges two
+    // preconditions server-side, through the same channel every other spec here uses:
+    //
+    //  1. `console mcp-commerce:feature-flag enable` — the feature ships fail-closed, so a fresh
+    //     environment 404s every MCP endpoint and step 1 below would see 404 where it expects 401.
+    //  2. `haveCustomerAddress` — the checkout tool deliberately refuses to accept a delivery address
+    //     from the caller (an AI client must not be able to redirect someone's order), so it requires
+    //     one saved on the account. A freshly seeded environment has none.
+    //
+    // Both go through the fixture rather than the runner's shell: `docker/sdk` cannot run in this CI
+    // job at all (it exits non-zero without an SSH agent / COMPOSER_AUTH), which is what broke the
+    // earlier attempts.
   })
 
   it('Positive | Completes the whole chain with no pre-existing credentials', (): void => {
