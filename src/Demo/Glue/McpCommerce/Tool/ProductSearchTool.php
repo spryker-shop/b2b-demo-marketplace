@@ -210,10 +210,20 @@ class ProductSearchTool extends AbstractTool
                 continue;
             }
 
+            $price = $abstractProduct[static::PRODUCT_KEY_PRICE] ?? null;
+
+            // A result without a price is not actionable: the assistant cannot present it, and
+            // offering it would invite an add-to-cart the customer cannot complete. Search indexes
+            // can legitimately carry such entries (a freshly seeded environment indexes the catalog
+            // before prices land), so they are omitted rather than surfaced as `price: null`.
+            if ($price === null) {
+                continue;
+            }
+
             $products[] = [
                 static::RESULT_KEY_SKU => (string)($abstractProduct[static::PRODUCT_KEY_ABSTRACT_SKU] ?? ''),
                 static::RESULT_KEY_NAME => (string)($abstractProduct[static::PRODUCT_KEY_ABSTRACT_NAME] ?? ''),
-                static::RESULT_KEY_PRICE => $abstractProduct[static::PRODUCT_KEY_PRICE] ?? null,
+                static::RESULT_KEY_PRICE => $price,
                 static::RESULT_KEY_ADD_TO_CART_SKU => (string)($abstractProduct[static::PRODUCT_KEY_ADD_TO_CART_SKU] ?? ''),
             ];
         }

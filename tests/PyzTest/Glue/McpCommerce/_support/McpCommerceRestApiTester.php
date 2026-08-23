@@ -731,6 +731,58 @@ class McpCommerceRestApiTester extends ApiEndToEndTester
      *
      * @return int
      */
+
+    /**
+     * Guarantees the customer has a delivery address, creating one through the storefront API when
+     * they have none. A freshly seeded environment (CI) ships customers without addresses, so a
+     * checkout test that merely assumes demo data has one fails with
+     * "shippingAddress.address1: This value should not be blank" — a precondition the test must
+     * arrange itself rather than inherit from whatever state the database happens to be in.
+     *
+     * @return void
+     */
+    public function haveCustomerDeliveryAddress(string $customerEmail): void
+    {
+        $shopAccessToken = $this->haveShopAccessToken($customerEmail);
+        $customerReference = $customerEmail === static::OTHER_CUSTOMER_EMAIL
+            ? static::OTHER_CUSTOMER_REFERENCE
+            : static::CUSTOMER_REFERENCE;
+        $addressesPath = sprintf('/customers/%s/addresses', rawurlencode($customerReference));
+
+        $this->haveHttpHeader(static::HEADER_AUTHORIZATION, 'Bearer ' . $shopAccessToken);
+        $this->sendGet($addressesPath);
+
+        $payload = $this->grabResponseJson();
+        $existingAddresses = is_array($payload['data'] ?? null) ? $payload['data'] : [];
+
+        if ($existingAddresses !== []) {
+            $this->unsetHttpHeader(static::HEADER_AUTHORIZATION);
+
+            return;
+        }
+
+        $this->haveHttpHeader(static::HEADER_CONTENT_TYPE, static::CONTENT_TYPE_JSON);
+        $this->sendPost($addressesPath, [
+            'data' => [
+                'type' => 'addresses',
+                'attributes' => [
+                    'salutation' => 'Ms',
+                    'firstName' => 'Mcp',
+                    'lastName' => 'Tester',
+                    'address1' => 'Julie-Wolfthorn-Strasse',
+                    'address2' => '1',
+                    'zipCode' => '10115',
+                    'city' => 'Berlin',
+                    'iso2Code' => 'DE',
+                    'isDefaultShipping' => true,
+                    'isDefaultBilling' => true,
+                ],
+            ],
+        ]);
+
+        $this->unsetHttpHeader(static::HEADER_AUTHORIZATION);
+    }
+
     public function getCartItemCount(string $cartUuid, string $customerEmail): int
     {
         $shopAccessToken = $this->haveShopAccessToken($customerEmail);

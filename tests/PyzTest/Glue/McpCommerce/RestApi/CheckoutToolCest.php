@@ -42,6 +42,7 @@ class CheckoutToolCest
     public function _before(McpCommerceRestApiTester $I): void
     {
         $I->setFeatureFlag(true);
+        $I->haveCustomerDeliveryAddress(McpCommerceRestApiTester::CUSTOMER_EMAIL);
     }
 
     /**

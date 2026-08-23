@@ -182,6 +182,25 @@ class CheckoutTool extends AbstractTool
      */
     protected const ERROR_MESSAGE_NO_ORDER_REFERENCE = 'The order was not confirmed by the shop.';
 
+    /**
+     * @var string
+     */
+    protected const ERROR_MESSAGE_NO_DELIVERABLE_ADDRESS = 'The customer has no saved delivery address, '
+        . 'so the order cannot be placed. Add an address to the customer account in the shop first.';
+
+    /**
+     * The fields the shipping-address validator requires. An address missing any of them is rejected
+     * at checkout, so it is treated as unusable rather than sent and allowed to fail.
+     *
+     * @var array<string>
+     */
+    protected const REQUIRED_ADDRESS_ATTRIBUTES = [
+        self::ATTRIBUTE_ADDRESS1,
+        self::ATTRIBUTE_ZIP_CODE,
+        self::ATTRIBUTE_CITY,
+        self::ATTRIBUTE_ISO2_CODE,
+    ];
+
     public function __construct(
         StorefrontSubRequestInvokerInterface $storefrontSubRequestInvoker,
         protected readonly McpCommerceConfig $mcpCommerceConfig,
@@ -263,7 +282,11 @@ class CheckoutTool extends AbstractTool
             return ToolResult::createError($this->extractErrorMessage($cartResult));
         }
 
-        $address = $this->resolveAddress($customerReference, $customerAttributes, $identityClaims);
+        $address = $this->resolveAddress($customerReference, $identityClaims);
+
+        if ($address === []) {
+            return ToolResult::createError(static::ERROR_MESSAGE_NO_DELIVERABLE_ADDRESS);
+        }
 
         $storefrontSubRequestResult = $this->storefrontSubRequestInvoker->invoke(
             static::PATH_CHECKOUT,
@@ -310,30 +333,46 @@ class CheckoutTool extends AbstractTool
     }
 
     /**
-     * Prefers the customer's first stored address and falls back to their profile name, so checkout
-     * never depends on address data supplied by the assistant.
+     * Returns the customer's first stored, deliverable address, or an empty array when they have
+     * none. Checkout never uses address data supplied by the assistant.
      *
-     * @param array<string, mixed> $customerAttributes
      * @param array<string, mixed> $identityClaims
      *
      * @return array<string, mixed>
      */
     protected function resolveAddress(
         string $customerReference,
-        array $customerAttributes,
         array $identityClaims,
     ): array {
         $storedAddress = $this->findFirstStoredAddress($customerReference, $identityClaims);
 
-        if ($storedAddress !== []) {
+        if ($this->isDeliverableAddress($storedAddress)) {
             return $storedAddress;
         }
 
-        return [
-            static::ATTRIBUTE_SALUTATION => (string)($customerAttributes[static::ATTRIBUTE_SALUTATION] ?? ''),
-            static::ATTRIBUTE_FIRST_NAME => (string)($customerAttributes[static::ATTRIBUTE_FIRST_NAME] ?? ''),
-            static::ATTRIBUTE_LAST_NAME => (string)($customerAttributes[static::ATTRIBUTE_LAST_NAME] ?? ''),
-        ];
+        // Deliberately NOT falling back to a name-only address: checkout would be rejected with
+        // "shippingAddress.address1: This value should not be blank", which reaches the assistant as
+        // an opaque validation dump. An empty array signals the caller to return an actionable tool
+        // error instead. Inventing address lines is never acceptable — this is a real order.
+        return [];
+    }
+
+    /**
+     * An address is only usable for checkout when it carries the fields the shipping validator
+     * requires. A partial address (a name with no street or postcode) fails validation downstream,
+     * so it is treated as absent.
+     *
+     * @param array<string, mixed> $address
+     */
+    protected function isDeliverableAddress(array $address): bool
+    {
+        foreach (static::REQUIRED_ADDRESS_ATTRIBUTES as $requiredAddressAttribute) {
+            if (trim((string)($address[$requiredAddressAttribute] ?? '')) === '') {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
