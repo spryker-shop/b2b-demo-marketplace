@@ -31,6 +31,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * @method \Demo\Zed\McpCommerce\Business\McpCommerceFacadeInterface getFacade()
  * @method \Demo\Zed\McpCommerce\McpCommerceConfig getConfig()
+ * @method \Demo\Zed\McpCommerce\Communication\McpCommerceCommunicationFactory getFactory()
+ * @method \Demo\Zed\McpCommerce\Persistence\McpCommerceRepositoryInterface getRepository()
  */
 class McpCommerceFeatureFlagConsole extends Console
 {
