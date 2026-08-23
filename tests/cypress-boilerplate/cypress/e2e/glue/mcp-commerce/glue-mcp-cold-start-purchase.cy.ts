@@ -29,6 +29,20 @@ describe('MCP Commerce Server - cold-start purchase journey', (): void => {
       unknown,
       McpCommerceColdStartStaticFixtures
     >())
+
+    // The feature ships fail-closed, so a freshly built environment has the flag OFF and every MCP
+    // endpoint 404s. The spec arranges its own precondition instead of assuming someone left it
+    // enabled: without this, step 1 below sees 404 where it expects 401.
+    //
+    // Done in a Node task rather than `cy.exec`: the value lives in the key-value entry the Glue read
+    // path resolves, no console command sets a Configuration Management value, and writing MySQL
+    // alone would not work because this environment runs no publish worker to propagate it.
+    cy.task('enableMcpCommerceServer').then((exitCode): void => {
+      expect(
+        exitCode,
+        'the MCP feature flag must be enabled before the journey runs'
+      ).to.eq(0)
+    })
   })
 
   it('Positive | Completes the whole chain with no pre-existing credentials', (): void => {
