@@ -28,6 +28,20 @@ use PyzTest\Glue\McpCommerce\McpCommerceRestApiTester;
 class CartToolsCest
 {
     /**
+     * The feature ships fail-closed, so a fresh environment (CI included) has the flag OFF and every
+     * MCP endpoint 404s. Enabling it here makes each spec self-sufficient instead of depending on
+     * ambient state a developer happened to leave enabled.
+     *
+     * @param \PyzTest\Glue\McpCommerce\McpCommerceRestApiTester $I
+     *
+     * @return void
+     */
+    public function _before(McpCommerceRestApiTester $I): void
+    {
+        $I->setFeatureFlag(true);
+    }
+
+    /**
      * US6-AC1: an item is added at the requested quantity and the tool reports the cart identifier,
      * the single line and the cart total.
      *

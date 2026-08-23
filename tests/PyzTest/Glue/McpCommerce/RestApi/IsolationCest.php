@@ -31,6 +31,20 @@ use PyzTest\Glue\McpCommerce\McpCommerceRestApiTester;
 class IsolationCest
 {
     /**
+     * The feature ships fail-closed, so a fresh environment (CI included) has the flag OFF and every
+     * MCP endpoint 404s. Enabling it here makes each spec self-sufficient instead of depending on
+     * ambient state a developer happened to leave enabled.
+     *
+     * @param \PyzTest\Glue\McpCommerce\McpCommerceRestApiTester $I
+     *
+     * @return void
+     */
+    public function _before(McpCommerceRestApiTester $I): void
+    {
+        $I->setFeatureFlag(true);
+    }
+
+    /**
      * US6-AC4 / mandatory scenario 7: Customer A's MCP token can neither see nor modify Customer B's
      * cart.
      *

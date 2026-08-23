@@ -30,6 +30,20 @@ use PyzTest\Glue\McpCommerce\McpCommerceRestApiTester;
 class RegistrationCest
 {
     /**
+     * The feature ships fail-closed, so a fresh environment (CI included) has the flag OFF and every
+     * MCP endpoint 404s. Enabling it here makes each spec self-sufficient instead of depending on
+     * ambient state a developer happened to leave enabled.
+     *
+     * @param \PyzTest\Glue\McpCommerce\McpCommerceRestApiTester $I
+     *
+     * @return void
+     */
+    public function _before(McpCommerceRestApiTester $I): void
+    {
+        $I->setFeatureFlag(true);
+    }
+
+    /**
      * US2-AC1: a client registers itself and is issued a unique identifier, declared as a public
      * client (no secret) that must use PKCE with S256.
      *

@@ -30,6 +30,20 @@ use PyzTest\Glue\McpCommerce\McpCommerceRestApiTester;
 class TokenCest
 {
     /**
+     * The feature ships fail-closed, so a fresh environment (CI included) has the flag OFF and every
+     * MCP endpoint 404s. Enabling it here makes each spec self-sufficient instead of depending on
+     * ambient state a developer happened to leave enabled.
+     *
+     * @param \PyzTest\Glue\McpCommerce\McpCommerceRestApiTester $I
+     *
+     * @return void
+     */
+    public function _before(McpCommerceRestApiTester $I): void
+    {
+        $I->setFeatureFlag(true);
+    }
+
+    /**
      * US3-AC2 / mandatory scenario 9: the exchange returns an opaque MCP token, and neither the shop
      * access token nor a refresh token appears anywhere in the response.
      *
