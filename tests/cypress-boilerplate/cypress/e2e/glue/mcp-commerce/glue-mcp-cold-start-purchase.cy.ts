@@ -30,19 +30,13 @@ describe('MCP Commerce Server - cold-start purchase journey', (): void => {
       McpCommerceColdStartStaticFixtures
     >())
 
-    // The feature ships fail-closed, so a freshly built environment has the flag OFF and every MCP
-    // endpoint 404s. The spec arranges its own precondition instead of assuming someone left it
-    // enabled: without this, step 1 below sees 404 where it expects 401.
-    //
-    // Done in a Node task rather than `cy.exec`: the value lives in the key-value entry the Glue read
-    // path resolves, no console command sets a Configuration Management value, and writing MySQL
-    // alone would not work because this environment runs no publish worker to propagate it.
-    cy.task('enableMcpCommerceServer').then((exitCode): void => {
-      expect(
-        exitCode,
-        'the MCP feature flag must be enabled before the journey runs'
-      ).to.eq(0)
-    })
+    // The MCP feature flag is enabled by this spec's dynamic fixture
+    // (fixtures/glue/mcp-commerce/dynamic-glue-mcp-cold-start-purchase.json), which runs
+    // `console mcp-commerce:feature-flag enable` server-side through the Testify dynamic-fixtures
+    // endpoint. The feature ships fail-closed, so without that a fresh environment 404s every MCP
+    // endpoint and step 1 below would see 404 where it expects 401. Arranging it through the fixture
+    // channel — the same one every other spec uses — avoids depending on the runner's shell, cwd or
+    // PATH, which is what broke earlier attempts.
   })
 
   it('Positive | Completes the whole chain with no pre-existing credentials', (): void => {

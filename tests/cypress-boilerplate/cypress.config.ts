@@ -1,8 +1,6 @@
 import { defineConfig } from 'cypress'
 import * as fs from 'fs'
 import { createHash, randomBytes } from 'crypto'
-import { execFileSync } from 'child_process'
-import { join, resolve } from 'path'
 import { config as dotenvConfig } from 'dotenv'
 
 interface ResolvedStore {
@@ -91,54 +89,6 @@ export default defineConfig({
         // dynamic/static fixture files (cy.fixture would fail the spec on a missing file)
         isFileExists: (filePath: string): boolean => {
           return fs.existsSync(filePath)
-        },
-        // Enables the MCP Commerce Server feature flag, which ships fail-closed and is therefore OFF
-        // on a freshly built environment. The value is written into the key-value entry the Glue read
-        // path resolves: no console command sets a Configuration Management value, and writing MySQL
-        // alone would not propagate without a publish worker.
-        //
-        // Uses execFileSync with an argument array (no shell string) so nothing has to survive two
-        // layers of quoting. Returns the exit code; the spec asserts it is 0 rather than letting a
-        // silent failure surface later as a confusing 404.
-        enableMcpCommerceServer: (): number => {
-          const settingKey = 'mcp_commerce:server:general:is_enabled'
-          const storageKey = 'kv:configuration:global'
-          const script = [
-            `raw=$(redis-cli -h key_value_store -n 1 --raw GET ${storageKey})`,
-            `printf '%s' "$raw" > /tmp/mcp-kv.json`,
-            `python3 -c "import json;p='/tmp/mcp-kv.json';d=json.load(open(p));d['${settingKey}']='true';open(p,'w').write(json.dumps(d,separators=(',',':')))"`,
-            `redis-cli -h key_value_store -n 1 -x SET ${storageKey} < /tmp/mcp-kv.json`,
-          ].join(' && ')
-
-          // Resolved absolutely from the config's own cwd (the cypress-boilerplate directory), so it
-          // does not depend on where the Cypress process happens to be invoked from. PROJECT_LOCATION
-          // is a *Cypress* env var, not a process one, so reading it from process.env yielded
-          // undefined and the relative fallback resolved differently on CI than locally.
-          const repoRoot = resolve(process.cwd(), '..', '..')
-
-          try {
-            execFileSync(join(repoRoot, 'docker', 'sdk'), ['cli', script], {
-              cwd: repoRoot,
-              stdio: 'pipe',
-              timeout: 180000,
-            })
-
-            return 0
-          } catch (error) {
-            const failure = error as {
-              status?: number
-              stderr?: Buffer
-              stdout?: Buffer
-            }
-            console.error(
-              'enableMcpCommerceServer failed:',
-              failure.stderr?.toString() ??
-                failure.stdout?.toString() ??
-                String(error)
-            )
-
-            return failure.status ?? 1
-          }
         },
         // PKCE S256 needs a real SHA-256. `window.crypto.subtle` is unavailable in the spec because
         // the app is served over plain HTTP and Web Crypto requires a secure context, so the pair is

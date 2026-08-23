@@ -1,0 +1,15 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "cli-command",
+          "name": "vendor/bin/console mcp-commerce:feature-flag enable",
+          "key": "mcpFeatureFlag"
+        }
+      ]
+    }
+  }
+}

@@ -9,6 +9,8 @@ declare(strict_types = 1);
 
 namespace Demo\Zed\McpCommerce\Communication;
 
+use Demo\Zed\McpCommerce\McpCommerceDependencyProvider;
+use Spryker\Zed\Configuration\Business\ConfigurationFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -19,4 +21,8 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class McpCommerceCommunicationFactory extends AbstractCommunicationFactory
 {
+    public function getConfigurationFacade(): ConfigurationFacadeInterface
+    {
+        return $this->getProvidedDependency(McpCommerceDependencyProvider::FACADE_CONFIGURATION);
+    }
 }
