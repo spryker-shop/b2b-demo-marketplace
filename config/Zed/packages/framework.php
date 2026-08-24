@@ -10,9 +10,10 @@ declare(strict_types = 1);
 /**
  * @see config/README.md for more information about this configuration.
  */
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Config\FrameworkConfig;
 
-return static function (FrameworkConfig $framework): void {
+return static function (FrameworkConfig $framework, ContainerConfigurator $container, string $env): void {
     $framework->secret('spryker-zed-secret');
 
     $framework->assets([
@@ -20,4 +21,5 @@ return static function (FrameworkConfig $framework): void {
         ]);
 
     $framework->test('%kernel.environment%' === 'dockerdev');
+    $container->parameters()->set('.container.dumper.inline_factories', $env !== 'dockerdev');
 };
