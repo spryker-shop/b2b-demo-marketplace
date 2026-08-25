@@ -529,6 +529,10 @@ class CalculationWithCalculableObjectFacadeTest extends Unit
 
     /**
      * @dataProvider getTaxInitTestData
+     *
+     * @param array<int, array<int, mixed>> $items
+     * @param array<int, float|int> $expense
+     * @param array<int, int> $results
      */
     public function testCalculationTotalQuoteValues(string $priceMode, array $items, array $expense, array $results): void
     {
