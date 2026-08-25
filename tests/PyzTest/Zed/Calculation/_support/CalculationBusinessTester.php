@@ -76,13 +76,6 @@ class CalculationBusinessTester extends Actor
      */
     protected const FALLBACK_COUNTRY_ISO2_CODE = 'DE';
 
-    /**
-     * @param int $discountAmount
-     * @param string $calculatorType
-     * @param string $sku
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
-     */
     public function createDiscounts(int $discountAmount, string $calculatorType, string $sku = '*'): SpyDiscountVoucher
     {
         $discountVoucherPoolEntity = new SpyDiscountVoucherPool();
@@ -128,14 +121,6 @@ class CalculationBusinessTester extends Actor
         return $discountVoucherEntity;
     }
 
-    /**
-     * @param int $price
-     * @param string $priceMode
-     * @param float $taxRate
-     * @param int $quantity
-     *
-     * @return \Generated\Shared\Transfer\ExpenseTransfer
-     */
     public function createExpenseTransfer(int $price, string $priceMode, float $taxRate, int $quantity): ExpenseTransfer
     {
         $expenseTransfer = new ExpenseTransfer();
@@ -153,11 +138,6 @@ class CalculationBusinessTester extends Actor
         return $expenseTransfer;
     }
 
-    /**
-     * @param array $calculatorPlugins
-     *
-     * @return \Spryker\Zed\Calculation\Business\CalculationFacade
-     */
     public function createCalculationFacade(array $calculatorPlugins = []): CalculationFacade
     {
         if (!$calculatorPlugins) {
@@ -182,9 +162,6 @@ class CalculationBusinessTester extends Actor
         return $calculationFacade;
     }
 
-    /**
-     * @return void
-     */
     public function resetCurrentDiscounts(): void
     {
         $discounts = SpyDiscountQuery::create()->find();
@@ -198,9 +175,6 @@ class CalculationBusinessTester extends Actor
 
     /**
      * @param array<\Generated\Shared\Transfer\ItemTransfer> $items
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function recalculateCanceledAmount(array $items, QuoteTransfer $quoteTransfer): QuoteTransfer
     {
@@ -224,12 +198,6 @@ class CalculationBusinessTester extends Actor
         return $calculationFacade->recalculateQuote($quoteTransfer);
     }
 
-    /**
-     * @param int $discountAmount
-     * @param string $sku
-     *
-     * @return \Generated\Shared\Transfer\DiscountTransfer
-     */
     public function createDiscountTransfer(int $discountAmount, string $sku): DiscountTransfer
     {
         $voucherEntity = $this->createDiscounts($discountAmount, DiscountDependencyProvider::PLUGIN_CALCULATOR_FIXED, $sku);
@@ -238,17 +206,11 @@ class CalculationBusinessTester extends Actor
             ->setVoucherCode($voucherEntity->getCode());
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
     public function getCurrentStoreTransfer(): StoreTransfer
     {
         return $this->getLocator()->store()->facade()->getCurrentStore();
     }
 
-    /**
-     * @return string
-     */
     public function getCurrentStoreCountryIso2Code(): string
     {
         $countryIso2Codes = $this->getCurrentStoreTransfer()->getCountries();
@@ -256,23 +218,12 @@ class CalculationBusinessTester extends Actor
         return current($countryIso2Codes) ?: static::FALLBACK_COUNTRY_ISO2_CODE;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\CurrencyTransfer
-     */
     public function createCurrencyTransfer(): CurrencyTransfer
     {
         return (new CurrencyTransfer())
             ->setCode('EUR');
     }
 
-    /**
-     * @param int $price
-     * @param string $priceMode
-     * @param float $taxRate
-     * @param int $quantity
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
     public function createItemTransfer(int $price, string $priceMode, float $taxRate, int $quantity): ItemTransfer
     {
         $abstractProductEntity = $this->createAbstractProductWithTaxSet($taxRate);
@@ -295,14 +246,6 @@ class CalculationBusinessTester extends Actor
         return $itemTransfer;
     }
 
-    /**
-     * @param int $price
-     * @param string $priceMode
-     * @param float $taxRate
-     * @param int $quantity
-     *
-     * @return \Generated\Shared\Transfer\ProductOptionTransfer
-     */
     public function createProductOptionTransfer(int $price, string $priceMode, float $taxRate, int $quantity): ProductOptionTransfer
     {
         $productOptionValueEntity = $this->createProductOptionValue($taxRate);
@@ -323,11 +266,6 @@ class CalculationBusinessTester extends Actor
         return $productOptionTransfer;
     }
 
-    /**
-     * @param float $taxRate
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
-     */
     public function createAbstractProductWithTaxSet(float $taxRate): SpyProductAbstract
     {
         $countryEntity = SpyCountryQuery::create()->findOneByIso2Code($this->getCurrentStoreCountryIso2Code());
@@ -345,9 +283,6 @@ class CalculationBusinessTester extends Actor
         return $this->createAbstractProduct($taxSetEntity);
     }
 
-    /**
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
-     */
     public function createAbstractProductWithTaxExemption(): SpyProductAbstract
     {
         $taxRateEntity = new SpyTaxRate();
@@ -362,27 +297,16 @@ class CalculationBusinessTester extends Actor
         return $this->createAbstractProduct($taxSetEntity);
     }
 
-    /**
-     * @return int
-     */
     protected function getIncrementNumber(): int
     {
         return ++$this->incrementNumber;
     }
 
-    /**
-     * @return \Orm\Zed\Currency\Persistence\SpyCurrency
-     */
     protected function getCurrency(): SpyCurrency
     {
         return SpyCurrencyQuery::create()->findOneByCode('EUR');
     }
 
-    /**
-     * @param float $taxRate
-     *
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue
-     */
     protected function createProductOptionValue(float $taxRate): SpyProductOptionValue
     {
         $countryEntity = SpyCountryQuery::create()->findOneByIso2Code($this->getCurrentStoreCountryIso2Code());
@@ -410,9 +334,6 @@ class CalculationBusinessTester extends Actor
         return $productOptionValueEntity;
     }
 
-    /**
-     * @return \Orm\Zed\Tax\Persistence\SpyTaxSet
-     */
     protected function createTaxSet(): SpyTaxSet
     {
         $taxSetEntity = new SpyTaxSet();
@@ -422,12 +343,6 @@ class CalculationBusinessTester extends Actor
         return $taxSetEntity;
     }
 
-    /**
-     * @param \Orm\Zed\Tax\Persistence\SpyTaxSet $taxSetEntity
-     * @param \Orm\Zed\Tax\Persistence\SpyTaxRate $taxRateEntity
-     *
-     * @return void
-     */
     protected function createTaxSetTax(SpyTaxSet $taxSetEntity, SpyTaxRate $taxRateEntity): void
     {
         $taxSetTaxRateEntity = new SpyTaxSetTax();
@@ -437,11 +352,6 @@ class CalculationBusinessTester extends Actor
         $taxSetTaxRateEntity->save();
     }
 
-    /**
-     * @param \Orm\Zed\Tax\Persistence\SpyTaxSet $taxSetEntity
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
-     */
     protected function createAbstractProduct(SpyTaxSet $taxSetEntity): SpyProductAbstract
     {
         $abstractProductEntity = new SpyProductAbstract();
@@ -453,11 +363,6 @@ class CalculationBusinessTester extends Actor
         return $abstractProductEntity;
     }
 
-    /**
-     * @param array $items
-     *
-     * @return bool
-     */
     protected function isCanceledAmount(array $items): bool
     {
         foreach ($items as $item) {
@@ -469,9 +374,6 @@ class CalculationBusinessTester extends Actor
         return false;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\AddressTransfer
-     */
     public function getCurrentShippingAddress(): AddressTransfer
     {
         return (new AddressTransfer())->setIso2Code($this->getCurrentStoreCountryIso2Code());

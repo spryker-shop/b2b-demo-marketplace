@@ -42,10 +42,6 @@ class VertexTaxIdValidationRestApiCest
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\Vertex\VertexApiTester $I
-     *
-     * @return void
      */
     public function requestPostTaxIdValidationWithoutAuthorization(VertexApiTester $I): void
     {
@@ -76,10 +72,6 @@ class VertexTaxIdValidationRestApiCest
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\Vertex\VertexApiTester $I
-     *
-     * @return void
      */
     public function requestPostTaxIdValidationWhenVertexIsDisabledReturnsBadRequest(VertexApiTester $I): void
     {
@@ -120,10 +112,6 @@ class VertexTaxIdValidationRestApiCest
      * validation path (422 "Invalid request data.").
      *
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\Vertex\VertexApiTester $I
-     *
-     * @return void
      */
     public function requestPostTaxIdValidationWithoutTaxIdReturnsError(VertexApiTester $I): void
     {
@@ -157,10 +145,6 @@ class VertexTaxIdValidationRestApiCest
      * validation path (422 "Invalid request data.").
      *
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\Vertex\VertexApiTester $I
-     *
-     * @return void
      */
     public function requestPostTaxIdValidationWithoutCountryCodeReturnsError(VertexApiTester $I): void
     {

@@ -39,9 +39,6 @@ class CalculationWithCalculableObjectFacadeTest extends Unit
      */
     protected $tester;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -49,9 +46,6 @@ class CalculationWithCalculableObjectFacadeTest extends Unit
         $this->tester->resetCurrentDiscounts();
     }
 
-    /**
-     * @return void
-     */
     public function testCalculatorStackWithGrossPriceMode(): void
     {
         $calculationFacade = $this->tester->createCalculationFacade();
@@ -110,9 +104,6 @@ class CalculationWithCalculableObjectFacadeTest extends Unit
         $this->assertSame(56, $totalsTransfer->getTaxTotal()->getAmount());
     }
 
-    /**
-     * @return void
-     */
     public function testCalculatorStackWithGrossPriceModeAfterDiscounts(): void
     {
         $calculationFacade = $this->tester->createCalculationFacade();
@@ -175,9 +166,6 @@ class CalculationWithCalculableObjectFacadeTest extends Unit
         $this->assertSame(53, $totalsTransfer->getTaxTotal()->getAmount());
     }
 
-    /**
-     * @return void
-     */
     public function testCalculatorStackWithNetTaxMode(): void
     {
         $calculationFacade = $this->tester->createCalculationFacade();
@@ -243,9 +231,6 @@ class CalculationWithCalculableObjectFacadeTest extends Unit
         $this->assertSame(49, $totalsTransfer->getTaxTotal()->getAmount());
     }
 
-    /**
-     * @return void
-     */
     public function testCalculatorStackWithNetTaxModeAfterDiscounts(): void
     {
         $calculationFacade = $this->tester->createCalculationFacade();
@@ -304,9 +289,6 @@ class CalculationWithCalculableObjectFacadeTest extends Unit
         $this->assertSame(53, $totalsTransfer->getTaxTotal()->getAmount());
     }
 
-    /**
-     * @return void
-     */
     public function testTaxCalculationWhenDifferentRatesUsed(): void
     {
         $calculationFacade = $this->tester->createCalculationFacade();
@@ -349,9 +331,6 @@ class CalculationWithCalculableObjectFacadeTest extends Unit
         $this->assertSame(47, $totalsTransfer->getTaxTotal()->getAmount());
     }
 
-    /**
-     * @return void
-     */
     public function testTaxCalculationWhenDifferentRatesAndDiscountUsed(): void
     {
         $calculationFacade = $this->tester->createCalculationFacade();
@@ -399,9 +378,6 @@ class CalculationWithCalculableObjectFacadeTest extends Unit
         $this->assertSame(45, $totalsTransfer->getTaxTotal()->getAmount());
     }
 
-    /**
-     * @return void
-     */
     public function testCalculationWhenTaxExemptionIsUsedShouldUseEmptyTax(): void
     {
         $calculationFacade = $this->tester->createCalculationFacade();
@@ -430,9 +406,6 @@ class CalculationWithCalculableObjectFacadeTest extends Unit
         $this->assertSame(0, $totalsTransfer->getTaxTotal()->getAmount());
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     protected function createFixtureDataForCalculation(): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();
@@ -475,9 +448,6 @@ class CalculationWithCalculableObjectFacadeTest extends Unit
         return $quoteTransfer;
     }
 
-    /**
-     * @return array
-     */
     public function getTaxInitTestData(): array
     {
         return [
@@ -559,13 +529,6 @@ class CalculationWithCalculableObjectFacadeTest extends Unit
 
     /**
      * @dataProvider getTaxInitTestData
-     *
-     * @param string $priceMode
-     * @param array $items
-     * @param array $expense
-     * @param array $results
-     *
-     * @return void
      */
     public function testCalculationTotalQuoteValues(string $priceMode, array $items, array $expense, array $results): void
     {
@@ -583,13 +546,6 @@ class CalculationWithCalculableObjectFacadeTest extends Unit
         $this->assertSame($results[5], $quoteTransfer->getTotals()->getRefundTotal());
     }
 
-    /**
-     * @param string $priceMode
-     * @param array $items
-     * @param array $expense
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     protected function createFixtureDataForTestCases(string $priceMode, array $items, array $expense): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();
