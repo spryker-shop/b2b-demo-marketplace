@@ -51,8 +51,13 @@
             </div>
             <div class="col">
                 <button type="button" class="button button--sm button--hollow {{ config.jsName }}__remove {{ hiddenClass }}"
+                        title="{{ 'recurring_orders.review.substitute.remove' | trans }}"
                         {{ qa('recurring-order-review-substitute-remove')}}>
-                    {{ 'recurring_orders.review.substitute.remove' | trans }}
+                    {% include atom('icon') with {
+                        data: {
+                            name: 'remove',
+                        },
+                    } only %}
                 </button>
             </div>
         </div>
