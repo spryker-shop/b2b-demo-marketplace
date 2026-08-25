@@ -19,10 +19,6 @@ interface WaterTreatmentConfiguratorPageExampleFacadeInterface
      *   the built frontend application into the public web root.
      *
      * @api
-     *
-     * @param \Psr\Log\LoggerInterface $logger
-     *
-     * @return bool
      */
     public function buildProductConfigurationFrontend(LoggerInterface $logger): bool;
 }

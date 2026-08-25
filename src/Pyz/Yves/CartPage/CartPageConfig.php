@@ -33,9 +33,6 @@ class CartPageConfig extends SprykerCartPageConfig
      */
     protected const IS_QUOTE_VALIDATION_ENABLED_FOR_AJAX_CART_ITEMS = false;
 
-    /**
-     * @return int
-     */
     public function getCartValidationCacheTTL(): int
     {
         return 60;

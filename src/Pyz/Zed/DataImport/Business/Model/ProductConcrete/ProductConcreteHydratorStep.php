@@ -135,19 +135,11 @@ class ProductConcreteHydratorStep implements DataImportStepInterface
      */
     protected static $isProductColumnBuffer = [];
 
-    /**
-     * @param \Pyz\Zed\DataImport\Business\Model\Product\Repository\ProductRepository $productRepository
-     */
     public function __construct(ProductRepository $productRepository)
     {
         $this->productRepository = $productRepository;
     }
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return void
-     */
     public function execute(DataSetInterface $dataSet): void
     {
         $this->importProduct($dataSet);
@@ -155,11 +147,6 @@ class ProductConcreteHydratorStep implements DataImportStepInterface
         $this->importBundles($dataSet);
     }
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return void
-     */
     protected function importProduct(DataSetInterface $dataSet): void
     {
         $productEntityTransfer = new SpyProductEntityTransfer();
@@ -180,11 +167,6 @@ class ProductConcreteHydratorStep implements DataImportStepInterface
         $dataSet[static::DATA_PRODUCT_CONCRETE_TRANSFER] = $productEntityTransfer;
     }
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return void
-     */
     protected function importProductLocalizedAttributes(DataSetInterface $dataSet): void
     {
         $localizedAttributeTransfer = [];
@@ -213,11 +195,6 @@ class ProductConcreteHydratorStep implements DataImportStepInterface
         $dataSet[static::DATA_PRODUCT_CONCRETE_LOCALIZED_TRANSFER] = $localizedAttributeTransfer;
     }
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return void
-     */
     protected function importBundles(DataSetInterface $dataSet): void
     {
         $productBundleTransfer = [];
@@ -241,11 +218,6 @@ class ProductConcreteHydratorStep implements DataImportStepInterface
         $dataSet[static::DATA_PRODUCT_BUNDLE_TRANSFER] = $productBundleTransfer;
     }
 
-    /**
-     * @param string $columnName
-     *
-     * @return bool
-     */
     protected function isProductColumn(string $columnName): bool
     {
         if (isset(static::$isProductColumnBuffer[$columnName])) {

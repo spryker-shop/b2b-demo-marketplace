@@ -89,11 +89,6 @@ class CmsBlockWriterStep extends PublishAwareStep implements DataImportStepInter
      */
     public const KEY_PLACEHOLDER_IMAGE_URL = 'placeholder.imageUrl';
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return void
-     */
     public function execute(DataSetInterface $dataSet): void
     {
         $templateEntity = $this->findOrCreateCmsBlockTemplate($dataSet);
@@ -103,11 +98,6 @@ class CmsBlockWriterStep extends PublishAwareStep implements DataImportStepInter
         $this->addPublishEvents(CmsBlockEvents::CMS_BLOCK_PUBLISH, $cmsBlockEntity->getIdCmsBlock());
     }
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplate
-     */
     protected function findOrCreateCmsBlockTemplate(DataSetInterface $dataSet): SpyCmsBlockTemplate
     {
         $templateEntity = SpyCmsBlockTemplateQuery::create()
@@ -123,12 +113,6 @@ class CmsBlockWriterStep extends PublishAwareStep implements DataImportStepInter
         return $templateEntity;
     }
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplate $templateEntity
-     *
-     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock
-     */
     protected function findOrCreateCmsBlock(DataSetInterface $dataSet, SpyCmsBlockTemplate $templateEntity): SpyCmsBlock
     {
         $cmsBlockEntity = SpyCmsBlockQuery::create()
@@ -146,12 +130,6 @@ class CmsBlockWriterStep extends PublishAwareStep implements DataImportStepInter
         return $cmsBlockEntity;
     }
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock $cmsBlockEntity
-     *
-     * @return void
-     */
     protected function findOrCreateCmsBlockPlaceholderTranslation(DataSetInterface $dataSet, SpyCmsBlock $cmsBlockEntity): void
     {
         foreach ($dataSet[LocalizedAttributesExtractorStep::KEY_LOCALIZED_ATTRIBUTES] as $idLocale => $placeholder) {
