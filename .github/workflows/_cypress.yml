@@ -6,7 +6,7 @@ on:
             platform-image:
                 description: "PHP platform image the shards boot on."
                 type: string
-                default: "spryker/php:8.4"
+                default: "spryker/php:8.5"
             deploy-file:
                 description: "Deploy file the shards boot."
                 type: string
@@ -20,7 +20,7 @@ on:
                 # S3 folder the screenshots land in.
                 description: "Platform segment of the screenshot upload path."
                 type: string
-                default: "PHP8.4MariaDB"
+                default: "PHP8.5MariaDB"
 
 env:
     SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
