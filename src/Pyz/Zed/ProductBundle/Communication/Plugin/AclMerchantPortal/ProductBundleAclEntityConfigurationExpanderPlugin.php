@@ -27,10 +27,6 @@ class ProductBundleAclEntityConfigurationExpanderPlugin extends AbstractPlugin i
      * - Registers `SpySalesOrderItemBundle` as a sub-entity of `SpySalesOrderItem`, so a merchant user inherits access to bundle data of their own order items.
      *
      * @api
-     *
-     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
-     *
-     * @return \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
      */
     public function expand(AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer): AclEntityMetadataConfigTransfer
     {

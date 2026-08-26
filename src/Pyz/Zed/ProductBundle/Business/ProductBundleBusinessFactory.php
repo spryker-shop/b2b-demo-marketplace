@@ -18,13 +18,9 @@ use Spryker\Zed\ProductOffer\Business\ProductOfferFacadeInterface;
 /**
  * @method \Pyz\Zed\ProductBundle\ProductBundleConfig getConfig()
  * @method \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface getRepository()
- * @method \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface getQueryContainer()
  */
 class ProductBundleBusinessFactory extends SprykerProductBundleBusinessFactory
 {
-    /**
-     * @return \Pyz\Zed\ProductBundle\Business\ProductBundle\Cart\BundledItemsProductOfferExpanderInterface
-     */
     public function createBundledItemsProductOfferExpander(): BundledItemsProductOfferExpanderInterface
     {
         return new BundledItemsProductOfferExpander(
@@ -32,9 +28,6 @@ class ProductBundleBusinessFactory extends SprykerProductBundleBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\ProductOffer\Business\ProductOfferFacadeInterface
-     */
     public function getProductOfferFacade(): ProductOfferFacadeInterface
     {
         return $this->getProvidedDependency(ProductBundleDependencyProvider::FACADE_PRODUCT_OFFER);

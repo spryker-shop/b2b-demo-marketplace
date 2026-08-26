@@ -14,16 +14,8 @@ use Spryker\Zed\ProductBundle\ProductBundleDependencyProvider as SprykerProductB
 
 class ProductBundleDependencyProvider extends SprykerProductBundleDependencyProvider
 {
-    /**
-     * @var string
-     */
-    public const FACADE_PRODUCT_OFFER = 'FACADE_PRODUCT_OFFER';
+    public const string FACADE_PRODUCT_OFFER = 'FACADE_PRODUCT_OFFER';
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
@@ -32,11 +24,6 @@ class ProductBundleDependencyProvider extends SprykerProductBundleDependencyProv
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addProductOfferFacade(Container $container): Container
     {
         $container->set(static::FACADE_PRODUCT_OFFER, function (Container $container) {

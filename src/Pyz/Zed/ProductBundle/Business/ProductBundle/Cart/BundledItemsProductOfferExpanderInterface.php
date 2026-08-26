@@ -13,10 +13,5 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 
 interface BundledItemsProductOfferExpanderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
     public function expandBundledItemsWithProductOffer(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 }

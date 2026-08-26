@@ -26,10 +26,6 @@ class BundledItemsProductOfferItemExpanderPlugin extends AbstractPlugin implemen
      * - Must run after `ExpandBundleItemsPlugin`.
      *
      * @api
-     *
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     public function expandItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {

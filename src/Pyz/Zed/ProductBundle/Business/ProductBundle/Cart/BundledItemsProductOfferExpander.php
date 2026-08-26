@@ -21,18 +21,10 @@ use Spryker\Zed\ProductOffer\Business\ProductOfferFacadeInterface;
  */
 class BundledItemsProductOfferExpander implements BundledItemsProductOfferExpanderInterface
 {
-    /**
-     * @param \Spryker\Zed\ProductOffer\Business\ProductOfferFacadeInterface $productOfferFacade
-     */
     public function __construct(protected ProductOfferFacadeInterface $productOfferFacade)
     {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
     public function expandBundledItemsWithProductOffer(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         $merchantReferencesByBundleItemIdentifier = $this->getMerchantReferencesByBundleItemIdentifier($cartChangeTransfer);
