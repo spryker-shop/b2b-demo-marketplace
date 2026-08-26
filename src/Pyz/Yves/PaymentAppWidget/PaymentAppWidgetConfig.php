@@ -39,9 +39,6 @@ class PaymentAppWidgetConfig extends SprykerPaymentAppWidgetConfig
         ];
     }
 
-    /**
-     * @return string
-     */
     public function getExpressCheckoutStartPageRouteName(): string
     {
         return CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_INDEX;

@@ -32,8 +32,6 @@ class WaterTreatmentConfiguratorPageExampleConfig extends AbstractBundleConfig
      * Path to the built configurator frontend directory.
      *
      * @api
-     *
-     * @return string
      */
     public function getFrontendOriginPath(): string
     {
@@ -44,8 +42,6 @@ class WaterTreatmentConfiguratorPageExampleConfig extends AbstractBundleConfig
      * Path to the configurator frontend web root directory.
      *
      * @api
-     *
-     * @return string
      */
     public function getFrontendTargetPath(): string
     {

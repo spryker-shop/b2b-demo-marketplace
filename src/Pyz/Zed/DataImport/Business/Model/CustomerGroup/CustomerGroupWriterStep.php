@@ -25,11 +25,6 @@ class CustomerGroupWriterStep implements DataImportStepInterface
      */
     public const KEY_DESCRIPTION = 'description';
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return void
-     */
     public function execute(DataSetInterface $dataSet): void
     {
         $customerGroupEntity = SpyCustomerGroupQuery::create()
