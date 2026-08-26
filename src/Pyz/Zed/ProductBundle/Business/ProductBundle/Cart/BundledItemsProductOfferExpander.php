@@ -59,8 +59,6 @@ class BundledItemsProductOfferExpander implements BundledItemsProductOfferExpand
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
      * @return array<string, string>
      */
     protected function getMerchantReferencesByBundleItemIdentifier(CartChangeTransfer $cartChangeTransfer): array
@@ -83,7 +81,6 @@ class BundledItemsProductOfferExpander implements BundledItemsProductOfferExpand
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      * @param array<string, string> $merchantReferencesByBundleItemIdentifier
      *
      * @return list<\Generated\Shared\Transfer\ItemTransfer>

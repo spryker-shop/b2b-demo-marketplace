@@ -24,10 +24,6 @@ interface ProductBundleFacadeInterface extends SprykerProductBundleFacadeInterfa
      * - Leaves bundled items without a matching offer unchanged.
      *
      * @api
-     *
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     public function expandBundledItemsWithProductOffer(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 }
