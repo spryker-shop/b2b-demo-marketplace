@@ -1271,11 +1271,11 @@
         "config/Shared/config_default-docker.php": {
             "operations": [
                 { "type": "remove_use", "class_name": "DummyMarketplacePaymentConfig" },
-                { "type": "remove_array_value", "array_value": "MarketplacePayment01" },
                 {
                     "type": "remove_array_key_value",
                     "key_pattern": "DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE"
-                }
+                },
+                { "type": "remove_array_value", "array_value": "MarketplacePayment01" }
             ],
             "success_messages": ["✓ Removed marketplace payment configuration from config_default-docker.php"]
         },
