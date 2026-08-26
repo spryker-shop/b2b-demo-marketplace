@@ -1,12 +1,6 @@
 {% extends molecule('budget-form', 'SprykerFeature:PurchasingControl') %}
 
 {% block body %}
-    {% include molecule('action-bar', 'ShopUi') with {
-        data: {
-            title: 'purchasing_control.budget.update.title' | trans,
-        }
-    } only %}
-
     {% embed molecule('form') with {
         data: {
             form: data.form,

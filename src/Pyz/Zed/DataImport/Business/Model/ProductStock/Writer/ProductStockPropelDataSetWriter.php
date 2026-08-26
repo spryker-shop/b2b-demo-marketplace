@@ -281,8 +281,6 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
     }
 
     /**
-     * @param string $storeName
-     *
      * @return array<string>
      */
     protected function getStoreWarehouses(string $storeName): array
@@ -291,7 +289,6 @@ class ProductStockPropelDataSetWriter implements DataSetWriterInterface
     }
 
     /**
-     * @param int $idProductConcrete
      * @param array<string> $stockNames
      */
     protected function getStockProductQuantityByIdProductAndStockNames(

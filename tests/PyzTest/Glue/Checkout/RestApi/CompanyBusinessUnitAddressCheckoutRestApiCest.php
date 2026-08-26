@@ -28,16 +28,8 @@ use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
  */
 class CompanyBusinessUnitAddressCheckoutRestApiCest
 {
-    /**
-     * @var \PyzTest\Glue\Checkout\RestApi\Fixtures\CompanyBusinessUnitAddressCheckoutRestApiFixtures
-     */
     protected CompanyBusinessUnitAddressCheckoutRestApiFixtures $fixtures;
 
-    /**
-     * @param \PyzTest\Glue\Checkout\CheckoutApiTester $I
-     *
-     * @return void
-     */
     public function loadFixtures(CheckoutApiTester $I): void
     {
         $fixtures = $I->loadFixtures(CompanyBusinessUnitAddressCheckoutRestApiFixtures::class);
@@ -46,10 +38,6 @@ class CompanyBusinessUnitAddressCheckoutRestApiCest
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\Checkout\CheckoutApiTester $I
-     *
-     * @return void
      */
     public function requestCheckoutShouldAcceptCompanyBusinessUnitAddressForBillingAddress(CheckoutApiTester $I): void
     {
@@ -83,10 +71,6 @@ class CompanyBusinessUnitAddressCheckoutRestApiCest
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\Checkout\CheckoutApiTester $I
-     *
-     * @return void
      */
     public function requestCheckoutShouldAcceptCompanyBusinessUnitAddressForShippingAddress(CheckoutApiTester $I): void
     {
@@ -119,11 +103,6 @@ class CompanyBusinessUnitAddressCheckoutRestApiCest
         $I->assertCompanyBusinessUnitShippingAddressInOrderShipments($this->fixtures->getCompanyUnitAddressTransfer());
     }
 
-    /**
-     * @param \PyzTest\Glue\Checkout\CheckoutApiTester $I
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     protected function createCartWithOneItem(CheckoutApiTester $I): QuoteTransfer
     {
         $productConcreteTransfer = $I->haveFullProduct();

@@ -120,6 +120,7 @@ use Spryker\Shared\Storage\StorageConstants;
 use Spryker\Shared\StorageRedis\StorageRedisConstants;
 use Spryker\Shared\SymfonyMailer\SymfonyMailerConstants;
 use Spryker\Shared\SymfonyMessenger\SymfonyMessengerConstants;
+use Spryker\Shared\SymfonyScheduler\SymfonySchedulerConstants;
 use Spryker\Shared\Synchronization\SynchronizationConstants;
 use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Shared\Testify\TestifyConstants;
@@ -232,6 +233,7 @@ if ($isTestifyConstantsClassExists) {
     $config[TestifyConstants::GLUE_OPEN_API_SCHEMA] = APPLICATION_SOURCE_DIR . '/Generated/Glue/Specification/spryker_rest_api.schema.yml';
     $config[TestifyConstants::BOOTSTRAP_CLASS_YVES] = YvesBootstrap::class;
     $config[TestifyConstants::BOOTSTRAP_CLASS_ZED] = ZedBootstrap::class;
+    $config[TestifyConstants::IS_DATA_BUILDER_RULE_EVAL_ENABLED] = false;
 }
 
 // ----------------------------------------------------------------------------
@@ -452,6 +454,18 @@ $config[StorageRedisConstants::STORAGE_REDIS_DATABASE] = $keyValueRegionNamespac
 $config[StorageRedisConstants::STORAGE_REDIS_DATA_SOURCE_NAMES] = json_decode(getenv('SPRYKER_KEY_VALUE_STORE_SOURCE_NAMES') ?: '[]', true) ?: [];
 $config[StorageRedisConstants::STORAGE_REDIS_CONNECTION_OPTIONS] = json_decode(getenv('SPRYKER_KEY_VALUE_STORE_CONNECTION_OPTIONS') ?: '[]', true) ?: [];
 
+// >>> SYMFONY SCHEDULER
+
+$config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_REDIS_PERSISTENT_CONNECTION] = true;
+$config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_REDIS_SCHEME] = getenv('SPRYKER_KEY_VALUE_STORE_PROTOCOL') ?: 'tcp';
+$config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_REDIS_HOST] = getenv('SPRYKER_KEY_VALUE_STORE_HOST');
+$config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_REDIS_PORT] = getenv('SPRYKER_KEY_VALUE_STORE_PORT');
+$config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_REDIS_USER] = getenv('SPRYKER_KEY_VALUE_USERNAME');
+$config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_REDIS_PASSWORD] = getenv('SPRYKER_KEY_VALUE_PASSWORD');
+$config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_REDIS_DATABASE] = $keyValueRegionNamespaces[$namespaceKey]['namespace'] ?? getenv('SPRYKER_KEY_VALUE_STORE_NAMESPACE') ?: 1;
+$config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_REDIS_DATA_SOURCE_NAMES] = json_decode(getenv('SPRYKER_KEY_VALUE_STORE_SOURCE_NAMES') ?: '[]', true) ?: [];
+$config[SymfonySchedulerConstants::SYMFONY_SCHEDULER_REDIS_CONNECTION_OPTIONS] = json_decode(getenv('SPRYKER_KEY_VALUE_STORE_CONNECTION_OPTIONS') ?: '[]', true) ?: [];
+
 // >>> SESSION
 
 $config[SecuritySystemUserConstants::SYSTEM_USER_SESSION_REDIS_LIFE_TIME] = 20;
@@ -585,7 +599,7 @@ $config[LogConstants::EXCEPTION_LOG_FILE_PATH_YVES]
 
 $config[QueueConstants::QUEUE_WORKER_WAIT_LIMIT_ENABLED] = true;
 $config[QueueConstants::RESOURCE_AWARE_QUEUE_WORKER_ENABLED] = (bool)getenv('RESOURCE_AWARE_QUEUE_WORKER_ENABLED') ?? false;
-$config[QueueConstants::QUEUE_WORKER_FREE_MEMORY_BUFFER] = (int)getenv('QUEUE_WORKER_FREE_MEMORY_BUFFER') ?: 750;
+$config[QueueConstants::QUEUE_WORKER_FREE_MEMORY_BUFFER] = (int)getenv('QUEUE_WORKER_FREE_MEMORY_BUFFER') ?: 350;
 $config[QueueConstants::QUEUE_WORKER_MEMORY_READ_PROCESS_TIMEOUT] = (int)getenv('QUEUE_WORKER_MEMORY_READ_PROCESS_TIMEOUT') ?: 5;
 
 $config[EventBehaviorConstants::EVENT_BEHAVIOR_TRIGGERING_ACTIVE] = true;
@@ -595,9 +609,6 @@ $config[QueueConstants::QUEUE_WORKER_MAX_PROCESSES] = 5;
 $config[QueueConstants::QUEUE_WORKER_DELAY_WHEN_NOT_EMPTY_MILLISECONDS] = 500;
 $config[QueueConstants::QUEUE_PROCESS_TRIGGER_INTERVAL_MICROSECONDS] = 1001;
 $config[QueueConstants::QUEUE_MESSAGE_CHUNK_SIZE_MAP] = json_decode(getenv('QUEUE_MESSAGE_CHUNK_SIZE_MAP') ?: '[]', true);
-$config[QueueConstants::RESOURCE_AWARE_QUEUE_WORKER_ENABLED] = (bool)getenv('RESOURCE_AWARE_QUEUE_WORKER_ENABLED') ?? false;
-$config[QueueConstants::QUEUE_WORKER_FREE_MEMORY_BUFFER] = (int)getenv('QUEUE_WORKER_FREE_MEMORY_BUFFER') ?: 750;
-$config[QueueConstants::QUEUE_WORKER_MEMORY_READ_PROCESS_TIMEOUT] = (int)getenv('QUEUE_WORKER_MEMORY_READ_PROCESS_TIMEOUT') ?: 5;
 $config[QueueConstants::QUEUE_ADAPTER_CONFIGURATION] = [
     EventConstants::EVENT_QUEUE => [
         QueueConfig::CONFIG_QUEUE_ADAPTER => SymfonyMessengerQueueAdapter::class,
@@ -714,6 +725,11 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
     'files-import' => [
         'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
         'root' => '/',
+        'path' => '/',
+    ],
+    'import-files' => [
+        'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
+        'root' => APPLICATION_ROOT_DIR . '/data/import',
         'path' => '/',
     ],
     'files' => [
@@ -873,9 +889,10 @@ $config[ApplicationConstants::BASE_URL_ZED] = sprintf(
 
 $merchantPortalPort = (int)(getenv('SPRYKER_MP_PORT')) ?: 443;
 $config[MerchantPortalConstants::BASE_URL_MP] = sprintf(
-    'http://%s%s',
+    '%s://%s%s',
+    $merchantPortalPort === 443 ? 'https' : 'http',
     getenv('SPRYKER_MP_HOST'),
-    $merchantPortalPort !== 80 ? ':' . $merchantPortalPort : '',
+    $merchantPortalPort !== 443 ? ':' . $merchantPortalPort : '',
 );
 
 // ----------------------------------------------------------------------------

@@ -28,6 +28,7 @@ use Spryker\Zed\Customer\Communication\Plugin\Sales\CustomerOrderHydratePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\Sales\DiscountOrderHydratePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\Sales\DiscountSalesOrderItemCollectionPreDeletePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\Sales\SalesDiscountSalesExpensePreDeletePlugin;
+use Spryker\Zed\MerchantOms\Communication\Plugin\Sales\MerchantStateOrderItemExpanderPlugin;
 use Spryker\Zed\MerchantOmsGui\Communication\Plugin\Sales\MerchantOmsStateOrderItemsTableExpanderPlugin;
 use Spryker\Zed\MerchantProfile\Communication\Plugin\Sales\MerchantDataOrderHydratePlugin;
 use Spryker\Zed\MerchantSalesOrder\Communication\Plugin\Sales\MerchantOrderDataOrderExpanderPlugin;
@@ -109,6 +110,7 @@ use Spryker\Zed\SalesReturnGui\Communication\Plugin\Sales\SalesReturnListBlockRe
 use Spryker\Zed\SalesServicePoint\Communication\Plugin\Sales\ServicePointOrderItemExpanderPlugin;
 use Spryker\Zed\SalesServicePoint\Communication\Plugin\Sales\ServicePointOrderItemsPostSavePlugin;
 use Spryker\Zed\SalesServicePoint\Communication\Plugin\Sales\ServicePointSalesOrderItemCollectionPreDeletePlugin;
+use Spryker\Zed\SalesShipmentType\Communication\Plugin\Sales\ShipmentTypeOrderItemExpanderPlugin;
 use Spryker\Zed\Shipment\Communication\Plugin\Sales\ShipmentOrderItemExpanderPlugin;
 use Spryker\Zed\Shipment\Communication\Plugin\ShipmentOrderHydratePlugin;
 use Spryker\Zed\ShipmentGui\Communication\Plugin\Sales\ShipmentExpensesSalesOrderDetailDataExpanderPlugin;
@@ -289,8 +291,10 @@ class SalesDependencyProvider extends SprykerSalesDependencyProvider
             new ProductConfigurationOrderItemExpanderPlugin(),
             new ServicePointOrderItemExpanderPlugin(),
             new ShipmentOrderItemExpanderPlugin(),
+            new ShipmentTypeOrderItemExpanderPlugin(),
             new SspServiceCancellableOrderItemExpanderPlugin(),
             new SspAssetOrderItemExpanderPlugin(),
+            new MerchantStateOrderItemExpanderPlugin(),
         ];
     }
 

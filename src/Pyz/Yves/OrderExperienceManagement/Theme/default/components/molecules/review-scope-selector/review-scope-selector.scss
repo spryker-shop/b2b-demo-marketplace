@@ -1,0 +1,17 @@
+@include order-experience-management-review-scope-selector {
+    &__option {
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-md);
+        padding: var(--scale-12) var(--scale-16);
+        margin-bottom: var(--scale-16);
+
+        &:hover {
+            background: var(--background-subtle);
+        }
+    }
+
+    &__note {
+        @include typography(body-md);
+        display: block;
+    }
+}

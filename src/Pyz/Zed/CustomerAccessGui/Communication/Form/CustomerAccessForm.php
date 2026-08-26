@@ -47,11 +47,6 @@ class CustomerAccessForm extends AbstractType
      */
     public const FIELD_CONTENT_TYPE_ACCESS = 'contentTypeAccess';
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired(static::OPTION_CONTENT_TYPE_ACCESS_MANAGEABLE);
@@ -60,10 +55,7 @@ class CustomerAccessForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array<string> $options
-     *
-     * @return void
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -72,7 +64,6 @@ class CustomerAccessForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array<string, mixed> $options
      *
      * @return $this
@@ -105,7 +96,6 @@ class CustomerAccessForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array<string, mixed> $options
      *
      * @return $this

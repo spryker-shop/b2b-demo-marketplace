@@ -1,143 +1,136 @@
-.filter-category {
-    &__menu {
-        &--lvl-1,
-        &--lvl-2 {
-            padding-left: rem(10);
+@mixin catalog-page-filter-category($name: '.filter-category') {
+    #{$name} {
+        &__menu {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-8);
 
-            @include helper-breakpoint-media-min($lg) {
-                padding-left: 0;
+            &--lvl-2 {
+                padding-left: var(--scale-12);
+            }
+
+            &--lvl-3,
+            &--lvl-4,
+            &--lvl-5 {
+                padding-left: var(--scale-12);
+                border-left: var(--stroke-sm) solid var(--border-subtle);
             }
         }
 
-        &--lvl-3 {
-            @include helper-breakpoint-media-min($lg) {
-                padding-left: rem(10);
-            }
-        }
-    }
-
-    &__menu-item {
-        display: flex;
-        flex-grow: 1;
-        color: $setting-color-gray-4;
-
-        &--lvl-2 {
-            &:first-child {
-                padding-top: rem(5);
-
-                @include helper-breakpoint-media-min($lg) {
-                    padding-top: 0;
-                }
-            }
-
-            &:last-child {
-                padding-bottom: rem(5);
-
-                @include helper-breakpoint-media-min($lg) {
-                    padding-bottom: 0;
-                }
-            }
-        }
-    }
-
-    &__category-row {
-        flex-grow: 1;
-
-        &--no-children {
-            margin-left: rem(16);
-        }
-    }
-
-    &__category-target {
-        @include helper-effect-transition(grid-template-rows);
-        display: grid;
-        grid-template-rows: 1fr;
-
-        &--hidden {
-            grid-template-rows: 0fr;
-        }
-    }
-
-    &__category-target-inner {
-        overflow: hidden;
-    }
-
-    &__category-toggle-button {
-        @include helper-effect-transition(transform);
-        color: $setting-color-gray-4;
-        margin-right: rem(5);
-        background-color: $setting-color-transparent;
-        cursor: pointer;
-        width: rem(20);
-
-        @include helper-breakpoint-media-max($lg) {
-            display: inline-block;
-            vertical-align: top;
-            margin-top: rem(-5);
+        &__menu-item {
+            display: block;
+            color: var(--text-secondary);
         }
 
-        &--collapsed {
-            transform: rotate(-90deg);
-        }
-    }
-
-    &__menu-link {
-        @include helper-effect-transition(color);
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        margin-bottom: rem(13);
-        color: $setting-color-gray-4;
-        cursor: pointer;
-        background-color: $setting-color-transparent;
-        font: fw(regular) rem(13) / rem(16) $setting-font-family;
-        gap: rem(var(--scale-2));
-
-        @include helper-breakpoint-media-min($lg) {
-            margin-bottom: rem(11);
-            font-size: rem(15);
-            line-height: rem(23);
+        &__category-row {
+            display: flex;
+            align-items: center;
+            gap: var(--scale-8);
+            min-height: rem(28);
         }
 
-        &--lvl-1 {
-            font-size: var(--font-size-16);
-            font-weight: fw(medium);
+        &__category-target {
+            @include helper-effect-transition(grid-template-rows);
+            display: grid;
+            grid-template-rows: 1fr;
         }
 
-        &--lvl-2 {
+        &__category-target-inner {
+            @include helper-effect-transition(padding-top);
+            overflow: hidden;
+            padding-top: var(--scale-8);
+        }
+
+        &__category-toggle-button {
+            @include helper-effect-transition(transform);
+            display: inline-flex;
+            align-items: center;
+            flex-shrink: 0;
+            color: var(--icon-secondary);
+            background-color: transparent;
+            cursor: pointer;
             font-size: var(--font-size-16);
         }
 
-        &--lvl-3 {
-            font-size: var(--font-size-14);
+        &__menu-link {
+            @include helper-effect-transition(color);
+            @include typography(body-md);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex: 1 0 0;
+            min-width: 0;
+            gap: var(--scale-8);
+            color: var(--text-primary);
+            cursor: pointer;
+            background-color: transparent;
+            text-align: left;
+
+            &--lvl-1 {
+                font-family: var(--label-md-semibold-family);
+                font-weight: var(--label-md-semibold-weight);
+            }
+
+            &:hover,
+            &:focus {
+                color: var(--text-brand);
+                text-decoration: none;
+
+                #{$name}__counter {
+                    color: var(--text-brand);
+                }
+            }
+
+            &[disabled] {
+                pointer-events: none;
+                color: var(--text-disabled);
+            }
+
+            &--active {
+                color: var(--text-brand);
+
+                #{$name}__counter {
+                    color: var(--text-brand);
+                }
+            }
         }
 
-        &:hover,
-        &:focus {
-            color: $setting-color-text;
-            text-decoration: none;
+        &__link-text {
+            flex: 1 0 0;
+            min-width: 0;
+            text-align: left;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
 
-        &[disabled] {
-            pointer-events: none;
-            color: $setting-color-gray-3;
+        &__counter {
+            flex-shrink: 0;
+            font-family: var(--body-sm-family);
+            font-size: var(--body-sm-size);
+            line-height: var(--body-sm-line-height);
+            color: var(--text-secondary);
         }
 
-        &--active {
-            font-weight: fw(bold);
-            color: $setting-color-text;
+        &__menu-item.is-collapsed {
+            #{$name}__category-target {
+                grid-template-rows: 0fr;
+            }
+
+            #{$name}__category-target-inner {
+                padding-top: 0;
+            }
+
+            #{$name}__category-toggle-button {
+                transform: rotate(180deg);
+            }
         }
     }
 
-    &__link-text {
-        text-align: left;
-
-        &--active {
-            text-decoration: underline;
-        }
-    }
-
-    &__counter {
-        @include helper-font-size(medium);
-    }
+    @include shop-ui-tooltip-trigger('#{$name}__category-row', '#{$name}__tooltip', '.is-truncated');
 }
+
+@include catalog-page-filter-category();

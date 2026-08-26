@@ -104,5 +104,11 @@ sections:
         controller-cache-warmup:
             command: 'vendor/bin/glue glue-api:controller:cache:warm-up'
 
+        api-router-cache-warmup-storefront:
+            command: 'GLUE_APPLICATION=GLUE_STOREFRONT vendor/bin/glue cache:warmup'
+
+        api-router-cache-warmup-backend:
+            command: 'GLUE_APPLICATION=GLUE_BACKEND vendor/bin/glue cache:warmup'
+
         api-generate-documentation:
             command: 'vendor/bin/glue api:generate:documentation'

@@ -29,11 +29,6 @@
                 }
             }
 
-            &--filter-enumeration {
-                line-height: rem(18);
-                margin-bottom: rem(10);
-            }
-
             &--social {
                 margin: 0 var(--scale-8);
 
@@ -90,10 +85,7 @@
         }
 
         &__link--lvl-0 {
-            font-family: var(--body-md-family);
-            font-size: var(--body-md-size);
-            font-weight: var(--font-weight-regular);
-            line-height: var(--body-md-line-height);
+            @include typography(body-md);
             color: var(--text-primary);
             text-decoration: none;
 

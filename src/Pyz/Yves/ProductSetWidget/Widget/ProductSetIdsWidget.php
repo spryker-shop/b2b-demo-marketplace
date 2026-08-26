@@ -33,17 +33,11 @@ class ProductSetIdsWidget extends AbstractWidget
         $this->addProductSetListParameter($productSetIds);
     }
 
-    /**
-     * @return string
-     */
     public static function getName(): string
     {
         return 'ProductSetIdsWidget';
     }
 
-    /**
-     * @return string
-     */
     public static function getTemplate(): string
     {
         return '@ProductSetWidget/views/product-set-ids/product-set-ids.twig';
@@ -51,8 +45,6 @@ class ProductSetIdsWidget extends AbstractWidget
 
     /**
      * @param list<int> $productSetIds
-     *
-     * @return void
      */
     protected function addProductSetListParameter(array $productSetIds): void
     {
@@ -81,8 +73,6 @@ class ProductSetIdsWidget extends AbstractWidget
     }
 
     /**
-     * @param int $productSetId
-     *
      * @return array<string, mixed>
      */
     protected function getSingleProductSet(int $productSetId): array
@@ -98,19 +88,12 @@ class ProductSetIdsWidget extends AbstractWidget
         ];
     }
 
-    /**
-     * @param int $idProductSet
-     *
-     * @return \Generated\Shared\Transfer\ProductSetDataStorageTransfer|null
-     */
     protected function getProductSetStorageTransfer(int $idProductSet): ?ProductSetDataStorageTransfer
     {
         return $this->getFactory()->getProductSetStorageClient()->getProductSetByIdProductSet($idProductSet, $this->getLocale());
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductSetDataStorageTransfer $productSetDataStorageTransfer
-     *
      * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     protected function mapProductSetDataStorageTransfers(ProductSetDataStorageTransfer $productSetDataStorageTransfer): array

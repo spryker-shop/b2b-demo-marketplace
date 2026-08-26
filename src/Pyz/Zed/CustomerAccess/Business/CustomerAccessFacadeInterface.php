@@ -19,10 +19,6 @@ interface CustomerAccessFacadeInterface extends SprykerCustomerAccessFacadeInter
      * - Filters only manageable content types. Manageable content type can be set up in config `getManageableContentTypes` method.
      *
      * @api
-     *
-     * @param \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
     public function filterManageableContentTypes(CustomerAccessTransfer $customerAccessTransfer): CustomerAccessTransfer;
 
@@ -31,10 +27,6 @@ interface CustomerAccessFacadeInterface extends SprykerCustomerAccessFacadeInter
      * - Filters only non manageable content types. Manageable content type can be set up in config `getManageableContentTypes` method.
      *
      * @api
-     *
-     * @param \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
     public function filterNonManageableContentTypes(CustomerAccessTransfer $customerAccessTransfer): CustomerAccessTransfer;
 
@@ -45,10 +37,6 @@ interface CustomerAccessFacadeInterface extends SprykerCustomerAccessFacadeInter
      * - Marks listed in CustomerAccessTransfer content types as has access
      *
      * @api
-     *
-     * @param \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
     public function updateUnauthenticatedCustomerAccess(CustomerAccessTransfer $customerAccessTransfer): CustomerAccessTransfer;
 }

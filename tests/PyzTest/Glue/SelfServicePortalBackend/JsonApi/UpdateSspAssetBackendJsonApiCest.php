@@ -37,8 +37,6 @@ class UpdateSspAssetBackendJsonApiCest
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\SelfServicePortalBackend\SelfServicePortalBackendApiTester $I
      */
     public function requestUpdateSspAssetWithValidData(SelfServicePortalBackendApiTester $I): void
     {

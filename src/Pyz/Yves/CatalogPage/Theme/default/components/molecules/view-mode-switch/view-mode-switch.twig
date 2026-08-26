@@ -12,23 +12,20 @@
 {% set gridHref = path('change-view-mode', { mode: 'grid', 'referer-url': app.request.requestUri }) %}
 {% set listHref = path('change-view-mode', { mode: 'list', 'referer-url': app.request.requestUri }) %}
 
+{% macro modeLink(name, href, icon, label, isActive) %}
+    <a class="{{ name }}__link{% if isActive %} {{ name }}__link--active{% endif %}"
+        href="{{ href }}"
+        aria-label="{{ label }}"
+        {% if isActive %}aria-current="true"{% endif %}>
+        {% include atom('font-icon') with {
+            data: {
+                name: icon,
+            },
+        } only %}
+    </a>
+{% endmacro %}
+
 {% block body %}
-    <a class="{{ config.name }}__link {% if data.viewMode == 'grid' %} {{ config.name }}__link--active {% endif %}" href="{{gridHref}}">
-        {% include atom('icon') with {
-            modifiers: ['view-mode-switch'],
-            data: {
-                name: 'th-large'
-            }
-        } only %}
-        {{ 'catalog.view.mode.grid' | trans }}
-    </a>
-    <a class="{{ config.name }}__link {% if data.viewMode != 'grid' %} {{ config.name }}__link--active {% endif %}" href="{{listHref}}">
-        {% include atom('icon') with {
-            modifiers: ['view-mode-switch'],
-            data: {
-                name: 'th-list'
-            }
-        } only %}
-        {{ 'catalog.view.mode.list' | trans }}
-    </a>
+    {{ _self.modeLink(config.name, gridHref, 'grid_view', 'catalog.view.mode.grid' | trans, data.viewMode == 'grid') }}
+    {{ _self.modeLink(config.name, listHref, 'menu', 'catalog.view.mode.list' | trans, data.viewMode != 'grid') }}
 {% endblock %}

@@ -5,10 +5,33 @@ export default class SellerList extends Component {
     protected static readonly MODAL_GROUP = 'product_offer_reference_modal';
     protected isApplying = false;
 
-    protected readyCallback(): void {}
-
     protected init(): void {
         this.mapEvents();
+        this.syncCartFormOfferInput();
+    }
+
+    /**
+     * The hidden cart-form input only changes when a seller is picked by hand. After the offer list is
+     * re-rendered — the shipment type changed, for instance — the server marks a different offer as
+     * checked without firing an event, leaving the input pointing at an offer that no longer applies.
+     * Submitting that combination is rejected as unavailable, so realign the input on every mount.
+     */
+    protected syncCartFormOfferInput(): void {
+        const checkedRadio = <HTMLInputElement>this.querySelector(`input[name="${SellerList.INLINE_GROUP}"]:checked`);
+
+        if (checkedRadio) {
+            this.updateCartFormOfferInput(checkedRadio.value);
+
+            return;
+        }
+
+        this.removeCartFormOfferInput();
+    }
+
+    protected removeCartFormOfferInput(): void {
+        const cartForm = document.querySelector(this.cartFormSelector);
+
+        cartForm?.getElementsByClassName(`${this.jsName}__offer-input`)[0]?.remove();
     }
 
     protected mapEvents(): void {

@@ -10,13 +10,9 @@
         }
 
         &__section-label {
+            @include typography(label-sm-semibold);
             margin: 0 0 var(--scale-6);
             color: var(--text-tertiary);
-            font-family: var(--label-sm-semibold-family);
-            font-size: var(--label-sm-semibold-size);
-            font-weight: var(--label-sm-semibold-weight);
-            line-height: var(--label-sm-semibold-line-height);
-            letter-spacing: var(--label-sm-semibold-letter-spacing);
             text-align: left;
             text-transform: none;
         }
@@ -47,14 +43,18 @@
 
         &__asset {
             display: flex;
-            flex-wrap: wrap;
-            align-items: flex-start;
-            justify-content: flex-start;
+            flex-direction: column;
+            gap: var(--scale-8);
             text-align: left;
             color: var(--text-secondary);
             font-family: var(--body-sm-family);
             font-size: var(--body-sm-size);
             line-height: var(--body-sm-line-height);
+        }
+
+        &__service-row {
+            @include typography(body-sm);
+            color: var(--text-secondary);
         }
     }
 }

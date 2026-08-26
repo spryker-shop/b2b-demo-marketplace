@@ -56,10 +56,7 @@
         }
 
         &__mode-label {
-            font-family: var(--label-sm-family, var(--body-sm-family));
-            font-size: var(--body-sm-size);
-            font-weight: var(--font-weight-semibold);
-            line-height: var(--body-sm-line-height);
+            @include typography(label-sm-semibold);
             color: var(--text-primary);
         }
 
@@ -141,11 +138,8 @@
         }
 
         &__panel-header {
+            @include typography(label-md);
             padding: var(--scale-12) var(--scale-16);
-            font-family: var(--label-md-family);
-            font-size: var(--label-md-size);
-            font-weight: var(--font-weight-medium);
-            line-height: var(--label-md-line-height);
             color: var(--text-primary);
         }
 
@@ -201,6 +195,7 @@
         }
 
         &__badge {
+            @include typography(label-sm);
             flex-shrink: 0;
             display: inline-flex;
             align-items: center;
@@ -208,10 +203,6 @@
             padding: rem(2) var(--scale-8);
             border-radius: var(--radius-sm);
             background-color: var(--background-subtle);
-            font-family: var(--body-sm-family);
-            font-size: var(--body-sm-size);
-            font-weight: var(--font-weight-medium);
-            line-height: var(--body-sm-line-height);
             color: var(--text-primary);
 
             &--assisting {
@@ -222,6 +213,7 @@
 
         &__menu-row {
             @include helper-effect-transition(background-color);
+            @include typography(label-md);
             display: flex;
             align-items: center;
             gap: var(--scale-12);
@@ -232,10 +224,6 @@
             cursor: pointer;
             text-align: left;
             text-decoration: none;
-            font-family: var(--label-md-family);
-            font-size: var(--label-md-size);
-            font-weight: var(--font-weight-medium);
-            line-height: var(--label-md-line-height);
             color: var(--text-primary);
 
             &:hover,

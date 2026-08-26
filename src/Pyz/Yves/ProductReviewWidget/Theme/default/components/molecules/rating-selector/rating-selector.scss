@@ -121,9 +121,7 @@ $product-review-rating-selector-icon-size-big: 24px;
             vertical-align: middle;
 
             &--pdp {
-                font-size: rem(var(--body-sm-size));
-                font-weight: var(--font-weight-regular);
-                line-height: rem(var(--body-sm-line-height));
+                @include typography(body-sm);
                 margin-left: var(--scale-6);
             }
         }

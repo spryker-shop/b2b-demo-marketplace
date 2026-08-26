@@ -37,8 +37,6 @@ class GetSingleSspAssetBackendJsonApiCest
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\SelfServicePortalBackend\SelfServicePortalBackendApiTester $I
      */
     public function requestGetSingleSspAssetWithValidToken(SelfServicePortalBackendApiTester $I): void
     {
@@ -68,8 +66,6 @@ class GetSingleSspAssetBackendJsonApiCest
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\SelfServicePortalBackend\SelfServicePortalBackendApiTester $I
      */
     public function requestGetSingleSspAssetWithInvalidToken(SelfServicePortalBackendApiTester $I): void
     {

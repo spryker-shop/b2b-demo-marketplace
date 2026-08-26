@@ -183,6 +183,8 @@ class OauthDependencyProvider extends SprykerOauthDependencyProvider
     }
 
     /**
+     * @SuppressWarnings(LayerAccessRule) Must not be used as a code example.
+     *
      * @return array<\Spryker\Glue\OauthExtension\Dependency\Plugin\ScopeCollectorPluginInterface>
      */
     protected function getScopeCollectorPlugins(): array
@@ -194,6 +196,8 @@ class OauthDependencyProvider extends SprykerOauthDependencyProvider
     }
 
     /**
+     * @SuppressWarnings(LayerAccessRule) Must not be used as a code example.
+     *
      * @return array<\Spryker\Glue\OauthExtension\Dependency\Plugin\ScopeFinderPluginInterface>
      */
     protected function getScopeFinderPlugins(): array
