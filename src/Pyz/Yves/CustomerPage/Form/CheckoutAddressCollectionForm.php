@@ -24,8 +24,6 @@ use Symfony\Component\Form\FormInterface;
 class CheckoutAddressCollectionForm extends SprykerCheckoutAddressCollectionForm
 {
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
      * @return $this
      */
     protected function addSameAsShippingCheckboxField(FormBuilderInterface $builder)

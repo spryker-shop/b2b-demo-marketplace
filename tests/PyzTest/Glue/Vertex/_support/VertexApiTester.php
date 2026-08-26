@@ -33,9 +33,6 @@ class VertexApiTester extends ApiEndToEndTester
     use _generated\VertexApiTesterActions;
 
     /**
-     * @param string|null $taxId
-     * @param string|null $countryCode
-     *
      * @return array<string, mixed>
      */
     public function buildTaxIdValidationRequestBody(?string $taxId, ?string $countryCode): array

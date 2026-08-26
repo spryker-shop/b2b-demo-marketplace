@@ -48,9 +48,6 @@ class RelationHandlingTest extends Unit
      */
     protected $tester;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -63,8 +60,6 @@ class RelationHandlingTest extends Unit
 
     /**
      * @group AclEntityCreate
-     *
-     * @return void
      */
     public function testInspectCreateWithCreatePermissionForRelation(): void
     {
@@ -100,8 +95,6 @@ class RelationHandlingTest extends Unit
 
     /**
      * @group AclEntityCreate
-     *
-     * @return void
      */
     public function testInspectCreateWithNoCreatePermissionForRelation(): void
     {
@@ -145,8 +138,6 @@ class RelationHandlingTest extends Unit
     /**
      * @group AclEntityCreate
      * @group AclEntityUpdate
-     *
-     * @return void
      */
     public function testInspectCreateWithUpdatePermissionForRelation(): void
     {
@@ -189,8 +180,6 @@ class RelationHandlingTest extends Unit
     /**
      * @group AclEntityCreate
      * @group AclEntityUpdate
-     *
-     * @return void
      */
     public function testInspectCreateWithNoUpdatePermissionForRelation(): void
     {
@@ -238,8 +227,6 @@ class RelationHandlingTest extends Unit
 
     /**
      * @group AclEntityUpdate
-     *
-     * @return void
      */
     public function testInspectUpdateWithUpdatePermissionForRelation(): void
     {
@@ -281,8 +268,6 @@ class RelationHandlingTest extends Unit
 
     /**
      * @group AclEntityUpdate
-     *
-     * @return void
      */
     public function testInspectUpdateWithNoUpdatePermissionForRelation(): void
     {
@@ -334,8 +319,6 @@ class RelationHandlingTest extends Unit
     /**
      * @group AclEntityCreate
      * @group AclEntityUpdate
-     *
-     * @return void
      */
     public function testInspectUpdateWithCreatePermissionForRelation(): void
     {
@@ -377,8 +360,6 @@ class RelationHandlingTest extends Unit
     /**
      * @group AclEntityCreate
      * @group AclEntityUpdate
-     *
-     * @return void
      */
     public function testInspectUpdateWithNoCreatePermissionForRelation(): void
     {
@@ -425,8 +406,6 @@ class RelationHandlingTest extends Unit
 
     /**
      * @group AclEntityApplyAclRules
-     *
-     * @return void
      */
     public function testApplyAclRulesOnSelectQueryWithReadPermissionForJoinsInGlobalScope(): void
     {
@@ -470,8 +449,6 @@ class RelationHandlingTest extends Unit
 
     /**
      * @group AclEntityApplyAclRules
-     *
-     * @return void
      */
     public function testApplyAclRulesOnSelectQueryWithNoReadPermissionForJoinsInGlobalScope(): void
     {
@@ -516,8 +493,6 @@ class RelationHandlingTest extends Unit
 
     /**
      * @group AclEntityApplyAclRules
-     *
-     * @return void
      */
     public function testApplyAclRulesOnSelectQueryWithReadPermissionForJoinsInSegmentScope(): void
     {
@@ -578,8 +553,6 @@ class RelationHandlingTest extends Unit
 
     /**
      * @group AclEntityApplyAclRules
-     *
-     * @return void
      */
     public function testApplyAclRulesOnSelectQueryWithNoReadPermissionForJoin(): void
     {
@@ -631,8 +604,6 @@ class RelationHandlingTest extends Unit
 
     /**
      * @group AclEntityApplyAclRules
-     *
-     * @return void
      */
     public function testApplyAclRulesOnSelectQueryWithReadPermissionForJoinsInDefaultScope(): void
     {
@@ -682,8 +653,6 @@ class RelationHandlingTest extends Unit
 
     /**
      * @group AclEntityApplyAclRules
-     *
-     * @return void
      */
     public function testApplyAclRulesOnSelectQueryWithReadPermissionForLeftJoin(): void
     {
@@ -728,8 +697,6 @@ class RelationHandlingTest extends Unit
 
     /**
      * @group AclEntityApplyAclRules
-     *
-     * @return void
      */
     public function testApplyAclRulesOnSelectQueryWithNoReadPermissionForLeftJoin(): void
     {
@@ -765,8 +732,6 @@ class RelationHandlingTest extends Unit
 
     /**
      * @group AclEntityApplyAclRules
-     *
-     * @return void
      */
     public function testApplyAclRulesOnSelectQueryWithReadPermissionForInnerJoin(): void
     {
@@ -811,8 +776,6 @@ class RelationHandlingTest extends Unit
 
     /**
      * @group AclEntityApplyAclRules
-     *
-     * @return void
      */
     public function testApplyAclRulesOnSelectQueryWithNoReadPermissionForInnerJoin(): void
     {
@@ -848,8 +811,6 @@ class RelationHandlingTest extends Unit
 
     /**
      * @group AclEntityApplyAclRules
-     *
-     * @return void
      */
     public function testApplyAclRulesOnSelectQueryWithReadPermissionForRightJoin(): void
     {
@@ -894,8 +855,6 @@ class RelationHandlingTest extends Unit
 
     /**
      * @group AclEntityApplyAclRules
-     *
-     * @return void
      */
     public function testApplyAclRulesOnSelectQueryWithNoReadPermissionForRightJoin(): void
     {
@@ -931,8 +890,6 @@ class RelationHandlingTest extends Unit
 
     /**
      * @group AclEntityApplyAclRules
-     *
-     * @return void
      */
     public function testApplyAclRulesOnSelectQueryWithReadPermissionForOptionalLeftJoinRelation(): void
     {

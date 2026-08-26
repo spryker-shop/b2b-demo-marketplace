@@ -19,9 +19,6 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class WaterTreatmentConfiguratorPageExampleBusinessFactory extends AbstractBusinessFactory
 {
-    /**
-     * @return \Pyz\Zed\WaterTreatmentConfiguratorPageExample\Business\Builder\FrontendBuilderInterface
-     */
     public function createProductConfiguratorFrontendBuilder(): FrontendBuilderInterface
     {
         return new FrontendBuilder(
@@ -30,9 +27,6 @@ class WaterTreatmentConfiguratorPageExampleBusinessFactory extends AbstractBusin
         );
     }
 
-    /**
-     * @return \Symfony\Component\Filesystem\Filesystem
-     */
     public function createFilesystem(): Filesystem
     {
         return new Filesystem();

@@ -25,9 +25,6 @@ use Spryker\Zed\SharedCartsRestApi\Communication\Plugin\CartsRestApi\QuotePermis
 
 class CartsRestApiDependencyProvider extends SprykerCartsRestApiDependencyProvider
 {
-    /**
-     * @return \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface
-     */
     protected function getQuoteCreatorPlugin(): QuoteCreatorPluginInterface
     {
         return new QuoteCreatorPlugin();
@@ -39,7 +36,7 @@ class CartsRestApiDependencyProvider extends SprykerCartsRestApiDependencyProvid
     protected function getQuoteCollectionExpanderPlugins(): array
     {
         return [
-            new SharedCartQuoteCollectionExpanderPlugin(),
+        new SharedCartQuoteCollectionExpanderPlugin(),
         ];
     }
 
@@ -49,9 +46,9 @@ class CartsRestApiDependencyProvider extends SprykerCartsRestApiDependencyProvid
     protected function getQuoteExpanderPlugins(): array
     {
         return [
-            new QuotePermissionGroupQuoteExpanderPlugin(),
-            new CustomerCompanyUserQuoteExpanderPlugin(),
-            new SalesOrderThresholdQuoteExpanderPlugin(),
+        new QuotePermissionGroupQuoteExpanderPlugin(),
+        new CustomerCompanyUserQuoteExpanderPlugin(),
+        new SalesOrderThresholdQuoteExpanderPlugin(),
         ];
     }
 
@@ -61,11 +58,11 @@ class CartsRestApiDependencyProvider extends SprykerCartsRestApiDependencyProvid
     protected function getCartItemMapperPlugins(): array
     {
         return [
-            new ProductOptionCartItemMapperPlugin(),
-            new DiscountPromotionCartItemMapperPlugin(),
-            new SalesUnitCartItemMapperPlugin(),
-            new MerchantProductOfferCartItemMapperPlugin(),
-            new ProductConfigurationCartItemMapperPlugin(),
+        new ProductOptionCartItemMapperPlugin(),
+        new DiscountPromotionCartItemMapperPlugin(),
+        new SalesUnitCartItemMapperPlugin(),
+        new MerchantProductOfferCartItemMapperPlugin(),
+        new ProductConfigurationCartItemMapperPlugin(),
         ];
     }
 
@@ -75,7 +72,7 @@ class CartsRestApiDependencyProvider extends SprykerCartsRestApiDependencyProvid
     protected function getQuoteItemReadValidatorPlugins(): array
     {
         return [
-            new BundleItemQuoteItemReadValidatorPlugin(),
+        new BundleItemQuoteItemReadValidatorPlugin(),
         ];
     }
 }

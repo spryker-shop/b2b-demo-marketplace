@@ -46,11 +46,6 @@ class PaymentCommunicationTester extends Actor
      */
     protected const DEFAULT_OMS_PROCESS_NAME = 'ForeignPaymentStateMachine01';
 
-    /**
-     * @param string $initialItemState
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
-     */
     public function haveSalesOrder(string $initialItemState): SpySalesOrder
     {
         $this->haveCurrency([CurrencyTransfer::CODE => static::CURRENCY_USD]);
@@ -66,12 +61,6 @@ class PaymentCommunicationTester extends Actor
         );
     }
 
-    /**
-     * @param string $paymentMessageTransferClassName
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
-     *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
-     */
     public function havePaymentMessageTransfer(
         string $paymentMessageTransferClassName,
         SpySalesOrder $salesOrderEntity,
@@ -81,11 +70,6 @@ class PaymentCommunicationTester extends Actor
         );
     }
 
-    /**
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $paymentMessageTransfer
-     *
-     * @return void
-     */
     public function handlePaymentMessageTransfer(TransferInterface $paymentMessageTransfer): void
     {
         $channelName = 'payment-commands';
@@ -132,8 +116,6 @@ class PaymentCommunicationTester extends Actor
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrder
-     *
      * @return list<int>
      */
     protected function getSalesOrderItemIds(SpySalesOrder $salesOrder): array

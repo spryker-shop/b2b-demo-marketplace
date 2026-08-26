@@ -14,11 +14,6 @@ use SprykerTest\Shared\Currency\Helper\CurrencyDataHelper as SprykerCurrencyData
 
 class CurrencyDataHelper extends SprykerCurrencyDataHelper
 {
-    /**
-     * @param string $isoCode
-     *
-     * @return \Generated\Shared\Transfer\CurrencyTransfer
-     */
     public function getCurrencyByIsoCode(string $isoCode): CurrencyTransfer
     {
         return $this->getCurrencyFacade()->fromIsoCode($isoCode);
