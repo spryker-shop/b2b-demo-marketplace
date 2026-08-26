@@ -36,19 +36,11 @@ class ProductManagementAttributeWriter extends PublishAwareStep implements DataI
      */
     protected const KEY_VISIBILITY = 'visibility';
 
-    /**
-     * @param \SprykerFeature\Zed\ProductExperienceManagement\Business\ProductExperienceManagementFacadeInterface|null $productExperienceManagementFacade
-     */
     public function __construct(
         protected readonly ?ProductExperienceManagementFacadeInterface $productExperienceManagementFacade = null,
     ) {
     }
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return void
-     */
     public function execute(DataSetInterface $dataSet): void
     {
         $productManagementAttributeEntity = SpyProductManagementAttributeQuery::create()
@@ -135,12 +127,7 @@ class ProductManagementAttributeWriter extends PublishAwareStep implements DataI
     }
 
     /**
-     * @param string $visibility
-     * @param string $attributeKey
-     *
      * @throws \Spryker\Zed\DataImport\Business\Exception\DataImportException
-     *
-     * @return string
      */
     protected function normalizeVisibility(string $visibility, string $attributeKey): string
     {

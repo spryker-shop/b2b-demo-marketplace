@@ -27,16 +27,8 @@ use Spryker\Glue\ShoppingListsRestApi\ShoppingListsRestApiConfig;
  */
 class ShoppingListProductConfigurationRestApiCest
 {
-    /**
-     * @var \PyzTest\Glue\ProductConfigurations\RestApi\Fixtures\ShoppingListProductConfigurationsRestApiFixtures
-     */
     protected ShoppingListProductConfigurationsRestApiFixtures $fixtures;
 
-    /**
-     * @param \PyzTest\Glue\ProductConfigurations\ProductConfigurationsApiTester $I
-     *
-     * @return void
-     */
     public function loadFixtures(ProductConfigurationsApiTester $I): void
     {
         /** @var \PyzTest\Glue\ProductConfigurations\RestApi\Fixtures\ShoppingListProductConfigurationsRestApiFixtures $fixtures */
@@ -47,10 +39,6 @@ class ShoppingListProductConfigurationRestApiCest
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\ProductConfigurations\ProductConfigurationsApiTester $I
-     *
-     * @return void
      */
     public function requestUpdateConfigurableShoppingListItemsInShoppingList(ProductConfigurationsApiTester $I): void
     {
@@ -91,10 +79,6 @@ class ShoppingListProductConfigurationRestApiCest
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\ProductConfigurations\ProductConfigurationsApiTester $I
-     *
-     * @return void
      */
     public function requestCleanUpConfigurableShoppingListItemsInShoppingList(ProductConfigurationsApiTester $I): void
     {
@@ -133,10 +117,6 @@ class ShoppingListProductConfigurationRestApiCest
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\ProductConfigurations\ProductConfigurationsApiTester $I
-     *
-     * @return void
      */
     public function requestAddConfigurableShoppingListItemsToShoppingList(ProductConfigurationsApiTester $I): void
     {

@@ -48,11 +48,6 @@ class CustomerDependencyProvider extends SprykerCustomerDependencyProvider
      */
     public const FACADE_NEWSLETTER = 'newsletter facade';
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
@@ -62,11 +57,6 @@ class CustomerDependencyProvider extends SprykerCustomerDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addFacadeSales(Container $container): Container
     {
         $container->set(static::FACADE_SALES, function (Container $container) {
@@ -76,11 +66,6 @@ class CustomerDependencyProvider extends SprykerCustomerDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addFacadeNewsletter(Container $container): Container
     {
         $container->set(static::FACADE_NEWSLETTER, function (Container $container) {

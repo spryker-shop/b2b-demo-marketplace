@@ -23,8 +23,6 @@ use Symfony\Component\HttpFoundation\Request;
 class PasswordController extends SprykerPasswordController
 {
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>
      */
     protected function executeRestorePasswordAction(Request $request): RedirectResponse|array

@@ -93,8 +93,6 @@ use SprykerFeature\Shared\ProductExperienceManagement\ProductExperienceManagemen
 class QueueDependencyProvider extends SprykerDependencyProvider
 {
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
      * @return array<\Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface>
      */
     protected function getProcessorMessagePlugins(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
