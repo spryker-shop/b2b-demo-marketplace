@@ -837,6 +837,9 @@ Document significant changes to the configuration:
 - `xml_files` - XML configuration files
 - `test_files` - Test files
 - `payment_config_updates` - Payment configuration updates
+  (B2B-MP ships only `DummyMarketplacePayment`; this section re-adds the B2B `DummyPayment` provider:
+  config wiring, `DummyPaymentCheckoutPreConditionPlugin`, `payment.twig` icon block, `payment_method*.csv`
+  and glossary demo data. The matching test fixtures are flipped back to `DummyPayment01` in `test_files`.)
 - `import_entities_to_remove` - Data import entity names
 - `import_yaml_files` - YAML import file paths
 - `docker_commands_to_remove` - Docker command names

@@ -270,7 +270,7 @@ class ProductConfigurationsRestApiFixtures implements FixturesBuilderInterface, 
      */
     protected function createStateMachine(ProductConfigurationsApiTester $I): string
     {
-        $testStateMachineProcessName = 'DummyPayment01';
+        $testStateMachineProcessName = 'MarketplacePayment01';
         $I->configureTestStateMachine([$testStateMachineProcessName]);
 
         return $testStateMachineProcessName;

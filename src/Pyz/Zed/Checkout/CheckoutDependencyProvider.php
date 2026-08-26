@@ -24,7 +24,6 @@ use Spryker\Zed\Discount\Communication\Plugin\Checkout\DiscountOrderSavePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\Checkout\ReleaseUsedCodesCheckoutDoSaveOrderPlugin;
 use Spryker\Zed\Discount\Communication\Plugin\Checkout\ReplaceSalesOrderDiscountsCheckoutDoSaveOrderPlugin;
 use Spryker\Zed\Discount\Communication\Plugin\Checkout\VoucherDiscountMaxUsageCheckoutPreConditionPlugin;
-use Spryker\Zed\DummyPayment\Communication\Plugin\Checkout\DummyPaymentCheckoutPreConditionPlugin;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Merchant\Communication\Plugin\Checkout\MerchantCheckoutPreConditionPlugin;
 use Spryker\Zed\MerchantProductOption\Communication\Plugin\Checkout\MerchantProductOptionCheckoutPreConditionPlugin;
@@ -130,7 +129,6 @@ class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
             new CustomerAddressSalutationCheckoutPreConditionPlugin(),
             new ProductsAvailableCheckoutPreConditionPlugin(),
             new NopaymentCheckoutPreConditionPlugin(),
-            new DummyPaymentCheckoutPreConditionPlugin(),
             new ShipmentCheckoutPreCheckPlugin(),
             new AmountAvailabilityCheckoutPreConditionPlugin(),
             new SalesOrderThresholdCheckoutPreConditionPlugin(), #SalesOrderThresholdFeature

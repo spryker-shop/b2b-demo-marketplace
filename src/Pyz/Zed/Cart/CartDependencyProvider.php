@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\Cart;
 
+use Pyz\Zed\ProductBundle\Communication\Plugin\Cart\BundledItemsProductOfferItemExpanderPlugin;
 use Spryker\Zed\AvailabilityCartConnector\Communication\Plugin\Cart\AvailabilityItemExpanderPlugin;
 use Spryker\Zed\AvailabilityCartConnector\Communication\Plugin\Cart\CheckAvailabilityPlugin;
 use Spryker\Zed\Cart\CartDependencyProvider as SprykerCartDependencyProvider;
@@ -127,6 +128,7 @@ class CartDependencyProvider extends SprykerCartDependencyProvider
             new CartItemPricePlugin(),
             new CartItemProductOptionPlugin(),
             new ExpandBundleItemsPlugin(),
+            new BundledItemsProductOfferItemExpanderPlugin(),
             new ExpandBundleItemsWithImagesPlugin(),
             new SkuGroupKeyPlugin(),
             new DefaultQuantitySalesUnitItemExpanderPlugin(),
@@ -170,6 +172,7 @@ class CartDependencyProvider extends SprykerCartDependencyProvider
             new OriginalSalesOrderItemPriceItemExpanderPlugin(),
             new CartItemProductOptionPlugin(),
             new ExpandBundleItemsPlugin(),
+            new BundledItemsProductOfferItemExpanderPlugin(),
             new ExpandBundleItemsWithImagesPlugin(),
             new SkuGroupKeyPlugin(),
             new DefaultQuantitySalesUnitItemExpanderPlugin(),

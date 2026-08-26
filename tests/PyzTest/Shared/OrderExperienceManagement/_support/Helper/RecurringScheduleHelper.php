@@ -31,8 +31,8 @@ class RecurringScheduleHelper extends SprykerFeatureRecurringScheduleHelper
 
         $paymentTransfer = (new PaymentTransfer())
             ->setPaymentMethod($recurringScheduleTransfer->getPaymentMethodOrFail())
-            ->setPaymentProvider('DummyPayment')
-            ->setPaymentSelection('dummyPaymentInvoice');
+            ->setPaymentProvider('DummyMarketplacePayment')
+            ->setPaymentSelection('dummyMarketplacePaymentInvoice');
 
         $totalsTransfer = (new TotalsTransfer())
             ->setGrandTotal(0)

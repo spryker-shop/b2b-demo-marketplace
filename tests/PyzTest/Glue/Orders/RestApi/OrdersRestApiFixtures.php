@@ -148,7 +148,7 @@ class OrdersRestApiFixtures implements FixturesBuilderInterface, FixturesContain
      */
     protected function createStateMachine(OrdersApiTester $I): string
     {
-        $testStateMachineProcessName = 'DummyPayment01';
+        $testStateMachineProcessName = 'MarketplacePayment01';
         $I->configureTestStateMachine([$testStateMachineProcessName]);
 
         return $testStateMachineProcessName;
