@@ -13,9 +13,6 @@ use Spryker\Zed\Development\DevelopmentConfig as SprykerDevelopmentConfig;
 
 class DevelopmentConfig extends SprykerDevelopmentConfig
 {
-    /**
-     * @return string
-     */
     public function getCodingStandard(): string
     {
         return APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'phpcs.xml';
@@ -27,9 +24,9 @@ class DevelopmentConfig extends SprykerDevelopmentConfig
     public function getOrganizationPathMap(): array
     {
         return [
-            'Spryker' => $this->getPathToCore(),
-            'SprykerFeature' => $this->getPathToFeature(),
-            'SprykerEco' => $this->getPathToEco(),
+        'Spryker' => $this->getPathToCore(),
+        'SprykerFeature' => $this->getPathToFeature(),
+        'SprykerEco' => $this->getPathToEco(),
         ];
     }
 }

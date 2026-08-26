@@ -17,8 +17,6 @@ class GlueControllerFinder extends SprykerGlueControllerFinder
     /**
      * @SuppressWarnings(LayerAccessRule) Must not be used as a code example.
      *
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
-     *
      * @return array<\SplFileInfo>
      */
     public function getGlueControllerFilesFromPlugin(ResourceRoutePluginInterface $plugin): array
@@ -48,9 +46,6 @@ class GlueControllerFinder extends SprykerGlueControllerFinder
     }
 
     /**
-     * @param string $moduleDirectory
-     * @param string $moduleName
-     *
      * @return array<string>
      */
     protected function getMonoRepositoryControllerSourceDirectories(string $moduleDirectory, string $moduleName): array

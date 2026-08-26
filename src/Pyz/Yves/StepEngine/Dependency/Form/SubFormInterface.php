@@ -16,13 +16,7 @@ interface SubFormInterface
      */
     public const OPTIONS_FIELD_NAME = 'select_options';
 
-    /**
-     * @return string
-     */
     public function getPropertyPath(): string;
 
-    /**
-     * @return string
-     */
     public function getName(): string;
 }

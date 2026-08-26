@@ -122,19 +122,11 @@ class ProductAbstractWriterStep extends PublishAwareStep implements DataImportSt
      */
     protected $productRepository;
 
-    /**
-     * @param \Pyz\Zed\DataImport\Business\Model\Product\Repository\ProductRepository $productRepository
-     */
     public function __construct(ProductRepository $productRepository)
     {
         $this->productRepository = $productRepository;
     }
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return void
-     */
     public function execute(DataSetInterface $dataSet): void
     {
         $productAbstractEntity = $this->importProductAbstract($dataSet);
@@ -148,11 +140,6 @@ class ProductAbstractWriterStep extends PublishAwareStep implements DataImportSt
         $this->addPublishEvents(ProductEvents::PRODUCT_ABSTRACT_PUBLISH, $productAbstractEntity->getIdProductAbstract());
     }
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
-     */
     protected function importProductAbstract(DataSetInterface $dataSet): SpyProductAbstract
     {
         $productAbstractEntity = SpyProductAbstractQuery::create()
@@ -173,12 +160,6 @@ class ProductAbstractWriterStep extends PublishAwareStep implements DataImportSt
         return $productAbstractEntity;
     }
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
-     *
-     * @return void
-     */
     protected function importProductAbstractLocalizedAttributes(DataSetInterface $dataSet, SpyProductAbstract $productAbstractEntity): void
     {
         foreach ($dataSet[ProductLocalizedAttributesExtractorStep::KEY_LOCALIZED_ATTRIBUTES] as $idLocale => $localizedAttributes) {
@@ -204,12 +185,7 @@ class ProductAbstractWriterStep extends PublishAwareStep implements DataImportSt
     }
 
     /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
-     *
      * @throws \Spryker\Zed\DataImport\Business\Exception\DataKeyNotFoundInDataSetException
-     *
-     * @return void
      */
     protected function importProductCategories(DataSetInterface $dataSet, SpyProductAbstract $productAbstractEntity): void
     {
@@ -249,8 +225,6 @@ class ProductAbstractWriterStep extends PublishAwareStep implements DataImportSt
     }
 
     /**
-     * @param string $categoryKeys
-     *
      * @return list<string>
      */
     protected function getCategoryKeys(string $categoryKeys): array
@@ -261,8 +235,6 @@ class ProductAbstractWriterStep extends PublishAwareStep implements DataImportSt
     }
 
     /**
-     * @param string $categoryProductOrder
-     *
      * @return list<string|int>
      */
     protected function getCategoryProductOrder(string $categoryProductOrder): array
@@ -272,12 +244,6 @@ class ProductAbstractWriterStep extends PublishAwareStep implements DataImportSt
         return array_map('trim', $categoryProductOrder);
     }
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
-     *
-     * @return void
-     */
     protected function importProductUrls(DataSetInterface $dataSet, SpyProductAbstract $productAbstractEntity): void
     {
         foreach ($dataSet[ProductLocalizedAttributesExtractorStep::KEY_LOCALIZED_ATTRIBUTES] as $idLocale => $localizedAttributes) {
@@ -302,11 +268,6 @@ class ProductAbstractWriterStep extends PublishAwareStep implements DataImportSt
         }
     }
 
-    /**
-     * @param string $abstractProductUrl
-     *
-     * @return void
-     */
     protected function cleanupRedirectUrls(string $abstractProductUrl): void
     {
         SpyUrlQuery::create()

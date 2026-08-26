@@ -32,8 +32,6 @@ class HealthCheckApiTester extends ApiEndToEndTester
     use _generated\HealthCheckApiTesterActions;
 
     /**
-     * @param string $attributeKey
-     *
      * @return mixed
      */
     public function getHealthCheckAttribute(string $attributeKey)

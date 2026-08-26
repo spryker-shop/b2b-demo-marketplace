@@ -32,11 +32,6 @@ class CustomerGroupToCustomerWriterStep implements DataImportStepInterface
      */
     protected static $idCustomerGroupBuffer = [];
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return void
-     */
     public function execute(DataSetInterface $dataSet): void
     {
         (new SpyCustomerGroupToCustomerQuery())
@@ -46,11 +41,6 @@ class CustomerGroupToCustomerWriterStep implements DataImportStepInterface
             ->save();
     }
 
-    /**
-     * @param string $customerGroupName
-     *
-     * @return int
-     */
     protected function getIdCustomerGroupByName(string $customerGroupName): int
     {
         if (!isset(static::$idCustomerGroupBuffer[$customerGroupName])) {
@@ -61,11 +51,6 @@ class CustomerGroupToCustomerWriterStep implements DataImportStepInterface
         return static::$idCustomerGroupBuffer[$customerGroupName];
     }
 
-    /**
-     * @param string $customerReference
-     *
-     * @return int
-     */
     protected function getIdCustomerByReference(string $customerReference): int
     {
         return SpyCustomerQuery::create()->findOneByCustomerReference($customerReference)->getIdCustomer();
