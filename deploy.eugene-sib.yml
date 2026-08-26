@@ -40,7 +40,7 @@ tag: '1.0'
 
 environment: docker.dev
 image:
-  tag: spryker/php:8.2-alpine3.18
+  tag: spryker/php:8.5
   environment:
     # SPRYKER_DEFAULT_STORE: "DE"
     # SPRYKER_ACTIVE_STORES: "DE,AT"
@@ -50,8 +50,8 @@ image:
     SPRYKER_HOOK_DESTRUCTIVE_INSTALL: "vendor/bin/install -r destructive --no-ansi -vvv"
     AWS_REGION: 'eu-central-1'
   node:
-    version: 18
-    npm: 9
+    version: 24
+    npm: 10
 composer:
   mode: --no-dev
   autoload: --classmap-authoritative
