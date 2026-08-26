@@ -77,16 +77,8 @@ class ProductConcreteCartReorderRestApiCest
      */
     protected const REORDER_STRATEGY_NEW = 'new';
 
-    /**
-     * @var \PyzTest\Glue\CartReorder\RestApi\Fixtures\ProductConcreteCartReorderRestApiFixtures
-     */
     protected ProductConcreteCartReorderRestApiFixtures $fixtures;
 
-    /**
-     * @param \PyzTest\Glue\CartReorder\CartReorderApiTester $I
-     *
-     * @return void
-     */
     public function loadFixtures(CartReorderApiTester $I): void
     {
         /** @var \PyzTest\Glue\CartReorder\RestApi\Fixtures\ProductConcreteCartReorderRestApiFixtures $fixtures */
@@ -95,11 +87,6 @@ class ProductConcreteCartReorderRestApiCest
         $this->fixtures = $fixtures;
     }
 
-    /**
-     * @param \PyzTest\Glue\CartReorder\CartReorderApiTester $I
-     *
-     * @return void
-     */
     public function requestCreateCartReorder(CartReorderApiTester $I): void
     {
         // Arrange
@@ -122,11 +109,6 @@ class ProductConcreteCartReorderRestApiCest
         $this->assertCreateCartReorder($I, $saveOrderTransfer);
     }
 
-    /**
-     * @param \PyzTest\Glue\CartReorder\CartReorderApiTester $I
-     *
-     * @return void
-     */
     public function requestCreateCartReorderWithReorderStrategyReplace(CartReorderApiTester $I): void
     {
         // Arrange
@@ -150,11 +132,6 @@ class ProductConcreteCartReorderRestApiCest
         $this->assertCreateCartReorder($I, $saveOrderTransfer);
     }
 
-    /**
-     * @param \PyzTest\Glue\CartReorder\CartReorderApiTester $I
-     *
-     * @return void
-     */
     public function requestCreateCartReorderWithReorderStrategyNew(CartReorderApiTester $I): void
     {
         // Arrange
@@ -180,11 +157,6 @@ class ProductConcreteCartReorderRestApiCest
         $this->deleteLastResponseCart($I);
     }
 
-    /**
-     * @param \PyzTest\Glue\CartReorder\CartReorderApiTester $I
-     *
-     * @return void
-     */
     public function requestCreateCartReorderWithNotAvailableProduct(CartReorderApiTester $I): void
     {
         // Arrange
@@ -219,11 +191,6 @@ class ProductConcreteCartReorderRestApiCest
             ->assertResponseDoesNotContainItemBySku($this->fixtures->getNotAvailableProductConcreteTransfer()->getSkuOrFail());
     }
 
-    /**
-     * @param \PyzTest\Glue\CartReorder\CartReorderApiTester $I
-     *
-     * @return void
-     */
     public function requestCreateReorderWithEmptyOrderReferenceParameter(CartReorderApiTester $I): void
     {
         //Arrange
@@ -252,11 +219,6 @@ class ProductConcreteCartReorderRestApiCest
         $I->assertEquals($errors[RestCheckoutErrorTransfer::DETAIL], static::RESPONSE_DETAIL_PARAMETER_ORDER_REFERENCE_INVALID);
     }
 
-    /**
-     * @param \PyzTest\Glue\CartReorder\CartReorderApiTester $I
-     *
-     * @return void
-     */
     public function requestCreateReorderWithNonExistingOrderReference(CartReorderApiTester $I): void
     {
         //Arrange
@@ -285,11 +247,6 @@ class ProductConcreteCartReorderRestApiCest
         $I->assertEquals($errors[RestCheckoutErrorTransfer::DETAIL], static::RESPONSE_DETAIL_ORDER_NOT_FOUND);
     }
 
-    /**
-     * @param \PyzTest\Glue\CartReorder\CartReorderApiTester $I
-     *
-     * @return void
-     */
     public function requestCreateReorderWithAnotherCustomersOrderReference(CartReorderApiTester $I): void
     {
         //Arrange
@@ -318,11 +275,6 @@ class ProductConcreteCartReorderRestApiCest
         $I->assertEquals($errors[RestCheckoutErrorTransfer::DETAIL], static::RESPONSE_DETAIL_ORDER_NOT_FOUND);
     }
 
-    /**
-     * @param \PyzTest\Glue\CartReorder\CartReorderApiTester $I
-     *
-     * @return void
-     */
     public function requestCreateReorderWithNonExistingReorderStrategy(CartReorderApiTester $I): void
     {
         //Arrange
@@ -353,13 +305,6 @@ class ProductConcreteCartReorderRestApiCest
         $I->assertEquals($errors[RestCheckoutErrorTransfer::DETAIL], static::RESPONSE_DETAIL_QUOTE_NOT_PROVIDED);
     }
 
-    /**
-     * @param \PyzTest\Glue\CartReorder\CartReorderApiTester $I
-     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
-     * @param string|null $cartNamePostfix
-     *
-     * @return void
-     */
     protected function assertCreateCartReorder(
         CartReorderApiTester $I,
         SaveOrderTransfer $saveOrderTransfer,
@@ -396,11 +341,6 @@ class ProductConcreteCartReorderRestApiCest
             ->assertItemHasCorrectQuantity($this->fixtures->getProductConcreteTransfer2()->getSkuOrFail(), 1);
     }
 
-    /**
-     * @param \PyzTest\Glue\CartReorder\CartReorderApiTester $I
-     *
-     * @return void
-     */
     protected function deleteLastResponseCart(CartReorderApiTester $I): void
     {
         $I->sendDelete($I->buildCartsUrl($I->getDataFromResponseByJsonPath('$.data.id')));

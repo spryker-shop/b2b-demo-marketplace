@@ -237,7 +237,6 @@ class PaymentsRestApiCest
     }
 
     /**
-     * @param string $type
      * @param array<string, mixed> $attributes
      *
      * @return array<string, mixed>

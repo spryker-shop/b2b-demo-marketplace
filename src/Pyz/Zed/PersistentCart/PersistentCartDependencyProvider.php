@@ -32,9 +32,6 @@ class PersistentCartDependencyProvider extends SprykerPersistentCartDependencyPr
         ];
     }
 
-    /**
-     * @return \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface
-     */
     protected function getQuoteItemFinderPlugin(): QuoteItemFinderPluginInterface
     {
         return new BundleProductQuoteItemFinderPlugin(); #ProductBundleFeature
@@ -51,8 +48,6 @@ class PersistentCartDependencyProvider extends SprykerPersistentCartDependencyPr
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
      * @return array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface>
      */
     protected function getCartAddItemStrategyPlugins(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter

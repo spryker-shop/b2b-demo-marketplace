@@ -15,33 +15,21 @@ use Spryker\Zed\ProductAlternativeStorage\ProductAlternativeStorageConfig as Spr
 
 class ProductAlternativeStorageConfig extends SprykerProductAlternativeStorageConfig
 {
-    /**
-     * @return string|null
-     */
     public function getProductAlternativeSynchronizationPoolName(): ?string
     {
         return SynchronizationConfig::DEFAULT_SYNCHRONIZATION_POOL_NAME;
     }
 
-    /**
-     * @return string|null
-     */
     public function getProductReplacementForSynchronizationPoolName(): ?string
     {
         return SynchronizationConfig::DEFAULT_SYNCHRONIZATION_POOL_NAME;
     }
 
-    /**
-     * @return string|null
-     */
     public function getProductAlternativeEventQueueName(): ?string
     {
         return SprykerSharedProductAlternativeStorageConfig::PUBLISH_PRODUCT_ALTERNATIVE_QUEUE;
     }
 
-    /**
-     * @return string|null
-     */
     public function getProductReplacementForEventQueueName(): ?string
     {
         return SprykerSharedProductAlternativeStorageConfig::PUBLISH_PRODUCT_ALTERNATIVE_QUEUE;

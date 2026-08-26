@@ -13,7 +13,6 @@ interface CartItemsProductProviderInterface
 {
     /**
      * @param array<\Generated\Shared\Transfer\ItemTransfer> $cartItems
-     * @param string $locale
      *
      * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */

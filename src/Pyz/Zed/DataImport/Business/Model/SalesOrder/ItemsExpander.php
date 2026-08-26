@@ -65,8 +65,6 @@ class ItemsExpander
     }
 
     /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
      * @throws \Spryker\Zed\DataImport\Business\Exception\DataImportException
      *
      * @return array<\Generated\Shared\Transfer\ItemTransfer>
