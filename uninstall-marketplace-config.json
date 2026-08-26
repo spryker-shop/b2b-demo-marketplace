@@ -1517,21 +1517,6 @@
             ],
             "success_messages": ["✓ Switched PaymentCancellationsRestApiCest.php to DummyPayment provider"]
         },
-        "tests/PyzTest/Shared/OrderExperienceManagement/_support/Helper/RecurringScheduleHelper.php": {
-            "operations": [
-                {
-                    "type": "replace_string",
-                    "old_value": "->setPaymentProvider('DummyMarketplacePayment')",
-                    "new_value": "->setPaymentProvider('DummyPayment')"
-                },
-                {
-                    "type": "replace_string",
-                    "old_value": "->setPaymentSelection('dummyMarketplacePaymentInvoice')",
-                    "new_value": "->setPaymentSelection('dummyPaymentInvoice')"
-                }
-            ],
-            "success_messages": ["✓ Switched RecurringScheduleHelper to DummyPayment"]
-        },
         "tests/PyzTest/Yves/Checkout/Controller/CheckoutControllerTest.php": {
             "operations": [
                 {

@@ -15,10 +15,13 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RecurringScheduleTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use Orm\Zed\Payment\Persistence\SpyPaymentMethodQuery;
 use SprykerFeatureTest\Shared\OrderExperienceManagement\Helper\RecurringScheduleHelper as SprykerFeatureRecurringScheduleHelper;
 
 class RecurringScheduleHelper extends SprykerFeatureRecurringScheduleHelper
 {
+    protected const string DEFAULT_PAYMENT_PROVIDER = 'DummyPayment';
+
     protected function buildMinimalQuoteData(RecurringScheduleTransfer $recurringScheduleTransfer): string
     {
         /** @var \SprykerTest\Shared\Customer\Helper\CustomerDataHelper $customerDataHelper */
@@ -29,10 +32,12 @@ class RecurringScheduleHelper extends SprykerFeatureRecurringScheduleHelper
         $storeDataHelper = $this->getModule('\SprykerTest\Shared\Store\Helper\StoreDataHelper');
         $storeTransfer = $storeDataHelper->haveStore([StoreTransfer::NAME => $recurringScheduleTransfer->getStoreNameOrFail()]);
 
+        $paymentMethodKey = $recurringScheduleTransfer->getPaymentMethodOrFail();
+
         $paymentTransfer = (new PaymentTransfer())
-            ->setPaymentMethod($recurringScheduleTransfer->getPaymentMethodOrFail())
-            ->setPaymentProvider('DummyMarketplacePayment')
-            ->setPaymentSelection('dummyMarketplacePaymentInvoice');
+            ->setPaymentMethod($paymentMethodKey)
+            ->setPaymentProvider($this->resolvePaymentProviderKey($paymentMethodKey))
+            ->setPaymentSelection($paymentMethodKey);
 
         $totalsTransfer = (new TotalsTransfer())
             ->setGrandTotal(0)
@@ -55,5 +60,22 @@ class RecurringScheduleHelper extends SprykerFeatureRecurringScheduleHelper
             ->setShippingAddress($addressTransfer);
 
         return json_encode($quoteTransfer->toArray(), JSON_THROW_ON_ERROR);
+    }
+
+    /**
+     * Resolves the payment provider of the given payment method from the database, so the schedule can be
+     * placed as an order in both the marketplace (DummyMarketplacePayment) and the B2B-only (DummyPayment) setup.
+     */
+    protected function resolvePaymentProviderKey(string $paymentMethodKey): string
+    {
+        $paymentMethodEntity = SpyPaymentMethodQuery::create()
+            ->filterByPaymentMethodKey($paymentMethodKey)
+            ->findOne();
+
+        if ($paymentMethodEntity === null) {
+            return static::DEFAULT_PAYMENT_PROVIDER;
+        }
+
+        return $paymentMethodEntity->getSpyPaymentProvider()->getPaymentProviderKey();
     }
 }
