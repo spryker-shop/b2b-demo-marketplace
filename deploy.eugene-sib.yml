@@ -41,6 +41,10 @@ tag: '1.0'
 environment: docker.dev
 image:
   tag: spryker/php:8.5
+  php:
+    enabled-extensions:
+        - otel
+        - amqp
   environment:
     # SPRYKER_DEFAULT_STORE: "DE"
     # SPRYKER_ACTIVE_STORES: "DE,AT"
