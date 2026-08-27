@@ -1,0 +1,10 @@
+@mixin helper-dot-separator {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    flex: 0 0 auto;
+    width: var(--scale-2);
+    height: var(--scale-2);
+    border-radius: 50%;
+    background-color: var(--text-tertiary);
+}

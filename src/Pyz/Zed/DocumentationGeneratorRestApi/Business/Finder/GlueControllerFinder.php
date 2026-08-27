@@ -15,7 +15,7 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Finder\GlueControllerFind
 class GlueControllerFinder extends SprykerGlueControllerFinder
 {
     /**
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
+     * @SuppressWarnings(LayerAccessRule) Must not be used as a code example.
      *
      * @return array<\SplFileInfo>
      */
@@ -46,9 +46,6 @@ class GlueControllerFinder extends SprykerGlueControllerFinder
     }
 
     /**
-     * @param string $moduleDirectory
-     * @param string $moduleName
-     *
      * @return array<string>
      */
     protected function getMonoRepositoryControllerSourceDirectories(string $moduleDirectory, string $moduleName): array

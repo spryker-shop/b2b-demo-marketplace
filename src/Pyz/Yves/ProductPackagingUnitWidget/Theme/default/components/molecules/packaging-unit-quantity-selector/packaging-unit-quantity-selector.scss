@@ -1,12 +1,8 @@
 @mixin product-packaging-unit-widget-packaging-unit-quantity-selector($name: '.packaging-unit-quantity-selector') {
     #{$name} {
         &__quantity-label {
+            @include typography(label-sm-semibold);
             margin: 0 0 var(--scale-12);
-            font-family: var(--label-sm-semibold-family);
-            font-size: var(--label-sm-semibold-size);
-            font-weight: var(--label-sm-semibold-weight);
-            line-height: var(--label-sm-semibold-line-height);
-            letter-spacing: var(--label-sm-semibold-letter-spacing);
             color: var(--text-primary);
         }
 
@@ -51,11 +47,7 @@
 
         &__unit-field-label,
         &__unit-field-value {
-            font-family: var(--label-sm-semibold-family);
-            font-size: var(--label-sm-semibold-size);
-            font-weight: var(--label-sm-semibold-weight);
-            line-height: var(--label-sm-semibold-line-height);
-            letter-spacing: var(--label-sm-semibold-letter-spacing);
+            @include typography(label-sm-semibold);
             color: var(--text-primary);
         }
 
@@ -124,6 +116,7 @@
             gap: var(--scale-8);
 
             .link {
+                @include typography(label-sm);
                 display: inline-flex;
                 align-items: center;
                 padding: var(--scale-6) var(--scale-12);
@@ -131,9 +124,6 @@
                 border: var(--stroke-sm) solid var(--border-default);
                 background: var(--background-page);
                 color: var(--text-primary);
-                font-size: var(--label-sm-size);
-                font-weight: var(--label-sm-weight);
-                line-height: var(--label-sm-line-height);
                 text-decoration: none;
 
                 &:hover {

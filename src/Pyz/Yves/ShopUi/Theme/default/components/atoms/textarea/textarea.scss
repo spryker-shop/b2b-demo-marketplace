@@ -1,9 +1,8 @@
-@import '../input/input';
-
 @mixin shop-ui-textarea($name: '.textarea') {
     @include shop-ui-input-extended($name) {
         height: rem(44);
         padding: var(--scale-12) var(--scale-16);
+        resize: vertical;
 
         &--md {
             padding: var(--scale-8) var(--scale-12);

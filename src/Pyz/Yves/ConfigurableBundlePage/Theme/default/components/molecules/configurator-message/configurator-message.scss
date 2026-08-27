@@ -1,4 +1,22 @@
 @include configurable-bundle-page-configurator-message {
-    margin: map-get($setting-spacing, 'default');
+    display: flex;
+    flex-direction: column;
+    gap: var(--scale-8);
+    align-items: center;
+    padding: var(--scale-48) var(--scale-16);
+    margin: 0;
     border: none;
+    text-align: center;
+
+    &__title {
+        @include typography(heading-sm);
+        margin: 0;
+        color: var(--text-primary);
+    }
+
+    &__text {
+        @include typography(body-md);
+        margin: 0;
+        color: var(--text-secondary);
+    }
 }

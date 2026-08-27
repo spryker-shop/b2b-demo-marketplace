@@ -40,18 +40,12 @@
         }
 
         &__brand-name {
-            font-family: var(--label-sm-semibold-family);
-            font-size: var(--label-sm-semibold-size);
-            font-weight: var(--label-sm-semibold-weight);
-            line-height: var(--label-sm-semibold-line-height);
+            @include typography(label-sm-semibold);
             color: var(--text-secondary);
         }
 
         &__sku {
-            font-family: var(--label-sm-family);
-            font-size: var(--label-sm-size);
-            font-weight: var(--label-sm-weight);
-            line-height: var(--label-sm-line-height);
+            @include typography(label-sm);
             color: var(--text-tertiary);
         }
 
@@ -60,11 +54,8 @@
         }
 
         &__section-title {
+            @include typography(label-sm);
             margin: 0;
-            font-family: var(--label-sm-family);
-            font-size: var(--label-sm-size);
-            font-weight: var(--label-sm-weight);
-            line-height: var(--label-sm-line-height);
             color: var(--text-tertiary);
         }
 
@@ -75,12 +66,9 @@
         }
 
         &__field-label {
+            @include typography(label-sm-semibold);
             display: block;
             margin: 0 0 var(--scale-8);
-            font-family: var(--label-sm-semibold-family);
-            font-size: var(--label-sm-semibold-size);
-            font-weight: var(--label-sm-semibold-weight);
-            line-height: var(--label-sm-semibold-line-height);
             color: var(--text-primary);
         }
 

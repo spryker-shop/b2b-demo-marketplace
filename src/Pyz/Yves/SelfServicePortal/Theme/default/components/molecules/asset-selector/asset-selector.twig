@@ -8,7 +8,11 @@
             modifiers: ['size-inherit'],
             data: { name: 'link' },
         } only %}
-        {{ data.buttonLabel | trans }}
+        {% if 'cart' in modifiers %}
+            {{ data.buttonLabel | trans }}
+        {% else %}
+            <span class="link__text">{{ data.buttonLabel | trans }}</span>
+        {% endif %}
     </button>
 {% endblock %}
 
@@ -29,27 +33,47 @@
 {% endblock %}
 
 {% block change %}
-    <button
-        type="button"
-        class="link link--no-decoration {{ config.name }}__action {{ config.name }}__action--change {{ config.name }}__data-link {{ popupTriggerClass }}"
-        aria-label="{{ 'self_service_portal.asset.selector.change' | trans }}"
-        {{ qa('asset-selector-change') }}
-    >
-        {% include atom('font-icon') with {
-            data: { name: 'edit' },
-        } only %}
-    </button>
+    {% if 'filter' in modifiers %}
+        <button
+            type="button"
+            class="link link--no-decoration {{ config.name }}__action-link {{ popupTriggerClass }}"
+            {{ qa('asset-selector-change') }}
+        >
+            {{ 'self_service_portal.asset.selector.change' | trans }}
+        </button>
+    {% else %}
+        <button
+            type="button"
+            class="link link--no-decoration {{ config.name }}__action {{ config.name }}__action--change {{ config.name }}__data-link {{ popupTriggerClass }}"
+            aria-label="{{ 'self_service_portal.asset.selector.change' | trans }}"
+            {{ qa('asset-selector-change') }}
+        >
+            {% include atom('font-icon') with {
+                data: { name: 'edit' },
+            } only %}
+        </button>
+    {% endif %}
 {% endblock %}
 
 {% block clear %}
-    <button
-        type="button"
-        class="link link--no-decoration {{ config.name }}__action {{ config.name }}__action--clear {{ config.name }}__data-link {{ config.jsName }}__clear"
-        aria-label="{{ 'self_service_portal.asset_filter.clear' | trans }}"
-        {{ qa('asset-selector-clear') }}
-    >
-        {% include atom('font-icon') with {
-            data: { name: 'close' },
-        } only %}
-    </button>
+    {% if 'filter' in modifiers %}
+        <button
+            type="button"
+            class="link link--no-decoration {{ config.name }}__action-link {{ config.jsName }}__clear"
+            {{ qa('asset-selector-clear') }}
+        >
+            {{ 'self_service_portal.asset_filter.clear' | trans }}
+        </button>
+    {% else %}
+        <button
+            type="button"
+            class="link link--no-decoration {{ config.name }}__action {{ config.name }}__action--clear {{ config.name }}__data-link {{ config.jsName }}__clear"
+            aria-label="{{ 'self_service_portal.asset_filter.clear' | trans }}"
+            {{ qa('asset-selector-clear') }}
+        >
+            {% include atom('font-icon') with {
+                data: { name: 'close' },
+            } only %}
+        </button>
+    {% endif %}
 {% endblock %}

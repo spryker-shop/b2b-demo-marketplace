@@ -34,6 +34,11 @@
         color: var(--text-state-error);
     }
 
+    &--info,
+    &--info:hover {
+        color: var(--text-state-info);
+    }
+
     &--no-decoration {
         text-decoration: none;
         border: 0;
@@ -45,5 +50,15 @@
 
     &--font-inherit {
         font: inherit;
+    }
+
+    &:has(.font-icon):hover,
+    &:has(.font-icon):focus {
+        text-decoration: none;
+    }
+
+    &:has(.font-icon):hover &__text,
+    &:has(.font-icon):focus &__text {
+        text-decoration: underline;
     }
 }

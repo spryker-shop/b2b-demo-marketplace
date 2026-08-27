@@ -1,13 +1,12 @@
 {% extends molecule('active-filter', '@SprykerShop:CatalogPage') %}
 
 {% block body %}
-    <strong class="{{ config.name ~ '__name' }}">{{ ('product.filter.' ~ data.filter.name) | trans }}:&nbsp;</strong>
-    {{ data.value }}
-    {% include atom('icon') with {
+    {% include atom('font-icon') with {
         class: config.name ~ '__icon',
-        modifiers: ['cross'],
+        modifiers: ['size-inherit'],
         data: {
-            name: 'cross',
+            name: 'close',
         },
     } only %}
+    <span class="{{ config.name ~ '__value' }}">{{ data.value }}</span>
 {% endblock %}

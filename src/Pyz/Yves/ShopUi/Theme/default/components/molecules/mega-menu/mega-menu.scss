@@ -5,7 +5,7 @@
 
         @include helper-breakpoint-media-min($xl) {
             display: flex;
-            background: var(--header-nav);
+            background: var(--header-main);
             width: rem(992);
             max-width: calc(100vw - #{rem(128)});
             border-radius: var(--radius-lg);
@@ -24,11 +24,8 @@
         }
 
         &__sidebar-header {
+            @include typography(label-sm-semibold);
             padding: var(--scale-20) var(--scale-16);
-            font-family: var(--label-sm-family);
-            font-size: var(--label-sm-size);
-            font-weight: var(--font-weight-semibold);
-            line-height: var(--label-sm-line-height);
             color: var(--text-tertiary);
             flex-shrink: 0;
             margin: 0;
@@ -52,15 +49,12 @@
         }
 
         &__sidebar-link {
+            @include typography(body-md);
             position: relative;
             display: flex;
             align-items: center;
             gap: var(--scale-8);
             padding: var(--scale-8) var(--scale-16) var(--scale-8) var(--scale-20);
-            font-family: var(--body-md-family);
-            font-size: var(--body-md-size);
-            font-weight: var(--font-weight-regular);
-            line-height: var(--body-md-line-height);
             color: var(--text-secondary);
             text-decoration: none;
         }
@@ -140,11 +134,8 @@
         }
 
         &__panel-title {
+            @include typography(heading-sm);
             display: block;
-            font-family: var(--heading-sm-family);
-            font-size: var(--heading-sm-size);
-            font-weight: var(--heading-sm-weight);
-            line-height: var(--heading-sm-line-height);
             color: var(--text-primary);
             text-decoration: none;
         }
@@ -165,10 +156,7 @@
         }
 
         &__panel-link {
-            font-family: var(--body-md-family);
-            font-size: var(--body-md-size);
-            font-weight: var(--font-weight-regular);
-            line-height: var(--body-md-line-height);
+            @include typography(body-md);
             color: var(--text-primary);
             text-decoration: none;
 

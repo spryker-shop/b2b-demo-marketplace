@@ -1,8 +1,24 @@
-.filter-enumeration {
-    margin-bottom: -0.5rem;
-    padding: 0 rem(85) 0 rem(10);
+@mixin catalog-page-filter-enumeration($name: '.filter-enumeration') {
+    #{$name} {
+        &__list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-8);
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
 
-    @include helper-breakpoint-media-min($lg) {
-        padding: 0;
+        &__item {
+            display: flex;
+            align-items: center;
+            min-height: rem(28);
+            margin: 0;
+            line-height: var(--font-line-height-20);
+        }
+
+        @content;
     }
 }
+
+@include catalog-page-filter-enumeration();

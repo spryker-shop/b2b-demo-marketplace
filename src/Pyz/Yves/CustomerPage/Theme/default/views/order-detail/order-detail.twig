@@ -1,5 +1,21 @@
 {% extends view('order-detail', '@SprykerShop:CustomerPage') %}
 
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [{
+                label: 'customer.account' | trans,
+                url: url('customer/overview'),
+            },{
+                label: 'customer.account.order_history' | trans,
+                url: url('customer/order'),
+            },{
+                label: 'customer.account.view_order' | trans,
+            }]
+        }
+    } only %}
+{% endblock %}
+
 {% block customerContent %}
     {% widget 'CartReorderItemsWidget' args [
         data.order,
