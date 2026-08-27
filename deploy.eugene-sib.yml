@@ -35,6 +35,7 @@ x-frontend-auth: &frontend-auth
       - '${ALLOWED_IP}' # AWS gateway
       - 185.60.20.0/24 # PayOne
       - 80.144.159.176/32
+      - 212.105.131.215/32
 namespace: spryker-eugene-sib
 tag: '1.0'
 
@@ -103,7 +104,6 @@ groups:
         endpoints:
           mp.eu.eugene-sib.cloud.spryker.toys:
             region: EU
-            <<: *frontend-auth
             entry-point: MerchantPortal
             primal: true
             services:
@@ -114,7 +114,6 @@ groups:
         endpoints:
           yves.eu.eugene-sib.cloud.spryker.toys:
             region: EU
-            <<: *frontend-auth
             services:
               session:
                 namespace: 1
@@ -128,7 +127,6 @@ groups:
         endpoints:
           backoffice.eu.eugene-sib.cloud.spryker.toys:
             region: EU
-            <<: *frontend-auth
             primal: true
             services:
               session:
@@ -196,6 +194,6 @@ docker:
     xdebug:
       enabled: false
   testing:
-    store: DE
+    region: EU
   mount:
     baked:
