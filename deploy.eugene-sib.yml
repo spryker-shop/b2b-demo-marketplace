@@ -79,28 +79,34 @@ regions:
         database: eugene_sib
         username: spryker
         password: secret
+      broker:
+          namespace: eu-docker
+      key_value_store:
+          namespace: 1
+      search:
+          namespace: eu_search
 
-    stores:
-      DE:
-        services:
-          broker:
-            namespace: de_queue
-          key_value_store:
-            namespace: 1
-          search:
-            namespace: de_search
-          session:
-            namespace: 2
-      AT:
-        services:
-          broker:
-            namespace: at_queue
-          key_value_store:
-            namespace: 1
-          search:
-            namespace: at_search
-          session:
-            namespace: 2
+   # stores:
+   #   DE:
+   #     services:
+   #       broker:
+   #         namespace: de_queue
+   #       key_value_store:
+   #         namespace: 1
+   #       search:
+   #         namespace: de_search
+   #       session:
+   #         namespace: 2
+   #   AT:
+   #     services:
+   #       broker:
+   #         namespace: at_queue
+   #       key_value_store:
+   #         namespace: 1
+   #       search:
+   #         namespace: at_search
+   #       session:
+   #         namespace: 2
 groups:
   EU:
     region: EU
