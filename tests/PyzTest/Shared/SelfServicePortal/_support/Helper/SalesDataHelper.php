@@ -78,9 +78,6 @@ class SalesDataHelper extends SprykerSalesDataHelper
 
     /**
      * @param list<mixed> $override
-     * @param string|null $stateMachineProcessName
-     *
-     * @return \Generated\Shared\Transfer\SaveOrderTransfer
      */
     public function haveFullOrder(
         array $override = [],
@@ -108,8 +105,6 @@ class SalesDataHelper extends SprykerSalesDataHelper
 
     /**
      * @param list<mixed> $override
-     *
-     * @return void
      */
     protected function handleOrderItemProductClasses(array $override): void
     {
@@ -152,8 +147,6 @@ class SalesDataHelper extends SprykerSalesDataHelper
 
     /**
      * @param list<mixed> $override
-     *
-     * @return void
      */
     protected function handleOrderItemScheduling(array $override): void
     {
@@ -178,10 +171,7 @@ class SalesDataHelper extends SprykerSalesDataHelper
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      * @param list<mixed> $override
-     *
-     * @return void
      */
     protected function handleCompanyAssignment(SaveOrderTransfer $saveOrderTransfer, array $override): void
     {

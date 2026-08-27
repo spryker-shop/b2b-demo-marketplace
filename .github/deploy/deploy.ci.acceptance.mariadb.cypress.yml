@@ -129,7 +129,7 @@ services:
         engine: valkey
     search:
         engine: opensearch
-        version: '2.19'
+        version: '2.19' # legacy version kept for backward compatibility testing
     mail_catcher:
         engine: mailpit
 

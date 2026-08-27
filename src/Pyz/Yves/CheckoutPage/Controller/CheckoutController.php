@@ -21,8 +21,6 @@ use Symfony\Component\HttpFoundation\Request;
 class CheckoutController extends SprykerCheckoutController
 {
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Spryker\Yves\Kernel\View\View
      */
     public function customerAction(Request $request)
@@ -54,8 +52,6 @@ class CheckoutController extends SprykerCheckoutController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Spryker\Yves\Kernel\View\View
      */
     public function addressAction(Request $request)
@@ -87,8 +83,6 @@ class CheckoutController extends SprykerCheckoutController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Spryker\Yves\Kernel\View\View
      */
     public function shipmentAction(Request $request)
@@ -120,8 +114,6 @@ class CheckoutController extends SprykerCheckoutController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Spryker\Yves\Kernel\View\View
      */
     public function paymentAction(Request $request)
@@ -153,8 +145,6 @@ class CheckoutController extends SprykerCheckoutController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Spryker\Yves\Kernel\View\View
      */
     public function summaryAction(Request $request)
@@ -185,9 +175,6 @@ class CheckoutController extends SprykerCheckoutController
         );
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
-     */
     protected function canProceedCheckout(): QuoteValidationResponseTransfer
     {
         $quoteTransfer = $this->getFactory()
@@ -201,8 +188,6 @@ class CheckoutController extends SprykerCheckoutController
 
     /**
      * @param \ArrayObject<int, \Generated\Shared\Transfer\MessageTransfer> $messageTransfers
-     *
-     * @return void
      */
     protected function processErrorMessages(ArrayObject $messageTransfers): void
     {

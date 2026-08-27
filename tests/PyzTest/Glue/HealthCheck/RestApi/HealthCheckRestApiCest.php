@@ -41,11 +41,6 @@ class HealthCheckRestApiCest
      */
     protected const UNKNOWN_SERVICE_NAME = 'unknown-service';
 
-    /**
-     * @param \PyzTest\Glue\HealthCheck\HealthCheckApiTester $I
-     *
-     * @return void
-     */
     public function requestGetHealthCheckReturnsForbiddenWhenDisabled(HealthCheckApiTester $I): void
     {
         // Act
@@ -80,10 +75,6 @@ class HealthCheckRestApiCest
      * Requesting an unknown service short-circuits before the disabled-flag check (validator runs
      * first), so this scenario is independent from `HealthCheckConfig::isHealthCheckEnabled()` and
      * reliably returns HTTP 400 with `Requested services not found.` in any environment.
-     *
-     * @param \PyzTest\Glue\HealthCheck\HealthCheckApiTester $I
-     *
-     * @return void
      */
     public function requestGetHealthCheckWithUnknownServiceReturnsBadRequest(HealthCheckApiTester $I): void
     {
@@ -115,10 +106,6 @@ class HealthCheckRestApiCest
      * keys (`status`, `statusCode`, `message`, `healthCheckServiceResponses`), regardless of the
      * underlying service state or which transport (legacy Glue REST array shape or API Platform
      * object shape) serves the request.
-     *
-     * @param \PyzTest\Glue\HealthCheck\HealthCheckApiTester $I
-     *
-     * @return void
      */
     public function requestGetHealthCheckResponseExposesTheExpectedAttributeShape(HealthCheckApiTester $I): void
     {

@@ -24,11 +24,6 @@ class ProductUrlCartConnectorDependencyProvider extends AbstractBundleDependency
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
@@ -38,11 +33,6 @@ class ProductUrlCartConnectorDependencyProvider extends AbstractBundleDependency
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addFacadeProduct(Container $container): Container
     {
         $container->set(static::FACADE_PRODUCT, function (Container $container) {
@@ -52,11 +42,6 @@ class ProductUrlCartConnectorDependencyProvider extends AbstractBundleDependency
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addFacadeLocale(Container $container): Container
     {
         $container->set(static::FACADE_PRODUCT, function (Container $container) {

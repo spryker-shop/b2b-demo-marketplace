@@ -52,8 +52,6 @@ class SelfServicePortalConfig extends SprykerSelfServicePortalConfig
 
     /**
      * @api
-     *
-     * @return string
      */
     public function getDefaultSelectedShipmentTypeKey(): string
     {

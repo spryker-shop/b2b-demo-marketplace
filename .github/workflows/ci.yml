@@ -188,12 +188,11 @@ jobs:
 
     # Not draft-tiered: codeception always runs, so its dump must too.
     build-db:
-        needs: [js-validation]
         uses: ./.github/workflows/_build-db.yml
         secrets: inherit
 
     codeception:
-        needs: [js-validation, validation, build-db]
+        needs: [build-db]
         uses: ./.github/workflows/_codeception.yml
         secrets: inherit
 
@@ -229,7 +228,7 @@ jobs:
 
     # [project applicable] Cypress Project tests run
     cypress-e2e:
-        needs: [js-validation, validation, cypress-quality-gate]
+        needs: [cypress-quality-gate]
         name: "Cypress-boilerplate / E2E"
         runs-on: ubuntu-latest
         env:
@@ -301,7 +300,6 @@ jobs:
 
     # [remove for project]
     robot-api:
-        needs: [validation]
         # Draft PRs skip the E2E tier; it runs on ready_for_review.
         if: ${{ github.event_name != 'pull_request' || github.event.pull_request.draft == false }}
         uses: ./.github/workflows/_robot-api.yml
@@ -309,7 +307,6 @@ jobs:
 
     # [remove for project]
     robot-ui:
-        needs: [js-validation, validation]
         # Draft PRs skip the E2E tier; it runs on ready_for_review.
         if: ${{ github.event_name != 'pull_request' || github.event.pull_request.draft == false }}
         uses: ./.github/workflows/_robot-ui.yml
@@ -317,7 +314,6 @@ jobs:
 
     # [remove for project]
     cypress:
-        needs: [js-validation, validation]
         # Draft PRs skip the E2E tier; it runs on ready_for_review.
         if: ${{ github.event_name != 'pull_request' || github.event.pull_request.draft == false }}
         uses: ./.github/workflows/_cypress.yml

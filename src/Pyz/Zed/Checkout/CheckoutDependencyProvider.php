@@ -83,8 +83,6 @@ use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\Checkout\CostCente
 class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
 {
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
      * @return array<\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginInterface>
      */
     protected function getCheckoutPreConditions(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
@@ -117,8 +115,6 @@ class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
      * @return list<\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginInterface>
      */
     protected function getCheckoutPreConditionsForOrderAmendment(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
@@ -153,8 +149,6 @@ class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
      * @return array<\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface>|array<\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface>
      */
     protected function getCheckoutOrderSavers(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
@@ -186,8 +180,6 @@ class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
      * @return list<\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface|\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface>
      */
     protected function getCheckoutOrderSaversForOrderAmendment(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
@@ -220,8 +212,6 @@ class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
      * @return array<\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPostSaveInterface>
      */
     protected function getCheckoutPostHooks(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
@@ -237,8 +227,6 @@ class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
      * @return list<\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPostSaveInterface>
      */
     protected function getCheckoutPostHooksForOrderAmendment(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
@@ -251,8 +239,6 @@ class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
      * @return array<\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveHookInterface|\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveInterface|\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreSavePluginInterface>
      */
     protected function getCheckoutPreSaveHooks(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
@@ -264,8 +250,6 @@ class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
      * @return list<\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveHookInterface|\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveInterface|\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreSavePluginInterface>
      */
     protected function getCheckoutPreSaveHooksForOrderAmendment(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter

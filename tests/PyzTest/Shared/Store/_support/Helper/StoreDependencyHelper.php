@@ -20,11 +20,6 @@ class StoreDependencyHelper extends SprykerStoreDependencyHelper
 {
     use LocatorHelperTrait;
 
-    /**
-     * @param \Codeception\TestInterface $test
-     *
-     * @return void
-     */
     public function _before(TestInterface $test): void
     {
         $storeName = $this->getDefaultStoreName();
@@ -36,9 +31,6 @@ class StoreDependencyHelper extends SprykerStoreDependencyHelper
             ->set(static::SERVICE_STORE, $storeName);
     }
 
-    /**
-     * @return string
-     */
     public function getDefaultStoreName(): string
     {
         return $this->getLocator()->store()->facade()->getCurrentStore(true)->getNameOrFail();
