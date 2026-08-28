@@ -60,7 +60,7 @@ class PriceProductOrderAmendmentRestApiFixtures implements FixturesBuilderInterf
     /**
      * @var string
      */
-    protected const STATE_MACHINE_NAME = 'DummyPayment01';
+    protected const STATE_MACHINE_NAME = 'MarketplacePayment01';
 
     /**
      * @var string
