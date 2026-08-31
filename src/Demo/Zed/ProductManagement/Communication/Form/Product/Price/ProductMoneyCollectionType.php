@@ -30,8 +30,6 @@ class ProductMoneyCollectionType extends SprykerProductMoneyCollectionType
     protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
 
     /**
-     * @param \Symfony\Component\Form\FormView $productMoneyTypeFormView
-     * @param \Symfony\Component\Form\FormView $moneyValueFormView
      * @param array<string, mixed> $priceTable
      *
      * @return array<string, mixed>
@@ -69,11 +67,7 @@ class ProductMoneyCollectionType extends SprykerProductMoneyCollectionType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormView $view
-     * @param \Symfony\Component\Form\FormInterface $form
      * @param array<string, mixed> $options
-     *
-     * @return void
      */
     public function finishView(FormView $view, FormInterface $form, array $options): void // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
     {

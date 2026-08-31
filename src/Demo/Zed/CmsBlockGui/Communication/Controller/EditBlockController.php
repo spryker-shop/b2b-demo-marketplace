@@ -20,8 +20,6 @@ use Symfony\Component\HttpFoundation\Request;
 class EditBlockController extends SprykerEditBlockController
 {
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>
      */
     public function indexAction(Request $request): RedirectResponse|array

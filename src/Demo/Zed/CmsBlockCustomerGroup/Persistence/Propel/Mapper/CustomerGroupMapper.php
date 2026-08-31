@@ -16,9 +16,6 @@ class CustomerGroupMapper
 {
     /**
      * @param array<int> $customerGroupIds
-     * @param \Generated\Shared\Transfer\CustomerGroupCollectionTransfer $customerGroupCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerGroupCollectionTransfer
      */
     public function mapCustomerGroupIdsToCustomerGroupCollection(
         array $customerGroupIds,

@@ -36,8 +36,6 @@ class CmsBlockCustomerGroupWriter
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
-     *
      * @return array<int>
      */
     protected function getRequestedCmsBlockCustomerGroupIds(CmsBlockTransfer $cmsBlockTransfer): array

@@ -34,10 +34,6 @@ class ProductPriceResolver extends SprykerProductPriceResolver
 
     /**
      * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     * @param \Generated\Shared\Transfer\CurrentProductPriceTransfer $currentProductPriceTransfer
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilter
-     *
-     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
     protected function prepareCurrentProductPriceTransfer(
         array $priceProductTransfers,
@@ -117,10 +113,7 @@ class ProductPriceResolver extends SprykerProductPriceResolver
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilter
      * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
-     * @return int|null
      */
     protected function getConcreteProductCostPrice(PriceProductFilterTransfer $priceProductFilter, array $priceProductTransfers): ?int
     {

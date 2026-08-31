@@ -23,7 +23,6 @@ class PriceProductOfferTableDataMapper extends SprykerPriceProductOfferTableData
     protected const PRICE_TYPE_DEFAULT = 'default';
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      * @param array<\Generated\Shared\Transfer\PriceTypeTransfer> $priceTypeTransfers
      *
      * @return array<string, int>

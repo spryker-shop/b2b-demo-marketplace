@@ -130,10 +130,7 @@ class CmsBlockCustomerGroupFacadeTest extends Unit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      * @param array<int> $customerGroupIds
-     *
-     * @return void
      */
     protected function assignGroupsToCmsBlock(CmsBlockTransfer $cmsBlockTransfer, array $customerGroupIds): void
     {
@@ -149,8 +146,6 @@ class CmsBlockCustomerGroupFacadeTest extends Unit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
-     *
      * @return array<int>
      */
     protected function getAssignedCustomerGroupIds(CmsBlockTransfer $cmsBlockTransfer): array

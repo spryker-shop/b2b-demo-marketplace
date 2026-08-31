@@ -13,17 +13,11 @@ interface CmsBlockCustomerGroupEntityManagerInterface
 {
     /**
      * @param array<int> $customerGroupIds
-     * @param int $idCmsBlock
-     *
-     * @return void
      */
     public function createCmsBlockCustomerGroups(array $customerGroupIds, int $idCmsBlock): void;
 
     /**
      * @param array<int> $customerGroupIds
-     * @param int $idCmsBlock
-     *
-     * @return void
      */
     public function deleteCmsBlockCustomerGroups(array $customerGroupIds, int $idCmsBlock): void;
 }

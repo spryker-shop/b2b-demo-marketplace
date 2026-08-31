@@ -72,8 +72,6 @@ class PriceProductOfferStorageWriter extends SprykerPriceProductOfferStorageWrit
 
     /**
      * @param array<mixed> $productOffer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductOfferStorageTransfer
      */
     protected function createPriceProductOfferStorageTransfer(array $productOffer): PriceProductOfferStorageTransfer
     {

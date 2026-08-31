@@ -21,11 +21,6 @@ class SymfonyMailerToSymfonyMailerAdapter extends SprykerSymfonyMailerToSymfonyM
         '@acme.com',
     ];
 
-    /**
-     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
-     *
-     * @return void
-     */
     public function send(MailTransfer $mailTransfer): void
     {
         if ($this->shouldMute($mailTransfer)) {
@@ -35,11 +30,6 @@ class SymfonyMailerToSymfonyMailerAdapter extends SprykerSymfonyMailerToSymfonyM
         parent::send($mailTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
-     *
-     * @return bool
-     */
     protected function shouldMute(MailTransfer $mailTransfer): bool
     {
         foreach ($mailTransfer->getRecipients() as $recipientTransfer) {

@@ -16,8 +16,6 @@ use SprykerEco\Zed\AmazonQuicksight\Communication\Console\QuicksightUserSyncSave
 class ConsoleDependencyProvider extends PyzConsoleDependencyProvider
 {
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
      * @return array<\Symfony\Component\Console\Command\Command>
      */
     protected function getConsoleCommands(Container $container): array

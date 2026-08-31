@@ -22,11 +22,6 @@ class PriceProductStoreWriterStep extends SprykerPriceProductStoreWriterStep
      */
     protected const VALUE_COST = PriceProductOfferDataSetInterface::VALUE_COST;
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return string
-     */
     protected function getIdPriceProductStore(DataSetInterface $dataSet): string
     {
         /** @var \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore|null $priceProductStoreEntity */
@@ -60,11 +55,6 @@ class PriceProductStoreWriterStep extends SprykerPriceProductStoreWriterStep
         return $priceProductStoreEntity->getIdPriceProductStore();
     }
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return int|null
-     */
     protected function getCostPrice(DataSetInterface $dataSet): ?int
     {
         if (!$dataSet->offsetExists(static::VALUE_COST)) {

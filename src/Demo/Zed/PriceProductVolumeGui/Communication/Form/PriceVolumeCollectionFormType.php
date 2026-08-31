@@ -24,10 +24,7 @@ class PriceVolumeCollectionFormType extends SprykerPriceVolumeCollectionFormType
     public const FIELD_COST_PRICE = 'cost_price';
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array<string, mixed> $options
-     *
-     * @return void
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -36,10 +33,7 @@ class PriceVolumeCollectionFormType extends SprykerPriceVolumeCollectionFormType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array<string, mixed> $options
-     *
-     * @return \Spryker\Zed\PriceProductVolumeGui\Communication\Form\PriceVolumeCollectionFormType
      */
     protected function addCostPriceField(
         FormBuilderInterface $builder,

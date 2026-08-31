@@ -38,10 +38,7 @@ class CostPriceTableConfigurationExpander
     }
 
     /**
-     * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
      * @param array<\Generated\Shared\Transfer\PriceTypeTransfer> $priceTypeTransfers
-     *
-     * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
      */
     public function expandWithColumns(
         GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder,
@@ -62,10 +59,7 @@ class CostPriceTableConfigurationExpander
     }
 
     /**
-     * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
      * @param array<\Generated\Shared\Transfer\PriceTypeTransfer> $priceTypeTransfers
-     *
-     * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
      */
     public function expandWithEditableColumns(
         GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder,

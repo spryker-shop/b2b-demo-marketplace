@@ -17,11 +17,7 @@ use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\Step\PreparePriceD
 class PreparePriceDataStep extends SprykerPreparePriceDataStep
 {
     /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
      * @throws \Spryker\Zed\DataImport\Business\Exception\InvalidDataException
-     *
-     * @return void
      */
     public function execute(DataSetInterface $dataSet): void
     {

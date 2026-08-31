@@ -38,10 +38,7 @@ class PriceProductOfferCreateGuiTableConfigurationProvider extends SprykerPriceP
     }
 
     /**
-     * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
      * @param array<\Generated\Shared\Transfer\PriceTypeTransfer> $priceTypeTransfers
-     *
-     * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
      */
     protected function addColumns(
         GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder,
@@ -56,10 +53,7 @@ class PriceProductOfferCreateGuiTableConfigurationProvider extends SprykerPriceP
     }
 
     /**
-     * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
      * @param array<\Generated\Shared\Transfer\PriceTypeTransfer> $priceTypeTransfers
-     *
-     * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
      */
     protected function addEditableColumns(
         GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder,

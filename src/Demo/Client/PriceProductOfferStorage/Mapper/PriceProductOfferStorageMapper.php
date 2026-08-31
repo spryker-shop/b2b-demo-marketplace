@@ -17,9 +17,6 @@ class PriceProductOfferStorageMapper extends SprykerPriceProductOfferStorageMapp
 {
     /**
      * @param array<mixed> $priceProductOffer
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
     public function mapPriceProductOfferStorageDataToPriceProductTransfer(
         array $priceProductOffer,

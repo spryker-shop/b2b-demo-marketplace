@@ -457,11 +457,6 @@ class CheckoutManager implements CheckoutManagerInterface
         ]);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quote
-     *
-     * @return void
-     */
     protected function ensureItemShipments(QuoteTransfer $quote): void
     {
         $placeholderAddress = (new AddressTransfer())
@@ -479,8 +474,6 @@ class CheckoutManager implements CheckoutManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quote
-     *
      * @return array<string, mixed>
      */
     protected function getCustomerAddresses(QuoteTransfer $quote): array
@@ -520,8 +513,6 @@ class CheckoutManager implements CheckoutManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quote
-     *
      * @return array<array<string, mixed>>
      */
     protected function getShipmentMethods(QuoteTransfer $quote): array
@@ -545,8 +536,6 @@ class CheckoutManager implements CheckoutManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quote
-     *
      * @return array<array<string, mixed>>
      */
     protected function getPaymentMethods(QuoteTransfer $quote): array

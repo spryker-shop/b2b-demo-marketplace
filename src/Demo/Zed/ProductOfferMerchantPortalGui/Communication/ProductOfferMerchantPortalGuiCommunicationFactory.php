@@ -30,9 +30,6 @@ use Symfony\Component\Form\DataTransformerInterface;
  */
 class ProductOfferMerchantPortalGuiCommunicationFactory extends SprykerProductOfferMerchantPortalGuiCommunicationFactory
 {
-    /**
-     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\PriceProductOfferCreateGuiTableConfigurationProviderInterface
-     */
     public function createPriceProductOfferCreateGuiTableConfigurationProvider(): PriceProductOfferCreateGuiTableConfigurationProviderInterface
     {
         return new PriceProductOfferCreateGuiTableConfigurationProvider(
@@ -45,9 +42,6 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends SprykerProductOf
         );
     }
 
-    /**
-     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\PriceProductOfferUpdateGuiTableConfigurationProviderInterface
-     */
     public function createPriceProductOfferUpdateGuiTableConfigurationProvider(): PriceProductOfferUpdateGuiTableConfigurationProviderInterface
     {
         return new PriceProductOfferUpdateGuiTableConfigurationProvider(
@@ -60,9 +54,6 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends SprykerProductOf
         );
     }
 
-    /**
-     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Mapper\PriceProductOfferTableDataMapperInterface
-     */
     public function createPriceProductOfferTableDataMapper(): PriceProductOfferTableDataMapperInterface
     {
         return new PriceProductOfferTableDataMapper(
@@ -73,8 +64,6 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends SprykerProductOf
     }
 
     /**
-     * @param int|null $idProductOffer
-     *
      * @return \Symfony\Component\Form\DataTransformerInterface<\ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>, string>
      */
     public function createPriceProductOfferTransformer(?int $idProductOffer = null): DataTransformerInterface
@@ -91,9 +80,6 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends SprykerProductOf
         );
     }
 
-    /**
-     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Mapper\PriceProductOfferMapper
-     */
     public function createPriceProductOfferMapper(): SprykerPriceProductOfferMapper
     {
         return new PriceProductOfferMapper(
@@ -106,9 +92,6 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends SprykerProductOf
         );
     }
 
-    /**
-     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Expander\PriceProductsVolumeDataExpanderInterface
-     */
     public function createPriceProductsVolumeDataExpander(): PriceProductsVolumeDataExpanderInterface
     {
         return new PriceProductsVolumeDataExpander(
