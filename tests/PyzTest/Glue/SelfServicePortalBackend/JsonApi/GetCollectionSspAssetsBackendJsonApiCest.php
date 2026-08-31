@@ -37,8 +37,6 @@ class GetCollectionSspAssetsBackendJsonApiCest
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\SelfServicePortalBackend\SelfServicePortalBackendApiTester $I
      */
     public function requestGetCollectionSspAssetsWithInvalidToken(SelfServicePortalBackendApiTester $I): void
     {
@@ -54,8 +52,6 @@ class GetCollectionSspAssetsBackendJsonApiCest
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\SelfServicePortalBackend\SelfServicePortalBackendApiTester $I
      */
     public function requestGetCollectionSspAssetsWithValidToken(SelfServicePortalBackendApiTester $I): void
     {

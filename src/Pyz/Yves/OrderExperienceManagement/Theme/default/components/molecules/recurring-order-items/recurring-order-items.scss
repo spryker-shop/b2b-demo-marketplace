@@ -11,8 +11,13 @@
             display: grid;
             gap: var(--scale-8);
             grid-template-columns: 70% auto auto;
+            padding-bottom: var(--scale-8);
             margin-bottom: var(--scale-8);
             text-align: right;
+
+            &:not(:last-child) {
+                border-bottom: 1px solid var(--border-subtle);
+            }
         }
 
         &__item-meta {

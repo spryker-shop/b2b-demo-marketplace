@@ -30,14 +30,8 @@ use Ramsey\Uuid\Uuid;
  */
 class AddReviewsMessageTest extends Unit
 {
-    /**
-     * @var \PyzTest\Zed\MessageBroker\ProductReviewCommunicationTester
-     */
     protected ProductReviewCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     public function testAddReviewsMessageIsSuccessfullyHandled(): void
     {
         // Arrange

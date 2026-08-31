@@ -18,9 +18,6 @@ use Spryker\Zed\SetupFrontend\Business\SetupFrontendBusinessFactory as SprykerSe
  */
 class SetupFrontendBusinessFactory extends SprykerSetupFrontendBusinessFactory
 {
-    /**
-     * @return \Spryker\Zed\SetupFrontend\Business\Model\Builder\BuilderInterface
-     */
     public function createStorybookBuilder(): BuilderInterface
     {
         return new Builder($this->getConfig()->getStorybookBuildCommand());
