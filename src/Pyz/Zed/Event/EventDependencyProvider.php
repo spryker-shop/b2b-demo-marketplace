@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\Event;
 
+use Pyz\Zed\ExampleWorkflow\Communication\Plugin\Event\Subscriber\StateMachineCompanyEventSubscriber;
 use Spryker\Zed\AvailabilityNotification\Communication\Plugin\Event\Subscriber\AvailabilityNotificationSubscriber;
 use Spryker\Zed\AvailabilityStorage\Communication\Plugin\Event\Subscriber\AvailabilityStorageEventSubscriber;
 use Spryker\Zed\CategoryImageStorage\Communication\Plugin\Event\Subscriber\CategoryImageStorageEventSubscriber;
@@ -36,6 +37,7 @@ use Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plugin\Eve
 use Spryker\Zed\PriceProductOfferStorage\Communication\Plugin\Event\Subscriber\PriceProductOfferStorageEventSubscriber;
 use Spryker\Zed\PriceProductStorage\Communication\Plugin\Event\Subscriber\PriceProductStorageEventSubscriber;
 use Spryker\Zed\ProductAlternativeStorage\Communication\Plugin\Event\Subscriber\ProductAlternativeStorageEventSubscriber;
+use Spryker\Zed\ProductAttachmentStorage\Communication\Plugin\Event\Subscriber\ProductAttachmentStorageEventSubscriber;
 use Spryker\Zed\ProductCategoryFilterStorage\Communication\Plugin\Event\Subscriber\ProductCategoryFilterStorageEventSubscriber;
 use Spryker\Zed\ProductDiscontinuedStorage\Communication\Plugin\Event\Subscriber\ProductDiscontinuedStorageEventSubscriber;
 use Spryker\Zed\ProductGroupStorage\Communication\Plugin\Event\Subscriber\ProductGroupStorageEventSubscriber;
@@ -67,9 +69,6 @@ use Spryker\Zed\UrlStorage\Communication\Plugin\Event\Subscriber\UrlStorageEvent
 
 class EventDependencyProvider extends SprykerEventDependencyProvider
 {
-    /**
-     * @return \Spryker\Zed\Event\Dependency\EventSubscriberCollectionInterface
-     */
     public function getEventSubscriberCollection(): EventSubscriberCollectionInterface
     {
         $eventSubscriberCollection = parent::getEventSubscriberCollection();
@@ -88,6 +87,7 @@ class EventDependencyProvider extends SprykerEventDependencyProvider
         $eventSubscriberCollection->add(new ProductStorageEventSubscriber());
         $eventSubscriberCollection->add(new ProductCategoryFilterStorageEventSubscriber());
         $eventSubscriberCollection->add(new ProductImageStorageEventSubscriber());
+        $eventSubscriberCollection->add(new ProductAttachmentStorageEventSubscriber());
         $eventSubscriberCollection->add(new ProductGroupStorageEventSubscriber());
         $eventSubscriberCollection->add(new ProductOptionStorageEventSubscriber());
         $eventSubscriberCollection->add(new ProductReviewStorageEventSubscriber());
@@ -137,6 +137,7 @@ class EventDependencyProvider extends SprykerEventDependencyProvider
 
         /* Custom Events */
         $eventSubscriberCollection->add(new PostUpdateStockRelationsEventSubscriber());
+        $eventSubscriberCollection->add(new StateMachineCompanyEventSubscriber()); #Workflow feature
 
         return $eventSubscriberCollection;
     }

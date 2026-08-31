@@ -39,7 +39,7 @@
         {% block fields %}
             {{ parent() }}
 
-            <label class="label label--browse-file spacing-bottom spacing-bottom--reset {{ embed.parentJsClass }}__browse-file"
+            <label class="{{ embed.parentClass }}__browse-file {{ embed.parentJsClass }}__browse-file"
                    for="{{ data.form.children.fileUploadOrder.vars.id }}">
                 <span class="{{ embed.parentClass }}__browse-file-info">
                     {% include atom('icon') with {
@@ -94,7 +94,8 @@
                 <div class="col col--sm-10 spacing-top">
                     <a class="{{ config.name }}__download-link" href="{{ path('quick-order/download-template', {'file-type': fileTemplateExtension}) }}">
                         {% include atom('icon') with {
-                            modifiers: ['download-file'],
+                            class: "col #{config.name}__download-icon",
+                            modifiers: ['sm-lg-bigger'],
                             data: {
                                 name: 'download-file',
                             },

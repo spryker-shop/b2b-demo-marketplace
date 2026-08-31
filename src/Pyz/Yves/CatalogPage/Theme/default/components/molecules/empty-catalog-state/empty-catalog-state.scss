@@ -1,0 +1,70 @@
+@mixin catalog-page-empty-catalog-state($name: '.empty-catalog-state') {
+    #{$name} {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: var(--scale-24);
+        padding: var(--scale-64) var(--scale-32);
+        background: var(--background-page);
+        border-radius: var(--radius-md);
+        text-align: center;
+        margin: 0;
+
+        @include helper-breakpoint-media-min($lg) {
+            padding: var(--scale-64) var(--scale-16);
+            background: var(--background-surface);
+        }
+
+        &__content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--scale-20);
+            color: var(--text-primary);
+        }
+
+        &__message {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--scale-8);
+        }
+
+        &__heading {
+            @include typography(heading-sm);
+            margin: 0;
+        }
+
+        &__text {
+            @include typography(body-md);
+            margin: 0;
+        }
+
+        &__suggestion {
+            @include typography(body-md);
+            margin: 0;
+        }
+
+        &__suggestion-link {
+            @include typography(label-md-semibold);
+            color: var(--text-brand);
+            text-decoration: none;
+
+            &:hover,
+            &:focus {
+                text-decoration: underline;
+            }
+        }
+
+        &__tip {
+            @include typography(body-sm);
+            margin: 0;
+            color: var(--text-secondary);
+        }
+
+        @content;
+    }
+}
+
+@include catalog-page-empty-catalog-state();

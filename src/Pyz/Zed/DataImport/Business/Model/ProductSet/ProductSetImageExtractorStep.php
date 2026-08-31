@@ -35,13 +35,20 @@ class ProductSetImageExtractorStep implements DataImportStepInterface
     public const IMAGE_LARGE_KEY_PREFIX = 'image_large.';
 
     /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return void
+     * @var string
      */
+    public const KEY_LOCALIZED_ATTRIBUTE_NAMES = 'localized_attribute_names';
+
+    /**
+     * @var string
+     */
+    public const IMAGE_ALT_TEXT_KEY_PREFIX = 'alt_text.';
+
     public function execute(DataSetInterface $dataSet): void
     {
         $imageSets = [];
+        $localizedAttributeNames = [];
+
         foreach ($dataSet as $key => $value) {
             if (!preg_match('/' . static::IMAGE_SET_KEY_PREFIX . '(\d+)/', $key, $match)) {
                 continue;
@@ -53,16 +60,19 @@ class ProductSetImageExtractorStep implements DataImportStepInterface
             ];
         }
         foreach ($dataSet as $key => $value) {
-            if (preg_match('/' . static::IMAGE_SMALL_KEY_PREFIX . '(\d+).(\d+)/', $key, $match)) {
+            if (preg_match('/^' . static::IMAGE_SMALL_KEY_PREFIX . '(\d+).(\d+)/', $key, $match)) {
                 $imageSets[$match[1]]['images'][$match[2]]['image_small'] = $value;
+                $localizedAttributeNames[] = static::IMAGE_ALT_TEXT_KEY_PREFIX . static::IMAGE_SMALL_KEY_PREFIX . $match[1] . '.' . $match[2];
             }
-            if (!preg_match('/' . static::IMAGE_LARGE_KEY_PREFIX . '(\d+).(\d+)/', $key, $match)) {
+            if (!preg_match('/^' . static::IMAGE_LARGE_KEY_PREFIX . '(\d+).(\d+)/', $key, $match)) {
                 continue;
             }
 
             $imageSets[$match[1]]['images'][$match[2]]['image_large'] = $value;
+            $localizedAttributeNames[] = static::IMAGE_ALT_TEXT_KEY_PREFIX . static::IMAGE_LARGE_KEY_PREFIX . $match[1] . '.' . $match[2];
         }
 
+        $dataSet[static::KEY_LOCALIZED_ATTRIBUTE_NAMES] = $localizedAttributeNames;
         $dataSet[static::KEY_TARGET] = $imageSets;
     }
 }

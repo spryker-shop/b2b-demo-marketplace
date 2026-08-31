@@ -14,9 +14,13 @@ use Spryker\Glue\CheckoutRestApi\Plugin\SinglePaymentCheckoutRequestAttributesVa
 use Spryker\Glue\CompanyUsersRestApi\Plugin\CheckoutRestApi\CompanyUserCheckoutRequestExpanderPlugin;
 use Spryker\Glue\CustomersRestApi\Plugin\CheckoutRestApi\BillingAddressCheckoutRequestAttributesValidatorPlugin;
 use Spryker\Glue\PaymentsRestApi\Plugin\CheckoutRestApi\SelectedPaymentMethodCheckoutDataResponseMapperPlugin;
+use Spryker\Glue\ServicePointsRestApi\Plugin\CheckoutRestApi\ServicePointCheckoutDataResponseMapperPlugin;
+use Spryker\Glue\ServicePointsRestApi\Plugin\CheckoutRestApi\ServicePointCheckoutRequestAttributesValidatorPlugin;
 use Spryker\Glue\ShipmentsRestApi\Plugin\CheckoutRestApi\AddressSourceCheckoutRequestValidatorPlugin;
 use Spryker\Glue\ShipmentsRestApi\Plugin\CheckoutRestApi\SelectedShipmentMethodCheckoutDataResponseMapperPlugin;
 use Spryker\Glue\ShipmentsRestApi\Plugin\CheckoutRestApi\ShipmentDataCheckoutRequestValidatorPlugin;
+use Spryker\Glue\ShipmentTypeServicePointsRestApi\Plugin\CheckoutRestApi\ShipmentTypeServicePointCheckoutRequestAttributesValidatorPlugin;
+use Spryker\Glue\ShipmentTypeServicePointsRestApi\Plugin\CheckoutRestApi\ShipmentTypeServicePointCheckoutRequestExpanderPlugin;
 
 class CheckoutRestApiDependencyProvider extends SprykerCheckoutRestApiDependencyProvider
 {
@@ -27,6 +31,8 @@ class CheckoutRestApiDependencyProvider extends SprykerCheckoutRestApiDependency
     {
         return [
             new SinglePaymentCheckoutRequestAttributesValidatorPlugin(),
+            new ServicePointCheckoutRequestAttributesValidatorPlugin(),
+            new ShipmentTypeServicePointCheckoutRequestAttributesValidatorPlugin(),
             new BillingAddressCheckoutRequestAttributesValidatorPlugin(),
         ];
     }
@@ -50,6 +56,7 @@ class CheckoutRestApiDependencyProvider extends SprykerCheckoutRestApiDependency
         return [
             new SelectedShipmentMethodCheckoutDataResponseMapperPlugin(),
             new SelectedPaymentMethodCheckoutDataResponseMapperPlugin(),
+            new ServicePointCheckoutDataResponseMapperPlugin(),
         ];
     }
 
@@ -60,6 +67,7 @@ class CheckoutRestApiDependencyProvider extends SprykerCheckoutRestApiDependency
     {
         return [
             new CompanyUserCheckoutRequestExpanderPlugin(),
+            new ShipmentTypeServicePointCheckoutRequestExpanderPlugin(),
         ];
     }
 }

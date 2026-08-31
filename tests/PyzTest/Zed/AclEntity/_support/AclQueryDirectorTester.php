@@ -53,6 +53,7 @@ use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\AclModelDirector;
 use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\AclModelDirectorInterface;
 use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\AclQueryDirector;
 use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\AclQueryDirectorInterface;
+use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\StrategyResolver\AclQueryScopeResolver;
 use Spryker\Zed\AclEntity\Persistence\Propel\Provider\AclEntityRuleProvider;
 use Spryker\Zed\AclEntity\Persistence\Propel\Provider\AclRoleProvider;
 use Spryker\Zed\AclEntity\Persistence\Propel\Provider\AclRoleProviderInterface;
@@ -128,9 +129,6 @@ class AclQueryDirectorTester extends Actor
      */
     public const CATEGORY_2_KEY = 'category-b';
 
-    /**
-     * @return void
-     */
     public function deleteTestData(): void
     {
         $this->deleteRoles(
@@ -148,9 +146,6 @@ class AclQueryDirectorTester extends Actor
         $this->cleanCache();
     }
 
-    /**
-     * @return void
-     */
     public function cleanCache(): void
     {
         $reflectionResolver = new ReflectionClass(AclEntityMetadataConfigReader::class);
@@ -164,9 +159,6 @@ class AclQueryDirectorTester extends Actor
         $reflectionProperty->setValue(null);
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\AclEntityMetadataCollectionTransfer
-     */
     public function createProductImageProductCompositeEntityMetadataHierarchy(): AclEntityMetadataCollectionTransfer
     {
         // SpyProductImage -> SpyProductImageSet -> SpyProduct
@@ -207,9 +199,6 @@ class AclQueryDirectorTester extends Actor
         return $aclEntityMetadataCollectionTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\AclEntityMetadataCollectionTransfer
-     */
     public function createProductAbstractMerchantMetadataHierarchy(): AclEntityMetadataCollectionTransfer
     {
         // SpyProductAbstract -> SpyMerchantProductAbstract -> SpyMerchant
@@ -244,9 +233,6 @@ class AclQueryDirectorTester extends Actor
         return $aclEntityMetadataCollectionTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\AclEntityMetadataCollectionTransfer
-     */
     public function createProductOfferMetadataHierarchy(): AclEntityMetadataCollectionTransfer
     {
         // SpyProductOffer -> SpyMerchant
@@ -274,9 +260,6 @@ class AclQueryDirectorTester extends Actor
         return $aclEntityMetadataCollectionTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\AclEntityMetadataCollectionTransfer
-     */
     public function createProductOfferMerchantHierarchy(): AclEntityMetadataCollectionTransfer
     {
         $aclEntityMetadataCollectionTransfer = new AclEntityMetadataCollectionTransfer();
@@ -302,9 +285,6 @@ class AclQueryDirectorTester extends Actor
         return $aclEntityMetadataCollectionTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\AclEntityMetadataCollectionTransfer
-     */
     public function createMerchantCategoryMerchantHierarchy(): AclEntityMetadataCollectionTransfer
     {
         $aclEntityMetadataCollectionTransfer = new AclEntityMetadataCollectionTransfer();
@@ -325,21 +305,11 @@ class AclQueryDirectorTester extends Actor
         return $aclEntityMetadataCollectionTransfer;
     }
 
-    /**
-     * @return \Spryker\Zed\AclEntityExtension\Dependency\Plugin\AclEntityMetadataConfigExpanderPluginInterface
-     */
     public function getProductAbstractMerchantAclEntityMetadataConfigExpanderPlugin(): AclEntityMetadataConfigExpanderPluginInterface
     {
         return new AclEntityMetadataConfigExpanderPluginMock();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\RolesTransfer $rolesTransfer
-     * @param \Generated\Shared\Transfer\AclEntityMetadataCollectionTransfer|null $aclEntityMetadataCollectionTransfer
-     * @param \Spryker\Zed\Kernel\AbstractBundleConfig|null $bundleConfig
-     *
-     * @return \Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\AclQueryDirectorInterface
-     */
     public function createAclQueryDirector(
         RolesTransfer $rolesTransfer,
         ?AclEntityMetadataCollectionTransfer $aclEntityMetadataCollectionTransfer = null,
@@ -364,13 +334,6 @@ class AclQueryDirectorTester extends Actor
         );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\RolesTransfer $rolesTransfer
-     * @param \Generated\Shared\Transfer\AclEntityMetadataCollectionTransfer|null $aclEntityMetadataCollectionTransfer
-     * @param \Spryker\Zed\Kernel\AbstractBundleConfig|null $bundleConfig
-     *
-     * @return \Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\AclModelDirectorInterface
-     */
     public function createAclModelDirector(
         RolesTransfer $rolesTransfer,
         ?AclEntityMetadataCollectionTransfer $aclEntityMetadataCollectionTransfer = null,
@@ -393,12 +356,6 @@ class AclQueryDirectorTester extends Actor
         );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     * @param \Generated\Shared\Transfer\RoleTransfer $roleTransfer
-     *
-     * @return void
-     */
     public function createMerchantCategoryRules(
         MerchantTransfer $merchantTransfer,
         RoleTransfer $roleTransfer,
@@ -430,12 +387,6 @@ class AclQueryDirectorTester extends Actor
         );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     * @param \Generated\Shared\Transfer\RoleTransfer $roleTransfer
-     *
-     * @return void
-     */
     public function createProductOfferRules(
         MerchantTransfer $merchantTransfer,
         RoleTransfer $roleTransfer,
@@ -467,12 +418,6 @@ class AclQueryDirectorTester extends Actor
         );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     * @param \Generated\Shared\Transfer\RoleTransfer $roleTransfer
-     *
-     * @return void
-     */
     public function createProductOfferManagerRules(MerchantTransfer $merchantTransfer, RoleTransfer $roleTransfer): void
     {
         $aclEntitySegmentMerchantTransfer = $this->haveAclEntitySegment(
@@ -503,12 +448,6 @@ class AclQueryDirectorTester extends Actor
         );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     * @param \Generated\Shared\Transfer\RoleTransfer $roleTransfer
-     *
-     * @return void
-     */
     public function createProductOfferViewerRules(MerchantTransfer $merchantTransfer, RoleTransfer $roleTransfer): void
     {
         $aclEntitySegmentMerchantTransfer = $this->haveAclEntitySegment(
@@ -540,9 +479,6 @@ class AclQueryDirectorTester extends Actor
         );
     }
 
-    /**
-     * @return \Spryker\Zed\AclEntity\Dependency\Facade\AclEntityToUserFacadeBridgeInterface
-     */
     protected function getUserFacadeMock(): AclEntityToUserFacadeBridgeInterface
     {
         $this->mockFacadeMethod('hasCurrentUser', true, 'User');
@@ -554,11 +490,6 @@ class AclQueryDirectorTester extends Actor
         return new AclEntityToUserFacadeBridge($userFacade);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\RolesTransfer $rolesTransfer
-     *
-     * @return \Spryker\Zed\AclEntity\Dependency\Facade\AclEntityToAclFacadeBridgeInterface
-     */
     protected function getAclFacadeMock(RolesTransfer $rolesTransfer): AclEntityToAclFacadeBridgeInterface
     {
         /** @var \Spryker\Zed\Acl\Business\AclFacadeInterface $aclFacade */
@@ -567,59 +498,31 @@ class AclQueryDirectorTester extends Actor
         return new AclEntityToAclFacadeBridge($aclFacade);
     }
 
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract|null
-     */
     public function findProductAbstractByIdProductAbstract(int $idProductAbstract): ?SpyProductAbstract
     {
         return SpyProductAbstractQuery::create()->filterByPrimaryKey($idProductAbstract)->findOne();
     }
 
-    /**
-     * @param int $idProductImage
-     *
-     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImage|null
-     */
     public function findProductImageByIdProductImage(int $idProductImage): ?SpyProductImage
     {
         return SpyProductImageQuery::create()->filterByPrimaryKey($idProductImage)->findOne();
     }
 
-    /**
-     * @param int $idMerchant
-     *
-     * @return \Orm\Zed\Merchant\Persistence\SpyMerchant|null
-     */
     public function findMerchantByIdMerchant(int $idMerchant): ?SpyMerchant
     {
         return SpyMerchantQuery::create()->filterByPrimaryKey($idMerchant)->findOne();
     }
 
-    /**
-     * @param int $idProduct
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProduct|null
-     */
     public function findProductConcreteByIdProduct(int $idProduct): ?SpyProduct
     {
         return SpyProductQuery::create()->filterByPrimaryKey($idProduct)->findOne();
     }
 
-    /**
-     * @param int $idProductOffer
-     *
-     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOffer|null
-     */
     public function findProductOfferByIdProductOffer(int $idProductOffer): ?SpyProductOffer
     {
         return SpyProductOfferQuery::create()->filterByPrimaryKey($idProductOffer)->findOne();
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\MerchantProductTransfer
-     */
     public function createMerchantProduct(): MerchantProductTransfer
     {
         $merchantTransfer = $this->haveMerchant();
@@ -633,21 +536,11 @@ class AclQueryDirectorTester extends Actor
         );
     }
 
-    /**
-     * @param string $string
-     *
-     * @return string
-     */
     public function purify(string $string): string
     {
         return str_replace(['`', '"'], '', strtolower($string));
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\RolesTransfer $rolesTransfer
-     *
-     * @return \Spryker\Zed\AclEntity\Persistence\Propel\Provider\AclRoleProviderInterface
-     */
     protected function getAclRoleProviderMock(RolesTransfer $rolesTransfer): AclRoleProviderInterface
     {
         return Stub::make(
@@ -658,5 +551,12 @@ class AclQueryDirectorTester extends Actor
                 'cache' => null,
             ],
         );
+    }
+
+    public function clearAclQueryScopeResolverCache(): void
+    {
+        $reflectionClass = new ReflectionClass(AclQueryScopeResolver::class);
+        $cacheProperty = $reflectionClass->getProperty('cache');
+        $cacheProperty->setValue(null, []);
     }
 }

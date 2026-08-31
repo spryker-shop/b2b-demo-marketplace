@@ -31,16 +31,8 @@ class UrlsRestApiCest
      */
     protected const DEFAULT_LOCALE = 'en_US';
 
-    /**
-     * @var \PyzTest\Glue\Urls\RestApi\UrlsRestApiFixtures
-     */
     protected UrlsRestApiFixtures $fixtures;
 
-    /**
-     * @param \PyzTest\Glue\Urls\UrlsRestApiTester $I
-     *
-     * @return void
-     */
     public function loadFixtures(UrlsRestApiTester $I): void
     {
         /** @var \PyzTest\Glue\Urls\RestApi\UrlsRestApiFixtures $fixtures */
@@ -51,10 +43,6 @@ class UrlsRestApiCest
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\Urls\UrlsRestApiTester $I
-     *
-     * @return void
      */
     public function requestNonExistingUrl(UrlsRestApiTester $I): void
     {
@@ -72,15 +60,11 @@ class UrlsRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema
     }
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\Urls\UrlsRestApiTester $I
-     *
-     * @return void
      */
     public function requestUrlWithoutUrlParameter(UrlsRestApiTester $I): void
     {
@@ -101,10 +85,6 @@ class UrlsRestApiCest
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\Urls\UrlsRestApiTester $I
-     *
-     * @return void
      */
     public function requestExistingProductAbstractUrl(UrlsRestApiTester $I): void
     {
@@ -132,7 +112,7 @@ class UrlsRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema
 
         $I->amSure('Returned resource collection consists of 1 item of type url-resolver')
             ->whenI()

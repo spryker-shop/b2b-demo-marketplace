@@ -34,7 +34,7 @@
         {% endblock %}
 
         {% block actions %}
-            <button {{ data.ajaxTriggerAttribute }} title="{{ 'comment_widget.form.add_comment' | trans }}" class="button button--primary {{ config.name }}__button {{ config.jsName }}__button" disabled>
+            <button {{ data.ajaxTriggerAttribute }} title="{{ 'comment_widget.form.add_comment' | trans }}" class="button button--sm {{ config.name }}__button {{ config.jsName }}__button" disabled>
                 {% include atom('icon') with {
                     data: {
                         name: 'send',

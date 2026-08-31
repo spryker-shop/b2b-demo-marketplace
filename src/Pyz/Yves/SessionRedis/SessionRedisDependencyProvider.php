@@ -10,7 +10,7 @@ declare(strict_types = 1);
 namespace Pyz\Yves\SessionRedis;
 
 use Spryker\Yves\SessionRedis\Plugin\SessionRedisLockingExclusion\BotSessionRedisLockingExclusionConditionPlugin;
-use Spryker\Yves\SessionRedis\Plugin\SessionRedisLockingExclusion\UrlSessionRedisLockingExclusionConditionPlugin;
+use Spryker\Yves\SessionRedis\Plugin\SessionRedisLockingExclusion\UrlSessionRedisLockingInclusionConditionPlugin;
 use Spryker\Yves\SessionRedis\SessionRedisDependencyProvider as SprykerSessionRedisDependencyProvider;
 
 class SessionRedisDependencyProvider extends SprykerSessionRedisDependencyProvider
@@ -21,7 +21,7 @@ class SessionRedisDependencyProvider extends SprykerSessionRedisDependencyProvid
     protected function getSessionRedisLockingExclusionConditionPlugins(): array
     {
         return [
-            new UrlSessionRedisLockingExclusionConditionPlugin(),
+            new UrlSessionRedisLockingInclusionConditionPlugin(),
             new BotSessionRedisLockingExclusionConditionPlugin(),
         ];
     }

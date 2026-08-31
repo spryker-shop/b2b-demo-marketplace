@@ -1,0 +1,73 @@
+{% extends template('page-layout-main') %}
+
+{% define data = {
+    title: 'merchant_registration_request_page.page_title' | trans,
+    merchantRegistrationRequestForm: _view.merchantRegistrationRequestForm,
+    companyFields: _view.companyFields,
+    userAccountFields: _view.userAccountFields,
+} %}
+
+{% block content %}
+    <div class="grid grid--center">
+        <div class="col col--sm-12 col--lg-8">
+            {% embed molecule('form') with {
+                data: {
+                    form: data.merchantRegistrationRequestForm,
+                    companyFields: data.companyFields,
+                    userAccountFields: data.userAccountFields,
+                    options: {
+                        action: url('merchant-registration-request'),
+                    },
+                    layout: {
+                        company_name: 'col col--sm-12 col--lg-6',
+                        registration_number: 'col col--sm-12 col--lg-6',
+                        address1: 'col col--sm-12 col--md-8 col--lg-8',
+                        address2: 'col col--sm-12 col--md-4 col--lg-4',
+                        zip_code: 'col col--sm-6 col--lg-4',
+                        city: 'col col--sm-6 col--lg-4',
+                        iso2_code: 'col col--sm-6 col--lg-4',
+                        contact_person_title: 'col col--sm-6 col--lg-4',
+                        contact_person_first_name: 'col col--sm-6 col--lg-4',
+                        contact_person_last_name: 'col col--sm-6 col--lg-4',
+                        email: 'col col--sm-6',
+                        contact_person_phone: 'col col--sm-6',
+                        contact_person_role: 'col col--sm-12',
+                    },
+                    submit: {
+                        enable: false,
+                        text: 'merchant_registration_request_page.form_submit' | trans,
+                    },
+                },
+            } only %}
+                {% block fields %}
+                    <div class="col col--sm-12 spacing-bottom--biggest">
+                        {% include molecule('merchant-registration-request-subform', 'MerchantRegistrationRequestPage') with {
+                            class: 'grid grid--gap-smaller',
+                            data: {
+                                fieldNames: data.companyFields,
+                                layout: data.layout,
+                                form: data.form,
+                                subformTitle: 'merchant_registration_request_page.company_subform_title' | trans,
+                                subformText: 'merchant_registration_request_page.company_subform_text' | trans,
+                            },
+                        } only %}
+                    </div>
+
+                    <div class="col col--sm-12">
+                        {% include molecule('merchant-registration-request-subform', 'MerchantRegistrationRequestPage') with {
+                            class: 'grid grid--gap-smaller',
+                            data: {
+                                fieldNames: data.userAccountFields | merge(['accept_terms']),
+                                layout: data.layout,
+                                form: data.form,
+                                subformTitle: 'merchant_registration_request_page.account_subform_title' | trans,
+                                subformText: 'merchant_registration_request_page.account_subform_text' | trans,
+                                renderParent: true,
+                            },
+                        } only %}
+                    </div>
+                {% endblock %}
+            {% endembed %}
+        </div>
+    </div>
+{% endblock %}

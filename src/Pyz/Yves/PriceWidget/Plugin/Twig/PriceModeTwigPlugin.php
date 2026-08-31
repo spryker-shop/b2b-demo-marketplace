@@ -42,11 +42,6 @@ class PriceModeTwigPlugin extends AbstractPlugin implements TwigPluginInterface
         return $twig;
     }
 
-    /**
-     * @param \Twig\Environment $twig
-     *
-     * @return \Twig\Environment
-     */
     protected function addPriceModeFunction(Environment $twig): Environment
     {
         $priceModeFunction = new TwigFunction(static::FUNCTION_NAME_GET_PRICE_MODE, function () {

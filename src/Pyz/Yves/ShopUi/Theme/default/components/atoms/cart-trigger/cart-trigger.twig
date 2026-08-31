@@ -1,0 +1,23 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'cart-trigger',
+    tag: 'button',
+} %}
+
+{% define data = {
+    quantity: 0,
+} %}
+
+{% block body %}
+    <span class="{{ config.name }}__icon">
+        {% include atom('font-icon') with {
+            modifiers: ['size-inherit'],
+            data: { name: 'shopping_cart' },
+        } only %}
+    </span>
+
+    {% if data.quantity > 0 %}
+        <span class="{{ config.name }}__badge" aria-hidden="true">{{ data.quantity }}</span>
+    {% endif %}
+{% endblock %}

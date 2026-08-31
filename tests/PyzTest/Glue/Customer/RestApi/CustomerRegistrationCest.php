@@ -32,16 +32,8 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class CustomerRegistrationCest
 {
-    /**
-     * @var \PyzTest\Glue\Customer\RestApi\CustomerRestApiFixtures
-     */
     protected CustomerRestApiFixtures $fixtures;
 
-    /**
-     * @param \PyzTest\Glue\Customer\CustomerApiTester $i
-     *
-     * @return void
-     */
     public function _before(CustomerApiTester $i): void
     {
         /** @var \PyzTest\Glue\Customer\RestApi\CustomerRestApiFixtures $fixtures */
@@ -50,11 +42,6 @@ class CustomerRegistrationCest
         $this->fixtures = $fixtures;
     }
 
-    /**
-     * @param \PyzTest\Glue\Customer\CustomerApiTester $I
-     *
-     * @return void
-     */
     public function requestPostCustomerFailsOnExistingEmailUsage(CustomerApiTester $I): void
     {
         /** @var \Generated\Shared\Transfer\RestCustomersAttributesTransfer $restCustomersAttributesTransfer */
@@ -86,7 +73,7 @@ class CustomerRegistrationCest
         // Assert
         $I->seeResponseCodeIs(Response::HTTP_UNPROCESSABLE_ENTITY);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->seeResponseErrorsHaveCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_ALREADY_EXISTS);
         $I->seeResponseErrorsHaveStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
@@ -95,11 +82,6 @@ class CustomerRegistrationCest
 
     /**
      * @dataProvider requestPostCustomerFailsValidationDataProvider
-     *
-     * @param \PyzTest\Glue\Customer\CustomerApiTester $I
-     * @param \Codeception\Example $example
-     *
-     * @return void
      */
     public function requestPostCustomerFailsValidation(CustomerApiTester $I, Example $example): void
     {
@@ -117,7 +99,7 @@ class CustomerRegistrationCest
         // Assert
         $I->seeResponseCodeIs($example[RestErrorMessageTransfer::STATUS]);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         foreach ($example['errors'] as $index => $error) {
             $I->seeResponseErrorsHaveCode($error[RestErrorMessageTransfer::CODE], (string)$index);
@@ -126,9 +108,6 @@ class CustomerRegistrationCest
         }
     }
 
-    /**
-     * @return array
-     */
     protected function requestPostCustomerFailsValidationDataProvider(): array
     {
         return [

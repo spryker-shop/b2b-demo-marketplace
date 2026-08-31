@@ -10,6 +10,7 @@ declare(strict_types = 1);
 namespace Pyz\Yves\Console;
 
 use Spryker\Yves\Console\ConsoleDependencyProvider as SprykerConsoleDependencyProvider;
+use Spryker\Yves\EventDispatcher\Plugin\Console\EventDispatcherApplicationPlugin;
 use Spryker\Yves\Form\Plugin\Application\FormApplicationPlugin;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Locale\Plugin\Application\ConsoleLocaleApplicationPlugin;
@@ -26,8 +27,6 @@ use Spryker\Yves\Twig\Plugin\Console\TwigTemplateWarmingModeEventSubscriberPlugi
 class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
 {
     /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
      * @return array<\Symfony\Component\Console\Command\Command>
      */
     protected function getConsoleCommands(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
@@ -40,8 +39,6 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
     }
 
     /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
      * @return array<\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface>
      */
     protected function getApplicationPlugins(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
@@ -53,12 +50,11 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new RouterApplicationPlugin(),
             new TwigApplicationPlugin(),
             new FormApplicationPlugin(),
+            new EventDispatcherApplicationPlugin(),
         ];
     }
 
     /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
      * @return array<\Symfony\Component\EventDispatcher\EventSubscriberInterface>
      */
     protected function getEventSubscriber(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter

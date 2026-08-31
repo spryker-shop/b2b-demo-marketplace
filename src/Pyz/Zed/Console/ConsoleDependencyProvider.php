@@ -10,10 +10,13 @@ declare(strict_types = 1);
 namespace Pyz\Zed\Console;
 
 use Pyz\Zed\DataImport\DataImportConfig;
-use Pyz\Zed\Development\Communication\Console\AcceptanceCodeTestConsole;
 use Pyz\Zed\Development\Communication\Console\ApiCodeTestConsole;
 use Pyz\Zed\Development\Communication\Console\FunctionalCodeTestConsole;
+use Pyz\Zed\PunchoutGateway\Communication\Console\PunchoutDemoConnectionCreateConsole;
+use Pyz\Zed\SetupFrontend\Communication\Console\StorybookBuildFrontendConsole;
+use Pyz\Zed\WaterTreatmentConfiguratorPageExample\Communication\Console\WaterTreatmentProductConfiguratorBuildFrontendConsole;
 use SecurityChecker\Command\SecurityCheckerCommand;
+use Spryker\Zed\AclEntity\Communication\Console\AclEntityMetadataConfigValidateConsole;
 use Spryker\Zed\AclMerchantPortal\Communication\Console\AclEntitySynchronizeConsole;
 use Spryker\Zed\BusinessOnBehalfDataImport\BusinessOnBehalfDataImportConfig;
 use Spryker\Zed\Cache\Communication\Console\EmptyAllCachesConsole;
@@ -22,7 +25,11 @@ use Spryker\Zed\CompanyBusinessUnitDataImport\CompanyBusinessUnitDataImportConfi
 use Spryker\Zed\CompanyDataImport\CompanyDataImportConfig;
 use Spryker\Zed\CompanyUnitAddressDataImport\CompanyUnitAddressDataImportConfig;
 use Spryker\Zed\CompanyUnitAddressLabelDataImport\CompanyUnitAddressLabelDataImportConfig;
+use Spryker\Zed\Configuration\Communication\Console\ConfigurationSyncConsole;
+use Spryker\Zed\Configuration\Communication\Plugin\Application\ConfigurationApplicationPlugin;
+use Spryker\Zed\Console\Communication\Plugin\Console\MultiProcessRunConsole;
 use Spryker\Zed\Console\ConsoleDependencyProvider as SprykerConsoleDependencyProvider;
+use Spryker\Zed\Container\Communication\Console\ContainerBuilderConsole;
 use Spryker\Zed\ContentNavigationDataImport\ContentNavigationDataImportConfig;
 use Spryker\Zed\CountryDataImport\CountryDataImportConfig;
 use Spryker\Zed\CurrencyDataImport\CurrencyDataImportConfig;
@@ -32,6 +39,7 @@ use Spryker\Zed\CustomerStorage\Communication\Console\DeleteExpiredCustomerInval
 use Spryker\Zed\DataExport\Communication\Console\DataExportConsole;
 use Spryker\Zed\DataImport\Communication\Console\DataImportConsole;
 use Spryker\Zed\DataImport\Communication\Console\DataImportDumpConsole;
+use Spryker\Zed\DataImportMerchant\Communication\Console\DataImportMerchantImportConsole;
 use Spryker\Zed\Development\Communication\Console\CodeArchitectureSnifferConsole;
 use Spryker\Zed\Development\Communication\Console\CodeFixturesConsole;
 use Spryker\Zed\Development\Communication\Console\CodePhpstanConsole;
@@ -53,9 +61,11 @@ use Spryker\Zed\Development\Communication\Console\RemoveServiceIdeAutoCompletion
 use Spryker\Zed\Development\Communication\Console\RemoveYvesIdeAutoCompletionConsole;
 use Spryker\Zed\Development\Communication\Console\RemoveZedIdeAutoCompletionConsole;
 use Spryker\Zed\DocumentationGeneratorRestApi\Communication\Console\GenerateRestApiDocumentationConsole;
+use Spryker\Zed\Event\Communication\Plugin\Console\EventListenerDumpConsole;
 use Spryker\Zed\EventBehavior\Communication\Console\EventBehaviorTriggerTimeoutConsole;
 use Spryker\Zed\EventBehavior\Communication\Console\EventTriggerListenerConsole;
 use Spryker\Zed\EventBehavior\Communication\Plugin\Console\EventBehaviorPostHookPlugin;
+use Spryker\Zed\EventDispatcher\Communication\Plugin\Console\EventDispatcherApplicationPlugin;
 use Spryker\Zed\Form\Communication\Plugin\Application\FormApplicationPlugin;
 use Spryker\Zed\IndexGenerator\Communication\Console\PostgresIndexGeneratorConsole;
 use Spryker\Zed\IndexGenerator\Communication\Console\PostgresIndexRemoverConsole;
@@ -94,11 +104,14 @@ use Spryker\Zed\PriceProductSchedule\Communication\Console\PriceProductScheduleC
 use Spryker\Zed\PriceProductScheduleDataImport\PriceProductScheduleDataImportConfig;
 use Spryker\Zed\ProductAlternativeDataImport\ProductAlternativeDataImportConfig;
 use Spryker\Zed\ProductApprovalDataImport\ProductApprovalDataImportConfig;
+use Spryker\Zed\ProductAttachment\ProductAttachmentConfig;
 use Spryker\Zed\ProductDiscontinued\Communication\Console\DeactivateDiscontinuedProductsConsole;
 use Spryker\Zed\ProductDiscontinuedDataImport\ProductDiscontinuedDataImportConfig;
 use Spryker\Zed\ProductLabel\Communication\Console\ProductLabelRelationUpdaterConsole;
 use Spryker\Zed\ProductLabel\Communication\Console\ProductLabelValidityConsole;
 use Spryker\Zed\ProductLabelDataImport\ProductLabelDataImportConfig;
+use Spryker\Zed\ProductOfferServicePointDataImport\ProductOfferServicePointDataImportConfig;
+use Spryker\Zed\ProductOfferShipmentTypeDataImport\ProductOfferShipmentTypeDataImportConfig;
 use Spryker\Zed\ProductOfferShoppingListDataImport\ProductOfferShoppingListDataImportConfig;
 use Spryker\Zed\ProductOfferValidity\Communication\Console\ProductOfferValidityConsole;
 use Spryker\Zed\ProductPackagingUnitDataImport\ProductPackagingUnitDataImportConfig;
@@ -128,6 +141,7 @@ use Spryker\Zed\RabbitMq\Communication\Console\QueueSetupConsole;
 use Spryker\Zed\RabbitMq\Communication\Console\SetUserPermissionsConsole;
 use Spryker\Zed\RestRequestValidator\Communication\Console\BuildRestApiValidationCacheConsole;
 use Spryker\Zed\RestRequestValidator\Communication\Console\RemoveRestApiValidationCacheConsole;
+use Spryker\Zed\Router\Communication\Plugin\Application\RouterApplicationPlugin;
 use Spryker\Zed\Router\Communication\Plugin\Console\BackendGatewayRouterCacheWarmUpConsole;
 use Spryker\Zed\Router\Communication\Plugin\Console\BackofficeRouterCacheWarmUpConsole;
 use Spryker\Zed\Router\Communication\Plugin\Console\MerchantPortalRouterCacheWarmUpConsole;
@@ -151,19 +165,19 @@ use Spryker\Zed\SearchElasticsearch\Communication\Console\ElasticsearchSnapshotD
 use Spryker\Zed\SearchElasticsearch\Communication\Console\ElasticsearchSnapshotRegisterRepositoryConsole;
 use Spryker\Zed\SearchElasticsearch\Communication\Console\ElasticsearchSnapshotRestoreConsole;
 use Spryker\Zed\Security\Communication\Plugin\Application\ConsoleSecurityApplicationPlugin;
+use Spryker\Zed\ServicePointDataImport\ServicePointDataImportConfig;
 use Spryker\Zed\Session\Communication\Console\SessionRemoveLockConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\CleanUpDependenciesConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\InstallPackageManagerConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\InstallProjectDependenciesConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\MerchantPortalBuildFrontendConsole;
-use Spryker\Zed\SetupFrontend\Communication\Console\MerchantPortalInstallDependenciesConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\Npm\RunnerConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\YvesBuildFrontendConsole;
-use Spryker\Zed\SetupFrontend\Communication\Console\YvesInstallDependenciesConsole;
 use Spryker\Zed\SetupFrontend\Communication\Console\ZedBuildFrontendConsole;
-use Spryker\Zed\SetupFrontend\Communication\Console\ZedInstallDependenciesConsole;
 use Spryker\Zed\SharedCartDataImport\SharedCartDataImportConfig;
 use Spryker\Zed\ShipmentDataImport\ShipmentDataImportConfig;
+use Spryker\Zed\ShipmentTypeDataImport\ShipmentTypeDataImportConfig;
+use Spryker\Zed\ShipmentTypeServicePointDataImport\ShipmentTypeServicePointDataImportConfig;
 use Spryker\Zed\ShoppingListDataImport\ShoppingListDataImportConfig;
 use Spryker\Zed\Sitemap\Communication\Console\SitemapGenerateConsole;
 use Spryker\Zed\StateMachine\Communication\Console\CheckConditionConsole as StateMachineCheckConditionConsole;
@@ -176,6 +190,8 @@ use Spryker\Zed\StorageRedis\Communication\Console\StorageRedisExportRdbConsole;
 use Spryker\Zed\StorageRedis\Communication\Console\StorageRedisImportRdbConsole;
 use Spryker\Zed\StoreContextDataImport\StoreContextDataImportConfig;
 use Spryker\Zed\StoreDataImport\StoreDataImportConfig;
+use Spryker\Zed\SymfonyMessenger\Communication\Console\SymfonyMessengerConsumeMessagesConsole;
+use Spryker\Zed\SymfonyScheduler\Communication\Console\SchedulerListConsole;
 use Spryker\Zed\Synchronization\Communication\Console\ExportSynchronizedDataConsole;
 use Spryker\Zed\Synchronization\Communication\Plugin\Console\DirectSynchronizationConsolePlugin;
 use Spryker\Zed\Transfer\Communication\Console\DataBuilderGeneratorConsole;
@@ -189,10 +205,19 @@ use Spryker\Zed\Twig\Communication\Console\CacheWarmerConsole;
 use Spryker\Zed\Twig\Communication\Console\TwigTemplateWarmerConsole;
 use Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin;
 use Spryker\Zed\Uuid\Communication\Console\UuidGeneratorConsole;
+use Spryker\Zed\Workflow\Communication\Console\CheckConditionConsole as WorkflowCheckConditionConsole;
+use Spryker\Zed\Workflow\Communication\Console\CheckTimeoutConsole as WorkflowCheckTimeoutConsole;
+use Spryker\Zed\Workflow\WorkflowConfig;
 use Spryker\Zed\ZedNavigation\Communication\Console\BuildNavigationConsole;
 use Spryker\Zed\ZedNavigation\Communication\Console\RemoveNavigationCacheConsole;
+use SprykerEco\Zed\Algolia\Communication\Console\AlgoliaEntityExportConsole;
 use SprykerEco\Zed\NewRelic\Communication\Console\RecordDeploymentConsole;
-use SprykerShop\Zed\DateTimeConfiguratorPageExample\Communication\Console\DateTimeProductConfiguratorBuildFrontendConsole;
+use SprykerFeature\Zed\OrderExperienceManagement\Communication\Console\RecurringOrderForecastRefreshConsole;
+use SprykerFeature\Zed\OrderExperienceManagement\Communication\Console\RecurringOrderTriggerConsole;
+use SprykerFeature\Zed\ProductExperienceManagement\Communication\Console\ImportJobRunConsole;
+use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
+use SprykerSdk\Zed\AiDev\Communication\Console\AiToolSetupConsole;
+use SprykerSdk\Zed\AiDev\Communication\Console\McpServerConsole;
 
 /**
  * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
@@ -206,8 +231,6 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
     protected const COMMAND_SEPARATOR = ':';
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
      * @return array<\Symfony\Component\Console\Command\Command>
      */
     protected function getConsoleCommands(Container $container): array
@@ -237,6 +260,8 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new StateMachineCheckTimeoutConsole(),
             new StateMachineCheckConditionConsole(),
             new StateMachineClearLocksConsole(),
+            new WorkflowCheckConditionConsole(), #WorkflowFeature
+            new WorkflowCheckTimeoutConsole(), #WorkflowFeature
             new ImportOrderItemsStatusConsole(),
             new SessionRemoveLockConsole(),
             new QueueTaskConsole(),
@@ -253,6 +278,8 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . CategoryDataImportConfig::IMPORT_TYPE_CATEGORY_STORE),
             new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_CATEGORY_TEMPLATE),
             new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_CUSTOMER),
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_CUSTOMER_GROUP),
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_CUSTOMER_GROUP_TO_CUSTOMER),
             new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_GLOSSARY),
             new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_NAVIGATION),
             new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_NAVIGATION_NODE),
@@ -282,6 +309,8 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_SHIPMENT_PRICE),
             new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_TAX),
             new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_DISCOUNT_AMOUNT),
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_SALES_ORDER),
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . DataImportConfig::IMPORT_TYPE_RECURRING_SCHEDULE),
             new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ShipmentDataImportConfig::IMPORT_TYPE_SHIPMENT),
             new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ShipmentDataImportConfig::IMPORT_TYPE_SHIPMENT_PRICE),
             new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ShipmentDataImportConfig::IMPORT_TYPE_SHIPMENT_METHOD_STORE),
@@ -328,6 +357,31 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . MerchantCommissionDataImportConfig::IMPORT_TYPE_MERCHANT_COMMISSION_STORE),
             new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . MerchantCommissionDataImportConfig::IMPORT_TYPE_MERCHANT_COMMISSION_MERCHANT),
 
+            //Service Point Data Importers
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ServicePointDataImportConfig::IMPORT_TYPE_SERVICE_POINT),
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ServicePointDataImportConfig::IMPORT_TYPE_SERVICE_POINT_STORE),
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ServicePointDataImportConfig::IMPORT_TYPE_SERVICE_POINT_ADDRESS),
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ServicePointDataImportConfig::IMPORT_TYPE_SERVICE_TYPE),
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ServicePointDataImportConfig::IMPORT_TYPE_SERVICE),
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ShipmentTypeServicePointDataImportConfig::IMPORT_TYPE_SHIPMENT_TYPE_SERVICE_TYPE),
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ShipmentTypeDataImportConfig::IMPORT_TYPE_SHIPMENT_TYPE),
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ShipmentTypeDataImportConfig::IMPORT_TYPE_SHIPMENT_TYPE_STORE),
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ShipmentTypeDataImportConfig::IMPORT_TYPE_SHIPMENT_METHOD_SHIPMENT_TYPE),
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ProductOfferServicePointDataImportConfig::IMPORT_TYPE_PRODUCT_OFFER_SERVICE),
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ProductOfferShipmentTypeDataImportConfig::IMPORT_TYPE_PRODUCT_OFFER_SHIPMENT_TYPE),
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . SelfServicePortalConfig::IMPORT_TYPE_PRODUCT_SHIPMENT_TYPE),
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . SelfServicePortalConfig::IMPORT_TYPE_PRODUCT_CLASS),
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . SelfServicePortalConfig::IMPORT_TYPE_PRODUCT_TO_PRODUCT_CLASS),
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . SelfServicePortalConfig::IMPORT_TYPE_SSP_INQUIRY),
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . SelfServicePortalConfig::IMPORT_TYPE_SSP_ASSET),
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . SelfServicePortalConfig::IMPORT_TYPE_SSP_MODEL),
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . SelfServicePortalConfig::IMPORT_TYPE_SSP_MODEL_ASSET),
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . SelfServicePortalConfig::IMPORT_TYPE_SSP_MODEL_PRODUCT_LIST),
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . ProductAttachmentConfig::IMPORT_TYPE_PRODUCT_ATTACHMENT),
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . WorkflowConfig::IMPORT_TYPE_WORKFLOW), #WorkflowFeature
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . SelfServicePortalConfig::IMPORT_TYPE_FILE),
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . static::COMMAND_SEPARATOR . SelfServicePortalConfig::IMPORT_TYPE_FILE_ATTACHMENT),
+
             // Publish and Synchronization
             new EventBehaviorTriggerTimeoutConsole(),
             new PublisherTriggerEventsConsole(),
@@ -358,12 +412,10 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new InstallPackageManagerConsole(),
             new CleanUpDependenciesConsole(),
             new InstallProjectDependenciesConsole(),
-
-            new YvesInstallDependenciesConsole(),
             new YvesBuildFrontendConsole(),
-
-            new ZedInstallDependenciesConsole(),
             new ZedBuildFrontendConsole(),
+            new MerchantPortalBuildFrontendConsole(),
+            new StorybookBuildFrontendConsole(),
 
             new DeleteAllQueuesConsole(),
             new PurgeAllQueuesConsole(),
@@ -408,29 +460,40 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new RecordDeploymentConsole(),
 
             new OrderInvoiceSendConsole(),
-
             new ProductOfferValidityConsole(),
-
-            new MerchantPortalInstallDependenciesConsole(),
-            new MerchantPortalBuildFrontendConsole(),
 
             new MessageBrokerWorkerConsole(),
             new ScopeCacheCollectorConsole(),
-            new DateTimeProductConfiguratorBuildFrontendConsole(),
+            new WaterTreatmentProductConfiguratorBuildFrontendConsole(),
             new OrderMatrixConsole(),
             new AclEntitySynchronizeConsole(),
+            new AclEntityMetadataConfigValidateConsole(),
             new StorageRedisDataReSaveConsole(),
             new SitemapGenerateConsole(),
+            new DataImportMerchantImportConsole(),
+            new ImportJobRunConsole(),
+
+            // Container commands
+            new ContainerBuilderConsole(),
+
+            new AlgoliaEntityExportConsole(),
+
+            new SymfonyMessengerConsumeMessagesConsole(),
+            new SchedulerListConsole(),
+            new ConfigurationSyncConsole(),
+
+            new RecurringOrderTriggerConsole(),
+            new RecurringOrderForecastRefreshConsole(),
         ];
 
         $propelCommands = $container->getLocator()->propel()->facade()->getConsoleCommands();
         $commands = array_merge($commands, $propelCommands);
 
         if ($this->getConfig()->isDevelopmentConsoleCommandsEnabled()) {
+            $commands[] = new EventListenerDumpConsole();
             $commands[] = new CodeTestConsole();
             $commands[] = new CodeStyleSnifferConsole();
             $commands[] = new CodeArchitectureSnifferConsole();
-            $commands[] = new AcceptanceCodeTestConsole();
             $commands[] = new FunctionalCodeTestConsole();
             $commands[] = new ApiCodeTestConsole();
             $commands[] = new CodeFixturesConsole();
@@ -465,6 +528,15 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             $commands[] = new CustomerPasswordResetConsole();
             $commands[] = new CustomerPasswordSetConsole();
             $commands[] = new TriggerEventFromCsvFileConsole();
+            $commands[] = new MultiProcessRunConsole();
+
+            if (class_exists(McpServerConsole::class)) {
+                $commands[] = new McpServerConsole();
+            }
+
+            if (class_exists(AiToolSetupConsole::class)) {
+                $commands[] = new AiToolSetupConsole();
+            }
 
             if (class_exists(SecurityCheckerCommand::class)) {
                 $commands[] = new SecurityCheckerCommand();
@@ -474,14 +546,15 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             $commands[] = new MessageBrokerAwsSqsQueuesCreatorConsole();
             $commands[] = new MessageBrokerAwsSnsTopicsCreatorConsole();
             $commands[] = new MessageBrokerSqsToSnsSubscriberConsole();
+
+            // Punchout Gateway demo connections
+            $commands[] = new PunchoutDemoConnectionCreateConsole();
         }
 
         return $commands;
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
      * @return array<\Spryker\Zed\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface>
      */
     public function getConsolePostRunHookPlugins(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
@@ -492,8 +565,6 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
      * @return array<\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface>
      */
     public function getApplicationPlugins(Container $container): array
@@ -503,15 +574,16 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
         $applicationPlugins[] = new ConsoleLocaleApplicationPlugin();
         $applicationPlugins[] = new ConsoleSecurityApplicationPlugin();
         $applicationPlugins[] = new PropelApplicationPlugin();
+        $applicationPlugins[] = new RouterApplicationPlugin();
         $applicationPlugins[] = new TwigApplicationPlugin();
         $applicationPlugins[] = new FormApplicationPlugin();
+        $applicationPlugins[] = new EventDispatcherApplicationPlugin();
+        $applicationPlugins[] = new ConfigurationApplicationPlugin();
 
         return $applicationPlugins;
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
      * @return array<\Symfony\Component\EventDispatcher\EventSubscriberInterface>
      */
     public function getEventSubscriber(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter

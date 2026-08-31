@@ -26,15 +26,10 @@ use PyzTest\Glue\AvailabilityNotifications\RestApi\Fixtures\AvailabilityNotifica
  */
 class AvailabilityNotificationsRestApiCest
 {
-    /**
-     * @var \PyzTest\Glue\AvailabilityNotifications\RestApi\Fixtures\AvailabilityNotificationsApiFixtures
-     */
     protected AvailabilityNotificationsApiFixtures $fixtures;
 
     /**
      * @param \PyzTest\Glue\AvailabilityNotifications\AvailabilityNotificationsRestApiTester.php $I
-     *
-     * @return void
      */
     public function loadFixtures(AvailabilityNotificationsRestApiTester $I): void
     {
@@ -44,11 +39,6 @@ class AvailabilityNotificationsRestApiCest
         $this->fixtures = $fixtures;
     }
 
-    /**
-     * @param \PyzTest\Glue\AvailabilityNotifications\AvailabilityNotificationsRestApiTester $I
-     *
-     * @return void
-     */
     public function requestCustomerAvailabilityNotifications(AvailabilityNotificationsRestApiTester $I): void
     {
         // Arrange
@@ -65,14 +55,9 @@ class AvailabilityNotificationsRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
-    /**
-     * @param \PyzTest\Glue\AvailabilityNotifications\AvailabilityNotificationsRestApiTester $I
-     *
-     * @return void
-     */
     public function requestCustomerAvailabilityNotificationsAuthorizationError(AvailabilityNotificationsRestApiTester $I): void
     {
         // Arrange
@@ -89,6 +74,6 @@ class AvailabilityNotificationsRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::FORBIDDEN);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 }

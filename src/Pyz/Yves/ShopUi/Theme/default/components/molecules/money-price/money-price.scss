@@ -1,5 +1,13 @@
 @include shop-ui-money-price {
     $name: &;
+    color: var(--text-primary);
+
+    &--row {
+        display: flex;
+        align-items: baseline;
+        gap: var(--scale-8);
+        flex-wrap: wrap;
+    }
 
     &--big {
         margin-top: rem(12);
@@ -35,14 +43,41 @@
         background: $setting-color-gray-7;
     }
 
+    &--detail {
+        margin: 0;
+
+        #{$name}__amount {
+            @include typography(price-lg);
+            color: var(--text-primary);
+
+            &--original {
+                @include typography(caption);
+                color: var(--text-tertiary);
+                text-decoration: line-through;
+            }
+        }
+
+        #{$name}__mode {
+            @include typography(body-sm);
+            color: var(--text-tertiary);
+        }
+    }
+
     &__amount {
         font-size: rem(16);
         font-weight: fw(medium);
         line-height: 1.2;
-        color: $setting-color-gray-4;
+        color: var(--text-primary);
 
         @include helper-breakpoint-media-min($lg) {
-            @include helper-font-size(big);
+            font-size: rem(21);
+        }
+
+        &--sm {
+            font-family: var(--label-sm-family);
+            font-size: var(--label-sm-size);
+            font-weight: var(--label-sm-weight);
+            line-height: 1;
         }
 
         &--big {
@@ -66,28 +101,27 @@
         }
 
         &--original {
-            font-size: rem(15);
-            display: inline-block;
-            color: $setting-color-text;
-            font-weight: fw(regular);
-            margin-left: rem(4);
+            font-size: var(--caption-size);
+            font-weight: var(--caption-weight);
+            text-decoration: line-through;
         }
 
         &--block {
             display: block;
         }
+
+        &--cart {
+            @include typography(price-sm);
+            color: var(--text-primary);
+        }
     }
 
     &__mode {
-        color: $setting-color-gray-5;
-        font-size: rem(12);
-        font-weight: fw(regular);
-        line-height: rem(14);
-
-        @include helper-breakpoint-media-min($lg) {
-            margin-left: rem(5);
-            font-size: rem(12);
-        }
+        font-family: var(--label-sm-family);
+        font-size: var(--label-sm-size);
+        font-weight: var(--label-sm-weight);
+        line-height: 1;
+        white-space: nowrap;
 
         &--big {
             font-size: rem(13);
@@ -96,6 +130,11 @@
 
         &--block {
             display: block;
+        }
+
+        &--cart {
+            @include typography(body-sm);
+            color: var(--text-tertiary);
         }
     }
 }

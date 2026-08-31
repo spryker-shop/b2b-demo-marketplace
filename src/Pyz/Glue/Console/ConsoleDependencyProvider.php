@@ -11,6 +11,7 @@ namespace Pyz\Glue\Console;
 
 use Spryker\Glue\Console\ConsoleDependencyProvider as SprykerConsoleDependencyProvider;
 use Spryker\Glue\DocumentationGeneratorApi\Plugin\Console\ApiGenerateDocumentationConsole;
+use Spryker\Glue\EventDispatcher\Plugin\Console\EventDispatcherApplicationPlugin;
 use Spryker\Glue\GlueApplication\Plugin\Console\ControllerCacheCollectorConsole;
 use Spryker\Glue\GlueApplication\Plugin\Console\RouterCacheWarmUpConsole;
 use Spryker\Glue\GlueApplication\Plugin\Console\RouterDebugGlueApplicationConsole;
@@ -20,8 +21,6 @@ use Spryker\Zed\Propel\Communication\Plugin\Application\PropelApplicationPlugin;
 class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
 {
     /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
      * @return array<\Symfony\Component\Console\Command\Command>
      */
     protected function getConsoleCommands(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
@@ -35,8 +34,6 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
     }
 
     /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
      * @return array<\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface>
      */
     public function getApplicationPlugins(Container $container): array
@@ -44,6 +41,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
         $applicationPlugins = parent::getApplicationPlugins($container);
 
         $applicationPlugins[] = new PropelApplicationPlugin();
+        $applicationPlugins[] = new EventDispatcherApplicationPlugin();
 
         return $applicationPlugins;
     }

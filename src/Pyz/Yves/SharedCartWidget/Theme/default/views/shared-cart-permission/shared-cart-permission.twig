@@ -8,11 +8,11 @@
 {% block body %}
     <span class="cart-permission cart-permission--widget">
     {% if data.accessType == 'OWNER_ACCESS' %}
-        <span class="cart-permission__owner text-alt">
+        <span class="cart-permission__owner">
             {{ 'shared_cart.share_list.permissions.OWNER_ACCESS' | trans }}
         </span>
     {%  elseif data.accessType == 'FULL_ACCESS' %}
-        <span class="cart-permission__full text-success">
+        <span class="cart-permission__full">
             {{ 'shared_cart.share_list.permissions.FULL_ACCESS' | trans }}
         </span>
     {% elseif data.accessType == 'READ_ONLY' %}

@@ -64,43 +64,37 @@
 
 {% block quantity %}
     <div class="col col--sm-6 {{ priceColumnClass }} spacing-y spacing-x spacing-x--inner">
-        <div class="{{ config.name }}__holder-quantity">
-            {% set options = {
-                required: true,
-                label: false,
-                watchExternalChanges: true,
-                componentClass: config.jsName ~ '__formatted',
-                hiddenInputClass: config.jsName ~ '__hidden-input',
-                attr: {
-                    class: config.name ~ '__quantity-input ' ~ config.jsName ~ '__quantity-input',
-                    min: 1,
-                    max: null,
-                    step: 1,
-                    disabled: product is empty,
-                    value: product is empty ? null : data.quantityField.vars.value,
-                },
-            } %}
+        {% set options = {
+            required: true,
+            label: false,
+            watchExternalChanges: true,
+            componentClass: 'quantity-counter__formatted-input js-quantity-counter__formatted-input',
+            hiddenInputClass: config.jsName ~ '__hidden-input',
+            attr: {
+                class: 'quantity-counter__input js-quantity-counter__input ' ~ config.jsName ~ '__quantity-input',
+                min: 1,
+                max: null,
+                step: 1,
+                disabled: product is empty,
+                value: product is empty ? null : data.quantityField.vars.value,
+            },
+        } %}
 
-            {% if data.customQuantityFieldName %}
-                {% set options = options | merge({ full_name: data.customQuantityFieldName }) %}
-            {% endif %}
+        {% if data.customQuantityFieldName %}
+            {% set options = options | merge({ full_name: data.customQuantityFieldName }) %}
+        {% endif %}
 
-            <button class="{{ config.name }}__button
-                    {% if data.product is empty %}
-                        {{ config.name }}__button--disabled
-                    {% endif %}
-                    {{ config.jsName }}__button-decrement
-                    {{ config.name }}__button--decrement">-</button>
-
-            {{ form_widget(data.quantityField, options) }}
-
-            <button class="{{ config.name }}__button
-                    {% if data.product is empty %}
-                       {{ config.name }}__button--disabled
-                    {% endif %}
-                    {{ config.jsName }}__button-increment
-                    {{ config.name }}__button--increment">+</button>
-        </div>
+        {% embed molecule('quantity-counter') with {
+            data: {
+                isDisabled: product is empty,
+            },
+            quantityFormField: data.quantityField,
+            quantityFieldOptions: options,
+        } only %}
+            {% block quantityField %}
+                {{ form_widget(quantityFormField, quantityFieldOptions) }}
+            {% endblock %}
+        {% endembed %}
     </div>
 {% endblock %}
 

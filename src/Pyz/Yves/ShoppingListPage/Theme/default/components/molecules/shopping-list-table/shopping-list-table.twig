@@ -86,6 +86,9 @@
                 {% widget 'ProductConfigurationShoppingListPageButtonWidget' args [data.listItem.shoppingListItem] only %}{% endwidget %}
             {% endblock %}
 
+            {% block serviceInformation %}
+            {% endblock %}
+
             {% block itemAttributes %}
                 {% if data.attributes is not empty %}
                     {% include molecule('product-item-attributes') with {
@@ -127,7 +130,6 @@
 
             {% block quantity %}
                 {% include molecule('quantity-counter') with {
-                    modifiers: ['shopping-list'],
                     data: {
                         isDisabled: not embed.isItemAvailable,
                         numberFormatConfig: embed.numberFormatConfig,

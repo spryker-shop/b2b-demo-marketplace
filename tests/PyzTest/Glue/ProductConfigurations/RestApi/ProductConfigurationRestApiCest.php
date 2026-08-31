@@ -32,16 +32,8 @@ use Spryker\Shared\Price\PriceConfig;
  */
 class ProductConfigurationRestApiCest
 {
-    /**
-     * @var \PyzTest\Glue\ProductConfigurations\RestApi\Fixtures\ProductConfigurationsRestApiFixtures
-     */
     protected ProductConfigurationsRestApiFixtures $fixtures;
 
-    /**
-     * @param \PyzTest\Glue\ProductConfigurations\ProductConfigurationsApiTester $I
-     *
-     * @return void
-     */
     public function loadFixtures(ProductConfigurationsApiTester $I): void
     {
         /** @var \PyzTest\Glue\ProductConfigurations\RestApi\Fixtures\ProductConfigurationsRestApiFixtures $fixtures */
@@ -52,10 +44,6 @@ class ProductConfigurationRestApiCest
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\ProductConfigurations\ProductConfigurationsApiTester $I
-     *
-     * @return void
      */
     public function requestProductConcrete(ProductConfigurationsApiTester $I): void
     {
@@ -78,7 +66,7 @@ class ProductConfigurationRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->amSure('Returned resource is of type concrete-products')
             ->whenI()
@@ -97,11 +85,6 @@ class ProductConfigurationRestApiCest
             ->seeProductConfigurationInstanceEqualToExpectedValue($this->fixtures->getProductConfigurationTransfer());
     }
 
-    /**
-     * @param \PyzTest\Glue\ProductConfigurations\ProductConfigurationsApiTester $I
-     *
-     * @return void
-     */
     public function requestAddConfigurableItemsToCart(ProductConfigurationsApiTester $I): void
     {
         // Arrange
@@ -138,7 +121,7 @@ class ProductConfigurationRestApiCest
 
         // Assert
         $I->seeResponseCodeIs(HttpCode::CREATED);
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->amSure('Returned resource has correct id')
             ->whenI()
@@ -170,11 +153,6 @@ class ProductConfigurationRestApiCest
         );
     }
 
-    /**
-     * @param \PyzTest\Glue\ProductConfigurations\ProductConfigurationsApiTester $I
-     *
-     * @return void
-     */
     public function requestGetOrderDetails(ProductConfigurationsApiTester $I): void
     {
         // Arrange
@@ -195,7 +173,7 @@ class ProductConfigurationRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->amSure('The returned resource is of correct type')
             ->whenI()

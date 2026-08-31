@@ -1,0 +1,32 @@
+@use '~src/ShopUi/styles/panel-dropdown' as *;
+
+@include shop-ui-nav-pill('.header-shopping-list-pill') {
+    &__trigger {
+        @include helper-effect-transition(color);
+        @include typography(label-md);
+        display: flex;
+        align-items: center;
+        gap: var(--scale-4);
+        color: var(--text-secondary);
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        white-space: nowrap;
+
+        &:hover,
+        &[aria-expanded='true'] {
+            color: var(--text-brand);
+        }
+    }
+
+    &__chevron {
+        @include helper-effect-transition(transform);
+        font-size: rem(18);
+        color: var(--icon-secondary);
+    }
+
+    &__trigger[aria-expanded='true'] &__chevron {
+        transform: rotate(180deg);
+    }
+}

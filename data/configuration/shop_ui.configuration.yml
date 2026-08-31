@@ -1,0 +1,345 @@
+# yaml-language-server: $schema=../../../../Spryker/Configuration/resources/configuration/configuration-schema-v1.json
+features:
+    - key: theme
+      name: Theme
+      description: Visual branding settings for Storefront, Back Office, and Merchant Portal
+      enabled: true
+      order: 10
+      tabs:
+          - key: storefront
+            name: Storefront
+            icon: storefront
+            description: Storefront theme colors and custom CSS
+            order: 2
+            enabled: true
+            groups:
+                - key: colors
+                  name: Brand Colors
+                  description: Set the main colors that represent the customer's brand across the storefront.
+                  scopes:
+                      - global
+                      - store
+                  enabled: true
+                  settings:
+                      - key: background_brand_primary
+                        name: Primary Brand Color
+                        description: Primary buttons, cart badge, pagination active page, checkbox/radio/switch checked state, mega-menu active indicator
+                        type: color
+                        default_value: '#318272'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        constraints:
+                            - type: regex
+                              message: 'Must be a valid hex color (e.g. #ff0000)'
+                              options:
+                                  pattern: '^#[0-9A-Fa-f]{6}$'
+
+                      - key: background_brand_subtle
+                        name: Subtle Brand Color
+                        description: Tertiary button hover background, selected option highlight in dropdowns
+                        type: color
+                        default_value: '#f3fffc'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        constraints:
+                            - type: regex
+                              message: 'Must be a valid hex color (e.g. #ff0000)'
+                              options:
+                                  pattern: '^#[0-9A-Fa-f]{6}$'
+
+                      - key: background_brand_hover
+                        name: Hover Color
+                        description: Hover state for primary buttons, checkbox, radio, and switch
+                        type: color
+                        default_value: '#226558'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        constraints:
+                            - type: regex
+                              message: 'Must be a valid hex color (e.g. #ff0000)'
+                              options:
+                                  pattern: '^#[0-9A-Fa-f]{6}$'
+
+                      - key: background_brand_pressed
+                        name: Selected Color
+                        description: Active/pressed state for primary buttons
+                        type: color
+                        default_value: '#15483e'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        constraints:
+                            - type: regex
+                              message: 'Must be a valid hex color (e.g. #ff0000)'
+                              options:
+                                  pattern: '^#[0-9A-Fa-f]{6}$'
+
+                      - key: focus_ring
+                        name: Focus Outline Color
+                        description: Keyboard focus outline on selects, user-account dropdown, cart pill
+                        type: color
+                        default_value: '#acffef'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        constraints:
+                            - type: regex
+                              message: 'Must be a valid hex color (e.g. #ff0000)'
+                              options:
+                                  pattern: '^#[0-9A-Fa-f]{6}$'
+
+                      - key: shadows_focus_color
+                        name: Focus Shadow Color
+                        description: Focus glow on buttons, inputs, checkboxes, switches, selects, tabs
+                        type: color
+                        default_value: '#acffef'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        constraints:
+                            - type: regex
+                              message: 'Must be a valid hex color (e.g. #ff0000)'
+                              options:
+                                  pattern: '^#[0-9A-Fa-f]{6}$'
+
+                      - key: text_brand
+                        name: Text Color
+                        description: Links, breadcrumbs, active tabs, navigation hover, shopping list names, mini-cart item links, suggest search highlights
+                        type: color
+                        default_value: '#226558'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        constraints:
+                            - type: regex
+                              message: 'Must be a valid hex color (e.g. #ff0000)'
+                              options:
+                                  pattern: '^#[0-9A-Fa-f]{6}$'
+
+                      - key: border_brand
+                        name: Border Color
+                        description: Active tab underline, checkout back-button border
+                        type: color
+                        default_value: '#318272'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        constraints:
+                            - type: regex
+                              message: 'Must be a valid hex color (e.g. #ff0000)'
+                              options:
+                                  pattern: '^#[0-9A-Fa-f]{6}$'
+
+                      - key: icon_brand
+                        name: Icon Color
+                        description: Brand-colored icons across the storefront
+                        type: color
+                        default_value: '#226558'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        constraints:
+                            - type: regex
+                              message: 'Must be a valid hex color (e.g. #ff0000)'
+                              options:
+                                  pattern: '^#[0-9A-Fa-f]{6}$'
+
+                - key: header
+                  name: Header
+                  description: Customise the top section of the storefront that customers see first.
+                  scopes:
+                      - global
+                      - store
+                  enabled: true
+                  settings:
+                      - key: header_topbar
+                        name: Top Bar
+                        description: Background of the top info/utility bar above the main header
+                        type: color
+                        default_value: '#3b3b3d'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        constraints:
+                            - type: regex
+                              message: 'Must be a valid hex color (e.g. #ff0000)'
+                              options:
+                                  pattern: '^#[0-9A-Fa-f]{6}$'
+
+                      - key: header_main
+                        name: Main Header
+                        description: Background of the main header area with logo, search, and cart
+                        type: color
+                        default_value: '#ffffff'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        constraints:
+                            - type: regex
+                              message: 'Must be a valid hex color (e.g. #ff0000)'
+                              options:
+                                  pattern: '^#[0-9A-Fa-f]{6}$'
+
+                      - key: header_nav
+                        name: Navigation Bar
+                        description: Background of the category navigation bar below the main header
+                        type: color
+                        default_value: '#fafafa'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        constraints:
+                            - type: regex
+                              message: 'Must be a valid hex color (e.g. #ff0000)'
+                              options:
+                                  pattern: '^#[0-9A-Fa-f]{6}$'
+
+                - key: footer
+                  name: Footer
+                  description: Customise the bottom section of the storefront.
+                  scopes:
+                      - global
+                      - store
+                  enabled: true
+                  settings:
+                      - key: footer_newsletter
+                        name: Newsletter Section
+                        description: Background of the newsletter subscription section in the footer
+                        type: color
+                        default_value: '#1b3835'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        constraints:
+                            - type: regex
+                              message: 'Must be a valid hex color (e.g. #ff0000)'
+                              options:
+                                  pattern: '^#[0-9A-Fa-f]{6}$'
+
+                      - key: footer_main
+                        name: Main Footer
+                        description: Background of the main footer area with links and contacts
+                        type: color
+                        default_value: '#ffffff'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        constraints:
+                            - type: regex
+                              message: 'Must be a valid hex color (e.g. #ff0000)'
+                              options:
+                                  pattern: '^#[0-9A-Fa-f]{6}$'
+
+                      - key: footer_bottombar
+                        name: Bottom Bar
+                        description: Background of the bottom bar in the footer with payment icons and copyright
+                        type: color
+                        default_value: '#f5f5f5'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        constraints:
+                            - type: regex
+                              message: 'Must be a valid hex color (e.g. #ff0000)'
+                              options:
+                                  pattern: '^#[0-9A-Fa-f]{6}$'
+
+                - key: other
+                  name: Other
+                  description: Adjust additional highlight style used in the storefront.
+                  scopes:
+                      - global
+                      - store
+                  enabled: true
+                  settings:
+                      - key: background_highlight
+                        name: Highlight Background Color
+                        description: Accent background for highlighted sections on the page
+                        type: color
+                        default_value: '#f9faff'
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        constraints:
+                            - type: regex
+                              message: 'Must be a valid hex color (e.g. #ff0000)'
+                              options:
+                                  pattern: '^#[0-9A-Fa-f]{6}$'
+
+                - key: custom_css
+                  order: 10
+                  name: Custom CSS
+                  scopes:
+                      - global
+                      - store
+                  enabled: true
+                  settings:
+                      - key: yves_custom_css
+                        name: Storefront Custom CSS
+                        description: Custom CSS injected into storefront pages. Use with caution — invalid CSS may break page layout.
+                        help_text: 'Enter valid CSS rules. Example: .header { background-color: #333; }'
+                        type: text
+                        default_value: ''
+                        scopes:
+                            - global
+                            - store
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        constraints:
+                            - type: max
+                              message: 'Custom CSS must not exceed 50000 characters'
+                              options:
+                                  max: 50000
+                        sanitize_xss: {}

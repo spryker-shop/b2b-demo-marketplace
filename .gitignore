@@ -37,6 +37,7 @@ FOSS.md
 /data/*
 !/data/import/
 !/data/export/
+!/data/configuration/
 /data/export/merchants/*
 
 # grunt stuff
@@ -48,7 +49,13 @@ config/Yves/cache_bust.php
 
 # public stuff
 public/*/assets/
-public/Configurator/dist/
+
+# design tokens - ignore generated files, keep source
+/frontend/assets/global/default/design-tokens/*
+!/frontend/assets/global/default/design-tokens/design-tokens.json
+/src/Pyz/Yves/ShopUi/Theme/*/styles/design-tokens.css
+
+public/WaterTreatmentConfigurator/dist/
 
 # docker stuff
 /.docker-sync/
@@ -68,10 +75,11 @@ npm-debug.log
 !/tests/_support/_generated/.gitkeep
 /codeception.local.yml
 
+/tests/cypress-tests
 /tests/PyzTest/*/*/_output/*
 /tests/PyzTest/*/*/_support/_generated/*
 
-/.robot/results
+/.robot
 /.cypress
 
 # propel classes
@@ -104,9 +112,9 @@ integrator.lock
 docker
 
 # angular
-/.angular/cache
-/.angular
-.nx/cache
+**/.angular/
 
 # Generated icon sprite
 /frontend/assets/global/default/icons/sprite.svg
+CLAUDE.local.md
+.mcp.json

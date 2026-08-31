@@ -34,6 +34,7 @@
 
     {% include molecule('ajax-loader') with {
         attributes: {
+            'parent-class-name': config.name,
             'provider-class-name': config.jsName ~ '__provider-' ~ data.id,
         },
     } only %}
@@ -50,12 +51,12 @@
             <input type="hidden" name="{{ attributes['selected-value-key'] }}" class="{{ config.jsName }}__input-hidden"/>
             {% if attributes['show-clean-button'] %}
                 {% block cleanButton %}
-                    <button type="button" class="button button--hollow-icon {{ config.name }}__clean-button {{ config.jsName }}__clean-button">
+                    <button type="button" class="button button--tertiary button--icon-only {{ config.name }}__clean-button {{ config.jsName }}__clean-button">
                         {% include atom('icon') with {
                             class: config.name ~ '__icon',
                             data: {
-                                name: 'cross'
-                            }
+                                name: 'cross',
+                            },
                         } only %}
                     </button>
                 {% endblock %}
@@ -67,6 +68,7 @@
         <div class="is-hidden {{ config.name }}__suggestion {{ config.jsName }}__container">
             {% include molecule('ajax-renderer') with {
                 attributes: {
+                    'parent-class-name': config.name,
                     'provider-class-name': config.jsName ~ '__provider-' ~ data.id,
                     'target-class-name': config.jsName ~ '__suggestions-' ~ data.id,
                     'render-if-response-is-empty': true,

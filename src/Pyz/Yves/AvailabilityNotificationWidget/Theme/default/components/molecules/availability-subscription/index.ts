@@ -1,0 +1,1 @@
+import './availability-subscription.scss';

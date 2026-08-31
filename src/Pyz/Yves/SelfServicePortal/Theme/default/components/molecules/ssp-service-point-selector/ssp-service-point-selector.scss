@@ -1,0 +1,19 @@
+.ssp-service-point-selector {
+    &__location-container {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--scale-8);
+        padding: var(--scale-16) var(--scale-20);
+        margin-bottom: var(--scale-16);
+        background-color: var(--background-surface);
+        border-radius: var(--radius-sm);
+        color: var(--text-secondary);
+        font-family: var(--body-sm-family);
+        font-size: var(--body-sm-size);
+        line-height: var(--body-sm-line-height);
+    }
+
+    &__location {
+        flex-grow: 1;
+    }
+}

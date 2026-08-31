@@ -26,11 +26,6 @@ use Spryker\Zed\UserLocaleGui\Communication\Plugin\UserLocaleFormExpanderPlugin;
 
 class UserDependencyProvider extends SprykerUserDependencyProvider
 {
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addGroupPlugin(Container $container): Container
     {
         $container->set(static::PLUGIN_GROUP, function (Container $container) { // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
@@ -46,7 +41,7 @@ class UserDependencyProvider extends SprykerUserDependencyProvider
     protected function getUserTableActionExpanderPlugins(): array
     {
         return [
-            new UserTableActionExpanderPlugin(),
+        new UserTableActionExpanderPlugin(),
         ];
     }
 
@@ -56,9 +51,9 @@ class UserDependencyProvider extends SprykerUserDependencyProvider
     protected function getUserFormExpanderPlugins(): array
     {
         return [
-            new UserAgentFormExpanderPlugin(),
-            new UserLocaleFormExpanderPlugin(),
-            new MerchantAgentUserFormExpanderPlugin(),
+        new UserAgentFormExpanderPlugin(),
+        new UserLocaleFormExpanderPlugin(),
+        new MerchantAgentUserFormExpanderPlugin(),
         ];
     }
 
@@ -68,8 +63,8 @@ class UserDependencyProvider extends SprykerUserDependencyProvider
     protected function getUserTableConfigExpanderPlugins(): array
     {
         return [
-            new MerchantAgentUserTableConfigExpanderPlugin(),
-            new UserAgentTableConfigExpanderPlugin(),
+        new MerchantAgentUserTableConfigExpanderPlugin(),
+        new UserAgentTableConfigExpanderPlugin(),
         ];
     }
 
@@ -79,8 +74,8 @@ class UserDependencyProvider extends SprykerUserDependencyProvider
     protected function getUserTableDataExpanderPlugins(): array
     {
         return [
-            new UserAgentTableDataExpanderPlugin(),
-            new MerchantAgentUserTableDataExpanderPlugin(),
+        new UserAgentTableDataExpanderPlugin(),
+        new MerchantAgentUserTableDataExpanderPlugin(),
         ];
     }
 
@@ -90,7 +85,7 @@ class UserDependencyProvider extends SprykerUserDependencyProvider
     protected function getUserPreSavePlugins(): array
     {
         return [
-            new AssignUserLocalePreSavePlugin(),
+        new AssignUserLocalePreSavePlugin(),
         ];
     }
 
@@ -100,7 +95,7 @@ class UserDependencyProvider extends SprykerUserDependencyProvider
     protected function getUserTransferExpanderPlugins(): array
     {
         return [
-            new UserLocaleTransferExpanderPlugin(),
+        new UserLocaleTransferExpanderPlugin(),
         ];
     }
 
@@ -110,7 +105,7 @@ class UserDependencyProvider extends SprykerUserDependencyProvider
     protected function getUserQueryCriteriaExpanderPlugins(): array
     {
         return [
-            new MerchantAgentUserQueryCriteriaExpanderPlugin(),
+        new MerchantAgentUserQueryCriteriaExpanderPlugin(),
         ];
     }
 }

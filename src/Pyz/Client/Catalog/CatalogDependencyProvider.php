@@ -28,6 +28,7 @@ use Spryker\Client\CatalogPriceProductConnector\Plugin\ProductPriceQueryExpander
 use Spryker\Client\CategoryStorage\Plugin\Catalog\ResultFormatter\CategorySuggestionsSearchHttpResultFormatterPlugin;
 use Spryker\Client\CategoryStorage\Plugin\Catalog\ResultFormatter\CategoryTreeFilterSearchHttpResultFormatterPlugin;
 use Spryker\Client\CategoryStorage\Plugin\Elasticsearch\ResultFormatter\CategoryTreeFilterPageSearchResultFormatterPlugin;
+use Spryker\Client\CmsPageSearch\Plugin\Search\SearchHttp\ResultFormatter\CmsPageSuggestionsSearchHttpResultFormatterPlugin;
 use Spryker\Client\CustomerCatalog\Plugin\Search\ProductListQueryExpanderPlugin as CustomerCatalogProductListQueryExpanderPlugin;
 use Spryker\Client\MerchantProductOfferSearch\Plugin\Search\MerchantReferenceQueryExpanderPlugin;
 use Spryker\Client\MerchantProductSearch\Plugin\Search\MerchantReferenceQueryExpanderPlugin as MerchantProductReferenceQueryExpanderPlugin;
@@ -36,6 +37,8 @@ use Spryker\Client\ProductLabelStorage\Plugin\ProductLabelFacetConfigTransferBui
 use Spryker\Client\ProductListSearch\Plugin\Search\ProductListQueryExpanderPlugin as ProductListSearchProductListQueryExpanderPlugin;
 use Spryker\Client\ProductReview\Plugin\RatingFacetConfigTransferBuilderPlugin;
 use Spryker\Client\ProductReview\Plugin\RatingSortConfigTransferBuilderPlugin;
+use Spryker\Client\ProductStorage\Plugin\Catalog\ProductConcreteStorageSearchPlugin;
+use Spryker\Client\ProductStorage\Plugin\Catalog\ProductConcreteSuggestionEnricherPlugin;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\CompletionQueryExpanderPlugin;
 use Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\FacetQueryExpanderPlugin;
@@ -54,9 +57,6 @@ use Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\PaginatedResultFor
 use Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\SortedResultFormatterPlugin;
 use Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\SpellingSuggestionResultFormatterPlugin;
 use Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\SuggestionByTypeResultFormatterPlugin;
-use Spryker\Client\SearchHttp\Plugin\Catalog\Query\ProductConcreteSearchHttpQueryPlugin;
-use Spryker\Client\SearchHttp\Plugin\Catalog\Query\SearchHttpQueryPlugin;
-use Spryker\Client\SearchHttp\Plugin\Catalog\Query\SuggestionSearchHttpQueryPlugin;
 use Spryker\Client\SearchHttp\Plugin\Catalog\QueryExpander\BasicSearchHttpQueryExpanderPlugin;
 use Spryker\Client\SearchHttp\Plugin\Catalog\QueryExpander\FacetSearchHttpQueryExpanderPlugin;
 use Spryker\Client\SearchHttp\Plugin\Catalog\ResultFormatter\CompletionSearchHttpResultFormatterPlugin;
@@ -69,6 +69,11 @@ use Spryker\Client\SearchHttp\Plugin\Catalog\ResultFormatter\SpellingSuggestionS
 use Spryker\Client\SearchHttp\Plugin\Search\ProductConcreteCatalogSearchHttpResultFormatterPlugin;
 use Spryker\Client\SearchHttp\Plugin\Search\SearchHttpSearchResultCountPlugin;
 use Spryker\Shared\SearchHttp\SearchHttpConfig;
+use SprykerEco\Client\Algolia\Plugin\Search\AlgoliaProductConcreteSearchQueryPlugin;
+use SprykerEco\Client\Algolia\Plugin\Search\AlgoliaSearchQueryPlugin;
+use SprykerEco\Client\Algolia\Plugin\Search\AlgoliaSuggestionSearchQueryPlugin;
+use SprykerFeature\Client\SelfServicePortal\Plugin\Catalog\ProductClassFacetConfigTransferBuilderPlugin;
+use SprykerFeature\Client\SelfServicePortal\Plugin\Catalog\SspAssetQueryExpanderPlugin;
 
 class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
 {
@@ -81,6 +86,7 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
             new CategoryFacetConfigTransferBuilderPlugin(),
             new RatingFacetConfigTransferBuilderPlugin(),
             new ProductLabelFacetConfigTransferBuilderPlugin(),
+            new ProductClassFacetConfigTransferBuilderPlugin(),
         ];
     }
 
@@ -100,8 +106,6 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
 
     /**
      * @phpstan-return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
-     *
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
     protected function createCatalogSearchQueryPlugin(): QueryInterface
     {
@@ -124,7 +128,9 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
             new IsActiveQueryExpanderPlugin(),
             new IsActiveInDateRangeQueryExpanderPlugin(),
             new CustomerCatalogProductListQueryExpanderPlugin(),
+            new ProductListSearchProductListQueryExpanderPlugin(),
             new MerchantReferenceQueryExpanderPlugin(),
+            new SspAssetQueryExpanderPlugin(),
 
             /*
              * FacetQueryExpanderPlugin needs to be after other query expanders which filters down the results.
@@ -239,6 +245,7 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
                 new PriceFacetConfigTransferBuilderPlugin(),
                 new RatingFacetConfigTransferBuilderPlugin(),
                 new ProductLabelSearchHttpFacetConfigTransferBuilderPlugin(),
+                new ProductClassFacetConfigTransferBuilderPlugin(),
             ],
         ];
     }
@@ -251,7 +258,7 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
     protected function createCatalogSearchQueryPluginVariants(): array
     {
         return [
-            new SearchHttpQueryPlugin(),
+            new AlgoliaSearchQueryPlugin(),
         ];
     }
 
@@ -263,7 +270,7 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
     protected function createSuggestionQueryPluginVariants(): array
     {
         return [
-            new SuggestionSearchHttpQueryPlugin(),
+            new AlgoliaSuggestionSearchQueryPlugin(),
         ];
     }
 
@@ -291,6 +298,19 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
                     new ProductSuggestionSearchHttpResultFormatterPlugin(),
                 ),
                 new CategorySuggestionsSearchHttpResultFormatterPlugin(),
+                new CmsPageSuggestionsSearchHttpResultFormatterPlugin(),
+            ],
+        ];
+    }
+
+    /**
+     * @return array<string, array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface>>
+     */
+    protected function createCatalogSearchCountQueryExpanderPluginVariants(): array
+    {
+        return [
+            SearchHttpConfig::TYPE_SEARCH_HTTP => [
+                new ProductPriceSearchHttpQueryExpanderPlugin(),
             ],
         ];
     }
@@ -303,7 +323,7 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
     protected function createProductConcreteCatalogSearchQueryPluginVariants(): array
     {
         return [
-            new ProductConcreteSearchHttpQueryPlugin(),
+            new AlgoliaProductConcreteSearchQueryPlugin(),
         ];
     }
 
@@ -349,6 +369,26 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
     {
         return [
             new SearchHttpSearchResultCountPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Client\CatalogExtension\Dependency\Plugin\ProductConcreteSuggestionEnricherPluginInterface>
+     */
+    protected function getProductConcreteSuggestionEnricherPlugins(): array
+    {
+        return [
+            new ProductConcreteSuggestionEnricherPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Client\CatalogExtension\Dependency\Plugin\ProductConcreteStorageSearchPluginInterface>
+     */
+    protected function getProductConcreteStorageSearchPlugins(): array
+    {
+        return [
+            new ProductConcreteStorageSearchPlugin(),
         ];
     }
 }

@@ -1,0 +1,43 @@
+sequenceDiagram
+    autonumber
+
+    %% Group participants - using mid-tone saturated colors that work in both modes
+    box rgb(230, 126, 34) API Client
+        participant APIClient as API Client (Storefront)
+    end
+    box rgb(41, 128, 185) Glue
+        participant Glue as Glue
+    end
+    box rgb(39, 174, 96) Payment Services Provider
+        participant PSP as Payment Services Provider<br/>(Third Party)
+    end
+
+    %% Begin actual sequence
+    Note over APIClient: User submits checkout
+    APIClient->>Glue: POST /checkout-data?include=fraud <br/>
+    Glue->>Glue: Do external Fraud call
+    Glue-->>APIClient: Fraud validation result
+    APIClient->>Glue: POST /payments endpoint<br/>(send checkout data)
+    Glue->>Glue: Initialize pre-payment
+    Glue-->>APIClient: PaymentID + Redirect URL
+    APIClient->>PSP: Redirect to payment provider + PaymentID
+
+    PSP->>PSP: Process payment <br/> (incl. Authorize 3D)
+
+    PSP-->>APIClient: Return payment<br/>status & payload
+
+    APIClient->>Glue: PUT /payments/{paymentID}
+    Glue->>Glue: Process payload, <br/> Update payment data
+
+    APIClient-->>PSP: Payment saved
+    PSP->>APIClient: Redirect to merchant
+
+    APIClient->>Glue: Call /checkout endpoint<br/>(send checkout data)
+    Glue->>Glue: Pre-check plugins:<br/>check if order is authorised
+    Glue-xAPIClient: Result (Payment Failed)
+    Glue->>Glue: Place order
+
+    Glue->>APIClient: Result (Success)
+
+    Note over APIClient: Show result to user
+    APIClient->>APIClient: Display success/failure<br/>page

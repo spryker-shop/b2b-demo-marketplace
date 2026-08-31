@@ -1,6 +1,11 @@
 @use 'sass:math';
+@use '~ShopUi/styles/settings/font' as *;
 
 @function rem($value: $setting-font-size-base, $type: string) {
+    @if $value == 0 {
+        @return 0;
+    }
+
     $remSize: math.div($value, math.div($setting-font-size-base, 1px));
 
     @if ($type == number) {

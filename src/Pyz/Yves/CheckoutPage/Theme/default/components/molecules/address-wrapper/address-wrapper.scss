@@ -44,13 +44,17 @@ $address-form-background-width: calc(100% + #{rem(40)});
             margin: auto;
 
             @include helper-breakpoint-media-min($lg) {
-                padding: rem(20) rem(40) rem(25);
+                padding: rem(20) 0;
                 width: 100%;
             }
 
             #{$name}__inner-content {
                 max-width: $address-form-width;
                 margin: 0 auto;
+                display: flex;
+                flex-wrap: wrap;
+                --grid-gap: #{rem(10)};
+                gap: var(--grid-gap);
             }
 
             &--mobile-background {

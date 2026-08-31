@@ -1,0 +1,39 @@
+@mixin shop-ui-cart-trigger($name: '.cart-trigger') {
+    #{$name} {
+        display: flex;
+        align-items: center;
+        gap: var(--scale-2);
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        color: var(--icon-primary);
+        text-decoration: none;
+
+        &__icon {
+            display: flex;
+            align-items: center;
+            font-size: rem(24);
+        }
+
+        &__badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: rem(18);
+            height: rem(18);
+            padding: 0 var(--scale-4);
+            border-radius: var(--radius-full);
+            background-color: var(--background-brand-primary);
+            color: var(--text-inverse);
+            font-family: var(--label-sm-family);
+            font-size: rem(11);
+            font-weight: var(--label-sm-weight);
+            line-height: 1;
+        }
+
+        @content;
+    }
+}
+
+@include shop-ui-cart-trigger();

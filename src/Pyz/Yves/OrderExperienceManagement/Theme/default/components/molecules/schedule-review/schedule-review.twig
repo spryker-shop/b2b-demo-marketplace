@@ -1,0 +1,26 @@
+{% extends molecule('schedule-review', '@SprykerFeature:OrderExperienceManagement') %}
+
+{% block extraClass %}{% endblock %}
+
+{% block reviewHeader %}
+    {% set reviewHeaderClassName = config.name ~ '__heading' %}
+    {% set reviewHeaderTitleClassName = config.name ~ '__title' %}
+    {% set reviewHeaderTextClassName = config.name ~ '__heading-content' %}
+    
+    {{ parent() }}
+{% endblock %}
+
+{% block mainPopup %}
+    {% include molecule('main-popup') with {
+        class: config.jsName ~ '__confirmation-popup' ~ ' ' ~ config.name ~ '__confirmation-popup',
+        modifiers: ['lg'],
+        data: {
+            title: 'recurring_orders.review.modal.headline' | trans,
+            content: confirmContent,
+        },
+        attributes: {
+            'content-id': 'review-confirm-popup',
+            'trigger-class-name': confirmModalTriggerClassName,
+        },
+    } only %}
+{% endblock %}

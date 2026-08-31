@@ -1,0 +1,26 @@
+{% extends view('buy-box-widget', '@SprykerFeature:BuyBox') %}
+
+{% block template %}
+    {% if data.products %}
+        {% set offers = [] %}
+        {% for product in data.products %}
+            {% set offers = offers | merge([{
+                productOfferReference: product.productOfferReference | default,
+                merchantStorage: {
+                    name: product.merchant.name | default,
+                    merchantUrl: product.merchant.merchantUrl | default,
+                },
+                merchantReference: product.merchant.merchantReference | default(null),
+                price: product.price | default(null),
+                availabilityProduct: product,
+            }]) %}
+        {% endfor %}
+
+        {% include molecule('seller-offers', 'BuyBox') with {
+            data: {
+                offers: offers,
+                selectedReference: data.productView.productOfferReference | default,
+            },
+        } only %}
+    {% endif %}
+{% endblock %}

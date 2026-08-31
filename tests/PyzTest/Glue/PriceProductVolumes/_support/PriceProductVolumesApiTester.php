@@ -34,11 +34,6 @@ class PriceProductVolumesApiTester extends ApiEndToEndTester
 {
     use _generated\PriceProductVolumesApiTesterActions;
 
-    /**
-     * @param array $expectedVolumePrices
-     *
-     * @return void
-     */
     public function seeVolumePricesEqualToExpectedValue(array $expectedVolumePrices): void
     {
         $expectedVolumePrices = $this->mapVolumePricesDataToExpectedFormat($expectedVolumePrices);
@@ -46,30 +41,17 @@ class PriceProductVolumesApiTester extends ApiEndToEndTester
         $this->assertEqualsCanonicalizing($expectedVolumePrices, $this->grabPriceProductVolumesData());
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return void
-     */
     public function authorizeCustomerToGlue(CustomerTransfer $customerTransfer): void
     {
         $oauthResponseTransfer = $this->haveAuthorizationToGlue($customerTransfer);
         $this->amBearerAuthenticated($oauthResponseTransfer->getAccessToken());
     }
 
-    /**
-     * @return array
-     */
     protected function grabPriceProductVolumesData(): array
     {
         return $this->getDataFromResponseByJsonPath('$.data[0].attributes.prices[0].volumePrices');
     }
 
-    /**
-     * @param array $volumePrices
-     *
-     * @return array
-     */
     protected function mapVolumePricesDataToExpectedFormat(array $volumePrices): array
     {
         return array_map(function (array $volumePrice): array {
@@ -77,7 +59,7 @@ class PriceProductVolumesApiTester extends ApiEndToEndTester
                 ->fromArray($volumePrice, true)
                 ->setNetAmount($volumePrice[PriceProductVolumeConfig::VOLUME_PRICE_NET_PRICE])
                 ->setGrossAmount($volumePrice[PriceProductVolumeConfig::VOLUME_PRICE_GROSS_PRICE])
-                ->toArray();
+                ->toArray(true, true);
         }, $volumePrices);
     }
 }

@@ -25,20 +25,20 @@ class PaymentAppWidgetConfig extends SprykerPaymentAppWidgetConfig
     ];
 
     /**
-     * @var list<string>
+     * @return list<string>
      */
-    protected const QUOTE_FIELDS_TO_CLEAN_IN_EXPRESS_CHECKOUT_WORKFLOW = [
-        QuoteTransfer::PAYMENT,
-        QuoteTransfer::PAYMENTS,
-        QuoteTransfer::SHIPMENT,
-        QuoteTransfer::BILLING_ADDRESS,
-        QuoteTransfer::SHIPPING_ADDRESS,
-        QuoteTransfer::PRE_ORDER_PAYMENT_DATA,
-    ];
+    public function getQuoteFieldsToCleanInExpressCheckoutWorkflow(): array
+    {
+        return [
+            QuoteTransfer::PAYMENT,
+            QuoteTransfer::PAYMENTS,
+            QuoteTransfer::SHIPMENT,
+            QuoteTransfer::BILLING_ADDRESS,
+            QuoteTransfer::SHIPPING_ADDRESS,
+            QuoteTransfer::PRE_ORDER_PAYMENT_DATA,
+        ];
+    }
 
-    /**
-     * @return string
-     */
     public function getExpressCheckoutStartPageRouteName(): string
     {
         return CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_INDEX;

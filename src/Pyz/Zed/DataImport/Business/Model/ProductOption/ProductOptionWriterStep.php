@@ -81,11 +81,6 @@ class ProductOptionWriterStep extends PublishAwareStep implements DataImportStep
      */
     public const KEY_TAX_SET_NAME = 'tax_set_name';
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return void
-     */
     public function execute(DataSetInterface $dataSet): void
     {
         $productOptionGroupEntity = SpyProductOptionGroupQuery::create()
@@ -93,7 +88,7 @@ class ProductOptionWriterStep extends PublishAwareStep implements DataImportStep
             ->findOneOrCreate();
 
         $productOptionGroupEntity
-            ->setName($dataSet[static::KEY_OPTION_NAME_TRANSLATION_KEY])
+            ->setName($dataSet[static::KEY_GROUP_NAME_TRANSLATION_KEY])
             ->setActive($this->isActive($dataSet, $productOptionGroupEntity))
             ->setFkTaxSet($dataSet[TaxSetNameToIdTaxSetStep::KEY_TARGET])
             ->save();
@@ -137,12 +132,6 @@ class ProductOptionWriterStep extends PublishAwareStep implements DataImportStep
         }
     }
 
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup $productOptionGroupEntity
-     *
-     * @return bool
-     */
     protected function isActive(DataSetInterface $dataSet, SpyProductOptionGroup $productOptionGroupEntity): bool
     {
         if (isset($dataSet[self::KEY_IS_ACTIVE])) {
@@ -152,13 +141,6 @@ class ProductOptionWriterStep extends PublishAwareStep implements DataImportStep
         return ($productOptionGroupEntity->getActive() !== null) ? $productOptionGroupEntity->getActive() : true;
     }
 
-    /**
-     * @param string $key
-     * @param string $translation
-     * @param int $idLocale
-     *
-     * @return void
-     */
     protected function findOrCreateTranslation(string $key, string $translation, int $idLocale): void
     {
         $glossaryKeyEntity = SpyGlossaryKeyQuery::create()

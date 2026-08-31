@@ -15,6 +15,24 @@
             border-top: none;
         }
 
+        &--footer-logo {
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-20);
+            padding: 0;
+
+            @include helper-breakpoint-media-min($md) {
+                align-items: center;
+                flex-direction: row;
+                gap: var(--scale-32);
+            }
+        }
+
+        &--social {
+            border-top: none;
+            padding: 0;
+        }
+
         @content;
     }
 }

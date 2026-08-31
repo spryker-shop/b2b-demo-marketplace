@@ -1,0 +1,171 @@
+@mixin shop-ui-header-dropdown($name: '.header-dropdown') {
+    #{$name} {
+        display: inline-flex;
+        position: relative;
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            height: var(--scale-8);
+        }
+
+        &__trigger--user-account {
+            @include helper-effect-transition(background-color);
+            display: flex;
+            align-items: center;
+            gap: var(--scale-8);
+            border: 0;
+            cursor: pointer;
+            text-align: left;
+            white-space: nowrap;
+            height: rem(50);
+            padding: var(--scale-8) var(--scale-12);
+            border-radius: var(--radius-md);
+            background: transparent;
+
+            &:hover,
+            &:focus-visible {
+                background: var(--background-surface);
+            }
+
+            &:focus-visible {
+                outline: var(--stroke-md) solid var(--focus-ring);
+                outline-offset: var(--stroke-md);
+            }
+
+            #{$name}--drawer & {
+                width: 100%;
+                height: auto;
+                padding: var(--scale-12) 0;
+                border-radius: 0;
+                background: transparent;
+            }
+        }
+
+        &__trigger--self-service {
+            @include helper-effect-transition(color);
+            @include typography(label-md);
+            display: flex;
+            align-items: center;
+            gap: var(--scale-4);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            white-space: nowrap;
+            color: var(--text-secondary);
+
+            &:hover {
+                color: var(--text-brand);
+            }
+
+            #{$name}--drawer & {
+                @include typography(body-md);
+                width: 100%;
+                justify-content: space-between;
+                padding: var(--scale-12) 0;
+                color: var(--text-primary);
+                text-align: left;
+
+                &:hover {
+                    color: var(--text-primary);
+                }
+            }
+        }
+
+        &__avatar {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        &__info {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            min-width: 0;
+        }
+
+        &__name {
+            @include typography(label-md);
+            color: var(--text-primary);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: rem(120);
+        }
+
+        &__company {
+            @include typography(body-sm);
+            color: var(--text-secondary);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: rem(120);
+        }
+
+        &__chevron {
+            @include helper-effect-transition(transform);
+            display: flex;
+            align-items: center;
+            color: var(--icon-secondary);
+            flex-shrink: 0;
+            font-size: rem(18);
+
+            #{$name}--drawer & {
+                margin-left: auto;
+            }
+        }
+
+        &__dropdown {
+            @include helper-effect-transition(opacity visibility transform);
+            position: absolute;
+            top: calc(100% + var(--scale-8));
+            right: 0;
+            min-width: rem(150);
+            background: var(--background-page);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadows-md-x) var(--shadows-md-y) var(--shadows-md-blur) var(--shadows-md-spread)
+                var(--shadows-md-color);
+            z-index: $setting-zi-dropdown;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: translateY(rem(-4));
+
+            &::before {
+                content: '';
+                position: absolute;
+                bottom: 100%;
+                left: 0;
+                width: 100%;
+                height: var(--scale-8);
+            }
+        }
+
+        &:hover &__dropdown,
+        &__trigger[aria-expanded='true'] ~ &__dropdown {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        &:hover &__chevron,
+        &__trigger[aria-expanded='true'] &__chevron {
+            @include helper-breakpoint-media-min($xl) {
+                transform: rotate(180deg);
+            }
+        }
+
+        &__trigger--self-service ~ &__dropdown {
+            right: auto;
+            left: 0;
+        }
+
+        @content;
+    }
+}
+
+@include shop-ui-header-dropdown();

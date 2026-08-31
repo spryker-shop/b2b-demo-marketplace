@@ -7,7 +7,6 @@
 {% block body %}
     {% block orderActions %}
         {% embed molecule('action-bar') with {
-            modifiers: ['first'],
             data: {
                 title: 'customer.profile.order_details' | trans,
                 actions: [
@@ -26,6 +25,12 @@
         } only %}
             {% block actions %}
                 {{ parent() }}
+
+                {% if widgetGlobalExists('CreateOrderSspInquiryWidget') and can('CreateSspInquiryPermissionPlugin') %}
+                    <div class="{{ config.name }}__action">
+                        {% widget 'CreateOrderSspInquiryWidget' args [embed.order.orderReference, embed.order.idSalesOrder] only %}{% endwidget %}
+                    </div>
+                {% endif %}
 
                 {% embed molecule('return-create-link', 'SalesReturnPage') ignore missing with {
                     class: config.name ~ '__action ' ~ embed.jsName ~ '__target-state-toggler button',
@@ -97,18 +102,30 @@
                     } only %}
                     {% endwidget %}
                 </div>
+
+                {% if widgetGlobalExists('CreateOrderSspInquiryLinkWidget') and can('CreateSspInquiryPermissionPlugin') %}
+                    <div class="{{ config.name }}__action">
+                        {% widget 'CreateOrderSspInquiryLinkWidget' args [embed.order.orderReference, embed.order.idSalesOrder] only %}{% endwidget %}
+                    </div>
+                {% endif %}
             {% endblock %}
         {% endembed %}
     {% endblock %}
 
     {% block orderInfo %}
-        {% include molecule('order-info', 'CustomerPage') with {
+        {% embed molecule('order-info', 'CustomerPage') with {
             data: {
                 id: data.order.orderReference,
                 date: data.order.createdAt | formatDateTime,
                 order: data.order,
             },
         } only %}
+            {% block body %}
+                {{ parent() }}
+                
+                {% widget 'CostCenterOrderDetailWidget' args [data.order] only %}{% endwidget %}
+            {% endblock %}
+        {% endembed %}
     {% endblock %}
 
     {% block orderDetails %}

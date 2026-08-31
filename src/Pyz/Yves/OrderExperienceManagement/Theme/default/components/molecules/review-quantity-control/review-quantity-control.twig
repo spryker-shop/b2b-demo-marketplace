@@ -1,0 +1,25 @@
+{% extends molecule('review-quantity-control', '@SprykerFeature:OrderExperienceManagement') %}
+
+{% define attributes = {
+    'quantity-counter-class-name': 'quantity-counter',
+} %}
+
+{% block quantity %}
+    {% include molecule('quantity-counter') with {
+        class: config.jsName ~ '__quantity-counter',
+        modifiers: ['sm'],
+        data: {
+            inputExtraClasses: config.name ~ '__input ' ~ config.jsName ~ '__input js-review-total-recalculator__line-quantity',
+        },
+        attributes: {
+            min: 1,
+            value: quantity,
+            'data-qa': 'recurring-order-review-line-quantity',
+        },
+    } only %}
+{% endblock %}
+
+{% block removeButton %}
+    {% set removeButtonClassName = config.jsName ~ "__remove-toggle button button--sm button--hollow" %}
+    {{ parent() }}
+{% endblock %}

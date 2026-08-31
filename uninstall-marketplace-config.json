@@ -1,0 +1,1786 @@
+{
+    "php_dependency_providers": {
+        "src/Pyz/Zed/Application/ApplicationDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "GuiTableApplicationPlugin" },
+                { "type": "remove_use", "class_name": "OauthKnpuApplicationPlugin" },
+                { "type": "remove_plugin", "plugin_class": "GuiTableApplicationPlugin" },
+                { "type": "remove_plugin", "plugin_class": "OauthKnpuApplicationPlugin" }
+            ],
+            "success_messages": [
+                "✓ ApplicationDependencyProvider cleaned from marketplace-specific plugins",
+                "✓ Removed GuiTableApplicationPlugin",
+                "✓ Removed OauthKnpuApplicationPlugin"
+            ]
+        },
+        "src/Pyz/Zed/Acl/AclConfig.php": {
+            "operations": [
+                { "type": "remove_constant", "constant_name": "RULE_TYPE_DENY" },
+                { "type": "remove_method", "method_name": "addMerchantPortalInstallerRules" },
+                { "type": "remove_method", "method_name": "getInstallerRules" },
+                { "type": "remove_array_entry", "key": "agent-merchant@spryker.com" }
+            ],
+            "success_messages": [
+                "✓ AclConfig cleaned from marketplace-specific code",
+                "✓ Removed agent-merchant@spryker.com user"
+            ]
+        },
+        "src/Pyz/Zed/Acl/AclDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantAgentAclAccessCheckerStrategyPlugin" },
+                { "type": "remove_use", "class_name": "ProductViewerForOfferCreationAclInstallerPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantAgentAclAccessCheckerStrategyPlugin" },
+                { "type": "remove_plugin", "plugin_class": "ProductViewerForOfferCreationAclInstallerPlugin" }
+            ],
+            "success_messages": [
+                "✓ AclDependencyProvider cleaned from marketplace-specific plugins",
+                "✓ Removed MerchantAgentAclAccessCheckerStrategyPlugin",
+                "✓ Removed ProductViewerForOfferCreationAclInstallerPlugin"
+            ]
+        },
+        "src/Pyz/Zed/AclEntity/AclEntityDependencyProvider.php": {
+            "operations": [
+                {
+                    "type": "remove_use",
+                    "class_name": "MerchantPortalConfigurationAclEntityMetadataConfigExpanderPlugin"
+                },
+                {
+                    "type": "remove_plugin",
+                    "plugin_class": "MerchantPortalConfigurationAclEntityMetadataConfigExpanderPlugin"
+                }
+            ],
+            "success_messages": [
+                "✓ AclEntityDependencyProvider cleaned from marketplace-specific code",
+                "✓ Removed MerchantPortalConfigurationAclEntityMetadataConfigExpanderPlugin"
+            ]
+        },
+        "src/Pyz/Zed/AvailabilityGui/AvailabilityGuiDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantAvailabilityListActionViewDataExpanderPlugin" },
+                {
+                    "type": "remove_use",
+                    "class_name": "MerchantProductAvailabilityAbstractTableQueryCriteriaExpanderPlugin"
+                },
+                { "type": "remove_use", "class_name": "MerchantProductAvailabilityViewActionViewDataExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantAvailabilityListActionViewDataExpanderPlugin" },
+                {
+                    "type": "remove_plugin",
+                    "plugin_class": "MerchantProductAvailabilityAbstractTableQueryCriteriaExpanderPlugin"
+                },
+                {
+                    "type": "remove_plugin",
+                    "plugin_class": "MerchantProductAvailabilityViewActionViewDataExpanderPlugin"
+                }
+            ],
+            "success_messages": ["✓ AvailabilityGuiDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/Calculation/CalculationDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantCommissionCalculatorPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantCommissionCalculatorPlugin" }
+            ],
+            "success_messages": ["✓ CalculationDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/Cart/CartDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "ProductApprovalCartPreCheckPlugin" },
+                { "type": "remove_use", "class_name": "OrderAmendmentProductApprovalCartPreCheckPlugin" },
+                { "type": "remove_use", "class_name": "SanitizeMerchantCommissionPreReloadPlugin" },
+                { "type": "remove_use", "class_name": "ProductApprovalPreReloadItemsPlugin" },
+                { "type": "remove_use", "class_name": "OrderAmendmentProductApprovalPreReloadItemsPlugin" },
+                { "type": "remove_use", "class_name": "MerchantShipmentItemExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantCartPreCheckPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProductCartPreCheckPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProductOptionCartPreCheckPlugin" },
+                { "type": "remove_use", "class_name": "CartBundleItemsPreReloadPlugin" },
+                { "type": "remove_use", "class_name": "BundledItemsProductOfferItemExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "ProductApprovalCartPreCheckPlugin" },
+                { "type": "remove_plugin", "plugin_class": "OrderAmendmentProductApprovalCartPreCheckPlugin" },
+                { "type": "remove_plugin", "plugin_class": "SanitizeMerchantCommissionPreReloadPlugin" },
+                { "type": "remove_plugin", "plugin_class": "ProductApprovalPreReloadItemsPlugin" },
+                { "type": "remove_plugin", "plugin_class": "OrderAmendmentProductApprovalPreReloadItemsPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantShipmentItemExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantCartPreCheckPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductCartPreCheckPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductOptionCartPreCheckPlugin" },
+                { "type": "remove_plugin", "plugin_class": "CartBundleItemsPreReloadPlugin" },
+                { "type": "remove_plugin", "plugin_class": "BundledItemsProductOfferItemExpanderPlugin" }
+            ],
+            "success_messages": ["✓ CartDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/CartReorder/CartReorderDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantProductCartReorderItemHydratorPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductCartReorderItemHydratorPlugin" }
+            ],
+            "success_messages": ["✓ CartReorderDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/Category/CategoryDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "RemoveMerchantCategoryRelationPlugin" },
+                { "type": "remove_plugin", "plugin_class": "RemoveMerchantCategoryRelationPlugin" }
+            ],
+            "success_messages": ["✓ CategoryDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/Checkout/CheckoutDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantProductOptionCheckoutPreConditionPlugin" },
+                { "type": "remove_use", "class_name": "ProductApprovalCheckoutPreConditionPlugin" },
+                { "type": "remove_use", "class_name": "MerchantCheckoutPreConditionPlugin" },
+                { "type": "remove_use", "class_name": "OrderAmendmentProductApprovalCheckoutPreConditionPlugin" },
+                { "type": "remove_use", "class_name": "ProductOfferCheckoutPreConditionPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductOptionCheckoutPreConditionPlugin" },
+                { "type": "remove_plugin", "plugin_class": "ProductApprovalCheckoutPreConditionPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantCheckoutPreConditionPlugin" },
+                { "type": "remove_plugin", "plugin_class": "OrderAmendmentProductApprovalCheckoutPreConditionPlugin" },
+                { "type": "remove_plugin", "plugin_class": "ProductOfferCheckoutPreConditionPlugin" }
+            ],
+            "success_messages": ["✓ CheckoutDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/DataImport/DataImportDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantProductDataImportPlugin" },
+                { "type": "remove_use", "class_name": "ProductOfferShoppingListItemDataImportPlugin" },
+                { "type": "remove_use", "class_name": "MerchantOmsProcessDataImportPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProductOptionGroupDataImportPlugin" },
+                { "type": "remove_use", "class_name": "MerchantOpeningHoursDateScheduleDataImportPlugin" },
+                { "type": "remove_use", "class_name": "MerchantOpeningHoursWeekdayScheduleDataImportPlugin" },
+                { "type": "remove_use", "class_name": "MerchantCategoryDataImportPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProductApprovalStatusDefaultDataImportPlugin" },
+                { "type": "remove_use", "class_name": "MerchantCommissionGroupDataImportPlugin" },
+                { "type": "remove_use", "class_name": "MerchantCommissionDataImportPlugin" },
+                { "type": "remove_use", "class_name": "MerchantCommissionAmountDataImportPlugin" },
+                { "type": "remove_use", "class_name": "MerchantCommissionStoreDataImportPlugin" },
+                { "type": "remove_use", "class_name": "MerchantCommissionMerchantDataImportPlugin" },
+                { "type": "remove_use", "class_name": "MerchantCombinedProductDataImportPlugin" },
+                { "type": "remove_use", "class_name": "ProductAbstractApprovalStatusDataImportPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductDataImportPlugin" },
+                { "type": "remove_plugin", "plugin_class": "ProductOfferShoppingListItemDataImportPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantOmsProcessDataImportPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductOptionGroupDataImportPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantOpeningHoursDateScheduleDataImportPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantOpeningHoursWeekdayScheduleDataImportPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantCategoryDataImportPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductApprovalStatusDefaultDataImportPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantCommissionGroupDataImportPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantCommissionDataImportPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantCommissionAmountDataImportPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantCommissionStoreDataImportPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantCommissionMerchantDataImportPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantCombinedProductDataImportPlugin" },
+                { "type": "remove_plugin", "plugin_class": "ProductAbstractApprovalStatusDataImportPlugin" },
+                { "type": "remove_constant", "constant_name": "FACADE_MERCHANT_SALES_ORDER" },
+                { "type": "remove_constant", "constant_name": "FACADE_MERCHANT_OMS" },
+                { "type": "remove_method", "method_name": "addMerchantSalesOrderFacade" },
+                { "type": "remove_method", "method_name": "addMerchantOmsFacade" },
+                {
+                    "type": "remove_line_containing",
+                    "pattern": "$container = $this->addMerchantSalesOrderFacade($container);"
+                },
+                { "type": "remove_line_containing", "pattern": "$container = $this->addMerchantOmsFacade($container);" }
+            ],
+            "success_messages": ["✓ DataImportDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/DataImport/Business/DataImportBusinessFactory.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantSalesOrderFacadeInterface" },
+                { "type": "remove_use", "class_name": "MerchantOmsFacadeInterface" },
+                { "type": "remove_method", "method_name": "getMerchantSalesOrderFacade" },
+                { "type": "remove_method", "method_name": "getMerchantOmsFacade" },
+                { "type": "remove_line_containing", "pattern": "$this->getMerchantSalesOrderFacade()," },
+                { "type": "remove_line_containing", "pattern": "$this->getMerchantOmsFacade()," }
+            ],
+            "success_messages": ["✓ DataImportBusinessFactory cleaned from marketplace-specific facades"]
+        },
+        "src/Pyz/Zed/DataImport/Business/Model/SalesOrder/OmsEventTrigger.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantOmsTriggerRequestTransfer" },
+                { "type": "remove_use", "class_name": "MerchantOrderItemCriteriaTransfer" },
+                { "type": "remove_use", "class_name": "MerchantOmsFacadeInterface" },
+                { "type": "remove_use", "class_name": "MerchantSalesOrderFacadeInterface" },
+                {
+                    "type": "remove_line_containing",
+                    "pattern": "protected MerchantSalesOrderFacadeInterface $merchantSalesOrderFacade,"
+                },
+                {
+                    "type": "remove_line_containing",
+                    "pattern": "protected MerchantOmsFacadeInterface $merchantOmsFacade,"
+                },
+                {
+                    "type": "remove_line_containing",
+                    "pattern": "protected const MERCHANT_OMS_EVENT_PREFIX = 'merchant:';"
+                },
+                { "type": "remove_method", "method_name": "triggerMerchantOmsEvent" },
+                {
+                    "type": "replace_string",
+                    "old_value": "            if (str_starts_with($omsEvent, static::MERCHANT_OMS_EVENT_PREFIX)) {\n                $this->triggerMerchantOmsEvent(\n                    substr($omsEvent, strlen(static::MERCHANT_OMS_EVENT_PREFIX)),\n                    $salesOrderItemIds,\n                );\n            } else {\n                $this->omsFacade->triggerEventForOrderItems($omsEvent, $salesOrderItemIds);\n            }",
+                    "new_value": "            $this->omsFacade->triggerEventForOrderItems($omsEvent, $salesOrderItemIds);"
+                }
+            ],
+            "success_messages": ["✓ OmsEventTrigger cleaned from marketplace-specific OMS event handling"]
+        },
+        "src/Pyz/Zed/DataImport/DataImportConfig.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantProductApprovalDataImportConfig" },
+                { "type": "remove_use", "class_name": "ProductOfferShoppingListDataImportConfig" },
+                {
+                    "type": "remove_array_value_entry",
+                    "array_value": "MerchantProductApprovalDataImportConfig::IMPORT_TYPE_MERCHANT_PRODUCT_APPROVAL_STATUS_DEFAULT"
+                },
+                {
+                    "type": "remove_array_value_entry",
+                    "array_value": "ProductOfferShoppingListDataImportConfig::IMPORT_TYPE_PRODUCT_OFFER_SHOPPING_LIST_ITEM"
+                },
+                {
+                    "type": "remove_array_value_entry",
+                    "array_value": "ProductApprovalDataImportConfig::IMPORT_TYPE_PRODUCT_APPROVAL_STATUS"
+                }
+            ],
+            "success_messages": ["✓ DataImportConfig cleaned from marketplace-specific import types"]
+        },
+        "src/Pyz/Zed/Console/ConsoleDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "AclEntitySynchronizeConsole" },
+                { "type": "remove_use", "class_name": "AclEntityMetadataConfigValidateConsole" },
+                { "type": "remove_use", "class_name": "DataImportMerchantImportConsole" },
+                { "type": "remove_use", "class_name": "TriggerEventFromCsvFileConsole" },
+                { "type": "remove_use", "class_name": "MerchantProductApprovalDataImportConfig" },
+                { "type": "remove_use", "class_name": "ProductOfferShoppingListDataImportConfig" },
+                { "type": "remove_use", "class_name": "ProductApprovalDataImportConfig" },
+                { "type": "remove_use", "class_name": "MerchantCommissionDataImportConfig" },
+                { "type": "remove_plugin", "plugin_class": "AclEntitySynchronizeConsole" },
+                { "type": "remove_plugin", "plugin_class": "AclEntityMetadataConfigValidateConsole" },
+                { "type": "remove_plugin", "plugin_class": "DataImportMerchantImportConsole" },
+                { "type": "remove_plugin", "plugin_class": "TriggerEventFromCsvFileConsole" },
+                {
+                    "type": "remove_data_import_console",
+                    "config_constant": "MerchantProductApprovalDataImportConfig::IMPORT_TYPE_MERCHANT_PRODUCT_APPROVAL_STATUS_DEFAULT"
+                },
+                {
+                    "type": "remove_data_import_console",
+                    "config_constant": "ProductOfferShoppingListDataImportConfig::IMPORT_TYPE_PRODUCT_OFFER_SHOPPING_LIST_ITEM"
+                },
+                {
+                    "type": "remove_data_import_console",
+                    "config_constant": "MerchantCommissionDataImportConfig::IMPORT_TYPE_MERCHANT_COMMISSION_GROUP"
+                },
+                {
+                    "type": "remove_data_import_console",
+                    "config_constant": "MerchantCommissionDataImportConfig::IMPORT_TYPE_MERCHANT_COMMISSION"
+                },
+                {
+                    "type": "remove_data_import_console",
+                    "config_constant": "MerchantCommissionDataImportConfig::IMPORT_TYPE_MERCHANT_COMMISSION_AMOUNT"
+                },
+                {
+                    "type": "remove_data_import_console",
+                    "config_constant": "MerchantCommissionDataImportConfig::IMPORT_TYPE_MERCHANT_COMMISSION_STORE"
+                },
+                {
+                    "type": "remove_data_import_console",
+                    "config_constant": "MerchantCommissionDataImportConfig::IMPORT_TYPE_MERCHANT_COMMISSION_MERCHANT"
+                },
+                {
+                    "type": "remove_data_import_console",
+                    "config_constant": "ProductApprovalDataImportConfig::IMPORT_TYPE_PRODUCT_APPROVAL_STATUS"
+                }
+            ],
+            "success_messages": ["✓ ConsoleDependencyProvider cleaned from marketplace-specific console commands"]
+        },
+        "src/Pyz/Zed/DataExport/DataExportDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantOrderDataEntityExporterPlugin" },
+                { "type": "remove_use", "class_name": "MerchantOrderExpenseDataEntityExporterPlugin" },
+                { "type": "remove_use", "class_name": "MerchantOrderItemDataEntityExporterPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantOrderDataEntityExporterPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantOrderItemDataEntityExporterPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantOrderExpenseDataEntityExporterPlugin" }
+            ],
+            "success_messages": ["✓ DataExportDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/Discount/DiscountDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantReferenceDecisionRulePlugin" },
+                { "type": "remove_use", "class_name": "MerchantReferenceDiscountableItemCollectorPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantReferenceDecisionRulePlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantReferenceDiscountableItemCollectorPlugin" }
+            ],
+            "success_messages": ["✓ DiscountDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/Event/EventDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantProductOfferSearchEventSubscriber" },
+                { "type": "remove_event_subscriber", "subscriber_class": "MerchantProductOfferSearchEventSubscriber" }
+            ],
+            "success_messages": ["✓ EventDependencyProvider cleaned from marketplace-specific subscribers"]
+        },
+        "src/Pyz/Zed/EventDispatcher/EventDispatcherDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "SecurityBlockerMerchantPortalUserEventDispatcherPlugin" },
+                { "type": "remove_use", "class_name": "SecurityBlockerAgentMerchantPortalEventDispatcherPlugin" },
+                { "type": "remove_use", "class_name": "MerchantPortalHeadersSecurityEventDispatcherPlugin" },
+                { "type": "remove_use", "class_name": "MerchantPortalLastVisitedPageEventDispatcherPlugin" },
+                { "type": "remove_plugin", "plugin_class": "SecurityBlockerMerchantPortalUserEventDispatcherPlugin" },
+                { "type": "remove_plugin", "plugin_class": "SecurityBlockerAgentMerchantPortalEventDispatcherPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantPortalHeadersSecurityEventDispatcherPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantPortalLastVisitedPageEventDispatcherPlugin" },
+                { "type": "remove_method", "method_name": "getMerchantPortalEventDispatcherPlugins" }
+            ],
+            "success_messages": ["✓ EventDispatcherDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/Installer/InstallerDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "StripeMarketplaceInstallerPlugin" },
+                { "type": "remove_plugin", "plugin_class": "StripeMarketplaceInstallerPlugin" }
+            ],
+            "success_messages": ["✓ Removed StripeMarketplaceInstallerPlugin from InstallerDependencyProvider"]
+        },
+        "src/Pyz/Zed/Mail/MailDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantUserPasswordResetMailTypeBuilderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantUserPasswordResetMailTypeBuilderPlugin" }
+            ],
+            "success_messages": ["✓ MailDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/MessageBroker/MessageBrokerDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantAppOnboardingMessageHandlerPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantAppOnboardingMessageHandlerPlugin" }
+            ],
+            "success_messages": [
+                "✓ Removed MerchantAppOnboardingMessageHandlerPlugin from MessageBrokerDependencyProvider"
+            ]
+        },
+        "src/Pyz/Zed/MultiFactorAuth/MultiFactorAuthDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantPortalMultiFactorAuthPluginExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantPortalMultiFactorAuthPluginExpanderPlugin" },
+                { "type": "remove_method", "method_name": "getMultiFactorAuthPluginExpanderPlugins" }
+            ],
+            "success_messages": ["✓ MultiFactorAuthDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/OauthUserConnector/OauthUserConnectorDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantUserTypeOauthScopeProviderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantUserTypeOauthScopeAuthorizationCheckerPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantUserTypeOauthScopeProviderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantUserTypeOauthScopeAuthorizationCheckerPlugin" }
+            ],
+            "success_messages": ["✓ OauthUserConnectorDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/Oms/OmsDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "IsOrderPaidConditionPlugin" },
+                { "type": "remove_use", "class_name": "CreateMerchantOrdersCommandPlugin" },
+                { "type": "remove_use", "class_name": "CloseMerchantOrderItemCommandPlugin" },
+                { "type": "remove_use", "class_name": "ReturnMerchantOrderItemCommandPlugin" },
+                { "type": "remove_use", "class_name": "IsMerchantPaidOutConditionPlugin" },
+                { "type": "remove_use", "class_name": "IsMerchantPayoutReversedConditionPlugin" },
+                { "type": "remove_use", "class_name": "SalesMerchantCommissionCalculationCommandByOrderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantPayoutCommandByOrderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantPayoutReverseCommandByOrderPlugin" },
+                { "type": "remove_use", "class_name": "ProductOfferPackagingUnitOmsReservationAggregationPlugin" },
+                { "type": "remove_collection_add", "plugin_class": "IsOrderPaidConditionPlugin" },
+                { "type": "remove_collection_add", "plugin_class": "IsMerchantPaidOutConditionPlugin" },
+                { "type": "remove_collection_add", "plugin_class": "IsMerchantPayoutReversedConditionPlugin" },
+                { "type": "remove_collection_add", "plugin_class": "CreateMerchantOrdersCommandPlugin" },
+                { "type": "remove_collection_add", "plugin_class": "CloseMerchantOrderItemCommandPlugin" },
+                { "type": "remove_collection_add", "plugin_class": "ReturnMerchantOrderItemCommandPlugin" },
+                {
+                    "type": "remove_collection_add",
+                    "plugin_class": "SalesMerchantCommissionCalculationCommandByOrderPlugin"
+                },
+                { "type": "remove_collection_add", "plugin_class": "MerchantPayoutCommandByOrderPlugin" },
+                { "type": "remove_collection_add", "plugin_class": "MerchantPayoutReverseCommandByOrderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "ProductOfferPackagingUnitOmsReservationAggregationPlugin" }
+            ],
+            "success_messages": ["✓ OmsDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/Payment/PaymentDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantProductItemPaymentMethodFilterPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductItemPaymentMethodFilterPlugin" }
+            ],
+            "success_messages": ["✓ PaymentDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/Merchant/MerchantDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantAclEntitiesMerchantPostCreatePlugin" },
+                { "type": "remove_use", "class_name": "MerchantCategoryMerchantBulkExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProfileMerchantPostCreatePlugin" },
+                { "type": "remove_use", "class_name": "MerchantProfileMerchantPostUpdatePlugin" },
+                { "type": "remove_use", "class_name": "MerchantProfileMerchantBulkExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantAclEntitiesMerchantPostCreatePlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantCategoryMerchantBulkExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProfileMerchantPostCreatePlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProfileMerchantPostUpdatePlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProfileMerchantBulkExpanderPlugin" }
+            ],
+            "success_messages": ["✓ MerchantDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/MerchantGui/MerchantGuiDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantProfileFormExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProfileContactPersonFormTabExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProfileFormTabExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProfileLegalInformationFormTabExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantStockMerchantFormExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantUserTabMerchantFormTabExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantUserViewMerchantUpdateFormViewExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProfileFormExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantStockMerchantFormExpanderPlugin" },
+                { "type": "remove_method", "method_name": "getMerchantFormTabsExpanderPlugins" },
+                { "type": "remove_method", "method_name": "getMerchantUpdateFormViewExpanderPlugins" },
+                { "type": "remove_method", "method_name": "getMerchantViewFormViewExpanderPlugins" }
+            ],
+            "success_messages": [
+                "✓ MerchantGuiDependencyProvider cleaned from marketplace-specific plugins",
+                "✓ Removed MerchantProfileFormExpanderPlugin",
+                "✓ Removed MerchantStockMerchantFormExpanderPlugin",
+                "✓ Removed getMerchantFormTabsExpanderPlugins method",
+                "✓ Removed getMerchantUpdateFormViewExpanderPlugins method",
+                "✓ Removed getMerchantViewFormViewExpanderPlugins method"
+            ]
+        },
+        "src/Pyz/Zed/PriceProduct/PriceProductDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantRelationshipVolumePriceProductValidatorPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantRelationshipVolumePriceProductValidatorPlugin" }
+            ],
+            "success_messages": ["✓ PriceProductDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/Product/ProductDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantProductProductAbstractPostCreatePlugin" },
+                { "type": "remove_use", "class_name": "MerchantProductProductAbstractAfterUpdatePlugin" },
+                { "type": "remove_use", "class_name": "MerchantProductProductAbstractExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProductApprovalProductAbstractPreCreatePlugin" },
+                { "type": "remove_use", "class_name": "ProductApprovalProductAbstractPreCreatePlugin" },
+                { "type": "remove_use", "class_name": "ApprovalStatusProductConcreteMergerPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductProductAbstractPostCreatePlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductProductAbstractAfterUpdatePlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductProductAbstractExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductApprovalProductAbstractPreCreatePlugin" },
+                { "type": "remove_plugin", "plugin_class": "ProductApprovalProductAbstractPreCreatePlugin" },
+                { "type": "remove_plugin", "plugin_class": "ApprovalStatusProductConcreteMergerPlugin" }
+            ],
+            "success_messages": ["✓ ProductDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/ProductPageSearch/ProductPageSearchDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantProductOfferSearchConfig" },
+                { "type": "remove_use", "class_name": "MerchantProductSearchConfig" },
+                { "type": "remove_use", "class_name": "MerchantNamesProductAbstractMapExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProductPageDataExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProductPageDataLoaderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantReferencesProductAbstractsMapExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProductAbstractMapExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantMerchantProductPageDataExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantMerchantProductPageDataLoaderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProductProductConcretePageMapExpanderPlugin" },
+                { "type": "remove_use", "class_name": "ProductApprovalProductPageSearchCollectionFilterPlugin" },
+                { "type": "remove_use", "class_name": "ProductApprovalProductConcreteCollectionFilterPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantMerchantProductPageDataExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductPageDataExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantMerchantProductPageDataLoaderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductPageDataLoaderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductProductConcretePageMapExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductAbstractMapExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantNamesProductAbstractMapExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantReferencesProductAbstractsMapExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "ProductApprovalProductPageSearchCollectionFilterPlugin" },
+                { "type": "remove_plugin", "plugin_class": "ProductApprovalProductConcreteCollectionFilterPlugin" }
+            ],
+            "success_messages": ["✓ ProductPageSearchDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/ProductManagement/ProductManagementDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantProductAbstractListActionViewDataExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProductAbstractFormDataProviderExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProductAbstractFormExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProductAbstractFormOptionsExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProductAbstractFormOptionsResolverExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProductAbstractGeneralTabContentProviderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProductProductAbstractEditViewExpanderPlugin" },
+                {
+                    "type": "remove_use",
+                    "class_name": "MerchantProductProductAbstractViewActionViewDataExpanderPlugin"
+                },
+                { "type": "remove_use", "class_name": "MerchantProductProductTableQueryCriteriaExpanderPlugin" },
+                { "type": "remove_use", "class_name": "ApprovalStatusAbstractProductReadinessProviderPlugin" },
+                { "type": "remove_use", "class_name": "ProductApprovalProductAbstractEditViewExpanderPlugin" },
+                { "type": "remove_use", "class_name": "ProductApprovalProductTableActionExpanderPlugin" },
+                { "type": "remove_use", "class_name": "ProductApprovalProductTableConfigurationExpanderPlugin" },
+                { "type": "remove_use", "class_name": "ProductApprovalProductTableDataBulkExpanderPlugin" },
+                { "type": "remove_use", "class_name": "ProductApprovalProductTableQueryCriteriaExpanderPlugin" },
+                { "type": "remove_use", "class_name": "ProductAttachmentImageTabContentProviderPlugin" },
+                { "type": "remove_use", "class_name": "ShipmentTypeProductConcreteEditFormExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductAbstractListActionViewDataExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductAbstractFormDataProviderExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductAbstractFormExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductAbstractFormOptionsExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductAbstractFormOptionsResolverExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductAbstractGeneralTabContentProviderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductProductAbstractEditViewExpanderPlugin" },
+                {
+                    "type": "remove_plugin",
+                    "plugin_class": "MerchantProductProductAbstractViewActionViewDataExpanderPlugin"
+                },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductProductTableQueryCriteriaExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "ApprovalStatusAbstractProductReadinessProviderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "ProductApprovalProductAbstractEditViewExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "ProductApprovalProductTableActionExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "ProductApprovalProductTableConfigurationExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "ProductApprovalProductTableDataBulkExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "ProductApprovalProductTableQueryCriteriaExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "ShipmentTypeProductConcreteEditFormExpanderPlugin" }
+            ],
+            "success_messages": ["✓ ProductManagementDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/ProductOfferShipmentTypeDataImport/ProductOfferShipmentTypeDataImportDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "ProductOfferConcreteShipmentTypeValidatorStepPlugin" },
+                { "type": "remove_plugin", "plugin_class": "ProductOfferConcreteShipmentTypeValidatorStepPlugin" }
+            ],
+            "success_messages": [
+                "✓ ProductOfferShipmentTypeDataImportDependencyProvider cleaned from marketplace-specific plugins"
+            ]
+        },
+        "src/Pyz/Zed/ProductOption/ProductOptionDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantProductOptionListActionViewDataExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProductOptionGroupExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProductOptionListTableQueryCriteriaExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductOptionListActionViewDataExpanderPlugin" },
+                {
+                    "type": "remove_plugin",
+                    "plugin_class": "MerchantProductOptionListTableQueryCriteriaExpanderPlugin"
+                },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductOptionGroupExpanderPlugin" }
+            ],
+            "success_messages": ["✓ ProductOptionDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/ProductOptionStorage/ProductOptionStorageDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantProductOptionCollectionFilterPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductOptionCollectionFilterPlugin" }
+            ],
+            "success_messages": ["✓ ProductOptionStorageDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/ProductStorage/ProductStorageDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantProductAbstractStorageExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProductConcreteStorageCollectionExpanderPlugin" },
+                { "type": "remove_use", "class_name": "ProductApprovalProductAbstractStorageCollectionFilterPlugin" },
+                { "type": "remove_use", "class_name": "ProductApprovalProductConcreteStorageCollectionFilterPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductAbstractStorageExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductConcreteStorageCollectionExpanderPlugin" },
+                {
+                    "type": "remove_plugin",
+                    "plugin_class": "ProductApprovalProductAbstractStorageCollectionFilterPlugin"
+                },
+                {
+                    "type": "remove_plugin",
+                    "plugin_class": "ProductApprovalProductConcreteStorageCollectionFilterPlugin"
+                }
+            ],
+            "success_messages": ["✓ ProductStorageDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/Publisher/PublisherDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "CategoryWritePublisherPlugin" },
+                { "type": "remove_use", "class_name": "MerchantOpeningHoursDateScheduleWritePublisherPlugin" },
+                { "type": "remove_use", "class_name": "MerchantOpeningHoursWeekdayScheduleWritePublisherPlugin" },
+                { "type": "remove_use", "class_name": "MerchantOpeningHoursWritePublisherPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProductOptionGroupWritePublisherPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProductSearchWritePublisherPlugin" },
+                { "type": "remove_use", "class_name": "MerchantUpdatePublisherPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProductWritePublisherPlugin" },
+                { "type": "remove_use", "class_name": "MerchantCategoryWritePublisherPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProductOptionGroupPublisherTriggerPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProductSearchPublisherTriggerPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProductPublisherTriggerPlugin" },
+                { "type": "remove_use", "class_name": "MerchantCategoryStoragePublisherPlugin" },
+                { "type": "remove_plugin", "plugin_class": "CategoryWritePublisherPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantOpeningHoursWritePublisherPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantOpeningHoursWeekdayScheduleWritePublisherPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantOpeningHoursDateScheduleWritePublisherPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductWritePublisherPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantUpdatePublisherPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantMerchantProductSearchWritePublisherPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductSearchWritePublisherPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantCategoryWritePublisherPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductOptionGroupWritePublisherPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductOptionGroupPublisherTriggerPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductSearchPublisherTriggerPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductPublisherTriggerPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantCategoryStoragePublisherPlugin" }
+            ],
+            "success_messages": ["✓ PublisherDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/Queue/QueueDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantOpeningHoursStorageConfig" },
+                {
+                    "type": "remove_queue_entry",
+                    "queue_config_key": "MerchantOpeningHoursStorageConfig::MERCHANT_OPENING_HOURS_SYNC_STORAGE_QUEUE"
+                }
+            ],
+            "success_messages": ["✓ QueueDependencyProvider cleaned from marketplace-specific queue entries"]
+        },
+        "src/Pyz/Zed/Quote/QuoteDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantShipmentQuoteExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantShipmentQuoteExpanderPlugin" }
+            ],
+            "success_messages": ["✓ QuoteDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/Refund/RefundDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantOrderTotalsRefundPostSavePlugin" },
+                { "type": "remove_use", "class_name": "MerchantCommissionRefundPostSavePlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantOrderTotalsRefundPostSavePlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantCommissionRefundPostSavePlugin" }
+            ],
+            "success_messages": ["✓ RefundDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/Router/RouterDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantPortalRouterPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantPortalRouterPlugin" }
+            ],
+            "success_messages": ["✓ RouterDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/RuleEngine/RuleEngineDependencyProvider.php": {
+            "operations": [
+                {
+                    "type": "remove_use",
+                    "class_name": "MerchantCommissionItemCollectorRuleSpecificationProviderPlugin"
+                },
+                {
+                    "type": "remove_use",
+                    "class_name": "MerchantCommissionOrderDecisionRuleSpecificationProviderPlugin"
+                },
+                {
+                    "type": "remove_plugin",
+                    "plugin_class": "MerchantCommissionItemCollectorRuleSpecificationProviderPlugin"
+                },
+                {
+                    "type": "remove_plugin",
+                    "plugin_class": "MerchantCommissionOrderDecisionRuleSpecificationProviderPlugin"
+                }
+            ],
+            "success_messages": ["✓ RuleEngineDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/Sales/SalesDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantOmsStateOrderItemsTableExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantDataOrderHydratePlugin" },
+                { "type": "remove_use", "class_name": "MerchantOrderDataOrderExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantReferenceOrderItemExpanderPreSavePlugin" },
+                { "type": "remove_use", "class_name": "MerchantReferencesOrderExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantCommissionOrderPostCancelPlugin" },
+                { "type": "remove_use", "class_name": "MerchantStateOrderItemExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantOrderDataOrderExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantReferencesOrderExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantDataOrderHydratePlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantReferenceOrderItemExpanderPreSavePlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantOmsStateOrderItemsTableExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantCommissionOrderPostCancelPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantStateOrderItemExpanderPlugin" }
+            ],
+            "success_messages": ["✓ SalesDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/SalesReturn/SalesReturnDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantReturnCreateRequestValidatorPlugin" },
+                { "type": "remove_use", "class_name": "MerchantReturnExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantReturnPreCreatePlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantReturnPreCreatePlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantReturnCreateRequestValidatorPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantReturnExpanderPlugin" }
+            ],
+            "success_messages": ["✓ SalesReturnDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/SalesReturnGui/SalesReturnGuiDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantSalesReturnCreateFormHandlerPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantSalesReturnCreateFormHandlerPlugin" }
+            ],
+            "success_messages": ["✓ SalesReturnGuiDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/Customer/CustomerDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "AcceptOnlyOauthCustomerAuthenticationStrategyPlugin" },
+                { "type": "remove_use", "class_name": "CreateCustomerOauthCustomerAuthenticationStrategyPlugin" },
+                { "type": "remove_use", "class_name": "KnpuOauthCustomerIdentityPersistencePlugin" },
+                { "type": "remove_use", "class_name": "KnpuOauthCustomerIdentityStrategyPlugin" },
+                { "type": "remove_method", "method_name": "getOauthCustomerAuthenticationStrategyPlugins" },
+                { "type": "remove_method", "method_name": "getOauthCustomerPostResolvePlugins" }
+            ],
+            "success_messages": ["✓ CustomerDependencyProvider cleaned from SecurityOauthKnpu plugins"]
+        },
+        "src/Pyz/Zed/Security/SecurityDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MultiFactorAuthenticationAgentMerchantUserSecurityPlugin" },
+                { "type": "remove_use", "class_name": "ZedAgentMerchantUserSecurityPlugin" },
+                { "type": "remove_use", "class_name": "MultiFactorAuthenticationMerchantUserSecurityPlugin" },
+                { "type": "remove_use", "class_name": "ZedMerchantUserSecurityPlugin" },
+                { "type": "remove_use", "class_name": "ZedOauthMerchantPortalSecurityPlugin" },
+                { "type": "remove_use", "class_name": "ZedKnpuOauthUserSecurityPlugin" },
+                { "type": "remove_plugin", "plugin_class": "ZedAgentMerchantUserSecurityPlugin" },
+                { "type": "remove_plugin", "plugin_class": "ZedMerchantUserSecurityPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MultiFactorAuthenticationMerchantUserSecurityPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MultiFactorAuthenticationAgentMerchantUserSecurityPlugin" },
+                { "type": "remove_plugin", "plugin_class": "ZedOauthMerchantPortalSecurityPlugin" },
+                { "type": "remove_plugin", "plugin_class": "ZedKnpuOauthUserSecurityPlugin" }
+            ],
+            "success_messages": ["✓ SecurityDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/SecurityGui/SecurityGuiDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantUserUserRoleFilterPlugin" },
+                { "type": "remove_use", "class_name": "KnpuOauthAuthenticationLinkPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantUserUserRoleFilterPlugin" },
+                { "type": "remove_plugin", "plugin_class": "KnpuOauthAuthenticationLinkPlugin" }
+            ],
+            "success_messages": ["✓ SecurityGuiDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/Shipment/ShipmentDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantReferenceShipmentExpenseExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantReferenceShipmentExpenseExpanderPlugin" }
+            ],
+            "success_messages": ["✓ ShipmentDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/ShipmentsRestApi/ShipmentsRestApiDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantReferenceQuoteItemExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantReferenceQuoteItemExpanderPlugin" }
+            ],
+            "success_messages": ["✓ ShipmentsRestApiDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/ShipmentGui/ShipmentGuiDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantShipmentOrderItemTemplatePlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantShipmentOrderItemTemplatePlugin" }
+            ],
+            "success_messages": ["✓ ShipmentGuiDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/ShoppingList/ShoppingListDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantProductAddItemPreCheckPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProductShoppingListItemBulkPostSavePlugin" },
+                { "type": "remove_use", "class_name": "MerchantProductShoppingListItemCollectionExpanderPlugin" },
+                { "type": "remove_use", "class_name": "ProductApprovalAddItemPreCheckPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductAddItemPreCheckPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductShoppingListItemBulkPostSavePlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductShoppingListItemCollectionExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "ProductApprovalAddItemPreCheckPlugin" }
+            ],
+            "success_messages": ["✓ ShoppingListDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/StateMachine/StateMachineDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantStateMachineHandlerPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantStateMachineHandlerPlugin" }
+            ],
+            "success_messages": ["✓ StateMachineDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/Synchronization/SynchronizationDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantOpeningHoursSynchronizationDataBulkPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantOpeningHoursSynchronizationDataBulkPlugin" }
+            ],
+            "success_messages": ["✓ SynchronizationDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/Twig/TwigDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantNavigationTypeTwigPlugin" },
+                { "type": "remove_use", "class_name": "MerchantUserTwigPlugin" },
+                { "type": "remove_use", "class_name": "ZedUiNavigationTwigPlugin" },
+                { "type": "remove_use", "class_name": "BooleanToStringTwigPlugin" },
+                { "type": "remove_use", "class_name": "GuiTableConfigurationTwigPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantUserTwigPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantNavigationTypeTwigPlugin" },
+                { "type": "remove_plugin", "plugin_class": "ZedUiNavigationTwigPlugin" },
+                { "type": "remove_plugin", "plugin_class": "BooleanToStringTwigPlugin" },
+                { "type": "remove_plugin", "plugin_class": "GuiTableConfigurationTwigPlugin" }
+            ],
+            "success_messages": ["✓ TwigDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/User/UserDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantAgentUserQueryCriteriaExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantAgentUserFormExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantAgentUserTableConfigExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantAgentUserTableDataExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantAgentUserFormExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantAgentUserTableConfigExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantAgentUserTableDataExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantAgentUserQueryCriteriaExpanderPlugin" }
+            ],
+            "success_messages": ["✓ UserDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/ZedNavigation/ZedNavigationDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "AgentMerchantPortalNavigationItemCollectionFilterPlugin" },
+                { "type": "remove_use", "class_name": "MerchantPortalNavigationItemCollectionFilterPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantPortalNavigationItemCollectionFilterPlugin" },
+                { "type": "remove_plugin", "plugin_class": "AgentMerchantPortalNavigationItemCollectionFilterPlugin" }
+            ],
+            "success_messages": ["✓ ZedNavigationDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/ZedNavigation/ZedNavigationConfig.php": {
+            "operations": [
+                { "type": "remove_constant", "constant_name": "NAVIGATION_TYPE_MAIN_MERCHANT_PORTAL" },
+                { "type": "remove_constant", "constant_name": "NAVIGATION_TYPE_SECONDARY_MERCHANT_PORTAL" },
+                { "type": "remove_method", "method_name": "getCacheFilePaths" },
+                { "type": "remove_method", "method_name": "getRootNavigationSchemaPaths" },
+                { "type": "remove_method", "method_name": "getNavigationSchemaFileNamePatterns" },
+                { "type": "remove_method", "method_name": "getDefaultNavigationType" }
+            ],
+            "success_messages": ["✓ ZedNavigationConfig cleaned from marketplace-specific configuration"]
+        },
+        "src/Pyz/Zed/SalesOrderAmendment/SalesOrderAmendmentConfig.php": {
+            "operations": [{ "type": "remove_array_value_entry", "array_value": "QuoteTransfer::MERCHANT_REFERENCE" }],
+            "success_messages": ["✓ SalesOrderAmendmentConfig cleaned from marketplace-specific configuration"]
+        },
+        "src/Pyz/Zed/SelfServicePortal/SelfServicePortalConfig.php": {
+            "operations": [{ "type": "replace_string", "old_value": "'MER000008'", "new_value": "'MERSPRYKER'" }],
+            "success_messages": ["✓ SelfServicePortalConfig updated getDefaultMerchantReference to return 'MERSPRYKER'"]
+        },
+        "src/Pyz/Zed/MerchantSearch/MerchantSearchDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantCategoryMerchantSearchDataExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantCategoryMerchantSearchDataExpanderPlugin" }
+            ],
+            "success_messages": ["✓ Zed MerchantSearchDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Yves/CartPage/CartPageDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantProductPreAddToCartPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductPreAddToCartPlugin" }
+            ],
+            "success_messages": ["✓ Yves CartPageDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Yves/CheckoutPage/CheckoutPageDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "DummyMarketplacePaymentConfig" },
+                { "type": "remove_use", "class_name": "DummyMarketplacePaymentHandlerPlugin" },
+                { "type": "remove_use", "class_name": "DummyMarketplacePaymentInvoiceSubFormPlugin" },
+                { "type": "remove_use", "class_name": "MerchantShipmentCheckoutPageStepEnginePreRenderPlugin" },
+                { "type": "remove_collection_add", "plugin_class": "DummyMarketplacePaymentHandlerPlugin" },
+                { "type": "remove_collection_add", "plugin_class": "DummyMarketplacePaymentInvoiceSubFormPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantShipmentCheckoutPageStepEnginePreRenderPlugin" }
+            ],
+            "success_messages": ["✓ Yves CheckoutPageDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Yves/CustomerPage/CustomerPageDependencyProvider.php": {
+            "operations": [
+                {
+                    "type": "remove_use",
+                    "class_name": "MerchantShipmentCheckoutAddressStepPreGroupItemsByShipmentPlugin"
+                },
+                { "type": "remove_use", "class_name": "KnpuCustomerAuthenticationLinkPlugin" },
+                { "type": "remove_use", "class_name": "KnpuOauthCustomerClientStrategyPlugin" },
+                {
+                    "type": "remove_plugin",
+                    "plugin_class": "MerchantShipmentCheckoutAddressStepPreGroupItemsByShipmentPlugin"
+                },
+                { "type": "remove_method", "method_name": "getOauthCustomerClientStrategyPlugins" },
+                { "type": "remove_method", "method_name": "getCustomerAuthenticationLinkPlugins" }
+            ],
+            "success_messages": ["✓ Yves CustomerPageDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Yves/Security/SecurityDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "OauthCustomerSecurityPlugin" },
+                { "type": "remove_plugin", "plugin_class": "OauthCustomerSecurityPlugin" }
+            ],
+            "success_messages": ["✓ Yves SecurityDependencyProvider cleaned from SecurityOauthKnpu plugins"]
+        },
+        "src/Pyz/Yves/QuickOrderPage/QuickOrderPageDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantProductQuickOrderItemExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantQuickOrderItemMapperPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductQuickOrderItemExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantQuickOrderItemMapperPlugin" }
+            ],
+            "success_messages": ["✓ Yves QuickOrderPageDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Yves/Router/RouterDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantRegistrationRequestPageRouteProviderPlugin" },
+                { "type": "remove_use", "class_name": "SecurityOauthKnpuRouteProviderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantRegistrationRequestPageRouteProviderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "SecurityOauthKnpuRouteProviderPlugin" }
+            ],
+            "success_messages": ["✓ Yves RouterDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Yves/StorageRouter/StorageRouterDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantPageResourceCreatorPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantPageResourceCreatorPlugin" }
+            ],
+            "success_messages": ["✓ Yves StorageRouterDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Yves/ShopApplication/ShopApplicationDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantOpeningHoursWidget" },
+                { "type": "remove_use", "class_name": "MerchantOrderReferenceForItemsWidget" },
+                { "type": "remove_use", "class_name": "MerchantSalesReturnCreateFormWidget" },
+                { "type": "remove_use", "class_name": "ProductOfferShoppingListWidget" },
+                {
+                    "type": "remove_use",
+                    "class_name": "MerchantSalesReturnCreateFormWidgetCacheKeyGeneratorStrategyPlugin"
+                },
+                { "type": "remove_use", "class_name": "SoldByMerchantWidget" },
+                { "type": "remove_use", "class_name": "ShoppingListMerchantWidget" },
+                { "type": "remove_use", "class_name": "MerchantSearchWidget" },
+                { "type": "remove_plugin", "plugin_class": "MerchantOpeningHoursWidget" },
+                { "type": "remove_plugin", "plugin_class": "MerchantOrderReferenceForItemsWidget" },
+                { "type": "remove_plugin", "plugin_class": "MerchantSalesReturnCreateFormWidget" },
+                { "type": "remove_plugin", "plugin_class": "ProductOfferShoppingListWidget" },
+                { "type": "remove_plugin", "plugin_class": "SoldByMerchantWidget" },
+                { "type": "remove_plugin", "plugin_class": "ShoppingListMerchantWidget" },
+                { "type": "remove_plugin", "plugin_class": "MerchantSearchWidget" },
+                {
+                    "type": "remove_plugin",
+                    "plugin_class": "MerchantSalesReturnCreateFormWidgetCacheKeyGeneratorStrategyPlugin"
+                },
+                { "type": "remove_use", "class_name": "OauthKnpuApplicationPlugin" },
+                { "type": "remove_use", "class_name": "OauthAuthenticationLinksWidget" },
+                { "type": "remove_plugin", "plugin_class": "OauthAuthenticationLinksWidget" },
+                { "type": "remove_plugin", "plugin_class": "OauthKnpuApplicationPlugin" }
+            ],
+            "success_messages": ["✓ Yves ShopApplicationDependencyProvider cleaned from marketplace-specific widgets"]
+        },
+        "src/Pyz/Glue/CartsRestApi/CartsRestApiDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantProductCartItemExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductCartItemExpanderPlugin" }
+            ],
+            "success_messages": ["✓ Glue CartsRestApiDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Glue/GlueApplication/GlueApplicationDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantOpeningHoursRestApiConfig" },
+                {
+                    "type": "remove_use",
+                    "class_name": "MerchantOpeningHoursByMerchantReferenceResourceRelationshipPlugin"
+                },
+                { "type": "remove_use", "class_name": "MerchantOpeningHoursResourceRoutePlugin" },
+                { "type": "remove_use", "class_name": "MerchantsRestApiConfig" },
+                { "type": "remove_use", "class_name": "MerchantAddressByMerchantReferenceResourceRelationshipPlugin" },
+                { "type": "remove_use", "class_name": "MerchantAddressesResourceRoutePlugin" },
+                { "type": "remove_use", "class_name": "MerchantByMerchantReferenceResourceRelationshipPlugin" },
+                { "type": "remove_use", "class_name": "MerchantsByOrderResourceRelationshipPlugin" },
+                { "type": "remove_use", "class_name": "MerchantsResourceRoutePlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantsResourceRoutePlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantAddressesResourceRoutePlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantOpeningHoursResourceRoutePlugin" },
+                {
+                    "type": "remove_resource_relationship",
+                    "resource_type": "MerchantsRestApiConfig::RESOURCE_MERCHANTS",
+                    "plugin_class": "MerchantAddressByMerchantReferenceResourceRelationshipPlugin"
+                },
+                {
+                    "type": "remove_resource_relationship",
+                    "resource_type": "OrdersRestApiConfig::RESOURCE_ORDERS",
+                    "plugin_class": "MerchantsByOrderResourceRelationshipPlugin"
+                },
+                {
+                    "type": "remove_resource_relationship",
+                    "resource_type": "ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS",
+                    "plugin_class": "MerchantByMerchantReferenceResourceRelationshipPlugin"
+                },
+                {
+                    "type": "remove_resource_relationship",
+                    "resource_type": "CartsRestApiConfig::RESOURCE_CART_ITEMS",
+                    "plugin_class": "MerchantByMerchantReferenceResourceRelationshipPlugin"
+                },
+                {
+                    "type": "remove_resource_relationship",
+                    "resource_type": "CartsRestApiConfig::RESOURCE_GUEST_CARTS_ITEMS",
+                    "plugin_class": "MerchantByMerchantReferenceResourceRelationshipPlugin"
+                },
+                {
+                    "type": "remove_resource_relationship",
+                    "resource_type": "MerchantsRestApiConfig::RESOURCE_MERCHANTS",
+                    "plugin_class": "MerchantOpeningHoursByMerchantReferenceResourceRelationshipPlugin"
+                },
+                {
+                    "type": "remove_resource_relationship",
+                    "resource_type": "SalesReturnsRestApiConfig::RESOURCE_RETURNS",
+                    "plugin_class": "MerchantByMerchantReferenceResourceRelationshipPlugin"
+                },
+                {
+                    "type": "remove_resource_relationship",
+                    "resource_type": "MerchantProductOffersRestApiConfig::RESOURCE_PRODUCT_OFFERS",
+                    "plugin_class": "MerchantByMerchantReferenceResourceRelationshipPlugin"
+                },
+                {
+                    "type": "remove_resource_relationship",
+                    "resource_type": "ShoppingListsRestApiConfig::RESOURCE_SHOPPING_LIST_ITEMS",
+                    "plugin_class": "MerchantByMerchantReferenceResourceRelationshipPlugin"
+                },
+                {
+                    "type": "remove_resource_relationship",
+                    "resource_type": "ShoppingListsRestApiConfig::RESOURCE_SHOPPING_LIST_ITEMS",
+                    "plugin_class": "ProductOfferAvailabilitiesByProductOfferReferenceResourceRelationshipPlugin"
+                },
+                {
+                    "type": "remove_resource_relationship",
+                    "resource_type": "ShoppingListsRestApiConfig::RESOURCE_SHOPPING_LIST_ITEMS",
+                    "plugin_class": "ProductOffersByProductOfferReferenceResourceRelationshipPlugin"
+                },
+                {
+                    "type": "remove_resource_relationship",
+                    "resource_type": "ShoppingListsRestApiConfig::RESOURCE_SHOPPING_LIST_ITEMS",
+                    "plugin_class": "ProductOfferPriceByProductOfferReferenceResourceRelationshipPlugin"
+                }
+            ],
+            "success_messages": ["✓ Glue GlueApplicationDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Glue/UrlsRestApi/UrlsRestApiDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantRestUrlResolverAttributesTransferProviderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantRestUrlResolverAttributesTransferProviderPlugin" }
+            ],
+            "success_messages": ["✓ Glue UrlsRestApiDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Glue/PaymentsRestApi/PaymentsRestApiConfig.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "DummyMarketplacePaymentConfig" },
+                { "type": "remove_constant", "constant_name": "PAYMENT_METHOD_PRIORITY" },
+                { "type": "remove_constant", "constant_name": "PAYMENT_METHOD_REQUIRED_FIELDS" }
+            ],
+            "success_messages": ["✓ Glue PaymentsRestApiConfig cleaned from marketplace-specific configuration"]
+        },
+        "src/Pyz/Client/Catalog/CatalogDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantProductReferenceQueryExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductReferenceQueryExpanderPlugin" }
+            ],
+            "success_messages": ["✓ Client CatalogDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Client/ProductStorage/ProductStorageDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "ProductViewMerchantProductExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "ProductViewMerchantProductExpanderPlugin" }
+            ],
+            "success_messages": ["✓ Client ProductStorageDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Client/RabbitMq/RabbitMqConfig.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantOpeningHoursStorageConfig" },
+                {
+                    "type": "remove_array_constant_entry",
+                    "constant_reference": "MerchantOpeningHoursStorageConfig::MERCHANT_OPENING_HOURS_SYNC_STORAGE_QUEUE"
+                }
+            ],
+            "success_messages": ["✓ Client RabbitMqConfig cleaned from marketplace-specific queue configurations"]
+        },
+        "src/Pyz/Client/SymfonyMessenger/SymfonyMessengerConfig.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantOpeningHoursStorageConfig" },
+                {
+                    "type": "remove_array_constant_entry",
+                    "constant_reference": "MerchantOpeningHoursStorageConfig::MERCHANT_OPENING_HOURS_SYNC_STORAGE_QUEUE"
+                }
+            ],
+            "success_messages": [
+                "✓ Client SymfonyMessengerConfig cleaned from marketplace-specific queue configurations"
+            ]
+        },
+        "src/Pyz/Client/Search/SearchDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantNameSearchConfigExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProductMerchantNameSearchConfigExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductMerchantNameSearchConfigExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantNameSearchConfigExpanderPlugin" }
+            ],
+            "success_messages": ["✓ Client SearchDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Client/SearchElasticsearch/SearchElasticsearchDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantNameSearchConfigExpanderPlugin" },
+                { "type": "remove_use", "class_name": "MerchantProductMerchantNameSearchConfigExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductMerchantNameSearchConfigExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantNameSearchConfigExpanderPlugin" }
+            ],
+            "success_messages": [
+                "✓ Client SearchElasticsearchDependencyProvider cleaned from marketplace-specific plugins"
+            ]
+        },
+        "src/Pyz/Client/SecurityBlocker/SecurityBlockerDependencyProvider.php": {
+            "operations": [
+                {
+                    "type": "remove_use",
+                    "class_name": "AgentMerchantPortalSecurityBlockerConfigurationSettingsExpanderPlugin"
+                },
+                {
+                    "type": "remove_use",
+                    "class_name": "MerchantPortalUserSecurityBlockerConfigurationSettingsExpanderPlugin"
+                },
+                {
+                    "type": "remove_plugin",
+                    "plugin_class": "MerchantPortalUserSecurityBlockerConfigurationSettingsExpanderPlugin"
+                },
+                {
+                    "type": "remove_plugin",
+                    "plugin_class": "AgentMerchantPortalSecurityBlockerConfigurationSettingsExpanderPlugin"
+                }
+            ],
+            "success_messages": ["✓ Client SecurityBlockerDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Client/ShoppingList/ShoppingListDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantShoppingListItemToItemMapperPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantShoppingListItemToItemMapperPlugin" }
+            ],
+            "success_messages": ["✓ Client ShoppingListDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Client/UrlStorage/UrlStorageDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "UrlStorageMerchantMapperPlugin" },
+                { "type": "remove_plugin", "plugin_class": "UrlStorageMerchantMapperPlugin" }
+            ],
+            "success_messages": ["✓ Client UrlStorageDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Client/ProductOfferStorage/ProductOfferStorageDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantProductProductOfferReferenceStrategyPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantProductProductOfferReferenceStrategyPlugin" }
+            ],
+            "success_messages": [
+                "✓ Client ProductOfferStorageDependencyProvider cleaned from marketplace-specific plugins"
+            ]
+        },
+        "src/Pyz/Client/MerchantSearch/MerchantSearchDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantCategoryMerchantSearchQueryExpanderPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantCategoryMerchantSearchQueryExpanderPlugin" }
+            ],
+            "success_messages": ["✓ Client MerchantSearchDependencyProvider cleaned from marketplace-specific plugins"]
+        }
+    },
+    "config_files": {
+        "config/Yves/bundles.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "KnpUOAuth2ClientBundle" },
+                { "type": "remove_line_containing", "pattern": "KnpUOAuth2ClientBundle::class" }
+            ],
+            "success_messages": ["✓ Removed KnpUOAuth2ClientBundle from config/Yves/bundles.php"]
+        },
+        "config/Zed/bundles.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "KnpUOAuth2ClientBundle" },
+                { "type": "remove_line_containing", "pattern": "KnpUOAuth2ClientBundle::class" }
+            ],
+            "success_messages": ["✓ Removed KnpUOAuth2ClientBundle from config/Zed/bundles.php"]
+        },
+        "config/MerchantPortal/bundles.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "KnpUOAuth2ClientBundle" },
+                { "type": "remove_line_containing", "pattern": "KnpUOAuth2ClientBundle::class" }
+            ],
+            "success_messages": ["✓ Removed KnpUOAuth2ClientBundle from config/MerchantPortal/bundles.php"]
+        },
+        "config/Shared/config_default.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "SecurityBlockerMerchantPortalConstants" },
+                { "type": "remove_use", "class_name": "MerchantPortalConstants" },
+                { "type": "remove_use", "class_name": "MerchantProductDataImportConstants" },
+                { "type": "remove_use", "class_name": "MerchantProductOfferDataImportConstants" },
+                { "type": "remove_use", "class_name": "DummyMarketplacePaymentConfig" },
+                { "type": "remove_use", "class_name": "AgentSecurityBlockerMerchantPortalConstants" },
+                { "type": "remove_config_assignment", "constant_pattern": "SecurityBlockerMerchantPortalConstants::" },
+                { "type": "remove_config_assignment", "constant_pattern": "MerchantPortalConstants::BASE_URL_MP" },
+                { "type": "remove_config_assignment", "constant_pattern": "MerchantPortalConstants::" },
+                { "type": "remove_config_assignment", "constant_pattern": "MerchantProductDataImportConstants::" },
+                { "type": "remove_config_assignment", "constant_pattern": "MerchantProductOfferDataImportConstants::" },
+                {
+                    "type": "remove_config_assignment",
+                    "constant_pattern": "AgentSecurityBlockerMerchantPortalConstants::"
+                },
+                {
+                    "type": "remove_array_key_value",
+                    "key_pattern": "DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE"
+                },
+                { "type": "remove_filesystem_config", "filesystem_name": "merchant-product-data-import-files" },
+                { "type": "remove_filesystem_config", "filesystem_name": "merchant-product-offer-data-import-files" },
+                { "type": "remove_section_comment", "comment_pattern": "MERCHANT PORTAL" },
+                { "type": "remove_array_value", "array_value": "MarketplacePayment01" },
+                {
+                    "type": "replace_string",
+                    "old_value": "'StripeManualMarketplace01'",
+                    "new_value": "'StripeManual01'"
+                }
+            ],
+            "success_messages": [
+                "✓ Removed merchant portal configuration from config_default.php",
+                "✓ Removed MarketplacePayment01 from ACTIVE_PROCESSES in config_default.php",
+                "✓ Replaced StripeManualMarketplace01 with StripeManual01"
+            ]
+        },
+        "config/Shared/config_default-docker.dev.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantPortalConstants" },
+                { "type": "remove_use", "class_name": "SecurityMerchantPortalGuiConstants" },
+                { "type": "remove_config_assignment", "constant_pattern": "MerchantPortalConstants::BASE_URL_MP" },
+                { "type": "remove_config_assignment", "constant_pattern": "MerchantPortalConstants::" },
+                { "type": "remove_line_containing", "pattern": "SecurityMerchantPortalGuiConstants::" },
+                { "type": "remove_filesystem_config", "filesystem_name": "merchant-product-data-import-files" },
+                { "type": "remove_filesystem_config", "filesystem_name": "merchant-product-offer-data-import-files" },
+                { "type": "remove_section_comment", "comment_pattern": "MERCHANT PORTAL" }
+            ],
+            "success_messages": ["✓ Removed merchant portal configuration from config_default-docker.dev.php"]
+        },
+        "config/Shared/config_default-ci.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantPortalConstants" },
+                { "type": "remove_use", "class_name": "SecurityMerchantPortalGuiConstants" },
+                { "type": "remove_config_assignment", "constant_pattern": "MerchantPortalConstants::BASE_URL_MP" },
+                { "type": "remove_config_assignment", "constant_pattern": "MerchantPortalConstants::" },
+                { "type": "remove_line_containing", "pattern": "SecurityMerchantPortalGuiConstants::" },
+                { "type": "remove_filesystem_config", "filesystem_name": "merchant-product-data-import-files" },
+                { "type": "remove_filesystem_config", "filesystem_name": "merchant-product-offer-data-import-files" },
+                { "type": "remove_section_comment", "comment_pattern": "MERCHANT PORTAL" }
+            ],
+            "success_messages": ["✓ Removed merchant portal configuration from config_default-ci.php"]
+        },
+        "config/Shared/config_default-docker.ci.cypress.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "SecurityBlockerMerchantPortalConstants" },
+                { "type": "remove_use", "class_name": "AgentSecurityBlockerMerchantPortalConstants" },
+                {
+                    "type": "remove_config_assignment",
+                    "constant_pattern": "SecurityBlockerMerchantPortalConstants::MERCHANT_PORTAL_USER_BLOCKING_NUMBER_OF_ATTEMPTS"
+                },
+                {
+                    "type": "remove_config_assignment",
+                    "constant_pattern": "AgentSecurityBlockerMerchantPortalConstants::AGENT_MERCHANT_PORTAL_BLOCKING_NUMBER_OF_ATTEMPTS"
+                }
+            ],
+            "success_messages": [
+                "✓ Removed merchant portal SecurityBlocker configuration from config_default-docker.ci.cypress.php"
+            ]
+        },
+        "config/Shared/config_default-docker.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "DummyMarketplacePaymentConfig" },
+                {
+                    "type": "remove_array_key_value",
+                    "key_pattern": "DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE"
+                },
+                { "type": "remove_array_value", "array_value": "MarketplacePayment01" }
+            ],
+            "success_messages": ["✓ Removed marketplace payment configuration from config_default-docker.php"]
+        },
+        "config/Shared/common/config_oms-development.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "DummyMarketplacePaymentConfig" },
+                { "type": "remove_array_value", "array_value": "DummyMarketplacePayment" },
+                {
+                    "type": "remove_array_key_value",
+                    "key_pattern": "DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE"
+                },
+                { "type": "remove_array_value", "array_value": "MarketplacePayment01" }
+            ],
+            "success_messages": ["✓ Removed marketplace payment configuration from config_oms-development.php"]
+        },
+        "src/Pyz/Yves/ShopUi/Theme/default/components/molecules/product-item/product-item.twig": {
+            "operations": [
+                {
+                    "type": "regex_replace",
+                    "pattern": "\\n\\{%\\s*block\\s+ajaxAddToCart\\s*%\\}\\n\\{%\\s*endblock\\s*%\\}",
+                    "replacement": "",
+                    "flags": ""
+                }
+            ],
+            "success_messages": ["✓ Removed ajaxAddToCart block from product-item.twig"]
+        }
+    },
+    "import_entities_to_remove": [
+        "merchant-opening-hours-date-schedule",
+        "merchant-opening-hours-weekday-schedule",
+        "merchant-category",
+        "merchant-oms-process",
+        "merchant-product-option-group",
+        "merchant-product",
+        "merchant-product-approval-status-default",
+        "merchant-commission-group",
+        "merchant-commission",
+        "merchant-commission-merchant",
+        "merchant-commission-amount",
+        "merchant-commission-store",
+        "product-offer-shopping-list-item"
+    ],
+    "import_yaml_files": [
+        "data/import/local/full_EU.yml",
+        "data/import/local/full_US.yml",
+        "data/import/production/full_EU.yml",
+        "data/import/production/full_US.yml",
+        "data/import/local/full_ROBOT.yml"
+    ],
+    "docker_commands_to_remove": [
+        "router-cache-warmup-merchant-portal",
+        "merchant-portal-build-frontend",
+        "acl-entity-metadata-validate",
+        "acl-entity-synchronize"
+    ],
+    "docker_config_files": [
+        "config/install/docker.yml",
+        "config/install/docker.ci.acceptance-no-mp.yml",
+        "config/install/docker.ci.acceptance.yml",
+        "config/install/docker.ci.api.full.yml",
+        "config/install/docker.ci.api.yml",
+        "config/install/docker.robot.ci.acceptance.yml",
+        "config/install/docker.robot.ci.api.full.yml",
+        "config/install/ci.yml"
+    ],
+    "deploy_files": ["deploy.dev.yml", "deploy.yml"],
+    "docker_config_substitutions": {
+        "data/import/common/minimal.yml": "data/import/b2b_common/minimal.yml",
+        "data:import --config=data/import/local/full_${SPRYKER_REGION}.yml": "data:import --config=data/import/local/b2b_full_EU.yml",
+        "data:import --config=data/import/local/full_ROBOT.yml": "data:import --config=data/import/local/b2b_full_ROBOT.yml",
+        "data:import --config=data/import/local/full_EU.yml": "data:import --config=data/import/local/b2b_full_EU.yml"
+    },
+    "directories_to_remove": [
+        "src/Pyz/Zed/AclEntity:AclEntity",
+        "src/Pyz/Zed/AclMerchantAgent:AclMerchantAgent",
+        "src/Pyz/Zed/AgentDashboardMerchantPortalGui:AgentDashboardMerchantPortalGui",
+        "src/Pyz/Zed/AgentSecurityMerchantPortalGui:AgentSecurityMerchantPortalGui",
+        "src/Pyz/Zed/DashboardMerchantPortalGui:DashboardMerchantPortalGui",
+        "src/Pyz/Zed/DataImportMerchantPortalGui:DataImportMerchantPortalGui",
+        "src/Pyz/Zed/MerchantCommission:MerchantCommission",
+        "src/Pyz/Zed/MerchantCategory:MerchantCategory",
+        "src/Pyz/Zed/MerchantCommissionGui:MerchantCommissionGui",
+        "src/Pyz/Zed/MerchantOms:MerchantOms",
+        "src/Pyz/Zed/MerchantOpeningHours:MerchantOpeningHours",
+        "src/Pyz/Zed/MerchantOpeningHoursStorage:MerchantOpeningHoursStorage",
+        "src/Pyz/Zed/MerchantPortalApplication:MerchantPortalApplication",
+        "src/Pyz/Zed/MerchantProduct:MerchantProduct",
+        "src/Pyz/Zed/MerchantProductDataImport:MerchantProductDataImport",
+        "src/Pyz/Zed/MerchantProfileMerchantPortalGui:MerchantProfileMerchantPortalGui",
+        "src/Pyz/Zed/MerchantRelationshipMerchantPortalGui:MerchantRelationshipMerchantPortalGui",
+        "src/Pyz/Zed/MerchantSalesOrder:MerchantSalesOrder",
+        "src/Pyz/Zed/MerchantSalesOrderMerchantUserGui:MerchantSalesOrderMerchantUserGui",
+        "src/Pyz/Zed/MerchantUser:MerchantUser",
+        "src/Pyz/Zed/MultiFactorAuthMerchantPortal:MultiFactorAuthMerchantPortal",
+        "src/Pyz/Zed/ProductMerchantPortalGui:ProductMerchantPortalGui",
+        "src/Pyz/Zed/ProductOfferMerchantPortalGui:ProductOfferMerchantPortalGui",
+        "src/Pyz/Zed/SalesMerchantCommission:SalesMerchantCommission",
+        "src/Pyz/Zed/SalesMerchantPortalGui:SalesMerchantPortalGui",
+        "src/Pyz/Zed/SalesPaymentMerchant:SalesPaymentMerchant",
+        "src/Pyz/Zed/SalesPaymentMerchantSalesMerchantCommission:SalesPaymentMerchantSalesMerchantCommission",
+        "src/Pyz/Zed/SecurityMerchantPortalGui:SecurityMerchantPortalGui",
+        "src/Pyz/Zed/UserMerchantPortalGui:UserMerchantPortalGui",
+        "src/Pyz/Glue/MerchantsRestApi:MerchantsRestApi",
+        "src/Pyz/Yves/MerchantSalesReturnWidget:MerchantSalesReturnWidget",
+        "src/Pyz/Zed/AclMerchantPortal:AclMerchantPortal",
+        "src/Pyz/Zed/ProductBundle/Communication/Plugin/AclMerchantPortal:ProductBundle AclMerchantPortal plugin",
+        "src/Pyz/Zed/DataImportMerchant:DataImportMerchant",
+        "src/Pyz/Zed/GuiTable:GuiTable",
+        "src/Pyz/Zed/ProductApprovalGui:ProductApprovalGui",
+        "tests/PyzTest/Zed/AclEntity:AclEntity",
+        "public/MerchantPortal:MerchantPortal",
+        "src/Pyz/Zed/SecurityOauthUser:SecurityOauthUser",
+        "src/Pyz/Yves/SecurityOauthKnpu:SecurityOauthKnpu",
+        "src/Pyz/Zed/SecurityOauthKnpu:SecurityOauthKnpu"
+    ],
+    "xml_files": {
+        "config/Zed/oms/DummyPayment01.xml": {
+            "operations": [
+                { "type": "remove_xml_element", "element_pattern": "<process>DummyMerchantCommission</process>" },
+                {
+                    "type": "remove_xml_element",
+                    "element_pattern": "<process name=\"DummyMerchantCommission\" file=\"DummySubprocess/DummyMerchantCommission01.xml\"/>"
+                },
+                {
+                    "type": "add_xml_transition",
+                    "after_pattern": "condition=\"DummyPayment/IsPayed\"",
+                    "transition": "<transition happy=\"true\">\n                <source>paid</source>\n                <target>tax pending</target>\n            </transition>"
+                }
+            ],
+            "success_messages": [
+                "✓ Removed DummyMerchantCommission subprocess from DummyPayment01.xml",
+                "✓ Added transition from paid to tax pending in DummyPayment01.xml"
+            ]
+        }
+    },
+    "test_files": {
+        "tests/PyzTest/Zed/TestifyBackendApi/codeception.dynamic.fixtures.yml": {
+            "operations": [
+                {
+                    "type": "remove_line_containing",
+                    "pattern": "\\SprykerTest\\Shared\\MerchantCommission\\Helper\\MerchantCommissionHelper"
+                }
+            ],
+            "success_messages": ["✓ Removed MerchantCommissionHelper from codeception.dynamic.fixtures.yml"]
+        },
+        "tests/PyzTest/Glue/CartReorder/RestApi/MerchantProductOfferCartReorderRestApiCest.php": {
+            "operations": [
+                { "type": "add_skip_annotation", "class_name": "MerchantProductOfferCartReorderRestApiCest" }
+            ],
+            "success_messages": ["✓ Added @skip annotation to MerchantProductOfferCartReorderRestApiCest test class"]
+        },
+        "tests/PyzTest/Glue/Checkout/_support/CheckoutApiTester.php": {
+            "operations": [
+                { "type": "replace_string", "old_value": "'DummyMarketplacePayment'", "new_value": "'DummyPayment'" }
+            ],
+            "success_messages": [
+                "✓ Updated REQUEST_PARAM_PAYMENT_PROVIDER_NAME_DUMMY_PAYMENT constant to 'DummyPayment'"
+            ]
+        },
+        "tests/PyzTest/Glue/CartReorder/_support/CartReorderApiTester.php": {
+            "operations": [
+                { "type": "replace_string", "old_value": "'MarketplacePayment01'", "new_value": "'DummyPayment01'" }
+            ],
+            "success_messages": ["✓ Switched CartReorderApiTester.php to DummyPayment01 state machine"]
+        },
+        "tests/PyzTest/Glue/OrderAmendments/RestApi/Fixtures/OrderAmendmentRestApiFixtures.php": {
+            "operations": [
+                { "type": "replace_string", "old_value": "'MarketplacePayment01'", "new_value": "'DummyPayment01'" }
+            ],
+            "success_messages": ["✓ Switched OrderAmendmentRestApiFixtures.php to DummyPayment01 state machine"]
+        },
+        "tests/PyzTest/Glue/OrderAmendments/RestApi/Fixtures/PriceProductOrderAmendmentRestApiFixtures.php": {
+            "operations": [
+                { "type": "replace_string", "old_value": "'MarketplacePayment01'", "new_value": "'DummyPayment01'" }
+            ],
+            "success_messages": [
+                "✓ Switched PriceProductOrderAmendmentRestApiFixtures.php to DummyPayment01 state machine"
+            ]
+        },
+        "tests/PyzTest/Glue/OrderAmendments/RestApi/Fixtures/ProductOfferPriceOrderAmendmentRestApiFixtures.php": {
+            "operations": [
+                { "type": "replace_string", "old_value": "'MarketplacePayment01'", "new_value": "'DummyPayment01'" }
+            ],
+            "success_messages": [
+                "✓ Switched ProductOfferPriceOrderAmendmentRestApiFixtures.php to DummyPayment01 state machine"
+            ]
+        },
+        "tests/PyzTest/Glue/Orders/RestApi/OrdersRestApiFixtures.php": {
+            "operations": [
+                { "type": "replace_string", "old_value": "'MarketplacePayment01'", "new_value": "'DummyPayment01'" }
+            ],
+            "success_messages": ["✓ Switched OrdersRestApiFixtures.php to DummyPayment01 state machine"]
+        },
+        "tests/PyzTest/Glue/ProductConfigurations/RestApi/Fixtures/ProductConfigurationsRestApiFixtures.php": {
+            "operations": [
+                { "type": "replace_string", "old_value": "'MarketplacePayment01'", "new_value": "'DummyPayment01'" }
+            ],
+            "success_messages": ["✓ Switched ProductConfigurationsRestApiFixtures.php to DummyPayment01 state machine"]
+        },
+        "tests/PyzTest/Glue/SelfServicePortal/RestApi/Fixtures/SspServicesRestApiFixtures.php": {
+            "operations": [
+                { "type": "replace_string", "old_value": "'MarketplacePayment01'", "new_value": "'DummyPayment01'" }
+            ],
+            "success_messages": ["✓ Switched SspServicesRestApiFixtures.php to DummyPayment01 state machine"]
+        },
+        "tests/PyzTest/Glue/SelfServicePortal/RestApi/Fixtures/SspInquiriesRestApiFixtures.php": {
+            "operations": [
+                { "type": "replace_string", "old_value": "'MarketplacePayment01'", "new_value": "'DummyPayment01'" }
+            ],
+            "success_messages": ["✓ Switched SspInquiriesRestApiFixtures.php to DummyPayment01 state machine"]
+        },
+        "tests/PyzTest/Glue/Payments/RestApi/PaymentsRestApiCest.php": {
+            "operations": [
+                {
+                    "type": "replace_string",
+                    "old_value": "PAYMENT_PROVIDER_NAME = 'DummyMarketplacePayment';",
+                    "new_value": "PAYMENT_PROVIDER_NAME = 'DummyPayment';"
+                }
+            ],
+            "success_messages": ["✓ Switched PaymentsRestApiCest.php to DummyPayment provider"]
+        },
+        "tests/PyzTest/Glue/Payments/RestApi/PaymentCustomersRestApiCest.php": {
+            "operations": [
+                {
+                    "type": "replace_string",
+                    "old_value": "PAYMENT_PROVIDER_NAME = 'DummyMarketplacePayment';",
+                    "new_value": "PAYMENT_PROVIDER_NAME = 'DummyPayment';"
+                }
+            ],
+            "success_messages": ["✓ Switched PaymentCustomersRestApiCest.php to DummyPayment provider"]
+        },
+        "tests/PyzTest/Glue/Payments/RestApi/PaymentCancellationsRestApiCest.php": {
+            "operations": [
+                {
+                    "type": "replace_string",
+                    "old_value": "PAYMENT_PROVIDER_NAME = 'DummyMarketplacePayment';",
+                    "new_value": "PAYMENT_PROVIDER_NAME = 'DummyPayment';"
+                }
+            ],
+            "success_messages": ["✓ Switched PaymentCancellationsRestApiCest.php to DummyPayment provider"]
+        },
+        "tests/PyzTest/Yves/Checkout/Controller/CheckoutControllerTest.php": {
+            "operations": [
+                {
+                    "type": "replace_string",
+                    "old_value": "use Spryker\\Shared\\DummyMarketplacePayment\\DummyMarketplacePaymentConfig;",
+                    "new_value": "use Spryker\\Shared\\DummyPayment\\DummyPaymentConfig;"
+                },
+                {
+                    "type": "replace_string",
+                    "old_value": "use Spryker\\Yves\\DummyMarketplacePayment\\Form\\InvoiceSubForm;",
+                    "new_value": "use Spryker\\Yves\\DummyPayment\\Form\\AbstractSubForm;"
+                },
+                {
+                    "type": "replace_string",
+                    "old_value": "This test only works with DummyMarketplacePayment",
+                    "new_value": "This test only works with DummyPayment"
+                },
+                {
+                    "type": "replace_string",
+                    "old_value": "DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE",
+                    "new_value": "DummyPaymentConfig::PAYMENT_METHOD_INVOICE"
+                },
+                {
+                    "type": "replace_string",
+                    "old_value": "InvoiceSubForm::FIELD_DATE_OF_BIRTH",
+                    "new_value": "AbstractSubForm::FIELD_DATE_OF_BIRTH"
+                }
+            ],
+            "success_messages": ["✓ Switched CheckoutControllerTest to DummyPayment"]
+        },
+        "tests/PyzTest/Yves/Checkout/_support/Helper/CheckoutHelper.php": {
+            "operations": [
+                {
+                    "type": "replace_string",
+                    "old_value": "paymentForm_dummyMarketplacePaymentInvoice_dateOfBirth",
+                    "new_value": "paymentForm_dummyPaymentInvoice_date_of_birth"
+                }
+            ],
+            "success_messages": ["✓ Switched CheckoutHelper payment form field to DummyPayment"]
+        },
+        "tests/cypress-boilerplate/cypress/fixtures/storefront/order/static-storefront-order.json": {
+            "operations": [
+                {
+                    "type": "replace_string",
+                    "old_value": "\"dummyMarketplacePaymentInvoice\"",
+                    "new_value": "\"dummyPaymentInvoice\""
+                }
+            ],
+            "success_messages": ["✓ Switched static-storefront-order.json to dummyPaymentInvoice"]
+        },
+        "tests/cypress-boilerplate/cypress/fixtures/storefront/checkout/static-storefront-checkout.json": {
+            "operations": [
+                {
+                    "type": "replace_string",
+                    "old_value": "\"dummyMarketplacePaymentInvoice\"",
+                    "new_value": "\"dummyPaymentInvoice\""
+                }
+            ],
+            "success_messages": ["✓ Switched static-storefront-checkout.json to dummyPaymentInvoice"]
+        },
+        "tests/cypress-boilerplate/README.md": {
+            "operations": [
+                {
+                    "type": "replace_string",
+                    "old_value": "(`Spryker\\Yves\\DummyMarketplacePayment`)",
+                    "new_value": "(`Pyz\\Yves\\DummyPayment`)"
+                }
+            ],
+            "success_messages": ["✓ Updated cypress-boilerplate README payment module reference"]
+        }
+    },
+    "payment_config_updates": {
+        "config/Shared/config_default-docker.php": {
+            "operations": [
+                {
+                    "type": "regex_replace",
+                    "pattern": "use Spryker\\\\Shared\\\\DummyMarketplacePayment\\\\DummyMarketplacePaymentConfig;\\s*\\n",
+                    "replacement": "",
+                    "flags": ""
+                },
+                {
+                    "type": "ensure_use_statement",
+                    "class_name": "Spryker\\Shared\\DummyPayment\\DummyPaymentConfig",
+                    "after_pattern": "use Spryker\\Shared\\Sales\\SalesConstants;"
+                },
+                {
+                    "type": "replace_array_config_content",
+                    "config_key": "$config[OmsConstants::ACTIVE_PROCESSES]",
+                    "new_content": "\n    'DummyPayment01',\n"
+                },
+                {
+                    "type": "replace_array_config_content",
+                    "config_key": "$config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING]",
+                    "new_content": "\n    DummyPaymentConfig::PAYMENT_METHOD_INVOICE => 'DummyPayment01',\n    DummyPaymentConfig::PAYMENT_METHOD_CREDIT_CARD => 'DummyPayment01',\n"
+                }
+            ],
+            "success_messages": ["✓ Updated payment method statemachine mapping in config_default-docker.php"]
+        },
+        "src/Pyz/Glue/PaymentsRestApi/PaymentsRestApiConfig.php": {
+            "operations": [
+                { "type": "ensure_use_statement", "class_name": "Spryker\\Shared\\DummyPayment\\DummyPaymentConfig" },
+                {
+                    "type": "regex_replace",
+                    "pattern": "use Spryker\\\\Shared\\\\DummyMarketplacePayment\\\\DummyMarketplacePaymentConfig;\\s*\\n",
+                    "replacement": "",
+                    "flags": ""
+                },
+                {
+                    "type": "replace_or_add_constant",
+                    "constant_pattern": "protected\\s+const\\s+PAYMENT_METHOD_PRIORITY\\s*=\\s*\\[.*?\\];",
+                    "new_constant_definition": "protected const PAYMENT_METHOD_PRIORITY = [\n        DummyPaymentConfig::PAYMENT_METHOD_INVOICE => 1,\n    ];"
+                },
+                {
+                    "type": "replace_or_add_constant",
+                    "constant_pattern": "protected\\s+const\\s+PAYMENT_METHOD_REQUIRED_FIELDS\\s*=\\s*\\[.*?\\];",
+                    "new_constant_definition": "protected const PAYMENT_METHOD_REQUIRED_FIELDS = [\n        DummyPaymentConfig::PAYMENT_METHOD_INVOICE => [\n            'dummyPaymentInvoice.dateOfBirth',\n        ],\n    ];"
+                }
+            ],
+            "success_messages": ["✓ Updated PaymentsRestApiConfig with DummyPayment configuration"]
+        },
+        "config/Shared/common/config_oms-development.php": {
+            "operations": [
+                {
+                    "type": "regex_replace",
+                    "pattern": "(use Spryker\\\\Shared\\\\Kernel\\\\KernelConstants;)",
+                    "replacement": "use Spryker\\\\Shared\\\\DummyPayment\\\\DummyPaymentConfig;\\n\\1",
+                    "flags": ""
+                },
+                {
+                    "type": "regex_replace",
+                    "pattern": "('CheckoutPage' => \\[)\\s*",
+                    "replacement": "\\1\\n        'DummyPayment',\\n        ",
+                    "flags": ""
+                },
+                {
+                    "type": "regex_replace",
+                    "pattern": "('Payment' => \\[)\\s*",
+                    "replacement": "\\1\\n        'DummyPayment',\\n        ",
+                    "flags": ""
+                },
+                {
+                    "type": "regex_replace",
+                    "pattern": "('Payment' => \\[.*?\\],\\n)",
+                    "replacement": "\\1    'Oms' => [\\n        'DummyPayment',\\n    ],\\n",
+                    "flags": "DOTALL"
+                },
+                {
+                    "type": "regex_replace",
+                    "pattern": "(\\$config\\[OmsConstants::ACTIVE_PROCESSES\\] = array_merge\\(\\[)\\s*",
+                    "replacement": "\\1\\n    'DummyPayment01',\\n    ",
+                    "flags": ""
+                },
+                {
+                    "type": "regex_replace",
+                    "pattern": "(\\$config\\[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING\\],\\s*\\[)\\s*",
+                    "replacement": "\\1\\n        DummyPaymentConfig::PAYMENT_METHOD_INVOICE => 'DummyPayment01',\\n        DummyPaymentConfig::PAYMENT_METHOD_CREDIT_CARD => 'DummyPayment01',\\n        ",
+                    "flags": ""
+                }
+            ],
+            "success_messages": [
+                "✓ Re-added DummyPayment provider, DummyPayment01 process and statemachine mapping to config_oms-development.php"
+            ]
+        },
+        "config/Shared/config_default.php": {
+            "operations": [
+                {
+                    "type": "ensure_use_statement",
+                    "class_name": "Spryker\\Shared\\DummyPayment\\DummyPaymentConfig",
+                    "after_pattern": "use Spryker\\Shared\\DocumentationGeneratorRestApi\\DocumentationGeneratorRestApiConstants;"
+                },
+                {
+                    "type": "regex_replace",
+                    "pattern": "(\\$config\\[OmsConstants::ACTIVE_PROCESSES\\] = \\[)\\s*",
+                    "replacement": "\\1\\n    'DummyPayment01',\\n    ",
+                    "flags": ""
+                },
+                {
+                    "type": "regex_replace",
+                    "pattern": "(\\$config\\[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING\\] = \\[)\\s*",
+                    "replacement": "\\1\\n    DummyPaymentConfig::PAYMENT_METHOD_INVOICE => 'DummyPayment01',\\n    DummyPaymentConfig::PAYMENT_METHOD_CREDIT_CARD => 'DummyPayment01',\\n    ",
+                    "flags": ""
+                }
+            ],
+            "success_messages": ["✓ Re-added DummyPayment01 process and statemachine mapping to config_default.php"]
+        },
+        "src/Pyz/Zed/Checkout/CheckoutDependencyProvider.php": {
+            "operations": [
+                {
+                    "type": "ensure_use_statement",
+                    "class_name": "Spryker\\Zed\\DummyPayment\\Communication\\Plugin\\Checkout\\DummyPaymentCheckoutPreConditionPlugin",
+                    "after_pattern": "use Spryker\\Zed\\Discount\\Communication\\Plugin\\Checkout\\VoucherDiscountMaxUsageCheckoutPreConditionPlugin;"
+                },
+                {
+                    "type": "replace_string",
+                    "old_value": "            new NopaymentCheckoutPreConditionPlugin(),\n",
+                    "new_value": "            new NopaymentCheckoutPreConditionPlugin(),\n            new DummyPaymentCheckoutPreConditionPlugin(),\n"
+                }
+            ],
+            "success_messages": ["✓ Re-added DummyPaymentCheckoutPreConditionPlugin to CheckoutDependencyProvider"]
+        },
+        "src/Pyz/Yves/CheckoutPage/Theme/default/views/payment/payment.twig": {
+            "operations": [
+                {
+                    "type": "replace_string",
+                    "old_value": "                    {% block contentItem %}\n                        {% embed molecule('form') with {",
+                    "new_value": "                    {% block contentItem %}\n                        {% if embed.form.paymentSelection[key].vars.value == 'dummyPaymentInvoice' %}\n                            {% include atom('icon') with {\n                                modifiers: ['invoice-logo', 'payment-logo'],\n                                data: {\n                                    name: 'dummyPaymentInvoice.icon' | trans,\n                                },\n                            } only %}\n                        {% endif %}\n\n                        {% embed molecule('form') with {"
+                }
+            ],
+            "success_messages": ["✓ Re-added dummyPaymentInvoice icon block to payment.twig"]
+        },
+        "data/import/common/common/payment_method.csv": {
+            "operations": [
+                {
+                    "type": "replace_string",
+                    "old_value": "dummyMarketplacePaymentInvoice,Invoice,DummyMarketplacePayment,Dummy Marketplace Payment,1",
+                    "new_value": "dummyPaymentInvoice,Invoice,DummyPayment,Dummy Payment,1\ndummyPaymentCreditCard,Credit Card,DummyPayment,Dummy Payment,1\ndummyMarketplacePaymentInvoice,Invoice,DummyMarketplacePayment,Dummy Marketplace Payment,1"
+                }
+            ],
+            "success_messages": ["✓ Re-added DummyPayment payment methods to payment_method.csv"]
+        },
+        "data/import/common/DE/payment_method_store.csv": {
+            "operations": [
+                {
+                    "type": "replace_string",
+                    "old_value": "dummyMarketplacePaymentInvoice,DE",
+                    "new_value": "dummyPaymentInvoice,DE\ndummyPaymentCreditCard,DE\ndummyMarketplacePaymentInvoice,DE"
+                }
+            ],
+            "success_messages": ["✓ Re-added DummyPayment payment methods to DE payment_method_store.csv"]
+        },
+        "data/import/common/AT/payment_method_store.csv": {
+            "operations": [
+                {
+                    "type": "replace_string",
+                    "old_value": "dummyMarketplacePaymentInvoice,AT",
+                    "new_value": "dummyPaymentInvoice,AT\ndummyPaymentCreditCard,AT\ndummyMarketplacePaymentInvoice,AT"
+                }
+            ],
+            "success_messages": ["✓ Re-added DummyPayment payment methods to AT payment_method_store.csv"]
+        },
+        "data/import/common/US/payment_method_store.csv": {
+            "operations": [
+                {
+                    "type": "replace_string",
+                    "old_value": "dummyMarketplacePaymentInvoice,US",
+                    "new_value": "dummyPaymentInvoice,US\ndummyPaymentCreditCard,US\ndummyMarketplacePaymentInvoice,US"
+                }
+            ],
+            "success_messages": ["✓ Re-added DummyPayment payment methods to US payment_method_store.csv"]
+        },
+        "data/import/common/common/glossary.csv": {
+            "operations": [
+                {
+                    "type": "replace_string",
+                    "old_value": "DummyMarketplacePaymentInvoice,Marketplace Invoice,en_US",
+                    "new_value": "DummyPaymentCreditCard,Credit Card,en_US\nDummyPaymentCreditCard,Kreditkarte,de_DE\npayment.dummy-payment.credit-card,Pay with the following credit card:,en_US\npayment.dummy-payment.credit-card,Mit der folgenden Kreditkarte bezahlen:,de_DE\ndummyPaymentCreditCard.card_type,Card Type,en_US\ndummyPaymentCreditCard.card_type,Kartentyp,de_DE\ndummyPaymentCreditCard.card_number,Card Number,en_US\ndummyPaymentCreditCard.card_number,Nummer,de_DE\ndummyPaymentCreditCard.name_on_card,Name on the Card,en_US\ndummyPaymentCreditCard.name_on_card,Name auf der Karte,de_DE\ndummyPaymentCreditCard.card_expires,Expiry Date,en_US\ndummyPaymentCreditCard.card_expires,Gültig bis,de_DE\ndummyPaymentCreditCard.card_security_code,CVC,en_US\ndummyPaymentCreditCard.card_security_code,CVC,de_DE\nDummyPaymentInvoice,Invoice,en_US\nDummyPaymentInvoice,Auf Rechnung,de_DE\ndummyPaymentInvoice.invoice,Pay with invoice:,en_US\ndummyPaymentInvoice.invoice,Auf Rechnung bezahlen:,de_DE\ndummyPaymentInvoice.date_of_birth,Date of Birth,en_US\ndummyPaymentInvoice.date_of_birth,Geburtsdatum,de_DE\ndummyPaymentInvoice.icon,invoice-logo,en_US\ndummyPaymentInvoice.icon,rechnung-logo,de_DE\nDummyMarketplacePaymentInvoice,Marketplace Invoice,en_US"
+                },
+                {
+                    "type": "replace_string",
+                    "old_value": "checkout.order.duplicate,Order with given reference {{reference}} already exists,en_US",
+                    "new_value": "checkout.payment.provider.DummyPayment,Dummy Payment,en_US\ncheckout.payment.provider.DummyPayment,Beispiel-Zahlungsart,de_DE\ncheckout.order.duplicate,Order with given reference {{reference}} already exists,en_US"
+                }
+            ],
+            "success_messages": ["✓ Re-added DummyPayment glossary keys to glossary.csv"]
+        }
+    }
+}
