@@ -28,7 +28,7 @@ class RecurringScheduleHelper extends SprykerFeatureRecurringScheduleHelper
 {
     protected const string DEFAULT_PAYMENT_PROVIDER = 'DummyPayment';
 
-    protected function buildMinimalQuoteData(RecurringScheduleTransfer $recurringScheduleTransfer): string
+    protected function buildMinimalQuoteData(RecurringScheduleTransfer $recurringScheduleTransfer, array $quoteDataOverrides = []): string
     {
         /** @var \SprykerTest\Shared\Customer\Helper\CustomerDataHelper $customerDataHelper */
         $customerDataHelper = $this->getModule('\SprykerTest\Shared\Customer\Helper\CustomerDataHelper');
@@ -63,7 +63,8 @@ class RecurringScheduleHelper extends SprykerFeatureRecurringScheduleHelper
             ->setPayment($paymentTransfer)
             ->setTotals($totalsTransfer)
             ->setBillingAddress($addressTransfer)
-            ->setShippingAddress($addressTransfer);
+            ->setShippingAddress($addressTransfer)
+            ->fromArray($quoteDataOverrides, true);
 
         return json_encode($quoteTransfer->toArray(), JSON_THROW_ON_ERROR);
     }
