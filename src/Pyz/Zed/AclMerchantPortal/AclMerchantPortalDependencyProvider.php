@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\AclMerchantPortal;
 
+use Pyz\Zed\ProductBundle\Communication\Plugin\AclMerchantPortal\ProductBundleAclEntityConfigurationExpanderPlugin;
 use Spryker\Zed\Acl\Communication\Plugin\AclMerchantPortal\AclEntityConfigurationExpanderPlugin;
 use Spryker\Zed\AclEntity\Communication\Plugin\AclMerchantPortal\AclEntityAclEntityConfigurationExpanderPlugin;
 use Spryker\Zed\AclMerchantPortal\AclMerchantPortalDependencyProvider as SprykerAclMerchantPortalDependencyProvider;
@@ -241,6 +242,7 @@ class AclMerchantPortalDependencyProvider extends SprykerAclMerchantPortalDepend
             new PriceProductMerchantRelationshipAclEntityConfigurationExpanderPlugin(),
             new PriceProductOfferAclEntityConfigurationExpanderPlugin(),
             new ProductAclEntityConfigurationExpanderPlugin(),
+            new ProductBundleAclEntityConfigurationExpanderPlugin(),
             new ProductAttributeAclEntityConfigurationExpanderPlugin(),
             new ProductCategoryAclEntityConfigurationExpanderPlugin(),
             new ProductImageAclEntityConfigurationExpanderPlugin(),

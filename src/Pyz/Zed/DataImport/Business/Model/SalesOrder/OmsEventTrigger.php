@@ -55,8 +55,6 @@ class OmsEventTrigger
     }
 
     /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
      * @return array<string>
      */
     protected function parseOmsEvents(DataSetInterface $dataSet): array
@@ -77,10 +75,7 @@ class OmsEventTrigger
     }
 
     /**
-     * @param string $merchantOmsEvent
      * @param array<int> $salesOrderItemIds
-     *
-     * @return void
      */
     protected function triggerMerchantOmsEvent(string $merchantOmsEvent, array $salesOrderItemIds): void
     {

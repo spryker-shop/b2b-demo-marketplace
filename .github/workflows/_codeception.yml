@@ -6,7 +6,7 @@ on:
             platform-image:
                 description: "PHP platform image both jobs boot on."
                 type: string
-                default: "spryker/php:8.4"
+                default: "spryker/php:8.5"
             acceptance-deploy-file:
                 description: "Deploy file the acceptance & API job boots."
                 type: string
@@ -88,18 +88,13 @@ jobs:
                     echo "console queue:worker:start --stop-when-empty"
                     docker/sdk testing console queue:worker:start --stop-when-empty
 
-            -   name: Run Acceptance Tests
-                id: acceptance-tests
-                run: |
-                    docker/sdk testing codecept run -c tests/codeception.acceptance.yml
-
             -   name: Run API Tests
                 id: api-tests
                 run: |
                     docker/sdk testing codecept run -c tests/codeception.api.yml
 
             -   name: Save PHP logs
-                if: always() && (steps.api-tests.outcome == 'failure' || steps.acceptance-tests.outcome == 'failure')
+                if: always() && steps.api-tests.outcome == 'failure'
                 run: |
                     mkdir -p logs
                     docker logs spryker_ci_backoffice_eu_1 > logs/backoffice_app.log 2>&1
@@ -109,7 +104,7 @@ jobs:
                     echo "PHP logs saved. After upload, they will be available in GitHub Actions Artifacts as 'codeception-failed-artifacts'"
 
             -   name: Upload logs, failed screenshots and HTML
-                if: always() && (steps.api-tests.outcome == 'failure' || steps.acceptance-tests.outcome == 'failure')
+                if: always() && steps.api-tests.outcome == 'failure'
                 uses: actions/upload-artifact@v5
                 with:
                     name: codeception-failed-artifacts

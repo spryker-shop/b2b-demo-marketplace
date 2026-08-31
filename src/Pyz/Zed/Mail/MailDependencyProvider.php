@@ -43,11 +43,6 @@ use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Mail\SspInquiryRej
 
 class MailDependencyProvider extends SprykerMailDependencyProvider
 {
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
@@ -57,11 +52,6 @@ class MailDependencyProvider extends SprykerMailDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function extendMailProviderCollection(Container $container): Container
     {
         $container->extend(self::MAIL_PROVIDER_COLLECTION, function (MailProviderCollectionAddInterface $mailProviderCollection) {
@@ -84,31 +74,31 @@ class MailDependencyProvider extends SprykerMailDependencyProvider
     protected function getMailTypeBuilderPlugins(): array
     {
         return [
-            new CustomerRegistrationMailTypeBuilderPlugin(),
-            new CustomerRegistrationConfirmationMailTypeBuilderPlugin(),
-            new CustomerRestorePasswordMailTypeBuilderPlugin(),
-            new CustomerRestoredPasswordConfirmationMailTypeBuilderPlugin(),
-            new NewsletterSubscribedMailTypeBuilderPlugin(),
-            new NewsletterUnsubscribedMailTypeBuilderPlugin(),
-            new OrderConfirmationMailTypeBuilderPlugin(),
-            new OrderShippedMailTypeBuilderPlugin(),
-            new CompanyUserInvitationMailTypeBuilderPlugin(),
-            new CompanyStatusMailTypeBuilderPlugin(),
-            new UserPasswordResetMailTypeBuilderPlugin(),
-            new AvailabilityNotificationUnsubscribedMailTypeBuilderPlugin(),
-            new AvailabilityNotificationSubscriptionMailTypeBuilderPlugin(),
-            new AvailabilityNotificationMailTypeBuilderPlugin(),
-            new MerchantUserPasswordResetMailTypeBuilderPlugin(),
-            new OrderInvoiceMailTypeBuilderPlugin(),
-            new CustomerEmailChangeVerificationMailTypePlugin(),
-            new CustomerEmailChangeNotificationMailTypePlugin(),
-            new CustomerEmailMultiFactorAuthMailTypeBuilderPlugin(),
-            new UserEmailMultiFactorAuthMailTypeBuilderPlugin(),
-            new SspInquiryApprovedMailTypeBuilderPlugin(),
-            new SspInquiryRejectedMailTypeBuilderPlugin(),
-            new RecurringOrderUpcomingNotificationMailTypeBuilderPlugin(), #RecurringOrdersFeature
-            new RecurringOrderValidationFailedMailTypeBuilderPlugin(), #RecurringOrdersFeature
-            new RecurringOrderFailureMailTypeBuilderPlugin(), #RecurringOrdersFeature
+        new CustomerRegistrationMailTypeBuilderPlugin(),
+        new CustomerRegistrationConfirmationMailTypeBuilderPlugin(),
+        new CustomerRestorePasswordMailTypeBuilderPlugin(),
+        new CustomerRestoredPasswordConfirmationMailTypeBuilderPlugin(),
+        new NewsletterSubscribedMailTypeBuilderPlugin(),
+        new NewsletterUnsubscribedMailTypeBuilderPlugin(),
+        new OrderConfirmationMailTypeBuilderPlugin(),
+        new OrderShippedMailTypeBuilderPlugin(),
+        new CompanyUserInvitationMailTypeBuilderPlugin(),
+        new CompanyStatusMailTypeBuilderPlugin(),
+        new UserPasswordResetMailTypeBuilderPlugin(),
+        new AvailabilityNotificationUnsubscribedMailTypeBuilderPlugin(),
+        new AvailabilityNotificationSubscriptionMailTypeBuilderPlugin(),
+        new AvailabilityNotificationMailTypeBuilderPlugin(),
+        new MerchantUserPasswordResetMailTypeBuilderPlugin(),
+        new OrderInvoiceMailTypeBuilderPlugin(),
+        new CustomerEmailChangeVerificationMailTypePlugin(),
+        new CustomerEmailChangeNotificationMailTypePlugin(),
+        new CustomerEmailMultiFactorAuthMailTypeBuilderPlugin(),
+        new UserEmailMultiFactorAuthMailTypeBuilderPlugin(),
+        new SspInquiryApprovedMailTypeBuilderPlugin(),
+        new SspInquiryRejectedMailTypeBuilderPlugin(),
+        new RecurringOrderUpcomingNotificationMailTypeBuilderPlugin(), #RecurringOrdersFeature
+        new RecurringOrderValidationFailedMailTypeBuilderPlugin(), #RecurringOrdersFeature
+        new RecurringOrderFailureMailTypeBuilderPlugin(), #RecurringOrdersFeature
         ];
     }
 }

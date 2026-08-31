@@ -1345,28 +1345,6 @@ invoice.company.bank.information,Bank Name<br/>IBAN 1234 5678 9123 4567 89<br />
 invoice.company.bank.information,Bank Name<br/>IBAN 1234 5678 9123 4567 89<br />BIC 12345678<br/>Handelsregister ABC123456<br />Steuernummer 12/345/6789,de_DE
 invoice.company.contact.information,+49 (0)30 2084983 50<br/>hello@spryker.com,en_US
 invoice.company.contact.information,+49 (0)30 2084983 50<br/>hello@spryker.com,de_DE
-DummyPaymentCreditCard,Credit Card,en_US
-DummyPaymentCreditCard,Kreditkarte,de_DE
-payment.dummy-payment.credit-card,Pay with the following credit card:,en_US
-payment.dummy-payment.credit-card,Mit der folgenden Kreditkarte bezahlen:,de_DE
-dummyPaymentCreditCard.card_type,Card Type,en_US
-dummyPaymentCreditCard.card_type,Kartentyp,de_DE
-dummyPaymentCreditCard.card_number,Card Number,en_US
-dummyPaymentCreditCard.card_number,Nummer,de_DE
-dummyPaymentCreditCard.name_on_card,Name on the Card,en_US
-dummyPaymentCreditCard.name_on_card,Name auf der Karte,de_DE
-dummyPaymentCreditCard.card_expires,Expiry Date,en_US
-dummyPaymentCreditCard.card_expires,Gültig bis,de_DE
-dummyPaymentCreditCard.card_security_code,CVC,en_US
-dummyPaymentCreditCard.card_security_code,CVC,de_DE
-DummyPaymentInvoice,Invoice,en_US
-DummyPaymentInvoice,Auf Rechnung,de_DE
-dummyPaymentInvoice.invoice,Pay with invoice:,en_US
-dummyPaymentInvoice.invoice,Auf Rechnung bezahlen:,de_DE
-dummyPaymentInvoice.date_of_birth,Date of Birth,en_US
-dummyPaymentInvoice.date_of_birth,Geburtsdatum,de_DE
-dummyPaymentInvoice.icon,invoice-logo,en_US
-dummyPaymentInvoice.icon,rechnung-logo,de_DE
 DummyMarketplacePaymentInvoice,Marketplace Invoice,en_US
 DummyMarketplacePaymentInvoice,Auf Rechnung,de_DE
 dummyMarketplacePaymentInvoice.invoice,Pay with invoice:,en_US
@@ -1423,8 +1401,6 @@ cart.promotion.items,Promotional products,en_US
 cart.promotion.items,Werbeprodukte,de_DE
 checkout.payment_method.invalid,Checkout Zahlung ist ungültig,de_DE
 checkout.payment_method.invalid,Checkout payment is not valid,en_US
-checkout.payment.provider.DummyPayment,Dummy Payment,en_US
-checkout.payment.provider.DummyPayment,Beispiel-Zahlungsart,de_DE
 checkout.order.duplicate,Order with given reference {{reference}} already exists,en_US
 checkout.order.duplicate,Bestellung mit gegebener Referenz {{reference}} existiert bereits,de_DE
 checkout.order.checkout.error.duplicate-order-processing,Cart with given uid %quote-uid% has already been processed,en_US
@@ -3453,8 +3429,8 @@ configurable_bundle_page.invalid_template_slot_combination,Invalid template/slot
 configurable_bundle_page.invalid_template_slot_combination,Die Template/Slot Kombination ist nicht valide.,de_DE
 configurable_bundle_page.configurator.tip.header,Create your own bundle.,en_US
 configurable_bundle_page.configurator.tip.header,Eigenes Bündel erstellen.,de_DE
-configurable_bundle_page.configurator.tip.text,"To create the bundle, please select the slot from the left side, and choose the product from the list.",en_US
-configurable_bundle_page.configurator.tip.text,"Um ein Bündel zu erstellen, wählen Sie bitte links ein Slot und dann die Produkte von der Liste aus.",de_DE
+configurable_bundle_page.configurator.tip.text,"To create the bundle, pick a slot tab above and choose the product from the list.",en_US
+configurable_bundle_page.configurator.tip.text,"Um ein Bündel zu erstellen, wählen Sie oben einen Slot-Tab und dann ein Produkt aus der Liste aus.",de_DE
 configurable_bundle_page.configurator.selected_product,Selected product,en_US
 configurable_bundle_page.configurator.selected_product,Ausgewähltes Produkt,de_DE
 configurable_bundle_page.configurator.summary,Summary,en_US
@@ -6716,8 +6692,12 @@ purchasing_control.error.budget_access_denied,The selected budget does not belon
 purchasing_control.error.budget_access_denied,Das ausgewählte Budget gehört nicht zur gewählten Kostenstelle.,de_DE
 purchasing_control.error.quote_approved,Cost center and budget cannot be changed after the quote has been approved.,en_US
 purchasing_control.error.quote_approved,Kostenstelle und Budget können nach der Genehmigung nicht mehr geändert werden.,de_DE
+purchasing_control.quote_request.cost_center_updated,Cost center and budget have been saved.,en_US
+purchasing_control.quote_request.cost_center_updated,Kostenstelle und Budget wurden gespeichert.,de_DE
 purchasing_control.title,Cost Center Control,en_US
 purchasing_control.title,Kostenstellen-Verwaltung,de_DE
+purchasing_control.budget.validation.cost_center_mismatch,The selected budget does not belong to the selected cost center.,en_US
+purchasing_control.budget.validation.cost_center_mismatch,Das ausgewählte Budget gehört nicht zur ausgewählten Kostenstelle.,de_DE
 purchasing_control.budget.validation.access_denied,You do not have permission to manage this budget.,en_US
 purchasing_control.budget.validation.access_denied,"Sie haben keine Berechtigung, dieses Budget zu verwalten.",de_DE
 purchasing_control.budget.validation.amount_invalid,Budget amount must be greater than zero.,en_US
@@ -7486,6 +7466,12 @@ recurring_orders.review.unchanged.title,Unchanged items (%count%),en_US
 recurring_orders.review.unchanged.title,Unveränderte Artikel (%count%),de_DE
 recurring_orders.review.unchanged.title.plural,%count% unchanged items,en_US
 recurring_orders.review.unchanged.title.plural,%count% unveränderte Artikel,de_DE
+recurring_orders.review.add_product.error.product_required,Please choose a product.,en_US
+recurring_orders.review.add_product.error.product_required,Bitte wählen Sie ein Produkt aus.,de_DE
+recurring_orders.review.add_product.error.shipping_address_required,Please choose a shipping address.,en_US
+recurring_orders.review.add_product.error.shipping_address_required,Bitte wählen Sie eine Lieferadresse aus.,de_DE
+recurring_orders.review.add_product.error.shipment_method_required,Please choose a shipment method.,en_US
+recurring_orders.review.add_product.error.shipment_method_required,Bitte wählen Sie eine Versandart aus.,de_DE
 recurring_orders.status.active,Active,en_US
 recurring_orders.status.active,Aktiv,de_DE
 recurring_orders.status.cancelled,Cancelled,en_US
@@ -7534,3 +7520,11 @@ product.option.group.name.hrs_warranty,Warranty Extension,en_US
 product.option.group.name.hrs_warranty,Garantieverlängerung,de_DE
 product.option.group.name.hrs_insurance,Installation Insurance,en_US
 product.option.group.name.hrs_insurance,Installationsversicherung,de_DE
+measurement_units.custom.seat.name,Seat,en_US
+measurement_units.custom.seat.name,Platz,de_DE
+self_service_portal.service.product.select_training_center,Select a training center,en_US
+self_service_portal.service.product.select_training_center,Wählen Sie ein Schulungszentrum,de_DE
+shipment_type.name.shipment_type_on-site-service,On-Site Service,en_US
+shipment_type.name.shipment_type_on-site-service,Service vor Ort,de_DE
+mail.error.send_failed,"The email failed to send. Error code: %errorCode%.",en_US
+mail.error.send_failed,"Die E-Mail konnte nicht gesendet werden. Fehlercode: %errorCode%.",de_DE

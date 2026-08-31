@@ -26,7 +26,7 @@ use Spryker\Glue\PaymentsRestApi\PaymentsRestApiConfig;
  */
 class PaymentCustomersRestApiCest
 {
-    protected const string PAYMENT_PROVIDER_NAME = 'DummyPayment';
+    protected const string PAYMENT_PROVIDER_NAME = 'DummyMarketplacePayment';
 
     protected const string PAYMENT_METHOD_NAME = 'Invoice';
 
@@ -155,7 +155,6 @@ class PaymentCustomersRestApiCest
     }
 
     /**
-     * @param string $type
      * @param array<string, mixed> $attributes
      *
      * @return array<string, mixed>

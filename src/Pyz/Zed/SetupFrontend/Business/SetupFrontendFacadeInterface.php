@@ -21,11 +21,6 @@ interface SetupFrontendFacadeInterface extends SprykerSetupFrontendFacadeInterfa
      * - Uses `SetupFrontendConfigurationTransfer` to configure the build process.
      *
      * @api
-     *
-     * @param \Psr\Log\LoggerInterface $logger
-     * @param \Generated\Shared\Transfer\SetupFrontendConfigurationTransfer $setupFrontendConfigurationTransfer
-     *
-     * @return bool
      */
     public function buildStorybookFrontend(LoggerInterface $logger, SetupFrontendConfigurationTransfer $setupFrontendConfigurationTransfer): bool;
 }

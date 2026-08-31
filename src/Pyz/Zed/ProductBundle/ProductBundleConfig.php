@@ -26,6 +26,7 @@ class ProductBundleConfig extends SprykerProductBundleConfig
     {
         return [
             ItemTransfer::SHIPMENT,
+            ItemTransfer::MERCHANT_REFERENCE,
         ];
     }
 }

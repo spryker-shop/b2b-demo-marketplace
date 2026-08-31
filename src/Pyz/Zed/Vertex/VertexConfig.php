@@ -17,4 +17,9 @@ class VertexConfig extends SprykerEcoVertexConfig
     {
         return true;
     }
+
+    public function isShipmentRefundable(): bool
+    {
+        return false;
+    }
 }

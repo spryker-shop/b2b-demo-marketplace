@@ -1,7 +1,20 @@
 @mixin order-experience-management-review-footer($name: '.review-footer') {
     #{$name} {
-        small {
-            font-size: var(--font-size-12);
+        @include typography(label-md);
+
+        &__actions-column {
+            @include helper-breakpoint-media-max($md) {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                gap: var(--scale-8);
+            }
+        }
+
+        &__button {
+            @include helper-breakpoint-media-max($md) {
+                width: 100%;
+            }
         }
 
         @content;

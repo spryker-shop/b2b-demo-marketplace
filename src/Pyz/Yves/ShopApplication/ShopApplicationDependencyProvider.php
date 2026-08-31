@@ -43,6 +43,8 @@ use SprykerFeature\Yves\PurchasingControl\Widget\CostCenterMenuItemWidget;
 use SprykerFeature\Yves\PurchasingControl\Widget\CostCenterOrderDetailWidget;
 use SprykerFeature\Yves\PurchasingControl\Widget\CostCenterSelectorWidget;
 use SprykerFeature\Yves\PurchasingControl\Widget\PurchasingControlSummaryWidget;
+use SprykerFeature\Yves\PurchasingControl\Widget\QuoteRequestAgentCostCenterSelectorWidget;
+use SprykerFeature\Yves\PurchasingControl\Widget\QuoteRequestCostCenterSelectorWidget;
 use SprykerFeature\Yves\SelfServicePortal\Plugin\ShopApplication\AddressFormItemsByShipmentTypeWidgetCacheKeyGeneratorStrategyPlugin;
 use SprykerFeature\Yves\SelfServicePortal\Plugin\ShopApplication\SingleAddressPerShipmentTypeWidgetCacheKeyGeneratorStrategyPlugin;
 use SprykerFeature\Yves\SelfServicePortal\Plugin\ShopApplication\SspDashboardFilterControllerEventHandlerPlugin;
@@ -457,6 +459,8 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
             CostCenterOrderDetailWidget::class, #PurchasingControlFeature
             PunchoutCartWidget::class,
             OauthAuthenticationLinksWidget::class,
+            QuoteRequestCostCenterSelectorWidget::class,
+            QuoteRequestAgentCostCenterSelectorWidget::class,
         ];
     }
 
