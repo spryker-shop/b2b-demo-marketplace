@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "33f9712e438fc0f23964369136ee148a",
+    "content-hash": "52bf06aa0aa7219eace12e5a52cccc07",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -9816,6 +9816,63 @@
                 "source": "https://github.com/spryker-eco/algolia/tree/2.0.1"
             },
             "time": "2026-08-17T08:56:22+00:00"
+        },
+        {
+            "name": "spryker-eco/amazon-quicksight",
+            "version": "2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-eco/amazon-quicksight.git",
+                "reference": "f24b19639cfb527095d9af11ed840cb0903c2426"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-eco/amazon-quicksight/zipball/f24b19639cfb527095d9af11ed840cb0903c2426",
+                "reference": "f24b19639cfb527095d9af11ed840cb0903c2426",
+                "shasum": ""
+            },
+            "require": {
+                "aws/aws-sdk-php": "^3.90.0",
+                "php": ">=8.2",
+                "spryker/analytics-gui-extension": "^1.0.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/messenger": "^3.0.0",
+                "spryker/propel-orm": "^1.0.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/twig": "^3.0.0",
+                "spryker/user": "^3.16.0",
+                "spryker/user-extension": "^1.5.0",
+                "spryker/util-encoding": "^2.0.0",
+                "spryker/uuid-behavior": "^1.0.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "*",
+                "spryker/code-sniffer": "*",
+                "spryker/container": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SprykerEco\\": "src/SprykerEco/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "AmazonQuicksight module",
+            "support": {
+                "issues": "https://github.com/spryker-eco/amazon-quicksight/issues",
+                "source": "https://github.com/spryker-eco/amazon-quicksight/tree/2.1.0"
+            },
+            "time": "2025-05-06T08:49:01+00:00"
         },
         {
             "name": "spryker-eco/google-analytics",
@@ -92395,18 +92452,18 @@
         },
         {
             "name": "spryker/cypress-tests",
-            "version": "dev-feature/cc-39797/master-removed-non-mp-payment-providers",
+            "version": "dev-master-demo",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/cypress-tests.git",
-                "reference": "3bf8b06061b7101e9e32c2fedf0efecf16ed2a90"
+                "reference": "af88686c3cf0154b509c914fe4f6170b35d3e679"
             },
             "type": "spryker-test",
             "license": [
                 "MIT"
             ],
             "description": "This repository is dedicated to housing an extensive collection of UI end-to-end tests, meticulously crafted using Cypress for Spryker applications. These tests are designed to thoroughly evaluate the user interface, ensuring that all interactions and visual elements function as intended in real-world scenarios. By leveraging Cypress's advanced browser automation capabilities, this suite provides an efficient and effective means of validating the user experience, confirming the seamless operation and aesthetic integrity of Spryker's front-end components. Our commitment to rigorous UI testing helps maintain the high standard of quality and reliability that Spryker users expect.",
-            "time": "2026-08-26T14:08:42+00:00"
+            "time": "2026-08-20T18:26:41+00:00"
         },
         {
             "name": "spryker/development",
