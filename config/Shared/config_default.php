@@ -51,6 +51,7 @@ use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Shared\CmsGui\CmsGuiConstants;
 use Spryker\Shared\Configuration\ConfigurationConstants;
 use Spryker\Shared\Customer\CustomerConstants;
+use Spryker\Shared\DataImport\DataImportConstants;
 use Spryker\Shared\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConstants;
 use Spryker\Shared\DummyMarketplacePayment\DummyMarketplacePaymentConfig;
 use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
@@ -1191,5 +1192,7 @@ $config[ContentNavigationWidgetConstants::NAVIGATION_REVALIDATION_TIME_IN_SECOND
 $config[PunchoutGatewayConstants::ENABLE_LOGGING] = getenv('PUNCHOUT_GATEWAY_ENABLE_LOGGING') ?? false;
 
 $config[ProductPageSearchConstants::PRODUCT_CONCRETE_SEARCH_IN_STORAGE_ENABLED] = true;
+
+$config[DataImportConstants::OTHER_SOURCE_ENABLED] = true;
 
 require 'config_ai.php';
