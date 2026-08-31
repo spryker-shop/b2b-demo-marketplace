@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Demo\Zed\Console;
 
+use Demo\Zed\McpCommerce\Communication\Console\McpCommerceFeatureFlagConsole;
 use Pyz\Zed\Console\ConsoleDependencyProvider as PyzConsoleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use SprykerEco\Zed\AmazonQuicksight\Communication\Console\QuicksightUserSyncSaveConsole;
@@ -23,6 +24,7 @@ class ConsoleDependencyProvider extends PyzConsoleDependencyProvider
         $commands = parent::getConsoleCommands($container);
 
         $commands[] = new QuicksightUserSyncSaveConsole();
+        $commands[] = new McpCommerceFeatureFlagConsole();
 
         return $commands;
     }

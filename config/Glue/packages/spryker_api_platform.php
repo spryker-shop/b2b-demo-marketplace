@@ -17,6 +17,7 @@ return static function (SprykerApiPlatformConfig $sprykerApiPlatform): void {
 
     // The following configuration is optional. By default, the source directories are set to 'src/Pyz'.
     $sprykerApiPlatform->sourceDirectories([
+        'src/Demo',
         'src/Pyz',
         'vendor/spryker',
         'vendor/spryker-shop',

@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          name="zed"
+          xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+          namespace="Orm\Zed\McpCommerce\Persistence"
+          package="src.Orm.Zed.McpCommerce.Persistence">
+
+    <table name="pyz_mcp_auth_code" identifierQuoting="true">
+        <column name="id_mcp_auth_code" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+
+        <column name="code" type="VARCHAR" size="255" required="true" description="The opaque single-use authorization code handed to the MCP client."/>
+        <column name="client_identifier" type="VARCHAR" size="255" required="true" description="Identifier of the OAuth client the code was issued to."/>
+        <column name="customer_reference" type="VARCHAR" size="255" required="true" description="Reference of the customer who completed the browser login."/>
+        <column name="id_customer" type="INTEGER" required="true" description="Numeric identifier of the customer who completed the browser login."/>
+        <column name="code_challenge" type="VARCHAR" size="255" required="true" description="The PKCE code challenge supplied by the client."/>
+        <column name="code_challenge_method" type="VARCHAR" size="16" required="true" description="The PKCE code challenge method. Only S256 is accepted."/>
+        <column name="redirect_uri" type="VARCHAR" size="1024" required="true" description="The redirect URI the code was issued for."/>
+        <column name="scopes" type="VARCHAR" size="1024" required="false" description="Space separated list of granted scopes."/>
+        <column name="expires_at" type="TIMESTAMP" required="true" description="The point in time after which the code can no longer be redeemed."/>
+        <column name="is_used" type="BOOLEAN" required="true" default="false" description="Single-use flag, set when the code has been redeemed."/>
+
+        <unique name="pyz_mcp_auth_code-unique-code">
+            <unique-column name="code"/>
+        </unique>
+
+        <index name="index-pyz_mcp_auth_code-client_identifier">
+            <index-column name="client_identifier"/>
+        </index>
+
+        <index name="index-pyz_mcp_auth_code-expires_at">
+            <index-column name="expires_at"/>
+        </index>
+
+        <behavior name="timestampable"/>
+
+        <id-method-parameter value="pyz_mcp_auth_code_pk_seq"/>
+    </table>
+
+    <table name="pyz_mcp_access_token" identifierQuoting="true">
+        <column name="id_mcp_access_token" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+
+        <column name="identifier" type="VARCHAR" size="255" required="true" description="The opaque MCP access token identifier presented as a bearer token."/>
+        <column name="client_identifier" type="VARCHAR" size="255" required="true" description="Identifier of the OAuth client the token was issued to."/>
+        <column name="customer_reference" type="VARCHAR" size="255" required="true" description="Reference of the customer the token resolves to."/>
+        <column name="id_customer" type="INTEGER" required="true" description="Numeric identifier of the customer the token resolves to."/>
+        <column name="scopes" type="VARCHAR" size="1024" required="false" description="Space separated list of granted scopes."/>
+        <column name="expires_at" type="TIMESTAMP" required="true" description="The point in time after which the token is no longer valid."/>
+        <column name="is_revoked" type="BOOLEAN" required="true" default="false" description="Flag indicating the token has been individually revoked."/>
+
+        <unique name="pyz_mcp_access_token-unique-identifier">
+            <unique-column name="identifier"/>
+        </unique>
+
+        <index name="index-pyz_mcp_access_token-customer_reference">
+            <index-column name="customer_reference"/>
+        </index>
+
+        <index name="index-pyz_mcp_access_token-client_identifier">
+            <index-column name="client_identifier"/>
+        </index>
+
+        <index name="index-pyz_mcp_access_token-expires_at">
+            <index-column name="expires_at"/>
+        </index>
+
+        <behavior name="timestampable"/>
+
+        <id-method-parameter value="pyz_mcp_access_token_pk_seq"/>
+    </table>
+
+</database>
