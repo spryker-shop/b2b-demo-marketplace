@@ -1,0 +1,25 @@
+{% extends template('widget') %}
+
+{% define data = {
+    isLoggedIn: _widget.isLoggedIn,
+    agent: _widget.agent,
+    customer: _widget.customer,
+    isInline: false,
+    isChipOnly: false,
+    drillDownTarget: '',
+} %}
+
+{% block body %}
+    {% if data.isLoggedIn %}
+        {% include molecule('agent-control', 'AgentWidget') with {
+            modifiers: data.isInline ? ['inline'] : (data.isChipOnly ? ['chip-only'] : []),
+            data: {
+                agent: data.agent,
+                customer: data.customer,
+                isInline: data.isInline,
+                isChipOnly: data.isChipOnly,
+                drillDownTarget: data.drillDownTarget,
+            },
+        } only %}
+    {% endif %}
+{% endblock %}

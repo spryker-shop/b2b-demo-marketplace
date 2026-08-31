@@ -1,0 +1,41 @@
+sequenceDiagram
+    autonumber
+
+    participant Admin as Admin / Import
+    participant Zed as Zed (PHP)
+    participant Jenkins as Zed (PHP) - Jenkins
+    participant DB as Database
+    participant RabbitMQ
+    participant Redis as Redis,<br/>ElasticSearch
+
+    Note over Admin,Redis: Publish and Synchronization Sequence Diagram
+
+    %% Data Import Phase (Blue - Spryker backend)
+    rect rgb(41, 128, 185)
+        Note right of Admin: Data importer / zed ui backend
+        Admin->>Zed: update / import product
+        activate Zed
+        Zed->>DB: Save product
+        Zed->>RabbitMQ: Trigger "event" message<br/>(entity updated/created/deleted)
+        Zed-->>Admin: Response
+        deactivate Zed
+    end
+
+    %% Search/Storage Publish Phase (Green - Processing)
+    rect rgb(39, 174, 96)
+        Note right of Jenkins: Search / Storage Publish listeners
+        RabbitMQ->>Jenkins: "event" message gets consumed
+        activate Jenkins
+        Jenkins->>DB: Save "storage" / "search" data
+        Jenkins->>RabbitMQ: Trigger "sync" message<br/>(contains corresp. product data)
+        deactivate Jenkins
+    end
+
+    %% Synchronization Phase (Orange - Final sync)
+    rect rgb(230, 126, 34)
+        Note right of Jenkins: Synchronization module
+        RabbitMQ->>Jenkins: "sync" message gets consumed
+        activate Jenkins
+        Jenkins->>Redis: Data from message gets delivered<br/>to Redis / Elastic search
+        deactivate Jenkins
+    end

@@ -7,7 +7,7 @@ command-timeout: 7200
 sections:
     scheduler-clean:
         scheduler-clean:
-            command: 'vendor/bin/console scheduler:clean -vvv --no-ansi || true'
+            command: 'vendor/bin/console scheduler:clean -vvv --no-ansi'
 
     clean-storage:
         clean-storage:
@@ -41,9 +41,23 @@ sections:
         init-database:
             command: 'vendor/bin/console setup:init-db -vvv --no-ansi'
 
+    configuration:
+        configuration-sync:
+            command: 'vendor/bin/console configuration:sync -vvv --no-ansi'
+
     setup-queue:
         queue-setup:
             command: 'vendor/bin/console queue:setup'
+
+    setup-minimal-data:
+        import-demodata:
+            command: 'vendor/bin/console data:import --config=data/import/local/store_${SPRYKER_CURRENT_REGION}.yml'
+
+    clear-and-init-search:
+        clean-search:
+            command: 'vendor/bin/console elasticsearch:index:delete -vvv --no-ansi'
+        setup-search-create-sources:
+            command: 'vendor/bin/console search:setup:sources -vvv --no-ansi'
 
     demodata:
         import-demodata:
@@ -55,16 +69,14 @@ sections:
         check-product-validity:
             command: 'vendor/bin/console product:check-validity'
 
-    init-storage:
-        clean-search:
-            command: 'vendor/bin/console elasticsearch:index:delete -vvv --no-ansi'
+        stripe:
+            command: 'vendor/bin/console data:import --config=vendor/spryker-eco/stripe/data/import/stripe.yml -vvv --no-ansi'
 
-        setup-search-create-sources:
-            command: 'vendor/bin/console search:setup:sources -vvv --no-ansi'
-
-        trigger-events:
-            command: 'vendor/bin/console publish:trigger-events'
+        punchout:
+            command: 'vendor/bin/console punchout-gateway:demo-connection:create'
 
     scheduler-start:
+        trigger-events:
+            command: 'vendor/bin/console publish:trigger-events'
         scheduler-setup:
-            command: 'vendor/bin/console scheduler:setup -vvv --no-ansi || true'
+            command: 'vendor/bin/console scheduler:setup -vvv --no-ansi'

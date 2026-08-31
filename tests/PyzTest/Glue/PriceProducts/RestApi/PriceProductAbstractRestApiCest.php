@@ -25,16 +25,8 @@ use PyzTest\Glue\PriceProducts\PriceProductsApiTester;
  */
 class PriceProductAbstractRestApiCest
 {
-    /**
-     * @var \PyzTest\Glue\PriceProducts\RestApi\PriceProductsRestApiFixtures
-     */
     protected PriceProductsRestApiFixtures $fixtures;
 
-    /**
-     * @param \PyzTest\Glue\PriceProducts\PriceProductsApiTester $I
-     *
-     * @return void
-     */
     public function loadFixtures(PriceProductsApiTester $I): void
     {
         /** @var \PyzTest\Glue\PriceProducts\RestApi\PriceProductsRestApiFixtures $fixtures */
@@ -45,10 +37,6 @@ class PriceProductAbstractRestApiCest
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\PriceProducts\PriceProductsApiTester $I
-     *
-     * @return void
      */
     public function requestTheNonExistingProductAbstractPrices(PriceProductsApiTester $I): void
     {
@@ -62,15 +50,11 @@ class PriceProductAbstractRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\PriceProducts\PriceProductsApiTester $I
-     *
-     * @return void
      */
     public function requestProductAbstractPricesWithoutId(PriceProductsApiTester $I): void
     {
@@ -88,10 +72,6 @@ class PriceProductAbstractRestApiCest
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\PriceProducts\PriceProductsApiTester $I
-     *
-     * @return void
      */
     public function requestExistingProductAbstractPrices(PriceProductsApiTester $I): void
     {
@@ -112,7 +92,7 @@ class PriceProductAbstractRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->amSure('Returned resource is of type abstract-product-prices')
             ->whenI()

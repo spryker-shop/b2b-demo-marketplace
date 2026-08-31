@@ -10,6 +10,12 @@ export default class RatingSelector extends RatingSelectorCore {
         super.init();
     }
 
+    protected onStepClick(event: Event): void {
+        super.onStepClick(event);
+
+        this.input.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+
     protected mapUpdateRatingEvents(): void {
         super.mapUpdateRatingEvents();
         this.mapProductItemUpdateReviewCountCustomEvent();

@@ -32,21 +32,10 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class CustomerPasswordCest
 {
-    /**
-     * @var \PyzTest\Glue\Customer\RestApi\CustomerRestApiFixtures
-     */
     protected CustomerRestApiFixtures $fixtures;
 
-    /**
-     * @var \Generated\Shared\Transfer\CustomerTransfer
-     */
     protected CustomerTransfer $customerTransfer;
 
-    /**
-     * @param \PyzTest\Glue\Customer\CustomerApiTester $I
-     *
-     * @return void
-     */
     public function _before(CustomerApiTester $I): void
     {
         /** @var \PyzTest\Glue\Customer\RestApi\CustomerRestApiFixtures $fixtures */
@@ -66,11 +55,6 @@ class CustomerPasswordCest
         $I->amBearerAuthenticated($oauthResponseTransfer->getAccessToken());
     }
 
-    /**
-     * @param \PyzTest\Glue\Customer\CustomerApiTester $I
-     *
-     * @return void
-     */
     public function requestPatchCustomerPasswordUpdatesCustomerPassword(CustomerApiTester $I): void
     {
         // Arrange
@@ -101,11 +85,6 @@ class CustomerPasswordCest
         $I->seeResponseCodeIs(HttpCode::NO_CONTENT);
     }
 
-    /**
-     * @param \PyzTest\Glue\Customer\CustomerApiTester $I
-     *
-     * @return void
-     */
     public function requestPatchCustomerPasswordFailsToUseAnotherCustomerReference(CustomerApiTester $I): void
     {
         // Arrange
@@ -143,7 +122,7 @@ class CustomerPasswordCest
         // Assert
         $I->seeResponseCodeIs(Response::HTTP_FORBIDDEN);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->seeResponseErrorsHaveCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_UNAUTHORIZED);
         $I->seeResponseErrorsHaveStatus(Response::HTTP_FORBIDDEN);
@@ -152,11 +131,6 @@ class CustomerPasswordCest
 
     /**
      * @dataProvider requestPatchCustomerPasswordFailsValidationDataProvider
-     *
-     * @param \PyzTest\Glue\Customer\CustomerApiTester $I
-     * @param \Codeception\Example $example
-     *
-     * @return void
      */
     public function requestPatchCustomerPasswordFailsValidation(CustomerApiTester $I, Example $example): void
     {
@@ -181,7 +155,7 @@ class CustomerPasswordCest
         // Assert
         $I->seeResponseCodeIs($example[RestErrorMessageTransfer::STATUS]);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         foreach ($example['errors'] as $index => $error) {
             $I->seeResponseErrorsHaveCode($error[RestErrorMessageTransfer::CODE], (string)$index);
@@ -190,9 +164,6 @@ class CustomerPasswordCest
         }
     }
 
-    /**
-     * @return array
-     */
     protected function requestPatchCustomerPasswordFailsValidationDataProvider(): array
     {
         return [

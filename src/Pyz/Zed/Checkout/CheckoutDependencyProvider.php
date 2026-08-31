@@ -13,6 +13,8 @@ use Spryker\Zed\Availability\Communication\Plugin\ProductsAvailableCheckoutPreCo
 use Spryker\Zed\CartNote\Communication\Plugin\Checkout\CartNoteSaverPlugin;
 use Spryker\Zed\CartNote\Communication\Plugin\Checkout\UpdateCartNoteCheckoutDoSaveOrderPlugin;
 use Spryker\Zed\Checkout\CheckoutDependencyProvider as SprykerCheckoutDependencyProvider;
+use Spryker\Zed\CompanyBusinessUnitSalesConnector\Communication\Plugin\Checkout\EditBusinessUnitOrderQuoteExpanderCheckoutPreSavePlugin;
+use Spryker\Zed\CompanySalesConnector\Communication\Plugin\Checkout\EditCompanyOrderQuoteExpanderCheckoutPreSavePlugin;
 use Spryker\Zed\Customer\Communication\Plugin\Checkout\CustomerAddressSalutationCheckoutPreConditionPlugin;
 use Spryker\Zed\Customer\Communication\Plugin\Checkout\CustomerOrderSavePlugin;
 use Spryker\Zed\Customer\Communication\Plugin\Checkout\CustomerSalutationCheckoutPreConditionPlugin;
@@ -22,7 +24,6 @@ use Spryker\Zed\Discount\Communication\Plugin\Checkout\DiscountOrderSavePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\Checkout\ReleaseUsedCodesCheckoutDoSaveOrderPlugin;
 use Spryker\Zed\Discount\Communication\Plugin\Checkout\ReplaceSalesOrderDiscountsCheckoutDoSaveOrderPlugin;
 use Spryker\Zed\Discount\Communication\Plugin\Checkout\VoucherDiscountMaxUsageCheckoutPreConditionPlugin;
-use Spryker\Zed\DummyPayment\Communication\Plugin\Checkout\DummyPaymentCheckoutPreConditionPlugin;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Merchant\Communication\Plugin\Checkout\MerchantCheckoutPreConditionPlugin;
 use Spryker\Zed\MerchantProductOption\Communication\Plugin\Checkout\MerchantProductOptionCheckoutPreConditionPlugin;
@@ -44,7 +45,7 @@ use Spryker\Zed\ProductDiscontinued\Communication\Plugin\Checkout\ProductDiscont
 use Spryker\Zed\ProductOffer\Communication\Plugin\Checkout\OrderAmendmentProductOfferCheckoutPreConditionPlugin;
 use Spryker\Zed\ProductOffer\Communication\Plugin\Checkout\ProductOfferCheckoutPreConditionPlugin;
 use Spryker\Zed\ProductPackagingUnit\Communication\Plugin\Checkout\AmountAvailabilityCheckoutPreConditionPlugin;
-use Spryker\Zed\ProductQuantity\Communication\Plugin\Checkout\ProductQuantityRestrictionCheckoutPreConditionPlugin;
+use Spryker\Zed\ProductQuantity\Communication\Plugin\Checkout\ProductQuantityBySkuRestrictionCheckoutPreConditionPlugin;
 use Spryker\Zed\QuoteApproval\Communication\Plugin\Checkout\QuoteApprovalCheckoutPreConditionPlugin;
 use Spryker\Zed\QuoteCheckoutConnector\Communication\Plugin\Checkout\DisallowedQuoteCheckoutPreConditionPlugin;
 use Spryker\Zed\QuoteCheckoutConnector\Communication\Plugin\Checkout\DisallowQuoteCheckoutPreSavePlugin;
@@ -66,15 +67,21 @@ use Spryker\Zed\SalesOrderThreshold\Communication\Plugin\Checkout\SalesOrderThre
 use Spryker\Zed\SalesPayment\Communication\Plugin\Checkout\ReplaceSalesOrderPaymentCheckoutDoSaveOrderPlugin;
 use Spryker\Zed\SalesPayment\Communication\Plugin\Checkout\SalesPaymentCheckoutDoSaveOrderPlugin;
 use Spryker\Zed\SalesShipmentType\Communication\Plugin\Checkout\ShipmentTypeCheckoutDoSaveOrderPlugin;
+use Spryker\Zed\ServicePointCart\Communication\Plugin\Checkout\ServicePointCheckoutPreConditionPlugin;
 use Spryker\Zed\Shipment\Communication\Plugin\Checkout\ReplaceSalesOrderShipmentCheckoutDoSaveOrderPlugin;
 use Spryker\Zed\Shipment\Communication\Plugin\Checkout\SalesOrderShipmentSavePlugin;
 use Spryker\Zed\ShipmentCheckoutConnector\Communication\Plugin\Checkout\ShipmentCheckoutPreCheckPlugin;
+use Spryker\Zed\ShipmentTypeCart\Communication\Plugin\Checkout\ShipmentTypeCheckoutPreConditionPlugin;
+use SprykerEco\Zed\Stripe\Communication\Plugin\Checkout\StripeCheckoutPostSavePlugin;
+use SprykerFeature\Zed\OrderExperienceManagement\Communication\Plugin\Checkout\RecurringOrderCheckoutPreConditionPlugin;
+use SprykerFeature\Zed\OrderExperienceManagement\Communication\Plugin\Checkout\RecurringOrdersCheckoutPostSavePlugin;
+use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\Checkout\BudgetCheckoutPreConditionPlugin;
+use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\Checkout\ConsumeBudgetCheckoutPostSavePlugin;
+use SprykerFeature\Zed\PurchasingControl\Communication\Plugin\Checkout\CostCenterOrderSaverPlugin;
 
 class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
 {
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
      * @return array<\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginInterface>
      */
     protected function getCheckoutPreConditions(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
@@ -98,13 +105,15 @@ class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
             new MerchantProductOptionCheckoutPreConditionPlugin(),
             new ProductApprovalCheckoutPreConditionPlugin(),
             new ProductConfigurationCheckoutPreConditionPlugin(),
-            new ProductQuantityRestrictionCheckoutPreConditionPlugin(),
+            new ProductQuantityBySkuRestrictionCheckoutPreConditionPlugin(),
+            new ServicePointCheckoutPreConditionPlugin(),
+            new ShipmentTypeCheckoutPreConditionPlugin(),
+            new BudgetCheckoutPreConditionPlugin(),
+            new RecurringOrderCheckoutPreConditionPlugin(), #RecurringOrdersFeature
         ];
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
      * @return list<\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginInterface>
      */
     protected function getCheckoutPreConditionsForOrderAmendment(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
@@ -116,7 +125,6 @@ class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
             new CustomerAddressSalutationCheckoutPreConditionPlugin(),
             new ProductsAvailableCheckoutPreConditionPlugin(),
             new NopaymentCheckoutPreConditionPlugin(),
-            new DummyPaymentCheckoutPreConditionPlugin(),
             new ShipmentCheckoutPreCheckPlugin(),
             new AmountAvailabilityCheckoutPreConditionPlugin(),
             new SalesOrderThresholdCheckoutPreConditionPlugin(), #SalesOrderThresholdFeature
@@ -128,7 +136,7 @@ class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
             new ProductConfigurationCheckoutPreConditionPlugin(),
             new DuplicateOrderCheckoutPreConditionPlugin(),
             new MerchantProductOptionCheckoutPreConditionPlugin(),
-            new ProductQuantityRestrictionCheckoutPreConditionPlugin(),
+            new ProductQuantityBySkuRestrictionCheckoutPreConditionPlugin(),
             new OrderAmendmentProductBundleAvailabilityCheckoutPreConditionPlugin(), #Order Amendment Feature
             new OrderAmendmentProductDiscontinuedCheckoutPreConditionPlugin(), #ProductDiscontinuedFeature
             new OrderAmendmentProductOfferCheckoutPreConditionPlugin(),
@@ -139,8 +147,6 @@ class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
      * @return array<\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface>|array<\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface>
      */
     protected function getCheckoutOrderSavers(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
@@ -160,18 +166,18 @@ class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
             new OrderTotalsSaverPlugin(),
             new SalesOrderShipmentSavePlugin(),
             new OrderItemsSaverPlugin(),
+            new ShipmentTypeCheckoutDoSaveOrderPlugin(),
             new CartNoteSaverPlugin(), #CartNoteFeature
             new DiscountOrderSavePlugin(),
             new ProductBundleOrderSaverPlugin(),
             new SalesPaymentCheckoutDoSaveOrderPlugin(),
             new SalesOrderThresholdExpenseSavePlugin(), #SalesOrderThresholdFeature
             new CustomerDiscountOrderSavePlugin(),
+            new CostCenterOrderSaverPlugin(),
         ];
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
      * @return list<\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface|\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface>
      */
     protected function getCheckoutOrderSaversForOrderAmendment(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
@@ -182,19 +188,19 @@ class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
              * Plugins
              * `UpdateOrderByQuoteCheckoutDoSaveOrderPlugin`,
              * `OrderTotalsSaverPlugin`,
-             * `ShipmentTypeCheckoutDoSaveOrderPlugin`
              * `ReplaceSalesOrderDiscountsCheckoutDoSaveOrderPlugin`
              * `ReplaceSalesOrderShipmentCheckoutDoSaveOrderPlugin`,
+             * `ShipmentTypeCheckoutDoSaveOrderPlugin`
              * `SalesOrderAmendmentItemsCheckoutDoSaveOrderPlugin`,
              * must be enabled in the strict order.
              */
             new UpdateOrderByQuoteCheckoutDoSaveOrderPlugin(),
             new OrderTotalsSaverPlugin(),
             new ReleaseUsedCodesCheckoutDoSaveOrderPlugin(),
-            new ShipmentTypeCheckoutDoSaveOrderPlugin(),
             new UpdateCartNoteCheckoutDoSaveOrderPlugin(), #CartNoteFeature
             new ReplaceSalesOrderDiscountsCheckoutDoSaveOrderPlugin(),
             new ReplaceSalesOrderShipmentCheckoutDoSaveOrderPlugin(),
+            new ShipmentTypeCheckoutDoSaveOrderPlugin(),
             new SalesOrderAmendmentQuoteCheckoutDoSaveOrderPlugin(),
             new SalesOrderAmendmentItemsCheckoutDoSaveOrderPlugin(),
             new ProductBundleOrderSaverPlugin(),
@@ -204,8 +210,6 @@ class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
      * @return array<\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPostSaveInterface>
      */
     protected function getCheckoutPostHooks(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
@@ -214,12 +218,13 @@ class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
             new CloseQuoteRequestCheckoutPostSaveHookPlugin(),
             new PaymentAuthorizationCheckoutPostSavePlugin(),
             new PaymentConfirmPreOrderPaymentCheckoutPostSavePlugin(),
+            new StripeCheckoutPostSavePlugin(),
+            new ConsumeBudgetCheckoutPostSavePlugin(),
+            new RecurringOrdersCheckoutPostSavePlugin(), #RecurringOrdersFeature
         ];
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
      * @return list<\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPostSaveInterface>
      */
     protected function getCheckoutPostHooksForOrderAmendment(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
@@ -232,8 +237,6 @@ class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
      * @return array<\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveHookInterface|\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveInterface|\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreSavePluginInterface>
      */
     protected function getCheckoutPreSaveHooks(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
@@ -245,8 +248,6 @@ class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
      * @return list<\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveHookInterface|\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveInterface|\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreSavePluginInterface>
      */
     protected function getCheckoutPreSaveHooksForOrderAmendment(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
@@ -255,6 +256,8 @@ class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
             new DisallowQuoteCheckoutPreSavePlugin(),
             new SalesOrderExpanderPlugin(),
             new OriginalOrderQuoteExpanderCheckoutPreSavePlugin(),
+            new EditCompanyOrderQuoteExpanderCheckoutPreSavePlugin(),
+            new EditBusinessUnitOrderQuoteExpanderCheckoutPreSavePlugin(),
             new FilterOriginalOrderBundleItemCheckoutPreSavePlugin(), #Order Amendment Feature
         ];
     }

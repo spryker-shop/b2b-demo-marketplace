@@ -18,11 +18,20 @@ class PropelConfig extends SprykerPropelConfig
      * - If true, adds additional shared logger that will send all Propel logs to the same destination as regular logs.
      *
      * @api
-     *
-     * @return bool
      */
     public function isSharedLoggerEnabled(): bool
     {
         return true;
+    }
+
+    /**
+     * @return array<string, array<string>>
+     */
+    public function getWhitelistForAllowedAttributeValueChanges(): array
+    {
+        return [
+            'spy_product_page_search.schema.xml' => ['type'],
+            'spy_product_review_search.schema.xml' => ['type'],
+        ];
     }
 }

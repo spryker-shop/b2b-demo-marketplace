@@ -31,16 +31,8 @@ class RefreshTokensRestApiCest
      */
     protected const INVALID_REFRESH_TOKEN = 'invalid refresh token';
 
-    /**
-     * @var \PyzTest\Glue\Auth\RestApi\RefreshTokensRestApiFixtures
-     */
     protected RefreshTokensRestApiFixtures $fixtures;
 
-    /**
-     * @param \PyzTest\Glue\Auth\AuthRestApiTester $I
-     *
-     * @return void
-     */
     public function loadFixtures(AuthRestApiTester $I): void
     {
         /** @var \PyzTest\Glue\Auth\RestApi\RefreshTokensRestApiFixtures $fixtures */
@@ -51,10 +43,6 @@ class RefreshTokensRestApiCest
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\Auth\AuthRestApiTester $I
-     *
-     * @return void
      */
     public function requestRefreshTokenWithValidRefreshTokenValue(AuthRestApiTester $I): void
     {
@@ -76,10 +64,6 @@ class RefreshTokensRestApiCest
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\Auth\AuthRestApiTester $I
-     *
-     * @return void
      */
     public function requestRefreshTokenWithInvalidRefreshTokenValue(AuthRestApiTester $I): void
     {
@@ -95,15 +79,11 @@ class RefreshTokensRestApiCest
 
         // Assert
         $I->seeResponseCodeIs(HttpCode::UNAUTHORIZED);
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\Auth\AuthRestApiTester $I
-     *
-     * @return void
      */
     public function requestRefreshTokenWithEmptyRefreshTokenValue(AuthRestApiTester $I): void
     {
@@ -121,15 +101,11 @@ class RefreshTokensRestApiCest
         $I->seeResponseCodeIs(HttpCode::UNPROCESSABLE_ENTITY);
         $I->dontSeeResponseHasAccessToken();
         $I->dontSeeResponseHasRefreshToken();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\Auth\AuthRestApiTester $I
-     *
-     * @return void
      */
     public function requestRefreshTokenWithInvalidPostData(AuthRestApiTester $I): void
     {
@@ -145,15 +121,11 @@ class RefreshTokensRestApiCest
         $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
         $I->dontSeeResponseHasAccessToken();
         $I->dontSeeResponseHasRefreshToken();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\Auth\AuthRestApiTester $I
-     *
-     * @return void
      */
     public function requestRefreshTokenWithInvalidRequestType(AuthRestApiTester $I): void
     {
@@ -171,15 +143,11 @@ class RefreshTokensRestApiCest
         $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
         $I->dontSeeResponseHasAccessToken();
         $I->dontSeeResponseHasRefreshToken();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\Auth\AuthRestApiTester $I
-     *
-     * @return void
      */
     public function requestRefreshTokenWithEmptyType(AuthRestApiTester $I): void
     {
@@ -197,6 +165,6 @@ class RefreshTokensRestApiCest
         $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
         $I->dontSeeResponseHasAccessToken();
         $I->dontSeeResponseHasRefreshToken();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 }

@@ -16,17 +16,11 @@ use Spryker\Zed\ShipmentGui\Communication\Plugin\Form\ShipmentFormTypePlugin;
 
 class MerchantSalesOrderMerchantUserGuiDependencyProvider extends SprykerMerchantSalesOrderMerchantUserGuiDependencyProvider
 {
-    /**
-     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
-     */
     public function getShipmentFormTypePlugin(): FormTypeInterface
     {
         return new ShipmentFormTypePlugin();
     }
 
-    /**
-     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
-     */
     public function getItemFormTypePlugin(): FormTypeInterface
     {
         return new ItemFormTypePlugin();

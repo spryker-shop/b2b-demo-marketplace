@@ -1,24 +1,15 @@
 @mixin shop-ui-action-bar($name: '.action-bar') {
     #{$name} {
-        margin-top: rem(16);
-        margin-bottom: rem(16);
+        margin-bottom: var(--scale-16);
 
         @include helper-breakpoint-media-min($md) {
             display: flex;
-            flex-flow: row nowrap;
-        }
-
-        &--first {
-            margin-top: 0;
-        }
-
-        &--big {
-            margin-top: rem(48);
+            flex-flow: row wrap;
+            gap: var(--scale-16);
         }
 
         &--small {
-            margin-top: rem(16);
-            margin-bottom: rem(8);
+            margin-bottom: var(--scale-8);
         }
 
         &--spaceless {
@@ -36,29 +27,29 @@
         }
 
         &__title {
-            flex: 1;
+            flex-grow: 1;
 
             &--small {
-                @include helper-font-size(4);
-                @include helper-font-line-height(4);
+                @include typography(heading-sm);
             }
 
             &--middle {
-                font-size: rem(22);
+                @include typography(heading-md);
             }
         }
 
         &__actions {
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-8);
+
             @include helper-breakpoint-media-min($md) {
-                flex: none;
-                display: flex;
-                flex-flow: row nowrap;
-                align-items: center;
+                flex-direction: row;
+                flex-wrap: wrap;
             }
         }
 
         &__action {
-            margin-top: rem(8);
             width: 100%;
             display: flex;
             flex-flow: row nowrap;
@@ -67,14 +58,12 @@
             justify-content: center;
 
             @include helper-breakpoint-media-min($md) {
-                margin-top: 0;
-                margin-left: rem(8);
                 width: auto;
             }
         }
 
         &__icon {
-            margin-right: rem(10);
+            margin-right: var(--scale-8);
         }
     }
 }

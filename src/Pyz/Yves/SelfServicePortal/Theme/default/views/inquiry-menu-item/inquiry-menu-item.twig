@@ -1,0 +1,27 @@
+{% extends view('inquiry-menu-item', '@SprykerFeature:SelfServicePortal') %}
+
+{% define data = {
+    url: url('customer/ssp-inquiry'),
+    label: 'self_service_portal.inquiry.list.widget.title' | trans,
+    name: 'ssp-inquiries-management',
+    enabled: can('ViewBusinessUnitSspInquiryPermissionPlugin') or can('ViewCompanySspInquiryPermissionPlugin'),
+} %}
+
+{% block body %}
+    {% if data.enabled %}
+        {% set modifiers = data.modifiers | default([]) %}
+
+        {% block content %}
+            {% include molecule('navigation-sidebar-item') with {
+                data: {
+                    url: data.url,
+                    icon: 'inquiries',
+                    label: data.label,
+                    name: data.name,
+                },
+                qa: 'inquiries',
+                modifiers: data.isActivePage ? ['active'] | merge(modifiers) : modifiers,
+            } only %}
+        {% endblock %}
+    {% endif %}
+{% endblock %}

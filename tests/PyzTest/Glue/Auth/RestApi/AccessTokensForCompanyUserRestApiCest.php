@@ -26,16 +26,8 @@ use Spryker\Glue\AuthRestApi\AuthRestApiConfig;
  */
 class AccessTokensForCompanyUserRestApiCest
 {
-    /**
-     * @var \PyzTest\Glue\Auth\RestApi\AccessTokensForCompanyUserRestApiFixtures
-     */
     protected AccessTokensForCompanyUserRestApiFixtures $fixtures;
 
-    /**
-     * @param \PyzTest\Glue\Auth\AuthRestApiTester $I
-     *
-     * @return void
-     */
     public function loadFixtures(AuthRestApiTester $I): void
     {
         /** @var \PyzTest\Glue\Auth\RestApi\AccessTokensForCompanyUserRestApiFixtures $fixtures */
@@ -46,10 +38,6 @@ class AccessTokensForCompanyUserRestApiCest
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\Auth\AuthRestApiTester $I
-     *
-     * @return void
      */
     public function requestAccessTokenForExistingCustomerWithoutCompanyUser(AuthRestApiTester $I): void
     {
@@ -71,15 +59,11 @@ class AccessTokensForCompanyUserRestApiCest
         $I->seeResponseHasRefreshToken();
         $I->seeResponseHasAccessToken();
 
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\Auth\AuthRestApiTester $I
-     *
-     * @return void
      */
     public function requestAccessTokenForExistingCustomerWithCompanyUser(AuthRestApiTester $I): void
     {
@@ -101,15 +85,11 @@ class AccessTokensForCompanyUserRestApiCest
         $I->seeResponseHasRefreshToken();
         $I->seeResponseHasAccessToken();
 
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\Auth\AuthRestApiTester $I
-     *
-     * @return void
      */
     public function requestAccessTokenForCustomerWithTwoCompanyUserWithoutDefaultOne(AuthRestApiTester $I): void
     {
@@ -131,15 +111,11 @@ class AccessTokensForCompanyUserRestApiCest
         $I->seeResponseHasRefreshToken();
         $I->seeResponseHasAccessToken();
 
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\Auth\AuthRestApiTester $I
-     *
-     * @return void
      */
     public function requestAccessTokenForCustomerWithTwoCompanyUserWithDefaultOne(AuthRestApiTester $I): void
     {
@@ -161,6 +137,6 @@ class AccessTokensForCompanyUserRestApiCest
         $I->seeResponseHasRefreshToken();
         $I->seeResponseHasAccessToken();
 
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 }

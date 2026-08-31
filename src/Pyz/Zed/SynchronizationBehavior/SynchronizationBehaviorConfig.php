@@ -13,11 +13,8 @@ use Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig as Spryker
 
 class SynchronizationBehaviorConfig extends SprykerSynchronizationBehaviorConfig
 {
-    /**
-     * @return bool
-     */
     public function isDirectSynchronizationEnabled(): bool
     {
-        return false;
+        return true;
     }
 }

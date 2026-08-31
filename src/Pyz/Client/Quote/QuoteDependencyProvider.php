@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Client\Quote;
 
+use Spryker\Client\Agent\Plugin\Quote\AgentQuoteTransferExpanderPlugin;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\MultiCart\Plugin\NameQuoteTransferExpanderPlugin;
 use Spryker\Client\PersistentCart\Plugin\Quote\QuoteSyncDatabaseStrategyReaderPlugin;
@@ -20,9 +21,7 @@ use Spryker\Client\Store\Plugin\StoreQuoteTransferExpanderPlugin;
 class QuoteDependencyProvider extends SprykerQuoteDependencyProvider
 {
     /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return array<\Spryker\Client\Quote\Dependency\Plugin\QuoteTransferExpanderPluginInterface>
+     * @return array<\Spryker\Client\QuoteExtension\Dependency\Plugin\QuoteTransferExpanderPluginInterface>
      */
     protected function getQuoteTransferExpanderPlugins(Container $container): array // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
@@ -30,6 +29,7 @@ class QuoteDependencyProvider extends SprykerQuoteDependencyProvider
             new NameQuoteTransferExpanderPlugin(), #MultiCartFeature
             new StoreQuoteTransferExpanderPlugin(),
             new PriceModeQuoteTransferExpanderPlugin(),
+            new AgentQuoteTransferExpanderPlugin(), # AgentAssist Feature
         ];
     }
 

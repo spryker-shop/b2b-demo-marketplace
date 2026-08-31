@@ -1,0 +1,39 @@
+flowchart TB
+subgraph Spryker["Spryker B2B Marketplace Platform"]
+S3["📁 File Storage<br><small>AWS S3</small>"]
+DB["🗄️ MySQL/MariaDB<br><small>Database</small>"]
+Redis["⚡ Redis<br><small>Key-Value Store</small>"]
+Jenkins["⏰ Scheduler<br><small>Jenkins + PHP</small>"]
+PS(["📬 Publish & Sync<br><small><a href='../sequence/publish-sync.mmd'>Process Details</a></small>"])
+Client["🔗 Price Client<br><small>Communication Layer</small>"]
+Yves["🌐 Yves<br><small>Storefront</small>"]
+end
+PIM["📦 PIM System<br><small>Akeneo</small>"] -- "1. Product data with<br>base prices (CSV)" --> S3
+S3 -- "2. CSV file" --> Jenkins
+Jenkins -- "3. Base price data" --> DB
+Jenkins -- "4. Base price data" --> PS
+PS -- "5. Base price data" --> Redis
+Redis -- "9. Base price + Customer-specific price" --> Client
+Client -- "6. Customer + Product ID<br>" --> ERP["💾 ERP System<br><small>SAP ECC 6.0</small>"]
+ERP -- "7. Customer-specific price (2h TTL)" --> Client
+Client -- "8. Customer-specific<br>price (2h TTL)" --> Redis
+Client -- "10. Final price" --> Yves
+Yves -- "11. Final price" --> Customer["👤 Customer"]
+
+S3:::storageStyle
+DB:::storageStyle
+Redis:::storageStyle
+Jenkins:::infraStyle
+PS:::processStyle
+Client:::communicationStyle
+Yves:::webAppStyle
+PIM:::externalStyle
+ERP:::externalStyle
+Customer:::userStyle
+classDef externalStyle fill:#95A5A6,stroke:#7f8c8d,stroke-width:2px,color:#fff
+classDef storageStyle fill:#9B59B6,stroke:#8e44ad,stroke-width:2px,color:#fff
+classDef infraStyle fill:#95A5A6,stroke:#95a5a6,stroke-width:2px,color:#fff
+classDef processStyle fill:#2980B9,stroke:#2980b9,stroke-width:2px,color:#fff
+classDef communicationStyle fill:#E67E22,stroke:#d68910,stroke-width:2px,color:#fff
+classDef webAppStyle fill:#27AE60,stroke:#27ae60,stroke-width:2px,color:#fff
+classDef userStyle fill:#e1f5ff,stroke:#0366d6,stroke-width:2px

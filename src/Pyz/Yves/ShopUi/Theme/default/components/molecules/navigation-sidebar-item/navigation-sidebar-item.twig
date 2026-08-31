@@ -8,23 +8,36 @@
 
 {% define data = {
     url: required,
-    icon: required,
+    icon: false,
+    fontIcon: false,
     label: required,
-    name: required
+    name: required,
 } %}
 
 
 {%- block body -%}
     <a class="{{ component.renderClass(config.name ~ '__link', modifiers) }}" href="{{ data.url }}">
         {% apply spaceless %}
-            {% if data.icon | default(false) %}
+            {% if data.icon %}
                 <div class="{{ component.renderClass(config.name ~ '__icon-wrapper', modifiers) }}">
                     {% include atom('icon') with {
                         modifiers: ['big', data.name],
                         data: {
-                            name: data.icon
+                            name: data.icon,
                         },
-                        class: config.name ~ '__icon'
+                        class: config.name ~ '__icon',
+                    } only %}
+                </div>
+            {% endif %}
+
+            {% if data.fontIcon %}
+                <div class="{{ component.renderClass(config.name ~ '__icon-wrapper', modifiers) }}">
+                    {% include atom('font-icon') with {
+                        modifiers: ['big'],
+                        data: {
+                            name: data.fontIcon,
+                        },
+                        class: config.name ~ '__icon',
                     } only %}
                 </div>
             {% endif %}

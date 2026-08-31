@@ -1,0 +1,102 @@
+name: B2B-MP-COMPATIBILITY-CI
+
+# The same test lanes B2B-MP-CI runs, booted on the alternative platform (PHP 8.3,
+# PostgreSQL) to prove the shop still installs and passes there. Opt in per PR with the
+# `run-compatibility-ci` label; the weekly cron covers master.
+
+on:
+    pull_request:
+        types: [ labeled, synchronize ]
+    schedule:
+        - cron: '0 2 * * 6'
+    workflow_dispatch:
+
+env:
+    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+    WEEKLY_CI_SLACK_CHANNEL_ID: ${{ secrets.WEEKLY_CI_SLACK_CHANNEL_ID }}
+    JIRA_TICKET_SLACK_USER_GROUP_MAPPING: ${{ secrets.JIRA_TICKET_SLACK_USER_GROUP_MAPPING }}
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    compat-codeception:
+        if: >
+            (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci'))
+            || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        uses: ./.github/workflows/_codeception.yml
+        secrets: inherit
+        with:
+            platform-image: "spryker/php:8.3-debian"
+            acceptance-deploy-file: ".github/deploy/deploy.ci.acceptance.postgres.yml"
+            functional-deploy-file: ".github/deploy/deploy.ci.functional.postgres.yml"
+            # The shared dump is built by mariadb-dump, so this lane imports demodata.
+            restore-db: false
+
+    compat-robot-api:
+        if: >
+            (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci'))
+            || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        uses: ./.github/workflows/_robot-api.yml
+        secrets: inherit
+        with:
+            platform-image: "spryker/php:8.3-debian"
+            deploy-file: ".github/deploy/deploy.ci.api.postgres.robot.yml"
+            db-engine: psycopg2
+            # No PostgreSQL deploy file for the marketplace-uninstalled B2B API run exists.
+            include-b2b: false
+
+    compat-robot-ui:
+        if: >
+            (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci'))
+            || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        uses: ./.github/workflows/_robot-ui.yml
+        secrets: inherit
+        with:
+            platform-image: "spryker/php:8.3"
+            deploy-file: ".github/deploy/deploy.ci.acceptance.postgres.robot.yml"
+            db-engine: psycopg2
+
+    compat-cypress:
+        if: >
+            (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'run-compatibility-ci'))
+            || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        uses: ./.github/workflows/_cypress.yml
+        secrets: inherit
+        with:
+            platform-image: "spryker/php:8.3"
+            deploy-file: ".github/deploy/deploy.ci.acceptance.postgress.cypress.yml"
+            # Marketplace-uninstalled Cypress has no PostgreSQL counterpart to cover.
+            repository-ids: '["b2b-mp"]'
+            artifact-platform: "PHP8.3Postgres"
+
+    # Own label, own lifecycle: this proves the frontend images build, not that tests pass.
+    frontend-assets:
+        if: >
+            (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'run-frontend-ci'))
+            || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        name: "Frontend & Assets"
+        runs-on: ubuntu-latest
+        env:
+            PROGRESS_TYPE: plain
+            SPRYKER_PLATFORM_IMAGE: spryker/php:8.3
+            SPRYKER_CURRENT_REGION: EU
+            DYNAMIC_STORE_MODE: true
+        steps:
+            -   uses: actions/checkout@v4
+                with:
+                    # Nothing downstream needs the checkout token; every repo cloned here is public.
+                    persist-credentials: false
+            -   run: echo eyAiZXhwZXJpbWVudGFsIiA6IHRydWUsICJmZWF0dXJlcyIgOiB7ICJidWlsZGtpdCI6IHRydWUgfSB9Cg==|base64 -d|sudo tee /etc/docker/daemon.json
+            -   run: git clone https://github.com/spryker/docker-sdk.git ./docker && git -C ./docker fetch --depth 1 origin $(cat .git.docker) && git -C ./docker checkout $(cat .git.docker)
+            -   run: docker/sdk boot .github/deploy/deploy.yml
+            -   run: SPRYKER_BUILD_HASH=myhash docker/sdk export images
+            -   run: docker run -t --rm -e SPRYKER_NGINX_CGI_HOST_YVES_EU=localhost -e SPRYKER_NGINX_CGI_HOST_ZED_EU=localhost -e SPRYKER_NGINX_CGI_HOST_GLUE_EU=localhost -e SPRYKER_NGINX_CGI_HOST_YVES_US=localhost -e SPRYKER_NGINX_CGI_HOST_GLUE_US=localhost -e SPRYKER_NGINX_CGI_HOST_ZED_US=localhost -e ALLOWED_IP=127.0.0.1 spryker_b2b_marketplace_frontend:1.0-frontend nginx -t
+            -   run: docker run -t --rm --entrypoint='' spryker_b2b_marketplace_frontend:1.0-frontend ls -al /data/public/Yves/assets/myhash
+            -   run: docker run -t --rm --entrypoint='' spryker_b2b_marketplace_frontend:1.0-frontend ls -al /data/public/Zed/assets/
+            -   run: docker run -t --rm --entrypoint='' spryker_b2b_marketplace_frontend:1.0-frontend ls -al /data/public/MerchantPortal/assets/
+
+            -   name: Slack Notification for failed job
+                uses: ./.github/actions/job-slack-notifications
+                if: always()

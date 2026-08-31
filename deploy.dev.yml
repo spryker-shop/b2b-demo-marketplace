@@ -5,34 +5,22 @@ tag: 'dev'
 
 environment: docker.dev
 image:
-    tag: spryker/php:8.3
+    tag: spryker/php:8.5
     php:
         enabled-extensions:
             - otel
+            - amqp
+        ini:
+        'upload_max_filesize': '100M'
+        'post_max_size': '100M'
     environment:
-        SPRYKER_PRODUCT_CONFIGURATOR_HOST: date-time-configurator-example.spryker.local
-        SPRYKER_PRODUCT_CONFIGURATOR_PORT: 80
+        SPRYKER_WATER_TREATMENT_CONFIGURATOR_HOST: water-treatment-configurator.spryker.local
+        SPRYKER_WATER_TREATMENT_CONFIGURATOR_PORT: 80
         SPRYKER_DYNAMIC_STORE_MODE: true
         SPRYKER_YVES_HOST_EU: yves.eu.spryker.local
-        SPRYKER_YVES_HOST_US: yves.us.spryker.local
-        #AOP
-        SPRYKER_AOP_INFRASTRUCTURE: '{
-            "SPRYKER_MESSAGE_BROKER_HTTP_SENDER_CONFIG": {},
-            "SPRYKER_MESSAGE_BROKER_SQS_RECEIVER_CONFIG": {}
-        }'
-        SPRYKER_AOP_APPLICATION: '{
-            "APP_DOMAINS": [],
-            "STORE_NAME_REFERENCE_MAP": {},
-            "APP_CATALOG_SCRIPT_URL": ""
-        }'
-        SPRYKER_AOP_AUTHENTICATION: '{
-            "AUTH0_CUSTOM_DOMAIN": "",
-            "AUTH0_CLIENT_ID": "",
-            "AUTH0_CLIENT_SECRET": ""
-        }'
     node:
-        version: 18
-        npm: 9
+        version: 24
+        npm: 10
 
 composer:
     mode: ''
@@ -60,28 +48,11 @@ regions:
             search:
                 namespace: eu_search
 
-    US:
-        services:
-            mail:
-                sender:
-                    name: Spryker No-Reply
-                    email: no-reply@spryker.local
-            database:
-                database: us-docker
-                username: spryker
-                password: secret
-            broker:
-                namespace: us-docker
-            key_value_store:
-                namespace: 2
-            search:
-                namespace: us_search
-
 groups:
     EU:
         region: EU
         applications:
-            merchant_portal_eu:
+            mportal_eu: # custom name to differentiate between two applications, incorrect for the cloud usage
                 application: merchant-portal
                 endpoints:
                     mp.eu.spryker.local:
@@ -91,32 +62,29 @@ groups:
                         services:
                             session:
                                 namespace: 1
-            yves_eu:
+            yves_eu: # custom name to differentiate between two applications, incorrect for the cloud usage
                 application: yves
                 endpoints:
-                    date-time-configurator-example.spryker.local:
-                        entry-point: Configurator
+                    water-treatment-configurator.spryker.local:
+                        entry-point: WaterTreatmentConfigurator
                     yves.eu.spryker.local:
                         region: EU
                         services:
                             session:
                                 namespace: 2
-            glue_eu:
+                http:
+                    max-request-body-size: 100M
+            glue_eu: # custom name to differentiate between two applications, incorrect for the cloud usage
                 application: glue
                 endpoints:
                     glue.eu.spryker.local:
                         region: EU
-            glue_storefront_eu:
-                application: glue-storefront
-                endpoints:
-                    glue-storefront.eu.spryker.local:
-                        region: EU
-            glue_backend_eu:
+            gluebackend_eu: # custom name to differentiate between two applications, incorrect for the cloud usage
                 application: glue-backend
                 endpoints:
                     glue-backend.eu.spryker.local:
                         region: EU
-            backoffice_eu:
+            boffice_eu: # custom name to differentiate between two applications, incorrect for the cloud usage
                 application: backoffice
                 endpoints:
                     backoffice.eu.spryker.local:
@@ -125,80 +93,24 @@ groups:
                         services:
                             session:
                                 namespace: 3
-            backend_gateway_eu:
+                http:
+                    max-request-body-size: 100M
+            backgw_eu: # custom name to differentiate between two applications, incorrect for the cloud usage
                 application: backend-gateway
                 endpoints:
                     backend-gateway.eu.spryker.local:
                         region: EU
                         primal: true
-            backend_api_eu:
-                application: zed
+            storybook_eu:
+                application: static
                 endpoints:
-                    backend-api.eu.spryker.local:
+                    storybook.spryker.local:
+                        entry-point: Storybook/assets
                         region: EU
-                        entry-point: BackendApi
-
-    US:
-        region: US
-        applications:
-            mportal_us:
-                application: merchant-portal
-                endpoints:
-                    mp.us.spryker.local:
-                        region: US
-                        entry-point: MerchantPortal
-                        primal: true
-                        services:
-                            session:
-                                namespace: 4
-            yves_us:
-                application: yves
-                endpoints:
-                    yves.us.spryker.local:
-                        region: US
-                        services:
-                            session:
-                                namespace: 5
-            glue_us:
-                application: glue
-                endpoints:
-                    glue.us.spryker.local:
-                        region: US
-            glue_storefront_us:
-                application: glue-storefront
-                endpoints:
-                    glue-storefront.us.spryker.local:
-                        region: US
-            glue_backend_us:
-                application: glue-backend
-                endpoints:
-                    glue-backend.us.spryker.local:
-                        region: US
-            backoffice_us:
-                application: backoffice
-                endpoints:
-                    backoffice.us.spryker.local:
-                        region: US
-                        primal: true
-                        services:
-                            session:
-                                namespace: 6
-            backend_gateway_us:
-                application: backend-gateway
-                endpoints:
-                    backend-gateway.us.spryker.local:
-                        region: US
-                        primal: true
-            backend_api_us:
-                application: zed
-                endpoints:
-                    backend-api.us.spryker.local:
-                        region: US
-                        entry-point: BackendApi
 services:
     database:
         engine: mysql
-        version: mariadb-10.4
+        version: mariadb-11.8
         root:
             username: 'root'
             password: 'secret'
@@ -207,7 +119,7 @@ services:
                 protocol: tcp
     broker:
         engine: rabbitmq
-        version: '3.13'
+        version: '4.1'
         api:
             username: 'spryker'
             password: 'secret'
@@ -223,14 +135,14 @@ services:
             localhost:16379:
                 protocol: tcp
     search:
-        engine: elastic
-        version: '7.10'
+        engine: opensearch
+        version: '3.5'
         endpoints:
             localhost:9200:
                 protocol: tcp
     scheduler:
         engine: jenkins
-        version: '2.492.3'
+        version: '2.516.3'
         csrf-protection-enabled: true
         endpoints:
             scheduler.spryker.local:

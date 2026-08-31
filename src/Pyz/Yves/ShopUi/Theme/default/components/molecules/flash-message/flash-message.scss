@@ -1,59 +1,114 @@
 @mixin shop-ui-flash-message($name: '.flash-message') {
     #{$name} {
-        @include helper-visibility-invisible;
-        @include helper-effect-transition(max-height opacity visibility, $setting-effect-default-duration * 2);
+        @include helper-effect-transition(translate opacity);
+        --notification-border: var(--background-state-info-bold);
+        --notification-background: var(--background-state-info-subtle);
+        --notification-icon: var(--icon-state-info);
+        --notification-text: var(--text-state-info);
+        display: flex;
+        align-items: flex-start;
+        max-width: rem(630);
+        translate: 0 -100%;
+        opacity: 0;
+        gap: var(--scale-12);
+        border-radius: var(--radius-md);
+        border-left: var(--stroke-lg) solid var(--notification-border);
+        background: var(--notification-background);
+        font-size: var(--body-sm-size);
+        line-height: var(--body-sm-line-height);
+        letter-spacing: var(--body-sm-letter-spacing);
+        pointer-events: none;
         max-height: 0;
-        overflow-y: hidden;
-        font-size: $setting-font-size-base + 1;
-        font-family: $setting-font-family;
-        background-color: map-get($setting-color-actions, 'success');
-        color: $setting-color-white;
+        overflow: clip;
+        color: var(--text-primary);
 
-        &__content {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
+        &--show {
+            pointer-events: all;
+            translate: 0 0;
+            opacity: 1;
+            max-height: 100vh;
+            margin-top: var(--scale-12);
+            padding: var(--scale-16) var(--scale-40) var(--scale-16) var(--scale-20);
+        }
 
-            &::after {
+        &--static {
+            pointer-events: all;
+            translate: 0 0;
+            opacity: 1;
+            max-width: none;
+            max-height: none;
+            padding: var(--scale-12) var(--scale-16);
+        }
+
+        &--notification {
+            justify-content: center;
+            border-left: none;
+            text-align: center;
+
+            #{$name}__icon {
                 display: none;
+            }
+
+            #{$name}__content {
+                flex-grow: 0;
+            }
+
+            #{$name}__text {
+                margin-top: 0;
+                color: var(--notification-text);
             }
         }
 
+        &__content {
+            flex-grow: 1;
+        }
+
+        &__title {
+            @include typography(label-md);
+            display: block;
+        }
+
         &__text {
-            padding-right: 1rem;
+            margin-top: var(--scale-2);
+            color: var(--text-secondary);
         }
 
-        &__static-link {
-            flex-shrink: 0;
+        &__close {
+            color: var(--icon-primary);
+            position: absolute;
+            right: var(--scale-12);
+            top: var(--scale-8);
+            background: none;
+            cursor: pointer;
         }
 
-        &__message {
-            padding: 1.25rem 1rem;
+        &__icon {
+            color: var(--notification-icon);
         }
 
-        &--show {
-            @include helper-visibility-visible;
-            max-height: 8rem;
+        &--success {
+            --notification-border: var(--background-state-success-bold);
+            --notification-background: var(--background-state-success-subtle);
+            --notification-icon: var(--icon-state-success);
+            --notification-text: var(--text-state-success);
         }
 
-        &--info {
-            color: $setting-color-black;
+        &--warning {
+            --notification-border: var(--background-state-warning-bold);
+            --notification-background: var(--background-state-warning-subtle);
+            --notification-icon: var(--icon-state-warning);
+            --notification-text: var(--text-state-warning);
         }
 
-        @each $action, $setting-color-action in $setting-color-actions {
-            @include shop-ui-flash-message-action($action, $setting-color-action);
+        &--alert {
+            --notification-border: var(--background-state-error-bold);
+            --notification-background: var(--background-state-error-subtle);
+            --notification-icon: var(--icon-state-error);
+            --notification-text: var(--text-state-error);
         }
 
         @content;
     }
-}
-
-@mixin shop-ui-flash-message-action($action, $setting-color-action) {
-    &--#{$action} {
-        background-color: $setting-color-action;
-    }
-
-    @content;
 }
 
 @include shop-ui-flash-message();

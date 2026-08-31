@@ -34,14 +34,14 @@ use Spryker\Zed\Oms\Communication\Plugin\Mail\OrderShippedMailTypeBuilderPlugin;
 use Spryker\Zed\SalesInvoice\Communication\Plugin\Mail\OrderInvoiceMailTypeBuilderPlugin;
 use Spryker\Zed\SymfonyMailer\Communication\Plugin\Mail\SymfonyMailerProviderPlugin;
 use Spryker\Zed\UserPasswordResetMail\Communication\Plugin\Mail\UserPasswordResetMailTypeBuilderPlugin;
+use SprykerFeature\Zed\OrderExperienceManagement\Communication\Plugin\Mail\RecurringOrderFailureMailTypeBuilderPlugin;
+use SprykerFeature\Zed\OrderExperienceManagement\Communication\Plugin\Mail\RecurringOrderUpcomingNotificationMailTypeBuilderPlugin;
+use SprykerFeature\Zed\OrderExperienceManagement\Communication\Plugin\Mail\RecurringOrderValidationFailedMailTypeBuilderPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Mail\SspInquiryApprovedMailTypeBuilderPlugin;
+use SprykerFeature\Zed\SelfServicePortal\Communication\Plugin\Mail\SspInquiryRejectedMailTypeBuilderPlugin;
 
 class MailDependencyProvider extends SprykerMailDependencyProvider
 {
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
@@ -51,18 +51,13 @@ class MailDependencyProvider extends SprykerMailDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function extendMailProviderCollection(Container $container): Container
     {
         $container->extend(self::MAIL_PROVIDER_COLLECTION, function (MailProviderCollectionAddInterface $mailProviderCollection) {
             $mailProviderCollection
-                ->addProvider(new SymfonyMailerProviderPlugin(), [
-                    MailConfig::MAIL_TYPE_ALL,
-                ]);
+            ->addProvider(new SymfonyMailerProviderPlugin(), [
+                MailConfig::MAIL_TYPE_ALL,
+            ]);
 
             return $mailProviderCollection;
         });
@@ -76,26 +71,31 @@ class MailDependencyProvider extends SprykerMailDependencyProvider
     protected function getMailTypeBuilderPlugins(): array
     {
         return [
-            new CustomerRegistrationMailTypeBuilderPlugin(),
-            new CustomerRegistrationConfirmationMailTypeBuilderPlugin(),
-            new CustomerRestorePasswordMailTypeBuilderPlugin(),
-            new CustomerRestoredPasswordConfirmationMailTypeBuilderPlugin(),
-            new NewsletterSubscribedMailTypeBuilderPlugin(),
-            new NewsletterUnsubscribedMailTypeBuilderPlugin(),
-            new OrderConfirmationMailTypeBuilderPlugin(),
-            new OrderShippedMailTypeBuilderPlugin(),
-            new CompanyUserInvitationMailTypeBuilderPlugin(),
-            new CompanyStatusMailTypeBuilderPlugin(),
-            new UserPasswordResetMailTypeBuilderPlugin(),
-            new AvailabilityNotificationUnsubscribedMailTypeBuilderPlugin(),
-            new AvailabilityNotificationSubscriptionMailTypeBuilderPlugin(),
-            new AvailabilityNotificationMailTypeBuilderPlugin(),
-            new MerchantUserPasswordResetMailTypeBuilderPlugin(),
-            new OrderInvoiceMailTypeBuilderPlugin(),
-            new CustomerEmailChangeVerificationMailTypePlugin(),
-            new CustomerEmailChangeNotificationMailTypePlugin(),
-            new CustomerEmailMultiFactorAuthMailTypeBuilderPlugin(),
-            new UserEmailMultiFactorAuthMailTypeBuilderPlugin(),
+        new CustomerRegistrationMailTypeBuilderPlugin(),
+        new CustomerRegistrationConfirmationMailTypeBuilderPlugin(),
+        new CustomerRestorePasswordMailTypeBuilderPlugin(),
+        new CustomerRestoredPasswordConfirmationMailTypeBuilderPlugin(),
+        new NewsletterSubscribedMailTypeBuilderPlugin(),
+        new NewsletterUnsubscribedMailTypeBuilderPlugin(),
+        new OrderConfirmationMailTypeBuilderPlugin(),
+        new OrderShippedMailTypeBuilderPlugin(),
+        new CompanyUserInvitationMailTypeBuilderPlugin(),
+        new CompanyStatusMailTypeBuilderPlugin(),
+        new UserPasswordResetMailTypeBuilderPlugin(),
+        new AvailabilityNotificationUnsubscribedMailTypeBuilderPlugin(),
+        new AvailabilityNotificationSubscriptionMailTypeBuilderPlugin(),
+        new AvailabilityNotificationMailTypeBuilderPlugin(),
+        new MerchantUserPasswordResetMailTypeBuilderPlugin(),
+        new OrderInvoiceMailTypeBuilderPlugin(),
+        new CustomerEmailChangeVerificationMailTypePlugin(),
+        new CustomerEmailChangeNotificationMailTypePlugin(),
+        new CustomerEmailMultiFactorAuthMailTypeBuilderPlugin(),
+        new UserEmailMultiFactorAuthMailTypeBuilderPlugin(),
+        new SspInquiryApprovedMailTypeBuilderPlugin(),
+        new SspInquiryRejectedMailTypeBuilderPlugin(),
+        new RecurringOrderUpcomingNotificationMailTypeBuilderPlugin(), #RecurringOrdersFeature
+        new RecurringOrderValidationFailedMailTypeBuilderPlugin(), #RecurringOrdersFeature
+        new RecurringOrderFailureMailTypeBuilderPlugin(), #RecurringOrdersFeature
         ];
     }
 }

@@ -9,11 +9,14 @@ declare(strict_types = 1);
 
 namespace Pyz\Zed\DataImport;
 
+use Spryker\Zed\Configuration\ConfigurationConfig;
 use Spryker\Zed\DataImport\DataImportConfig as SprykerDataImportConfig;
 use Spryker\Zed\MerchantProductApprovalDataImport\MerchantProductApprovalDataImportConfig;
 use Spryker\Zed\ProductApprovalDataImport\ProductApprovalDataImportConfig;
 use Spryker\Zed\ProductOfferShoppingListDataImport\ProductOfferShoppingListDataImportConfig;
 use Spryker\Zed\StockAddressDataImport\StockAddressDataImportConfig;
+use Spryker\Zed\Workflow\WorkflowConfig;
+use SprykerFeature\Zed\SelfServicePortal\SelfServicePortalConfig;
 
 /**
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
@@ -29,6 +32,16 @@ class DataImportConfig extends SprykerDataImportConfig
      * @var string
      */
     public const IMPORT_TYPE_CUSTOMER = 'customer';
+
+    /**
+     * @var string
+     */
+    public const IMPORT_TYPE_CUSTOMER_GROUP = 'customer-group';
+
+    /**
+     * @var string
+     */
+    public const IMPORT_TYPE_CUSTOMER_GROUP_TO_CUSTOMER = 'customer-group-to-customer';
 
     /**
      * @var string
@@ -221,13 +234,20 @@ class DataImportConfig extends SprykerDataImportConfig
     public const IMPORT_TYPE_MERCHANT_USER = 'merchant-user';
 
     /**
+     * @var string
+     */
+    public const IMPORT_TYPE_SALES_ORDER = 'sales-order';
+
+    /**
+     * @var string
+     */
+    public const IMPORT_TYPE_RECURRING_SCHEDULE = 'recurring-schedule';
+
+    /**
      * @var int
      */
     protected const READ_COLLECTION_BATCH_SIZE = 500;
 
-    /**
-     * @return string|null
-     */
     public function getDefaultYamlConfigPath(): ?string
     {
         $regionDir = defined('APPLICATION_REGION') ? APPLICATION_REGION : 'EU';
@@ -245,15 +265,21 @@ class DataImportConfig extends SprykerDataImportConfig
             static::IMPORT_TYPE_MERCHANT_USER,
             MerchantProductApprovalDataImportConfig::IMPORT_TYPE_MERCHANT_PRODUCT_APPROVAL_STATUS_DEFAULT,
             ProductApprovalDataImportConfig::IMPORT_TYPE_PRODUCT_APPROVAL_STATUS,
+            SelfServicePortalConfig::IMPORT_TYPE_SSP_INQUIRY,
+            SelfServicePortalConfig::IMPORT_TYPE_PRODUCT_SHIPMENT_TYPE,
             ProductOfferShoppingListDataImportConfig::IMPORT_TYPE_PRODUCT_OFFER_SHOPPING_LIST_ITEM,
+            ConfigurationConfig::IMPORT_TYPE_CONFIGURATION_VALUE,
+            WorkflowConfig::IMPORT_TYPE_WORKFLOW, #WorkflowFeature
+            static::IMPORT_TYPE_SALES_ORDER,
+            static::IMPORT_TYPE_RECURRING_SCHEDULE,
+            SelfServicePortalConfig::IMPORT_TYPE_SSP_MODEL,
+            SelfServicePortalConfig::IMPORT_TYPE_SSP_ASSET,
+            SelfServicePortalConfig::IMPORT_TYPE_FILE_ATTACHMENT,
         ];
 
         return array_merge(parent::getFullImportTypes(), $customImportTypes);
     }
 
-    /**
-     * @return int
-     */
     public function getReadCollectionBatchSize(): int
     {
         return static::READ_COLLECTION_BATCH_SIZE;

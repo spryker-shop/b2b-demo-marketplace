@@ -1,0 +1,55 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'mini-cart',
+    tag: 'mini-cart',
+} %}
+
+{% define data = {
+    activeCart: null,
+    carts: [],
+    isMultiCartAllowed: false,
+} %}
+
+{% block body %}
+    <div class="{{ config.name }}__header">
+        <span class="{{ config.name }}__title">{{ 'cart_popover.title' | trans }}</span>
+    </div>
+
+    <div class="{{ config.name }}__divider"></div>
+
+    <div class="{{ config.name }}__rows">
+        {% if data.activeCart is not empty %}
+            <div class="{{ config.name }}__row {{ config.name }}__row--active">
+                {% include molecule('mini-cart-detail', 'MultiCartWidget') with {
+                    data: {
+                        cart: data.activeCart,
+                    },
+                } only %}
+            </div>
+        {% endif %}
+
+        {% if data.carts is not empty %}
+            {% for cart in data.carts %}
+                <div class="{{ config.name }}__row">
+                    {% include molecule('mini-cart-detail', 'MultiCartWidget') with {
+                        data: {
+                            cart: cart,
+                        },
+                    } only %}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    {% if data.isMultiCartAllowed %}
+        <div class="{{ config.name }}__footer">
+            <a href="{{ path('multi-cart') }}" class="button button--expand button--secondary">
+                {{ 'multi_cart_widget.cart.view_all' | trans }}
+            </a>
+            <a href="{{ url('multi-cart/create') }}" class="button button--expand button--secondary">
+                {{ 'multi_cart_widget.cart.add' | trans }}
+            </a>
+        </div>
+    {% endif %}
+{% endblock %}

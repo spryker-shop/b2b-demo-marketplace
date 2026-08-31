@@ -3,6 +3,11 @@
 {% block meta %}
     {{ parent() }}
     <meta name="format-detection" content="telephone=no">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 {% endblock %}
 
 {% set pageLayoutMainJsClassName = 'js-page-layout-main' %}
@@ -11,10 +16,11 @@
 
 {% block viewport %}
     <div class="page-layout page-layout--preload">
-        {% widget 'AgentControlBarWidget' only %}{% endwidget %}
-
         {% block sidebar %}
             {% embed organism('side-drawer') with {
+                data: {
+                    isAjaxMode: data.isAjaxHeader | default(false),
+                },
                 attributes: {
                     'trigger-selector': pageLayoutMainJsClassName ~ '__side-drawer-trigger',
                     'container-selector': pageLayoutMainJsClassName ~ '__side-drawer-container',
@@ -98,6 +104,20 @@
                     }
                 } only %}
 
+                {% include organism('account-navigation') with {
+                    attributes: {
+                        'trigger-selector': pageLayoutMainJsClassName ~ '__ssp-navigation-trigger',
+                        'container-selector': pageLayoutMainJsClassName ~ '__side-drawer-container',
+                        'locked-body-class-name': 'is-locked-mobile',
+                        'overlay-breakpoint': 768,
+                    },
+                    data: {
+                        title: 'self_service_portal.customer_navigation.title' | trans,
+                        introIcon: 'ssp',
+                        isSSP: true,
+                    }
+                } only %}
+
                 {% if can('SeeCompanyMenuPermissionPlugin') %}
                     {% set menuItemCompanyWidget = findWidget('MenuItemCompanyWidget') %}
                     {% set companyName = menuItemCompanyWidget.companyName %}
@@ -159,6 +179,10 @@
 
         {% block outside %}{% endblock %}
 
+        {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+            {% widget 'QuoteRequestAgentOverviewWidget' only %}{% endwidget %}
+        {% endif %}
+
         {% block header %}
             {% embed organism('header') with {
                 data: {
@@ -173,17 +197,6 @@
                     <nav aria-label="{{ 'shop_ui.aria_label.main.navigation' | trans }}">
                         {% cms_slot 'slt-desktop-header' %}
                     </nav>
-                {% endblock %}
-
-                {% block mobile %}
-                    <a href="#" class="link link--alt {{ pageLayoutMainJsClassName }}__side-drawer-trigger">
-                        {% include atom('icon') with {
-                            modifiers: ['big'],
-                            data: {
-                                name: 'bars',
-                            },
-                        } only %}
-                    </a>
                 {% endblock %}
             {% endembed %}
         {% endblock %}
@@ -242,6 +255,13 @@
 
 {% block globalComponents %}
     {{ parent() }}
+
+    {% include molecule('sticky-body-toggler') with {
+        class: 'js-sticky-body-toggler-root',
+        attributes: {
+            'class-to-fix-body': 'is-locked-mobile',
+        },
+    } only %}
 
     {% include molecule('node-animator') only %}
 

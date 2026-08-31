@@ -10,7 +10,10 @@ declare(strict_types = 1);
 namespace Pyz\Zed\WebProfiler;
 
 use Spryker\Zed\Config\Communication\Plugin\WebProfiler\WebProfilerConfigDataCollectorPlugin;
+use Spryker\Zed\Event\Communication\Plugin\WebProfiler\WebProfilerApplicationEventsDataCollectorPlugin;
+use Spryker\Zed\Log\Communication\Plugin\WebProfiler\WebProfilerAuditLogDataCollectorPlugin;
 use Spryker\Zed\Profiler\Communication\Plugin\WebProfiler\WebProfilerProfilerDataCollectorPlugin;
+use Spryker\Zed\Propel\Communication\Plugin\WebProfiler\WebProfilerPropelDataCollectorPlugin;
 use Spryker\Zed\WebProfiler\Communication\Plugin\WebProfiler\WebProfilerAjaxDataCollectorPlugin;
 use Spryker\Zed\WebProfiler\Communication\Plugin\WebProfiler\WebProfilerConfigDataCollectorPlugin as SymfonyWebProfilerConfigDataCollectorPlugin;
 use Spryker\Zed\WebProfiler\Communication\Plugin\WebProfiler\WebProfilerEventsDataCollectorPlugin;
@@ -19,6 +22,7 @@ use Spryker\Zed\WebProfiler\Communication\Plugin\WebProfiler\WebProfilerLoggerDa
 use Spryker\Zed\WebProfiler\Communication\Plugin\WebProfiler\WebProfilerMemoryDataCollectorPlugin;
 use Spryker\Zed\WebProfiler\Communication\Plugin\WebProfiler\WebProfilerRequestDataCollectorPlugin;
 use Spryker\Zed\WebProfiler\Communication\Plugin\WebProfiler\WebProfilerRouterDataCollectorPlugin;
+use Spryker\Zed\WebProfiler\Communication\Plugin\WebProfiler\WebProfilerSessionDataCollectorPlugin;
 use Spryker\Zed\WebProfiler\Communication\Plugin\WebProfiler\WebProfilerTimeDataCollectorPlugin;
 use Spryker\Zed\WebProfiler\Communication\Plugin\WebProfiler\WebProfilerTwigDataCollectorPlugin;
 use Spryker\Zed\WebProfiler\WebProfilerDependencyProvider as SprykerWebProfilerDependencyProvider;
@@ -35,6 +39,7 @@ class WebProfilerDependencyProvider extends SprykerWebProfilerDependencyProvider
             new WebProfilerRouterDataCollectorPlugin(),
             new WebProfilerAjaxDataCollectorPlugin(),
             new SymfonyWebProfilerConfigDataCollectorPlugin(),
+            new WebProfilerSessionDataCollectorPlugin(),
             new WebProfilerConfigDataCollectorPlugin(),
             new WebProfilerEventsDataCollectorPlugin(),
             new WebProfilerExceptionDataCollectorPlugin(),
@@ -42,6 +47,9 @@ class WebProfilerDependencyProvider extends SprykerWebProfilerDependencyProvider
             new WebProfilerMemoryDataCollectorPlugin(),
             new WebProfilerTimeDataCollectorPlugin(),
             new WebProfilerTwigDataCollectorPlugin(),
+            new WebProfilerPropelDataCollectorPlugin(),
+            new WebProfilerApplicationEventsDataCollectorPlugin(),
+            new WebProfilerAuditLogDataCollectorPlugin(),
         ];
 
         if (class_exists(WebProfilerProfilerDataCollectorPlugin::class)) {

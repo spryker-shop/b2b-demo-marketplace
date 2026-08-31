@@ -9,8 +9,9 @@ declare(strict_types = 1);
 
 namespace Pyz\Yves\Application;
 
+use Pyz\Yves\WaterTreatmentConfiguratorPageExample\Plugin\Application\WaterTreatmentConfiguratorSecurityHeaderExpanderPlugin;
 use Spryker\Yves\Application\ApplicationDependencyProvider as SprykerApplicationDependencyProvider;
-use SprykerShop\Yves\DateTimeConfiguratorPageExample\Plugin\Application\ConfiguratorSecurityHeaderExpanderPlugin;
+use SprykerEco\Yves\PunchoutGateway\Plugin\Application\PunchoutSecurityHeaderExpanderPlugin;
 
 class ApplicationDependencyProvider extends SprykerApplicationDependencyProvider
 {
@@ -20,7 +21,8 @@ class ApplicationDependencyProvider extends SprykerApplicationDependencyProvider
     protected function getSecurityHeaderExpanderPlugins(): array
     {
         return [
-            new ConfiguratorSecurityHeaderExpanderPlugin(),
+            new WaterTreatmentConfiguratorSecurityHeaderExpanderPlugin(),
+            new PunchoutSecurityHeaderExpanderPlugin(),
         ];
     }
 }

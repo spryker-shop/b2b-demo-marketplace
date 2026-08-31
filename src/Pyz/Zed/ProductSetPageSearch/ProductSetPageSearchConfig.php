@@ -10,24 +10,18 @@ declare(strict_types = 1);
 namespace Pyz\Zed\ProductSetPageSearch;
 
 use Pyz\Zed\Synchronization\SynchronizationConfig;
-use Spryker\Shared\Publisher\PublisherConfig;
+use Spryker\Shared\ProductSetPageSearch\ProductSetPageSearchConfig as SprykerSharedProductSetPageSearchConfig;
 use Spryker\Zed\ProductSetPageSearch\ProductSetPageSearchConfig as SprykerProductSetPageSearchConfig;
 
 class ProductSetPageSearchConfig extends SprykerProductSetPageSearchConfig
 {
-    /**
-     * @return string|null
-     */
     public function getProductSetSynchronizationPoolName(): ?string
     {
         return SynchronizationConfig::DEFAULT_SYNCHRONIZATION_POOL_NAME;
     }
 
-    /**
-     * @return string|null
-     */
     public function getEventQueueName(): ?string
     {
-        return PublisherConfig::PUBLISH_QUEUE;
+        return SprykerSharedProductSetPageSearchConfig::PUBLISH_PRODUCT_SET_PAGE_QUEUE;
     }
 }

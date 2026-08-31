@@ -1,0 +1,77 @@
+@mixin order-experience-management-recurring-order-items($name: '.recurring-order-items') {
+    #{$name} {
+        @include typography(body-md);
+
+        &__title {
+            @include typography(label-md);
+            margin-bottom: var(--scale-8);
+        }
+
+        &__items {
+            display: grid;
+            gap: var(--scale-8);
+            grid-template-columns: 70% auto auto;
+            padding-bottom: var(--scale-8);
+            margin-bottom: var(--scale-8);
+            text-align: right;
+
+            &:not(:last-child) {
+                border-bottom: 1px solid var(--border-subtle);
+            }
+        }
+
+        &__item-meta {
+            @include typography(body-md);
+            margin-top: var(--scale-2);
+        }
+
+        .sold-by-merchant {
+            @include typography(body-md);
+            color: inherit;
+        }
+
+        &__item-name {
+            font-weight: normal;
+        }
+
+        &__main-info {
+            text-align: left;
+        }
+
+        &__item-bundle {
+            display: block;
+            color: var(--text-tertiary);
+        }
+
+        &__item-flags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--scale-4);
+            margin-top: var(--scale-4);
+        }
+
+        &__item-recurring-quantity,
+        &__item-recurring-total {
+            display: block;
+        }
+
+        &__summary,
+        &__item-total {
+            font-weight: var(--font-weight-bold);
+        }
+
+        &__note {
+            font-size: var(--font-size-12);
+        }
+
+        &__summary {
+            border-top: 1px solid var(--border-default);
+            margin-top: var(--scale-12);
+            padding-top: var(--scale-12);
+        }
+
+        @content;
+    }
+}
+
+@include order-experience-management-recurring-order-items;

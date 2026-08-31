@@ -12,6 +12,7 @@ namespace Pyz\Client\ProductStorage;
 use Spryker\Client\AvailabilityStorage\Plugin\ProductViewAvailabilityStorageExpanderPlugin;
 use Spryker\Client\MerchantProductStorage\Plugin\ProductStorage\ProductViewMerchantProductExpanderPlugin;
 use Spryker\Client\PriceProductStorage\Plugin\ProductViewPriceExpanderPlugin;
+use Spryker\Client\ProductAttachmentStorage\Plugin\ProductStorage\ProductAttachmentProductViewExpanderPlugin;
 use Spryker\Client\ProductBundleStorage\Plugin\ProductStorage\ProductBundleProductViewExpanderPlugin;
 use Spryker\Client\ProductConfigurationStorage\Plugin\ProductStorage\ProductViewProductConfigurationExpanderPlugin;
 use Spryker\Client\ProductDiscontinuedStorage\Plugin\ProductStorage\ProductDiscontinuedProductAvailabilityExpanderPlugin;
@@ -21,9 +22,11 @@ use Spryker\Client\ProductListStorage\Plugin\ProductStorageExtension\ProductAbst
 use Spryker\Client\ProductListStorage\Plugin\ProductStorageExtension\ProductAbstractRestrictionPlugin;
 use Spryker\Client\ProductListStorage\Plugin\ProductStorageExtension\ProductConcreteListStorageRestrictionFilterPlugin;
 use Spryker\Client\ProductListStorage\Plugin\ProductStorageExtension\ProductConcreteRestrictionPlugin;
+use Spryker\Client\ProductMeasurementUnitStorage\Plugin\ProductStorage\ProductViewMeasurementUnitExpanderPlugin;
 use Spryker\Client\ProductOfferStorage\Plugin\ProductStorage\ProductViewProductOfferExpanderPlugin;
 use Spryker\Client\ProductStorage\Plugin\ProductVariantProductViewExpanderPlugin;
 use Spryker\Client\ProductStorage\ProductStorageDependencyProvider as SprykerProductStorageDependencyProvider;
+use SprykerFeature\Client\SelfServicePortal\Plugin\ProductStorage\ShipmentTypeProductViewExpanderPlugin;
 
 class ProductStorageDependencyProvider extends SprykerProductStorageDependencyProvider
 {
@@ -32,18 +35,29 @@ class ProductStorageDependencyProvider extends SprykerProductStorageDependencyPr
      */
     protected function getProductViewExpanderPlugins(): array
     {
-        /** @var array<\Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface> $plugins */
+        /**
+         * Returns a list of `ProductView` expander plugins ordered by execution priority.
+         *
+         * Important: `ShipmentTypeProductViewExpanderPlugin` MUST come before
+         * `ProductViewAvailabilityStorageExpanderPlugin` so that shipment type data
+         * is available when availability is expanded/calculated.
+         *
+         * @var array<\Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface> $plugins
+         */
         $plugins = [
             new ProductViewDiscontinuedOptionsExpanderPlugin(), #ProductDiscontinuedFeature
             new ProductVariantProductViewExpanderPlugin(),
             new ProductViewProductOfferExpanderPlugin(),
+            new ProductViewMerchantProductExpanderPlugin(),
             new ProductViewProductConfigurationExpanderPlugin(),
             new ProductViewPriceExpanderPlugin(),
+            new ShipmentTypeProductViewExpanderPlugin(),
             new ProductViewAvailabilityStorageExpanderPlugin(),
             new ProductDiscontinuedProductAvailabilityExpanderPlugin(), #ProductDiscontinuedFeature
             new ProductViewImageExpanderPlugin(),
-            new ProductViewMerchantProductExpanderPlugin(),
             new ProductBundleProductViewExpanderPlugin(),
+            new ProductViewMeasurementUnitExpanderPlugin(),
+            new ProductAttachmentProductViewExpanderPlugin(),
         ];
 
         return $plugins;

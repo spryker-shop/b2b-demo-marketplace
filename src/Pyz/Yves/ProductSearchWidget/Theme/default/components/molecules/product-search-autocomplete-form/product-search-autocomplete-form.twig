@@ -47,15 +47,6 @@
 
     {% block input %}
         <div class="{{ config.name }}__field">
-
-            {% include atom('icon') with {
-                class: config.name ~ '__search-icon',
-                modifiers: ['search'],
-                data: {
-                    name: 'search'
-                }
-            } only %}
-
             <input type="text"
                    class="input input--expand {{ config.name }}__input {{ config.jsName }}__input"
                    placeholder="{{ data.placeholder | trans }}"
@@ -70,12 +61,12 @@
 
             {% if attributes['show-clean-button'] %}
                 {% block cleanButton %}
-                    <button type="button" class="button button--hollow-icon {{ config.name }}__clean-button {{ config.jsName }}__clean-button">
+                    <button type="button" class="{{ config.name }}__clean-button {{ config.jsName }}__clean-button">
                         {% include atom('icon') with {
                             modifiers: ['small'],
                             data: {
-                                name: 'cross'
-                            }
+                                name: 'cross',
+                            },
                         } only %}
                     </button>
                 {% endblock %}

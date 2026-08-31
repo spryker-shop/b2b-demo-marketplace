@@ -30,7 +30,6 @@ class ProductController extends SprykerShopProductController
 
     /**
      * @param array<string, mixed> $productData
-     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
@@ -38,13 +37,14 @@ class ProductController extends SprykerShopProductController
      */
     protected function executeDetailAction(array $productData, Request $request): array
     {
+        $selectedAttributes = $this->getSelectedAttributesWithoutPostfix($productData, $request);
+
         $shopContextTransfer = $this->getFactory()
             ->createShopContextResolver()
             ->resolve();
 
         $productStorageCriteriaTransfer = (new ProductStorageCriteriaTransfer())
             ->fromArray($shopContextTransfer->toArray());
-        $selectedAttributes = $this->getSelectedAttributesWithoutPostfix($productData, $request);
 
         $productViewTransfer = $this->getFactory()
             ->getProductStoragePyzClient()

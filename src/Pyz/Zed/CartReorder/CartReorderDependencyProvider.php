@@ -14,6 +14,8 @@ use Spryker\Zed\CartNote\Communication\Plugin\CartReorder\CartNoteCartPreReorder
 use Spryker\Zed\CartNote\Communication\Plugin\CartReorder\CartNoteCartReorderItemHydratorPlugin;
 use Spryker\Zed\CartReorder\CartReorderDependencyProvider as SprykerCartReorderDependencyProvider;
 use Spryker\Zed\Comment\Communication\Plugin\CartReorder\CopyOrderCommentThreadCartPreReorderPlugin;
+use Spryker\Zed\CompanyBusinessUnitSalesConnector\Communication\Plugin\CartReorder\EditBusinessUnitOrderCartReorderOrderProviderPlugin;
+use Spryker\Zed\CompanySalesConnector\Communication\Plugin\CartReorder\EditCompanyOrderCartReorderOrderProviderPlugin;
 use Spryker\Zed\ConfigurableBundleNote\Communication\Plugin\CartReorder\ConfigurableBundleNoteCartReorderItemHydratorPlugin;
 use Spryker\Zed\Currency\Communication\Plugin\CartReorder\CopyOrderCurrencyCartPreReorderPlugin;
 use Spryker\Zed\MerchantProduct\Communication\Plugin\CartReorder\MerchantProductCartReorderItemHydratorPlugin;
@@ -52,20 +54,11 @@ use Spryker\Zed\SalesOrderAmendment\Communication\Plugin\CartReorder\QuoteReques
 use Spryker\Zed\SalesOrderAmendmentOms\Communication\Plugin\CartReorder\IsAmendableOrderCartReorderRequestValidatorPlugin;
 use Spryker\Zed\SalesOrderAmendmentOms\Communication\Plugin\CartReorder\StartOrderAmendmentCartReorderPostCreatePlugin;
 use Spryker\Zed\SalesProductConfiguration\Communication\Plugin\CartReorder\ProductConfigurationCartReorderItemHydratorPlugin;
+use Spryker\Zed\SalesShipmentType\Communication\Plugin\CartReorder\ShipmentTypeReorderItemHydratorPlugin;
 use Spryker\Zed\Store\Communication\Plugin\CartReorder\CurrentStoreCartReorderValidatorPlugin;
 
 class CartReorderDependencyProvider extends SprykerCartReorderDependencyProvider
 {
-    /**
-     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderValidatorPluginInterface>
-     */
-    protected function getCartReorderValidatorPlugins(): array
-    {
-        return [
-            new CurrentStoreCartReorderValidatorPlugin(),
-        ];
-    }
-
     /**
      * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderRequestValidatorPluginInterface>
      */
@@ -84,6 +77,16 @@ class CartReorderDependencyProvider extends SprykerCartReorderDependencyProvider
         return [
             new ReplacePersistentCartReorderQuoteProviderStrategyPlugin(),
             new NewPersistentCartReorderQuoteProviderStrategyPlugin(),
+        ];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderValidatorPluginInterface>
+     */
+    protected function getCartReorderValidatorPlugins(): array
+    {
+        return [
+            new CurrentStoreCartReorderValidatorPlugin(),
         ];
     }
 
@@ -136,6 +139,7 @@ class CartReorderDependencyProvider extends SprykerCartReorderDependencyProvider
             new ProductPackagingUnitCartReorderItemHydratorPlugin(),
             new CartNoteCartReorderItemHydratorPlugin(),
             new ProductOfferCartReorderItemHydratorPlugin(),
+            new ShipmentTypeReorderItemHydratorPlugin(),
             new MerchantProductCartReorderItemHydratorPlugin(),
             new MerchantProductOfferCartReorderItemHydratorPlugin(),
             new ProductConfigurationCartReorderItemHydratorPlugin(),
@@ -188,6 +192,17 @@ class CartReorderDependencyProvider extends SprykerCartReorderDependencyProvider
     {
         return [
             new ProductBundleCartReorderOrderItemFilterPlugin(),
+        ];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderOrderProviderPluginInterface>
+     */
+    protected function getCartReorderOrderProviderPlugins(): array
+    {
+        return [
+            new EditCompanyOrderCartReorderOrderProviderPlugin(),
+            new EditBusinessUnitOrderCartReorderOrderProviderPlugin(),
         ];
     }
 }

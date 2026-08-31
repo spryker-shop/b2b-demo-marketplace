@@ -13,10 +13,14 @@ use Spryker\Client\MerchantProductStorage\Plugin\ProductOfferStorage\MerchantPro
 use Spryker\Client\MerchantStorage\Plugin\ProductOfferStorage\MerchantProductOfferStorageExpanderPlugin;
 use Spryker\Client\PriceProductOfferStorage\Plugin\ProductOfferStorage\LowestPriceProductOfferStorageCollectionSorterPlugin;
 use Spryker\Client\PriceProductOfferStorage\Plugin\ProductOfferStorage\PriceProductOfferStorageExpanderPlugin;
+use Spryker\Client\ProductOfferAvailabilityStorage\Plugin\ProductOfferStorage\ProductOfferAvailabilityProductOfferStorageBulkExpanderPlugin;
+use Spryker\Client\ProductOfferServicePointStorage\Plugin\ProductOfferStorage\ServiceProductOfferStorageExpanderPlugin;
+use Spryker\Client\ProductOfferShipmentTypeStorage\Plugin\ProductOfferStorage\ShipmentTypeProductOfferStorageExpanderPlugin;
 use Spryker\Client\ProductOfferStorage\Plugin\ProductOfferStorage\DefaultProductOfferReferenceStrategyPlugin;
 use Spryker\Client\ProductOfferStorage\Plugin\ProductOfferStorage\ProductOfferReferenceStrategyPlugin;
 use Spryker\Client\ProductOfferStorage\ProductOfferStorageDependencyProvider as SprykerProductOfferStorageDependencyProvider;
 use Spryker\Client\ProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageCollectionSorterPluginInterface;
+use SprykerFeature\Client\SelfServicePortal\Plugin\ProductOfferStorage\ShipmentTypeServicePointProductOfferStorageFilterPlugin;
 
 class ProductOfferStorageDependencyProvider extends SprykerProductOfferStorageDependencyProvider
 {
@@ -40,14 +44,33 @@ class ProductOfferStorageDependencyProvider extends SprykerProductOfferStorageDe
         return [
             new PriceProductOfferStorageExpanderPlugin(),
             new MerchantProductOfferStorageExpanderPlugin(),
+            new ServiceProductOfferStorageExpanderPlugin(),
+            new ShipmentTypeProductOfferStorageExpanderPlugin(),
+        ];
+    }
+
+    protected function createProductOfferStorageCollectionSorterPlugin(): ProductOfferStorageCollectionSorterPluginInterface
+    {
+        return new LowestPriceProductOfferStorageCollectionSorterPlugin();
+    }
+
+    /**
+     * @return list<\Spryker\Client\ProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageFilterPluginInterface>
+     */
+    protected function getProductOfferStorageFilterPlugins(): array
+    {
+        return [
+            new ShipmentTypeServicePointProductOfferStorageFilterPlugin(),
         ];
     }
 
     /**
-     * @return \Spryker\Client\ProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageCollectionSorterPluginInterface
+     * @return array<\Spryker\Client\ProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageBulkExpanderPluginInterface>
      */
-    protected function createProductOfferStorageCollectionSorterPlugin(): ProductOfferStorageCollectionSorterPluginInterface
+    protected function getProductOfferStorageBulkExpanderPlugins(): array
     {
-        return new LowestPriceProductOfferStorageCollectionSorterPlugin();
+        return [
+            new ProductOfferAvailabilityProductOfferStorageBulkExpanderPlugin(),
+        ];
     }
 }

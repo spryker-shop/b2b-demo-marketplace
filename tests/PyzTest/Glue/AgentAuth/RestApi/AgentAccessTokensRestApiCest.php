@@ -27,16 +27,8 @@ use Spryker\Glue\AgentAuthRestApi\AgentAuthRestApiConfig;
  */
 class AgentAccessTokensRestApiCest
 {
-    /**
-     * @var \PyzTest\Glue\AgentAuth\RestApi\Fixtures\AgentAccessTokensRestApiFixtures
-     */
     protected AgentAccessTokensRestApiFixtures $fixtures;
 
-    /**
-     * @param \PyzTest\Glue\AgentAuth\AgentAuthRestApiTester $I
-     *
-     * @return void
-     */
     public function loadFixtures(AgentAuthRestApiTester $I): void
     {
         /** @var \PyzTest\Glue\AgentAuth\RestApi\Fixtures\AgentAccessTokensRestApiFixtures $fixtures */
@@ -47,10 +39,6 @@ class AgentAccessTokensRestApiCest
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\AgentAuth\AgentAuthRestApiTester $I
-     *
-     * @return void
      */
     public function requestAccessTokenForExistingAgentUser(AgentAuthRestApiTester $I): void
     {
@@ -69,15 +57,11 @@ class AgentAccessTokensRestApiCest
         $I->seeResponseCodeIs(HttpCode::CREATED);
         $I->seeResponseHasAccessToken();
         $I->seeResponseHasRefreshToken();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\AgentAuth\AgentAuthRestApiTester $I
-     *
-     * @return void
      */
     public function requestAccessTokenForNonExistingAgentUser(AgentAuthRestApiTester $I): void
     {
@@ -96,6 +80,6 @@ class AgentAccessTokensRestApiCest
         $I->seeResponseCodeIs(HttpCode::UNAUTHORIZED);
         $I->seeResponseDoesNotHaveAccessToken();
         $I->seeResponseDoesNotHaveRefreshToken();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 }

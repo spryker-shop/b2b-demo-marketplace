@@ -27,16 +27,8 @@ use Spryker\Glue\ShoppingListsRestApi\ShoppingListsRestApiConfig;
  */
 class ShoppingListProductConfigurationRestApiCest
 {
-    /**
-     * @var \PyzTest\Glue\ProductConfigurations\RestApi\Fixtures\ShoppingListProductConfigurationsRestApiFixtures
-     */
     protected ShoppingListProductConfigurationsRestApiFixtures $fixtures;
 
-    /**
-     * @param \PyzTest\Glue\ProductConfigurations\ProductConfigurationsApiTester $I
-     *
-     * @return void
-     */
     public function loadFixtures(ProductConfigurationsApiTester $I): void
     {
         /** @var \PyzTest\Glue\ProductConfigurations\RestApi\Fixtures\ShoppingListProductConfigurationsRestApiFixtures $fixtures */
@@ -47,10 +39,6 @@ class ShoppingListProductConfigurationRestApiCest
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\ProductConfigurations\ProductConfigurationsApiTester $I
-     *
-     * @return void
      */
     public function requestUpdateConfigurableShoppingListItemsInShoppingList(ProductConfigurationsApiTester $I): void
     {
@@ -82,7 +70,7 @@ class ShoppingListProductConfigurationRestApiCest
 
         // Assert
         $I->seeResponseCodeIs(HttpCode::OK);
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->amSure('Returned resource contains `productConfiguration` attribute')
             ->whenI()
@@ -91,10 +79,6 @@ class ShoppingListProductConfigurationRestApiCest
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\ProductConfigurations\ProductConfigurationsApiTester $I
-     *
-     * @return void
      */
     public function requestCleanUpConfigurableShoppingListItemsInShoppingList(ProductConfigurationsApiTester $I): void
     {
@@ -126,17 +110,13 @@ class ShoppingListProductConfigurationRestApiCest
 
         // Assert
         $I->seeResponseCodeIs(HttpCode::OK);
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->assertNull($I->grabDataFromResponseByJsonPath('$.data.attributes.productConfigurationInstance')[0]);
     }
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\ProductConfigurations\ProductConfigurationsApiTester $I
-     *
-     * @return void
      */
     public function requestAddConfigurableShoppingListItemsToShoppingList(ProductConfigurationsApiTester $I): void
     {
@@ -167,7 +147,7 @@ class ShoppingListProductConfigurationRestApiCest
 
         // Assert
         $I->seeResponseCodeIs(HttpCode::CREATED);
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->amSure('Returned resource contains `productConfiguration` attribute')
             ->whenI()

@@ -27,16 +27,8 @@ use Spryker\Glue\OrdersRestApi\OrdersRestApiConfig;
  */
 class OrdersRestApiCest
 {
-    /**
-     * @var \PyzTest\Glue\Orders\RestApi\OrdersRestApiFixtures
-     */
     protected OrdersRestApiFixtures $fixtures;
 
-    /**
-     * @param \PyzTest\Glue\Orders\OrdersApiTester $I
-     *
-     * @return void
-     */
     public function loadFixtures(OrdersApiTester $I): void
     {
         /** @var \PyzTest\Glue\Orders\RestApi\OrdersRestApiFixtures $fixtures */
@@ -46,10 +38,6 @@ class OrdersRestApiCest
 
     /**
      * @depends loadFixtures
-     *
-     * @param \PyzTest\Glue\Orders\OrdersApiTester $I
-     *
-     * @return void
      */
     public function requestGetEmptyListOfOrders(OrdersApiTester $I): void
     {
@@ -64,7 +52,7 @@ class OrdersRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->amSure('The returned resource contains empty collection')
             ->whenI()
@@ -77,11 +65,6 @@ class OrdersRestApiCest
             );
     }
 
-    /**
-     * @param \PyzTest\Glue\Orders\OrdersApiTester $I
-     *
-     * @return void
-     */
     public function requestGetListOfOrdersWithSingleOrder(OrdersApiTester $I): void
     {
         // Arrange
@@ -95,7 +78,7 @@ class OrdersRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->amSure('The returned resource has correct self-link')
             ->whenI()
@@ -116,11 +99,6 @@ class OrdersRestApiCest
             ->seeResponseDataContainsResourceCollectionOfTypeWithSizeOf('orders', 1);
     }
 
-    /**
-     * @param \PyzTest\Glue\Orders\OrdersApiTester $I
-     *
-     * @return void
-     */
     public function requestGetOrderDetails(OrdersApiTester $I): void
     {
         // Arrange
@@ -141,7 +119,7 @@ class OrdersRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->amSure('The returned resource is of correct type')
             ->whenI()
@@ -152,11 +130,6 @@ class OrdersRestApiCest
             ->seeSingleResourceIdEqualTo($orderReference);
     }
 
-    /**
-     * @param \PyzTest\Glue\Orders\OrdersApiTester $I
-     *
-     * @return void
-     */
     public function requestGetCustomerOrder(OrdersApiTester $I): void
     {
         // Arrange
@@ -178,14 +151,9 @@ class OrdersRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
-    /**
-     * @param \PyzTest\Glue\Orders\OrdersApiTester $I
-     *
-     * @return void
-     */
     public function requestGetCustomerOrderAuthorizationError(OrdersApiTester $I): void
     {
         // Arrange
@@ -206,14 +174,9 @@ class OrdersRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::FORBIDDEN);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
-    /**
-     * @param \PyzTest\Glue\Orders\OrdersApiTester $I
-     *
-     * @return void
-     */
     public function requestGetListOfOrderWithoutAuthorizationToken(OrdersApiTester $I): void
     {
         // Act
@@ -224,14 +187,9 @@ class OrdersRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::FORBIDDEN);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
-    /**
-     * @param \PyzTest\Glue\Orders\OrdersApiTester $I
-     *
-     * @return void
-     */
     public function requestGetOrderDetailsWithoutAuthorizationToken(OrdersApiTester $I): void
     {
         // Arrange
@@ -251,14 +209,9 @@ class OrdersRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::FORBIDDEN);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
-    /**
-     * @param \PyzTest\Glue\Orders\OrdersApiTester $I
-     *
-     * @return void
-     */
     public function requestGetOrderDetailsWithIncorrectOrderReference(OrdersApiTester $I): void
     {
         // Arrange
@@ -278,15 +231,9 @@ class OrdersRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
     }
 
-    /**
-     * @param \PyzTest\Glue\Orders\OrdersApiTester $I
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return void
-     */
     protected function authorizeCustomer(OrdersApiTester $I, CustomerTransfer $customerTransfer): void
     {
         $token = $I->haveAuthorizationToGlue($customerTransfer)->getAccessToken();

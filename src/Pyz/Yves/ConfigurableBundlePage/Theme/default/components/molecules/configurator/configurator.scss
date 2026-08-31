@@ -1,10 +1,37 @@
 @mixin configurable-bundle-page-configurator($name: '.configurator') {
     #{$name} {
-        padding: rem(16) 0 rem(176);
+        padding: var(--scale-24) 0 var(--scale-48);
 
         &__content {
-            padding-bottom: rem(30);
-            border: rem(1) solid $setting-color-gray-6;
+            display: block;
+        }
+
+        &__panel {
+            padding-top: var(--scale-24);
+        }
+
+        &__summary {
+            display: grid;
+            padding-top: var(--scale-24);
+            grid-template-columns: 1fr;
+            gap: var(--scale-24);
+
+            @include helper-breakpoint-media-min($lg) {
+                grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+                align-items: start;
+            }
+        }
+
+        &__summary-aside {
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-16);
+        }
+
+        &__summary-actions {
+            display: flex;
+            flex-direction: column;
+            gap: var(--scale-8);
         }
 
         @content;

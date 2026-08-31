@@ -66,4 +66,9 @@ class ContentNavigationWidgetConfig extends SprykerShopContentNavigationWidgetCo
 
         return $availableTemplates;
     }
+
+    public function isNavigationCacheEnabled(): bool
+    {
+        return true;
+    }
 }

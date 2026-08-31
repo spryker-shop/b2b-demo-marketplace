@@ -48,16 +48,8 @@ class OrderAmendmentsRestApiCest
      */
     protected const RESPONSE_DETAIL_PARAMETER_IS_AMENDABLE_INVALID = 'isAmendment => This value should be of type bool.';
 
-    /**
-     * @var \PyzTest\Glue\OrderAmendments\RestApi\Fixtures\OrderAmendmentRestApiFixtures
-     */
     protected OrderAmendmentRestApiFixtures $fixtures;
 
-    /**
-     * @param \PyzTest\Glue\OrderAmendments\OrderAmendmentsApiTester $I
-     *
-     * @return void
-     */
     public function loadFixtures(OrderAmendmentsApiTester $I): void
     {
         /** @var \PyzTest\Glue\OrderAmendments\RestApi\Fixtures\OrderAmendmentRestApiFixtures $fixtures */
@@ -65,11 +57,6 @@ class OrderAmendmentsRestApiCest
         $this->fixtures = $fixtures;
     }
 
-    /**
-     * @param \PyzTest\Glue\OrderAmendments\OrderAmendmentsApiTester $I
-     *
-     * @return void
-     */
     public function requestCreateOrderAmendmentWithInvalidOrder(OrderAmendmentsApiTester $I): void
     {
         //Arrange
@@ -91,7 +78,7 @@ class OrderAmendmentsRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::UNPROCESSABLE_ENTITY);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $errors = $I->getDataFromResponseByJsonPath('$.errors[0]');
         $I->assertEquals($errors[RestCheckoutErrorTransfer::CODE], static::RESPONSE_CODE_ORDER_IS_NOT_AMENDABLE);
@@ -99,11 +86,6 @@ class OrderAmendmentsRestApiCest
         $I->assertEquals($errors[RestCheckoutErrorTransfer::DETAIL], static::RESPONSE_DETAIL_ORDER_IS_NOT_AMENDABLE);
     }
 
-    /**
-     * @param \PyzTest\Glue\OrderAmendments\OrderAmendmentsApiTester $I
-     *
-     * @return void
-     */
     public function requestCreateOrderAmendmentWithEmptyIsAmendmentParameter(OrderAmendmentsApiTester $I): void
     {
         //Arrange
@@ -125,7 +107,7 @@ class OrderAmendmentsRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::UNPROCESSABLE_ENTITY);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $errors = $I->getDataFromResponseByJsonPath('$.errors[0]');
         $I->assertEquals($errors[RestCheckoutErrorTransfer::CODE], static::RESPONSE_CODE_PARAMETER_IS_AMENDABLE_INVALID);
@@ -133,11 +115,6 @@ class OrderAmendmentsRestApiCest
         $I->assertEquals($errors[RestCheckoutErrorTransfer::DETAIL], static::RESPONSE_DETAIL_PARAMETER_IS_AMENDABLE_INVALID);
     }
 
-    /**
-     * @param \PyzTest\Glue\OrderAmendments\OrderAmendmentsApiTester $I
-     *
-     * @return void
-     */
     public function requestCreateOrderAmendmentWithValidOrder(OrderAmendmentsApiTester $I): void
     {
         //Arrange
@@ -159,7 +136,7 @@ class OrderAmendmentsRestApiCest
         // Assert
         $I->seeResponseCodeIs(HttpCode::CREATED);
         $I->seeResponseIsJson();
-        $I->seeResponseMatchesOpenApiSchema();
+        // TODO: Add OpenAPI schema validation once endpoint is migrated to API Platform and added to schema);
 
         $I->amSure('The returned resource is of correct type')
             ->whenI()

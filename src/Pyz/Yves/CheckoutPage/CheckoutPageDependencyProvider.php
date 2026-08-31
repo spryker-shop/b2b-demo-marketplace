@@ -10,6 +10,7 @@ declare(strict_types = 1);
 namespace Pyz\Yves\CheckoutPage;
 
 use Generated\Shared\Transfer\PaymentTransfer;
+use Pyz\Yves\CustomerPage\Form\CheckoutAddressCollectionForm;
 use Spryker\Shared\DummyMarketplacePayment\DummyMarketplacePaymentConfig;
 use Spryker\Shared\Kernel\Container\GlobalContainer;
 use Spryker\Shared\Nopayment\NopaymentConfig;
@@ -22,10 +23,12 @@ use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginInterface;
+use SprykerEco\Shared\Stripe\StripeConfig as SharedStripeConfig;
+use SprykerEco\Yves\Stripe\Plugin\StepEngine\StripeStepHandlerPlugin;
+use SprykerEco\Yves\Stripe\Plugin\StepEngine\StripeSubFormPlugin;
 use SprykerShop\Yves\CheckoutPage\CheckoutPageDependencyProvider as SprykerShopCheckoutPageDependencyProvider;
 use SprykerShop\Yves\CheckoutPage\Plugin\StepEngine\PaymentForeignHandlerPlugin;
 use SprykerShop\Yves\CompanyPage\Plugin\CheckoutPage\CompanyUnitAddressExpanderPlugin;
-use SprykerShop\Yves\CustomerPage\Form\CheckoutAddressCollectionForm;
 use SprykerShop\Yves\CustomerPage\Form\CustomerCheckoutForm;
 use SprykerShop\Yves\CustomerPage\Form\GuestForm;
 use SprykerShop\Yves\CustomerPage\Form\LoginForm;
@@ -42,6 +45,8 @@ use SprykerShop\Yves\QuoteRequestAgentPage\Plugin\CheckoutPage\QuoteRequestAgent
 use SprykerShop\Yves\QuoteRequestPage\Plugin\CheckoutPage\QuoteRequestCheckoutWorkflowStepResolverStrategyPlugin;
 use SprykerShop\Yves\QuoteRequestPage\Plugin\CheckoutPage\QuoteWithCustomShipmentPriceCheckoutWorkflowStepResolverStrategyPlugin;
 use SprykerShop\Yves\SalesOrderThresholdWidget\Plugin\CheckoutPage\SalesOrderThresholdWidgetPlugin;
+use SprykerShop\Yves\ServicePointCartPage\Plugin\CartPage\ServicePointCheckoutAddressStepPostExecutePlugin;
+use SprykerShop\Yves\ShipmentTypeWidget\Plugin\CheckoutPage\ShipmentTypeCheckoutPageStepEnginePreRenderPlugin;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -54,11 +59,6 @@ class CheckoutPageDependencyProvider extends SprykerShopCheckoutPageDependencyPr
      */
     protected const SERVICE_FORM_FACTORY = 'form.factory';
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
@@ -68,11 +68,6 @@ class CheckoutPageDependencyProvider extends SprykerShopCheckoutPageDependencyPr
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function extendPaymentMethodHandler(Container $container): Container
     {
         $container->extend(static::PAYMENT_METHOD_HANDLER, function (StepHandlerPluginCollection $paymentMethodHandler) {
@@ -81,6 +76,7 @@ class CheckoutPageDependencyProvider extends SprykerShopCheckoutPageDependencyPr
                 new DummyMarketplacePaymentHandlerPlugin(),
                 DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE,
             );
+            $paymentMethodHandler->add(new StripeStepHandlerPlugin(), SharedStripeConfig::PAYMENT_METHOD_NAME);
             $paymentMethodHandler->add(new PaymentForeignHandlerPlugin(), PaymentTransfer::FOREIGN_PAYMENTS);
 
             return $paymentMethodHandler;
@@ -89,15 +85,11 @@ class CheckoutPageDependencyProvider extends SprykerShopCheckoutPageDependencyPr
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function extendSubFormPluginCollection(Container $container): Container
     {
         $container->extend(static::PAYMENT_SUB_FORMS, function (SubFormPluginCollection $paymentSubFormPluginCollection) {
             $paymentSubFormPluginCollection->add(new DummyMarketplacePaymentInvoiceSubFormPlugin());
+            $paymentSubFormPluginCollection->add(new StripeSubFormPlugin());
 
             return $paymentSubFormPluginCollection;
         });
@@ -129,12 +121,6 @@ class CheckoutPageDependencyProvider extends SprykerShopCheckoutPageDependencyPr
         ];
     }
 
-    /**
-     * @param string $subForm
-     * @param string $blockPrefix
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
     protected function getCustomerCheckoutForm(string $subForm, string $blockPrefix): FormInterface
     {
         return $this->getFormFactory()->createNamed(
@@ -145,9 +131,6 @@ class CheckoutPageDependencyProvider extends SprykerShopCheckoutPageDependencyPr
         );
     }
 
-    /**
-     * @return \Symfony\Component\Form\FormFactory
-     */
     protected function getFormFactory(): FormFactory
     {
         return (new GlobalContainer())->get(static::SERVICE_FORM_FACTORY);
@@ -204,17 +187,11 @@ class CheckoutPageDependencyProvider extends SprykerShopCheckoutPageDependencyPr
         ];
     }
 
-    /**
-     * @return \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface
-     */
     protected function getCheckoutAddressFormDataProviderPlugin(): StepEngineFormDataProviderInterface
     {
         return new CheckoutAddressFormDataProviderPlugin();
     }
 
-    /**
-     * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginInterface
-     */
     protected function getCustomerStepHandler(): StepHandlerPluginInterface
     {
         return new CustomerStepHandler();
@@ -240,6 +217,7 @@ class CheckoutPageDependencyProvider extends SprykerShopCheckoutPageDependencyPr
     {
         return [
             new MerchantShipmentCheckoutPageStepEnginePreRenderPlugin(),
+            new ShipmentTypeCheckoutPageStepEnginePreRenderPlugin(),
         ];
     }
 
@@ -250,6 +228,16 @@ class CheckoutPageDependencyProvider extends SprykerShopCheckoutPageDependencyPr
     {
         return [
             new PaymentForeignPaymentCollectionExtenderPlugin(),
+        ];
+    }
+
+    /**
+     * @return list<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStepPostExecutePluginInterface>
+     */
+    protected function getCheckoutAddressStepPostExecutePlugins(): array
+    {
+        return [
+            new ServicePointCheckoutAddressStepPostExecutePlugin(),
         ];
     }
 }

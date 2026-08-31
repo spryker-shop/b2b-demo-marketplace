@@ -55,7 +55,7 @@
         <div class="{{ config.name ~ "__container" }} col col--sm-12 col--md-6 col--lg-5">
             {% block banner %}
                 {% embed molecule('banner') with {
-                    modifiers: ['medium', 'spacing-bottom-reset'],
+                    modifiers: ['small', 'spacing-bottom-reset'],
                     data: {
                         imageUrl: data.images.0.externalUrlLarge | default,
                     },
