@@ -116,7 +116,7 @@ class CheckoutHelper extends Module
 
         $tester->click('[data-qa*="paymentForm_paymentSelection_1"] [data-qa="label"]');
         $tester->executeJS('document.querySelector(".js-payment-method-2-0").classList.remove("is-hidden")');
-        $tester->fillField('//*[@id="paymentForm_dummyPaymentInvoice_date_of_birth"]', '01.07.1985');
+        $tester->fillField('//*[@id="paymentForm_dummyMarketplacePaymentInvoice_dateOfBirth"]', '01.07.1985');
 
         return $this;
     }

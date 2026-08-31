@@ -100,12 +100,97 @@ The push to cypress `master-demo` targets a **protected shared branch and is a h
 
 Capture the new cypress `master-demo` tip, then re-pin the demo-shop:
 
+`composer update spryker/cypress-tests --lock` **fails** here — "You cannot simultaneously update only a selection of packages and regenerate the lock file metadata." Splice the new reference in directly instead (same technique as Step 5b), then refresh the metadata:
+
 ```bash
 # demo-shop repo root, upmerge feature branch:
-composer update spryker/cypress-tests --lock --no-install --ignore-platform-reqs
-python3 -c "import json; d=json.load(open('composer.lock')); p=[x for x in d['packages']+d['packages-dev'] if x['name']=='spryker/cypress-tests'][0]; print('now pins:', p['version'], p['source']['reference'])"
+NEW_TIP=$(git -C tests/cypress-tests rev-parse master-demo)
+NEW_TIME=$(git -C tests/cypress-tests show -s --format=%cI master-demo)
+
+python3 - "$NEW_TIP" "$NEW_TIME" <<'PYEOF'
+import json, sys
+new, ts = sys.argv[1], sys.argv[2]
+d = json.load(open('composer.lock'))
+for key in ('packages', 'packages-dev'):
+    for pkg in d.get(key, []):
+        if pkg['name'] == 'spryker/cypress-tests':
+            old = pkg['source']['reference']
+            pkg['source']['reference'] = new
+            if 'dist' in pkg:
+                if 'url' in pkg['dist']:
+                    pkg['dist']['url'] = pkg['dist']['url'].replace(old, new)
+                if 'reference' in pkg['dist']:
+                    pkg['dist']['reference'] = new
+            pkg['time'] = ts            # composer records the commit time too — update it or the lock looks stale
+            print(f"{old[:12]} -> {new[:12]}")
+with open('composer.lock', 'w', encoding='utf-8') as f:
+    json.dump(d, f, indent=4, ensure_ascii=False); f.write('\n')
+PYEOF
+
+composer update --lock --no-install --ignore-platform-reqs   # refresh content-hash only
 git add composer.lock
 git commit -m "chore(composer): re-pin spryker/cypress-tests to upmerged master-demo for <TICKET-or-date>"
 ```
 
+`composer install` will warn `The .git directory is missing from tests/cypress-tests` — expected when that path is your live working clone; the lock reference is still correct.
+
 Record in the PR body: the `TARGET_CYPRESS_HASH` merged, the new cypress `master-demo` tip pushed (or "push pending — user authorization required"), the re-pin, and confirmation no newer-than-target cypress-master commits leaked in.
+
+## 6f-6 — Keep the cypress CI quality gates green
+
+**Pushing cypress `master-demo` triggers its own `Check Code Quality` workflow** (`.github/workflows/code-quality.yml`), which runs three steps in order and stops at the first failure:
+
+1. `npm run prettier:check`
+2. `npm run typecheck`
+3. `npm run lint`  (ESLint)
+
+Because they short-circuit, fixing one step **reveals** the next — expect to iterate. Budget for this: a push is not "done" until all three are green. Check with:
+
+```bash
+gh run list --repo spryker/cypress-tests --branch master-demo --limit 3
+gh run view <run-id> --repo spryker/cypress-tests            # step-level ✓/✗
+gh api "repos/spryker/cypress-tests/actions/jobs/<job-id>/logs"   # full text; --log-failed often returns nothing here
+```
+
+### Reproducing ESLint locally — the trap
+
+`npm run lint` is `eslint . --ext .ts` against a legacy `.eslintrc`. From `tests/cypress-tests`, a bare `npx eslint` walks **up** the tree, finds the demo-shop's `eslint.config.mjs`, switches to flat-config mode and dies on `Invalid option '--ext'` — with a **zero exit code**, so it reads as a pass. Always force legacy mode:
+
+```bash
+cd tests/cypress-tests
+ESLINT_USE_FLAT_CONFIG=false ./node_modules/.bin/eslint . --ext .ts
+```
+
+This reproduces CI's error list exactly. Never conclude "lint is clean" from the unforced form.
+
+### Fixing the two Spryker convention rules
+
+Both live in `plugins/eslint-plugin-spryker-cypress/rules/` — **read the rule source before fixing**; each documents precisely what satisfies it.
+
+- **`no-assertions-in-page-objects`** — flags `.should()`/`expect()` in a `pages/` file whose enclosing method performs no Cypress *action*. The action must be a **literal** action call (`click`, `type`, `selectFile`, `visit`, …) syntactically inside that function; delegating to a helper (`this.save()`) does **not** count.
+  - *Assertion-only method* (`verifySaveSuccess`, `assertFirstCostAmount`) → the rule is right: convert to a getter returning the chainable and assert in the spec.
+  - *Genuine sync guard* whose action sits in a called helper → inline the action call, or keep the guard and add a justified disable.
+- **`no-cy-get-outside-repository`** — flags every `cy.get()`/`cy.contains()` outside `repositories/` and `support/`. It does **not** exempt alias reads: `cy.get('@someAlias.all')` retrieves a `cy.intercept()` alias, not a selector, so there is nothing to move into a repository. Same for generic XSS probes (`cy.get('script')`, `cy.get('[onerror]')`) scoped inside `.within()`.
+
+For anything that is a real convention violation, **fix it properly** — don't paper over it. For the false positives above, use the repo's established escape hatch, which already has ~10 precedents:
+
+```ts
+// eslint-disable-next-line spryker-cypress/no-cy-get-outside-repository -- Reads a cy.intercept() alias, not a DOM selector; there is no selector to move into a repository.
+cy.get('@generateRequest.all').should('have.length', 0);
+```
+
+Always include the `-- <reason>` justification. For a multi-line block use the `/* eslint-disable ... */` … `/* eslint-enable ... */` pair.
+
+**Do not "fix" this by editing the shared rule** unless the gap affects non-demo specs too (check with `grep -rn "cy\.get('@" cypress/e2e | grep -v /demo/`). A shared-rule change for a demo-only need is out of scope for an upmerge.
+
+### After any spec/page-object edit
+
+Lint-clean is not enough — you changed test code, so re-run both tiers before pushing:
+
+```bash
+npm run cy:demo && npm run cy:demo:full
+```
+
+Also confirm no dangling references to methods you renamed or removed (`grep -rn '<oldMethodName>' cypress --include='*.ts'`).
+
+Each fix round is a normal commit on cypress `master-demo`; re-run the gate and push with the wrapper as in 6f-5, then **re-pin the demo-shop again** — every new cypress tip needs a fresh re-pin commit, or the shop points at a stale ref.

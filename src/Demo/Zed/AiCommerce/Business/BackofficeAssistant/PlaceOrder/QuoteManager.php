@@ -258,8 +258,6 @@ class QuoteManager implements QuoteManagerInterface
     }
 
     /**
-     * @param mixed $address
-     *
      * @return array<string, mixed>|null
      */
     protected function formatAddress(mixed $address): ?array

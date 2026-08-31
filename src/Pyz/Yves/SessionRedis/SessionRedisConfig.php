@@ -19,8 +19,9 @@ class SessionRedisConfig extends SprykerSessionRedisConfig
     public function getSessionRedisLockingIncludedUrlPatterns(): array
     {
         return [
-            // Cart — the cart page itself and all sub-actions (sync + async); (\/|$) ensures /de/cart without trailing slash is also matched
-            '/^.*\/cart(\/|$)/',
+            // Cart — the cart page itself and all sub-actions (sync + async); the alternation ensures
+            // /de/cart without a trailing slash and /de/cart?page=2 are matched as well
+            '/^.*\/cart(\/|\?|$)/',
             // Voucher / promotion codes applied to the cart
             '/^.*\/cart-code\/code(|-async)\/(add|remove|clear)/',
             // Cart item and quote notes
@@ -35,8 +36,9 @@ class SessionRedisConfig extends SprykerSessionRedisConfig
             '/^.*\/shared-cart\/(share|dismiss)/',
             // Checkout — entire funnel is session-stateful (address, shipment, payment, place-order)
             '/^.*\/checkout/',
-            // Customer authentication — creates or destroys the session
-            '/^.*\/(login|logout|register)($|\/)/',
+            // Customer authentication — creates or destroys the session; the alternation also matches
+            // the /login?redirect=... form the storefront uses when bouncing off a protected page
+            '/^.*\/(login|logout|register)($|\/|\?)/',
             // Multi-factor authentication
             '/^.*\/multi-factor-auth\//',
             // Store switch — triggered via ?_store= query parameter on any URL
@@ -49,6 +51,9 @@ class SessionRedisConfig extends SprykerSessionRedisConfig
             '/^.*\/customer\//',
             // Company account — all routes under /company/
             '/^.*\/company\//',
+            // Catalog search — the fulltext page and its type-ahead suggestions hold the session open
+            // for the duration of the search query, so a concurrent cart or login write is lost
+            '/^.*\/search(\/|\?|$)/',
         ];
     }
 }

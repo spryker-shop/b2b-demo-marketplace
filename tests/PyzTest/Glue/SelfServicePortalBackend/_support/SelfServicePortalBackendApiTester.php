@@ -57,13 +57,6 @@ class SelfServicePortalBackendApiTester extends BackendApiEndToEndTester
     }
 
     /**
-     * @param string $name
-     * @param string $serialNumber
-     * @param string $status
-     * @param string $note
-     * @param string $externalImageUrl
-     * @param string $companyBusinessUnitOwnerUuid
-     *
      * @return array<string, mixed>
      */
     public function buildAssetCreateRequestData(
@@ -90,11 +83,6 @@ class SelfServicePortalBackendApiTester extends BackendApiEndToEndTester
     }
 
     /**
-     * @param string $serialNumber
-     * @param string $note
-     * @param string $externalImageUrl
-     * @param string $name
-     *
      * @return array<string, mixed>
      */
     public function buildAssetUpdateRequestData(

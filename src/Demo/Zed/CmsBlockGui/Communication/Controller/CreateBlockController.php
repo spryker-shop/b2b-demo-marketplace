@@ -24,8 +24,6 @@ use Symfony\Component\HttpFoundation\Request;
 class CreateBlockController extends SprykerCreateBlockController
 {
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>
      */
     public function indexAction(Request $request): RedirectResponse|array

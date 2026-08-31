@@ -19,17 +19,11 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
  */
 class PriceProductOfferDataImportBusinessFactory extends PyzPriceProductOfferDataImportBusinessFactory
 {
-    /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
-     */
     public function createPriceProductStoreWriterStep(): DataImportStepInterface
     {
         return new PriceProductStoreWriterStep();
     }
 
-    /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
-     */
     public function createCombinedPriceProductStoreWriterStep(): DataImportStepInterface
     {
         return new CombinedPriceProductStoreWriterStep();

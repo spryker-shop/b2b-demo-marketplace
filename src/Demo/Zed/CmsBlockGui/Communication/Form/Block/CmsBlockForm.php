@@ -42,10 +42,7 @@ class CmsBlockForm extends SprykerCmsBlockForm
     protected const string CSS_CLASS_RADIO_ROW = 'radio_row';
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array<string, mixed> $options
-     *
-     * @return void
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -57,11 +54,6 @@ class CmsBlockForm extends SprykerCmsBlockForm
         $builder->addEventListener(FormEvents::PRE_SUBMIT, $this->clearCustomerGroupsWhenNotRestrictedCallback());
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
@@ -69,10 +61,7 @@ class CmsBlockForm extends SprykerCmsBlockForm
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array<int, string> $choices
-     *
-     * @return void
      */
     protected function addCustomerGroups(FormBuilderInterface $builder, array $choices): void
     {
@@ -86,11 +75,6 @@ class CmsBlockForm extends SprykerCmsBlockForm
         $this->addCustomerGroupTransformer($builder);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return void
-     */
     protected function addContentVisibility(FormBuilderInterface $builder): void
     {
         $defaultValue = $this->resolveIsRestrictedDefault($builder->getData());
@@ -119,11 +103,6 @@ class CmsBlockForm extends SprykerCmsBlockForm
         return false;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return void
-     */
     protected function addCustomerGroupTransformer(FormBuilderInterface $builder): void
     {
         $builder->get(static::OPTION_CUSTOMER_GROUP)

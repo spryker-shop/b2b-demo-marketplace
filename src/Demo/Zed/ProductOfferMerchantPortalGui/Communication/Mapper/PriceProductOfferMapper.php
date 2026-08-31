@@ -27,8 +27,6 @@ class PriceProductOfferMapper extends SprykerPriceProductOfferMapper
     protected const PROPERTY_PATH_VALUES_INDEX_PRICE_PRODUCT_INDEX = 4;
 
     /**
-     * @param \Generated\Shared\Transfer\ValidationErrorTransfer $validationErrorTransfer
-     * @param \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfer
      * @param array<mixed> $initialData
      *
      * @return array<mixed>
@@ -57,7 +55,6 @@ class PriceProductOfferMapper extends SprykerPriceProductOfferMapper
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ValidationErrorTransfer $validationErrorTransfer
      * @param array<mixed> $initialData
      *
      * @return array<mixed>
@@ -75,13 +72,6 @@ class PriceProductOfferMapper extends SprykerPriceProductOfferMapper
         return $initialData;
     }
 
-    /**
-     * @param string $requestDataKey
-     * @param string $requestDataValue
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
-     */
     public function mapMoneyValuesToPriceProductTransfer(
         string $requestDataKey,
         string $requestDataValue,

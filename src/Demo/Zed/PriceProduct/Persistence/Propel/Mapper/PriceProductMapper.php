@@ -16,10 +16,7 @@ use Spryker\Zed\PriceProduct\Persistence\Propel\Mapper\PriceProductMapper as Spr
 class PriceProductMapper extends SprykerPriceProductMapper
 {
     /**
-     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore $priceProductStoreEntity
      * @param array<string, mixed> $priceProductStoreEntityData
-     *
-     * @return \Generated\Shared\Transfer\MoneyValueTransfer
      */
     protected function createMoneyValueTransfer(
         SpyPriceProductStore $priceProductStoreEntity,

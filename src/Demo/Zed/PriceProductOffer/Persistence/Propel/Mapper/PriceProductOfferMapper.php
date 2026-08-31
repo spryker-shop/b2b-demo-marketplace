@@ -28,9 +28,6 @@ class PriceProductOfferMapper extends SprykerPriceProductOfferMapper
 
     /**
      * @param array<string, mixed> $priceProductStoreData
-     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
-     *
-     * @return \Generated\Shared\Transfer\MoneyValueTransfer
      */
     protected function mapPriceProductStoreDataToMoneyValueTransfer(
         array $priceProductStoreData,

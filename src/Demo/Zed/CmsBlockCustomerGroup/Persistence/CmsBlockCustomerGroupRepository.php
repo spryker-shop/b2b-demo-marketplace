@@ -19,8 +19,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class CmsBlockCustomerGroupRepository extends AbstractRepository implements CmsBlockCustomerGroupRepositoryInterface
 {
     /**
-     * @param int $idCmsBlock
-     *
      * @return array<int>
      */
     public function getCmsBlockCustomerGroupIds(int $idCmsBlock): array

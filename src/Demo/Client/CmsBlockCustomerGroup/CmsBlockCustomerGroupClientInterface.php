@@ -19,10 +19,6 @@ interface CmsBlockCustomerGroupClientInterface
      * - Calls Zed gateway to check if the CMS block is visible for the given customer.
      *
      * @api
-     *
-     * @param \Generated\Shared\Transfer\CmsBlockValidationRequestTransfer $cmsBlockValidationRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\CmsBlockValidationResponseTransfer
      */
     public function checkCmsBlockValidity(
         CmsBlockValidationRequestTransfer $cmsBlockValidationRequestTransfer,

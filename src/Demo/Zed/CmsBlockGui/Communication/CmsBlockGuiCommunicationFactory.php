@@ -40,10 +40,7 @@ class CmsBlockGuiCommunicationFactory extends SprykerCmsBlockGuiCommunicationFac
     /**
      * @phpcsSuppress SprykerStrict.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      *
-     * @param \Spryker\Zed\CmsBlockGui\Communication\Form\DataProvider\CmsBlockFormDataProvider $cmsBlockFormDataProvider
      * @param mixed $idCmsBlock
-     *
-     * @return \Symfony\Component\Form\FormInterface
      */
     public function createCmsBlockForm(SprykerCmsBlockFormDataProvider $cmsBlockFormDataProvider, $idCmsBlock = null): FormInterface
     {

@@ -1,7 +1,12 @@
 {% extends molecule('review-quantity-control', '@SprykerFeature:OrderExperienceManagement') %}
 
+{% define attributes = {
+    'quantity-counter-class-name': 'quantity-counter',
+} %}
+
 {% block quantity %}
     {% include molecule('quantity-counter') with {
+        class: config.jsName ~ '__quantity-counter',
         modifiers: ['sm'],
         data: {
             inputExtraClasses: config.name ~ '__input ' ~ config.jsName ~ '__input js-review-total-recalculator__line-quantity',

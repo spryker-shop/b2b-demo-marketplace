@@ -16,6 +16,10 @@
             }
         }
 
+        &__form {
+            display: contents;
+        }
+
         &__trigger {
             @include helper-effect-transition(color border-color);
             @include typography(label-md);
@@ -30,13 +34,16 @@
             background: transparent;
             border: none;
             border-bottom: var(--stroke-md) solid transparent;
+            border-radius: 0;
             cursor: pointer;
             margin-bottom: calc(var(--stroke-sm) * -1);
             overflow: hidden;
+            text-transform: none;
 
             &:hover,
             &:focus {
                 color: var(--text-primary);
+                background: transparent;
                 outline: none;
             }
 
@@ -57,6 +64,10 @@
                 color: var(--text-disabled);
                 cursor: not-allowed;
                 pointer-events: none;
+            }
+
+            &--complete #{$name}__icon {
+                color: var(--icon-state-success);
             }
 
             &--sm {

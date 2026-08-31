@@ -44,9 +44,6 @@ class CustomerGroupFacadeTest extends Unit
 
     /**
      * @param array<\Generated\Shared\Transfer\CustomerGroupTransfer> $customerGroupTransfers
-     * @param int $idCustomerGroup
-     *
-     * @return \Generated\Shared\Transfer\CustomerGroupTransfer|null
      */
     protected function findGroupById(array $customerGroupTransfers, int $idCustomerGroup): ?CustomerGroupTransfer
     {

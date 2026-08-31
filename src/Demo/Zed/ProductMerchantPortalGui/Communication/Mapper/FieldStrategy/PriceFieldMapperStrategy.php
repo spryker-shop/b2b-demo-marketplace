@@ -30,9 +30,6 @@ class PriceFieldMapperStrategy extends SprykerPriceFieldMapperStrategy
 
     /**
      * @param array<string, mixed> $data
-     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
-     *
-     * @return \Generated\Shared\Transfer\MoneyValueTransfer
      */
     protected function mapDataToMoneyValueTransfer(
         array $data,

@@ -23,8 +23,6 @@ class PriceProductsVolumeDataExpander extends SprykerPriceProductsVolumeDataExpa
      *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param array<mixed> $requestData
-     * @param int $volumeQuantity
-     * @param int $idProductOffer
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */

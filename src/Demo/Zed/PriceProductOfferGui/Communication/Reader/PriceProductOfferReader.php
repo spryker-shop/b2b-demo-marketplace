@@ -31,7 +31,6 @@ class PriceProductOfferReader extends SprykerPriceProductOfferReader
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      * @param array<string, array<string, array<string, array<string, \Generated\Shared\Transfer\PriceProductTransfer>>>> $priceTable
      *
      * @return array<string, array<string, array<string, array<string, \Generated\Shared\Transfer\PriceProductTransfer>>>>

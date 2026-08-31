@@ -16,10 +16,7 @@ use Spryker\Zed\ProductMerchantPortalGui\Communication\Creator\PriceProductTable
 class PriceProductTableColumnCreator extends SprykerPriceProductTableColumnCreator
 {
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      * @param array<string> $propertyPathValues
-     *
-     * @return string
      */
     public function createColumnIdFromPropertyPath(
         PriceProductTransfer $priceProductTransfer,

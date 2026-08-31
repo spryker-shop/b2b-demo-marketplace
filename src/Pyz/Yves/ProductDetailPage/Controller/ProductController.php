@@ -30,7 +30,6 @@ class ProductController extends SprykerShopProductController
 
     /**
      * @param array<string, mixed> $productData
-     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *

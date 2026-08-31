@@ -20,11 +20,6 @@ class PriceProductOfferTransformer extends SprykerPriceProductOfferTransformer
 {
     /**
      * @param array<mixed> $newPriceProductOfferData
-     * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceProductDimensionTransfer
-     * @param \Generated\Shared\Transfer\CurrencyTransfer|null $currencyTransfer
-     * @param \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
     protected function createPriceProductTransfer(
         array $newPriceProductOfferData,
@@ -53,7 +48,6 @@ class PriceProductOfferTransformer extends SprykerPriceProductOfferTransformer
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      * @param array<mixed> $prices
      * @param array<\Generated\Shared\Transfer\PriceTypeTransfer> $priceTypes
      *
@@ -85,9 +79,6 @@ class PriceProductOfferTransformer extends SprykerPriceProductOfferTransformer
 
     /**
      * @param array<mixed> $newPriceProductOfferData
-     * @param string $costAmountKey
-     *
-     * @return int|null
      */
     protected function extractCostAmount(array $newPriceProductOfferData, string $costAmountKey): ?int
     {

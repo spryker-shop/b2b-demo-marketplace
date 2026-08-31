@@ -55,9 +55,6 @@ class CostPriceProductMapper
 
     /**
      * @param array<string, mixed> $data
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
     public function mapTableDataToPriceProductTransfer(
         array $data,
