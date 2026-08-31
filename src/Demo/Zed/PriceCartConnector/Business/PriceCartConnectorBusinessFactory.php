@@ -27,6 +27,7 @@ class PriceCartConnectorBusinessFactory extends SprykerPriceCartConnectorBusines
             $this->getPriceProductService(),
             $this->getPriceProductExpanderPlugins(),
             $this->createItemIdentifierBuilder(),
+            $this->createItemComparator(),
         );
     }
 }
