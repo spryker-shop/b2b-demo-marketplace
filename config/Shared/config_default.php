@@ -1193,6 +1193,4 @@ $config[PunchoutGatewayConstants::ENABLE_LOGGING] = getenv('PUNCHOUT_GATEWAY_ENA
 
 $config[ProductPageSearchConstants::PRODUCT_CONCRETE_SEARCH_IN_STORAGE_ENABLED] = true;
 
-$config[DataImportConstants::OTHER_SOURCE_ENABLED] = true;
-
 require 'config_ai.php';
