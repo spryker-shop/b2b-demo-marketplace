@@ -49,9 +49,6 @@ class ProductOfferStorageDependencyProvider extends SprykerProductOfferStorageDe
         ];
     }
 
-    /**
-     * @return \Spryker\Client\ProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageCollectionSorterPluginInterface
-     */
     protected function createProductOfferStorageCollectionSorterPlugin(): ProductOfferStorageCollectionSorterPluginInterface
     {
         return new LowestPriceProductOfferStorageCollectionSorterPlugin();

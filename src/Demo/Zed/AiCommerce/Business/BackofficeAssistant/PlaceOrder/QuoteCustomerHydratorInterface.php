@@ -18,18 +18,12 @@ interface QuoteCustomerHydratorInterface
      * The quote_data JSON blob does not contain the customer transfer — only the
      * customer_reference column is persisted. Any operation that needs the full
      * CustomerTransfer will fail without this hydration.
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function hydrateQuoteCustomer(QuoteTransfer $quoteTransfer): QuoteTransfer;
 
     /**
      * Drains all flash messages added by cart/checkout plugins to prevent
      * them from leaking into the next Backoffice page render.
-     *
-     * @return void
      */
     public function drainFlashMessages(): void;
 }

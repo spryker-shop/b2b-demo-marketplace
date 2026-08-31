@@ -10,10 +10,8 @@ declare(strict_types = 1);
 namespace Demo\Zed\PriceCartConnector\Business\Manager;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\PriceCartConnector\Business\Manager\PriceManager as SprykerPriceManager;
 
 class PriceManager extends SprykerPriceManager
@@ -62,6 +60,12 @@ class PriceManager extends SprykerPriceManager
                 $priceMode,
             );
 
+            $moneyValueTransfer = $indexedPriceProductTransfer->getMoneyValueOrFail();
+            $costAmount = $this->resolveCostAmount($moneyValueTransfer, $priceProductFilterTransfers[$itemIdentifier] ?? null);
+            $itemTransfer->setOriginUnitCostPrice($costAmount)
+                ->setUnitCostPrice($costAmount)
+                ->setGrossMargin($this->getGrossMargin($moneyValueTransfer, $costAmount));
+
             if ($this->hasForcedUnitGrossPrice($itemTransfer)) {
                 continue;
             }
@@ -73,11 +77,6 @@ class PriceManager extends SprykerPriceManager
             }
 
             $itemTransfer = $this->applyOriginUnitPrices($itemTransfer);
-            $moneyValueTransfer = $indexedPriceProductTransfer->getMoneyValueOrFail();
-            $costAmount = $this->resolveCostAmount($moneyValueTransfer, $priceProductFilterTransfers[$itemIdentifier] ?? null);
-            $itemTransfer->setGrossMargin(
-                $this->getGrossMargin($moneyValueTransfer, $costAmount),
-            );
         }
 
         return $cartChangeTransfer;
@@ -106,44 +105,6 @@ class PriceManager extends SprykerPriceManager
         }
 
         return $this->concreteCostAmountByProductOfferReference[$productOfferReference];
-    }
-
-    protected function setOriginUnitPrices(
-        ItemTransfer $itemTransfer,
-        PriceProductTransfer $priceProductTransfer,
-        string $priceMode,
-    ): ItemTransfer {
-        $itemTransfer = parent::setOriginUnitPrices(
-            $itemTransfer,
-            $priceProductTransfer,
-            $priceMode,
-        );
-
-        return $this->setOriginUnitCostPrice(
-            $itemTransfer,
-            $priceProductTransfer,
-        );
-    }
-
-    private function setOriginUnitCostPrice(
-        ItemTransfer $itemTransfer,
-        PriceProductTransfer $priceProductTransfer,
-    ): ItemTransfer {
-        $itemTransfer->setOriginUnitCostPrice(
-            $priceProductTransfer->getMoneyValueOrFail()
-                ->getCostAmount(),
-        );
-
-        return $itemTransfer;
-    }
-
-    protected function applyOriginUnitPrices(ItemTransfer $itemTransfer): ItemTransfer
-    {
-        $itemTransfer = parent::applyOriginUnitPrices($itemTransfer);
-
-        $itemTransfer->setUnitCostPrice($itemTransfer->getOriginUnitCostPrice());
-
-        return $itemTransfer;
     }
 
     protected function getGrossMargin(MoneyValueTransfer $moneyValueTransfer, ?int $costPrice = null): int

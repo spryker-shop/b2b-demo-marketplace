@@ -31,9 +31,6 @@ class ExampleWaterTreatmentProductConfiguratorRequestExpanderPlugin extends Abst
         return $productConfiguratorRequestTransfer->setAccessTokenRequestUrl($this->createConfiguratorUrl());
     }
 
-    /**
-     * @return string
-     */
     protected function createConfiguratorUrl(): string
     {
         return sprintf(

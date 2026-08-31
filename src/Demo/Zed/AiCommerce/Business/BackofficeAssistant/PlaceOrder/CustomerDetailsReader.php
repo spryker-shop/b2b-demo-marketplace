@@ -64,8 +64,6 @@ class CustomerDetailsReader implements CustomerDetailsReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
      * @return array<string, mixed>
      */
     protected function mapAddressToArray(AddressTransfer $addressTransfer): array
@@ -89,8 +87,6 @@ class CustomerDetailsReader implements CustomerDetailsReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
      * @return array<string, mixed>
      */
     protected function mapCustomerToArray(CustomerTransfer $customerTransfer): array

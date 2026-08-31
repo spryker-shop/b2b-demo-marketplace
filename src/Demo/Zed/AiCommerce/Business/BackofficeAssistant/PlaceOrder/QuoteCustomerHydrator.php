@@ -21,11 +21,6 @@ class QuoteCustomerHydrator implements QuoteCustomerHydratorInterface
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     public function hydrateQuoteCustomer(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         if ($quoteTransfer->getCustomer()) {
@@ -45,9 +40,6 @@ class QuoteCustomerHydrator implements QuoteCustomerHydratorInterface
         return $quoteTransfer;
     }
 
-    /**
-     * @return void
-     */
     public function drainFlashMessages(): void
     {
         $this->messengerFacade->getStoredMessages();

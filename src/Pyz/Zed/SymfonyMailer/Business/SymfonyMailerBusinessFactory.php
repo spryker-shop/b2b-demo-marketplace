@@ -18,9 +18,6 @@ use Spryker\Zed\SymfonyMailer\Dependency\External\SymfonyMailerToMailerInterface
  */
 class SymfonyMailerBusinessFactory extends SprykerSymfonyMailerBusinessFactory
 {
-    /**
-     * @return \Spryker\Zed\SymfonyMailer\Dependency\External\SymfonyMailerToMailerInterface
-     */
     public function createSymfonyMailerAdapter(): SymfonyMailerToMailerInterface
     {
         return new SymfonyMailerToSymfonyMailerAdapter(

@@ -59,15 +59,6 @@
                     },
                 } only %}
                     {% block contentItem %}
-                        {% if embed.form.paymentSelection[key].vars.value == 'dummyPaymentInvoice' %}
-                            {% include atom('icon') with {
-                                modifiers: ['invoice-logo', 'payment-logo'],
-                                data: {
-                                    name: 'dummyPaymentInvoice.icon' | trans,
-                                },
-                            } only %}
-                        {% endif %}
-
                         {% embed molecule('form') with {
                             class: 'spacing-x spacing-x--inner spacing-x--reset',
                             modifiers: ['checkout-form', 'hidden-actions'],

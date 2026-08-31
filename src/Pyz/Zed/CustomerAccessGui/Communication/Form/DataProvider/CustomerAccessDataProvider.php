@@ -21,9 +21,6 @@ use Spryker\Zed\CustomerAccessGui\Communication\Form\DataProvider\CustomerAccess
  */
 class CustomerAccessDataProvider extends SprykerCustomerAccessDataProvider
 {
-    /**
-     * @param \Pyz\Zed\CustomerAccess\Business\CustomerAccessFacadeInterface $customerAccessFacade
-     */
     public function __construct(
         CustomerAccessFacadeInterface $customerAccessFacade,
     ) {
@@ -39,13 +36,13 @@ class CustomerAccessDataProvider extends SprykerCustomerAccessDataProvider
         $nonManageableContentTypes = $this->customerAccessFacade->filterNonManageableContentTypes($allContentTypes)->getContentTypeAccess();
 
         return [
-            'data_class' => CustomerAccessTransfer::class,
-            CustomerAccessForm::OPTION_CONTENT_TYPE_ACCESS_MANAGEABLE
-                => $this->customerAccessFacade->filterManageableContentTypes($allContentTypes)->getContentTypeAccess(),
-            CustomerAccessForm::OPTION_CONTENT_TYPE_ACCESS_NON_MANAGEABLE
-                => $nonManageableContentTypes,
-            CustomerAccessForm::OPTION_CONTENT_TYPE_ACCESS_NON_MANAGEABLE_DATA
-                => $this->filterContentTypesData($nonManageableContentTypes),
+        'data_class' => CustomerAccessTransfer::class,
+        CustomerAccessForm::OPTION_CONTENT_TYPE_ACCESS_MANAGEABLE
+            => $this->customerAccessFacade->filterManageableContentTypes($allContentTypes)->getContentTypeAccess(),
+        CustomerAccessForm::OPTION_CONTENT_TYPE_ACCESS_NON_MANAGEABLE
+            => $nonManageableContentTypes,
+        CustomerAccessForm::OPTION_CONTENT_TYPE_ACCESS_NON_MANAGEABLE_DATA
+            => $this->filterContentTypesData($nonManageableContentTypes),
         ];
     }
 

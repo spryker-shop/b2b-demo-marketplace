@@ -67,10 +67,6 @@ class PriceProductBusinessTester extends Actor
     }
 
     /**
-     * @param int $grossAmount
-     * @param int $netAmount
-     * @param int|null $costAmount
-     *
      * @return array<string, int|null>
      */
     private function buildMoneyValueSeed(int $grossAmount, int $netAmount, ?int $costAmount): array

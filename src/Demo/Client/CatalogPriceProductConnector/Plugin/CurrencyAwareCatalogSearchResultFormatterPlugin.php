@@ -15,7 +15,6 @@ use Spryker\Client\CatalogPriceProductConnector\Plugin\CurrencyAwareCatalogSearc
 class CurrencyAwareCatalogSearchResultFormatterPlugin extends SprykerCurrencyAwareCatalogSearchResultFormatterPlugin
 {
     /**
-     * @param \Elastica\ResultSet $searchResult
      * @param array<string, mixed> $requestParameters
      *
      * @return array<string, mixed>

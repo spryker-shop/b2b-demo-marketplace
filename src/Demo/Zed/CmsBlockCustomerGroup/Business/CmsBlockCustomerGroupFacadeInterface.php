@@ -21,10 +21,6 @@ interface CmsBlockCustomerGroupFacadeInterface
      * - Persists customer group assignments for a CMS block by diffing requested vs current rows.
      *
      * @api
-     *
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
-     *
-     * @return void
      */
     public function saveCmsBlockCustomerGroups(CmsBlockTransfer $cmsBlockTransfer): void;
 
@@ -33,10 +29,6 @@ interface CmsBlockCustomerGroupFacadeInterface
      * - Returns the customer group collection assigned to the given CMS block.
      *
      * @api
-     *
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerGroupCollectionTransfer
      */
     public function getCmsBlockCustomerGroups(CmsBlockTransfer $cmsBlockTransfer): CustomerGroupCollectionTransfer;
 
@@ -45,10 +37,6 @@ interface CmsBlockCustomerGroupFacadeInterface
      * - Checks if the CMS block is visible to the customer based on the configured personalization rules.
      *
      * @api
-     *
-     * @param \Generated\Shared\Transfer\CmsBlockValidationRequestTransfer $cmsBlockValidationRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\CmsBlockValidationResponseTransfer
      */
     public function validateAccessToCmsBlock(
         CmsBlockValidationRequestTransfer $cmsBlockValidationRequestTransfer,

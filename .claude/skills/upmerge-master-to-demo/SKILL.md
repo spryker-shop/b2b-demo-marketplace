@@ -12,7 +12,7 @@ Bring `master` into `master-demo` through a feature branch, open a PR, and sheph
 Detail lives in reference files, loaded when you reach each phase:
 - `@.claude/skills/upmerge-master-to-demo/references/merge-and-composer.md` — sync, branch, merge conflicts, composer.lock (Steps 2–5)
 - `@.claude/skills/upmerge-master-to-demo/references/demo-reconciliation.md` — Pyz/Demo overrides, deploy, config↔wiring audits (Step 6a–6e, 6g)
-- `@.claude/skills/upmerge-master-to-demo/references/cypress-tests.md` — external cypress-tests repo upmerge (Step 6f)
+- `@.claude/skills/upmerge-master-to-demo/references/cypress-tests.md` — external cypress-tests repo upmerge, incl. keeping its own CI quality gates green (Step 6f, 6f-6)
 - `@.claude/skills/upmerge-master-to-demo/references/smoke.md` — runtime feature smoke (delegated to `Skill(demo-runtime-smoke)`), changed-file FE-anomaly scan, `cy:demo` + `cy:demo:full` (Steps 7, 7a, 7b)
 - `@.claude/skills/upmerge-master-to-demo/references/ci.md` — CI poll, auto-fix, final report (Steps 10–12)
 
@@ -21,7 +21,7 @@ Detail lives in reference files, loaded when you reach each phase:
 Run unattended. Decide and proceed using these defaults:
 - **Merge conflicts** → resolve by the per-type rules in `@.claude/skills/upmerge-master-to-demo/references/merge-and-composer.md` (demo-owned files keep the master-demo side; core-tracking files keep the master side; additive lists keep both).
 - **Silent divergences** (Step 6 audits, the `demo-runtime-smoke` runtime check, and the Step 7a visual FE scan) → default to **restoring** the demo-only block/wiring/override to its working master-demo version; the runtime smoke, the FE scan, and `cy:demo`/`cy:demo:full` are the safety net. A visibly-broken redesigned page whose fix is confined to restoring a demo-owned Yves Twig/SCSS override to its master-demo pair is a simple auto-fix (Step 7/7a); anything needing real template/logic changes escalates.
-- **CI failures** → auto-fix the deterministic classes (phpcs, transfer:generate, propel:install, lock sync); push and re-poll.
+- **CI failures** → auto-fix the deterministic classes (phpcs, prettier, transfer:generate, propel:install, lock sync); push and re-poll. A **code-sniffer version bump** in the merge can mass-fail `code:sniff:style` on files the merge never touched — that is still deterministic: run `vendor/bin/console code:sniff:style -f`, then verify the diff touched only comments. Cypress ESLint convention errors (`spryker-cypress/*`) need judgement, not a fixer — see Step 6f-6.
 - Record every non-obvious decision in the PR body so the reviewer can check it.
 
 **Hard stops** — the only situations where you pause for the user:
@@ -74,7 +74,7 @@ Rules:
 5. Refresh `composer.lock`, `composer install` → same reference
 6. Reconcile with the incoming changes — all of the following, even on a clean merge:
    - Pyz/Demo overrides incl. Twig shadowing changed core; `deploy.spryker-icpplus.yml` sibling audit — entry-points/env-keys **and** a value-level `image.php.ini` diff vs `icp`/`scos`/`sns` (6d); `config_default.php` demo-only block audit (6e); Dependency Provider wiring audit (6g) → `@.claude/skills/upmerge-master-to-demo/references/demo-reconciliation.md`
-   - External `spryker/cypress-tests` `master-demo` upmerge to the demo-shop's pinned cypress hash (6f) → `@.claude/skills/upmerge-master-to-demo/references/cypress-tests.md`
+   - External `spryker/cypress-tests` `master-demo` upmerge to the demo-shop's pinned cypress hash (6f), then drive that repo's own `Check Code Quality` workflow (prettier → typecheck → eslint) to green (6f-6) → `@.claude/skills/upmerge-master-to-demo/references/cypress-tests.md`
 7. Runtime feature smoke via `Skill(demo-runtime-smoke)` (all 10 AI Commerce features incl. the analytics-gui/QuickSight canary); then run the fast FE-anomaly scan over the pages the merge's Twig/SCSS touched and auto-fix the simple ones (Step 7a); then run both demo Cypress tiers, `cy:demo` and `cy:demo:full` (Step 7b) → `@.claude/skills/upmerge-master-to-demo/references/smoke.md`
 8. Push and open the PR targeting `master-demo` (Step 8 below)
 9. JIRA — optional PR-link comment only, and only if a ticket was provided; **never** move the status (Step 9 below)
@@ -108,6 +108,7 @@ Routine upmerge bringing the latest `master` changes into `master-demo`.
 - [x] config_default.php audited for dropped demo-only config blocks (Step 6e)
 - [x] Dependency Providers audited for dropped demo-only plugin/console registrations (Step 6g)
 - [x] spryker/cypress-tests master-demo upmerged to the demo-shop's pinned cypress hash; demo-shop re-pinned (Step 6f)
+- [x] cypress-tests `Check Code Quality` green — prettier, typecheck and eslint all pass on the new master-demo tip (Step 6f-6)
 - [x] Runtime feature smoke via Skill(demo-runtime-smoke): all 10 AI Commerce features, incl. Backoffice dashboard + analytics-gui (QuickSight canary)
 - [x] Demo Cypress smoke tier green locally (npm run cy:demo)
 - [x] Demo Cypress full tier (npm run cy:demo:full) — green, or @demo-full self-skipped (no provider token configured)
@@ -140,6 +141,8 @@ For a ticketed PR, insert the `JIRA: <TICKET-URL>` line under `## Summary`. Capt
 - **Demo-only wiring belongs in `src/Demo`, not `src/Pyz`.** `Demo` shadows `Pyz` and `Pyz` is on master's edit surface, so a demo entry in a `Pyz` provider is one master-side edit from silent deletion. When restoring one, relocate it to a `src/Demo` provider extending the `Pyz` one.
 - **Cypress: merge the pinned HASH, never cypress master's tip** (Step 6f). Cypress master runs ahead of the shop's pin; merging its tip makes the demo cypress branch assert behavior the shop lacks → false failures.
 - **The cypress target hash comes from `merge-base(master, HEAD)`, NOT from `HEAD`'s cypress lock entry** (Step 6f-1). `HEAD`'s lock pins the demo's own `dev-master-demo` cypress branch; the CI gate targets the `dev-master` pin the merged *master* requires, read at the merge-base. Reading `HEAD`'s entry makes 6f wrongly skip the upmerge ("already at pin") while CI fails the `cypress-version-gate` **BEHIND** — a red check on an otherwise-green upmerge. If your computed target equals the current cypress `master-demo` tip, you read the wrong ref. Always confirm 6f-2 by reproducing CI's gate locally (`DEMOSHOP_DEMO=HEAD` + a fresh cypress clone — see `references/cypress-tests.md` 6f-2) before concluding no cypress merge is needed.
+- **Pushing cypress `master-demo` starts a second, independent CI pipeline** (Step 6f-6) — the cypress repo's own `Check Code Quality`. Its three steps short-circuit (prettier → typecheck → eslint), so fixing one **reveals** the next; a single green step is not done. Its ESLint failures are often *pre-existing* debt that your push merely surfaced (the rules were tightened earlier but nothing had run CI on that branch since) — prove it with `git diff --name-only <merge>^1 <merge>` over the flagged paths before assuming you caused it, and say so in the PR either way.
+- **A bare `npx eslint` in `tests/cypress-tests` silently no-ops** — it finds the demo-shop's `eslint.config.mjs` up the tree, rejects `--ext`, and exits **0**. Use `ESLINT_USE_FLAT_CONFIG=false ./node_modules/.bin/eslint . --ext .ts`. Never report lint clean from the unforced form.
 - **The cypress quality gate false-fails on a feature branch** unless you pass `TARGET_HASH=` (before re-pin) or `DEMOSHOP_REF=HEAD` (after). The plain no-env form is authoritative only in CI / on merged `master-demo`.
 
 ## Polling-only invocation

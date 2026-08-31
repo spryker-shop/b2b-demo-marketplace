@@ -53,9 +53,6 @@ class WaterTreatmentConfiguratorSecurityHeaderExpanderPlugin implements Security
         return $securityHeaders;
     }
 
-    /**
-     * @return string
-     */
     protected function createConfiguratorUrl(): string
     {
         return sprintf(

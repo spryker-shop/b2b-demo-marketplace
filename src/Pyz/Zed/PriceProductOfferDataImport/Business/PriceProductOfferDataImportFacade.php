@@ -14,15 +14,10 @@ use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\PriceProductOfferDataImport\Business\PriceProductOfferDataImportFacade as SprykerPriceProductOfferDataImportFacade;
 
 /**
- * @method \Pyz\Zed\PriceProductOfferDataImport\Business\PriceProductOfferDataImportBusinessFactory getFactory()
+ * @method \Demo\Zed\PriceProductOfferDataImport\Business\PriceProductOfferDataImportBusinessFactory getFactory()
  */
 class PriceProductOfferDataImportFacade extends SprykerPriceProductOfferDataImportFacade implements PriceProductOfferDataImportFacadeInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
-     *
-     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
-     */
     public function importCombinedPriceProductOfferData(
         ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null,
     ): DataImporterReportTransfer {

@@ -31,38 +31,21 @@
     <div class="{{ config.name }}__grid grid grid--gap">
         <div class="col col--sm-12 col--lg-8 spacing-bottom">
             <div class="{{ config.name }}__order-info">
-                {% include molecule('schedule-next-execution', 'OrderExperienceManagement') with {
-                    data: {
-                        schedule: data.schedule,
-                        skipUrl: url('recurring-order/skip', {uuid: data.schedule.uuid}),
-                        statusActive: data.statusActive,
-                        statusPaused: data.statusPaused,
-                        statusReviewRequired: data.statusReviewRequired,
-                        skipModalTriggerClassName: skipModalTriggerClassName,
-                        resumeModalTriggerClassName: resumeModalTriggerClassName,
-                    },
-                } only %}
+                {% block scheduleNextExecution %}
+                    {{ parent() }}
+                {% endblock %}
 
-                {% include molecule('recurring-order-items', 'OrderExperienceManagement') with {
-                    data: {
-                        schedule: data.schedule,
-                        itemFlagLabelMap: data.itemFlagLabelMap,
-                        itemFlagBadgeMap: data.itemFlagBadgeMap,
-                    }
-                } only %}
+                {% block orderItems %}
+                    {{ parent() }}
+                {% endblock %}
             </div>
             
         </div>
 
         <div class="col col--sm-12 col--lg-4 spacing-bottom">
-            {% include molecule('schedule-detail-sidebar', 'OrderExperienceManagement') with {
-                data: {
-                    schedule: data.schedule,
-                    statusClassMap: data.statusClassMap,
-                    quote: data.quote,
-                    editModalTriggerClassName: editModalTriggerClassName,
-                },
-            } only %}
+            {% block scheduleDetailSidebar %}
+                {{ parent() }}
+            {% endblock %}
         </div>
     </div>
 {% endblock %}

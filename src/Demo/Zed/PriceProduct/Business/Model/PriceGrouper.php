@@ -31,7 +31,6 @@ class PriceGrouper extends SprykerPriceGrouper
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      * @param array<string, array<string, mixed>> $prices
      *
      * @return array<string, array<string, mixed>>

@@ -15,17 +15,11 @@ use Spryker\Zed\ProductReviewStorage\ProductReviewStorageConfig as SprykerProduc
 
 class ProductReviewStorageConfig extends SprykerProductReviewStorageConfig
 {
-    /**
-     * @return string|null
-     */
     public function getProductAbstractReviewSynchronizationPoolName(): ?string
     {
         return SynchronizationConfig::DEFAULT_SYNCHRONIZATION_POOL_NAME;
     }
 
-    /**
-     * @return string|null
-     */
     public function getEventQueueName(): ?string
     {
         return SprykerSharedProductReviewStorageConfig::PUBLISH_PRODUCT_REVIEW_STORAGE_QUEUE;

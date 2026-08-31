@@ -25,7 +25,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 class ProductConcreteFormEdit extends SprykerProductConcreteFormEdit
 {
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array<string, mixed> $options
      *
      * @return $this

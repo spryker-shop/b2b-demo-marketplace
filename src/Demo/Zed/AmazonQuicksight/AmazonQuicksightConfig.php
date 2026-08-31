@@ -55,9 +55,6 @@ class AmazonQuicksightConfig extends SprykerAmazonQuicksightConfig
 
     protected const string DEFAULT_DATA_SOURCE_ID = 'SprykerB2BMPDefaultDataSource';
 
-    /**
-     * @return string
-     */
     public function getAssetBundleImportFilePath(): string
     {
         return sprintf(static::ASSET_BUNDLE_IMPORT_FILE_PATH, APPLICATION_ROOT_DIR);

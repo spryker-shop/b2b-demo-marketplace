@@ -26,21 +26,12 @@ class FrontendBuilder implements FrontendBuilderInterface
      */
     protected $config;
 
-    /**
-     * @param \Symfony\Component\Filesystem\Filesystem $filesystem
-     * @param \Pyz\Zed\WaterTreatmentConfiguratorPageExample\WaterTreatmentConfiguratorPageExampleConfig $config
-     */
     public function __construct(Filesystem $filesystem, WaterTreatmentConfiguratorPageExampleConfig $config)
     {
         $this->filesystem = $filesystem;
         $this->config = $config;
     }
 
-    /**
-     * @param \Psr\Log\LoggerInterface $logger
-     *
-     * @return bool
-     */
     public function build(LoggerInterface $logger): bool
     {
         try {

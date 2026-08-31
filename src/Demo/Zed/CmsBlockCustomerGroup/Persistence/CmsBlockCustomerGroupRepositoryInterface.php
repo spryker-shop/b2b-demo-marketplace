@@ -14,8 +14,6 @@ use Generated\Shared\Transfer\CustomerGroupCollectionTransfer;
 interface CmsBlockCustomerGroupRepositoryInterface
 {
     /**
-     * @param int $idCmsBlock
-     *
      * @return array<int>
      */
     public function getCmsBlockCustomerGroupIds(int $idCmsBlock): array;

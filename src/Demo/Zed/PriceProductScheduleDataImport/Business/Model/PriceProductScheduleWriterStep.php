@@ -20,11 +20,7 @@ use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\PriceProductSchedu
 class PriceProductScheduleWriterStep extends SprykerPriceProductScheduleWriterStep
 {
     /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
      * @throws \Spryker\Zed\DataImport\Business\Exception\DataKeyNotFoundInDataSetException
-     *
-     * @return void
      */
     public function execute(DataSetInterface $dataSet): void
     {
