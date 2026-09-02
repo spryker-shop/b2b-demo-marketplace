@@ -14,15 +14,32 @@ use Pyz\Client\SymfonyScheduler\SymfonySchedulerConfig;
 //$logger = 'config/Zed/cronjobs/bin/loggable.sh '; // script for jenkins logging
 $logger = '';
 
-// Legacy setup: Symfony Scheduler/Messenger is switched off, so Jenkins has to run every cron job
-// on its own instead of consuming the compiled Symfony Messenger transports.
-foreach ((new SymfonySchedulerConfig())->getCronJobs() as $jobName => $cronJob) {
+$isSymfonyMessengerEnabled = require APPLICATION_ROOT_DIR . '/config/Shared/symfony_messenger_enabled.php';
+
+if ($isSymfonyMessengerEnabled) {
+    // Symfony Scheduler owns the cron jobs, Jenkins only drives the compiled Symfony Messenger transports.
     $jobs[] = [
-        'name' => $jobName,
-        'command' => $cronJob['command'],
-        'schedule' => $cronJob['schedule'],
+        'name' => 'consume-queue',
+        'command' => $logger . '$PHP_BIN vendor/bin/console symfonymessenger:consume queue-worker-start --time-limit=900',
+        'schedule' => '* * * * *',
         'enable' => true,
     ];
+    $jobs[] = [
+        'name' => 'consume-other-cron-jobs',
+        'command' => $logger . '$PHP_BIN vendor/bin/console symfonymessenger:consume compiled-cron-scheduler --time-limit=900 --exclude-from-group=queue-worker-start',
+        'schedule' => '* * * * *',
+        'enable' => true,
+    ];
+} else {
+    // Legacy setup: Symfony Scheduler/Messenger is switched off, so Jenkins has to run every cron job itself.
+    foreach ((new SymfonySchedulerConfig())->getCronJobs() as $jobName => $cronJob) {
+        $jobs[] = [
+            'name' => $jobName,
+            'command' => $cronJob['command'],
+            'schedule' => $cronJob['schedule'],
+            'enable' => true,
+        ];
+    }
 }
 
 if (getenv('SPRYKER_CURRENT_REGION')) {
