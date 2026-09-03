@@ -45,8 +45,8 @@ image:
 
   environment:
     SPRYKER_DYNAMIC_STORE_MODE: true
-    SPRYKER_YVES_HOST_EU: yves.eu.dev-nightciverify.cloud.spryker.toys
-    SPRYKER_PRODUCT_CONFIGURATOR_HOST: date-time-configurator.dev-nightciverify.cloud.spryker.toys
+    SPRYKER_YVES_HOST_EU: yves.eu.dev-releaseverifymvc.cloud.spryker.toys
+    SPRYKER_PRODUCT_CONFIGURATOR_HOST: date-time-configurator.dev-releaseverifymvc.cloud.spryker.toys
     SPRYKER_PRODUCT_CONFIGURATOR_PORT: 443
     SPRYKER_PRODUCT_CONFIGURATOR_ENCRYPTION_KEY: 'change123'
     SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR: '0c1ffefeebdab4a3d839d0e52590c9a2'
@@ -55,7 +55,7 @@ image:
     SPRYKER_HOOK_INSTALL: "vendor/bin/install -r production --no-ansi -vvv"
     SPRYKER_HOOK_DESTRUCTIVE_INSTALL: "vendor/bin/install -r destructive --no-ansi -vvv"
     AWS_REGION: "eu-central-1"
-    SPRYKER_CUSTOMER_REMEMBER_ME_SECRET: nightci
+    SPRYKER_CUSTOMER_REMEMBER_ME_SECRET: releaseverify
     # OTEL
     #OTEL_SDK_DISABLED: "false"
     #OTEL_ATTRIBUTE_COUNT_LIMIT: 70
@@ -91,9 +91,9 @@ regions:
       mail:
         sender:
           name: Spryker No-Reply
-          email: no-reply@dev-nightciverify.cloud.spryker.toys
+          email: no-reply@dev-releaseverifymvc.cloud.spryker.toys
       database:
-        database: dev_nightciverify
+        database: dev_releaseverifymvc
         username: spryker
         password: secret
       broker:
@@ -110,51 +110,51 @@ groups:
       mportal:
         application: merchant-portal
         endpoints:
-          mp.eu.dev-nightciverify.cloud.spryker.toys:
+          mp.eu.dev-releaseverifymvc.cloud.spryker.toys:
             entry-point: MerchantPortal
             region: EU
             <<: *real-ip
       yves:
         application: yves
         endpoints:
-          date-time-configurator.dev-nightciverify.cloud.spryker.toys:
+          date-time-configurator.dev-releaseverifymvc.cloud.spryker.toys:
             entry-point: Configurator
-          yves.eu.dev-nightciverify.cloud.spryker.toys:
+          yves.eu.dev-releaseverifymvc.cloud.spryker.toys:
             region: EU
             <<: *frontend-auth
       glue:
         application: glue
         endpoints:
-          glue.eu.dev-nightciverify.cloud.spryker.toys:
+          glue.eu.dev-releaseverifymvc.cloud.spryker.toys:
             region: EU
             <<: *real-ip
       gluestorefront:
         application: glue-storefront
         endpoints:
-            glue-storefront.de.dev-nightciverify.cloud.spryker.toys:
+            glue-storefront.de.dev-releaseverifymvc.cloud.spryker.toys:
                 region: EU
       gluebackend:
         application: glue-backend
         endpoints:
-          glue-backend.eu.dev-nightciverify.cloud.spryker.toys:
+          glue-backend.eu.dev-releaseverifymvc.cloud.spryker.toys:
             region: EU
             <<: *real-ip
       boffice:
         application: backoffice
         endpoints:
-          backoffice.eu.dev-nightciverify.cloud.spryker.toys:
+          backoffice.eu.dev-releaseverifymvc.cloud.spryker.toys:
             region: EU
             <<: *frontend-auth
       backgw:
         application: backend-gateway
         endpoints:
-          backend-gateway.eu.dev-nightciverify.cloud.spryker.toys:
+          backend-gateway.eu.dev-releaseverifymvc.cloud.spryker.toys:
             region: EU
             <<: *real-ip
       backapi:
         application: zed
         endpoints:
-          backend-api.eu.dev-nightciverify.cloud.spryker.toys:
+          backend-api.eu.dev-releaseverifymvc.cloud.spryker.toys:
             region: EU
             entry-point: BackendApi
             <<: *real-ip
@@ -177,7 +177,7 @@ services:
       username: "spryker"
       password: "secret"
     endpoints:
-      queue.dev-nightciverify.cloud.spryker.toys:
+      queue.dev-releaseverifymvc.cloud.spryker.toys:
       localhost:5672:
         protocol: tcp
   session:
@@ -198,23 +198,23 @@ services:
     version: "2.401"
     csrf-protection-enabled: false
     endpoints:
-      scheduler.dev-nightciverify.cloud.spryker.toys:
+      scheduler.dev-releaseverifymvc.cloud.spryker.toys:
   mail_catcher:
     engine: mailhog
     endpoints:
-      mail.dev-nightciverify.cloud.spryker.toys:
+      mail.dev-releaseverifymvc.cloud.spryker.toys:
   swagger:
     engine: swagger-ui
     endpoints:
-      swagger.dev-nightciverify.cloud.spryker.toys:
+      swagger.dev-releaseverifymvc.cloud.spryker.toys:
   redis-gui:
     engine: redis-commander
     endpoints:
-      redis-commander.dev-nightciverify.cloud.spryker.toys:
+      redis-commander.dev-releaseverifymvc.cloud.spryker.toys:
   dashboard:
     engine: dashboard
     endpoints:
-      dev-nightciverify.cloud.spryker.toys:
+      dev-releaseverifymvc.cloud.spryker.toys:
 
 docker:
   ssl:
@@ -226,7 +226,7 @@ docker:
 
   newrelic:
     enabled: false
-    appname: dev-nightciverify-newrelic-app
+    appname: dev-releaseverifymvc-newrelic-app
     distributed-tracing:
       enabled: false
 

@@ -45,8 +45,8 @@ image:
 
   environment:
     SPRYKER_DYNAMIC_STORE_MODE: true
-    SPRYKER_YVES_HOST_EU: yves.eu.dev-nightcisandbox.cloud.spryker.toys
-    SPRYKER_PRODUCT_CONFIGURATOR_HOST: date-time-configurator.dev-nightcisandbox.cloud.spryker.toys
+    SPRYKER_YVES_HOST_EU: yves.eu.dev-nightcisandboxmvc.cloud.spryker.toys
+    SPRYKER_PRODUCT_CONFIGURATOR_HOST: date-time-configurator.dev-nightcisandboxmvc.cloud.spryker.toys
     SPRYKER_PRODUCT_CONFIGURATOR_PORT: 443
     SPRYKER_PRODUCT_CONFIGURATOR_ENCRYPTION_KEY: 'change123'
     SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR: '0c1ffefeebdab4a3d839d0e52590c9a2'
@@ -91,9 +91,9 @@ regions:
       mail:
         sender:
           name: Spryker No-Reply
-          email: no-reply@dev-nightcisandbox.cloud.spryker.toys
+          email: no-reply@dev-nightcisandboxmvc.cloud.spryker.toys
       database:
-        database: dev_nightcisandbox
+        database: dev_nightcisandboxmvc
         username: spryker
         password: secret
       broker:
@@ -110,51 +110,51 @@ groups:
       mportal:
         application: merchant-portal
         endpoints:
-          mp.eu.dev-nightcisandbox.cloud.spryker.toys:
+          mp.eu.dev-nightcisandboxmvc.cloud.spryker.toys:
             entry-point: MerchantPortal
             region: EU
             <<: *real-ip
       yves:
         application: yves
         endpoints:
-          date-time-configurator.dev-nightcisandbox.cloud.spryker.toys:
+          date-time-configurator.dev-nightcisandboxmvc.cloud.spryker.toys:
             entry-point: Configurator
-          yves.eu.dev-nightcisandbox.cloud.spryker.toys:
+          yves.eu.dev-nightcisandboxmvc.cloud.spryker.toys:
             region: EU
             <<: *frontend-auth
       glue:
         application: glue
         endpoints:
-          glue.eu.dev-nightcisandbox.cloud.spryker.toys:
+          glue.eu.dev-nightcisandboxmvc.cloud.spryker.toys:
             region: EU
             <<: *real-ip
       gluestorefront:
         application: glue-storefront
         endpoints:
-            glue-storefront.de.dev-nightcisandbox.cloud.spryker.toys:
+            glue-storefront.de.dev-nightcisandboxmvc.cloud.spryker.toys:
                 region: EU
       gluebackend:
         application: glue-backend
         endpoints:
-          glue-backend.eu.dev-nightcisandbox.cloud.spryker.toys:
+          glue-backend.eu.dev-nightcisandboxmvc.cloud.spryker.toys:
             region: EU
             <<: *real-ip
       boffice:
         application: backoffice
         endpoints:
-          backoffice.eu.dev-nightcisandbox.cloud.spryker.toys:
+          backoffice.eu.dev-nightcisandboxmvc.cloud.spryker.toys:
             region: EU
             <<: *frontend-auth
       backgw:
         application: backend-gateway
         endpoints:
-          backend-gateway.eu.dev-nightcisandbox.cloud.spryker.toys:
+          backend-gateway.eu.dev-nightcisandboxmvc.cloud.spryker.toys:
             region: EU
             <<: *real-ip
       backapi:
         application: zed
         endpoints:
-          backend-api.eu.dev-nightcisandbox.cloud.spryker.toys:
+          backend-api.eu.dev-nightcisandboxmvc.cloud.spryker.toys:
             region: EU
             entry-point: BackendApi
             <<: *real-ip
@@ -177,7 +177,7 @@ services:
       username: "spryker"
       password: "secret"
     endpoints:
-      queue.dev-nightcisandbox.cloud.spryker.toys:
+      queue.dev-nightcisandboxmvc.cloud.spryker.toys:
       localhost:5672:
         protocol: tcp
   session:
@@ -198,23 +198,23 @@ services:
     version: "2.401"
     csrf-protection-enabled: false
     endpoints:
-      scheduler.dev-nightcisandbox.cloud.spryker.toys:
+      scheduler.dev-nightcisandboxmvc.cloud.spryker.toys:
   mail_catcher:
     engine: mailhog
     endpoints:
-      mail.dev-nightcisandbox.cloud.spryker.toys:
+      mail.dev-nightcisandboxmvc.cloud.spryker.toys:
   swagger:
     engine: swagger-ui
     endpoints:
-      swagger.dev-nightcisandbox.cloud.spryker.toys:
+      swagger.dev-nightcisandboxmvc.cloud.spryker.toys:
   redis-gui:
     engine: redis-commander
     endpoints:
-      redis-commander.dev-nightcisandbox.cloud.spryker.toys:
+      redis-commander.dev-nightcisandboxmvc.cloud.spryker.toys:
   dashboard:
     engine: dashboard
     endpoints:
-      dev-nightcisandbox.cloud.spryker.toys:
+      dev-nightcisandboxmvc.cloud.spryker.toys:
 
 docker:
   ssl:
@@ -226,7 +226,7 @@ docker:
 
   newrelic:
     enabled: false
-    appname: dev-nightcisandbox-newrelic-app
+    appname: dev-nightcisandboxmvc-newrelic-app
     distributed-tracing:
       enabled: false
 
