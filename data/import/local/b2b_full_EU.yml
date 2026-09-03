@@ -29,6 +29,8 @@ actions:
     source: data/import/b2b_common/AT/store_context.csv
   - data_entity: customer
     source: data/import/b2b_common/common/customer.csv
+  - data_entity: workflow
+    source: data/import/b2b_common/common/workflow.csv
   - data_entity: glossary
     source: data/import/b2b_common/common/glossary.csv
   - data_entity: tax
@@ -176,7 +178,7 @@ actions:
   - data_entity: product-alternative
     source: data/import/b2b_common/common/product_alternative.csv
   - data_entity: product-quantity
-    source: data/import/b2b_common/common/product_quantity.csv
+    source: data/import/common/common/product_quantity.csv
   # Store relation
   - data_entity: discount-store
     source: data/import/b2b_common/DE/discount_store.csv
@@ -200,15 +202,15 @@ actions:
   - data_entity: cms-block
     source: data/import/b2b_common/common/cms_block.csv
   - data_entity: content-banner
-    source: data/import/b2b_common/common/content_banner.csv
+    source: data/import/common/common/content_banner.csv
   - data_entity: content-navigation
     source: data/import/b2b_common/common/content_navigation.csv
   - data_entity: content-product-abstract-list
-    source: data/import/b2b_common/common/content_product_abstract_list.csv
+    source: data/import/common/common/content_product_abstract_list.csv
   - data_entity: content-product-set
     source: data/import/b2b_common/common/content_product_set.csv
   - data_entity: cms-page
-    source: data/import/b2b_common/common/cms_page.csv
+    source: data/import/common/common/cms_page.csv
   - data_entity: cms-slot-template
     source: data/import/b2b_common/common/cms_slot_template.csv
   - data_entity: cms-slot
@@ -234,7 +236,7 @@ actions:
   - data_entity: company
     source : data/import/b2b_common/common/company.csv
   - data_entity: company-business-unit
-    source : data/import/b2b_common/common/company_business_unit.csv
+    source : data/import/common/common/company_business_unit.csv
   - data_entity: company-unit-address
     source : data/import/b2b_common/common/company_unit_address.csv
   - data_entity: company-unit-address-label
@@ -312,7 +314,7 @@ actions:
   - data_entity: quote-request
     source: data/import/b2b_common/common/quote_request.csv
   - data_entity: quote-request-version
-    source: data/import/b2b_common/common/quote_request_version.csv
+    source: data/import/common/common/quote_request_version.csv
 
 
 #7. Miscellaneous Setup import
@@ -322,6 +324,8 @@ actions:
     source: data/import/b2b_common/AT/comment.csv
   - data_entity: mime-type
     source: data/import/b2b_common/common/mime_type.csv
+  - data_entity: self-service-portal-file
+    source: data/import/common/common/file.csv
 
 #9. Click&Collect import
   - data_entity: service-point
@@ -350,10 +354,15 @@ actions:
   - data_entity: product-to-product-class
     source: data/import/b2b_common/common/product_to_product_class.csv
   - data_entity: ssp-asset
-    source: data/import/b2b_common/common/ssp_asset.csv
+    source: data/import/common/common/ssp_asset.csv
   - data_entity: ssp-model
     source: data/import/b2b_common/common/ssp_model.csv
   - data_entity: ssp-model-asset
     source: data/import/b2b_common/common/ssp_model_asset.csv
   - data_entity: ssp-model-product-list
     source: data/import/b2b_common/common/ssp_model_product_list.csv
+  - data_entity: self-service-portal-file-attachment
+    source: data/import/common/common/file_attachment.csv
+
+  - data_entity: sales-order
+    source: data/import/b2b_common/common/sales_order.csv

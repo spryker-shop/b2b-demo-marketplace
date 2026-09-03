@@ -1,81 +1,104 @@
 @include configurable-bundle-page-configurator-product {
-    margin: 0 0 rem(10);
-    border-radius: $setting-border-radius;
-    flex-direction: column;
-
-    @include helper-breakpoint-media-min($md) {
-        padding-right: rem(20);
-        background-color: $setting-color-gray-7;
-        flex-direction: row;
-    }
-
-    @include helper-breakpoint-media-min($xl) {
-        @include helper-effect-transition(background-color box-shadow);
-
-        &:hover {
-            box-shadow:
-                0 rem(3) rem(3) $setting-color-shadow-1,
-                0 rem(18) rem(18) $setting-color-shadow-1;
-            background-color: $setting-color-transparent;
-        }
-    }
+    $name: &;
+    display: block;
+    margin-bottom: var(--scale-12);
 
     &__container {
-        width: 100%;
+        @include helper-effect-transition(border-color box-shadow);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--scale-12);
+        margin-bottom: 0;
+        padding: var(--scale-12);
+        background-color: var(--background-page);
+        border: var(--stroke-sm) solid var(--border-default);
+        border-radius: var(--radius-lg);
+
+        @include helper-breakpoint-media-min($md) {
+            flex-direction: row;
+            align-items: center;
+            gap: var(--scale-16);
+        }
+
+        &:hover {
+            border-color: var(--border-strong);
+            box-shadow: var(--shadows-sm-x) var(--shadows-sm-y) var(--shadows-sm-blur) var(--shadows-sm-spread)
+                var(--shadows-sm-color);
+        }
     }
 
-    &__col {
-        padding: rem(24) 0;
-
-        &:last-child {
-            margin: 0 rem(30);
-
-            @include helper-breakpoint-media-min($md) {
-                margin: 0;
-            }
-        }
-
-        &--image-container {
-            position: relative;
-            background-color: $setting-color-white;
-            display: flex;
-            align-items: center;
-
-            &::before {
-                content: '';
-                position: absolute;
-                left: 0;
-                top: 0;
-                right: 0;
-                bottom: 0;
-                background-color: $setting-color-alpha-2;
-                z-index: $setting-zi-element;
-            }
-        }
-
-        &--description {
-            padding-left: rem(30);
-            padding-right: rem(30);
-
-            @include helper-breakpoint-media-min($xl) {
-                padding-right: rem(150);
-            }
-        }
+    &__image {
+        display: flex;
+        padding: 0;
+        flex: 0 0 auto;
+        align-items: center;
+        justify-content: center;
+        width: rem(80);
+        height: rem(80);
+        overflow: hidden;
+        background-color: var(--background-muted);
+        border-radius: var(--radius-md);
     }
 
     &__overlay {
+        display: flex;
+        margin: 0;
+        align-items: center;
+        justify-content: center;
         width: 100%;
+        height: 100%;
+    }
+
+    &__content {
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: column;
+        gap: var(--scale-4);
+        min-width: 0;
+    }
+
+    &__name {
+        @include typography(label-md);
+        color: var(--text-primary);
+        text-decoration: none;
+
+        &:hover,
+        &:focus {
+            color: var(--text-primary);
+            text-decoration: underline;
+        }
     }
 
     &__sku {
+        @include typography(body-sm);
         display: block;
-        color: $setting-color-gray-3;
-        font-size: map_get($setting-font-size, small);
-        line-height: rem(18);
-        text-transform: uppercase;
+        color: var(--text-secondary);
+    }
+
+    &__actions {
+        display: flex;
+        flex: 0 0 auto;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--scale-12);
+        width: 100%;
+
+        @include helper-breakpoint-media-min($md) {
+            justify-content: flex-end;
+            width: auto;
+            margin-left: auto;
+        }
+    }
+
+    &__price {
+        @include typography(price-md);
+        color: var(--text-primary);
     }
 
     &--selected {
-        border: rem(2) solid $setting-color-main;
+        #{$name}__container {
+            border-color: var(--border-brand);
+        }
     }
 }

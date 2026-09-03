@@ -93,6 +93,7 @@
                 { "type": "remove_use", "class_name": "MerchantProductCartPreCheckPlugin" },
                 { "type": "remove_use", "class_name": "MerchantProductOptionCartPreCheckPlugin" },
                 { "type": "remove_use", "class_name": "CartBundleItemsPreReloadPlugin" },
+                { "type": "remove_use", "class_name": "BundledItemsProductOfferItemExpanderPlugin" },
                 { "type": "remove_plugin", "plugin_class": "ProductApprovalCartPreCheckPlugin" },
                 { "type": "remove_plugin", "plugin_class": "OrderAmendmentProductApprovalCartPreCheckPlugin" },
                 { "type": "remove_plugin", "plugin_class": "SanitizeMerchantCommissionPreReloadPlugin" },
@@ -102,7 +103,8 @@
                 { "type": "remove_plugin", "plugin_class": "MerchantCartPreCheckPlugin" },
                 { "type": "remove_plugin", "plugin_class": "MerchantProductCartPreCheckPlugin" },
                 { "type": "remove_plugin", "plugin_class": "MerchantProductOptionCartPreCheckPlugin" },
-                { "type": "remove_plugin", "plugin_class": "CartBundleItemsPreReloadPlugin" }
+                { "type": "remove_plugin", "plugin_class": "CartBundleItemsPreReloadPlugin" },
+                { "type": "remove_plugin", "plugin_class": "BundledItemsProductOfferItemExpanderPlugin" }
             ],
             "success_messages": ["✓ CartDependencyProvider cleaned from marketplace-specific plugins"]
         },
@@ -166,9 +168,56 @@
                 { "type": "remove_plugin", "plugin_class": "MerchantCommissionStoreDataImportPlugin" },
                 { "type": "remove_plugin", "plugin_class": "MerchantCommissionMerchantDataImportPlugin" },
                 { "type": "remove_plugin", "plugin_class": "MerchantCombinedProductDataImportPlugin" },
-                { "type": "remove_plugin", "plugin_class": "ProductAbstractApprovalStatusDataImportPlugin" }
+                { "type": "remove_plugin", "plugin_class": "ProductAbstractApprovalStatusDataImportPlugin" },
+                { "type": "remove_constant", "constant_name": "FACADE_MERCHANT_SALES_ORDER" },
+                { "type": "remove_constant", "constant_name": "FACADE_MERCHANT_OMS" },
+                { "type": "remove_method", "method_name": "addMerchantSalesOrderFacade" },
+                { "type": "remove_method", "method_name": "addMerchantOmsFacade" },
+                {
+                    "type": "remove_line_containing",
+                    "pattern": "$container = $this->addMerchantSalesOrderFacade($container);"
+                },
+                { "type": "remove_line_containing", "pattern": "$container = $this->addMerchantOmsFacade($container);" }
             ],
             "success_messages": ["✓ DataImportDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Zed/DataImport/Business/DataImportBusinessFactory.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantSalesOrderFacadeInterface" },
+                { "type": "remove_use", "class_name": "MerchantOmsFacadeInterface" },
+                { "type": "remove_method", "method_name": "getMerchantSalesOrderFacade" },
+                { "type": "remove_method", "method_name": "getMerchantOmsFacade" },
+                { "type": "remove_line_containing", "pattern": "$this->getMerchantSalesOrderFacade()," },
+                { "type": "remove_line_containing", "pattern": "$this->getMerchantOmsFacade()," }
+            ],
+            "success_messages": ["✓ DataImportBusinessFactory cleaned from marketplace-specific facades"]
+        },
+        "src/Pyz/Zed/DataImport/Business/Model/SalesOrder/OmsEventTrigger.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "MerchantOmsTriggerRequestTransfer" },
+                { "type": "remove_use", "class_name": "MerchantOrderItemCriteriaTransfer" },
+                { "type": "remove_use", "class_name": "MerchantOmsFacadeInterface" },
+                { "type": "remove_use", "class_name": "MerchantSalesOrderFacadeInterface" },
+                {
+                    "type": "remove_line_containing",
+                    "pattern": "protected MerchantSalesOrderFacadeInterface $merchantSalesOrderFacade,"
+                },
+                {
+                    "type": "remove_line_containing",
+                    "pattern": "protected MerchantOmsFacadeInterface $merchantOmsFacade,"
+                },
+                {
+                    "type": "remove_line_containing",
+                    "pattern": "protected const MERCHANT_OMS_EVENT_PREFIX = 'merchant:';"
+                },
+                { "type": "remove_method", "method_name": "triggerMerchantOmsEvent" },
+                {
+                    "type": "replace_string",
+                    "old_value": "            if (str_starts_with($omsEvent, static::MERCHANT_OMS_EVENT_PREFIX)) {\n                $this->triggerMerchantOmsEvent(\n                    substr($omsEvent, strlen(static::MERCHANT_OMS_EVENT_PREFIX)),\n                    $salesOrderItemIds,\n                );\n            } else {\n                $this->omsFacade->triggerEventForOrderItems($omsEvent, $salesOrderItemIds);\n            }",
+                    "new_value": "            $this->omsFacade->triggerEventForOrderItems($omsEvent, $salesOrderItemIds);"
+                }
+            ],
+            "success_messages": ["✓ OmsEventTrigger cleaned from marketplace-specific OMS event handling"]
         },
         "src/Pyz/Zed/DataImport/DataImportConfig.php": {
             "operations": [
@@ -631,12 +680,14 @@
                 { "type": "remove_use", "class_name": "MerchantReferenceOrderItemExpanderPreSavePlugin" },
                 { "type": "remove_use", "class_name": "MerchantReferencesOrderExpanderPlugin" },
                 { "type": "remove_use", "class_name": "MerchantCommissionOrderPostCancelPlugin" },
+                { "type": "remove_use", "class_name": "MerchantStateOrderItemExpanderPlugin" },
                 { "type": "remove_plugin", "plugin_class": "MerchantOrderDataOrderExpanderPlugin" },
                 { "type": "remove_plugin", "plugin_class": "MerchantReferencesOrderExpanderPlugin" },
                 { "type": "remove_plugin", "plugin_class": "MerchantDataOrderHydratePlugin" },
                 { "type": "remove_plugin", "plugin_class": "MerchantReferenceOrderItemExpanderPreSavePlugin" },
                 { "type": "remove_plugin", "plugin_class": "MerchantOmsStateOrderItemsTableExpanderPlugin" },
-                { "type": "remove_plugin", "plugin_class": "MerchantCommissionOrderPostCancelPlugin" }
+                { "type": "remove_plugin", "plugin_class": "MerchantCommissionOrderPostCancelPlugin" },
+                { "type": "remove_plugin", "plugin_class": "MerchantStateOrderItemExpanderPlugin" }
             ],
             "success_messages": ["✓ SalesDependencyProvider cleaned from marketplace-specific plugins"]
         },
@@ -1220,11 +1271,11 @@
         "config/Shared/config_default-docker.php": {
             "operations": [
                 { "type": "remove_use", "class_name": "DummyMarketplacePaymentConfig" },
-                { "type": "remove_array_value", "array_value": "MarketplacePayment01" },
                 {
                     "type": "remove_array_key_value",
                     "key_pattern": "DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE"
-                }
+                },
+                { "type": "remove_array_value", "array_value": "MarketplacePayment01" }
             ],
             "success_messages": ["✓ Removed marketplace payment configuration from config_default-docker.php"]
         },
@@ -1232,11 +1283,11 @@
             "operations": [
                 { "type": "remove_use", "class_name": "DummyMarketplacePaymentConfig" },
                 { "type": "remove_array_value", "array_value": "DummyMarketplacePayment" },
-                { "type": "remove_array_value", "array_value": "MarketplacePayment01" },
                 {
                     "type": "remove_array_key_value",
                     "key_pattern": "DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE"
-                }
+                },
+                { "type": "remove_array_value", "array_value": "MarketplacePayment01" }
             ],
             "success_messages": ["✓ Removed marketplace payment configuration from config_oms-development.php"]
         },
@@ -1330,6 +1381,7 @@
         "src/Pyz/Glue/MerchantsRestApi:MerchantsRestApi",
         "src/Pyz/Yves/MerchantSalesReturnWidget:MerchantSalesReturnWidget",
         "src/Pyz/Zed/AclMerchantPortal:AclMerchantPortal",
+        "src/Pyz/Zed/ProductBundle/Communication/Plugin/AclMerchantPortal:ProductBundle AclMerchantPortal plugin",
         "src/Pyz/Zed/DataImportMerchant:DataImportMerchant",
         "src/Pyz/Zed/GuiTable:GuiTable",
         "src/Pyz/Zed/ProductApprovalGui:ProductApprovalGui",
@@ -1369,10 +1421,6 @@
             ],
             "success_messages": ["✓ Removed MerchantCommissionHelper from codeception.dynamic.fixtures.yml"]
         },
-        "tests/PyzTest/Zed/NavigationGui/Presentation/NavigationTreeCest.php": {
-            "operations": [{ "type": "add_skip_annotation", "method_name": "testUpdateNodeToCategoryType" }],
-            "success_messages": ["✓ Added @skip annotation to testUpdateNodeToCategoryType test"]
-        },
         "tests/PyzTest/Glue/CartReorder/RestApi/MerchantProductOfferCartReorderRestApiCest.php": {
             "operations": [
                 { "type": "add_skip_annotation", "class_name": "MerchantProductOfferCartReorderRestApiCest" }
@@ -1386,6 +1434,158 @@
             "success_messages": [
                 "✓ Updated REQUEST_PARAM_PAYMENT_PROVIDER_NAME_DUMMY_PAYMENT constant to 'DummyPayment'"
             ]
+        },
+        "tests/PyzTest/Glue/CartReorder/_support/CartReorderApiTester.php": {
+            "operations": [
+                { "type": "replace_string", "old_value": "'MarketplacePayment01'", "new_value": "'DummyPayment01'" }
+            ],
+            "success_messages": ["✓ Switched CartReorderApiTester.php to DummyPayment01 state machine"]
+        },
+        "tests/PyzTest/Glue/OrderAmendments/RestApi/Fixtures/OrderAmendmentRestApiFixtures.php": {
+            "operations": [
+                { "type": "replace_string", "old_value": "'MarketplacePayment01'", "new_value": "'DummyPayment01'" }
+            ],
+            "success_messages": ["✓ Switched OrderAmendmentRestApiFixtures.php to DummyPayment01 state machine"]
+        },
+        "tests/PyzTest/Glue/OrderAmendments/RestApi/Fixtures/PriceProductOrderAmendmentRestApiFixtures.php": {
+            "operations": [
+                { "type": "replace_string", "old_value": "'MarketplacePayment01'", "new_value": "'DummyPayment01'" }
+            ],
+            "success_messages": [
+                "✓ Switched PriceProductOrderAmendmentRestApiFixtures.php to DummyPayment01 state machine"
+            ]
+        },
+        "tests/PyzTest/Glue/OrderAmendments/RestApi/Fixtures/ProductOfferPriceOrderAmendmentRestApiFixtures.php": {
+            "operations": [
+                { "type": "replace_string", "old_value": "'MarketplacePayment01'", "new_value": "'DummyPayment01'" }
+            ],
+            "success_messages": [
+                "✓ Switched ProductOfferPriceOrderAmendmentRestApiFixtures.php to DummyPayment01 state machine"
+            ]
+        },
+        "tests/PyzTest/Glue/Orders/RestApi/OrdersRestApiFixtures.php": {
+            "operations": [
+                { "type": "replace_string", "old_value": "'MarketplacePayment01'", "new_value": "'DummyPayment01'" }
+            ],
+            "success_messages": ["✓ Switched OrdersRestApiFixtures.php to DummyPayment01 state machine"]
+        },
+        "tests/PyzTest/Glue/ProductConfigurations/RestApi/Fixtures/ProductConfigurationsRestApiFixtures.php": {
+            "operations": [
+                { "type": "replace_string", "old_value": "'MarketplacePayment01'", "new_value": "'DummyPayment01'" }
+            ],
+            "success_messages": ["✓ Switched ProductConfigurationsRestApiFixtures.php to DummyPayment01 state machine"]
+        },
+        "tests/PyzTest/Glue/SelfServicePortal/RestApi/Fixtures/SspServicesRestApiFixtures.php": {
+            "operations": [
+                { "type": "replace_string", "old_value": "'MarketplacePayment01'", "new_value": "'DummyPayment01'" }
+            ],
+            "success_messages": ["✓ Switched SspServicesRestApiFixtures.php to DummyPayment01 state machine"]
+        },
+        "tests/PyzTest/Glue/SelfServicePortal/RestApi/Fixtures/SspInquiriesRestApiFixtures.php": {
+            "operations": [
+                { "type": "replace_string", "old_value": "'MarketplacePayment01'", "new_value": "'DummyPayment01'" }
+            ],
+            "success_messages": ["✓ Switched SspInquiriesRestApiFixtures.php to DummyPayment01 state machine"]
+        },
+        "tests/PyzTest/Glue/Payments/RestApi/PaymentsRestApiCest.php": {
+            "operations": [
+                {
+                    "type": "replace_string",
+                    "old_value": "PAYMENT_PROVIDER_NAME = 'DummyMarketplacePayment';",
+                    "new_value": "PAYMENT_PROVIDER_NAME = 'DummyPayment';"
+                }
+            ],
+            "success_messages": ["✓ Switched PaymentsRestApiCest.php to DummyPayment provider"]
+        },
+        "tests/PyzTest/Glue/Payments/RestApi/PaymentCustomersRestApiCest.php": {
+            "operations": [
+                {
+                    "type": "replace_string",
+                    "old_value": "PAYMENT_PROVIDER_NAME = 'DummyMarketplacePayment';",
+                    "new_value": "PAYMENT_PROVIDER_NAME = 'DummyPayment';"
+                }
+            ],
+            "success_messages": ["✓ Switched PaymentCustomersRestApiCest.php to DummyPayment provider"]
+        },
+        "tests/PyzTest/Glue/Payments/RestApi/PaymentCancellationsRestApiCest.php": {
+            "operations": [
+                {
+                    "type": "replace_string",
+                    "old_value": "PAYMENT_PROVIDER_NAME = 'DummyMarketplacePayment';",
+                    "new_value": "PAYMENT_PROVIDER_NAME = 'DummyPayment';"
+                }
+            ],
+            "success_messages": ["✓ Switched PaymentCancellationsRestApiCest.php to DummyPayment provider"]
+        },
+        "tests/PyzTest/Yves/Checkout/Controller/CheckoutControllerTest.php": {
+            "operations": [
+                {
+                    "type": "replace_string",
+                    "old_value": "use Spryker\\Shared\\DummyMarketplacePayment\\DummyMarketplacePaymentConfig;",
+                    "new_value": "use Spryker\\Shared\\DummyPayment\\DummyPaymentConfig;"
+                },
+                {
+                    "type": "replace_string",
+                    "old_value": "use Spryker\\Yves\\DummyMarketplacePayment\\Form\\InvoiceSubForm;",
+                    "new_value": "use Spryker\\Yves\\DummyPayment\\Form\\AbstractSubForm;"
+                },
+                {
+                    "type": "replace_string",
+                    "old_value": "This test only works with DummyMarketplacePayment",
+                    "new_value": "This test only works with DummyPayment"
+                },
+                {
+                    "type": "replace_string",
+                    "old_value": "DummyMarketplacePaymentConfig::PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE",
+                    "new_value": "DummyPaymentConfig::PAYMENT_METHOD_INVOICE"
+                },
+                {
+                    "type": "replace_string",
+                    "old_value": "InvoiceSubForm::FIELD_DATE_OF_BIRTH",
+                    "new_value": "AbstractSubForm::FIELD_DATE_OF_BIRTH"
+                }
+            ],
+            "success_messages": ["✓ Switched CheckoutControllerTest to DummyPayment"]
+        },
+        "tests/PyzTest/Yves/Checkout/_support/Helper/CheckoutHelper.php": {
+            "operations": [
+                {
+                    "type": "replace_string",
+                    "old_value": "paymentForm_dummyMarketplacePaymentInvoice_dateOfBirth",
+                    "new_value": "paymentForm_dummyPaymentInvoice_date_of_birth"
+                }
+            ],
+            "success_messages": ["✓ Switched CheckoutHelper payment form field to DummyPayment"]
+        },
+        "tests/cypress-boilerplate/cypress/fixtures/storefront/order/static-storefront-order.json": {
+            "operations": [
+                {
+                    "type": "replace_string",
+                    "old_value": "\"dummyMarketplacePaymentInvoice\"",
+                    "new_value": "\"dummyPaymentInvoice\""
+                }
+            ],
+            "success_messages": ["✓ Switched static-storefront-order.json to dummyPaymentInvoice"]
+        },
+        "tests/cypress-boilerplate/cypress/fixtures/storefront/checkout/static-storefront-checkout.json": {
+            "operations": [
+                {
+                    "type": "replace_string",
+                    "old_value": "\"dummyMarketplacePaymentInvoice\"",
+                    "new_value": "\"dummyPaymentInvoice\""
+                }
+            ],
+            "success_messages": ["✓ Switched static-storefront-checkout.json to dummyPaymentInvoice"]
+        },
+        "tests/cypress-boilerplate/README.md": {
+            "operations": [
+                {
+                    "type": "replace_string",
+                    "old_value": "(`Spryker\\Yves\\DummyMarketplacePayment`)",
+                    "new_value": "(`Pyz\\Yves\\DummyPayment`)"
+                }
+            ],
+            "success_messages": ["✓ Updated cypress-boilerplate README payment module reference"]
         }
     },
     "payment_config_updates": {
@@ -1436,6 +1636,151 @@
                 }
             ],
             "success_messages": ["✓ Updated PaymentsRestApiConfig with DummyPayment configuration"]
+        },
+        "config/Shared/common/config_oms-development.php": {
+            "operations": [
+                {
+                    "type": "regex_replace",
+                    "pattern": "(use Spryker\\\\Shared\\\\Kernel\\\\KernelConstants;)",
+                    "replacement": "use Spryker\\\\Shared\\\\DummyPayment\\\\DummyPaymentConfig;\\n\\1",
+                    "flags": ""
+                },
+                {
+                    "type": "regex_replace",
+                    "pattern": "('CheckoutPage' => \\[)\\s*",
+                    "replacement": "\\1\\n        'DummyPayment',\\n        ",
+                    "flags": ""
+                },
+                {
+                    "type": "regex_replace",
+                    "pattern": "('Payment' => \\[)\\s*",
+                    "replacement": "\\1\\n        'DummyPayment',\\n        ",
+                    "flags": ""
+                },
+                {
+                    "type": "regex_replace",
+                    "pattern": "('Payment' => \\[.*?\\],\\n)",
+                    "replacement": "\\1    'Oms' => [\\n        'DummyPayment',\\n    ],\\n",
+                    "flags": "DOTALL"
+                },
+                {
+                    "type": "regex_replace",
+                    "pattern": "(\\$config\\[OmsConstants::ACTIVE_PROCESSES\\] = array_merge\\(\\[)\\s*",
+                    "replacement": "\\1\\n    'DummyPayment01',\\n    ",
+                    "flags": ""
+                },
+                {
+                    "type": "regex_replace",
+                    "pattern": "(\\$config\\[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING\\],\\s*\\[)\\s*",
+                    "replacement": "\\1\\n        DummyPaymentConfig::PAYMENT_METHOD_INVOICE => 'DummyPayment01',\\n        DummyPaymentConfig::PAYMENT_METHOD_CREDIT_CARD => 'DummyPayment01',\\n        ",
+                    "flags": ""
+                }
+            ],
+            "success_messages": [
+                "✓ Re-added DummyPayment provider, DummyPayment01 process and statemachine mapping to config_oms-development.php"
+            ]
+        },
+        "config/Shared/config_default.php": {
+            "operations": [
+                {
+                    "type": "ensure_use_statement",
+                    "class_name": "Spryker\\Shared\\DummyPayment\\DummyPaymentConfig",
+                    "after_pattern": "use Spryker\\Shared\\DocumentationGeneratorRestApi\\DocumentationGeneratorRestApiConstants;"
+                },
+                {
+                    "type": "regex_replace",
+                    "pattern": "(\\$config\\[OmsConstants::ACTIVE_PROCESSES\\] = \\[)\\s*",
+                    "replacement": "\\1\\n    'DummyPayment01',\\n    ",
+                    "flags": ""
+                },
+                {
+                    "type": "regex_replace",
+                    "pattern": "(\\$config\\[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING\\] = \\[)\\s*",
+                    "replacement": "\\1\\n    DummyPaymentConfig::PAYMENT_METHOD_INVOICE => 'DummyPayment01',\\n    DummyPaymentConfig::PAYMENT_METHOD_CREDIT_CARD => 'DummyPayment01',\\n    ",
+                    "flags": ""
+                }
+            ],
+            "success_messages": ["✓ Re-added DummyPayment01 process and statemachine mapping to config_default.php"]
+        },
+        "src/Pyz/Zed/Checkout/CheckoutDependencyProvider.php": {
+            "operations": [
+                {
+                    "type": "ensure_use_statement",
+                    "class_name": "Spryker\\Zed\\DummyPayment\\Communication\\Plugin\\Checkout\\DummyPaymentCheckoutPreConditionPlugin",
+                    "after_pattern": "use Spryker\\Zed\\Discount\\Communication\\Plugin\\Checkout\\VoucherDiscountMaxUsageCheckoutPreConditionPlugin;"
+                },
+                {
+                    "type": "replace_string",
+                    "old_value": "            new NopaymentCheckoutPreConditionPlugin(),\n",
+                    "new_value": "            new NopaymentCheckoutPreConditionPlugin(),\n            new DummyPaymentCheckoutPreConditionPlugin(),\n"
+                }
+            ],
+            "success_messages": ["✓ Re-added DummyPaymentCheckoutPreConditionPlugin to CheckoutDependencyProvider"]
+        },
+        "src/Pyz/Yves/CheckoutPage/Theme/default/views/payment/payment.twig": {
+            "operations": [
+                {
+                    "type": "replace_string",
+                    "old_value": "                    {% block contentItem %}\n                        {% embed molecule('form') with {",
+                    "new_value": "                    {% block contentItem %}\n                        {% if embed.form.paymentSelection[key].vars.value == 'dummyPaymentInvoice' %}\n                            {% include atom('icon') with {\n                                modifiers: ['invoice-logo', 'payment-logo'],\n                                data: {\n                                    name: 'dummyPaymentInvoice.icon' | trans,\n                                },\n                            } only %}\n                        {% endif %}\n\n                        {% embed molecule('form') with {"
+                }
+            ],
+            "success_messages": ["✓ Re-added dummyPaymentInvoice icon block to payment.twig"]
+        },
+        "data/import/common/common/payment_method.csv": {
+            "operations": [
+                {
+                    "type": "replace_string",
+                    "old_value": "dummyMarketplacePaymentInvoice,Invoice,DummyMarketplacePayment,Dummy Marketplace Payment,1",
+                    "new_value": "dummyPaymentInvoice,Invoice,DummyPayment,Dummy Payment,1\ndummyPaymentCreditCard,Credit Card,DummyPayment,Dummy Payment,1\ndummyMarketplacePaymentInvoice,Invoice,DummyMarketplacePayment,Dummy Marketplace Payment,1"
+                }
+            ],
+            "success_messages": ["✓ Re-added DummyPayment payment methods to payment_method.csv"]
+        },
+        "data/import/common/DE/payment_method_store.csv": {
+            "operations": [
+                {
+                    "type": "replace_string",
+                    "old_value": "dummyMarketplacePaymentInvoice,DE",
+                    "new_value": "dummyPaymentInvoice,DE\ndummyPaymentCreditCard,DE\ndummyMarketplacePaymentInvoice,DE"
+                }
+            ],
+            "success_messages": ["✓ Re-added DummyPayment payment methods to DE payment_method_store.csv"]
+        },
+        "data/import/common/AT/payment_method_store.csv": {
+            "operations": [
+                {
+                    "type": "replace_string",
+                    "old_value": "dummyMarketplacePaymentInvoice,AT",
+                    "new_value": "dummyPaymentInvoice,AT\ndummyPaymentCreditCard,AT\ndummyMarketplacePaymentInvoice,AT"
+                }
+            ],
+            "success_messages": ["✓ Re-added DummyPayment payment methods to AT payment_method_store.csv"]
+        },
+        "data/import/common/US/payment_method_store.csv": {
+            "operations": [
+                {
+                    "type": "replace_string",
+                    "old_value": "dummyMarketplacePaymentInvoice,US",
+                    "new_value": "dummyPaymentInvoice,US\ndummyPaymentCreditCard,US\ndummyMarketplacePaymentInvoice,US"
+                }
+            ],
+            "success_messages": ["✓ Re-added DummyPayment payment methods to US payment_method_store.csv"]
+        },
+        "data/import/common/common/glossary.csv": {
+            "operations": [
+                {
+                    "type": "replace_string",
+                    "old_value": "DummyMarketplacePaymentInvoice,Marketplace Invoice,en_US",
+                    "new_value": "DummyPaymentCreditCard,Credit Card,en_US\nDummyPaymentCreditCard,Kreditkarte,de_DE\npayment.dummy-payment.credit-card,Pay with the following credit card:,en_US\npayment.dummy-payment.credit-card,Mit der folgenden Kreditkarte bezahlen:,de_DE\ndummyPaymentCreditCard.card_type,Card Type,en_US\ndummyPaymentCreditCard.card_type,Kartentyp,de_DE\ndummyPaymentCreditCard.card_number,Card Number,en_US\ndummyPaymentCreditCard.card_number,Nummer,de_DE\ndummyPaymentCreditCard.name_on_card,Name on the Card,en_US\ndummyPaymentCreditCard.name_on_card,Name auf der Karte,de_DE\ndummyPaymentCreditCard.card_expires,Expiry Date,en_US\ndummyPaymentCreditCard.card_expires,Gültig bis,de_DE\ndummyPaymentCreditCard.card_security_code,CVC,en_US\ndummyPaymentCreditCard.card_security_code,CVC,de_DE\nDummyPaymentInvoice,Invoice,en_US\nDummyPaymentInvoice,Auf Rechnung,de_DE\ndummyPaymentInvoice.invoice,Pay with invoice:,en_US\ndummyPaymentInvoice.invoice,Auf Rechnung bezahlen:,de_DE\ndummyPaymentInvoice.date_of_birth,Date of Birth,en_US\ndummyPaymentInvoice.date_of_birth,Geburtsdatum,de_DE\ndummyPaymentInvoice.icon,invoice-logo,en_US\ndummyPaymentInvoice.icon,rechnung-logo,de_DE\nDummyMarketplacePaymentInvoice,Marketplace Invoice,en_US"
+                },
+                {
+                    "type": "replace_string",
+                    "old_value": "checkout.order.duplicate,Order with given reference {{reference}} already exists,en_US",
+                    "new_value": "checkout.payment.provider.DummyPayment,Dummy Payment,en_US\ncheckout.payment.provider.DummyPayment,Beispiel-Zahlungsart,de_DE\ncheckout.order.duplicate,Order with given reference {{reference}} already exists,en_US"
+                }
+            ],
+            "success_messages": ["✓ Re-added DummyPayment glossary keys to glossary.csv"]
         }
     }
 }

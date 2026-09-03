@@ -1,8 +1,20 @@
 {% extends view('order', '@SprykerShop:CustomerPage') %}
 
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [{
+                label: 'customer.account' | trans,
+                url: url('customer/overview'),
+            },{
+                label: 'customer.account.order_history' | trans,
+            }]
+        }
+    } only %}
+{% endblock %}
+
 {% block customerContent %}
     {% embed molecule('action-bar') with {
-        modifiers: ['first'],
         data: {
             title: 'customer.account.order_history' | trans,
         },
@@ -11,7 +23,7 @@
         },
     } only %}
         {% block actions %}
-            <button class="button button--hollow button--justify-center {{ embed.jsPrefix }}filter-button">
+            <button class="button button--hollow button--justify-center {{ embed.jsPrefix }}filter-button" {{ qa('order-filters-toggle') }}>
                 {% include atom('icon') with {
                     modifiers: ['filter'],
                     class: 'spacing-right',
@@ -48,7 +60,7 @@
                 {% endblock %}
             {%- endset -%}
 
-            <div class="{{ jsPrefix }}filter-section {% if not activeFilters | trim %}is-hidden{% endif %}">
+            <div class="{{ jsPrefix }}filter-section {% if not activeFilters | trim %}is-hidden{% endif %}" {{ qa('order-filter-section') }}>
                 {% block orderFilters %}
                     {{ parent() }}
                 {% endblock %}

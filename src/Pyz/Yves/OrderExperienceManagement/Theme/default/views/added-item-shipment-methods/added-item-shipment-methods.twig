@@ -1,0 +1,41 @@
+{% set shipmentMethods = _view.shipmentMethods ?? [] %}
+
+<div class="spacing-bottom">
+    {% if shipmentMethods | length %}
+        <label class="label">{{ 'recurring_orders.review.add_product.shipment_method' | trans }}</label>
+
+        {% embed molecule('custom-select') with {
+            modifiers: ['full-width'],
+            attributes: {
+                name: 'shipment_method',
+                'config-width': '100%',
+            },
+            embed: {
+                shipmentMethods: shipmentMethods,
+            },
+        } only %}
+            {%- block selectClass -%}
+                select select--expand js-review-add-product__shipment-method {{ parent() }}
+            {%- endblock -%}
+
+            {%- block selectAttributes -%}
+                {{ parent() }}
+                data-qa="review-shipment-selection-method"
+                aria-label="{{ 'recurring_orders.review.add_product.shipment_method' | trans }}"
+            {%- endblock -%}
+
+            {% block options %}
+                <option value="">{{ 'recurring_orders.review.add_product.shipment_method.placeholder' | trans }}</option>
+
+                {% for shipmentMethod in embed.shipmentMethods %}
+                    <option value="{{ shipmentMethod.idShipmentMethod }}">
+                        {{- shipmentMethod.name -}}
+                        {%- if shipmentMethod.storeCurrencyPrice is not null %} — {{ shipmentMethod.storeCurrencyPrice | money(true, shipmentMethod.currencyIsoCode) }}{% endif -%}
+                    </option>
+                {% endfor %}
+            {% endblock %}
+        {% endembed %}
+    {% else %}
+        <p class="review-add-product__shipment-empty text-alert">{{ 'recurring_orders.review.add_product.shipment_method.none' | trans }}</p>
+    {% endif %}
+</div>

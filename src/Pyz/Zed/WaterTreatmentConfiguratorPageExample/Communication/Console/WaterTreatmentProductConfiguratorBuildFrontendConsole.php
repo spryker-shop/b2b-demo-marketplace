@@ -28,9 +28,6 @@ class WaterTreatmentProductConfiguratorBuildFrontendConsole extends Console
      */
     public const DESCRIPTION = 'This command will build Water Treatment Product Configurator frontend.';
 
-    /**
-     * @return void
-     */
     protected function configure(): void
     {
         $this->setName(static::COMMAND_NAME);
@@ -39,12 +36,6 @@ class WaterTreatmentProductConfiguratorBuildFrontendConsole extends Console
         parent::configure();
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
-     * @return int
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
         $this->info('Build Water Treatment Product Configurator frontend');

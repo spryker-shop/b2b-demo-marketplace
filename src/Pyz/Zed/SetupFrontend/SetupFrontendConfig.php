@@ -15,8 +15,6 @@ class SetupFrontendConfig extends SprykerSetupFrontendConfig
 {
     /**
      * @api
-     *
-     * @return string
      */
     public function getProjectInstallCommand(): string
     {
@@ -25,8 +23,6 @@ class SetupFrontendConfig extends SprykerSetupFrontendConfig
 
     /**
      * @api
-     *
-     * @return string
      */
     public function getStorybookBuildCommand(): string
     {

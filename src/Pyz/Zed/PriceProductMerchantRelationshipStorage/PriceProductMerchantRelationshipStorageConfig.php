@@ -18,41 +18,26 @@ use Spryker\Zed\PriceProductMerchantRelationshipStorage\PriceProductMerchantRela
  */
 class PriceProductMerchantRelationshipStorageConfig extends SprykerPriceProductMerchantRelationshipStorageConfig
 {
-    /**
-     * @return string|null
-     */
     public function getPriceProductConcreteMerchantRelationSynchronizationPoolName(): ?string
     {
         return SynchronizationConfig::DEFAULT_SYNCHRONIZATION_POOL_NAME;
     }
 
-    /**
-     * @return string|null
-     */
     public function getPriceProductAbstractMerchantRelationSynchronizationPoolName(): ?string
     {
         return SynchronizationConfig::DEFAULT_SYNCHRONIZATION_POOL_NAME;
     }
 
-    /**
-     * @return string|null
-     */
     public function getMerchantRelationEventQueueName(): ?string
     {
         return SprykerSharedPriceProductMerchantRelationshipStorageConfig::PUBLISH_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_QUEUE;
     }
 
-    /**
-     * @return string|null
-     */
     public function getPriceProductConcreteMerchantRelationEventQueueName(): ?string
     {
         return SprykerSharedPriceProductMerchantRelationshipStorageConfig::PUBLISH_PRICE_PRODUCT_CONCRETE_MERCHANT_RELATIONSHIP_QUEUE;
     }
 
-    /**
-     * @return string|null
-     */
     public function getPriceProductAbstractMerchantRelationEventQueueName(): ?string
     {
         return SprykerSharedPriceProductMerchantRelationshipStorageConfig::PUBLISH_PRICE_PRODUCT_ABSTRACT_MERCHANT_RELATIONSHIP_QUEUE;

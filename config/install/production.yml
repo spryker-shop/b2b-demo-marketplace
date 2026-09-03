@@ -25,14 +25,16 @@ sections:
         propel-migration-cleanup:
             command: 'vendor/bin/console propel:migration:delete -vvv --no-ansi'
 
+    configuration:
+        configuration-sync:
+            command: 'vendor/bin/console configuration:sync -vvv --no-ansi'
+
     scheduler-start:
         queue-setup:
             command: 'vendor/bin/console queue:setup'
         scheduler-setup:
             command: 'vendor/bin/console scheduler:setup -vvv --no-ansi'
     data-import:
-        glossary:
-            command: 'vendor/bin/console data:import:glossary -vvv --no-ansi'
         stripe:
             command: 'vendor/bin/console data:import --config=vendor/spryker-eco/stripe/data/import/stripe.yml -vvv --no-ansi'
     acl:

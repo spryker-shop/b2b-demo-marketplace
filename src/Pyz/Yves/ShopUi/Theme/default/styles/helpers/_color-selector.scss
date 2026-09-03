@@ -1,3 +1,8 @@
+@use 'calc-rem' as *;
+@use '../settings/color' as *;
+@use '../settings/radius' as *;
+@use '~ShopUi/styles/helpers/effect' as *;
+
 @mixin helper-color-selector($name) {
     #{$name} {
         cursor: default;
@@ -9,7 +14,7 @@
             position: relative;
 
             &:not(:last-child) {
-                margin-right: rem(var(--scale-2));
+                margin-right: var(--scale-2);
             }
 
             &:hover #{$name}__tooltip {
@@ -34,7 +39,7 @@
             left: rem(-15);
             background: $setting-color-gray-5;
             color: $setting-color-white;
-            font-size: rem(var(--fontsize-2));
+            font-size: var(--fontsize-2);
             padding: rem(5) rem(11) rem(7) rem(10);
             white-space: nowrap;
             border-radius: $setting-border-radius;

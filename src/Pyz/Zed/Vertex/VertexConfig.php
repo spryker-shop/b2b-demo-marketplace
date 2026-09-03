@@ -18,13 +18,8 @@ class VertexConfig extends SprykerEcoVertexConfig
         return true;
     }
 
-    public function isTaxAssistEnabled(): bool
+    public function isShipmentRefundable(): bool
     {
-        return true;
-    }
-
-    public function isInvoicingEnabled(): bool
-    {
-        return true;
+        return false;
     }
 }

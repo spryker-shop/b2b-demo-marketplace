@@ -32,11 +32,6 @@ class CustomerAccessUpdater extends SprykerCustomerAccessUpdater
      */
     protected $customerAccessFilter;
 
-    /**
-     * @param \Pyz\Zed\CustomerAccess\Persistence\CustomerAccessEntityManagerInterface $customerAccessEntityManager
-     * @param \Spryker\Zed\CustomerAccess\Business\CustomerAccess\CustomerAccessReaderInterface $customerAccessReader
-     * @param \Pyz\Zed\CustomerAccess\Business\CustomerAccess\CustomerAccessFilterInterface $customerAccessFilter
-     */
     public function __construct(
         CustomerAccessEntityManagerInterface $customerAccessEntityManager,
         CustomerAccessReaderInterface $customerAccessReader,
@@ -47,11 +42,6 @@ class CustomerAccessUpdater extends SprykerCustomerAccessUpdater
         $this->customerAccessFilter = $customerAccessFilter;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
-     */
     public function updateUnauthenticatedCustomerAccess(CustomerAccessTransfer $customerAccessTransfer): CustomerAccessTransfer
     {
         return $this->getTransactionHandler()->handleTransaction(function () use ($customerAccessTransfer) {

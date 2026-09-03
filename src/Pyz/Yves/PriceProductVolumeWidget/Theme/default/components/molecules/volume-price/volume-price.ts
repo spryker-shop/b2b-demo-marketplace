@@ -14,8 +14,6 @@ export default class VolumePrice extends Component {
     protected currentQuantityValue: number;
     protected timeout = 400;
 
-    protected readyCallback(): void {}
-
     protected init(): void {
         this.productPriceElement = <HTMLElement>this.getElementsByClassName(`${this.jsName}__price`)[0];
         this.amountValueElement = <HTMLElement>this.getElementsByClassName(`${this.jsName}__amount-value`)[0];
@@ -57,6 +55,12 @@ export default class VolumePrice extends Component {
 
     public get originalPrice(): string {
         return this.amountValueElement.dataset.originalPrice ?? this.amountValueElement.innerText;
+    }
+
+    public getPriceForQuantity(quantity: number): string {
+        const tier = this.volumePricesData.find((priceData) => quantity >= priceData.count);
+
+        return tier ? tier.price : this.originalPrice;
     }
 
     public changePrice(price: string): void {

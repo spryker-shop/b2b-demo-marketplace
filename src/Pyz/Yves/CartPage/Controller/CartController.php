@@ -26,7 +26,6 @@ class CartController extends SprykerCartController
 
     /**
      * @param array<string, mixed> $selectedAttributes
-     * @param bool $withItems
      *
      * @return array<string, mixed>
      */
@@ -43,10 +42,7 @@ class CartController extends SprykerCartController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $sku
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function addAction(Request $request, $sku): RedirectResponse // phpcs:ignore
     {
@@ -55,11 +51,6 @@ class CartController extends SprykerCartController
         return $this->redirectToReferer($request);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     protected function redirectToReferer(Request $request): RedirectResponse
     {
         return $request->headers->has(static::PARAM_REFERER) ?

@@ -1,8 +1,6 @@
 import Component from 'ShopUi/models/component';
 
 export default class CartItemNote extends Component {
-    protected readyCallback(): void {}
-
     protected init(): void {
         this.addEventListener('click', (event: Event) => this.onTriggerClick(event));
     }

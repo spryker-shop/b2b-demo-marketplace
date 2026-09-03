@@ -6,9 +6,11 @@
             <h5 class="spacing-bottom">{{ 'merchant_relation_request_widget.create_request.label' | trans }}:</h5>
 
             <div>
-                <a class="button" href="{{ url('company/merchant-relation-request/create', {'merchant-reference': data.merchantReference}) }}" data-qa="merchant-relation-request-create-button">
-                    {{ 'merchant_relation_request_widget.request_for_relation.button' | trans }}
-                </a>
+                {% block button %}
+                    <a class="button" href="{{ url('company/merchant-relation-request/create', {'merchant-reference': data.merchantReference}) }}" data-qa="merchant-relation-request-create-button">
+                        {{ 'merchant_relation_request_widget.request_for_relation.button' | trans }}
+                    </a>
+                {% endblock %}
             </div>
         </div>
     </div>

@@ -7,7 +7,7 @@
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: rem(var(--scale-8));
+            gap: var(--scale-8);
         }
 
         &__box {
@@ -15,8 +15,8 @@
             display: block;
             width: rem(18);
             height: rem(18);
-            border-radius: rem(var(--radius-xs));
-            border: rem(var(--stroke-sm)) solid var(--input-border-default);
+            border-radius: var(--radius-xs);
+            border: var(--stroke-sm) solid var(--input-border-default);
             background: var(--input-background-default);
         }
 
@@ -42,7 +42,7 @@
                         left: 50%;
                         top: 50%;
                         translate: -50% -50%;
-                        font-size: rem(var(--font-size-18));
+                        font-size: var(--font-size-18);
                         color: var(--text-inverse);
                     }
                 }
@@ -94,6 +94,15 @@
         &--filter {
             display: block;
             width: 100%;
+
+            #{$name}__box {
+                width: rem(16);
+                height: rem(16);
+            }
+
+            #{$name}__input:checked ~ #{$name}__box::after {
+                font-size: var(--font-size-16);
+            }
         }
 
         &__label:empty {

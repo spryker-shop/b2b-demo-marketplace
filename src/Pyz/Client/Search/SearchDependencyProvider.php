@@ -22,19 +22,12 @@ use SprykerEco\Client\Algolia\Plugin\Search\AlgoliaSearchAdapterPlugin;
 
 class SearchDependencyProvider extends SprykerSearchDependencyProvider
 {
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigBuilderInterface
-     */
     protected function createSearchConfigBuilderPlugin(Container $container): SearchConfigBuilderInterface // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
         return new CatalogSearchConfigBuilder();
     }
 
     /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
      * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigExpanderPluginInterface>
      */
     protected function createSearchConfigExpanderPlugins(Container $container): array
@@ -54,8 +47,8 @@ class SearchDependencyProvider extends SprykerSearchDependencyProvider
     protected function getClientAdapterPlugins(): array
     {
         return [
-            new AlgoliaSearchAdapterPlugin(),
-            new ElasticsearchSearchAdapterPlugin(),
+        new AlgoliaSearchAdapterPlugin(),
+        new ElasticsearchSearchAdapterPlugin(),
         ];
     }
 
@@ -65,7 +58,7 @@ class SearchDependencyProvider extends SprykerSearchDependencyProvider
     protected function getSearchContextExpanderPlugins(): array
     {
         return [
-            new ElasticsearchSearchContextExpanderPlugin(),
+        new ElasticsearchSearchContextExpanderPlugin(),
         ];
     }
 }

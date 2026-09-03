@@ -1,8 +1,6 @@
 import Component from 'ShopUi/models/component';
 
 export default class SaveToShoppingList extends Component {
-    protected readyCallback(): void {}
-
     protected init(): void {
         document.addEventListener(
             'click',

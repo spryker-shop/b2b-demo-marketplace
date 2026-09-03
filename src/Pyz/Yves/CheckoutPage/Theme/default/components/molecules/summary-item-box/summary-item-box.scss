@@ -15,9 +15,7 @@
         }
 
         &__method {
-            font-weight: fw(medium);
-            font-size: rem(14);
-            line-height: rem(20);
+            @include typography(label-md);
             padding-right: rem(10);
 
             @include helper-breakpoint-media-min($lg) {

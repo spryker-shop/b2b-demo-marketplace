@@ -13,9 +13,6 @@ use SprykerFeature\Yves\BuyBox\BuyBoxConfig as SprykerFeatureBuyBoxConfig;
 
 class BuyBoxConfig extends SprykerFeatureBuyBoxConfig
 {
-    /**
-     * @return string
-     */
     public function getSortingStrategy(): string
     {
         return static::SORT_BY_PRICE;

@@ -1,10 +1,15 @@
 {% extends molecule('ssp-service-point-selector', '@SprykerFeature:SelfServicePortal') %}
 
 {% block noLocation %}
+    {# Services carrying the `seminar` product class are booked in a training center, not a service shop. #}
+    {% set selectLocationKey = 'seminar' in (data.product.productClassNames | default([]))
+        ? 'self_service_portal.service.product.select_training_center'
+        : 'service_point_widget.select_location_action' %}
+
     {% if not data.servicePoint %}
-        <div class="{{ config.jsName }}__no-location {{ config.name }}__location-container">
+        <div class="{{ config.jsName }}__no-location {{ config.name }}__location-container" {{ qa('ssp-select-location') }}>
             <button type="button" class="link link--font-inherit link--no-decoration {{ attributes['trigger-class-name'] }}">
-                {{ 'service_point_widget.select_location_action' | trans }}
+                {{ selectLocationKey | trans }}
             </button>
         </div>
     {% endif %}
