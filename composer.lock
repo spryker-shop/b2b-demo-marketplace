@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fd5ea1401a78b5ce58866e6a51592542",
+    "content-hash": "956b39584eb2e6f849aa970747c5a7c1",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -61497,33 +61497,38 @@
         },
         {
             "name": "spryker/product-offer-service-point",
-            "version": "1.2.0",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/product-offer-service-point.git",
-                "reference": "a6bc93421ad7006dd802d4bf13ab85c3b8c81acb"
+                "reference": "a013a2f7f2cc1df19fd48588cde2afdf65d8cf22"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/product-offer-service-point/zipball/a6bc93421ad7006dd802d4bf13ab85c3b8c81acb",
-                "reference": "a6bc93421ad7006dd802d4bf13ab85c3b8c81acb",
+                "url": "https://api.github.com/repos/spryker/product-offer-service-point/zipball/a013a2f7f2cc1df19fd48588cde2afdf65d8cf22",
+                "reference": "a013a2f7f2cc1df19fd48588cde2afdf65d8cf22",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/acl-merchant-portal-extension": "^1.0.0",
+                "spryker/gui": "^4.0.0 || ^5.0.0",
                 "spryker/kernel": "^3.30.0",
                 "spryker/product-offer": "^1.10.0",
                 "spryker/product-offer-extension": "^1.0.0",
                 "spryker/propel-orm": "^1.0.0",
-                "spryker/service-point": "^1.0.0",
-                "spryker/transfer": "^3.27.0"
+                "spryker/service-point": "^1.3.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/transfer": "^3.27.0",
+                "spryker/util-text": "^1.1.0"
             },
             "require-dev": {
                 "spryker/code-sniffer": "*",
+                "spryker/container": "*",
                 "spryker/product": "*",
                 "spryker/propel": "*",
-                "spryker/testify": "*"
+                "spryker/testify": "*",
+                "spryker/twig": "*"
             },
             "type": "library",
             "extra": {
@@ -61543,9 +61548,9 @@
             ],
             "description": "ProductOfferServicePoint module",
             "support": {
-                "source": "https://github.com/spryker/product-offer-service-point/tree/1.2.0"
+                "source": "https://github.com/spryker/product-offer-service-point/tree/1.3.0"
             },
-            "time": "2024-11-04T14:07:47+00:00"
+            "time": "2026-09-02T08:12:11+00:00"
         },
         {
             "name": "spryker/product-offer-service-point-availability",
@@ -71747,32 +71752,37 @@
         },
         {
             "name": "spryker/service-point",
-            "version": "1.2.1",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/service-point.git",
-                "reference": "8b093de50d94229b6f0d14a24727ffaafce8c488"
+                "reference": "65fbe0381cae1875a75ffbbcd7c27d061de65fa0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/service-point/zipball/8b093de50d94229b6f0d14a24727ffaafce8c488",
-                "reference": "8b093de50d94229b6f0d14a24727ffaafce8c488",
+                "url": "https://api.github.com/repos/spryker/service-point/zipball/65fbe0381cae1875a75ffbbcd7c27d061de65fa0",
+                "reference": "65fbe0381cae1875a75ffbbcd7c27d061de65fa0",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.3",
                 "spryker/acl-merchant-portal-extension": "^1.0.0",
                 "spryker/country": "^4.1.0",
+                "spryker/gui": "^4.0.0 || ^5.0.0",
                 "spryker/kernel": "^3.30.0",
                 "spryker/propel-orm": "^1.0.0",
                 "spryker/store": "^1.12.0",
+                "spryker/symfony": "^3.0.0",
                 "spryker/transfer": "^3.27.0",
+                "spryker/util-text": "^1.1.0",
                 "spryker/uuid-behavior": "^1.0.0"
             },
             "require-dev": {
                 "spryker/code-sniffer": "*",
+                "spryker/container": "*",
                 "spryker/propel": "*",
-                "spryker/testify": "*"
+                "spryker/testify": "*",
+                "spryker/twig": "*"
             },
             "type": "library",
             "extra": {
@@ -71792,9 +71802,9 @@
             ],
             "description": "ServicePoint module",
             "support": {
-                "source": "https://github.com/spryker/service-point/tree/1.2.1"
+                "source": "https://github.com/spryker/service-point/tree/1.3.0"
             },
-            "time": "2025-08-15T13:19:34+00:00"
+            "time": "2026-09-02T08:12:11+00:00"
         },
         {
             "name": "spryker/service-point-cart",
@@ -92400,18 +92410,18 @@
         },
         {
             "name": "spryker/cypress-tests",
-            "version": "dev-feature/cc-39797/master-removed-non-mp-payment-providers",
+            "version": "dev-feature/cc-40218-service-points-backoffice",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/cypress-tests.git",
-                "reference": "3bf8b06061b7101e9e32c2fedf0efecf16ed2a90"
+                "reference": "e2832929dd457b83b9d07216081e00e2c9e27b8d"
             },
             "type": "spryker-test",
             "license": [
                 "MIT"
             ],
             "description": "This repository is dedicated to housing an extensive collection of UI end-to-end tests, meticulously crafted using Cypress for Spryker applications. These tests are designed to thoroughly evaluate the user interface, ensuring that all interactions and visual elements function as intended in real-world scenarios. By leveraging Cypress's advanced browser automation capabilities, this suite provides an efficient and effective means of validating the user experience, confirming the seamless operation and aesthetic integrity of Spryker's front-end components. Our commitment to rigorous UI testing helps maintain the high standard of quality and reliability that Spryker users expect.",
-            "time": "2026-08-26T14:08:42+00:00"
+            "time": "2026-09-03T14:44:18+00:00"
         },
         {
             "name": "spryker/development",
