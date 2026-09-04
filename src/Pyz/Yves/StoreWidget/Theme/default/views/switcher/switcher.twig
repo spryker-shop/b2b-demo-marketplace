@@ -1,13 +1,30 @@
 {% extends view('switcher', '@SprykerShop:StoreWidget') %}
 
 {% block body %}
-    <form method="GET" action="/">
+    {% set attributes = data.storeUrls
+        ? {
+            name: '_store',
+            'onchange': 'this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);',
+            'config-theme': 'nav-top',
+            'aria-label': 'aria_label.store.switcher' | trans,
+            'mobile-resolution': '1024',
+        }
+        : {
+            name: '_store',
+            'data-form-submitter': true,
+            'config-theme': 'nav-top',
+            'aria-label': 'aria_label.store.switcher' | trans,
+            'mobile-resolution': '1024',
+        }
+    %}
+
+    <form method="GET" action="{{ data.storeUrls ? '' : '/' }}">
         {% set options = [] %}
 
         {% for storeName in data.storeNames %}
             {% set options = options | merge([{
                 label: 'store_widget.switcher.store' | trans ~ ' ' ~ storeName,
-                value: storeName,
+                value: data.storeUrls ? data.storeUrls[storeName] : storeName,
                 selected: storeName == data.currentStoreName,
             }]) %}
         {% endfor %}
@@ -18,13 +35,7 @@
                 options: options,
                 icon: 'store',
             },
-            attributes: {
-                name: '_store',
-                'data-form-submitter': true,
-                'config-theme': 'nav-top',
-                'aria-label': 'aria_label.store.switcher' | trans,
-                'mobile-resolution': '1024',
-            },
+            attributes: attributes,
         } only %}
     </form>
 {% endblock %}
