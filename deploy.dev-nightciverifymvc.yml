@@ -195,7 +195,8 @@ services:
         protocol: tcp
   scheduler:
     engine: jenkins
-    version: "2.401"
+    version: "2.516.3"
+    number-of-executors: 4
     csrf-protection-enabled: false
     endpoints:
       scheduler.dev-nightciverifymvc.cloud.spryker.toys:
