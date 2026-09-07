@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<database
+        xmlns="spryker:schema-01"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        name="zed"
+        xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd"
+        namespace="Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence"
+        package="src.Orm.Zed.PriceProductMerchantRelationshipStorage.Persistence"
+>
+
+    <table name="spy_price_product_abstract_merchant_relationship_storage">
+        <index name="spy_price_product_ab_m_r_storage-fk_company_business_unit">
+            <index-column name="fk_company_business_unit"/>
+        </index>
+    </table>
+
+    <table name="spy_price_product_concrete_merchant_relationship_storage">
+        <index name="spy_price_product_con_m_r_storage-fk_company_business_unit">
+            <index-column name="fk_company_business_unit"/>
+        </index>
+    </table>
+
+</database>
