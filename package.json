@@ -33,7 +33,7 @@
         "mp:lint": "npm run lint -w mp-zed-ui --",
         "mp:test": "npm run test -w mp-zed-ui --",
         "mp:update:config": "npm run update:config -w mp-zed-ui --",
-        "postinstall": "npm run update:config -w mp-zed-ui",
+        "postinstall": "if [ -d vendor/spryker/zed-ui ]; then npm run update:config -w mp-zed-ui; fi",
         "storybook": "NODE_OPTIONS=--max-old-space-size=8192 storybook dev -p 6006 -c src/Pyz/Yves/ShopUi/Theme/storybook/config",
         "storybook:build": "NODE_OPTIONS=--max-old-space-size=8192 storybook build -c src/Pyz/Yves/ShopUi/Theme/storybook/config -o public/Storybook/assets"
     },
