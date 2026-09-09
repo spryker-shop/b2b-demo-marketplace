@@ -14,33 +14,31 @@
                     "builder": "@angular-builders/custom-webpack:browser",
                     "options": {
                         "customWebpackConfig": {
-                            "path": "./frontend/merchant-portal/webpack.config.ts",
+                            "path": "./vendor/spryker/zed-ui/src/Spryker/Zed/ZedUi/FrontendBuilder/webpack.config.mts",
                             "mergeRules": {}
                         },
-                        "indexTransform": "./frontend/merchant-portal/html-transform.js",
+                        "indexTransform": "./vendor/spryker/zed-ui/src/Spryker/Zed/ZedUi/FrontendBuilder/libs/index-transform.mts",
                         "outputPath": "public/MerchantPortal/assets/js",
                         "baseHref": "/assets/js/",
                         "index": "src/Pyz/Zed/ZedUi/Presentation/Components/index.html",
                         "main": "src/Pyz/Zed/ZedUi/Presentation/Components/main.ts",
                         "polyfills": "src/Pyz/Zed/ZedUi/Presentation/Components/polyfills.ts",
-                        "tsConfig": "tsconfig.mp.json",
+                        "tsConfig": "vendor/spryker/zed-ui/src/Spryker/Zed/ZedUi/FrontendBuilder/tsconfig.mp.json",
                         "assets": [
                             {
                                 "glob": "*/src/Spryker/Zed/*/Presentation/Components/assets/**/*",
                                 "input": "vendor/spryker",
-                                "output": "/assets/",
-                                "ignore": ["**/.gitkeep"]
+                                "output": "/assets/"
+                            },
+                            {
+                                "glob": "*/data/files/**/*",
+                                "input": "vendor/spryker",
+                                "output": "/static/"
                             },
                             {
                                 "glob": "*/Presentation/Components/assets/**/*",
                                 "input": "src/Pyz/Zed",
                                 "output": "/assets/",
-                                "ignore": ["**/.gitkeep"]
-                            },
-                            {
-                                "glob": "*/data/files/**/*",
-                                "input": "vendor/spryker",
-                                "output": "/static/",
                                 "ignore": ["**/.gitkeep"]
                             },
                             {
@@ -96,20 +94,12 @@
                     },
                     "defaultConfiguration": "development"
                 },
-                "lint": {
-                    "builder": "@angular-eslint/builder:lint",
-                    "options": {
-                        "lintFilePatterns": [
-                            "src/Pyz/Zed/*/Presentation/Components/**/*.ts",
-                            "src/Pyz/Zed/*/Presentation/Components/**/*.html"
-                        ]
-                    }
-                },
                 "test": {
                     "builder": "@angular-builders/jest:run",
                     "options": {
-                        "tsConfig": "frontend/merchant-portal/tsconfig.spec.json",
-                        "configPath": "frontend/merchant-portal/jest.config.ts"
+                        "tsConfig": "vendor/spryker/zed-ui/src/Spryker/Zed/ZedUi/FrontendBuilder/tsconfig.mp.spec.json",
+                        "config": "vendor/spryker/zed-ui/src/Spryker/Zed/ZedUi/FrontendBuilder/jest.config.mjs",
+                        "zoneless": false
                     }
                 }
             }
