@@ -19,4 +19,9 @@ class PriceProductConfig extends SprykerPriceProductConfig
      * @var bool
      */
     protected const IS_DELETE_ORPHAN_STORE_PRICES_ON_SAVE_ENABLED = true;
+
+    public function isPriceProductStoreUuidEnabled(): bool
+    {
+        return true;
+    }
 }
