@@ -19,7 +19,6 @@ use Spryker\Glue\AuthRestApi\Plugin\GlueApplication\SimultaneousAuthenticationRe
 use Spryker\Glue\AuthRestApi\Plugin\RestUserFinderByAccessTokenPlugin;
 use Spryker\Glue\CartsRestApi\Plugin\ControllerBeforeAction\SetAnonymousCustomerIdControllerBeforeActionPlugin;
 use Spryker\Glue\CartsRestApi\Plugin\Validator\AnonymousCustomerUniqueIdValidatorPlugin;
-use Spryker\Glue\CatalogSearchRestApi\Plugin\CatalogSearchRequestParametersIntegerRestRequestValidatorPlugin;
 use Spryker\Glue\CompanyUsersRestApi\Plugin\GlueApplication\CompanyUserRestUserValidatorPlugin;
 use Spryker\Glue\CustomerAccessRestApi\Plugin\GlueApplication\CustomerAccessFormatRequestPlugin;
 use Spryker\Glue\CustomersRestApi\Plugin\SetCustomerBeforeActionPlugin;
@@ -129,8 +128,6 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
             new PriceModeParameterValidatorPlugin(),
             new ValidateRestRequestAttributesPlugin(),
             new EntityTagRestRequestValidatorPlugin(),
-            new CatalogSearchRequestParametersIntegerRestRequestValidatorPlugin(),
-            new AccessTokenRestRequestValidatorPlugin(),
             new CartItemProductConfigurationRestRequestValidatorPlugin(),
         ];
     }
