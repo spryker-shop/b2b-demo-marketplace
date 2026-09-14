@@ -32,6 +32,7 @@ class PropelConfig extends SprykerPropelConfig
         return [
             'spy_product_page_search.schema.xml' => ['type'],
             'spy_product_review_search.schema.xml' => ['type'],
+            'spy_sales_order_threshold.schema.xml' => ['type'],
         ];
     }
 }
