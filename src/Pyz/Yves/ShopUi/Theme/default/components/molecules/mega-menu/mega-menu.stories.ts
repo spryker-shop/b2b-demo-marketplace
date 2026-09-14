@@ -20,7 +20,7 @@ export default meta;
 export const Overview: StoryObj = {
     translations: {
         'navigation.browse_by_category': 'Browse by category',
-        'navigation.show_all': 'Show all',
+        'navigation.show_all': 'Show more',
         'navigation.all_prefix': 'All',
     },
     render: () => {
