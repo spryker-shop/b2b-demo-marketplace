@@ -35,7 +35,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends SprykerProductOf
         return new PriceProductOfferCreateGuiTableConfigurationProvider(
             $this->getGuiTableFactory(),
             $this->getPriceProductFacade(),
-            $this->getStoreFacade(),
+            $this->getMerchantUserFacade(),
             $this->getCurrencyFacade(),
             $this->createColumnIdCreator(),
             $this->createCostPriceTableConfigurationExpander(),
@@ -47,7 +47,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends SprykerProductOf
         return new PriceProductOfferUpdateGuiTableConfigurationProvider(
             $this->getGuiTableFactory(),
             $this->getPriceProductFacade(),
-            $this->getStoreFacade(),
+            $this->getMerchantUserFacade(),
             $this->getCurrencyFacade(),
             $this->createColumnIdCreator(),
             $this->createCostPriceTableConfigurationExpander(),
