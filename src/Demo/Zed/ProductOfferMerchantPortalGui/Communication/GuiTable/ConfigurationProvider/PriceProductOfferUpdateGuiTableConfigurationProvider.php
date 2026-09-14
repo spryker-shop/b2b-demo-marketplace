@@ -15,15 +15,15 @@ use Spryker\Shared\GuiTable\GuiTableFactoryInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\Column\ColumnIdCreatorInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\PriceProductOfferUpdateGuiTableConfigurationProvider as SprykerPriceProductOfferUpdateGuiTableConfigurationProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToCurrencyFacadeInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToStoreFacadeInterface;
 
 class PriceProductOfferUpdateGuiTableConfigurationProvider extends SprykerPriceProductOfferUpdateGuiTableConfigurationProvider
 {
     public function __construct(
         GuiTableFactoryInterface $guiTableFactory,
         ProductOfferMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade,
-        ProductOfferMerchantPortalGuiToStoreFacadeInterface $storeFacade,
+        ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade,
         ProductOfferMerchantPortalGuiToCurrencyFacadeInterface $currencyFacade,
         ColumnIdCreatorInterface $columnIdCreator,
         protected CostPriceTableConfigurationExpander $costPriceTableConfigurationExpander,
@@ -31,7 +31,7 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends SprykerPriceP
         parent::__construct(
             $guiTableFactory,
             $priceProductFacade,
-            $storeFacade,
+            $merchantUserFacade,
             $currencyFacade,
             $columnIdCreator,
         );

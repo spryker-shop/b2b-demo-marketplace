@@ -111,6 +111,7 @@ use Spryker\Zed\Shipment\Communication\Plugin\AclMerchantPortal\ShipmentAclEntit
 use Spryker\Zed\ShipmentType\Communication\Plugin\AclMerchantPortal\ShipmentTypeAclEntityConfigurationExpanderPlugin;
 use Spryker\Zed\StateMachine\Communication\Plugin\AclMerchantPortal\StateMachineAclEntityConfigurationExpanderPlugin;
 use Spryker\Zed\Stock\Communication\Plugin\AclMerchantPortal\StockAclEntityConfigurationExpanderPlugin;
+use Spryker\Zed\StockAddress\Communication\Plugin\AclMerchantPortal\StockAddressAclEntityConfigurationExpanderPlugin;
 use Spryker\Zed\Store\Communication\Plugin\AclMerchantPortal\StoreAclEntityConfigurationExpanderPlugin;
 use Spryker\Zed\Store\Communication\Plugin\AclMerchantPortal\StoreMerchantAclEntityRuleExpanderPlugin;
 use Spryker\Zed\Tax\Communication\Plugin\AclMerchantPortal\TaxAclEntityConfigurationExpanderPlugin;
@@ -120,6 +121,7 @@ use Spryker\Zed\UserMerchantPortalGui\Communication\Plugin\AclMerchantPortal\Use
 use Spryker\Zed\UserPasswordReset\Communication\Plugin\AclMerchantPortal\UserPasswordResetAclEntityConfigurationExpanderPlugin;
 use SprykerEco\Zed\Stripe\Communication\Plugin\AclMerchantPortal\StripeAclEntityConfigurationExpanderPlugin;
 use SprykerEco\Zed\Stripe\Communication\Plugin\AclMerchantPortal\StripeMerchantAclRuleExpanderPlugin;
+use SprykerEco\Zed\Vertex\Communication\Plugin\AclMerchantPortal\VertexAclEntityConfigurationExpanderPlugin;
 
 class AclMerchantPortalDependencyProvider extends SprykerAclMerchantPortalDependencyProvider
 {
@@ -276,6 +278,8 @@ class AclMerchantPortalDependencyProvider extends SprykerAclMerchantPortalDepend
             new ConfigurationValueAclEntityConfigurationExpanderPlugin(),
             new StripeAclEntityConfigurationExpanderPlugin(),
             new SecurityOauthKnpuMerchantUserAclEntityConfigurationExpanderPlugin(),
+            new VertexAclEntityConfigurationExpanderPlugin(),
+            new StockAddressAclEntityConfigurationExpanderPlugin(),
         ];
     }
 }
