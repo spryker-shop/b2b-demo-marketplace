@@ -51,6 +51,7 @@ use Spryker\Zed\OauthDummy\OauthDummyConfig;
 use SprykerFeature\Shared\SelfServicePortal\SelfServicePortalConstants;
 use SprykerShop\Shared\CustomerPage\CustomerPageConstants;
 use SprykerShop\Shared\ErrorPage\ErrorPageConstants;
+use SprykerShop\Shared\ShopUi\ShopUiConstants;
 
 // ############################################################################
 // ############################## TESTING IN CI ###############################
@@ -406,3 +407,5 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'path' => '/data/pim-exports',
     ],
 ];
+
+$config[ShopUiConstants::IS_QA_ATTRIBUTES_ENABLED] = true;
