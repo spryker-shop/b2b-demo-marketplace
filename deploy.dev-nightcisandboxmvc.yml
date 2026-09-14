@@ -46,8 +46,8 @@ image:
   environment:
     SPRYKER_DYNAMIC_STORE_MODE: true
     SPRYKER_YVES_HOST_EU: yves.eu.dev-nightcisandboxmvc.cloud.spryker.toys
-    SPRYKER_PRODUCT_CONFIGURATOR_HOST: date-time-configurator.dev-nightcisandboxmvc.cloud.spryker.toys
-    SPRYKER_PRODUCT_CONFIGURATOR_PORT: 443
+    SPRYKER_WATER_TREATMENT_CONFIGURATOR_HOST: demo-water-treatment-configurator.dev-nightcisandboxmvc.cloud.spryker.toys
+    SPRYKER_WATER_TREATMENT_CONFIGURATOR_PORT: 443
     SPRYKER_PRODUCT_CONFIGURATOR_ENCRYPTION_KEY: 'change123'
     SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR: '0c1ffefeebdab4a3d839d0e52590c9a2'
     SPRYKER_HOOK_AFTER_DEPLOY: "true"
@@ -55,7 +55,7 @@ image:
     SPRYKER_HOOK_INSTALL: "vendor/bin/install -r production --no-ansi -vvv"
     SPRYKER_HOOK_DESTRUCTIVE_INSTALL: "vendor/bin/install -r destructive --no-ansi -vvv"
     AWS_REGION: "eu-central-1"
-    SPRYKER_CUSTOMER_REMEMBER_ME_SECRET: nightci
+    SPRYKER_CUSTOMER_REMEMBER_ME_SECRET: nightcisandboxmvc
     # OTEL
     #OTEL_SDK_DISABLED: "false"
     #OTEL_ATTRIBUTE_COUNT_LIMIT: 70
@@ -117,8 +117,8 @@ groups:
       yves:
         application: yves
         endpoints:
-          date-time-configurator.dev-nightcisandboxmvc.cloud.spryker.toys:
-            entry-point: WaterTreatmentConfigurator
+          demo-water-treatment-configurator.dev-nightcisandboxmvc.cloud.spryker.toys:
+            entry-point: Configurator
           yves.eu.dev-nightcisandboxmvc.cloud.spryker.toys:
             region: EU
             <<: *frontend-auth
@@ -195,7 +195,8 @@ services:
         protocol: tcp
   scheduler:
     engine: jenkins
-    version: "2.401"
+    version: "2.516.3"
+    number-of-executors: 4
     csrf-protection-enabled: false
     endpoints:
       scheduler.dev-nightcisandboxmvc.cloud.spryker.toys:
