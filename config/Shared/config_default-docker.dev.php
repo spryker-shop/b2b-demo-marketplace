@@ -48,6 +48,7 @@ use SprykerShop\Shared\ContentNavigationWidget\ContentNavigationWidgetConstants;
 use SprykerShop\Shared\CustomerPage\CustomerPageConstants;
 use SprykerShop\Shared\ErrorPage\ErrorPageConstants;
 use SprykerShop\Shared\ShopApplication\ShopApplicationConstants;
+use SprykerShop\Shared\ShopUi\ShopUiConstants;
 use SprykerShop\Shared\WebProfilerWidget\WebProfilerWidgetConstants;
 
 // ############################################################################
@@ -315,3 +316,4 @@ if (!getenv('SPRYKER_S3_PUBLIC_ASSETS_BUCKET')) {
 }
 
 $config[ContentNavigationWidgetConstants::NAVIGATION_REVALIDATION_TIME_IN_SECONDS] = 300;//5 min for local development
+$config[ShopUiConstants::IS_QA_ATTRIBUTES_ENABLED] = true;
