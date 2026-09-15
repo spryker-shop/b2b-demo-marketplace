@@ -21,6 +21,10 @@ on:
                 description: "Platform segment of the screenshot upload path."
                 type: string
                 default: "PHP8.5MariaDB"
+            prefer-lowest:
+                description: "Resolve composer dependencies to their lowest allowed versions instead of the lock file."
+                type: boolean
+                default: false
 
 env:
     SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
@@ -43,6 +47,7 @@ jobs:
             -   uses: ramsey/composer-install@a8d0d959dab41457692a5e2041bd9b757a119e3f # v3
                 with:
                     composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
+                    dependency-versions: ${{ inputs.prefer-lowest && 'lowest' || 'locked' }}
 
             -   id: compute
                 name: Generate shard matrix
@@ -84,6 +89,7 @@ jobs:
             -   uses: ramsey/composer-install@a8d0d959dab41457692a5e2041bd9b757a119e3f # v3
                 with:
                     composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
+                    dependency-versions: ${{ inputs.prefer-lowest && 'lowest' || 'locked' }}
 
             -   name: Configure sysctl limits
                 run: |

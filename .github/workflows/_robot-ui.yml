@@ -15,6 +15,10 @@ on:
                 description: "Robot db_engine variable, e.g. psycopg2. Empty leaves the Robot suite default."
                 type: string
                 default: ""
+            prefer-lowest:
+                description: "Resolve composer dependencies to their lowest allowed versions instead of the lock file."
+                type: boolean
+                default: false
 
 env:
     SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
@@ -43,6 +47,7 @@ jobs:
             -   uses: ramsey/composer-install@a8d0d959dab41457692a5e2041bd9b757a119e3f # v3
                 with:
                     composer-options: "-q --ignore-platform-reqs --optimize-autoloader --no-interaction --prefer-install=auto"
+                    dependency-versions: ${{ inputs.prefer-lowest && 'lowest' || 'locked' }}
 
             #  needed for mount:baked
             #-   name: Install robotframework-suite-tests folder
