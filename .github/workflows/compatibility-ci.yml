@@ -33,6 +33,7 @@ jobs:
             functional-deploy-file: ".github/deploy/deploy.ci.functional.postgres.yml"
             # The shared dump is built by mariadb-dump, so this lane imports demodata.
             restore-db: false
+            prefer-lowest: true
 
     compat-robot-api:
         if: >
@@ -46,6 +47,7 @@ jobs:
             db-engine: psycopg2
             # No PostgreSQL deploy file for the marketplace-uninstalled B2B API run exists.
             include-b2b: false
+            prefer-lowest: true
 
     compat-robot-ui:
         if: >
@@ -57,6 +59,7 @@ jobs:
             platform-image: "spryker/php:8.3"
             deploy-file: ".github/deploy/deploy.ci.acceptance.postgres.robot.yml"
             db-engine: psycopg2
+            prefer-lowest: true
 
     compat-cypress:
         if: >
@@ -70,6 +73,7 @@ jobs:
             # Marketplace-uninstalled Cypress has no PostgreSQL counterpart to cover.
             repository-ids: '["b2b-mp"]'
             artifact-platform: "PHP8.3Postgres"
+            prefer-lowest: true
 
     # Own label, own lifecycle: this proves the frontend images build, not that tests pass.
     frontend-assets:
