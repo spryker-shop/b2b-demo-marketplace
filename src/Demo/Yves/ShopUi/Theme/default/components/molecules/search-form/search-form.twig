@@ -41,11 +41,13 @@
         } only %}
 
         {% if data.byImage and widgetGlobalExists('ImageSearchAiWidget') %}
-            {% widget 'ImageSearchAiWidget' with {
-                data: {
-                    dataSearchId: attributes['data-search-id'],
-                },
-            } only %}{% endwidget %}
+            <div class="{{ config.name }}__search-by-image">
+                {% widget 'ImageSearchAiWidget' with {
+                    data: {
+                        dataSearchId: attributes['data-search-id'],
+                    },
+                } only %}{% endwidget %}
+            </div>
         {% endif %}
 
        <button
