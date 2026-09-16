@@ -1,12 +1,26 @@
 @include ai-commerce-search-by-image {
     &__popup-trigger {
         @include helper-effect-transition(rotate);
-        background: none;
-        cursor: pointer;
+        align-items: center;
+        background: var(--background-subtle);
+        border: none;
+        border-radius: var(--radius-sm);
+        color: var(--icon-primary);
         display: flex;
+        flex-shrink: 0;
+        font-size: 1rem;
+        height: 1.75rem;
+        justify-content: center;
+        padding: 0;
+        position: absolute;
+        right: var(--scale-40);
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1.75rem;
+        cursor: pointer;
 
         &:hover {
-            rotate: 90deg;
+            background: var(--background-muted);
         }
     }
 }

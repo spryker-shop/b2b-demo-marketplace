@@ -10,7 +10,7 @@
     {% set triggerButtonPhotoPopupTriggerClassname = "js-search-by-image__photo-popup-trigger--#{data.dataSearchId}-#{instanceUid}" %}
 
     {% block triggerFileButton %}
-        <button type="button" class="{{ config.jsName }}__btn-search-by-file {{ triggerButtonClassname }} {{ triggerButtonFilePopupTriggerClassname }}">
+        <button type="button" class="{{ config.name }}__btn-search-by-file {{ config.jsName }}__btn-search-by-file {{ triggerButtonClassname }} {{ triggerButtonFilePopupTriggerClassname }}">
             {% include atom('icon') with {
                 data: { name: 'visual-search' },
             } only %}
