@@ -47,11 +47,20 @@
                 {
                     "type": "remove_plugin",
                     "plugin_class": "MerchantPortalConfigurationAclEntityMetadataConfigExpanderPlugin"
+                },
+                {
+                    "type": "remove_use",
+                    "class_name": "NoCurrentMerchantUserAclEntityDisablerPlugin"
+                },
+                {
+                    "type": "remove_plugin",
+                    "plugin_class": "NoCurrentMerchantUserAclEntityDisablerPlugin"
                 }
             ],
             "success_messages": [
                 "✓ AclEntityDependencyProvider cleaned from marketplace-specific code",
-                "✓ Removed MerchantPortalConfigurationAclEntityMetadataConfigExpanderPlugin"
+                "✓ Removed MerchantPortalConfigurationAclEntityMetadataConfigExpanderPlugin",
+                "✓ Removed NoCurrentMerchantUserAclEntityDisablerPlugin"
             ]
         },
         "src/Pyz/Zed/AvailabilityGui/AvailabilityGuiDependencyProvider.php": {
@@ -962,6 +971,13 @@
                 { "type": "remove_plugin", "plugin_class": "MerchantProductCartItemExpanderPlugin" }
             ],
             "success_messages": ["✓ Glue CartsRestApiDependencyProvider cleaned from marketplace-specific plugins"]
+        },
+        "src/Pyz/Glue/GlueBackendApiApplication/GlueBackendApiApplicationDependencyProvider.php": {
+            "operations": [
+                { "type": "remove_use", "class_name": "AclEntityApplicationPlugin" },
+                { "type": "remove_plugin", "plugin_class": "AclEntityApplicationPlugin" }
+            ],
+            "success_messages": ["✓ Glue GlueBackendApiApplicationDependencyProvider cleaned from marketplace-specific plugins"]
         },
         "src/Pyz/Glue/GlueApplication/GlueApplicationDependencyProvider.php": {
             "operations": [
