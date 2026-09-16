@@ -11,12 +11,22 @@ namespace PyzTest\Glue\CustomerExperienceManagement\Helper;
 
 use Codeception\Module;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
+use Generated\Shared\Transfer\CompanyRoleTransfer;
+use Generated\Shared\Transfer\CompanyTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer;
 use Generated\Shared\Transfer\UserTransfer;
+use Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface;
 use SprykerTest\Shared\Customer\Helper\CustomerDataHelper;
 use SprykerTest\Shared\CustomerNote\Helper\CustomerNoteDataHelper;
+use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 use SprykerTest\Shared\User\Helper\UserDataHelper;
+use SprykerTest\Zed\Company\Helper\CompanyHelper;
+use SprykerTest\Zed\CompanyBusinessUnit\Helper\CompanyBusinessUnitHelper;
+use SprykerTest\Zed\CompanyRole\Helper\CompanyRoleHelper;
 
 /**
  * Request building and fixture arrangement for every resource of the CustomerExperienceManagement
@@ -31,11 +41,21 @@ use SprykerTest\Shared\User\Helper\UserDataHelper;
  */
 class CustomerExperienceManagementBackendApiHelper extends Module
 {
+    use LocatorHelperTrait;
+
     public const string RESOURCE_CUSTOMERS = 'customers';
+
+    public const string RESOURCE_COMPANY_USERS = 'company-users';
 
     public const string RESOURCE_ADDRESSES = 'addresses';
 
     public const string RESOURCE_NOTES = 'notes';
+
+    public const string OPERATION_SET_STATUS = 'set-status';
+
+    public const string OPERATION_SET_DEFAULT = 'set-default';
+
+    public const string RESOURCE_COMPANIES = 'companies';
 
     /**
      * Distinguishes the customers of one test method from every other row in the database, so a
@@ -44,9 +64,15 @@ class CustomerExperienceManagementBackendApiHelper extends Module
      */
     protected const string LISTED_LAST_NAME_PREFIX = 'CxmListed';
 
-    protected const string LISTED_FIRST_NAME_FIRST = 'Aaron';
+    protected const string LISTED_COMPANY_NAME_PREFIX = 'CxmListedCompany';
 
-    protected const string LISTED_FIRST_NAME_SECOND = 'Zoe';
+    protected const string LISTED_COMPANY_NAME_FIRST = 'Aaa';
+
+    protected const string LISTED_COMPANY_NAME_SECOND = 'Zzz';
+
+    public const string LISTED_FIRST_NAME_FIRST = 'Aaron';
+
+    public const string LISTED_FIRST_NAME_SECOND = 'Zoe';
 
     protected const string ISO2_CODE = 'DE';
 
@@ -66,6 +92,16 @@ class CustomerExperienceManagementBackendApiHelper extends Module
 
     protected const string ZIP_CODE_SECOND_ADDRESS = '10115';
 
+    /**
+     * Resource-only: the company user resource addresses its related entities by public reference
+     * and uuid, none of which the CompanyUser transfer has a counterpart for.
+     */
+    protected const string ATTRIBUTE_COMPANY_UUID = 'companyUuid';
+
+    protected const string ATTRIBUTE_COMPANY_BUSINESS_UNIT_UUID = 'companyBusinessUnitUuid';
+
+    protected const string ATTRIBUTE_COMPANY_ROLE_UUIDS = 'companyRoleUuids';
+
     public function getIso2Code(): string
     {
         return static::ISO2_CODE;
@@ -84,6 +120,59 @@ class CustomerExperienceManagementBackendApiHelper extends Module
     public function getSecondAddressCity(): string
     {
         return static::CITY_SECOND_ADDRESS;
+    }
+
+    // ---------------------------------------------------------------- companies
+
+    /**
+     * @param array<string, mixed> $override
+     *
+     * @return array<string, mixed>
+     */
+    public function buildValidCompanyAttributes(array $override = []): array
+    {
+        return $override + [
+            CompanyTransfer::NAME => uniqid('CxmCompany', false),
+        ];
+    }
+
+    /**
+     * @param array<string, mixed> $attributes
+     */
+    public function buildCompanyRequestBody(array $attributes, ?string $uuid = null): string
+    {
+        return $this->buildRequestBody(static::RESOURCE_COMPANIES, $attributes, $uuid);
+    }
+
+    /**
+     * @return non-empty-string
+     */
+    public function getCompanyUrl(string $uuid): string
+    {
+        return sprintf('/%s/%s', static::RESOURCE_COMPANIES, $uuid);
+    }
+
+    /**
+     * @param array<string, mixed> $query
+     */
+    public function getCompanyCollectionUrl(array $query = []): string
+    {
+        return sprintf('/%s', static::RESOURCE_COMPANIES) . $this->formatQuery($query);
+    }
+
+    public function buildListedCompanyNameToken(): string
+    {
+        return uniqid(static::LISTED_COMPANY_NAME_PREFIX);
+    }
+
+    public function buildFirstListedCompanyName(string $token): string
+    {
+        return $token . static::LISTED_COMPANY_NAME_FIRST;
+    }
+
+    public function buildSecondListedCompanyName(string $token): string
+    {
+        return $token . static::LISTED_COMPANY_NAME_SECOND;
     }
 
     // ---------------------------------------------------------------- customers
@@ -328,6 +417,223 @@ class CustomerExperienceManagementBackendApiHelper extends Module
     public function haveNoteAuthor(): UserTransfer
     {
         return $this->getUserDataHelper()->haveUser();
+    }
+
+    // ---------------------------------------------------------------- company users
+
+    /**
+     * @param array<string, mixed> $query
+     */
+    public function getCompanyUserCollectionUrl(array $query = []): string
+    {
+        return sprintf('/%s', static::RESOURCE_COMPANY_USERS) . $this->formatQuery($query);
+    }
+
+    /**
+     * @return non-empty-string
+     */
+    public function getCompanyUserUrl(string $uuid): string
+    {
+        return sprintf('/%s/%s', static::RESOURCE_COMPANY_USERS, $uuid);
+    }
+
+    /**
+     * @return non-empty-string
+     */
+    public function getCompanyUserSetStatusUrl(string $uuid): string
+    {
+        return sprintf('/%s/%s/%s', static::RESOURCE_COMPANY_USERS, $uuid, static::OPERATION_SET_STATUS);
+    }
+
+    /**
+     * @return non-empty-string
+     */
+    public function getCompanyUserSetDefaultUrl(string $uuid): string
+    {
+        return sprintf('/%s/%s/%s', static::RESOURCE_COMPANY_USERS, $uuid, static::OPERATION_SET_DEFAULT);
+    }
+
+    /**
+     * @param array<string, mixed> $attributes
+     */
+    public function buildCompanyUserRequestBody(array $attributes): string
+    {
+        return $this->buildRequestBody(static::RESOURCE_COMPANY_USERS, $attributes);
+    }
+
+    /**
+     * @return array{company: \Generated\Shared\Transfer\CompanyTransfer, businessUnit: \Generated\Shared\Transfer\CompanyBusinessUnitTransfer, role: \Generated\Shared\Transfer\CompanyRoleTransfer}
+     */
+    public function haveCompanyContext(): array
+    {
+        // haveCompany() rather than haveActiveCompany(): approving a company fires
+        // SendCompanyStatusChangePlugin, and CompanyMailConnector resolves its mail facade from the
+        // bare 'FACADE_MAIL' key that CustomerDataHelper has already registered a Customer-specific
+        // bridge under — a TypeError as soon as a customer was created earlier in the same test.
+        // No company-user write checks the company status; the pre-check plugin only checks that it
+        // exists.
+        $companyTransfer = $this->getCompanyHelper()->haveCompany();
+        $idCompany = $companyTransfer->getIdCompanyOrFail();
+
+        return [
+            'company' => $companyTransfer,
+            'businessUnit' => $this->haveBusinessUnitFor($idCompany),
+            'role' => $this->haveRoleFor($idCompany),
+        ];
+    }
+
+    public function haveBusinessUnitFor(int $idCompany): CompanyBusinessUnitTransfer
+    {
+        return $this->getCompanyBusinessUnitHelper()->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $idCompany,
+        ]);
+    }
+
+    public function haveRoleFor(int $idCompany): CompanyRoleTransfer
+    {
+        return $this->getCompanyRoleHelper()->haveCompanyRole([
+            CompanyRoleTransfer::FK_COMPANY => $idCompany,
+        ]);
+    }
+
+    public function getListedCompanyUserLastName(): string
+    {
+        return uniqid(static::LISTED_LAST_NAME_PREFIX);
+    }
+
+    /**
+     * @return array{0: \Generated\Shared\Transfer\CompanyUserTransfer, 1: \Generated\Shared\Transfer\CompanyUserTransfer}
+     */
+    public function haveTwoListedCompanyUsers(
+        CompanyTransfer $companyTransfer,
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer,
+        CompanyRoleTransfer $companyRoleTransfer,
+        string $listedLastName,
+    ): array {
+        $secondBusinessUnitTransfer = $this->haveBusinessUnitFor($companyTransfer->getIdCompanyOrFail());
+
+        return [
+            $this->haveCompanyUserFor(
+                $companyTransfer,
+                $companyBusinessUnitTransfer,
+                $companyRoleTransfer,
+                static::LISTED_FIRST_NAME_FIRST,
+                $listedLastName,
+            ),
+            $this->haveCompanyUserFor(
+                $companyTransfer,
+                $secondBusinessUnitTransfer,
+                $companyRoleTransfer,
+                static::LISTED_FIRST_NAME_SECOND,
+                $listedLastName,
+            ),
+        ];
+    }
+
+    public function haveCompanyUserFor(
+        CompanyTransfer $companyTransfer,
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer,
+        CompanyRoleTransfer $companyRoleTransfer,
+        string $firstName = self::LISTED_FIRST_NAME_FIRST,
+        ?string $lastName = null,
+    ): CompanyUserTransfer {
+        $customerTransfer = $this->haveCompanyUserCustomer($firstName, $lastName ?? $this->getListedCompanyUserLastName());
+
+        $companyUserTransfer = (new CompanyUserTransfer())
+            ->setCustomer($customerTransfer)
+            ->setFkCustomer($customerTransfer->getIdCustomerOrFail())
+            ->setCompany($companyTransfer)
+            ->setFkCompany($companyTransfer->getIdCompanyOrFail())
+            ->setCompanyBusinessUnit($companyBusinessUnitTransfer)
+            ->setFkCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnitOrFail())
+            ->setCompanyRoleCollection(
+                (new CompanyRoleCollectionTransfer())->addRole($companyRoleTransfer),
+            );
+
+        $companyUserResponseTransfer = $this->getCompanyUserFacade()->create($companyUserTransfer);
+
+        if (!$companyUserResponseTransfer->getIsSuccessful()) {
+            $this->fail(sprintf(
+                'Could not provision the company user under test: %s',
+                implode('; ', array_map(
+                    static fn ($responseMessageTransfer): string => (string)$responseMessageTransfer->getText(),
+                    $companyUserResponseTransfer->getMessages()->getArrayCopy(),
+                )),
+            ));
+        }
+
+        return $companyUserResponseTransfer->getCompanyUserOrFail();
+    }
+
+    public function haveCompanyUserCustomer(string $firstName, string $lastName): CustomerTransfer
+    {
+        return $this->getCustomerDataHelper()->haveCustomer([
+            CustomerTransfer::EMAIL => sprintf('%s.%s@spryker.local', strtolower($firstName), strtolower($lastName)),
+            CustomerTransfer::FIRST_NAME => $firstName,
+            CustomerTransfer::LAST_NAME => $lastName,
+        ]);
+    }
+
+    /**
+     * @param array<string, mixed> $override
+     *
+     * @return array<string, mixed>
+     */
+    public function buildValidCompanyUserAttributes(
+        CompanyTransfer $companyTransfer,
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer,
+        CompanyRoleTransfer $companyRoleTransfer,
+        array $override = [],
+    ): array {
+        return $override + [
+            static::ATTRIBUTE_COMPANY_UUID => $companyTransfer->getUuidOrFail(),
+            static::ATTRIBUTE_COMPANY_BUSINESS_UNIT_UUID => $companyBusinessUnitTransfer->getUuidOrFail(),
+            static::ATTRIBUTE_COMPANY_ROLE_UUIDS => [$companyRoleTransfer->getUuidOrFail()],
+        ];
+    }
+
+    /**
+     * @param array<string, mixed> $override
+     *
+     * @return array<string, mixed>
+     */
+    public function buildNewCustomerAttributes(array $override = []): array
+    {
+        return $override + [
+            CustomerTransfer::EMAIL => uniqid('cxm.company.user.', true) . '@spryker.local',
+            CustomerTransfer::SALUTATION => 'Mr',
+            CustomerTransfer::FIRST_NAME => 'Created',
+            CustomerTransfer::LAST_NAME => 'ViaBackendApi',
+        ];
+    }
+
+    protected function getCompanyUserFacade(): CompanyUserFacadeInterface
+    {
+        return $this->getLocator()->companyUser()->facade();
+    }
+
+    protected function getCompanyHelper(): CompanyHelper
+    {
+        /** @var \SprykerTest\Zed\Company\Helper\CompanyHelper $companyHelper */
+        $companyHelper = $this->getModule('\\' . CompanyHelper::class);
+
+        return $companyHelper;
+    }
+
+    protected function getCompanyBusinessUnitHelper(): CompanyBusinessUnitHelper
+    {
+        /** @var \SprykerTest\Zed\CompanyBusinessUnit\Helper\CompanyBusinessUnitHelper $companyBusinessUnitHelper */
+        $companyBusinessUnitHelper = $this->getModule('\\' . CompanyBusinessUnitHelper::class);
+
+        return $companyBusinessUnitHelper;
+    }
+
+    protected function getCompanyRoleHelper(): CompanyRoleHelper
+    {
+        /** @var \SprykerTest\Zed\CompanyRole\Helper\CompanyRoleHelper $companyRoleHelper */
+        $companyRoleHelper = $this->getModule('\\' . CompanyRoleHelper::class);
+
+        return $companyRoleHelper;
     }
 
     /**

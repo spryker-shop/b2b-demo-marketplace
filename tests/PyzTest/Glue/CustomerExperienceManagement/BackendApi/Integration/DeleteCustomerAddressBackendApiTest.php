@@ -32,6 +32,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @group Integration
  * @group DeleteCustomerAddressBackendApiTest
  * Add your own group annotations below this line
+ * @group CustomerAddresses
  */
 class DeleteCustomerAddressBackendApiTest extends AbstractCustomerExperienceManagementBackendApiTestCase
 {

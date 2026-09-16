@@ -1,4 +1,4 @@
-namespace: PyzTest\Glue\CustomerExperienceManagement
+namespace: PyzTest\Glue\CategoriesBackend
 
 paths:
     tests: .
@@ -14,19 +14,15 @@ coverage:
 suites:
     BackendApiIntegration:
         path: BackendApi/Integration
-        actor: CustomerExperienceManagementBackendApiIntegrationTester
+        actor: CategoriesBackendApiIntegrationTester
         modules:
             enabled:
                 - \SprykerTest\ApiPlatform\Helper\BackendApiIntegrationHelper:
                       environmentModule: '\PyzTest\Shared\Testify\Helper\Environment'
                       projectNamespaces: ['Pyz']
                 - \SprykerTest\Shared\User\Helper\UserDataHelper
-                - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper
-                - \SprykerTest\Shared\CustomerNote\Helper\CustomerNoteDataHelper
-                - \SprykerTest\Zed\Company\Helper\CompanyHelper
-                - \SprykerTest\Zed\CompanyBusinessUnit\Helper\CompanyBusinessUnitHelper
-                - \SprykerTest\Zed\CompanyRole\Helper\CompanyRoleHelper
-                - \PyzTest\Glue\CustomerExperienceManagement\Helper\CustomerExperienceManagementBackendApiHelper
+                - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+                - \PyzTest\Glue\CategoriesBackend\Helper\CategoriesBackendApiHelper
                 - \SprykerTest\ApiPlatform\Helper\BackendApiLoginHelper
                 - \SprykerTest\ApiPlatform\Helper\ApiPlatformHelper:
                       mode: 'project'

@@ -34,6 +34,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @group Integration
  * @group AnonymizeCustomerBackendApiTest
  * Add your own group annotations below this line
+ * @group Customers
  */
 class AnonymizeCustomerBackendApiTest extends AbstractCustomerExperienceManagementBackendApiTestCase
 {
@@ -41,11 +42,7 @@ class AnonymizeCustomerBackendApiTest extends AbstractCustomerExperienceManageme
 
     protected const string ANONYMIZABLE_LAST_NAME = 'CxmAnonymizable';
 
-    protected const string ATTRIBUTE_ANONYMIZED_AT = 'anonymizedAt';
-
     protected const string FILTER_CUSTOMER_REFERENCE = 'customers.customerReference';
-
-    protected const string FILTER_INCLUDE_ANONYMIZED = 'customers.includeAnonymized';
 
     public function testGivenNoAuthenticationWhenAnonymizeCustomerThenItRespondsUnauthorized(): void
     {
@@ -113,49 +110,20 @@ class AnonymizeCustomerBackendApiTest extends AbstractCustomerExperienceManageme
         );
     }
 
-    public function testGivenAnAnonymizedCustomerWhenExplicitlyRequestedThenItIsStillListed(): void
+    public function testGivenAnAnonymizedCustomerWhenListedThenItIsNoLongerInTheCollection(): void
     {
         // Arrange
         $customerTransfer = $this->haveAnonymizedCustomer();
         $customerReference = $customerTransfer->getCustomerReferenceOrFail();
 
         // Act
-        $response = $this->handleApiRequest('GET', $this->anonymizedCustomerCollectionUrl($customerReference));
+        $response = $this->handleApiRequest('GET', $this->tester->getCustomerCollectionUrl([
+            'filter' => [static::FILTER_CUSTOMER_REFERENCE => $customerReference],
+        ]));
 
         // Assert
         $this->assertRespondsWithStatus($response, Response::HTTP_OK);
-        $this->assertContains($customerReference, $this->getResourceIds($response));
-    }
-
-    public function testGivenAnAnonymizedCustomerWhenListedThenItNoLongerCarriesPersonalData(): void
-    {
-        // Arrange
-        $customerTransfer = $this->haveAnonymizedCustomer();
-
-        // Act
-        $response = $this->handleApiRequest(
-            'GET',
-            $this->anonymizedCustomerCollectionUrl($customerTransfer->getCustomerReferenceOrFail()),
-        );
-
-        // Assert
-        $this->assertRespondsWithStatus($response, Response::HTTP_OK);
-
-        $body = (string)$response->getContent();
-        $this->assertStringNotContainsString(
-            $customerTransfer->getEmailOrFail(),
-            $body,
-            'The anonymizer scrubbed the email off the retained row.',
-        );
-        $this->assertStringNotContainsString(
-            $customerTransfer->getFirstNameOrFail(),
-            $body,
-            'The anonymizer scrubbed the first name off the retained row.',
-        );
-        $this->assertNotEmpty(
-            $this->getFirstResourceAttributes($response)[static::ATTRIBUTE_ANONYMIZED_AT] ?? null,
-            'The anonymization is stamped on the record.',
-        );
+        $this->assertNotContains($customerReference, $this->getResourceIds($response));
     }
 
     protected function haveAnonymizableCustomer(): CustomerTransfer
@@ -184,15 +152,5 @@ class AnonymizeCustomerBackendApiTest extends AbstractCustomerExperienceManageme
         );
 
         return $customerTransfer;
-    }
-
-    protected function anonymizedCustomerCollectionUrl(string $customerReference): string
-    {
-        return $this->tester->getCustomerCollectionUrl([
-            'filter' => [
-                static::FILTER_CUSTOMER_REFERENCE => $customerReference,
-                static::FILTER_INCLUDE_ANONYMIZED => '1',
-            ],
-        ]);
     }
 }

@@ -29,6 +29,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @group Integration
  * @group GetSingleCustomerBackendApiTest
  * Add your own group annotations below this line
+ * @group Customers
  */
 class GetSingleCustomerBackendApiTest extends AbstractCustomerExperienceManagementBackendApiTestCase
 {

@@ -32,6 +32,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @group Integration
  * @group CustomerAddressOwnershipBackendApiTest
  * Add your own group annotations below this line
+ * @group CustomerAddresses
  */
 class CustomerAddressOwnershipBackendApiTest extends AbstractCustomerExperienceManagementBackendApiTestCase
 {

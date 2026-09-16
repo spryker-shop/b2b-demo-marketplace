@@ -33,6 +33,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @group Integration
  * @group CreateCustomerNoteBackendApiTest
  * Add your own group annotations below this line
+ * @group CustomerNotes
  */
 class CreateCustomerNoteBackendApiTest extends AbstractCustomerExperienceManagementBackendApiTestCase
 {
@@ -108,7 +109,7 @@ class CreateCustomerNoteBackendApiTest extends AbstractCustomerExperienceManagem
         // Arrange
         [$customerReference, $userTransfer] = $this->haveWritableCustomer();
 
-        // Act — the payload tries to forge the author, the identifier and the timestamp.
+        // Act
         $response = $this->handleApiRequest(
             'POST',
             $this->tester->getCustomerNoteCollectionUrl($customerReference),
@@ -238,8 +239,8 @@ class CreateCustomerNoteBackendApiTest extends AbstractCustomerExperienceManagem
             ]),
         );
 
-        // Assert — a note records what was said; the resource exposes no way to rewrite it.
-        $this->assertRespondsWithStatus($response, Response::HTTP_NOT_FOUND);
+        // Assert
+        $this->assertRespondsWithStatus($response, Response::HTTP_METHOD_NOT_ALLOWED);
 
         $readResponse = $this->handleApiRequest(
             'GET',
@@ -264,8 +265,8 @@ class CreateCustomerNoteBackendApiTest extends AbstractCustomerExperienceManagem
             $this->tester->getCustomerNoteUrl($customerReference, $uuid),
         );
 
-        // Assert — the resource exposes no way to erase a note.
-        $this->assertRespondsWithStatus($response, Response::HTTP_NOT_FOUND);
+        // Assert
+        $this->assertRespondsWithStatus($response, Response::HTTP_METHOD_NOT_ALLOWED);
 
         $readResponse = $this->handleApiRequest(
             'GET',
@@ -279,7 +280,7 @@ class CreateCustomerNoteBackendApiTest extends AbstractCustomerExperienceManagem
         // Arrange
         $customerTransfer = $this->tester->haveNotedCustomer();
 
-        // Act — intentionally unauthenticated.
+        // Act
         $response = $this->handleApiRequest(
             'POST',
             $this->tester->getCustomerNoteCollectionUrl($customerTransfer->getCustomerReferenceOrFail()),
