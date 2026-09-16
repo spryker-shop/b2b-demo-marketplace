@@ -1,0 +1,23 @@
+{% extends molecule('quote-request-cart-item', '@Pyz:QuoteRequestPage') %}
+
+{% block sourcePriceForm %}
+    {{ parent() }}
+
+    {% if is_granted('ROLE_AGENT') %}
+        {% set costPriceOriginUnitPrice = (data.priceMode == 'GROSS_MODE') ? data.cartItem.originUnitGrossPrice : data.cartItem.originUnitNetPrice %}
+        {% include molecule('cost-price', 'quote-request-page') with {
+            data: {
+                priceToPay: data.cartItem.unitPrice,
+                costPrice: data.cartItem.unitCostPrice,
+                currencyCode: data.currency.code,
+            },
+            attributes: {
+                'original-price': costPriceOriginUnitPrice,
+                'cost-price': data.cartItem.unitCostPrice,
+                'cost-price-formatted': data.cartItem.unitCostPrice | money(true, data.currency.code),
+            },
+        } only %}
+    {% endif %}
+{% endblock %}
+
+                

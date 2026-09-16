@@ -1,0 +1,11 @@
+@use 'src/ShopUi/components/molecules/search-form/search-form' as pyz-search-form;
+
+@include pyz-search-form.shop-ui-search-form('.search-form') {
+    $name: '.search-form';
+    
+    &:has(.search-by-image) {
+        #{$name}__clear {
+            right: rem(80);
+        }
+    }
+}
