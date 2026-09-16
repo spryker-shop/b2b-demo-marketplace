@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "96a08672524a55c6f13a1d5f5b14abf8",
+    "content-hash": "dfd439a37ee9e3cd0d08e9e53edb14b0",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -20902,16 +20902,16 @@
         },
         {
             "name": "spryker-shop/product-detail-page",
-            "version": "3.33.0",
+            "version": "3.33.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-shop/product-detail-page.git",
-                "reference": "6383f98c3a6bbedbd438c191812c453fabae3aa3"
+                "reference": "58aef5e05dc818094d29689bc584d00cf292b2fe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-shop/product-detail-page/zipball/6383f98c3a6bbedbd438c191812c453fabae3aa3",
-                "reference": "6383f98c3a6bbedbd438c191812c453fabae3aa3",
+                "url": "https://api.github.com/repos/spryker-shop/product-detail-page/zipball/58aef5e05dc818094d29689bc584d00cf292b2fe",
+                "reference": "58aef5e05dc818094d29689bc584d00cf292b2fe",
                 "shasum": ""
             },
             "require": {
@@ -20963,9 +20963,9 @@
             ],
             "description": "ProductDetailPage module",
             "support": {
-                "source": "https://github.com/spryker-shop/product-detail-page/tree/3.33.0"
+                "source": "https://github.com/spryker-shop/product-detail-page/tree/3.33.1"
             },
-            "time": "2026-08-04T08:22:01+00:00"
+            "time": "2026-08-28T09:15:26+00:00"
         },
         {
             "name": "spryker-shop/product-discontinued-widget",
@@ -29389,37 +29389,45 @@
         },
         {
             "name": "spryker/category",
-            "version": "5.24.2",
+            "version": "5.26.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/category.git",
-                "reference": "87cb38e0da44573a6e5302f458e2dee51808cfb9"
+                "reference": "ea3be6404695cb5ba8e3c3019f05a9c03a14f481"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/category/zipball/87cb38e0da44573a6e5302f458e2dee51808cfb9",
-                "reference": "87cb38e0da44573a6e5302f458e2dee51808cfb9",
+                "url": "https://api.github.com/repos/spryker/category/zipball/ea3be6404695cb5ba8e3c3019f05a9c03a14f481",
+                "reference": "ea3be6404695cb5ba8e3c3019f05a9c03a14f481",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.3",
                 "spryker/acl-merchant-portal-extension": "^1.0.0",
                 "spryker/category-extension": "^1.2.0",
+                "spryker/category-image": "^1.0.0",
                 "spryker/event": "^2.3.0",
                 "spryker/kernel": "^3.30.0",
                 "spryker/locale": "^3.0.0 || ^4.0.0",
+                "spryker/product-extension": "^1.6.0",
                 "spryker/propel": "^3.0.0",
                 "spryker/propel-orm": "^1.22.0",
                 "spryker/store": "^1.0.0",
+                "spryker/symfony": "^3.0.0",
                 "spryker/touch": "^4.5.0",
                 "spryker/transfer": "^3.27.0",
-                "spryker/url": "^3.5.0"
+                "spryker/url": "^3.5.0",
+                "spryker/uuid-behavior": "^1.3.0"
             },
             "require-dev": {
+                "spryker/api-platform": "*",
                 "spryker/code-sniffer": "*",
                 "spryker/container": "*",
                 "spryker/silex": "*",
                 "spryker/testify": "*"
+            },
+            "suggest": {
+                "spryker/api-platform": "Required to expose the categories Backend API resource; without it the resource schema is never discovered."
             },
             "type": "library",
             "extra": {
@@ -29440,9 +29448,9 @@
             ],
             "description": "Category module",
             "support": {
-                "source": "https://github.com/spryker/category/tree/5.24.2"
+                "source": "https://github.com/spryker/category/tree/5.26.3"
             },
-            "time": "2026-07-30T11:48:21+00:00"
+            "time": "2026-09-11T10:39:08+00:00"
         },
         {
             "name": "spryker/category-data-feed",
@@ -30277,16 +30285,16 @@
         },
         {
             "name": "spryker/chart",
-            "version": "1.6.4",
+            "version": "1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/chart.git",
-                "reference": "94a56a6d7d377d2df60ed5ec2fe12cfb17677d3b"
+                "reference": "39c3e4d122f9a0d00eb50d91ee0211c6444bb767"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/chart/zipball/94a56a6d7d377d2df60ed5ec2fe12cfb17677d3b",
-                "reference": "94a56a6d7d377d2df60ed5ec2fe12cfb17677d3b",
+                "url": "https://api.github.com/repos/spryker/chart/zipball/39c3e4d122f9a0d00eb50d91ee0211c6444bb767",
+                "reference": "39c3e4d122f9a0d00eb50d91ee0211c6444bb767",
                 "shasum": ""
             },
             "require": {
@@ -30323,9 +30331,9 @@
             ],
             "description": "Chart module",
             "support": {
-                "source": "https://github.com/spryker/chart/tree/1.6.4"
+                "source": "https://github.com/spryker/chart/tree/1.7.0"
             },
-            "time": "2026-07-30T15:08:17+00:00"
+            "time": "2026-09-10T06:35:29+00:00"
         },
         {
             "name": "spryker/chart-gui",
@@ -65626,16 +65634,16 @@
         },
         {
             "name": "spryker/propel-orm",
-            "version": "1.25.1",
+            "version": "1.26.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/propel-orm.git",
-                "reference": "5f1034103fe65f14d58f09ccc0e245a9c6e761e9"
+                "reference": "d510892f1f91c0055839391aa9999b85098efe67"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/propel-orm/zipball/5f1034103fe65f14d58f09ccc0e245a9c6e761e9",
-                "reference": "5f1034103fe65f14d58f09ccc0e245a9c6e761e9",
+                "url": "https://api.github.com/repos/spryker/propel-orm/zipball/d510892f1f91c0055839391aa9999b85098efe67",
+                "reference": "d510892f1f91c0055839391aa9999b85098efe67",
                 "shasum": ""
             },
             "require": {
@@ -65671,9 +65679,9 @@
             ],
             "description": "PropelOrm module",
             "support": {
-                "source": "https://github.com/spryker/propel-orm/tree/1.25.1"
+                "source": "https://github.com/spryker/propel-orm/tree/1.26.0"
             },
-            "time": "2026-08-21T15:09:48+00:00"
+            "time": "2026-09-03T14:06:31+00:00"
         },
         {
             "name": "spryker/propel-orm-extension",
@@ -79342,16 +79350,16 @@
         },
         {
             "name": "spryker/workflow",
-            "version": "0.1.2",
+            "version": "0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/workflow.git",
-                "reference": "4b539ce7b317b994aa149f8310b77060d1f7646f"
+                "reference": "604fb9db91af4d3a2636e231a6f881cb3394ac2a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/workflow/zipball/4b539ce7b317b994aa149f8310b77060d1f7646f",
-                "reference": "4b539ce7b317b994aa149f8310b77060d1f7646f",
+                "url": "https://api.github.com/repos/spryker/workflow/zipball/604fb9db91af4d3a2636e231a6f881cb3394ac2a",
+                "reference": "604fb9db91af4d3a2636e231a6f881cb3394ac2a",
                 "shasum": ""
             },
             "require": {
@@ -79392,9 +79400,9 @@
             ],
             "description": "Workflow module",
             "support": {
-                "source": "https://github.com/spryker/workflow/tree/0.1.2"
+                "source": "https://github.com/spryker/workflow/tree/0.2.0"
             },
-            "time": "2026-08-27T07:50:45+00:00"
+            "time": "2026-09-15T11:26:05+00:00"
         },
         {
             "name": "spryker/zed-navigation",
@@ -90550,16 +90558,16 @@
         },
         {
             "name": "react/http",
-            "version": "v1.11.0",
+            "version": "v1.11.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/reactphp/http.git",
-                "reference": "8db02de41dcca82037367f67a2d4be365b1c4db9"
+                "reference": "e5b8eb2654dec6cbbc692a39f05ea4ecd40c8cc1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/reactphp/http/zipball/8db02de41dcca82037367f67a2d4be365b1c4db9",
-                "reference": "8db02de41dcca82037367f67a2d4be365b1c4db9",
+                "url": "https://api.github.com/repos/reactphp/http/zipball/e5b8eb2654dec6cbbc692a39f05ea4ecd40c8cc1",
+                "reference": "e5b8eb2654dec6cbbc692a39f05ea4ecd40c8cc1",
                 "shasum": ""
             },
             "require": {
@@ -90576,7 +90584,7 @@
                 "clue/http-proxy-react": "^1.8",
                 "clue/reactphp-ssh-proxy": "^1.4",
                 "clue/socks-react": "^1.4",
-                "phpunit/phpunit": "^9.6 || ^5.7 || ^4.8.36",
+                "phpunit/phpunit": "^9.6 || ^8.5 || ^5.7 || ^4.8.36",
                 "react/async": "^4.2 || ^3 || ^2",
                 "react/promise-stream": "^1.4",
                 "react/promise-timer": "^1.11"
@@ -90629,7 +90637,7 @@
             ],
             "support": {
                 "issues": "https://github.com/reactphp/http/issues",
-                "source": "https://github.com/reactphp/http/tree/v1.11.0"
+                "source": "https://github.com/reactphp/http/tree/v1.11.1"
             },
             "funding": [
                 {
@@ -90637,7 +90645,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2024-11-20T15:24:08+00:00"
+            "time": "2026-09-09T07:08:28+00:00"
         },
         {
             "name": "react/socket",
