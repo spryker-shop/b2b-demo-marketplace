@@ -1,7 +1,8 @@
 @use 'src/CartPage/components/molecules/cart-item-details/cart-item-details.scss' as pyz-cart-item-details;
 
+$name: '.cart-item-details';
+
 @include pyz-cart-item-details.cart-page-cart-item-details {
-    $name: '.cart-item-details';
     @include typography(body-sm);
 
     &__margin {

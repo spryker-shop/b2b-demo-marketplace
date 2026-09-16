@@ -10,7 +10,7 @@ $product-review-rating-selector-star-mask: url("data:image/svg+xml,%3Csvg xmlns=
 
 @include pyz-rating-selector.product-review-rating-selector {
     $name: '.rating-selector';
-    
+
     &__meter {
         display: inline-block;
         position: relative;
@@ -18,8 +18,8 @@ $product-review-rating-selector-star-mask: url("data:image/svg+xml,%3Csvg xmlns=
         width: calc(#{$product-review-rating-selector-cell-size} * var(--rating-max, 5));
         height: $product-review-rating-selector-icon-size;
         background-color: var(--background-muted);
-        mask: $product-review-rating-selector-star-mask repeat-x left center /
-            $product-review-rating-selector-cell-size $product-review-rating-selector-icon-size;
+        mask: $product-review-rating-selector-star-mask repeat-x left center / $product-review-rating-selector-cell-size
+            $product-review-rating-selector-icon-size;
     }
 
     &__meter-fill {
@@ -30,8 +30,8 @@ $product-review-rating-selector-star-mask: url("data:image/svg+xml,%3Csvg xmlns=
         height: 100%;
         max-width: 100%;
         background-color: var(--yellow-300);
-        mask: $product-review-rating-selector-star-mask repeat-x left center /
-            $product-review-rating-selector-cell-size $product-review-rating-selector-icon-size;
+        mask: $product-review-rating-selector-star-mask repeat-x left center / $product-review-rating-selector-cell-size
+            $product-review-rating-selector-icon-size;
     }
 
     &--big {

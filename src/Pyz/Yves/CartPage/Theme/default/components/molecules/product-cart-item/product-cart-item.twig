@@ -230,16 +230,6 @@
 
             <div class="{{ config.name }}__panel" data-qa="cart-item-panel">
                 <div class="{{ config.name }}__panel-inner">
-                    {% include molecule('cart-item-details', '@Pyz:CartPage') with {
-                        data: {
-                            listItem: listItem,
-                            list: data.list,
-                            canEdit: data.canEdit,
-                            ajaxTriggerAttribute: data.ajaxTriggerAttribute,
-                            currencyIsoCode: data.currencyIsoCode,
-                        },
-                    } only %}
-
                     {% block panelExtras %}
                         {% block productOptions %}
                             {% if listItem.productOptions ?? false %}
@@ -260,6 +250,15 @@
                             {% widget 'ProductBundleCartItemsListWidget' args [listItem, data.list] only %}{% endwidget %}
                         {% endblock %}
                     {% endblock %}
+
+                    {% include molecule('cart-item-details', 'CartPage') with {
+                        data: {
+                            listItem: listItem,
+                            list: data.list,
+                            canEdit: data.canEdit,
+                            ajaxTriggerAttribute: data.ajaxTriggerAttribute,
+                        },
+                    } only %}
                 </div>
             </div>
     </div>
