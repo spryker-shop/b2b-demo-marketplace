@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7e9d1316e8044123494be38261ca6615",
+    "content-hash": "43ca7074846fd5fee168d7f82e8c627e",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -11086,20 +11086,25 @@
         },
         {
             "name": "spryker-feature/customer-experience-management",
-            "version": "0.1.2",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-feature/customer-experience-management.git",
-                "reference": "c57b064b6631f051cb5726cdb0206026caa4a2dd"
+                "reference": "5215f4994caa9936decb65274a52a5eea76c641e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-feature/customer-experience-management/zipball/c57b064b6631f051cb5726cdb0206026caa4a2dd",
-                "reference": "c57b064b6631f051cb5726cdb0206026caa4a2dd",
+                "url": "https://api.github.com/repos/spryker-feature/customer-experience-management/zipball/5215f4994caa9936decb65274a52a5eea76c641e",
+                "reference": "5215f4994caa9936decb65274a52a5eea76c641e",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.3",
+                "spryker/business-on-behalf": "^1.0.0",
+                "spryker/company": "^1.11.0",
+                "spryker/company-business-unit": "^2.22.0",
+                "spryker/company-role": "^1.14.0",
+                "spryker/company-user": "^2.24.0",
                 "spryker/customer": "^7.85.0",
                 "spryker/customer-note": "^1.3.0",
                 "spryker/kernel": "^3.30.0",
@@ -11115,8 +11120,9 @@
                 "spryker/testify": "*"
             },
             "suggest": {
-                "spryker/api-platform": "Required to expose the customers Backend API resource; without it the resource schema is never discovered."
+                "spryker/api-platform": "Required to expose the customers and company-users Backend API resources; without it the resource schemas are never discovered."
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -11134,9 +11140,9 @@
             ],
             "description": "CustomerExperienceManagement module",
             "support": {
-                "source": "https://github.com/spryker-feature/customer-experience-management/tree/0.1.2"
+                "source": "https://github.com/spryker-feature/customer-experience-management/tree/master"
             },
-            "time": "2026-09-11T10:39:08+00:00"
+            "time": "2026-09-16T13:43:21+00:00"
         },
         {
             "name": "spryker-feature/data-exchange-api",
@@ -26078,16 +26084,16 @@
         },
         {
             "name": "spryker/api-platform",
-            "version": "1.34.0",
+            "version": "1.35.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/api-platform.git",
-                "reference": "9c74927fceea7c774f69e0cdbb8cbb8acf1dd2b6"
+                "reference": "6711a7183bef13e3ec632726f2eadc4857df554c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/api-platform/zipball/9c74927fceea7c774f69e0cdbb8cbb8acf1dd2b6",
-                "reference": "9c74927fceea7c774f69e0cdbb8cbb8acf1dd2b6",
+                "url": "https://api.github.com/repos/spryker/api-platform/zipball/6711a7183bef13e3ec632726f2eadc4857df554c",
+                "reference": "6711a7183bef13e3ec632726f2eadc4857df554c",
                 "shasum": ""
             },
             "require": {
@@ -26152,7 +26158,8 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Spryker\\": "src/Spryker/"
+                    "Spryker\\": "src/Spryker/",
+                    "SprykerTest\\ApiPlatform\\": "tests/SprykerTest/ApiPlatform/_support/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -26168,9 +26175,9 @@
                 "spryker"
             ],
             "support": {
-                "source": "https://github.com/spryker/api-platform/tree/1.34.0"
+                "source": "https://github.com/spryker/api-platform/tree/1.35.0"
             },
-            "time": "2026-09-15T14:13:29+00:00"
+            "time": "2026-09-16T10:54:40+00:00"
         },
         {
             "name": "spryker/app-catalog-gui",
@@ -33763,21 +33770,22 @@
         },
         {
             "name": "spryker/company",
-            "version": "1.9.0",
+            "version": "1.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/company.git",
-                "reference": "1a537afc2ecf7ab9a071b47f05e14aae9e714e33"
+                "reference": "b489e6be95bd5e14b12c3828d2a52f36482278e8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/company/zipball/1a537afc2ecf7ab9a071b47f05e14aae9e714e33",
-                "reference": "1a537afc2ecf7ab9a071b47f05e14aae9e714e33",
+                "url": "https://api.github.com/repos/spryker/company/zipball/b489e6be95bd5e14b12c3828d2a52f36482278e8",
+                "reference": "b489e6be95bd5e14b12c3828d2a52f36482278e8",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.3",
                 "spryker/company-extension": "^1.0.0",
+                "spryker/company-user-extension": "^1.2.0",
                 "spryker/kernel": "^3.30.0",
                 "spryker/propel-orm": "^1.13.0",
                 "spryker/store": "^1.0.0",
@@ -33811,22 +33819,22 @@
             ],
             "description": "Company module",
             "support": {
-                "source": "https://github.com/spryker/company/tree/1.9.0"
+                "source": "https://github.com/spryker/company/tree/1.11.0"
             },
-            "time": "2026-05-15T15:04:51+00:00"
+            "time": "2026-09-16T13:43:21+00:00"
         },
         {
             "name": "spryker/company-business-unit",
-            "version": "2.21.1",
+            "version": "2.22.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/company-business-unit.git",
-                "reference": "065e429fb09cf81d624ab801f1146edccf0a774b"
+                "reference": "580a2f191bd56d8196005e88802cc51da1c0b682"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/company-business-unit/zipball/065e429fb09cf81d624ab801f1146edccf0a774b",
-                "reference": "065e429fb09cf81d624ab801f1146edccf0a774b",
+                "url": "https://api.github.com/repos/spryker/company-business-unit/zipball/580a2f191bd56d8196005e88802cc51da1c0b682",
+                "reference": "580a2f191bd56d8196005e88802cc51da1c0b682",
                 "shasum": ""
             },
             "require": {
@@ -33868,9 +33876,9 @@
             ],
             "description": "CompanyBusinessUnit module",
             "support": {
-                "source": "https://github.com/spryker/company-business-unit/tree/2.21.1"
+                "source": "https://github.com/spryker/company-business-unit/tree/2.22.0"
             },
-            "time": "2026-08-17T12:41:32+00:00"
+            "time": "2026-09-16T13:43:21+00:00"
         },
         {
             "name": "spryker/company-business-unit-addresses-rest-api",
@@ -34573,16 +34581,16 @@
         },
         {
             "name": "spryker/company-role",
-            "version": "1.13.0",
+            "version": "1.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/company-role.git",
-                "reference": "48216e22e7cae56f700522c84f5750fe425820eb"
+                "reference": "56118ed8c04b972093b36219def45355aecc3bd3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/company-role/zipball/48216e22e7cae56f700522c84f5750fe425820eb",
-                "reference": "48216e22e7cae56f700522c84f5750fe425820eb",
+                "url": "https://api.github.com/repos/spryker/company-role/zipball/56118ed8c04b972093b36219def45355aecc3bd3",
+                "reference": "56118ed8c04b972093b36219def45355aecc3bd3",
                 "shasum": ""
             },
             "require": {
@@ -34591,7 +34599,7 @@
                 "spryker/company-extension": "^1.0.0",
                 "spryker/company-role-extension": "^1.0.0",
                 "spryker/company-user": "^1.0.0 || ^2.0.0",
-                "spryker/company-user-extension": "^1.0.0",
+                "spryker/company-user-extension": "^1.2.0",
                 "spryker/customer": "^7.5.0",
                 "spryker/kernel": "^3.30.0",
                 "spryker/permission": "^1.2.0",
@@ -34624,9 +34632,9 @@
             ],
             "description": "CompanyRole module",
             "support": {
-                "source": "https://github.com/spryker/company-role/tree/1.13.0"
+                "source": "https://github.com/spryker/company-role/tree/1.14.0"
             },
-            "time": "2026-05-15T15:04:51+00:00"
+            "time": "2026-09-16T13:43:21+00:00"
         },
         {
             "name": "spryker/company-role-data-import",
@@ -35344,16 +35352,16 @@
         },
         {
             "name": "spryker/company-user",
-            "version": "2.23.0",
+            "version": "2.24.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/company-user.git",
-                "reference": "d05f07061a2d48382ba9508a52f2bc11002853a3"
+                "reference": "363b1e95c657c37beeb0fd05f76523a0a5210c81"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/company-user/zipball/d05f07061a2d48382ba9508a52f2bc11002853a3",
-                "reference": "d05f07061a2d48382ba9508a52f2bc11002853a3",
+                "url": "https://api.github.com/repos/spryker/company-user/zipball/363b1e95c657c37beeb0fd05f76523a0a5210c81",
+                "reference": "363b1e95c657c37beeb0fd05f76523a0a5210c81",
                 "shasum": ""
             },
             "require": {
@@ -35397,9 +35405,9 @@
             ],
             "description": "CompanyUser module",
             "support": {
-                "source": "https://github.com/spryker/company-user/tree/2.23.0"
+                "source": "https://github.com/spryker/company-user/tree/2.24.0"
             },
-            "time": "2026-07-23T09:51:13+00:00"
+            "time": "2026-09-16T13:43:21+00:00"
         },
         {
             "name": "spryker/company-user-agent",
@@ -93552,6 +93560,12 @@
     ],
     "aliases": [
         {
+            "package": "spryker-feature/customer-experience-management",
+            "version": "9999999-dev",
+            "alias": "202608.0",
+            "alias_normalized": "202608.0"
+        },
+        {
             "package": "spryker-feature/order-experience-management",
             "version": "9999999-dev",
             "alias": "202608.0",
@@ -93572,6 +93586,7 @@
     ],
     "minimum-stability": "dev",
     "stability-flags": {
+        "spryker-feature/customer-experience-management": 20,
         "spryker-feature/order-experience-management": 20,
         "spryker-feature/product-experience-management": 20,
         "spryker-feature/self-service-portal": 20,
