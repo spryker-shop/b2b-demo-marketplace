@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 namespace Pyz\Glue\GlueBackendApiApplication;
 
+use Spryker\Glue\AclEntity\Plugin\Application\AclEntityApplicationPlugin;
 use Spryker\Glue\DynamicEntityBackendApi\Plugin\GlueApplication\DynamicEntityRouteProviderPlugin;
 use Spryker\Glue\EventDispatcher\Plugin\GlueBackendApiApplication\EventDispatcherApplicationPlugin;
 use Spryker\Glue\GlueBackendApiApplication\GlueBackendApiApplicationDependencyProvider as SprykerGlueBackendApiApplicationDependencyProvider;
@@ -28,7 +29,6 @@ use Spryker\Glue\MultiFactorAuth\Plugin\GlueBackendApiApplication\MultiFactorAut
 use Spryker\Glue\MultiFactorAuth\Plugin\GlueBackendApiApplication\MultiFactorAuthTypeDeactivateBackendResourcePlugin;
 use Spryker\Glue\MultiFactorAuth\Plugin\GlueBackendApiApplication\MultiFactorAuthTypeVerifyBackendResourcePlugin;
 use Spryker\Glue\OauthBackendApi\Plugin\GlueApplication\BackendApiAccessTokenValidatorPlugin;
-use Spryker\Glue\OauthBackendApi\Plugin\GlueApplication\OauthBackendApiTokenResource;
 use Spryker\Glue\OauthBackendApi\Plugin\GlueApplication\UserRequestValidatorPlugin;
 use Spryker\Glue\OauthBackendApi\Plugin\GlueBackendApiApplication\UserRequestBuilderPlugin;
 use Spryker\Glue\Router\Plugin\Application\RouterApplicationPlugin;
@@ -56,6 +56,7 @@ class GlueBackendApiApplicationDependencyProvider extends SprykerGlueBackendApiA
             new EventDispatcherApplicationPlugin(),
             new LocaleApplicationPlugin(),
             new TwigApplicationPlugin(),
+            new AclEntityApplicationPlugin(),
         ];
 
         if (class_exists(WebProfilerApplicationPlugin::class)) {
@@ -118,7 +119,6 @@ class GlueBackendApiApplicationDependencyProvider extends SprykerGlueBackendApiA
     protected function getResourcePlugins(): array
     {
         $plugins = [
-            new OauthBackendApiTokenResource(),
             new MultiFactorAuthBackendResourcePlugin(),
             new MultiFactorAuthTriggerBackendResourcePlugin(),
             new MultiFactorAuthTypeActivateBackendResourcePlugin(),
