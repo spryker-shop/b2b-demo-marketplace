@@ -125,7 +125,9 @@ jobs:
                 # the upload would add a second red step pointing away from the real cause.
                 if: failure() && steps.run_tests.outcome == 'failure'
                 run: |
-                    AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp .cypress s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/${{ matrix.cell.repository_id }}/dms-on/cypress/${GITHUB_RUN_ID}/${ARTIFACT_PLATFORM}/shard-${{ matrix.cell.shard }}/ --recursive
+                    DESTINATION="s3://${{vars.ROBOT_TESTS_ARTIFACTS_BUCKET}}/${{ matrix.cell.repository_id }}/dms-on/cypress/${GITHUB_RUN_ID}/${ARTIFACT_PLATFORM}/shard-${{ matrix.cell.shard }}/"
+                    AWS_DEFAULT_REGION=${{env.ROBOT_TESTS_ARTIFACTS_BUCKET_REGION}} AWS_ACCESS_KEY_ID=${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }} AWS_SECRET_ACCESS_KEY=${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }} aws s3 cp .cypress "$DESTINATION" --recursive
+                    echo "Cypress screenshots: ${DESTINATION}" | tee -a "$GITHUB_STEP_SUMMARY"
 
             -   name: Generate Cypress Test Summary
                 if: always() && steps.run_tests.outcome == 'failure'
@@ -150,6 +152,9 @@ jobs:
                 with:
                     name: cypress-ui-${{ matrix.cell.repository_id }}-${{ matrix.cell.shard }}-failed-artifacts
                     retention-days: 5 # save for 5 days
+                    # `.cypress/` is a dotted path, which upload-artifact excludes by default
+                    # since v4 — without this the artifact silently holds only logs/*.log.
+                    include-hidden-files: true
                     path: |
                         logs/*.log
                         .cypress/
