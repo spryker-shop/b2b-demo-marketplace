@@ -26084,16 +26084,16 @@
         },
         {
             "name": "spryker/api-platform",
-            "version": "1.35.1",
+            "version": "1.34.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/api-platform.git",
-                "reference": "b1e474ff23c8eba73abb018ceccfdb7dd132fbbc"
+                "reference": "9c74927fceea7c774f69e0cdbb8cbb8acf1dd2b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/api-platform/zipball/b1e474ff23c8eba73abb018ceccfdb7dd132fbbc",
-                "reference": "b1e474ff23c8eba73abb018ceccfdb7dd132fbbc",
+                "url": "https://api.github.com/repos/spryker/api-platform/zipball/9c74927fceea7c774f69e0cdbb8cbb8acf1dd2b6",
+                "reference": "9c74927fceea7c774f69e0cdbb8cbb8acf1dd2b6",
                 "shasum": ""
             },
             "require": {
@@ -26158,8 +26158,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Spryker\\": "src/Spryker/",
-                    "SprykerTest\\ApiPlatform\\": "tests/SprykerTest/ApiPlatform/_support/"
+                    "Spryker\\": "src/Spryker/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -26175,9 +26174,9 @@
                 "spryker"
             ],
             "support": {
-                "source": "https://github.com/spryker/api-platform/tree/1.35.1"
+                "source": "https://github.com/spryker/api-platform/tree/1.34.0"
             },
-            "time": "2026-09-16T13:43:21+00:00"
+            "time": "2026-09-15T14:13:29+00:00"
         },
         {
             "name": "spryker/app-catalog-gui",
@@ -38484,10 +38483,10 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Spryker\\": "src/Spryker/",
-                    "SprykerTest\\Zed\\Customer\\Helper\\": "tests/SprykerTest/Zed/Customer/_support/Helper/",
                     "SprykerTest\\Shared\\Customer\\Helper\\": "tests/SprykerTest/Shared/Customer/_support/Helper/",
-                    "SprykerTest\\Zed\\Customer\\PageObject\\": "tests/SprykerTest/Zed/Customer/_support/PageObject/"
+                    "SprykerTest\\Zed\\Customer\\Helper\\": "tests/SprykerTest/Zed/Customer/_support/Helper/",
+                    "SprykerTest\\Zed\\Customer\\PageObject\\": "tests/SprykerTest/Zed/Customer/_support/PageObject/",
+                    "Spryker\\": "src/Spryker/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -93612,5 +93611,5 @@
     "platform-overrides": {
         "php": "8.3.13"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
