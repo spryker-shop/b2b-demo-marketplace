@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "193179fa3fac78de2d399f9d81f19ade",
+    "content-hash": "215ec31f90ed5a18ecb43089410331e9",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -92475,16 +92475,16 @@
         },
         {
             "name": "spryker-shop/web-profiler-widget",
-            "version": "1.9.0",
+            "version": "1.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker-shop/web-profiler-widget.git",
-                "reference": "2a3d45eed65400ac517e8a95fc5bf01be158a23b"
+                "reference": "39433b30412e967bd28f2cf4cd1bc761629baf17"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker-shop/web-profiler-widget/zipball/2a3d45eed65400ac517e8a95fc5bf01be158a23b",
-                "reference": "2a3d45eed65400ac517e8a95fc5bf01be158a23b",
+                "url": "https://api.github.com/repos/spryker-shop/web-profiler-widget/zipball/39433b30412e967bd28f2cf4cd1bc761629baf17",
+                "reference": "39433b30412e967bd28f2cf4cd1bc761629baf17",
                 "shasum": ""
             },
             "require": {
@@ -92504,6 +92504,7 @@
                 "spryker/log": "*",
                 "spryker/monolog": "*",
                 "spryker/silex": "*",
+                "spryker/testify": "*",
                 "symfony/monolog-bridge": "*"
             },
             "suggest": {
@@ -92531,9 +92532,9 @@
             ],
             "description": "WebProfilerWidget module",
             "support": {
-                "source": "https://github.com/spryker-shop/web-profiler-widget/tree/1.9.0"
+                "source": "https://github.com/spryker-shop/web-profiler-widget/tree/1.9.1"
             },
-            "time": "2026-09-14T12:38:19+00:00"
+            "time": "2026-09-17T13:32:30+00:00"
         },
         {
             "name": "spryker/architecture-sniffer",
@@ -92742,16 +92743,16 @@
         },
         {
             "name": "spryker/profiler",
-            "version": "0.1.3",
+            "version": "0.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/profiler.git",
-                "reference": "956b3c8f384a39b26c9ac8411ad35b6facbddd47"
+                "reference": "598926ad6b9b35c38aad84276d99667c71b0460d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/profiler/zipball/956b3c8f384a39b26c9ac8411ad35b6facbddd47",
-                "reference": "956b3c8f384a39b26c9ac8411ad35b6facbddd47",
+                "url": "https://api.github.com/repos/spryker/profiler/zipball/598926ad6b9b35c38aad84276d99667c71b0460d",
+                "reference": "598926ad6b9b35c38aad84276d99667c71b0460d",
                 "shasum": ""
             },
             "require": {
@@ -92762,6 +92763,7 @@
                 "spryker/web-profiler-extension": "^1.0.0"
             },
             "require-dev": {
+                "codeception/module-asserts": "^3.3",
                 "spryker/code-sniffer": "*",
                 "spryker/container": "*",
                 "spryker/event-dispatcher": "*",
@@ -92789,9 +92791,9 @@
             ],
             "description": "Profiler module",
             "support": {
-                "source": "https://github.com/spryker/profiler/tree/0.1.3"
+                "source": "https://github.com/spryker/profiler/tree/0.1.4"
             },
-            "time": "2026-01-05T09:45:23+00:00"
+            "time": "2026-09-17T11:37:09+00:00"
         },
         {
             "name": "spryker/robotframework-suite-tests",
@@ -92959,16 +92961,16 @@
         },
         {
             "name": "spryker/web-profiler",
-            "version": "1.13.0",
+            "version": "1.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/web-profiler.git",
-                "reference": "4a4fc7dc649c2c4e2ad4d896140b403cb4c3b151"
+                "reference": "377b4d962e56e825e393deb21d5c162fd53dbcd0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/web-profiler/zipball/4a4fc7dc649c2c4e2ad4d896140b403cb4c3b151",
-                "reference": "4a4fc7dc649c2c4e2ad4d896140b403cb4c3b151",
+                "url": "https://api.github.com/repos/spryker/web-profiler/zipball/377b4d962e56e825e393deb21d5c162fd53dbcd0",
+                "reference": "377b4d962e56e825e393deb21d5c162fd53dbcd0",
                 "shasum": ""
             },
             "require": {
@@ -92990,6 +92992,7 @@
                 "spryker/log": "*",
                 "spryker/monolog": "*",
                 "spryker/silex": "*",
+                "spryker/testify": "*",
                 "symfony/monolog-bridge": "*"
             },
             "suggest": {
@@ -93018,9 +93021,9 @@
             ],
             "description": "WebProfiler module",
             "support": {
-                "source": "https://github.com/spryker/web-profiler/tree/1.13.0"
+                "source": "https://github.com/spryker/web-profiler/tree/1.13.1"
             },
-            "time": "2026-09-14T12:38:19+00:00"
+            "time": "2026-09-17T13:32:30+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -93608,7 +93611,7 @@
         "ext-readline": "*",
         "ext-redis": "*"
     },
-    "platform-dev": {},
+    "platform-dev": [],
     "platform-overrides": {
         "php": "8.3.13"
     },
