@@ -89,9 +89,9 @@
                         </strong>
                         <strong class="text-big">{{ data.cartItem.unitPrice | money(true, data.currency.code) }}</strong>
                     </div>
-
-
                 {% endblock %}
+
+                {% block costPricePlaceholder %}{% endblock %}
 
                 <div><strong class="text-right">{{ 'cart.item.item_total' | trans }}</strong></div>
 
