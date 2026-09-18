@@ -16,6 +16,7 @@ return static function (SprykerApiPlatformConfig $sprykerApiPlatform): void {
     $sprykerApiPlatform->apiTypes(['storefront']);
 
     $sprykerApiPlatform->sourceDirectories([
+        'src/Demo',
         'src/Pyz',
         'vendor/spryker',
         'vendor/spryker-shop',

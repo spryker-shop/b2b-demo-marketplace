@@ -1,0 +1,36 @@
+namespace: PyzTest\Glue\McpCommerce
+
+paths:
+    tests: .
+    data: _data
+    support: _support
+    output: _output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    RestApi:
+        actor: McpCommerceRestApiTester
+        modules:
+            enabled:
+                - Asserts
+                - \PyzTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper:
+                      projectNamespaces: ['Demo', 'Pyz']
+                - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Glue\Testify\Helper\GlueRest
+                - \SprykerTest\Glue\Testify\Helper\JsonPath
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \PyzTest\Shared\Store\Helper\StoreDependencyHelper
+                - \PyzTest\Glue\McpCommerce\Helper\OauthRedirectHelper
+            config:
+                \SprykerTest\Glue\Testify\Helper\GlueRest:
+                    depends: PhpBrowser
+                    part: Json
+                \SprykerTest\Shared\Testify\Helper\DataCleanupHelper:
+                    cleanup: false

@@ -1,0 +1,34 @@
+# yaml-language-server: $schema=../../vendor/spryker/configuration/resources/configuration/configuration-schema-v1.json
+features:
+    - key: mcp_commerce
+      name: MCP Commerce Server
+      description: Model Context Protocol (MCP) server that lets authorised external AI clients browse the catalog, manage a cart and place orders on behalf of an authenticated customer.
+      enabled: true
+      order: 2
+      tabs:
+          - key: server
+            name: Server
+            description: Availability of the MCP Commerce Server endpoints.
+            enabled: true
+            order: 1
+            groups:
+                - key: general
+                  name: General
+                  description: Turns the MCP Commerce Server on or off for this environment.
+                  enabled: true
+                  order: 1
+                  scopes:
+                      - global
+                  settings:
+                      - key: is_enabled
+                        name: Enable MCP Commerce Server
+                        description: When enabled, external AI clients can connect to the MCP Commerce Server and call its commerce tools. When disabled, all MCP and OAuth endpoints stop serving traffic, even for clients that already hold a valid token. Disabled by default.
+                        help_text: Keep this disabled unless the environment is intentionally exposed to AI clients.
+                        type: boolean
+                        default_value: 'false'
+                        enabled: true
+                        secret: false
+                        storefront: true
+                        order: 1
+                        scopes:
+                            - global
