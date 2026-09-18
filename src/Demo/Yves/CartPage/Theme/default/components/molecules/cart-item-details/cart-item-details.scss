@@ -1,0 +1,57 @@
+@use 'src/CartPage/components/molecules/cart-item-details/cart-item-details.scss' as pyz-cart-item-details;
+
+$name: '.cart-item-details';
+
+@include pyz-cart-item-details.cart-page-cart-item-details {
+    @include typography(body-sm);
+
+    &__margin {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--scale-4) var(--scale-12);
+    }
+
+    &__margin-total {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--scale-12);
+    }
+
+    &__margin-label {
+        @include typography(label-md);
+        color: var(--text-secondary);
+    }
+
+    &__margin-breakdown {
+        @include typography(caption-sm);
+        color: var(--text-tertiary);
+    }
+
+    &__margin-money {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--scale-4);
+
+        .money-price__amount {
+            @include typography(label-md);
+            color: var(--text-secondary);
+        }
+
+        .money-price__mode {
+            color: var(--text-tertiary);
+        }
+    }
+
+    &__gross-margin {
+        color: var(--text-tertiary);
+
+        &::before {
+            content: '\00B7';
+            margin-right: rem(var(--scale-4));
+            color: var(--text-secondary);
+        }
+    }
+}

@@ -1,0 +1,9 @@
+{% extends molecule('product-item', '@Pyz:ShopUi') %}
+
+{% block priceContainer %}
+    {% block price %}
+        {{ parent() }}
+    {% endblock %}
+
+    {% widget 'ProductGrossMarginWidget' args [data.product.grossMargin ?? 0, config.name] %}{% endwidget %}
+{% endblock %}
