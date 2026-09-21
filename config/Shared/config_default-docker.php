@@ -22,7 +22,6 @@ use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Log\LogConstants;
 use Spryker\Shared\Mail\MailConstants;
 use Spryker\Shared\Newsletter\NewsletterConstants;
-use Spryker\Shared\Oauth\OauthConstants;
 use Spryker\Shared\OauthCustomerConnector\OauthCustomerConnectorConstants;
 use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
@@ -77,7 +76,7 @@ $config[ApplicationConstants::BASE_URL_SSL_ZED] = sprintf(
     $backofficePort,
 );
 $config[ZedRequestConstants::HOST_ZED_API] = sprintf(
-    '%s:%s',
+    '%s%s',
     getenv('SPRYKER_ZED_HOST'),
     $config[ApplicationConstants::PORT_ZED],
 );
@@ -132,11 +131,6 @@ $config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = [
 ];
 
 $config[EventConstants::LOGGER_ACTIVE] = true;
-
-//Check how to generate https://oauth2.thephpleague.com/installation/
-$config[OauthConstants::PRIVATE_KEY_PATH] = 'file://' . APPLICATION_ROOT_DIR . '/config/Zed/dev_only_private.key';
-$config[OauthConstants::PUBLIC_KEY_PATH] = 'file://' . APPLICATION_ROOT_DIR . '/config/Zed/dev_only_public.key';
-$config[OauthConstants::ENCRYPTION_KEY] = 'lxZFUEsBCJ2Yb14IF2ygAHI5N4+ZAUXXaSeeJm6+twsUmIen';
 
 $config[OauthCustomerConnectorConstants::OAUTH_CLIENT_IDENTIFIER] = 'frontend';
 $config[OauthCustomerConnectorConstants::OAUTH_CLIENT_SECRET] = 'abc123';
@@ -360,7 +354,7 @@ $config[DocumentationGeneratorRestApiConstants::ENABLE_REST_API_DOCUMENTATION_GE
 $config[KernelConstants::DOMAIN_WHITELIST] = [];
 
 $config[SelfServicePortalConstants::STORAGE_NAME] = 'files';
-$config[FileSystemConstants::FILESYSTEM_SERVICE] = [
+$config[FileSystemConstants::FILESYSTEM_SERVICE] = array_merge($config[FileSystemConstants::FILESYSTEM_SERVICE] ?? [], [
     'files' => [
         'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
         'root' => '/',
@@ -381,4 +375,4 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'root' => '/data',
         'path' => '/data/ssp-model-image',
     ],
-];
+]);
