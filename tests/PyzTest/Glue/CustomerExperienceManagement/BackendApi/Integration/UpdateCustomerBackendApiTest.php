@@ -36,6 +36,30 @@ class UpdateCustomerBackendApiTest extends AbstractCustomerExperienceManagementB
 {
     protected const string UPDATED_FIRST_NAME = 'PatchedViaBackendApi';
 
+    public function testGivenAPasswordTokenIsRequestedWithoutAStoreWhenUpdateCustomerThenItIsRejected(): void
+    {
+        // Arrange: create requires a store, update does not, so this is where the flag can arrive without one.
+        $customerTransfer = $this->tester->haveCustomer();
+        $this->tester->actingAsUser();
+
+        // Act
+        $response = $this->handleApiRequest(
+            'PATCH',
+            $this->tester->getCustomerUrl($customerTransfer->getCustomerReferenceOrFail()),
+            $this->tester->buildCustomerRequestBody(
+                [CustomerTransfer::SEND_PASSWORD_TOKEN => true],
+                $customerTransfer->getCustomerReferenceOrFail(),
+            ),
+        );
+
+        // Assert — the store provides the context for the email template.
+        $this->assertRespondsWithErrorCode(
+            $response,
+            Response::HTTP_UNPROCESSABLE_ENTITY,
+            CustomerExperienceManagementConfig::RESPONSE_CODE_STORE_NAME_REQUIRED,
+        );
+    }
+
     public function testGivenASingleAttributeWhenUpdateCustomerThenItIsAppliedAndTheRestIsKept(): void
     {
         // Arrange
