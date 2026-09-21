@@ -76,7 +76,7 @@ $config[ApplicationConstants::BASE_URL_SSL_ZED] = sprintf(
     $backofficePort,
 );
 $config[ZedRequestConstants::HOST_ZED_API] = sprintf(
-    '%s:%s',
+    '%s%s',
     getenv('SPRYKER_ZED_HOST'),
     $config[ApplicationConstants::PORT_ZED],
 );
@@ -354,7 +354,7 @@ $config[DocumentationGeneratorRestApiConstants::ENABLE_REST_API_DOCUMENTATION_GE
 $config[KernelConstants::DOMAIN_WHITELIST] = [];
 
 $config[SelfServicePortalConstants::STORAGE_NAME] = 'files';
-$config[FileSystemConstants::FILESYSTEM_SERVICE] = [
+$config[FileSystemConstants::FILESYSTEM_SERVICE] = array_merge($config[FileSystemConstants::FILESYSTEM_SERVICE] ?? [], [
     'files' => [
         'sprykerAdapterClass' => LocalFilesystemBuilderPlugin::class,
         'root' => '/',
@@ -375,4 +375,4 @@ $config[FileSystemConstants::FILESYSTEM_SERVICE] = [
         'root' => '/data',
         'path' => '/data/ssp-model-image',
     ],
-];
+]);
