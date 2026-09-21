@@ -45,6 +45,8 @@ class GetSingleCustomerNoteBackendApiTest extends AbstractCustomerExperienceMana
 
     protected const string ATTRIBUTE_CUSTOMER_REFERENCE = 'customerReference';
 
+    protected const string ATTRIBUTE_UPDATED_AT = 'updatedAt';
+
     public function testGivenAnExistingNoteWhenGetByUuidThenTheNoteIsReturned(): void
     {
         // Arrange
@@ -68,6 +70,11 @@ class GetSingleCustomerNoteBackendApiTest extends AbstractCustomerExperienceMana
         $this->assertNotEmpty(
             $attributes[static::ATTRIBUTE_USERNAME] ?? null,
             'A note names its author wherever it is read.',
+        );
+        $this->assertArrayNotHasKey(
+            static::ATTRIBUTE_UPDATED_AT,
+            $attributes,
+            'A note is never modified, so it carries createdAt alone.',
         );
         $this->assertStringEndsWith(
             $this->tester->getCustomerNoteUrl($customerReference, $uuid),

@@ -227,7 +227,10 @@ class GetCollectionCustomerNotesBackendApiTest extends AbstractCustomerExperienc
         $this->assertSame([], $this->getResourceIds($response));
     }
 
-    public function testGivenAnUnsupportedSortFieldWhenGetCollectionThenItRespondsBadRequest(): void
+    /**
+     * @dataProvider unsupportedSortFieldsDataProvider
+     */
+    public function testGivenAnUnsupportedSortFieldWhenGetCollectionThenItRespondsBadRequest(string $sortField): void
     {
         // Arrange
         [$customerTransfer] = $this->haveNotedCustomer();
@@ -237,7 +240,7 @@ class GetCollectionCustomerNotesBackendApiTest extends AbstractCustomerExperienc
             'GET',
             $this->tester->getCustomerNoteCollectionUrl(
                 $customerTransfer->getCustomerReferenceOrFail(),
-                ['sort' => static::UNSUPPORTED_SORT_FIELD],
+                ['sort' => $sortField],
             ),
         );
 
@@ -297,6 +300,17 @@ class GetCollectionCustomerNotesBackendApiTest extends AbstractCustomerExperienc
 
         // Assert
         $this->assertRespondsWithStatus($response, Response::HTTP_UNAUTHORIZED);
+    }
+
+    /**
+     * @return array<string, array<int, string>>
+     */
+    protected function unsupportedSortFieldsDataProvider(): array
+    {
+        return [
+            'free text has no column to order by' => [static::UNSUPPORTED_SORT_FIELD],
+            'updatedAt is withdrawn by the project config' => [SpyCustomerNoteEntityTransfer::UPDATED_AT],
+        ];
     }
 
     /**

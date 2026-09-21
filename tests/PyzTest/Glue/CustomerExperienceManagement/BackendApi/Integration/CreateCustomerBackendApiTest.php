@@ -44,9 +44,15 @@ class CreateCustomerBackendApiTest extends AbstractCustomerExperienceManagementB
     protected const string ATTRIBUTE_LOCALE_NAME = 'localeName';
 
     /**
-     * Every attribute the Back Office form requires is reported, not just the first one to fail.
+     * @var array<string>
      */
-    protected const int REQUIRED_ATTRIBUTE_COUNT = 4;
+    protected const array REQUIRED_ATTRIBUTES = [
+        CustomerTransfer::EMAIL,
+        CustomerTransfer::SALUTATION,
+        CustomerTransfer::FIRST_NAME,
+        CustomerTransfer::LAST_NAME,
+        CustomerTransfer::STORE_NAME,
+    ];
 
     public function testGivenValidDataWhenCreateCustomerThenTheCustomerIsCreated(): void
     {
@@ -96,10 +102,45 @@ class CreateCustomerBackendApiTest extends AbstractCustomerExperienceManagementB
             Response::HTTP_UNPROCESSABLE_ENTITY,
             static::RESPONSE_CODE_VALIDATION,
         );
+        $errorDetails = $this->getErrorDetails($response);
+
         $this->assertCount(
-            static::REQUIRED_ATTRIBUTE_COUNT,
-            $this->getErrorDetails($response),
-            'Every attribute the Back Office form requires is reported, not just the first.',
+            count(static::REQUIRED_ATTRIBUTES),
+            $errorDetails,
+            'Every required attribute is reported, not just the first one to fail.',
+        );
+
+        foreach (static::REQUIRED_ATTRIBUTES as $requiredAttribute) {
+            $this->assertNotEmpty(
+                array_filter($errorDetails, static fn (string $detail): bool => str_starts_with($detail, $requiredAttribute . ' ')),
+                sprintf('The response must name "%s" as missing.', $requiredAttribute),
+            );
+        }
+    }
+
+    public function testGivenNoStoreWhenCreateCustomerThenItIsRejectedAndNoCustomerIsCreated(): void
+    {
+        // Arrange: the store is the context of the registration mail, and a multi-store shop has no default.
+        $this->tester->actingAsUser();
+        $attributes = $this->tester->buildValidCustomerAttributes();
+        unset($attributes[CustomerTransfer::STORE_NAME]);
+
+        // Act
+        $response = $this->handleApiRequest(
+            'POST',
+            $this->tester->getCustomerCollectionUrl(),
+            $this->tester->buildCustomerRequestBody($attributes),
+        );
+
+        // Assert
+        $this->assertRespondsWithErrorCode(
+            $response,
+            Response::HTTP_UNPROCESSABLE_ENTITY,
+            static::RESPONSE_CODE_VALIDATION,
+        );
+        $this->assertNull(
+            $this->tester->findCustomerIdByEmail($attributes[CustomerTransfer::EMAIL]),
+            'A rejected request must not leave a customer behind.',
         );
     }
 
@@ -126,29 +167,6 @@ class CreateCustomerBackendApiTest extends AbstractCustomerExperienceManagementB
             CustomerExperienceManagementConfig::RESPONSE_CODE_VALIDATION,
         );
         $this->assertContains(static::GLOSSARY_KEY_EMAIL_ALREADY_USED, $this->getErrorDetails($response));
-    }
-
-    public function testGivenAPasswordTokenIsRequestedWithoutAStoreWhenCreateCustomerThenItIsRejected(): void
-    {
-        // Arrange
-        $this->tester->actingAsUser();
-        $attributes = $this->tester->buildValidCustomerAttributes([
-            CustomerTransfer::SEND_PASSWORD_TOKEN => true,
-        ]);
-
-        // Act
-        $response = $this->handleApiRequest(
-            'POST',
-            $this->tester->getCustomerCollectionUrl(),
-            $this->tester->buildCustomerRequestBody($attributes),
-        );
-
-        // Assert — the store provides the context for the email template.
-        $this->assertRespondsWithErrorCode(
-            $response,
-            Response::HTTP_UNPROCESSABLE_ENTITY,
-            CustomerExperienceManagementConfig::RESPONSE_CODE_STORE_NAME_REQUIRED,
-        );
     }
 
     public function testGivenAStoreThatIsNotConfiguredWhenCreateCustomerThenItIsRejected(): void

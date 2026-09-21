@@ -19,6 +19,7 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer;
 use Generated\Shared\Transfer\UserTransfer;
+use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface;
 use SprykerTest\Shared\Customer\Helper\CustomerDataHelper;
 use SprykerTest\Shared\CustomerNote\Helper\CustomerNoteDataHelper;
@@ -75,6 +76,8 @@ class CustomerExperienceManagementBackendApiHelper extends Module
     public const string LISTED_FIRST_NAME_SECOND = 'Zoe';
 
     protected const string ISO2_CODE = 'DE';
+
+    protected const string STORE_NAME = 'DE';
 
     protected const string COUNTRY_NAME = 'Germany';
 
@@ -189,7 +192,15 @@ class CustomerExperienceManagementBackendApiHelper extends Module
             CustomerTransfer::SALUTATION => 'Mr',
             CustomerTransfer::FIRST_NAME => 'Created',
             CustomerTransfer::LAST_NAME => 'ViaBackendApi',
+            CustomerTransfer::STORE_NAME => static::STORE_NAME,
         ];
+    }
+
+    public function findCustomerIdByEmail(string $email): ?int
+    {
+        $customerEntity = SpyCustomerQuery::create()->filterByEmail($email)->findOne();
+
+        return $customerEntity?->getIdCustomer();
     }
 
     /**
