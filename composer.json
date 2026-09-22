@@ -420,7 +420,11 @@
             "Orm\\": "src/Orm/",
             "Pyz\\": "src/Pyz/",
             "SprykerConfig\\": "src/SprykerConfig/"
-        }
+        },
+        "exclude-from-classmap": [
+            "src/Generated/**/codeBucket/",
+            "tests/PyzTest/**/_support/"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
